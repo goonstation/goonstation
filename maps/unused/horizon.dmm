@@ -1050,7 +1050,6 @@
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -14576,7 +14575,6 @@
 	},
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vintage,

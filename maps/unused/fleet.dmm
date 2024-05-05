@@ -250,7 +250,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -709,7 +708,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -3538,7 +3536,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -7306,7 +7303,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{

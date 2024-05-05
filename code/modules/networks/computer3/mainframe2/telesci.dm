@@ -812,7 +812,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/myturf = src.loc
 				for(var/atom/movable/M in view(4, myturf))
 					if(M.anchored) continue
-					if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 8 SECONDS)
+					if(ismob(M))
+						M.changeStatus("knockdown", 8 SECONDS)
 					if(ismob(M)) random_brute_damage(M, 20)
 					var/dir_away = get_dir(myturf,M)
 					var/turf/target = get_step(myturf,dir_away)

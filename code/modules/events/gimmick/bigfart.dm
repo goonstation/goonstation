@@ -48,7 +48,7 @@
 						if (prob(30) && iscarbon(M))
 							if (!M.lying)
 								M.show_text("The shockwave sends you flying to the ground!", "red")
-								M.getStatusDuration("weakened")
+								M.getStatusDuration("knockdown")
 								M.force_laydown_standup()
 
 								var/turf/T1 = get_turf(M)
@@ -152,9 +152,9 @@
 	H.visible_message(SPAN_ALERT("[is_bot ? "Oily chunks of twisted shrapnel" : "Wadded hunks of blood and gore"] burst out of where <b>[H]</b>'s [magical ? "arse" : "ass"] used to be!"),\
 	SPAN_ALERT("[nobutt_phrase[assmagic]]"))
 	if(!magical)
-		H.changeStatus("weakened", 3 SECONDS)
+		H.changeStatus("knockdown", 3 SECONDS)
 	else
-		H.changeStatus("weakened", 1 DECI SECOND)
+		H.changeStatus("knockdown", 1 DECI SECOND)
 	H.force_laydown_standup()
 
 /// Returns 0 if it cant be severed like this, 1 if it always gets severed, or 2 if it *sometimes* gets severed

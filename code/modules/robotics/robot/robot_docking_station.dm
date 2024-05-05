@@ -321,7 +321,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			else
 				H.bioHolder.AddEffect("eaten")
 				random_brute_damage(H, 10)
-				H.changeStatus("weakened", 5 SECONDS)
+				H.changeStatus("knockdown", 5 SECONDS)
 				if (prob(15))
 					boutput(H, SPAN_ALERT("[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]"))
 			src.updateUsrDialog()

@@ -872,7 +872,7 @@
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
 		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
-		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.setStatus("unconscious", 10 SECONDS)
 		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
@@ -1107,9 +1107,7 @@
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 		src.next_click = world.time + src.combat_click_delay
 
@@ -3347,7 +3345,7 @@
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")
-				src.changeStatus("weakened", 3 SECONDS)
+				src.changeStatus("knockdown", 3 SECONDS)
 			else if (src.shoes.laces == LACES_CUT) // Laces cut
 				var/obj/item/clothing/shoes/S = src.shoes
 				src.u_equip(S)

@@ -26,7 +26,7 @@
 					found_target = 1
 
 					random_brute_damage(M, 2,1)
-					M.changeStatus("weakened", 1 SECONDS)
+					M.changeStatus("knockdown", 1 SECONDS)
 					M.force_laydown_standup()
 					playsound(ow.loc, "swing_hit", 60, 1)
 					ow.visible_message(SPAN_ALERT("<B>[ow.name] kicks [M]!</B>"))
@@ -38,5 +38,5 @@
 
 			sleep(0.5 SECONDS)
 
-		ow.changeStatus("weakened", 3 SECONDS)
+		ow.changeStatus("knockdown", 3 SECONDS)
 		ow.force_laydown_standup()

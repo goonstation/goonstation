@@ -137,28 +137,28 @@
 					M.ex_act(3)
 				else
 					random_brute_damage(M, 20 * effect_mult)
-					M.changeStatus("weakened", 7 SECONDS * effect_mult)
+					M.changeStatus("knockdown", 7 SECONDS * effect_mult)
 					M.force_laydown_standup()
 			else
 				random_brute_damage(M, 10 * effect_mult)
-				if (!M.hasStatus("weakened"))
-					M.changeStatus("weakened", 4 SECONDS * effect_mult)
+				if (!M.hasStatus("knockdown"))
+					M.changeStatus("knockdown", 4 SECONDS * effect_mult)
 					M.force_laydown_standup()
 
-				if (src.hasStatus("weakened") && src.getStatusDuration("weakened") < 3 SECONDS * effect_mult) //address race of thus throw_end() happening before this proc lands due to bump() timing
-					src.setStatus("weakened", 3 SECONDS * effect_mult)
+				if (src.hasStatus("knockdown") && src.getStatusDuration("knockdown") < 3 SECONDS * effect_mult) //address race of thus throw_end() happening before this proc lands due to bump() timing
+					src.setStatus("knockdown", 3 SECONDS * effect_mult)
 				else
-					src.changeStatus("weakened", 3 SECONDS * effect_mult)
+					src.changeStatus("knockdown", 3 SECONDS * effect_mult)
 				src.force_laydown_standup()
 
 /mob/throw_end(list/params, turf/thrown_from)
 	if (src.throwing & THROW_CHAIRFLIP)
-		src.changeStatus("weakened", 2.8 SECONDS)
+		src.changeStatus("knockdown", 2.8 SECONDS)
 		src.force_laydown_standup()
 
 	if (length(params) && params["stun"])
-		if (src.getStatusDuration("weakened") < params["stun"])
-			src.setStatus("weakened", params["stun"])
+		if (src.getStatusDuration("knockdown") < params["stun"])
+			src.setStatus("knockdown", params["stun"])
 			src.force_laydown_standup()
 
 

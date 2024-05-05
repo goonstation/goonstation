@@ -520,10 +520,10 @@
 			// for creepy automatoning
 			if ("snap")
 				if (src.emote_check(voluntary, 50) && (src.automaton_skin || src.alohamaton_skin || src.metalman_skin))
-					if ((src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
-					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((!src.restrained()) && (!src.getStatusDuration("knockdown")))
 						if (prob(33))
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound."
@@ -557,10 +557,10 @@
 				if (src.emote_check(voluntary, 50))
 					if (!(src.client && src.client.holder)) src.emote_allowed = 0
 					if (isdead(src)) src.emote_allowed = 0
-					if ((src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
-					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((!src.restrained()) && (!src.getStatusDuration("knockdown")))
 						if (isobj(src.loc))
 							var/obj/container = src.loc
 							container.mob_flip_inside(src)
@@ -936,7 +936,7 @@
 		var/damage = (P.power / 3) * dmgmult
 
 		if(P.proj_data.stun && P.proj_data.damage <= 5)
-			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), knockdown = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
