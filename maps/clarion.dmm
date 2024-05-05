@@ -33978,12 +33978,6 @@
 /obj/machinery/computer3/terminal,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
-"rAV" = (
-/obj/shrub{
-	dir = 9
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "rBs" = (
 /obj/machinery/light_switch/east{
 	dir = 4
@@ -38127,6 +38121,9 @@
 /area/station/hallway/primary/southwest)
 "uzV" = (
 /obj/machinery/camera/ranch,
+/obj/shrub{
+	dir = 9
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uAh" = (
@@ -84822,7 +84819,7 @@ aem
 ayf
 uzV
 axE
-rAV
+axE
 xMo
 axE
 rhb
