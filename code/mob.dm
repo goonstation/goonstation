@@ -1543,11 +1543,11 @@
 		if (D_ENERGY)
 			TakeDamage("All", 0, damage)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*1.5 SECONDS)
+				src.changeStatus("unconscious", stun*1.5 SECONDS)
 			else if (prob(90))
 				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
+				src.changeStatus("knockdown", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
@@ -1576,11 +1576,11 @@
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*1.5 SECONDS)
+				src.changeStatus("unconscious", stun*1.5 SECONDS)
 			else if (prob(90))
 				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
+				src.changeStatus("knockdown", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 			src.show_text(SPAN_ALERT("You are shocked by the impact of [P]!"))
 		if (D_RADIOACTIVE)
@@ -2416,8 +2416,8 @@
 		if (thr?.get_throw_travelled() <= 410)
 			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-				if (!src.hasStatus("weakened"))
-					src.changeStatus("weakened", 2 SECONDS)
+				if (!src.hasStatus("knockdown"))
+					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
 		else
 			src.gib()
@@ -2448,9 +2448,7 @@
 	src.stuttering = 0
 	src.losebreath = 0
 	src.delStatus("drowsy")
-	src.delStatus("paralysis")
-	src.delStatus("stunned")
-	src.delStatus("weakened")
+	src.remove_stuns()
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
@@ -3341,3 +3339,9 @@
 	amp.expended = TRUE
 	amp.icon_state = "amp-broken"
 	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)
+
+/mob/proc/remove_stuns()
+	src.delStatus("stunned")
+	src.delStatus("knockdown")
+	src.delStatus("unconscious")
+	src.delStatus("paralysis")

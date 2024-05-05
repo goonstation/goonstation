@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
 		var/mob/living/H = target
-		H.changeStatus("weakened", 3 SECONDS)
+		H.changeStatus("knockdown", 3 SECONDS)
 		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
@@ -2031,7 +2031,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	mouse_drop(atom/over_object, src_location, over_location, params)
-		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
 			src.Attackhand(usr)

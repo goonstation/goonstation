@@ -1,4 +1,11 @@
 
+(t)sun may 05 24
+(u)LeahTheTech
+(+)The medusa pod cloaking system will now deactivate if the pod has no occupants. No more losing your extremely sneaky pod.
+(p)18746
+(e)🎨⚖|C-Sprites, C-Balance
+(*)Fixed corpses being able to be rotated by ghosts.
+(*)Capulettium now prevents you from rotating, pointing and emoting.
 (t)sat may 04 24
 (u)FlameArrow57
 (p)18755

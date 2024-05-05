@@ -85,10 +85,19 @@
 			src.add_topping(W, user, params)
 		return ..()
 
-	/// Used to pick the pizza up by click dragging a topping to you, in case the pizza is covered in toppings
-	proc/indirect_pickup(var/topping, mob/user, atom/over_object)
-		if (user == over_object && in_interact_range(src, user) && can_act(user))
+	MouseDrop_T(obj/item/W, mob/user, src_location, over_location, over_control, src_control, params)
+		if (isitem(W) && !isintangible(user) && in_interact_range(W, user) && in_interact_range(src, user))
+			return src.Attackby(W, user, params2list(params))
+		return ..()
+
+	/// Handles toppings being dragged around
+	proc/indirect_pickup(var/obj/item/topping, mob/user, atom/over_object)
+		if (!in_interact_range(src, user) || !can_act(user))
+			return
+		if (user == over_object)
 			src.Attackhand(user)
+		else if (over_object == src || isturf(over_object))
+			src.remove_topping(topping)
 
 	/// Adds a topping to the pizza
 	proc/add_topping(var/obj/item/topping, var/mob/user, var/list/params = null)
@@ -419,7 +428,7 @@
 				H.implant.Add(src)
 				src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-				H.changeStatus("weakened", 2 SECONDS)
+				H.changeStatus("knockdown", 2 SECONDS)
 				src.set_loc(H)
 				src.transfer_all_reagents(H)
 			random_brute_damage(hit_atom, 11)

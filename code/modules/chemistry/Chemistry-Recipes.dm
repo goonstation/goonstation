@@ -2750,7 +2750,7 @@
 							boutput(H, SPAN_ALERT("Your face has become disfigured!"))
 							H.disfigured = TRUE
 							H.UpdateName()
-						H.changeStatus("weakened", 8 SECONDS)
+						H.changeStatus("knockdown", 8 SECONDS)
 						H:unlock_medal("Red Hood", 1)
 			return
 
