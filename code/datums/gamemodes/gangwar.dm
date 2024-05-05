@@ -1999,7 +1999,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.delStatus("resting")
 			H.hud.update_resting()
 			H.delStatus("stunned")
-			H.delStatus("weakened")
+			H.delStatus("knockdown")
 			H.force_laydown_standup()
 			#ifdef USE_STAMINA_DISORIENT
 			H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = TRUE, target_type = DISORIENT_NONE)

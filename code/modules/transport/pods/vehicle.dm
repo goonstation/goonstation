@@ -192,7 +192,7 @@
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 				return /////ships should pretty much be immune to fire
 			else
@@ -200,7 +200,7 @@
 				if (prob(W.force*3))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 
 		checkhealth()
@@ -579,32 +579,28 @@
 		qdel(P)
 		return
 
-	proc/disrupt(var/disruption as num, var/obj/projectile/P)
-		if(disruption)
-			playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
-			if(pilot)
-				boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
-			//if (P)
-			//	for (var/mob/M in src)
-			//		M.bullet_act_indirect(P)
-			var/chance = disruption * 1
-			for(var/obj/item/shipcomponent/S in src.components)
-				var/my_chance = chance
-				if (istype(S, /obj/item/shipcomponent/engine))
-					my_chance += 40
+	proc/disrupt(disruption, obj/projectile/P)
+		if(disruption <= 0 || !length(src.components))
+			return
+		playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
+		if(pilot)
+			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-				if(prob(my_chance))
-					if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
-						var/obj/item/shipcomponent/engine/E = S
-						if (E.ready)
-							E.ready = 0
-							E.ready()
-					else
-						S.deactivate()
+		var/obj/item/shipcomponent/S = pick(src.components)
+		if (istype(S, /obj/item/shipcomponent/engine))
+			disruption += 40
 
-					chance -= 25
-					if (chance <= 0)
-						return
+		if(prob(disruption))
+			if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
+				var/obj/item/shipcomponent/engine/E = S
+				if (E.ready)
+					E.ready = 0
+					E.ready()
+			else
+				S.deactivate()
+				S.disrupted = TRUE
+				SPAWN(2 SECONDS)
+					S.disrupted = FALSE
 
 	emp_act()
 		src.disrupt(10)
@@ -661,7 +657,7 @@
 				if(M.health > 0)
 					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
-				//M.changeStatus("weakened", 1 SECOND)
+				//M.changeStatus("knockdown", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
@@ -1049,7 +1045,7 @@
 		boutput(boarder, SPAN_ALERT("[src] is locked!"))
 		return
 
-	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
+	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("knockdown") || boarder.getStatusDuration("unconscious") || !isalive(boarder) || boarder.restrained())
 		boutput(boarder, SPAN_ALERT("You can't enter a pod while incapacitated or restrained."))
 		return
 
@@ -1198,7 +1194,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1214,7 +1210,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -1178,7 +1178,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
-								M.changeStatus("weakened", 0.9 SECONDS)
+								M.changeStatus("knockdown", 0.9 SECONDS)
 								M.force_laydown_standup()
 								boutput(M, SPAN_ALERT("You are pulled by the force of [user]'s [master]."))
 						else

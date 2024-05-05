@@ -68,7 +68,7 @@
 			return
 		user.visible_message(SPAN_ALERT("<b>[user] eats the ice cream in one bite and collapses from brainfreeze!</b>"))
 		user.TakeDamage("head", 0, 50 * icecount)
-		user.changeStatus("paralysis", icecount SECONDS) //in case the damage isn't enough to crit
+		user.changeStatus("unconscious", icecount SECONDS) //in case the damage isn't enough to crit
 		user.bodytemperature -= 100
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))

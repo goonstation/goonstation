@@ -354,7 +354,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			for(var/mob/living/carbon/human/H in view(1, target))
 				var/atom/targetTurf = get_edge_target_turf(H, get_dir(holder.owner, get_step_away(H, holder.owner)))
 				boutput(H, SPAN_ALERT("<b>[holder.owner] knocks you back!</b>"))
-				H.changeStatus("weakened", 2 SECONDS)
+				H.changeStatus("knockdown", 2 SECONDS)
 				H.throw_at(targetTurf, 200, 4)
 
 

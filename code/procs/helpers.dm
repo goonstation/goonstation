@@ -2463,7 +2463,8 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 proc/is_incapacitated(mob/M)
 	return (M &&(\
 		M.hasStatus("stunned") || \
-		M.hasStatus("weakened") || \
+		M.hasStatus("knockdown") || \
+		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction

@@ -17133,7 +17133,6 @@
 "coC" = (
 /obj/table/folding,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light/incandescent,
@@ -18898,7 +18897,6 @@
 	panel_open = 1
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,

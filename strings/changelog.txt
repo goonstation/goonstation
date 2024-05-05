@@ -1,4 +1,23 @@
 
+(t)sun may 05 24
+(u)LeahTheTech
+(p)18746
+(e)🎨⚖|C-Sprites, C-Balance
+(*)Fixed corpses being able to be rotated by ghosts.
+(*)Capulettium now prevents you from rotating, pointing and emoting.
+(t)sat may 04 24
+(u)FlameArrow57
+(p)18755
+(e)⚖📦🚗|C-Balance, A-Game-Objects, A-Vehicles
+(+)Increased armory Mk. 3 Disruptor pod weapon damage (from 0 to mobs, ~9 to vehicles -> 10 to mobs, ~15 to vehicles)
+(+)Pod disruption from projectiles now causes a random picked pod component to be disabled for 2 seconds. Manual re-activation still required.
+(u)tarmunora
+(+)Walking over someone while on harm intent will throw a free kick on a moderate cooldown. Trample lube victims and napping staff assistants alike.
+(+)Rebalance syndicate chainsaw.
+(u)DecidedlyUnethical
+(p)18752
+(e)💅📦🍝|C-QoL, A-Game-Objects, A-Catering
+(*)NT has now stocked Booze-O-Mats with bottles of curacao liquor.
 (t)thu may 02 24
 (u)MylieDaniels
 (p)18692

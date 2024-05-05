@@ -748,7 +748,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		src.changeStatus("weakened", 5 SECONDS)
+		src.changeStatus("knockdown", 5 SECONDS)
 		if(prob(15))
 			SPAWN(0) emote(pick("giggle", "laugh"))
 		if(prob(1))
@@ -803,7 +803,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	proc/illusion_expire(mob/user)
 		if(user)
 			boutput(user, SPAN_ALERT("<B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B>"))
-			user.changeStatus("weakened", 4 SECONDS)
+			user.changeStatus("knockdown", 4 SECONDS)
 		for(var/mob/M in viewers(src, null))
 			if(M.client && M != user)
 				M.show_message(SPAN_ALERT("<b>The Waldo illusion explodes into smoke!</b>"))
