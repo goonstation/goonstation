@@ -154,6 +154,10 @@
 			process()
 
 	proximity_act()
+		if (QDELETED(src.target)) //STOP CRASHING THE SERVER OMG
+			maniac_active &= ~2
+			qdel(src)
+			return
 		..()
 		if(prob(40))
 			src.visible_message(SPAN_ALERT("<B>[src] passes its arm through [target]!</B>"))
