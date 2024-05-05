@@ -158,7 +158,7 @@
 			using = FALSE
 			return
 
-		var/obj/the_object =  tgui_input_list(usr, "Which item do you want to eat?", "Matter Eater", items)
+		var/obj/the_object = tgui_input_list(usr, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
 			using = FALSE
 			return TRUE
