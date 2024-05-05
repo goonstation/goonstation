@@ -13,7 +13,7 @@
 					H.take_brain_damage(60)
 					H.TakeDamage("head", 50, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
-					H.changeStatus("weakened", 5 SECONDS)
+					H.changeStatus("knockdown", 5 SECONDS)
 					H.UpdateDamageIcon()
 					qdel(G)
 				else

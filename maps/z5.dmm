@@ -2820,9 +2820,10 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/security)
 "AV" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/noGenerate)
 "AY" = (
 /obj/cable{
@@ -3955,7 +3956,7 @@
 	pixel_x = -4;
 	pixel_y = 30;
 	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni)
 	},
 /obj/item/paper/martian_manifest{
 	rand_pos = 1

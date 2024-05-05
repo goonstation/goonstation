@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
 		var/mob/living/H = target
-		H.changeStatus("weakened", 3 SECONDS)
+		H.changeStatus("knockdown", 3 SECONDS)
 		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
@@ -2031,10 +2031,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	mouse_drop(atom/over_object, src_location, over_location, params)
-		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			attack_hand(usr)
+			src.Attackhand(usr)
 			return
 
 	attackby(obj/item/b, mob/user)
@@ -2817,6 +2817,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 6
 	can_dual_wield = 0
 
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
@@ -2874,6 +2875,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
+	contraband = 8
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -3015,6 +3017,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown_time = 5
 
 	can_dual_wield = 0
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 

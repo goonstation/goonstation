@@ -166,7 +166,7 @@
 	Bumped(var/mob/M)
 		if (!istype(M))
 			return
-		attack_hand(M)
+		src.Attackhand(M)
 
 	attack_hand(var/mob/user)
 		if (!density)

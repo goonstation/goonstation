@@ -69,7 +69,7 @@
 		if (the_mob.bioHolder.HasEffect("clumsy") && prob(50))
 			the_mob.visible_message(SPAN_ALERT("[the_mob] swings the [C] wildly and falls on [his_or_her(the_mob)] face."),\
 			SPAN_ALERT("You swing so hard you lose your balance and fall!"))
-			the_mob.changeStatus("weakened", 2 SECONDS)
+			the_mob.changeStatus("knockdown", 2 SECONDS)
 			JOB_XP(the_mob, "Clown", 4)
 			return
 

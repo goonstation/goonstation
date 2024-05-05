@@ -2249,13 +2249,13 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 					if (lethal)
 						var/mob/living/carbon/human/H = target_r
 						random_burn_damage(target_r, rand(45,60))
-						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
+						H.do_disorient(stamina_damage = 45, knockdown = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 					boutput(target_r, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
 					target_r:Virus_ShockCure(100)
 					target_r:shock_cyberheart(33)
 					if (ishuman(target_r))
-						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))
+						target_r:changeStatus("knockdown", lethal ? (3 SECONDS): (8 SECONDS))
 					break
 
 				var/list/next = new/list()
@@ -3107,6 +3107,9 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(ckey(perp.name) in target_names)
 					return 7
 
+				if(perp.mutantrace.jerk)
+					return 5
+
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
 					perp_id = perp.get_id()
@@ -3115,20 +3118,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(ckey(perp_id.registered) in target_names)
 						return 7
 
-					var/list/contraband_returned = list()
-					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
-						. += max(contraband_returned)
-				else
-					var/list/contraband_returned = list()
-					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-						. += max(contraband_returned)
-				if(perp.mutantrace.jerk)
-//					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
-//						return 5 //Zombies are bad news!
-
-//					threatcount += 2
-
-					return 5
+				if(!perp_id || !(contraband_access in perp_id.access))
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+				if(!perp_id || !(weapon_access in perp_id.access))
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 
 		halloween //Go trick or treating!

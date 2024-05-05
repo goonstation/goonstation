@@ -425,12 +425,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y + 4,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (4)	//E
@@ -438,12 +438,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 4,src.loc.y + 1 + increment,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (2)	//S
@@ -451,12 +451,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y - 2,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (8)	//W
@@ -464,12 +464,12 @@
 					for (var/mob/living/M in T)
 						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
-						M.changeStatus("weakened", 4 SECONDS)
+						M.changeStatus("knockdown", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x - 2,src.loc.y + 1 + increment,src.loc.z))
 							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
-							M.changeStatus("weakened", 4 SECONDS)
+							M.changeStatus("knockdown", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 		SPAWN(8)
@@ -843,7 +843,7 @@
 					M.health = M.health * randfloat(0.1 / dam_type, 0.2 / dam_type)
 				else
 					random_brute_damage(M, 80 / dam_type)
-			M.changeStatus("weakened", 4 SECOND)
+			M.changeStatus("knockdown", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)

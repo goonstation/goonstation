@@ -500,7 +500,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
-			var/obj/item/reagent_containers/food/snacks/ingredient/pizza1/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza1(src.loc)
+			var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza_base(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
 			qdel(src)
@@ -552,7 +552,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				else
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
 					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, TRUE, -1)
-					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
+					user.do_disorient(baton.stamina_damage, knockdown = baton.stun_normal_knockdown * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
 			else
 				boutput(user, SPAN_NOTICE("You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react."))
 		else ..()
@@ -668,185 +668,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		..()
 		src.pixel_x = rand(-8, 8)
 		src.pixel_y = rand(-8, 8)
-
-/obj/item/reagent_containers/food/snacks/ingredient/pizza1
-	name = "unfinished pizza base"
-	desc = "You need to add tomatoes..."
-	icon_state = "pizzabase"
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/ketchup) || istype(W, /obj/item/reagent_containers/food/snacks/plant/tomato))
-			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
-			var/obj/item/reagent_containers/food/snacks/ingredient/pizza2/D=new /obj/item/reagent_containers/food/snacks/ingredient/pizza2(W.loc)
-			user.u_equip(W)
-			user.put_in_hand_or_drop(D)
-			qdel(W)
-			qdel(src)
-		if (prob(25))
-			JOB_XP(user, "Chef", 1)
-		else if (iscuttingtool(W) || issawingtool(W))
-			boutput(user, SPAN_NOTICE("You cut [src] into smaller pieces..."))
-			for(var/i = 1, i <= 3, i++)
-				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))
-			qdel(src)
-		if (prob(25))
-			JOB_XP(user, "Chef", 1)
-		else ..()
-
-	attack_self(var/mob/user as mob)
-		boutput(user, SPAN_NOTICE("You knead the [src] back into a blob."))
-		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
-		qdel (src)
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to add tomatoes, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-/obj/item/reagent_containers/food/snacks/ingredient/pizza2
-	name = "half-finished pizza base"
-	desc = "You need to add cheese..."
-	icon_state = "pizzabase2"
-	custom_food = 0
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
-			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
-			var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/D = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3(W.loc)
-			user.u_equip(W)
-			user.put_in_hand_or_drop(D)
-			qdel(W)
-			qdel(src)
-		else ..()
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to add cheese, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		attack(user, user)
-
-/obj/item/reagent_containers/food/snacks/ingredient/pizza3
-	name = "uncooked pizza"
-	desc = "A plain cheese and tomato pizza. You need to bake it..."
-	icon_state = "pizzabase3"
-	custom_food = 0
-	var/num = null
-	var/topping = 0
-	var/topping_color = null
-	var/list/toppings = list()
-	var/list/topping_types = list()
-	var/list/topping_colors = list()
-	var/toppingstext = null
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/))
-			var/obj/item/reagent_containers/food/snacks/F = W
-			if(!F.custom_food)
-				return
-			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
-			topping = 1
-			food_effects += F.food_effects
-			topping_types += W.type
-			if (F.real_name)
-				toppings += F.real_name
-			else
-				toppings += W.name
-			toppingstext = copytext(html_encode(english_list(toppings)), 1, 512)
-			name = "uncooked [toppingstext] pizza"
-			desc = "A pizza with [toppingstext] toppings. You need to bake it..."
-			if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/))
-				heal_amt += 4
-			else
-				heal_amt += round((F.heal_amt * F.bites_left)/bites_left) + 1
-			topping_color = F.get_food_color()
-			if(num < 3)
-				num ++
-				add_topping(src.num)
-			W.reagents.trans_to(src, W.reagents.total_volume)
-			user.u_equip(W)
-			qdel (W)
-		else
-			return
-
-	proc/add_topping(var/num)
-		var/icon/I
-		I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_[num]")
-		I.Blend(topping_color, ICON_ADD)
-		src.topping_colors += topping_color
-		src.overlays += I
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to bake it, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		attack(user, user)
-
-/obj/item/reagent_containers/food/snacks/ingredient/pizzam
-	name = "uncooked mushroom pizza"
-	desc = "A cheese and mushroom pizza. You need to bake it..."
-	icon_state = "pizzabasem"
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to bake it, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		attack(user, user)
-
-/obj/item/reagent_containers/food/snacks/ingredient/pizzab
-	name = "uncooked meatball pizza"
-	desc = "A cheese and meatball pizza. You need to bake it..."
-	icon_state = "pizzabaseb"
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to bake it, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		attack(user, user)
-
-/obj/item/reagent_containers/food/snacks/ingredient/pizzap
-	name = "uncooked pepperoni pizza"
-	desc = "A cheese and pepperoni pizza. You need to bake it..."
-	icon_state = "pizzabasep"
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to bake it, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent

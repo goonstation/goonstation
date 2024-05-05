@@ -147,7 +147,7 @@
 		return
 	if (href_list["on"])
 		on = !on
-	attack_hand(usr)
+	src.Attackhand(usr)
 
 /obj/machinery/bot/duckbot/attack_hand(mob/user)
 	var/dat

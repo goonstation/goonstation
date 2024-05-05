@@ -149,7 +149,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/whiteweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/omegaweed,1)
-		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza/spacer,6)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza/spacer,12)
 		..()
 
 /datum/rc_entry/item
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		typepath = /obj/item/plant/herb/cannabis/omega
 
 /datum/rc_entry/food/pizza/spacer
-	name = "Pizza Hexa-Subsections (May Be Unseparated)"
+	name = "Pizza Mouthfuls (Must Be Unseparated)"
 
 
 
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		payout =  PAY_TRADESMAN*10
 
 	New()
-		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*6)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*12)
 		..()
 
 //contract below defines the details itself based on variety of order - this is just a dummy so as not to use an abstract type

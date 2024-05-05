@@ -960,7 +960,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 #undef PRISONER_MODE_INCARCERATED
 
 /obj/item/device/ticket_writer
-	name = "Security TicketWriter 2000"
+	name = "security TicketWriter 2000"
 	desc = "A device used to issue tickets from the security department."
 	icon_state = "ticketwriter"
 	item_state = "electronic"

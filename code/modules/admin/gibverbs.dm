@@ -443,7 +443,7 @@
 			else if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message(SPAN_ALERT("<B>[src]</B> punches [tysontarget2]!"), 1)
-				tysontarget2.changeStatus("weakened", 10 SECONDS)
+				tysontarget2.changeStatus("knockdown", 10 SECONDS)
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
 				banproc()
@@ -513,7 +513,7 @@
 			if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message(SPAN_ALERT("<B>[src]</B> punches [tysontarget2]!"), 1)
-				tysontarget2.changeStatus("weakened", 10 SECONDS)
+				tysontarget2.changeStatus("knockdown", 10 SECONDS)
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
 				icon_state = "punch"
