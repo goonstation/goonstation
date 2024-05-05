@@ -101,7 +101,7 @@
 				if (prob(50))
 					affected_mob.emote("scream")
 
-				affected_mob.do_disorient(80, knockdown = 5 SECONDS, stunned = 0, paralysis = 2 SECONDS, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
+				affected_mob.do_disorient(80, knockdown = 5 SECONDS, stunned = 0, unconscious = 2 SECONDS, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 10
 				affected_mob.take_brain_damage(6)
 
