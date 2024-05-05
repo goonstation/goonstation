@@ -879,12 +879,12 @@
 				. = ..()
 
 		locked
-			id = "locked"
+			id = "paralysis"
 			name = "Paralyzed" //I'm going to scream
 			desc = "You are completely paralyzed."
 			unique = 1
 			maxDuration = 30 SECONDS
-			icon_state = "locked"
+			icon_state = "paralysis"
 
 			onAdd(optional=null)
 				. = ..()

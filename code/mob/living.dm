@@ -591,7 +591,7 @@
 	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
-	if (src.hasStatus("locked"))
+	if (src.hasStatus("paralysis"))
 		src.show_text("You are completely paralysed and can't point!", "red")
 		return
 
@@ -747,7 +747,7 @@
 
 	// emotes
 	if (dd_hasprefix(message, "*"))
-		if (src.stat || src.hasStatus("locked"))
+		if (src.stat || src.hasStatus("paralysis"))
 			return
 		return src.emote(copytext(message, 2),1)
 

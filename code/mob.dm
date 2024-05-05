@@ -3344,4 +3344,4 @@
 	src.delStatus("stunned")
 	src.delStatus("weakened")
 	src.delStatus("unconscious")
-	src.delStatus("locked")
+	src.delStatus("paralysis")

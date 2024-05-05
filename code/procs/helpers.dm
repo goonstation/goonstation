@@ -2465,7 +2465,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("stunned") || \
 		M.hasStatus("weakened") || \
 		M.hasStatus("unconscious") || \
-		M.hasStatus("locked") || \
+		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
