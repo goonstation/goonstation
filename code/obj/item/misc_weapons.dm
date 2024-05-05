@@ -42,7 +42,6 @@ TYPEINFO(/obj/item/sword)
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	leaves_slash_wound = TRUE
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -106,7 +105,6 @@ TYPEINFO(/obj/item/sword)
 
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
-		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		AddComponent(/datum/component/itemblock/reflect/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -227,6 +225,8 @@ TYPEINFO(/obj/item/sword)
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
+		src.leaves_slash_wound = TRUE
+		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
@@ -241,6 +241,8 @@ TYPEINFO(/obj/item/sword)
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.w_class = off_w_class
+		src.leaves_slash_wound = FALSE
+		src.setItemSpecial(null)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
