@@ -1,4 +1,10 @@
 
+(t)sun may 05 24
+(u)LeahTheTech
+(p)18746
+(e)🎨⚖|C-Sprites, C-Balance
+(*)Fixed corpses being able to be rotated by ghosts.
+(*)Capulettium now prevents you from rotating, pointing and emoting.
 (t)sat may 04 24
 (u)FlameArrow57
 (p)18755
