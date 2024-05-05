@@ -1,31 +1,6 @@
 // Hydroponics procs not specific to the plantpot start here.
 
-proc/HYPget_growth_stage(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes, var/growth)
-	//! This proc returns the theoretical growth stage of passed_plant with (optional) passed_plantgenes a given growth
-	if (!passed_plant || !growth)
-		return
-	if(growth >= HYPget_growth_to_harvestable(passed_plant, passed_plantgenes))
-		return HYP_GROWTH_HARVESTABLE
-	else if(growth >= HYPget_growth_to_matured(passed_plant, passed_plantgenes))
-		return HYP_GROWTH_MATURED
-	else if(growth >= HYPget_growth_to_growing(passed_plant, passed_plantgenes))
-		return HYP_GROWTH_GROWING
-	else if(growth <= 0)
-		return HYP_GROWTH_DEAD
-	else
-		return HYP_GROWTH_PLANTED
 
-proc/HYPget_growth_to_growing(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
-	//! this proc returns the time needed for passed_plant with (optional) passed_plantgenes to reach the "growing"-stage
-	return (passed_plant.growtime - passed_plantgenes?.get_effective_value("growtime")) / 2
-
-proc/HYPget_growth_to_matured(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
-	//! this proc returns the time needed for passed_plant with (optional) passed_plantgenes to reach the "matured"-stage
-	return passed_plant.growtime - passed_plantgenes?.get_effective_value("growtime")
-
-proc/HYPget_growth_to_harvestable(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
-	//! this proc returns the time needed for passed_plant with (optional) passed_plantgenes to reach the "harvestable"-stage
-	return passed_plant.harvtime - passed_plantgenes?.get_effective_value("harvtime")
 
 
 proc/HYPchem_scaling(var/scaling_statistics)

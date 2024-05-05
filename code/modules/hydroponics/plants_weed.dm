@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth >= (HYPget_growth_to_harvestable(P, DNA) + 50) && prob(10) && !src.exploding)
+		if (POT.growth >= (P.HYPget_growth_to_harvestable(DNA) + 50) && prob(10) && !src.exploding)
 			src.exploding = 1
 			POT.visible_message(SPAN_ALERT("<b>[POT]</b> begins to bubble and expand!"))
 			playsound(POT, 'sound/effects/bubbles.ogg', 50, TRUE)

@@ -233,7 +233,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			playsound(POT,'sound/voice/animal/cat.ogg',30,TRUE,-1)
 			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> meows!"))
 
-		if (POT.growth > HYPget_growth_to_harvestable(P, DNA) + 10)
+		if (POT.growth > P.HYPget_growth_to_harvestable(DNA) + 10)
 			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message(SPAN_NOTICE("The synthcat climbs out of the tray!"))
@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < HYPget_growth_to_matured(P, DNA) + 10) return 0
+		if (POT.growth < P.HYPget_growth_to_matured(DNA) + 10) return 0
 
 		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,TRUE,-1)
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> hisses!"))
