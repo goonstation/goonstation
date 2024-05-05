@@ -298,7 +298,7 @@
 				M.nutrition -= rand(3,5)
 				M.take_toxin_damage(10) // im bad
 				M.setStatusMin("stunned", 3 SECONDS * mult)
-				M.setStatusMin("weakened", 3 SECONDS * mult)
+				M.setStatusMin("knockdown", 3 SECONDS * mult)
 
 /datum/reagent/lithium
 	name = "lithium"
@@ -598,11 +598,11 @@
 				responseBee.visible_message("<b>[responseBee]</b> [ pick("looks confused.", "appears to undergo a metaphysical crisis.  What is human?  What is space bee?<br>Or it might just have gas.", "looks perplexed.", "bumbles in a confused way.", "holds out its forelegs, staring into its little bee-palms and wondering what is real.") ]")
 
 		else
-			if (!M.getStatusDuration("paralysis"))
+			if (!M.getStatusDuration("unconscious"))
 				boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 				M.emote("collapse")
-				//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
-				M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
+				//M.changeStatus("unconscious", ((2 * severity)*15) * mult)
+				M.changeStatus("knockdown", ((4 * severity)*1.5 SECONDS) * mult)
 
 			if (prob(8))
 				M.take_toxin_damage(severity * mult)

@@ -559,7 +559,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				src.r_hand?.AddComponent(/datum/component/glued, src, T.spawn_delay, T.spawn_delay / 2)
 
 				src.setStatus("resting", INFINITE_STATUS)
-				src.setStatus("paralysis", T.spawn_delay)
+				src.setStatus("unconscious", T.spawn_delay)
 				src.force_laydown_standup()
 
 		if (src.traitHolder && src.traitHolder.hasTrait("partyanimal"))
@@ -641,6 +641,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				H.l_hand?.AddComponent(/datum/component/glued, H, T.spawn_delay, T.spawn_delay / 2)
 				H.r_hand?.AddComponent(/datum/component/glued, H, T.spawn_delay, T.spawn_delay / 2)
 				H.setStatus("resting", INFINITE_STATUS)
+				H.setStatus("unconscious", T.spawn_delay)
 				H.force_laydown_standup()
 
 			if (H.head)
@@ -679,11 +680,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
 	//this was previously indented in the ishuman() block, but I don't think it needs to be - Amylizzle
-	if (possible_new_mob)
-		var/mob/living/newmob = possible_new_mob
-		newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
-	else
-		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
+	SPAWN(0)
+		if (possible_new_mob)
+			var/mob/living/newmob = possible_new_mob
+			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
+		else
+			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 

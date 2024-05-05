@@ -549,9 +549,7 @@
 	onStart()
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
-		if (source.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(source, COMSIG_MOB_TRIGGER_THREAT)
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
 			boutput(source, SPAN_ALERT("You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)]."))
@@ -1335,7 +1333,7 @@
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
-		target.changeStatus("paralysis", -2 SECONDS)
+		target.changeStatus("unconscious", -2 SECONDS)
 
 		if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))

@@ -111,7 +111,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				src.visible_message(SPAN_ALERT("<b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!"))
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
-					H.changeStatus("weakened", 1 SECOND)
+					H.changeStatus("knockdown", 1 SECOND)
 				else
 					boutput(H, SPAN_NOTICE("Your helmet protected you from injury!"))
 				return 1
@@ -301,7 +301,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat || user.restrained())
 		return
 	if(istype(I, /obj/item/grab))
 		return ..() // handled in grab.dm + Bumped
@@ -573,7 +573,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-					L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("knockdown", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)

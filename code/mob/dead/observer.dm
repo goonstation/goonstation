@@ -165,6 +165,10 @@
 	if (doubleghost|| !P.proj_data?.hits_ghosts)
 		return
 
+	if (P.proj_data && istype(P.proj_data, /datum/projectile/paintball))
+		// i wanna paint ghosts not bust em
+		return
+
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder

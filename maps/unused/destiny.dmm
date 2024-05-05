@@ -6040,9 +6040,7 @@
 /area/station/medical/medbay/pharmacy)
 "aBF" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 7
-	},
+/obj/machinery/glass_recycler,
 /obj/item/device/reagentscanner{
 	pixel_x = -12
 	},

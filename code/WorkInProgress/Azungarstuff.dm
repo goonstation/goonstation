@@ -124,7 +124,7 @@
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					M.canmove = 0
-					M.changeStatus("weakened", 6 SECONDS)
+					M.changeStatus("knockdown", 6 SECONDS)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
 					H.set_burning(500)
@@ -142,7 +142,7 @@
 			if(M.loc == src)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					M.changeStatus("weakened", 10 SECONDS)
+					M.changeStatus("knockdown", 10 SECONDS)
 					M.set_body_icon_dirty()
 					H.set_burning(1000)
 					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
@@ -912,8 +912,8 @@
 				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
+				user.changeStatus("unconscious", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(usr)
@@ -925,7 +925,7 @@
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 9 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
+					H.changeStatus("knockdown", 2 SECONDS)
 					H.force_laydown_standup()
 					//H.paralysis++
 					playsound(H.loc, "swing_hit", 50, 1)
@@ -1020,7 +1020,7 @@
 
 	ChaseAttack(mob/M)
 		src.visible_message(SPAN_COMBAT("<B>[src]</B> launches itself at [M]!"))
-		if (prob(30)) M.changeStatus("weakened", 2 SECONDS)
+		if (prob(30)) M.changeStatus("knockdown", 2 SECONDS)
 
 	CritterAttack(mob/M)
 		src.attacking = 1

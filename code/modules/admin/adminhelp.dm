@@ -70,7 +70,7 @@
 		ircmsg_fah["key"] = "Loggo"
 		ircmsg_fah["name"] = "First Adminhelp Notice"
 		// ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
+		ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: https://goonhub.com/admin/logs/[roundId]"
 		ircbot.export_async("help", ircmsg_fah)
 
 	ircbot.export_async("help", ircmsg)

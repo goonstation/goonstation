@@ -50,7 +50,7 @@ TYPEINFO(/obj/item/card/emag)
 //delicious fake emag
 	attack_hand(mob/user)
 		boutput(user, SPAN_COMBAT("Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!"))
-		user.changeStatus("paralysis", 10 SECONDS)
+		user.changeStatus("unconscious", 10 SECONDS)
 		SPAWN(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
 			user.set_loc(C)

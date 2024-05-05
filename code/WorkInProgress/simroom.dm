@@ -339,7 +339,7 @@
 		O.set_loc(get_turf(src.loc))
 //	src.verbs -= /mob/proc/jack_in
 	src.occupant?.set_loc(get_turf(src.loc))
-	src.occupant?.changeStatus("weakened", 2 SECONDS)
+	src.occupant?.changeStatus("knockdown", 2 SECONDS)
 	src.occupant?.network_device = null
 	src.occupant = null
 	src.active = 0

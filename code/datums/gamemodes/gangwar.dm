@@ -28,11 +28,7 @@
 #define PLAYERS_PER_GANG_GENERATED 12
 #endif
 /datum/game_mode/gang/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if(player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
 	logTheThing(LOG_GAMEMODE, src, "Counted [num_players] available, with [PLAYERS_PER_GANG_GENERATED] per gang that means [num_teams] gangs.")
@@ -2002,7 +1998,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.delStatus("resting")
 			H.hud.update_resting()
 			H.delStatus("stunned")
-			H.delStatus("weakened")
+			H.delStatus("knockdown")
 			H.force_laydown_standup()
 			#ifdef USE_STAMINA_DISORIENT
 			H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = TRUE, target_type = DISORIENT_NONE)

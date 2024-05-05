@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			for (var/mob/living/M in range(1,POT))
 				if (POT.health > P.starthealth / 2)
 					random_brute_damage(M, 8, 1)//slight bump to damage to account for everyone having 1 armor from jumpsuit, further bump to damage to make blooming lasher more difficult to cultivate
-					if (prob(20)) M.changeStatus("weakened", 3 SECONDS)
+					if (prob(20)) M.changeStatus("knockdown", 3 SECONDS)
 
 				if (POT.health <= P.starthealth / 2) POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> weakly slaps [M] with a vine!"))
 				else POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> slashes [M] with thorny vines!"))

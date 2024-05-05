@@ -764,7 +764,7 @@
 /area/station/chapel/office)
 "acj" = (
 /obj/machinery/traymachine/morgue,
-/obj/item/reagent_containers/food/snacks/pizza/meatball,
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -20650,7 +20650,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/reagent_containers/food/snacks/pizza/pepperoni{
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni{
 	pixel_x = 2;
 	pixel_y = 8
 	},
@@ -42308,7 +42308,6 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "qDX" = (
-/obj/disposalpipe/segment/mail,
 /obj/disposalpipe/switch_junction/right/south{
 	mail_tag = "detective's office"
 	},
@@ -46975,7 +46974,7 @@
 	pixel_x = -4;
 	pixel_y = 30;
 	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni)
 	},
 /obj/item/paper/martian_manifest{
 	rand_pos = 1
