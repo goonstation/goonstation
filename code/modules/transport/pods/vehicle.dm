@@ -192,7 +192,7 @@
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 				return /////ships should pretty much be immune to fire
 			else
@@ -200,7 +200,7 @@
 				if (prob(W.force*3))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 
 		checkhealth()
@@ -270,6 +270,14 @@
 				sec_system.deactivate()
 				src.updateDialog()
 
+			else if (href_list["alights"])
+				lights.activate()
+				src.updateDialog()
+
+			else if (href_list["dlights"])
+				lights.deactivate()
+				src.updateDialog()
+
 			else if (href_list["comcomp"])
 				com_system.opencomputer(usr)
 				src.updateDialog()
@@ -288,6 +296,10 @@
 
 			else if (href_list["sec_systemcomp"])
 				sec_system.opencomputer(usr)
+				src.updateDialog()
+
+			else if (href_list["lightscomp"])
+				lights.opencomputer(usr)
 				src.updateDialog()
 
 			src.add_fingerprint(usr)
@@ -383,6 +395,15 @@
 					components -= sensors
 					sensors.set_loc(src.loc)
 					sensors = null
+					src.updateDialog()
+
+			else if (href_list["unlights"])
+				if (src.lights)
+					logTheThing(LOG_VEHICLE, usr, "ejects the lights system ([src.lights]) from [src] at [log_loc(src)]")
+					lights.deactivate()
+					components -= lights
+					lights.set_loc(src.loc)
+					lights = null
 					src.updateDialog()
 
 			// Added logs for atmos tanks and such here, because booby-trapping pods is becoming a trend (Convair880).
@@ -488,27 +509,31 @@
 		var/damage = round(P.power, 1.0)
 
 		var/hitsound = null
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC)
-				src.health -= damage/1.7
-				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-			if(D_PIERCING)
-				src.health -= damage/1
-				hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
-			if(D_ENERGY)
-				src.health -= damage/1.5
-				hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
-			if(D_SLASHING)
-				src.health -= damage/2
-				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-			if(D_BURNING)
-				src.material_trigger_on_temp(5000)
-				src.health -= damage/3
-				hitsound = 'sound/items/Welder.ogg'
-			if(D_SPECIAL) //blob
-				src.health -= damage
-				hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
-		checkhealth()
+
+		if(istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
+			hitsound = 'sound/impact_sounds/Glass_Hit_1.ogg'
+		else
+			switch(P.proj_data.damage_type)
+				if(D_KINETIC)
+					src.health -= damage/1.7
+					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				if(D_PIERCING)
+					src.health -= damage/1
+					hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+				if(D_ENERGY)
+					src.health -= damage/1.5
+					hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+				if(D_SLASHING)
+					src.health -= damage/2
+					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				if(D_BURNING)
+					src.material_trigger_on_temp(5000)
+					src.health -= damage/3
+					hitsound = 'sound/items/Welder.ogg'
+				if(D_SPECIAL) //blob
+					src.health -= damage
+					hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
+			checkhealth()
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
@@ -554,32 +579,28 @@
 		qdel(P)
 		return
 
-	proc/disrupt(var/disruption as num, var/obj/projectile/P)
-		if(disruption)
-			playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
-			if(pilot)
-				boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
-			//if (P)
-			//	for (var/mob/M in src)
-			//		M.bullet_act_indirect(P)
-			var/chance = disruption * 1
-			for(var/obj/item/shipcomponent/S in src.components)
-				var/my_chance = chance
-				if (istype(S, /obj/item/shipcomponent/engine))
-					my_chance += 40
+	proc/disrupt(disruption, obj/projectile/P)
+		if(disruption <= 0 || !length(src.components))
+			return
+		playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
+		if(pilot)
+			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-				if(prob(my_chance))
-					if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
-						var/obj/item/shipcomponent/engine/E = S
-						if (E.ready)
-							E.ready = 0
-							E.ready()
-					else
-						S.deactivate()
+		var/obj/item/shipcomponent/S = pick(src.components)
+		if (istype(S, /obj/item/shipcomponent/engine))
+			disruption += 40
 
-					chance -= 25
-					if (chance <= 0)
-						return
+		if(prob(disruption))
+			if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
+				var/obj/item/shipcomponent/engine/E = S
+				if (E.ready)
+					E.ready = 0
+					E.ready()
+			else
+				S.deactivate()
+				S.disrupted = TRUE
+				SPAWN(2 SECONDS)
+					S.disrupted = FALSE
 
 	emp_act()
 		src.disrupt(10)
@@ -636,7 +657,7 @@
 				if(M.health > 0)
 					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
-				//M.changeStatus("weakened", 1 SECOND)
+				//M.changeStatus("knockdown", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
@@ -872,6 +893,11 @@
 			else
 				boutput(usr, "That system already has a part!")
 				return
+		if("Lights")
+			if(!lights)
+				lights = S
+			else
+				boutput(usr, "That system already has a part!")
 		if("Lock")
 			if (!lock)
 				src.lock = S
@@ -1019,7 +1045,7 @@
 		boutput(boarder, SPAN_ALERT("[src] is locked!"))
 		return
 
-	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
+	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("knockdown") || boarder.getStatusDuration("unconscious") || !isalive(boarder) || boarder.restrained())
 		boutput(boarder, SPAN_ALERT("You can't enter a pod while incapacitated or restrained."))
 		return
 
@@ -1168,7 +1194,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1184,7 +1210,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1255,7 +1281,7 @@
 
 	src.add_dialog(user)
 
-	var/dat = "<TT><B>[src] Maintenance Panel</B><BR><HR><BR>"
+	var/dat = "<TT><B>[src] Maintenance Panel</B><BR>"
 	//Air and Fuel tanks
 	dat += "<HR><B>Atmos Tank</B>: "
 	if(!isnull(src.atmostank))
@@ -1310,6 +1336,12 @@
 	dat += "<HR><B>Secondary System</B>: "
 	if(src.sec_system)
 		dat += "<A href='?src=\ref[src];unsec_system=1'>[src.sec_system]</A>"
+	else
+		dat += "None Installed"
+	////Lights System
+	dat += "<HR><B>Lights System</B>: "
+	if(src.lights)
+		dat += "<A href='?src=\ref[src];unlights=1'>[src.lights]</A>"
 	else
 		dat += "None Installed"
 	////Locking System
@@ -1424,6 +1456,14 @@
 			dat += {"<HR><B>Secondary System</B>: <I><A href='?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
 			dat += {"<BR><A href='?src=\ref[src];asec_system=1'>(Activate)</A>"}
 		dat+= {"([src.sec_system.power_used])"}
+	if(src.lights)
+		if(src.lights.active)
+			dat += {"<HR><B>Lights</B>: <I><A href='?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
+			dat += {"<BR><A href='?src=\ref[src];dlights=1'>(Deactivate)</A>"}
+		else
+			dat += {"<HR><B>Lights</B>: <I><A href='?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
+			dat += {"<BR><A href='?src=\ref[src];alights=1'>(Activate)</A>"}
+		dat+= {"([src.lights.power_used])"}
 	if(src.lock)
 		if(src.locked)
 			dat += "<HR><B>Lock</B>:<br><a href='?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
@@ -2172,6 +2212,8 @@
 			src.lights = new /obj/item/shipcomponent/pod_lights/police_siren( src )
 			src.lights.ship = src
 			src.components += src.lights
+
+			src.myhud?.update_states()
 /*
 	engineering
 		body_type =

@@ -14,9 +14,7 @@
 
 	user.lastattacked = src
 
-	if (user.mob_flags & AT_GUNPOINT)
-		for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
-			G.shoot()
+	SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
 	var/obj/item/grab/block/block = user.check_block()
 	if (block)

@@ -4,7 +4,9 @@
 	desc = "A pair of standard pod lights."
 	power_used = 30
 	system = "Lights"
-	//icon_state = "lights"
+	icon_state = "star_lights"
+	var/hud_state = "lights"
+
 	var/col_r = 0.9
 	var/col_g = 0.8
 	var/col_b = 0.7
@@ -85,7 +87,8 @@
 /obj/item/shipcomponent/pod_lights/police_siren
 	name = "Police Lights"
 	desc = "Wee woo."
-	icon_state= "sec_system"
+	icon_state = "police_siren"
+	hud_state = "siren"
 
 	var/weeoo_in_progress = 0
 

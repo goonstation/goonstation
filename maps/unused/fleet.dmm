@@ -12,7 +12,7 @@
 "ad" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "ae" = (
@@ -48,7 +48,7 @@
 "aj" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "ak" = (
@@ -165,7 +165,7 @@
 "az" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "aA" = (
@@ -195,7 +195,7 @@
 /area/space)
 "aD" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "aE" = (
@@ -250,7 +250,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -709,7 +708,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -3538,7 +3536,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -7306,7 +7303,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{

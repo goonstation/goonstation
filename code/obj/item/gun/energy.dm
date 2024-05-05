@@ -252,6 +252,8 @@ TYPEINFO(/obj/item/gun/energy)
 		projectiles = list(current_projectile)
 		..()
 
+/obj/item/gun/energy/phaser_gun/extended_mag
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 
 TYPEINFO(/obj/item/gun/energy/phaser_small)
 	mats = 20
@@ -1409,7 +1411,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			switch(text)
 				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
 					random_burn_damage(M, 50)
-					M.changeStatus("weakened", 4 SECONDS)
+					M.changeStatus("knockdown", 4 SECONDS)
 					elecflash(src,power=2)
 					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
 					return
@@ -1514,7 +1516,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			// if (!fingerprints_can_shoot(user))
 			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
-			// 	user.changeStatus("weakened", 4 SECONDS)
+			// 	user.changeStatus("knockdown", 4 SECONDS)
 			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()

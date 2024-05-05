@@ -20,13 +20,7 @@
 
 /datum/game_mode/blob/pre_setup()
 	..()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if(player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/i = rand(10, 15)
 	var/num_blobs = clamp(round((num_players + i) / 20), blobs_minimum, blobs_possible)

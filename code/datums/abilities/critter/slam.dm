@@ -85,7 +85,7 @@
 			logTheThing(LOG_COMBAT, charger, "slams [constructTarget(M,"combat")].")
 			var/kbdir = angle_to_dir(angle)
 			step(M, kbdir, 2)
-			M.changeStatus("weakened", 4 SECONDS)
+			M.changeStatus("knockdown", 4 SECONDS)
 
 	on_end(var/obj/projectile/O)
 		var/keys = ""

@@ -113,7 +113,7 @@ datum
 					if(16 to 36)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatusMin("paralysis", 3 SECONDS * mult)
+						M.setStatusMin("unconscious", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
 				return
@@ -203,7 +203,7 @@ datum
 						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
 					if(40 to INFINITY)
 						depletion_rate = 0.4
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatusMin("unconscious", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
 				return
@@ -245,9 +245,9 @@ datum
 						M.change_misstep_chance(8 * mult)
 					else if (effect <= 9)
 						M.emote("twitch")
-						M.setStatusMin("weakened", 3 SECONDS * mult)
+						M.setStatusMin("knockdown", 3 SECONDS * mult)
 					else if(effect <= 12)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 						M.druggy ++
 				else if (severity == 2)
 					if(effect <= 4)
@@ -255,9 +255,9 @@ datum
 						M.change_misstep_chance(14 * mult)
 					else if (effect <= 10)
 						M.emote("twitch")
-						M.setStatusMin("weakened", 3 SECONDS * mult)
+						M.setStatusMin("knockdown", 3 SECONDS * mult)
 					else if (effect <= 13)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 						M.druggy ++
 
 
@@ -596,14 +596,14 @@ datum
 					if(effect <= 1)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
 						M.emote("scream")
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> completely spaces out for a moment."))
 						M.change_misstep_chance(15 * mult)
 					else if(effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
 						M.dizziness += 5
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 7)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> shakes uncontrollably."))
 						M.make_jittery(30)
@@ -611,11 +611,11 @@ datum
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
 							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
-						M.setStatusMin("weakened", 8 SECONDS * mult)
+						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
 						M.dizziness += 5
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 
 		medical/saline // COGWERKS CHEM REVISION PROJECT. magic drug, ought to use plasma or something
 			name = "saline-glucose solution"
@@ -715,12 +715,12 @@ datum
 						var/mob/living/H = M
 						H.delStatus("drowsy")
 						H.delStatus("passing_out")
-						if (H.stamina < 0 || H.hasStatus("weakened") || H.hasStatus("paralysis")) //enhanced effects if you're downed (also implies a second person is applying this)
+						if (H.stamina < 0 || H.hasStatus("knockdown") || H.hasStatus("unconscious")) //enhanced effects if you're downed (also implies a second person is applying this)
 							H.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN) // a little damage penalty
 							if (H.use_stamina)
 								H.stamina = max(H.stamina_max*0.2,H.stamina)
-							H.changeStatus("paralysis", -20 SECONDS)
-							H.changeStatus("weakened", -20 SECONDS)
+							H.changeStatus("unconscious", -20 SECONDS)
+							H.changeStatus("knockdown", -20 SECONDS)
 						if (H.sleeping == TRUE)
 							H.sleeping = 0
 						H.setStatus("smelling_salts", 6 MINUTES)
@@ -891,7 +891,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> staggers and drools, their eyes bloodshot!"))
 						M.dizziness += 2
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					if (effect <= 15) M.emote("collapse")
 
 		medical/heparin
@@ -1235,7 +1235,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> staggers and drools, their eyes bloodshot!"))
 						M.dizziness += 8
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 

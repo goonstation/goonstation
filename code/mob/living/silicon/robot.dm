@@ -118,6 +118,8 @@
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
+			if(HAS_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG))
+				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -294,6 +296,8 @@
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
+			if(HAS_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG))
+				APPLY_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG, "borg")
 
 			src.ghostize()
 			qdel(src)
@@ -516,10 +520,10 @@
 			// for creepy automatoning
 			if ("snap")
 				if (src.emote_check(voluntary, 50) && (src.automaton_skin || src.alohamaton_skin || src.metalman_skin))
-					if ((src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
-					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((!src.restrained()) && (!src.getStatusDuration("knockdown")))
 						if (prob(33))
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound."
@@ -553,10 +557,10 @@
 				if (src.emote_check(voluntary, 50))
 					if (!(src.client && src.client.holder)) src.emote_allowed = 0
 					if (isdead(src)) src.emote_allowed = 0
-					if ((src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
-					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((!src.restrained()) && (!src.getStatusDuration("knockdown")))
 						if (isobj(src.loc))
 							var/obj/container = src.loc
 							container.mob_flip_inside(src)
@@ -906,6 +910,9 @@
 		update_bodypart()
 
 	bullet_act(var/obj/projectile/P)
+		log_shot(P, src)
+		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [P]!"))
+
 		var/dmgtype = 0 // 0 for brute, 1 for burn
 		var/dmgmult = 1.2
 		switch (P.proj_data.damage_type)
@@ -922,19 +929,14 @@
 				dmgtype = 1
 				dmgmult = 0.2
 			if(D_TOXIC)
-				dmgmult = 0
+				return
 			if(D_SPECIAL)
-				dmgmult = 0
+				return
 
-
-		log_shot(P, src)
-		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [P]!"))
 		var/damage = (P.power / 3) * dmgmult
-		if (damage < 1)
-			return
 
 		if(P.proj_data.stun && P.proj_data.damage <= 5)
-			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), knockdown = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
@@ -2384,6 +2386,10 @@
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
+
+
+		var/datum/eventRecord/CyborgModuleSelection/cyborgModuleSelectionEvent = new()
+		cyborgModuleSelectionEvent.buildAndSend(src, mod)
 
 		var/datum/robot_cosmetic/C = null
 		var/datum/robot_cosmetic/M = null

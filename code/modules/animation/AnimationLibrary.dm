@@ -950,6 +950,29 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
 
+/proc/animate_flubber(var/atom/A, var/jiggle_duration_start = 6, var/jiggle_duration_end = 12, var/amount = 3, var/severity = 1.5)
+	//makes the person quickly increase it's y-size up and down
+	if (!istype(A))
+		return
+	var/matrix/M1 = matrix(1, 1, MATRIX_SCALE)
+	var/matrix/M2 = matrix(1, severity, MATRIX_SCALE)
+	var/current_jiggle_duration = jiggle_duration_start
+	var/do_loops = amount
+	SPAWN(0)
+		while (do_loops > 0)
+			do_loops--
+			if (istype(A))
+				animate(A, transform = M2, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			else
+				break
+			sleep(round(current_jiggle_duration / 2))
+			if (istype(A))
+				animate(A, transform = M1, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			sleep(round(current_jiggle_duration / 2) )
+			//make the jiggling slower/faster towards the end
+			current_jiggle_duration += (jiggle_duration_end - jiggle_duration_start) / min(1,(amount - 1))
+	return
+
 /proc/animate_teleport(var/atom/A)
 	if (!istype(A))
 		return
@@ -1098,8 +1121,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	if(isliving(A))
 		var/mob/living/L = A
-		if(!A.hasStatus("weakened"))
-			L.changeStatus("weakened", stun_duration)
+		if(!A.hasStatus("knockdown"))
+			L.changeStatus("knockdown", stun_duration)
 			L.force_laydown_standup()
 		if(!L.lying) // oh no, they didn't fall down actually, time to unflip them 😰
 			animate_rest(L, TRUE)
@@ -1891,3 +1914,46 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(pixel_x = distance * 0.5, pixel_y = -distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
 	animate(pixel_x = distance, pixel_y = -distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
 	animate_spin(thing, parallel = TRUE, T = 2 SECONDS)
+
+///Animate being stretched and spun around a point. Looks best when combined with a distortion map. Note that the resulting dummy object is added to center.vis_contents and deleted when done.
+///atom/A is the thing to spaghettify. Note this proc does not delete A, you must handle that separately
+///atom/center is the central atom around which to spin, usually the singulo
+///spaget_time is how long to run the animation. Default 15 seconds.
+///right_spinning is whether to go clockwise or anti-clockwise. Default true.
+///client/C is to show the spaghetti to only one client, or null to show it to everybody. Default null.
+/proc/animate_spaghettification(atom/A, atom/center, spaget_time = 15 SECONDS, right_spinning = TRUE, client/C = null)
+	var/obj/dummy/spaget_overlay = new()
+	var/tmp = null
+	if(istype(C, /client)) //if we're doing a client image, operate on the image instead of the object
+		tmp = spaget_overlay
+		spaget_overlay = image(loc = spaget_overlay)
+	spaget_overlay.appearance = A.appearance
+	spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+	spaget_overlay.pixel_x = A.pixel_x + (A.x - center.x + 0.5)*32
+	spaget_overlay.pixel_y = A.pixel_y + (A.y - center.y + 0.5)*32
+	spaget_overlay.plane = PLANE_DEFAULT
+	spaget_overlay.mouse_opacity = 0
+	spaget_overlay.transform = A.transform
+	if(prob(0.1)) // easteregg
+		spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+		spaget_overlay.icon_state = "spag-dish"
+		spaget_overlay.Scale(2, 2)
+	if(istype(C, /client)) //if we're doing a client image, push that to the client and then continue operating on the object
+		C << spaget_overlay
+		spaget_overlay = tmp
+		tmp = null
+	var/angle = get_angle(A, center)
+	var/matrix/flatten = matrix((A.x - center.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - center.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
+	animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+	var/obj/dummy/spaget_turner = new()
+	spaget_turner.vis_contents += spaget_overlay
+	spaget_turner.mouse_opacity = 0
+	spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+	animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
+	if(!istype(center, /area))
+		center:vis_contents += spaget_turner
+	else
+		throw EXCEPTION("Can't use /area as a center point in spaget animation")
+	SPAWN(spaget_time + 1 SECOND)
+		qdel(spaget_overlay)
+		qdel(spaget_turner)

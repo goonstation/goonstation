@@ -329,19 +329,24 @@
 		return ..()
 
 	ten
-		amount = 10
+		default_min_amount = 10
+		default_max_amount = 10
 
 	fifty
-		amount = 50
+		default_min_amount = 50
+		default_max_amount = 50
 
 	hundred
-		amount = 100
+		default_min_amount = 100
+		default_max_amount = 100
 
 	fivehundred
-		amount = 500
+		default_min_amount = 500
+		default_max_amount = 500
 
 	thousand
-		amount = 1000
+		default_min_amount = 1000
+		default_max_amount = 1000
 
 //not a good spot for this but idc
 TYPEINFO(/obj/item/stamped_bullion)

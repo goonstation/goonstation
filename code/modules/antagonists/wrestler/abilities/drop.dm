@@ -74,7 +74,7 @@
 				if (falling == 1 && !fake)
 					M.visible_message(SPAN_ALERT("<B>...and dives head-first into the ground, ouch!</b>"))
 					M.TakeDamageAccountArmor("head", 15, 0, 0, DAMAGE_BLUNT)
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					M.force_laydown_standup()
 				boutput(M, SPAN_ALERT("[target] is too far away!"))
 				return 0
@@ -105,7 +105,7 @@
 				else
 					random_brute_damage(target, 15, 1)
 
-			target.changeStatus("weakened", 3 SECOND)
+			target.changeStatus("knockdown", 3 SECOND)
 			target.changeStatus("stunned", 3 SECONDS)
 			target.force_laydown_standup()
 

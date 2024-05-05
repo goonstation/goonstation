@@ -1241,7 +1241,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 		if (isrobot(user)) return attack_ai(user)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	power_change()
 
@@ -1679,7 +1679,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			return ..()
 
 	attack_self(mob/user)
-		attack_hand(user)
+		src.Attackhand(user)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		return

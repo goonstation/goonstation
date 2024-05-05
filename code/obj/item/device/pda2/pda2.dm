@@ -253,7 +253,7 @@
 				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
 					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
 					if (M.bioHolder.HasEffect("clumsy"))
-						M.changeStatus("weakened", 5 SECONDS)
+						M.changeStatus("knockdown", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
 				else
 					src.on_mob_throw_end(M)
@@ -734,7 +734,7 @@
 /obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 
 /obj/item/device/pda2/verb/pdasay(var/target in pdasay_autocomplete, var/message as text)
 	set name = "PDAsay"

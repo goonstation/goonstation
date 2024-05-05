@@ -191,7 +191,7 @@ var/list/headset_channel_lookup
 				usr.u_equip(R)
 				usr.put_in_hand_or_drop(T)
 				R.set_loc(T)
-				T.attack_self(usr)
+				T.AttackSelf(usr)
 				return
 
 			return TRUE
@@ -675,7 +675,7 @@ var/list/headset_channel_lookup
 		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
-		src.attack_self(M)
+		src.AttackSelf(M)
 		//Foreach goto(83)
 	src.add_fingerprint(user)
 	return
@@ -850,9 +850,9 @@ TYPEINFO(/obj/item/radiojammer)
 				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 #ifdef USE_STAMINA_DISORIENT
-			M.do_disorient(200, weakened = 100, disorient = 60, remove_stamina_below_zero = 0)
+			M.do_disorient(200, knockdown = 100, disorient = 60, remove_stamina_below_zero = 0)
 #else
-			M.changeStatus("weakened", 10 SECONDS)
+			M.changeStatus("knockdown", 10 SECONDS)
 #endif
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M

@@ -76,7 +76,9 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy" = "ai_veryhappy-dol",\
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
-	"Wink (Inverted)" = "ai_wink-lod") // this should be in typeinfo
+	"Wink (Inverted)" = "ai_wink-lod",\
+	"Devious" = "ai_devious-dol",\
+	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -741,7 +743,7 @@ or don't if it uses a custom topopen overlay
 					var/mob/living/carbon/human/M = user
 					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
-					user.changeStatus("weakened", 2 SECONDS)
+					user.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()
 
@@ -1244,7 +1246,7 @@ or don't if it uses a custom topopen overlay
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
 						M.throw_at(T, 100, 2)
-						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("knockdown", 1 SECOND)
 						M.changeStatus("stunned", 2 SECONDS)
 					break
 
@@ -1379,7 +1381,7 @@ or don't if it uses a custom topopen overlay
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
 	if (src.sleeping) src.sleeping = 0
-	src.delStatus("weakened")
+	src.delStatus("knockdown")
 
 /mob/living/silicon/ai/use_power()
 	..()
@@ -1475,7 +1477,7 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/process_locks()
 	if(weapon_lock)
-		src.setStatus("paralysis", 5 SECONDS)
+		src.setStatus("unconscious", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
@@ -2234,7 +2236,7 @@ or don't if it uses a custom topopen overlay
 			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
 
 
-	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
+	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("unconscious"))
 		clearFaceOverlays(1)
 		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
 

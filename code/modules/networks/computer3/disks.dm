@@ -105,6 +105,54 @@
 	name = "data disk - 'Mr. Muggles'"
 	read_only = 1
 
+/obj/item/disk/data/floppy/lrt
+	name = "galactic coordinate disk - 'Blank'"
+	title = "Teleconsole"
+	icon_state = "datadisktele0"
+	random_color = FALSE
+
+	var/target_name
+
+	New()
+		. = ..()
+		var/datum/computer/file/lrt_data/place = new /datum/computer/file/lrt_data(src)
+		place.place_name = src.target_name
+		src.root.add_file( place )
+
+	icemoon
+		name = "galactic coordinate disk - 'Moon X15'"
+		target_name = "Moon X15"
+
+	solarium
+		name = "galactic coordinate disk - 'Sol'"
+		icon_state = "datadisktele1"
+		target_name = "Sol"
+
+	biodome
+		name = "galactic coordinate disk - 'Moon X05'"
+		target_name = "Moon X05"
+
+	mars_outpost
+		name = "galactic coordinate disk - 'Mars'"
+		target_name = "Mars"
+
+	lavamoon
+		name = "galactic coordinate disk - 'Io'"
+		target_name = "Io"
+
+	luna_museum
+		name = "galactic coordinate disk - 'Lunar Museum'"
+		target_name = "Luna"
+
+	ainley
+		name = "galactic coordinate disk - 'Ainley'"
+		target_name = "Ainley Staff Retreat"
+
+	meat_derelict
+		name = "galactic coordinate disk - 'Derelict Station'"
+		target_name = "Derelict Station"
+
+
 /obj/item/disk/data/fixed_disk
 	name = "Storage Drive"
 	icon_state = "harddisk"

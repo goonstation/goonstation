@@ -665,7 +665,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		return
 
 	attack_ai(mob/user)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		if (src.status & NOPOWER)

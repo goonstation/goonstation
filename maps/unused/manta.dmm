@@ -2060,7 +2060,6 @@
 "ahz" = (
 /obj/decal/cleanable/rust,
 /obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "ahA" = (
@@ -5769,20 +5768,8 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"arC" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark,
-/turf/simulated/floor/caution/north,
-/area/station/crew_quarters/fitness)
-"arD" = (
-/obj/landmark,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "arE" = (
 /obj/item/device/radio/beacon,
-/obj/landmark,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -5797,7 +5784,6 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail,
-/obj/landmark,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "arG" = (
@@ -9764,9 +9750,7 @@
 /area/station/security/starboardtorpedoes)
 "aCq" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 5
-	},
+/obj/machinery/glass_recycler,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
@@ -9823,12 +9807,12 @@
 /obj/item/clothing/under/misc/mime,
 /obj/item/clothing/under/misc/mime/alt,
 /obj/item/clothing/under/suit/pinstripe,
-/obj/item/clothing/under/suit,
 /obj/item/clothing/under/gimmick/rainbow,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/pride/special,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersC)
@@ -18417,7 +18401,7 @@
 /obj/machinery/traymachine/morgue{
 	dir = 2
 	},
-/obj/item/reagent_containers/food/snacks/pizza/meatball,
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bbq" = (
@@ -32738,22 +32722,22 @@
 /area/station/medical/medbay/lobby)
 "cmd" = (
 /obj/item/clothing/under/suit/black/dress,
-/obj/item/clothing/under/suit,
 /obj/item/clothing/under/shirt_pants,
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/head/fedora,
-/obj/item/clothing/glasses/eyepatch{
-	name = "costume eyepatch"
-	},
 /obj/storage/closet/dresser{
 	anchored = 1;
 	name = "costume dresser"
 	},
-/obj/item/clothing/head/mime_beret,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
+/obj/item/clothing/head/mime_beret,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/quarters)
 "coI" = (
@@ -35249,7 +35233,6 @@
 "hwB" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/garbagegarbssign,
-/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crewquarters/cryotron)
 "hAj" = (
@@ -36209,17 +36192,15 @@
 /obj/item/surgical_spoon,
 /obj/item/hand_labeler,
 /obj/item/storage/box/body_bag,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit"
-	},
-/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1;
 	nostick = 1;
 	pixel_y = 20
 	},
+/obj/item/clothing/under/suit/mortician,
+/obj/item/clothing/gloves/latex,
+/obj/item/device/analyzer/healthanalyzer,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "jwI" = (
@@ -37372,12 +37353,6 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload_foyer)
-"mEZ" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/crewquarters/cryotron)
 "mFN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38267,11 +38242,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"ozn" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/diner/hangar)
 "oEq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -38304,7 +38274,7 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "oIR" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
@@ -38824,11 +38794,6 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/quartermaster/cargobay)
-"pKu" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/crewquarters/cryotron)
 "pNh" = (
 /obj/machinery/power/data_terminal,
 /obj/item/device/net_sniffer,
@@ -73272,7 +73237,7 @@ aKV
 mvC
 aDL
 aDL
-arC
+beY
 aJb
 aJw
 aJJ
@@ -73894,7 +73859,7 @@ aGZ
 asj
 btS
 bEy
-mEZ
+acV
 jnl
 gTP
 gTP
@@ -74196,7 +74161,7 @@ kkK
 aHf
 btS
 bEy
-pKu
+acV
 gnm
 klE
 qKt
@@ -95927,7 +95892,7 @@ bgI
 bhz
 bit
 bjc
-arD
+biq
 bkX
 blT
 bmV
@@ -118514,7 +118479,7 @@ agd
 agG
 agG
 ahz
-ozn
+ahE
 ahE
 agB
 aaa

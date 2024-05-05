@@ -10,8 +10,7 @@
 					var/mob/living/H = G.affecting
 					if (H.lying)
 						H.lying = 0
-						H.delStatus("paralysis")
-						H.delStatus("weakened")
+						H.remove_stuns()
 						H.set_clothing_icon_dirty()
 					H.transforming = 1
 					holder.owner.transforming = 1
@@ -65,7 +64,7 @@
 							sleep(1 SECOND)
 						HU.bioHolder.age = original_age
 						HU.changeStatus("stunned", 10 SECONDS)
-						HU.changeStatus("weakened", 10 SECONDS)
+						HU.changeStatus("knockdown", 10 SECONDS)
 						var/turf/T = get_edge_target_turf(holder.owner, holder.owner.dir)
 						SPAWN(0)
 							playsound(holder.owner.loc, "swing_hit", 40, 1)

@@ -242,8 +242,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				src.attached_device = null
 				UpdateIcon()
 			if ("interact_device")
-				attached_device.attack_self(usr)
-		src.attack_self(usr)
+				attached_device.AttackSelf(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 
 	proc/remove_tank(var/T)
@@ -412,7 +412,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 					shake_camera(L,10,32)
 					boutput(L, SPAN_ALERT("You are sent flying!"))
 
-					L.changeStatus("weakened", stun_time SECONDS)
+					L.changeStatus("knockdown", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
