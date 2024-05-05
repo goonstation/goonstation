@@ -922,7 +922,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	elecflash(src.loc, 1, 2, 1)
 	if (ismob(target))
 		var/mob/M = target
-		M.do_disorient(150, weakened = 120, disorient = 60)
+		M.do_disorient(150, knockdown = 120, disorient = 60)
 
 /mob/living/critter/robotic/securitron/weed_seeking
 	name = "weedhound"
