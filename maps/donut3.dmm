@@ -22006,27 +22006,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay/treatment)
-"gAw" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/machinery/camera{
-	dir = 6
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 4
-	},
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload_foyer)
 "gAU" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -37057,12 +37036,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "lje" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/machinery/recharge_station,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "ljE" = (
 /obj/indestructible/shuttle_corner,
@@ -51478,6 +51452,24 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"pAU" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload_foyer)
 "pBe" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -75019,6 +75011,17 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"wGj" = (
+/obj/machinery/recharge_station,
+/obj/machinery/camera{
+	dir = 9
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload_foyer)
 "wGD" = (
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
@@ -137849,7 +137852,7 @@ rhm
 rhm
 ojJ
 ouW
-gAw
+uwc
 lje
 avI
 yaq
@@ -138151,8 +138154,8 @@ gQk
 gDk
 gDk
 ouW
-ouW
-ouW
+pAU
+wGj
 avI
 xgx
 cPA
@@ -138452,8 +138455,8 @@ cCT
 gQk
 rdj
 rdj
-rdj
-rdj
+ouW
+ouW
 avI
 avI
 avI
