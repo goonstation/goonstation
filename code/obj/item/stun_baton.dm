@@ -43,10 +43,6 @@ TYPEINFO(/obj/item/baton)
 	var/active_time
 	var/recharge_time
 
-	var/charge_time = 0
-	var/active_time
-	var/recharge_time
-
 	var/stun_normal_knockdown = 15
 
 	var/disorient_stamina_damage = 130 // Amount of stamina drained.
