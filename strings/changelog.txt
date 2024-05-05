@@ -1,5 +1,9 @@
 
 (t)sun may 05 24
+(u)colossusqw
+(p)18671
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Bladed gloves now create standard insulated glove markings, have a smaller attack slowdown, and deal 15 damage(previous 11).
 (u)LeahTheTech
 (+)The medusa pod cloaking system will now deactivate if the pod has no occupants. No more losing your extremely sneaky pod.
 (p)18746
