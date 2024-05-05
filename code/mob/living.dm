@@ -591,7 +591,7 @@
 	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
-	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
+	if (src.hasStatus("locked"))
 		src.show_text("You are completely paralysed and can't point!", "red")
 		return
 
@@ -746,7 +746,9 @@
 		return
 
 	// emotes
-	if (dd_hasprefix(message, "*") && !src.stat)
+	if (dd_hasprefix(message, "*"))
+		if (src.stat || src.hasStatus("locked"))
+			return
 		return src.emote(copytext(message, 2),1)
 
 	// Mute disability

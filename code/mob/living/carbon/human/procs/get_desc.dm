@@ -344,7 +344,7 @@
 			else
 				. += "<br>[SPAN_ALERT("<B>[src.name] looks severely burned!</B>")]"
 
-		if (src.stat)
+		if (src.stat || src.hasStatus("locked"))
 			. += "<br>[SPAN_ALERT("[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
 			if (src.get_brain_damage() >= 60)

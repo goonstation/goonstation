@@ -576,7 +576,7 @@
 		if (dead_check && isdead(src))
 			src.emote_allowed = FALSE
 			return FALSE
-		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
+		if (voluntary && (src.hasStatus("paralysis") || src.hasStatus("locked") || isunconscious(src)))
 			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
