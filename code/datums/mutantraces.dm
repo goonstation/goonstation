@@ -457,7 +457,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.e_state = src.eye_state
 		AH.e_offset_y = src.eye_offset ? src.eye_offset : src.head_offset
 
-		AH.UpdateMob()
+		if(mode != "preview")
+			AH.UpdateMob()
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)
@@ -1747,7 +1748,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		SPAWN(2 SECONDS)
 			if (ishuman(src.mob))
 				src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> starts convulsing violently!"), "You feel as if your body is tearing itself apart!")
-				src.mob.changeStatus("weakened", 15 SECONDS)
+				src.mob.changeStatus("knockdown", 15 SECONDS)
 				src.mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				src.mob.gib()
@@ -2076,7 +2077,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.mob.changeStatus("slowed", 3 SECONDS)
 				// random_brute_damage(src.mob, 2 * mult)
 				if (prob(30))
-					src.mob.changeStatus("weakened", 3 SECONDS)
+					src.mob.changeStatus("knockdown", 3 SECONDS)
 
 		return
 

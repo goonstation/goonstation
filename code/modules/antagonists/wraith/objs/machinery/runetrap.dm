@@ -201,7 +201,7 @@
 		if(!checkRun(M)) return
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")
 		M.remove_pulling()
-		M.changeStatus("weakened", 3 SECONDS)
+		M.changeStatus("knockdown", 3 SECONDS)
 		boutput(M, SPAN_NOTICE("An ethereal force slips you!"))
 		playsound(M, 'sound/misc/slip.ogg', 50, TRUE, -3)
 		var/atom/target = get_edge_target_turf(M, M.dir)

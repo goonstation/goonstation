@@ -2750,7 +2750,7 @@
 							boutput(H, SPAN_ALERT("Your face has become disfigured!"))
 							H.disfigured = TRUE
 							H.UpdateName()
-						H.changeStatus("weakened", 8 SECONDS)
+						H.changeStatus("knockdown", 8 SECONDS)
 						H:unlock_medal("Red Hood", 1)
 			return
 
@@ -2958,7 +2958,7 @@
 		id = "charcoal"
 		result = "charcoal"
 		required_reagents = list("carbon" = 1, "ash" = 1)
-		inhibitors = list("steam")
+		inhibitors = list("steam" = 2)
 		min_temperature = T0C + 140 //irl this needs to be much, much hotter than this but this will be fine for the game, and less annoying to cool for medical use
 		result_amount = 1
 		instant = FALSE

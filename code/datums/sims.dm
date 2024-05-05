@@ -406,9 +406,9 @@
 		mayStandardDeplete()
 			if (..())
 				// JFC fuck mobs
-				if (holder.owner.getStatusDuration("weakened"))
+				if (holder.owner.getStatusDuration("knockdown"))
 					return 0
-				if (holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("unconscious"))
 					return 0
 				if (holder.owner.lying)
 					return 0

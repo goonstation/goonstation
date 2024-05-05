@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 							break
 						if("disarm")
 							logTheThing(LOG_COMBAT, user, "disarm-zaps [constructTarget(target_r,"combat")] with power gloves at [log_loc(user)], power = [PN.avail]")
-							target.changeStatus("weakened", 3 SECONDS)
+							target.changeStatus("knockdown", 3 SECONDS)
 							break
 
 				var/list/next = new/list()

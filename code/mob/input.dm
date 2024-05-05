@@ -59,7 +59,7 @@
 		else
 			src.move_dir = 0
 
-		if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+		if(!src.dir_locked && !isdead(src) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTURN)) //in order to not turn around and good fuckin ruin the emote animation
 			src.set_dir(src.move_dir)
 	if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 		src.update_cursor()
@@ -238,9 +238,7 @@
 					//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
 					if (!do_step || src.loc != old_loc)
 
-						if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
-							for(var/obj/item/grab/gunpoint/G in grabbed_by)
-								G.shoot()
+						SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
 						var/list/stepped = list()
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if ((G.assailant in stepped) || G.assailant == pushing || G.affecting == pushing) continue

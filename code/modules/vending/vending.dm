@@ -304,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
 	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
-		if((src.can_fall) && prob(P.power))
+		if((src.can_fall) && prob(P.power * P.proj_data?.ks_ratio))
 			src.fall()
 	..()
 
@@ -2356,22 +2356,32 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/mushroom, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/meatball, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/cheese, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/pepperoni, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/mushroom, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/meatball, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
 		if (src.sharpen)
+			pizza.set_loc(src) // to hide the pizza while it slices it up slowly
 			pizza.sharpened = TRUE
-			var/list/slices = pizza.make_slices()
-			for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
-				slice.throw_at(usr, 16, 3)
-			return slices[1]
-		else
-			return pizza
+			var/amount_to_transfer = round(pizza.reagents.total_volume / pizza.slice_amount) // unfortunately a partial copy paste from slice code
+			pizza.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			pizza.onSlice()
+			var/turf/T = get_turf(src)
+			SPAWN(0)
+				for (var/i in 1 to pizza.slice_amount)
+					var/atom/slice_result = new pizza.slice_product(T)
+					if(istype(slice_result, /obj/item/reagent_containers/food))
+						var/obj/item/reagent_containers/food/slice = slice_result
+						pizza.process_sliced_products(slice, amount_to_transfer)
+						slice.throw_at(usr, 16, 3)
+						sleep(1 DECI SECOND) // introduced because this actually just instacrit you before
+				qdel(pizza)
+				return
+		return pizza
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
@@ -2767,6 +2777,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/rum, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/champagne, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/curacao, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bojackson, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_umbrellas, 4)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_doodads, 4)

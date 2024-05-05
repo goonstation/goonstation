@@ -165,7 +165,7 @@
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
-					owner.changeStatus("weakened", 4 SECONDS * mult)
+					owner.changeStatus("knockdown", 4 SECONDS * mult)
 				if (prob(30))
 					owner.changeStatus("shivering", 6 SECONDS)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
@@ -186,7 +186,7 @@
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
-					owner.changeStatus("weakened", 3 SECONDS * mult)
+					owner.changeStatus("knockdown", 3 SECONDS * mult)
 				if (prob(25))
 					owner.changeStatus("shivering", 6 SECONDS) // Getting very cold (same duration as shivers from cold)
 				if (prob(25))

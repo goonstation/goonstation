@@ -1044,7 +1044,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		L.Virus_ShockCure(100)
 		L.shock_cyberheart(100)
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage/4 SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage/4 SECONDS)
+	if(user.getStatusDuration("knockdown") < shock_damage * 10)	user.changeStatus("knockdown", shock_damage/4 SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")

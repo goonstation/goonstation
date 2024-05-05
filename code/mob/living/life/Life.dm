@@ -571,7 +571,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
+			setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)

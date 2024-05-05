@@ -357,7 +357,7 @@
 				if ("feet")
 					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
 						zone = pick("l_leg", "r_leg")
-						H.changeStatus("weakened", 3 SECONDS)
+						H.changeStatus("knockdown", 3 SECONDS)
 				if ("l_arm", "r_arm")
 					if (!H.gloves)
 						zone = type
