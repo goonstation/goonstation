@@ -658,12 +658,11 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		step_towards(src, src.my_target) //oh god it's chasing me!
 
 	//"eat" stuff by overriding its icon with a blank icon state
-	for (var/X in range(3, src))
-		if (!X)
+	for (var/atom/A in range(3, src))
+		if (!A)
 			continue
-		if (X == src)
+		if (A == src)
 			continue
-		var/atom/A = X
 
 		if (A.event_handler_flags & IMMUNE_SINGULARITY)
 			continue
@@ -671,9 +670,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			continue
 
-		if (!isarea(X))
+		if (!isarea(A))
 			if(IN_EUCLIDEAN_RANGE(src, A, 2.5))
-				if (X == src.my_target) //gotcha!
+				if (A == src.my_target) //gotcha!
 					if(!ON_COOLDOWN(src.my_target, "fake_singulo_scream", 5 SECONDS))
 						src.my_target.emote("scream", FALSE)
 					src.my_target.changeStatus("weakened", 2 SECONDS)
@@ -687,41 +686,16 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				var/image/blank_image = image(loc = A)
 				blank_image.override = TRUE
 				src.my_image_overrides += blank_image
-				src.eaten_atoms += X
+				src.eaten_atoms += A
 				src.my_target << blank_image
 				//for the spinny falling in animations. low count for performance
 				//this is almost a straight copy/paste from singulo code
-				if(src.spaget_count < 3 || X == src.my_target) //always show the mob getting spaget'd
+				if(src.spaget_count < 3 || A == src.my_target) //always show the mob getting spaget'd
 					src.spaget_count++
-					var/spaget_time = 15 SECONDS
-					//create dummy object with client image appearance
-					var/obj/dummy/spaget_overlay = new()
-					var/image/spaget_overlay_client_image = image(loc=spaget_overlay)
-					spaget_overlay_client_image.appearance = A.appearance
-					spaget_overlay_client_image.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-					spaget_overlay_client_image.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
-					spaget_overlay_client_image.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
-					spaget_overlay_client_image.plane = PLANE_DEFAULT
-					spaget_overlay_client_image.mouse_opacity = 0
-					spaget_overlay_client_image.transform = A.transform
-					if(prob(0.1)) // easteregg
-						spaget_overlay_client_image.icon = 'icons/obj/foodNdrink/food_meals.dmi'
-						spaget_overlay_client_image.icon_state = "spag-dish"
-						spaget_overlay_client_image.transform.Scale(2, 2)
-					src.my_target << spaget_overlay_client_image
-					var/angle = get_angle(A, src)
-					var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
-					animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
-					var/obj/dummy/spaget_turner = new()
-					spaget_turner.vis_contents += spaget_overlay
-					spaget_turner.mouse_opacity = 0
-					spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
-					animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
-					src.vis_contents += spaget_turner
-					SPAWN(spaget_time + 1 SECOND)
+					animate_spaghettification(A, src, 15 SECONDS, right_spinning, src.my_target.client)
+					SPAWN(16 SECONDS)
 						src.spaget_count--
-						qdel(spaget_overlay)
-						qdel(spaget_turner)
+
 	SPAWN(1 SECOND)
 		process()
 
