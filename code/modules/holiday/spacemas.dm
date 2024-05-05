@@ -291,7 +291,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			O.changeStatus("knockdown", 10 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
-			O.do_disorient(120, weakened = 100, disorient = 80)
+			O.do_disorient(120, knockdown = 100, disorient = 80)
 #else
 			O.changeStatus("knockdown", 10 SECONDS)
 #endif

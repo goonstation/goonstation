@@ -333,7 +333,7 @@
 	if (safety == 0)
 		//src.flash(animation_duration)
 #ifdef USE_STAMINA_DISORIENT
-		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
+		src.do_disorient(stamina_damage, knockdown = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
 		changeStatus("knockdown", weak*2 SECONDS)
 		changeStatus("stunned", stun*2 SECONDS)
@@ -452,7 +452,7 @@
 
 
 #ifdef USE_STAMINA_DISORIENT
-	src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_EAR)
+	src.do_disorient(stamina_damage, knockdown = weak*20, stunned = stun*20, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_EAR)
 #else
 
 	changeStatus("knockdown", stun*10)

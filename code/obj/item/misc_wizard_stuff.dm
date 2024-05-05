@@ -91,7 +91,7 @@
 		switch (severity)
 			if (0)
 				affected_mob.visible_message(SPAN_ALERT("[affected_mob] is knocked off-balance by the curse upon [src]!"))
-				affected_mob.do_disorient(30, weakened = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
+				affected_mob.do_disorient(30, knockdown = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 2
 				affected_mob.take_brain_damage(2)
 
@@ -101,7 +101,7 @@
 				if (prob(50))
 					affected_mob.emote("scream")
 
-				affected_mob.do_disorient(80, weakened = 5 SECONDS, stunned = 0, paralysis = 2 SECONDS, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
+				affected_mob.do_disorient(80, knockdown = 5 SECONDS, stunned = 0, paralysis = 2 SECONDS, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 10
 				affected_mob.take_brain_damage(6)
 
@@ -306,7 +306,7 @@
 		if (target.bioHolder?.HasEffect("resist_electric"))
 			return
 		else
-			target.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
+			target.do_disorient(stamina_damage = 0, knockdown = 0, stunned = 0, disorient = 20)
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"

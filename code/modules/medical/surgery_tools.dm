@@ -528,7 +528,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
-					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
+					patient.do_disorient(130, knockdown = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
 					patient.changeStatus("unconscious", 5 SECONDS)
 #else

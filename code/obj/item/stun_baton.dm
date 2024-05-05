@@ -39,7 +39,7 @@ TYPEINFO(/obj/item/baton)
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/is_active = TRUE
 
-	var/stun_normal_weakened = 15
+	var/stun_normal_knockdown = 15
 
 	var/disorient_stamina_damage = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
@@ -213,7 +213,7 @@ TYPEINFO(/obj/item/baton)
 			dude_to_stun = victim
 
 
-		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+		dude_to_stun.do_disorient(src.disorient_stamina_damage, knockdown = src.stun_normal_knockdown * 10, disorient = 60)
 
 		if (isliving(dude_to_stun))
 			var/mob/living/L = dude_to_stun

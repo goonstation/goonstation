@@ -1034,7 +1034,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 #ifdef USE_STAMINA_DISORIENT
 	var/weak = (user.getStatusDuration("knockdown") < shock_damage * 20) ? shock_damage * 20 : 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
-	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
+	user.do_disorient(130, knockdown = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
 	if(user.getStatusDuration("knockdown") < shock_damage * 20)	user.changeStatus("knockdown", shock_damage * 2 SECONDS)

@@ -2249,7 +2249,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 					if (lethal)
 						var/mob/living/carbon/human/H = target_r
 						random_burn_damage(target_r, rand(45,60))
-						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
+						H.do_disorient(stamina_damage = 45, knockdown = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 					boutput(target_r, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
 					target_r:Virus_ShockCure(100)

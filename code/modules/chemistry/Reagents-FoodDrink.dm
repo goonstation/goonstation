@@ -311,7 +311,7 @@ datum
 				if (method == INGEST)
 					boutput(M, "<em>What a kick!</em>")
 					if (prob(20))
-						M.do_disorient(stamina_damage = 7.5, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+						M.do_disorient(stamina_damage = 7.5, knockdown = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 						M.throw_at(get_edge_target_turf(M, get_dir(get_step(M, M.dir), M)),(5)/2,1, throw_type = THROW_GUNIMPACT)
 						M.emote("twitch_v", "scream")
 

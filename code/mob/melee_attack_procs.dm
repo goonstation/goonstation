@@ -155,7 +155,7 @@
 							X.show_text("The stunhat has [hat.uses] charges left!", "red")
 
 
-						src.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+						src.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
 						src.stuttering = max(target.stuttering,5)
 					else
 						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
@@ -555,7 +555,7 @@
 			return
 
 #ifdef USE_STAMINA_DISORIENT
-		target.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+		target.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
 #else
 		target.changeStatus("knockdown", 3 SECONDS)
 		target.changeStatus("stunned", 2 SECONDS)

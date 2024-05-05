@@ -1998,7 +1998,7 @@
 			if (D_KINETIC)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / max(1, rangedprot_mod*0.75)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
@@ -2006,7 +2006,7 @@
 
 			if (D_PIERCING)
 				if (stun > 0) //kinetic weapons don't disorient
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
@@ -2015,7 +2015,7 @@
 			if (D_SLASHING)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / rangedprot_mod
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (rangedprot_mod > 1)
 					src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
@@ -2024,7 +2024,7 @@
 
 			if (D_ENERGY)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = min(stun,  80), remove_stamina_below_zero = 0) //only energy stunners apply disorient and are resisted
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = min(stun,  80), remove_stamina_below_zero = 0) //only energy stunners apply disorient and are resisted
 
 				if (isalive(src)) lastgasp()
 
@@ -2034,7 +2034,7 @@
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
@@ -2045,7 +2045,7 @@
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
 				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
@@ -2057,7 +2057,7 @@
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
 
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
@@ -2181,7 +2181,7 @@
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 * stun_multiplier + stun, weakened = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
+	src.do_disorient(100 * stun_multiplier + stun, knockdown = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage
 

@@ -1078,7 +1078,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
-			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			hitguy.do_disorient(15, knockdown = 20 * 10, disorient = 80)
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy
