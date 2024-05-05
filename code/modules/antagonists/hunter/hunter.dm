@@ -337,9 +337,7 @@
 	src.real_name = "hunter"
 
 	src.jitteriness = 0
-	src.delStatus("stunned")
-	src.delStatus("weakened")
-	src.delStatus("paralysis")
+	src.remove_stuns()
 	src.delStatus("slowed")
 	src.change_misstep_chance(-INFINITY)
 	src.stuttering = 0

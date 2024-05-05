@@ -4028,9 +4028,7 @@ datum
 				M.make_dizzy(5 * mult)
 				M.change_misstep_chance(50 * mult)
 				M.take_brain_damage(1 * mult)
-				if(M.getStatusDuration("paralysis")) M.delStatus("paralysis")
-				M.delStatus("stunned")
-				M.delStatus("weakened")
+				M.remove_stuns()
 				M.delStatus("disorient")
 				if(M.sleeping) M.sleeping = 0
 				..(M)

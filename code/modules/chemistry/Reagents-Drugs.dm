@@ -53,9 +53,7 @@ datum
 						SPAWN(0.3 SECONDS)
 							M.visible_message(SPAN_ALERT("<b>[M.name]</b> has a wild look in their eyes!"))
 					if(check < 60)
-						if(H.getStatusDuration("paralysis")) H.delStatus("paralysis")
-						H.delStatus("stunned")
-						H.delStatus("weakened")
+						H.remove_stuns()
 					if(check < 30)
 						H.emote(pick("twitch", "twitch_s", "scream", "drool", "grumble", "mumble"))
 
@@ -854,10 +852,7 @@ datum
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(2)
 				if(probmult(5))
-					M.delStatus("paralysis")
-					M.delStatus("stunned")
-					M.delStatus("weakened")
-					M.delStatus("paralysis")
+					M.remove_stuns()
 					M.sleeping = 0
 					M.make_jittery(30)
 					M.emote(pick("twitch","twitch_v","shiver","shudder","flinch","blink_r"))

@@ -18,9 +18,7 @@
 				M.coreMR = null
 			M.coreMR = M.mutantrace
 			M.jitteriness = 0
-			M.delStatus("stunned")
-			M.delStatus("weakened")
-			M.delStatus("paralysis")
+			M.remove_stuns()
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")

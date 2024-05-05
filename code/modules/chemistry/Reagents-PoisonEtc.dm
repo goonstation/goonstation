@@ -2011,9 +2011,7 @@ datum
 
 					if (probmult(10)) //Stronk
 						H.show_text("You feel strong!", "red")
-						H.delStatus("weakened")
-						H.delStatus("stunned")
-						H.delStatus("paralysis")
+						H.remove_stuns()
 						H.delStatus("disorient")
 
 				if (t9 && ticks >= t9)
@@ -2042,9 +2040,7 @@ datum
 
 					if (probmult(20)) //V. Stronk
 						H.show_text("You feel strong!", "red")
-						H.delStatus("weakened")
-						H.delStatus("stunned")
-						H.delStatus("paralysis")
+						H.remove_stuns()
 						H.delStatus("disorient")
 
 				H.take_brain_damage(0.5 * mult)

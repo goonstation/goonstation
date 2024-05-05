@@ -23,9 +23,7 @@
 		if (is_incapacitated(M) && M.stamina < 40)
 			M.set_stamina(40)
 
-		M.delStatus("stunned")
-		M.delStatus("weakened")
-		M.delStatus("paralysis")
+		M.remove_stuns()
 		M.delStatus("slowed")
 		M.delStatus("disorient")
 		M.change_misstep_chance(-INFINITY)

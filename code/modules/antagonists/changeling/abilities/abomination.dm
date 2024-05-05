@@ -40,9 +40,7 @@
 			C.in_fakedeath = 0
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTMOVE, "regen_stasis")
 
-			H.delStatus("paralysis")
-			H.delStatus("stunned")
-			H.delStatus("weakened")
+			H.remove_stuns()
 			H.delStatus("disorient")
 			H.delStatus("pinned")
 			H.force_laydown_standup()

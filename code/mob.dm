@@ -2448,9 +2448,7 @@
 	src.stuttering = 0
 	src.losebreath = 0
 	src.delStatus("drowsy")
-	src.delStatus("paralysis")
-	src.delStatus("stunned")
-	src.delStatus("weakened")
+	src.remove_stuns()
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
@@ -3341,3 +3339,9 @@
 	amp.expended = TRUE
 	amp.icon_state = "amp-broken"
 	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)
+
+/mob/proc/remove_stuns()
+	src.delStatus("stunned")
+	src.delStatus("weakened")
+	src.delStatus("paralysis")
+	src.delStatus("locked")

@@ -330,9 +330,7 @@
 				src.handcuffs.destroy_handcuffs(src)
 			SPAWN(5 DECI SECONDS)
 				src.losebreath = 0
-				src.delStatus("paralysis")
-				src.delStatus("stunned")
-				src.delStatus("weakened")
+				src.remove_stuns()
 				src.HealDamage("All", 100, 100)
 				src.add_stamina(200)
 				src.take_brain_damage(-INFINITY)

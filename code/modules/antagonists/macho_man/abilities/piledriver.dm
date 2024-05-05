@@ -10,8 +10,7 @@
 					var/mob/living/H = G.affecting
 					if (H.lying)
 						H.lying = 0
-						H.delStatus("paralysis")
-						H.delStatus("weakened")
+						H.remove_stuns()
 						H.set_clothing_icon_dirty()
 					H.transforming = 1
 					holder.owner.transforming = 1
