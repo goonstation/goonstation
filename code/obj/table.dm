@@ -101,7 +101,7 @@ TYPEINFO_NEW(/obj/table)
 			setMaterialAppearanceForImage(working_image)
 			src.AddOverlays(working_image, "SEcorner")
 		else
-			src.ClearSpecificOverlays(null, "SEcorner")
+			src.ClearSpecificOverlays("SEcorner")
 		if((SOUTHWEST & ordinals) == SOUTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SW")
@@ -110,7 +110,7 @@ TYPEINFO_NEW(/obj/table)
 			setMaterialAppearanceForImage(working_image)
 			src.AddOverlays(working_image, "SWcorner")
 		else
-			src.ClearSpecificOverlays(null, "SWcorner")
+			src.ClearSpecificOverlays("SWcorner")
 
 		if((NORTHWEST & ordinals) == NORTHWEST)
 			if (!src.working_image)
@@ -120,7 +120,7 @@ TYPEINFO_NEW(/obj/table)
 			setMaterialAppearanceForImage(working_image)
 			src.AddOverlays(working_image, "NWcorner")
 		else
-			src.ClearSpecificOverlays(null, "NWcorner")
+			src.ClearSpecificOverlays("NWcorner")
 
 	proc/deconstruct() //feel free to burn me alive because im stupid and couldnt figure out how to properly do it- Ze // im helping - haine
 		var/obj/item/furniture_parts/P

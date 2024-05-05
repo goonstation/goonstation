@@ -769,7 +769,7 @@ datum/pump_ui/circulator_ui
 		if(src.variant_b)
 			AddOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
 		else
-			ClearSpecificOverlays(null, "variant")
+			ClearSpecificOverlays("variant")
 
 		var/max_warning = src.circ1?.warning_active | src.circ2?.warning_active
 		if( max_warning )

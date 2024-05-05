@@ -567,6 +567,13 @@
 		if (src.active)
 			src.AddOverlays(src.active_overlay, "magnet_active")
 
+	// Sanity check to make sure we gib on no health
+	proc/check_should_die()
+		if (isnull(src.health) || src.health <= 0)
+			qdel(src)
+			return TRUE
+		return FALSE
+
 	proc/damage(var/amount)
 		if (!isnum(amount))
 			return
@@ -2615,7 +2622,7 @@ TYPEINFO(/obj/submachine/cargopad)
 	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, SPAN_NOTICE("You switch the receiver off."))
-			ClearSpecificOverlays(null, "lights")
+			ClearSpecificOverlays("lights")
 			src.active = FALSE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		else

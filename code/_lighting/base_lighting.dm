@@ -38,7 +38,7 @@
 		if (force_fullbright)
 			src.AddOverlays(new /image/fullbright, "fullbright")
 		else
-			src.ClearSpecificOverlays(null, "fullbright")
+			src.ClearSpecificOverlays("fullbright")
 			for (var/turf/T as anything in src)
 				T.RL_Init()
 

@@ -131,7 +131,7 @@
 			src.ClearSpecificOverlays("material_suit")
 
 	else
-		src.ClearSpecificOverlays(null, "material_suit")
+		src.ClearSpecificOverlays("material_suit")
 
 /mob/living/carbon/human/proc/update_id(head_offset)
 	if (src.wear_id)
@@ -870,7 +870,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				if (src.organHolder?.tail)
 					update_tail_clothing()
 				else
-					ClearSpecificOverlays(null, "tail", "tail_oversuit")
+					ClearSpecificOverlays("tail", "tail_oversuit")
 
 			else
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))

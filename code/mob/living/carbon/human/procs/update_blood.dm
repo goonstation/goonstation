@@ -158,7 +158,7 @@
 				blood_image.icon_state = "left_shoeblood_c"
 				src.AddOverlays(blood_image, "bloody_feet_l")
 			else
-				src.ClearSpecificOverlays(null, "bloody_feet_l")
+				src.ClearSpecificOverlays("bloody_feet_l")
 			blood_image = src.SafeGetOverlayImage("bloody_feet_r", 'icons/obj/decals/blood/blood.dmi', layer=MOB_CLOTHING_LAYER + 0.1)
 			if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 				blood_image.color = src.forensics_blood_color
