@@ -750,7 +750,9 @@
 		return
 
 	// emotes
-	if (dd_hasprefix(message, "*") && !src.stat)
+	if (dd_hasprefix(message, "*"))
+		if (src.stat || src.hasStatus("locked"))
+			return
 		return src.emote(copytext(message, 2),1)
 
 	// Mute disability
