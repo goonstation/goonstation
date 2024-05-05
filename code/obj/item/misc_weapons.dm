@@ -138,7 +138,7 @@ TYPEINFO(/obj/item/sword)
 				SPAWN(0.2 SECONDS)
 					target.visible_message("[SPAN_BOLD("[target.name]")] flops over in shame!")
 					target.changeStatus("stunned", 5 SECONDS)
-					target.changeStatus("weakened", 5 SECONDS)
+					target.changeStatus("knockdown", 5 SECONDS)
 		else
 			..()
 
@@ -170,7 +170,7 @@ TYPEINFO(/obj/item/sword)
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "weakened", "unconscious"))))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "knockdown", "unconscious"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
@@ -553,7 +553,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ismob(usr))
 			M.lastattacker = usr
 			M.lastattackertime = world.time
-		M.changeStatus("weakened", 6 SECONDS)
+		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
@@ -829,7 +829,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
-		C.changeStatus("weakened", 6 SECONDS)
+		C.changeStatus("knockdown", 6 SECONDS)
 		C.force_laydown_standup()
 		random_brute_damage(C, 20,1)
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
@@ -2006,7 +2006,7 @@ obj/item/whetstone
 			else
 				random_brute_damage(user, 2*src.force)
 				boutput(user,SPAN_ALERT("You feel immense pain!"))
-				user.changeStatus("weakened", 80)
+				user.changeStatus("knockdown", 80)
 				return
 		else ..()
 
@@ -2022,7 +2022,7 @@ obj/item/whetstone
 		else
 			random_brute_damage(user, 2*src.force)
 			boutput(user,SPAN_ALERT("You feel immense pain!"))
-			user.changeStatus("weakened", 80)
+			user.changeStatus("knockdown", 80)
 			return
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -2031,7 +2031,7 @@ obj/item/whetstone
 			if (ismob(usr))
 				C.lastattacker = usr
 				C.lastattackertime = world.time
-			C.changeStatus("weakened", 3 SECONDS)
+			C.changeStatus("knockdown", 3 SECONDS)
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
 			random_brute_damage(C, round(throwforce * 0.75),1)

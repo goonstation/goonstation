@@ -743,7 +743,7 @@ or don't if it uses a custom topopen overlay
 					var/mob/living/carbon/human/M = user
 					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
-					user.changeStatus("weakened", 2 SECONDS)
+					user.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()
 
@@ -1246,7 +1246,7 @@ or don't if it uses a custom topopen overlay
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
 						M.throw_at(T, 100, 2)
-						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("knockdown", 1 SECOND)
 						M.changeStatus("stunned", 2 SECONDS)
 					break
 
@@ -1381,7 +1381,7 @@ or don't if it uses a custom topopen overlay
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
 	if (src.sleeping) src.sleeping = 0
-	src.delStatus("weakened")
+	src.delStatus("knockdown")
 
 /mob/living/silicon/ai/use_power()
 	..()

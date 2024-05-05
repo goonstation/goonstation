@@ -964,7 +964,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/brullbar
@@ -1287,7 +1287,7 @@
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
 
 			msgs.damage = rand(1,9)
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 			target.stuttering += 1
 
 

@@ -799,7 +799,7 @@
 			setunconscious(src)
 			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()

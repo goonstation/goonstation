@@ -1341,7 +1341,7 @@ datum/pathogeneffects/malevolent/liverdamage
 				if (prob(12) && M.reagents.has_reagent("ethanol"))
 					M.visible_message("[M] falls to the ground, clutching their chest!", SPAN_ALERT("The pain overwhelms you!"), SPAN_ALERT("You hear someone fall."))
 					M.take_toxin_damage(5)
-					M.changeStatus("weakened", 40 SECONDS)
+					M.changeStatus("knockdown", 40 SECONDS)
 
 	may_react_to()
 		return "The pathogen appears to be capable of processing certain beverages."

@@ -232,7 +232,7 @@ toxic - poisons
 				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
 #else
 				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
+				M.changeStatus("knockdown", 3 SECONDS)
 #endif
 			if(proj.power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
@@ -268,7 +268,7 @@ toxic - poisons
 					H.do_disorient(50, weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 	#else
 					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 3 SECONDS)
+					H.changeStatus("knockdown", 3 SECONDS)
 	#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, 1, 3, throw_type = THROW_GUNIMPACT)
@@ -633,7 +633,7 @@ toxic - poisons
 			var/mob/living/carbon/human/M = hit
 			if(proj.power > 30)
 				M.changeStatus("slowed", 3 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 			if(proj.power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, 3, 2, throw_type = THROW_GUNIMPACT)
@@ -1154,7 +1154,7 @@ toxic - poisons
 				H.do_disorient(max(P.power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 				#else
 				H.changeStatus("stunned", 4 SECONDS)
-				H.changeStatus("weakened", 3 SECONDS)
+				H.changeStatus("knockdown", 3 SECONDS)
 				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
@@ -1423,7 +1423,7 @@ datum/projectile/bullet/autocannon
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.changeStatus("stunned", 1 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)

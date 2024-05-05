@@ -147,9 +147,9 @@
 		src.changeStatus("stunned", STAMINA_STUN_ON_CRIT_SEV)
 		#endif
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
-		if(!src.getStatusDuration("weakened") && isalive(src))
+		if(!src.getStatusDuration("knockdown") && isalive(src))
 			src.visible_message(SPAN_ALERT("[src] collapses!"))
-			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME) SECONDS)
+			src.changeStatus("knockdown", (STAMINA_STUN_CRIT_TIME) SECONDS)
 		#endif
 	stamina_stun() //Just in case.
 	return
@@ -173,9 +173,9 @@
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
 		if(prob(chance))
-			if(!src.getStatusDuration("weakened") && isalive(src))
+			if(!src.getStatusDuration("knockdown") && isalive(src))
 				src.visible_message(SPAN_ALERT("[src] collapses!"))
-				src.changeStatus("weakened", (STAMINA_STUN_TIME * stunmult) SECONDS)
+				src.changeStatus("knockdown", (STAMINA_STUN_TIME * stunmult) SECONDS)
 				src.force_laydown_standup()
 
 //new disorient thing
@@ -204,9 +204,9 @@
 			src.setStatus("stunned", stunned)
 	if (weakened)
 		if(stack_stuns)
-			src.changeStatus("weakened", weakened)
-		else if(weakened >= src.getStatusDuration("weakened"))
-			src.setStatus("weakened", weakened)
+			src.changeStatus("knockdown", weakened)
+		else if(weakened >= src.getStatusDuration("knockdown"))
+			src.setStatus("knockdown", weakened)
 	if (paralysis)
 		if(stack_stuns)
 			src.changeStatus("unconscious", paralysis)

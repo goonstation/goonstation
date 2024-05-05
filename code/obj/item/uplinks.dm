@@ -942,7 +942,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
 					HP.remove()
 					take_bleeding_damage(H, null, 10)
-					H.changeStatus("weakened", 3 SECONDS)
+					H.changeStatus("knockdown", 3 SECONDS)
 					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 					H.emote("scream")
 					logTheThing(LOG_STATION, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")

@@ -393,7 +393,7 @@ TYPEINFO(/obj/item/baton/classic)
 		user.visible_message(SPAN_ALERT("<B>[victim] has been beaten with the [src.name] by [user]!</B>"))
 		playsound(src, "swing_hit", 50, 1, -1)
 		random_brute_damage(victim, src.force, 1) // Necessary since the item/attack() parent wasn't called.
-		victim.changeStatus("weakened", 8 SECONDS)
+		victim.changeStatus("knockdown", 8 SECONDS)
 		victim.force_laydown_standup()
 		victim.remove_stamina(src.stamina_damage)
 		if (user && ismob(user) && user.get_stamina() >= STAMINA_MIN_ATTACK)

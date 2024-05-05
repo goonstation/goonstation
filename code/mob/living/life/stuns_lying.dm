@@ -25,12 +25,12 @@
 			if (C?.in_fakedeath)
 				changeling_fakedeath = TRUE
 
-			if (statusList["unconscious"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || statusList["paralysis"] || changeling_fakedeath || must_lie) //Stunned etc.
+			if (statusList["unconscious"] || statusList["stunned"] || statusList["knockdown"] || statusList["pinned"] || statusList["paralysis"] || changeling_fakedeath || must_lie) //Stunned etc.
 				var/setStat = owner.stat
 				var/oldStat = owner.stat
 				if (statusList["stunned"])
 					setStat = STAT_ALIVE
-				if (statusList["weakened"] || statusList["pinned"] && !owner.fakedead)
+				if (statusList["knockdown"] || statusList["pinned"] && !owner.fakedead)
 					if (!cant_lie)
 						owner.lying = TRUE
 					setStat = STAT_ALIVE
@@ -54,7 +54,7 @@
 						owner.lose_breath(-0.3)
 						owner.HealDamage("All", 0.2, 0.2, 0.2)
 
-				else if ((oldStat == STAT_UNCONSCIOUS) && (!statusList["unconscious"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
+				else if ((oldStat == STAT_UNCONSCIOUS) && (!statusList["unconscious"] && !statusList["stunned"] && !statusList["knockdown"] && !changeling_fakedeath))
 					owner.playsound_local_not_inworld('sound/misc/molly_revived.ogg', 50)
 					setalive(owner)
 

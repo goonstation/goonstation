@@ -3345,7 +3345,7 @@
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")
-				src.changeStatus("weakened", 3 SECONDS)
+				src.changeStatus("knockdown", 3 SECONDS)
 			else if (src.shoes.laces == LACES_CUT) // Laces cut
 				var/obj/item/clothing/shoes/S = src.shoes
 				src.u_equip(S)

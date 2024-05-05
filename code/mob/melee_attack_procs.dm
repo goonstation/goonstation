@@ -77,7 +77,7 @@
 
 	target.changeStatus("stunned", -5 SECONDS)
 	target.changeStatus("unconscious", -5 SECONDS)
-	target.changeStatus("weakened", -5 SECONDS)
+	target.changeStatus("knockdown", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
@@ -205,7 +205,7 @@
 	if(!..())
 		return
 	var/block_it_up = TRUE
-	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("unconscious"))
+	if (!src.lying && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious"))
 		for(var/obj/stool/stool_candidate in src.loc)
 			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
@@ -557,7 +557,7 @@
 #ifdef USE_STAMINA_DISORIENT
 		target.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
 #else
-		target.changeStatus("weakened", 3 SECONDS)
+		target.changeStatus("knockdown", 3 SECONDS)
 		target.changeStatus("stunned", 2 SECONDS)
 #endif
 
@@ -959,7 +959,7 @@
 
 				if ("shoved_down" in src.disarm_RNG_result)
 					target.deliver_move_trigger("pushdown")
-					target.changeStatus("weakened", 2 SECONDS)
+					target.changeStatus("knockdown", 2 SECONDS)
 					target.force_laydown_standup()
 					disarm_log += " shoving them down"
 				if ("shoved" in src.disarm_RNG_result)
@@ -1256,12 +1256,12 @@
 
 	if (variant)
 		if(prob(50))
-			T.changeStatus("weakened", 2 SECONDS)
+			T.changeStatus("knockdown", 2 SECONDS)
 			T.force_laydown_standup()
 		SPAWN(0)
 			step_rand(T, 15)
 	else
-		T.changeStatus("weakened", 2 SECONDS)
+		T.changeStatus("knockdown", 2 SECONDS)
 		T.force_laydown_standup()
 		SPAWN(0)
 			step_away(T, H, 15)
@@ -1272,7 +1272,7 @@
 	if (!H || !ismob(H) || !T || !ismob(T))
 		return
 
-	T.changeStatus("weakened", 5 SECONDS)
+	T.changeStatus("knockdown", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
 		T.throw_at(throwpoint, 10, 2)
@@ -1325,7 +1325,7 @@
 				step_away(M, src, 15)
 			else
 				src.visible_message(SPAN_COMBAT("<b>[src] parries [M]'s attack, knocking [him_or_her(M)] to the ground!</B>"))
-				M.changeStatus("weakened", 4 SECONDS)
+				M.changeStatus("knockdown", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
 		return 1

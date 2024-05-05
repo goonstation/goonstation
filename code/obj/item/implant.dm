@@ -527,13 +527,13 @@ THROWING DARTS
 
 		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			H.visible_message(SPAN_ALERT("<b>[H] resists the counter-revolutionary implant!</b>"))
-			H.changeStatus("weakened", 1 SECOND)
+			H.changeStatus("knockdown", 1 SECOND)
 			H.force_laydown_standup()
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
 
 		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1, 1, 0)
-			H.changeStatus("weakened", 1 SECOND)
+			H.changeStatus("knockdown", 1 SECOND)
 			H.setStatus("derevving")
 			H.force_laydown_standup()
 			H.emote("scream")
@@ -808,7 +808,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 10 SECONDS)
+		M.changeStatus("knockdown", 10 SECONDS)
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -2183,7 +2183,7 @@ TYPEINFO(/obj/item/gun/implanter)
 			H.implant.Add(src)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
+			H.changeStatus("knockdown", 2 SECONDS)
 			random_brute_damage(H, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(H, null, 10, DAMAGE_CUT)
 			src.implanted(H)

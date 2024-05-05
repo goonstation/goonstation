@@ -124,7 +124,7 @@
 			user.u_equip(W)
 			if (user.bioHolder.HasEffect("clumsy") && prob(50)) // clowns are not good at basketball I guess
 				user.visible_message(SPAN_COMBAT("<b>[user] knocks their head into the rim of [src]!</b>"))
-				user.changeStatus("weakened", 5 SECONDS)
+				user.changeStatus("knockdown", 5 SECONDS)
 				JOB_XP(user, "Clown", 1)
 
 			if (!src.shoot(W, user))

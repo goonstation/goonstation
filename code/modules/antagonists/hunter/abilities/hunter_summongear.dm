@@ -45,7 +45,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("weakened") || M.getStatusDuration("unconscious") > 0 || !isalive(M) || M.restrained())
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("knockdown") || M.getStatusDuration("unconscious") > 0 || !isalive(M) || M.restrained())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

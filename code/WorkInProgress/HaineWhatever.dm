@@ -1689,7 +1689,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
-			if(src.getStatusDuration("unconscious") || src.getStatusDuration("weakened") || src.stunned > 0)
+			if(src.getStatusDuration("unconscious") || src.getStatusDuration("knockdown") || src.stunned > 0)
 				boutput(src, "You can't do that while incapacitated!")
 				return
 
@@ -1712,7 +1712,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						if(H.lying)
 							H.lying = 0
 							H.delStatus("unconscious")
-							H.delStatus("weakened")
+							H.delStatus("knockdown")
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
 						src.transforming = 1

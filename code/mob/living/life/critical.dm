@@ -49,7 +49,7 @@
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (probmult(6))
 						boutput(owner, SPAN_ALERT("<b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!"))
-						owner.setStatusMin("weakened", 3 SECONDS)
+						owner.setStatusMin("knockdown", 3 SECONDS)
 					if (probmult(3))
 						owner.changeStatus("unconscious", 2 SECONDS)
 				if (-50 to 0)
@@ -62,7 +62,7 @@
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
 					if (probmult(5))
 						boutput(owner, SPAN_ALERT("<b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b>"))
-						owner.changeStatus("weakened", 3 SECONDS)
+						owner.changeStatus("knockdown", 3 SECONDS)
 
 		var/is_chg = ischangeling(owner)
 		//if (src.brain_op_stage == 4.0) // handled above in handle_organs() now
@@ -75,7 +75,7 @@
 			if (!is_chg)
 				boutput(owner, SPAN_ALERT("Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")]."))
 				owner.losebreath += 10 * mult
-				owner.changeStatus("weakened", 3 SECONDS * mult)
+				owner.changeStatus("knockdown", 3 SECONDS * mult)
 		if (owner.health <= -100)
 			if ((owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine")) || ((owner.bodytemperature < owner.base_body_temp - 100 && owner.bodytemperature > owner.base_body_temp - 275 && !owner.hasStatus("burning")) && (owner.reagents && owner.reagents.has_reagent("cryoxadone"))))
 				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)

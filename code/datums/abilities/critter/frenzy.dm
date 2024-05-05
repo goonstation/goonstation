@@ -52,7 +52,7 @@
 			var/frenz = rand(frenzy_low, frenzy_high)
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "frenzy")
 			while (frenz > 0 && MT && !MT.disposed)
-				MT.changeStatus("weakened", weakened_dur)
+				MT.changeStatus("knockdown", weakened_dur)
 				APPLY_ATOM_PROPERTY(MT, PROP_MOB_CANTMOVE, "frenzy")
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)

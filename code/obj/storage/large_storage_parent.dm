@@ -479,8 +479,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					SPAN_ALERT("You trip over [src]!"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 					user.set_loc(T)
-					if (!user.hasStatus("weakened"))
-						user.changeStatus("weakened", 10 SECONDS)
+					if (!user.hasStatus("knockdown"))
+						user.changeStatus("knockdown", 10 SECONDS)
 					JOB_XP(user, "Clown", 3)
 					return
 				else

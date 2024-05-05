@@ -477,7 +477,7 @@ TYPEINFO(/obj/item/device/flash/revolution)
 
 	proc/finish_conversion(mob/living/M, mob/user)
 		M.mind?.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_CONVERTED)
-		M.setStatus("weakened", 5 SECONDS)
+		M.setStatus("knockdown", 5 SECONDS)
 		ON_COOLDOWN(global, "conspiracy_convert", src.convert_cooldown)
 		for (var/datum/mind/antag in ticker.mode.traitors)
 			if (antag.get_antagonist(ROLE_CONSPIRATOR))

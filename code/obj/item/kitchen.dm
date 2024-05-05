@@ -835,7 +835,7 @@ TRAYS
 				if(istype(H.head, /obj/item/clothing/head/helmet))
 					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else if(ismobcritter(target))
 				var/mob/living/critter/L = target
@@ -847,7 +847,7 @@ TRAYS
 				if(has_helmet)
 					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else //borgs, ghosts, whatever
 				target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)

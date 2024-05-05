@@ -114,7 +114,7 @@
 				poorSob.TakeDamage(def_zone, 4, 4, 0, DAMAGE_BLUNT)
 			else
 				poorSob.TakeDamage("All", 4, 4, 0, DAMAGE_BLUNT)
-			poorSob.changeStatus("weakened", 2 SECONDS)
+			poorSob.changeStatus("knockdown", 2 SECONDS)
 			step_away(poorSob, owner, 15)
 			sleep(0.3 SECONDS)
 			step_away(poorSob, owner, 15)
@@ -333,9 +333,9 @@
 			else if( check_target_immunity(T) )
 				holder.owner.show_message( SPAN_ALERT("That target seems to be warded from the effects!") )
 			else
-				T.changeStatus("stunned", max(max(T.getStatusDuration("weakened"), T.getStatusDuration("stunned")), 3))
+				T.changeStatus("stunned", max(max(T.getStatusDuration("knockdown"), T.getStatusDuration("stunned")), 3))
 				T.lying = 0
-				T.delStatus("weakened")
+				T.delStatus("knockdown")
 				T.show_message(SPAN_ALERT("A ghostly force compels you to be still on your feet."))
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
@@ -365,12 +365,12 @@
 		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 			animate_revenant_shockwave(T, 1, 3)
 			sleep(0.3 SECONDS)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
-					M.changeStatus("weakened", 6 SECONDS)
+					M.changeStatus("knockdown", 6 SECONDS)
 					M.show_message(SPAN_ALERT("A shockwave sweeps you off your feet!"))
 			for (var/obj/machinery/light/L in T)
 				L.broken()
@@ -516,7 +516,7 @@
 			return TRUE
 
 		holder.owner.visible_message(SPAN_ALERT("[holder.owner] reaches out towards [H], making a crushing motion."), SPAN_NOTICE("You reach out towards [H]."))
-		H.changeStatus("weakened", 2 SECONDS)
+		H.changeStatus("knockdown", 2 SECONDS)
 		actions.start(new/datum/action/bar/crush(holder.owner, H), holder.owner)
 		return FALSE
 
@@ -542,7 +542,7 @@
 		if (src.casting_mob == null || src.target_mob == null || !isalive(src.casting_mob) || !can_act(src.casting_mob) || (GET_DIST(src.casting_mob, src.target_mob) > 7))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.target_mob.changeStatus("weakened", 2 SECONDS)
+		src.target_mob.changeStatus("knockdown", 2 SECONDS)
 		src.target_mob.TakeDamage("chest", 5, 0, 0, DAMAGE_CRUSH)
 		if (prob(25))
 			src.target_mob.visible_message(SPAN_ALERT("[src.target_mob]'s bones crack loudly!"), SPAN_ALERT("You feel like you're about to be [pick("crushed", "destroyed", "vaporized")]."))

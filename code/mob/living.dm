@@ -401,7 +401,7 @@
 /mob/living/onMouseMove(object,location,control,params)
 	var/obj/item/W = src.equipped()
 	if(W.needOnMouseMove)
-		if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
+		if (!src.stat && !src.restrained() && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
 			if (W && istype(W))
 				W.onMouseMove(object,location,control,params)
 	return
@@ -1031,7 +1031,7 @@
 
 			switch (message_mode)
 				if ("internal 1")
-					if (R1 && !(A.stat || A.hasStatus(list("stunned", "weakened")))) // Mainframe may be stunned when the shell isn't.
+					if (R1 && !(A.stat || A.hasStatus(list("stunned", "knockdown")))) // Mainframe may be stunned when the shell isn't.
 						R1.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
@@ -1039,7 +1039,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("internal 2")
-					if (R2 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
+					if (R2 && !(A.stat || A.hasStatus(list("stunned", "knockdown"))))
 						R2.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1
@@ -1047,7 +1047,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("monitor")
-					if (R3 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
+					if (R3 && !(A.stat || A.hasStatus(list("stunned", "knockdown"))))
 						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1

@@ -343,7 +343,7 @@
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			owner.changeStatus("unconscious", 5 SECONDS)
-			owner.changeStatus("weakened", 5 SECONDS)
+			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
@@ -371,7 +371,7 @@
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			owner.changeStatus("weakened", 10 SECONDS)
+			owner.changeStatus("knockdown", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
 			SPAWN(0)
@@ -390,7 +390,7 @@
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			owner.changeStatus("unconscious", 5 SECONDS)
-			owner.changeStatus("weakened", 5 SECONDS)
+			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(owner.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			SPAWN(0)
@@ -1025,7 +1025,7 @@
 				if (V == owner)
 					continue
 
-				V.changeStatus("weakened", stun_time SECONDS)
+				V.changeStatus("knockdown", stun_time SECONDS)
 				if(!V.anchored)
 					boutput(V, SPAN_ALERT("You are sent flying!"))
 					// why the hell was this set to 12 christ
@@ -1068,7 +1068,7 @@
 
 	proc/indigestion_gib()
 		owner.emote("faint")
-		owner.setStatus("weakened", 20 SECONDS)
+		owner.setStatus("knockdown", 20 SECONDS)
 		owner.make_jittery(50)
 		sleep(1 SECOND)
 		owner.emote("scream")
@@ -2231,7 +2231,7 @@
 						if (ability.cast(T))
 							return //no limbs left, no text!!!
 						boutput(owner, SPAN_ALERT("The pressure in one of your joints built up too high! One of your limbs flew off!"))
-						owner.changeStatus("weakened", 4 SECONDS)
+						owner.changeStatus("knockdown", 4 SECONDS)
 						return
 				while (do_count < 5)
 
@@ -2248,7 +2248,7 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 5 SECONDS)
+			hit.changeStatus("knockdown", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
 

@@ -144,7 +144,7 @@
 					HH.changeStatus("unconscious", 10 SECONDS)
 				else
 					if (prob(65))
-						HH.changeStatus("weakened", 1 SECOND)
+						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
 			if (istype(H)) H.blood_tracking_output()
@@ -291,7 +291,7 @@
 					HH.changeStatus("unconscious", 10 SECONDS)
 				else
 					if (prob(65))
-						HH.changeStatus("weakened", 1 SECOND)
+						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))

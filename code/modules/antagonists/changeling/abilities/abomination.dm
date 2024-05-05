@@ -60,7 +60,7 @@
 			H.changeStatus("unconscious", 10 SECONDS)
 		else
 			boutput(H, SPAN_ALERT("You revert back to your original form. It leaves you weak."))
-			H.changeStatus("weakened", 5 SECONDS)
+			H.changeStatus("knockdown", 5 SECONDS)
 		if (C)
 			C.points = max(C.points - 15, 0)
 			var/D = pick(C.absorbed_dna)

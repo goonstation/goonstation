@@ -3068,7 +3068,7 @@ var/global/noir = 0
 								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
-									M.changeStatus("weakened", 2 SECONDS)
+									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
 							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")

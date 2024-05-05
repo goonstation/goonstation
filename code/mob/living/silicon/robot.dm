@@ -520,10 +520,10 @@
 			// for creepy automatoning
 			if ("snap")
 				if (src.emote_check(voluntary, 50) && (src.automaton_skin || src.alohamaton_skin || src.metalman_skin))
-					if ((src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
-					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((!src.restrained()) && (!src.getStatusDuration("knockdown")))
 						if (prob(33))
 							playsound(src.loc, src.sound_automaton_ratchet, 60, 1)
 							message = "<B>[src]</B> emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound."
@@ -557,10 +557,10 @@
 				if (src.emote_check(voluntary, 50))
 					if (!(src.client && src.client.holder)) src.emote_allowed = 0
 					if (isdead(src)) src.emote_allowed = 0
-					if ((src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
-					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
+					if ((!src.restrained()) && (!src.getStatusDuration("knockdown")))
 						if (isobj(src.loc))
 							var/obj/container = src.loc
 							container.mob_flip_inside(src)

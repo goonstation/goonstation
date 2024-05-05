@@ -550,7 +550,7 @@ proc/filter_carrier_pets(var/type)
 		if ((src.catnip || prob(2) ) && (!ON_COOLDOWN(src, "claw_fury", 20 SECONDS)))
 			var/attackCount = rand(5, 9)
 			var/iteration = 0
-			target.setStatus("weakened", 2 SECONDS)
+			target.setStatus("knockdown", 2 SECONDS)
 			src.visible_message(SPAN_COMBAT("[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!"))
 			SPAWN(0)
 				while (iteration <= attackCount && (get_dist(src, target) <= 1))
@@ -746,14 +746,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			src.icon_state = "[src.dogtype]-lying"
 			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] flops on [his_or_her(src)] back! Scratch that belly!"),\
 			SPAN_NOTICE("You flop on your back!"))
 			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
 					src.delStatus("unconscious")
 					src.changeStatus("stunned", 10 SECONDS)
-					src.delStatus("weakened")
+					src.delStatus("knockdown")
 					src.icon_state = src.dogtype
 
 	Life(datum/controller/process/mobs/parent)
@@ -937,7 +937,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			setunconscious(src)
 			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -1861,7 +1861,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return
 				else
 					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
-					M.setStatus("weakened", 5 SECONDS)
+					M.setStatus("knockdown", 5 SECONDS)
 					return
 		. = ..()
 
@@ -2393,7 +2393,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			setunconscious(src)
 			src.setStatus("unconscious", 6 SECONDS)
 			src.setStatus("stunned", 6 SECONDS)
-			src.setStatus("weakened", 6 SECONDS)
+			src.setStatus("knockdown", 6 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()

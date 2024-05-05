@@ -2255,7 +2255,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 					target_r:Virus_ShockCure(100)
 					target_r:shock_cyberheart(33)
 					if (ishuman(target_r))
-						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))
+						target_r:changeStatus("knockdown", lethal ? (3 SECONDS): (8 SECONDS))
 					break
 
 				var/list/next = new/list()

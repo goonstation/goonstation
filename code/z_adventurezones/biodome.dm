@@ -780,7 +780,7 @@ SYNDICATE DRONE FACTORY AREAS
 				src.set_loc(next)
 				for(var/mob/living/carbon/C in next)
 					C.TakeDamageAccountArmor("chest", 33, 0)
-					C.changeStatus("weakened", 5 SECONDS)
+					C.changeStatus("knockdown", 5 SECONDS)
 
 
 /obj/boulder_trap/respawning

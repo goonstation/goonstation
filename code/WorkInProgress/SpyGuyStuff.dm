@@ -70,7 +70,7 @@ Fibre wire
 		SPAWN(0) animate_levitate(src, -1)
 		H.emote("scream")
 
-		H.changeStatus("weakened", 10 SECONDS)
+		H.changeStatus("knockdown", 10 SECONDS)
 
 		SPAWN(7 SECONDS)
 			if(!H)

@@ -214,7 +214,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
-			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
+			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("knockdown"))
 				boutput(user, SPAN_ALERT("[capitalize(hes_or_shes(G.affecting))] moving too much to feed to His Grace!"))
 				return
 			user.visible_message(SPAN_ALERT("<b>[user] is trying to feed [G.affecting] to [src]!</b>"))

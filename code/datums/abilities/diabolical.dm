@@ -106,7 +106,7 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.hasStatus(list("stunned", "unconscious", "weakened")))
+				if (!isalive(M) || M.hasStatus(list("stunned", "unconscious", "knockdown")))
 					return 0
 				else
 					return 1

@@ -583,11 +583,11 @@
 					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
 				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel sick."))
 					M.vomit()
 
@@ -771,7 +771,7 @@
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "unconscious", "pinned")))
+			if (!owner.hasStatus(list("stunned", "knockdown", "unconscious", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -802,10 +802,10 @@
 				. = ..()
 
 		weakened
-			id = "weakened"
+			id = "knockdown"
 			name = "Knocked-down"
 			desc = "You are knocked-down.<br>Unable to take any actions, prone."
-			icon_state = "weakened"
+			icon_state = "knockdown"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -996,7 +996,7 @@
 
 		onUpdate(timePassed)
 			counter += timePassed
-			if (counter >= count && owner && !owner.hasStatus(list("weakened", "unconscious")) )
+			if (counter >= count && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1355,8 +1355,8 @@
 				H.changeStatus("unconscious", -1)
 			if(statusList["stunned"])
 				H.changeStatus("stunned", -1)
-			if(statusList["weakened"])
-				H.changeStatus("weakened", -1)
+			if(statusList["knockdown"])
+				H.changeStatus("knockdown", -1)
 
 		getTooltip()
 			if (GET_DIST(owner,gang.locker) < 4)

@@ -261,7 +261,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)
-										M.changeStatus("weakened", 2 SECONDS)
+										M.changeStatus("knockdown", 2 SECONDS)
 
 										if (prob(50) || bonus_stun)
 											var/atom/target = get_edge_target_turf(M, pick(alldirs))
