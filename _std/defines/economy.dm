@@ -22,6 +22,6 @@
 #define PIN_MAX 9999
 
 /mob/proc/enter_pin(title="ID PIN number")
-	. = tgui_input_number(src, "Please enter your PIN number:", title, src.mind?.remembered_pin || PIN_MIN, PIN_MAX, PIN_MIN)
+	. = tgui_input_pin(src, "Please enter your PIN number:", title, src.mind?.remembered_pin || PIN_MIN, PIN_MAX, PIN_MIN)
 	if(. && src.mind && isnull(src.mind.remembered_pin))
 		src.mind.remembered_pin = .
