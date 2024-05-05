@@ -63,7 +63,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 ///mob/living/silicon/proc/update_canmove()
 //	..()
-	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
+	//canmove = !(src.hasStatus(list("weakened", "unconscious", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return
@@ -184,7 +184,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/click(atom/target, params, location, control)
 	if (src.targeting_ability)
 		..()
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return

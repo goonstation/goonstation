@@ -1543,7 +1543,7 @@
 		if (D_ENERGY)
 			TakeDamage("All", 0, damage)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*1.5 SECONDS)
+				src.changeStatus("unconscious", stun*1.5 SECONDS)
 			else if (prob(90))
 				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
@@ -1576,7 +1576,7 @@
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*1.5 SECONDS)
+				src.changeStatus("unconscious", stun*1.5 SECONDS)
 			else if (prob(90))
 				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
@@ -3343,5 +3343,5 @@
 /mob/proc/remove_stuns()
 	src.delStatus("stunned")
 	src.delStatus("weakened")
-	src.delStatus("paralysis")
+	src.delStatus("unconscious")
 	src.delStatus("locked")

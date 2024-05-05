@@ -391,7 +391,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
 		if (!is_puritan)
-			src.occupant.changeStatus("paralysis", 10 SECONDS)
+			src.occupant.changeStatus("unconscious", 10 SECONDS)
 		previous_heal = src.occupant.health
 #ifdef CLONING_IS_INSTANT
 		src.occupant.full_heal()
@@ -468,7 +468,7 @@ TYPEINFO(/obj/machinery/clonepod)
 					src.look_busy(prob(33))
 
 				// Otherwise, heal thyself, clone.
-				src.occupant.changeStatus("paralysis", 10 SECONDS)
+				src.occupant.changeStatus("unconscious", 10 SECONDS)
 
 				// Slowly get that clone healed and finished.
 				//At this rate one clone takes about 95 seconds to produce.
@@ -776,7 +776,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			var/mob/living/carbon/C = src.occupant
 			C.remove_ailments() // no more cloning with heart failure
 
-		src.occupant.changeStatus("paralysis", 10 SECONDS)
+		src.occupant.changeStatus("unconscious", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
 		if (src.emagged) //huck em
 			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)

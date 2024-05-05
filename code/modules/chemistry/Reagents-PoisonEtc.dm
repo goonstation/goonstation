@@ -1209,7 +1209,7 @@ datum
 						M.emote("faint")
 						M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (6 to INFINITY)
-						M.setStatusMin("paralysis", 5 SECONDS * mult)
+						M.setStatusMin("unconscious", 5 SECONDS * mult)
 
 				M.jitteriness = max(M.jitteriness-50,0)
 
@@ -1260,7 +1260,7 @@ datum
 						M.emote("faint")
 						M.setStatusMin("weakened", 5 SECONDS * mult)
 					if (11 to INFINITY)
-						M.setStatusMin("paralysis", 25 SECONDS * mult)
+						M.setStatusMin("unconscious", 25 SECONDS * mult)
 
 				..()
 				return
@@ -1311,7 +1311,7 @@ datum
 							fainted = TRUE
 						if (prob(20))
 							M.emote("faint")
-							M.setStatusMin("paralysis", 8 SECONDS * mult)
+							M.setStatusMin("unconscious", 8 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				M.take_toxin_damage(1 * mult)
 				..()
@@ -1455,7 +1455,7 @@ datum
 						if (!fainted)
 							M.emote("faint")
 							fainted = 1
-						M.setStatusMin("paralysis", 10 SECONDS * mult)
+						M.setStatusMin("unconscious", 10 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 
 				M.jitteriness = max(M.jitteriness-30,0)

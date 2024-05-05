@@ -809,7 +809,7 @@ datum
 						M.emote("collapse")
 						boutput(M, SPAN_ALERT("<b>Your heart is pounding!</b>"))
 						M.playsound_local_not_inworld('sound/effects/heartbeat.ogg', 100)
-						M.setStatusMin("paralysis", 5 SECONDS * mult)
+						M.setStatusMin("unconscious", 5 SECONDS * mult)
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
 						M.take_oxygen_deprivation(20 * mult)
@@ -952,7 +952,7 @@ datum
 								if(4)
 									boutput(M, SPAN_ALERT("<b>[M] has been attacked with the taser gun by Unknown</b>"))
 									boutput(M, "<i>You can almost hear someone talking...</i>")
-									M.setStatusMin("paralysis", 3 SECONDS * mult)
+									M.setStatusMin("unconscious", 3 SECONDS * mult)
 				..()
 
 
@@ -1311,7 +1311,7 @@ datum
 					if(check < 20)
 						boutput(M, SPAN_ALERT("Your throat feels like it's on fire!"))
 						M.emote(pick("scream","cry","twitch_s","choke","gasp","grumble"))
-						M.changeStatus("paralysis", 2 SECONDS)
+						M.changeStatus("unconscious", 2 SECONDS)
 					if(check < 20)
 						boutput(M, SPAN_NOTICE("<b>You feel A LOT warmer.</b>"))
 						M.bodytemperature += rand(30,60)

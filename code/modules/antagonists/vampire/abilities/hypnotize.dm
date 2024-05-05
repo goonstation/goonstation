@@ -103,7 +103,7 @@
 			boutput(M, SPAN_NOTICE("Your piercing gaze knocks out [target]."))
 			target.changeStatus("stunned", 30 SECONDS)
 			target.changeStatus("weakened", 30 SECONDS)
-			target.changeStatus("paralysis", 30 SECONDS)
+			target.changeStatus("unconscious", 30 SECONDS)
 			target.remove_stamina(300)
 			target.force_laydown_standup()
 

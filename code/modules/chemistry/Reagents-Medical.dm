@@ -113,7 +113,7 @@ datum
 					if(16 to 36)
 						M.setStatus("drowsy", 40 SECONDS)
 					if(36 to INFINITY)
-						M.setStatusMin("paralysis", 3 SECONDS * mult)
+						M.setStatusMin("unconscious", 3 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
 				return
@@ -203,7 +203,7 @@ datum
 						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
 					if(40 to INFINITY)
 						depletion_rate = 0.4
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatusMin("unconscious", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()
 				return
@@ -715,11 +715,11 @@ datum
 						var/mob/living/H = M
 						H.delStatus("drowsy")
 						H.delStatus("passing_out")
-						if (H.stamina < 0 || H.hasStatus("weakened") || H.hasStatus("paralysis")) //enhanced effects if you're downed (also implies a second person is applying this)
+						if (H.stamina < 0 || H.hasStatus("weakened") || H.hasStatus("unconscious")) //enhanced effects if you're downed (also implies a second person is applying this)
 							H.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN) // a little damage penalty
 							if (H.use_stamina)
 								H.stamina = max(H.stamina_max*0.2,H.stamina)
-							H.changeStatus("paralysis", -20 SECONDS)
+							H.changeStatus("unconscious", -20 SECONDS)
 							H.changeStatus("weakened", -20 SECONDS)
 						if (H.sleeping == TRUE)
 							H.sleeping = 0

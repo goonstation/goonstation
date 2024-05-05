@@ -40,7 +40,7 @@
 
 /obj/item/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.getStatusDuration("paralysis") || !isalive(usr) || usr.restrained())
+	if (usr.getStatusDuration("unconscious") || !isalive(usr) || usr.restrained())
 		return
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
@@ -110,7 +110,7 @@
 				affected_mob.visible_message(SPAN_ALERT("The curse upon [src] rebukes [affected_mob]!"))
 				boutput(affected_mob, SPAN_ALERT("Horrible visions of depravity and terror flood your mind!"))
 				affected_mob.emote("scream")
-				affected_mob.changeStatus("paralysis", 8 SECONDS)
+				affected_mob.changeStatus("unconscious", 8 SECONDS)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.stuttering += 20
 				affected_mob.take_brain_damage(25)

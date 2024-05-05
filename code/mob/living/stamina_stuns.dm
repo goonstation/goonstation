@@ -209,9 +209,9 @@
 			src.setStatus("weakened", weakened)
 	if (paralysis)
 		if(stack_stuns)
-			src.changeStatus("paralysis", paralysis)
-		else if(paralysis >= src.getStatusDuration("paralysis"))
-			src.setStatus("paralysis", paralysis)
+			src.changeStatus("unconscious", paralysis)
+		else if(paralysis >= src.getStatusDuration("unconscious"))
+			src.setStatus("unconscious", paralysis)
 
 	src.force_laydown_standup()
 

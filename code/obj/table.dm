@@ -329,7 +329,7 @@ TYPEINFO_NEW(/obj/table)
 		return FALSE
 
 	MouseDrop_T(atom/O, mob/user as mob)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (ismob(O) && O == user)

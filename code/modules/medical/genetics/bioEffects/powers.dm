@@ -342,7 +342,7 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("paralysis", 5 SECONDS)
+			owner.changeStatus("unconscious", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
@@ -389,7 +389,7 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("paralysis", 5 SECONDS)
+			owner.changeStatus("unconscious", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(owner.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
@@ -801,7 +801,7 @@
 		boutput(read, SPAN_ALERT("Somehow, you sense <b>[owner]</b> trying and failing to read your mind!"))
 		boutput(owner, SPAN_ALERT("You are mentally overwhelmed by a huge barrage of worthless data!"))
 		owner.emote("scream")
-		owner.changeStatus("paralysis", 5 SECONDS)
+		owner.changeStatus("unconscious", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
 
 	/// Mostly stolen from laspgasp() (thanks pali)

@@ -1045,7 +1045,7 @@
 		boutput(boarder, SPAN_ALERT("[src] is locked!"))
 		return
 
-	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
+	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("unconscious") || !isalive(boarder) || boarder.restrained())
 		boutput(boarder, SPAN_ALERT("You can't enter a pod while incapacitated or restrained."))
 		return
 
@@ -1194,7 +1194,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1210,7 +1210,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

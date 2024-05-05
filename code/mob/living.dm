@@ -401,7 +401,7 @@
 /mob/living/onMouseMove(object,location,control,params)
 	var/obj/item/W = src.equipped()
 	if(W.needOnMouseMove)
-		if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+		if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
 			if (W && istype(W))
 				W.onMouseMove(object,location,control,params)
 	return

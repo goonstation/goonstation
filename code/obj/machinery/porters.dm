@@ -479,7 +479,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
+		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "unconscious", "weakened", "handcuffed")))
 			return
 		src.go_out()
 		add_fingerprint(usr)

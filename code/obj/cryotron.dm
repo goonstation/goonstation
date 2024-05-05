@@ -250,11 +250,11 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to enter storage on their own
-		if (!user && (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping))
+		if (!user && (L.stat || L.restrained() || L.getStatusDuration("unconscious") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to put someone else in
-		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
+		if (user && (user.stat || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping))
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return FALSE
 		// Person entering is too far away

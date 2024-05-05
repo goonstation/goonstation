@@ -42,7 +42,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if(patient.lying || patient == surgeon)
 			return . // surgery is okay
 
-	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
+	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("unconscious") || patient.stat)) // is the patient on a table and paralyzed or dead?
 		return . // surgery is okay
 	else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying))) // is the patient really drunk and also the surgeon?
 		return . // surgery is okay
@@ -127,7 +127,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (patient.stat) // is the patient dead?
 		screw_up_prob -= 30
-	if (patient.getStatusDuration("paralysis")) // unable to move?
+	if (patient.getStatusDuration("unconscious")) // unable to move?
 		screw_up_prob -= 15
 	if (patient.sleeping) // asleep?
 		screw_up_prob -= 10

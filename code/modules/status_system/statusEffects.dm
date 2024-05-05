@@ -771,7 +771,7 @@
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
+			if (!owner.hasStatus(list("stunned", "weakened", "unconscious", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -859,10 +859,10 @@
 
 
 		paralysis
-			id = "paralysis"
+			id = "unconscious"
 			name = "Unconscious"
 			desc = "You are unconscious.<br>Unable to take any actions, blinded."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -904,7 +904,7 @@
 			id = "dormant"
 			name = "Dormant"
 			desc = "You are dormant.<br>Unable to take any actions, until you power yourself."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			duration = INFINITE_STATUS
 
@@ -996,7 +996,7 @@
 
 		onUpdate(timePassed)
 			counter += timePassed
-			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+			if (counter >= count && owner && !owner.hasStatus(list("weakened", "unconscious")) )
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1351,8 +1351,8 @@
 
 			var/list/statusList = H.getStatusList()
 
-			if(statusList["paralysis"])
-				H.changeStatus("paralysis", -1)
+			if(statusList["unconscious"])
+				H.changeStatus("unconscious", -1)
 			if(statusList["stunned"])
 				H.changeStatus("stunned", -1)
 			if(statusList["weakened"])
@@ -2169,7 +2169,7 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.changeStatus("paralysis", 5 SECONDS)
+			M.changeStatus("unconscious", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
 

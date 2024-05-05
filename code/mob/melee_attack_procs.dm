@@ -76,7 +76,7 @@
 	target.delStatus("resting")
 
 	target.changeStatus("stunned", -5 SECONDS)
-	target.changeStatus("paralysis", -5 SECONDS)
+	target.changeStatus("unconscious", -5 SECONDS)
 	target.changeStatus("weakened", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
@@ -205,7 +205,7 @@
 	if(!..())
 		return
 	var/block_it_up = TRUE
-	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("unconscious"))
 		for(var/obj/stool/stool_candidate in src.loc)
 			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
@@ -472,7 +472,7 @@
 
 /mob/proc/check_block(ignoreStuns = 0) //am i blocking?
 	RETURN_TYPE(/obj/item/grab/block)
-	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
+	if (ignoreStuns || (isalive(src) && !getStatusDuration("unconscious")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))

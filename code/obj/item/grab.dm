@@ -165,7 +165,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
-				H.setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
+				H.setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -430,7 +430,7 @@
 		if (!src.affecting) return 0
 		if (BOUNDS_DIST(user, src.affecting) > 0)
 			return 0
-		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
+		if ((src.state < 1 && !(src.affecting.getStatusDuration("unconscious") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message(SPAN_ALERT("[src.affecting] stumbles a little!"))
 			user.u_equip(src)
 			qdel(src)

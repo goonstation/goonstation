@@ -98,7 +98,7 @@
 				MT.canmove = 1
 				if (BOUNDS_DIST(holder.owner, target) > 0)
 					break
-				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("unconscious"))
 					break
 				if (istype(S))
 					S.venom_bite(MT)
@@ -175,7 +175,7 @@
 			while (drain > 0 && H && H.stat && !H.disposed)
 				if (H.loc && holder.owner.loc != H.loc)
 					break
-				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("unconscious"))
 					break
 				holder.owner.HealDamage("All", 1, 1)
 				sleep(0.4 SECONDS)
@@ -321,7 +321,7 @@
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
 				MT.changeStatus("stunned", 1 SECOND)
-				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("unconscious"))
 					break
 				playsound(holder.owner, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				playsound(holder.owner, src.sound_kick, 50, 1)

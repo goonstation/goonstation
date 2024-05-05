@@ -269,7 +269,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 												if (M.buckled) M.buckled.unbuckle()
 												M.throw_at(target, 25, 1)
 												if (bonus_stun)
-													M.changeStatus("paralysis", 6 SECONDS)
+													M.changeStatus("unconscious", 6 SECONDS)
 													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 

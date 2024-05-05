@@ -220,7 +220,7 @@
 	//3) Do any of your items allow you to see?
 	//4) Are you blind?
 
-	if (consciousness_check && (src.hasStatus("paralysis") || src.sleeping || src.stat || src.hibernating))
+	if (consciousness_check && (src.hasStatus("unconscious") || src.sleeping || src.stat || src.hibernating))
 		return 0
 
 	if(!(HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION_WEAK)))
@@ -241,7 +241,7 @@
 	return 1
 
 /mob/living/critter/sight_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
+	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 	return 1
 
@@ -371,7 +371,7 @@
 	return 1
 
 /mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.stat || src.getStatusDuration("paralysis") || src.sleeping))
+	if (consciousness_check && (src.stat || src.getStatusDuration("unconscious") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
 	else
@@ -387,7 +387,7 @@
 			.= 0
 
 /mob/living/silicon/hearing_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
+	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 
 	if (src.ear_disability)

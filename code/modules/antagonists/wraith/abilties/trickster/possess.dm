@@ -41,7 +41,7 @@
 			H.change_misstep_chance(-20)
 			H.emote("scream")
 			H.setStatusMin("weakened", 8 SECONDS)
-			H.setStatusMin("paralysis", 8 SECONDS)
+			H.setStatusMin("unconscious", 8 SECONDS)
 			sleep(8 SECONDS)
 			if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
 			if(isnull(W.mind))	//Wraith died or was removed in the meantime

@@ -109,7 +109,7 @@
 			var/we_hold_it = FALSE
 			var/mob/living/M = src
 
-			if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("paralysis") || !isalive(M) || M.restrained())
+			if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("unconscious") || !isalive(M) || M.restrained())
 				boutput(M, SPAN_ALERT("Not when you're incapacitated, restrained, or incorporeal."))
 				return TRUE
 
@@ -155,7 +155,7 @@
 					if (!istype(K2))
 						boutput(M, SPAN_ALERT("You are unable to summon your machete."))
 						return TRUE
-					if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("paralysis") || !isalive(M) || M.restrained())
+					if (M.hasStatus("stunned") || M.hasStatus("weakened") || M.hasStatus("unconscious") || !isalive(M) || M.restrained())
 						boutput(M, SPAN_ALERT("Not when you're incapacitated, restrained, or incorporeal."))
 						return TRUE
 					if (M.mind.key != K2.slasher_key)
@@ -206,7 +206,7 @@
 				if(prob(50))
 					M.emote("shudder")
 					M.setStatusMin("weakened", 1 SECONDS)
-					M.setStatusMin("paralysis", 1 SECONDS)
+					M.setStatusMin("unconscious", 1 SECONDS)
 					M.force_laydown_standup()
 				else
 					M.emote("faint")
@@ -218,7 +218,7 @@
 				M.emote("scream")
 				M.emote("faint")
 				M.setStatusMin("weakened", 8 SECONDS)
-				M.setStatusMin("paralysis", 8 SECONDS)
+				M.setStatusMin("unconscious", 8 SECONDS)
 				sleep(8 SECONDS)
 
 				var/turf/T = get_turf(M)

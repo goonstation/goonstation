@@ -216,9 +216,9 @@
 		if(..()) return
 		if (isdead(owner))
 			return
-		if (probmult(1) && !owner.getStatusDuration("paralysis"))
+		if (probmult(1) && !owner.getStatusDuration("unconscious"))
 			owner:visible_message(SPAN_ALERT("<B>[owner] looks totally stupefied!"), SPAN_ALERT("You feel totally stupefied!"))
-			owner.setStatusMin("paralysis", 2 SECONDS * mult)
+			owner.setStatusMin("unconscious", 2 SECONDS * mult)
 		return
 
 /datum/bioEffect/thermal_vuln
@@ -289,7 +289,7 @@
 		if(..()) return
 		if (isdead(owner))
 			return
-		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
+		if ((probmult(5) && !owner.getStatusDuration("unconscious")))
 			owner:drop_item()
 			SPAWN(0)
 				owner:emote("cough")
@@ -355,7 +355,7 @@
 				owner.changeStatus("weakened", 2 SECONDS)
 			else if (probmult(2))
 				owner.visible_message(SPAN_ALERT("<B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B>"))
-				owner.changeStatus("paralysis", 7 SECONDS)
+				owner.changeStatus("unconscious", 7 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(2))
 				owner.visible_message(SPAN_ALERT("<B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B>"))

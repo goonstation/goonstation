@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 				var/mob/M = A
 				random_brute_damage(M, brutedamage)
 				if (brutedamage >= 50)
-					M.changeStatus("paralysis", 7 SECONDS)
+					M.changeStatus("unconscious", 7 SECONDS)
 				else if (brutedamage >= 30)
 					M.changeStatus("stunned", 10 SECONDS)
 				else if (brutedamage >= 20)

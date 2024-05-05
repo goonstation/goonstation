@@ -1651,8 +1651,8 @@
 				m_type = 1
 
 			if ("collapse", "trip")
-				if (!src.getStatusDuration("paralysis"))
-					src.changeStatus("paralysis", 3 SECONDS)
+				if (!src.getStatusDuration("unconscious"))
+					src.changeStatus("unconscious", 3 SECONDS)
 				message = "<B>[src]</B> [lowertext(act)]s!"
 				m_type = 2
 

@@ -1477,7 +1477,7 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/process_locks()
 	if(weapon_lock)
-		src.setStatus("paralysis", 5 SECONDS)
+		src.setStatus("unconscious", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
@@ -2236,7 +2236,7 @@ or don't if it uses a custom topopen overlay
 			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
 
 
-	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
+	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("unconscious"))
 		clearFaceOverlays(1)
 		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
 

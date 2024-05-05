@@ -641,7 +641,7 @@ datum
 								M.visible_message(SPAN_ALERT("[M] pukes everywhere and passes out!"))
 								M.vomit()
 								M.reagents.del_reagent("bojack")
-								M.setStatusMin("paralysis", 3 SECONDS)
+								M.setStatusMin("unconscious", 3 SECONDS)
 
 		fooddrink/alcoholic/cocktail_screwdriver
 			name = "Screwdriver"
@@ -2229,7 +2229,7 @@ datum
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
 							boutput(M, SPAN_ALERT("What stunning texture!"))
-							M.setStatusMin("paralysis", 6 SECONDS)
+							M.setStatusMin("unconscious", 6 SECONDS)
 							M.setStatusMin("stunned", 7 SECONDS)
 							M.setStatusMin("weakened", 8 SECONDS)
 							M.stuttering += 20
@@ -3174,7 +3174,7 @@ datum
 						boutput(M, SPAN_ALERT("You feel a sharp pain in your chest!"))
 						M.take_oxygen_deprivation(25 * mult)
 						M.setStatusMin("stunned", 10 SECONDS * mult)
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatusMin("unconscious", 6 SECONDS * mult)
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -3414,7 +3414,7 @@ datum
 					if(effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> enters a food coma!"))
 						M.emote("faint")
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatusMin("unconscious", 6 SECONDS * mult)
 					else if(effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> wants more delicious food!"))
 						M.emote("scream")

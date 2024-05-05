@@ -147,7 +147,7 @@
 		if(!istype(P))
 			return
 		user.show_text(SPAN_ALERT("You leap and slam against the inside of [P]! Ouch!"))
-		user.changeStatus("paralysis", 4 SECONDS)
+		user.changeStatus("unconscious", 4 SECONDS)
 		user.changeStatus("weakened", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[P]</b> emits a loud thump and rattles a bit."))
 

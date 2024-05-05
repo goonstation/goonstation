@@ -569,7 +569,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
-				M.changeStatus("paralysis", 3 SECONDS)
+				M.changeStatus("unconscious", 3 SECONDS)
 				M.changeStatus("stunned", 6 SECONDS)
 				M.take_brain_damage(15)
 			qdel(src)

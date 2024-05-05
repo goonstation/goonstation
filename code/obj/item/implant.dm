@@ -546,7 +546,7 @@ THROWING DARTS
 		if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 			if (H.health < 0)
-				H.changeStatus("paralysis", 5 SECONDS)
+				H.changeStatus("unconscious", 5 SECONDS)
 				H.changeStatus("newcause", 5 SECONDS)
 				H.delStatus("derevving")
 				H.force_laydown_standup()
@@ -1385,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				sleep(3 SECONDS)
 				if (H && src)
 					H.emote("faint")
-					H.changeStatus("paralysis", 10 SECONDS)
+					H.changeStatus("unconscious", 10 SECONDS)
 					H.losebreath += 5
 					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
 

@@ -24,7 +24,7 @@
 	var/voice_fem = 'sound/voice/wizard/TeleportFem.ogg'
 	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
 
-	if (src.getStatusDuration("paralysis") || !isalive(src))
+	if (src.getStatusDuration("unconscious") || !isalive(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 
@@ -111,7 +111,7 @@
 			if (src.wizard_castcheck(spell) == 0)
 				return 0 // Has own user feedback.
 
-	if (src.getStatusDuration("paralysis") || !isalive(src))
+	if (src.getStatusDuration("unconscious") || !isalive(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 

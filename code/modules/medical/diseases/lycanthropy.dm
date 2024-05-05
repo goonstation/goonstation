@@ -34,7 +34,7 @@
 			if (4)
 				if (probmult(10))
 					H.emote("cough")
-				if (probmult(5) && !H.getStatusDuration("weakened") && !H.getStatusDuration("paralysis"))
+				if (probmult(5) && !H.getStatusDuration("weakened") && !H.getStatusDuration("unconscious"))
 					boutput(H, SPAN_ALERT("You suddenly feel very weak."))
 					H.emote("collapse")
 

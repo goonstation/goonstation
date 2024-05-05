@@ -1080,7 +1080,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	cooldown = 100
 
 	ability_allowed()
-		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("unconscious"))
 			boutput(the_mob, SPAN_ALERT("You are incapacitated."))
 			return 0
 
@@ -1689,7 +1689,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
-			if(src.getStatusDuration("paralysis") || src.getStatusDuration("weakened") || src.stunned > 0)
+			if(src.getStatusDuration("unconscious") || src.getStatusDuration("weakened") || src.stunned > 0)
 				boutput(src, "You can't do that while incapacitated!")
 				return
 
@@ -1711,7 +1711,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						var/mob/living/H = G.affecting
 						if(H.lying)
 							H.lying = 0
-							H.delStatus("paralysis")
+							H.delStatus("unconscious")
 							H.delStatus("weakened")
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
@@ -1890,7 +1890,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_mob_life(var/mob/M)
 		if(!M) M = holder.my_atom
 		M.drowsyness = max(M.drowsyness-15, 0)
-		if(M.getStatusDuration("paralysis")) M.paralysis-=3
+		if(M.getStatusDuration("unconscious")) M.paralysis-=3
 		if(M.stunned) M.stunned-=3
 		if(M.weakened) M.weakened-=3
 		if(M.sleeping) M.sleeping = 0

@@ -30,7 +30,7 @@
 				boutput(H, SPAN_ALERT("You bash your head on the ground."))
 				H.TakeDamageAccountArmor("head", 5, 0, 0, DAMAGE_BLUNT)
 				H.take_brain_damage(2)
-				H.changeStatus("paralysis", 10 SECONDS)
+				H.changeStatus("unconscious", 10 SECONDS)
 				H.make_jittery(1000)
 			else
 				boutput(H, SPAN_ALERT("You bash your head on the ground - good thing you were wearing a helmet!"))

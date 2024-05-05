@@ -1126,7 +1126,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			else if (istype(the_mob.loc, /obj/))
 				var/obj/container = the_mob.loc
 				boutput(the_mob, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-				the_mob.changeStatus("paralysis", 5 SECONDS)
+				the_mob.changeStatus("unconscious", 5 SECONDS)
 				the_mob.changeStatus("weakened", 5 SECONDS)
 				container.visible_message(SPAN_ALERT("<b>[the_mob.loc]</b> emits a loud thump and rattles a bit."))
 				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)

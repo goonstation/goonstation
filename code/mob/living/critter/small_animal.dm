@@ -744,14 +744,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			return 1
 		if (prob(30))
 			src.icon_state = "[src.dogtype]-lying"
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
 			src.setStatus("weakened", 10 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] flops on [his_or_her(src)] back! Scratch that belly!"),\
 			SPAN_NOTICE("You flop on your back!"))
 			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
-					src.delStatus("paralysis")
+					src.delStatus("unconscious")
 					src.changeStatus("stunned", 10 SECONDS)
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
@@ -935,7 +935,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
 			src.setStatus("weakened", 10 SECONDS)
 			src.sleeping = 10
@@ -2391,7 +2391,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 6 SECONDS)
+			src.setStatus("unconscious", 6 SECONDS)
 			src.setStatus("stunned", 6 SECONDS)
 			src.setStatus("weakened", 6 SECONDS)
 			src.sleeping = 10

@@ -446,7 +446,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(H, pick(SPAN_ALERT("That tasted <b>HORRIBLE</b>! Your mouth feels numb!"), SPAN_ALERT("You feel like you're about to puke!")))
 		else
 			if (prob(30))
-				H.setStatus("paralysis", 2.5 SECONDS)
+				H.setStatus("unconscious", 2.5 SECONDS)
 				boutput(H, pick(SPAN_ALERT("The sudden assault of displeasing flavors on your tongue dazes you!"), SPAN_ALERT("This ignoble meal makes you blank out!")))
 			else if (prob(30))
 				boutput(H, pick(SPAN_ALERT("You can't keep down this <i>food</i>!"), SPAN_ALERT("You fail to swallow this horrific meal!")))

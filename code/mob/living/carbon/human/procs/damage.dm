@@ -213,7 +213,7 @@
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
-		src.changeStatus("paralysis", b_loss DECI SECONDS)
+		src.changeStatus("unconscious", b_loss DECI SECONDS)
 		src.force_laydown_standup()
 
 	TakeDamage(zone="All", brute=b_loss, burn=f_loss, tox=0, damage_type=0, disallow_limb_loss=1)

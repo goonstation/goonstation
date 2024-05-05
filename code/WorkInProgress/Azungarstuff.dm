@@ -913,7 +913,7 @@
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
+				user.changeStatus("unconscious", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(usr)
