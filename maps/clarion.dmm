@@ -15224,29 +15224,6 @@
 	},
 /area/station/medical/medbay/lobby)
 "cVE" = (
-/obj/surgery_tray,
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -24064,29 +24041,6 @@
 	pixel_x = 6
 	},
 /obj/machinery/camera,
-/obj/surgery_tray,
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -30757,6 +30711,29 @@
 	dir = 8
 	},
 /obj/item_dispenser/latex_gloves,
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -42301,6 +42278,35 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"xYv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "xYZ" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/vending/cards,
@@ -67928,7 +67934,7 @@ lfY
 brX
 oYr
 oBI
-oBI
+xYv
 pre
 uCQ
 gNH
