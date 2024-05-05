@@ -518,9 +518,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 /mob/living/critter/proc/can_pull(atom/A)
 	if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
@@ -734,9 +732,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (HH.can_attack)
 		if (ismob(target))
 			if (a_intent != INTENT_HELP)
-				if (mob_flags & AT_GUNPOINT)
-					for(var/obj/item/grab/gunpoint/G in grabbed_by)
-						G.shoot()
+				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 			switch (a_intent)
 				if (INTENT_HELP)

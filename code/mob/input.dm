@@ -238,9 +238,7 @@
 					//robust grab : Assailant gets moved here (do_step shit). this is messy, i'm sorry, blame MBC
 					if (!do_step || src.loc != old_loc)
 
-						if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
-							for(var/obj/item/grab/gunpoint/G in grabbed_by)
-								G.shoot()
+						SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
 						var/list/stepped = list()
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if ((G.assailant in stepped) || G.assailant == pushing || G.affecting == pushing) continue

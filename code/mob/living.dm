@@ -508,11 +508,7 @@
 			if (istype(movable))
 				movable.pull(src)
 
-				if (mob_flags & AT_GUNPOINT)
-					for(var/obj/item/grab/gunpoint/G in grabbed_by)
-						G.shoot()
-
-				return
+				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 		else
 			var/reach = can_reach(src, target)
 			if (src.pre_attack_modify())
@@ -1585,9 +1581,7 @@
 		actions.interrupt(src, INTERRUPT_ATTACKED)
 		src.was_harmed(M, intent = M.a_intent)
 
-		if (M.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(M, COMSIG_MOB_TRIGGER_THREAT)
 
 	var/obj/item/clothing/gloves/gloves
 	if (ishuman(M))
