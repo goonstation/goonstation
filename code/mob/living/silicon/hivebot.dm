@@ -910,6 +910,14 @@ Frequency:
 				return src.module_states[i]
 	return 0
 
+/mob/living/silicon/hivebot/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
+
+/mob/living/silicon/hivebot/set_pulling(atom/movable/A)
+	. = ..()
+	src.hud?.update_pulling()
+
 /*-----Actual AI Shells---------------------------------------*/
 
 /mob/living/silicon/hivebot/eyebot
@@ -1219,3 +1227,4 @@ Frequency:
 			else
 				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
 		..()
+
