@@ -26,6 +26,9 @@
 		"hemophilia",
 	)
 
+	var/list/traitData = list()
+	var/traitDataDirty = TRUE
+
 	proc/selectTrait(var/id, var/list/parts_selected = null)
 		var/list/future_selected = traits_selected.Copy()
 		if (id in traitList)
@@ -35,6 +38,7 @@
 			return FALSE
 
 		traits_selected = future_selected
+		traitDataDirty = TRUE
 		updateTotal()
 		return TRUE
 
@@ -46,10 +50,12 @@
 			return FALSE
 
 		traits_selected = future_selected
+		traitDataDirty = TRUE
 		updateTotal()
 		return TRUE
 
 	proc/resetTraits()
+		traitDataDirty = TRUE
 		traits_selected = list()
 		updateTotal()
 
@@ -120,6 +126,19 @@
 					continue
 
 			. += C
+
+	proc/generateTraitData(/mob/user)
+		if(traitDataDirty)
+			traitData = list()
+			for (var/datum/trait/trait as anything in src.getTraits(user))
+				var/selected = (trait.id in src.traits_selected)
+				traitData += list(list(
+					"id" = trait.id,
+					"selected" = selected,
+					"available" = src.isAvailableTrait(trait.id, selected)
+				))
+			traitDataDirty = FALSE
+		return traitData
 
 /datum/traitHolder
 	var/list/traits = list()
@@ -333,6 +352,18 @@
 		return
 */
 
+
+
+/datum/trait/german
+	name = "German"
+	desc = "You're from somewhere in the middle of Texas. Prost y'all."
+	id = "german"
+	icon_state = "german"
+	points = 0
+	category =  list("language")
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("accent_german")
 /datum/trait/finnish
 	name = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"

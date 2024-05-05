@@ -2640,6 +2640,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/pod/armor_heavy,
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
+		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,

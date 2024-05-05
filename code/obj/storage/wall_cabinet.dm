@@ -300,6 +300,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/sunhat/sunhatg = 1,
+		/obj/item/clothing/head/sunhat/sunhaty = 1,
 		/obj/item/clothing/head/serpico = 1,
 		/obj/item/clothing/head/cowboy = 1)
 

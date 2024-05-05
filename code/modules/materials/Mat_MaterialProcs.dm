@@ -394,7 +394,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (!istype(molitz))
 			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
 		var/iterations = owner.material.getProperty("molitz_bubbles")
-		if(iterations <= 0) return
+		if(iterations <= 0)
+			owner.setMaterial(getMaterial("molitz_expended"))
+			return
 
 		var/datum/gas_mixture/air = owner.return_air() || owner.loc.return_air()
 		if(!istype(air))

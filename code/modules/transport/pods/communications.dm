@@ -80,7 +80,7 @@
 		access_type = list(POD_ACCESS_SECURITY, POD_ACCESS_STANDARD)
 
 	opencomputer(mob/user as mob)
-		ship.intercom?.attack_self(user)
+		ship.intercom?.AttackSelf(user)
 		return
 
 	deactivate()

@@ -404,7 +404,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 		. += "There's [src.papers] paper[s_es(src.papers)] loaded into it."
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)

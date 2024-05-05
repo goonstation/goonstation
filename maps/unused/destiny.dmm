@@ -6040,9 +6040,7 @@
 /area/station/medical/medbay/pharmacy)
 "aBF" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 7
-	},
+/obj/machinery/glass_recycler,
 /obj/item/device/reagentscanner{
 	pixel_x = -12
 	},
@@ -17133,7 +17131,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -22475,7 +22473,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/item/device/radio/intercom/security,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)

@@ -535,7 +535,7 @@
 			usr.u_equip(R)
 			usr.put_in_hand_or_drop(T)
 			T.set_frequency(initial(T.frequency))
-			T.attack_self(usr)
+			T.AttackSelf(usr)
 			return
 		else if (href_list["selfdestruct"])
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
@@ -548,11 +548,11 @@
 			if (href_list["temp"])
 				src.temp = null
 		if (ismob(src.loc))
-			attack_self(src.loc)
+			src.AttackSelf(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					src.AttackSelf(M)
 	return
 
 /mob/proc/bball_spellpower()

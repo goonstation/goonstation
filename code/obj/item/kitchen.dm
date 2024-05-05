@@ -62,6 +62,7 @@ TRAYS
 
 	attack_self(mob/user as mob)
 		src.rotate()
+		..()
 
 	proc/rotate()
 		if(rotatable)
@@ -726,10 +727,14 @@ TRAYS
 
 		src.UpdateIcon()
 
-	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
-	proc/indirect_pickup(var/food, mob/user, atom/over_object)
-		if (user == over_object && in_interact_range(src, user) && can_act(user))
+	/// Handles food being dragged around
+	proc/indirect_pickup(var/obj/item/food, mob/user, atom/over_object)
+		if (!in_interact_range(src, user) || !can_act(user))
+			return
+		if (user == over_object)
 			src.Attackhand(user)
+		else if (over_object == src || isturf(over_object))
+			src.remove_contents(food)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere(depth = 1)

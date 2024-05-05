@@ -393,7 +393,7 @@
 		src.add_fingerprint(user)
 		if (user.is_in_hands(src))
 			if (!src.open)
-				attack_self(user)
+				src.AttackSelf(user)
 				if (!src.open)
 					return ..()
 			var/obj/item/I = src.take_from()

@@ -1857,14 +1857,14 @@ Returns:
 
 		if (r <= 60)
 			if(r < 30)
-				return item1.attack_self(user)
+				return item1.AttackSelf(user)
 			else
-				return item2.attack_self(user)
+				return item2.AttackSelf(user)
 		else
 			if(r <= 80)
 				SPAWN(0)
-					item1.attack_self(user)
-					item2.attack_self(user)
+					item1.AttackSelf(user)
+					item2.AttackSelf(user)
 				return
 			else
 				src.fall_apart(user)
@@ -3311,9 +3311,9 @@ var/list/lag_list = new/list()
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
 
-			src.attack_self(usr)
+			src.AttackSelf(usr)
 			return
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 		return
 

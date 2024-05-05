@@ -194,7 +194,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/toggleinput()
 	if(src.cant_emag || (src.req_access && !(src.operating == -1)))
-		play_animation("deny")
+		if (src.density) //only play if it's closed
+			play_animation("deny")
 		return
 	if(density)
 		open()

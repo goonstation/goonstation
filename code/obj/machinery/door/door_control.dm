@@ -519,6 +519,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	requires_power = 0
 	welcome_text = "Welcome, Agent."
 
+/obj/machinery/door_control/ex_act(severity)
+	return
+
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return

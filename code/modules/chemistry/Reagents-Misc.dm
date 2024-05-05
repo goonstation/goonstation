@@ -1084,7 +1084,7 @@ datum
 					if (ranchance == 1)
 						boutput(M, SPAN_ALERT("You feel very sick."))
 						M.reagents.add_reagent("toxin", rand(1,5))
-					else if (ranchance <= 5 && ranchance != 1)
+					else if (ranchance <= 5)
 						boutput(M, SPAN_ALERT("That tasted absolutely FOUL."))
 						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 					else boutput(M, SPAN_ALERT("Yuck!"))
@@ -2272,6 +2272,56 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 127
+			overdose = 25
+			var/OD_ticks = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				if (holder.get_reagent_amount(src.id) < src.overdose)
+					//once we loose the OD treshold, we really stop turning into rubber
+					src.OD_ticks = 0
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				switch (severity)
+					if (1)
+						if(prob(5))
+							//while we are overdosing, we don't fully break down the OD-ticks. Gotta get under the OD-limit
+							src.OD_ticks = max(0, src.OD_ticks - 1)
+						if(prob(10) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+							animate_flubber(M)
+							boutput(M, SPAN_ALERT("You feel [pick("like you're bending out of shape", "a jiggling sensation", "like something is wrong")]."))
+							//your body becoming rubber should hurt. We start at 6 damage and scale up to 8 damage before hitting the really dangerous OD-limit
+							random_brute_damage(M, 8 * (holder.get_reagent_amount(src.id) / src.overdose)  * mult)
+					if (2 to INFINITY)
+						//now the real fun starts
+						src.OD_ticks += 1
+						if(src.OD_ticks > 8 && prob(10))
+							boutput(M, SPAN_ALERT("<I>Your finger's feel rubbery!</I>"))
+							if(istype(M, /mob/living))
+								var/mob/living/rubber_finger_mob = M
+								rubber_finger_mob.empty_hands()
+						switch(src.OD_ticks)
+							if (1 to 10)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+									animate_flubber(M)
+									boutput(M, SPAN_ALERT(pick("Something feels seriously off.","You can swear you have seen your back just a second ago...", "It felt like your stomach shifted upwards for a second, odd...")))
+									random_brute_damage(M, 8 * mult)
+							if (11 to 22)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
+									animate_flubber(M, 6, 10, 3, 2)
+									boutput(M, SPAN_ALERT(pick("Your body cannot stop jiggling.","Your knees twist in an unsettling direction.", "Your eyes bounce inside your skull for a moment, holy fuck...")))
+									random_brute_damage(M, 10 * mult)
+							if (23 to INFINITY)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
+									boutput(M, SPAN_ALERT("<B>[pick("Your body stretches to an unreasonable degree, FUCK!","You cannot control your form! MAKE. IT. STOP!", "You feel your organs jiggling into each other... IT HURTS!")]</B>"))
+									M.setStatusMin("stunned", 2 SECONDS * mult)
+									animate_flubber(M, 4, 8, 4, 2.5)
+									random_brute_damage(M, 12 * mult)
+
 
 		fliptonium
 			name = "fliptonium"

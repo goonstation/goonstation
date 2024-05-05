@@ -41,7 +41,7 @@
 	var/deadly = 0
 
 	attackby(obj/item/W, mob/user)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	MouseDrop_T(atom/target, mob/user)
 		if (BOUNDS_DIST(user, src) == 0 && target == user)
@@ -116,7 +116,7 @@
 		if (in_use)
 			return 0
 		suiciding = 1 //reset in attack_hand() at the same time as in_use
-		attack_hand(user)
+		src.Attackhand(user)
 
 		SPAWN(50 SECONDS)
 			if (src)

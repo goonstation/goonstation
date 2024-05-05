@@ -279,9 +279,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/light/zippo,
 	/obj/item/storage/box/clothing/research_director,
 	/obj/item/clothing/shoes/brown,
-	/obj/item/circular_saw,
-	/obj/item/scalpel,
 	/obj/item/hand_tele,
+	/obj/item/clothing/glasses/packetvision,
 	/obj/item/storage/box/zeta_boot_kit,
 	/obj/item/device/radio/electropack,
 	/obj/item/clothing/mask/gas,
@@ -885,8 +884,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_bar)
 	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\
 	/obj/item/storage/box/glassbox)
 
 /obj/storage/secure/closet/civilian/chaplain

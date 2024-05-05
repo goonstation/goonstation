@@ -81,7 +81,7 @@ Contains:
 	..()
 
 /obj/item/assembly/time_ignite/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -405,7 +405,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -623,7 +623,7 @@ Contains:
 
 /obj/item/assembly/rad_ignite/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -852,7 +852,7 @@ Contains:
 	return
 
 obj/item/assembly/radio_horn/attack_self(mob/user as mob)
-	src.part1.attack_self(user)
+	src.part1.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 
@@ -907,8 +907,8 @@ obj/item/assembly/radio_horn/receive_signal()
 
 /obj/item/assembly/rad_time/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
-	src.part2.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
+	src.part2.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -975,8 +975,8 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
-	src.part2.attack_self(user, src.status)
+	src.part1.AttackSelf(user, src.status)
+	src.part2.AttackSelf(user, src.status)
 	src.add_fingerprint(user)
 	return
 

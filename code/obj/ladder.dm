@@ -147,7 +147,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	src.climb(user)
 
 /obj/ladder/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/ladder/Click(location, control, params)
 	if (isobserver(usr))

@@ -8,6 +8,7 @@
 	light_r =1
 	light_g = 0.7
 	light_b = 0.03
+	circuit_type = /obj/item/circuitboard/stockexchange
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)

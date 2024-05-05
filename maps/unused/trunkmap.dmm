@@ -13257,7 +13257,7 @@
 "aUR" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aUS" = (
@@ -13281,7 +13281,7 @@
 "aUV" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -15974,7 +15974,7 @@
 "beT" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -17059,7 +17059,7 @@
 /area/station/hallway/secondary/exit)
 "biQ" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "biR" = (
@@ -27048,7 +27048,7 @@
 /area/station/hangar/engine)
 "iuk" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "iuv" = (
@@ -29930,7 +29930,7 @@
 "rel" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "rem" = (
@@ -32037,7 +32037,7 @@
 "xdz" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "xdW" = (
@@ -32128,7 +32128,7 @@
 "xED" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "xEU" = (

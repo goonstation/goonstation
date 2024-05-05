@@ -729,7 +729,7 @@
 
 	afterattack(var/atom/target, mob/user, flag)
 		if (target == user)
-			src.attack_self(user)
+			src.AttackSelf(user)
 		else
 			. = ..()
 

@@ -472,6 +472,9 @@ proc/generate_space_color()
 	proc/process_cell()
 		return
 
+	meteorhit(obj/meteor)
+		return
+
 /turf/New()
 	..()
 	if (density)
@@ -616,7 +619,7 @@ proc/generate_space_color()
 /turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(src.density)
-		if(AM.throwforce >= 80)
+		if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 
@@ -1108,6 +1111,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
+	explosion_resistance = 999999
 	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors

@@ -432,7 +432,7 @@
 				return
 			boutput(user, SPAN_NOTICE("You swipe your ID card in the ATM."))
 			src.scan = id_card
-			attack_hand(user)
+			src.Attackhand(user)
 			return
 		if (istype(I, /obj/item/currency/spacecash/))
 			if (afterlife)
@@ -446,7 +446,7 @@
 				src.accessed_record["current_money"] += I.amount
 				I.amount = 0
 				qdel(I)
-				attack_hand(user)
+				src.Attackhand(user)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
 			return
 		if (istype(I, /obj/item/lotteryTicket))
@@ -463,7 +463,7 @@
 						wagesystem.lotteryJackpot -= I:winner
 					else
 						wagesystem.lotteryJackpot = 0
-					attack_hand(user)
+					src.Attackhand(user)
 				else
 					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
 					src.show_message("Your ticket is not a winner. Commiserations.", "danger", "lottery")
@@ -482,7 +482,7 @@
 				playsound(src.loc, 'sound/machines/capsulebuy.ogg', 50, 1)
 			user.drop_item(SB)
 			qdel(SB)
-			attack_hand(user)
+			src.Attackhand(user)
 			return
 		var/damage = I.force
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.

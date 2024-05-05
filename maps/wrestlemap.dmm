@@ -19543,7 +19543,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -51925,7 +51925,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/cable{
 	icon_state = "2-8"
 	},

@@ -1168,6 +1168,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
 
+	sunhaty
+		icon_state = "sunhaty"
+		item_state = "sunhaty"
+
 	stunhatr
 		stunready = 1
 		uses = 1

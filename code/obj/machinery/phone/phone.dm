@@ -413,7 +413,7 @@ TYPEINFO(/obj/machinery/phone)
 
 			// intercoms overhear phone conversations
 			for (var/obj/item/device/radio/intercom/I in range(3, listener))
-				I.talk_into(M, text, null, heard_name, lang_id)
+				I.talk_into(M, text, null, M.get_heard_name(just_name_itself=TRUE), lang_id)
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25

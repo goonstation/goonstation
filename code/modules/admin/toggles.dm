@@ -46,6 +46,7 @@ var/list/server_toggles_tab_verbs = list(
 /client/proc/admin_toggle_nightmode,
 /client/proc/toggle_camera_network_reciprocity,
 /datum/admins/proc/toggle_radio_audio,
+/datum/admins/proc/toggle_remote_music_announcements,
 )
 
 /client/proc/toggle_server_toggles_tab()
@@ -1031,6 +1032,20 @@ client/proc/toggle_ghost_respawns()
 	message_admins(SPAN_INTERNAL("[key_name(usr)] [radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play."))
 	logTheThing(LOG_DIARY, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
 	logTheThing(LOG_ADMIN, usr, "[radio_audio_enabled ? "" : "dis"]allowed for radio music/tapes to play.")
+
+
+/datum/admins/proc/toggle_remote_music_announcements()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle whether remotely-played music tracks are announced."
+	set name = "Toggle Music Announcements"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
+	NOT_IF_TOGGLES_ARE_OFF
+	remote_music_announcements = !( remote_music_announcements )
+	logTheThing(LOG_ADMIN, usr, "toggled remote music announcements [remote_music_announcements ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled remote music announcements [remote_music_announcements ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled remote music announcements [remote_music_announcements ? "on" : "off"]")
+
 
 //Dont need this any more? Player controlled now
 /*

@@ -379,6 +379,59 @@
 			user.visible_message(SPAN_ALERT("<b>[user]</b> is flung out of [src.ship]!"))
 			user.throw_at(get_edge_target_turf(user, pick(alldirs)), rand(3,7), 3)
 
+/obj/item/shipcomponent/secondary_system/storage
+	name = "Storage Hold"
+	desc = "Allows the ship to hold many smaller items, versus a typical cargo hold."
+	hud_state = "cargo"
+	f_active = TRUE
+	var/obj/dummy_storage/dummy_storage
+
+	New()
+		..()
+		src.dummy_storage = new(null, src)
+
+	disposing()
+		qdel(src.dummy_storage)
+		src.dummy_storage = null
+		..()
+
+/obj/item/shipcomponent/secondary_system/storage/Use(mob/user)
+	src.dummy_storage.storage.show_hud(user)
+
+/obj/item/shipcomponent/secondary_system/storage/activate()
+	src.dummy_storage.storage.show_hud(usr)
+
+/obj/item/shipcomponent/secondary_system/storage/deactivate()
+	for (var/atom/A as anything in src.dummy_storage.storage.get_contents())
+		src.dummy_storage.storage.transfer_stored_item(A, get_turf(src))
+
+/obj/item/shipcomponent/secondary_system/storage/Clickdrag_PodToObject(mob/living/user, atom/A)
+	if (user == A)
+		src.dummy_storage.storage.show_hud(user)
+
+/obj/item/shipcomponent/secondary_system/storage/Clickdrag_ObjectToPod(mob/living/user, atom/A)
+	if (istype(A, /obj/item) && src.dummy_storage.storage.check_can_hold(A) == STORAGE_CAN_HOLD)
+		src.dummy_storage.storage.add_contents(A, user)
+	else
+		boutput(user, SPAN_NOTICE("[src] can't hold this!"))
+
+/obj/item/shipcomponent/secondary_system/storage/on_shipdeath(var/obj/machinery/vehicle/ship)
+	var/atom/movable/AM
+	for (var/atom/A in src.dummy_storage.storage.get_contents())
+		src.dummy_storage.storage.transfer_stored_item(A, get_turf(src.ship))
+		A.visible_message(SPAN_ALERT("<b>[A]</b> is flung out of [src.ship]!"))
+		if (istype(A, /atom/movable))
+			AM = A
+			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3, 7), 3)
+
+/obj/dummy_storage
+	name = "Storage Hold"
+
+	New(turf/newLoc, obj/item/shipcomponent/secondary_system/storage/parent_storage)
+		..()
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
+		src.set_loc(parent_storage)
+
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
 	desc = "Allows the ship to pull objects towards it"
@@ -409,25 +462,34 @@
 		..()
 		if(!active)
 			return
-		var/list/targets = list()
+
+		var/list/targets_by_name = list()
+		var/list/counts_by_type = list()
 		for (var/atom/movable/a in view(src.seekrange,ship.loc))
 			if(!a.anchored)
-				targets += a
+				counts_by_type[a.type] += 1
+				if (counts_by_type[a.type] == 1)
+					targets_by_name[a.name] = a
+				else
+					targets_by_name["[a.name] #[counts_by_type[a.type]]"] = a
 
-		target = input(usr, "Choose what to use the tractor beam on", "Choose Target")  as null|anything in targets
+		target = targets_by_name[tgui_input_list(usr, "Choose what to use the tractor beam on", "Choose Target", sortList(targets_by_name, GLOBAL_PROC_REF(cmp_text_asc)))]
 
 		if(!target)
 			deactivate()
 			return
 		tractor = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "tractor", "layer" = FLOAT_LAYER)
 		target.overlays += tractor
+		RegisterSignal(src.ship, COMSIG_MOVABLE_MOVED, PROC_REF(tractor_drag))
 		settingup = 0
+
 	deactivate()
 		..()
 		settingup = 1
 		if(target)
 			target.overlays -= tractor
 			target = null
+			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
 		return
 
 	opencomputer(mob/user as mob)
@@ -443,6 +505,12 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
+
+	proc/tractor_drag(obj/machinery/vehicle/holding_ship, atom/previous_loc, direction)
+		if (QDELETED(src.target) || GET_DIST(holding_ship, src.target) > src.seekrange)
+			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
+			return
+		step_to(src.target, src.ship, 1)
 
 /obj/item/shipcomponent/secondary_system/repair
 	name = "Duracorp Construction Device"

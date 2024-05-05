@@ -191,7 +191,7 @@ var/list/headset_channel_lookup
 				usr.u_equip(R)
 				usr.put_in_hand_or_drop(T)
 				R.set_loc(T)
-				T.attack_self(usr)
+				T.AttackSelf(usr)
 				return
 
 			return TRUE
@@ -675,7 +675,7 @@ var/list/headset_channel_lookup
 		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
-		src.attack_self(M)
+		src.AttackSelf(M)
 		//Foreach goto(83)
 	src.add_fingerprint(user)
 	return
