@@ -62,5 +62,5 @@
 					O.icon_state = "explosion"
 					SPAWN(3.5 SECONDS) qdel(O)
 					random_brute_damage(H, 50)
-					H.changeStatus("weakened", 10 SECONDS)
+					H.changeStatus("knockdown", 10 SECONDS)
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_piledriver

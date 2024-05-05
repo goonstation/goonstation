@@ -155,7 +155,7 @@
 					if(jerk.protected_from_space()) // Be kind around station...
 						return
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
-					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
+					jerk.do_disorient(stamina_damage = 100, knockdown = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
 						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, TRUE)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))

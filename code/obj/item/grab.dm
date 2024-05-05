@@ -76,8 +76,8 @@
 
 
 			if (state == GRAB_PIN)
-				assailant.changeStatus("weakened",2 SECONDS)
-				affecting.changeStatus("weakened",1 SECOND)
+				assailant.changeStatus("knockdown",2 SECONDS)
+				affecting.changeStatus("knockdown",1 SECOND)
 				assailant.force_laydown_standup()
 				affecting.force_laydown_standup()
 
@@ -165,7 +165,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
-				H.setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
+				H.setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -430,7 +430,7 @@
 		if (!src.affecting) return 0
 		if (BOUNDS_DIST(user, src.affecting) > 0)
 			return 0
-		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
+		if ((src.state < 1 && !(src.affecting.getStatusDuration("unconscious") || src.affecting.getStatusDuration("knockdown") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message(SPAN_ALERT("[src.affecting] stumbles a little!"))
 			user.u_equip(src)
 			qdel(src)
@@ -910,7 +910,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 			target_dir = user.dir
 		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
 
-			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
+			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)
