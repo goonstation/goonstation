@@ -1,4 +1,9 @@
+
 (t)mon may 06 24
+(u)FlameArrow57
+(p)18773
+(e)⚖💅🧛🔨|C-Balance, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Revolution rounds now properly end immediately after buckle-cuffing the last revolutionary head in a brig cell.
 (t)LeahTheTech
 (+)Syndicate docking stations now require the target to be adjacent to be click-dragged in.
 (t)sun may 05 24
