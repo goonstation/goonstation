@@ -910,7 +910,12 @@ proc/broadcast_to_all_gangs(var/message)
 	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
 	var/empty = FALSE
-
+	var/mode = "graffiti"
+	var/list/turf/graffititargets = list()
+	var/list/image/targetoverlay = list()
+	var/tagging_horizontally = FALSE
+	var/tagging_vertically = FALSE
+	var/tagging_direction
 	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
 		// check it's far enough from another tag to claim
@@ -995,7 +1000,24 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return validLocation
 
+	attack_self(mob/user)
+		if (ON_COOLDOWN(src,"shake",1 SECOND))
+			user.visible_message(SPAN_ALERT("[user] shakes the [src.name]!"))
+			playsound(user.loc, 'sound/items/graffitishake.ogg', 50, FALSE)
+		if (mode == "graffiti" && user.get_gang())
+			boutput(user, SPAN_NOTICE("You prepare to spray gang tags."))
+			mode = "gangtag"
+		else if (mode == "gangtag")
+			boutput(user, SPAN_NOTICE("You prepare to spray random graffiti."))
+			mode = "graffiti"
+
 	afterattack(target, mob/user)
+		if (mode == "gangtag")
+			do_gang_tag(target,user)
+		else
+			do_graffiti(target,user)
+
+	proc/do_gang_tag(target, mob/user)
 		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
 
 		if (!user)
@@ -1020,6 +1042,67 @@ proc/broadcast_to_all_gangs(var/message)
 		if (check_tile_unclaimed(turftarget, user))
 			user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
 			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
+	proc/clear_targets()
+		graffititargets = list()
+		tagging_horizontally = FALSE
+		tagging_vertically = FALSE
+		for (var/image/image in targetoverlay)
+			targetoverlay -= image
+			qdel(image)
+	proc/add_target(mob/user, turf/turftarget)
+		graffititargets += turftarget
+		var/image/target_image = image('icons/effects/effects.dmi', turftarget)
+		targetoverlay += target_image
+		target_image.icon_state = "tile_channel_target"
+		target_image.layer = NOLIGHT_EFFECTS_LAYER_BASE
+		user << target_image
+
+	proc/do_graffiti(target, mob/user)
+		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
+
+		if (!user)
+			return
+		if (empty)
+			return
+		var/turf/turftarget = get_turf(target)
+
+		if(BOUNDS_DIST(src, target) > 0)
+			return
+		if(in_use)
+			var/valid = FALSE
+			for (var/turf/sprayedturf in graffititargets)
+				var/relative_dir = get_dir(turftarget,sprayedturf)
+				if (BOUNDS_DIST(sprayedturf, turftarget) == 0 && relative_dir in cardinal)
+					if (tagging_horizontally && (relative_dir == WEST || relative_dir == EAST))
+						valid = TRUE
+						break
+					if (tagging_vertically && (relative_dir == NORTH || relative_dir == SOUTH))
+						valid = TRUE
+						break
+					if (!tagging_horizontally && !tagging_vertically)
+						valid = TRUE
+						break
+			if (!valid)
+				boutput(user, SPAN_ALERT("You are already tagging elsewhere!"))
+				return
+
+		user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
+		if (!actions.hasAction(user,/datum/action/bar/icon/spray_graffiti,FALSE))
+			actions.start(new/datum/action/bar/icon/spray_graffiti(src), user)
+			clear_targets()
+			add_target(user, turftarget)
+			tagging_direction = (get_dir(turftarget,user)) & (EAST | WEST)
+		else if (length(graffititargets) == 1)
+			var/direction_check = get_dir(turftarget, graffititargets[1])
+			if (direction_check == NORTH || direction_check == SOUTH)
+				tagging_vertically = TRUE
+				tagging_direction = (get_dir(turftarget,user)) & (EAST | WEST)
+			else if (direction_check == EAST || direction_check == WEST)
+				tagging_horizontally = TRUE
+				tagging_direction = (get_dir(turftarget,user)) & (NORTH | SOUTH)
+			add_target(user, turftarget)
+		else if (length(graffititargets) < 3)
+			add_target(user, turftarget)
 
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
@@ -1050,7 +1133,7 @@ proc/broadcast_to_all_gangs(var/message)
 				M = owner
 				src.gang = M?.get_gang()
 			if (gang)
-				icon = 'icons/obj/decals/graffiti.dmi'
+				icon = 'icons/obj/decals/gang_tags.dmi'
 				icon_state = "gangtag[src.gang.gang_tag]"
 				var/speedup = src.gang.gear_worn(M)
 				switch (speedup)
@@ -1075,7 +1158,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || S.mode != "gangtag")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1114,6 +1197,116 @@ proc/broadcast_to_all_gangs(var/message)
 		else
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area]")
 		boutput(M, SPAN_NOTICE("You have claimed this area for your gang and gained bonus points!"))
+
+
+/datum/action/bar/icon/spray_graffiti
+	duration = 100 SECONDS
+	interrupt_flags = INTERRUPT_STUNNED
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "spraycan"
+	var/obj/item/spray_paint/S
+	/// the mob spraying this tag
+	var/mob/M
+	/// the gang we're spraying for
+	var/datum/gang/gang
+	/// when our next spray sound can beplayed
+	var/next_spray = 0 DECI SECONDS
+
+	New(var/obj/item/spray_paint/S)
+		src.S = S
+		..()
+
+	onStart()
+		try
+			if (ismob(owner))
+				M = owner
+				var/ownerGang = M?.get_gang()
+				if (ownerGang)
+					gang = ownerGang
+			..()
+		catch(var/exception/e)
+			..()
+			throw e
+
+		for (var/turf/sprayedturf in S.graffititargets)
+			if (BOUNDS_DIST(owner, sprayedturf) > 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+		if( !M || S.mode != "graffiti")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		S.in_use = TRUE
+		next_spray += rand(10,15) DECI SECONDS
+
+	onUpdate()
+		..()
+		for (var/turf/sprayedturf in S.graffititargets)
+			if (BOUNDS_DIST(owner, sprayedturf) > 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		if(src.time_spent() > next_spray)
+			next_spray += rand(18,26) DECI SECONDS
+			playsound(owner.loc, 'sound/items/graffitispray3.ogg', 100, TRUE)
+		switch (length(S.graffititargets))
+			if (1)
+				duration = 2 SECONDS
+			if (2)
+				duration = 2 SECONDS
+			if (3)
+				duration = 2 SECONDS
+
+
+	onInterrupt(var/flag)
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
+		if (S)
+			S.in_use = FALSE
+			S.clear_targets()
+		..()
+
+	onEnd()
+		..()
+		for (var/turf/sprayedturf in S.graffititargets)
+			if (BOUNDS_DIST(owner, sprayedturf) > 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		if(!owner)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		S.in_use = FALSE
+		var/iconstate
+		var/targets = length(S.graffititargets)
+		switch (targets)
+			if (1)
+				iconstate = "graffiti-single-[rand(1,9)]"
+			if (2)
+				iconstate = "graffiti-dbl-[rand(1,5)]-"
+			if (3)
+				iconstate = "graffiti-trpl-[rand(1,7)]-"
+		if (targets == 1)
+			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(S.graffititargets[1])
+			tag.icon_state = iconstate
+			tag.dir = S.tagging_direction
+		else
+			var/list/turf/turfs_ordered = new/list(length(S.graffititargets))
+			var/spraydirection = dir_to_angle(S.tagging_direction)
+			var/vec = angle_to_vector(spraydirection)
+			var/min_distance = 1000
+			for (var/i = 1; i<=targets; i++)
+				min_distance = min(vec[2] * S.graffititargets[i].y - vec[1] * S.graffititargets[i].x , min_distance)
+
+			for (var/sorting = 1; sorting<=targets; sorting++)
+				var/dist = (vec[2] * S.graffititargets[sorting].y -vec[1] * S.graffititargets[sorting].x ) - min_distance
+				turfs_ordered[dist+1] = S.graffititargets[sorting]
+
+
+			for (var/i = 1; i<=targets; i++)
+				var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(turfs_ordered[i])
+				tag.icon_state = "[iconstate][i]"
+				tag.dir = S.tagging_direction
+		S.clear_targets()
+
 
 /obj/ganglocker
 	desc = "Gang locker."
@@ -2360,6 +2553,11 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 		return
 
+// GRAFFITI
+/obj/decal/cleanable/gang_graffiti
+	name = "graffiti"
+	desc = "A mural, of some kind. Made with cheap paint."
+	icon = 'icons/obj/decals/graffiti.dmi'
 // GANG TAGS
 
 /obj/decal/gangtag
@@ -2368,7 +2566,7 @@ proc/broadcast_to_all_gangs(var/message)
 	density = FALSE
 	anchored = TRUE
 	layer = TAG_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/exploded = FALSE
 	var/datum/gang/owners = null
