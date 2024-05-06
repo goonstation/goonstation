@@ -4,20 +4,24 @@ import { Window } from '../layouts';
 
 const RegionItem = ({ region, removeRegion, gotoRegion }) => (
   <LabeledList>
-    <LabeledList.Item label="Label"
+    <LabeledList.Item
+      label="Label"
       buttons={
         <Button.Confirm
           icon="trash"
           color="bad"
           onClick={() => removeRegion(region.ref)} />
-      } >{region.label ? region.label : region.ref}
+      }
+    >
+      {region.label ? region.label : region.ref}
     </LabeledList.Item>
     <LabeledList.Item label="Source Turf"
       buttons={
         <Button
           icon="location-dot"
           onClick={() => gotoRegion(region.ref)} />
-      } >
+      }
+    >
       {`${region.x}, ${region.y}, ${region.z} `}
     </LabeledList.Item>
     <LabeledList.Item label="Width">{`${region.width} tiles`}</LabeledList.Item>
