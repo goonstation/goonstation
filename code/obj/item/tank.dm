@@ -530,6 +530,13 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
+	empty
+		New()
+			..()
+			src.air_contents.toxins = null
+			return
+
+
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/air
