@@ -463,8 +463,7 @@
 				if (src.authenticated)
 					var/currentcard = src.modify
 
-					var/newpin = tgui_input_number(usr, "Enter a new PIN between [PIN_MIN] and [PIN_MAX].", "ID computer", PIN_MIN, PIN_MAX, PIN_MIN)
-
+					var/newpin = tgui_input_pin(usr, "Enter a new PIN between [PIN_MIN] and [PIN_MAX].", "ID Computer", null, PIN_MAX, PIN_MIN)
 					if (newpin && (src.authenticated && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
 						logTheThing(LOG_STATION, usr, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 						playsound(src.loc, "keyboard", 50, 1, -15)

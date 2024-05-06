@@ -148,7 +148,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
-
 	health_update_queue |= src
 
 	if(!src.abilityHolder)

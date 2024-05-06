@@ -35,11 +35,17 @@
 		CRASH("TGUI input PIN prompt opened with default PIN that is not a number.")
 	if (default > (!isnull(max_value) ? max_value : PIN_MAX) || default < min_value)
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
-	var/datum/tgui_input_pin/numbox = new(user, message, title, timeout, theme)
+	var/datum/tgui_input_pin/numbox = new(user, message, title, default, max_value, min_value, timeout, theme)
 	numbox.ui_interact(user)
 	numbox.wait()
 	if (numbox)
-		. = numbox.entry
+		. = round(numbox.entry)
+		if (max_value && (. > max_value))
+			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [max_value])."))
+			. = null
+		else if (min_value && (. < min_value))
+			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [min_value])."))
+			. = null
 		qdel(numbox)
 
 /**
@@ -73,7 +79,7 @@
 		CRASH("TGUI input PIN prompt opened with default PIN that is not a number.")
 	if (default > (!isnull(max_value) ? max_value : PIN_MAX) || default < min_value)
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
-	var/datum/tgui_input_pin/async/numbox = new(user, message, title, callback, timeout,  theme)
+	var/datum/tgui_input_pin/async/numbox = new(user, message, title, default, max_value, min_value, callback, timeout, theme)
 	numbox.ui_interact(user)
 
 /**
@@ -149,7 +155,7 @@
 
 /datum/tgui_input_pin/ui_data(mob/user)
 	. = list(
-		"init_value" = src.default || PIN_MIN,
+		"init_value" = src.default || null,
 		"message" = message,
 		"max_value" = max_value || PIN_MAX,
 		"min_value" = min_value || PIN_MIN,
@@ -165,10 +171,14 @@
 		return
 	switch(action)
 		if("submit")
-			var/input_num = params["entry"]
-			if(input_num > (!isnull(max_value) ? max_value : 1000))
+			var/input_arr = params["entry"]
+			// Convert the array[4] to a single number
+			var/input_num = input_arr[1] * 1000 + input_arr[2] * 100 + input_arr[3] * 10 + input_arr[4] * 1
+			if (max_value && (input_num > max_value))
+				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [max_value])."))
 				return FALSE
-			if(input_num < min_value)
+			if (min_value && (input_num < min_value))
+				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [min_value])."))
 				return FALSE
 			set_entry(input_num)
 			tgui_process.close_uis(src)
@@ -190,7 +200,7 @@
 	/// The callback to be invoked by the tgui_input_pin upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_input_pin/async/New(mob/user, message, title, default, max_value = null, min_value = null, callback, timeout)
+/datum/tgui_input_pin/async/New(mob/user, message, title, default, max_value = null, min_value = null, callback, timeout, theme)
 	. = ..()
 	src.callback = callback
 
@@ -202,6 +212,13 @@
 /datum/tgui_input_pin/async/set_entry(entry)
 	. = ..()
 	if(!isnull(src.entry))
+		src.entry = round(src.entry)
+		if (max_value && (src.entry > max_value))
+			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [max_value])."))
+			return
+		if (min_value && (src.entry < min_value))
+			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [min_value])."))
+			return
 		callback?.InvokeAsync(src.entry)
 
 /datum/tgui_input_pin/async/wait()
