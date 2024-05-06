@@ -290,6 +290,43 @@ dmm_suite
 					else
 						. += loadAttribute(trimtext(key_str), strings)
 
+		/// returns the maxx value of a TGM formatted map. Accepts either a map file or preread map text data
+		get_tgm_maxx(map_data)
+			if (isfile(map_data))
+				map_data = file2text(map_data)
+			var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+			var/x_max = 0
+
+			// Extract X from the last valid match
+			if(idx > 0)
+			{
+				var/end_of_tuple = findtextEx(map_data, ")", idx)  // Find the end of the tuple
+				x_max = text2num(copytext(map_data, idx + 1, end_of_tuple))  // Extract the X value
+			}
+			return x_max
+
+		/// returns the maxy value of a TGM formatted map. Accepts either a map file or preread map text data
+		get_tgm_maxy(map_data)
+			if (isfile(map_data))
+				map_data = file2text(map_data)
+			var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+			var/y_max = 0
+
+			// Start counting newlines from the first newline after the last match
+			if(idx > 0)
+			{
+				var/line_start = findtextEx(map_data, "\n", idx) + 1
+				while(line_start > 0 && line_start < length(map_data))
+				{
+					line_start = findtextEx(map_data, "\n", line_start + 1)  // Find the next newline
+					if(line_start)
+						y_max++
+				}
+				// Decrement Y count if there's an extra newline at the end of the data
+				if(map_data[length(map_data)] == "\n")
+					y_max--
+			}
+			return y_max
 
 //-- Preloading ----------------------------------------------------------------
 
