@@ -11602,6 +11602,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bfR" = (
@@ -29811,6 +29812,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "pmW" = (
@@ -31148,6 +31150,7 @@
 	anchored = 0;
 	dir = 8
 	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "qoZ" = (
@@ -37176,6 +37179,11 @@
 /obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"uWm" = (
+/obj/stool,
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor,
+/area/station/crew_quarters/stockex)
 "uWQ" = (
 /turf/simulated/floor{
 	icon_state = "L13";
@@ -89237,7 +89245,7 @@ qjR
 urp
 dAy
 urp
-uww
+uWm
 bnL
 bAF
 egh
