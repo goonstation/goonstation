@@ -10893,7 +10893,7 @@
 "bcZ" = (
 /obj/decal/poster/wallsign/poster_nt,
 /turf/simulated/wall/auto/supernorn,
-/area/station/ranch)
+/area/station/storage/emergency)
 "bda" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
@@ -15818,6 +15818,9 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"coH" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/emergency)
 "coR" = (
 /obj/disposalpipe/block_sensing_outlet{
 	dir = 8
@@ -16358,7 +16361,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "cMd" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -17129,7 +17132,7 @@
 	spawn_contents = list(/obj/item/raw_material/char = 40)
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "dzv" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -17290,7 +17293,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "dIy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -17653,7 +17656,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/ranch)
+/area/station/storage/emergency)
 "ebZ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -18236,7 +18239,7 @@
 "eHM" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "eIi" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -19114,7 +19117,7 @@
 "fvH" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "fwr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -21552,7 +21555,7 @@
 "hBp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "hBq" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -22805,7 +22808,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "iOF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -23096,7 +23099,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "jeA" = (
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
@@ -23738,7 +23741,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "jKz" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -24791,7 +24794,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "kPj" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
@@ -28488,7 +28491,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "oqt" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/sleeper{
@@ -28931,7 +28934,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "oKL" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/terminal/zeta{
@@ -28945,7 +28948,7 @@
 /area/station/science/artifact)
 "oKM" = (
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "oKZ" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -29103,7 +29106,7 @@
 	},
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "oQf" = (
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/plating,
@@ -31169,7 +31172,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "qqe" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -31445,7 +31448,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "qBG" = (
 /obj/cable,
 /obj/cable{
@@ -32342,7 +32345,7 @@
 "rhk" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "rhu" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/glasses/vr{
@@ -33272,7 +33275,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "rRc" = (
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
@@ -35515,7 +35518,7 @@
 /obj/machinery/light/incandescent,
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "tHA" = (
 /obj/lattice{
 	dir = 4;
@@ -35765,7 +35768,7 @@
 "tNk" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "tNn" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/plating,
@@ -35867,7 +35870,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "tVe" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -36573,7 +36576,7 @@
 "uvI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/ranch)
+/area/station/storage/emergency)
 "uww" = (
 /obj/stool,
 /turf/simulated/floor,
@@ -36661,7 +36664,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/ranch)
+/area/station/storage/emergency)
 "uCv" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -36722,7 +36725,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "uEl" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
@@ -37028,7 +37031,7 @@
 	},
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "uPR" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -37290,7 +37293,7 @@
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "vbm" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -37456,7 +37459,7 @@
 "vkx" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "vkK" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38125,7 +38128,7 @@
 	layer = 3.9
 	},
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "vOX" = (
 /obj/mapping_helper/access/research_foyer,
 /obj/cable{
@@ -38594,7 +38597,7 @@
 "whs" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor,
-/area/station/ranch)
+/area/station/storage/emergency)
 "whD" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -84377,13 +84380,13 @@ aPu
 fcn
 uvI
 uvI
-bda
-bda
+coH
+coH
 uEi
 uvI
 uvI
 uvI
-bda
+coH
 bdd
 bdd
 och
@@ -84685,7 +84688,7 @@ dHY
 eHM
 eHM
 eHM
-bda
+coH
 bdX
 beU
 bfR
@@ -85281,7 +85284,7 @@ aEI
 aPu
 aPu
 bji
-bda
+coH
 jew
 oKM
 dHY
@@ -85289,7 +85292,7 @@ oKM
 oKM
 oKM
 oKM
-bda
+coH
 mTZ
 beV
 bfS
@@ -85583,15 +85586,15 @@ aEI
 aUq
 aPu
 kuj
-bda
-bda
+coH
+coH
 rQX
 vOA
 oKM
 oKM
 oKM
 vkx
-bda
+coH
 aNv
 beX
 bfT
@@ -85886,14 +85889,14 @@ aUw
 aPu
 bjo
 sYZ
-bda
+coH
 oKM
 dHY
 oKM
 oKM
 oKM
 vkx
-bda
+coH
 aNv
 aNv
 bfT
@@ -86195,7 +86198,7 @@ oKM
 oKM
 oKM
 fvH
-bda
+coH
 aNv
 aNv
 bfT
@@ -86497,7 +86500,7 @@ oKM
 oKM
 oKM
 hBp
-bda
+coH
 bdY
 bfa
 bfT
@@ -86798,8 +86801,8 @@ dHY
 oKM
 oKM
 tNk
-bda
-bda
+coH
+coH
 bdZ
 bfb
 bea
@@ -87094,13 +87097,13 @@ aQz
 aVt
 aWm
 bji
-bda
+coH
 vbk
 opK
 iOe
 cLb
 oPe
-bda
+coH
 bdc
 bbN
 ulp
@@ -87402,7 +87405,7 @@ whs
 whs
 qqc
 tHt
-bda
+coH
 uTt
 bec
 ewq
@@ -87698,13 +87701,13 @@ acn
 aVv
 aWm
 bji
-bda
+coH
 uvI
-bda
-bda
+coH
+coH
 jJd
 ebR
-bda
+coH
 bdd
 bdd
 sjZ
