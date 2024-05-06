@@ -581,7 +581,7 @@
 						boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 						src.show_message("Cannot find a bank record for this card.", "danger", "login")
 				else
-					boutput(usr, SPAN_ALERT("Incorrect or invalid."))
+					boutput(usr, SPAN_ALERT("Incorrect or invalid PIN."))
 					src.show_message("Incorrect or invalid PIN entered. Please try again.", "danger", "login")
 				. = TRUE
 			if("logout")
