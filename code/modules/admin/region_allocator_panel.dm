@@ -35,8 +35,9 @@
 	switch (action)
 		if ("customRegion")
 			var/x = tgui_input_number(ui.user, "Enter the width", "Custom Region", 1, world.maxx - 2, 1)
+			if (!x) return
 			var/y = tgui_input_number(ui.user, "Enter the height", "Custom Region", 1, world.maxy - 2, 1)
-			if (!x || !y) return
+			if (!y) return
 			var/datum/allocated_region/region = region_allocator.allocate(x + 2, y + 2)
 			if (!region) return
 			region.clean_up()
