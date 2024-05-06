@@ -18,9 +18,9 @@
 				boutput(usr, SPAN_ALERT("Some mysterious force protects [T] from your influence."))
 				return 1
 			else
-				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
+				H.setStatus("stunned", max(H.getStatusDuration("knockdown"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
 				// T:stunned = max(max(T:weakened, T:stunned), 3)
-				H.delStatus("weakened")
+				H.delStatus("knockdown")
 				H.lying = 0
 				H.show_message(SPAN_ALERT("A ghostly force compels you to be still on your feet."))
 		for (var/obj/O in view(7, holder.owner))

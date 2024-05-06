@@ -154,6 +154,10 @@
 			process()
 
 	proximity_act()
+		if (QDELETED(src.target)) //STOP CRASHING THE SERVER OMG
+			maniac_active &= ~2
+			qdel(src)
+			return
 		..()
 		if(prob(40))
 			src.visible_message(SPAN_ALERT("<B>[src] passes its arm through [target]!</B>"))
@@ -162,7 +166,7 @@
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatusMin("paralysis", 10 SECONDS)
+				target.setStatusMin("unconscious", 10 SECONDS)
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))

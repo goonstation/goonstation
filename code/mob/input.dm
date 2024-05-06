@@ -9,6 +9,9 @@
 		return controller.hotkey(src, name)
 	return ..()
 
+/mob/proc/can_turn()
+	return !src.dir_locked && (!isliving(src) || !isdead(src)) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTURN)
+
 /mob/proc/keys_changed(keys, changed)
 	set waitfor = 0
 	if (changed & KEY_EXAMINE && src.client)
@@ -59,7 +62,7 @@
 		else
 			src.move_dir = 0
 
-		if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+		if(src.can_turn()) //in order to not turn around and good fuckin ruin the emote animation
 			src.set_dir(src.move_dir)
 	if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 		src.update_cursor()

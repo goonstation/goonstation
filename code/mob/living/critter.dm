@@ -502,7 +502,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			var/mob/living/carbon/C = I
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 			if ( ishuman(C) )
-				C.changeStatus("weakened", 1 SECOND)
+				C.changeStatus("knockdown", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
@@ -1554,7 +1554,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	if (damage > 4.9)
 		if (prob(50))
-			changeStatus("weakened", 5 SECONDS)
+			changeStatus("knockdown", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(SPAN_ALERT("<B>The blob has knocked down [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 		else

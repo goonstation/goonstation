@@ -713,7 +713,7 @@
 					src.visible_message(SPAN_ALERT("[src] knocks over [M]!"))
 					M.remove_pulling()
 					M.changeStatus("stunned", 8 SECONDS)
-					M.changeStatus("weakened", 5 SECONDS)
+					M.changeStatus("knockdown", 5 SECONDS)
 					M.lying = 1
 					M.set_clothing_icon_dirty()
 		..()

@@ -1333,7 +1333,7 @@
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
-		target.changeStatus("paralysis", -2 SECONDS)
+		target.changeStatus("unconscious", -2 SECONDS)
 
 		if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))

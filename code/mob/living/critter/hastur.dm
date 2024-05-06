@@ -379,7 +379,7 @@ var/HasturPresent = 0
 					if (destination)
 						do_teleport(M, destination, 1, sparks=0) ///You will appear adjacent to Hastur.
 						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
-						M.changeStatus("paralysis", 2 SECONDS)
+						M.changeStatus("unconscious", 2 SECONDS)
 						M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
 
 

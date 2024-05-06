@@ -428,7 +428,7 @@
 				H.implant.Add(src)
 				src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-				H.changeStatus("weakened", 2 SECONDS)
+				H.changeStatus("knockdown", 2 SECONDS)
 				src.set_loc(H)
 				src.transfer_all_reagents(H)
 			random_brute_damage(hit_atom, 11)

@@ -412,8 +412,8 @@
 
 /obj/proc/mob_flip_inside(var/mob/user)
 	user.show_text(SPAN_ALERT("You leap and slam against the inside of [src]! Ouch!"))
-	user.changeStatus("paralysis", 4 SECONDS)
-	user.changeStatus("weakened", 4 SECONDS)
+	user.changeStatus("unconscious", 4 SECONDS)
+	user.changeStatus("knockdown", 4 SECONDS)
 	src.visible_message(SPAN_ALERT("<b>[src]</b> emits a loud thump and rattles a bit."))
 
 	animate_storage_thump(src)

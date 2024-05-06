@@ -248,7 +248,7 @@
 				user.visible_message(SPAN_ALERT("<b>The blades of \the [src] hit [user] with some force, giving them a nasty cut.</b>"))
 				user.TakeDamageAccountArmor("head", src.RPM, 0, 0, DAMAGE_STAB)
 				user.changeStatus("stunned", 6 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				return FALSE
 			if(100 to INFINITY)
 				user.visible_message(SPAN_ALERT("<b>The blades of \the [src] decapitate [user] instantly!</b>"))
