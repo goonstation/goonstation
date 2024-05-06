@@ -713,7 +713,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 10
-		src.air_contents.toxins = (ONE_ATMOSPHERE * 2) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.toxins = (ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	empty
