@@ -12,6 +12,7 @@
 (*)Revolution rounds now properly end immediately after buckle-cuffing the last revolutionary head in a brig cell.
 (u)LeahTheTech
 (+)Syndicate docking stations now require the target to be adjacent to be click-dragged in.
+(+)EMPs now disorient robotic critters (ie gunbots)
 (t)sun may 05 24
 (u)colossusqw
 (p)18671
