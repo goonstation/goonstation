@@ -16,7 +16,8 @@ const RegionItem = ({ region, removeRegion, gotoRegion, gotoRegionCenter }) => (
     >
       {region.name ? region.name : region.ref}
     </LabeledList.Item>
-    <LabeledList.Item label="Source Turf"
+    <LabeledList.Item
+      label="Source Turf"
       buttons={
         <>
           <Button
