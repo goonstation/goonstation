@@ -292,6 +292,27 @@
 	disability_name = "Plasma Lungs"
 	disability_desc = "Only capable of breathing plasma in a gaseous state"
 
+	onAdd(mob/living/carbon/human/owner)
+		if (!istype(owner))
+			return
+		var/obj/item/organ/created_organ
+		var/obj/item/organ/lung/left = owner?.organHolder?.left_lung
+		var/obj/item/organ/lung/right = owner?.organHolder?.right_lung
+		if(istype(left) && istype(right))
+			created_organ = new /obj/item/organ/lung/plasmatoid/left()
+			owner.organHolder.drop_organ(left.organ_holder_name)
+			qdel(left)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+			created_organ = new /obj/item/organ/lung/plasmatoid/right()
+			owner.organHolder.drop_organ(right.organ_holder_name)
+			qdel(right)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
 // LANGUAGE - Yellow Border
 
 /datum/trait/swedish
