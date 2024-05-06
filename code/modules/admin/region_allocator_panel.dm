@@ -54,13 +54,14 @@
 			mapPrefab.applyTo(locate(region.bottom_left.x + 1, region.bottom_left.y + 1, region.bottom_left.z))
 			. = TRUE
 		if ("loadFile")
-			var/map_data = file2text(input(ui.user, "Select a map to load. Only TGM formatted map files are supported.", "Load File", null) as null|file)
+			var/map_file = input(ui.user, "Select a map to load. Only TGM formatted map files are supported.", "Load File", null) as null|file
+			var/map_data = file2text(map_file)
 			if (!map_data) return
 			var/x = get_tgm_maxx(map_data)
 			var/y = get_tgm_maxy(map_data)
 			if (!x || !y) return
 			if ((x + 2) > world.maxx || (y + 2) > world.maxy) return
-			var/datum/allocated_region/region = region_allocator.allocate(x + 2, y + 2)
+			var/datum/allocated_region/region = region_allocator.allocate(x + 2, y + 2, stringify_file_name(map_file, TRUE))
 			if (!region) return
 			region.clean_up()
 			LAZYLISTADD(region_allocator.custom_admin_regions, region)
