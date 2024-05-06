@@ -18844,6 +18844,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname  - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -39979,6 +39985,7 @@
 	pixel_x = 5;
 	pixel_y = -3
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
