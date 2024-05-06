@@ -2631,9 +2631,9 @@ var/list/fun_images = list()
 /client/proc/region_allocator_panel()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Region Allocator"
+	set desc = "Region Allocator front end panel. Allows you to dynamically allocate and deallocate areas of reserved space."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	DENY_TEMPMIN
 
 	if (isnull(src.holder.region_allocator_panel))
 		src.holder.region_allocator_panel = new

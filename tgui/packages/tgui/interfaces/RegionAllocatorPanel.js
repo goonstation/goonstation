@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Divider, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-const RegionItem = ({ region, removeRegion, gotoRegion }) => (
+const RegionItem = ({ region, removeRegion, gotoRegion, gotoRegionCenter }) => (
   <LabeledList>
     <LabeledList.Item
       label="Label"
@@ -10,6 +10,7 @@ const RegionItem = ({ region, removeRegion, gotoRegion }) => (
         <Button.Confirm
           icon="trash"
           color="bad"
+          tooltip="Deallocate"
           onClick={() => removeRegion(region.ref)} />
       }
     >
@@ -17,9 +18,16 @@ const RegionItem = ({ region, removeRegion, gotoRegion }) => (
     </LabeledList.Item>
     <LabeledList.Item label="Source Turf"
       buttons={
-        <Button
-          icon="location-dot"
-          onClick={() => gotoRegion(region.ref)} />
+        <>
+          <Button
+            icon="location-dot"
+            tooltip="Jump to Source"
+            onClick={() => gotoRegion(region.ref)} />
+          <Button
+            icon="arrows-to-dot"
+            tooltip="Jump to Center"
+            onClick={() => gotoRegionCenter(region.ref)} />
+        </>
       }
     >
       {`${region.x}, ${region.y}, ${region.z} `}
@@ -38,6 +46,7 @@ export const RegionAllocatorPanel = (props, context) => {
   const loadFile = () => act('loadFile');
   const removeRegion = ref => act('removeRegion', { ref });
   const gotoRegion = ref => act('gotoRegion', { ref });
+  const gotoRegionCenter = ref => act('gotoRegionCenter', { ref });
 
   return (
     <Window title="Region Allocator" width={500} height={600}>
@@ -59,6 +68,7 @@ export const RegionAllocatorPanel = (props, context) => {
                       region={region}
                       removeRegion={removeRegion}
                       gotoRegion={gotoRegion}
+                      gotoRegionCenter={gotoRegionCenter}
                     />
                     <Divider />
                   </Stack.Item>

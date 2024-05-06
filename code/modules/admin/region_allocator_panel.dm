@@ -32,6 +32,7 @@
 	. = ..()
 	if(.)
 		return
+	USR_ADMIN_ONLY
 	switch (action)
 		if ("customRegion")
 			var/x = tgui_input_number(ui.user, "Enter the width", "Custom Region", 1, world.maxx - 2, 1)
@@ -84,4 +85,12 @@
 			var/datum/allocated_region/region = region_ref.deref()
 			if (!region) return
 			ui.user.set_loc(region.bottom_left)
+		if ("gotoRegionCenter")
+			var/datum/weakref/region_ref = locate(params["ref"]) in region_allocator.allocated_regions
+			if (!region_ref)
+				stack_trace("Region allocator panel failed to find ref [params["ref"]] in the list of allocated regions")
+				return
+			var/datum/allocated_region/region = region_ref.deref()
+			if (!region) return
+			ui.user.set_loc(region.get_center())
 
