@@ -976,10 +976,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if(H.gloves && bite == 0)
 			var/obj/item/clothing/gloves/G = H.gloves
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-		if (H.limbs.l_arm)
-			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
-		if (H.limbs.r_arm)
-			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
 
 	else if (issilicon(user) || isAI(user))
 		return 0

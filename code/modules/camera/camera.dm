@@ -134,7 +134,7 @@
 	..()
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
+	if(istype(W,/obj/item/mob_part/humanoid_part/carbon_part)) //dumb easter egg incoming
 		user.visible_message(SPAN_ALERT("[user] wipes [src] with the bloody end of [W.name]. What the fuck?"), SPAN_ALERT("You wipe [src] with the bloody end of [W.name]. What the fuck?"))
 		return
 

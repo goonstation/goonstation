@@ -797,7 +797,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/usage = min(src.reagents.get_reagent_amount("fuel"), R.compborg_get_total_damage(1))
 			if (usage < 1)
 				return
-			for (var/obj/item/parts/robot_parts/RP in R.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in R.contents)
 				RP.ropart_mend_damage(usage, 0)
 			src.reagents.remove_reagent("fuel", usage)
 			R.update_appearance()
@@ -815,7 +815,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/usage =  min(src.cabling, R.compborg_get_total_damage(2))
 			if (usage < 1)
 				return
-			for (var/obj/item/parts/robot_parts/RP in R.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in R.contents)
 				RP.ropart_mend_damage(0, usage)
 			src.cabling -= usage
 			if (src.cabling < 0)

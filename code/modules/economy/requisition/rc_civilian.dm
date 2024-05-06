@@ -613,38 +613,38 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/robot_arm_any
 	name = "robot arm (any grade/facing)"
-	typepath = /obj/item/parts/robot_parts/arm
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/arm
 	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/botpart_std
 	name = "beepy boopy boye (you shouldn't see this)"
-	typepath = /obj/item/parts/robot_parts/drone
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/drone
 	exactpath = TRUE
 	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/item/botpart_std/head
 	name = "standard cyborg head"
-	typepath = /obj/item/parts/robot_parts/head/standard
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/head/standard
 
 /datum/rc_entry/item/botpart_std/chest
 	name = "standard cyborg chest"
-	typepath = /obj/item/parts/robot_parts/chest/standard
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/chest/standard
 
 /datum/rc_entry/item/botpart_std/arm_l
 	name = "standard cyborg left arm"
-	typepath = /obj/item/parts/robot_parts/arm/left/standard
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard
 
 /datum/rc_entry/item/botpart_std/arm_r
 	name = "standard cyborg right arm"
-	typepath = /obj/item/parts/robot_parts/arm/right/standard
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard
 
 /datum/rc_entry/item/botpart_std/leg_l
 	name = "standard cyborg left leg"
-	typepath = /obj/item/parts/robot_parts/leg/left/standard
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard
 
 /datum/rc_entry/item/botpart_std/leg_r
 	name = "standard cyborg right leg"
-	typepath = /obj/item/parts/robot_parts/leg/right/standard
+	typepath = /obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard
 
 /datum/rc_entry/item/powercell
 	name = "standard 15000u power cell"

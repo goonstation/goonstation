@@ -543,8 +543,8 @@
 		B.item = pair[1]
 		B.job = pair[2]
 		// B.path = B.item.type
-		if (istype(B.item, /obj/item/parts))
-			var/obj/item/parts/P = B.item
+		if (istype(B.item, /obj/item/mob_part))
+			var/obj/item/mob_part/P = B.item
 			if (!P || P.qdeled || !P.holder || P.holder.qdeled)
 				// Not found, next organ
 				O -= list(pair)

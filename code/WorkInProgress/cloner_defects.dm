@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 
 	on_add()
 		. = ..()
-		var/obj/item/parts/lost_limb = src.owner.limbs.get_limb(data["lost_limb_string"])
+		var/obj/item/mob_part/lost_limb = src.owner.limbs.get_limb(data["lost_limb_string"])
 		lost_limb?.delete()
 
 /// Get some histamine after cloning
@@ -391,19 +391,19 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 		. = ..()
 		src.owner.limbs.l_arm?.delete()
 		src.owner.limbs.r_arm?.delete()
-		var/obj/item/parts/l_leg = src.owner.limbs.l_leg
-		var/obj/item/parts/r_leg = src.owner.limbs.r_leg
+		var/obj/item/mob_part/humanoid_part/l_leg = src.owner.limbs.l_leg
+		var/obj/item/mob_part/humanoid_part/r_leg = src.owner.limbs.r_leg
 		// this sucks
 		l_leg.sever()
 		l_leg.set_loc(src.owner)
-		var/obj/item/parts/human_parts/arm/left/item/l_item_arm = new(src.owner, l_leg)
+		var/obj/item/mob_part/humanoid_part/item_arm/left/l_item_arm = new(src.owner, l_leg)
 		l_leg.cant_drop = TRUE
 		src.owner.limbs.l_arm = l_item_arm
 		l_item_arm.holder = src.owner
 
 		r_leg.sever()
 		r_leg.set_loc(src.owner)
-		var/obj/item/parts/human_parts/arm/right/item/r_item_arm = new(src.owner, r_leg)
+		var/obj/item/mob_part/humanoid_part/item_arm/right/r_item_arm = new(src.owner, r_leg)
 		r_leg.cant_drop = TRUE
 		src.owner.limbs.r_arm = r_item_arm
 		r_item_arm.holder = src.owner

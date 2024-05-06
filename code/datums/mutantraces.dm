@@ -492,7 +492,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
 					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(L)
+						var/obj/item/mob_part/humanoid_part/carbon_part/arm/limb = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_arm)
 							limb.quality = 0.5
@@ -502,7 +502,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 				if (src.l_limb_arm_type_mutantrace)
 					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(L)
+						var/obj/item/mob_part/humanoid_part/carbon_part/arm/limb = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_arm)
 							limb.quality = 0.5
@@ -513,7 +513,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
 					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(L)
+						var/obj/item/mob_part/humanoid_part/carbon_part/leg/limb = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_leg)
 							limb.quality = 0.5
@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 				if (src.l_limb_leg_type_mutantrace)
 					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(L)
+						var/obj/item/mob_part/humanoid_part/carbon_part/leg/limb = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_leg)
 							limb.quality = 0.5
@@ -729,10 +729,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	override_attack = 0
 	mutant_folder = 'icons/mob/flashy.dmi'
 	special_head = HEAD_FLASHY
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/flashy/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/flashy/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/flashy/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/flashy/left
 	dna_mutagen_banned = FALSE
 
 
@@ -743,10 +743,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	override_attack = 0
 	mutant_folder = 'icons/mob/virtual.dmi'
 	special_head = HEAD_VIRTUAL
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/virtual/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/virtual/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/virtual/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/virtual/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/virtual/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/virtual/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
 	on_attach(var/mob/living/carbon/human/H)
@@ -817,10 +817,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	detail_1_icon = 'icons/mob/lizard.dmi'
 	detail_1_state = "lizard_detail-1"
 	detail_1_color = CUST_2
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
@@ -888,8 +888,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/right/zombie
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie
 	var/strain = 0
 
 	//this is terrible, but I do anyway.
@@ -927,10 +927,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.real_name = "Zombie [M.real_name]"
 
 			//give em zombie arms if they don't have em...
-			if (!istype(M.limbs.r_arm, /obj/item/parts/human_parts/arm/right/zombie))
-				M.limbs.replace_with("r_arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
-			if (!istype(M.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
-				M.limbs.replace_with("l_arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
+			if (!istype(M.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/zombie))
+				M.limbs.replace_with("r_arm", /obj/item/mob_part/humanoid_part/carbon_part/arm/right/zombie, M, 0)
+			if (!istype(M.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie))
+				M.limbs.replace_with("l_arm", /obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie, M, 0)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
@@ -1031,10 +1031,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/vampiric_thrall/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/vampiric_thrall/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/vampiric_thrall/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/vampiric_thrall/left
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
 	special_head = HEAD_VAMPTHRALL
 	jerk = TRUE
@@ -1083,10 +1083,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
 	"right_eye" = /obj/item/organ/eye/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/skeleton/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/skeleton/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/skeleton/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/skeleton/left
 	special_head = HEAD_SKELETON
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
@@ -1189,7 +1189,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if (isskeleton(target))
 			var/mob/living/carbon/human/H = target
 			if (user.zone_sel.selecting in H.limbs.vars)
-				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
+				var/obj/item/mob_part/limb = H.limbs.vars[user.zone_sel.selecting]
 				if (!limb)
 					if (!src.uses)
 						boutput(user, SPAN_ALERT("The joint wax is empty!</alert>"))
@@ -1229,8 +1229,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	jerk = TRUE
 	brutevuln = 0.2
 	override_attack = 0
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/abomination
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/abomination
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination
 	ignore_missing_limbs = 1 //OVERRIDE_ARM_L | OVERRIDE_ARM_R
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
@@ -1335,10 +1335,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/original_name
 	jerk = TRUE
 	override_attack = 0
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/werewolf/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/werewolf/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/werewolf/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/werewolf/left
 	ignore_missing_limbs = 1 // heck it, just regenerate your limbs, you shambling dogbomination
 	var/old_client_color = null
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
@@ -1469,10 +1469,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	override_attack = 0
 	mutant_folder = 'icons/mob/hunter.dmi'
 	special_head = HEAD_HUNTER //heh
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/hunter/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/hunter/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/hunter/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/hunter/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/hunter/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/hunter/left
 	ignore_missing_limbs = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
@@ -1512,10 +1512,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	special_hair_1_layer = MOB_HAIR_LAYER1
 	special_hair_1_layer_f = MOB_HAIR_LAYER1
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/ithillid/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/ithillid/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/ithillid/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/ithillid/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "gills"
@@ -1544,10 +1544,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	override_attack = FALSE
 	understood_languages = list("english")
 	race_mutation = /datum/bioEffect/mutantrace/monkey
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/monkey/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/monkey/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/monkey/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/monkey/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
@@ -1684,10 +1684,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	special_head_state = "head"
 	aquatic = 1
 	race_mutation = /datum/bioEffect/mutantrace/seamonkey
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/seamonkey/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/seamonkey/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/seamonkey/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/seamonkey/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/seamonkey/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/seamonkey/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/seamonkey/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/seamonkey/left
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey/seamonkey)
 
 /datum/mutantrace/martian
@@ -1789,10 +1789,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
 	mutant_folder = 'icons/mob/roach.dmi'
 	special_head = HEAD_ROACH
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/roach/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/roach/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/roach/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/roach/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.5, "crush" = 1.5)
@@ -1831,10 +1831,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/cat)
 	mutant_folder = 'icons/mob/cat.dmi'
 	special_head = HEAD_CAT
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 
 	on_attach(mob/living/carbon/human/M)
@@ -1864,10 +1864,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	genetics_removable = FALSE
 	aquaphobic = TRUE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/bingus/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/bingus/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/bingus/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/bingus/left
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
@@ -1887,10 +1887,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
 	special_head = HEAD_FROG
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/amphibian/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/amphibian/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/amphibian/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/amphibian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
 
@@ -1948,10 +1948,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/permanent = 0
 	mutant_folder = 'icons/mob/shelterfrog.dmi'
 	special_head = HEAD_SHELTER
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/shelterfrog/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/shelterfrog/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/shelterfrog/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/shelterfrog/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#91b978"
 
@@ -1990,10 +1990,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	detail_1_icon = 'icons/mob/kudzu.dmi'
 	detail_1_state = "kudzu_torso"
 	detail_1_color = null
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/kudzu/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/kudzu/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/kudzu/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/kudzu/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/kudzu/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/kudzu/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/kudzu/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/kudzu/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
 
@@ -2122,10 +2122,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	special_hair_2_state = "cow_over_suit"
 	special_hair_2_color = null
 	special_hair_2_layer = MOB_OVERMASK_LAYER
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cow/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cow/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cow/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cow/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
@@ -2275,10 +2275,10 @@ TYPEINFO(/datum/mutantrace/pug)
 	"right_eye" = /obj/item/organ/eye/pug)
 	mutant_folder = 'icons/mob/pug/fawn.dmi'
 	special_head = HEAD_PUG
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/left
+	r_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/pug/right
+	l_limb_arm_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/pug/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/pug/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/pug/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
@@ -2391,7 +2391,7 @@ TYPEINFO(/datum/mutantrace/pug)
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
-		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/parts) || istype(item, /obj/item/material_piece/bone))))
+		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/mob_part) || istype(item, /obj/item/material_piece/bone))))
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))
@@ -2405,8 +2405,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	race_mutation = /datum/bioEffect/mutantrace/chicken
 	mutant_folder = 'icons/mob/chicken.dmi'
 	special_head = HEAD_CHICKEN
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
+	r_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/chicken/right
+	l_limb_leg_type_mutantrace = /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/chicken/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 
 	emote(var/act, var/voluntary)

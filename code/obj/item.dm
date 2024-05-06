@@ -344,7 +344,7 @@ ABSTRACT_TYPE(/obj/item)
 		src.stored.transfer_stored_item(src, newloc)
 		return
 	if (src.temp_flags & IS_LIMB_ITEM)
-		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
+		if (istype(newloc,/obj/item/mob_part/humanoid_part/item_arm/left) || istype(newloc,/obj/item/mob_part/humanoid_part/item_arm/right))
 			..()
 		else
 			return
@@ -953,7 +953,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			else
 				make_cleanable( /obj/decal/cleanable/ash,get_turf(src))
 
-			if (istype(src,/obj/item/parts/human_parts))
+			if (istype(src,/obj/item/mob_part/humanoid_part/carbon_part))
 				src:holder = null
 
 			src.combust_ended()
@@ -986,12 +986,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/attack_self(mob/user)
 	PROTECTED_PROC(TRUE)
 	if (src.temp_flags & IS_LIMB_ITEM)
-		if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
-			var/obj/item/parts/human_parts/arm/left/item/I = src.loc
+		if (istype(src.loc,/obj/item/mob_part/humanoid_part/item_arm/left))
+			var/obj/item/mob_part/humanoid_part/item_arm/left/I = src.loc
 			I.remove_from_mob()
 			I.set_item(src)
-		else if (istype(src.loc,/obj/item/parts/human_parts/arm/right/item))
-			var/obj/item/parts/human_parts/arm/right/item/I = src.loc
+		else if (istype(src.loc,/obj/item/mob_part/humanoid_part/item_arm/right))
+			var/obj/item/mob_part/humanoid_part/item_arm/right/I = src.loc
 			I.remove_from_mob()
 			I.set_item(src)
 
@@ -1492,12 +1492,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		boutput(attacher, SPAN_ALERT("You try to attach [src] to [attachee]'s stump, but it politely declines!"))
 		return
 
-	var/obj/item/parts/human_parts/arm/new_arm = null
+	var/obj/item/mob_part/humanoid_part/item_arm/new_arm = null
 	if (attacher.zone_sel.selecting == "l_arm")
-		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
+		new_arm = new /obj/item/mob_part/humanoid_part/item_arm/left(attachee)
 		attachee.limbs.l_arm = new_arm
 	else if (attacher.zone_sel.selecting == "r_arm")
-		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
+		new_arm = new /obj/item/mob_part/humanoid_part/item_arm/right(attachee)
 		attachee.limbs.r_arm = new_arm
 	if (!new_arm) return //who knows - or they aren't targetting an arm!
 
@@ -1550,7 +1550,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/turf/T = loc
 	if (!istype(T))
 		if(src.temp_flags & IS_LIMB_ITEM)
-			if(istype(src.loc, /obj/item/parts/human_parts/arm/right/item)||istype(src.loc, /obj/item/parts/human_parts/arm/left/item))
+			if(istype(src.loc, /obj/item/mob_part/humanoid_part/item_arm/right)||istype(src.loc, /obj/item/mob_part/humanoid_part/item_arm/left))
 				src.loc:remove(0)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
@@ -1610,8 +1610,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /// If `sever` is TRUE, items will be severed from item arms
 /obj/item/proc/force_drop(var/mob/possible_mob_holder = 0, sever=TRUE)
 	if(sever && (src.temp_flags & IS_LIMB_ITEM))
-		if (istype(src.loc, /obj/item/parts/human_parts/arm/left/item) || istype(src.loc, /obj/item/parts/human_parts/arm/right/item))
-			var/obj/item/parts/human_parts/arm/item_arm = src.loc
+		if (istype(src.loc, /obj/item/mob_part/humanoid_part/item_arm/left) || istype(src.loc, /obj/item/mob_part/humanoid_part/item_arm/right))
+			var/obj/item/mob_part/humanoid_part/carbon_part/arm/item_arm = src.loc
 			item_arm.sever()
 			return
 

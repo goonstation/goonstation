@@ -1088,7 +1088,7 @@
 
 			if ("flex","flexmuscles")
 				if (!src.restrained())
-					var/roboarms = src.limbs && istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && istype(src.limbs.l_arm, /obj/item/parts/robot_parts)
+					var/roboarms = src.limbs && istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/silicon_part) && istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/silicon_part)
 					if (roboarms)
 						message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] powerful robotic muscles</I>"

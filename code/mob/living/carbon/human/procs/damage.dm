@@ -369,7 +369,7 @@
 				else if (prob(30))
 					src.organHolder.damage_organs(brute/10, 0, 0, list("spleen", "left_lung", "right_lung"), 50)
 		if("l_leg", "l_arm", "r_leg", "r_arm")
-			var/obj/item/parts/P = src.limbs?.get_limb(zone)
+			var/obj/item/mob_part/humanoid_part/P = src.limbs?.get_limb(zone)
 			if(istype(P))
 				if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 					P.sever()

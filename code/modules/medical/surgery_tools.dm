@@ -302,7 +302,7 @@ CONTAINS:
 			return ..()
 
 		if (user.zone_sel.selecting in H.limbs.vars) //ugly copy paste in surgery_procs.dm for suture
-			var/obj/item/parts/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
+			var/obj/item/mob_part/humanoid_part/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
 			if (istype(surgery_limb))
 				src.ammo--
 				surgery_limb.surgery(src)
@@ -1197,7 +1197,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 					H.visible_message("[user][doctor ? " gently" : null] taps [H == user ? "[him_or_her(H)]self" : H] on the head with [src].<br>&emsp;[H]'s head sounds normal.")
 /*
 			if ("l_arm","r_arm")
-				var/obj/item/parts/my_arm
+				var/obj/item/mob_part/my_arm
 				if (H.limbs)
 
 				if (!H.limbs || !H.

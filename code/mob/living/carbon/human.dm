@@ -254,10 +254,10 @@
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 
-	var/obj/item/parts/l_arm = null
-	var/obj/item/parts/r_arm = null
-	var/obj/item/parts/l_leg = null
-	var/obj/item/parts/r_leg = null
+	var/obj/item/mob_part/humanoid_part/l_arm = null
+	var/obj/item/mob_part/humanoid_part/r_arm = null
+	var/obj/item/mob_part/humanoid_part/l_leg = null
+	var/obj/item/mob_part/humanoid_part/r_leg = null
 
 	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
@@ -267,24 +267,20 @@
 	disposing()
 		if (l_arm)
 			l_arm.holder = null
-			l_arm?.bones?.donor = null
 		if (r_arm)
 			r_arm.holder = null
-			r_arm?.bones?.donor = null
 		if (l_leg)
 			l_leg.holder = null
-			l_leg?.bones?.donor = null
 		if (r_leg)
 			r_leg.holder = null
-			r_leg?.bones?.donor = null
 		holder = null
 		..()
 
 	proc/create(var/datum/appearanceHolder/AHolLimb)
-		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder, AHolLimb)
-		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AHolLimb)
-		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AHolLimb)
-		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AHolLimb)
+		if (!l_arm) l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(holder, AHolLimb)
+		if (!r_arm) r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(holder, AHolLimb)
+		if (!l_leg) l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(holder, AHolLimb)
+		if (!r_leg) r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(holder, AHolLimb)
 
 	proc/mend(var/howmany = 4)
 		if (!holder)
@@ -294,7 +290,7 @@
 			if (holder?.mutantrace?.l_limb_arm_type_mutantrace)
 				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
 			else
-				l_arm = new /obj/item/parts/human_parts/arm/left(holder)
+				l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(holder)
 			l_arm.holder = holder
 			boutput(holder, SPAN_NOTICE("Your left arm regrows!"))
 			l_arm:original_holder = holder
@@ -306,7 +302,7 @@
 			if (holder?.mutantrace?.r_limb_arm_type_mutantrace)
 				r_arm = new holder.mutantrace.r_limb_arm_type_mutantrace(holder)
 			else
-				r_arm = new /obj/item/parts/human_parts/arm/right(holder)
+				r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(holder)
 			r_arm.holder = holder
 			boutput(holder, SPAN_NOTICE("Your right arm regrows!"))
 			r_arm:original_holder = holder
@@ -318,7 +314,7 @@
 			if (holder?.mutantrace?.l_limb_leg_type_mutantrace)
 				l_leg = new holder.mutantrace.l_limb_leg_type_mutantrace(holder)
 			else
-				l_leg = new /obj/item/parts/human_parts/leg/left(holder)
+				l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(holder)
 			l_leg.holder = holder
 			boutput(holder, SPAN_NOTICE("Your left leg regrows!"))
 			l_leg:original_holder = holder
@@ -329,7 +325,7 @@
 			if (holder?.mutantrace?.r_limb_leg_type_mutantrace)
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
-				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
+				r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(holder)
 			r_leg.holder = holder
 			boutput(holder, SPAN_NOTICE("Your right leg regrows!"))
 			r_leg:original_holder = holder
@@ -339,13 +335,13 @@
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
 
 	proc/reset_stone() // reset skintone to whatever the holder's s_tone is
-		if (l_arm && istype(l_arm, /obj/item/parts/human_parts))
+		if (l_arm && istype(l_arm, /obj/item/mob_part/humanoid_part/carbon_part))
 			l_arm:set_skin_tone()
-		if (r_arm && istype(r_arm, /obj/item/parts/human_parts))
+		if (r_arm && istype(r_arm, /obj/item/mob_part/humanoid_part/carbon_part))
 			r_arm:set_skin_tone()
-		if (l_leg && istype(l_leg, /obj/item/parts/human_parts))
+		if (l_leg && istype(l_leg, /obj/item/mob_part/humanoid_part/carbon_part))
 			l_leg:set_skin_tone()
-		if (r_leg && istype(r_leg, /obj/item/parts/human_parts))
+		if (r_leg && istype(r_leg, /obj/item/mob_part/humanoid_part/carbon_part))
 			r_leg:set_skin_tone()
 
 	proc/sever(var/target = "all", var/mob/user)
@@ -369,18 +365,18 @@
 				if ("r_leg")
 					limbs_to_sever += list(src.r_leg)
 			if (length(limbs_to_sever))
-				for (var/obj/item/parts/P in limbs_to_sever)
+				for (var/obj/item/mob_part/humanoid_part/P in limbs_to_sever)
 					P.sever(user)
 				return 1
-		else if (istype(target, /obj/item/parts))
-			var/obj/item/parts/P = target
+		else if (istype(target, /obj/item/mob_part))
+			var/obj/item/mob_part/humanoid_part/P = target
 			P.sever(user)
 			return 1
 
 	// quick hacky thing to have similar functionality to get_organ
 	// maybe one day one of us will make this better - cirr
 	proc/get_limb(var/limb)
-		RETURN_TYPE(/obj/item/parts)
+		RETURN_TYPE(/obj/item/mob_part)
 		if(!limb)
 			return
 		switch(limb)
@@ -396,9 +392,10 @@
 	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0
+		var/obj/item/mob_part/humanoid_part/part_type = new_type
 		if (istext(target) && ispath(new_type))
 			if (target == "both_arms" || target == "l_arm")
-				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm) || ispath(new_type, /obj/item/parts/artifact_parts/arm))
+				if (initial(part_type.slot) == "l_arm")
 					var/l_held_item
 					if (src.l_arm)
 						if (no_drop && src.holder.l_hand)
@@ -410,7 +407,7 @@
 				else // need to make an item arm
 					if (src.l_arm)
 						src.l_arm.delete()
-					src.l_arm = new /obj/item/parts/human_parts/arm/left/item(src.holder, new new_type(src.holder))
+					src.l_arm = new /obj/item/mob_part/humanoid_part/item_arm/left(src.holder, new new_type(src.holder))
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message(SPAN_NOTICE("<b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b>"))
@@ -419,7 +416,7 @@
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
-				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm) || ispath(new_type, /obj/item/parts/artifact_parts/arm))
+				if (initial(part_type.slot) == "r_arm")
 					var/r_held_item
 					if (src.r_arm)
 						if (no_drop && src.holder.r_hand)
@@ -431,7 +428,7 @@
 				else // need to make an item arm
 					if (src.r_arm)
 						src.r_arm.delete()
-					src.r_arm = new /obj/item/parts/human_parts/arm/right/item(src.holder, new new_type(src.holder))
+					src.r_arm = new /obj/item/mob_part/humanoid_part/item_arm/right(src.holder, new new_type(src.holder))
 				src.holder.hud.update_hands()
 				if (show_message)
 					src.holder.show_message(SPAN_NOTICE("<b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b>"))
@@ -440,7 +437,7 @@
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
-				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
+				if (initial(part_type.slot) == "l_leg")
 					qdel(src.l_leg)
 					src.l_leg = new new_type(src.holder)
 					if (show_message)
@@ -450,7 +447,7 @@
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
-				if (ispath(new_type, /obj/item/parts/human_parts/leg) || ispath(new_type, /obj/item/parts/robot_parts/leg) || ispath(new_type, /obj/item/parts/artifact_parts/leg))
+				if (initial(part_type.slot) == "r_leg")
 					qdel(src.r_leg)
 					src.r_leg = new new_type(src.holder)
 					if (show_message)
@@ -567,25 +564,23 @@
 // death
 
 /mob/living/carbon/human/disposing()
-	for (var/obj/item/parts/HP in src)
-		if (istype(HP,/obj/item/parts/human_parts))
-			if (HP.bones && HP.bones.donor == src)
-				HP.dispose()
+	for (var/obj/item/mob_part/HP in src)
+		if (istype(HP,/obj/item/mob_part/humanoid_part/carbon_part))
 
-			var/obj/item/parts/human_parts/humanpart = HP
+			var/obj/item/mob_part/humanoid_part/carbon_part/humanpart = HP
 			humanpart.original_holder = null
 
 		HP.holder = null
 
 	//limbs may be detacherd?
 	if (src.limbs)
-		if (src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts))
+		if (src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part))
 			src.limbs.l_arm:original_holder = null
-		if (src.limbs.r_arm && istype(src.limbs.r_arm, /obj/item/parts/human_parts))
+		if (src.limbs.r_arm && istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part))
 			src.limbs.r_arm:original_holder = null
-		if (src.limbs.l_leg && istype(src.limbs.l_leg, /obj/item/parts/human_parts))
+		if (src.limbs.l_leg && istype(src.limbs.l_leg, /obj/item/mob_part/humanoid_part/carbon_part))
 			src.limbs.l_leg:original_holder = null
-		if (src.limbs.r_leg && istype(src.limbs.r_leg, /obj/item/parts/human_parts))
+		if (src.limbs.r_leg && istype(src.limbs.r_leg, /obj/item/mob_part/humanoid_part/carbon_part))
 			src.limbs.r_leg:original_holder = null
 
 
@@ -1857,12 +1852,12 @@
 /mob/living/carbon/human/proc/has_hand(var/hand = 1)
 	switch(hand)
 		if (1)//Left
-			if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+			if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left))
 				return TRUE
 			if (istype(src.l_hand, /obj/item/magtractor))
 				return TRUE
 		if (0)//Right
-			if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+			if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right))
 				return TRUE
 			if (istype(src.r_hand, /obj/item/magtractor))
 				return TRUE
@@ -1872,9 +1867,9 @@
 	. = ..()
 	if (src.r_hand || src.l_hand)
 		return FALSE
-	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right)))
 		return FALSE
-	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left)))
 		return FALSE
 	return TRUE
 
@@ -1918,7 +1913,7 @@
 				if (!src.l_hand)
 					if (I == src.r_hand && I.cant_self_remove)
 						return 0
-					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left)))
 						return 0
 					src.l_hand = I
 					I.pickup(src)
@@ -1935,7 +1930,7 @@
 				if (!src.r_hand)
 					if (I == src.l_hand && I.cant_self_remove)
 						return 0
-					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right)))
 						return 0
 					src.r_hand = I
 					I.pickup(src)
@@ -2155,9 +2150,9 @@
 				return TRUE
 		if (SLOT_L_HAND)
 			if (src.limbs.l_arm)
-				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
+				if (src.limbs.l_arm.slot != "l_arm")
 					return FALSE
-				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				if (istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left))
 					return FALSE
 				if (I.two_handed)
 					if (src.limbs.r_arm)
@@ -2168,9 +2163,9 @@
 				return TRUE
 		if (SLOT_R_HAND)
 			if (src.limbs.r_arm)
-				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
+				if (src.limbs.r_arm.slot != "r_arm")
 					return FALSE
-				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				if (istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right))
 					return FALSE
 				if (I.two_handed)
 					if (src.limbs.l_arm)
@@ -2277,7 +2272,7 @@
 
 /// swap I into the given slot, puts item in that slot (if it exists) into hand or on ground
 /mob/living/carbon/human/proc/autoequip_slot(obj/item/I, slot)
-	if(!src.can_equip(I, slot) || istype(I.loc, /obj/item/parts))
+	if(!src.can_equip(I, slot) || istype(I.loc, /obj/item/mob_part))
 		return FALSE
 	var/obj/item/current = src.get_slot(slot)
 	if(current && current.cant_self_remove)
@@ -2558,7 +2553,7 @@
 			src.equip_if_possible(NEW, SLOT_SHOES)
 			src.update_clothing()
 			qdel(SH)
-		else if (src.limbs && (istype(src.limbs.l_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/light)) && (istype(src.limbs.r_leg, /obj/item/parts/robot_parts) && !istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/light))) // Light cyborg legs don't count.
+		else if (src.limbs && (istype(src.limbs.l_leg, /obj/item/mob_part/humanoid_part/silicon_part) && !istype(src.limbs.l_leg, /obj/item/mob_part/humanoid_part/silicon_part/leg/left/light)) && (istype(src.limbs.r_leg, /obj/item/mob_part/humanoid_part/silicon_part) && !istype(src.limbs.r_leg, /obj/item/mob_part/humanoid_part/silicon_part/leg/right/light))) // Light cyborg legs don't count.
 			src.visible_message(SPAN_ALERT("[src] rips apart the shackles with pure machine-like strength!</b>"), SPAN_NOTICE("You rip apart the shackles."))
 			var/obj/item/clothing/shoes/NEW2 = new SH.type
 			if (NEW2.chained)
@@ -2605,7 +2600,7 @@
 
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
-		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
+		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/silicon_part) && !istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/silicon_part/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/silicon_part) && !istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/silicon_part/arm/right/light))) //Gotta be two standard borg arms
 			for (var/mob/O in AIviewers(src))
 				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with machine-like strength!</B>"), 1)
 			boutput(src, SPAN_NOTICE("You rip apart your handcuffs."))
@@ -2866,7 +2861,7 @@
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))
 			return
-	var/obj/item/parts/arm = null
+	var/obj/item/mob_part/arm = null
 	if (limbs) //Wire: fix for null.r_arm and null.l_arm
 		arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
 	if (arm)
@@ -3492,20 +3487,20 @@
 		var/mob/living/carbon/human/H = src
 		if(!H?.limbs)
 			return
-		if (istype(H.limbs.l_arm, /obj/item/parts/human_parts ))
-			var/obj/item/parts/human_parts/LA = H.limbs.l_arm
+		if (istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part ))
+			var/obj/item/mob_part/humanoid_part/carbon_part/LA = H.limbs.l_arm
 			LA.colorize_limb_icon()
 			LA.set_skin_tone()
-		if (istype(H.limbs.r_arm, /obj/item/parts/human_parts ))
-			var/obj/item/parts/human_parts/RA = H.limbs.r_arm
+		if (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part ))
+			var/obj/item/mob_part/humanoid_part/carbon_part/RA = H.limbs.r_arm
 			RA.colorize_limb_icon()
 			RA.set_skin_tone()
-		if (istype(H.limbs.l_leg, /obj/item/parts/human_parts ))
-			var/obj/item/parts/human_parts/LL = H.limbs.l_leg
+		if (istype(H.limbs.l_leg, /obj/item/mob_part/humanoid_part/carbon_part ))
+			var/obj/item/mob_part/humanoid_part/carbon_part/LL = H.limbs.l_leg
 			LL.colorize_limb_icon()
 			LL.set_skin_tone()
-		if (istype(H.limbs.r_leg, /obj/item/parts/human_parts ))
-			var/obj/item/parts/human_parts/RL = H.limbs.r_leg
+		if (istype(H.limbs.r_leg, /obj/item/mob_part/humanoid_part/carbon_part ))
+			var/obj/item/mob_part/humanoid_part/carbon_part/RL = H.limbs.r_leg
 			RL.colorize_limb_icon()
 			RL.set_skin_tone()
 		if (H.organHolder?.head)

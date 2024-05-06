@@ -347,7 +347,7 @@ var/global/mail_types_by_job = list(
 
 
 	/datum/job/research/scientist = list(
-		/obj/item/parts/robot_parts/arm/right/light = 5,
+		/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light = 5,
 		/obj/item/cargotele = 5,
 		/obj/item/disk/data/tape = 5,
 		/obj/item/pinpointer/category/artifacts/safe = 8,
@@ -382,7 +382,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/reagent_containers/mender_refill_cartridge/burn = 6,
 		/obj/item/reagent_containers/mender_refill_cartridge/both = 5,
 		/obj/item/robot_module = 5,
-		/obj/item/parts/robot_parts/robot_frame = 4,
+		/obj/item/mob_part/humanoid_part/silicon_part/robot_frame = 4,
 		/obj/item/cell/supercell/charged = 3,
 		/obj/item/cable_coil = 5,
 		/obj/item/sheet/steel/fullstack = 2,

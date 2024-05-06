@@ -385,7 +385,7 @@
 						user.put_in_hand_or_drop(new /obj/item/storage/firstaid/regular)
 			if("Staff Assistant")
 				for (var/obj/item/W in user)
-					if ((istype(W, /obj/item/parts) && W:holder == user) || istype(W,/obj/item/zoldorfdeck) || (W == src) || istype(W,/obj/item/organ) || istype(W,/obj/item/skull))
+					if ((istype(W, /obj/item/mob_part) && W:holder == user) || istype(W,/obj/item/zoldorfdeck) || (W == src) || istype(W,/obj/item/organ) || istype(W,/obj/item/skull))
 						continue
 					user.u_equip(W) //flashlight modules in pdas error for some reason when deleted by this
 					qdel(W)

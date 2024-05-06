@@ -109,7 +109,7 @@
 				H.visible_message(SPAN_ALERT("<b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!"),\
 				SPAN_ALERT("[changer ? "Our" : "Your"] [magical ? "tægl" : "tail"] is torn free from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!"))
 				H.drop_and_throw_organ("tail", dist = 6, speed = 1, showtext = 1)
-			for(var/obj/item/parts/L in possible_limbs)
+			for(var/obj/item/mob_part/humanoid_part/L in possible_limbs)
 				if(length(possible_limbs) > 2) // Lets not remove both limbs unless that's all that's left
 					if(possible_limbs[L] == "arm" && (!H.limbs.l_arm || !H.limbs.l_arm))
 						possible_limbs -= L
@@ -158,7 +158,7 @@
 	H.force_laydown_standup()
 
 /// Returns 0 if it cant be severed like this, 1 if it always gets severed, or 2 if it *sometimes* gets severed
-/proc/ass_explosion_limb_success(var/obj/item/parts/L)
+/proc/ass_explosion_limb_success(var/obj/item/mob_part/humanoid_part/L)
 	if(!istype(L)) return
 
 	. = 1
@@ -176,7 +176,7 @@
 			return 2 // Both sturdy and scary
 
 /// returns some flufftext as to why their limb didnt come off. Or came off anyway.
-/proc/ass_explosion_message(var/obj/item/parts/L, var/mob/living/H, var/magical, var/armleg, var/severed)
+/proc/ass_explosion_message(var/obj/item/mob_part/humanoid_part/L, var/mob/living/H, var/magical, var/armleg, var/severed)
 	if(!istype(L) || !istype(H)) return
 	if(L.kind_of_limb)
 		/// Returns if the limb is not ass-severable, and a message to the owner about why not

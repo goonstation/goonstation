@@ -37,7 +37,7 @@
 		/obj/item/grinder_upgrade = 20,\
 		/obj/item/reagent_containers/mender/both = 10,\
 		/obj/item/plant/herb/cannabis/white/spawnable = 20,\
-		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster) = 10,
+		list(/obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster, /obj/item/mob_part/humanoid_part/silicon_part/leg/left/thruster) = 10,
 	// botany
 		/obj/item/reagent_containers/glass/happyplant = 20,\
 	// mining

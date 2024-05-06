@@ -61,7 +61,7 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
-	
+
 	run_component()
 		if (!src.ship.passengers)
 			src.deactivate()
@@ -945,13 +945,13 @@
 			else
 				var/valid_dna_source = null
 				if(ishuman(user))
-					var/obj/item/parts/human_parts/limb
+					var/obj/item/mob_part/humanoid_part/carbon_part/limb
 					var/mob/living/carbon/human/H = user
 					limb = H.l_hand
-					if(limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+					if(limb && ((istype(limb) && limb.limb_DNA == bdna) || (limb.blood_DNA == bdna)))
 						valid_dna_source = limb
 					limb = H.r_hand
-					if(!valid_dna_source && limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+					if(!valid_dna_source && limb && ((istype(limb) && limb.limb_DNA == bdna) || (limb.blood_DNA == bdna)))
 						valid_dna_source = limb
 
 				if(valid_dna_source)

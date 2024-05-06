@@ -124,7 +124,7 @@ Turfs and decal for the space rift
 		core.created_model_task = src.model_task
 */
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
+		throwparts += new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		//throwparts += core
 		throwparts += src.tool

@@ -1,58 +1,15 @@
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
-/obj/item/parts/artifact_parts
-	name = "artifact parts"
-	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part)
+
+/obj/item/mob_part/humanoid_part/artifact_part
 	flags = FPRINT | TABLEPASS
-	c_flags = ONBELT
-	skintoned = FALSE
-	decomp_affected = FALSE
 	accepts_normal_human_overlays = FALSE
 	limb_is_unnatural = TRUE
 	kind_of_limb = LIMB_ARTIFACT
+	show_on_examine = TRUE
 	var/artifact_type = null
-
-	// surgery messages (for lists, first message appears to performer, second to person who owns/will own limb)
-	var/list/cut_messages
-	var/list/saw_messages
-	var/limb_material
 
 	New(atom/new_holder)
 		..()
-		switch (src.artifact_type)
-			if ("eldritch")
-				if (src.slot == "l_arm" || src.slot == "r_arm")
-					src.name = pick("vile", "threatening", "intimidating") + " [src.side]" + " claw"
-				else
-					src.name = pick("vile", "threatening", "scary") + " [src.side]" + " leg"
-
-				src.item_state = "eldritch-limb"
-
-				src.cut_messages = list("slowly cuts through", "slowly cut through")
-				src.saw_messages = list("gradually saws through", "gradually saw through")
-				src.limb_material = "flesh"
-			if ("martian")
-				if (src.slot == "l_arm" || src.slot == "r_arm")
-					src.name = pick("entwined", "jittery", "soft") + " [src.side]" + " tentacles"
-				else
-					src.name = pick("entwined", "jittery", "pulsing") + " [src.side]" + " leg"
-
-				src.item_state = "martian-limb"
-
-				src.cut_messages = list("swiftly cuts through", "swiftly cut through")
-				src.saw_messages = list("easily saws through", "easily saw through")
-				src.limb_material = "tentacles"
-			if ("precursor")
-				if (src.slot == "l_arm" || src.slot == "r_arm")
-					src.name = pick("ancient", "old", "humming") + " [src.side]" + " device"
-				else
-					src.name =  pick("ancient", "old", "clunky") + " [src.side]" + " leg"
-
-				src.item_state = "precursor-limb"
-
-				src.cut_messages = list("roughly cuts through", "roughly cut through")
-				src.saw_messages = list("messily saws through", "messily saw through")
-				src.limb_material = "metal"
 
 		if (ishuman(new_holder))
 			SPAWN(0.1 SECONDS) // required for abilities to be applied
@@ -74,50 +31,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		if (..())
 			src.on_attach()
 
-	surgery(obj/item/tool)
-		if(remove_stage > 0 && (istype(tool, /obj/item/staple_gun) || istype(tool, /obj/item/suture)) )
-			remove_stage = 0
-
-		else if(remove_stage == 0 || remove_stage == 2)
-			if(istool(tool, TOOL_CUTTING))
-				remove_stage++
-			else
-				return FALSE
-
-		else if(remove_stage == 1)
-			if(istool(tool, TOOL_SAWING))
-				remove_stage++
-			else
-				return FALSE
-
-		if(!isdead(holder))
-			if(prob(40))
-				holder.emote("scream")
-		holder.TakeDamage("chest", 20, 0, 0, DAMAGE_STAB)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
-
-		switch(remove_stage)
-			if(0)
-				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [src.name] to [holder.name] with [tool].</span>", SPAN_ALERT("You attach [src.name] to [holder.name] with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "attaches [src.name] to [constructTarget(holder,"combat")].")
-			if(1)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.cut_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."))
-			if(2)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.saw_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.saw_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."))
-
-				SPAWN(rand(15, 20) SECONDS)
-					if(remove_stage == 2)
-						src.remove(FALSE)
-			if(3)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.cut_messages[1]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "removes [src.name] to [constructTarget(holder,"combat")].")
-				src.remove(FALSE)
-
-		return TRUE
-
-	on_holder_examine()
-		return "has [bicon(src)] \an [src.name] attached as a"
-
 	getMobIcon()
 		if (src.bodyImage)
 			return src.bodyImage
@@ -125,48 +38,31 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
 		return bodyImage
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!ishuman(target))
-			return
-
-		src.add_fingerprint(user)
-
-		if(user.zone_sel.selecting != src.slot)
-			return ..()
-
-		if (!surgeryCheck(target, user))
-			return ..()
-
-		var/mob/living/carbon/human/H = target
-
-		attach(H, user)
-
 	proc/on_attach()
 		return ishuman(src.holder)
 
 	proc/on_remove()
 		return ishuman(src.holder)
 
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm)
-/obj/item/parts/artifact_parts/arm
-	can_hold_items = TRUE
-	var/update_with_clothing = FALSE
-
-	getMobIcon()
-		if (!src.update_with_clothing || !istype(holder, /mob/living/carbon/human))
-			return ..()
-		var/mob/living/carbon/human/H = holder
-		src.handlistPart = (!H.w_uniform && !H.wear_suit) ? initial(src.handlistPart) : "[initial(src.handlistPart)]-clothing"
-		src.bodyImage = image('icons/mob/human.dmi', src.handlistPart)
-		return src.bodyImage
-
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg)
-/obj/item/parts/artifact_parts/leg
-
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/eldritch)
-/obj/item/parts/artifact_parts/arm/eldritch
-	limb_type = /datum/limb/eldritch
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch)
+/obj/item/mob_part/humanoid_part/artifact_part/eldritch
+	item_state = "eldritch-limb"
 	artifact_type = "eldritch"
+
+	New(atom/new_holder)
+		..()
+		src.cut_messages = list("slowly cuts through", "slowly cut through")
+		src.saw_messages = list("gradually saws through", "gradually saw through")
+		src.limb_material = list("twisted sinew","dark ivory","shriveling tendons")
+
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/arm)
+/obj/item/mob_part/humanoid_part/artifact_part/eldritch/arm
+	limb_type = /datum/limb/eldritch
+	can_hold_items = TRUE
+
+	New(atom/new_holder)
+		..()
+		src.name = pick("vile", "threatening", "intimidating") + " [src.side]" + " claw"
 
 	left
 		name = "eldritch left arm"
@@ -182,16 +78,20 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/eldritch)
 		icon_state = "arm-eldritch-R"
 		handlistPart = "arm-eldritch-R-attached"
 
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/eldritch)
-/obj/item/parts/artifact_parts/leg/eldritch
-	artifact_type = "eldritch"
+
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg)
+/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg
+
+	New()
+		..()
+		src.name = pick("vile", "threatening", "scary") + " [src.side]" + " leg"
 
 	on_attach()
 		if (!..())
 			return
 		var/mob/living/carbon/human/H = holder
 		H.update_clothing()
-		if (istype(H.limbs.get_limb("l_leg"), /obj/item/parts/artifact_parts/leg/eldritch/left) && istype(H.limbs.get_limb("r_leg"), /obj/item/parts/artifact_parts/leg/eldritch/right))
+		if (istype(H.limbs.get_limb("l_leg"), /obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg/left) && istype(H.limbs.get_limb("r_leg"), /obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg/right))
 			src.holder.addAbility(/datum/targetable/artifact_limb_ability/eldritch_run)
 
 	on_remove()
@@ -215,16 +115,30 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/eldritch)
 		icon_state = "leg-eldritch-R"
 		handlistPart = "leg-eldritch-R-attached"
 
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/martian)
-/obj/item/parts/artifact_parts/arm/martian
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian)
+/obj/item/mob_part/humanoid_part/artifact_part/martian
+	item_state = "martian-limb"
 	artifact_type = "martian"
-	update_with_clothing = TRUE
+
+	New(atom/new_holder)
+		..()
+		src.cut_messages = list("swiftly cuts through", "swiftly cut through")
+		src.saw_messages = list("easily saws through", "easily saw through")
+		src.limb_material = list("woven tendrils","denser tentacles","wriggling strands")
+
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian/arm)
+/obj/item/mob_part/humanoid_part/artifact_part/martian/arm
+	can_hold_items = TRUE
+
+	New(atom/new_holder)
+		..()
+		src.name = pick("entwined", "jittery", "soft") + " [src.side]" + " tentacles"
 
 	on_attach()
 		if (!..())
 			return
 		var/mob/living/carbon/human/H = holder
-		if (istype(H.limbs.get_limb("l_arm"), /obj/item/parts/artifact_parts/arm/martian/left) && istype(H.limbs.get_limb("r_arm"), /obj/item/parts/artifact_parts/arm/martian/right))
+		if (istype(H.limbs.get_limb("l_arm"), /obj/item/mob_part/humanoid_part/artifact_part/martian/arm/left) && istype(H.limbs.get_limb("r_arm"), /obj/item/mob_part/humanoid_part/artifact_part/martian/arm/right))
 			src.holder.addAbility(/datum/targetable/artifact_limb_ability/martian_pull)
 
 	on_remove()
@@ -246,9 +160,12 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/martian)
 		icon_state = "arm-martian-R"
 		handlistPart = "arm-martian-R-attached"
 
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/martian)
-/obj/item/parts/artifact_parts/leg/martian
-	artifact_type = "martian"
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian/leg)
+/obj/item/mob_part/humanoid_part/artifact_part/martian/leg
+
+	New()
+		..()
+		src.name = pick("entwined", "jittery", "pulsing") + " [src.side]" + " leg"
 
 	left
 		name = "martian left leg"
@@ -268,16 +185,30 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/martian)
 		partlistPart = "leg-martian-R-attached"
 		movement_modifier = /datum/movement_modifier/martian_legs/right
 
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/precursor)
-/obj/item/parts/artifact_parts/arm/precursor
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor)
+/obj/item/mob_part/humanoid_part/artifact_part/precursor
+	item_state = "precursor-limb"
 	artifact_type = "precursor"
-	update_with_clothing = TRUE
+
+	New(atom/new_holder)
+		..()
+		src.cut_messages = list("roughly cuts through", "roughly cut through")
+		src.saw_messages = list("messily saws through", "messily saw through")
+		src.limb_material = list("smooth metal","shifting doodads","integral supports")
+
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/arm)
+/obj/item/mob_part/humanoid_part/artifact_part/precursor/arm
+	can_hold_items = TRUE
+
+	New(atom/new_holder)
+		..()
+		src.name = pick("ancient", "old", "humming") + " [src.side]" + " device"
 
 	on_attach()
 		if (!..())
 			return
 		var/mob/living/carbon/human/H = holder
-		if (istype(H.limbs.get_limb("l_arm"), /obj/item/parts/artifact_parts/arm/precursor/left) && istype(H.limbs.get_limb("r_arm"), /obj/item/parts/artifact_parts/arm/precursor/right))
+		if (istype(H.limbs.get_limb("l_arm"), /obj/item/mob_part/humanoid_part/artifact_part/precursor/arm/left) && istype(H.limbs.get_limb("r_arm"), /obj/item/mob_part/humanoid_part/artifact_part/precursor/arm/right))
 			src.holder.addAbility(/datum/targetable/artifact_limb_ability/precursor_heal)
 
 	on_remove()
@@ -299,9 +230,12 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/precursor)
 		icon_state = "arm-precursor-R"
 		handlistPart = "arm-precursor-R-attached"
 
-ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
-/obj/item/parts/artifact_parts/leg/precursor
-	artifact_type = "precursor"
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
+/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg
+
+	New()
+		..()
+		src.name =  pick("ancient", "old", "clunky") + " [src.side]" + " leg"
 
 	on_attach()
 		if (!..())

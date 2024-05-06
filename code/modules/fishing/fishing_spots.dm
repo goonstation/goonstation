@@ -506,10 +506,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/atmospherics/unary/cryo_cell
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
-	/obj/item/parts/human_parts/arm/left = 10,\
-	/obj/item/parts/human_parts/arm/right = 10,\
-	/obj/item/parts/human_parts/leg/left = 10,\
-	/obj/item/parts/human_parts/leg/right =10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/arm/left = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/arm/right = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/leg/left = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/leg/right =10,\
 	/obj/item/organ/brain = 10)
 
 /datum/fishing_spot/clonepod
@@ -518,10 +518,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
 	/mob/living/critter/blobman = 5,\
 	/mob/living/critter/blobman/meat = 5,\
-	/obj/item/parts/human_parts/arm/left = 10,\
-	/obj/item/parts/human_parts/arm/right = 10,\
-	/obj/item/parts/human_parts/leg/left = 10,\
-	/obj/item/parts/human_parts/leg/right =10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/arm/left = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/arm/right = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/leg/left = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/leg/right =10,\
 	/obj/item/organ/brain = 10)
 
 /datum/fishing_spot/time_ship
@@ -671,10 +671,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 2
 	fishing_atom_type = /obj/crevice
 	fish_available = list(/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
-	/obj/item/parts/human_parts/arm/left = 10,\
-	/obj/item/parts/human_parts/arm/right = 10,\
-	/obj/item/parts/human_parts/leg/left = 10,\
-	/obj/item/parts/human_parts/leg/right =10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/arm/left = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/arm/right = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/leg/left = 10,\
+	/obj/item/mob_part/humanoid_part/carbon_part/leg/right =10,\
 	/obj/item/organ/brain = 10,\
 	/mob/living/critter/martian = 15)
 

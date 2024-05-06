@@ -612,12 +612,12 @@
 
 	else
 
-		if (istype(A, /obj/item/parts/human_parts))
-			var/obj/item/parts/human_parts/H = A
-			if (H.original_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.original_DNA]"
-			if (istype(H, /obj/item/parts/human_parts/arm)) // has fringerpints
-				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.original_fprints]"
+		if (istype(A, /obj/item/mob_part/humanoid_part/carbon_part))
+			var/obj/item/mob_part/humanoid_part/carbon_part/H = A
+			if (H.limb_DNA)
+				blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.limb_DNA]"
+			if (istype(H, /obj/item/mob_part/humanoid_part/carbon_part/arm)) // has fringerpints
+				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.limb_fingerprints]"
 
 		else if (istype(A, /obj/item/organ))
 			var/obj/item/organ/O = A

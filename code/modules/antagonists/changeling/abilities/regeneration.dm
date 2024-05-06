@@ -111,9 +111,9 @@
 		if (!C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(!C.limbs.l_arm && prob(limb_regen_prob))
 				if (isabomination(C))
-					C.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/abomination(C)
+					C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination(C)
 				else
-					C.limbs.l_arm = new /obj/item/parts/human_parts/arm/left(C)
+					C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(C)
 				C.limbs.l_arm.holder = C
 				C.limbs.l_arm:original_holder = C
 				C.limbs.l_arm:set_skin_tone()
@@ -123,9 +123,9 @@
 
 			if (!C.limbs.r_arm && prob(limb_regen_prob))
 				if (isabomination(C))
-					C.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/abomination(C)
+					C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination(C)
 				else
-					C.limbs.r_arm = new /obj/item/parts/human_parts/arm/right(C)
+					C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(C)
 				C.limbs.r_arm.holder = C
 				C.limbs.r_arm:original_holder = C
 				C.limbs.r_arm:set_skin_tone()
@@ -134,7 +134,7 @@
 				C.hud.update_hands()
 
 			if (!C.limbs.l_leg && prob(limb_regen_prob))
-				C.limbs.l_leg = new /obj/item/parts/human_parts/leg/left(C)
+				C.limbs.l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(C)
 				C.limbs.l_leg.holder = C
 				C.limbs.l_leg:original_holder = C
 				C.limbs.l_leg:set_skin_tone()
@@ -142,7 +142,7 @@
 				C.set_body_icon_dirty()
 
 			if (!C.limbs.r_leg && prob(limb_regen_prob))
-				C.limbs.r_leg = new /obj/item/parts/human_parts/leg/right(C)
+				C.limbs.r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(C)
 				C.limbs.r_leg.holder = C
 				C.limbs.r_leg:original_holder = C
 				C.limbs.r_leg:set_skin_tone()

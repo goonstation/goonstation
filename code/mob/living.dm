@@ -426,12 +426,12 @@
 			var/success = dropping_organ.attach_organ(src, dropping_user)
 			if (success)
 				return
-		else if (istype(dropped, /obj/item/parts))
-			if (istype(dropped, /obj/item/parts/human_parts/) || istype(dropped, /obj/item/parts/artifact_parts))
-				var/obj/item/parts/dropping_limb = dropped
+		else if (istype(dropped, /obj/item/mob_part))
+			if (istype(dropped, /obj/item/mob_part/humanoid_part/carbon_part/) || istype(dropped, /obj/item/mob_part/humanoid_part/artifact_part))
+				var/obj/item/mob_part/dropping_limb = dropped
 				dropping_limb.attach(src, dropping_user)
-			else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-				var/obj/item/parts/robot_parts/dropping_limb = dropped
+			else if (istype(dropped, /obj/item/mob_part/humanoid_part/silicon_part/arm/) || istype(dropped, /obj/item/mob_part/humanoid_part/silicon_part/leg/))
+				var/obj/item/mob_part/humanoid_part/silicon_part/dropping_limb = dropped
 				dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
@@ -2100,10 +2100,6 @@
 		var/obj/item/clothing/gloves/G = H.gloves
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-		if (H.limbs.l_arm && !ignore_gloves)
-			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
-		if (H.limbs.r_arm && !ignore_gloves)
-			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
 		if (prot <= 0.29)
 			return 0
 

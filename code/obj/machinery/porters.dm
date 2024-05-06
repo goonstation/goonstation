@@ -825,7 +825,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol
 								// s_tone now an RGB rather than a numeric value so disabling this for the moment
 								//M.bioHolder.mobAppearance.s_tone  = max(M.bioHolder.mobAppearance.s_tone - 40, -185)
-								//for(var/obj/item/parts/human_parts/HP in M.contents)
+								//for(var/obj/item/mob_part/humanoid_part/carbon_part/HP in M.contents)
 								//	HP.set_skin_tone()
 
 								//M.bioHolder.mobAppearance.UpdateMob()

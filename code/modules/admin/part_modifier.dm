@@ -2,7 +2,7 @@
 /datum/admins/var/datum/partmod_holder/part_modifier = null
 
 var/list/default_organ_paths = list("head" = /obj/item/organ/head, "skull" = /obj/item/skull, "brain" = /obj/item/organ/brain, "left_eye" = /obj/item/organ/eye, "right_eye" = /obj/item/organ/eye, "chest" = /obj/item/organ/chest, "heart" = /obj/item/organ/heart, "left_lung" = /obj/item/organ/lung, "right_lung" = /obj/item/organ/lung, "butt" = /obj/item/clothing/head/butt, "liver" = /obj/item/organ/liver, "stomach" = /obj/item/organ/stomach, "intestines" = /obj/item/organ/intestines, "pancreas" = /obj/item/organ/pancreas, "spleen" = /obj/item/organ/spleen, "appendix" = /obj/item/organ/appendix, "left_kidney" = /obj/item/organ/kidney, "right_kidney" = /obj/item/organ/kidney, "tail" = /obj/item/organ/tail)
-var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/left, "r_arm" = /obj/item/parts/human_parts/arm/right, "l_leg" = /obj/item/parts/human_parts/leg/left, "r_leg" = /obj/item/parts/human_parts/leg/right)
+var/list/default_limb_paths = list("l_arm" = /obj/item/mob_part/humanoid_part/carbon_part/arm/left, "r_arm" = /obj/item/mob_part/humanoid_part/carbon_part/arm/right, "l_leg" = /obj/item/mob_part/humanoid_part/carbon_part/leg/left, "r_leg" = /obj/item/mob_part/humanoid_part/carbon_part/leg/right)
 
 /client/proc/modify_parts(var/mob/living/carbon/human/target as mob)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -65,7 +65,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 					boutput(usr, "Error: invalid target limb(s).")
 					return
 
-				var/new_type = get_one_match(input("Type path", "Type path", "[ispath(default_limb_paths[target_limb]) ? default_limb_paths[target_limb] : /obj/item/parts/human_parts]"), /obj)
+				var/new_type = get_one_match(input("Type path", "Type path", "[ispath(default_limb_paths[target_limb]) ? default_limb_paths[target_limb] : /obj/item/mob_part/humanoid_part/carbon_part]"), /obj)
 				if (!new_type)
 					return
 
@@ -113,7 +113,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 						return
 
 					if (limbs.randomize(target_limb,usr)) // returns 1 or greater when at least one limb is replaced
-						var/obj/item/parts/new_limb = limbs.get_limb(target_limb)
+						var/obj/item/mob_part/new_limb = limbs.get_limb(target_limb)
 						message_admins("[key_name(usr)] randomised [key_name(limbs.holder)]'s limb: [uppertext(target_limb)] (new type: [new_limb.type])")
 				src.show_window(limbs.holder, usr)
 // randomise all limbs

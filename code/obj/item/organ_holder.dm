@@ -1013,8 +1013,8 @@
 
 			if(showtext && ishuman(src.donor))
 				var/grody_arc = "bloody"
-				if(istype(organ_toss, /obj/item/parts))
-					var/obj/item/parts/limb = organ_toss
+				if(istype(organ_toss, /obj/item/mob_part))
+					var/obj/item/mob_part/limb = organ_toss
 					grody_arc = limb.streak_descriptor
 				else if(istype(organ_toss, /obj/item/organ))
 					var/obj/item/organ/orgn = organ_toss

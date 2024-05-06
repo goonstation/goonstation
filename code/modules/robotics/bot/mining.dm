@@ -310,7 +310,7 @@
 	var/build_step = 0
 
 	attackby(var/obj/item/T, mob/user as mob)
-		if (istype(T, /obj/item/parts/robot_parts/arm/))
+		if (istype(T, /obj/item/mob_part/humanoid_part/silicon_part/arm/))
 			if (src.build_step == 0)
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)

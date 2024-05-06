@@ -24,8 +24,8 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/brullbar
 	is_npc = TRUE
-	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
-	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
+	left_arm = /obj/item/mob_part/humanoid_part/carbon_part/arm/left/brullbar
+	right_arm = /obj/item/mob_part/humanoid_part/carbon_part/arm/right/brullbar
 	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy)
 	no_stamina_stuns = TRUE
 	var/is_king = FALSE
@@ -228,8 +228,8 @@
 	health_brute_vuln = 0.7
 	health_burn = 250
 	health_burn_vuln = 1.4
-	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
-	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
+	left_arm = /obj/item/mob_part/humanoid_part/carbon_part/arm/left/brullbar/king
+	right_arm = /obj/item/mob_part/humanoid_part/carbon_part/arm/right/brullbar/king
 	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy/king)
 	is_king = TRUE
 	limbpath = /datum/limb/brullbar/king

@@ -203,7 +203,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.tool.set_loc(get_turf(src))
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
+		throwparts += new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		//throwparts += core
 		throwparts += src.tool

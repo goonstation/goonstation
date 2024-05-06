@@ -1081,14 +1081,14 @@
 	name = "random prosthesis spawner"
 	min_amt2spawn = 6
 	max_amt2spawn = 8
-	items2spawn = list(/obj/item/parts/robot_parts/arm/left/sturdy,
-	/obj/item/parts/robot_parts/arm/right/sturdy,
-	/obj/item/parts/robot_parts/arm/left/heavy,
-	/obj/item/parts/robot_parts/arm/right/heavy,
-	/obj/item/parts/robot_parts/arm/left/light,
-	/obj/item/parts/robot_parts/arm/right/light,
-	/obj/item/parts/robot_parts/leg/right/treads,
-	/obj/item/parts/robot_parts/leg/left/treads,
+	items2spawn = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/left/sturdy,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/right/heavy,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light,
+	/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads,
+	/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads,
 	/obj/item/organ/eye/cyber/prodoc,
 	/obj/item/organ/eye/cyber/nightvision)
 

@@ -59,7 +59,7 @@
 	desc = "A useful kit for building guardbuddies. All you need is a module!"
 	spawn_contents = list(/obj/item/guardbot_frame,\
 	/obj/item/guardbot_core,\
-	/obj/item/parts/robot_parts/arm/right/standard,\
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,\
 	/obj/item/cell)
 
 /obj/item/storage/box/lightbox

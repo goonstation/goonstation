@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		amt_high = 4
 	limbs
 		text = "human limbs"
-		path = /obj/item/parts/human_parts
+		path = /obj/item/mob_part/humanoid_part/carbon_part
 		amt_low = 4
 		amt_high = 7
 	butts

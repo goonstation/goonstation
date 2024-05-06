@@ -175,7 +175,7 @@
 
 	// RANDOM LIMBS
 	for (var/i = 0, i < pick(0, 1, 2), i++)
-		var/limb_type = pick(/obj/item/parts/human_parts/arm/left, /obj/item/parts/human_parts/arm/right, /obj/item/parts/human_parts/leg/left, /obj/item/parts/human_parts/leg/right)
+		var/limb_type = pick(/obj/item/mob_part/humanoid_part/carbon_part/arm/left, /obj/item/mob_part/humanoid_part/carbon_part/arm/right, /obj/item/mob_part/humanoid_part/carbon_part/leg/left, /obj/item/mob_part/humanoid_part/carbon_part/leg/right)
 		gib = new limb_type(location)
 		gib.throw_at(get_edge_target_turf(location, pick(alldirs)), 4, 3)
 		gib.color = pick(party_colors)

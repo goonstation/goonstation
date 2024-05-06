@@ -156,7 +156,7 @@
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS
 
-		if (bodypart && istype(bodypart, /obj/item/parts/robot_parts))
+		if (bodypart && istype(bodypart, /obj/item/mob_part/humanoid_part/silicon_part))
 			src.icon_prefix = "robo"
 			src.UpdateIcon()
 
@@ -283,18 +283,18 @@
 			if(!C.limbs.l_arm || !C.limbs.r_arm)
 				if(!C.limbs.l_arm)
 					if (isabomination(C))
-						C.limbs.l_arm = new /obj/item/parts/human_parts/arm/left/abomination(C)
+						C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination(C)
 					else //mbc todo : use type of handspider to get diff arms
-						C.limbs.l_arm = new /obj/item/parts/human_parts/arm/left(C)
+						C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(C)
 					C.limbs.l_arm.holder = C
 					C.limbs.l_arm:original_holder = C
 					C.limbs.l_arm:set_skin_tone()
 					C.set_body_icon_dirty()
 				else if(!C.limbs.r_arm)
 					if (isabomination(C))
-						C.limbs.r_arm = new /obj/item/parts/human_parts/arm/right/abomination(C)
+						C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination(C)
 					else
-						C.limbs.r_arm = new /obj/item/parts/human_parts/arm/right(C)
+						C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(C)
 					C.limbs.r_arm.holder = C
 					C.limbs.r_arm:original_holder = C
 					C.limbs.r_arm:set_skin_tone()
@@ -537,13 +537,13 @@
 			var/mob/living/carbon/human/C = hivemind_owner.owner
 			if(!C.limbs.l_leg || !C.limbs.r_leg)
 				if(!C.limbs.l_leg)
-					C.limbs.l_leg = new /obj/item/parts/human_parts/leg/left(C)
+					C.limbs.l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(C)
 					C.limbs.l_leg.holder = C
 					C.limbs.l_leg:original_holder = C
 					C.limbs.l_leg:set_skin_tone()
 					C.set_body_icon_dirty()
 				else if(!C.limbs.r_leg)
-					C.limbs.r_leg = new /obj/item/parts/human_parts/leg/right(C)
+					C.limbs.r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(C)
 					C.limbs.r_leg.holder = C
 					C.limbs.r_leg:original_holder = C
 					C.limbs.r_leg:set_skin_tone()

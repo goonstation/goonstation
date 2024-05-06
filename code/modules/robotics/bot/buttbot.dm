@@ -54,7 +54,7 @@
 	/// hello this is my butt
 	var/obj/item/clothing/head/butt/butt
 	/// and this is the arm sticking out of my butt
-	var/obj/item/parts/buttarm
+	var/obj/item/mob_part/buttarm
 	/// and this is the fallback butt I have if someone spawns me
 	var/default_butt = /obj/item/clothing/head/butt
 	var/list/fartsounds = list('sound/voice/farts/poo2.ogg', \
@@ -83,10 +83,10 @@
 		src.butt = _butt
 	else
 		src.butt = new src.default_butt(src)
-	if(istype(_arm, /obj/item/parts))
+	if(istype(_arm, /obj/item/mob_part))
 		src.buttarm = _arm
 	else
-		src.buttarm = new/obj/item/parts/robot_parts/arm/left/light(src)
+		src.buttarm = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light(src)
 
 	if(src.butt?.toned)
 		var/icon/new_icon = icon(src.icon, "butt_ncbot")

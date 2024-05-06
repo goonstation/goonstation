@@ -36,8 +36,8 @@
 	var/datum/hud/drone/hud
 	var/mob/controller = null
 	var/obj/item/device/radio/radio = null
-	var/obj/item/parts/robot_parts/drone/propulsion/propulsion = null
-	var/obj/item/parts/robot_parts/drone/plating/plating = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/drone/propulsion/propulsion = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/drone/plating/plating = null
 	var/list/equipment_slots = list(null, null, null, null, null)
 	var/obj/item/active_tool = null
 	var/datum/material/mat_chassis = null
@@ -90,7 +90,7 @@
 	movement_delay()
 		var/tally = 0
 		tally += movement_delay_modifier
-		for (var/obj/item/parts/robot_parts/drone/DP in src.contents)
+		for (var/obj/item/mob_part/humanoid_part/silicon_part/drone/DP in src.contents)
 			tally += DP.weight
 		if (src.propulsion && istype(src.propulsion))
 			tally -= src.propulsion.speed
@@ -327,8 +327,8 @@
 	var/construct_stage = 0
 	var/obj/item/device/radio/part_radio = null
 	var/obj/item/cell/part_cell = null
-	var/obj/item/parts/robot_parts/drone/propulsion/part_propulsion = null
-	var/obj/item/parts/robot_parts/drone/plating/part_plating = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/drone/propulsion/part_propulsion = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/drone/plating/part_plating = null
 	var/obj/item/cable_coil/cable_type = null
 
 	proc/change_stage(var/change_to,var/mob/user,var/obj/item/item_used)
@@ -458,7 +458,7 @@
 			src.part_cell = W
 			change_stage(5,user,W)
 
-		else if(istype(W, /obj/item/parts/robot_parts/drone/propulsion) && construct_stage == 5)
+		else if(istype(W, /obj/item/mob_part/humanoid_part/silicon_part/drone/propulsion) && construct_stage == 5)
 			src.visible_message("<b>[user]</b> adds [W] to [src].")
 			src.part_propulsion = W
 			change_stage(6,user,W)
@@ -468,13 +468,13 @@
 
 // DRONE PARTS
 
-/obj/item/parts/robot_parts/drone
+/obj/item/mob_part/humanoid_part/silicon_part/drone
 	name = "drone part"
 	icon = 'icons/mob/drone.dmi'
 	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusable. Some things are like that."
 	var/image/drone_overlay = null
 
-/obj/item/parts/robot_parts/drone/propulsion
+/obj/item/mob_part/humanoid_part/silicon_part/drone/propulsion
 	name = "drone wheels"
 	desc = "The most cost-effective movement available for drones. Won't do very good in space, though!"
 	var/speed = 0
@@ -483,7 +483,7 @@
 		..()
 		drone_overlay = image('icons/mob/drone.dmi',"wheels")
 
-/obj/item/parts/robot_parts/drone/plating
+/obj/item/mob_part/humanoid_part/silicon_part/drone/plating
 	name = "drone plating"
 	desc = "Armor for a remote controlled drone."
 

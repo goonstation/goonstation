@@ -814,7 +814,7 @@
 		src.reagent_glass = null
 
 	if (prob(50))
-		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
+		new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(Tsec)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
@@ -824,8 +824,8 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
-	if (!istype(S, /obj/item/parts/robot_parts/arm/))
+/obj/item/storage/firstaid/attackby(var/obj/item/mob_part/humanoid_part/silicon_part/S, mob/user as mob)
+	if (!istype(S, /obj/item/mob_part/humanoid_part/silicon_part/arm/))
 		if (src.storage.is_full())
 			return
 		if (S.w_class >= W_CLASS_SMALL || S.storage)

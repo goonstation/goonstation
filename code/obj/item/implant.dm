@@ -1400,18 +1400,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_good
-	var/static/left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left/standard)
-	var/static/right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
-	var/static/left_leg = list(/obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/treads)
-	var/static/right_leg = list(/obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/treads)
+	var/static/left_arm = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light, /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard)
+	var/static/right_arm = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light, /obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard)
+	var/static/left_leg = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/left/light, /obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard, /obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads)
+	var/static/right_leg = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/right/light, /obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard, /obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads)
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
 			var/mob/living/carbon/human/H = owner
-			var/obj/item/parts/l_arm = H.limbs.get_limb("l_arm")
-			var/obj/item/parts/r_arm = H.limbs.get_limb("r_arm")
-			var/obj/item/parts/l_leg = H.limbs.get_limb("l_leg")
-			var/obj/item/parts/r_leg = H.limbs.get_limb("r_leg")
+			var/obj/item/mob_part/l_arm = H.limbs.get_limb("l_arm")
+			var/obj/item/mob_part/r_arm = H.limbs.get_limb("r_arm")
+			var/obj/item/mob_part/l_leg = H.limbs.get_limb("l_leg")
+			var/obj/item/mob_part/r_leg = H.limbs.get_limb("r_leg")
 
 			if (!l_arm || !r_arm || !l_leg || !r_leg)
 				active = TRUE

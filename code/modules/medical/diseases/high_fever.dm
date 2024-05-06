@@ -31,8 +31,8 @@
 			boutput(affected_mob, SPAN_ALERT("You're a hundred and one!"))
 			var/mob/living/carbon/human/H = affected_mob
 			if(H.limbs != null)
-				H.limbs.replace_with("l_arm", /obj/item/parts/human_parts/arm/left/hot, null , 0)
-				H.limbs.replace_with("r_arm", /obj/item/parts/human_parts/arm/right/hot, null , 0)
+				H.limbs.replace_with("l_arm", /obj/item/mob_part/humanoid_part/carbon_part/arm/left/hot, null , 0)
+				H.limbs.replace_with("r_arm", /obj/item/mob_part/humanoid_part/carbon_part/arm/right/hot, null , 0)
 				H.limbs.l_arm.holder = H
 				H.limbs.r_arm.holder = H
 				H.update_body()

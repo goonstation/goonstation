@@ -128,8 +128,8 @@
 			var/replace_action = "appends something else"
 			if(part)
 				src.augment.modify_part(part)
-				if(istype(part, /obj/item/parts)) // LIMBS
-					var/obj/item/parts/old_limb = H.limbs.get_limb(part_loc)
+				if(istype(part, /obj/item/mob_part)) // LIMBS
+					var/obj/item/mob_part/old_limb = H.limbs.get_limb(part_loc)
 					if(old_limb)
 						old_limb.remove(FALSE)
 					H.limbs.replace_with(part_loc, part_type, null , 0)
@@ -298,10 +298,10 @@
 		return
 
 /datum/artifact_augmentation/borg
-	left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left/standard)
-	right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
-	left_leg = list(/obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/treads)
-	right_leg = list(/obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/treads)
+	left_arm = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light, /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard)
+	right_arm = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light, /obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard)
+	left_leg = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard, /obj/item/mob_part/humanoid_part/silicon_part/leg/left/light, /obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads)
+	right_leg = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard, /obj/item/mob_part/humanoid_part/silicon_part/leg/right/light, /obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads)
 	eye = list(/obj/item/organ/eye/cyber/configurable,/obj/item/organ/eye/cyber/sunglass,/obj/item/organ/eye/cyber/sechud,/obj/item/organ/eye/cyber/thermal,/obj/item/organ/eye/cyber/meson,/obj/item/organ/eye/cyber/spectro,/obj/item/organ/eye/cyber/prodoc,/obj/item/organ/eye/cyber/ecto,/obj/item/organ/eye/cyber/camera,/obj/item/organ/eye/cyber/nightvision,/obj/item/organ/eye/cyber/laser)
 	heart = list(/obj/item/organ/heart/cyber)
 	butt = list(/obj/item/clothing/head/butt/cyberbutt)
@@ -323,10 +323,10 @@
 			kidney.randomize_modifier()
 
 /datum/artifact_augmentation/synth
-	left_arm = list(/obj/item/parts/human_parts/arm/left/synth, /obj/item/parts/human_parts/arm/left/synth/bloom)
-	right_arm = list(/obj/item/parts/human_parts/arm/right/synth, /obj/item/parts/human_parts/arm/right/synth/bloom)
-	left_leg = list(/obj/item/parts/human_parts/leg/left/synth, /obj/item/parts/human_parts/leg/left/synth/bloom)
-	right_leg = list(/obj/item/parts/human_parts/leg/right/synth, /obj/item/parts/human_parts/leg/right/synth/bloom)
+	left_arm = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth, /obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth/bloom)
+	right_arm = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth/bloom)
+	left_leg = list(/obj/item/mob_part/humanoid_part/carbon_part/leg/left/synth, /obj/item/mob_part/humanoid_part/carbon_part/leg/left/synth/bloom)
+	right_leg = list(/obj/item/mob_part/humanoid_part/carbon_part/leg/right/synth, /obj/item/mob_part/humanoid_part/carbon_part/leg/right/synth/bloom)
 	eye = list(/obj/item/organ/eye/synth)
 	heart = list(/obj/item/organ/heart/synth)
 	butt = list(/obj/item/clothing/head/butt/synth)
@@ -393,19 +393,19 @@
 		return part_list[part_loc][1]
 
 /datum/artifact_augmentation/artifact/artifact_eldritch
-	left_arm = list(/obj/item/parts/artifact_parts/arm/eldritch/left)
-	right_arm = list(/obj/item/parts/artifact_parts/arm/eldritch/right)
-	left_leg = list(/obj/item/parts/artifact_parts/leg/eldritch/left)
-	right_leg = list(/obj/item/parts/artifact_parts/leg/eldritch/right)
+	left_arm = list(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/arm/left)
+	right_arm = list(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/arm/right)
+	left_leg = list(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg/left)
+	right_leg = list(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg/right)
 
 /datum/artifact_augmentation/artifact/artifact_martian
-	left_arm = list(/obj/item/parts/artifact_parts/arm/martian/left)
-	right_arm = list(/obj/item/parts/artifact_parts/arm/martian/right)
-	left_leg = list(/obj/item/parts/artifact_parts/leg/martian/left)
-	right_leg = list(/obj/item/parts/artifact_parts/leg/martian/right)
+	left_arm = list(/obj/item/mob_part/humanoid_part/artifact_part/martian/arm/left)
+	right_arm = list(/obj/item/mob_part/humanoid_part/artifact_part/martian/arm/right)
+	left_leg = list(/obj/item/mob_part/humanoid_part/artifact_part/martian/leg/left)
+	right_leg = list(/obj/item/mob_part/humanoid_part/artifact_part/martian/leg/right)
 
 /datum/artifact_augmentation/artifact/artifact_precursor
-	left_arm = list(/obj/item/parts/artifact_parts/arm/precursor/left)
-	right_arm = list(/obj/item/parts/artifact_parts/arm/precursor/right)
-	left_leg = list(/obj/item/parts/artifact_parts/leg/precursor/left)
-	right_leg = list(/obj/item/parts/artifact_parts/leg/precursor/right)
+	left_arm = list(/obj/item/mob_part/humanoid_part/artifact_part/precursor/arm/left)
+	right_arm = list(/obj/item/mob_part/humanoid_part/artifact_part/precursor/arm/right)
+	left_leg = list(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg/left)
+	right_leg = list(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg/right)

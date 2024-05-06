@@ -204,8 +204,8 @@
 							var/obj/item/organ/organ_obj = the_object
 							if (organ_obj.donor)
 								H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
-						else if (istype(the_object, /obj/item/parts))
-							var/obj/item/parts/part = the_object
+						else if (istype(the_object, /obj/item/mob_part))
+							var/obj/item/mob_part/part = the_object
 							part.delete()
 							H.hud.update_hands()
 			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
@@ -2258,7 +2258,7 @@
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			var/obj/item/parts/thrown_limb = null
+			var/obj/item/mob_part/humanoid_part/thrown_limb = null
 			var/datum/bioEffect/power/shoot_limb/SL = linked_power
 
 			if (H.has_limb("l_arm"))

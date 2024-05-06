@@ -149,7 +149,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			user.show_text("You add the timer to the butt!", "blue")
 			qdel(W)
 			qdel(src)
-		else if (istype(W, /obj/item/parts/robot_parts/arm))
+		else if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm))
 			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/parts/robot_parts/arm))
+		if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm))
 			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] robuttbot"

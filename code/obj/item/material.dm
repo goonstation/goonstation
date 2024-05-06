@@ -601,7 +601,7 @@
 		//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
 		if (H.mutantrace?.can_walk_on_shards)
 			return
-		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
+		if (!istype(H.limbs?.l_leg, /obj/item/mob_part/humanoid_part/carbon_part) && !istype(H.limbs?.r_leg, /obj/item/mob_part/humanoid_part/carbon_part))
 			return
 		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 			boutput(H, SPAN_ALERT("<B>You step on [src]! Ouch!</B>"))
@@ -1004,8 +1004,8 @@
 		if (!istype(I))
 			return
 		var/obj/item/organ/brain/brain = null
-		if (istype(I, /obj/item/parts/robot_parts/head))
-			var/obj/item/parts/robot_parts/head/head = I
+		if (istype(I, /obj/item/mob_part/humanoid_part/silicon_part/head))
+			var/obj/item/mob_part/humanoid_part/silicon_part/head/head = I
 			brain = head.brain
 		else if (istype(I, /obj/item/organ/brain))
 			brain = I

@@ -7,8 +7,8 @@
 	target_anything = 0
 	pointCost = 0
 	can_use_in_container = 1
-	var/list/potential_r_arms = list(/obj/item/parts/human_parts/arm/right/claw, /obj/item/parts/human_parts/arm/right/abomination)
-	var/list/potential_l_arms = list(/obj/item/parts/human_parts/arm/left/claw,/obj/item/parts/human_parts/arm/left/abomination)
+	var/list/potential_r_arms = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/right/claw, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination)
+	var/list/potential_l_arms = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/left/claw,/obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination)
 
 	cast(atom/target)
 		if (..())
@@ -65,10 +65,10 @@
 		SPAWN(cooldown)
 			if (target_limb == "r_arm")
 				if (C.limbs.r_arm && istype(C.limbs.r_arm, new_limb))
-					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/right, C, 0)
+					C.limbs.replace_with(target_limb, /obj/item/mob_part/humanoid_part/carbon_part/arm/right, C, 0)
 					boutput(holder.owner, SPAN_NOTICE("<B>Our right arm shrinks back to normal size.</B>"))
 			else
 				if (C.limbs.l_arm && istype(C.limbs.l_arm, new_limb))
-					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/left, C, 0)
+					C.limbs.replace_with(target_limb, /obj/item/mob_part/humanoid_part/carbon_part/arm/left, C, 0)
 					boutput(holder.owner, SPAN_NOTICE("<B>Our left arm shrinks back to normal size.</B>"))
 		return 0

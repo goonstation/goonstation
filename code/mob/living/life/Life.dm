@@ -337,20 +337,20 @@
 
 	//Attaching a limb that didn't originally belong to you can do stuff
 	if(!isdead(src) && prob(2) && src.limbs)
-		if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
-			var/obj/item/parts/human_parts/arm/A = src.limbs.l_arm
+		if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/))
+			var/obj/item/mob_part/humanoid_part/carbon_part/arm/A = src.limbs.l_arm
 			if(A.original_holder && src != A.original_holder)
 				A.foreign_limb_effect()
-		if(src.limbs.r_arm && istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/))
-			var/obj/item/parts/human_parts/arm/B = src.limbs.r_arm
+		if(src.limbs.r_arm && istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/))
+			var/obj/item/mob_part/humanoid_part/carbon_part/arm/B = src.limbs.r_arm
 			if(B.original_holder && src != B.original_holder)
 				B.foreign_limb_effect()
-		if(src.limbs.l_leg && istype(src.limbs.l_leg, /obj/item/parts/human_parts/leg/))
-			var/obj/item/parts/human_parts/leg/C = src.limbs.l_leg
+		if(src.limbs.l_leg && istype(src.limbs.l_leg, /obj/item/mob_part/humanoid_part/carbon_part/leg/))
+			var/obj/item/mob_part/humanoid_part/carbon_part/leg/C = src.limbs.l_leg
 			if(C.original_holder && src != C.original_holder)
 				C.foreign_limb_effect()
-		if(src.limbs.r_leg && istype(src.limbs.r_leg, /obj/item/parts/human_parts/leg/))
-			var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
+		if(src.limbs.r_leg && istype(src.limbs.r_leg, /obj/item/mob_part/humanoid_part/carbon_part/leg/))
+			var/obj/item/mob_part/humanoid_part/carbon_part/leg/D = src.limbs.r_leg
 			if(D.original_holder && src != D.original_holder)
 				D.foreign_limb_effect()
 
@@ -404,7 +404,7 @@
 	process_locks()
 	update_canmove()
 
-	for (var/obj/item/parts/robot_parts/part in src.contents)
+	for (var/obj/item/mob_part/humanoid_part/silicon_part/part in src.contents)
 		part.on_life(src)
 
 	if (metalman_skin && prob(1))

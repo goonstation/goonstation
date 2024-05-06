@@ -43,7 +43,7 @@
 
 /datum/recipe/roburger
 	flour_amount = 1
-	extra_item = /obj/item/parts/robot_parts/head
+	extra_item = /obj/item/mob_part/humanoid_part/silicon_part/head
 	creates = "/obj/item/reagent_containers/food/snacks/burger/roburger"
 
 /datum/recipe/heartburger

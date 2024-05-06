@@ -47,9 +47,9 @@
 				user.set_loc(get_turf(O.loc))
 			converting = TRUE
 			// keep it truthy to avoid null values due to missing limbs
-			var/list/obj/item/parts/convertable_limbs = keep_truthy(list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg))
+			var/list/obj/item/mob_part/humanoid_part/convertable_limbs = keep_truthy(list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg))
 			//figure out which limbs are already robotic and remove them from the list
-			for (var/obj/item/parts/limb in convertable_limbs)
+			for (var/obj/item/mob_part/humanoid_part/limb in convertable_limbs)
 				if (!limb || (limb.kind_of_limb & LIMB_ROBOT))
 					convertable_limbs -= limb
 			//people with existing robolimbs get converted faster.
@@ -68,16 +68,16 @@
 				if (loops % loops_per_conversion_step == 0)
 					if (!convertable_limbs.len) //avoid runtiming once all limbs are converted
 						continue
-					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
+					var/obj/item/mob_part/limb_to_replace = pick(convertable_limbs)
 					switch(limb_to_replace.slot)
 						if ("l_arm")
-							humanuser.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null, 0)
+							humanuser.limbs.replace_with("l_arm", /obj/item/mob_part/humanoid_part/silicon_part/arm/left/light, null, 0)
 						if ("r_arm")
-							humanuser.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null, 0)
+							humanuser.limbs.replace_with("r_arm", /obj/item/mob_part/humanoid_part/silicon_part/arm/right/light, null, 0)
 						if ("l_leg")
-							humanuser.limbs.replace_with("l_leg", /obj/item/parts/robot_parts/leg/left/light, null, 0)
+							humanuser.limbs.replace_with("l_leg", /obj/item/mob_part/humanoid_part/silicon_part/leg/left/light, null, 0)
 						if ("r_leg")
-							humanuser.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right/light, null, 0)
+							humanuser.limbs.replace_with("r_leg", /obj/item/mob_part/humanoid_part/silicon_part/leg/right/light, null, 0)
 					convertable_limbs -= limb_to_replace
 					humanuser.update_body()
 				sleep(0.4 SECONDS)

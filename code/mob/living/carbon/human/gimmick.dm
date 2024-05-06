@@ -301,7 +301,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				hudlist += I
 
 	for (var/obj/item/I in src.contents)
-		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts)) continue //FUCK
+		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/mob_part)) continue //FUCK
 		hudlist += I
 		if (I.storage)
 			hudlist += I.storage.get_contents()
@@ -311,7 +311,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	for (var/atom/I in view(1,src) + hudlist)
 		if (!I.mouse_opacity) continue
 		if (TWITCH_BOT_INTERACT_BLOCK(I)) continue
-		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts)) continue  //fuck x3
+		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/mob_part)) continue  //fuck x3
 		if ((msg == "airlock" || msg == "door") && istype(I,/obj/machinery/door))
 			close_match += I
 			continue

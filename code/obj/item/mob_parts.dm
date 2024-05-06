@@ -1,6 +1,7 @@
-ABSTRACT_TYPE(/obj/item/parts)
+/*
+ABSTRACT_TYPE(/obj/item/mob_part)
 
-/obj/item/parts
+/obj/item/mob_part
 	name = "body part"
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -400,25 +401,25 @@ ABSTRACT_TYPE(/obj/item/parts)
 			sleep(0.1 SECONDS)
 
 
-var/global/list/all_valid_random_right_arms = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_right_arm_slot)
-var/global/list/all_valid_random_left_arms = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_left_arm_slot)
-var/global/list/all_valid_random_right_legs = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_right_leg_slot)
-var/global/list/all_valid_random_left_legs = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_left_leg_slot)
+var/global/list/all_valid_random_right_arms = filtered_concrete_typesof(/obj/item/mob_part, /proc/goes_in_right_arm_slot)
+var/global/list/all_valid_random_left_arms = filtered_concrete_typesof(/obj/item/mob_part, /proc/goes_in_left_arm_slot)
+var/global/list/all_valid_random_right_legs = filtered_concrete_typesof(/obj/item/mob_part, /proc/goes_in_right_leg_slot)
+var/global/list/all_valid_random_left_legs = filtered_concrete_typesof(/obj/item/mob_part, /proc/goes_in_left_leg_slot)
 
 /proc/goes_in_right_arm_slot(var/type)
-	var/obj/item/parts/fakeInstance = type
+	var/obj/item/mob_part/fakeInstance = type
 	return (((initial(fakeInstance.slot) == "r_arm")) && !(initial(fakeInstance.random_limb_blacklisted)))
 
 /proc/goes_in_left_arm_slot(var/type)
-	var/obj/item/parts/fakeInstance = type
+	var/obj/item/mob_part/fakeInstance = type
 	return (((initial(fakeInstance.slot) == "l_arm")) && !(initial(fakeInstance.random_limb_blacklisted)))
 
 /proc/goes_in_right_leg_slot(var/type)
-	var/obj/item/parts/fakeInstance = type
+	var/obj/item/mob_part/fakeInstance = type
 	return (((initial(fakeInstance.slot) == "r_leg")) && !(initial(fakeInstance.random_limb_blacklisted)))
 
 /proc/goes_in_left_leg_slot(var/type)
-	var/obj/item/parts/fakeInstance = type
+	var/obj/item/mob_part/fakeInstance = type
 	return (((initial(fakeInstance.slot) == "l_leg")) && !(initial(fakeInstance.random_limb_blacklisted)))
 
 /proc/randomize_mob_limbs(var/mob/living/carbon/human/target, var/mob/user, var/zone = "all", var/showmessage = 1)
@@ -428,5 +429,4 @@ var/global/list/all_valid_random_left_legs = filtered_concrete_typesof(/obj/item
 	if (!targetlimbs)
 		return 0
 	return targetlimbs.randomize(zone, user, showmessage)
-
-
+*/

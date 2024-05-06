@@ -23,8 +23,8 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
-	left_arm = /obj/item/parts/human_parts/arm/left/bear
-	right_arm = /obj/item/parts/human_parts/arm/right/bear
+	left_arm = /obj/item/mob_part/humanoid_part/carbon_part/arm/left/bear
+	right_arm = /obj/item/mob_part/humanoid_part/carbon_part/arm/right/bear
 	add_abilities = list(/datum/targetable/critter/tackle)
 	no_stamina_stuns = TRUE
 	var/droparms = TRUE

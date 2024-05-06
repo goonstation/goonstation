@@ -402,7 +402,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/time = 5
 	var/heat = "Low"
 	var/list/recipes = null
-	//var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain/obj/item)
+	//var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/mob_part/humanoid_part/silicon_part/head, /obj/item/clothing/head/butt, /obj/item/organ/brain/obj/item)
 	var/allowed = list(/obj/item)
 	var/tmp/recipe_html = null
 

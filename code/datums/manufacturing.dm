@@ -1388,7 +1388,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Frame"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_FRAME_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/robot_frame)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/robot_frame)
 	time = 45 SECONDS
 	create = 1
 	category = "Component"
@@ -1398,9 +1398,9 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Standard Cyborg Parts"
 	item_paths = list("MET-2")
 	item_amounts = list((ROBOT_CHEST_COST + ROBOT_HEAD_COST + ROBOT_LIMB_COST * 4) * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/chest/standard,/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/right/standard,/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/chest/standard,/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
@@ -1410,9 +1410,9 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Parts"
 	item_paths = list("MET-2")
 	item_amounts = list((ROBOT_CHEST_COST + ROBOT_HEAD_COST + ROBOT_LIMB_COST * 4) * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/chest/light,/obj/item/parts/robot_parts/head/light,
-/obj/item/parts/robot_parts/arm/right/light,/obj/item/parts/robot_parts/arm/left/light,
-/obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/chest/light,/obj/item/mob_part/humanoid_part/silicon_part/head/light,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light,/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/light,/obj/item/mob_part/humanoid_part/silicon_part/leg/left/light)
 	time = 62 SECONDS
 	create = 1
 	category = "Component"
@@ -1422,7 +1422,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Chest"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_CHEST_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/chest/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/chest/standard)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
@@ -1432,7 +1432,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Chest"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_CHEST_COST * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/chest/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/chest/light)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1442,7 +1442,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Head"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_HEAD_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/head/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/head/standard)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
@@ -1452,7 +1452,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Screen Head"
 	item_paths = list("MET-2","CON-1","CRY-1")
 	item_amounts = list(ROBOT_SCREEN_METAL_COST * 10,2,6)
-	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/head/screen)
 	time = 24 SECONDS
 	create = 1
 	category = "Component"
@@ -1462,7 +1462,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Head"
 	item_paths = list("MET-1")
 	item_amounts = list(ROBOT_HEAD_COST * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/head/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/head/light)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1472,7 +1472,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Arm (Right)"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_LIMB_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/arm/right/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1482,7 +1482,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Arm (Right)"
 	item_paths = list("MET-1")
 	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/arm/right/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
@@ -1492,7 +1492,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Arm (Left)"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_LIMB_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/arm/left/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1502,7 +1502,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Arm (Left)"
 	item_paths = list("MET-1")
 	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/arm/left/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
@@ -1512,7 +1512,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Leg (Right)"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_LIMB_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/right/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1522,7 +1522,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Leg (Right)"
 	item_paths = list("MET-1")
 	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/right/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/right/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
@@ -1532,7 +1532,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Leg (Left)"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_LIMB_COST * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/standard)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1542,7 +1542,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Light Cyborg Leg (Left)"
 	item_paths = list("MET-1")
 	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/light)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/left/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
@@ -1552,7 +1552,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cyborg Treads"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(ROBOT_TREAD_METAL_COST * 2 * 10,6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads, /obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -1943,7 +1943,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Alastor Pattern Thrusters"
 	item_paths = list("MET-2")
 	item_amounts = list(ROBOT_THRUSTER_COST * 2 * 10)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
+	item_outputs = list(/obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster,/obj/item/mob_part/humanoid_part/silicon_part/leg/left/thruster)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"

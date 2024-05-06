@@ -222,12 +222,12 @@
 		if (!H.limbs.l_arm)
 			current_status = "Missing"
 		else
-			if (istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-				var/obj/item/parts/human_parts/arm/left/item/I = H.limbs.l_arm
+			if (istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left))
+				var/obj/item/mob_part/humanoid_part/item_arm/left/I = H.limbs.l_arm
 				current_status = I.remove_object
-			else if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/))
+			else if (istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/silicon_part/arm/left/))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.l_arm, /obj/item/parts/artifact_parts/arm/))
+			else if (istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/artifact_part))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
 			"limb" = current_limb,
@@ -239,12 +239,12 @@
 		if (!H.limbs.r_arm)
 			current_status = "Missing"
 		else
-			if (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-				var/obj/item/parts/human_parts/arm/right/item/I = H.limbs.r_arm
+			if (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right))
+				var/obj/item/mob_part/humanoid_part/item_arm/right/I = H.limbs.r_arm
 				current_status = I.remove_object
-			else if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts/arm/right))
+			else if (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/silicon_part/arm/right))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.r_arm, /obj/item/parts/artifact_parts/arm/))
+			else if (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/artifact_part))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
 			"limb" = current_limb,
@@ -256,9 +256,9 @@
 		if (!H.limbs.l_leg)
 			current_status = "Missing"
 		else
-			if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/left))
+			if (istype(H.limbs.l_leg, /obj/item/mob_part/humanoid_part/silicon_part/leg/left))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.l_leg, /obj/item/parts/artifact_parts/leg/))
+			else if (istype(H.limbs.l_leg, /obj/item/mob_part/humanoid_part/artifact_part))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
 			"limb" = current_limb,
@@ -270,9 +270,9 @@
 		if (!H.limbs.r_leg)
 			current_status = "Missing"
 		else
-			if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts/leg/right))
+			if (istype(H.limbs.r_leg, /obj/item/mob_part/humanoid_part/silicon_part/leg/right))
 				current_status = "Cybernetic"
-			else if (istype(H.limbs.r_leg, /obj/item/parts/artifact_parts/leg/))
+			else if (istype(H.limbs.r_leg, /obj/item/mob_part/humanoid_part/artifact_part))
 				current_status = "UNKNOWN"
 		limb_data += list(list(
 			"limb" = current_limb,

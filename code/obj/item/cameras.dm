@@ -67,7 +67,7 @@ TYPEINFO(/obj/item/camera/large)
 			qdel(C)
 			user.show_text("You replace the film cartridge. The camera can now take [src.pictures_left] pictures.", "blue")
 
-		else if (istype(W, /obj/item/parts/robot_parts/arm))
+		else if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm))
 			var/obj/item/camera_arm_assembly/B = new /obj/item/camera_arm_assembly
 			B.set_loc(user)
 			user.u_equip(W)

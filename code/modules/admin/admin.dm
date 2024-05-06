@@ -3010,21 +3010,21 @@ var/global/noir = 0
 						if (src.level >= LEVEL_ADMIN)
 							for (var/mob/living/carbon/human/M in mobs)
 								if (!ismonkey(M))
-									for (var/obj/item/parts/human_parts/arm/P in M)
+									for (var/obj/item/mob_part/humanoid_part/carbon_part/arm/P in M)
 										P.sever()
-										var/obj/item/parts/human_parts/arm/sawarm = null
+										var/obj/item/mob_part/humanoid_part/item_arm/sawarm = null
 
 										if (P.slot == "l_arm")
-											sawarm = new /obj/item/parts/human_parts/arm/left/item(M)
+											sawarm = new /obj/item/mob_part/humanoid_part/item_arm/left(M)
 											M.limbs.l_arm = sawarm
 										else
-											sawarm = new /obj/item/parts/human_parts/arm/right/item(M)
+											sawarm = new /obj/item/mob_part/humanoid_part/item_arm/right(M)
 											M.limbs.r_arm = sawarm
 										if (!sawarm) return
 
 										sawarm.holder = M
 										sawarm.remove_stage = 0
-										sawarm:set_item(new /obj/item/saw/elimbinator())
+										sawarm.set_item(new /obj/item/saw/elimbinator())
 
 
 									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, TRUE)

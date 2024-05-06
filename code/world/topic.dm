@@ -239,7 +239,7 @@
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								for (var/obj/item/I in H.contents)
-									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
+									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/mob_part) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
 									if (I.storage)
 										hudlist += I.storage.get_contents()
@@ -248,7 +248,7 @@
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
 								if (!isturf(I.loc)) continue
 								if (TWITCH_BOT_INTERACT_BLOCK(I)) continue
-								if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
+								if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/mob_part) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 								if (I.name == msg)
 									close_match.len = 0
 									close_match += I

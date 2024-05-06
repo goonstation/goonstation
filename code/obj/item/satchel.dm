@@ -256,8 +256,8 @@
 			/obj/item/reagent_containers/food/snacks,
 			/obj/item/organ,
 			/obj/item/clothing/head/butt,
-			/obj/item/parts/human_parts/arm,
-			/obj/item/parts/human_parts/leg,
+			/obj/item/mob_part/humanoid_part/carbon_part/arm,
+			/obj/item/mob_part/humanoid_part/carbon_part/leg,
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)

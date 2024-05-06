@@ -1440,7 +1440,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 						target_doodad.deactivate()
 
 //Meat limbs: probably not a desirable prize
-/obj/item/parts/human_parts/arm/meat_mutant
+/obj/item/mob_part/humanoid_part/carbon_part/arm/meat_mutant
 	partIconModifier = "mutated"
 
 	left

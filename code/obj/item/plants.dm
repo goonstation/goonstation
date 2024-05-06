@@ -366,11 +366,11 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0
-			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+			if (istype(H.limbs.l_arm,/obj/item/mob_part/humanoid_part/silicon_part) || istype(H.limbs.l_arm,/obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth))
 				..()
 				return
 		else
-			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+			if (istype(H.limbs.r_arm,/obj/item/mob_part/humanoid_part/silicon_part) || istype(H.limbs.r_arm,/obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth))
 				..()
 				return
 		if(istype(H))
@@ -522,10 +522,10 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 
 	proc/thorns_protected(mob/living/carbon/human/H)
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0
-			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+			if (istype(H.limbs.l_arm,/obj/item/mob_part/humanoid_part/silicon_part) || istype(H.limbs.l_arm,/obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth))
 				return TRUE
 		else
-			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+			if (istype(H.limbs.r_arm,/obj/item/mob_part/humanoid_part/silicon_part) || istype(H.limbs.r_arm,/obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth))
 				return TRUE
 		if(H.gloves)
 			return TRUE

@@ -26,12 +26,12 @@
 	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
-	var/obj/item/parts/robot_parts/head/part_head = null
-	var/obj/item/parts/robot_parts/chest/part_chest = null
-	var/obj/item/parts/robot_parts/arm/part_arm_r = null
-	var/obj/item/parts/robot_parts/arm/part_arm_l = null
-	var/obj/item/parts/robot_parts/leg/part_leg_r = null
-	var/obj/item/parts/robot_parts/leg/part_leg_l = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/head/part_head = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/chest/part_chest = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/arm/part_arm_r = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/arm/part_arm_l = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/leg/part_leg_r = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/leg/part_leg_l = null
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
@@ -108,7 +108,7 @@
 	var/oil = 0
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
@@ -121,18 +121,18 @@
 			if(HAS_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG))
 				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
-			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/chest/light/PC = new /obj/item/mob_part/humanoid_part/silicon_part/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
 			PC.wires = 1
 			src.cell = CELL
 			PC.cell = CELL
 			src.part_chest = PC
-			src.part_head = new /obj/item/parts/robot_parts/head/light(src)
-			src.part_arm_r = new /obj/item/parts/robot_parts/arm/right/light(src)
-			src.part_arm_l = new /obj/item/parts/robot_parts/arm/left/light(src)
-			src.part_leg_r = new /obj/item/parts/robot_parts/leg/right/light(src)
-			src.part_leg_l = new /obj/item/parts/robot_parts/leg/left/light(src)
-			for(var/obj/item/parts/robot_parts/P in src.contents)
+			src.part_head = new /obj/item/mob_part/humanoid_part/silicon_part/head/light(src)
+			src.part_arm_r = new /obj/item/mob_part/humanoid_part/silicon_part/arm/right/light(src)
+			src.part_arm_l = new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/light(src)
+			src.part_leg_r = new /obj/item/mob_part/humanoid_part/silicon_part/leg/right/light(src)
+			src.part_leg_l = new /obj/item/mob_part/humanoid_part/silicon_part/leg/left/light(src)
+			for(var/obj/item/mob_part/humanoid_part/silicon_part/P in src.contents)
 				P.holder = src
 				if(P.robot_movement_modifier)
 					APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
@@ -147,7 +147,7 @@
 				src.part_head.set_loc(src)
 			if (src.part_chest.loc != src)
 				src.part_chest.set_loc(src)
-			for (var/obj/item/parts/robot_parts/P in src.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/P in src.contents)
 				P.holder = src
 				if(P.robot_movement_modifier)
 					APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
@@ -170,13 +170,13 @@
 				if (frame.r_arm) src.part_arm_r = frame.r_arm
 				if (frame.l_leg) src.part_leg_l = frame.l_leg
 				if (frame.r_leg) src.part_leg_r = frame.r_leg
-				for(var/obj/item/parts/robot_parts/P in frame.contents)
+				for(var/obj/item/mob_part/humanoid_part/silicon_part/P in frame.contents)
 					P.set_loc(src)
 					P.holder = src
 					if(P.robot_movement_modifier)
 						APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
 
-		if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
+		if (istype(src.part_leg_l,/obj/item/mob_part/humanoid_part/silicon_part/leg/left/thruster) || istype(src.part_leg_r,/obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster))
 			src.flags ^= TABLEPASS
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
@@ -248,7 +248,7 @@
 				else
 					// how the hell would this happen. oh well
 					stack_trace("[identify_object(src)] was created without a head, somehow. That's bad.")
-					var/obj/item/parts/robot_parts/head/standard/H = new /obj/item/parts/robot_parts/head/standard(src)
+					var/obj/item/mob_part/humanoid_part/silicon_part/head/standard/H = new /obj/item/mob_part/humanoid_part/silicon_part/head/standard(src)
 					src.part_head = H
 					B.set_loc(H)
 					H.brain = B
@@ -283,15 +283,15 @@
 		if (!gibbed)
 			src.visible_message(SPAN_ALERT("<b>[src]</b> falls apart into a pile of components!"))
 			var/turf/T = get_turf(src)
-			for(var/obj/item/parts/robot_parts/R in src.contents)
+			for(var/obj/item/mob_part/humanoid_part/silicon_part/R in src.contents)
 				R.set_loc(T)
-				if (istype(R, /obj/item/parts/robot_parts/chest))
-					var/obj/item/parts/robot_parts/chest/chest = R
+				if (istype(R, /obj/item/mob_part/humanoid_part/silicon_part/chest))
+					var/obj/item/mob_part/humanoid_part/silicon_part/chest/chest = R
 					chest.wires = 1
 					if (src.cell)
 						chest.cell = src.cell
 
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame =  new(T)
 			frame.setMaterial(src.frame_material)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
@@ -841,7 +841,7 @@
 				boutput(src, SPAN_NOTICE("Your shield completely blocks the attack!"))
 				return 1
 			boutput(src, SPAN_ALERT("The blob attacks you!"))
-			for (var/obj/item/parts/robot_parts/RP in src.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 				// maybe the blob is a little acidic?? idk
 				if (RP.ropart_take_damage(damage, damage/2) == 1)
 					src.compborg_lose_limb(RP)
@@ -894,7 +894,7 @@
 		var/burn_damage = max((power-2.5)*5,0)
 
 		SPAWN(0)
-			for (var/obj/item/parts/robot_parts/RP in src.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 				if (RP.ropart_take_damage(brute_damage,burn_damage) == 1)
 					src.compborg_lose_limb(RP)
 				RP.ropart_ex_act(severity, lasttouched, power)
@@ -957,7 +957,7 @@
 
 		src.material_trigger_on_bullet(src, P)
 
-		var/obj/item/parts/robot_parts/PART = null
+		var/obj/item/mob_part/humanoid_part/silicon_part/PART = null
 		if (ismob(P.shooter))
 			var/mob/living/M = P.shooter
 			switch(M.zone_sel.selecting)
@@ -977,7 +977,7 @@
 				PART = src.part_chest
 		else
 			var/list/parts = list()
-			for (var/obj/item/parts/robot_parts/RP in src.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 				parts.Add(RP)
 			if (length(parts) > 0)
 				PART = pick(parts)
@@ -1010,7 +1010,7 @@
 		src.changeStatus("stunned", 5 SECONDS, optional=null)
 		src.changeStatus("upgrade_disabled", 5 SECONDS, optional=null)
 		boutput(src, SPAN_ALERT("<B>*BZZZT*</B>"))
-		for (var/obj/item/parts/robot_parts/RP in src.contents)
+		for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
 
 	meteorhit(obj/O as obj)
@@ -1032,7 +1032,7 @@
 			boutput(src, SPAN_NOTICE("Your force shield absorbs the impact!"))
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		else
-			for (var/obj/item/parts/robot_parts/RP in src.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 				if (RP.ropart_take_damage(35,0) == 1) src.compborg_lose_limb(RP)
 		if ((O.icon_state == "flaming"))
 			if (Fshield)
@@ -1040,7 +1040,7 @@
 				boutput(src, SPAN_NOTICE("Your fire shield absorbs the heat!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 			else
-				for (var/obj/item/parts/robot_parts/RP in src.contents)
+				for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 					if (RP.ropart_take_damage(0, 35) == 1) src.compborg_lose_limb(RP)
 				if (istype(cell, /obj/item/cell/erebite))
 					src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
@@ -1436,8 +1436,8 @@
 			src.update_appearance()
 			return
 
-		else if (istype(W,/obj/item/parts/robot_parts/) && src.wiresexposed)
-			var/obj/item/parts/robot_parts/RP = W
+		else if (istype(W,/obj/item/mob_part/humanoid_part/silicon_part/) && src.wiresexposed)
+			var/obj/item/mob_part/humanoid_part/silicon_part/RP = W
 			switch(RP.slot)
 				if("chest")
 					boutput(user, SPAN_ALERT("You can't attach a chest piece to a constructed cyborg. You'll need to put it on a frame."))
@@ -1497,8 +1497,8 @@
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			boutput(user, SPAN_NOTICE("You successfully attach the piece to [src.name]."))
 			src.update_bodypart(RP.slot)
-		else if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen) && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-			var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+		else if (istype(src.part_head, /obj/item/mob_part/humanoid_part/silicon_part/head/screen) && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			var/obj/item/mob_part/humanoid_part/silicon_part/head/screen/screenhead = src.part_head
 			if (screenhead.smashed)
 				screenhead.start_repair(W, user)
 			else
@@ -1702,7 +1702,7 @@
 			if (!O || (O.loc != src && O.loc != src.module))
 				return
 
-			if(!src.module_states[1] && istype(src.part_arm_l,/obj/item/parts/robot_parts/arm/))
+			if(!src.module_states[1] && istype(src.part_arm_l,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 				src.module_states[1] = O
 				src.contents += O
 				O.pickup(src) // Handle light datums and the like.
@@ -1710,7 +1710,7 @@
 				src.module_states[2] = O
 				src.contents += O
 				O.pickup(src)
-			else if(!src.module_states[3] && istype(src.part_arm_r,/obj/item/parts/robot_parts/arm/))
+			else if(!src.module_states[3] && istype(src.part_arm_r,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 				src.module_states[3] = O
 				src.contents += O
 				O.pickup(src)
@@ -1799,7 +1799,7 @@
 			. += ROBOT_MISSING_LEG_MOVEMENT_ADJUST
 			if (src.part_arm_r)
 				. += ROBOT_MISSING_LEG_ARM_OFFSET
-		for (var/obj/item/parts/robot_parts/arm as anything in list(src.part_arm_l, src.part_arm_r))
+		for (var/obj/item/mob_part/humanoid_part/silicon_part/arm as anything in list(src.part_arm_l, src.part_arm_r))
 			if (!arm)
 				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
 
@@ -2126,7 +2126,7 @@
 			dat += "No Power Cell Installed<BR>"
 
 		var/extraweight = 0
-		for(var/obj/item/parts/robot_parts/RP in src.contents)
+		for(var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 			extraweight += RP.weight
 
 		if (extraweight) dat += "<B>Extra Weight:</B> [extraweight]kg over standard limit"
@@ -2280,7 +2280,7 @@
 	verb/cmd_alter_head_screen()
 		set category = "Robot Commands"
 		set name = "Change facial expression (screen head only)"
-		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		var/obj/item/mob_part/humanoid_part/silicon_part/head/screen/targethead = locate(/obj/item/mob_part/humanoid_part/silicon_part/head/screen) in src.contents
 		if (!istype(targethead))
 			boutput(src, SPAN_ALERT("You're not equipped with a suitable head to use this command!"))
 			return 0
@@ -2454,7 +2454,7 @@
 
 			if (!efficient) power_use_tally += 1
 
-			for (var/obj/item/parts/robot_parts/P in src.contents)
+			for (var/obj/item/mob_part/humanoid_part/silicon_part/P in src.contents)
 				if (P.powerdrain > 0)
 					if (efficient) power_use_tally += P.powerdrain / 2
 					else power_use_tally += P.powerdrain
@@ -2538,7 +2538,7 @@
 				// consume 1 power per tick unless we've got the efficiency upgrade
 				if (!efficient) power_use_tally += 1
 
-				for (var/obj/item/parts/robot_parts/P in src.contents)
+				for (var/obj/item/mob_part/humanoid_part/silicon_part/P in src.contents)
 					if (P.powerdrain > 0)
 						if (efficient) power_use_tally += P.powerdrain / 2
 						else power_use_tally += P.powerdrain
@@ -2658,7 +2658,7 @@
 			C = src.cosmetic_mods
 
 		total_weight = 0
-		for (var/obj/item/parts/robot_parts/P in src.contents)
+		for (var/obj/item/mob_part/humanoid_part/silicon_part/P in src.contents)
 			if (P.weight > 0)
 				total_weight += P.weight
 
@@ -2683,10 +2683,10 @@
 				if (src.part_head.visible_eyes && C)
 					var/icon/eyesovl = null
 					var/image/eye_light = null
-					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
+					if (istype(src.part_head, /obj/item/mob_part/humanoid_part/silicon_part/head/screen))
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
-						var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+						var/obj/item/mob_part/humanoid_part/silicon_part/head/screen/screenhead = src.part_head
 						if (screenhead.smashed)
 							src.i_head.overlays += image('icons/mob/robots.dmi', "screen-smashed", layer = FLOAT_LAYER + 0.1)
 					else
@@ -2969,7 +2969,7 @@
 				if (part_arm_r.ropart_take_damage(brute, burn) == 1)
 					src.compborg_lose_limb(part_arm_r)
 		else
-			var/obj/item/parts/robot_parts/target_part
+			var/obj/item/mob_part/humanoid_part/silicon_part/target_part
 			switch (zone)
 				if ("head")
 					target_part = part_head
@@ -3021,7 +3021,7 @@
 			if (part_arm_r)
 				part_arm_r.ropart_mend_damage(brute, burn)
 		else
-			var/obj/item/parts/robot_parts/target_part
+			var/obj/item/mob_part/humanoid_part/silicon_part/target_part
 			switch (zone)
 				if ("head")
 					target_part = part_head
@@ -3073,23 +3073,23 @@
 			available_ai_shells -= src
 		..()
 
-	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
+	proc/compborg_lose_limb(var/obj/item/mob_part/humanoid_part/silicon_part/part)
 
 		playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, TRUE)
 		if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
 		elecflash(src,power = 2)
 
-		if (istype(part,/obj/item/parts/robot_parts/chest/))
+		if (istype(part,/obj/item/mob_part/humanoid_part/silicon_part/chest/))
 			src.visible_message("<b>[src]'s</b> chest unit is destroyed!")
 			src.part_chest = null
-		if (istype(part,/obj/item/parts/robot_parts/head/))
+		if (istype(part,/obj/item/mob_part/humanoid_part/silicon_part/head/))
 			src.visible_message("<b>[src]'s</b> head breaks apart!")
 			if (src.part_head.brain)
 				src.part_head.brain.set_loc(get_turf(src))
 			src.part_head.brain = null
 			src.part_head.brain = null
 			src.part_head = null
-		if (istype(part,/obj/item/parts/robot_parts/arm/))
+		if (istype(part,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 			if (part.slot == "arm_both")
 				src.visible_message("<b>[src]'s</b> arms are destroyed!")
 				src.part_leg_r = null
@@ -3104,7 +3104,7 @@
 				src.visible_message("<b>[src]'s</b> right arm breaks off!")
 				src.part_arm_r = null
 				src.compborg_force_unequip(3)
-		if (istype(part,/obj/item/parts/robot_parts/leg/))
+		if (istype(part,/obj/item/mob_part/humanoid_part/silicon_part/leg/))
 			if (part.slot == "leg_both")
 				src.visible_message("<b>[src]'s</b> legs are destroyed!")
 				src.part_leg_r = null
@@ -3127,7 +3127,7 @@
 	proc/compborg_get_total_damage(var/sort = 0)
 		var/tally = 0
 
-		for(var/obj/item/parts/robot_parts/RP in src.contents)
+		for(var/obj/item/mob_part/humanoid_part/silicon_part/RP in src.contents)
 			switch(sort)
 				if(1) tally += RP.dmg_blunt
 				if(2) tally += RP.dmg_burns
@@ -3327,143 +3327,143 @@
 ///////////////////////////////////////////////////
 
 /mob/living/silicon/robot/spawnable // can be spawned via the admin panel in properly unlike the parent
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/light
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest/light(src)
+			src.part_chest = new/obj/item/mob_part/humanoid_part/silicon_part/chest/light(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/light(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/light(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/light(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/light(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/light(src)
+		if (!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/light(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/mob_part/humanoid_part/silicon_part/leg/left/light(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/mob_part/humanoid_part/silicon_part/leg/right/light(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	latejoin
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
-			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/light(src)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/light(src)
 			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/standard
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest = new/obj/item/mob_part/humanoid_part/silicon_part/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/supercell/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/standard(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/standard(src)
+		if (!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/standard(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 	metalman
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 			..(loc, frame, starter, syndie, frame_emagged)
 			src.metalman_skin = 1
 			src.update_appearance()
 
 	latejoin
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
-			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/standard(src)
 			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
 			..(loc, frame, starter, syndie, frame_emagged)
 
 
 /mob/living/silicon/robot/spawnable/standard_thruster
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest = new/obj/item/mob_part/humanoid_part/silicon_part/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/supercell/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/thruster(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/thruster(src)
+		if (!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/standard(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/mob_part/humanoid_part/silicon_part/leg/left/thruster(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 
 /mob/living/silicon/robot/spawnable/sturdy
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest = new/obj/item/mob_part/humanoid_part/silicon_part/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/sturdy(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/sturdy(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/sturdy(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/treads(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/treads(src)
+		if (!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/sturdy(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 	latejoin
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
-			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/sturdy(src)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy(src)
 			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/heavy
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest = new/obj/item/mob_part/humanoid_part/silicon_part/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/heavy(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/heavy(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/heavy(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/treads(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/treads(src)
+		if (!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/heavy(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/mob_part/humanoid_part/silicon_part/arm/right/heavy(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 	latejoin
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
-			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/heavy(src)
+		New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/heavy(src)
 			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/screenhead
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
-			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
+			src.part_chest = new/obj/item/mob_part/humanoid_part/silicon_part/chest/standard(src)
 			src.part_chest.wires = 1
 			src.part_chest.cell = new/obj/item/cell/cerenkite/charged(src.part_chest)
 			src.cell = src.part_chest.cell
-		if (!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/screen(src)
-		if (!src.part_arm_l) src.part_arm_l = new/obj/item/parts/robot_parts/arm/left/standard(src)
-		if (!src.part_arm_r) src.part_arm_r = new/obj/item/parts/robot_parts/arm/right/standard(src)
-		if (!src.part_leg_l) src.part_leg_l = new/obj/item/parts/robot_parts/leg/left/treads(src)
-		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/treads(src)
+		if (!src.part_head) src.part_head = new/obj/item/mob_part/humanoid_part/silicon_part/head/screen(src)
+		if (!src.part_arm_l) src.part_arm_l = new/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(src)
+		if (!src.part_arm_r) src.part_arm_r = new/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard(src)
+		if (!src.part_leg_l) src.part_leg_l = new/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads(src)
+		if (!src.part_leg_r) src.part_leg_r = new/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/uber
@@ -3542,7 +3542,7 @@
 		if ((src.part_leg_r || src.part_leg_l) && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
 			src.footstep++
 			if (can_step_sfx(src))
-				var/obj/item/parts/robot_parts/leg/leg = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/leg/leg = null
 				if (prob(50) && part_leg_l)
 					leg = part_leg_l
 				else if (part_leg_r)

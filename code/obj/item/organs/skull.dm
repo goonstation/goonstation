@@ -64,7 +64,7 @@
 			return ..()
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/parts/robot_parts/leg))
+		if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/leg))
 			var/obj/machinery/bot/skullbot/B
 
 			if (src.icon_state == "skull_crystal" || istype(src, /obj/item/skull/crystal))

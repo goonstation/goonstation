@@ -69,11 +69,11 @@ TYPEINFO(/obj/item/saw)
 		src.item_state = "[src.base_state][src.active ? "-A" : "-D"]"
 		src.arm_icon = "[src.base_arm][src.active ? "-A" : "-D"]"
 		if (src.temp_flags & IS_LIMB_ITEM)
-			if (istype(src.loc,/obj/item/parts/human_parts/arm/left/item))
-				var/obj/item/parts/human_parts/arm/left/item/I = src.loc
+			if (istype(src.loc,/obj/item/mob_part/humanoid_part/item_arm/left))
+				var/obj/item/mob_part/humanoid_part/item_arm/left/I = src.loc
 				I.handlistPart = "l_arm_[src.arm_icon]"
 			else
-				var/obj/item/parts/human_parts/arm/right/item/I = src.loc
+				var/obj/item/mob_part/humanoid_part/item_arm/right/I = src.loc
 				I.handlistPart = "r_arm_[src.arm_icon]"
 		return
 
@@ -299,14 +299,14 @@ TYPEINFO(/obj/item/saw/syndie)
 		if (!H.find_in_hand(src))
 			boutput(H, SPAN_ALERT("You need to be holding your saw!"))
 			return
-		var/obj/item/parts/human_parts/arm/new_arm = null
+		var/obj/item/mob_part/humanoid_part/item_arm/new_arm = null
 		if (target == "l_arm")
 			if (H.limbs.l_arm)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
 				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
-			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
+			new_arm = new /obj/item/mob_part/humanoid_part/item_arm/left(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
 			if (H.limbs.r_arm)
@@ -314,14 +314,14 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
 				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
-			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
+			new_arm = new /obj/item/mob_part/humanoid_part/item_arm/right(H)
 			H.limbs.r_arm = new_arm
 		if (!new_arm) return //who knows
 
 		new_arm.holder = H
 		H.remove_item(src)
 
-		new_arm:set_item(src)
+		new_arm.set_item(src)
 		src.cant_drop = 1
 
 		H.set_body_icon_dirty()

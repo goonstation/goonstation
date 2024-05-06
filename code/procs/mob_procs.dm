@@ -667,8 +667,8 @@
 		// Some mutantraces get powerful limbs and we generally don't want the player to keep them.
 		if (copy_limbs && old && !old.mutantrace && newbody && old.limbs && newbody.limbs)
 			if (old.limbs.l_arm && (old.limbs.l_arm.type != newbody.limbs.l_arm.type))
-				if (istype(old.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-					var/obj/item/parts/human_parts/arm/left/item/NL_item = new old.limbs.l_arm.type(newbody)
+				if (istype(old.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left))
+					var/obj/item/mob_part/humanoid_part/item_arm/left/NL_item = new old.limbs.l_arm.type(newbody)
 					if (old.limbs.l_arm.remove_object)
 						var/obj/item/new_LAI = new old.limbs.l_arm.remove_object.type(NL_item)
 						NL_item.set_item(new_LAI)
@@ -676,13 +676,13 @@
 					qdel(newbody.limbs.l_arm)
 					newbody.limbs.l_arm = NL_item
 				else
-					var/obj/item/parts/NL = new old.limbs.l_arm.type(newbody)
+					var/obj/item/mob_part/NL = new old.limbs.l_arm.type(newbody)
 					NL.holder = newbody
 					qdel(newbody.limbs.l_arm)
 					newbody.limbs.l_arm = NL
 			if (old.limbs.r_arm && (old.limbs.r_arm.type != newbody.limbs.r_arm.type))
-				if (istype(old.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-					var/obj/item/parts/human_parts/arm/right/item/NL2_item = new old.limbs.r_arm.type(newbody)
+				if (istype(old.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right))
+					var/obj/item/mob_part/humanoid_part/item_arm/right/NL2_item = new old.limbs.r_arm.type(newbody)
 					if (old.limbs.r_arm.remove_object)
 						var/obj/item/new_RAI = new old.limbs.r_arm.remove_object.type(NL2_item)
 						NL2_item.set_item(new_RAI)
@@ -690,17 +690,17 @@
 					qdel(newbody.limbs.r_arm)
 					newbody.limbs.r_arm = NL2_item
 				else
-					var/obj/item/parts/NL2 = new old.limbs.r_arm.type(newbody)
+					var/obj/item/mob_part/NL2 = new old.limbs.r_arm.type(newbody)
 					NL2.holder = newbody
 					qdel(newbody.limbs.r_arm)
 					newbody.limbs.r_arm = NL2
 			if (old.limbs.l_leg && (old.limbs.l_leg.type != newbody.limbs.l_leg.type))
-				var/obj/item/parts/NL3 = new old.limbs.l_leg.type(newbody)
+				var/obj/item/mob_part/NL3 = new old.limbs.l_leg.type(newbody)
 				NL3.holder = newbody
 				qdel(newbody.limbs.l_leg)
 				newbody.limbs.l_leg = NL3
 			if (old.limbs.r_leg && (old.limbs.r_leg.type != newbody.limbs.r_leg.type))
-				var/obj/item/parts/NL4 = new old.limbs.r_leg.type(newbody)
+				var/obj/item/mob_part/NL4 = new old.limbs.r_leg.type(newbody)
 				NL4.holder = newbody
 				qdel(newbody.limbs.r_leg)
 				newbody.limbs.r_leg = NL4

@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			boutput(holder.owner, SPAN_NOTICE("We have no arms to detach!"))
 			return null
 
-		var/obj/item/parts/original_arm = null
+		var/obj/item/mob_part/original_arm = null
 
 		if (owner.limbs.l_arm && owner.limbs.r_arm) //if both arms are available, remove the inactive one
 			if (owner.hand)
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			boutput(holder.owner, SPAN_NOTICE("We have no legs to detach!"))
 			return null
 
-		var/obj/item/parts/original_leg = null
+		var/obj/item/mob_part/original_leg = null
 
 		if (owner.limbs.l_leg && owner.limbs.r_leg) //remove leg opposite of active hand
 			if (owner.hand)

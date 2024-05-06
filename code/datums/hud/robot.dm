@@ -177,19 +177,19 @@
 			var/obj/item/O = master.module.tools[content_id]
 			if(!O || O.loc != master.module)
 				return
-			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
+			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 				master.equip_slot(1, O)
 			else if(!master.module_states[2])
 				master.equip_slot(2, O)
-			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
+			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 				master.equip_slot(3, O)
 			else
 				master.uneq_active()
-				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
+				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 					master.equip_slot(1, O)
 				else if(!master.module_states[2])
 					master.equip_slot(2, O)
-				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
+				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/mob_part/humanoid_part/silicon_part/arm/))
 					master.equip_slot(3, O)
 			update_equipment()
 			update_tools()
@@ -453,12 +453,12 @@
 
 
 			/*
-				var/obj/item/parts/robot_parts/head/part_head = null
-				var/obj/item/parts/robot_parts/chest/part_chest = null
-				var/obj/item/parts/robot_parts/arm/part_arm_r = null
-				var/obj/item/parts/robot_parts/arm/part_arm_l = null
-				var/obj/item/parts/robot_parts/leg/part_leg_r = null
-				var/obj/item/parts/robot_parts/leg/part_leg_l = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/head/part_head = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/chest/part_chest = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/arm/part_arm_r = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/arm/part_arm_l = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/leg/part_leg_r = null
+				var/obj/item/mob_part/humanoid_part/silicon_part/leg/part_leg_l = null
 			*/
 
 			switch(master.health)
@@ -554,7 +554,7 @@
 				charge.icon_state = "charge-none"
 				charge.maptext = "<span class='ps2p ol vt c' style='color: #f00;'>---</span>"
 
-		maptext_health_percent(var/obj/item/parts/robot_parts/part)
+		maptext_health_percent(var/obj/item/mob_part/humanoid_part/silicon_part/part)
 			if (!part || !istype(part) || part.qdeled)
 				return "<span style='color: #f00;'>[!mini_health ? "---%" : "MISSING"]</span>"
 

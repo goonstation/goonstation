@@ -604,12 +604,12 @@
 			random_brute_damage(H, 5)
 			switch (missing_arm)
 				if ("r_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (H)
+					var/obj/item/mob_part/humanoid_part/carbon_part/arm/meat_mutant/part = new /obj/item/mob_part/humanoid_part/carbon_part/arm/meat_mutant/right {remove_stage = 2;} (H)
 					H.limbs.vars["r_arm"] = part
 					part.holder = H
 
 				if ("l_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (H)
+					var/obj/item/mob_part/humanoid_part/carbon_part/arm/meat_mutant/part = new /obj/item/mob_part/humanoid_part/carbon_part/arm/meat_mutant/left {remove_stage = 2;} (H)
 					H.limbs.vars["l_arm"] = part
 					part.holder = H
 

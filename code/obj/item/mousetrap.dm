@@ -16,7 +16,7 @@
 	var/obj/item/pipebomb/bomb/pipebomb = null
 	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
-	var/obj/item/parts/arm = null
+	var/obj/item/mob_part/arm = null
 	var/obj/item/clothing/head/butt/butt = null
 	var/obj/item/gimmickbomb/gimmickbomb = null
 	var/mob/armer = null
@@ -185,7 +185,7 @@
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
-		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
+		else if (!src.arm && (istype(C, /obj/item/mob_part/humanoid_part/silicon_part/arm) || istype(C, /obj/item/mob_part/humanoid_part/carbon_part/arm)) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return

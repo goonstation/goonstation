@@ -6,7 +6,7 @@
  */
 
 /datum/limb
-	var/obj/item/parts/holder = null
+	var/obj/item/mob_part/holder = null
 	/// used for ON_COOLDOWN stuff
 	var/cooldowns
 	var/special_next = 0
@@ -20,7 +20,7 @@
 	/// if the limb can gun grab with a held gun
 	var/can_gun_grab = TRUE
 
-	New(var/obj/item/parts/holder)
+	New(var/obj/item/mob_part/holder)
 		..()
 		src.holder = holder
 
@@ -620,7 +620,7 @@
 	var/borg_damage_bonus = 4 //! additional damage bonus or malus dealt to borgs
 	var/borg_flinging_cooldown = 6 SECONDS //! cooldown on which to throw a borg across the room. No permastunning borgs
 
-/datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
+/datum/limb/mouth/maneater/New(var/obj/item/mob_part/holder)
 	..()
 	src.chems_to_inject = list()
 
@@ -1784,7 +1784,7 @@
 	actions = list("cuts", "rips", "claws", "slashes")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 
-	New(var/obj/item/parts/holder)
+	New(var/obj/item/mob_part/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/katana_dash/limb)
 		src.setHarmSpecial (/datum/item_special/katana_dash/limb)
@@ -1811,7 +1811,7 @@
 
 /// test for crab attack thing
 /datum/limb/swipe_quake
-	New(var/obj/item/parts/holder)
+	New(var/obj/item/mob_part/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)

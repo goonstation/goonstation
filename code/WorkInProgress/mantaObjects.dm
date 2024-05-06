@@ -1504,7 +1504,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/wrecknsspolaris/outside/back
 	name = "Back of the Wreck"
 
-/obj/item/parts/human_parts/arm/right/polaris
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right/polaris
 	name = "misplaced right arm"
 	desc = "Someone might need a hand with this."
 
@@ -1524,7 +1524,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if (used == 0)
-		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
+		if(istype(W, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/polaris))
 			user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the hand and beeps, granting you access."))
 			playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 			for_by_tcl(M, /obj/machinery/door/airlock)
@@ -1542,7 +1542,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	if (used == 0)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
+			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/polaris)))
 				user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the hand and beeps, granting you access."))
 
 				for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])

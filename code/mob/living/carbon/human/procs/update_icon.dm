@@ -730,8 +730,8 @@
 	if (src.limbs)
 		if(src.l_hand && src.r_hand && src.l_hand == src.r_hand && src.l_hand.two_handed)
 			if (src.limbs.r_arm && src.r_hand && src.limbs.l_arm && src.l_hand)
-				var/r_item_arm = !(!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item) && isitem(src.r_hand))
-				var/l_item_arm = !(!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
+				var/r_item_arm = !(!istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right) && isitem(src.r_hand))
+				var/l_item_arm = !(!istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left) && isitem(src.l_hand))
 				if (!r_item_arm && !l_item_arm)
 					var/obj/item/I = src.l_hand
 					if (!I.inhand_image)
@@ -753,7 +753,7 @@
 
 		else
 			if (src.limbs.r_arm && src.r_hand)
-				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item) && isitem(src.r_hand))
+				if (!istype(src.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right) && isitem(src.r_hand))
 					var/obj/item/I = src.r_hand
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
@@ -768,7 +768,7 @@
 
 
 			if (src.limbs.l_arm && src.l_hand)
-				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
+				if (!istype(src.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left) && isitem(src.l_hand))
 					var/obj/item/I = src.l_hand
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
@@ -940,7 +940,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					sleeveless = 0
 
 				for (var/name in update_body_limbs) // this is awful
-					var/obj/item/parts/human_parts/limb = src.limbs.vars[name]
+					var/obj/item/mob_part/humanoid_part/carbon_part/limb = src.limbs.vars[name]
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset
 					if (limb)
 						var/mutantrace_override = null

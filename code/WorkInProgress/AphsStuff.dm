@@ -372,7 +372,7 @@
 // Servotron (the spooky mars robots) parts
 
 
-/obj/item/parts/robot_parts/leg/left/servotron
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/servotron
 	name = "servotron left leg"
 	desc = "The left leg of a Kingsway Systems SV-4 Servotron."
 	icon_state = "l_leg-servo"
@@ -380,7 +380,7 @@
 	max_health = 40
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 
-/obj/item/parts/robot_parts/leg/right/servotron
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/servotron
 	name = "servotron right leg"
 	desc = "The right leg of a Kingsway Systems SV-4 Servotron."
 	icon_state = "r_leg-servo"
@@ -389,7 +389,7 @@
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 
 
-/obj/item/parts/robot_parts/arm/right/servotron
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/servotron
 	name = "servotron right arm"
 	desc = "The right arm of a Kingsway Systems SV-4 Servotron."
 	icon_state = "r_arm-servo"
@@ -398,7 +398,7 @@
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
-/obj/item/parts/robot_parts/arm/left/servotron
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/servotron
 	name = "servotron left arm"
 	desc = "The left arm of a Kingsway Systems SV-4 Servotron."
 	icon_state = "l_arm-servo"
@@ -407,7 +407,7 @@
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 
-/obj/item/parts/robot_parts/head/servotron
+/obj/item/mob_part/humanoid_part/silicon_part/head/servotron
 	name = "servotron head"
 	desc = "The surprisingly spacious head of a Kingsway Systems SV-4 Servotron."
 	icon_state = "head-servo"
@@ -415,7 +415,7 @@
 	max_health = 87
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 
-/obj/item/parts/robot_parts/chest/servotron
+/obj/item/mob_part/humanoid_part/silicon_part/chest/servotron
 	name = "servotron chest"
 	desc = "The chest component of a Kingsway Systems SV-4 Servotron."
 	icon_state = "chest-servo"

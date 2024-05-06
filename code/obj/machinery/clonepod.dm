@@ -1102,7 +1102,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
 			return
-		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
+		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/mob_part/humanoid_part/carbon_part)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
 			if (length(src.meats) >= src.max_meat)
 				boutput(user, SPAN_ALERT("There is already enough meat in there! You should not exceed the maximum safe meat level!"))
 				return
@@ -1245,11 +1245,11 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			if(target.hasStatus("handcuffed"))
 				target.handcuffs.drop_handcuffs(target) //handcuffs have special handling for zipties and such, remove them properly first
 			target.unequip_all()
-			if(istype(target.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-				var/obj/item/parts/human_parts/arm/right/item/right_arm = target.limbs.r_arm
+			if(istype(target.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right))
+				var/obj/item/mob_part/humanoid_part/item_arm/right/right_arm = target.limbs.r_arm
 				right_arm.remove()
-			if(istype(target.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-				var/obj/item/parts/human_parts/arm/left/item/left_arm = target.limbs.l_arm
+			if(istype(target.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left))
+				var/obj/item/mob_part/humanoid_part/item_arm/left/left_arm = target.limbs.l_arm
 				left_arm.remove()
 			if (length(target.implant))
 				for (var/obj/item/implant/I in target.implant)

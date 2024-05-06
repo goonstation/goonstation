@@ -118,10 +118,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return FALSE
 	var/mob/living/carbon/human/H = M
 	// changelings just grab the prize with their claw instead of using the machine claw
-	. = istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/claw) \
-		|| istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/abomination) \
-		|| istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/claw) \
-		|| istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/abomination)
+	. = istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/claw) \
+		|| istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination) \
+		|| istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/left/claw) \
+		|| istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination)
 
 /datum/action/bar/icon/claw_machine/onUpdate()
 	..()

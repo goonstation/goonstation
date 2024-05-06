@@ -228,14 +228,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 /datum/cookingrecipe/oven/roburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/parts/robot_parts/head
+	item2 = /obj/item/mob_part/humanoid_part/silicon_part/head
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/roburger
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/cheeseborger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/parts/robot_parts/head
+	item2 = /obj/item/mob_part/humanoid_part/silicon_part/head
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger

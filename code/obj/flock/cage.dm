@@ -60,7 +60,7 @@
 				organs += I
 				if(istype(I, /obj/item/organ/brain))
 					brain = I
-			else if(istype(I, /obj/item/parts))
+			else if(istype(I, /obj/item/mob_part))
 				limbs += I
 			else
 				items += I
@@ -105,13 +105,13 @@
 		var/list/items = list()
 		var/obj/item/organ/brain/brain = null
 		for(var/obj/item/I in R.contents)
-			if(istype(I, /obj/item/parts/robot_parts/head) || istype(I, /obj/item/parts/robot_parts/chest))
+			if(istype(I, /obj/item/mob_part/humanoid_part/silicon_part/head) || istype(I, /obj/item/mob_part/humanoid_part/silicon_part/chest))
 				continue // taking container organs is kinda too cheap
 			if(istype(I, /obj/item/organ) || istype(I, /obj/item/clothing/head/butt))
 				organs += I
 				if(istype(I, /obj/item/organ/brain))
 					brain = I
-			else if(istype(I, /obj/item/parts))
+			else if(istype(I, /obj/item/mob_part))
 				limbs += I
 			else if(istype(I,/obj/item/clothing))
 				items += I

@@ -1,4 +1,4 @@
-/obj/item/parts/dummy
+/obj/item/mob_part/dummy
 	name = "dummyholder"
 
 /datum/handHolder 								// pun
@@ -22,7 +22,7 @@
 	var/mob/holder = null
 	/// sets the inhands of an item, for limbs with weapons, etc. should be a type of /obj/item.
 	var/object_for_inhand = null // Ex. var/object_for_inhand = /obj/item/dagger
-	var/obj/item/parts/limbholder				// technically a dummy, do not set.
+	var/obj/item/mob_part/limbholder				// technically a dummy, do not set.
 
 	New()
 		..()
@@ -45,7 +45,7 @@
 	proc/spawn_dummy_holder()
 		if (!limb)
 			return
-		limbholder = new /obj/item/parts/dummy
+		limbholder = new /obj/item/mob_part/dummy
 		limb.holder = limbholder
 		limb.holder.name = limb_name
 		limb.holder.limb_data = limb

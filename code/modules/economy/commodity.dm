@@ -51,7 +51,7 @@
 
 /datum/commodity/robotics
 	comname = "Robot Parts"
-	comtype = /obj/item/parts/robot_parts
+	comtype = /obj/item/mob_part/humanoid_part/silicon_part
 	desc_buy = "The Omega Mining Corporation is expanding its operations and is in need of some robot parts"
 	desc_buy_demand = "Cyborgs have revolted in the Lambada Quadrant, they are in desprate need of some more robot parts"
 	onmarket = 1
@@ -1058,22 +1058,22 @@
 
 /datum/commodity/bodyparts/armL
 	comname = "Human Arm - Left"
-	comtype = /obj/item/parts/human_parts/arm/left
+	comtype = /obj/item/mob_part/humanoid_part/carbon_part/arm/left
 	price = PAY_DOCTORATE
 
 /datum/commodity/bodyparts/armR
 	comname = "Human Arm - Right"
-	comtype = /obj/item/parts/human_parts/arm/right
+	comtype = /obj/item/mob_part/humanoid_part/carbon_part/arm/right
 	price = PAY_DOCTORATE
 
 /datum/commodity/bodyparts/legL
 	comname = "Human Leg - Left"
-	comtype = /obj/item/parts/human_parts/leg/left
+	comtype = /obj/item/mob_part/humanoid_part/carbon_part/leg/left
 	price = PAY_DOCTORATE
 
 /datum/commodity/bodyparts/legR
 	comname = "Human Leg - Right"
-	comtype = /obj/item/parts/human_parts/leg/right
+	comtype = /obj/item/mob_part/humanoid_part/carbon_part/leg/right
 	price = PAY_DOCTORATE
 
 /datum/commodity/bodyparts/brain

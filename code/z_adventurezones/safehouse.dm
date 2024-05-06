@@ -147,7 +147,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		return
 	if(ON_COOLDOWN(src, "bio_handscanner_attackby", cooldown)) // To reduce chat spam in case of multi-click
 		return
-	if(istype(W, /obj/item/parts/human_parts/arm/))
+	if(istype(W, /obj/item/mob_part/humanoid_part/carbon_part/arm/))
 		boutput(user, SPAN_ALERT("ERROR: no pulse detected."))
 	if(istype(W, /obj/item/card/emag))
 		boutput(user, "You short out the hand scanner's circuits. So much for cutting edge.")

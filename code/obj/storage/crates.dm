@@ -227,13 +227,13 @@
 	spawn_contents = list(/obj/item/sheet/steel/fullstack = 3,
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/ai_interface,
-	/obj/item/parts/robot_parts/robot_frame,
-	/obj/item/parts/robot_parts/leg/left/standard,
-	/obj/item/parts/robot_parts/leg/right/standard,
-	/obj/item/parts/robot_parts/arm/left/standard,
-	/obj/item/parts/robot_parts/arm/right/standard,
-	/obj/item/parts/robot_parts/chest/standard,
-	/obj/item/parts/robot_parts/head/standard,
+	/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+	/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
+	/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+	/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+	/obj/item/mob_part/humanoid_part/silicon_part/chest/standard,
+	/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
 	/obj/item/cell/supercell = 4,
 	/obj/item/cable_coil = 2)
 
@@ -378,29 +378,29 @@
 		if(..()) //obj/storage/proc/make_my_stuff returns 1 only the first time it's run, so this is how we only spawn stuff once. It's a bit of a weird system
 			new /obj/item/cable_coil/cut(src)
 
-			var/obj/item/parts/robot_parts/robot_frame/B1 = new /obj/item/parts/robot_parts/robot_frame(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/B1 = new /obj/item/mob_part/humanoid_part/silicon_part/robot_frame(src)
 			B1.pixel_y = 3
 
-			new /obj/item/parts/robot_parts/head/standard(src) //Was B2 but no offsets needed
+			new /obj/item/mob_part/humanoid_part/silicon_part/head/standard(src) //Was B2 but no offsets needed
 
-			var/obj/item/parts/robot_parts/chest/standard/B3 = new /obj/item/parts/robot_parts/chest/standard/(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/chest/standard/B3 = new /obj/item/mob_part/humanoid_part/silicon_part/chest/standard/(src)
 			B3.pixel_y = -5
 
 
-			var/obj/item/parts/robot_parts/arm/left/standard/B4 = new /obj/item/parts/robot_parts/arm/left/standard(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard/B4 = new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(src)
 			B4.pixel_y = 0
 			B4.pixel_x = 11
 
-			var/obj/item/parts/robot_parts/arm/right/standard/B5 = new /obj/item/parts/robot_parts/arm/right/standard(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard/B5 = new /obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard(src)
 
 			B5.pixel_y = 0
 			B5.pixel_x = -12
 
-			var/obj/item/parts/robot_parts/leg/left/standard/B6 = new /obj/item/parts/robot_parts/leg/left/standard(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard/B6 = new /obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard(src)
 			B6.pixel_y = -6
 			B6.pixel_x = 7
 
-			var/obj/item/parts/robot_parts/leg/right/standard/B7 = new /obj/item/parts/robot_parts/leg/right/standard(src)
+			var/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard/B7 = new /obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard(src)
 			B7.pixel_y = -6
 			B7.pixel_x = -8
 			return TRUE

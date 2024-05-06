@@ -357,10 +357,10 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/raw_material/telecrystal,\
 				/obj/item/skull,\
 				/obj/item/football,\
-				/obj/item/parts/human_parts/arm/left,\
-				/obj/item/parts/human_parts/arm/right,\
-				/obj/item/parts/human_parts/leg/left,\
-				/obj/item/parts/human_parts/leg/right,\
+				/obj/item/mob_part/humanoid_part/carbon_part/arm/left,\
+				/obj/item/mob_part/humanoid_part/carbon_part/arm/right,\
+				/obj/item/mob_part/humanoid_part/carbon_part/leg/left,\
+				/obj/item/mob_part/humanoid_part/carbon_part/leg/right,\
 				/obj/item/currency/spacecash,\
 				/obj/item/scrap,\
 				/obj/item/storage/pill_bottle/cyberpunk,\
@@ -427,7 +427,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				src.storage.add_contents(new /obj/item/storage/firstaid/brain(src))
 				src.storage.add_contents(new /obj/item/storage/firstaid/toxin(src))
 				src.storage.add_contents(new /obj/item/storage/firstaid/old(src))
-				src.storage.add_contents(new /obj/item/parts/robot_parts/head/standard(src))
+				src.storage.add_contents(new /obj/item/mob_part/humanoid_part/silicon_part/head/standard(src))
 			if (2)
 				src.storage.add_contents(new /obj/item/injector_belt(src))
 				src.storage.add_contents(new /obj/item/reagent_containers/glass/bottle/morphine(src))
@@ -584,8 +584,8 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 			if (2)
 				src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				src.storage.add_contents(new /obj/item/skull(src))
-				src.storage.add_contents(new /obj/item/parts/human_parts/arm/left(src))
-				src.storage.add_contents(new /obj/item/parts/human_parts/leg/right(src))
+				src.storage.add_contents(new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(src))
+				src.storage.add_contents(new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(src))
 				var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
 				S.setup(src, try_add_to_storage = TRUE)
 				S = new /obj/item/currency/spacecash/thousand

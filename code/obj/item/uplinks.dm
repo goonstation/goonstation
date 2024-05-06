@@ -936,9 +936,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
-			if (istype(delivery,/obj/item/parts) && ishuman(M))
+			if (istype(delivery,/obj/item/mob_part) && ishuman(M))
 				var/mob/living/carbon/human/H = M
-				var/obj/item/parts/HP = delivery
+				var/obj/item/mob_part/HP = delivery
 				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
 					HP.remove()
 					take_bleeding_damage(H, null, 10)
@@ -953,7 +953,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				M.drop_from_slot(delivery,get_turf(M))
 		for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
 			M.set_loc(get_turf(delivery))
-		if (!istype(delivery,/obj/item/parts))
+		if (!istype(delivery,/obj/item/mob_part))
 			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 
 		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
@@ -1017,7 +1017,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		var/icon/photo_icon
 		var/atom/A = null
 		if ((B.bounty_type == BOUNTY_TYPE_ORGAN) && B.item)
-			var/obj/item/parts/O = B.item
+			var/obj/item/mob_part/O = B.item
 			if (O.holder)
 				A = O.holder
 			else

@@ -467,8 +467,8 @@
 	qdel(D)
 	qdel(src)
 
-/obj/item/toolbox_tiles_sensor/attackby(var/obj/item/parts/robot_parts/P, mob/user as mob)
-	if (!istype(P, /obj/item/parts/robot_parts/arm/))
+/obj/item/toolbox_tiles_sensor/attackby(var/obj/item/mob_part/humanoid_part/silicon_part/P, mob/user as mob)
+	if (!istype(P, /obj/item/mob_part/humanoid_part/silicon_part/arm/))
 		return
 	var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
 	if(src.color_overlay)

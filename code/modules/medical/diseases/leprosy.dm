@@ -26,7 +26,7 @@
 			if(probmult(D.stage) && ishuman(affected_mob))
 				var/mob/living/carbon/human/M = affected_mob
 				var/limb_name = pick("l_arm","r_arm","l_leg","r_leg")
-				var/obj/item/parts/limb = M.limbs.vars[limb_name]
+				var/obj/item/mob_part/limb = M.limbs.vars[limb_name]
 				if (istype(limb))
 					if (limb.remove_stage < 2)
 						limb.remove_stage = 2

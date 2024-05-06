@@ -1819,7 +1819,7 @@ datum/pathogeneffects/malevolent/leprosy
 			if (4 to 5)
 				if (prob(2 + origin.stage))
 					var/limb_name = pick("l_arm","r_arm","l_leg","r_leg")
-					var/obj/item/parts/limb = M.limbs.vars[limb_name]
+					var/obj/item/mob_part/limb = M.limbs.vars[limb_name]
 					if (istype(limb))
 						if (limb.remove_stage < 2)
 							limb.remove_stage = 2
@@ -2155,7 +2155,7 @@ datum/pathogeneffects/malevolent/snaps/wild
 				possible_limbs += H.limbs.r_arm
 
 			if (possible_limbs.len)
-				var/obj/item/parts/P = pick(possible_limbs)
+				var/obj/item/mob_part/humanoid_part/P = pick(possible_limbs)
 				H.visible_message(SPAN_ALERT("[H.name] violently swings [his_or_her(H)] [initial(P.name)] to provide the necessary energy for producing a thunderously loud finger snap!"), SPAN_ALERT("You violently swing your [initial(P.name)] to provide the necessary energy for producing a thunderously loud finger snap!"))
 				playsound(H.loc, H.sound_snap, 200, 1, 5910) //5910 is approximately the same extra range from which you could hear a max-power artifact bomb
 				playsound(H.loc, "explosion", 200, 1, 5910)

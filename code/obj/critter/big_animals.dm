@@ -52,7 +52,7 @@
 	CritterAttack(mob/M)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/parts/targetLimb = pickTargetLimb(H)
+			var/obj/item/mob_part/targetLimb = pickTargetLimb(H)
 			if(targetLimb)
 				src.attacking = 0
 				src.visible_message(SPAN_COMBAT("<b>[src]</b> bites [targetLimb] right off!'"))
@@ -86,8 +86,8 @@
 		while(length(part_list) > 0)
 			var/current_part = pick(part_list)
 			part_list -= current_part
-			var/obj/item/parts/bodypart = H.limbs.get_limb(current_part)
-			if(bodypart && !istype(bodypart, /obj/item/parts/robot_parts)) //Quick check for robolimbs. It may be wrong, limb check examples give me headaches
+			var/obj/item/mob_part/bodypart = H.limbs.get_limb(current_part)
+			if(bodypart && !istype(bodypart, /obj/item/mob_part/humanoid_part/silicon_part)) //Quick check for robolimbs. It may be wrong, limb check examples give me headaches
 				return bodypart
 		return null
 

@@ -482,7 +482,7 @@ datum
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 			/*reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/item/parts/robot_parts/robot_frame))
+				if(istype(O,/obj/item/mob_part/humanoid_part/silicon_part/robot_frame))
 					if (O.check_completion() && volume >= 20)
 						O.replicant = 1
 						O.overlays = null

@@ -29,7 +29,7 @@ Fibre wire
 			if(ishuman(M)) evil_act(M)
 /* oops didn't quite think this through
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/parts/robot_parts/leg))
+		if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/leg))
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"

@@ -545,7 +545,7 @@
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 
-			#define clicked_slot(slot) var/obj/item/W = master.get_slot(slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, slot) || istype(I.loc, /obj/item/parts/)) { return; } master.u_equip(I); master.force_equip(I, slot); }
+			#define clicked_slot(slot) var/obj/item/W = master.get_slot(slot); if (W) { master.click(W, params); } else { var/obj/item/I = master.equipped(); if (!I || !master.can_equip(I, slot) || istype(I.loc, /obj/item/mob_part/)) { return; } master.u_equip(I); master.force_equip(I, slot); }
 			if("belt")
 				clicked_slot(SLOT_BELT)
 			if("storage1")

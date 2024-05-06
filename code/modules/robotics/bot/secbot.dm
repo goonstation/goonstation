@@ -565,7 +565,7 @@
 			new loot_baton_type(Tsec)
 
 		if (prob(50))
-			new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
+			new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(Tsec)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
@@ -1397,7 +1397,7 @@
 		src.name = "helmet/signaler/prox sensor assembly"
 		qdel(W)
 
-	else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.build_step == 2)
+	else if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm/) && src.build_step == 2)
 		src.build_step++
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"

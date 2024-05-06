@@ -506,7 +506,7 @@
 		..()
 
 	attackby(obj/item/W, mob/user)
-		if (!istype(W, /obj/item/parts/robot_parts/arm))
+		if (!istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm))
 			..()
 			return
 		else
@@ -562,7 +562,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	note_time = 30
 
 	attackby(obj/item/W, mob/user)
-		if (!istype(W, /obj/item/parts/robot_parts/arm))
+		if (!istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm))
 			..()
 			return
 		else

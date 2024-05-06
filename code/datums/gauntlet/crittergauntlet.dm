@@ -150,7 +150,7 @@
 			if (M.client)
 				moblist_names += " ([M.client.key])"
 			for (var/obj/item/I in M)
-				if (!istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/shoes) && !istype(I, /obj/item/parts) && !istype(I, /obj/item/organ) && !istype(I, /obj/item/skull))
+				if (!istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/shoes) && !istype(I, /obj/item/mob_part) && !istype(I, /obj/item/organ) && !istype(I, /obj/item/skull))
 					qdel(I)
 		var/default_table = null
 		var/list/tables = list()
@@ -475,7 +475,7 @@
 		for (var/obj/decal/D in gauntlet)
 			if (!istype(D, /obj/decal/teleport_swirl))
 				qdel(D)
-		for (var/obj/item/parts/human_parts/P in gauntlet)
+		for (var/obj/item/mob_part/humanoid_part/carbon_part/P in gauntlet)
 			if (isturf(P.loc))
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)

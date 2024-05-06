@@ -1259,7 +1259,7 @@ var/list/fun_images = list()
 		message_admins("[key_name(src)] has popped off everyone's limbs.")
 
 		for (var/mob/living/M in mobs)
-			for (var/obj/item/parts/P in M)
+			for (var/obj/item/mob_part/humanoid_part/P in M)
 				P.sever()
 				LAGCHECK(LAG_LOW)
 

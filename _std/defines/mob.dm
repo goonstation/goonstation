@@ -31,6 +31,12 @@
 #define LIMB_LEFT_LEG 4
 #define LIMB_RIGHT_LEG 8
 
+//limb attachment steps
+#define LIMB_SURGERY_ATTACHED 0
+#define LIMB_SURGERY_STEP_ONE 1
+#define LIMB_SURGERY_STEP_TWO 2
+#define LIMB_SURGERY_DETACHED 3
+
 //hand values
 #define LEFT_HAND 1
 #define RIGHT_HAND 0

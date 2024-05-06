@@ -11,7 +11,7 @@
 	if (!R.part_leg_r && !R.part_leg_l)
 		boutput(user, "This upgrade cannot be used when you have no legs!")
 		src.activated = 0
-	if (istype(R.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(R.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
+	if (istype(R.part_leg_l,/obj/item/mob_part/humanoid_part/silicon_part/leg/left/thruster) || istype(R.part_leg_r,/obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster))
 		boutput(user, "This upgrade cannot be used without firm ground connection!")
 		src.activated = 0
 	else

@@ -759,7 +759,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/robosuit
 	name = "Syndicate Robot Frame"
-	item = /obj/item/parts/robot_parts/robot_frame/syndicate
+	item = /obj/item/mob_part/humanoid_part/silicon_part/robot_frame/syndicate
 	cost = 2
 	desc = "A cyborg shell crafted from the finest recycled steel and reverse-engineered microelectronics. A cyborg crafted from this will see only Syndicate operatives (Such as yourself!) as human. Cyborg also comes preloaded with popular game \"Angry About the Bird\" and is compatible with most headphones."
 	not_in_crates = TRUE

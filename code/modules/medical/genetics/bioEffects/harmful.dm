@@ -315,7 +315,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	var/obj/item/parts/limb = null
+	var/obj/item/mob_part/limb = null
 	var/limb_type = LIMB_IS_ARM
 	icon_state  = "bad"
 
@@ -381,10 +381,10 @@
 
 		src.limb = pick(possible_limbs)
 
-		if (istype(src.limb, /obj/item/parts/human_parts/arm) || istype(src.limb, /obj/item/parts/robot_parts/arm))
+		if (istype(src.limb, /obj/item/mob_part/humanoid_part/carbon_part/arm) || istype(src.limb, /obj/item/mob_part/humanoid_part/silicon_part/arm))
 			src.limb_type = LIMB_IS_ARM
 			return 1
-		else if (istype(src.limb, /obj/item/parts/human_parts/leg) || istype(src.limb, /obj/item/parts/robot_parts/leg))
+		else if (istype(src.limb, /obj/item/mob_part/humanoid_part/carbon_part/leg) || istype(src.limb, /obj/item/mob_part/humanoid_part/silicon_part/leg))
 			src.limb_type = LIMB_IS_LEG
 			return 1
 

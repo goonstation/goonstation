@@ -61,25 +61,25 @@
 					return ..()
 				switch (user.zone_sel.selecting)
 					if ("l_arm")
-						if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0)
+						if (istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/silicon_part) && H.limbs.l_arm.remove_stage > 0)
 							attach_robopart("l_arm")
 						else
 							boutput(user, SPAN_ALERT("[H.name]'s left arm doesn't need welding on!"))
 							return
 					if ("r_arm")
-						if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0)
+						if (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/silicon_part) && H.limbs.r_arm.remove_stage > 0)
 							attach_robopart("r_arm")
 						else
 							boutput(user, SPAN_ALERT("[H.name]'s right arm doesn't need welding on!"))
 							return
 					if ("l_leg")
-						if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0)
+						if (istype(H.limbs.l_leg, /obj/item/mob_part/humanoid_part/silicon_part) && H.limbs.l_leg.remove_stage > 0)
 							attach_robopart("l_leg")
 						else
 							boutput(user, SPAN_ALERT("[H.name]'s left leg doesn't need welding on!"))
 							return
 					if ("r_leg")
-						if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0)
+						if (istype(H.limbs.r_leg, /obj/item/mob_part/humanoid_part/silicon_part) && H.limbs.r_leg.remove_stage > 0)
 							attach_robopart("r_leg")
 						else
 							boutput(user, SPAN_ALERT("[H.name]'s right leg doesn't need welding on!"))

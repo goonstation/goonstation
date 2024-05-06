@@ -10,6 +10,6 @@
 		return
 	if(..())
 		return
-	for (var/obj/item/parts/robot_parts/RP in user.contents)
+	for (var/obj/item/mob_part/humanoid_part/silicon_part/RP in user.contents)
 		RP.ropart_mend_damage(100, 100)
 	boutput(user, SPAN_NOTICE("All components repaired!"))

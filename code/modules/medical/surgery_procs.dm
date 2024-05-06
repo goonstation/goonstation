@@ -269,7 +269,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return_thing += oH.back_op_stage
 
 	if (zone in list("l_arm","r_arm","l_leg","r_leg"))
-		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
+		var/obj/item/mob_part/surgery_limb = src.limbs.vars[zone]
 		if (istype(surgery_limb))
 			return_thing += surgery_limb.remove_stage
 		else if (!surgery_limb)
@@ -277,7 +277,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if(!zone)
 		for(var/actual_zone in list("l_arm","r_arm","l_leg","r_leg"))
-			var/obj/item/parts/surgery_limb = src.limbs.vars[actual_zone]
+			var/obj/item/mob_part/surgery_limb = src.limbs.vars[actual_zone]
 			if (istype(surgery_limb))
 				return_thing += surgery_limb.remove_stage
 			else if (!surgery_limb)
@@ -584,7 +584,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL - LIMBS ---------- */
 
 	else if (surgeon.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg"))
-		var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		var/obj/item/mob_part/humanoid_part/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (istype(surgery_limb))
 			if (surgery_limb.surgery(src))
 				return TRUE
@@ -824,7 +824,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SAW - LIMBS ---------- */
 
 	else if (surgeon.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg"))
-		var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		var/obj/item/mob_part/humanoid_part/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (istype(surgery_limb))
 			if (surgery_limb.surgery(src))
 				return TRUE
@@ -971,7 +971,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else
 
 		if (surgeon.zone_sel.selecting in patient.limbs.vars) //ugly copy paste from stapler
-			var/obj/item/parts/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+			var/obj/item/mob_part/humanoid_part/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 			if (istype(surgery_limb) && surgery_limb.remove_stage)
 				surgery_limb.surgery(src)
 			return
@@ -1379,7 +1379,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
-		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		var/obj/item/mob_part/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (!isskeletonlimb(limb) || limb.remove_stage != 1)
 			return FALSE
 		limb.remove_stage = 2
@@ -1414,7 +1414,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
-		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
+		var/obj/item/mob_part/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (!istype(limb) || !isskeletonlimb(limb))
 			return FALSE
 		if (limb.remove_stage == 0)

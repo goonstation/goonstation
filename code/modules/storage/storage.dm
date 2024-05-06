@@ -186,8 +186,8 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.limbs)
-				if ((src.linked_item == H.l_hand && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)) || \
-						(src.linked_item == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+				if ((src.linked_item == H.l_hand && istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/item_arm/left)) || \
+						(src.linked_item == H.r_hand && istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/item_arm/right)))
 					return FALSE
 		// open storage
 		user.s_active?.master.hide_hud(user)

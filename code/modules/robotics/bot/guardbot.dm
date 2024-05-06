@@ -1415,7 +1415,7 @@
 			core.created_model_task = src.model_task
 
 			var/list/throwparts = list()
-			throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
+			throwparts += new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 			throwparts += core
 			if(src.tool.tool_id == "GUN")
 				qdel(src.tool)	// Throw your phantom gun in the trash, not on the ground!
@@ -1452,7 +1452,7 @@
 			if(src.budgun)
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
-				new /obj/item/parts/robot_parts/arm/left/standard(T)
+				new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
@@ -4213,7 +4213,7 @@ TYPEINFO(/obj/item/guardbot_frame)
 			boutput(user, "You add the power cell to [src]!")
 
 
-		else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.stage == 3)
+		else if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/arm/) && src.stage == 3)
 			src.stage++
 			boutput(user, "You add the robot arm to [src]!")
 			qdel(W)
@@ -4885,7 +4885,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		if(src.budgun)
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
-			new /obj/item/parts/robot_parts/arm/left/standard(T)
+			new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
@@ -4894,7 +4894,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		core.created_model_task = src.model_task
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
+		throwparts += new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		throwparts += core
 		if(src.tool.tool_id == "GUN")

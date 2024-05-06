@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 	default_left
 		id = "arm_default_left"
 		slot = "l_arm"
-		part_type = /obj/item/parts/human_parts/arm/left
+		part_type = /obj/item/mob_part/humanoid_part/carbon_part/arm/left
 
 		apply_to(mob/living/carbon/human/human)
 			var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
@@ -77,7 +77,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 	default_right
 		id = "arm_default_right"
 		slot = "r_arm"
-		part_type = /obj/item/parts/human_parts/arm/right
+		part_type = /obj/item/mob_part/humanoid_part/carbon_part/arm/right
 
 		apply_to(mob/living/carbon/human/human)
 			var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
@@ -91,24 +91,24 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 	robo_left
 		id = "arm_robo_left"
 		slot = "l_arm"
-		part_type = /obj/item/parts/robot_parts/arm/left/light
+		part_type = /obj/item/mob_part/humanoid_part/silicon_part/arm/left/light
 
 	robo_right
 		id = "arm_robo_right"
 		slot = "r_arm"
-		part_type = /obj/item/parts/robot_parts/arm/right/light
+		part_type = /obj/item/mob_part/humanoid_part/silicon_part/arm/right/light
 
 	robo_standard_left
 		id = "arm_robo_standard_left"
 		slot = "l_arm"
-		part_type = /obj/item/parts/robot_parts/arm/left/standard
+		part_type = /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard
 		trait_cost = 1
 		incompatible_parts = list("arm_robo_standard_right")
 
 	robo_standard_right
 		id = "arm_robo_standard_right"
 		slot = "r_arm"
-		part_type = /obj/item/parts/robot_parts/arm/right/standard
+		part_type = /obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard
 		trait_cost = 1
 		incompatible_parts = list("arm_robo_standard_left")
 
@@ -116,13 +116,13 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		id = "arm_plant_left"
 		slot = "l_arm"
 		trait_cost = 1
-		part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
+		part_type = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth/bloom, /obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth)
 
 	plant_right
 		id = "arm_plant_right"
 		slot = "r_arm"
 		trait_cost = 1
-		part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
+		part_type = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth/bloom, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth)
 
 ABSTRACT_TYPE(/datum/part_customization/human/missing)
 /datum/part_customization/human/missing
@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 	custom_icon_state = "missing"
 
 	apply_to(mob/living/carbon/human/human)
-		var/obj/item/parts/limb = human.limbs.get_limb(src.slot)
+		var/obj/item/mob_part/limb = human.limbs.get_limb(src.slot)
 		limb?.remove(0)
 		qdel(limb)
 

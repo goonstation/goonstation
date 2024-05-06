@@ -1,5 +1,5 @@
-ABSTRACT_TYPE(/obj/item/parts/robot_parts)
-/obj/item/parts/robot_parts
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part)
+/obj/item/mob_part/humanoid_part/silicon_part
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -11,7 +11,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	var/appearanceString = "generic"
 	var/icon_state_base = ""
 	accepts_normal_human_overlays = FALSE
-	skintoned = FALSE
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ROBOT)
@@ -172,11 +171,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
-	proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+	proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/mob_part/humanoid_part/silicon_part/result, var/need_reinforced)
 		if (!src.can_reinforce(M, user, need_reinforced))
 			return
 
-		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+		var/obj/item/mob_part/humanoid_part/silicon_part/newitem = new result(get_turf(src))
 		newitem.setMaterial(src.material)
 		boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
 		M.change_stack_amount(-2)
@@ -198,8 +197,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			return FALSE
 		return TRUE
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
-/obj/item/parts/robot_parts/head
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/head)
+/obj/item/mob_part/humanoid_part/silicon_part/head
 	name = "cyborg head"
 	desc = "A serviceable head unit for a potential cyborg."
 	icon_state_base = "head"
@@ -288,15 +287,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		else
 			..()
 
-	reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+	reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/mob_part/humanoid_part/silicon_part/result, var/need_reinforced)
 		if (!src.can_reinforce(M, need_reinforced))
 			return
 
-		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+		var/obj/item/mob_part/humanoid_part/silicon_part/newitem = new result(get_turf(src))
 		newitem.setMaterial(src.material)
 
-		var/obj/item/parts/robot_parts/head/newhead = newitem
-		var/obj/item/parts/robot_parts/head/oldhead = src
+		var/obj/item/mob_part/humanoid_part/silicon_part/head/newhead = newitem
+		var/obj/item/mob_part/humanoid_part/silicon_part/head/oldhead = src
 		if (oldhead.brain)
 			newhead.brain = oldhead.brain
 			oldhead.brain.set_loc(newhead)
@@ -312,18 +311,18 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 
 		qdel(src)
 
-/obj/item/parts/robot_parts/head/standard
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard
 	name = "standard cyborg head"
 	max_health = 160
 	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_head
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			src.reinforce(M, user, /obj/item/parts/robot_parts/head/sturdy, FALSE)
+			src.reinforce(M, user, /obj/item/mob_part/humanoid_part/silicon_part/head/sturdy, FALSE)
 		else
 			..()
 
-/obj/item/parts/robot_parts/head/sturdy
+/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy
 	name = "sturdy cyborg head"
 	desc = "A reinforced head unit capable of taking more abuse than usual."
 	appearanceString = "sturdy"
@@ -337,11 +336,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			src.reinforce(M, user, /obj/item/parts/robot_parts/head/heavy, TRUE)
+			src.reinforce(M, user, /obj/item/mob_part/humanoid_part/silicon_part/head/heavy, TRUE)
 		else
 			..()
 
-/obj/item/parts/robot_parts/head/heavy
+/obj/item/mob_part/humanoid_part/silicon_part/head/heavy
 	name = "heavy cyborg head"
 	desc = "A heavily reinforced head unit intended for use on cyborgs that perform tough and dangerous work."
 	appearanceString = "heavy"
@@ -352,7 +351,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
-/obj/item/parts/robot_parts/head/light
+/obj/item/mob_part/humanoid_part/silicon_part/head/light
 	name = "light cyborg head"
 	desc = "A cyborg head with little reinforcement, to be built in times of scarce resources."
 	appearanceString = "light"
@@ -362,7 +361,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
-/obj/item/parts/robot_parts/head/antique
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique
 	name = "antique cyborg head"
 	desc = "Looks like a discarded prop from some sorta low-budget scifi movie."
 	appearanceString = "android"
@@ -371,7 +370,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	visible_eyes = 0
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
-/obj/item/parts/robot_parts/head/screen
+/obj/item/mob_part/humanoid_part/silicon_part/head/screen
 	name = "cyborg screen head"
 	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
 	appearanceString = "screen"
@@ -408,7 +407,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			..()
 
 	proc/start_repair(obj/item/W, mob/user)
-		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/item/parts/robot_parts/head/screen, repair), list(W, user),\
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/item/mob_part/humanoid_part/silicon_part/head/screen, repair), list(W, user),\
 			W.icon, W.icon_state, SPAN_ALERT("[user] repairs [src]."), INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	proc/repair(obj/item/sheet/sheets, mob/user)
@@ -419,8 +418,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		src.UpdateIcon()
 		playsound(get_turf(src.holder || src), 'sound/items/Deconstruct.ogg', 40, 1)
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
-/obj/item/parts/robot_parts/chest
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/chest)
+/obj/item/mob_part/humanoid_part/silicon_part/chest
 	name = "cyborg chest"
 	desc = "Oh no I'm an abstract parent object, how did you get me?"
 	icon_state_base = "body"
@@ -498,7 +497,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 		if(Obj == src.cell)
 			src.cell = null
 
-/obj/item/parts/robot_parts/chest/standard
+/obj/item/mob_part/humanoid_part/silicon_part/chest/standard
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
 	material_amt = ROBOT_CHEST_COST
@@ -518,7 +517,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 			..()
 
 
-/obj/item/parts/robot_parts/chest/light
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light
 	name = "light cyborg chest"
 	desc = "A bare-bones cyborg chest designed for the least consumption of resources."
 	appearanceString = "light"
@@ -528,8 +527,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_chest
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
-/obj/item/parts/robot_parts/arm
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm)
+/obj/item/mob_part/humanoid_part/silicon_part/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	material_amt = ROBOT_LIMB_COST
@@ -629,24 +628,24 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		if (last_active)
 			robot.swap_hand(last_active)
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
-/obj/item/parts/robot_parts/arm/left
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm/left)
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left
 	name = "cyborg left arm"
 	slot = "l_arm"
 	icon_state_base = "l_arm"
 	icon_state = "l_arm-generic"
 	handlistPart = "armL-generic"
 
-/obj/item/parts/robot_parts/arm/left/standard
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard
 	name = "standard cyborg left arm"
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/left/sturdy, FALSE)
+			src.reinforce(M, user, /obj/item/mob_part/humanoid_part/silicon_part/arm/left/sturdy, FALSE)
 		else ..()
 
-/obj/item/parts/robot_parts/arm/left/sturdy
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
@@ -659,10 +658,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/left/heavy, TRUE)
+			src.reinforce(M, user, /obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy, TRUE)
 		else ..()
 
-/obj/item/parts/robot_parts/arm/left/heavy
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
 	icon_state = "l_arm-heavy"
@@ -672,7 +671,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
-/obj/item/parts/robot_parts/arm/left/light
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light
 	name = "light cyborg left arm"
 	appearanceString = "light"
 	icon_state = "l_arm-light"
@@ -682,8 +681,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
-/obj/item/parts/robot_parts/arm/right
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm/right)
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right
 	name = "cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
@@ -692,15 +691,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	handlistPart = "armR-generic"
 
 
-/obj/item/parts/robot_parts/arm/right/standard
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard
 	name = "standard cyborg right arm"
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/right/sturdy, FALSE)
+			src.reinforce(M, user, /obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy, FALSE)
 		else ..()
 
-/obj/item/parts/robot_parts/arm/right/sturdy
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
@@ -713,10 +712,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/right/heavy, TRUE)
+			src.reinforce(M, user, /obj/item/mob_part/humanoid_part/silicon_part/arm/right/heavy, TRUE)
 		else ..()
 
-/obj/item/parts/robot_parts/arm/right/heavy
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
 	icon_state = "r_arm-heavy"
@@ -726,7 +725,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
-/obj/item/parts/robot_parts/arm/right/light
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light
 	name = "light cyborg right arm"
 	appearanceString = "light"
 	icon_state = "r_arm-light"
@@ -736,8 +735,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
-/obj/item/parts/robot_parts/leg
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg)
+/obj/item/mob_part/humanoid_part/silicon_part/leg
 	name = "placeholder item (don't use this!)"
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
 	icon_state_base = "legs" // effectively the prefix for items that go on both legs at once.
@@ -821,8 +820,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
 		return
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
-/obj/item/parts/robot_parts/leg/left
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/left)
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left
 	name = "cyborg left leg"
 	slot = "l_leg"
 	step_image_state = "footprintsL"
@@ -831,11 +830,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	partlistPart = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
-/obj/item/parts/robot_parts/leg/left/standard
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard
 	name = "standard cyborg left leg"
 	max_health = 115
 
-/obj/item/parts/robot_parts/leg/left/light
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
@@ -845,7 +844,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
-/obj/item/parts/robot_parts/leg/left/treads
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads
 	name = "left cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
@@ -858,8 +857,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
-ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
-/obj/item/parts/robot_parts/leg/right
+ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/right)
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right
 	name = "cyborg right leg"
 	slot = "r_leg"
 	step_image_state = "footprintsR"
@@ -868,11 +867,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	partlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
-/obj/item/parts/robot_parts/leg/right/standard
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard
 	name = "standard cyborg right leg"
 	max_health = 115
 
-/obj/item/parts/robot_parts/leg/right/light
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
@@ -882,7 +881,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
-/obj/item/parts/robot_parts/leg/right/treads
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads
 	name = "right cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
@@ -895,7 +894,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
-/obj/item/parts/robot_parts/leg/left/thruster
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/thruster
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
@@ -911,7 +910,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		var/turf/T = get_turf(src.holder)
 		T?.hotspot_expose(700, 50)
 
-/obj/item/parts/robot_parts/leg/right/thruster
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
@@ -928,7 +927,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		if(src.holder.loc == T)
 			T?.hotspot_expose(700, 50)
 
-/obj/item/parts/robot_parts/robot_frame
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame
 	name = "robot frame"
 	icon_state = "robo_suit"
 	material_amt = ROBOT_FRAME_COST
@@ -937,12 +936,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/syndicate = FALSE
 	var/emagged = 0
 	var/freemodule = TRUE
-	var/obj/item/parts/robot_parts/head/head = null
-	var/obj/item/parts/robot_parts/chest/chest = null
-	var/obj/item/parts/robot_parts/l_arm = null
-	var/obj/item/parts/robot_parts/r_arm = null
-	var/obj/item/parts/robot_parts/l_leg = null
-	var/obj/item/parts/robot_parts/r_leg = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/head/head = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/chest/chest = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/l_arm = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/r_arm = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/l_leg = null
+	var/obj/item/mob_part/humanoid_part/silicon_part/r_leg = null
 	var/obj/item/organ/brain/brain = null
 	appearance_flags = KEEP_TOGETHER
 
@@ -971,14 +970,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/parts/robot_parts/))
-			var/obj/item/parts/robot_parts/P = W
+		if (istype(W, /obj/item/mob_part/humanoid_part/silicon_part/))
+			var/obj/item/mob_part/humanoid_part/silicon_part/P = W
 			switch (P.slot)
 				if ("head")
 					if (src.head)
 						boutput(user, SPAN_ALERT("There is already a head piece on the frame. If you want to remove it, use a wrench."))
 						return
-					var/obj/item/parts/robot_parts/head/H = P
+					var/obj/item/mob_part/humanoid_part/silicon_part/head/H = P
 					if (!H.brain && !H.ai_interface)
 						boutput(user, SPAN_ALERT("You need to insert a brain or an AI interface into the head piece before attaching it to the frame."))
 						return
@@ -988,7 +987,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					if (src.chest)
 						boutput(user, SPAN_ALERT("There is already a chest piece on the frame. If you want to remove it, use a wrench."))
 						return
-					var/obj/item/parts/robot_parts/chest/C = P
+					var/obj/item/mob_part/humanoid_part/silicon_part/chest/C = P
 					if (!C.wires)
 						boutput(user, SPAN_ALERT("You need to add wiring to the chest piece before attaching it to the frame."))
 						return
@@ -1125,8 +1124,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		if(src.head)
 			src.UpdateOverlays(image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, FLOAT_LAYER, 2),"head")
 			var/image/smashed_image = null
-			if (istype(src.head, /obj/item/parts/robot_parts/head/screen)) //ehhhh
-				var/obj/item/parts/robot_parts/head/screen/screenhead = src.head
+			if (istype(src.head, /obj/item/mob_part/humanoid_part/silicon_part/head/screen)) //ehhhh
+				var/obj/item/mob_part/humanoid_part/silicon_part/head/screen/screenhead = src.head
 				if (screenhead.smashed)
 					smashed_image = image('icons/mob/robots.dmi', "screen-smashed", dir = SOUTH)
 			src.UpdateOverlays(smashed_image, "screen-smashed")
@@ -1262,7 +1261,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		qdel(src)
 		return
 
-/obj/item/parts/robot_parts/robot_frame/syndicate
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame/syndicate
 	syndicate = TRUE
 
 // UPGRADES

@@ -16,8 +16,8 @@
 	flags = TABLEPASS
 	var/created_cleanbot_type = /obj/machinery/bot/cleanbot
 
-	attackby(var/obj/item/parts/robot_parts/P, mob/user as mob)
-		if (!istype(P, /obj/item/parts/robot_parts/arm/))
+	attackby(var/obj/item/mob_part/humanoid_part/silicon_part/P, mob/user as mob)
+		if (!istype(P, /obj/item/mob_part/humanoid_part/silicon_part/arm/))
 			return
 
 		var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
@@ -343,7 +343,7 @@
 			new bucket_type_on_destruction(T)
 			new /obj/item/device/prox_sensor(T)
 			if (prob(50))
-				new /obj/item/parts/robot_parts/arm/left/standard(T)
+				new /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard(T)
 
 		qdel(src)
 		return

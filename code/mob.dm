@@ -990,8 +990,10 @@
 	var/list/obj/item/LI = list()
 
 	for (var/obj/item/W in src)
-		if (istype(W, /obj/item/parts) && W:holder == src)
-			continue
+		if (istype(W, /obj/item/mob_part))
+			var/obj/item/mob_part/part = W
+			if (part.holder == src)
+				continue
 
 		if(istype(W, /obj/item/implant))
 			continue

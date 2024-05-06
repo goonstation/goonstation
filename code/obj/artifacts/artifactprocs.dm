@@ -318,14 +318,14 @@
 		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [W]!"))
 		return 0
 
-	if (istype(W,/obj/item/parts/robot_parts))
-		var/obj/item/parts/robot_parts/THISPART = W
+	if (istype(W,/obj/item/mob_part/humanoid_part/silicon_part))
+		var/obj/item/mob_part/humanoid_part/silicon_part/THISPART = W
 		src.visible_message("<b>[user.name]</b> presses \the [THISPART] against \the [src].</span>")
 		src.ArtifactStimulus("silitouch", 1)
 		return 0
 
-	if (istype(W, /obj/item/parts/human_parts))
-		var/obj/item/parts/human_parts/THISPART = W
+	if (istype(W, /obj/item/mob_part/humanoid_part/carbon_part))
+		var/obj/item/mob_part/humanoid_part/carbon_part/THISPART = W
 		src.visible_message("<b>[user.name]</b> smooshes \the [THISPART] against \the [src].</span>")
 		src.ArtifactStimulus("carbtouch", 1)
 		return 0
@@ -478,8 +478,8 @@
 	if (istype(A,/datum/artifact/))
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			var/obj/item/parts/arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm
-			if(istype(arm, /obj/item/parts/robot_parts))
+			var/obj/item/mob_part/arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm
+			if(istype(arm, /obj/item/mob_part/humanoid_part/silicon_part))
 				src.ArtifactStimulus("silitouch", 1)
 			else
 				src.ArtifactStimulus("carbtouch", 1)

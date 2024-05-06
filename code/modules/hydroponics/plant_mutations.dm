@@ -376,10 +376,10 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	dont_rename_crop = TRUE
 	iconmod = "SynthLimbs" // im sorry Haine i made a new sprite
 	infusion_reagents = list("synthflesh")
-	crop = list(/obj/item/parts/human_parts/arm/left/synth, /obj/item/parts/human_parts/arm/right/synth,
-	            /obj/item/parts/human_parts/leg/left/synth, /obj/item/parts/human_parts/leg/right/synth,
-	            /obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/right/synth/bloom,
-	            /obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/right/synth/bloom)
+	crop = list(/obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth,
+	            /obj/item/mob_part/humanoid_part/carbon_part/leg/left/synth, /obj/item/mob_part/humanoid_part/carbon_part/leg/right/synth,
+	            /obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth/bloom, /obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth/bloom,
+	            /obj/item/mob_part/humanoid_part/carbon_part/leg/left/synth/bloom, /obj/item/mob_part/humanoid_part/carbon_part/leg/right/synth/bloom)
 
 /datum/plantmutation/synthmeat/heart
 	name = "Synthheart"

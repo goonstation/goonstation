@@ -465,7 +465,7 @@ TYPEINFO(/obj/item/rcd)
 				handle_light_tubes(A, user)
 				return
 
-	proc/handle_surgery(obj/item/parts/surgery_target, mob/user, var/mob/living/carbon/human/target)
+	proc/handle_surgery(obj/item/mob_part/surgery_target, mob/user, var/mob/living/carbon/human/target)
 		PRIVATE_PROC(TRUE)
 
 		var/user_limb_is_missing = FALSE
@@ -517,7 +517,7 @@ TYPEINFO(/obj/item/rcd)
 			boutput(user, SPAN_NOTICE("[src] is already working on something else."))
 		else if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/obj/item/parts/surgery_target = null
+			var/obj/item/mob_part/surgery_target = null
 			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
 					if (H.organHolder.butt == null)
@@ -600,7 +600,7 @@ TYPEINFO(/obj/item/rcd)
 
 		var/doing_surgery = FALSE
 
-		if (istype(target, /obj/item/parts))
+		if (istype(target, /obj/item/mob_part))
 			doing_surgery = TRUE
 
 		if (target in src.working_on)

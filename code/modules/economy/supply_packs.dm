@@ -912,13 +912,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Cyborg Component Crate"
 	desc = "Build your very own walking science nightmare! (Brain not included.)"
 	category = "Medical Department"
-	contains = list(/obj/item/parts/robot_parts/robot_frame,
-					/obj/item/parts/robot_parts/head/sturdy,
-					/obj/item/parts/robot_parts/chest/standard,
-					/obj/item/parts/robot_parts/arm/left/sturdy,
-					/obj/item/parts/robot_parts/arm/right/sturdy,
-					/obj/item/parts/robot_parts/leg/left/standard,
-					/obj/item/parts/robot_parts/leg/right/standard,
+	contains = list(/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+					/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy,
+					/obj/item/mob_part/humanoid_part/silicon_part/chest/standard,
+					/obj/item/mob_part/humanoid_part/silicon_part/arm/left/sturdy,
+					/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy,
+					/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
+					/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
 					/obj/item/cable_coil)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/crate/wooden
@@ -939,7 +939,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/guardbot_frame,
 					/obj/item/guardbot_core,
 					/obj/item/cell,
-					/obj/item/parts/robot_parts/arm/right/sturdy,
+					/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy,
 					/obj/random_item_spawner/buddytool)
 	cost = PAY_DOCTORATE*2
 	containertype = /obj/storage/crate/wooden

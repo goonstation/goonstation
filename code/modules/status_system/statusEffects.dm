@@ -2032,25 +2032,25 @@
 	icon_state = "cspider-hand"
 	regrow_target_id = "l_arm"
 	regrow_target_name = "left arm"
-	regrow_target_path = /obj/item/parts/human_parts/arm/left
+	regrow_target_path = /obj/item/mob_part/humanoid_part/carbon_part/arm/left
 /datum/statusEffect/changeling_regrow/limb/r_arm
 	id = "c_regrow-r_arm"
 	icon_state = "cspider-hand"
 	regrow_target_id = "r_arm"
 	regrow_target_name = "right arm"
-	regrow_target_path = /obj/item/parts/human_parts/arm/right
+	regrow_target_path = /obj/item/mob_part/humanoid_part/carbon_part/arm/right
 /datum/statusEffect/changeling_regrow/limb/l_leg
 	id = "c_regrow-l_leg"
 	icon_state = "cspider-leg"
 	regrow_target_id = "l_leg"
 	regrow_target_name = "left leg"
-	regrow_target_path = /obj/item/parts/human_parts/leg/left
+	regrow_target_path = /obj/item/mob_part/humanoid_part/carbon_part/leg/left
 /datum/statusEffect/changeling_regrow/limb/r_leg
 	id = "c_regrow-r_leg"
 	icon_state = "cspider-leg"
 	regrow_target_id = "r_leg"
 	regrow_target_name = "right leg"
-	regrow_target_path = /obj/item/parts/human_parts/leg/right
+	regrow_target_path = /obj/item/mob_part/humanoid_part/carbon_part/leg/right
 
 /datum/statusEffect/changeling_regrow/organ/left_eye
 	id = "c_regrow-l_eye"

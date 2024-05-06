@@ -46,7 +46,7 @@
 								flick("factory_arm_active",src)
 
 				if (3)
-					var/obj/item/parts/robot_parts/arm/arm = locate() in range(src,1)
+					var/obj/item/mob_part/humanoid_part/silicon_part/arm/arm = locate() in range(src,1)
 					if (istype(arm))
 						frame.Attackby(arm,src)
 						flick("factory_arm_active",src)

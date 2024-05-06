@@ -132,7 +132,7 @@ datum/v_space
 		if (isdead(user))
 			for (var/obj/item/I in user)
 				// Stop littering the place with VR skulls and organs, aaahh (Convair880).
-				if (istype(I,/obj/item/clothing/glasses/vr_fake) || istype(I, /obj/item/parts) || istype(I, /obj/item/organ) || istype(I, /obj/item/skull) || istype(I, /obj/item/clothing/head/butt))
+				if (istype(I,/obj/item/clothing/glasses/vr_fake) || istype(I, /obj/item/mob_part) || istype(I, /obj/item/organ) || istype(I, /obj/item/skull) || istype(I, /obj/item/clothing/head/butt))
 					continue
 				if (I != user.w_uniform && I != user.shoes)
 					user.u_equip(I)

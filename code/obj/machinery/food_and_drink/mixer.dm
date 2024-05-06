@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_working
 	var/list/recipes = null
 	var/list/to_remove = list()
-	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
+	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/mob_part/humanoid_part/silicon_part/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 	var/timeMixEnd = 0
 
