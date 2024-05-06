@@ -427,7 +427,7 @@ TYPEINFO(/obj/stool/wooden)
 		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 
-		if (istype(ticker?.mode, /datum/game_mode/revolution) && to_buckle.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+		if (istype(ticker?.mode, /datum/game_mode/revolution) && to_buckle.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			to_buckle.update_canmove()
 			SPAWN(1 SECOND) // so no abrupt ending
 				ticker.mode.check_win()
