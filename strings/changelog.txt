@@ -1,5 +1,7 @@
 
 (t)mon may 06 24
+(u)Sord
+(*)Added a new +1 trait, Plasma Lungs. The trait makes you spawn with plasma breathing lungs as well as a new belt-slot plasma tank.
 (u)glowbold
 (p)18680
 (e)🔄🔨📦|C-Rework, A-Player-Actions, A-Game-Objects

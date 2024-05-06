@@ -281,6 +281,17 @@
 	disability_name = "Legless"
 	disability_desc = "Legs have been severed"
 
+/datum/trait/plasmalungs
+	name = "Plasma Lungs"
+	desc = "You signed up for a maintenance experiment involving someone who was definitely a scientist and your lungs are now only capable of breathing in plasma. At least they gave you a free tank to breathe from."
+	id = "plasmalungs"
+	icon_state = "placeholder"
+	category = list("body")
+	points = 1
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Plasma Lungs"
+	disability_desc = "Only capable of breathing plasma in a gaseous state"
+
 // LANGUAGE - Yellow Border
 
 /datum/trait/swedish

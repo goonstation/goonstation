@@ -771,6 +771,38 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 						src.limbs.r_leg.delete()
 				new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
+		if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
+			var/mob/living/carbon/human/P = src
+			var/has_non_internals_mask = P.wear_mask && !(P.wear_mask.c_flags & MASKINTERNALS)
+			if(istype(P) && !has_non_internals_mask)
+				var/obj/item/organ/created_organ
+				var/obj/item/organ/lung/left = P?.organHolder?.left_lung
+				var/obj/item/organ/lung/right = P?.organHolder?.right_lung
+				if(istype(left) && istype(right))
+					created_organ = new /obj/item/organ/lung/plasmatoid/left()
+					P.organHolder.drop_organ(left.organ_holder_name)
+					qdel(left)
+
+					created_organ.donor = P
+					P.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+					created_organ = new /obj/item/organ/lung/plasmatoid/right()
+					P.organHolder.drop_organ(right.organ_holder_name)
+					qdel(right)
+
+					created_organ.donor = P
+					P.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+				else
+					return
+
+				if(!P.wear_mask)
+					P.equip_if_possible(new /obj/item/clothing/mask/breath(P), SLOT_WEAR_MASK)
+
+				var/obj/item/tank/good_air = new /obj/item/tank/mini_plasma(P)
+				P.put_in_hand_or_drop(good_air)
+				if (!good_air.using_internal())//set tank ON
+					good_air.toggle_valve()
+
 		// Special mutantrace items
 		if (src.traitHolder && src.traitHolder.hasTrait("pug"))
 			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
