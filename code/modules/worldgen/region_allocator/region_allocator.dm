@@ -116,9 +116,9 @@ var/global/datum/region_allocator/region_allocator = new
 	/// Corresponding node in the region_allocator quad tree
 	var/datum/region_node/node
 	/// optional friendly name for the region
-	var/label
+	var/name
 
-	New(turf/bottom_left, width, height, datum/region_node/node, label)
+	New(turf/bottom_left, width, height, datum/region_node/node, name)
 		..()
 		src.bottom_left = bottom_left
 		src.width = width
@@ -127,7 +127,7 @@ var/global/datum/region_allocator/region_allocator = new
 		node.set_state(NODE_STATE_USED)
 		src.node = node
 		global.region_allocator.allocated_regions += get_weakref(src)
-		src.label = label
+		src.name = name
 
 	proc/free()
 		PRIVATE_PROC(TRUE)
@@ -258,10 +258,10 @@ var/global/datum/region_allocator/region_allocator = new
 	 * To free up the region just delete the /datum/allocated_region object or drop all references to it.
 	 * See [/datum/allocated_region] for details.
 	 */
-	proc/allocate(width, height, label)
+	proc/allocate(width, height, name)
 		RETURN_TYPE(/datum/allocated_region)
 		var/datum/region_node/node = src.get_free_node(max(width, height))
-		. = new/datum/allocated_region(locate(node.x, node.y, node.z), width, height, node, label)
+		. = new/datum/allocated_region(locate(node.x, node.y, node.z), width, height, node, name)
 
 
 #undef NODE_STATE_FREE

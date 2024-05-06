@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 const RegionItem = ({ region, removeRegion, gotoRegion, gotoRegionCenter }) => (
   <LabeledList>
     <LabeledList.Item
-      label="Label"
+      label="Name"
       buttons={
         <Button.Confirm
           icon="trash"
@@ -14,7 +14,7 @@ const RegionItem = ({ region, removeRegion, gotoRegion, gotoRegionCenter }) => (
           onClick={() => removeRegion(region.ref)} />
       }
     >
-      {region.label ? region.label : region.ref}
+      {region.name ? region.name : region.ref}
     </LabeledList.Item>
     <LabeledList.Item label="Source Turf"
       buttons={

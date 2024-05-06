@@ -19,7 +19,7 @@
 		var/datum/allocated_region/region = region_ref.deref()
 		. += list(list(
 			"ref" = ref(region_ref),
-			"label" = region.label,
+			"name" = region.name,
 			"x" = region.bottom_left.x,
 			"y" = region.bottom_left.y,
 			"z" = region.bottom_left.z,
