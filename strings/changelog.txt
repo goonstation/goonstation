@@ -1,5 +1,9 @@
 
 (t)mon may 06 24
+(u)glowbold
+(p)18783
+(e)🪲🆕📄🤖|C-Bug, C-Feature, A-UI, A-Silicons
+(+)AI Eyebot Shells can swap between Help and Harm intent via HUD button.
 (u)Sord
 (*)Added a new +1 trait, Plasma Lungs. The trait makes you spawn with plasma breathing lungs as well as a new belt-slot plasma tank.
 (u)glowbold
