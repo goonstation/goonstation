@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Sovexe (https://github.com/Sovexe)
+ * @license ISC
+ */
+
 import { useBackend } from '../backend';
 import { Button, Divider, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
