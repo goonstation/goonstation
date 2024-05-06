@@ -173,7 +173,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(probmult(1))
 			boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 			random_brute_damage(M,5)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 			M.make_jittery(6)
 			M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor, scratching themselves violently!"))
 			M.emote("scream")
@@ -394,7 +394,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (!istype(molitz))
 			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
 		var/iterations = owner.material.getProperty("molitz_bubbles")
-		if(iterations <= 0) return
+		if(iterations <= 0)
+			owner.setMaterial(getMaterial("molitz_expended"))
+			return
 
 		var/datum/gas_mixture/air = owner.return_air() || owner.loc.return_air()
 		if(!istype(air))

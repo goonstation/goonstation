@@ -1937,3 +1937,47 @@ Other Goonstation servers:[serverList]</span>"})
 		if (!src.quantity_text) return
 		src.quantity_text.maptext = "<span class='r sh pixel' style='font-size: 5px;[(limit_total - number_purchased) == 0 ? " color: red;" : ""]'>x[limit_total - number_purchased]</span>"
 		return
+
+/obj/admin_spacebux_store/premade
+	New()
+		. = ..()
+		if (!type_to_spawn) return
+		setup_premade_shop()
+
+
+	proc/setup_premade_shop()
+		var/atom/movable/AM = new type_to_spawn
+
+		src.appearance = AM.appearance
+		src.name = AM.name
+		src.thing_name = AM.name
+
+		src.price_text = new()
+		src.price_text.set_loc(src)
+		src.price_text.maptext_width = 132
+		src.price_text.maptext_x = -50
+		src.price_text.maptext_y = 34
+		src.price_text.maptext = "<span class='c vb sh xfont'>[price > 0 ? price : "FREE"]</span>"
+		src.vis_contents += src.price_text
+		src.price_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+
+		if (src.limit_total)
+			src.quantity_text = new()
+			src.quantity_text.set_loc(src)
+			src.vis_contents += src.quantity_text
+			src.quantity_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+			src.update_quantity()
+
+		animate(src, pixel_y = 0 + 8,  time = 2 SECONDS, loop = -1, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+		animate(pixel_y = 0, time = 2 SECONDS, loop = -1, easing = SINE_EASING)
+		set_up = TRUE
+
+
+/obj/admin_spacebux_store/premade/popcorn
+	price = 5
+	type_to_spawn = /obj/item/reagent_containers/food/snacks/popcorn
+
+	New()
+		. = ..()
+		pixel_x = 0
+		pixel_y = 0

@@ -77,7 +77,7 @@
 				H.mind.transfer_to(clone)
 				clone.is_npc = FALSE
 			APPLY_ATOM_PROPERTY(clone, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
-			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
+			clone.changeStatus("unconscious", imprison_time) // so they don't ruin the surprise
 			O.ArtifactFaultUsed(H)
 			O.ArtifactFaultUsed(clone)
 

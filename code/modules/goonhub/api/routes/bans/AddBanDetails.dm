@@ -8,8 +8,11 @@
 	correct_response = /datum/apiModel/Tracked/BanDetail
 
 	buildBody(
+		game_admin_ckey,
+		round_id,
 		ckey,
 		comp_id,
-		ip
+		ip,
+		evasion
 	)
 		. = ..(args)

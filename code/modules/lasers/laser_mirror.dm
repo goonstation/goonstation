@@ -19,10 +19,16 @@ TYPEINFO(/obj/laser_sink/mirror)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
+	else if (ispryingtool(I))
+		src.rotate()
 	else
 		..()
 
 /obj/laser_sink/mirror/attack_hand(mob/user)
+	src.rotate()
+	..()
+
+/obj/laser_sink/mirror/proc/rotate()
 	if (ON_COOLDOWN(src, "rotate", 1 SECOND)) //this is probably a good idea
 		return
 	var/obj/linked_laser/laser = src.in_laser

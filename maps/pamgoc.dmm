@@ -24087,14 +24087,6 @@
 	},
 /turf/space,
 /area/station/wreckage)
-"bfH" = (
-/obj/lattice,
-/obj/decal/fakeobjects/pipe{
-	dir = 8;
-	color = "b4b4b4"
-	},
-/turf/space,
-/area/space)
 "bfJ" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -24452,31 +24444,6 @@
 	},
 /turf/space,
 /area/space)
-"bgG" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 8;
-	color = "b4b4b4"
-	},
-/obj/decal/floatingtiles{
-	icon_state = "floattiles4"
-	},
-/turf/space,
-/area/space)
-"bgH" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 8;
-	color = "b4b4b4"
-	},
-/turf/space,
-/area/space)
 "bgJ" = (
 /obj/lattice{
 	dir = 4;
@@ -24689,10 +24656,6 @@
 	},
 /turf/space,
 /area/space)
-"bhl" = (
-/obj/machinery/lrteleporter,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "bhm" = (
 /obj/machinery/abcu,
 /turf/simulated/floor/blue,
@@ -39989,7 +39952,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bUp" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bUq" = (
@@ -53861,20 +53824,6 @@
 "cyO" = (
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
-"cyP" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 2;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/shuttle/arrival/station)
-"cyQ" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/shuttle/arrival/station)
 "cyR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -53884,18 +53833,6 @@
 	dir = 1
 	},
 /area/shuttle/arrival/station)
-"cyT" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
-"cyU" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
 "cyV" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
@@ -57211,6 +57148,12 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"hmi" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
 "hmD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59126,6 +59069,12 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"kLj" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
 "kLp" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Arrivals Desk";
@@ -61327,7 +61276,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "pqo" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -62168,6 +62117,14 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/medical/staff)
+"rwy" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "rwU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -62833,6 +62790,20 @@
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
+"sNJ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 8
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/space)
 "sOG" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -63408,6 +63379,13 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"tUA" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 4;
+	icon_state = "wall_trans";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "tVo" = (
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
@@ -63693,6 +63671,17 @@
 /obj/storage/cart,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"uIa" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "uIL" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
@@ -64658,6 +64647,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
+"wCJ" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 2;
+	icon_state = "wall_trans";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "wEF" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
@@ -108755,7 +108751,7 @@ cwV
 bfm
 bfm
 cyR
-cyP
+wCJ
 cCQ
 aBn
 clm
@@ -109359,7 +109355,7 @@ cwV
 bfm
 bfm
 cyR
-cyQ
+tUA
 cCQ
 aAG
 bqh
@@ -122737,7 +122733,7 @@ cCO
 cCO
 bgN
 cAK
-bhl
+cyg
 cyg
 cyg
 atz
@@ -145182,14 +145178,14 @@ cCO
 cCO
 cCO
 cCO
-cyT
+kLj
 cCO
 bgb
 cyV
 bhc
 azw
 cyV
-cyU
+hmi
 cCO
 cCO
 cCO
@@ -145486,7 +145482,7 @@ cCO
 cCO
 cyV
 cCO
-bfH
+rwy
 cyV
 bfK
 bgb
@@ -146091,7 +146087,7 @@ cCO
 cyV
 azf
 azf
-bgG
+sNJ
 azw
 azi
 bfQ
@@ -146393,7 +146389,7 @@ cCO
 cyV
 azs
 bcT
-bgH
+uIa
 cyV
 bfJ
 bgb
@@ -146695,7 +146691,7 @@ cCO
 cyV
 azq
 azT
-bgH
+uIa
 cyV
 azp
 aAa
@@ -148203,7 +148199,7 @@ cCO
 cCO
 cCO
 cyV
-bgH
+uIa
 azW
 cqY
 cyV

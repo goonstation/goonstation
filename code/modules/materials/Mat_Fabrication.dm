@@ -329,7 +329,7 @@
 						selectingPartList.Cut()
 						selectedRecipe = null
 						flick("fab2-work", src)
-		attack_hand(usr)
+		src.Attackhand(usr)
 
 	proc/addMaterial(var/obj/item/W, var/mob/user)
 		for(var/obj/item/A in src)

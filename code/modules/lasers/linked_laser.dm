@@ -124,9 +124,10 @@
 /obj/linked_laser/Crossed(atom/movable/A)
 	..()
 	if (istype(A, /obj/laser_sink) && src.previous)
+		var/turf/T = get_turf(src)
 		//we need this to happen after the crossing atom has finished moving otherwise mirrors will delete their own laser obj
 		SPAWN(0)
-			if (!QDELETED(src.previous))
+			if (!QDELETED(src.previous) && get_turf(A) == T) //check that the sink hasn't moved during our SPAWN
 				src.previous.sink = A
 				src.previous.sink.incident(src.previous)
 	if (src.is_blocking(A))

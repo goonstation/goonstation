@@ -218,7 +218,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	else if (isobj(target) || ismob(target))
 		var/atom/L = target.loc
 		while (L && !isturf(L))
-			if (L == user)
+			if (L == user || L == user.loc)
 				return 1
 			L = L.loc
 	return 0

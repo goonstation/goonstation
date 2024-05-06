@@ -202,6 +202,9 @@
 	var/datum/loot_generator/lootMaster
 	level = UNDERFLOOR
 
+	Eat(mob/M, mob/user)
+		boutput(user, SPAN_ALERT("You can't eat this! It tastes like [pick(list("a video game cartridge","the inside of a clown's shoe","a hooligan's rancid socks"))]!"))
+		return FALSE
 
 	proc/initialize_loot_master(x,y)
 		src.vis_controller = new(src)
@@ -830,12 +833,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 				. = ..()
 
 	// GANG_CRATE_GUN:
-	makarov
-		tier = GANG_CRATE_GUN
-		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/makarov,scale_x=0.725,scale_y=0.725)
-			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 	webley
+		weight=10
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/webley,scale_x=0.65,scale_y=0.65)

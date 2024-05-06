@@ -569,7 +569,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
-				M.changeStatus("paralysis", 3 SECONDS)
+				M.changeStatus("unconscious", 3 SECONDS)
 				M.changeStatus("stunned", 6 SECONDS)
 				M.take_brain_damage(15)
 			qdel(src)
@@ -601,10 +601,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	proc/damage(var/mob/hitMob, damMin, damMax, var/mob/living/carbon/human/user)
 		if(istype(user) && user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
-			hitMob.do_disorient(stamina_damage = 35, weakened = 10, stunned = 0, disorient = 50, remove_stamina_below_zero = 0)
+			hitMob.do_disorient(stamina_damage = 35, knockdown = 10, stunned = 0, disorient = 50, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else
-			hitMob.do_disorient(stamina_damage = 35, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+			hitMob.do_disorient(stamina_damage = 35, knockdown = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
@@ -1023,7 +1023,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src]."))
 				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 
 				return

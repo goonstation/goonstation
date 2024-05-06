@@ -55,4 +55,4 @@
 			if ("toxin")
 				target.take_toxin_damage(rand(1, dmg_amount))
 		if (src.stamina_dmg)
-			target.do_disorient(stamina_damage = src.stamina_dmg, weakened = src.stamina_dmg - 20, disorient = src.stamina_dmg - 40)
+			target.do_disorient(stamina_damage = src.stamina_dmg, knockdown = src.stamina_dmg - 20, disorient = src.stamina_dmg - 40)

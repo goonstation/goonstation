@@ -576,7 +576,7 @@
 		if (dead_check && isdead(src))
 			src.emote_allowed = FALSE
 			return FALSE
-		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
+		if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
 			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
@@ -965,7 +965,7 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
+	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("unconscious")))
 		if (prob(20))
 			boutput(src, "<I>... You can almost hear something ...</I>")
 			if (isliving(src))

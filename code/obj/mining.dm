@@ -466,6 +466,7 @@
 					pull_new_source()
 
 	disposing()
+		src.health = 0 // DIE!!!!!! GOD!!!! (this makes sure the computers know the magnet is Dead and Buried)
 		src.visible_message("<b>[src] breaks apart!</b>")
 		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
@@ -565,6 +566,13 @@
 
 		if (src.active)
 			src.UpdateOverlays(src.active_overlay, "magnet_active")
+
+	// Sanity check to make sure we gib on no health
+	proc/check_should_die()
+		if (isnull(src.health) || src.health <= 0)
+			qdel(src)
+			return TRUE
+		return FALSE
 
 	proc/damage(var/amount)
 		if (!isnum(amount))
@@ -668,6 +676,7 @@
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
 
+		src.check_should_die()
 		src.updateUsrDialog()
 		return
 
@@ -795,6 +804,7 @@
 			return
 		switch(action)
 			if("linkmagnet")
+				src.connection_scan() // Magnets can explode inbetween scanning and linking
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
@@ -814,12 +824,11 @@
 				. = TRUE
 			else
 				if(istype(src.linked_magnet))
+					if (src.linked_magnet.health <= 0)
+						src.linked_magnet = null // ITS DEAD!!!! STOP!!!
+						src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+						return
 					. = src.linked_magnet.ui_act(action, params)
-
-	ui_status(mob/user, datum/ui_state/armed)
-		. = ..()
-		if(istype(src.linked_magnet))
-			. = min(., linked_magnet.ui_status(user))
 
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
@@ -1307,7 +1316,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
+		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "knockdown"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -2045,7 +2054,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
 			if(GET_DIST(src,C) <= src.expl_light)
 				C.changeStatus("stunned", 8 SECONDS)
-				C.changeStatus("weakened", 10 SECONDS)
+				C.changeStatus("knockdown", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, SPAN_ALERT("The concussive blast knocks you off your feet!"))
 			if(GET_DIST(src,C) <= src.expl_heavy)
@@ -2704,10 +2713,11 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (length(satchel.contents) < 1)
 				boutput(user, SPAN_ALERT("The satchel in [src] is empty."))
 				return
-			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
-			for (var/obj/item/I in satchel.contents)
-				I.set_loc(target)
-			satchel.UpdateIcon()
+			if(!is_blocked_turf(target))
+				user.visible_message("[user] dumps out [src]'s satchel contents onto the ground.", "You dump out [src]'s satchel contents onto the ground.")
+				for (var/obj/item/I in satchel.contents)
+					I.set_loc(target)
+				satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			if (!issilicon(user))

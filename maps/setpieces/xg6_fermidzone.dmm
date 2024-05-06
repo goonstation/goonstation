@@ -264,7 +264,7 @@
 	name = "SHAME BOARD"
 	},
 /obj/item/paper{
-	desc = "Looks like one of the Technicians got called out." ;
+	desc = "Looks like one of the Technicians got called out.";
 	icon_state = "postit-writing";
 	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
 	name = "Joff Muncey, Repair Technician";
@@ -272,7 +272,7 @@
 	pixel_y = 29
 	},
 /obj/item/paper{
-	desc = "Looks like some of the Sales team got called out." ;
+	desc = "Looks like some of the Sales team got called out.";
 	icon_state = "postit-writing";
 	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
 	name = "Gordon Baade & Sue Zhang, Sales Technicians";
@@ -280,7 +280,7 @@
 	pixel_y = 28
 	},
 /obj/item/paper{
-	desc = "Looks like one of the Janitors got called out." ;
+	desc = "Looks like one of the Janitors got called out.";
 	icon_state = "postit-writing";
 	info = "<b>Hurry up and take care of these damned ants! </b>";
 	name = "Tedward Benson, Janitor";
@@ -288,7 +288,7 @@
 	pixel_y = 26
 	},
 /obj/item/paper{
-	desc = "Looks like one of the Engineers got called out." ;
+	desc = "Looks like one of the Engineers got called out.";
 	icon_state = "postit-writing";
 	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
 	name = "Jimmy Li, Engineer";
@@ -850,10 +850,11 @@
 	name = "Reactor Core"
 	})
 "dz" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -1813,10 +1814,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "hE" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -2497,10 +2499,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "kc" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4230,9 +4233,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ri" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -9241,7 +9246,7 @@
 	})
 "Mt" = (
 /obj/overlay{
-	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik." ;
+	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
 	name = "portrait";
@@ -11348,7 +11353,7 @@
 	})
 "UG" = (
 /obj/overlay{
-	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik." ;
+	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
 	name = "portrait";
@@ -11744,7 +11749,7 @@
 	})
 "Wi" = (
 /obj/item/caution{
-	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services." ;
+	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services.";
 	name = "CLOSED FOR PEST CONTROL"
 	},
 /turf/simulated/floor/stairs/dark/wide{
@@ -12483,7 +12488,7 @@
 	})
 "Zi" = (
 /obj/item/caution{
-	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services." ;
+	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services.";
 	name = "CLOSED FOR PEST CONTROL"
 	},
 /turf/simulated/floor/stairs/dark/wide{

@@ -283,6 +283,7 @@
 		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
 		if(crisis)
 			signal.data["group"] += MGA_CRISIS
+			signal.data["noreply"] = TRUE
 		signal.data["message"] = msg
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"

@@ -456,7 +456,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
 		if (!src.is_acceptable_content(O))
@@ -479,8 +479,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					SPAN_ALERT("You trip over [src]!"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 					user.set_loc(T)
-					if (!user.hasStatus("weakened"))
-						user.changeStatus("weakened", 10 SECONDS)
+					if (!user.hasStatus("knockdown"))
+						user.changeStatus("knockdown", 10 SECONDS)
 					JOB_XP(user, "Clown", 3)
 					return
 				else
@@ -616,7 +616,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return 0
 		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage) || istype(A, /obj/tug_cart)))
 			return 0
 
 	var/obj/storage/entangled
@@ -830,7 +830,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
 				bleed(M, 500, 5)
 				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				var/mob/living/carbon/cube/meatcube = M.make_cube(null, rand(10,15), get_turf(src))
 				if (src.crunches_deliciously)
 					meatcube.name = "hotdog"
 					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)

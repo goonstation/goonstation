@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-import { useLocalState } from '../../../backend';
-import { Button, Section, Stack } from '../../../components';
+import { useLocalState } from '../../../../backend';
+import { Button, Section, Stack } from '../../../../components';
 import { Tools } from './Tools';
-import { ToolData } from '../type';
+import type { ToolData } from '../../type/data';
 
 const resetOptions = [
   {
@@ -45,7 +45,7 @@ interface ModuleProps {
   tools: ToolData[];
 }
 
-export const ModuleDetail = (props: ModuleProps, context) => {
+export const ModuleDetail = (props: ModuleProps, context: unknown) => {
   const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } = props;
   const [selectedToolRef, setSelectedToolRef] = useLocalState<string | undefined>(
     context,

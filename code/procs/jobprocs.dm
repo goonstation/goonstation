@@ -230,6 +230,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			player.antag_fallthrough = TRUE
 			continue
+		if ((!JOB.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+			player.antag_fallthrough = TRUE
+			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
 		if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
@@ -330,12 +333,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 //Given a list of candidates returns candidates that are acceptable to be promoted based on their medium/low priorities
 //ideally JOB should only be a command position. eg. CE, RD, MD
 /proc/FindPromotionCandidates(list/staff, var/datum/job/JOB)
-	var/list/picks = FindOccupationCandidates(staff,JOB.name,2)
-
-	//If there are no acceptable candidates (no inappropriate antags, no job bans) who have it in their medium priority list
-	if (!length(picks))
-		picks = FindOccupationCandidates(staff,JOB.name,3)
-	return picks
+	for (var/level in 1 to 3) //favourite, med prio, low prio in that order
+		var/list/picks = FindOccupationCandidates(staff,JOB.name,level)
+		if (length(picks))
+			return picks
+	return list()
 
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
@@ -540,12 +542,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and is trying to spawn")
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
 				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed), /area/station)) //believe it or not there are station areas on nonstation z levels
-					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
+					if (!(locate(/mob/living/carbon/human) in get_turf(bed))) //this is slow but it's Probably worth it
 						valid_beds += bed
 
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and has finished iterating through beds.")
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
@@ -554,7 +558,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				src.r_hand?.AddComponent(/datum/component/glued, src, 10 SECONDS, 5 SECONDS)
 
 				src.setStatus("resting", INFINITE_STATUS)
-				src.setStatus("paralysis", 10 SECONDS)
+				src.setStatus("unconscious", 10 SECONDS)
 				src.force_laydown_standup()
 
 		// This should be here (overriding most other things), probably? - #11215
@@ -589,11 +593,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
 	//this was previously indented in the ishuman() block, but I don't think it needs to be - Amylizzle
-	if (possible_new_mob)
-		var/mob/living/newmob = possible_new_mob
-		newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
-	else
-		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
+	SPAWN(0)
+		if (possible_new_mob)
+			var/mob/living/newmob = possible_new_mob
+			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
+		else
+			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 
@@ -704,6 +709,17 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("petperson"))
+		var/obj/item/pet_carrier/carrier = new/obj/item/pet_carrier(src)
+		var/picked = pick(filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)))
+		var/mob/living/critter/small_animal/pet = new picked(src)
+		pet.ai_type = /datum/aiHolder/wanderer
+		pet.ai = new pet.ai_type(pet)
+		pet.aggressive = FALSE
+		pet.randomize_name()
+		pet.ai_retaliate_persistence = RETALIATE_ONCE
+		carrier.trap_mob(pet, src)
+		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)

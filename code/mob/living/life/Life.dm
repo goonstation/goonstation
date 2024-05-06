@@ -410,7 +410,6 @@
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
 		src.show_text(voidSpeak(msg))
-		src.emagged = 1
 
 /mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -572,7 +571,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
+			setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)

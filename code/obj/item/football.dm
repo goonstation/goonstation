@@ -101,7 +101,7 @@
 
 	if (src.hasStatus("handcuffed"))
 		boutput(src, SPAN_ALERT("With your hands tied behind your back, you slam into [target] face first!"))
-		src.changeStatus("weakened", 3 SECONDS)
+		src.changeStatus("knockdown", 3 SECONDS)
 		src.force_laydown_standup()
 
 	src.remove_stamina(40)
@@ -118,7 +118,7 @@
 		M.visible_message(SPAN_ALERT("<B>[src] [msg] [target]!</B>"))
 
 		M.changeStatus("stunned", 2 SECONDS)
-		M.changeStatus("weakened", 2 SECONDS)
+		M.changeStatus("knockdown", 2 SECONDS)
 		M.force_laydown_standup()
 		power = max(9, power)
 		M.TakeDamageAccountArmor("chest", power, 0, 0, DAMAGE_BLUNT)
@@ -280,7 +280,7 @@
 							//boutput(hitMob, SPAN_ALERT("Oof! The [src.name] knocks the wind right out of you!"))
 							hitMob.visible_message(SPAN_ALERT("<b>[src] hits [hit_atom] in the gut and knocks the wind right out of them!</b>"))
 							hitMob.changeStatus("stunned", 2 SECONDS)
-							hitMob.changeStatus("weakened", 2 SECONDS)
+							hitMob.changeStatus("knockdown", 2 SECONDS)
 							hitMob.remove_stamina(30)
 							hitMob.force_laydown_standup()
 

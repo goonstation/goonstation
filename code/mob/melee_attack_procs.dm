@@ -76,8 +76,8 @@
 	target.delStatus("resting")
 
 	target.changeStatus("stunned", -5 SECONDS)
-	target.changeStatus("paralysis", -5 SECONDS)
-	target.changeStatus("weakened", -5 SECONDS)
+	target.changeStatus("unconscious", -5 SECONDS)
+	target.changeStatus("knockdown", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
@@ -155,7 +155,7 @@
 							X.show_text("The stunhat has [hat.uses] charges left!", "red")
 
 
-						src.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+						src.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
 						src.stuttering = max(target.stuttering,5)
 					else
 						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
@@ -205,7 +205,7 @@
 	if(!..())
 		return
 	var/block_it_up = TRUE
-	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+	if (!src.lying && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious"))
 		for(var/obj/stool/stool_candidate in src.loc)
 			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
@@ -472,7 +472,7 @@
 
 /mob/proc/check_block(ignoreStuns = 0) //am i blocking?
 	RETURN_TYPE(/obj/item/grab/block)
-	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
+	if (ignoreStuns || (isalive(src) && !getStatusDuration("unconscious")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
@@ -555,9 +555,9 @@
 			return
 
 #ifdef USE_STAMINA_DISORIENT
-		target.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+		target.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
 #else
-		target.changeStatus("weakened", 3 SECONDS)
+		target.changeStatus("knockdown", 3 SECONDS)
 		target.changeStatus("stunned", 2 SECONDS)
 #endif
 
@@ -623,7 +623,7 @@
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
 	var/do_kick = FALSE
-	if(!target.canmove && target.lying && can_kick)
+	if(target.lying && can_kick)
 		do_armor = FALSE
 		do_stam = FALSE
 		do_kick = TRUE
@@ -959,7 +959,7 @@
 
 				if ("shoved_down" in src.disarm_RNG_result)
 					target.deliver_move_trigger("pushdown")
-					target.changeStatus("weakened", 2 SECONDS)
+					target.changeStatus("knockdown", 2 SECONDS)
 					target.force_laydown_standup()
 					disarm_log += " shoving them down"
 				if ("shoved" in src.disarm_RNG_result)
@@ -1256,12 +1256,12 @@
 
 	if (variant)
 		if(prob(50))
-			T.changeStatus("weakened", 2 SECONDS)
+			T.changeStatus("knockdown", 2 SECONDS)
 			T.force_laydown_standup()
 		SPAWN(0)
 			step_rand(T, 15)
 	else
-		T.changeStatus("weakened", 2 SECONDS)
+		T.changeStatus("knockdown", 2 SECONDS)
 		T.force_laydown_standup()
 		SPAWN(0)
 			step_away(T, H, 15)
@@ -1272,7 +1272,7 @@
 	if (!H || !ismob(H) || !T || !ismob(T))
 		return
 
-	T.changeStatus("weakened", 5 SECONDS)
+	T.changeStatus("knockdown", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
 		T.throw_at(throwpoint, 10, 2)
@@ -1325,7 +1325,7 @@
 				step_away(M, src, 15)
 			else
 				src.visible_message(SPAN_COMBAT("<b>[src] parries [M]'s attack, knocking [him_or_her(M)] to the ground!</B>"))
-				M.changeStatus("weakened", 4 SECONDS)
+				M.changeStatus("knockdown", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
 		return 1
