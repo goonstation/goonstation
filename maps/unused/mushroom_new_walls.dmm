@@ -24657,6 +24657,7 @@
 	mail_tag = "Ranch";
 	mailgroup = "botany"
 	},
+/obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "kJE" = (
