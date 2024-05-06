@@ -147,8 +147,8 @@
 		if(!istype(P))
 			return
 		user.show_text(SPAN_ALERT("You leap and slam against the inside of [P]! Ouch!"))
-		user.changeStatus("paralysis", 4 SECONDS)
-		user.changeStatus("weakened", 4 SECONDS)
+		user.changeStatus("unconscious", 4 SECONDS)
+		user.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[P]</b> emits a loud thump and rattles a bit."))
 
 		animate_storage_thump(P)
@@ -2157,7 +2157,7 @@ TYPEINFO(/obj/disposaloutlet)
 
 // check if mob has client, if so restore client view on eject
 /mob/pipe_eject(var/direction)
-	src.changeStatus("weakened", 2 SECONDS)
+	src.changeStatus("knockdown", 2 SECONDS)
 	return
 
 /obj/decal/cleanable/blood/gibs/pipe_eject(var/direction)

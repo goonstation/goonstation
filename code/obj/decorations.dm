@@ -321,14 +321,14 @@
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
-			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
+			if (!L.getStatusDuration("knockdown") && !L.hasStatus("resting"))
 				boutput(L, SPAN_ALERT("<b>A branch from [src] smacks you right in the face!</b>"))
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
 				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
-						L.changeStatus("weakened", 4 SECONDS)
+						L.changeStatus("knockdown", 4 SECONDS)
 					if (2)
 						L.changeStatus("stunned", 2 SECONDS)
 
@@ -366,7 +366,7 @@
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
-			user.setStatus("weakened", 3 SECONDS)
+			user.setStatus("knockdown", 3 SECONDS)
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the plastic leaves."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!"))
 			user.take_oxygen_deprivation(20)
 			user.losebreath += 2

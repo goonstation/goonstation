@@ -51,7 +51,7 @@
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 		if (!fake && T && isturf(T))
 			target.throw_at(T, 3, 2, bonus_throwforce = 15)
-			target.changeStatus("weakened", 3 SECONDS)
+			target.changeStatus("knockdown", 3 SECONDS)
 			target.changeStatus("stunned", 3 SECONDS)
 			target.changeStatus("slowed", 8 SECONDS, 2)
 			target.force_laydown_standup()

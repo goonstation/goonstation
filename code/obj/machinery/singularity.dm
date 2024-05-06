@@ -242,13 +242,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/eat()
 
 	var/turf/sing_center = src.get_center()
-	for (var/X in range(grav_pull, sing_center))
-		if (!X)
+	for (var/atom/A in range(grav_pull, sing_center))
+		if (!A)
 			continue
-		if (X == src)
+		if (A == src)
 			continue
-
-		var/atom/A = X
 
 		if (A.event_handler_flags & IMMUNE_SINGULARITY)
 			continue
@@ -257,11 +255,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 				continue
 
-		if (!isarea(X))
-			if(IN_EUCLIDEAN_RANGE(sing_center, X, radius+0.5))
+		if (!isarea(A))
+			if(IN_EUCLIDEAN_RANGE(sing_center, A, radius+0.5))
 				src.Bumped(A)
-			else if (istype(X, /atom/movable))
-				var/atom/movable/AM = X
+			else if (istype(A, /atom/movable))
+				var/atom/movable/AM = A
 				if (!AM.anchored)
 					step_towards(AM, src)
 
@@ -308,33 +306,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		num_absorbed++
 		if(src.spaget_count < 25 && !katamari_mode)
 			src.spaget_count++
-			var/spaget_time = 15 SECONDS
-			var/obj/dummy/spaget_overlay = new()
-			spaget_overlay.appearance = A.appearance
-			spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-			spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
-			spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
-			spaget_overlay.vis_flags = 0
-			spaget_overlay.plane = PLANE_DEFAULT
-			spaget_overlay.mouse_opacity = 0
-			spaget_overlay.transform = A.transform
-			if(prob(0.1)) // easteregg
-				spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
-				spaget_overlay.icon_state = "spag-dish"
-				spaget_overlay.Scale(2, 2)
-			var/angle = get_angle(A, src)
-			var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
-			animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
-			var/obj/dummy/spaget_turner = new()
-			spaget_turner.vis_contents += spaget_overlay
-			spaget_turner.mouse_opacity = 0
-			spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
-			animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
-			src.vis_contents += spaget_turner
-			SPAWN(spaget_time + 1 SECOND)
-				src.spaget_count--
-				qdel(spaget_overlay)
-				qdel(spaget_turner)
+			animate_spaghettification(A, src, 15 SECONDS, right_spinning)
+			SPAWN(16 SECONDS)
+				src.spaget_count-- //this is fine, it doesn't need to be tick perfect
 		else if(katamari_mode)
 			var/obj/dummy/kat_overlay = new()
 			kat_overlay.appearance = A.appearance
@@ -1044,7 +1018,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		L.Virus_ShockCure(100)
 		L.shock_cyberheart(100)
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage/4 SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage/4 SECONDS)
+	if(user.getStatusDuration("knockdown") < shock_damage * 10)	user.changeStatus("knockdown", shock_damage/4 SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")

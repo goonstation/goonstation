@@ -1114,7 +1114,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	proc/on_hit(var/hit, var/mult = 1)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(src.stamina_damage * mult, weakened = 10)
+			H.do_disorient(src.stamina_damage * mult, knockdown = 10)
 
 		if (ismob(hit))
 			var/mob/M = hit
@@ -1210,6 +1210,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			afterUse(user)
 
 		return
+
+	gloves  // More agile attacks with bladed gloves
+		moveDelay = 2
+		moveDelayDuration = 2
 
 /datum/item_special/barrier
 	cooldown = 0
@@ -1475,7 +1479,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//maybe add this in, chance to weaken. I dunno a good amount offhand so leaving out for now - kyle
 		// if (ishuman(hit))
 		// 	var/mob/living/carbon/human/H = hit
-		// 	H.do_disorient(src.stamina_damage * mult, weakened = 10)
+		// 	H.do_disorient(src.stamina_damage * mult, knockdown = 10)
 		if(istype(master, /obj/item))
 			if (ismob(hit))
 				var/mob/M = hit

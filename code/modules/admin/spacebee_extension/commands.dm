@@ -390,7 +390,7 @@
 				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
-						M.changeStatus("paralysis", 8 SECONDS)
+						M.changeStatus("unconscious", 8 SECONDS)
 						M.set_loc(prison)
 						M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
@@ -683,7 +683,7 @@
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
 		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: https://goonhub.com/admin/logs/[roundId]"
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename

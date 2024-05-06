@@ -333,12 +333,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 //Given a list of candidates returns candidates that are acceptable to be promoted based on their medium/low priorities
 //ideally JOB should only be a command position. eg. CE, RD, MD
 /proc/FindPromotionCandidates(list/staff, var/datum/job/JOB)
-	var/list/picks = FindOccupationCandidates(staff,JOB.name,2)
-
-	//If there are no acceptable candidates (no inappropriate antags, no job bans) who have it in their medium priority list
-	if (!length(picks))
-		picks = FindOccupationCandidates(staff,JOB.name,3)
-	return picks
+	for (var/level in 1 to 3) //favourite, med prio, low prio in that order
+		var/list/picks = FindOccupationCandidates(staff,JOB.name,level)
+		if (length(picks))
+			return picks
+	return list()
 
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
@@ -559,7 +558,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				src.r_hand?.AddComponent(/datum/component/glued, src, 10 SECONDS, 5 SECONDS)
 
 				src.setStatus("resting", INFINITE_STATUS)
-				src.setStatus("paralysis", 10 SECONDS)
+				src.setStatus("unconscious", 10 SECONDS)
 				src.force_laydown_standup()
 
 		// This should be here (overriding most other things), probably? - #11215

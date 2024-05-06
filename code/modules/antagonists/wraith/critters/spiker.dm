@@ -87,7 +87,7 @@
 				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
-				M.changeStatus("paralysis", 5 SECONDS)
+				M.changeStatus("unconscious", 5 SECONDS)
 				M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
 
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)

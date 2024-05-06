@@ -1162,7 +1162,7 @@ var/list/fun_images = list()
 	qdel(mymob)
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
-			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+			M.apply_flash(animation_duration = 30, knockdown = 5, uncloak_prob = 0, stamina_damage = 250)
 
 /client/proc/respawn_list_players()
 	set name = "Respawn List of Players"
@@ -1738,7 +1738,7 @@ var/list/fun_images = list()
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
-			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+			M.apply_flash(animation_duration = 30, knockdown = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
 		sleep(1.5 SECONDS)
 

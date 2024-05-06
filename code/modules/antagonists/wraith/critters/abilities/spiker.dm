@@ -55,9 +55,7 @@
 			boutput(holder.owner, SPAN_NOTICE("You are already casting this ability!"))
 			return TRUE
 
-		the_spiker.delStatus("stunned")
-		the_spiker.delStatus("weakened")
-		the_spiker.delStatus("paralysis")
+		the_spiker.remove_stuns()
 		the_spiker.delStatus("slowed")
 		the_spiker.delStatus("disorient")
 		the_spiker.change_misstep_chance(-INFINITY)

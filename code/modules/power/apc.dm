@@ -892,7 +892,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
 		return
 	if (!in_interact_range(src, user))
 		return
@@ -1032,12 +1032,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
-	var/weak = (user.getStatusDuration("weakened") < shock_damage * 20) ? shock_damage * 20 : 0
+	var/knockdown = (user.getStatusDuration("knockdown") < shock_damage * 20) ? shock_damage * 20 : 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
-	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
+	user.do_disorient(130, knockdown = knockdown, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 2 SECONDS)
+	if(user.getStatusDuration("knockdown") < shock_damage * 20)	user.changeStatus("knockdown", shock_damage * 2 SECONDS)
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
