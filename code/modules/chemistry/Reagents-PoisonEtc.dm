@@ -1358,14 +1358,13 @@ datum
 					M.reagents.add_reagent("histamine", rand(5,10) * mult)
 				if (our_amt < 20)
 					M.take_toxin_damage(0.75 * mult)
-					delimb_counter += 0.2 * mult
 					random_brute_damage(M, 0.75 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
 						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(1.25 * mult)
-					delimb_counter += 0.5 * mult
+					delimb_counter += 0.6 * mult
 					random_brute_damage(M, 1.25 * mult)
 				else
 					if (probmult(8))
