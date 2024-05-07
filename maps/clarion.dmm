@@ -36692,6 +36692,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tAx" = (
