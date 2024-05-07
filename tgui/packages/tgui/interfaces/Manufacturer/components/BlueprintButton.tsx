@@ -41,7 +41,7 @@ const getProductionSatisfaction = (
     const target_pattern = pattern_requirements[i];
     const target_amount = amount_requirements[i];
     const matchingMaterial = materials_stored.find((material:ResourceData) => (
-      target_pattern === "ALL" || material.satisfies.find((pattern:string) => (pattern === target_pattern)) !== undefined
+      target_pattern === "ALL" || material.satisfies.includes(target_pattern)
     ));
     if (matchingMaterial !== undefined && matchingMaterial.amount >= target_amount/10) {
       material_amts_predicted[i] -= target_amount/10;
