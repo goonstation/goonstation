@@ -21033,10 +21033,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
-"hdD" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor,
-/area/station/hangar/main)
 "hdX" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -26278,6 +26274,18 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
+"mhP" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
 "mhX" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -27814,6 +27822,11 @@
 "nDO" = (
 /obj/machinery/light/incandescent{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -94501,8 +94514,8 @@ tUp
 cmt
 acq
 acq
+mhP
 acq
-hdD
 rkh
 aaa
 aaa
