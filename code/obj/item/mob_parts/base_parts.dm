@@ -82,8 +82,6 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 
 		object.set_loc(src.holder.loc)
 
-		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
 		if(show_message)

@@ -325,13 +325,13 @@
 
 	proc/reset_stone() // reset skintone to whatever the holder's s_tone is
 		if (l_arm && istype(l_arm, /obj/item/mob_part/humanoid_part/carbon_part))
-			l_arm:update_skin_tone()
+			l_arm:update_skin_tone(TRUE)
 		if (r_arm && istype(r_arm, /obj/item/mob_part/humanoid_part/carbon_part))
-			r_arm:update_skin_tone()
+			r_arm:update_skin_tone(TRUE)
 		if (l_leg && istype(l_leg, /obj/item/mob_part/humanoid_part/carbon_part))
-			l_leg:update_skin_tone()
+			l_leg:update_skin_tone(TRUE)
 		if (r_leg && istype(r_leg, /obj/item/mob_part/humanoid_part/carbon_part))
-			r_leg:update_skin_tone()
+			r_leg:update_skin_tone(TRUE)
 
 	proc/sever(var/target = "all", var/mob/user)
 		if (!target)

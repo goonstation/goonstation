@@ -938,12 +938,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset
 					if (limb)
 						if(limb.limb_layer_image)
-							if(limb.limb_layer_image)
-								limb.limb_layer_image.pixel_y = armleg_offset
-								src.body_standing.overlays += limb.limb_layer_image
-							if(limb.hand_layer_image)
-								limb.hand_layer_image.pixel_y = armleg_offset
-								src.hands_standing.overlays += limb.hand_layer_image
+							limb.limb_layer_image.pixel_y = armleg_offset
+							src.body_standing.overlays += limb.limb_layer_image
+						if(limb.hand_layer_image)
+							limb.hand_layer_image.pixel_y = armleg_offset
+							src.hands_standing.overlays += limb.hand_layer_image
 					else	// Handles stumps
 						var/stump = update_body_limbs[name]
 						if (src.decomp_stage)

@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 	/// the original mob (probably a carbon/human) that this was a part of
 	var/mob/living/original_holder = null
-	/// the original appearance holder that this was a part of
+	/// the appearance holder that this was a part of, modified in certain cases (such as genetic recoloration)
 	var/datum/appearanceHolder/holder_ahol
 	/// the DNA of this limb
 	var/limb_DNA = null
@@ -138,10 +138,16 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 			return
 		..()
 
-	/// Determines what the limb's skin tone should be
-	proc/update_skin_tone()
+	/// Determines what the limb's skin tone should be, optionally setting the s_tone of the stored appearance holder to the holder's
+	proc/update_skin_tone(reset = FALSE)
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors!
+
+		if (reset && istype(src.holder_ahol, /datum/appearanceHolder) && ishuman(src.holder))
+			var/mob/living/carbon/human/H = src.holder
+			if (H.bioHolder?.mobAppearance)
+				src.holder_ahol.s_tone = H.bioHolder.mobAppearance.s_tone
+
 		var/datum/appearanceHolder/AHLIMB = src.get_owner_appearance_holder()
 		if (AHLIMB)
 			if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
@@ -175,10 +181,10 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 	/// Gets an appearanceholder, either the owner's or the one in the limb
 	proc/get_owner_appearance_holder()
-		if (src.original_holder?.bioHolder?.mobAppearance)
-			. = src.original_holder.bioHolder.mobAppearance
-		else if (istype(src.holder_ahol, /datum/appearanceHolder))
+		if (istype(src.holder_ahol, /datum/appearanceHolder))
 			. = src.holder_ahol
+		else if (src.original_holder?.bioHolder?.mobAppearance)
+			. = src.original_holder.bioHolder.mobAppearance
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm
 	name = "placeholder item (don't use this!)"
@@ -585,23 +591,15 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 			set_loc(holder)
 		..()
 
-	sever(mob/user)
-		. = ..()
-		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
-		var/obj/item/mob_part/humanoid_part/carbon_part/arm/left/claw/newlimb = new(src.loc)
-		newlimb.limb_DNA = src.limb_DNA
-		newlimb.original_holder = src.original_holder
-		newlimb.limb_fingerprints = src.limb_fingerprints
-		qdel(src)
-
 	remove(show_message)
-		. = ..()
+		..()
 		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/mob_part/humanoid_part/carbon_part/arm/left/claw/newlimb = new(src.loc)
 		newlimb.limb_DNA = src.limb_DNA
 		newlimb.original_holder = src.original_holder
 		newlimb.limb_fingerprints = src.limb_fingerprints
 		qdel(src)
+		return newlimb
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination
 	name = "right chitinous tendril"
@@ -624,23 +622,15 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 			set_loc(holder)
 		..()
 
-	sever(mob/user)
-		. = ..()
-		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
-		var/obj/item/mob_part/humanoid_part/carbon_part/arm/right/claw/newlimb = new(src.loc)
-		newlimb.limb_DNA = src.limb_DNA
-		newlimb.original_holder = src.original_holder
-		newlimb.limb_fingerprints = src.limb_fingerprints
-		qdel(src)
-
 	remove(show_message)
-		. = ..()
+		..()
 		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/mob_part/humanoid_part/carbon_part/arm/right/claw/newlimb = new(src.loc)
 		newlimb.limb_DNA = src.limb_DNA
 		newlimb.original_holder = src.original_holder
 		newlimb.limb_fingerprints = src.limb_fingerprints
 		qdel(src)
+		return newlimb
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie
 	name = "left rotten arm"
@@ -1558,9 +1548,9 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	update_images()
 		..()
 		if (src.limb_layer_image)
-			src.limb_layer_image.overlays += image('icons/mob/kudzu.dmi', "[src.slot]_kudzu")
+			src.limb_layer_image.overlays += image('icons/mob/kudzu.dmi', src.limb_layer_image, "[src.slot]_kudzu")
 		if (src.hand_layer_image)
-			src.hand_layer_image.overlays += image('icons/mob/kudzu.dmi', "[src.hand_layer_image]_kudzu")
+			src.hand_layer_image.overlays += image('icons/mob/kudzu.dmi', src.hand_layer_image, "[src.hand_layer_icon_state]_kudzu")
 
 	update_severed_icon()
 		var/image/overlay = SafeGetOverlayImage("overlay", 'icons/mob/kudzu.dmi', "[src.icon_state]_kudzu")
@@ -1573,6 +1563,17 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	var/kudzu_overlay_icon = 'icons/mob/kudzu.dmi'
 	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
+
+	update_images()
+		..()
+		if (src.limb_layer_image)
+			src.limb_layer_image.overlays += image('icons/mob/kudzu.dmi', src.limb_layer_image, "[src.slot]_kudzu")
+		if (src.hand_layer_image)
+			src.hand_layer_image.overlays += image('icons/mob/kudzu.dmi', src.hand_layer_image, "[src.hand_layer_icon_state]_kudzu")
+
+	update_severed_icon()
+		var/image/overlay = SafeGetOverlayImage("overlay", 'icons/mob/kudzu.dmi', "[src.icon_state]_kudzu")
+		UpdateOverlays(overlay, "overlay")
 
 ////// ACTUAL KUDZU LIMBS //////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/kudzu/left
