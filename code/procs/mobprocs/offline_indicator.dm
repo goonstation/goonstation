@@ -1,3 +1,18 @@
+/*
+
+	Offline indicator for mobs -- a visual representation of "SSD" status
+
+	Intended behaviors/designs:
+	- AI mainframe should show "Zz" only if the AI itself is offline
+	- AI shells currently show "Zz" if the AI is offline *OR* the shell has been left
+	  (this is quasi-intentional as a visual clue that the shell is no longer in use;
+	   possible change might be giving "unoccupied future" thing)
+
+
+*/
+
+
+
 #define OFFLINE_OVERLAY_KEY "offline_indicator"
 
 // Singletons for offline indicators
@@ -24,14 +39,20 @@ var/mutable_appearance/offline_a_while_indicator = mutable_appearance('icons/mob
 	// - living
 	// - alive
 	// - has a ckey
-	if (!src.has_offline_indicator && isalive(src) && src.last_ckey != null)
+	if (!QDELETED(src) && !src.has_offline_indicator && isalive(src) && src.last_ckey != null)
 
 		if (!force)
-			// bodies of currently-virtual people don't count either
+			// bodies of currently-virtual people don't count.
+			// (this only handles and stops the "human -> virtual" check;
+			//  if the virtual human logs out, that's handled below and
+			//  should propagate to the human via a FORCE=TRUE call
 			if (src.network_device)
 				return
-			// ai mainframes don't count, either.
+
+			// ai mainframes don't count, either, if they're deploying.
 			// "ismainframe()"? no. totally different thing.
+			// probable bug: ai eyecam (living/intangible) doesn't get caught here, so leaving it
+			// still sets ai core? ?????
 			else if (istype(src, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = src
 				if (AI.deployed_to_eyecam || AI.deployed_shell) // are you just moving elsewhere?
@@ -62,13 +83,13 @@ var/mutable_appearance/offline_a_while_indicator = mutable_appearance('icons/mob
 		src.UpdateOverlays(offline_indicator, OFFLINE_OVERLAY_KEY)
 		RegisterSignal(src, COMSIG_MOB_DEATH, PROC_REF(remove_offline_indicator))
 
-		SPAWN(5 MINUTES)
+		SPAWN(5 SECONDS)
 			// check if they're still logged out after a while and update the overlay
-			if (src.has_offline_indicator == TRUE && logout_check == src.logout_at)
+			if (!QDELETED(src) && src.has_offline_indicator == TRUE && logout_check == src.logout_at)
 				src.UpdateOverlays(offline_a_while_indicator, OFFLINE_OVERLAY_KEY)
 
 /mob/living/remove_offline_indicator()
-	if (src.has_offline_indicator)
+	if (!QDELETED(src) && src.has_offline_indicator)
 		src.has_offline_indicator = FALSE
 		UnregisterSignal(src, COMSIG_MOB_DEATH)
 		src.UpdateOverlays(null, OFFLINE_OVERLAY_KEY)
