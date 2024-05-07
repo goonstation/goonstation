@@ -109,7 +109,7 @@
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "w" = (
-/obj/storage/secure/closet/personal/empty,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "x" = (
@@ -141,8 +141,8 @@
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "D" = (
-/obj/machinery/door/unpowered/wood,
 /obj/machinery/drainage,
+/obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "F" = (
