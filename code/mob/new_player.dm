@@ -376,12 +376,13 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				var/list/table_turfs = list()
 
 				for_by_tcl(table, /obj/table)
-					var/is_bar = istype(get_area(table), /area/station/crew_quarters/bar) || istype(get_area(table), /area/station/crew_quarters/cafeteria)
-					if (!is_bar)
-						continue
 					if (table.z != Z_LEVEL_STATION)
 						continue
-					if ((locate(/mob/living/carbon/human) in get_turf(table)))
+					var/area/table_area = get_area(table)
+					var/is_bar = istype(table_area, /area/station/crew_quarters/bar) || istype(table_area, /area/station/crew_quarters/cafeteria)
+					if (!is_bar)
+						continue
+					if (locate(/mob/living/carbon/human) in get_turf(table))
 						continue
 					valid_tables += table
 					table_turfs += get_turf(table)
@@ -393,15 +394,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					character.layer = 2.5 // so that they wake up under a table
 
 					var/turf/new_turf = null
-					for (var/turf/spot in range(1, character))
-
-						if (character in spot) // Skip range 0 tile
-							continue
-						if (!spot.Enter(character)) // Make sure we can walk there
-							continue
-						if ((locate(/obj/window) in spot)) // Windows can be entered, apparently :)
-							continue
-						if ((locate(/mob/living/carbon/human) in spot))
+					for (var/turf/spot in orange(1, character))
+						if (!jpsTurfPassable(spot, source=get_turf(character), passer=character)) // Make sure we can walk there
 							continue
 						if(spot in table_turfs) // Ensure we don't move to another table tile
 							continue
@@ -410,7 +404,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					if (new_turf)
 						SPAWN(T.spawn_delay) // Move from under the table
 							character.step_towards_movedelay(new_turf)
-					SPAWN(T.spawn_delay) // Wait until we moved to reset the layer
+							character.layer = initial(character.layer)
+					else
 						character.layer = initial(character.layer)
 
 					boutput(character?.mind?.current,"<h3 class='notice'>Man, what a party, eh? Anyway, good luck!</h3>")

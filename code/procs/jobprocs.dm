@@ -564,24 +564,13 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 		if (src.traitHolder && src.traitHolder.hasTrait("partyanimal"))
 			var/datum/trait/T = src.traitHolder.getTrait("partyanimal")
-			var/list/allowed_items = list(
-				/obj/item/clothing/head/party/random,
-				/obj/item/balloon_animal/random,
-				/obj/item/reagent_containers/balloon,
-				/obj/item/reagent_containers/glass/bottle,
-				/obj/item/clothing/head/party/birthday,
-			) + list(/obj/random_item_spawner/hat/one)
-			var/list/allowed_debris = list(
-				/obj/decal/cleanable/balloon,
-				/obj/decal/cleanable/vomit,
-				/obj/decal/cleanable/paper,
-				/obj/decal/cleanable/eggsplat,
-				/obj/decal/cleanable/generic
-			)
+			var/typeinfo/datum/trait/partyanimal/typeinfo = T.get_typeinfo()
 			logTheThing(LOG_STATION, H, "has the Party Animal trait and is trying to spawn")
 
-			// Sometimes the bar is called a cafe and sometimes the cafe is called a bar so we'll just do both :)
-			var/list/area_turf = get_area_turfs(/area/station/crew_quarters/bar, 1) + get_area_turfs(/area/station/crew_quarters/cafeteria, 1)
+			if (length(typeinfo.cached_bar_turfs) < 1) // Sometimes the bar is called a cafe and sometimes the cafe is called a bar so we'll just do both :)
+				var/list/area_turfs = get_area_turfs(/area/station/crew_quarters/bar, 1) + get_area_turfs(/area/station/crew_quarters/cafeteria, 1)
+				for (var/turf in area_turfs)
+					typeinfo.cached_bar_turfs[turf] = TRUE
 
 			var/current_clutter = length(by_cat[TR_CAT_PARTY_CLUTTER])
 			var/list/valid_stools = list()
@@ -590,7 +579,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			for_by_tcl(stool, /obj/stool)
 				if (stool.z != Z_LEVEL_STATION)
 					continue
-				var/is_bar = istype(get_area(stool), /area/station/crew_quarters/bar) || istype(get_area(stool), /area/station/crew_quarters/cafeteria)
+				var/area/stool_area = get_area(stool)
+				var/is_bar = istype(stool_area, /area/station/crew_quarters/bar) || istype(stool_area, /area/station/crew_quarters/cafeteria)
 				if (!is_bar)
 					continue
 				valid_stools+= stool
@@ -600,13 +590,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if(!joined_late) // We got special late-join handling
 				var/obj/stool/stool = pick(valid_stools)
 				if (stool)
-					var/list/spawn_range = range(1, stool) - range(0, stool) // Skip the actual stool
+					var/list/spawn_range = orange(1, get_turf(stool)) // Skip the actual stool
 					for (var/turf/spot in spawn_range)
-						if (!spot.Enter(H))
+						if (!jpsTurfPassable(spot, source=get_turf(H), passer=H)) // Make sure we can walk there
 							continue
-						if ((locate(/obj/window) in spot)) // Windows can be entered, apparently :)
-							continue
-						if ((locate(/mob/living/carbon/human) in spot))
+						if (locate(/mob/living/carbon/human) in spot)
 							continue
 						src.set_loc(spot)
 						logTheThing(LOG_STATION, src, "has the Party Animal trait and spawns at [log_loc(spot)]")
@@ -614,23 +602,19 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 				// Place clutter near the rascal
 				for (var/turf/spot in range(1, H))
-					if (current_clutter >= nround(length(area_turf) * 0.5))
+					if (current_clutter >= nround(length(typeinfo.cached_bar_turfs) * 0.5))
 						break
-					if (!spot.Enter(H))
+					if (!jpsTurfPassable(spot, source=get_turf(H), passer=H)) // Make sure we can walk there
 						continue
-					if ((locate(/obj/window) in spot))
-						continue
-					if (prob(30)) // Roll for random items
-						var/picked = pick(allowed_items)
+					if (prob(50)) // Roll for random items
+						var/picked = pick(typeinfo.allowed_items)
 						if(picked)
 							var/obj/item/thing = new picked(spot)
-							thing.set_loc(spot)
 							OTHER_START_TRACKING_CAT(thing, TR_CAT_PARTY_CLUTTER)
-					if (prob(30)) // Roll for random debris
-						var/picked = pick(allowed_debris)
+					if (prob(50)) // Roll for random debris
+						var/picked = pick(typeinfo.allowed_debris)
 						if (picked)
 							var/obj/decal/cleanable/stuff = new picked(spot)
-							stuff.set_loc(spot)
 							OTHER_START_TRACKING_CAT(stuff, TR_CAT_PARTY_CLUTTER)
 
 			// Do the alcohol stuff
