@@ -10362,6 +10362,10 @@
 /area/station/engine/elect)
 "baX" = (
 /obj/machinery/rkit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "baY" = (
@@ -11597,6 +11601,10 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bfP" = (
@@ -16525,6 +16533,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "cWb" = (
@@ -38701,6 +38712,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"wcc" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/elect)
 "wde" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -82784,7 +82804,7 @@ bcW
 jKE
 rHL
 xBy
-xBy
+wcc
 bcX
 fcO
 wgP
