@@ -80,7 +80,9 @@
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "q" = (
-/obj/decal/nav_danger,
+/obj/decal/nav_danger{
+	layer = 2.98
+	},
 /obj/barricade/barbed/wire{
 	dir = 8
 	},
@@ -240,7 +242,9 @@
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "X" = (
-/obj/decal/nav_danger,
+/obj/decal/nav_danger{
+	layer = 2.98
+	},
 /obj/storage/crate/trench_loot/drug,
 /turf/simulated/floor/concrete,
 /area/noGenerate)
