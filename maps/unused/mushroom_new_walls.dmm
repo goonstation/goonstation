@@ -31217,13 +31217,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"qqc" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/storage/emergency)
 "qqe" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -87474,7 +87467,7 @@ uvI
 whs
 whs
 whs
-qqc
+dHY
 tHt
 coH
 uTt
