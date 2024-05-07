@@ -799,7 +799,7 @@ toxic - poisons
 	icon_state = "4gauge"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 43
+	damage = 34
 	stun = 6
 	hit_type = DAMAGE_STAB
 	dissipation_rate = 4 //spread handles most of this
