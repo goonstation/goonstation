@@ -36369,7 +36369,7 @@
 "uhi" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/turf/space,
+/turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "uhk" = (
 /obj/stool/chair/yellow{
