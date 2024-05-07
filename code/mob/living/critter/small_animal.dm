@@ -2125,7 +2125,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					src.visible_message(SPAN_COMBAT("<b>[src] hisses and gives a warning strike!</b>"))
 					if(src.is_npc)
-						src.ai.move_away(AM, 1)
+						src.ai.move_away(AM, 2)
 				else
 					sting.handleCast(AM)
 		return

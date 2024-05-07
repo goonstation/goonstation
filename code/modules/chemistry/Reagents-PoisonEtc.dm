@@ -1358,21 +1358,21 @@ datum
 					M.reagents.add_reagent("histamine", rand(5,10) * mult)
 				if (our_amt < 20)
 					M.take_toxin_damage(0.75 * mult)
-					delimb_counter += 0.5 * mult
+					delimb_counter += 0.2 * mult
 					random_brute_damage(M, 0.75 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
 						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(1.25 * mult)
-					delimb_counter += 1 * mult
+					delimb_counter += 0.5 * mult
 					random_brute_damage(M, 1.25 * mult)
 				else
 					if (probmult(8))
 						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(2 * mult)
-					delimb_counter += 2 * mult
+					delimb_counter += 1.5 * mult
 					random_brute_damage(M, 2 * mult)
 
 				if (delimb_counter > 15)
@@ -1380,7 +1380,7 @@ datum
 
 					M.visible_message(SPAN_ALERT("<B>[M]</B> seems to be melting away!"), "You feel as if your body is tearing itself apart!")
 					M.setStatusMin("knockdown", 4 SECONDS * mult)
-					M.make_jittery(1000)
+					M.make_jittery(400)
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
 
@@ -1389,7 +1389,7 @@ datum
 						take_bleeding_damage(H, null, rand(15,35) * mult, DAMAGE_STAB)
 
 						for (var/chosen_limb in limb_list)
-							var/obj/item/parts/limb = H.limbs.vars[chosen_limb]
+							var/obj/item/parts/limb = H.limbs.get_limb(chosen_limb)
 							if (istype(limb))
 								H.lose_limb(chosen_limb)
 								break
@@ -1409,7 +1409,7 @@ datum
 			fluid_r = 210
 			fluid_g = 180
 			fluid_b = 25
-			depletion_rate = 0.2
+			depletion_rate = 0.3
 			blob_damage = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
