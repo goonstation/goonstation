@@ -14,10 +14,10 @@
 	ui.open()
 
 /datum/region_allocator_panel/ui_data(mob/user)
-	. = list()
+	var/region_data = list()
 	for (var/datum/weakref/region_ref as anything in region_allocator.allocated_regions)
 		var/datum/allocated_region/region = region_ref.deref()
-		. += list(list(
+		region_data += list(list(
 			"ref" = ref(region_ref),
 			"name" = region.name,
 			"x" = region.bottom_left.x,
@@ -26,7 +26,7 @@
 			"width" = region.width,
 			"height" = region.height,
 		))
-	. = list("regions" = .)
+	. = list("regions" = region_data)
 
 /datum/region_allocator_panel/ui_act(action, params, datum/tgui/ui)
 	. = ..()

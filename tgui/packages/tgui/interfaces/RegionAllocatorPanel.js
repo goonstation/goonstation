@@ -38,7 +38,7 @@ const RegionItem = ({ region, removeRegion, gotoRegion, gotoRegionCenter }) => (
         </>
       }
     >
-      {`${region.x}, ${region.y}, ${region.z} `}
+      {`${region.x}, ${region.y}, ${region.z}`}
     </LabeledList.Item>
     <LabeledList.Item label="Width">{`${region.width} tiles`}</LabeledList.Item>
     <LabeledList.Item label="Height">{`${region.height} tiles`}</LabeledList.Item>
