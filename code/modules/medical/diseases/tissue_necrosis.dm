@@ -23,15 +23,15 @@
 
 /datum/ailment/disease/tissue_necrosis/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if(ishuman(affected_mob))
-			var/mob/living/carbon/human/H = affected_mob
-			H.decomp_stage = DECOMP_STAGE_NO_ROT
-			if(H.limbs?.l_arm?.decomp_affected)
-				H.limbs.l_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
-			if(H.limbs?.r_arm?.decomp_affected)
-				H.limbs.r_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
-			if(H.limbs?.l_leg?.decomp_affected)
-				H.limbs.l_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
-			if(H.limbs?.r_leg?.decomp_affected)
-				H.limbs.r_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		var/mob/living/carbon/human/H = affected_mob
+		H.decomp_stage = DECOMP_STAGE_NO_ROT
+		if(H.limbs?.l_arm?.decomp_affected)
+			H.limbs.l_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		if(H.limbs?.r_arm?.decomp_affected)
+			H.limbs.r_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		if(H.limbs?.l_leg?.decomp_affected)
+			H.limbs.l_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		if(H.limbs?.r_leg?.decomp_affected)
+			H.limbs.r_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
 	..()
 
