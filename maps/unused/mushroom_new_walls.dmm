@@ -32571,6 +32571,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -20;
+	pixel_y = -9
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -37111,12 +37117,6 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/machinery/activation_button/flusher_button{
-	id = "ranch_flusher";
-	name = "Kitchen Chute Activation Button";
-	pixel_x = -20;
-	pixel_y = -9
 	},
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
