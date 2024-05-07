@@ -19914,6 +19914,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "ghN" = (
+/obj/reagent_dispensers/watertank,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "giH" = (
@@ -31514,6 +31515,12 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"qCf" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "qCm" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
@@ -72082,7 +72089,7 @@ azo
 aaa
 baI
 wOn
-rmY
+qCf
 rmY
 rmY
 mCd
