@@ -9088,11 +9088,11 @@
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "aUm" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
 	icon_state = "xtra_bigstripe-edge2"
 	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "aUn" = (
@@ -16315,6 +16315,10 @@
 /obj/item/gun/kinetic/foamdartrevolver,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"cHv" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "cHM" = (
 /turf/simulated/floor{
 	icon_state = "L16";
@@ -16371,7 +16375,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "cMd" = (
 /obj/chicken_nesting_box,
@@ -17142,7 +17146,7 @@
 	name = "Emergency Engine Fuel Crate";
 	spawn_contents = list(/obj/item/raw_material/char = 40)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "dzv" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -17990,7 +17994,7 @@
 	area_access = 99;
 	detector_id = "AI Core";
 	dir = 1;
-	setup_beam_length = 8
+	setup_beam_length = 7
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
@@ -19812,6 +19816,12 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"fYo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "fYS" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
@@ -20651,6 +20661,10 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
+"gJm" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "gJA" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -20843,6 +20857,10 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
+"gVB" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "gVZ" = (
 /obj/landmark/start/job/medical_doctor,
 /obj/cable{
@@ -21592,7 +21610,7 @@
 /area/station/hydroponics/bay)
 "hBp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "hBq" = (
 /obj/machinery/light/incandescent{
@@ -21909,6 +21927,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
+"hTe" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor,
+/area/station/storage/emergency)
 "hTO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23172,7 +23195,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "jeA" = (
 /obj/machinery/door/firedoor/pyro,
@@ -26861,7 +26884,7 @@
 /obj/machinery/networked/secdetector{
 	area_access = 99;
 	detector_id = "AI Core";
-	setup_beam_length = 8
+	setup_beam_length = 7
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
@@ -28632,7 +28655,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "oqt" = (
 /obj/machinery/power/data_terminal,
@@ -29075,7 +29098,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "oKL" = (
 /obj/machinery/power/data_terminal,
@@ -30084,6 +30107,10 @@
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"psU" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "ptB" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8
@@ -31581,7 +31608,7 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "qBG" = (
 /obj/cable,
@@ -33432,7 +33459,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "rRc" = (
 /turf/simulated/floor/circuit/red,
@@ -35676,7 +35703,7 @@
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/light/incandescent,
 /obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "tHA" = (
 /obj/lattice{
@@ -35926,7 +35953,7 @@
 /area/station/maintenance/southeast)
 "tNk" = (
 /obj/machinery/shieldgenerator/meteorshield,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "tNn" = (
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -36046,6 +36073,9 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
+"tVv" = (
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "tVJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -84864,9 +84894,9 @@ dzt
 uPd
 oKs
 dHY
+gVB
 eHM
-eHM
-eHM
+gVB
 coH
 bdX
 beU
@@ -85167,7 +85197,7 @@ opK
 kNl
 qBt
 oKM
-oKM
+tVv
 fvH
 bcZ
 wvS
@@ -85466,11 +85496,11 @@ bji
 coH
 jew
 oKM
-dHY
+fYo
 oKM
+tVv
 oKM
-oKM
-oKM
+tVv
 coH
 mTZ
 beV
@@ -85769,9 +85799,9 @@ coH
 coH
 rQX
 vOA
+tVv
 oKM
-oKM
-oKM
+tVv
 vkx
 coH
 aNv
@@ -86070,11 +86100,11 @@ bjo
 sYZ
 coH
 oKM
-dHY
+fYo
 oKM
+tVv
 oKM
-oKM
-vkx
+psU
 coH
 aNv
 aNv
@@ -86371,12 +86401,12 @@ aVs
 aPu
 bji
 uvI
-oKM
+tVv
 dHY
+tVv
 oKM
-oKM
-oKM
-fvH
+tVv
+hTe
 coH
 aNv
 aNv
@@ -86674,9 +86704,9 @@ aWj
 bji
 uvI
 rhk
-dHY
+fYo
 oKM
-oKM
+tVv
 oKM
 hBp
 coH
@@ -86975,9 +87005,9 @@ aVt
 aWm
 bji
 uvI
-rhk
+gJm
 dHY
-oKM
+tVv
 oKM
 tNk
 coH
@@ -87579,9 +87609,9 @@ aVt
 aWm
 bji
 uvI
+cHv
 whs
-whs
-whs
+cHv
 dHY
 tHt
 coH
