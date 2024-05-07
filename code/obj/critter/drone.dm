@@ -1045,7 +1045,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
-			poorSoul:changeStatus("weakened", 4 SECONDS)
+			poorSoul:changeStatus("knockdown", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))
 				poorSoul.gib()
 

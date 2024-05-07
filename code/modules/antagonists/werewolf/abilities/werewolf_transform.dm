@@ -39,7 +39,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") || !transform)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -50,7 +50,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") || !transform)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

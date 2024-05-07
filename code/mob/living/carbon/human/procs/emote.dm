@@ -1095,21 +1095,21 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
+					if(src.emote_check(voluntary))
+						for (var/obj/item/C as anything in src.get_equipped_items())
+							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
+								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
+								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								drop_item()
+								O.set_loc(src)
+								equip_if_possible(O, drophand)
+								src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+								playsound(src.loc, "rustle", 60, 1)
+								break
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
 					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
-
-				for (var/obj/item/C as anything in src.get_equipped_items())
-					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
-						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-						drop_item()
-						O.set_loc(src)
-						equip_if_possible(O, drophand)
-						src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
-						playsound(src.loc, "rustle", 60, 1)
-						break
 
 			if ("facepalm")
 				if (!src.restrained())
@@ -1634,24 +1634,25 @@
 				m_type = 1
 
 			if ("wink")
-				for (var/obj/item/C as anything in src.get_equipped_items())
-					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
-						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-						drop_item()
-						D.set_loc(src)
-						equip_if_possible(D, drophand)
-						src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
-						playsound(src.loc, "rustle", 60, 1)
-						break
+				if (!src.restrained() && src.emote_check(voluntary))
+					for (var/obj/item/C as anything in src.get_equipped_items())
+						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
+							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
+							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+							drop_item()
+							D.set_loc(src)
+							equip_if_possible(D, drophand)
+							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
+							playsound(src.loc, "rustle", 60, 1)
+							break
 
 				message = "<B>[src]</B> winks."
 				maptext_out = "<I>winks</I>"
 				m_type = 1
 
 			if ("collapse", "trip")
-				if (!src.getStatusDuration("paralysis"))
-					src.changeStatus("paralysis", 3 SECONDS)
+				if (!src.getStatusDuration("unconscious"))
+					src.changeStatus("unconscious", 3 SECONDS)
 				message = "<B>[src]</B> [lowertext(act)]s!"
 				m_type = 2
 
@@ -1863,7 +1864,7 @@
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
 							boutput(src, SPAN_ALERT("You fall over, panting and wheezing."))
 							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
-							src.changeStatus("weakened", 2 SECONDS)
+							src.changeStatus("knockdown", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
 							src.emote_allowed = 0
 							SPAWN(1 SECOND)
@@ -1879,7 +1880,7 @@
 						if (!src.lying)
 							if ((src.restrained()) || (src.reagents && src.reagents.get_reagent_amount("ethanol") > 30) || (src.bioHolder.HasEffect("clumsy")))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
-								src.changeStatus("weakened", 4 SECONDS)
+								src.changeStatus("knockdown", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
 								JOB_XP(src, "Clown", 1)
 							else
@@ -1971,9 +1972,9 @@
 										combatflipped |= M
 										message = SPAN_ALERT("<B>[src]</B> flips into [M]!")
 										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
-										src.changeStatus("weakened", 6 SECONDS)
+										src.changeStatus("knockdown", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
-										M.changeStatus("weakened", 2 SECONDS)
+										M.changeStatus("knockdown", 2 SECONDS)
 										M.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, pick(sounds_punch), 100, 1)
 										var/turf/newloc = M.loc
@@ -2397,15 +2398,15 @@
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
-		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
+		G.affecting.changeStatus("knockdown", max(G.affecting.getStatusDuration("knockdown"), 4.4 SECONDS))
 		G.affecting.force_laydown_standup()
 		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-		src.changeStatus("weakened", 1.5 SECONDS)
+		src.changeStatus("knockdown", 1.5 SECONDS)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	else
-		src.changeStatus("weakened", 3.9 SECONDS)
+		src.changeStatus("knockdown", 3.9 SECONDS)
 
-		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
+		G.affecting.changeStatus("knockdown", max(G.affecting.getStatusDuration("knockdown"), 4.4 SECONDS))
 
 
 		G.affecting.force_laydown_standup()
@@ -2421,10 +2422,10 @@
 			if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))))
 				SPAWN(0)
 					g_tabl.smash()
-					src.changeStatus("weakened", 7 SECONDS)
+					src.changeStatus("knockdown", 7 SECONDS)
 					random_brute_damage(src, rand(20,40))
 					take_bleeding_damage(src, src, rand(20,40))
-					G.affecting.changeStatus("weakened", 4 SECONDS)
+					G.affecting.changeStatus("knockdown", 4 SECONDS)
 					random_brute_damage(G.affecting, rand(20,40))
 					take_bleeding_damage(G.affecting, src, rand(20,40))
 					G.affecting.force_laydown_standup()

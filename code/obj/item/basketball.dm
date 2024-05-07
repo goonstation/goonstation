@@ -49,7 +49,7 @@
 					if (M.equipped() || get_dir(M, src) == M.dir)
 						src.visible_message(SPAN_COMBAT("[M] gets beaned with the [src.name]."))
 						logTheThing(LOG_COMBAT, M, "is struck by [src]")
-						M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+						M.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 					else
 						// catch the ball!
 						src.Attackhand(M)
@@ -58,7 +58,7 @@
 			else
 				src.visible_message(SPAN_COMBAT("[M] gets beaned with the [src.name]."))
 				logTheThing(LOG_COMBAT, M, "is struck by [src]")
-				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+				M.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -124,7 +124,7 @@
 			user.u_equip(W)
 			if (user.bioHolder.HasEffect("clumsy") && prob(50)) // clowns are not good at basketball I guess
 				user.visible_message(SPAN_COMBAT("<b>[user] knocks their head into the rim of [src]!</b>"))
-				user.changeStatus("weakened", 5 SECONDS)
+				user.changeStatus("knockdown", 5 SECONDS)
 				JOB_XP(user, "Clown", 1)
 
 			if (!src.shoot(W, user))

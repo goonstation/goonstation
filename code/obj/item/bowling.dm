@@ -32,7 +32,7 @@
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			if (damMax-10 > 0)
 				hitMob.changeStatus("stunned", 4 SECONDS)
-				hitMob.changeStatus("weakened", 4 SECONDS)
+				hitMob.changeStatus("knockdown", 4 SECONDS)
 				hitMob.force_laydown_standup()
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else

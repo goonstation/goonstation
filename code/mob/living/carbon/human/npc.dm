@@ -360,7 +360,7 @@
 					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
-				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
+				if((carbon_target.getStatusDuration("knockdown") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("unconscious")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
 						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [mask] from [carbon_target]'s head!</b>"))
@@ -462,7 +462,7 @@
 				if(valid)
 					ai_pounced = world.timeofday
 					src.visible_message(SPAN_ALERT("[src] lunges at [ai_target]!"))
-					ai_target:changeStatus("weakened", 2 SECONDS)
+					ai_target:changeStatus("knockdown", 2 SECONDS)
 					SPAWN(0)
 						step_towards(src,ai_target)
 						step_towards(src,ai_target)
@@ -865,7 +865,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus(list("stunned", "paralysis", "weakened")) || !sight_check(1)) return 1
+	if(stat || hasStatus(list("stunned", "unconscious", "knockdown")) || !sight_check(1)) return 1
 	else return 0
 
 /mob/living/carbon/human/proc/ai_validpath()
@@ -917,7 +917,7 @@
 	if(istype(src.loc, /obj/machinery/disposal))
 		var/obj/machinery/disposal/C = src.loc
 		src.set_loc(C.loc)
-		src.changeStatus("weakened", 2 SECONDS)
+		src.changeStatus("knockdown", 2 SECONDS)
 
 	else if(istype(src.loc, /obj/storage/closet))
 		var/obj/storage/closet/C = src.loc
@@ -930,7 +930,7 @@
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
 		if (V.rider == src)
-			if(!(src.getStatusDuration("paralysis") || src.getStatusDuration("stunned") || src.getStatusDuration("weakened") || src.stat))
+			if(!(src.getStatusDuration("unconscious") || src.getStatusDuration("stunned") || src.getStatusDuration("knockdown") || src.stat))
 				V.eject_rider(0, 1)
 
 	else if(istype(src.loc, /obj/icecube/))

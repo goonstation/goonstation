@@ -850,9 +850,9 @@ TYPEINFO(/obj/item/radiojammer)
 				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 #ifdef USE_STAMINA_DISORIENT
-			M.do_disorient(200, weakened = 100, disorient = 60, remove_stamina_below_zero = 0)
+			M.do_disorient(200, knockdown = 100, disorient = 60, remove_stamina_below_zero = 0)
 #else
-			M.changeStatus("weakened", 10 SECONDS)
+			M.changeStatus("knockdown", 10 SECONDS)
 #endif
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
