@@ -123,8 +123,8 @@
 	src.theme = theme
 	if (timeout)
 		src.timeout = timeout
-		start_time = TIME
-		SPAWN(timeout)
+		src.start_time = TIME
+		SPAWN(src.timeout)
 			qdel(src)
 	. = ..()
 
@@ -133,7 +133,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_input_pin/proc/wait()
-	while (user.client && !entry && !closed && !QDELETED(src))
+	while (user.client && !src.entry && !src.closed && !QDELETED(src))
 		sleep(1)
 
 /datum/tgui_input_pin/disposing(force, ...)
@@ -148,7 +148,7 @@
 
 /datum/tgui_input_pin/ui_close(mob/user)
 	. = ..()
-	closed = TRUE
+	src.closed = TRUE
 
 /datum/tgui_input_pin/ui_state(mob/user)
 	return tgui_always_state
@@ -156,14 +156,14 @@
 /datum/tgui_input_pin/ui_data(mob/user)
 	. = list(
 		"init_value" = src.default || null,
-		"message" = message,
-		"max_value" = max_value || PIN_MAX,
-		"min_value" = min_value || PIN_MIN,
-		"title" = title,
-		"theme" = theme,
+		"message" = src.message,
+		"max_value" = src.max_value || PIN_MAX,
+		"min_value" = src.min_value || PIN_MIN,
+		"title" = src.title,
+		"theme" = src.theme,
 	)
 	if(timeout)
-		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
+		.["timeout"] = clamp(((src.timeout - (TIME - src.start_time) - 1 SECONDS) / (src.timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_input_pin/ui_act(action, list/params)
 	. = ..()
@@ -174,11 +174,11 @@
 			var/input_arr = params["entry"]
 			// Convert the array[4] to a single number
 			var/input_num = input_arr[1] * 1000 + input_arr[2] * 100 + input_arr[3] * 10 + input_arr[4] * 1
-			if (max_value && (input_num > max_value))
-				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [max_value])."))
+			if (src.max_value && (input_num > src.max_value))
+				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [src.max_value])."))
 				return FALSE
-			if (min_value && (input_num < min_value))
-				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [min_value])."))
+			if (src.min_value && (input_num < src.min_value))
+				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [src.min_value])."))
 				return FALSE
 			set_entry(input_num)
 			tgui_process.close_uis(src)
@@ -205,19 +205,19 @@
 	src.callback = callback
 
 /datum/tgui_input_pin/async/disposing(force, ...)
-	qdel(callback)
-	callback = null
+	qdel(src.callback)
+	src.callback = null
 	. = ..()
 
 /datum/tgui_input_pin/async/set_entry(entry)
 	. = ..()
 	if(!isnull(src.entry))
 		src.entry = round(src.entry)
-		if (max_value && (src.entry > max_value))
-			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [max_value])."))
+		if (src.max_value && (src.entry > src.max_value))
+			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Maximum: [src.max_value])."))
 			return
-		if (min_value && (src.entry < min_value))
-			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [min_value])."))
+		if (src.min_value && (src.entry < src.min_value))
+			boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [src.min_value])."))
 			return
 		callback?.InvokeAsync(src.entry)
 
