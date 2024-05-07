@@ -1931,9 +1931,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light/incandescent{
 	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
@@ -23841,9 +23844,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "jKz" = (
@@ -29202,7 +29202,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/disposalpipe/junction/right/south,
+/obj/disposalpipe/switch_junction/right/south{
+	name = "Mail Junction - Ranch";
+	mail_tag = "ranch"
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -33567,6 +33570,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "rWa" = (
@@ -34254,7 +34260,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/disposalpipe/junction/middle/north,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -35697,14 +35702,8 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tHt" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "Ranch";
-	mailgroup = "botany"
-	},
 /obj/machinery/light/incandescent,
 /obj/machinery/shieldgenerator/energy_shield,
-/obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "tHA" = (
@@ -40675,16 +40674,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
-"xMr" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/storage/emergency)
 "xMO" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -87620,7 +87609,7 @@ uvI
 cHv
 whs
 cHv
-xMr
+dHY
 tHt
 coH
 uTt
@@ -88525,8 +88514,8 @@ aPu
 aPu
 aPu
 aPu
-aPu
 aXY
+aUx
 aWj
 aPu
 oWd
