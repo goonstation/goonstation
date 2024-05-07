@@ -31655,9 +31655,7 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "qHx" = (
 /obj/cable,
@@ -40920,9 +40918,7 @@
 /area/station/hallway/primary/south)
 "ydR" = (
 /obj/railing/orange,
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "yem" = (
 /obj/disposalpipe/segment{
