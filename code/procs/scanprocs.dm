@@ -552,7 +552,7 @@
 
 		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID)
+			if (WG.glove_ID && !(WG.no_prints))
 				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
 			if (!WG.hide_prints)
 				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
@@ -670,11 +670,9 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			var/list/contraband_returned = list()
-			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-				var/contra = max(contraband_returned)
-				if (contra)
-					contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
+			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
+			if (contra)
+				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A

@@ -63,7 +63,7 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 	breakme()
 		if(..() && emagged)
 			donor.emote("collapse")
-			donor.setStatus("weakened", 3 SECONDS)
+			donor.setStatus("knockdown", 3 SECONDS)
 
 			donor.reagents.add_reagent("salbutamol", 20) //copied mostly from robusttec
 			donor.reagents.add_reagent("epinephrine", 15)

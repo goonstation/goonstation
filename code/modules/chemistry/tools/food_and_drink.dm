@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 				return
 			var/turf/T = get_turf(src)
@@ -446,7 +446,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(H, pick(SPAN_ALERT("That tasted <b>HORRIBLE</b>! Your mouth feels numb!"), SPAN_ALERT("You feel like you're about to puke!")))
 		else
 			if (prob(30))
-				H.setStatus("paralysis", 2.5 SECONDS)
+				H.setStatus("unconscious", 2.5 SECONDS)
 				boutput(H, pick(SPAN_ALERT("The sudden assault of displeasing flavors on your tongue dazes you!"), SPAN_ALERT("This ignoble meal makes you blank out!")))
 			else if (prob(30))
 				boutput(H, pick(SPAN_ALERT("You can't keep down this <i>food</i>!"), SPAN_ALERT("You fail to swallow this horrific meal!")))
@@ -635,9 +635,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			C.u_equip(src)
 			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
 			src.throw_at(target, 7, 1)
-			if (!C.hasStatus("weakened"))
+			if (!C.hasStatus("knockdown"))
 				//Make them fall over, they lost their balance.
-				C.changeStatus("weakened", 2 SECONDS)
+				C.changeStatus("knockdown", 2 SECONDS)
 			return
 
 		actions.start(new /datum/action/bar/icon/chug(C, src), C)
@@ -1939,7 +1939,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			target.visible_message(SPAN_ALERT("<B>[user] smashes [src] over [target]'s head!</B>"))
 			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
 		target.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		target.changeStatus("weakened", 2 SECONDS)
+		target.changeStatus("knockdown", 2 SECONDS)
 		playsound(target, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(target))

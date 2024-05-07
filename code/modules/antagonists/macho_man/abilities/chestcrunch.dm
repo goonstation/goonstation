@@ -12,7 +12,7 @@
 					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] crushes [H]'s ribcage open like a bag of chips!</B>"))
 					H.TakeDamage("chest", 500, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
-					H.changeStatus("weakened", 5 SECONDS)
+					H.changeStatus("knockdown", 5 SECONDS)
 					H.UpdateDamageIcon()
 					qdel(G)
 				else

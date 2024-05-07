@@ -517,6 +517,6 @@
 						M.apply_flash(35, 0, 0, 25)
 					else
 						dist = clamp(dist,1,4)
-						M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+						M.apply_flash(20, knockdown = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 		else
 			boutput(holder.owner, "Target is outside of camera range!")

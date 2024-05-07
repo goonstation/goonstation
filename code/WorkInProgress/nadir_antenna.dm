@@ -866,7 +866,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			playsound(M.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 			M.emote("scream")
 			M.changeStatus("stunned", 5 SECONDS)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 
 	//if anyone gets stuck inside, eject them. (violently. you got stuck in a prototype teleporter)
 	process()

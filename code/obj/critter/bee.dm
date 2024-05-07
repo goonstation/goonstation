@@ -260,7 +260,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -274,7 +274,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return
 		if (prob(20))
 			return CritterAttack(M)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			return
 		src.visible_message(SPAN_ALERT("<B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!"), group = "beeattack")
@@ -678,7 +678,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (!istype(M)) return
 		if (prob(20))
 			return CritterAttack(M)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			return
 		src.visible_message(SPAN_ALERT("<B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!"))
@@ -730,7 +730,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1030,7 +1030,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1144,7 +1144,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (attacking)
 			return
 
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1161,7 +1161,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if ((GET_DIST(src, M) <= 6) && src.alive)
 				M.visible_message(SPAN_ALERT("<b>[M.name] clutches their temples!</b>"))
 				M.emote("scream")
-				M.setStatusMin("paralysis", 10 SECONDS)
+				M.setStatusMin("unconscious", 10 SECONDS)
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -2104,7 +2104,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		src.visible_message(SPAN_ALERT("<B>[src]</B> bites [M]!"))
 		logTheThing(LOG_COMBAT, src.name, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -2114,7 +2114,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	ChaseAttack(mob/M)
 		if (!istype(M)) return
 
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			return
 

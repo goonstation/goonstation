@@ -61,6 +61,10 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
+	
+	run_component()
+		if (!src.ship.passengers)
+			src.deactivate()
 
 /obj/item/shipcomponent/secondary_system/orescoop
 	name = "Alloyed Solutions Ore Scoop/Hold"
@@ -1036,7 +1040,7 @@
 		shake_camera(M, 8, 16)
 		boutput(M, SPAN_ALERT("<B>The [src] crashes into you!</B>"))
 		M.changeStatus("stunned", 8 SECONDS)
-		M.changeStatus("weakened", 5 SECONDS)
+		M.changeStatus("knockdown", 5 SECONDS)
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
 		M.throw_at(target, 4, 2)
