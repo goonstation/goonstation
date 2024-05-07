@@ -646,6 +646,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\playernotes.dm"
 #include "code\modules\admin\processSchedulerView.dm"
 #include "code\modules\admin\randomverbs.dm"
+#include "code\modules\admin\region_allocator_panel.dm"
 #include "code\modules\admin\terrainify.dm"
 #include "code\modules\admin\tgs_commands.dm"
 #include "code\modules\admin\ticklag.dm"

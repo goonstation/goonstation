@@ -1634,6 +1634,8 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	emp_act()
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+		//gunbots have a LOT of disorient resist which is usually good but we want to bypass it here because EMPs are meant to mess with robots goddamnit!
+		src.changeStatus("disorient", 4 SECONDS)
 
 	can_eat()
 		return FALSE
