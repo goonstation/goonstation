@@ -961,6 +961,23 @@ var/global/list/mapNames = list(
 		"the robotics lab" = list(/area/station/medical/robotics),
 		"the crew quarters on the south of the station" = list(/area/station/crew_quarters/quarters_south))
 
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2,
+		/datum/job/security/security_officer = 6,
+		/datum/job/security/detective = 1,
+		/datum/job/research/geneticist = 3,
+		/datum/job/research/roboticist = 3,
+		/datum/job/research/scientist = 6,
+		/datum/job/research/medical_doctor = 7,
+		/datum/job/engineering/miner = 4,
+		/datum/job/engineering/engineer = 6,
+		/datum/job/civilian/chef = 2,
+		/datum/job/civilian/bartender = 2,
+		/datum/job/civilian/janitor = 3,
+		/datum/job/civilian/chaplain = 2,
+		/datum/job/special/attorney = 1,
+		/datum/job/special/atmospheric_technician = 1
+	)
 
 /datum/map_settings/horizon/crash
 	name = "CRASH"
