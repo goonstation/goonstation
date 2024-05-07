@@ -17667,12 +17667,6 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
-"ebR" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/storage/emergency)
 "ebZ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -23855,6 +23849,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "jKz" = (
@@ -34265,7 +34262,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/junction/middle/north,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -35713,9 +35710,9 @@
 	mail_tag = "Ranch";
 	mailgroup = "botany"
 	},
-/obj/disposalpipe/trunk/mail/east,
 /obj/machinery/light/incandescent,
 /obj/machinery/shieldgenerator/energy_shield,
+/obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "tHA" = (
@@ -38664,15 +38661,6 @@
 /obj/item/dice,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"waW" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/junction/middle/north,
-/turf/simulated/floor/neutral/side{
-	dir = 8
-	},
-/area/station/hallway/primary/central)
 "waX" = (
 /obj/machinery/light/small/frostedred,
 /obj/storage/cart/trash,
@@ -40692,6 +40680,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"xMr" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/storage/emergency)
 "xMO" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -87627,7 +87625,7 @@ uvI
 cHv
 whs
 cHv
-dHY
+xMr
 tHt
 coH
 uTt
@@ -87930,7 +87928,7 @@ uvI
 coH
 coH
 jJd
-ebR
+coH
 coH
 bdd
 bdd
@@ -88232,7 +88230,7 @@ lXB
 lXB
 akc
 sDw
-waW
+cTE
 cTE
 vpg
 goL
@@ -88533,8 +88531,8 @@ aPu
 aPu
 aPu
 aPu
-aPu
-aWm
+aXY
+aWj
 aPu
 oWd
 aPu
