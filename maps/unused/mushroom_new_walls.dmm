@@ -20711,7 +20711,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "gMh" = (
-/obj/disposalpipe/switch_junction/left/west,
+/obj/disposalpipe/switch_junction/left/west{
+	name = "Mail Junction - Mechlab";
+	mail_tag = "mechanics"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "gNh" = (
