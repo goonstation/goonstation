@@ -7632,6 +7632,19 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
+"aMe" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "aMf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14785,6 +14798,14 @@
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"bxL" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/cafeteria)
 "bxO" = (
 /obj/stool/chair/office/blue{
 	dir = 4
@@ -20322,6 +20343,14 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
+"gyN" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "gzn" = (
 /obj/machinery/conveyor/SN{
 	id = "garbage";
@@ -22139,6 +22168,14 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"ifS" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "igr" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -23142,6 +23179,18 @@
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"jfG" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "jfJ" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -23562,6 +23611,7 @@
 /obj/railing/orange{
 	dir = 1
 	},
+/obj/landmark/start/job/rancher,
 /turf/simulated/floor/grasstodirt{
 	dir = 5
 	},
@@ -25231,6 +25281,13 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"llN" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/hangar/main)
 "lng" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -26893,6 +26950,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"mWr" = (
+/obj/machinery/vehicle/escape_pod{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "mWK" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -27431,6 +27494,18 @@
 	},
 /turf/space,
 /area/station/com_dish/auxdish)
+"nqK" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/maintenance/southeast)
 "nrZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27924,16 +27999,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
-"nNN" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "nNZ" = (
 /obj/shrub,
 /obj/machinery/light/incandescent{
@@ -29026,6 +29091,17 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"oLl" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/maintenance/southeast)
 "oLv" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/purplewhite{
@@ -30342,6 +30418,9 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/bar/auto,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "pEL" = (
@@ -34294,6 +34373,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"sKg" = (
+/obj/machinery/vehicle/escape_pod{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/maintenance/southeast)
 "sKj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -34752,7 +34837,7 @@
 /area/station/crew_quarters/cafeteria)
 "sYO" = (
 /obj/machinery/light/incandescent{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
@@ -38116,6 +38201,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/west)
+"vIF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "vIL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38780,11 +38872,6 @@
 	dir = 4
 	},
 /area/station/bridge)
-"wnP" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "woP" = (
 /obj/lattice{
 	dir = 8;
@@ -40943,6 +41030,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ybx" = (
@@ -73046,7 +73134,7 @@ toE
 tzi
 paz
 wKX
-wKX
+bxL
 wKX
 ubp
 cyH
@@ -73635,7 +73723,7 @@ bpo
 vuG
 wFK
 bda
-aqI
+ifS
 rmY
 qDY
 awf
@@ -92693,8 +92781,8 @@ urS
 urS
 urS
 mGW
-nNN
-wnP
+txv
+urS
 oDO
 oDO
 oDO
@@ -92995,9 +93083,9 @@ mGW
 mGW
 mGW
 mGW
-aaa
-aDR
-mGW
+aMe
+oLl
+gyN
 aaa
 aaa
 aaa
@@ -93297,9 +93385,9 @@ aaa
 aaa
 mGW
 aLg
-aaa
-aaa
-aaa
+vIF
+sKg
+vIF
 aaa
 aaa
 aaa
@@ -93599,9 +93687,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+mGW
+nqK
+mGW
 aaa
 aaa
 aaa
@@ -94701,9 +94789,9 @@ tUp
 tUp
 abq
 rkh
+llN
 rkh
-rkh
-rkh
+llN
 abq
 iNv
 iNv
@@ -95002,11 +95090,11 @@ tUp
 tUp
 tUp
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+rkh
+mWr
+rkh
+mWr
+rkh
 aaa
 aaa
 ctu
@@ -95304,11 +95392,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abq
+jfG
+abq
+jfG
+abq
 aaa
 aaa
 ctu
