@@ -180,11 +180,11 @@
 			if (src.min_value && (input_num < src.min_value))
 				boutput(user, SPAN_ALERT("The number you entered is an invalid PIN (Minimum: [src.min_value])."))
 				return FALSE
-			set_entry(input_num)
+			src.set_entry(input_num)
 			tgui_process.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
+			src.set_entry(null)
 			tgui_process.close_uis(src)
 			return TRUE
 
