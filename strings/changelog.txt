@@ -1,5 +1,7 @@
 
 (t)tue may 07 24
+(u)tarmunora
+(+)Some internal changes to ability code - using abilities will properly interrupt most actionbars. Make an issue if this breaks any features horribly.
 (u)Klushy225
 (p)18803
 (e)🎨📦|C-Sprites, A-Game-Objects
