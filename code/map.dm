@@ -988,21 +988,7 @@ var/global/list/mapNames = list(
 
 	escape_dir = EAST
 	job_limits_override = list(
-		/datum/job/civilian/clown = 2,
-		/datum/job/security/security_officer = 6,
-		/datum/job/security/detective = 1,
-		/datum/job/research/geneticist = 3,
-		/datum/job/research/roboticist = 3,
-		/datum/job/research/scientist = 6,
-		/datum/job/research/medical_doctor = 7,
-		/datum/job/engineering/miner = 4,
-		/datum/job/engineering/engineer = 6,
-		/datum/job/civilian/chef = 2,
-		/datum/job/civilian/bartender = 2,
-		/datum/job/civilian/janitor = 3,
-		/datum/job/civilian/chaplain = 2,
-		/datum/job/special/attorney = 1,
-		/datum/job/special/atmospheric_technician = 1
+		/datum/job/civilian/rancher = 2,
 	)
 
 /datum/map_settings/trunkmap
