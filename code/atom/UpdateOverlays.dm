@@ -155,17 +155,6 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
 		return 0
 
-	#if DM_VERSION > 515
-	#warn "okay now remove this"
-	#endif
-	#if DM_VERSION < 515 && !defined(SPACEMAN_DMM)
-	if(I)
-		for(var/ikey in overlay_refs)
-			if(ikey != key && overlay_refs[ikey][P_INDEX] && overlay_refs[ikey][P_ISTATE] == hash)
-				// logTheThing(LOG_DEBUG, null, "Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
-				I.layer += 0.0000001 * rand()
-	#endif
-
 	var/index = prev_data[P_INDEX]
 	if(index) //There is an existing overlay in place in this slot, remove it
 		if(index <= length(src.overlays))
@@ -198,8 +187,9 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(isnull(key))
 		CRASH("AddOverlays called without a key.")
 	LAZYLISTINIT(src.overlay_refs)
+	#ifdef CHECK_MORE_RUNTIMES //asserts can be somewhat slow in a proc as often as this.
 	ASSERT(I)
-
+	#endif
 	var/list/prev_data
 	//List to store info about the last state of the icon
 	prev_data = overlay_refs[key]
@@ -210,16 +200,6 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE]) //If it's the same image as the other one and the appearances match then do not update
 		return 0
-
-	#if DM_VERSION > 515
-	#warn "okay now remove this"
-	#endif
-	#if DM_VERSION < 515 && !defined(SPACEMAN_DMM)
-	for(var/ikey in overlay_refs)
-		if(ikey != key && overlay_refs[ikey][P_INDEX] && overlay_refs[ikey][P_ISTATE] == hash)
-			// logTheThing(LOG_DEBUG, null, "Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
-			I.layer += 0.0000001 * rand()
-	#endif
 
 	var/index = prev_data[P_INDEX]
 	if(index) //There is an existing overlay in place in this slot, remove it
