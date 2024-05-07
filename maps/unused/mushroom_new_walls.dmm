@@ -3193,10 +3193,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aqn" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aqp" = (
@@ -3208,15 +3208,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
-"aqr" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aqs" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tech)
@@ -37551,6 +37542,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "vdm" = (
@@ -88493,7 +88487,7 @@ abm
 abm
 pxQ
 apq
-aqr
+aqt
 sWj
 afC
 vQz
