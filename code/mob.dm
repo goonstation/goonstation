@@ -1508,7 +1508,7 @@
 	. = ..()
 	if(ishuman(AM) && src.lying)
 		var/mob/living/carbon/human/H = AM
-		if(H.a_intent == "harm" && can_act(H, FALSE) && !H.lying && !ON_COOLDOWN(H, "free_kick_on_\ref[src]", 4 SECONDS))
+		if(H.a_intent == "harm" && can_act(H, FALSE) && !H.lying && !ON_COOLDOWN(H, "free_kick_on_\ref[src]", H.trample_cooldown))
 			H.melee_attack_normal(src, 0, 0, DAMAGE_BLUNT)
 
 /mob/proc/update_inhands()

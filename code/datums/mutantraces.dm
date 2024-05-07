@@ -2151,6 +2151,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			src.mob.kickMessage = "stomps"
 			src.mob.traitHolder?.addTrait("hemophilia")
+			H.trample_cooldown = 2 SECONDS
 
 			src.mob.vis_contents += list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
 
@@ -2161,6 +2162,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
+			H.trample_cooldown = H::trample_cooldown
 
 			src.mob.vis_contents -= list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
 		. = ..()
