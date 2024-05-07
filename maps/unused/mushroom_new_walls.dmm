@@ -4170,6 +4170,7 @@
 	location = "Market"
 	},
 /obj/decal/stripe_caution,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "auY" = (
@@ -4427,7 +4428,6 @@
 	},
 /area/mining/magnet)
 "awc" = (
-/obj/machinery/light/incandescent,
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -5531,6 +5531,7 @@
 	pixel_y = 12;
 	pixel_x = -13
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
@@ -14912,6 +14913,9 @@
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
 	},
+/obj/machinery/espresso_machine{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -15544,7 +15548,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/courtroom)
 "ceU" = (
-/obj/submachine/chem_extractor,
+/obj/submachine/chem_extractor{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "cfw" = (
@@ -16411,13 +16417,8 @@
 /area/station/maintenance/northeast)
 "cOC" = (
 /obj/machinery/glass_recycler,
-/obj/window{
-	dir = 8;
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/window/reinforced/north,
 /obj/table/reinforced/bar/auto,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -26500,7 +26501,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "mrG" = (
-/obj/machinery/light/incandescent,
 /obj/machinery/light/emergency{
 	dir = 8
 	},
@@ -35976,7 +35976,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "tNp" = (
-/obj/machinery/light/incandescent,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
@@ -37313,6 +37312,9 @@
 "uTp" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/clothing/glasses/spectro,
+/obj/drink_rack/cup{
+	pixel_y = 28
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
 "uTt" = (
