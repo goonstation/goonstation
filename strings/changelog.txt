@@ -1,5 +1,16 @@
 
+(t)tue may 07 24
+(u)Klushy225
+(p)18803
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added two donator figures
 (t)mon may 06 24
+(u)glowbold
+(p)18783
+(e)🪲🆕📄🤖|C-Bug, C-Feature, A-UI, A-Silicons
+(+)AI Eyebot Shells can swap between Help and Harm intent via HUD button.
+(u)Sord
+(*)Added a new +1 trait, Plasma Lungs. The trait makes you spawn with plasma breathing lungs as well as a new belt-slot plasma tank.
 (u)glowbold
 (p)18680
 (e)🔄🔨📦|C-Rework, A-Player-Actions, A-Game-Objects
@@ -8,8 +19,9 @@
 (p)18773
 (e)⚖💅🧛🔨|C-Balance, C-QoL, A-Gamemodes, A-Player-Actions
 (*)Revolution rounds now properly end immediately after buckle-cuffing the last revolutionary head in a brig cell.
-(t)LeahTheTech
+(u)LeahTheTech
 (+)Syndicate docking stations now require the target to be adjacent to be click-dragged in.
+(+)EMPs now disorient robotic critters (ie gunbots)
 (t)sun may 05 24
 (u)colossusqw
 (p)18671
