@@ -12466,8 +12466,8 @@
 /area/crater)
 "oJX" = (
 /obj/storage/secure/crate,
-/obj/item/parts/human_parts/arm/right/zombie,
-/obj/item/parts/human_parts/arm/left/zombie,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right/zombie,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie,
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
 "oKk" = (

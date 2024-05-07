@@ -13,6 +13,7 @@
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
 	compatible_species = list("human")
 	protective_temperature = 500
+	wear_layer = MOB_HAND_LAYER2
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800

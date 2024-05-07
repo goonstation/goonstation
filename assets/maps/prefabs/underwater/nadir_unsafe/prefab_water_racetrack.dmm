@@ -384,7 +384,7 @@
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "bf" = (
-/obj/item/parts/robot_parts/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -401,7 +401,7 @@
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "bi" = (
-/obj/item/parts/robot_parts/head/antique,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

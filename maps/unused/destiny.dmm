@@ -47327,8 +47327,8 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /obj/item/storage/box/costume/robuddy,
 /turf/simulated/floor,
 /area/station/science/bot_storage)

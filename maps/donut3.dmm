@@ -71202,10 +71202,10 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
-/obj/item/parts/robot_parts/arm/right/standard{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard{
 	pixel_x = 5
 	},
-/obj/item/parts/robot_parts/arm/right/standard{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard{
 	pixel_x = 9;
 	pixel_y = 1
 	},

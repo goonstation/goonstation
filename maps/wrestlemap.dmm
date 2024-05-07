@@ -6776,13 +6776,13 @@
 "daI" = (
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
 /obj/item/pen/pencil,
@@ -26229,8 +26229,8 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
 /obj/machinery/light/incandescent/greenish,
 /obj/item/device/multitool,
 /obj/decal/tile_edge/stripe{

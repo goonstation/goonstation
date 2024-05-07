@@ -34466,15 +34466,15 @@
 	name = "Warrens Hall"
 	})
 "owK" = (
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/leg/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
-/obj/item/parts/robot_parts/leg/left/treads,
-/obj/item/parts/robot_parts/leg/right/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads,
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
@@ -46119,8 +46119,8 @@
 /obj/item/device/guardbot_tool/medicator,
 /obj/storage/crate,
 /obj/item/clothing/suit/robuddy,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /obj/machinery/light,
 /turf/simulated/floor/grey,
 /area/station/science/bot_storage)

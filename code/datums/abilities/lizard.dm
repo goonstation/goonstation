@@ -26,20 +26,16 @@
 			return
 		if (istype(liz.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/LA = liz.limbs.l_arm
-			LA.colorize_limb_icon()
-			LA.set_skin_tone()
+			LA.update_skin_tone()
 		if (istype(liz.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/RA = liz.limbs.r_arm
-			RA.colorize_limb_icon()
-			RA.set_skin_tone()
+			RA.update_skin_tone()
 		if (istype(liz.limbs.l_leg, /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/LL = liz.limbs.l_leg
-			LL.colorize_limb_icon()
-			LL.set_skin_tone()
+			LL.update_skin_tone()
 		if (istype(liz.limbs.r_leg, /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/RL = liz.limbs.r_leg
-			RL.colorize_limb_icon()
-			RL.set_skin_tone()
+			RL.update_skin_tone()
 		if (liz.organHolder?.head)
 			var/obj/item/organ/head/hed = liz.organHolder.head
 			if(hed.head_type == HEAD_LIZARD)

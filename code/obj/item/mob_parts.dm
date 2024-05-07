@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 	var/side = "left"
 	/// 2 will fall off, 3 is removed. This should use defines honestly but eh.
 	var/remove_stage = 0
-	///if the only icon is above the clothes layer ie. in the handlistPart list
+	///if the only icon is above the clothes layer ie. in the hand_layer_image list
 	var/no_icon = FALSE
 	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/skintoned = TRUE
@@ -69,14 +69,14 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 	/// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
 	var/image/bodyImage
 	/// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
-	var/partIcon = 'icons/mob/human.dmi'
+	var/part_icon = 'icons/mob/human.dmi'
 	/// The part of the icon state that differs per part, ie "brullbar" for brullbar arms
-	var/partIconModifier = null
-	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
+	var/limb_icon_suffix = null
+	var/part_decomp_icon = 'icons/mob/human_decomp.dmi'
 	/// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
-	var/handlistPart
+	var/hand_layer_image
 	/// Used by getPartIconState to determine the attached-to-mob-sprite non-hand sprite
-	var/partlistPart
+	var/hand_layer_icon_state
 	/// for medical crap
 	var/datum/bone/bones = null
 	var/brute_dam = 0
@@ -344,7 +344,7 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
-		return "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
+		return "[src.slot][src.limb_icon_suffix ? "_[src.limb_icon_suffix]" : ""][decomp]"
 
 	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 			decomp = "_decomp[decomp_stage]"
 
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
-		return "[src.handlistPart][decomp]"
+		return "[src.hand_layer_image][decomp]"
 
 	proc/getPartIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
@@ -365,7 +365,7 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 			decomp = "_decomp[decomp_stage]"
 
 		//boutput(world, "Attaching standing part [src.slot][decomp]_s on decomp stage [decomp_stage].")
-		return "[src.partlistPart][decomp]"
+		return "[src.hand_layer_icon_state][decomp]"
 
 	proc/on_holder_examine()
 		return

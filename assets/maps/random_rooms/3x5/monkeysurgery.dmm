@@ -8,7 +8,7 @@
 /area/dmm_suite/clear_area)
 "e" = (
 /obj/machinery/drainage,
-/obj/item/parts/human_parts/arm/left{
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left{
 	pixel_y = -2;
 	pixel_x = -17
 	},
@@ -17,8 +17,8 @@
 "i" = (
 /obj/decal/cleanable/blood/gibs/body,
 /obj/decal/cleanable/blood/splatter,
-/obj/item/parts/human_parts/leg/left,
-/obj/item/parts/human_parts/leg/right{
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right{
 	dir = 8;
 	pixel_y = 3;
 	pixel_x = -5
@@ -82,7 +82,7 @@
 /area/dmm_suite/clear_area)
 "Y" = (
 /obj/machinery/drainage,
-/obj/item/parts/human_parts/arm/right{
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right{
 	pixel_y = -2;
 	pixel_x = 16
 	},

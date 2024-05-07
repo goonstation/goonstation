@@ -178,7 +178,7 @@
 	name = "Strange Vessel"
 	})
 "dx" = (
-/obj/item/parts/human_parts/arm/mutant/skeleton/left,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/skeleton/left,
 /obj/item/device/pda_module/flashlight/dan,
 /obj/item/device/light/zippo/dan,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -1563,7 +1563,7 @@
 	name = "Strange Vessel"
 	})
 "Dw" = (
-/obj/item/parts/human_parts/leg/mutant/skeleton/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/skeleton/left,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -1889,7 +1889,7 @@
 	name = "Strange Vessel"
 	})
 "JJ" = (
-/obj/item/parts/human_parts/arm/mutant/skeleton/right,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/skeleton/right,
 /obj/item/material_piece/bone,
 /obj/random_item_spawner/prosthetics,
 /turf/unsimulated/iomoon/ancient_floor{

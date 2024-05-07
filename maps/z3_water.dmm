@@ -1863,7 +1863,7 @@
 /area/wrecknsspolaris)
 "fK" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/item/parts/human_parts/arm/right/polaris,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right/polaris,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"

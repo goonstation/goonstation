@@ -293,8 +293,6 @@
 				l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(holder)
 			l_arm.holder = holder
 			boutput(holder, SPAN_NOTICE("Your left arm regrows!"))
-			l_arm:original_holder = holder
-			l_arm:set_skin_tone()
 			holder.hud.update_hands()
 			howmany--
 
@@ -303,10 +301,7 @@
 				r_arm = new holder.mutantrace.r_limb_arm_type_mutantrace(holder)
 			else
 				r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(holder)
-			r_arm.holder = holder
 			boutput(holder, SPAN_NOTICE("Your right arm regrows!"))
-			r_arm:original_holder = holder
-			r_arm:set_skin_tone()
 			holder.hud.update_hands()
 			howmany--
 
@@ -315,10 +310,7 @@
 				l_leg = new holder.mutantrace.l_limb_leg_type_mutantrace(holder)
 			else
 				l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(holder)
-			l_leg.holder = holder
 			boutput(holder, SPAN_NOTICE("Your left leg regrows!"))
-			l_leg:original_holder = holder
-			l_leg:set_skin_tone()
 			howmany--
 
 		if (!r_leg && howmany > 0)
@@ -326,23 +318,20 @@
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
 				r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(holder)
-			r_leg.holder = holder
 			boutput(holder, SPAN_NOTICE("Your right leg regrows!"))
-			r_leg:original_holder = holder
-			r_leg:set_skin_tone()
 			howmany--
 
 		if (holder.client) holder.next_move = world.time + 7 //Fix for not being able to move after you got new limbs.
 
 	proc/reset_stone() // reset skintone to whatever the holder's s_tone is
 		if (l_arm && istype(l_arm, /obj/item/mob_part/humanoid_part/carbon_part))
-			l_arm:set_skin_tone()
+			l_arm:update_skin_tone()
 		if (r_arm && istype(r_arm, /obj/item/mob_part/humanoid_part/carbon_part))
-			r_arm:set_skin_tone()
+			r_arm:update_skin_tone()
 		if (l_leg && istype(l_leg, /obj/item/mob_part/humanoid_part/carbon_part))
-			l_leg:set_skin_tone()
+			l_leg:update_skin_tone()
 		if (r_leg && istype(r_leg, /obj/item/mob_part/humanoid_part/carbon_part))
-			r_leg:set_skin_tone()
+			r_leg:update_skin_tone()
 
 	proc/sever(var/target = "all", var/mob/user)
 		if (!target)
@@ -564,7 +553,7 @@
 // death
 
 /mob/living/carbon/human/disposing()
-	for (var/obj/item/mob_part/HP in src)
+	for (var/obj/item/mob_part/humanoid_part/HP in src)
 		if (istype(HP,/obj/item/mob_part/humanoid_part/carbon_part))
 
 			var/obj/item/mob_part/humanoid_part/carbon_part/humanpart = HP
@@ -3489,20 +3478,20 @@
 			return
 		if (istype(H.limbs.l_arm, /obj/item/mob_part/humanoid_part/carbon_part ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/LA = H.limbs.l_arm
-			LA.colorize_limb_icon()
-			LA.set_skin_tone()
+			LA.update_images()
+			LA.update_severed_icon()
 		if (istype(H.limbs.r_arm, /obj/item/mob_part/humanoid_part/carbon_part ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/RA = H.limbs.r_arm
-			RA.colorize_limb_icon()
-			RA.set_skin_tone()
+			RA.update_images()
+			RA.update_severed_icon()
 		if (istype(H.limbs.l_leg, /obj/item/mob_part/humanoid_part/carbon_part ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/LL = H.limbs.l_leg
-			LL.colorize_limb_icon()
-			LL.set_skin_tone()
+			LL.update_images()
+			LL.update_severed_icon()
 		if (istype(H.limbs.r_leg, /obj/item/mob_part/humanoid_part/carbon_part ))
 			var/obj/item/mob_part/humanoid_part/carbon_part/RL = H.limbs.r_leg
-			RL.colorize_limb_icon()
-			RL.set_skin_tone()
+			RL.update_images()
+			RL.update_severed_icon()
 		if (H.organHolder?.head)
 			H.organHolder.head.UpdateIcon()
 		if (H.organHolder?.tail)

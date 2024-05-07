@@ -1441,7 +1441,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 //Meat limbs: probably not a desirable prize
 /obj/item/mob_part/humanoid_part/carbon_part/arm/meat_mutant
-	partIconModifier = "mutated"
+	limb_icon_suffix = "mutated"
 
 	left
 		name = "weird left arm"
@@ -1449,7 +1449,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		icon_state = "arm_left_mutant"
 		slot = "l_arm"
 		side = "left"
-		handlistPart = "l_hand_mutated"
+		hand_layer_icon_state = "l_hand_mutated"
 
 	right
 		name = "grody right arm"
@@ -1457,7 +1457,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		icon_state = "arm_right_mutant"
 		slot = "r_arm"
 		side = "right"
-		handlistPart = "r_hand_mutated"
+		hand_layer_icon_state = "r_hand_mutated"
 
 //Gib gun.  Maybe a prize??? except for the whole "firing your internal organs as projectiles is not healthy" thing.
 /obj/item/gun/gibgun

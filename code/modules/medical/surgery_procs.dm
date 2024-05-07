@@ -586,7 +586,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg"))
 		var/obj/item/mob_part/humanoid_part/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (istype(surgery_limb))
-			if (surgery_limb.surgery(src))
+			if (surgery_limb.surgery(src, surgeon))
 				return TRUE
 			else
 				src.surgeryConfusion(patient, surgeon, damage_high)
@@ -826,7 +826,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg"))
 		var/obj/item/mob_part/humanoid_part/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 		if (istype(surgery_limb))
-			if (surgery_limb.surgery(src))
+			if (surgery_limb.surgery(src, surgeon))
 				return TRUE
 			else
 				src.surgeryConfusion(patient, surgeon, damage_high)
@@ -973,7 +973,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (surgeon.zone_sel.selecting in patient.limbs.vars) //ugly copy paste from stapler
 			var/obj/item/mob_part/humanoid_part/surgery_limb = patient.limbs.vars[surgeon.zone_sel.selecting]
 			if (istype(surgery_limb) && surgery_limb.remove_stage)
-				surgery_limb.surgery(src)
+				surgery_limb.surgery(src, surgeon)
 			return
 
 		return FALSE

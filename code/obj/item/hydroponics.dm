@@ -71,10 +71,10 @@ TYPEINFO(/obj/item/saw)
 		if (src.temp_flags & IS_LIMB_ITEM)
 			if (istype(src.loc,/obj/item/mob_part/humanoid_part/item_arm/left))
 				var/obj/item/mob_part/humanoid_part/item_arm/left/I = src.loc
-				I.handlistPart = "l_arm_[src.arm_icon]"
+				I.hand_layer_icon_state = "l_arm_[src.arm_icon]"
 			else
 				var/obj/item/mob_part/humanoid_part/item_arm/right/I = src.loc
-				I.handlistPart = "r_arm_[src.arm_icon]"
+				I.hand_layer_icon_state = "r_arm_[src.arm_icon]"
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).

@@ -10240,8 +10240,8 @@
 	},
 /obj/item/device/guardbot_tool/xmas,
 /obj/machinery/light/incandescent/greenish,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aHG" = (
@@ -14565,8 +14565,8 @@
 /obj/item/stamp,
 /obj/item/emeter,
 /obj/lattice,
-/obj/item/parts/robot_parts/head/antique,
-/obj/item/parts/robot_parts/head/antique,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
 /turf/simulated/floor/martian,
 /area/martian_trader)
 "aZu" = (

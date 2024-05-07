@@ -142,7 +142,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/obj/item/parts/human_parts/arm/left{
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left{
 	dir = 8;
 	pixel_x = -6;
 	pixel_y = -4
@@ -725,7 +725,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "u_guilty"
 	},
-/obj/item/parts/human_parts/leg/left{
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left{
 	pixel_x = -2;
 	pixel_y = -7
 	},

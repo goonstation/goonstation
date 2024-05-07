@@ -57,15 +57,19 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part)
 			if(60 to INFINITY)
 				. += SPAN_ALERT("It looks terribly burnt up.")
 
-	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
-		if (force)
-			qdel(src.bodyImage)
-			src.bodyImage = null
-		if (src.bodyImage)
-			return src.bodyImage
+	update_images()
+		var/used_icon = src.part_icon
 
-		src.bodyImage = image(mutantrace_override || src.partIcon, icon_state = "[src.icon_state_base]-[appearanceString]")
-		return bodyImage
+		if(src.hand_layer_icon_state)
+			src.hand_layer_image = image(used_icon, "[src.hand_layer_icon_state]", MOB_HAND_LAYER1)
+
+		var/limb_layer_icon_state = "[src.icon_state_base]-[appearanceString]"
+		if (ishuman(src.holder))
+			var/mob/living/carbon/human/H = src.holder
+			if (H.mutantrace?.override_limb_icons && (limb_layer_icon_state in H.mutantrace.icon_states))
+				used_icon = H.mutantrace.icon // monkeys use this to get smaller cyborg/synthlimbs, etc
+
+		src.limb_layer_image = image(used_icon, limb_layer_icon_state, MOB_LIMB_LAYER)
 
 	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
@@ -240,7 +244,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/head)
 				boutput(user, SPAN_ALERT("This brain doesn't look any good to use."))
 				return
 			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
-				boutput(user, SPAN_ALERT("The brain disintigrates in your hands!"))
+				boutput(user, SPAN_ALERT("The brain disintegrates in your hands!"))
 				user.drop_item()
 				qdel(B)
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -634,7 +638,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm/left)
 	slot = "l_arm"
 	icon_state_base = "l_arm"
 	icon_state = "l_arm-generic"
-	handlistPart = "armL-generic"
+	hand_layer_icon_state = "armL-generic"
 
 /obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard
 	name = "standard cyborg left arm"
@@ -677,7 +681,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm/left)
 	icon_state = "l_arm-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
-	handlistPart = "armL-light"
+	hand_layer_icon_state = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
@@ -688,7 +692,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm/right)
 	slot = "r_arm"
 	icon_state_base = "r_arm"
 	icon_state = "r_arm-generic"
-	handlistPart = "armR-generic"
+	hand_layer_icon_state = "armR-generic"
 
 
 /obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard
@@ -731,7 +735,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/arm/right)
 	icon_state = "r_arm-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
-	handlistPart = "armR-light"
+	hand_layer_icon_state = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
@@ -827,7 +831,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/left)
 	step_image_state = "footprintsL"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
-	partlistPart = "legL-generic"
+	hand_layer_icon_state = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard
@@ -838,7 +842,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/left)
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
-	partlistPart = "legL-light"
+	hand_layer_icon_state = "legL-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
@@ -849,7 +853,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/left)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
-	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	hand_layer_icon_state = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -864,7 +868,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/right)
 	step_image_state = "footprintsR"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
-	partlistPart = "legR-generic"
+	hand_layer_icon_state = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard
@@ -875,7 +879,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/right)
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
-	partlistPart = "legR-light"
+	hand_layer_icon_state = "legR-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
@@ -886,7 +890,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/right)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
-	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	hand_layer_icon_state = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksR"

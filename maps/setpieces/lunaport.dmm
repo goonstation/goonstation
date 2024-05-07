@@ -5286,7 +5286,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/parts/robot_parts/head/antique{
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique{
 	desc = "It's an original prop from a very, very old silent film.";
 	name = "\improper Garçon de la Lune d'argent, 1904 CE, French, silver";
 	pixel_y = 5;

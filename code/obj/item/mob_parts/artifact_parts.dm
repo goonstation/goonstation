@@ -31,13 +31,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part)
 		if (..())
 			src.on_attach()
 
-	getMobIcon()
-		if (src.bodyImage)
-			return src.bodyImage
-
-		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
-		return bodyImage
-
 	proc/on_attach()
 		return ishuman(src.holder)
 
@@ -48,6 +41,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch)
 /obj/item/mob_part/humanoid_part/artifact_part/eldritch
 	item_state = "eldritch-limb"
 	artifact_type = "eldritch"
+	limb_icon_suffix = "eldritch"
 
 	New(atom/new_holder)
 		..()
@@ -69,14 +63,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/arm)
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-eldritch-L"
-		handlistPart = "arm-eldritch-L-attached"
-
 	right
 		name = "eldritch right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-eldritch-R"
-		handlistPart = "arm-eldritch-R-attached"
 
 
 ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg)
@@ -105,7 +96,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg)
 		side = "left"
 		step_image_state = "footprintsL"
 		icon_state = "leg-eldritch-L"
-		handlistPart = "leg-eldritch-L-attached"
 
 	right
 		name = "eldritch right leg"
@@ -113,12 +103,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/eldritch/leg)
 		side = "right"
 		step_image_state = "footprintsR"
 		icon_state = "leg-eldritch-R"
-		handlistPart = "leg-eldritch-R-attached"
 
 ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian)
 /obj/item/mob_part/humanoid_part/artifact_part/martian
 	item_state = "martian-limb"
 	artifact_type = "martian"
+	limb_icon_suffix = "martian"
 
 	New(atom/new_holder)
 		..()
@@ -151,14 +141,14 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian/arm)
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-martian-L"
-		handlistPart = "arm-martian-L-attached"
+		hand_layer_icon_state = "l_hand_martian"
 
 	right
 		name = "martian right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-martian-R"
-		handlistPart = "arm-martian-R-attached"
+		hand_layer_icon_state = "r_hand_martian"
 
 ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian/leg)
 /obj/item/mob_part/humanoid_part/artifact_part/martian/leg
@@ -173,7 +163,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian/leg)
 		side = "left"
 		step_image_state = "footprintsL"
 		icon_state = "leg-martian-L"
-		partlistPart = "leg-martian-L-attached"
 		movement_modifier = /datum/movement_modifier/martian_legs/left
 
 	right
@@ -182,13 +171,13 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/martian/leg)
 		side = "right"
 		step_image_state = "footprintsR"
 		icon_state = "leg-martian-R"
-		partlistPart = "leg-martian-R-attached"
 		movement_modifier = /datum/movement_modifier/martian_legs/right
 
 ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor)
 /obj/item/mob_part/humanoid_part/artifact_part/precursor
 	item_state = "precursor-limb"
 	artifact_type = "precursor"
+	limb_icon_suffix = "precursor"
 
 	New(atom/new_holder)
 		..()
@@ -221,14 +210,14 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/arm)
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-precursor-L"
-		handlistPart = "arm-precursor-L-attached"
+		hand_layer_icon_state = "l_hand_precursor"
 
 	right
 		name = "precursor right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-precursor-R"
-		handlistPart = "arm-precursor-R-attached"
+		hand_layer_icon_state = "r_hand_martian"
 
 ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
 /obj/item/mob_part/humanoid_part/artifact_part/precursor/leg
@@ -278,7 +267,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
 		side = "left"
 		step_image_state = "footprintsL"
 		icon_state = "leg-precursor-L"
-		partlistPart = "leg-precursor-L-attached"
+		hand_layer_icon_state = "leg-precursor-L-attached"
 
 	right
 		name = "precursor right leg"
@@ -286,7 +275,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
 		side = "right"
 		step_image_state = "footprintsR"
 		icon_state = "leg-precursor-R"
-		partlistPart = "leg-precursor-R-attached"
+		hand_layer_icon_state = "leg-precursor-R-attached"
 
 /datum/targetable/artifact_limb_ability
 	icon = 'icons/mob/artifact_limb_abilities.dmi'

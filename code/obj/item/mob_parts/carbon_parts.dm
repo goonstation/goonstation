@@ -12,41 +12,14 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	stamina_crit_chance = 5
 	hitsound = 'sound/impact_sounds/meat_smack.ogg'
 
-
 	cut_messages = list("slices", "slice")
 	saw_messages = list("saws", "saw")
 	limb_material = list("skin and flesh","bone","strips of skin")
 
 	random_limb_blacklisted = FALSE
 
-	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
+	/// is this affected by human skin tones? Also overlays a severed stump, which is typically baked into non-skintoned limbs
 	var/skintoned = TRUE
-
-	// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
-	/// The icon of this overlay
-	var/severed_overlay_1_icon
-	/// The state of this overlay
-	var/severed_overlay_1_state
-	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
-	var/severed_overlay_1_color
-
-	/// Gets sent to update_body to overlay something onto this limb, like kudzu vines. Only handles the limb, not the hand/foot!
-	var/image/limb_overlay_1
-	/// The icon of this overlay
-	var/limb_overlay_1_icon
-	/// The state of this overlay
-	var/limb_overlay_1_state
-	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
-	var/limb_overlay_1_color
-
-	/// Gets sent to update_body to overlay something onto this hand/foot, like kudzu vines. Only handles the hand/foot, not the limb!
-	var/image/handfoot_overlay_1
-	/// The icon of this overlay
-	var/handfoot_overlay_1_icon
-	/// The state of this overlay
-	var/handfoot_overlay_1_state
-	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
-	var/handfoot_overlay_1_color
 
 	/// the original mob (probably a carbon/human) that this was a part of
 	var/mob/living/original_holder = null
@@ -81,10 +54,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 		return
 
-	New(mob/new_holder, var/datum/appearanceHolder/AHolAlmostThere)
+	New(mob/new_holder)
 		..()
-		if(AHolAlmostThere && istype(AHolAlmostThere, /datum/appearanceHolder))
-			src.holder_ahol = AHolAlmostThere
 		if (ismob(new_holder))
 			holder = new_holder
 			original_holder = new_holder
@@ -93,7 +64,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 				src.holder_ahol = H?.bioHolder?.mobAppearance
 			if ((src.holder_ahol.special_style) && (istype_exact(src, src.holder_ahol.mutant_race?.r_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.l_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.r_limb_leg_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.l_limb_leg_type_mutantrace)))
 				icon = src.holder_ahol.body_icon
-				partIcon = src.holder_ahol.body_icon
+				part_icon = src.holder_ahol.body_icon
 
 			src.add_fingerprint(holder)
 			//https://forum.ss13.co/showthread.php?tid=1774
@@ -103,78 +74,26 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
 			if (holder_ahol)
-				colorize_limb_icon()
-				set_skin_tone()
+				src.update_skin_tone()
 			else if(holder)	//
 				SPAWN(1 SECOND)
-					colorize_limb_icon()
-					set_skin_tone()
+					src.update_skin_tone()
 					holder.set_body_icon_dirty()
 					holder.set_face_icon_dirty()
 					holder.set_clothing_icon_dirty()
 			else
-				colorize_limb_icon()
-				set_skin_tone()
-		if(limb_overlay_1_icon || handfoot_overlay_1_icon)
-			setup_limb_overlay()
+				src.update_skin_tone()
 
 	disposing()
 		original_holder = null
 		holder = null
 		..()
 
-	proc/set_skin_tone()
-		if (!skintoned)
-			return
-		src.bodyImage?.color = src.skin_tone
-
-	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		. = ..()
-		src.set_skin_tone()
-
-	surgery(var/obj/item/tool)
-		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
-			remove_stage = 0
-
-		else if(remove_stage == 0 || remove_stage == 2)
-			if(istool(tool, TOOL_CUTTING))
-				remove_stage++
-			else
-				return 0
-
-		else if(remove_stage == 1)
-			if(istool(tool, TOOL_SAWING))
-				remove_stage++
-			else
-				return 0
-
-		if(!isdead(holder)) //This goes up here 'cuz removing limbs nulls holder
-			if(prob(40))
-				holder.emote("scream")
-		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
-
-		switch(remove_stage)
-			if(0)
-				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", SPAN_ALERT("You attach [holder.name]'s [src.name] securely with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
-				logTheThing(LOG_DIARY, tool.the_mob, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
-			if(1)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the skin and flesh of [holder.name]'s [src.name] with [tool]."))
-			if(2)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You saw through the bone of [holder.name]'s [src.name] with [tool]."))
-
-				SPAWN(rand(150,200))
-					if(remove_stage == 2)
-						src.remove(0)
-			if(3)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
-				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
-				src.remove(0)
-
-
-		return 1
+	update_images(var/decomp_stage = DECOMP_STAGE_NO_ROT)
+		..()
+		if (src.skintoned)
+			src.limb_layer_image?.color = src.skin_tone
+			src.hand_layer_image?.color = src.skin_tone
 
 	remove(var/show_message = 1)
 		if ((isnull(src.limb_DNA) || isnull(src.limb_fingerprints)) && ismob(src.original_holder))
@@ -220,14 +139,15 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 		..()
 
 	/// Determines what the limb's skin tone should be
-	proc/colorize_limb_icon()
-		if (!src.skintoned) return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
+	proc/update_skin_tone()
+		if (!src.skintoned)
+			return // No colorizing things that have their own baked in colors!
 		var/datum/appearanceHolder/AHLIMB = src.get_owner_appearance_holder()
 		if (AHLIMB)
 			if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
-				skin_tone = "#FFFFFF"
+				src.skin_tone = "#FFFFFF"
 			else
-				skin_tone = AHLIMB.s_tone
+				src.skin_tone = AHLIMB.s_tone
 		else	// This is going to look *weird* if these somehow spawn on a mob
 			if (istype(src, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard) || istype(src, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard))
 				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
@@ -235,10 +155,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 				var/blend_color = null
 				blend_color = pick(standard_skintones)
 				src.skin_tone = standard_skintones[blend_color]
-		set_limb_icon_coloration()
+
+		update_images()
+		update_severed_icon()
 
 	/// Applies the correct (hopefully) colors to the severed limbs
-	proc/set_limb_icon_coloration()
+	proc/update_severed_icon()
 		if (!src.skintoned || !isicon(src.icon))
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 
@@ -246,67 +168,10 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
 		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)
 
-		// Extra bit? Throw it in!
-		if(severed_overlay_1_icon)
-			var/colorheck = "#FFFFFF"
-			var/datum/appearanceHolder/AH_piece = get_owner_appearance_holder()
-			if(istype(AH_piece, /datum/appearanceHolder))
-				switch(src.severed_overlay_1_color)
-					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
-					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
-					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
-					if (SKIN_TONE)
-						colorheck = src.skin_tone
-					else
-						colorheck = "#FFFFFF"
-			var/icon/limb_detail_icon = new /icon(src.severed_overlay_1_icon, "[src.severed_overlay_1_state]")	// Preferably just about anything
-			limb_detail_icon.Blend(colorheck, ICON_MULTIPLY)
-			limb_icon.Blend(limb_detail_icon, ICON_OVERLAY)
-
 		var/icon/limb_icon_overlay = new /icon(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
 		limb_icon.Blend(limb_icon_overlay, ICON_OVERLAY)
 
 		src.icon = limb_icon
-
-	/// Assembles the limb's overlays, if any
-	proc/setup_limb_overlay()
-		if(!limb_overlay_1_icon && !handfoot_overlay_1_icon) // Gotta have something
-			return
-
-		var/datum/appearanceHolder/AH_overlimb = src.get_owner_appearance_holder()
-		var/colorlimb_heck = "#FFFFFF"
-		if(istype(AH_overlimb, /datum/appearanceHolder))
-			switch(src.limb_overlay_1_color)
-				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
-				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
-				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
-				if (SKIN_TONE)
-					colorlimb_heck = src.skin_tone
-				else
-					colorlimb_heck = "#FFFFFF"
-		var/colorhandfoot_heck = "#FFFFFF"
-		if(istype(AH_overlimb, /datum/appearanceHolder))
-			switch(src.handfoot_overlay_1_color)
-				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
-				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
-				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
-				if (SKIN_TONE)
-					colorhandfoot_heck = src.skin_tone
-				else
-					colorhandfoot_heck = "#FFFFFF"
-		src.limb_overlay_1 = image(icon = src.limb_overlay_1_icon, icon_state = src.limb_overlay_1_state)
-		src.limb_overlay_1?.color = colorlimb_heck
-		src.handfoot_overlay_1 = image(icon = src.handfoot_overlay_1_icon, icon_state = src.handfoot_overlay_1_state)
-		src.handfoot_overlay_1?.color = colorhandfoot_heck
 
 	/// Gets an appearanceholder, either the owner's or the one in the limb
 	proc/get_owner_appearance_holder()
@@ -375,14 +240,13 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 			I.set_loc(holder.loc)
 		. = ..()
 
-
 /obj/item/mob_part/humanoid_part/carbon_part/arm/left
 	name = "left arm"
 	desc = "According to superstition, left handed people are unlucky. Whoever lost this sure seems to back that belief up."
 	icon_state = "arm_left"
 	item_state = "arm-left"
 	slot = "l_arm"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 	disposing()
 		if (src.holder)
@@ -398,7 +262,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	item_state = "arm-right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 	disposing()
 		if (src.holder)
@@ -440,7 +304,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	item_state = "leg-left"
 	slot = "l_leg"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/right
@@ -449,7 +313,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	item_state = "leg-right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/left/brullbar
@@ -462,8 +326,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
-	handlistPart = "l_hand_brullbar"
-	partIconModifier = "brullbar"
+	hand_layer_icon_state = "l_hand_brullbar"
+	limb_icon_suffix = "brullbar"
 	show_on_examine = TRUE
 	/// Brullbar are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
@@ -489,8 +353,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
-	handlistPart = "r_hand_brullbar"
-	partIconModifier = "brullbar"
+	hand_layer_icon_state = "r_hand_brullbar"
+	limb_icon_suffix = "brullbar"
 	show_on_examine = TRUE
 	/// If you went through the trouble to get yourself a brullbar arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
@@ -516,7 +380,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "bloody"
 	override_attack_hand = 1
 	limb_type = /datum/limb/hot
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
@@ -536,7 +400,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "bloody"
 	override_attack_hand = 1
 	limb_type = /datum/limb/hot
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
@@ -558,8 +422,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "bearly"
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
-	handlistPart = "l_hand_bear"
-	partIconModifier = "bear"
+	hand_layer_icon_state = "l_hand_bear"
+	limb_icon_suffix = "bear"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
@@ -581,8 +445,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "bearly"
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
-	handlistPart = "r_hand_bear"
-	partIconModifier = "bear"
+	hand_layer_icon_state = "r_hand_bear"
+	limb_icon_suffix = "bear"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
@@ -600,8 +464,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	handlistPart = "l_hand_plant"
-	partIconModifier = "plant"
+	hand_layer_icon_state = "l_hand_plant"
+	limb_icon_suffix = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	/// Plants are pretty unnatural
@@ -621,8 +485,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	handlistPart = "r_hand_plant"
-	partIconModifier = "plant"
+	hand_layer_icon_state = "r_hand_plant"
+	limb_icon_suffix = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
@@ -641,8 +505,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	partlistPart = "l_foot_plant"
-	partIconModifier = "plant"
+	hand_layer_icon_state = "l_foot_plant"
+	limb_icon_suffix = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
@@ -661,8 +525,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	partlistPart = "r_foot_plant"
-	partIconModifier = "plant"
+	hand_layer_icon_state = "r_foot_plant"
+	limb_icon_suffix = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
@@ -677,26 +541,26 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 /obj/item/mob_part/humanoid_part/carbon_part/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "arm_left_plant_bloom"
-	handlistPart = "l_hand_plant"
-	partIconModifier = "plant_bloom"
+	hand_layer_icon_state = "l_hand_plant"
+	limb_icon_suffix = "plant_bloom"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/right/synth/bloom
 	desc = "A right arm. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "arm_right_plant_bloom"
-	handlistPart = "r_hand_plant"
-	partIconModifier = "plant_bloom"
+	hand_layer_icon_state = "r_hand_plant"
+	limb_icon_suffix = "plant_bloom"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/left/synth/bloom
 	desc = "A left leg. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "leg_left_plant_bloom"
-	partlistPart = "l_foot_plant"
-	partIconModifier = "plant_bloom"
+	hand_layer_icon_state = "l_foot_plant"
+	limb_icon_suffix = "plant_bloom"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/right/synth/bloom
 	desc = "A right leg. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "leg_right_plant_bloom"
-	partlistPart = "r_foot_plant"
-	partIconModifier = "plant_bloom"
+	hand_layer_icon_state = "r_foot_plant"
+	limb_icon_suffix = "plant_bloom"
 
 // Added shambler, werewolf and hunter arms, including the sprites (Convair880).
 /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination
@@ -709,8 +573,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
-	handlistPart = "l_hand_abomination"
-	partIconModifier = "abomination"
+	hand_layer_icon_state = "l_hand_abomination"
+	limb_icon_suffix = "abomination"
 	show_on_examine = TRUE
 	/// About as unnatural as it gets
 	limb_is_unnatural = TRUE
@@ -749,8 +613,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
-	handlistPart = "r_hand_abomination"
-	partIconModifier = "abomination"
+	hand_layer_icon_state = "r_hand_abomination"
+	limb_icon_suffix = "abomination"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ABOM)
@@ -782,7 +646,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	name = "left rotten arm"
 	desc = "A rotten hunk of human junk."
 	icon = 'icons/mob/vampiric_thrall.dmi'
-	partIcon = 'icons/mob/vampiric_thrall.dmi'
+	part_icon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
@@ -805,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	name = "right rotten arm"
 	desc = "A rotten hunk of human junk."
 	icon = 'icons/mob/vampiric_thrall.dmi'
-	partIcon = 'icons/mob/vampiric_thrall.dmi'
+	part_icon = 'icons/mob/vampiric_thrall.dmi'
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
@@ -834,8 +698,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "l_hand_brullbar"
-	partIconModifier = "brullbar"
+	hand_layer_icon_state = "l_hand_brullbar"
+	limb_icon_suffix = "brullbar"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
@@ -855,8 +719,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	streak_descriptor = "eerie"
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
-	handlistPart = "r_hand_brullbar"
-	partIconModifier = "brullbar"
+	hand_layer_icon_state = "r_hand_brullbar"
+	limb_icon_suffix = "brullbar"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BRULLBAR)
@@ -874,8 +738,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	handlistPart = "r_hand_stone"
-	partIconModifier = "stone"
+	hand_layer_icon_state = "r_hand_stone"
+	limb_icon_suffix = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -893,8 +757,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	handlistPart = "l_hand_stone"
-	partIconModifier = "stone"
+	hand_layer_icon_state = "l_hand_stone"
+	limb_icon_suffix = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -912,8 +776,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	partlistPart = "l_foot_stone"
-	partIconModifier = "stone"
+	hand_layer_icon_state = "l_foot_stone"
+	limb_icon_suffix = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -931,8 +795,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	partlistPart = "r_foot_stone"
-	partIconModifier = "stone"
+	hand_layer_icon_state = "r_foot_stone"
+	limb_icon_suffix = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -948,11 +812,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	name = "left mutant arm"
 	desc = "An arm that definitely does not look human."
 	icon = 'icons/mob/cow.dmi'
-	partIcon = 'icons/mob/cow.dmi'
+	part_icon = 'icons/mob/cow.dmi'
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 	skintoned = FALSE
 	kind_of_limb = (LIMB_MUTANT)
 
@@ -965,11 +829,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	name = "left mutant leg!"
 	desc = "A leg that definitely does not look human."
 	icon = 'icons/mob/cow.dmi'
-	partIcon = 'icons/mob/cow.dmi'
+	part_icon = 'icons/mob/cow.dmi'
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 	skintoned = FALSE
 	kind_of_limb = (LIMB_MUTANT)
@@ -984,20 +848,20 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cow
 	icon = 'icons/mob/cow.dmi'
-	partIcon = 'icons/mob/cow.dmi'
+	part_icon = 'icons/mob/cow.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cow
 	icon = 'icons/mob/cow.dmi'
-	partIcon = 'icons/mob/cow.dmi'
+	part_icon = 'icons/mob/cow.dmi'
 	limb_hit_bonus = 4
 	skintoned = TRUE
-	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
-	handfoot_overlay_1_state = null
-	handfoot_overlay_1_color = CUST_2
 
-	New()
-		handfoot_overlay_1_state = "[src.partlistPart]"
-		. = ..()
+	update_images()
+		..()
+		if (src.hand_layer_image)
+			var/datum/appearanceHolder/aholder = src.get_owner_appearance_holder()
+			if(aholder)
+				src.hand_layer_image.color = aholder.customization_second_color
 
 //// LIMBS ////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cow/left
@@ -1006,7 +870,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cow/right
 	name = "right cow arm"
@@ -1014,7 +878,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cow/left
 	name = "left cow leg"
@@ -1022,7 +886,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cow/right
@@ -1031,7 +895,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 	New(var/atom/holder)
@@ -1043,7 +907,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/pug
 	icon = 'icons/mob/pug/fawn.dmi'
-	partIcon = 'icons/mob/pug/fawn.dmi'
+	part_icon = 'icons/mob/pug/fawn.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/pug/left
 	name = "left pug arm"
@@ -1051,7 +915,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/pug/right
 	name = "right pug arm"
@@ -1059,11 +923,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/pug
 	icon = 'icons/mob/pug/fawn.dmi'
-	partIcon = 'icons/mob/pug/fawn.dmi'
+	part_icon = 'icons/mob/pug/fawn.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/pug/left
 	name = "left pug leg"
@@ -1071,7 +935,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/pug/right
@@ -1080,7 +944,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// LIZARD LIMBS ////
@@ -1088,12 +952,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard
 	icon = 'icons/mob/lizard.dmi'
-	partIcon = 'icons/mob/lizard.dmi'
+	part_icon = 'icons/mob/lizard.dmi'
 	skintoned = TRUE
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard
 	icon = 'icons/mob/lizard.dmi'
-	partIcon = 'icons/mob/lizard.dmi'
+	part_icon = 'icons/mob/lizard.dmi'
 	skintoned = TRUE
 
 ////// ACTUAL LIZARD LIMBS //////
@@ -1103,7 +967,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard/right
 	name = "right lizard arm"
@@ -1111,7 +975,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard/left
 	name = "left lizard leg"
@@ -1119,7 +983,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/lizard/right
@@ -1128,7 +992,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// AMPHIBIAN LIMBS ////
@@ -1136,11 +1000,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/amphibian
 	icon = 'icons/mob/amphibian.dmi'
-	partIcon = 'icons/mob/amphibian.dmi'
+	part_icon = 'icons/mob/amphibian.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/amphibian
 	icon = 'icons/mob/amphibian.dmi'
-	partIcon = 'icons/mob/amphibian.dmi'
+	part_icon = 'icons/mob/amphibian.dmi'
 
 ////// ACTUAL AMPHIBIAN LIMBS //////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/amphibian/left
@@ -1149,7 +1013,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/amphibian/right
 	name = "right amphibian arm"
@@ -1157,7 +1021,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/amphibian/left
 	name = "left amphibian leg"
@@ -1165,7 +1029,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/amphibian/right
@@ -1174,7 +1038,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// SHELTERFROG LIMBS ////
@@ -1182,11 +1046,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/shelterfrog
 	icon = 'icons/mob/shelterfrog.dmi'
-	partIcon = 'icons/mob/shelterfrog.dmi'
+	part_icon = 'icons/mob/shelterfrog.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/shelterfrog
 	icon = 'icons/mob/shelterfrog.dmi'
-	partIcon = 'icons/mob/shelterfrog.dmi'
+	part_icon = 'icons/mob/shelterfrog.dmi'
 
 ////// ACTUAL SHELTERFROG LIMBS //////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/shelterfrog/left
@@ -1195,7 +1059,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/shelterfrog/right
 	name = "right shelterfrog arm"
@@ -1203,7 +1067,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/shelterfrog/left
 	name = "left shelterfrog leg"
@@ -1211,7 +1075,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/shelterfrog/right
@@ -1220,7 +1084,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// ROACH LIMBS ////
@@ -1228,12 +1092,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/roach
 	icon = 'icons/mob/roach.dmi'
-	partIcon = 'icons/mob/roach.dmi'
+	part_icon = 'icons/mob/roach.dmi'
 	skintoned = TRUE
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/roach
 	icon = 'icons/mob/roach.dmi'
-	partIcon = 'icons/mob/roach.dmi'
+	part_icon = 'icons/mob/roach.dmi'
 	skintoned = TRUE
 
 ////// ACTUAL ROACH LIMBS //////
@@ -1243,7 +1107,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/roach/right
 	name = "right roach arm"
@@ -1251,7 +1115,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/roach/left
 	name = "left roach leg"
@@ -1259,7 +1123,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/roach/right
@@ -1268,7 +1132,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// CAT LIMBS ////
@@ -1276,11 +1140,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat
 	icon = 'icons/mob/cat.dmi'
-	partIcon = 'icons/mob/cat.dmi'
+	part_icon = 'icons/mob/cat.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat
 	icon = 'icons/mob/cat.dmi'
-	partIcon = 'icons/mob/cat.dmi'
+	part_icon = 'icons/mob/cat.dmi'
 
 ////// ACTUAL CAT LIMBS //////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/left
@@ -1289,7 +1153,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/right
 	name = "right cat arm"
@@ -1297,7 +1161,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/left
 	name = "left cat leg"
@@ -1305,7 +1169,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/right
@@ -1314,18 +1178,18 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 // bingus limbs hehehe
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/bingus
 	icon = 'icons/mob/bingus.dmi'
-	partIcon = 'icons/mob/bingus.dmi'
+	part_icon = 'icons/mob/bingus.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/bingus
 	icon = 'icons/mob/bingus.dmi'
-	partIcon = 'icons/mob/bingus.dmi'
+	part_icon = 'icons/mob/bingus.dmi'
 
 ////// ACTUAL CAT LIMBS //////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/bingus/left
@@ -1334,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/cat/bingus/right
 	name = "right cat arm"
@@ -1342,7 +1206,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/bingus/left
 	name = "left cat leg"
@@ -1350,7 +1214,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/cat/bingus/right
@@ -1359,19 +1223,19 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// WEREWOLF LIMBS ////
 ////// PARENT	//////////
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/werewolf
 	icon = 'icons/mob/werewolf.dmi'
-	partIcon = 'icons/mob/werewolf.dmi'
+	part_icon = 'icons/mob/werewolf.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/werewolf
 	icon = 'icons/mob/werewolf.dmi'
-	partIcon = 'icons/mob/werewolf.dmi'
+	part_icon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
 
@@ -1392,7 +1256,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/werewolf/right
@@ -1401,7 +1265,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/werewolf/left
@@ -1411,7 +1275,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 	decomp_affected = FALSE
 	skintoned = FALSE
 	override_attack_hand = 1
@@ -1434,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 	show_on_examine = TRUE
 
 	New(var/atom/holder)
@@ -1446,12 +1310,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'
-	partIcon = 'icons/mob/vampiric_thrall.dmi'
+	part_icon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = LIMB_MUTANT
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'
-	partIcon = 'icons/mob/vampiric_thrall.dmi'
+	part_icon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = LIMB_MUTANT
 
 //// LIMBS ////
@@ -1461,7 +1325,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/vampiric_thrall/right
 	name = "right vampiric thrall arm"
@@ -1469,7 +1333,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/vampiric_thrall/left
 	name = "left vampiric thrall leg"
@@ -1477,7 +1341,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/vampiric_thrall/right
@@ -1486,7 +1350,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// SKELETON LIMBS ////
@@ -1494,7 +1358,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
-	partIcon = 'icons/mob/skeleton.dmi'
+	part_icon = 'icons/mob/skeleton.dmi'
 	easy_attach = TRUE // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
@@ -1502,7 +1366,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
-	partIcon = 'icons/mob/skeleton.dmi'
+	part_icon = 'icons/mob/skeleton.dmi'
 	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
@@ -1515,7 +1379,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/skeleton/right
 	name = "right skeleton arm"
@@ -1523,7 +1387,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/skeleton/left
 	name = "left skeleton leg"
@@ -1531,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/skeleton/right
@@ -1540,7 +1404,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// MONKEY LIMBS ////
@@ -1548,13 +1412,13 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
-	partIcon = 'icons/mob/monkey.dmi'
-	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	part_icon = 'icons/mob/monkey.dmi'
+	part_decomp_icon = 'icons/mob/monkey_decomp.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
-	partIcon = 'icons/mob/monkey.dmi'
-	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	part_icon = 'icons/mob/monkey.dmi'
+	part_decomp_icon = 'icons/mob/monkey_decomp.dmi'
 
 
 //// LIMBS ////
@@ -1564,7 +1428,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/monkey/right
 	name = "right monkey arm"
@@ -1572,7 +1436,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/monkey/left
 	name = "left monkey leg"
@@ -1580,7 +1444,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/monkey/right
@@ -1589,7 +1453,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// SEA MONKEY LIMBS ////
@@ -1597,11 +1461,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
-	partIcon = 'icons/mob/seamonkey.dmi'
+	part_icon = 'icons/mob/seamonkey.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
-	partIcon = 'icons/mob/seamonkey.dmi'
+	part_icon = 'icons/mob/seamonkey.dmi'
 
 
 //// LIMBS ////
@@ -1611,7 +1475,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/seamonkey/right
 	name = "right seamonkey arm"
@@ -1619,7 +1483,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/seamonkey/left
 	name = "left seamonkey leg"
@@ -1627,7 +1491,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/seamonkey/right
@@ -1636,7 +1500,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 //// CHICKEN LIMBS ////
@@ -1644,11 +1508,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
-	partIcon = 'icons/mob/chicken.dmi'
+	part_icon = 'icons/mob/chicken.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
-	partIcon = 'icons/mob/chicken.dmi'
+	part_icon = 'icons/mob/chicken.dmi'
 
 
 //// LIMBS ////
@@ -1659,7 +1523,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 	New(mob/new_holder)
@@ -1673,7 +1537,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 	New(mob/new_holder)
@@ -1686,41 +1550,29 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/kudzu
 	icon = 'icons/obj/items/human_parts.dmi'
-	partIcon = 'icons/mob/human.dmi'
+	part_icon = 'icons/mob/human.dmi'
 	skintoned = TRUE
-	limb_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	handfoot_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	severed_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	limb_overlay_1_color = null
-	handfoot_overlay_1_color = null
-	severed_overlay_1_color = null
 	easy_attach = TRUE // These plants really like humanoid flesh
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
-	New()
-		limb_overlay_1_state = "[src.slot]_kudzu"
-		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
-		severed_overlay_1_state = "[src.icon_state]_kudzu"
-		. = ..()
+	update_images()
+		..()
+		if (src.limb_layer_image)
+			src.limb_layer_image.overlays += image('icons/mob/kudzu.dmi', "[src.slot]_kudzu")
+		if (src.hand_layer_image)
+			src.hand_layer_image.overlays += image('icons/mob/kudzu.dmi', "[src.hand_layer_image]_kudzu")
+
+	update_severed_icon()
+		var/image/overlay = SafeGetOverlayImage("overlay", 'icons/mob/kudzu.dmi', "[src.icon_state]_kudzu")
+		UpdateOverlays(overlay, "overlay")
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/kudzu
 	icon = 'icons/obj/items/human_parts.dmi'
-	partIcon = 'icons/mob/human.dmi'
+	part_icon = 'icons/mob/human.dmi'
 	skintoned = TRUE
-	limb_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	handfoot_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	severed_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	limb_overlay_1_color = null
-	handfoot_overlay_1_color = null
-	severed_overlay_1_color = null
+	var/kudzu_overlay_icon = 'icons/mob/kudzu.dmi'
 	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
-
-	New()
-		limb_overlay_1_state = "[src.slot]_kudzu"
-		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
-		severed_overlay_1_state = "[src.icon_state]_kudzu"
-		. = ..()
 
 ////// ACTUAL KUDZU LIMBS //////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/kudzu/left
@@ -1729,7 +1581,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/kudzu/right
 	name = "right kudzu arm"
@@ -1737,7 +1589,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/kudzu/left
 	name = "left kudzu leg"
@@ -1745,7 +1597,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/kudzu/right
@@ -1754,7 +1606,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 /// HUNTER LIMBS ///
@@ -1762,11 +1614,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/hunter
 	icon = 'icons/mob/hunter.dmi'
-	partIcon = 'icons/mob/hunter.dmi'
+	part_icon = 'icons/mob/hunter.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/hunter
 	icon = 'icons/mob/hunter.dmi'
-	partIcon = 'icons/mob/hunter.dmi'
+	part_icon = 'icons/mob/hunter.dmi'
 
 ///// LIMBS /////
 
@@ -1780,7 +1632,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 
@@ -1799,7 +1651,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	skintoned = FALSE
 	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 
@@ -1814,7 +1666,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/hunter/right
@@ -1823,18 +1675,18 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 /// VIRTUAL LIMBS ///
 ///// PARENT /////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/virtual
 	icon = 'icons/mob/virtual.dmi'
-	partIcon = 'icons/mob/virtual.dmi'
+	part_icon = 'icons/mob/virtual.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/virtual
 	icon = 'icons/mob/virtual.dmi'
-	partIcon = 'icons/mob/virtual.dmi'
+	part_icon = 'icons/mob/virtual.dmi'
 
 ///// LIMBS /////
 
@@ -1844,7 +1696,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/virtual/right
 	name = "left virtual arm"
@@ -1852,7 +1704,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/virtual/left
 	name = "left virtual leg"
@@ -1860,7 +1712,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/virtual/right
@@ -1869,18 +1721,18 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 /// ITHILLID LIMBS ///
 ///// PARENT /////
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/ithillid
 	icon = 'icons/mob/ithillid.dmi'
-	partIcon = 'icons/mob/ithillid.dmi'
+	part_icon = 'icons/mob/ithillid.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/ithillid
 	icon = 'icons/mob/ithillid.dmi'
-	partIcon = 'icons/mob/ithillid.dmi'
+	part_icon = 'icons/mob/ithillid.dmi'
 
 ///// LIMBS /////
 
@@ -1890,7 +1742,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/ithillid/right
 	name = "left squid arm"
@@ -1898,7 +1750,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/ithillid/left
 	name = "left squid leg"
@@ -1906,7 +1758,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/ithillid/right
@@ -1915,7 +1767,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"
 
 /// PSYCHEDELIC LIMBS ///
@@ -1923,11 +1775,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/flashy
 	icon = 'icons/mob/flashy.dmi'
-	partIcon = 'icons/mob/flashy.dmi'
+	part_icon = 'icons/mob/flashy.dmi'
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/flashy
 	icon = 'icons/mob/flashy.dmi'
-	partIcon = 'icons/mob/flashy.dmi'
+	part_icon = 'icons/mob/flashy.dmi'
 
 ///// LIMBS /////
 
@@ -1937,7 +1789,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
-	handlistPart = "hand_left"
+	hand_layer_icon_state = "hand_left"
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/flashy/right
 	name = "psychedelic right arm"
@@ -1945,7 +1797,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_right"
+	hand_layer_icon_state = "hand_right"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/flashy/left
 	name = "psychedelic left leg"
@@ -1953,7 +1805,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
-	partlistPart = "foot_left"
+	hand_layer_icon_state = "foot_left"
 	step_image_state = "footprintsL"
 
 /obj/item/mob_part/humanoid_part/carbon_part/leg/mutant/flashy/right
@@ -1962,5 +1814,5 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
-	partlistPart = "foot_right"
+	hand_layer_icon_state = "foot_right"
 	step_image_state = "footprintsR"

@@ -701,7 +701,7 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
 "cv" = (
-/obj/item/parts/human_parts/arm/left,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left,
 /obj/item/kitchen/utensil/knife,
 /obj/disposalpipe/segment{
 	dir = 4;

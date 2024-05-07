@@ -333,11 +333,11 @@
 /area/prefab/mobius)
 "be" = (
 /obj/storage/crate,
-/obj/item/parts/robot_parts/arm/left/light{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light{
 	desc = "A metal arm for a robuddy.";
 	name = "Robuddy Arm"
 	},
-/obj/item/parts/robot_parts/arm/left/light{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light{
 	desc = "A metal arm for a robuddy.";
 	name = "Robuddy Arm"
 	},

@@ -21479,7 +21479,7 @@
 "bIM" = (
 /obj/table/reinforced/auto,
 /obj/item/motherboard,
-/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/solarium)
 "bIN" = (
@@ -45269,12 +45269,12 @@
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
-/obj/item/parts/robot_parts/leg/left/treads,
-/obj/item/parts/robot_parts/leg/right/treads,
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/leg/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/medbay)
 "dhF" = (

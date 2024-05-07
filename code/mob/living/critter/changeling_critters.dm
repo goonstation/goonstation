@@ -282,23 +282,15 @@
 			var/mob/living/carbon/human/C = hivemind_owner.owner
 			if(!C.limbs.l_arm || !C.limbs.r_arm)
 				if(!C.limbs.l_arm)
-					if (isabomination(C))
-						C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination(C)
-					else //mbc todo : use type of handspider to get diff arms
+					if (ispath(C.mutantrace.l_limb_arm_type_mutantrace))
+						C.limbs.l_arm = new C.mutantrace.l_limb_arm_type_mutantrace(C)
+					else
 						C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(C)
-					C.limbs.l_arm.holder = C
-					C.limbs.l_arm:original_holder = C
-					C.limbs.l_arm:set_skin_tone()
-					C.set_body_icon_dirty()
 				else if(!C.limbs.r_arm)
-					if (isabomination(C))
-						C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination(C)
+					if (ispath(C.mutantrace.r_limb_arm_type_mutantrace))
+						C.limbs.r_arm = new C.mutantrace.r_limb_arm_type_mutantrace(C)
 					else
 						C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(C)
-					C.limbs.r_arm.holder = C
-					C.limbs.r_arm:original_holder = C
-					C.limbs.r_arm:set_skin_tone()
-					C.set_body_icon_dirty()
 				if (isdead(src))
 					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B>"))
 				else
@@ -537,17 +529,15 @@
 			var/mob/living/carbon/human/C = hivemind_owner.owner
 			if(!C.limbs.l_leg || !C.limbs.r_leg)
 				if(!C.limbs.l_leg)
-					C.limbs.l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(C)
-					C.limbs.l_leg.holder = C
-					C.limbs.l_leg:original_holder = C
-					C.limbs.l_leg:set_skin_tone()
-					C.set_body_icon_dirty()
+					if (ispath(C.mutantrace.l_limb_leg_type_mutantrace))
+						C.limbs.l_leg = new C.mutantrace.l_limb_leg_type_mutantrace(C)
+					else
+						C.limbs.l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(C)
 				else if(!C.limbs.r_leg)
-					C.limbs.r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(C)
-					C.limbs.r_leg.holder = C
-					C.limbs.r_leg:original_holder = C
-					C.limbs.r_leg:set_skin_tone()
-					C.set_body_icon_dirty()
+					if (ispath(C.mutantrace.r_limb_leg_type_mutantrace))
+						C.limbs.r_leg = new C.mutantrace.r_limb_leg_type_mutantrace(C)
+					else
+						C.limbs.r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(C)
 				if (isdead(src))
 					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B>"))
 				else

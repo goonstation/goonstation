@@ -110,42 +110,36 @@
 
 		if (!C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(!C.limbs.l_arm && prob(limb_regen_prob))
-				if (isabomination(C))
-					C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left/abomination(C)
+				if (ispath(C.mutantrace.l_limb_arm_type_mutantrace))
+					C.limbs.l_arm = new C.mutantrace.l_limb_arm_type_mutantrace(C)
 				else
 					C.limbs.l_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/left(C)
-				C.limbs.l_arm.holder = C
-				C.limbs.l_arm:original_holder = C
-				C.limbs.l_arm:set_skin_tone()
 				C.visible_message(SPAN_ALERT("<B> [C]'s left arm grows back!"))
 				C.set_body_icon_dirty()
 				C.hud.update_hands()
 
 			if (!C.limbs.r_arm && prob(limb_regen_prob))
-				if (isabomination(C))
-					C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right/abomination(C)
+				if (ispath(C.mutantrace.r_limb_arm_type_mutantrace))
+					C.limbs.r_arm = new C.mutantrace.r_limb_arm_type_mutantrace(C)
 				else
 					C.limbs.r_arm = new /obj/item/mob_part/humanoid_part/carbon_part/arm/right(C)
-				C.limbs.r_arm.holder = C
-				C.limbs.r_arm:original_holder = C
-				C.limbs.r_arm:set_skin_tone()
 				C.visible_message(SPAN_ALERT("<B> [C]'s right arm grows back!"))
 				C.set_body_icon_dirty()
 				C.hud.update_hands()
 
 			if (!C.limbs.l_leg && prob(limb_regen_prob))
-				C.limbs.l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(C)
-				C.limbs.l_leg.holder = C
-				C.limbs.l_leg:original_holder = C
-				C.limbs.l_leg:set_skin_tone()
+				if (ispath(C.mutantrace.l_limb_leg_type_mutantrace))
+					C.limbs.l_leg = new C.mutantrace.l_limb_leg_type_mutantrace(C)
+				else
+					C.limbs.l_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/left(C)
 				C.visible_message(SPAN_ALERT("<B> [C]'s left leg grows back!"))
 				C.set_body_icon_dirty()
 
 			if (!C.limbs.r_leg && prob(limb_regen_prob))
-				C.limbs.r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(C)
-				C.limbs.r_leg.holder = C
-				C.limbs.r_leg:original_holder = C
-				C.limbs.r_leg:set_skin_tone()
+				if (ispath(C.mutantrace.r_limb_leg_type_mutantrace))
+					C.limbs.r_leg = new C.mutantrace.r_limb_leg_type_mutantrace(C)
+				else
+					C.limbs.r_leg = new /obj/item/mob_part/humanoid_part/carbon_part/leg/right(C)
 				C.visible_message(SPAN_ALERT("<B> [C]'s right leg grows back!"))
 				C.set_body_icon_dirty()
 

@@ -44455,8 +44455,8 @@
 /obj/item/device/guardbot_tool/medicator,
 /obj/storage/crate,
 /obj/item/clothing/suit/robuddy,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "czz" = (

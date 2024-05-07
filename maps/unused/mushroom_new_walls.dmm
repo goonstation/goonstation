@@ -19505,13 +19505,13 @@
 "fRa" = (
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "fRo" = (
@@ -23357,8 +23357,8 @@
 	},
 /obj/item/guardbot_core,
 /obj/item/device/multitool,
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "jHs" = (
@@ -35551,13 +35551,13 @@
 "ugM" = (
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},

@@ -73,7 +73,13 @@ ABSTRACT_TYPE(/obj/item/mob_part)
 			REMOVE_MOVEMENT_MODIFIER(src.holder, src.movement_modifier, src)
 
 		var/obj/item/object = src
-		src.remove_stage = LIMB_SURGERY_DETACHED
+		if(remove_object)
+			object = remove_object
+			object.set_loc(src.loc)
+			object.layer = initial(object.layer)
+		else
+			src.remove_stage = LIMB_SURGERY_DETACHED
+
 		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
@@ -98,17 +104,21 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 
 	/// Which side of the body this limb goes on
 	var/side = null
-	/// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
-	var/image/bodyImage
-	/// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
-	var/partIcon = 'icons/mob/human.dmi'
-	/// The part of the icon state that differs per part, ie "brullbar" for brullbar arms
-	var/partIconModifier = null
-	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
-	/// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
-	var/handlistPart
-	/// Used by getPartIconState to determine the attached-to-mob-sprite non-hand sprite
-	var/partlistPart
+	/// The icon file the mob sprite uses when attached, change if that icon_state isn't in 'icons/mob/human.dmi'
+	var/part_icon = 'icons/mob/human.dmi'
+	/// The icon file the mob sprite uses when attached and decomposed, change if those icon_states aren't in 'icons/mob/human_decomp.dmi'
+	var/part_decomp_icon = 'icons/mob/human_decomp.dmi'
+
+	/// Appended to "[src.slot]_" to form the icon_state, i.e. "brullbar" for brullbar arms
+	var/limb_icon_suffix = null
+	/// The icon_state of hand_layer_image
+	var/hand_layer_icon_state = null
+
+	/// Stores an image to pass off to update_body set on MOB_LIMB_LAYER (this is usually a limb with no hand or foot)
+	var/image/limb_layer_image
+	/// Stores an image to pass off to update_body set to MOB_HAND_LAYER1 (this is usually a hand or foot)
+	var/image/hand_layer_image
+
 	/// If TRUE, it'll resist mutantraces trying to change them
 	var/limb_is_unnatural = FALSE
 	/// Limb is not attached to its original owner
@@ -117,8 +127,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 	var/kind_of_limb
 	/// Can we roll this limb as a random humanoid limb?
 	var/random_limb_blacklisted = TRUE
-	///if the only icon is above the clothes layer ie. in the handlistPart list
-	var/no_icon = FALSE
 	/// for avoiding istype in update icon
 	var/accepts_normal_human_overlays = TRUE
 
@@ -130,7 +138,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 
 	/// set to TRUE if this limb has decomposition icons
 	var/decomp_affected = TRUE
-	var/current_decomp_stage_s = -1
+	var/current_decomp_stage = DECOMP_STAGE_NO_ROT
 
 	///Attachable without surgery?
 	var/easy_attach = FALSE
@@ -146,6 +154,15 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 	var/list/saw_messages = list("throws the saw aside and tears through", "throw the saw aside and tear through")
 	/// surgery material messages (per stage)
 	var/limb_material = list("Source missing texture","unobtanium","strangelet loaf crust")
+
+	New(var/holder)
+		..()
+		if (ishuman(holder))
+			var/mob/living/carbon/human/H = src.holder
+			src.update_images()
+			H.update_body()
+			H.set_body_icon_dirty()
+			H.UpdateDamageIcon()
 
 	delete()
 		if(ishuman(src.holder))
@@ -169,6 +186,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
 			//fix for gloves/shoes still displaying after limb loss
+			src.update_images()
 			H.update_clothing()
 			H.update_body()
 			H.set_body_icon_dirty()
@@ -179,38 +197,14 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 			else if (src.slot == "r_arm")
 				H.drop_from_slot(H.r_hand)
 				H.hud.update_hands()
+		return ..()
 
+	/// A flashier version of remove
 	proc/sever(var/mob/user)
-		if (!src.holder) // fix for Cannot read null.loc, hopefully - haine
-			if (remove_object)
-				src.remove_object = null
-				holder = null
-				qdel(src)
-			return
-
-		if (movement_modifier)
-			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
-
 		if (user)
 			logTheThing(LOG_ADMIN, user, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
-		var/obj/item/object = src
-		if(remove_object)
-			object = remove_object
-			object.set_loc(src.loc)
-			object.layer = initial(object.layer)
-		else
-			remove_stage = 3
-
-		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
-
-		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
-		object.add_fingerprint(src.holder)
-
-		holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
-
 		switch(direction)
 			if(NORTH)
 				direction = WEST
@@ -220,84 +214,36 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 				direction = EAST
 			if(WEST)
 				direction = SOUTH
-
 		if(side != "left")
 			direction = turn(direction,180)
+		if(prob(60))
+			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
+		holder.visible_message(SPAN_ALERT("[holder.name]'s [src.name] flies off in a [src.streak_descriptor] arc!"))
 
+		var/obj/item/object = src.remove(FALSE)
 		if (isitem(object))
 			object.streak_object(direction, src.streak_decal)
 
-		if(prob(60))
-			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
-
-		if(ishuman(holder))
-			var/mob/living/carbon/human/H = holder
-			holder = null
-			if(H.limbs.vars[src.slot] == src) //BAD BAD HACK FUCK FUCK UGLY SHITCODE - Tarm
-				H.limbs.vars[src.slot] = null
-			if(remove_object)
-				src.remove_object = null
-				qdel(src)
-			//fix for gloves/shoes still displaying after limb loss
-			H.update_clothing()
-			H.update_body()
-			H.set_body_icon_dirty()
-			H.UpdateDamageIcon()
-			if (src.slot == "l_arm")
-				H.drop_from_slot(H.l_hand)
-				H.hud.update_hands()
-			else if (src.slot == "r_arm")
-				H.drop_from_slot(H.r_hand)
-				H.hud.update_hands()
-
-		else if(remove_object)
-			src.remove_object = null
-			holder = null
-			qdel(src)
-		if(!QDELETED(src))
-			src.holder = null
 		return object
 
-	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
-		if(no_icon)
-			return 0
-		if (force)
-			qdel(src.bodyImage)
-			src.bodyImage = null
-		var/used_icon = mutantrace_override || getAttachmentIcon(decomp_stage)
-		if (src.bodyImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.bodyImage
-		current_decomp_stage_s = decomp_stage
-		var/icon_state = src.getMobIconState(decomp_stage)
-		src.bodyImage = image(used_icon, icon_state)
-		return bodyImage
-
-	proc/getMobIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	/// Updates limb_layer_image and hand_layer_image
+	proc/update_images()
 		var/decomp = ""
-		if (src.decomp_affected && decomp_stage)
-			decomp = "_decomp[decomp_stage]"
-		return "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
+		var/used_icon = src.part_icon
+		if (src.decomp_affected && src.current_decomp_stage)
+			decomp = "_decomp[src.current_decomp_stage]"
+			used_icon = src.part_decomp_icon
 
-	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.decomp_affected && decomp_stage)
-			return src.partDecompIcon
-		return src.partIcon
+		if(src.hand_layer_icon_state)
+			src.hand_layer_image = image(used_icon, "[src.hand_layer_icon_state][decomp]", MOB_HAND_LAYER1)
 
-	proc/getHandIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		var/decomp = ""
-		if (src.decomp_affected && decomp_stage)
-			decomp = "_decomp[decomp_stage]"
+		var/limb_layer_icon_state = "[src.slot][src.limb_icon_suffix ? "_[src.limb_icon_suffix]" : ""][decomp]"
+		if (ishuman(src.holder))
+			var/mob/living/carbon/human/H = src.holder
+			if (H.mutantrace?.override_limb_icons && (limb_layer_icon_state in H.mutantrace.icon_states))
+				used_icon = H.mutantrace.icon // monkeys use this to get smaller cyborg/synthlimbs, etc
 
-		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
-		return "[src.handlistPart][decomp]"
-
-	proc/getPartIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		var/decomp = ""
-		if (src.decomp_affected && decomp_stage)
-			decomp = "_decomp[decomp_stage]"
-
-		//boutput(world, "Attaching standing part [src.slot][decomp]_s on decomp stage [decomp_stage].")
-		return "[src.partlistPart][decomp]"
+		src.limb_layer_image = image(used_icon, limb_layer_icon_state, MOB_LIMB_LAYER)
 
 	proc/surgery(obj/item/tool, mob/surgeon)
 		if(remove_stage > 0 && (istype(tool, /obj/item/staple_gun) || istype(tool, /obj/item/suture)) )
@@ -323,18 +269,18 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 		take_bleeding_damage(holder, surgeon, src.surgery_bleeding, DAMAGE_STAB, surgery_bleed = TRUE)
 
 		switch(remove_stage)
-			if(0)
+			if(LIMB_SURGERY_ATTACHED)
 				surgeon.visible_message("<span class'alert'>[surgeon] attaches [src.name] to [holder.name] with [tool].</span>", SPAN_ALERT("You attach [src.name] to [holder.name] with [tool]."))
 				logTheThing(LOG_COMBAT, surgeon, "attaches [src.name] to [constructTarget(holder,"combat")].")
-			if(1)
-				surgeon.visible_message(SPAN_ALERT("[surgeon] [src.cut_messages[1]] the [src.limb_material[1]] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the [src.limb_material[2]] of [holder.name]'s [src.name] with [tool]."))
-			if(2)
-				surgeon.visible_message(SPAN_ALERT("[surgeon] [src.saw_messages[1]] the [src.limb_material[1]] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.saw_messages[2]] the [src.limb_material[2]] of [holder.name]'s [src.name] with [tool]."))
+			if(LIMB_SURGERY_STEP_ONE)
+				surgeon.visible_message(SPAN_ALERT("[surgeon] [src.cut_messages[1]] the [src.limb_material[1]] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the [src.limb_material[1]] of [holder.name]'s [src.name] with [tool]."))
+			if(LIMB_SURGERY_STEP_TWO)
+				surgeon.visible_message(SPAN_ALERT("[surgeon] [src.saw_messages[1]] the [src.limb_material[2]] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.saw_messages[2]] the [src.limb_material[2]] of [holder.name]'s [src.name] with [tool]."))
 
 				SPAWN(rand(15, 20) SECONDS)
 					if(remove_stage == 2)
 						src.remove(FALSE)
-			if(3)
+			if(LIMB_SURGERY_DETACHED)
 				surgeon.visible_message(SPAN_ALERT("[surgeon] [src.cut_messages[1]] the remaining [src.limb_material[3]] holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the remaining [src.limb_material[3]] holding [holder.name]'s [src.name] on with [tool]."))
 				logTheThing(LOG_COMBAT, surgeon, "removes [src.name] to [constructTarget(holder,"combat")].")
 				src.remove(FALSE)
@@ -342,8 +288,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 		return TRUE
 
 	attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
-		if(!ishuman(attachee) || !(src.slot | attachee.limbs))
-			return ..()
+		if(!ishuman(attachee) || attachee.limbs.vars[src.slot])
+			return FALSE
 
 		var/can_secure = FALSE
 		if(attacher)
@@ -376,8 +322,10 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 			if(remove_stage == 2)
 				src.remove()
 
+		src.update_images()
 		attachee.update_clothing()
 		attachee.update_body()
+		attachee.set_body_icon_dirty()
 		attachee.UpdateDamageIcon()
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
@@ -403,13 +351,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/item_arm)
 	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
-	handlistPart = null
-	partlistPart = null
-	no_icon = TRUE
-	var/special_icons = 'icons/mob/human.dmi'
+	hand_layer_image = null
+	hand_layer_icon_state = null
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
-	var/image/handimage = 0
+	/// temporary until bitflag slots
+	var/side_letter = null
 	random_limb_blacklisted = TRUE
 	/// No more yee eating csaber arms
 	limb_is_unnatural = TRUE
@@ -436,7 +383,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/item_arm)
 			ret = src
 		return ret
 
-
 	proc/set_item(var/obj/item/I)
 		var/mob/living/carbon/human/H = null
 		if (ishuman(src.holder))
@@ -462,7 +408,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/item_arm)
 		I.set_loc(src)
 		remove_object.temp_flags |= IS_LIMB_ITEM
 		if (istype(I))
-			handlistPart += "l_arm_[I.arm_icon]"
 			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
@@ -477,21 +422,18 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/item_arm)
 			I.cant_self_remove = 1
 			I.cant_other_remove = 1
 
-			handimage = I.inhand_image
+			src.hand_layer_image = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
 			if(!(state in icon_states(I.inhand_image_icon)))
-				state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-			handimage.icon_state = state
-
-			handimage.pixel_y = H.mutantrace.hand_offset + 6
+				state = I.item_state ? I.item_state + "-[src.side_letter]" : (I.icon_state ? I.icon_state + "-[src.side_letter]" : "[src.side_letter]")
+			src.hand_layer_image.icon_state = state
 
 			if (H)
 				H.update_body()
 				H.update_inhands()
-				H.hud.add_other_object(H.l_hand,H.hud.layouts[H.hud.layout_style]["lhand"])
+				H.hud.add_other_object(H.l_hand,H.hud.layouts[H.hud.layout_style]["[src.side == "left" ? "lhand" : "rhand"]"])
 
-
-	proc/remove_from_mob(delete = 0)
+	proc/remove_from_mob(delete = FALSE)
 		if (isitem(remove_object))
 			remove_object.cant_drop = (original_flags & ORIGINAL_FLAGS_CANT_DROP) ? 1 : 0
 			remove_object.cant_self_remove = (original_flags & ORIGINAL_FLAGS_CANT_SELF_REMOVE) ? 1 : 0
@@ -515,33 +457,33 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/item_arm)
 			qdel(remove_object)
 			remove_object = null
 
-	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
-			.= handimage
-		else
-			.=..()
-
-	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
-			.= handimage
-		else
-			.=..()
-
-	remove(var/show_message = 1)
-		remove_from_mob(0)
+	remove(var/show_message = TRUE)
+		remove_from_mob(FALSE)
 		..()
 
 	sever()
-		remove_from_mob(0)
+		remove_from_mob(FALSE)
 		..()
 
 	disposing()
-		remove_from_mob(1)
+		remove_from_mob(TRUE)
 		..()
 
 	on_holder_examine()
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
+
+/obj/item/mob_part/humanoid_part/item_arm/left
+	name = "left item arm"
+	side = "left"
+	slot = "l_arm"
+	side_letter = "L"
+
+/obj/item/mob_part/humanoid_part/item_arm/right
+	name = "right item arm"
+	side = "right"
+	slot = "r_arm"
+	side_letter = "R"
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
@@ -568,14 +510,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/item_arm)
 				if (ispath(streak_splatter))
 					make_cleanable(streak_splatter,src.loc)
 			sleep(0.1 SECONDS)
-
-/obj/item/mob_part/humanoid_part/item_arm/left
-	name = "left item arm"
-	side = "left"
-
-/obj/item/mob_part/humanoid_part/item_arm/right
-	name = "right item arm"
-	side = "right"
 
 var/global/list/all_valid_random_right_arms = filtered_concrete_typesof(/obj/item/mob_part/humanoid_part, /proc/goes_in_right_arm_slot)
 var/global/list/all_valid_random_left_arms = filtered_concrete_typesof(/obj/item/mob_part/humanoid_part, /proc/goes_in_left_arm_slot)

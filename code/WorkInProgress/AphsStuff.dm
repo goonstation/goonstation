@@ -395,7 +395,7 @@
 	icon_state = "r_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	handlistPart = "armR-light"
+	hand_layer_icon_state = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
 /obj/item/mob_part/humanoid_part/silicon_part/arm/left/servotron
@@ -404,7 +404,7 @@
 	icon_state = "l_arm-servo"
 	appearanceString = "servo"
 	max_health = 40
-	handlistPart = "armL-light"
+	hand_layer_icon_state = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 
 /obj/item/mob_part/humanoid_part/silicon_part/head/servotron

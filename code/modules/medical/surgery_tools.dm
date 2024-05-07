@@ -305,7 +305,7 @@ CONTAINS:
 			var/obj/item/mob_part/humanoid_part/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
 			if (istype(surgery_limb))
 				src.ammo--
-				surgery_limb.surgery(src)
+				surgery_limb.surgery(src, user)
 			return
 
 

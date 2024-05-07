@@ -36,7 +36,7 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/replicant_lab)
 "aj" = (
-/obj/item/parts/robot_parts/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "ak" = (
@@ -115,7 +115,7 @@
 /obj/decal/cleanable/oil{
 	icon_state = "streak2"
 	},
-/obj/item/parts/robot_parts/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
 "ay" = (
@@ -287,7 +287,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip3"
 	},
-/obj/item/parts/robot_parts/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
 /obj/decal/cleanable/blood/tracks{
 	dir = 10;
 	icon_state = "tracks"
@@ -467,7 +467,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
 "bt" = (
-/obj/item/parts/robot_parts/arm/right/sturdy,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy,
 /obj/decal/cleanable/blood/tracks{
 	dir = 9;
 	icon_state = "tracks"
@@ -501,7 +501,7 @@
 	},
 /area/prefab/replicant_lab)
 "bz" = (
-/obj/item/parts/robot_parts/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
 /obj/item/electronics/fuse,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
@@ -568,7 +568,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
 "bJ" = (
-/obj/item/parts/robot_parts/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "bK" = (
@@ -632,7 +632,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "bS" = (
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /obj/storage/crate/bin,
 /obj/item/organ/brain/synth,
 /turf/simulated/floor/shuttlebay,
@@ -686,9 +686,9 @@
 	icon_state = "floor5"
 	},
 /obj/decal/cleanable/robot_debris,
-/obj/item/parts/human_parts/arm/left,
-/obj/item/parts/robot_parts/arm/left/light,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "ca" = (
@@ -739,11 +739,11 @@
 	},
 /area/prefab/replicant_lab)
 "cg" = (
-/obj/item/parts/robot_parts/head/sturdy,
+/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "ch" = (
-/obj/item/parts/human_parts/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
 /obj/item/kitchen/utensil/knife,
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
@@ -751,7 +751,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "ci" = (
-/obj/item/parts/robot_parts/arm/left/light,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
 /obj/decal/cleanable/blood{
 	icon_state = "drip5"
 	},
@@ -808,11 +808,11 @@
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib7"
 	},
-/obj/item/parts/human_parts/arm/right,
-/obj/item/parts/human_parts/leg/left,
-/obj/item/parts/human_parts/leg/left,
-/obj/item/parts/human_parts/leg/right,
-/obj/item/parts/robot_parts/arm/left/heavy,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy,
 /obj/decal/cleanable/blood{
 	icon_state = "drip5"
 	},
@@ -822,8 +822,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/prefab/replicant_lab)
 "cq" = (
-/obj/item/parts/human_parts/leg/right,
-/obj/item/parts/robot_parts/head/antique,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
 /obj/item/scalpel,
 /obj/item/reagent_containers/patch/synthflesh,
 /turf/simulated/floor/plating/damaged3,
@@ -872,8 +872,8 @@
 	},
 /area/prefab/replicant_lab)
 "cw" = (
-/obj/item/parts/human_parts/leg/right,
-/obj/item/parts/robot_parts/head/antique,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
 /obj/item/reagent_containers/patch/mini/burn,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)

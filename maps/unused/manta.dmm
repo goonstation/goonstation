@@ -3894,15 +3894,15 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "ang" = (
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/leg/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
-/obj/item/parts/robot_parts/leg/left/treads,
-/obj/item/parts/robot_parts/leg/right/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -26368,9 +26368,9 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;

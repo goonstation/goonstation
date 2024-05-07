@@ -415,7 +415,7 @@
 /turf/simulated/floor,
 /area/prefab/shooting_range)
 "AI" = (
-/obj/item/parts/robot_parts/arm/right/heavy,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/heavy,
 /turf/simulated/floor/dojo,
 /area/prefab/shooting_range)
 "Bq" = (
@@ -524,7 +524,7 @@
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)
 "LF" = (
-/obj/item/parts/robot_parts/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
 /obj/item/cable_coil/black/cut,
 /turf/simulated/floor/dojo,
 /area/prefab/shooting_range)

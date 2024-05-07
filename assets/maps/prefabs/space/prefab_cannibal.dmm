@@ -75,7 +75,7 @@
 /obj/item/reagent_containers/food/drinks/skull_chalice{
 	pixel_y = 20
 	},
-/obj/item/parts/human_parts/arm/left,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left,
 /obj/item/coin,
 /turf/simulated/floor/wood/two,
 /area/noGenerate)
@@ -110,7 +110,7 @@
 /obj/item/reagent_containers/food/drinks/skull_chalice{
 	pixel_y = 20
 	},
-/obj/item/parts/human_parts/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/two,
 /area/noGenerate)

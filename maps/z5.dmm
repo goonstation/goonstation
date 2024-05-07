@@ -4627,8 +4627,8 @@
 /obj/item/stamp,
 /obj/item/emeter,
 /obj/lattice,
-/obj/item/parts/robot_parts/head/antique,
-/obj/item/parts/robot_parts/head/antique,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "ME" = (

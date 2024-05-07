@@ -2052,11 +2052,11 @@
 /obj/item/guardbot_frame,
 /obj/item/guardbot_core,
 /obj/random_item_spawner/buddytool/three,
-/obj/item/parts/robot_parts/arm/right/standard{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard{
 	pixel_x = 9;
 	pixel_y = 1
 	},
-/obj/item/parts/robot_parts/arm/right/standard{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard{
 	pixel_x = 9;
 	pixel_y = 1
 	},
@@ -30941,7 +30941,7 @@
 /turf/simulated/wall/false_wall,
 /area/station/maintenance/southwest)
 "lrb" = (
-/obj/item/parts/human_parts/arm/left,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4";
 	tag = "icon-floor4"

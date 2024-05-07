@@ -845,7 +845,7 @@
 /area/noGenerate)
 "LI" = (
 /obj/machinery/door_control/podbay/suspiciousdebris,
-/obj/item/parts/robot_parts/arm/right/light{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/light{
 	pixel_x = -7
 	},
 /turf/variableTurf/floor,

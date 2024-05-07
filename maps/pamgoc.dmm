@@ -33303,11 +33303,11 @@
 	pixel_y = -6
 	},
 /obj/machinery/light,
-/obj/item/parts/robot_parts/arm/left/standard{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard{
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/parts/robot_parts/arm/left/standard{
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard{
 	pixel_x = 12;
 	pixel_y = 6
 	},
