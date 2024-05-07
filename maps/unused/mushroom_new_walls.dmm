@@ -20419,6 +20419,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"gDE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "gDK" = (
 /obj/cable,
 /obj/cable{
@@ -26054,6 +26061,16 @@
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless/solar,
 /area/space)
+"mdg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	dir = null
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "mdh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -26576,6 +26593,9 @@
 /obj/railing/orange{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -26957,6 +26977,9 @@
 /obj/cable{
 	icon_state = "2-4";
 	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8
@@ -30416,6 +30439,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"pHV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "pIe" = (
 /obj/item/device/timer{
 	pixel_x = -7;
@@ -32916,6 +32949,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"rBJ" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rBP" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Engineering";
@@ -39231,6 +39270,12 @@
 /area/station/hydroponics/bay)
 "wOn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "wOt" = (
@@ -40898,6 +40943,9 @@
 "ybq" = (
 /obj/shrub{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -71478,9 +71526,9 @@ ctu
 aaa
 aaa
 wOn
-wOn
-wOn
-wOn
+dYg
+dYg
+lwM
 bda
 nji
 rmY
@@ -71779,7 +71827,7 @@ amz
 ely
 aaa
 aaa
-wOn
+pHV
 aqI
 cMd
 ybq
@@ -72081,10 +72129,10 @@ bpm
 azo
 aaa
 baI
-wOn
+pHV
 qCf
 rmY
-rmY
+rBJ
 mCd
 nbc
 ppF
@@ -72382,8 +72430,8 @@ hKu
 alE
 azo
 aaa
-wOn
-wOn
+puS
+mdg
 nzI
 irQ
 irQ
@@ -72684,7 +72732,7 @@ ayY
 alE
 azo
 wFK
-wOn
+pHV
 rHR
 eEU
 jBG
@@ -72986,7 +73034,7 @@ reY
 jep
 azo
 aaa
-wOn
+pHV
 rmY
 rmY
 hPU
@@ -73288,7 +73336,7 @@ ayN
 nkc
 vuG
 aaa
-wOn
+gDE
 cMd
 rmY
 rrx
