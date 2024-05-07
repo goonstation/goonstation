@@ -333,12 +333,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 //Given a list of candidates returns candidates that are acceptable to be promoted based on their medium/low priorities
 //ideally JOB should only be a command position. eg. CE, RD, MD
 /proc/FindPromotionCandidates(list/staff, var/datum/job/JOB)
-	var/list/picks = FindOccupationCandidates(staff,JOB.name,2)
-
-	//If there are no acceptable candidates (no inappropriate antags, no job bans) who have it in their medium priority list
-	if (!length(picks))
-		picks = FindOccupationCandidates(staff,JOB.name,3)
-	return picks
+	for (var/level in 1 to 3) //favourite, med prio, low prio in that order
+		var/list/picks = FindOccupationCandidates(staff,JOB.name,level)
+		if (length(picks))
+			return picks
+	return list()
 
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
@@ -763,20 +762,32 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				I.set_loc(get_turf(src))
 
-		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-			if (src.limbs)
-				SPAWN(6 SECONDS)
-					if (src.limbs.l_leg)
-						src.limbs.l_leg.delete()
-					if (src.limbs.r_leg)
-						src.limbs.r_leg.delete()
-				new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+		if (src.limbs)
+			SPAWN(6 SECONDS)
+				if (src.limbs.l_leg)
+					src.limbs.l_leg.delete()
+				if (src.limbs.r_leg)
+					src.limbs.r_leg.delete()
+			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
-		// Special mutantrace items
-		if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
-		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-			src.put_in_hand_or_drop(new /obj/item/joint_wax)
+	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.drop_from_slot(src.wear_mask)
+
+		if(!src.wear_mask)
+			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
+
+		var/obj/item/tank/good_air = new /obj/item/tank/mini_plasma(src)
+		src.put_in_hand_or_drop(good_air)
+		if (!good_air.using_internal())//set tank ON
+			good_air.toggle_valve()
+
+	// Special mutantrace items
+	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+		src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
 	src.equip_sensory_items()
 

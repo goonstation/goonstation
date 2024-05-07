@@ -128,7 +128,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		// for the debug tray
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
-		var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
+		var/growthlimit = growing.HYPget_growth_to_matured(DNA)
 		plant_data["hp"] = src.health
 		plant_data["hpmax"] = growing.starthealth
 		plant_data["growth"] = src.growth
@@ -136,6 +136,11 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	input.signal = list2params(plant_data)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+
+/obj/machinery/plantpot/proc/get_current_growth_stage()
+	if(!current || src.dead)
+		return HYP_GROWTH_DEAD
+	return src.current.HYPget_growth_stage(src.plantgenes, src.growth)
 
 /obj/machinery/plantpot/proc/update_water_level() //checks reagent contents of the pot, then returns the cuurent water level
 	var/current_total_volume = (src.reagents ? src.reagents.total_volume : 0)
@@ -291,18 +296,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.HYPkillplant()
 		return
 
-	var/current_growth_level = 0
+	var/current_growth_level = src.get_current_growth_stage()
 	// This is entirely for updating the icon. Check how far the plant has grown and update
 	// if it's gone a level beyond what the tracking says it is.
-
-	if(src.growth >= growing.harvtime - DNA?.get_effective_value("harvtime"))
-		current_growth_level = 4
-	else if(src.growth >= growing.growtime - DNA?.get_effective_value("growtime"))
-		current_growth_level = 3
-	else if(src.growth >= (growing.growtime - DNA?.get_effective_value("growtime")) / 2)
-		current_growth_level = 2
-	else
-		current_growth_level = 1
 
 	var/do_update_icon = FALSE
 	if(current_growth_level != src.grow_level)
@@ -339,7 +335,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			var/datum/plant/maneater/Manipulated_Maneater = growing
 			// We want to be able to feed stuff to maneaters, such as meat, people, etc.
 			if(istype(W, /obj/item/grab) && ishuman(W:affecting) && W:state >= GRAB_AGGRESSIVE)
-				if(src.growth < (growing.growtime - DNA?.get_effective_value("growtime")))
+				if(src.get_current_growth_stage() < HYP_GROWTH_MATURED)
 					boutput(user, SPAN_ALERT("It's not big enough to eat that yet."))
 					// It doesn't make much sense to feed a full man to a dinky little plant.
 					return
@@ -816,11 +812,11 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(src.plantgenes.mutation)
 		var/datum/plantmutation/MUT = src.plantgenes.mutation
 		if(MUT.harvest_override && MUT.crop)
-			if(src.growth >= src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")) return TRUE
+			if(src.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE) return TRUE
 			else return FALSE
 	if(!src.current.crop || !src.current.harvestable) return FALSE
 
-	if(src.growth >= src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")) return TRUE
+	if(src.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE) return TRUE
 	else return FALSE
 
 /obj/machinery/plantpot/proc/HYPharvesting(var/mob/living/user,var/obj/item/satchel/SA)
@@ -873,7 +869,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(MUT?.harvest_cap)
 		harvest_cap = MUT.harvest_cap
 
-	src.growth = max(0, growing.growtime - DNA?.get_effective_value("growtime"))
+	src.growth = max(0, growing.HYPget_growth_to_matured(DNA))
 	// Reset the growth back to the beginning of maturation so we can wait out the
 	// harvest time again.
 	var/getamount = growing.cropsize + DNA?.get_effective_value("cropsize")
@@ -1349,7 +1345,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	maptext_x = -32
 	var/datum/plant/growing = src.current
 	var/datum/plantgenes/DNA = src.plantgenes
-	var/growth_pct = round(src.growth / (growing.harvtime - (DNA ? DNA.harvtime : 0)) * 100)
+	var/growth_pct = round(src.growth / growing.HYPget_growth_to_harvestable(DNA) * 100)
 	var/hp_pct = 0
 	var/hp_text = ""
 	if (growing.starthealth != 0)
@@ -1382,7 +1378,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	var/datum/plant/growing = src.current
 	var/datum/plantgenes/DNA = src.plantgenes
-	var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
+	var/growthlimit = growing.HYPget_growth_to_harvestable(DNA)
 	return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
 
 /obj/machinery/plantpot/hightech/process()
@@ -1454,14 +1450,14 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 			if(spawn_growth)
 				src.grow_level = spawn_growth
 			else
-				src.grow_level = pick(3,4,4)
+				src.grow_level = pick(HYP_GROWTH_MATURED,HYP_GROWTH_HARVESTABLE,HYP_GROWTH_HARVESTABLE)
 			switch(grow_level)
-				if(2)
-					src.growth = (src.current.growtime - src.plantgenes?.get_effective_value("growtime")) / 2
-				if(3)
-					src.growth = src.current.growtime - src.plantgenes?.get_effective_value("growtime")
-				if(4)
-					src.growth = src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")
+				if(HYP_GROWTH_GROWING)
+					src.growth = src.current.HYPget_growth_to_growing(src.plantgenes)
+				if(HYP_GROWTH_MATURED)
+					src.growth = src.current.HYPget_growth_to_matured(src.plantgenes)
+				if(HYP_GROWTH_HARVESTABLE)
+					src.growth = src.current.HYPget_growth_to_harvestable(src.plantgenes)
 			UpdateIcon()
 		else
 			if(!src.current)
