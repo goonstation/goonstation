@@ -68,7 +68,7 @@ export const BlueprintButton = (props:BlueprintButtonData) => {
     materialData,
   );
   // Condense producability
-  const notProduceable = blueprintSatisfaction.some((materialIsProducable:boolean) => materialIsProducable === false);
+  const notProduceable = blueprintSatisfaction.includes(false);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs = (blueprintData.item_names.length < 2
     && blueprintData.create < 2
