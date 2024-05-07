@@ -2214,6 +2214,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/miniplasmatank
+	name = "mini plasma tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/mini_plasma/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/minioxygentank
+	name = "mini oxygen tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/patch
 	name = "Chemical Patch"
 	item_paths = list("FAB-1")

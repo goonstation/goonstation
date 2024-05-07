@@ -675,7 +675,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				if (A == src.my_target) //gotcha!
 					if(!ON_COOLDOWN(src.my_target, "fake_singulo_scream", 5 SECONDS))
 						src.my_target.emote("scream", FALSE)
-					src.my_target.changeStatus("weakened", 2 SECONDS)
+					src.my_target.changeStatus("knockdown", 2 SECONDS)
 					src.my_target.changeStatus("stunned", 2 SECONDS)
 					SPAWN(5 SECONDS)
 						qdel(src)
