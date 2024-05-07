@@ -3,6 +3,7 @@
 	desc = "Transmutes a living target into gold"
 	icon_state = "grasp"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

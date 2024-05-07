@@ -3,6 +3,7 @@
 	desc = "Snaps a target into a slim jim."
 	icon_state = "lesser"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

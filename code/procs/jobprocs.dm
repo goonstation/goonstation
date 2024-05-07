@@ -144,7 +144,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
 	// Though we don't want to do this in sandbox mode where it won't matter anyway
-	if(master_mode != "sandbox")
+	if(master_mode != "sandbox" && FALSE)
 		for(var/datum/job/JOB in high_priority_jobs)
 			if (!length(unassigned)) break
 
