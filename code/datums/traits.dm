@@ -281,6 +281,38 @@
 	disability_name = "Legless"
 	disability_desc = "Legs have been severed"
 
+/datum/trait/plasmalungs
+	name = "Plasma Lungs"
+	desc = "You signed up for a maintenance experiment involving someone who was definitely a scientist and your lungs are now only capable of breathing in plasma. At least they gave you a free tank to breathe from."
+	id = "plasmalungs"
+	icon_state = "placeholder"
+	category = list("body")
+	points = 1
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Plasma Lungs"
+	disability_desc = "Only capable of breathing plasma in a gaseous state"
+
+	onAdd(mob/living/carbon/human/owner)
+		if (!istype(owner))
+			return
+		var/obj/item/organ/created_organ
+		var/obj/item/organ/lung/left = owner?.organHolder?.left_lung
+		var/obj/item/organ/lung/right = owner?.organHolder?.right_lung
+		if(istype(left) && istype(right))
+			created_organ = new /obj/item/organ/lung/plasmatoid/left()
+			owner.organHolder.drop_organ(left.organ_holder_name)
+			qdel(left)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+			created_organ = new /obj/item/organ/lung/plasmatoid/right()
+			owner.organHolder.drop_organ(right.organ_holder_name)
+			qdel(right)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
 // LANGUAGE - Yellow Border
 
 /datum/trait/swedish
