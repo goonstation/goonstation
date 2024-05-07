@@ -229,11 +229,11 @@
 						e_decomp_stage++
 		if (ishuman(owner)) // technically we won't let it be anything else but who knows what might happen
 			var/mob/living/carbon/human/H = owner
-			if (owner.decomp_stage != e_decomp_stage)
-				owner.decomp_stage = e_decomp_stage
-				owner.decompose_limbs()
-				owner.set_face_icon_dirty()
-				owner.set_body_icon_dirty()
+			if (H.decomp_stage != e_decomp_stage)
+				H.decomp_stage = e_decomp_stage
+				H.decompose_limbs()
+				H.set_face_icon_dirty()
+				H.set_body_icon_dirty()
 
 	proc/addRevenantVerbs()
 		var/datum/abilityHolder/revenant/RH = owner.add_ability_holder(/datum/abilityHolder/revenant)
