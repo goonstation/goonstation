@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 
 	proc/load()
 		RETURN_TYPE(/datum/allocated_region)
-		var/datum/allocated_region/region = global.region_allocator.allocate(src.prefabSizeX, src.prefabSizeY)
+		var/datum/allocated_region/region = global.region_allocator.allocate(src.prefabSizeX, src.prefabSizeY, name)
 		src.applyTo(region.bottom_left, overwrite_args = DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
 		return region
 
