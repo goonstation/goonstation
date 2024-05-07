@@ -16232,6 +16232,7 @@
 /area/station/hallway/primary/north)
 "cEF" = (
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/mug/HoS,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "cFj" = (
