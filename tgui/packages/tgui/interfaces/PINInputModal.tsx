@@ -24,17 +24,7 @@ type PINInputData = {
 export const PINInputModal = (_, context) => {
   const { act, data } = useBackend<PINInputData>(context);
   const { message, init_value, min_value, max_value, timeout, title, theme } = data;
-
-  const setupPinState = (): number[] => {
-    const arr = Array(4);
-
-    for (let i = 0; i < 4; i++) {
-      arr[i] = Math.floor(init_value / 10 ** (3 - i)) % 10;
-    }
-    return arr;
-  };
-
-  const [pin, setPin] = useLocalState(context, 'input', setupPinState());
+  const [pin, setPin] = useLocalState(context, 'input', setupPinState(init_value));
   const [giveWarning, setGiveWarning] = useLocalState(context, 'giveWarning', false);
 
   const onClick = (value: number) => {
@@ -45,12 +35,6 @@ export const PINInputModal = (_, context) => {
       // Otherwise, replace the rightmost digit with the new digit.
       setPin([...pin.slice(0, -1), value]);
     }
-  };
-
-  const pinToNumber = (pin: number[]) => {
-    return pin.reduce((acc, digit, index) => {
-      return acc + digit * 10 ** (3 - index);
-    }, 0);
   };
 
   const handleSubmission = () => {
@@ -66,7 +50,11 @@ export const PINInputModal = (_, context) => {
   };
 
   return (
-    <Window title={title} width={160} height={giveWarning ? 345 : 315} theme={theme || 'nanotrasen'}
+    <Window
+      title={title}
+      width={160}
+      height={giveWarning ? 345 : 315}
+      theme={theme || 'nanotrasen'}
       onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;
         if (keyCode === KEY_ENTER) {
@@ -123,7 +111,7 @@ export const PINInputModal = (_, context) => {
                   {Array.from({ length: 3 }, (_, subIndex) => {
                     const number = index * 3 + subIndex + 1;
                     return (
-                      <Stack.Item key={subIndex}>
+                      <Stack.Item key={subIndex} grow>
                         <Button onClick={() => onClick(number)}>{number}</Button>
                       </Stack.Item>
                     );
@@ -133,13 +121,13 @@ export const PINInputModal = (_, context) => {
             ))}
             <Stack.Item>
               <Stack fill>
-                <Stack.Item>
+                <Stack.Item grow>
                   <Button icon="circle-xmark" color="red" onClick={() => setPin([])} />
                 </Stack.Item>
-                <Stack.Item>
+                <Stack.Item grow>
                   <Button onClick={() => onClick(0)}>0</Button>
                 </Stack.Item>
-                <Stack.Item>
+                <Stack.Item grow>
                   <Button icon="circle-right" color="green" onClick={handleSubmission} />
                 </Stack.Item>
               </Stack>
@@ -150,4 +138,19 @@ export const PINInputModal = (_, context) => {
     </Window>
   );
 
+};
+
+const setupPinState = (init_value: number): number[] => {
+  const arr = Array(4);
+
+  for (let i = 0; i < 4; i++) {
+    arr[i] = Math.floor(init_value / 10 ** (3 - i)) % 10;
+  }
+  return arr;
+};
+
+const pinToNumber = (pin: number[]) => {
+  return pin.reduce((acc, digit, index) => {
+    return acc + digit * 10 ** (3 - index);
+  }, 0);
 };
