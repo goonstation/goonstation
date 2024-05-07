@@ -24686,10 +24686,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/heads)
-"kJr" = (
-/obj/storage/secure/closet/civilian/janitor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "kJu" = (
 /obj/stool/chair/green,
 /obj/machinery/camera{
@@ -88140,7 +88136,7 @@ aPu
 aPu
 aqj
 bpR
-kJr
+bdm
 uoe
 hQH
 jlr
