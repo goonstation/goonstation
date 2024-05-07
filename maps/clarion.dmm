@@ -1329,12 +1329,6 @@
 	dir = 8;
 	icon_state = "pipe-t"
 	},
-/obj/machinery/activation_button/flusher_button{
-	id = "ranch_flusher";
-	name = "Kitchen Chute Activation Button";
-	pixel_x = 22;
-	pixel_y = 31
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "alb" = (
@@ -3202,12 +3196,6 @@
 	icon_state = "wooden"
 	},
 /area/station/chapel/sanctuary)
-"ayf" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/rancher,
-/turf/simulated/floor/plating,
-/area/station/ranch)
 "ayj" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -16670,6 +16658,7 @@
 	dir = 1;
 	icon_state = "railing-reinforced"
 	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ejx" = (
@@ -18064,12 +18053,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "fqI" = (
-/obj/shrub{
-	dir = 9
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -18336,6 +18326,12 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"fDe" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "fDi" = (
 /obj/disposalpipe/segment,
 /obj/landmark/pest,
@@ -24697,6 +24693,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
+"kyD" = (
+/obj/landmark/start/job/rancher,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kyE" = (
 /obj/airbridge_controller{
 	id = "mining_shuttle";
@@ -36663,6 +36663,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tAx" = (
@@ -38078,11 +38079,10 @@
 	},
 /area/station/hallway/primary/southwest)
 "uzV" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
 /obj/machinery/camera/ranch,
+/obj/shrub{
+	dir = 9
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uAh" = (
@@ -42334,6 +42334,11 @@
 /area/station/security/secwing)
 "xZn" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -22
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "xZq" = (
@@ -84200,7 +84205,7 @@ axE
 axE
 ejn
 alF
-alF
+kyD
 iPi
 xZn
 ddX
@@ -84496,7 +84501,7 @@ eZS
 uuf
 hzU
 aem
-axB
+fDe
 xMP
 xMP
 xMP
@@ -84798,7 +84803,7 @@ yfJ
 uuf
 qPG
 aem
-ayf
+axB
 uzV
 axE
 axE
