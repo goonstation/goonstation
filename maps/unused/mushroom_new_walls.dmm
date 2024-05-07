@@ -4427,16 +4427,8 @@
 	},
 /area/mining/magnet)
 "awc" = (
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
 /obj/machinery/light/incandescent,
-/obj/decal/stripe_delivery,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "awd" = (
@@ -5535,11 +5527,6 @@
 "aBv" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/window/reinforced/north,
 /obj/item_dispenser/icedispenser{
 	pixel_y = 12;
 	pixel_x = -13
@@ -11462,6 +11449,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
 "bfr" = (
@@ -18022,6 +18010,13 @@
 "eqv" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"ere" = (
+/obj/fitness/speedbag/syndie,
+/turf/simulated/floor{
+	icon_state = "0,6";
+	tag = "icon-0,6"
+	},
+/area/station/crew_quarters/fitness)
 "erm" = (
 /obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
@@ -20747,11 +20742,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 4;
-	tag = "icon-rwindow (EAST)"
-	},
-/obj/reagent_dispensers/beerkeg,
+/obj/table/reinforced/bar/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
 "gQY" = (
@@ -22458,6 +22449,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"irp" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "irQ" = (
 /obj/railing/orange{
 	dir = 8
@@ -22950,6 +22945,13 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"iSz" = (
+/obj/fitness/weightlifter,
+/turf/simulated/floor{
+	icon_state = "0,6";
+	tag = "icon-0,6"
+	},
+/area/station/crew_quarters/fitness)
 "iSN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29460,17 +29462,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"oWq" = (
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/fitness/speedbag/captain,
-/turf/simulated/floor{
-	icon_state = "0,6";
-	tag = "icon-0,6"
-	},
-/area/station/crew_quarters/fitness)
 "oWu" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/power/apc/autoname_west,
@@ -30855,6 +30846,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"pXh" = (
+/obj/fitness/speedbag/captain,
+/turf/simulated/floor{
+	icon_state = "0,6";
+	tag = "icon-0,6"
+	},
+/area/station/crew_quarters/fitness)
 "pXB" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -30922,17 +30920,6 @@
 	},
 /turf/simulated/floor/greenblack,
 /area/station/hydroponics/bay)
-"qaE" = (
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/fitness/speedbag/syndie,
-/turf/simulated/floor{
-	icon_state = "0,6";
-	tag = "icon-0,6"
-	},
-/area/station/crew_quarters/fitness)
 "qbg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30950,16 +30937,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"qbx" = (
-/obj/fitness/weightlifter,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "0,6";
-	tag = "icon-0,6"
-	},
-/area/station/crew_quarters/fitness)
 "qbU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine,
@@ -32200,17 +32177,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"qXx" = (
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
-/obj/fitness/speedbag/wizard,
-/turf/simulated/floor{
-	icon_state = "0,6";
-	tag = "icon-0,6"
-	},
-/area/station/crew_quarters/fitness)
 "qXG" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -33689,10 +33655,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "scE" = (
-/obj/window/reinforced{
-	dir = 8;
-	tag = "icon-rwindow (WEST)"
-	},
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor{
 	icon_state = "0,6";
 	tag = "icon-0,6"
@@ -35209,9 +35172,11 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "tmG" = (
-/obj/machinery/door/window/westleft,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "0,6";
@@ -36411,13 +36376,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
-"uhT" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor{
-	icon_state = "0,6";
-	tag = "icon-0,6"
-	},
-/area/station/crew_quarters/fitness)
 "ujy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -36460,6 +36418,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor{
 	icon_state = "0,6";
 	tag = "icon-0,6"
@@ -37761,6 +37720,13 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"vpx" = (
+/obj/fitness/speedbag/wizard,
+/turf/simulated/floor{
+	icon_state = "0,6";
+	tag = "icon-0,6"
+	},
+/area/station/crew_quarters/fitness)
 "vqf" = (
 /obj/stool/bar,
 /turf/simulated/floor{
@@ -79171,13 +79137,13 @@ iGF
 vkK
 lNq
 toE
-oWq
-qaE
-qXx
+scE
+scE
+scE
 scE
 tmG
 scE
-qgs
+eol
 mcn
 uHC
 qBr
@@ -79473,13 +79439,13 @@ lpw
 kIA
 hnc
 toE
-aXu
-aXu
-aXu
+pXh
+ere
+vpx
 aXu
 axq
-uhT
-eol
+aXu
+qgs
 mcn
 uHG
 qBr
@@ -79776,7 +79742,7 @@ kIA
 cgL
 toE
 oWN
-qbx
+qYV
 qYV
 qYV
 tnV
@@ -80078,7 +80044,7 @@ eab
 fIA
 toE
 aXu
-aXu
+iSz
 rac
 uXq
 tob
@@ -82129,7 +82095,7 @@ xTD
 anY
 tIb
 anY
-anY
+irp
 auW
 awc
 axn
