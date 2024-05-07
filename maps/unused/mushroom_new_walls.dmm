@@ -3288,6 +3288,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"aqI" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "aqM" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -13897,11 +13902,8 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
 	dir = 4;
-	hardened = 1;
-	id = "medbay_entrance"
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
@@ -18229,6 +18231,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"eEU" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "eEW" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -19906,6 +19913,9 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"ghN" = (
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "giH" = (
 /obj/lattice{
 	dir = 9;
@@ -21817,6 +21827,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"hPU" = (
+/obj/storage/secure/closet/civilian/ranch,
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "hQb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -22394,6 +22413,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"irQ" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/station/ranch)
 "irT" = (
 /obj/rack,
 /obj/item/storage/box/stma_kit,
@@ -22457,7 +22484,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "iuO" = (
@@ -23524,6 +23550,14 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
+"jBG" = (
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 5
+	},
+/area/station/ranch)
 "jBH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25287,11 +25321,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
 	dir = 4;
-	hardened = 1;
-	id = "medbay_entrance"
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/hallway/primary/south)
@@ -26540,6 +26571,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"mCd" = (
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "mDl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -27546,6 +27585,17 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
+"nzI" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 4
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/station/ranch)
 "nzL" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -31605,7 +31655,9 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
 /area/station/ranch)
 "qHx" = (
 /obj/cable,
@@ -33038,6 +33090,14 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"rHR" = (
+/obj/shrub{
+	dir = 4
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "rIi" = (
 /obj/cable,
 /obj/cable{
@@ -33507,6 +33567,7 @@
 /area/station/medical/dome)
 "scq" = (
 /obj/shrub,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "scE" = (
@@ -34533,14 +34594,9 @@
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/station/engine/engineering/breakroom)
 "sVo" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-8"
+/turf/simulated/floor/grasstodirt{
+	dir = 9
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
 /area/station/ranch)
 "sVu" = (
 /obj/machinery/networked/secdetector{
@@ -39175,6 +39231,10 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
+"wOn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "wOt" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40837,6 +40897,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"ybq" = (
+/obj/shrub{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ybx" = (
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -40854,7 +40920,9 @@
 /area/station/hallway/primary/south)
 "ydR" = (
 /obj/railing/orange,
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
 /area/station/ranch)
 "yem" = (
 /obj/disposalpipe/segment{
@@ -71114,7 +71182,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+baI
 gEO
 iTO
 scq
@@ -71413,10 +71481,10 @@ amz
 ctu
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+wOn
+wOn
+wOn
+wOn
 bda
 nji
 rmY
@@ -71715,10 +71783,10 @@ amz
 ely
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+wOn
+aqI
+cMd
+ybq
 bda
 ise
 rmY
@@ -72016,12 +72084,12 @@ akg
 bpm
 azo
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-jIw
+baI
+wOn
+rmY
+rmY
+rmY
+mCd
 nbc
 ppF
 vya
@@ -72318,11 +72386,11 @@ hKu
 alE
 azo
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+wOn
+wOn
+nzI
+irQ
+irQ
 sVo
 iux
 oiz
@@ -72619,13 +72687,13 @@ azo
 ayY
 alE
 azo
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-sVo
+wFK
+wOn
+rHR
+eEU
+jBG
+ghN
+jIw
 bda
 bda
 wha
@@ -72922,10 +72990,10 @@ reY
 jep
 azo
 aaa
-aaa
-aaa
-aaa
-aaa
+wOn
+rmY
+rmY
+hPU
 rrx
 nSk
 toE
@@ -73224,9 +73292,9 @@ ayN
 nkc
 vuG
 aaa
-aaa
-apU
-aaa
+wOn
+cMd
+rmY
 rrx
 jbi
 awf
@@ -73525,10 +73593,10 @@ chL
 axM
 bpo
 vuG
-aaa
-aaa
-blm
 wFK
+bda
+aqI
+rmY
 qDY
 awf
 ect
@@ -73828,8 +73896,8 @@ akR
 uHu
 vuG
 aaa
-aaa
-abd
+bda
+bda
 toE
 toE
 lsF
@@ -74130,8 +74198,8 @@ azo
 azo
 azo
 aaa
-aaa
-aaa
+aDR
+bcc
 toE
 awf
 vNm
