@@ -2376,12 +2376,16 @@
 		src.limbs.mend()
 		if(src.limbs?.l_arm?.decomp_affected)
 			src.limbs.l_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			src.limbs.l_arm.update_images()
 		if(src.limbs?.r_arm?.decomp_affected)
 			src.limbs.r_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			src.limbs.r_arm.update_images()
 		if(src.limbs?.l_leg?.decomp_affected)
 			src.limbs.l_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			src.limbs.l_leg.update_images()
 		if(src.limbs?.r_leg?.decomp_affected)
 			src.limbs.r_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			src.limbs.r_leg.update_images()
 	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
 	for (var/organ_slot in src.organHolder.organ_list)
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
@@ -3614,9 +3618,13 @@
 /mob/living/carbon/human/proc/decompose_limbs()
 	if(src.limbs?.l_arm?.decomp_affected)
 		src.limbs.l_arm.current_decomp_stage = max(src.limbs.l_arm.current_decomp_stage, src.decomp_stage)
+		src.limbs.l_arm.update_images()
 	if(src.limbs?.r_arm?.decomp_affected)
 		src.limbs.r_arm.current_decomp_stage = max(src.limbs.r_arm.current_decomp_stage, src.decomp_stage)
+		src.limbs.r_arm.update_images()
 	if(src.limbs?.l_leg?.decomp_affected)
 		src.limbs.l_leg.current_decomp_stage = max(src.limbs.l_leg.current_decomp_stage, src.decomp_stage)
+		src.limbs.l_leg.update_images()
 	if(src.limbs?.r_leg?.decomp_affected)
 		src.limbs.r_leg.current_decomp_stage = max(src.limbs.r_leg.current_decomp_stage, src.decomp_stage)
+		src.limbs.r_leg.update_images()

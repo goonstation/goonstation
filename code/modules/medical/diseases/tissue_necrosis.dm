@@ -27,11 +27,15 @@
 		H.decomp_stage = DECOMP_STAGE_NO_ROT
 		if(H.limbs?.l_arm?.decomp_affected)
 			H.limbs.l_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			H.limbs.l_arm.update_images()
 		if(H.limbs?.r_arm?.decomp_affected)
 			H.limbs.r_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			H.limbs.r_arm.update_images()
 		if(H.limbs?.l_leg?.decomp_affected)
 			H.limbs.l_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			H.limbs.l_leg.update_images()
 		if(H.limbs?.r_leg?.decomp_affected)
 			H.limbs.r_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			H.limbs.r_leg.update_images()
 	..()
 

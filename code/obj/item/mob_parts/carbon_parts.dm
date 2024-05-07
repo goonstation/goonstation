@@ -86,7 +86,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 		holder = null
 		..()
 
-	update_images(var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	update_images()
 		..()
 		if (src.skintoned && src.skin_tone)
 			src.limb_layer_image?.color = src.skin_tone

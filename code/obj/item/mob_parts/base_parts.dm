@@ -184,7 +184,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
 			//fix for gloves/shoes still displaying after limb loss
-			src.update_images()
 			H.update_clothing()
 			H.update_body()
 			H.set_body_icon_dirty()
@@ -320,7 +319,6 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 			if(remove_stage == 2)
 				src.remove()
 
-		src.update_images()
 		attachee.update_clothing()
 		attachee.update_body()
 		attachee.set_body_icon_dirty()
