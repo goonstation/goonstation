@@ -46,6 +46,7 @@
 				if (suspend_rot || HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_DECOMPOSITION))
 					return ..()
 				H.decomp_stage = min(H.decomp_stage + 1, DECOMP_STAGE_SKELETONIZED)
+				H.decompose_limbs()
 				owner.update_body()
 				owner.update_face()
 		..()

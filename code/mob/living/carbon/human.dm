@@ -243,6 +243,7 @@
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.set_mutantrace(src.default_mutantrace)
+	src.limbs.reset_stone()
 	src.update_colorful_parts()
 
 	init_preferences?.apply_post_new_stuff(src)
@@ -2373,6 +2374,14 @@
 		src.limbs = new /datum/human_limbs(src)
 	else
 		src.limbs.mend()
+		if(src.limbs?.l_arm?.decomp_affected)
+			src.limbs.l_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		if(src.limbs?.r_arm?.decomp_affected)
+			src.limbs.r_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		if(src.limbs?.l_leg?.decomp_affected)
+			src.limbs.l_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+		if(src.limbs?.r_leg?.decomp_affected)
+			src.limbs.r_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
 	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
 	for (var/organ_slot in src.organHolder.organ_list)
 		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
@@ -3600,3 +3609,14 @@
 	src.hud.update_resting()
 	src.set_loc(get_turf(table))
 	table.victim = src
+
+/// updates limbs to be at least as rotten as the body
+/mob/living/carbon/human/proc/decompose_limbs()
+	if(src.limbs?.l_arm?.decomp_affected)
+		src.limbs.l_arm.current_decomp_stage = max(src.limbs.l_arm.current_decomp_stage, src.decomp_stage)
+	if(src.limbs?.r_arm?.decomp_affected)
+		src.limbs.r_arm.current_decomp_stage = max(src.limbs.r_arm.current_decomp_stage, src.decomp_stage)
+	if(src.limbs?.l_leg?.decomp_affected)
+		src.limbs.l_leg.current_decomp_stage = max(src.limbs.l_leg.current_decomp_stage, src.decomp_stage)
+	if(src.limbs?.r_leg?.decomp_affected)
+		src.limbs.r_leg.current_decomp_stage = max(src.limbs.r_leg.current_decomp_stage, src.decomp_stage)

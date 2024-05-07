@@ -120,6 +120,7 @@
 			H.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_HIGHLY_DECAYED)
 		else
 			H.decomp_stage = src.decomp_stage
+		H.decompose_limbs()
 
 		if (src.husked)
 			H.disfigured = TRUE

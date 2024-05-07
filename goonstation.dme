@@ -1996,7 +1996,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\misc_junk.dm"
 #include "code\obj\item\misc_weapons.dm"
 #include "code\obj\item\misc_wizard_stuff.dm"
-#include "code\obj\item\mob_parts.dm"
 #include "code\obj\item\mops_cleaners.dm"
 #include "code\obj\item\mousetrap.dm"
 #include "code\obj\item\neon_lining.dm"

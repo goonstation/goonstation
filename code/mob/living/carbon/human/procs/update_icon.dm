@@ -931,8 +931,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				src.body_standing.overlays += human_decomp_image
 
 			if (src.limbs)
-				src.limbs.reset_stone()
-
 				for (var/name in update_body_limbs) // almost not awful
 					var/obj/item/mob_part/humanoid_part/limb = src.limbs.vars[name]
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset

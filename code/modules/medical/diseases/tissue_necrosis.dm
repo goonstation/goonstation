@@ -13,13 +13,25 @@
 	if (..())
 		return
 	if (D.stage > 1)
-		if (affected_mob:decomp_stage != D.stage - 1)
-			affected_mob:decomp_stage = D.stage - 1
-			affected_mob.show_message(SPAN_ALERT("You feel [pick("very", "rather", "a bit", "terribly", "stinkingly")] rotten!"))
-			affected_mob.update_body()
-			affected_mob.update_face()
+		if(ishuman(affected_mob))
+			var/mob/living/carbon/human/H = affected_mob
+			if (H.decomp_stage != D.stage - 1)
+				H.decomp_stage = D.stage - 1
+				H.show_message(SPAN_ALERT("You feel [pick("very", "rather", "a bit", "terribly", "stinkingly")] rotten!"))
+				H.update_body()
+				H.update_face()
 
 /datum/ailment/disease/tissue_necrosis/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
-	affected_mob:decomp_stage = DECOMP_STAGE_NO_ROT
+	if(ishuman(affected_mob))
+			var/mob/living/carbon/human/H = affected_mob
+			H.decomp_stage = DECOMP_STAGE_NO_ROT
+			if(H.limbs?.l_arm?.decomp_affected)
+				H.limbs.l_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			if(H.limbs?.r_arm?.decomp_affected)
+				H.limbs.r_arm.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			if(H.limbs?.l_leg?.decomp_affected)
+				H.limbs.l_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
+			if(H.limbs?.r_leg?.decomp_affected)
+				H.limbs.r_leg.current_decomp_stage = DECOMP_STAGE_NO_ROT
 	..()
 

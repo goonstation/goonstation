@@ -173,9 +173,12 @@
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
-		owner:decomp_stage = DECOMP_STAGE_SKELETONIZED
-		if (ishuman(owner) && owner:organHolder && owner:organHolder:brain)
-			qdel(owner:organHolder:brain)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+			H.decompose_limbs()
+			if (H?.organHolder?.brain)
+				qdel(H.organHolder.brain)
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(owner.x, owner.y, owner.z)))
 		animate(owner)
 		src.wraith = null
@@ -225,8 +228,10 @@
 					if (owner.max_health < 0)
 						e_decomp_stage++
 		if (ishuman(owner)) // technically we won't let it be anything else but who knows what might happen
-			if (owner:decomp_stage != e_decomp_stage)
-				owner:decomp_stage = e_decomp_stage
+			var/mob/living/carbon/human/H = owner
+			if (owner.decomp_stage != e_decomp_stage)
+				owner.decomp_stage = e_decomp_stage
+				owner.decompose_limbs()
 				owner.set_face_icon_dirty()
 				owner.set_body_icon_dirty()
 

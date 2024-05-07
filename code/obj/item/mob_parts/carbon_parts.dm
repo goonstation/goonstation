@@ -23,14 +23,12 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 	/// the original mob (probably a carbon/human) that this was a part of
 	var/mob/living/original_holder = null
-	/// the appearance holder that this was a part of, modified in certain cases (such as genetic recoloration)
-	var/datum/appearanceHolder/holder_ahol
 	/// the DNA of this limb
 	var/limb_DNA = null
 	/// the fingerprints of this limb, if any
 	var/limb_fingerprints = null
 	/// the skin tone of this limb
-	var/skin_tone = "#FFFFFF"
+	var/skin_tone = null
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -57,30 +55,29 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 	New(mob/new_holder)
 		..()
 		if (ismob(new_holder))
-			holder = new_holder
-			original_holder = new_holder
-			if(!src.holder_ahol && ishuman(original_holder))
+			src.holder = new_holder
+			src.original_holder = new_holder
+			if(ishuman(original_holder))
 				var/mob/living/carbon/human/H = original_holder
-				src.holder_ahol = H?.bioHolder?.mobAppearance
-			if ((src.holder_ahol.special_style) && (istype_exact(src, src.holder_ahol.mutant_race?.r_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.l_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.r_limb_leg_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.l_limb_leg_type_mutantrace)))
-				icon = src.holder_ahol.body_icon
-				part_icon = src.holder_ahol.body_icon
+				var/datum/appearanceHolder/original_aholder = H?.bioHolder?.mobAppearance
+				if ((original_aholder.special_style) && (istype_exact(src, original_aholder.mutant_race?.r_limb_arm_type_mutantrace) || istype_exact(src, original_aholder.mutant_race?.l_limb_arm_type_mutantrace) || istype_exact(src, original_aholder.mutant_race?.r_limb_leg_type_mutantrace) || istype_exact(src, original_aholder.mutant_race?.l_limb_leg_type_mutantrace)))
+					icon = original_aholder.body_icon
+					part_icon = original_aholder.body_icon
 
-			src.add_fingerprint(holder)
+			src.add_fingerprint(src.holder)
 			//https://forum.ss13.co/showthread.php?tid=1774
 			// zam note - removing this again.
 			SPAWN(2 SECONDS)
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
-			if (holder_ahol)
-				src.update_skin_tone()
-			else if(holder)	//
+			if(src.holder)
 				SPAWN(1 SECOND)
 					src.update_skin_tone()
-					holder.set_body_icon_dirty()
-					holder.set_face_icon_dirty()
-					holder.set_clothing_icon_dirty()
+					if(holder)
+						holder.set_body_icon_dirty()
+						holder.set_face_icon_dirty()
+						holder.set_clothing_icon_dirty()
 			else
 				src.update_skin_tone()
 
@@ -91,18 +88,11 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 
 	update_images(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		..()
-		if (src.skintoned)
+		if (src.skintoned && src.skin_tone)
 			src.limb_layer_image?.color = src.skin_tone
 			src.hand_layer_image?.color = src.skin_tone
 
 	remove(var/show_message = 1)
-		if ((isnull(src.limb_DNA) || isnull(src.limb_fingerprints)) && ismob(src.original_holder))
-			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
-				src.limb_DNA = src.original_holder.bioHolder.Uid
-				src.limb_fingerprints = src.original_holder.bioHolder.fingerprints
-		return ..()
-
-	sever(mob/user)
 		if ((isnull(src.limb_DNA) || isnull(src.limb_fingerprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.limb_DNA = src.original_holder.bioHolder.Uid
@@ -138,52 +128,50 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/carbon_part)
 			return
 		..()
 
-	/// Determines what the limb's skin tone should be, optionally setting the s_tone of the stored appearance holder to the holder's
-	proc/update_skin_tone(reset = FALSE)
+	/// Copy skin tone from the holder if none is stored or force is true (which is when reset_stone is called by disguisers etc)
+	proc/update_skin_tone(force = FALSE)
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors!
 
-		if (reset && istype(src.holder_ahol, /datum/appearanceHolder) && ishuman(src.holder))
-			var/mob/living/carbon/human/H = src.holder
-			if (H.bioHolder?.mobAppearance)
-				src.holder_ahol.s_tone = H.bioHolder.mobAppearance.s_tone
+		if ((force || !src.skin_tone))
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				if (H.bioHolder?.mobAppearance)
+					src.skin_tone = H.bioHolder.mobAppearance.s_tone
 
-		var/datum/appearanceHolder/AHLIMB = src.get_owner_appearance_holder()
-		if (AHLIMB)
-			if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
-				src.skin_tone = "#FFFFFF"
-			else
-				src.skin_tone = AHLIMB.s_tone
-		else	// This is going to look *weird* if these somehow spawn on a mob
-			if (istype(src, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard) || istype(src, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard))
-				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
-			else
-				var/blend_color = null
-				blend_color = pick(standard_skintones)
-				src.skin_tone = standard_skintones[blend_color]
+		if (!src.skin_tone)
+			var/datum/appearanceHolder/AHLIMB = src.get_owner_appearance_holder()
+			if (AHLIMB)
+				if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
+					src.skin_tone = "#FFFFFF"
+				else
+					src.skin_tone = AHLIMB.s_tone
+			else	// This is going to look *weird* if these somehow spawn on a mob
+				if (istype(src, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard) || istype(src, /obj/item/mob_part/humanoid_part/carbon_part/arm/mutant/lizard))
+					src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
+				else
+					var/blend_color = null
+					blend_color = pick(standard_skintones)
+					src.skin_tone = standard_skintones[blend_color]
 
-		update_images()
-		update_severed_icon()
+		src.update_images()
+		src.update_severed_icon()
 
 	/// Applies the correct (hopefully) colors to the severed limbs
 	proc/update_severed_icon()
-		if (!src.skintoned || !isicon(src.icon))
+		if (!src.skintoned || !src.skin_tone)
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 
+		src.color = src.skin_tone
+
 		// All skintoned limbs also get a cool not-affected-by-coloration bloody stump!
-		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
-		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)
+		var/image/stump_overlay = SafeGetOverlayImage("stump", src.icon, "[src.icon_state]_blood") // Preferably blood-colored
 
-		var/icon/limb_icon_overlay = new /icon(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
-		limb_icon.Blend(limb_icon_overlay, ICON_OVERLAY)
+		src.UpdateOverlays(stump_overlay, "stump")
 
-		src.icon = limb_icon
-
-	/// Gets an appearanceholder, either the owner's or the one in the limb
+	/// Gets an appearanceholder from the original_holder
 	proc/get_owner_appearance_holder()
-		if (istype(src.holder_ahol, /datum/appearanceHolder))
-			. = src.holder_ahol
-		else if (src.original_holder?.bioHolder?.mobAppearance)
+		if (src.original_holder?.bioHolder?.mobAppearance)
 			. = src.original_holder.bioHolder.mobAppearance
 
 /obj/item/mob_part/humanoid_part/carbon_part/arm

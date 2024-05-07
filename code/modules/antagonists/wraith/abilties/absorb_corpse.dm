@@ -64,6 +64,7 @@
 		if (H.loc)//gibbed check
 			//Make the corpse all grody and skeleton-y
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+			H.decompose_limbs()
 			if (H.organHolder && H.organHolder.brain)
 				qdel(H.organHolder.brain)
 			H.set_face_icon_dirty()
