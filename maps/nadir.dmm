@@ -7851,8 +7851,20 @@
 	icon_state = "0-8"
 	},
 /obj/item/storage/box/beer{
-	pixel_y = 6;
+	pixel_y = 4;
 	pixel_x = 3
+	},
+/obj/item/storage/box/cocktail_doodads{
+	pixel_y = 5;
+	pixel_x = 1
+	},
+/obj/item/storage/box/cocktail_umbrellas{
+	pixel_y = 6;
+	pixel_x = -1
+	},
+/obj/item/storage/box/fruit_wedges{
+	pixel_y = 7;
+	pixel_x = -3
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -27134,8 +27146,8 @@
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/drinks/eggnog{
-	pixel_x = 5;
-	pixel_y = 13
+	pixel_x = 8;
+	pixel_y = 14
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
