@@ -4,6 +4,7 @@
 (e)💅🔨|C-QoL, A-Player-Actions
 (+)Visiting Ghost VR and the Afterlife Bar will now send a message to your fellow ghosts (once every five minutes).
 (+)Visiting the Afterlife Bar shows a message about talking on Deadchat (start with :d). The respawn timer is now visible too (it always counted, but now it is also visible).
+(+)Gun components have a shorter cooldown (1 second), and now accept paintball guns.
 (u)tarmunora
 (+)Some internal changes to ability code - using abilities will properly interrupt most actionbars. Make an issue if this breaks any features horribly.
 (u)Klushy225
