@@ -1,6 +1,20 @@
 /var/global/datum/bansHandler/bansHandler = new
 
 /datum/bansHandler
+	var/static/list/default_durations = list(
+		"Permanent" = "",
+		"Half hour" = 30 MINUTES,
+		"One hour" = 1 HOUR,
+		"Six hours" = 6 HOURS,
+		"One day" = 1 DAY,
+		"Half a week" = 3.5 DAYS,
+		"One week" = 1 WEEK,
+		"Two weeks" = 2 WEEKS,
+		"One month" = 30 DAYS,
+		"Three months" = 90 DAYS,
+		"Six months" = 26 WEEKS,
+		"One year" = 52 WEEKS
+	)
 	/// Convert duration to something useful for Humans
 	proc/getDurationHuman(seconds)
 		var/exp = seconds / 60
@@ -310,23 +324,9 @@
 		return null
 	var/serverId = istype(game_server) ? game_server.id : null // null = all servers
 
-	var/list/durations = list(
-		"Permanent" = "",
-		"Half hour" = 30 MINUTES,
-		"One hour" = 1 HOUR,
-		"Six hours" = 6 HOURS,
-		"One day" = 1 DAY,
-		"Half a week" = 3.5 DAYS,
-		"One week" = 1 WEEK,
-		"Two weeks" = 2 WEEKS,
-		"One month" = 30 DAYS,
-		"Three months" = 90 DAYS,
-		"Six months" = 26 WEEKS,
-		"One year" = 52 WEEKS
-	)
-	var/durationName = tgui_input_list(src.mob, "How long should the ban last?", "Duration", durations)
+	var/durationName = tgui_input_list(src.mob, "How long should the ban last?", "Duration", bansHandler.default_durations)
 	if (isnull(durationName)) return
-	var/duration = durations[durationName]
+	var/duration = bansHandler.default_durations[durationName]
 	if (!duration) duration = FALSE
 
 	var/reason = tgui_input_text(src.mob, "What is the reason for this ban?", "Reason", "", null, TRUE)
@@ -334,6 +334,35 @@
 
 	return list(
 		"akey" = src.ckey,
+		"server" = serverId,
+		"ckey" = ckey,
+		"compId" = compId,
+		"ip" = ip,
+		"reason" = reason,
+		"duration" = duration
+	)
+
+/client/proc/editBanTempDialog(datum/apiModel/Tracked/BanResource/ban) //look this just needs to work for now okay
+	var/ckey = ckey(tgui_input_text(src.mob, "Ckey of the player", "Ckey", ban.details?.ckey))
+	if (!ckey) return
+
+	var/ip = tgui_input_text(src.mob, "IP of the player", "IP", ban.details?.ip, null, FALSE, null, TRUE)
+	var/compId = tgui_input_text(src.mob, "Computer ID of the player", "Computer ID", ban.details?.comp_id, null, FALSE, null, TRUE)
+
+	var/datum/game_server/game_server = global.game_servers.input_server(src.mob, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+	if(isnull(game_server))
+		return null
+	var/serverId = istype(game_server) ? game_server.id : null // null = all servers
+
+	var/durationName = tgui_input_list(src.mob, "How long should the ban last?", "Duration", bansHandler.default_durations)
+	if (isnull(durationName)) return
+	var/duration = bansHandler.default_durations[durationName]
+	if (!duration) duration = FALSE
+
+	var/reason = tgui_input_text(src.mob, "What is the reason for this ban?", "Reason", ban.reason, null, TRUE)
+	if (!reason) return
+
+	return list(
 		"server" = serverId,
 		"ckey" = ckey,
 		"compId" = compId,

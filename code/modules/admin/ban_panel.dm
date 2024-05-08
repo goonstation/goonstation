@@ -87,8 +87,25 @@
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_EDIT_BAN)
-			// var/ban_id = params["id"]
-			// TODO: edit ban
+			var/ban_id = params["id"]
+			var/datum/apiModel/Tracked/BanResource/the_ban = src.find_ban_in_current(ban_id)
+			if (!the_ban)
+				tgui_alert(usr, "Ban couldn't be found! ID: [ban_id]", "Ban Panel Error")
+				return
+			var/list/edited_data = usr.client.editBanTempDialog(the_ban)
+			if (!edited_data)
+				return
+			bansHandler.update(
+				ban_id,
+				the_ban.game_admin["ckey"],
+				edited_data["server"],
+				edited_data["ckey"],
+				edited_data["compId"],
+				edited_data["ip"],
+				edited_data["reason"],
+				edited_data["duration"],
+				the_ban.requires_appeal
+			)
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_DELETE_BAN)
@@ -97,14 +114,18 @@
 			var/ban_id = params["id"]
 			src.removeBan(ban_id)
 
-
-/// Remove a ban, given an id
-/datum/ban_panel/proc/removeBan(ban_id)
+///Find a ban by id in the currently cached data
+/datum/ban_panel/proc/find_ban_in_current(ban_id)
 	var/datum/apiModel/Tracked/BanResource/the_ban = null
 	for (var/datum/apiModel/Tracked/BanResource/ban in src.banResourceList.data)
 		if (num2text(ban.id) == ban_id)
 			the_ban = ban
 			break
+	return the_ban
+
+/// Remove a ban, given an id
+/datum/ban_panel/proc/removeBan(ban_id)
+	var/datum/apiModel/Tracked/BanResource/the_ban = src.find_ban_in_current(ban_id)
 	if (!the_ban)
 		tgui_alert(usr, "Ban couldn't be found! ID: [ban_id]", "Ban Panel Error")
 		return
