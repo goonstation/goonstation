@@ -155,7 +155,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				fellow_bee.task = "chasing"
 
 	attack_ai(mob/user as mob)
-		if (GET_DIST(user, src) < 2)
+		if (GET_DIST(user, src) < 2 && user.a_intent != INTENT_HARM)
 			return attack_hand(user)
 		else
 			return ..()
