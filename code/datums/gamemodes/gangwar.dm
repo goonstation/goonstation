@@ -1281,9 +1281,9 @@ proc/broadcast_to_all_gangs(var/message)
 			if (1)
 				iconstate = "graffiti-single-[rand(1,9)]"
 			if (2)
-				iconstate = "graffiti-dbl-[rand(1,5)]-"
+				iconstate = "graffiti-dbl-[rand(1,7)]-"
 			if (3)
-				iconstate = "graffiti-trpl-[rand(1,7)]-"
+				iconstate = "graffiti-trpl-[rand(1,9)]-"
 		if (targets == 1)
 			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(S.graffititargets[1])
 			tag.icon_state = iconstate
