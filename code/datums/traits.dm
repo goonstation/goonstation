@@ -202,6 +202,12 @@
 	proc/hasTrait(var/id)
 		. = (id in traits)
 
+	proc/getTraitWithCategory(var/cat)
+		for(var/id in traits)
+			var/datum/trait/T = traits[id]
+			if (T.category == cat)
+				. = T
+
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
 	var/name
@@ -219,6 +225,7 @@
 	var/disability_type = TRAIT_DISABILITY_NONE //! Is this a major/minor/not a disability
 	var/disability_name = "" //! Name of the disability for medical records
 	var/disability_desc = "" //! Description of the disability for medical records
+	var/spawn_delay = 0 // To avoid ugly hardcoded spawn delay
 
 	New()
 		ASSERT(src.name)
@@ -759,6 +766,38 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "sleepy"
 	category = list("background")
 	points = 0
+	spawn_delay = 10 SECONDS
+
+TYPEINFO(/datum/trait/partyanimal)
+	var/list/allowed_items = list(
+		/obj/item/clothing/head/party/random,
+		/obj/item/balloon_animal/random,
+		/obj/item/reagent_containers/balloon,
+		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/clothing/head/party/birthday,
+		/obj/random_item_spawner/hat/one,
+		/obj/random_item_spawner/snacks/one,
+		/obj/random_item_spawner/junk/one,
+		/obj/random_item_spawner/mask/one,
+		/obj/random_item_spawner/pizza/one,
+		/obj/random_item_spawner/cola/one
+	)
+	var/list/allowed_debris = list(
+		/obj/decal/cleanable/balloon,
+		/obj/decal/cleanable/vomit,
+		/obj/decal/cleanable/paper,
+		/obj/decal/cleanable/eggsplat,
+		/obj/decal/cleanable/generic
+	)
+	var/list/cached_bar_turfs = list()
+/datum/trait/partyanimal
+	name = "Party Animal"
+	desc = "You don't remember much about last night, but you know you had a good time."
+	id = "partyanimal"
+	icon_state = "partyanimal"
+	category = list("background")
+	points = 0
+	spawn_delay = 3 SECONDS
 
 // NO CATEGORY - Grey Border
 
