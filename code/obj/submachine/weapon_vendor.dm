@@ -82,6 +82,20 @@
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
 					usr.put_in_hand_or_eject(A)
+
+					// right in here i believe
+
+					if (usr.mind.is_antagonist()) // okie so considering that this function is also the sec dispensers this check might uh... yeah...
+						// this check actualy does work but hgmph
+						// var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP)
+						var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+
+						nukie.purchased_items.Add(M)
+
+
+							//for (var/datum/antagonist/antagonist_role in mind.antagonists)
+							//if (istype(antagonist_role, /datum/antagonist/subordinate))
+
 					return TRUE
 
 	attackby(var/obj/item/I, var/mob/user)

@@ -9,6 +9,10 @@
 	var/static/commander_title
 	var/static/available_callsigns
 
+	//Used for adding a nukie's purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
+	var/list/purchased_items = list()
+
+
 	New(datum/mind/new_owner)
 		if (!src.commander_title)
 			src.commander_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
@@ -98,6 +102,34 @@
 				gamemode.syndicates -= src.owner
 
 		. = ..()
+
+	get_statistics()
+	// this worked omg
+
+		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
+			var/obj/item_type = initial(purchased_item.path)
+			purchased_items += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[purchased_item]", //YOU WILL NED TO FIX THIS probly with M
+				)
+			)
+
+		. = list(
+			list(
+				"name" = "Purchased Items",
+				"type" = "itemList",
+				"value" = purchased_items,
+			)
+		)
+
+/*
+		return list(
+			list(
+				"name" = "Crew Members Fed Upon",
+				"value" = purchased_items,
+			)
+		) */
 
 	proc/assign_name()
 		if (src.id == ROLE_NUKEOP_COMMANDER)
