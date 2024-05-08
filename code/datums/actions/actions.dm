@@ -536,6 +536,11 @@
 				else
 					duration = 2.5 SECONDS
 
+		if(!hidden && Item && istype(Item, /obj/item))
+			var/obj/item/interacting_item = Item
+			if(interacting_item.w_class <= W_CLASS_POCKET_SIZED && !(interacting_item.item_function_flags & OBVIOUS_INTERACTION_BAR))
+				src.hidden = TRUE
+
 		duration += ExtraDuration
 
 		if (source.reagents && source.reagents.has_reagent("crime"))
