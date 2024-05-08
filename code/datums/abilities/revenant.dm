@@ -277,6 +277,7 @@
 	icon = 'icons/mob/wraith_ui.dmi'
 	preferred_holder_type = /datum/abilityHolder/revenant
 	theme = "wraith"
+	interrupt_action_bars = FALSE
 
 	New()
 		var/atom/movable/screen/ability/topBar/revenant/B = new /atom/movable/screen/ability/topBar/revenant(null)
@@ -288,7 +289,7 @@
 		src.object = B
 
 	cast(atom/target)
-		return
+		return ..()
 
 	castcheck()
 		if (holder?.owner)
@@ -316,6 +317,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
+		. = ..()
 		playsound(target.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
@@ -394,6 +396,7 @@
 		var/turf/origin = get_turf(holder.owner)
 		if (!origin)
 			return 1
+		. = ..()
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -438,6 +441,7 @@
 	cooldown = 30 SECONDS
 
 	cast()
+		. = ..()
 		playsound(usr.loc, 'sound/voice/wraith/revtouch.ogg', 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
@@ -462,6 +466,7 @@
 		if (isturf(target))
 			holder.owner.show_message(SPAN_ALERT("You must target an object or mob with this ability."))
 			return 1
+		. = ..()
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -496,7 +501,6 @@
 	cooldown = 1 MINUTE
 
 	cast(atom/target)
-		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message(SPAN_ALERT("You must target a human with this ability."))
 			return TRUE
@@ -507,6 +511,8 @@
 		if (holder.owner.equipped())
 			holder.owner.show_message(SPAN_ALERT("You require a free hand to cast this ability."))
 			return TRUE
+		. = ..()
+		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message(SPAN_ALERT("Some mysterious force shields [target] from your influence."))
 			JOB_XP(H, "Chaplain", 2)
@@ -565,6 +571,7 @@
 	targeted = 0
 	cooldown = 0
 	helpable = 0
+	do_logs = FALSE
 
 	cast(atom/target)
 		if (..())

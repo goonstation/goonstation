@@ -173,7 +173,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		if (istype(current_planttype, /datum/plant/artifact/creeper))
 			return
 		// We check for the health treshold and if we have grown sufficiently
-		if (carrying_plantpot.growth > (current_planttype.growtime - current_plantgenes?.get_effective_value("growtime")) && carrying_plantpot.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+		if (carrying_plantpot.get_current_growth_stage() >= HYP_GROWTH_MATURED && carrying_plantpot.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
 			for (var/obj/machinery/plantpot/checked_plantpot in range(1,carrying_plantpot))
 				var/datum/plant/growing = checked_plantpot.current
 				// We don't try to destroy plants of our own type and cannot attack crystals
