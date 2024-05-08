@@ -125,7 +125,6 @@
 			start=positions[1], \
 			stop=positions[2], \
 			tool=W)
-			action_bar.maximum_range = 2
 			actions.start(action_bar, user)
 			return
 
