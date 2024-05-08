@@ -1954,7 +1954,7 @@
 		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
-			if(src != V && !V.reagents?.has_reagent("CBD"))
+			if(src != V && !V.reagents?.has_reagent("CBD") && !V.reagents?.has_reagent("capulettium"))
 				V.emote("scream")
 				V.changeStatus("stunned", 2 SECONDS)
 
