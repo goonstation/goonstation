@@ -789,7 +789,8 @@ TYPEINFO(/datum/trait/partyanimal)
 		/obj/decal/cleanable/eggsplat,
 		/obj/decal/cleanable/generic
 	)
-	var/list/cached_bar_turfs = list()
+	var/num_bar_turfs = null
+	var/clutter_count = 0
 /datum/trait/partyanimal
 	name = "Party Animal"
 	desc = "You don't remember much about last night, but you know you had a good time."

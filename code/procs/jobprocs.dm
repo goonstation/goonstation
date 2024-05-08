@@ -566,12 +566,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			var/typeinfo/datum/trait/partyanimal/typeinfo = T.get_typeinfo()
 			logTheThing(LOG_STATION, H, "has the Party Animal trait and is trying to spawn")
 
-			if (length(typeinfo.cached_bar_turfs) < 1) // Sometimes the bar is called a cafe and sometimes the cafe is called a bar so we'll just do both :)
-				var/list/area_turfs = get_area_turfs(/area/station/crew_quarters/bar, 1) + get_area_turfs(/area/station/crew_quarters/cafeteria, 1)
-				for (var/turf in area_turfs)
-					typeinfo.cached_bar_turfs[turf] = TRUE
+			if (isnull(typeinfo.num_bar_turfs)) // Sometimes the bar is called a cafe and sometimes the cafe is called a bar so we'll just do both :)
+				typeinfo.num_bar_turfs = length(get_area_turfs(/area/station/crew_quarters/bar, 1)) + length(get_area_turfs(/area/station/crew_quarters/cafeteria, 1))
 
-			var/current_clutter = length(by_cat[TR_CAT_PARTY_CLUTTER])
 			var/list/valid_stools = list()
 
 			// We iterate through stools in the bar to have more natural feeling spawn positions
@@ -601,7 +598,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 				// Place clutter near the rascal
 				for (var/turf/spot in range(1, H))
-					if (current_clutter >= nround(length(typeinfo.cached_bar_turfs) * 0.5))
+					if (typeinfo.clutter_count >= nround(typeinfo.num_bar_turfs * 0.5))
 						break
 					if (!jpsTurfPassable(spot, source=get_turf(H), passer=H)) // Make sure we can walk there
 						continue
@@ -609,12 +606,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 						var/picked = pick(typeinfo.allowed_items)
 						if(picked)
 							var/obj/item/thing = new picked(spot)
-							OTHER_START_TRACKING_CAT(thing, TR_CAT_PARTY_CLUTTER)
+							typeinfo.clutter_count++
 					if (prob(50)) // Roll for random debris
 						var/picked = pick(typeinfo.allowed_debris)
 						if (picked)
 							var/obj/decal/cleanable/stuff = new picked(spot)
-							OTHER_START_TRACKING_CAT(stuff, TR_CAT_PARTY_CLUTTER)
+							typeinfo.clutter_count++
 
 			// Do the alcohol stuff
 			var/alcohol_amount = rand(0, 60)
