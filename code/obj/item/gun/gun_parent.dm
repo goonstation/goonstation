@@ -434,11 +434,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
-	handle_recoil(user, start, target, POX, POY)
-
 	if (ismob(user))
-		var/mob/M = user
-		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
+		handle_recoil(user, start, target, POX, POY)
+		if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 			var/mob/living/carbon/human/H = user
 			H.gunshot_residue = 1
 
