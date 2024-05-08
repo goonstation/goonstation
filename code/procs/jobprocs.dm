@@ -605,12 +605,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 					if (prob(50)) // Roll for random items
 						var/picked = pick(typeinfo.allowed_items)
 						if(picked)
-							var/obj/item/thing = new picked(spot)
+							new picked(spot)
 							typeinfo.clutter_count++
 					if (prob(50)) // Roll for random debris
 						var/picked = pick(typeinfo.allowed_debris)
 						if (picked)
-							var/obj/decal/cleanable/stuff = new picked(spot)
+							new picked(spot)
 							typeinfo.clutter_count++
 
 			// Do the alcohol stuff
