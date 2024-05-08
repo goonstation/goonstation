@@ -173,7 +173,7 @@
 			src.add_fingerprint(user)
 			return
 
-		if (istype(W, /obj/item/tank))
+		if (istype(W, /obj/item/tank/plasma))
 			src.open_parts_panel(user)
 			return
 
