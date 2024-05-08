@@ -1,4 +1,8 @@
 
+(t)wed may 08 24
+(u)Zamujasa
+(e)📦|A-Game-Objects
+(*)Added an (admin-spawnable) "remote music" record that can play YouTube music in the radio equipment.
 (t)tue may 07 24
 (u)Zamujasa
 (e)💅🔨|C-QoL, A-Player-Actions

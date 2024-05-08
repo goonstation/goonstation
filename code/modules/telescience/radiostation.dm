@@ -292,7 +292,7 @@
 				if (YT.youtube)
 					play_youtube_remote_url(user, YT.youtube)
 				else
-					boutput(user, SPAN_ALERT("You have no idea what happened but this record does not seem to work. Maybe call a corder."))
+					boutput(user, SPAN_ALERT("You have no idea what happened but this record does not seem to work. Maybe call an admin."))
 					return	// guh????
 			else
 				user.client.play_music_radio(record_inside.song, R)
@@ -708,7 +708,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/record/remote
 	name = "remote record"
-	desc = "You know those casettes that you put in tape decks that are actually aux cables? This is like that, but for records! You have no idea hwo it works."
+	desc = "You know those casettes that you put in tape decks that are actually aux cables? This is like that, but for records! You have no idea how it works."
 	icon_state = "record_red"
 	var/youtube = null
 
