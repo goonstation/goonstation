@@ -53435,16 +53435,12 @@
 /turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
 "tCk" = (
-/obj/machinery/computer3/terminal/network{
-	dir = 4;
-	name = "CENTCOM Terminal";
-	pixel_x = -3;
-	pixel_y = 4;
-	setup_os_string = "MAIN_DISH_SS13"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/card/department/captain{
+	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/captain)

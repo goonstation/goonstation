@@ -18305,7 +18305,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/computer/card,
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},
@@ -18313,6 +18312,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/card/department/captain,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"

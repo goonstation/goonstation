@@ -14485,14 +14485,14 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cqH" = (
-/obj/machinery/computer/card{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/blind_switch/area/west{
+	dir = 4
+	},
+/obj/machinery/computer/card/department/captain{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{

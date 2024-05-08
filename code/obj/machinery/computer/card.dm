@@ -16,10 +16,9 @@
 	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
-	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
+	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
 	var/list/allowed_access_list
-	var/departmentcomp = FALSE
-	var/department = 0 //0 = standard, 1 = engineering, 2 = medical, 3 = research, 4 = security
+	var/department = 0 //0 = standard, 1 = engineering, 2 = medical, 3 = research, 4 = security, 5 = captain
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
@@ -201,32 +200,34 @@
 			if (access_name_lookup[A] in command_access_list)
 				command_access.Add(access_data(A))
 
-		if (src.departmentcomp)
-			switch(src.department)
-				if (1) // eng
-					civilian_jobs = list("Staff Assistant")
-					//stock engineering_jobs are good
-					research_jobs = null
-					security_jobs = null
-					command_jobs = null
-				if (2) // med
-					civilian_jobs = list("Staff Assistant")
-					engineering_jobs = null
-					research_jobs = list("Medical Doctor", "Geneticist", "Roboticist")
-					security_jobs = null
-					command_jobs = null
-				if (3) // research
-					civilian_jobs = list("Staff Assistant")
-					engineering_jobs = null
-					research_jobs = list("Scientist")
-					security_jobs = null
-					command_jobs = null
-				if (4) // sec
-					civilian_jobs = list("Staff Assistant", "Clown")
-					engineering_jobs = null
-					research_jobs = null
-					//stock security_jobs are good
-					command_jobs = null
+
+		switch(src.department)
+			if(0) // general
+				command_jobs = command_jobs - "Captain"
+			if (1) // eng
+				civilian_jobs = list("Staff Assistant")
+				//stock engineering_jobs are good
+				research_jobs = null
+				security_jobs = null
+				command_jobs = null
+			if (2) // med
+				civilian_jobs = list("Staff Assistant")
+				engineering_jobs = null
+				research_jobs = list("Medical Doctor", "Geneticist", "Roboticist")
+				security_jobs = null
+				command_jobs = null
+			if (3) // research
+				civilian_jobs = list("Staff Assistant")
+				engineering_jobs = null
+				research_jobs = list("Scientist")
+				security_jobs = null
+				command_jobs = null
+			if (4) // sec
+				civilian_jobs = list("Staff Assistant", "Clown")
+				engineering_jobs = null
+				research_jobs = null
+				//stock security_jobs are good
+				command_jobs = null
 
 		.["standard_jobs"] = list(
 			list(name = "Civilian", color = "blue", jobs = civilian_jobs),
@@ -594,7 +595,6 @@
 
 /obj/machinery/computer/card/department
 	name = "department identification computer"
-	departmentcomp = TRUE
 
 /obj/machinery/computer/card/department/engineering
 	color = "#ffffcc" // look there's a lot of icons to edit just to add a single stripe of color to these computers
@@ -654,3 +654,10 @@
 	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	command_access_list = list(access_eva)
 	#endif
+
+/obj/machinery/computer/card/department/captain
+	name = "Captain's identification computer"
+	color = "#ffd700"
+	department = 5
+	req_access = list(access_captain)
+	command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_captain, access_teleporter, access_eva, access_heads, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)

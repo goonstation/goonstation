@@ -206,6 +206,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
+	reinforced = TRUE
 	req_access = list(access_captain)
 	spawn_contents = list(/obj/item/gun/energy/egun/captain,
 	/obj/item/storage/box/id_kit,

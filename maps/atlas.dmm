@@ -6410,6 +6410,7 @@
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
 "axC" = (
+/obj/machinery/computer/card/department/captain,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "axE" = (

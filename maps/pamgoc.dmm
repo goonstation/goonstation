@@ -9851,6 +9851,10 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
+/obj/machinery/recharger{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /obj/item/item_box/gold_star{
 	pixel_x = -6;
 	pixel_y = -4
@@ -49874,10 +49878,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "cmE" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger{
-	pixel_x = -3;
-	pixel_y = 2
+/obj/machinery/computer/card/department/captain{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;

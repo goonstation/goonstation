@@ -8633,24 +8633,17 @@
 	name = "Diplomatic Quarters"
 	})
 "aTg" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
 /obj/machinery/camera{
 	c_tag = "Captain's Quarters";
 	dir = 4
 	},
-/obj/machinery/computer3/generic/communications{
+/obj/machinery/light/incandescent,
+/obj/machinery/computer/card/department/captain{
 	dir = 4
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTi" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -8803,12 +8796,11 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTS" = (
-/obj/table/wood/auto,
-/obj/machinery/recharger,
-/obj/item/hand_tele{
-	pixel_x = -8;
-	pixel_y = 4
+/obj/machinery/computer3/generic/communications{
+	dir = 8
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTT" = (
@@ -26797,6 +26789,14 @@
 	},
 /obj/item/stamp/cap,
 /obj/random_item_spawner/desk_stuff/one,
+/obj/machinery/recharger,
+/obj/item/hand_tele{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "iGp" = (

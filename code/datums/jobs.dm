@@ -242,8 +242,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	New()
 		..()
-		src.access = get_all_accesses()
-
+		src.access = get_access("Captain")
 
 	derelict
 		//name = "NT-SO Commander"
