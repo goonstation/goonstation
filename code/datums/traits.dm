@@ -288,6 +288,7 @@
 	icon_state = "placeholder"
 	category = list("body")
 	points = 1
+	afterlife_blacklisted = TRUE
 	disability_type = TRAIT_DISABILITY_MAJOR
 	disability_name = "Plasma Lungs"
 	disability_desc = "Only capable of breathing plasma in a gaseous state"
