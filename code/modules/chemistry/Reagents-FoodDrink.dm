@@ -161,10 +161,9 @@ datum
 									if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(M, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE) && I.reagents.has_reagent("legendairy"))
 										I.Attackhand(M)
 
-							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped() // Rechecks for held drink
+							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped()
 							if(helddrink && reagents.has_reagent("legendairy"))
 								helddrink.take_a_drink(M, M) // forces you to drink from held glasses.
-								M.emote("takes an exaggerated swig of [his_or_her(M)] drink, finishing it off with a loud ahh.")
 								if (probmult(70)) M.say("Wow! Great drink!") // The iconic line!!
 
 						else if (probmult(6))
@@ -2010,7 +2009,7 @@ datum
 			fluid_g = 207
 			fluid_b = 235
 			alch_strength = 0.1
-			thirst_value = 12 // accounting for depletion rate, it's a little worse than triple C... But it's fast
+			thirst_value = 13 // accounting for depletion rate, it's a little worse than triple C... But it's fast
 			depletion_rate = 3
 			description = "Chemical agitation gives the ice in this drink its unique striated pattern."
 			taste = "bittersweet"
@@ -2023,7 +2022,7 @@ datum
 			fluid_g = 85
 			fluid_b = 40
 			transparency = 240
-			thirst_value = 1.1
+			thirst_value = 1.2
 			depletion_rate = 0.2
 			description = "An ancient storm brews within."
 			taste = list("sweet", "milky")
@@ -2045,7 +2044,7 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/stam_percent_left = M.stamina / M.stamina_max
-				alch_strength = clamp((4 * (1 - stam_percent_left)), 0.4, 2.5)
+				alch_strength = clamp((4 * (1 - stam_percent_left)), 0.4, 4)
 				..()
 
 		fooddrink/alcoholic/vampire
@@ -2069,7 +2068,7 @@ datum
 					var/blood_percent_left = H.blood_volume / 500 //Doesn't support custom blood maxima but neither do spleens! Fuck it
 					H.nutrition -= 1 * mult
 					H.blood_volume -= 4 * mult
-					alch_strength = clamp((6.5 * (1 - blood_percent_left)), 0.25, 4)
+					alch_strength = clamp((6.66 * (1 - blood_percent_left)), 0.25, 4)
 				..()
 				return
 
