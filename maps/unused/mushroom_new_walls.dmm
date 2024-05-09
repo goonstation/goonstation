@@ -6608,6 +6608,12 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -20;
+	pixel_y = 20
+	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "aHr" = (
