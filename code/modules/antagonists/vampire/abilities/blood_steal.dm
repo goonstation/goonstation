@@ -26,6 +26,7 @@
 			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
 
 		return 0

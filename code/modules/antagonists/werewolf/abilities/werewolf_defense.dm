@@ -24,6 +24,7 @@
 		if (!iswerewolf(M))
 			return 1
 
+		. = ..()
 		H.changeStatus("werewolf_defense_howl", 15 SECONDS)
 
 /datum/statusEffect/defensive_howl

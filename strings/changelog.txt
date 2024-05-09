@@ -1,4 +1,24 @@
 
+(t)wed may 08 24
+(u)Glamurio (Ryou)
+(p)18717
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait, Party Animal, which will have you (and anyone else with the trait) wake up groggy from last night's party.
+(u)Zamujasa
+(e)📦|A-Game-Objects
+(*)Added an (admin-spawnable) "remote music" record that can play YouTube music in the radio equipment.
+(t)tue may 07 24
+(u)Zamujasa
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Visiting Ghost VR and the Afterlife Bar will now send a message to your fellow ghosts (once every five minutes).
+(+)Visiting the Afterlife Bar shows a message about talking on Deadchat (start with :d). The respawn timer is now visible too (it always counted, but now it is also visible).
+(+)Gun components have a shorter cooldown (1 second), and now accept paintball guns.
+(u)tarmunora
+(+)Some internal changes to ability code - using abilities will properly interrupt most actionbars. Make an issue if this breaks any features horribly.
+(u)Klushy225
+(p)18803
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added two donator figures
 (t)mon may 06 24
 (u)glowbold
 (p)18783

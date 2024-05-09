@@ -361,6 +361,7 @@
 	var/flavor_text = "clown"
 
 	cast(atom/T)
+		. = ..()
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/ammo = new egg_path(holder.owner.loc)
 		ammo.parent = holder.owner
 		ammo.throw_at(T, 32, 2)
