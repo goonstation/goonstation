@@ -1,4 +1,11 @@
 
+(t)thu may 09 24
+(u)Colossusqw
+(p)18795
+(e)🔄⚗📡|C-Rework, A-Chemistry, A-AI
+(+)Viper venom is now called Hemotoxin and has a recipe, 1 heparin, 3 ether, 2 hydrochloric acid at 75C
+(+)Venom is now called cytotoxin, and has had it's gib chance swapped by progressively removing limbs from the affected mob.
+(+)Rattlesnakes now have a slightly lower bite cooldown, but do warning strikes before actually biting.
 (t)wed may 08 24
 (u)Glamurio (Ryou)
 (p)18717

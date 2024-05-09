@@ -50,12 +50,9 @@ export const PINInputModal = (_, context) => {
   };
 
   return (
-    <Window
-      title={title}
-      width={160}
-      height={giveWarning ? 345 : 315}
-      theme={theme || 'nanotrasen'}
-      onKeyDown={(event) => {
+    <Window title={title} width={160} height={giveWarning ? 345 : 315} theme={theme || 'nanotrasen'} >
+      {timeout && <Loader value={timeout} />}
+      <Window.Content onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;
         if (keyCode === KEY_ENTER) {
           handleSubmission();
@@ -77,10 +74,7 @@ export const PINInputModal = (_, context) => {
           const number = keyCode - KEY_NUMPAD_0;
           onClick(number);
         }
-      }}
-    >
-      {timeout && <Loader value={timeout} />}
-      <Window.Content>
+      }}>
         {giveWarning ? (
           <NoticeBox danger>
             The PIN you entered is outside the valid range of {min_value}-{max_value}.
@@ -141,8 +135,10 @@ export const PINInputModal = (_, context) => {
 };
 
 const setupPinState = (init_value: number): number[] => {
+  if (init_value === null) {
+    return [];
+  }
   const arr = Array(4);
-
   for (let i = 0; i < 4; i++) {
     arr[i] = Math.floor(init_value / 10 ** (3 - i)) % 10;
   }
