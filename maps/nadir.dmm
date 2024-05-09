@@ -1270,6 +1270,12 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
+"aBg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "aBu" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -7525,6 +7531,9 @@
 /obj/mapping_helper/access/kitchen,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen/freezer)
@@ -14739,6 +14748,16 @@
 /obj/fireworksbox,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
+"gxc" = (
+/obj/disposalpipe/segment/food,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "gxk" = (
 /obj/machinery/light_switch/east,
 /obj/stool/chair/yellow{
@@ -26273,6 +26292,16 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"kXG" = (
+/obj/disposalpipe/segment/food,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "kXK" = (
 /obj/decal/tile_edge/floorguide/science{
 	dir = 1
@@ -34044,6 +34073,10 @@
 /area/station/storage/tools)
 "onm" = (
 /obj/item/kitchen/food_box/egg_box,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "ons" = (
@@ -42842,6 +42875,13 @@
 	pixel_x = 2;
 	pixel_y = 9
 	},
+/obj/machinery/power/apc/autoname_east{
+	areastring = "Bar";
+	name = "Bar APC"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "soE" = (
@@ -45863,6 +45903,12 @@
 /obj/decal/fakeobjects/flock/antenna,
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"tAC" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "tAU" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -88786,7 +88832,7 @@ iPb
 oaQ
 obA
 onm
-obA
+tAC
 kWT
 hHa
 gVW
@@ -89390,7 +89436,7 @@ kgO
 rsN
 rNq
 ndW
-hEa
+aBg
 fpe
 dFX
 gVW
@@ -89691,8 +89737,8 @@ heV
 nGo
 skp
 skp
-skp
-skp
+kXG
+gxc
 skp
 skp
 fMh

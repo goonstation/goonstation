@@ -17699,6 +17699,13 @@
 	can_rupture = 0;
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north{
+	areastring = "Freezer";
+	name = "Freezer APC"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "flr" = (
@@ -23798,6 +23805,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "hch" = (

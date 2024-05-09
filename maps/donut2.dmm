@@ -8127,7 +8127,10 @@
 /area/station/medical/head)
 "aQq" = (
 /obj/machinery/chem_heater,
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	areastring = "Cafeteria";
+	name = "Cafeteria APC"
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -12903,6 +12906,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bqD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "bqG" = (
@@ -30691,6 +30697,10 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "lhs" = (
@@ -32627,6 +32637,9 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -35666,6 +35679,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -50366,6 +50382,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "xtw" = (
@@ -51186,6 +51205,9 @@
 	pixel_x = 32;
 	pixel_y = 64;
 	text = "NF"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)

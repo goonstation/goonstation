@@ -15926,6 +15926,11 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start/job/bartender,
+/obj/machinery/power/apc/autoname_east{
+	areastring = "Bar";
+	name = "Bar APC"
+	},
+/obj/cable,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bni" = (
@@ -32656,6 +32661,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"ecd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "ecv" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -36330,6 +36344,13 @@
 /area/station/hangar/qm)
 "gGB" = (
 /obj/submachine/weapon_vendor/fishing/portable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east{
+	areastring = "Hydroponics Bay";
+	name = "Hydroponics APC"
+	},
 /turf/simulated/floor/grey,
 /area/station/storage/hydroponics)
 "gGT" = (
@@ -36668,6 +36689,13 @@
 "gTc" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/vending/monkey/kitchen,
+/obj/machinery/power/apc/autoname_north{
+	name = "Freezer APC";
+	areastring = "Freezer"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gTx" = (
@@ -39982,6 +40010,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/vending/jobclothing/catering,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jsm" = (
@@ -41277,6 +41308,15 @@
 /obj/disposalpipe/switch_junction/biofilter/left/north,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"ksN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grey,
+/area/station/storage/hydroponics)
 "ksO" = (
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
@@ -113906,7 +113946,7 @@ bmT
 vIY
 tkn
 kAy
-evU
+ksN
 bpC
 evU
 oUC
@@ -118129,7 +118169,7 @@ ppQ
 fMJ
 uzb
 axu
-fbZ
+ecd
 bne
 uzb
 qVA

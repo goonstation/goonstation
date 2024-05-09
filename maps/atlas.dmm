@@ -2211,6 +2211,9 @@
 	},
 /area/station/medical/medbay)
 "ahS" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "ahU" = (
@@ -7013,6 +7016,9 @@
 /area/station/science/lab)
 "azE" = (
 /mob/living/critter/small_animal/mouse/remy,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "azF" = (
@@ -13475,6 +13481,10 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aXj" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aXk" = (
@@ -16374,6 +16384,12 @@
 /area/station/hallway/primary/north)
 "iET" = (
 /obj/landmark/gps_waypoint,
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Bar"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "iFd" = (
@@ -16427,6 +16443,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -16804,6 +16823,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"ksq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "kvq" = (
 /obj/table/auto,
 /obj/machinery/cell_charger{
@@ -18008,6 +18033,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "oSG" = (
@@ -18291,6 +18319,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "ppJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -20051,6 +20082,9 @@
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-10"
 	},
 /turf/simulated/floor/white/side,
 /area/station/crew_quarters/kitchen)
@@ -69264,7 +69298,7 @@ acA
 add
 uFr
 drl
-aXj
+ksq
 cyw
 uFr
 rvp

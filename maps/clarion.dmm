@@ -396,6 +396,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "abn" = (
@@ -3654,11 +3657,17 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aAz" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -3666,6 +3675,9 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -4363,7 +4375,7 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "aEI" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
@@ -11822,6 +11834,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "byo" = (
@@ -13911,7 +13926,7 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "bXA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14717,7 +14732,7 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "cyJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -16578,9 +16593,9 @@
 /area/station/medical/medbay/lobby)
 "egr" = (
 /obj/machinery/power/apc{
-	areastring = "Bar";
+	areastring = "Cafeteria";
 	dir = 4;
-	name = "Bar APC";
+	name = "Cafeteria APC";
 	pixel_x = 24
 	},
 /obj/cable{
@@ -17375,6 +17390,9 @@
 /area/listeningpost/solars)
 "eOI" = (
 /obj/disposalpipe/segment/produce,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "eOQ" = (
@@ -18161,7 +18179,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/purple/fancy,
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "fyI" = (
 /obj/rack,
 /obj/item/raw_material/cerenkite,
@@ -18834,9 +18852,6 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
-"fVP" = (
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "fVZ" = (
 /obj/item/storage/wall/medical{
 	dir = 4;
@@ -19684,6 +19699,9 @@
 	pixel_x = 5
 	},
 /obj/landmark/start/job/chef,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gAY" = (
@@ -22364,7 +22382,7 @@
 /turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
 	dir = 4
 	},
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "iDw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25663,6 +25681,9 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lju" = (
@@ -26062,6 +26083,9 @@
 "lyh" = (
 /obj/machinery/navbeacon/mule/catering_north,
 /obj/decal/stripe_caution,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "lyx" = (
@@ -26759,7 +26783,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west{
 	dir = 4
 	},
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "lZY" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -30678,7 +30702,7 @@
 /turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
 	dir = 4
 	},
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "oWh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -30959,6 +30983,13 @@
 	name = "autoname  - SS13";
 	pixel_y = 21;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north{
+	areastring = "Bar";
+	name = "Bar APC"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -32774,7 +32805,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy,
-/area/station/crew_quarters/cafeteria)
+/area/station/crew_quarters/bar)
 "qEG" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bootleg,
@@ -35782,6 +35813,12 @@
 /obj/disposalpipe/chicken_disposal_pipe/horizontal,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"sSe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "sTE" = (
 /obj/storage/crate,
 /obj/item/clothing/glasses/vr/arcade,
@@ -36660,7 +36697,7 @@
 /area/station/hallway/primary/central)
 "tzE" = (
 /obj/machinery/power/apc{
-	areastring = "Waste Disposal";
+	areastring = "Freezer";
 	dir = 8;
 	name = "Waste Disposal APC";
 	pixel_x = -24
@@ -39152,6 +39189,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vmJ" = (
@@ -41151,6 +41191,9 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/milk,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "xbR" = (
@@ -41502,6 +41545,19 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"xsj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable,
+/obj/machinery/power/apc{
+	areastring = "Waste Disposal";
+	dir = 8;
+	name = "Waste Disposal APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "xsx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2{
@@ -83628,7 +83684,7 @@ uWN
 nWp
 kZl
 bXw
-fVP
+aDu
 aEB
 dhZ
 nWp
@@ -86643,7 +86699,7 @@ pwy
 pMB
 ayX
 vVW
-aAC
+sSe
 sRC
 lQz
 eTX
@@ -88758,7 +88814,7 @@ auN
 auN
 azS
 tzE
-auN
+xsj
 esa
 aDJ
 abN

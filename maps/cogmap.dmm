@@ -4562,6 +4562,9 @@
 /area/station/crew_quarters/cafeteria)
 "ask" = (
 /obj/disposalpipe/segment/food,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "asl" = (
@@ -5285,6 +5288,9 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "auP" = (
@@ -5684,6 +5690,9 @@
 "awe" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -39932,6 +39941,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"erD" = (
+/obj/disposalpipe/segment/food,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "erT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41463,6 +41479,12 @@
 	dir = 5
 	},
 /area/space)
+"fqw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "fqB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -49306,6 +49328,9 @@
 	},
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "lMq" = (
@@ -49338,6 +49363,9 @@
 "lQi" = (
 /obj/landmark/pest,
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "lQq" = (
@@ -56250,6 +56278,9 @@
 /area/station/crew_quarters/bar)
 "qQK" = (
 /obj/landmark/start/job/bartender,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "qQQ" = (
@@ -58312,6 +58343,14 @@
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"sCY" = (
+/obj/disposalpipe/segment/food,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "sDi" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -63823,6 +63862,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
+"wLm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "wNc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64116,6 +64164,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
+"wZm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "xaa" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -64193,6 +64247,13 @@
 "xce" = (
 /obj/shrub{
 	dir = 10
+	},
+/obj/machinery/power/apc/autoname_east{
+	areastring = "Freezer";
+	name = "Freezer APC"
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -114719,8 +114780,8 @@ amY
 aoq
 apD
 aqR
-ask
-ask
+sCY
+erD
 auO
 ask
 ayR
@@ -115326,7 +115387,7 @@ wVZ
 kCu
 wiO
 axr
-asl
+fqw
 qQJ
 tvH
 qPU
@@ -115930,7 +115991,7 @@ dWk
 aso
 atC
 mlb
-auR
+wZm
 sqG
 ayT
 aAw
@@ -116534,7 +116595,7 @@ vlI
 jJj
 atC
 elA
-auR
+wZm
 auR
 ayT
 eqa
@@ -118347,7 +118408,7 @@ lfO
 bEI
 apK
 xce
-sRY
+wLm
 aqY
 aDo
 aDo
