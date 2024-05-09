@@ -58676,8 +58676,8 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/autoname_north{
-	areastring = "Bar";
-	name = "Bar APC"
+	areastring = "Cafeteria";
+	name = "Cafeteria APC"
 	},
 /obj/cable{
 	icon_state = "0-8"
