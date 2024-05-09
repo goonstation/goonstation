@@ -32656,7 +32656,10 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/disposal/mail/autoname,
+/obj/machinery/disposal/mail/autoname{
+	mail_tag = "mechanics";
+	mailgroup = "engineer"
+	},
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
