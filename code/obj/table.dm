@@ -388,6 +388,11 @@ TYPEINFO_NEW(/obj/table)
 					REMOVE_FLAG(AM.flags, TABLEPASS)
 				src.harm_slam(thr.thrown_by, AM)
 
+	after_abcu_spawn()
+		if(src.has_drawer)
+			for(var/obj/I in src.storage.get_all_contents())
+				qdel(I)
+
 
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
