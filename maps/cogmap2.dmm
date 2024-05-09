@@ -40073,9 +40073,9 @@
 "cmV" = (
 /obj/cable,
 /obj/machinery/power/apc{
-	areastring = "Southwest Primarly Hallway APC";
+	areastring = "Southwest Primary Hallway APC";
 	dir = 8;
-	name = "Southwest Primarly Hallway APC";
+	name = "Southwest Primary Hallway APC";
 	pixel_x = -24
 	},
 /obj/reagent_dispensers/foamtank,
