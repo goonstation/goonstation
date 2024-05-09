@@ -17886,7 +17886,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/rancher,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor,
+/turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "enu" = (
 /obj/cable,
@@ -25476,6 +25476,11 @@
 	dir = 4
 	},
 /area/station/engine/engineering/breakroom)
+"lIo" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
+/area/station/hydroponics/bay)
 "lIE" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -38060,7 +38065,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "vVb" = (
 /obj/table/reinforced/chemistry/auto{
@@ -73760,7 +73765,7 @@ awf
 vNm
 dGj
 slg
-ujy
+lIo
 huW
 izu
 kcX
