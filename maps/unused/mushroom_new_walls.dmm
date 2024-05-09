@@ -20524,6 +20524,7 @@
 "gJm" = (
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
+/obj/item/clothing/suit/bedsheet/green,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters)
 "gJA" = (
@@ -28803,6 +28804,7 @@
 	},
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
+/obj/item/clothing/suit/bedsheet/pink,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters)
 "oKL" = (
