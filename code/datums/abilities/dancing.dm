@@ -32,6 +32,7 @@
 
 /datum/targetable/dancing
 	icon = 'icons/mob/dance_ui.dmi'
+	do_logs = FALSE
 	var/style = null
 	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
 											"[EAST]"=list(-8,1),
@@ -145,6 +146,7 @@
 		var/time_change
 
 		cast(atom/target)
+			. = ..()
 			var/datum/abilityHolder/dancing/AH = holder
 			if(AH)
 				AH.time_per_count += time_change

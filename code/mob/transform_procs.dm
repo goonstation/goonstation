@@ -422,6 +422,7 @@
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
+		announce_ghost_afterlife(usr.key, "<b>[usr.name]</b> is logging into Ghost VR.")
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
 
@@ -660,11 +661,19 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
 
+	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")
+	boutput(src, "<h2>You are visiting the Afterlife Bar!</h2>You can still talk to ghosts! Start a message with \"<tt>:d</tt>\" (like \"<tt>:dhello ghosts</tt>\") to talk in deadchat.")
+
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
 		newbody.key = src.key
 
+	// copy the respawn timer to the new body.
+	// since afterlife bodies get trashed when you die it isnt too big of a deal
+	var/atom/movable/screen/respawn_timer/respawn_timer = newbody.ghost.hud?.get_respawn_timer()
+	if (respawn_timer)
+		newbody.hud.add_object(newbody.ghost.hud?.get_respawn_timer())
 
 
 	return

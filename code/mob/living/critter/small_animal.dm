@@ -3956,12 +3956,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mentordisappear"
 	needs_turf = FALSE //always castable
 	var/const/disappearance_time = 0.5 SECONDS
+	do_logs = FALSE //we're already logged
 
 	cast(mob/target)
 
 		var/mob/living/M = holder.owner
 		if (!holder)
 			return 1
+		. = ..()
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
 		animate_bouncy(src)
@@ -3979,8 +3981,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
 	needs_turf = FALSE //always castable
+	do_logs = FALSE
 
 	cast(mob/target)
+		. = ..()
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, SPAN_NOTICE("You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]"))

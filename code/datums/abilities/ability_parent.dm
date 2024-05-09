@@ -873,6 +873,9 @@
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/tooltip_flags = null
 
+	///do we log casting this action? set false for stuff that doesn't need to be logged, like dancing
+	var/do_logs = TRUE
+
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	// 38 types have overriden this.
 	New(datum/abilityHolder/holder)
@@ -914,6 +917,9 @@
 			afterCast()
 
 		cast(atom/target)
+			SHOULD_CALL_PARENT(TRUE)
+			if(do_logs)
+				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src] on [constructTarget(target, "combat")] at [log_loc(target)]")
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 

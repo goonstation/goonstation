@@ -1293,7 +1293,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
-		assign_name(M)
+		src.assign_name(M)
 
 		..()
 
@@ -1303,25 +1303,27 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
+			src.assign_name(user)
 		..()
-
 
 	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
-		else
+		if (owner_prints)
 			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+		else
+			src.assign_name(user)
+		..()
+
 
 	proc/assign_name(var/mob/M)
+		if (owner_prints)
+			return
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
+				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. You are now the owner!"))
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1

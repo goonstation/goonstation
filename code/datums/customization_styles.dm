@@ -235,6 +235,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Mullet"
 				id = "long"
 				gender = MASCULINE | FEMININE
+			suave
+				name = "Suave Mullet"
+				id = "suave_mullet"
+				gender = MASCULINE | FEMININE
 			part
 				name = "Parted Hair"
 				id = "part"

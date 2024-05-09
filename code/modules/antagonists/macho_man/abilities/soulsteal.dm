@@ -3,6 +3,7 @@
 	desc = "Steals a target's soul to restore health"
 	icon_state = "enthrall"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

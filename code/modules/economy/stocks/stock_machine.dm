@@ -156,7 +156,7 @@
 				boutput(user, SPAN_NOTICE("Card authorized."))
 				src.logged_in = ID.registered
 			else
-				boutput(user, SPAN_ALERT("Pin number incorrect."))
+				boutput(user, SPAN_ALERT("PIN incorrect."))
 				src.logged_in = null
 		else
 			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
