@@ -31330,7 +31330,6 @@
 "qEU" = (
 /obj/table/reinforced,
 /obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/produce,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -31338,6 +31337,7 @@
 	name = "Kitchen Shutter";
 	opacity = 0
 	},
+/obj/disposalpipe/chicken_disposal_pipe/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qEV" = (
