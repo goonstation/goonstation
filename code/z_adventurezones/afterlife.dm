@@ -106,9 +106,19 @@ proc/inafterlifebar(var/mob/M as mob in world)
 proc/inafterlife(var/mob/M as mob in world)
 	return istype(get_area(M),/area/afterlife)
 
+// list of ([ckey] = TIME) for handling ghosts doing interesting things,
+// like spawning in the afterlife. with a cooldown so you can't spam it.
+var/global/list/afterlife_announcements = list()
+proc/announce_ghost_afterlife(var/ckey, var/text)
+	if (!afterlife_announcements[ckey] || afterlife_announcements[ckey] < (TIME - 5 MINUTES))
+		afterlife_announcements[ckey] = TIME
+		message_ghosts(text)
+
+
 #ifndef SECRETS_ENABLED
 /obj/submachine/scryingpool/afterlifebar
 /turf/unsimulated/floor/plating/holo
+/obj/machinery/maptext_monitor/scrying_pool/afterlife_bar
 #endif
 
 // belongs in the center of pool

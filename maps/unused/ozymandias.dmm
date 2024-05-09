@@ -257,7 +257,6 @@
 	name = "wooden table"
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood/seven,
@@ -2152,7 +2151,6 @@
 "aEF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light/emergency{
@@ -3013,7 +3011,6 @@
 "aOY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/cable,
@@ -8552,7 +8549,6 @@
 "cpG" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/firealarm{
@@ -13792,7 +13788,6 @@
 "dKS" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/item/device/radio/intercom/engineering{
@@ -14233,7 +14228,6 @@
 "dRz" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light{
@@ -23563,7 +23557,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/genpop)
 "gmf" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 4
 	},
@@ -43142,7 +43136,6 @@
 "lro" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -46217,7 +46210,6 @@
 "mdw" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/grey,
@@ -46597,7 +46589,6 @@
 "miw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light{
@@ -71670,7 +71661,6 @@
 	name = "wooden table"
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light/small{
@@ -75427,7 +75417,6 @@
 "tAD" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -89381,7 +89370,6 @@
 "wRe" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/blueblack/corner{
@@ -93029,7 +93017,6 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/west,

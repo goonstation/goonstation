@@ -153,6 +153,7 @@
 	var/hair_override = 0 // only really works if they have hair. Barbering might help
 	/// forces the mob to display their special hair, even if their flags tell them not to
 	var/special_hair_override = 0 // only really works if they have any special hair
+	var/trample_cooldown = 4 SECONDS
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
@@ -872,7 +873,7 @@
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
 		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
-		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.setStatus("unconscious", 10 SECONDS)
 		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
@@ -1043,12 +1044,18 @@
 
 	var/obj/item/I = src.equipped()
 
-	if (!I || !isitem(I) || I.cant_drop) return
+	if (!I || !isitem(I) || I.cant_drop)
+		return
 
+	var/obj/item/grab/grab = null
 	if (istype(I, /obj/item/grab))
-		var/obj/item/grab/G = I
-		I = G.handle_throw(src, target)
-		if (!I) return
+		grab = I
+	else if (I.chokehold)
+		grab = I.chokehold
+	if (grab)
+		I = grab.handle_throw(src, target)
+		if (!I)
+			return
 
 	I.set_loc(src.loc)
 
@@ -1101,9 +1108,7 @@
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 		src.next_click = world.time + src.combat_click_delay
 
@@ -3341,7 +3346,7 @@
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")
-				src.changeStatus("weakened", 3 SECONDS)
+				src.changeStatus("knockdown", 3 SECONDS)
 			else if (src.shoes.laces == LACES_CUT) // Laces cut
 				var/obj/item/clothing/shoes/S = src.shoes
 				src.u_equip(S)
@@ -3605,3 +3610,10 @@
 		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
 	src.bandaged -= bandaged_part
 	src.update_body()
+
+/mob/living/carbon/human/proc/drag_onto_op_table(obj/machinery/optable/table)
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()
+	src.set_loc(get_turf(table))
+	table.victim = src

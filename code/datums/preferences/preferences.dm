@@ -27,42 +27,42 @@ var/list/removed_jobs = list(
 	var/synd_int_note
 	var/employment_note
 
-	var/be_traitor = 0
-	var/be_syndicate = 0
-	var/be_syndicate_commander = 0
-	var/be_spy = 0
-	var/be_gangleader = 0
-	var/be_gangmember = 0
-	var/be_revhead = 0
-	var/be_changeling = 0
-	var/be_wizard = 0
-	var/be_werewolf = 0
-	var/be_vampire = 0
-	var/be_arcfiend = 0
-	var/be_wraith = 0
-	var/be_blob = 0
-	var/be_conspirator = 0
-	var/be_flock = 0
-	var/be_salvager = 0
-	var/be_misc = 0
+	var/be_traitor = FALSE
+	var/be_syndicate = FALSE
+	var/be_syndicate_commander = FALSE
+	var/be_spy = FALSE
+	var/be_gangleader = FALSE
+	var/be_gangmember = FALSE
+	var/be_revhead = FALSE
+	var/be_changeling = FALSE
+	var/be_wizard = FALSE
+	var/be_werewolf = FALSE
+	var/be_vampire = FALSE
+	var/be_arcfiend = FALSE
+	var/be_wraith = FALSE
+	var/be_blob = FALSE
+	var/be_conspirator = FALSE
+	var/be_flock = FALSE
+	var/be_salvager = FALSE
+	var/be_misc = FALSE
 
-	var/be_random_name = 0
-	var/be_random_look = 0
-	var/random_blood = 0
-	var/view_changelog = 1
-	var/view_score = 1
-	var/view_tickets = 1
+	var/be_random_name = FALSE
+	var/be_random_look = FALSE
+	var/random_blood = FALSE
+	var/view_changelog = TRUE
+	var/view_score = TRUE
+	var/view_tickets = TRUE
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
-	var/use_click_buffer = 0
+	var/use_click_buffer = FALSE
 	var/help_text_in_examine = TRUE
-	var/listen_ooc = 1
-	var/listen_looc = 1
-	var/flying_chat_hidden = 0
-	var/auto_capitalization = 0
-	var/local_deadchat = 0
-	var/use_wasd = 1
-	var/use_azerty = 0 // do they have an AZERTY keyboard?
+	var/listen_ooc = TRUE
+	var/listen_looc = TRUE
+	var/flying_chat_hidden = FALSE
+	var/auto_capitalization = FALSE
+	var/local_deadchat = FALSE
+	var/use_wasd = TRUE
+	var/use_azerty = FALSE // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
 
@@ -77,9 +77,9 @@ var/list/removed_jobs = list(
 
 	var/datum/movable_preview/character/preview = null
 
-	var/mentor = 0
-	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
-	var/antispam = 0
+	var/mentor = FALSE
+	var/see_mentor_pms = TRUE // do they wanna disable mentor pms?
+	var/antispam = FALSE
 
 	var/datum/traitPreferences/traitPreferences = new
 
@@ -102,13 +102,16 @@ var/list/removed_jobs = list(
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
 
+	var/list/profile_names = null
+	var/profile_names_dirty = TRUE
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
 	New()
-		character_name_validation = regex("\\w+") //TODO: Make this regex a bit sturdier (capitalization requirements, character whitelist, etc)
-		randomize_name()
-		randomizeLook()
+		src.character_name_validation = regex("\\w+") //TODO: Make this regex a bit sturdier (capitalization requirements, character whitelist, etc)
+		src.randomize_name()
+		src.randomizeLook()
+		src.profile_names = new/list(SAVEFILE_PROFILES_MAX)
 		..()
 		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
 			src.custom_parts = list(
@@ -123,7 +126,7 @@ var/list/removed_jobs = list(
 		return tgui_always_state.can_use_topic(src, user)
 
 	ui_interact(mob/user, datum/tgui/ui)
-		if(!tgui_process)
+		if (!tgui_process)
 			boutput(user, SPAN_ALERT("Hold on a moment, stuff is still setting up."))
 			return
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -141,14 +144,14 @@ var/list/removed_jobs = list(
 			src.preview = null
 
 	ui_static_data(mob/user)
-		var/list/traits = list()
+		var/list/traitsData = list()
 		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/list/categories
 			if (islist(trait.category))
 				categories = trait.category.Copy()
 				categories.Remove(src.traitPreferences.hidden_categories)
 
-			traits[trait.id] = list(
+			traitsData[trait.id] = list(
 				"id" = trait.id,
 				"name" = trait.name,
 				"desc" = trait.desc,
@@ -157,7 +160,7 @@ var/list/removed_jobs = list(
 				"points" = trait.points,
 			)
 		. = list(
-			"traitsData" = traits
+			"traitsData" = traitsData
 		)
 
 	ui_data(mob/user)
@@ -167,36 +170,26 @@ var/list/removed_jobs = list(
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
-
 		if (!client)
 			return
 
 		var/list/profiles = new/list(SAVEFILE_PROFILES_MAX)
 		for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
+			if (src.profile_names_dirty)
+				src.profile_names[i] = src.savefile_get_profile_name(client, i)
 			profiles[i] = list(
 				"active" = i == src.profile_number,
-				"name" = src.savefile_get_profile_name(client, i),
+				"name" = src.profile_names[i],
 			)
+		src.profile_names_dirty = FALSE
 
 		var/list/cloud_saves = list()
 		for (var/name in client.player.cloudSaves.saves)
 			cloud_saves += name
 
-		sanitize_null_values()
+		src.sanitize_null_values()
 
-		var/list/traits = list()
-		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
-			var/selected = (trait.id in traitPreferences.traits_selected)
-			var/list/categories
-			if (islist(trait.category))
-				categories = trait.category.Copy()
-				categories.Remove(src.traitPreferences.hidden_categories)
-
-			traits += list(list(
-				"id" = trait.id,
-				"selected" = selected,
-				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
-			))
+		var/list/traits = src.traitPreferences.generateTraitData(user)
 
 		var/list/custom_parts_data = list()
 		for (var/slot_id in src.custom_parts)
@@ -225,7 +218,7 @@ var/list/removed_jobs = list(
 			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
-			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
+			"pronouns" = isnull(src.AH.pronouns) ? "Default" : src.AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -239,7 +232,7 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
-			"skinTone" = src.AH.s_tone,
+			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
@@ -260,9 +253,9 @@ var/list/removed_jobs = list(
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
-			"hudThemePreview" = icon2base64(icon(hud_style_selection[hud_style], "preview")),
+			"hudThemePreview" = icon2base64(icon(hud_style_selection[src.hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
-			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
+			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
 			"tguiFancy" = src.tgui_fancy,
@@ -288,15 +281,15 @@ var/list/removed_jobs = list(
 
 		var/client/client = ismob(usr) ? usr.client : usr
 
-		switch(action)
+		switch (action)
 			if ("previewSound")
 				var/sound_file
 
 				if (params["pdaRingtone"])
 					get_all_character_setup_ringtones()
 					var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
-					if(istype(RT) && length(RT.ringList))
-						sound_file = RT.ringList[rand(1,length(RT.ringList))]
+					if (istype(RT) && length(RT.ringList))
+						sound_file = RT.ringList[rand(1, length(RT.ringList))]
 
 				if (params["fartsound"])
 					sound_file = sound(src.AH.fartsounds[src.AH.fartsound])
@@ -305,21 +298,21 @@ var/list/removed_jobs = list(
 					sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
 
 				if (params["chatsound"])
-					sound_file = sounds_speak["[AH.voicetype]"]
+					sound_file = sounds_speak["[src.AH.voicetype]"]
 
 				if (sound_file)
-					preview_sound(sound_file)
+					src.preview_sound(sound_file)
 
 				return FALSE
 
 			if ("rotate-clockwise")
 				src.spessman_direction = turn(src.spessman_direction, 90)
-				update_preview_icon()
+				src.update_preview_icon()
 				return
 
 			if ("rotate-counter-clockwise")
 				src.spessman_direction = turn(src.spessman_direction, -90)
-				update_preview_icon()
+				src.update_preview_icon()
 				return
 
 			if ("open-occupation-window")
@@ -332,7 +325,7 @@ var/list/removed_jobs = list(
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
 					tgui_alert(usr, "You need to give your profile a name.", "Pick name")
 					return
-
+				src.profile_names_dirty = TRUE
 				if (!isnull(index) && isnum(index))
 					src.savefile_save(client.key, index)
 					src.profile_number = index
@@ -347,26 +340,27 @@ var/list/removed_jobs = list(
 						return FALSE
 
 					boutput(usr, SPAN_NOTICE("<b>Character loaded from Slot [index].</b>"))
-					update_preview_icon()
+					src.traitPreferences.traitDataDirty = TRUE
+					src.update_preview_icon()
 					return TRUE
 
 			if ("cloud-new")
-				if(length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if (length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
-					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
+					if (length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
-						if(istext(ret))
+						if (istext(ret))
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
-				if(istext(ret))
+				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile saved!"))
@@ -374,16 +368,16 @@ var/list/removed_jobs = list(
 
 			if ("cloud-load")
 				var/ret = src.cloudsave_load(client, params["name"])
-				if( istext(ret))
+				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
-					update_preview_icon()
+					src.update_preview_icon()
 					return TRUE
 
 			if ("cloud-delete")
 				var/ret = src.cloudsave_delete(client, params["name"])
-				if(istext(ret))
+				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to delete savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
@@ -452,7 +446,6 @@ var/list/removed_jobs = list(
 				new_name = capitalize(new_name)
 				src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 				src.profile_modified = TRUE
-
 				return TRUE
 
 			if ("update-nameLast")
@@ -504,36 +497,33 @@ var/list/removed_jobs = list(
 			if ("update-gender")
 				if (src.gender == MALE)
 					src.gender = FEMALE
-					AH.gender = FEMALE
+					src.AH.gender = FEMALE
 				else
 					src.gender = MALE
-					AH.gender = MALE
-				update_preview_icon()
+					src.AH.gender = MALE
+				src.update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-pronouns")
-				if(isnull(AH.pronouns))
-					AH.pronouns = get_singleton(/datum/pronouns/theyThem)
+				if (isnull(src.AH.pronouns))
+					src.AH.pronouns = get_singleton(/datum/pronouns/theyThem)
 				else
-					AH.pronouns = AH.pronouns.next_pronouns()
-					if(AH.pronouns == get_singleton(/datum/pronouns/theyThem))
-						AH.pronouns = null
+					src.AH.pronouns = src.AH.pronouns.next_pronouns()
+					if (src.AH.pronouns == get_singleton(/datum/pronouns/theyThem))
+						src.AH.pronouns = null
 				src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-age")
 				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
-
 				if (new_age)
 					src.age = clamp(round(text2num(new_age)), 20, 80)
 					src.profile_modified = TRUE
-
 					return TRUE
 
 			if ("update-bloodType")
 				var/blTypeNew = tgui_input_list(usr, "Please select a blood type:", "Character Generation", list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"), src.blType)
-
 				if (blTypeNew)
 					if (blTypeNew == "Random")
 						src.random_blood = TRUE
@@ -548,9 +538,9 @@ var/list/removed_jobs = list(
 					src.pin	= null
 					return TRUE
 				else
-					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || 1000, 9999, 1000)
+					var/new_pin = tgui_input_pin(usr, "Please select a PIN between [PIN_MIN] and [PIN_MAX]", "Character Generation", src.pin || null, PIN_MAX, PIN_MIN)
 					if (new_pin)
-						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
+						src.pin = new_pin
 						src.profile_modified = TRUE
 						return TRUE
 
@@ -563,7 +553,6 @@ var/list/removed_jobs = list(
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 					src.flavor_text = new_text || null
 					src.profile_modified = TRUE
-
 					return TRUE
 
 			if ("update-securityNote")
@@ -575,7 +564,6 @@ var/list/removed_jobs = list(
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 					src.security_note = new_text || null
 					src.profile_modified = TRUE
-
 					return TRUE
 
 			if ("update-medicalNote")
@@ -587,7 +575,6 @@ var/list/removed_jobs = list(
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 					src.medical_note = new_text || null
 					src.profile_modified = TRUE
-
 					return TRUE
 
 			if ("update-syndintNote")
@@ -599,12 +586,11 @@ var/list/removed_jobs = list(
 						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
 					src.synd_int_note = new_text || null
 					src.profile_modified = TRUE
-
 					return TRUE
 
 			if ("update-pdaRingtone")
 				get_all_character_setup_ringtones()
-				if(!length(selectable_ringtones))
+				if (!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
 					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
@@ -612,7 +598,6 @@ var/list/removed_jobs = list(
 					src.pda_ringtone_index = tgui_input_list(usr, "Choose a ringtone", "PDA", selectable_ringtones)
 					if (!(src.pda_ringtone_index in selectable_ringtones))
 						src.pda_ringtone_index = "Two-Beep"
-
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -621,58 +606,56 @@ var/list/removed_jobs = list(
 				if (!isnull(new_color))
 					src.PDAcolor = new_color
 					src.profile_modified = TRUE
-
 					return TRUE
 
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
 				if (usr.has_medal("Contributor"))
-					switch(tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
-						if("Paint me like a posh fence!")
-							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
-						if("Use Standard tone.")
+					switch (tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
+						if ("Paint me like a posh fence!")
+							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", src.AH.s_tone)
+						if ("Use Standard tone.")
 							new_tone = get_standard_skintone(usr)
 						else
 							return
 
-					if(new_tone)
-						AH.s_tone = new_tone
-						AH.s_tone_original = new_tone
-
-						update_preview_icon()
+					if (new_tone)
+						src.AH.s_tone = new_tone
+						src.AH.s_tone_original = new_tone
+						src.update_preview_icon()
 						src.profile_modified = TRUE
 						return TRUE
 				else
 					new_tone = get_standard_skintone(usr)
-					if(new_tone)
-						AH.s_tone = new_tone
-						AH.s_tone_original = new_tone
-
-						update_preview_icon()
+					if (new_tone)
+						src.AH.s_tone = new_tone
+						src.AH.s_tone_original = new_tone
+						src.update_preview_icon()
 						src.profile_modified = TRUE
 						return TRUE
+
 			if ("decrease-skinTone")
 				var/units = 1
 				if (params["alot"])
 					units = 8
-				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
-				AH.s_tone_original = AH.s_tone
-
-				update_preview_icon()
+				var/list/L = hex_to_rgb_list(src.AH.s_tone_original)
+				src.AH.s_tone_original = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
+				src.AH.s_tone = src.AH.s_tone_original
+				src.update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
+
 			if ("increase-skinTone")
 				var/units = 1
 				if (params["alot"])
 					units = 8
-				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
-				AH.s_tone_original = AH.s_tone
-
-				update_preview_icon()
+				var/list/L = hex_to_rgb_list(src.AH.s_tone_original)
+				src.AH.s_tone_original = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
+				src.AH.s_tone = src.AH.s_tone_original
+				src.update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
+
 			if ("update-specialStyle")
 				var/mob/living/carbon/human/H = src.preview.preview_thing
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
@@ -682,16 +665,16 @@ var/list/removed_jobs = list(
 				var/list/style_list = typeinfo.special_styles
 				var/new_style = tgui_input_list(usr, "Select a style pattern", "Special Style", style_list)
 				if (new_style)
-					AH.special_style = new_style
-					update_preview_icon()
+					src.AH.special_style = new_style
+					src.update_preview_icon()
 					src.profile_modified = TRUE
 					return TRUE
-			if ("update-eyeColor")
-				var/new_color = tgui_color_picker(usr, "Please select an eye color.", "Character Generation", AH.e_color)
-				if (new_color)
-					AH.e_color = new_color
 
-					update_preview_icon()
+			if ("update-eyeColor")
+				var/new_color = tgui_color_picker(usr, "Please select an eye color.", "Character Generation", src.AH.e_color)
+				if (new_color)
+					src.AH.e_color = new_color
+					src.update_preview_icon()
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -702,7 +685,7 @@ var/list/removed_jobs = list(
 
 			if ("update-detail-color")
 				var/current_color
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1")
 						current_color = src.AH.customization_first_color
 					if ("custom2")
@@ -713,7 +696,7 @@ var/list/removed_jobs = list(
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
-					switch(params["id"])
+					switch (params["id"])
 						if ("custom1")
 							src.AH.customization_first_color = new_color
 						if ("custom2")
@@ -722,21 +705,19 @@ var/list/removed_jobs = list(
 							src.AH.customization_third_color = new_color
 						if ("underwear")
 							src.AH.u_color = new_color
-
-					update_preview_icon()
+					src.update_preview_icon()
 					src.profile_modified = TRUE
 					return TRUE
 
 			if ("update-detail-style")
 				var/new_style
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
-
 				if (new_style)
-					switch(params["id"])
+					switch (params["id"])
 						if ("custom1")
 							src.AH.customization_first = new_style
 						if ("custom2")
@@ -745,8 +726,7 @@ var/list/removed_jobs = list(
 							src.AH.customization_third = new_style
 						if ("underwear")
 							src.AH.underwear = new_style
-
-					update_preview_icon()
+					src.update_preview_icon()
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -756,7 +736,7 @@ var/list/removed_jobs = list(
 				var/current_index
 				var/list/style_list
 
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1")
 						current_style = src.AH.customization_first.type
 					if ("custom2")
@@ -769,7 +749,7 @@ var/list/removed_jobs = list(
 				if (isnull(current_style))
 					return
 
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
 					if ("underwear")
@@ -785,7 +765,7 @@ var/list/removed_jobs = list(
 					new_style = style_list[current_index - 1 < 1 ? length(style_list) : current_index - 1]
 
 				if (new_style)
-					switch(params["id"])
+					switch (params["id"])
 						if ("custom1")
 							src.AH.customization_first = new new_style
 						if ("custom2")
@@ -794,39 +774,35 @@ var/list/removed_jobs = list(
 							src.AH.customization_third = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style
-
-					update_preview_icon()
+					src.update_preview_icon()
 					src.profile_modified = TRUE
 					return TRUE
 
 			if ("update-fartsound")
-				var/list/sound_list = list_keys(AH.fartsounds)
+				var/list/sound_list = list_keys(src.AH.fartsounds)
 				var/new_sound = tgui_input_list(usr, "Select a farting sound", "Fart sound", sound_list)
-
 				if (new_sound)
 					src.AH.fartsound = new_sound
-					preview_sound(sound(src.AH.fartsounds[src.AH.fartsound]))
+					src.preview_sound(sound(src.AH.fartsounds[src.AH.fartsound]))
 					src.profile_modified = TRUE
 					return TRUE
 
 			if ("update-screamsound")
-				var/list/sound_list = list_keys(AH.screamsounds)
+				var/list/sound_list = list_keys(src.AH.screamsounds)
 				var/new_sound = tgui_input_list(usr, "Select a screaming sound", "Scream sound", sound_list)
-
 				if (new_sound)
 					src.AH.screamsound = new_sound
-					preview_sound(sound(src.AH.screamsounds[src.AH.screamsound]))
+					src.preview_sound(sound(src.AH.screamsounds[src.AH.screamsound]))
 					src.profile_modified = TRUE
 					return TRUE
 
 			if ("update-chatsound")
-				var/list/sound_list = list_keys(AH.voicetypes)
+				var/list/sound_list = list_keys(src.AH.voicetypes)
 				var/new_sound = tgui_input_list(usr, "Select a chatting sound", "Chat sound", sound_list)
-
 				if (new_sound)
 					new_sound = src.AH.voicetypes[new_sound]
 					src.AH.voicetype = new_sound
-					preview_sound(sound(sounds_speak[src.AH.voicetype]))
+					src.preview_sound(sound(sounds_speak[src.AH.voicetype]))
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -873,7 +849,6 @@ var/list/removed_jobs = list(
 
 			if ("update-hudTheme")
 				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
-
 				if (new_hud)
 					src.hud_style = new_hud
 					src.profile_modified = TRUE
@@ -881,7 +856,6 @@ var/list/removed_jobs = list(
 
 			if ("update-targetingCursor")
 				var/new_cursor = tgui_input_list(usr, "Please select a cursor:", "Cursor", cursors_selection)
-
 				if (new_cursor)
 					src.target_cursor = new_cursor
 					src.profile_modified = TRUE
@@ -897,7 +871,7 @@ var/list/removed_jobs = list(
 				if (params["value"] == SCROLL_TARGET_ALWAYS || params["value"] == SCROLL_TARGET_HOVER || params["value"] == SCROLL_TARGET_NEVER)
 					src.scrollwheel_limb_targeting = params["value"]
 					src.profile_modified = TRUE
-				return TRUE
+					return TRUE
 
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
@@ -945,7 +919,7 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-preferredMap")
-				src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=TRUE)
+				src.preferred_map = mapSwitcher.clientSelectMap(usr.client, pickable=TRUE)
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -971,6 +945,7 @@ var/list/removed_jobs = list(
 						if (customization.trait_cost)
 							option_string += " ([customization.trait_cost] trait point[customization.trait_cost > 1 ? "s" : ""])"
 						options[option_string] = customization.id
+				src.traitPreferences.traitDataDirty = TRUE
 				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
 				if (!result)
 					return FALSE
@@ -984,80 +959,72 @@ var/list/removed_jobs = list(
 					boutput(usr, SPAN_ALERT("Unable to equip part"))
 					return FALSE
 				src.custom_parts = new_custom_parts
-				profile_modified = TRUE
-				update_preview_icon()
+				src.profile_modified = TRUE
+				src.update_preview_icon()
 				return TRUE
 
 			if ("reset")
 				src.profile_modified = TRUE
 
 				src.gender = MALE
-				AH.gender = MALE
-				randomize_name()
+				src.AH.gender = MALE
+				src.randomize_name()
 
-				AH.customization_first = new /datum/customization_style/hair/short/short
-				AH.customization_second = new /datum/customization_style/none
-				AH.customization_third = new /datum/customization_style/none
-				AH.underwear = "No Underwear"
+				src.AH.customization_first = new /datum/customization_style/hair/short/short
+				src.AH.customization_second = new /datum/customization_style/none
+				src.AH.customization_third = new /datum/customization_style/none
+				src.AH.underwear = "No Underwear"
 
-				AH.customization_first_color = initial(AH.customization_first_color)
-				AH.customization_second_color = initial(AH.customization_second_color)
-				AH.customization_third_color = initial(AH.customization_third_color)
-				AH.e_color = "#101010"
-				AH.u_color = "#FEFEFE"
+				src.AH.customization_first_color = initial(src.AH.customization_first_color)
+				src.AH.customization_second_color = initial(src.AH.customization_second_color)
+				src.AH.customization_third_color = initial(src.AH.customization_third_color)
+				src.AH.e_color = "#101010"
+				src.AH.u_color = "#FEFEFE"
 
-				AH.s_tone = "#FAD7D0"
-				AH.s_tone_original = "#FAD7D0"
+				src.AH.s_tone = "#FAD7D0"
+				src.AH.s_tone_original = "#FAD7D0"
 
-				age = 30
-				pin = null
-				flavor_text = null
+				src.age = 30
+				src.pin = null
+				src.flavor_text = null
 				src.ResetAllPrefsToLow(usr)
-				flying_chat_hidden = 0
-				local_deadchat = 0
-				auto_capitalization = 0
-				listen_ooc = 1
-				view_changelog = 1
-				view_score = 1
-				view_tickets = 1
-				admin_music_volume = 50
-				radio_music_volume = 50
-				use_click_buffer = 0
-				help_text_in_examine = TRUE
-				be_traitor = 0
-				be_syndicate = 0
-				be_syndicate_commander = 0
-				be_spy = 0
-				be_gangleader = 0
-				be_gangmember = 0
-				be_revhead = 0
-				be_changeling = 0
-				be_wizard = 0
-				be_werewolf = 0
-				be_vampire = 0
-				be_wraith = 0
-				be_blob = 0
-				be_conspirator = 0
-				be_flock = 0
-				be_misc = 0
-				tooltip_option = TOOLTIP_ALWAYS
-				scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
-				tgui_fancy = TRUE
-				tgui_lock = FALSE
-				PDAcolor = "#6F7961"
-				pda_ringtone_index = "Two-Beep"
-				if (!force_random_names)
-					be_random_name = 0
-				else
-					be_random_name = 1
-				if (!force_random_looks)
-					be_random_look = 0
-				else
-					be_random_look = 1
-				blType = "A+"
-
-				update_preview_icon()
-
+				src.flying_chat_hidden = FALSE
+				src.local_deadchat = FALSE
+				src.auto_capitalization = FALSE
+				src.listen_ooc = TRUE
+				src.view_changelog = TRUE
+				src.view_score = TRUE
+				src.view_tickets = TRUE
+				src.admin_music_volume = 50
+				src.radio_music_volume = 50
+				src.use_click_buffer = FALSE
+				src.help_text_in_examine = TRUE
+				src.be_traitor = FALSE
+				src.be_syndicate = FALSE
+				src.be_syndicate_commander = FALSE
+				src.be_spy = FALSE
+				src.be_gangleader = FALSE
+				src.be_gangmember = FALSE
+				src.be_revhead = FALSE
+				src.be_changeling = FALSE
+				src.be_wizard = FALSE
+				src.be_werewolf = FALSE
+				src.be_vampire = FALSE
+				src.be_wraith = FALSE
+				src.be_blob = FALSE
+				src.be_conspirator = FALSE
+				src.be_flock = FALSE
+				src.be_misc = FALSE
+				src.tooltip_option = TOOLTIP_ALWAYS
+				src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
+				src.tgui_fancy = TRUE
+				src.tgui_lock = FALSE
+				src.PDAcolor = "#6F7961"
+				src.pda_ringtone_index = "Two-Beep"
+				src.be_random_name = force_random_names
+				src.be_random_look = force_random_looks
+				src.blType = "A+"
+				src.update_preview_icon()
 				return TRUE
 
 	proc/preview_sound(var/sound/S)
@@ -1065,8 +1032,7 @@ var/list/removed_jobs = list(
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
 			usr.playsound_local(usr, S, 100)
 
-	proc/randomize_name(var/first = 1, var/middle = 1, var/last = 1)
-		//real_name = random_name(src.gender)
+	proc/randomize_name(first = TRUE, middle = TRUE, last = TRUE)
 		if (src.gender == MALE)
 			if (first)
 				src.name_first = capitalize(pick_string_autokey("names/first_male.txt"))
@@ -1082,49 +1048,48 @@ var/list/removed_jobs = list(
 		src.real_name = src.name_first + " " + src.name_last
 
 	proc/randomizeLook() // im laze
-		if (!AH)
+		if (!src.AH)
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
-		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
+		randomize_look(src.AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
 			blType = "Zesty Ranch"
-
-		update_preview_icon()
+		src.update_preview_icon()
 
 	proc/sanitize_name()
-		//var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
 		for (var/c in bad_name_characters)
-			//real_name = replacetext(real_name, c, "")
-			name_first = replacetext(name_first, c, "")
-			name_middle = replacetext(name_middle, c, "")
-			name_last = replacetext(name_last, c, "")
+			src.name_first = replacetext(src.name_first, c, "")
+			src.name_middle = replacetext(src.name_middle, c, "")
+			src.name_last = replacetext(src.name_last, c, "")
 
-		if (length(name_first) < NAME_CHAR_MIN || length(name_first) > NAME_CHAR_MAX || is_blank_string(name_first) || !character_name_validation.Find(name_first))
+		if (length(src.name_first) < NAME_CHAR_MIN || length(src.name_first) > NAME_CHAR_MAX || is_blank_string(src.name_first) || !character_name_validation.Find(src.name_first))
 			src.randomize_name(1, 0, 0)
 
-		if (length(name_middle) > NAME_CHAR_MAX || is_blank_string(name_middle))
+		if (length(src.name_middle) > NAME_CHAR_MAX || is_blank_string(src.name_middle))
 			src.randomize_name(0, 1, 0)
 
-		if (length(name_last) < NAME_CHAR_MIN || length(name_last) > NAME_CHAR_MAX || is_blank_string(name_last) || !character_name_validation.Find(name_last))
+		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
 			src.randomize_name(0, 0, 1)
 
 		src.real_name = src.name_first + " " + src.name_last
 
 
 	proc/update_preview_icon()
-		if (!AH)
+		if (!src.AH)
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
-		for (var/ID in traitPreferences.traits_selected)
-			var/datum/trait/T = getTraitById(ID)
+		for (var/trait_id in src.traitPreferences.traits_selected)
+			var/datum/trait/T = getTraitById(trait_id)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break
 
-		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
-
+		src.AH.mutant_race = mutantRace
+		var/s_orig = src.AH.s_tone_original
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name = src.real_name)
+		src.AH.s_tone_original = s_orig // refuse any edits made by mutantrace setting/etc
 		// bald trait preview stuff
 		if (!src.preview)
 			return
@@ -1134,7 +1099,7 @@ var/list/removed_jobs = list(
 			H.u_equip(ourWig)
 			qdel(ourWig)
 
-		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
+		if (src.traitPreferences.traits_selected.Find("bald") && mutantRace)
 			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
 
 		for (var/slot_id in src.custom_parts)
@@ -1153,7 +1118,7 @@ var/list/removed_jobs = list(
 		for (var/datum/job/J in job_controls.staple_jobs)
 			if (istype(J, /datum/job/daily))
 				continue
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))
@@ -1249,7 +1214,6 @@ var/list/removed_jobs = list(
 							src.jobs_low_priority |= J.name
 						else
 							src.jobs_unwanted |= J.name
-
 #else
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
@@ -1388,7 +1352,7 @@ var/list/removed_jobs = list(
 					print_the_job = TRUE
 			else
 				print_the_job = TRUE
-			if(print_the_job)
+			if (print_the_job)
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
 		HTML += {"
@@ -1513,21 +1477,21 @@ var/list/removed_jobs = list(
 		user.Browse(HTML.Join(), "window=mob_occupation;size=850x580")
 		return
 
-	proc/SetJob(mob/user, occ=1, job="Captain",var/level = 0)
+	proc/SetJob(mob/user, occ=1, job="Captain", level = 0)
 		if (src.antispam)
 			return
-		switch(occ)
+		switch (occ)
 			if (1)
-				if(src.job_favorite != job)
+				if (src.job_favorite != job)
 					return
 			if (2)
-				if(!(job in src.jobs_med_priority))
+				if (!(job in src.jobs_med_priority))
 					return
 			if (3)
-				if(!(job in src.jobs_low_priority))
+				if (!(job in src.jobs_low_priority))
 					return
 			if (4)
-				if(!(job in src.jobs_unwanted))
+				if (!(job in src.jobs_unwanted))
 					return
 			else
 				return
@@ -1539,7 +1503,7 @@ var/list/removed_jobs = list(
 		if (!find_job_in_controller_by_string(job,1))
 #endif
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
-			switch(occ)
+			switch (occ)
 				if (1) src.job_favorite = null
 				if (2) src.jobs_med_priority -= job
 				if (3) src.jobs_low_priority -= job
@@ -1548,7 +1512,7 @@ var/list/removed_jobs = list(
 		if (job=="AI" && (!config.allow_ai))
 			boutput(user, SPAN_ALERT("<b>Selecting the AI is not currently allowed.</b>"))
 			if (occ != 4)
-				switch(occ)
+				switch (occ)
 					if (1) src.job_favorite = null
 					if (2) src.jobs_med_priority -= job
 					if (3) src.jobs_low_priority -= job
@@ -1558,7 +1522,7 @@ var/list/removed_jobs = list(
 		if (jobban_isbanned(user, job))
 			boutput(user, SPAN_ALERT("<b>You are banned from this job and may not select it.</b>"))
 			if (occ != 4)
-				switch(occ)
+				switch (occ)
 					if (1) src.job_favorite = null
 					if (2) src.jobs_med_priority -= job
 					if (3) src.jobs_low_priority -= job
@@ -1576,23 +1540,23 @@ var/list/removed_jobs = list(
 			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
 				boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
 				if (occ != 4)
-					switch(occ)
+					switch (occ)
 						if (1) src.job_favorite = null
 						if (2) src.jobs_med_priority -= job
 						if (3) src.jobs_low_priority -= job
 					src.jobs_unwanted += job
 				return
 
-		src.antispam = 1
+		src.antispam = TRUE
 
 		var/picker = "Low Priority"
 		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (level == 0)
-			var/list/valid_actions = list("Favorite","Medium Priority","Low Priority","Unwanted")
-			if(J.wiki_link)
+			var/list/valid_actions = list("Favorite", "Medium Priority", "Low Priority", "Unwanted")
+			if (J.wiki_link)
 				valid_actions += "Show Wiki Page"
 
-			switch(occ)
+			switch (occ)
 				if (1) valid_actions -= "Favorite"
 				if (2) valid_actions -= "Medium Priority"
 				if (3) valid_actions -= "Low Priority"
@@ -1600,10 +1564,10 @@ var/list/removed_jobs = list(
 
 			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
 			if (!picker)
-				src.antispam = 0
+				src.antispam = FALSE
 				return
 		else
-			switch(level)
+			switch (level)
 				if (1) picker = "Favorite"
 				if (2) picker = "Medium Priority"
 				if (3) picker = "Low Priority"
@@ -1611,43 +1575,43 @@ var/list/removed_jobs = list(
 
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
-			src.antispam = 0
+			src.antispam = FALSE
 			return
 
-		var/successful_move = 0
+		var/successful_move = FALSE
 
-		switch(picker)
+		switch (picker)
 			if ("Favorite")
 				if (src.job_favorite)
 					src.jobs_med_priority += src.job_favorite
 				src.job_favorite = job
-				successful_move = 1
+				successful_move = TRUE
 			if ("Medium Priority")
 				src.jobs_med_priority += job
 				if (occ == 1)
 					src.job_favorite = null
-				successful_move = 1
+				successful_move = TRUE
 			if ("Low Priority")
 				src.jobs_low_priority += job
 				if (occ == 1)
 					src.job_favorite = null
-				successful_move = 1
+				successful_move = TRUE
 			if ("Unwanted")
 				src.jobs_unwanted += job
 				if (occ == 1)
 					src.job_favorite = null
-				successful_move = 1
+				successful_move = TRUE
 			if ("Show Wiki Page")
 				user << link(J.wiki_link)
 
 		if (successful_move)
-			switch(occ)
+			switch (occ)
 				// i know, repetitive, but its the safest way i can think of right now
 				if (2) src.jobs_med_priority -= job
 				if (3) src.jobs_low_priority -= job
 				if (4) src.jobs_unwanted -= job
 
-		src.antispam = 0
+		src.antispam = FALSE
 		return 1
 
 	Topic(href, href_list[])
@@ -1666,7 +1630,7 @@ var/list/removed_jobs = list(
 
 		// do we check if they actually modified something? no.
 		// thats effort.
-		src.profile_modified = 1
+		src.profile_modified = TRUE
 
 		if (link_tags["job"])
 			src.SetJob(user, text2num(link_tags["occ"]), link_tags["job"], text2num(link_tags["level"]))
@@ -1684,7 +1648,7 @@ var/list/removed_jobs = list(
 
 		if (link_tags["resetalljobs"])
 			var/resetwhat = tgui_input_list(user, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
-			switch(resetwhat)
+			switch (resetwhat)
 				if ("Medium Priority")
 					src.ResetAllPrefsToMed(user)
 				if ("Low Priority")
@@ -1697,88 +1661,88 @@ var/list/removed_jobs = list(
 			return
 
 		if (link_tags["b_traitor"])
-			src.be_traitor = !( src.be_traitor)
+			src.be_traitor = !src.be_traitor
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_syndicate"])
-			src.be_syndicate = !( src.be_syndicate )
+			src.be_syndicate = !src.be_syndicate
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_syndicate_commander"])
-			src.be_syndicate_commander = !( src.be_syndicate_commander )
+			src.be_syndicate_commander = !src.be_syndicate_commander
 			src.be_syndicate |= src.be_syndicate_commander
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_spy"])
-			src.be_spy = !( src.be_spy)
+			src.be_spy = !src.be_spy
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_gangleader"])
-			src.be_gangleader = !( src.be_gangleader)
+			src.be_gangleader = !src.be_gangleader
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_gangmember"])
-			src.be_gangmember = !( src.be_gangmember )
+			src.be_gangmember = !src.be_gangmember
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_revhead"])
-			src.be_revhead = !( src.be_revhead )
+			src.be_revhead = !src.be_revhead
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_changeling"])
-			src.be_changeling = !( src.be_changeling )
+			src.be_changeling = !src.be_changeling
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_wizard"])
-			src.be_wizard = !( src.be_wizard)
+			src.be_wizard = !src.be_wizard
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_werewolf"])
-			src.be_werewolf = !( src.be_werewolf)
+			src.be_werewolf = !src.be_werewolf
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_vampire"])
-			src.be_vampire = !( src.be_vampire)
+			src.be_vampire = !src.be_vampire
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_arcfiend"])
-			src.be_arcfiend = !( src.be_arcfiend)
+			src.be_arcfiend = !src.be_arcfiend
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_salvager"])
-			src.be_salvager = !( src.be_salvager)
+			src.be_salvager = !src.be_salvager
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_wraith"])
-			src.be_wraith = !( src.be_wraith)
+			src.be_wraith = !src.be_wraith
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_blob"])
-			src.be_blob = !( src.be_blob)
+			src.be_blob = !src.be_blob
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_conspirator"])
-			src.be_conspirator = !( src.be_conspirator )
+			src.be_conspirator = !src.be_conspirator
 			src.SetChoices(user)
 			return
 
 		if (link_tags["b_flock"])
-			src.be_flock = !( src.be_flock)
+			src.be_flock = !src.be_flock
 			src.SetChoices(user)
 			return
 
@@ -1789,25 +1753,25 @@ var/list/removed_jobs = list(
 
 		src.ShowChoices(user)
 
-	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0, skip_post_new_stuff=FALSE)
-		sanitize_null_values()
+	proc/copy_to(mob/living/character, mob/user, ignore_randomizer = FALSE, skip_post_new_stuff = FALSE)
+		src.sanitize_null_values()
 		if (!ignore_randomizer)
-			if (be_random_name)
-				randomize_name()
+			if (src.be_random_name)
+				src.randomize_name()
 
-			if (be_random_look)
-				randomizeLook()
+			if (src.be_random_look)
+				src.randomizeLook()
 
 			if (character.bioHolder)
-				if (random_blood)
+				if (src.random_blood)
 					character.bioHolder.bloodType = random_blood_type()
 				else
-					character.bioHolder.bloodType = blType
+					character.bioHolder.bloodType = src.blType
 
 			SPAWN(0) // avoid blocking
-				if(jobban_isbanned(user, "Custom Names"))
-					randomize_name()
-					randomizeLook()
+				if (jobban_isbanned(user, "Custom Names"))
+					src.randomize_name()
+					src.randomizeLook()
 					character.bioHolder?.bloodType = random_blood_type()
 					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
@@ -1819,7 +1783,7 @@ var/list/removed_jobs = list(
 		//Wire: Not everything has a bioholder you morons
 		if (character.bioHolder)
 			character.bioHolder.age = age
-			character.bioHolder.mobAppearance.CopyOther(AH)
+			character.bioHolder.mobAppearance.CopyOther(src.AH)
 			character.bioHolder.mobAppearance.gender = src.gender
 			if (!src.be_random_name)
 				character.bioHolder.mobAppearance.flavor_text = src.flavor_text
@@ -1827,18 +1791,18 @@ var/list/removed_jobs = list(
 		//Also I think stuff other than human mobs can call this proc jesus christ
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			H.pin = pin
+			H.pin = src.pin
 			H.gender = src.gender
 
 		if (!skip_post_new_stuff)
-			apply_post_new_stuff(character)
+			src.apply_post_new_stuff(character)
 
 		character.update_face()
 		character.update_body()
 
-		character.sound_scream = AH.screamsounds[AH.screamsound || "default"] || AH.screamsounds["default"]
-		character.sound_fart = AH.fartsounds[AH.fartsound || "default"] || AH.fartsounds["default"]
-		character.voice_type = AH.voicetype || RANDOM_HUMAN_VOICE
+		character.sound_scream = src.AH.screamsounds[src.AH.screamsound || "default"] || src.AH.screamsounds["default"]
+		character.sound_fart = src.AH.fartsounds[src.AH.fartsound || "default"] || src.AH.fartsounds["default"]
+		character.voice_type = src.AH.voicetype || RANDOM_HUMAN_VOICE
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
@@ -1850,35 +1814,35 @@ var/list/removed_jobs = list(
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
-		if (traitPreferences.isValid(traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
-			for (var/T in traitPreferences.traits_selected)
+		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
+			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))
 			src.gender = MALE
-		if (!AH)
-			AH = new
-		if (AH.gender != src.gender)
-			AH.gender = src.gender
-		if (AH.customization_first_color == null)
-			AH.customization_first_color = "#101010"
-		if (AH.customization_first == null)
-			AH.customization_first = new  /datum/customization_style/none
-		if (AH.customization_second_color == null)
-			AH.customization_second_color = "#101010"
-		if (AH.customization_second == null)
-			AH.customization_second = new /datum/customization_style/none
-		if (AH.customization_third_color == null)
-			AH.customization_third_color = "#101010"
-		if (AH.customization_third == null)
-			AH.customization_third = new /datum/customization_style/none
-		if (AH.e_color == null)
-			AH.e_color = "#101010"
-		if (AH.u_color == null)
-			AH.u_color = "#FEFEFE"
-		if (AH.s_tone == null || AH.s_tone == "#FFFFFF" || AH.s_tone == "#ffffff")
-			AH.s_tone = "#FEFEFE"
+		if (!src.AH)
+			src.AH = new
+		if (src.AH.gender != src.gender)
+			src.AH.gender = src.gender
+		if (src.AH.customization_first_color == null)
+			src.AH.customization_first_color = "#101010"
+		if (src.AH.customization_first == null)
+			src.AH.customization_first = new  /datum/customization_style/none
+		if (src.AH.customization_second_color == null)
+			src.AH.customization_second_color = "#101010"
+		if (src.AH.customization_second == null)
+			src.AH.customization_second = new /datum/customization_style/none
+		if (src.AH.customization_third_color == null)
+			src.AH.customization_third_color = "#101010"
+		if (src.AH.customization_third == null)
+			src.AH.customization_third = new /datum/customization_style/none
+		if (src.AH.e_color == null)
+			src.AH.e_color = "#101010"
+		if (src.AH.u_color == null)
+			src.AH.u_color = "#FEFEFE"
+		if (src.AH.s_tone == null || src.AH.s_tone == "#FFFFFF" || src.AH.s_tone == "#ffffff")
+			src.AH.s_tone = "#FEFEFE"
 
 	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))
@@ -1889,274 +1853,10 @@ var/list/removed_jobs = list(
 				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
 		if (C.preferences.use_wasd)
-			winset( C, "menu.wasd_controls", "is-checked=true" )
+			winset(C, "menu.wasd_controls", "is-checked=true")
 		else
-			winset( C, "menu.wasd_controls", "is-checked=false" )
+			winset(C, "menu.wasd_controls", "is-checked=false")
 		C.mob.reset_keymap()
-
-/* ---------------------- RANDOMIZER PROC STUFF */
-
-/proc/random_blood_type(var/weighted = 1)
-	var/return_type
-	// set a default one so that, if none of the weighted ones happen, they at least have SOME kind of blood type
-	return_type = pick("O", "A", "B", "AB") + pick("+", "-")
-	if (weighted)
-		var/list/types_and_probs = list(\
-		"O" = 40,\
-		"A" = 30,\
-		"B" = 15,\
-		"AB" = 5)
-		for (var/i in types_and_probs)
-			if (prob(types_and_probs[i]))
-				return_type = i
-				if (prob(80))
-					return_type += "+"
-				else
-					return_type += "-"
-
-	if (prob(1))
-		return_type = "Zesty Ranch"
-
-	return return_type
-
-/proc/random_saturated_hex_color()
-	return pick(rgb(255, rand(0, 255), rand(0, 255)), rgb(rand(0, 255), 255, rand(0, 255)), rgb(rand(0, 255), rand(0, 255), 255))
-
-/proc/randomize_hair_color(var/hcolor)
-	if (!hcolor)
-		return
-	var/list/rgb_list = rgb2num(hcolor)
-	return rgb(
-		rgb_list[1] + rand(-25, 25),
-		rgb_list[2] + rand(-5, 5),
-		rgb_list[3] + rand(-10, 10)
-	)
-
-/proc/randomize_eye_color(var/ecolor)
-	if (!ecolor)
-		return
-	var/list/rgb_list = rgb2num(ecolor)
-	return rgb(
-		rgb_list[1] + rand(-10, 10),
-		rgb_list[2] + rand(-10, 10),
-		rgb_list[3] + rand(-10, 10)
-	)
-
-proc/isfem(datum/customization_style/style)
-	return !!(initial(style.gender) & FEMININE)
-
-proc/ismasc(datum/customization_style/style)
-	return !!(initial(style.gender) & MASCULINE)
-
-// this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
-// further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
-// if it's a list then we'll pick from the options in the list
-var/global/list/hair_details = list("einstein" = /datum/customization_style/hair/short/einalt,\
-	"80s" = /datum/customization_style/hair/long/eightiesfade,\
-	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
-	"lionsmane" = /datum/customization_style/hair/long/lionsmane_fade,\
-	"longwaves" = /datum/customization_style/hair/long/longwaves_fade,\
-	"ripley" = /datum/customization_style/hair/long/ripley_fade,\
-	"violet" = /datum/customization_style/hair/long/violet_fade,\
-	"willow" = /datum/customization_style/hair/long/willow_fade,\
-	"rockponytail" = /datum/customization_style/hair/hairup/rockponytail_fade,\
-	"pompompigtail" = /datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long,\
-	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
-	"flick" = /datum/customization_style/hair/short/flick_fade,\
-	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
-	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
-	"longbeard" = /datum/customization_style/beard/longbeardfade,\
-	"pomp" = /datum/customization_style/hair/short/pompS,\
-	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
-	"emo" = /datum/customization_style/hair/short/emoH,\
-	"clown" = list(/datum/customization_style/hair/short/clownT, /datum/customization_style/hair/short/clownM, /datum/customization_style/hair/short/clownB),\
-	"dreads" = /datum/customization_style/hair/long/dreadsA,\
-	"afro" = list(/datum/customization_style/hair/short/afroHR, /datum/customization_style/hair/short/afroHL, /datum/customization_style/hair/short/afroST, /datum/customization_style/hair/short/afroSM, /datum/customization_style/hair/short/afroSB, /datum/customization_style/hair/short/afroSL, /datum/customization_style/hair/short/afroSR, /datum/customization_style/hair/short/afroSC, /datum/customization_style/hair/short/afroCNE, /datum/customization_style/hair/short/afroCNW, /datum/customization_style/hair/short/afroCSE, /datum/customization_style/hair/short/afroCSW, /datum/customization_style/hair/short/afroSV, /datum/customization_style/hair/short/afroSH))
-
-// all these icon state names are ridiculous
-var/global/list/feminine_ustyles = list("No Underwear" = "none",\
-	"Bra and Panties" = "brapan",\
-	"Tanktop and Panties" = "tankpan",\
-	"Bra and Boyshorts" = "braboy",\
-	"Tanktop and Boyshorts" = "tankboy",\
-	"Panties" = "panties",\
-	"Boyshorts" = "boyshort")
-var/global/list/masculine_ustyles = list("No Underwear" = "none",\
-	"Briefs" = "briefs",\
-	"Boxers" = "boxers",\
-	"Boyshorts" = "boyshort")
-
-var/global/list/male_screams = list("male", "malescream4", "malescream5", "malescream6", "malescream7")
-var/global/list/female_screams = list("female", "femalescream1", "femalescream2", "femalescream3", "femalescream4")
-
-/proc/randomize_look(to_randomize, change_gender = 1, change_blood = 1, change_age = 1, change_name = 1, change_underwear = 1, remove_effects = 1, optional_donor)
-	if (!to_randomize)
-		return
-
-	var/mob/living/carbon/human/H
-	var/datum/appearanceHolder/AH
-
-	if (ishuman(to_randomize))
-		H = to_randomize
-		if (H.bioHolder && H.bioHolder.mobAppearance)
-			AH = H.bioHolder.mobAppearance
-		else if (H.bioHolder)
-			H.bioHolder.mobAppearance = new /datum/appearanceHolder()
-			H.bioHolder.mobAppearance.owner = H
-			H.bioHolder.mobAppearance.parentHolder = H.bioHolder
-			AH = H.bioHolder.mobAppearance
-		else
-			H.bioHolder = new /datum/bioHolder()
-			H.initializeBioholder()
-
-			H.bioHolder.mobAppearance = new /datum/appearanceHolder()
-			H.bioHolder.mobAppearance.owner = H
-			H.bioHolder.mobAppearance.parentHolder = H.bioHolder
-			AH = H.bioHolder.mobAppearance
-
-	else if (istype(to_randomize, /datum/appearanceHolder))
-		AH = to_randomize
-		if (ishuman(AH.owner))
-			H = AH.owner
-		else
-			H = optional_donor
-	else
-		return
-
-	if (H?.bioHolder && remove_effects)
-		H.bioHolder.RemoveAllEffects()
-		H.bioHolder.BuildEffectPool()
-
-	if (change_gender)
-		AH.gender = pick(MALE, FEMALE)
-	if (H && AH.gender)
-		H.sound_scream = AH.screamsounds[pick(AH.gender == MALE ? male_screams : female_screams)]
-	if (H && change_name)
-		if (AH.gender == FEMALE)
-			H.real_name = pick_string_autokey("names/first_female.txt")
-		else
-			H.real_name = pick_string_autokey("names/first_male.txt")
-		H.real_name += " [pick_string_autokey("names/last.txt")]"
-		H.on_realname_change()
-
-	AH.voicetype = RANDOM_HUMAN_VOICE
-
-	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
-	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
-	var/hair_color1
-	var/hair_color2
-	var/hair_color3
-	if (prob(75))
-		hair_color1 = randomize_hair_color(pick(hair_colors))
-		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
-		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
-	else
-		hair_color1 = randomize_hair_color(random_saturated_hex_color())
-		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
-		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
-
-	AH.customization_first_color = hair_color1
-	AH.customization_second_color = hair_color2
-	AH.customization_third_color = hair_color3
-
-	var/stone = rand(34,-184)
-	if (stone < -30)
-		stone = rand(34,-184)
-	if (stone < -50)
-		stone = rand(34,-184)
-
-	AH.s_tone = blend_skintone(stone, stone, stone)
-	AH.s_tone_original = AH.s_tone
-
-	if (H?.limbs)
-		H.limbs.reset_stone()
-
-	var/list/eye_colors = list("#101010", "#613F1D", "#808000", "#3333CC")
-	AH.e_color = randomize_eye_color(pick(eye_colors))
-
-	var/has_second = 0
-	var/type_first
-	if (AH.gender == MALE)
-		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
-			AH.customization_first = new type_first
-		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
-			AH.customization_first = new type_first
-
-		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
-								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
-			AH.customization_second = new type_second
-			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
-
-	else // if FEMALE
-		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
-			AH.customization_first = new type_first
-		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
-			AH.customization_first = new type_first
-
-	if (!has_second)
-		var/hair_detail = hair_details[AH.customization_first.name] // check for detail styles for our chosen style
-
-		if (hair_detail && prob(50)) // found something in the list
-			AH.customization_second = new hair_detail // default to being whatever we found
-
-			if (islist(hair_detail)) // if we found a bunch of things in the list
-				var/type_second = pick(hair_detail) // let's choose just one (we don't need to assign a list as someone's hair detail)
-				AH.customization_second = new type_second
-				if (prob(20)) // with a small chance for another detail thing
-					var/type_third = pick(hair_detail)
-					AH.customization_third = new type_third
-					AH.customization_third_color = random_saturated_hex_color()
-					if (prob(5))
-						AH.customization_third_color = randomize_hair_color(pick(hair_colors))
-				else
-					AH.customization_third = new /datum/customization_style/none
-
-			AH.customization_second_color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
-			if (prob(15))
-				AH.customization_second_color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
-
-		else if (prob(5)) // chance for a special eye color
-			var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
-			AH.customization_second = new type_second
-			if (prob(75))
-				AH.customization_second_color = random_saturated_hex_color()
-			else
-				AH.customization_second_color = randomize_eye_color(pick(eye_colors))
-			AH.customization_third = new /datum/customization_style/none
-
-		else // otherwise, nada
-			AH.customization_second = new /datum/customization_style/none
-			AH.customization_third = new /datum/customization_style/none
-
-	if (change_underwear)
-		if (AH.gender == MALE)
-			if (prob(1))
-				AH.underwear = pick(feminine_ustyles)
-			else
-				AH.underwear = pick(masculine_ustyles)
-		else
-			if (prob(5))
-				AH.underwear = pick(masculine_ustyles)
-			else
-				AH.underwear = pick(feminine_ustyles)
-		AH.u_color = random_saturated_hex_color()
-
-	if (H && change_blood)
-		H.bioHolder.bloodType = random_blood_type(1)
-
-	if (H && change_age)
-		H.bioHolder.age = rand(20,80)
-
-	if (H?.organHolder?.head?.donor_appearance) // aaaa
-		H.organHolder.head.donor_appearance.CopyOther(AH)
-	AH.flavor_text = null //random characters don't have flavor text and disguised ones shouldn't show theirs
-	SPAWN(1 DECI SECOND)
-		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.
 // it sucks but it's a bit more readable i guess.

@@ -112,7 +112,7 @@
 					boutput(user, SPAN_NOTICE("Card authorized."))
 					src.scan = id_card
 				else
-					boutput(user, SPAN_ALERT("Pin number incorrect."))
+					boutput(user, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -412,7 +412,7 @@
 						boutput(usr, SPAN_NOTICE("Card authorized."))
 						src.scan = id_card
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
@@ -1157,6 +1157,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/waltwhite(src)
 		src.goods_sell += new /datum/commodity/costume/spiderman(src)
 		src.goods_sell += new /datum/commodity/costume/wonka(src)
+		src.goods_sell += new /datum/commodity/costume/goku(src)
 		src.goods_sell += new /datum/commodity/costume/light_borg(src)
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)

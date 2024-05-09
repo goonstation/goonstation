@@ -549,9 +549,7 @@
 	onStart()
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
-		if (source.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in source.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(source, COMSIG_MOB_TRIGGER_THREAT)
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
 			boutput(source, SPAN_ALERT("You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)]."))
@@ -641,7 +639,7 @@
 			if(existing_item && in_start) // if they have something there, smack it with held item
 				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
 													[log_object(existing_item)] equipped by [log_object(target)].")
-				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(item != source.equipped())
@@ -948,11 +946,26 @@
 	var/atom/movable/target = null
 	/// what string is broadcast once the action bar finishes
 	var/end_message = ""
-	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
-	var/maximum_range = 1
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 	bar_on_owner = FALSE
+
+	proc/make_welding_effect()
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
+			qdel(E)
+
+		if(ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+		else
+			E = new(src.target)
+		E.pixel_x = start_offset[1]
+		E.pixel_y = start_offset[2]
+		animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
 
 	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on)
 		..()
@@ -974,18 +987,9 @@
 		..()
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
-		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+		if (src.target && (BOUNDS_DIST(src.owner, src.target) > 0))
 			interrupt(INTERRUPT_ALWAYS)
-		if(!E)
-			if(ismovable(src.target))
-				var/atom/movable/M = src.target
-				E = new(M)
-				M.vis_contents += E
-			else
-				E = new(src.target)
-			E.pixel_x = start_offset[1]
-			E.pixel_y = start_offset[2]
-			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+		src.make_welding_effect()
 
 	onDelete(var/flag)
 		if(E)
@@ -1000,7 +1004,7 @@
 		if (!src.owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+		if (src.target && (BOUNDS_DIST(src.owner, src.target) > 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (end_message)
@@ -1013,11 +1017,87 @@
 		else
 			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
-		if(E)
-			if(ismovable(src.target))
-				var/atom/movable/M = src.target
-				M.vis_contents -= E
-			qdel(E)
+/// A looping weld action bar. Duration and cost are per cycle.
+/datum/action/bar/private/welding/loop
+	/// Tool being used to weld (weldingtool, omnitool, etc)
+	var/obj/item/welder
+	/// Unit cost per cycle (for charging fuel)
+	var/cycle_cost
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
+		. = ..()
+		src.welder = tool
+		if(cost)
+			src.cycle_cost = cost
+
+	canRunCheck(in_start)
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (src.target && (BOUNDS_DIST(src.owner, src.target) > 0))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/M = owner
+		if (!istype(M) || !isweldingtool(M.equipped()) || !src.welder:welding)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		src.loopStart()
+
+	loopStart()
+		..()
+		src.make_welding_effect()
+
+	onEnd()
+		if(!src.welder:try_weld(owner, src.cycle_cost))
+			src.interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+		if(src.welder:get_fuel())
+			src.onResume()
+			src.onRestart()
+
+
+/// Weld-repairing vehicles/pods hulls
+/datum/action/bar/private/welding/loop/vehicle
+	duration = 0.5 SECONDS
+	cycle_cost = 1
+
+/datum/action/bar/private/welding/loop/vehicle/New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
+	. = ..()
+	src.place_to_put_bar = owner
+
+/datum/action/bar/private/welding/loop/vehicle/loopStart()
+	var/obj/machinery/vehicle/V = target
+	var/newPositions = V.get_welding_positions()
+	src.start_offset = newPositions[1]
+	src.end_offset = newPositions[2]
+	. = ..()
+
+/datum/action/bar/private/welding/loop/vehicle/canRunCheck(in_start)
+	..()
+
+	var/obj/machinery/vehicle/vehicle = target
+	if(!istype(vehicle))
+		src.interrupt(INTERRUPT_ALWAYS)
+
+	if(vehicle.health >= vehicle.maxhealth)
+		src.interrupt(INTERRUPT_ALWAYS)
+
+	var/turf/T = get_turf(target)
+	if(T.active_liquid)
+		if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
+			boutput(owner, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
+			src.interrupt(INTERRUPT_ALWAYS)
+#ifdef MAP_OVERRIDE_NADIR
+	if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+		//prevent in-acid welding from extending excursion times indefinitely
+		boutput(owner, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
+		src.interrupt(INTERRUPT_ALWAYS)
+#endif
 
 //CLASSES & OBJS
 
@@ -1335,7 +1415,7 @@
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
-		target.changeStatus("paralysis", -2 SECONDS)
+		target.changeStatus("unconscious", -2 SECONDS)
 
 		if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))

@@ -39,7 +39,7 @@ TYPEINFO(/obj/item/baton)
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/is_active = TRUE
 
-	var/stun_normal_weakened = 15
+	var/stun_normal_knockdown = 15
 
 	var/disorient_stamina_damage = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
@@ -213,7 +213,7 @@ TYPEINFO(/obj/item/baton)
 			dude_to_stun = victim
 
 
-		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+		dude_to_stun.do_disorient(src.disorient_stamina_damage, knockdown = src.stun_normal_knockdown * 10, disorient = 60)
 
 		if (isliving(dude_to_stun))
 			var/mob/living/L = dude_to_stun
@@ -393,7 +393,7 @@ TYPEINFO(/obj/item/baton/classic)
 		user.visible_message(SPAN_ALERT("<B>[victim] has been beaten with the [src.name] by [user]!</B>"))
 		playsound(src, "swing_hit", 50, 1, -1)
 		random_brute_damage(victim, src.force, 1) // Necessary since the item/attack() parent wasn't called.
-		victim.changeStatus("weakened", 8 SECONDS)
+		victim.changeStatus("knockdown", 8 SECONDS)
 		victim.force_laydown_standup()
 		victim.remove_stamina(src.stamina_damage)
 		if (user && ismob(user) && user.get_stamina() >= STAMINA_MIN_ATTACK)

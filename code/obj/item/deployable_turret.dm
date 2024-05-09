@@ -404,7 +404,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return FALSE
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus(list("resting", "knockdown", "stunned", "unconscious"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return FALSE
 		if (is_friend(C))
 			return FALSE
@@ -574,8 +574,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/turf/user_turf = null
 
 	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+		if (M.client && M.client.holder) //???
 			return TRUE
+		else
+			return ..()
 
 	handleCast(var/atom/target)
 

@@ -22,23 +22,20 @@
 	boutput(world, "<B>A number of gangs are competing for control of the station!</B>")
 	boutput(world, "<B>Gang members are antagonists and can kill or be killed!</B>")
 
-/datum/game_mode/gang/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if(player.ready) num_players++
-
 #ifdef RP_MODE
 #define PLAYERS_PER_GANG_GENERATED 15
 #else
 #define PLAYERS_PER_GANG_GENERATED 12
 #endif
+/datum/game_mode/gang/pre_setup()
+	var/num_players = src.roundstart_player_count()
+
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
-#undef PLAYERS_PER_GANG_GENERATED
+	logTheThing(LOG_GAMEMODE, src, "Counted [num_players] available, with [PLAYERS_PER_GANG_GENERATED] per gang that means [num_teams] gangs.")
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > length(leaders_possible))
+		logTheThing(LOG_GAMEMODE, src, "Reducing number of gangs from [num_teams] to [length(leaders_possible)] due to lack of available gang leaders.")
 		num_teams = length(leaders_possible)
 
 	if (!length(leaders_possible))
@@ -69,6 +66,7 @@
 		leader.special_role = ROLE_GANG_LEADER
 
 	return 1
+#undef PLAYERS_PER_GANG_GENERATED
 
 /datum/game_mode/gang/post_setup()
 	for(var/datum/mind/antag_mind in src.traitors)
@@ -2000,7 +1998,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.delStatus("resting")
 			H.hud.update_resting()
 			H.delStatus("stunned")
-			H.delStatus("weakened")
+			H.delStatus("knockdown")
 			H.force_laydown_standup()
 			#ifdef USE_STAMINA_DISORIENT
 			H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = TRUE, target_type = DISORIENT_NONE)
@@ -2370,6 +2368,7 @@ proc/broadcast_to_all_gangs(var/message)
 	layer = TAG_LAYER
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
+	var/exploded = FALSE
 	var/datum/gang/owners = null
 	var/list/mobs
 	var/heat = 0 // a rough estimation of how regularly this tag has people near it
@@ -2402,6 +2401,14 @@ proc/broadcast_to_all_gangs(var/message)
 		heat = round(heat * GANG_TAG_HEAT_DECAY_MUL, 0.01) //slowly decay heat
 		mobs = list()
 		return heat
+
+	ex_act(severity)
+		if (severity > 1)
+			if (!exploded)
+				exploded = TRUE
+				desc = desc + " So heavy, in fact, that this tag hasn't exploded. Huh."
+			return //no!
+		..()
 
 	proc/apply_score(var/largestHeat)
 		var/mappedHeat // the 'heat' value mapped to the scale of 0-5

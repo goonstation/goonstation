@@ -355,7 +355,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 					if(A.anchored) continue
 					if(ismob(A))
 						var/mob/M = A
-						M.changeStatus("weakened", 8 SECONDS)
+						M.changeStatus("knockdown", 8 SECONDS)
 						random_brute_damage(M, 20)//armor won't save you from the pressure wave or something
 						var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 						M.throw_at(targetTurf, 200, 4)
@@ -398,7 +398,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
+		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W.name] is full!"))
 		else if (src.anchored) boutput(user, SPAN_ALERT("\The [src] is attached!"))
 		else
 			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))

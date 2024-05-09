@@ -235,6 +235,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Mullet"
 				id = "long"
 				gender = MASCULINE | FEMININE
+			suave
+				name = "Suave Mullet"
+				id = "suave_mullet"
+				gender = MASCULINE | FEMININE
 			part
 				name = "Parted Hair"
 				id = "part"
@@ -737,6 +741,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			goku
 				name = "Goku"
 				id = "goku"
+			super
+				name = "Super"
+				id = "super"
 			homer
 				name = "Homer"
 				id = "homer"

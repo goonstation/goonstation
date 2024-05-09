@@ -326,7 +326,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("knockdown")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br>[SPAN_ALERT("[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
 	else
@@ -344,7 +344,7 @@
 			else
 				. += "<br>[SPAN_ALERT("<B>[src.name] looks severely burned!</B>")]"
 
-		if (src.stat)
+		if (src.stat || src.hasStatus("paralysis"))
 			. += "<br>[SPAN_ALERT("[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
 			if (src.get_brain_damage() >= 60)
@@ -381,10 +381,13 @@
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
-			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]"
+			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]<br>"
+			var/list/trait_names = list()
 			for(var/id in src.traitHolder.traits)
 				var/datum/trait/T = src.traitHolder.traits[id]
-				. += "<br>[SPAN_NOTICE("[T.name]")]"
+				trait_names += T.name
+			. += SPAN_NOTICE(english_list(trait_names))
+
 		else
 			. += "<br>[SPAN_NOTICE("[src] does not appear to possess any special traits.")]"
 

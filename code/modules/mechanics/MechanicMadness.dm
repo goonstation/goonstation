@@ -2961,8 +2961,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon_state = "comp_gun"
 	density = 0
 	can_rotate = 1
+	cooldown_time = 1 SECOND
 	var/obj/item/gun/Gun = null
-	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent)
+	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent, /obj/item/gun/paintball)
 	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]")]"
