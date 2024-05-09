@@ -7846,25 +7846,25 @@
 /area/station/maintenance/southwest)
 "dAz" = (
 /obj/table/auto,
+/obj/item/storage/box/cocktail_doodads{
+	pixel_x = 6;
+	pixel_y = 17
+	},
+/obj/item/storage/box/beer{
+	pixel_y = 17;
+	pixel_x = -4
+	},
+/obj/item/storage/box/fruit_wedges{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/storage/box/cocktail_umbrellas{
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
-	},
-/obj/item/storage/box/beer{
-	pixel_y = 4;
-	pixel_x = 3
-	},
-/obj/item/storage/box/cocktail_doodads{
-	pixel_y = 5;
-	pixel_x = 1
-	},
-/obj/item/storage/box/cocktail_umbrellas{
-	pixel_y = 6;
-	pixel_x = -1
-	},
-/obj/item/storage/box/fruit_wedges{
-	pixel_y = 7;
-	pixel_x = -3
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -27140,14 +27140,10 @@
 "lsm" = (
 /obj/table/auto,
 /obj/item/gun/russianrevolver{
-	pixel_y = -9
+	pixel_y = 6
 	},
 /obj/machinery/phone/wall{
 	pixel_y = 32
-	},
-/obj/item/reagent_containers/food/drinks/eggnog{
-	pixel_x = 8;
-	pixel_y = 14
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -49383,6 +49379,7 @@
 /turf/simulated/floor,
 /area/pasiphae/bridge)
 "veT" = (
+/obj/item/storage/firstaid/toxin,
 /obj/item/device/reagentscanner{
 	pixel_x = 8;
 	pixel_y = -2
