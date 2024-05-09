@@ -145,6 +145,10 @@ TYPEINFO(/obj/submachine/slot_machine)
 				ui_interact(user)
 				return TRUE
 			var/enterpin = user.enter_pin("Input PIN")
+			if (isnull(enterpin))
+				user.put_in_hand_or_eject(I)
+				ui_interact(user)
+				return TRUE
 			if (enterpin != idcard.pin)
 				boutput(user, SPAN_ALERT("PIN incorrect."))
 				user.put_in_hand_or_eject(I)
