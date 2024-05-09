@@ -14815,10 +14815,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "Cafeteria";
 	dir = 8;
-	name = "Cafeteria APC";
-	pixel_x = -24
+	name = "Northwest Primary Hallway APC";
+	pixel_x = -24;
+	areastring = "Northwest Primary Hallway"
 	},
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -16448,9 +16448,6 @@
 /area/station/hallway/primary/northwest)
 "aWr" = (
 /obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/northwest)
 "aWs" = (
@@ -16956,9 +16953,6 @@
 /obj/disposalpipe/junction,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/northwest)
@@ -40050,9 +40044,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southwest)
 "cmQ" = (
@@ -40082,9 +40073,9 @@
 "cmV" = (
 /obj/cable,
 /obj/machinery/power/apc{
-	areastring = "Medbay Lobby";
+	areastring = "Southwest Primarly Hallway APC";
 	dir = 8;
-	name = "W APC";
+	name = "Southwest Primarly Hallway APC";
 	pixel_x = -24
 	},
 /obj/reagent_dispensers/foamtank,
@@ -40666,9 +40657,6 @@
 /area/station/hallway/primary/southwest)
 "coy" = (
 /obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
@@ -59243,6 +59231,13 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/com_dish/auxdish)
+"gJU" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	dir = null
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/lobby)
 "gKl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -61910,16 +61905,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"jqn" = (
-/obj/disposalpipe/segment,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 8
-	},
-/area/station/hallway/primary/northwest)
 "jqT" = (
 /obj/machinery/light/small,
 /obj/grille/catwalk,
@@ -73674,19 +73659,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"vES" = (
-/obj/disposalpipe/segment,
-/obj/machinery/power/apc{
-	areastring = "Medbay Lobby";
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24
-	},
-/obj/cable,
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/hallway/primary/southwest)
 "vFG" = (
 /obj/disposalpipe/segment/morgue,
 /obj/grille/catwalk,
@@ -73958,6 +73930,18 @@
 /obj/effects/background_objects/iudicium,
 /turf/space,
 /area/space)
+"vWH" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/lobby)
 "vWT" = (
 /obj/stool/bench/purple/auto,
 /turf/simulated/floor/grey/blackgrime,
@@ -108083,8 +108067,8 @@ cze
 cAz
 cCb
 cDy
-cFm
-cAL
+vWH
+gJU
 cSy
 qmO
 ica
@@ -109523,7 +109507,7 @@ aPN
 aOB
 aOB
 aOB
-jqn
+aOB
 aWr
 aXR
 aZy
@@ -109583,7 +109567,7 @@ cjD
 clf
 cmP
 coy
-vES
+cqk
 cqk
 cqk
 cqk
