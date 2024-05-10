@@ -496,7 +496,7 @@
 	M.attack_particle.transform.Turn(rand(0,360))
 
 	SPAWN(1 SECOND)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
 	SPAWN(0.1 SECONDS)
