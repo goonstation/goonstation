@@ -22,7 +22,7 @@
 	w_class = W_CLASS_BULKY
 
 	/// Please override this in child types to specify what can actually fit in.
-	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat)
+	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat, /mob/living/carbon/human/npc/monkey, /mob/living/carbon/human/monkey)
 	/// Time it takes for each action (eg. grabbing, releasing).
 	var/actionbar_duration = 2 SECONDS
 	/// If FALSE, an occupant cannot escape the carrier on their own.

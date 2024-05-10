@@ -253,6 +253,14 @@
 		. = ..()
 
 	ai_action()
+		if(istype(src.loc, /obj/item/pet_carrier))
+			var/obj/item/pet_carrier/carrier = src.loc
+			src.emote("scream")
+			src.emote("flip", TRUE)
+			if(ishuman(carrier.loc))
+				src.was_harmed(carrier.loc) // Monkey angry for being trapped
+			return
+
 		if(ai_aggressive)
 			return ..()
 
