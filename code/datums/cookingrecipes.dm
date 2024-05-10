@@ -1735,7 +1735,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 		B.food_color = S ? S.get_food_color() : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
-		B.UpdateOverlays(overlay,"first")
+		B.AddOverlays(overlay,"first")
 		B.cake_bases = list("base_custom")
 		if(S)
 			B.cake_types += S.type

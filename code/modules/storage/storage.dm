@@ -69,6 +69,9 @@
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/I = src.linked_item
 		I.tooltip_rebuild = TRUE
+		// Items with storage datums attached shouldn't be able to be used for stealthy pickpocketing
+		if (!(I.item_function_flags & OBVIOUS_INTERACTION_BAR))
+			I.item_function_flags |= OBVIOUS_INTERACTION_BAR
 
 	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, PROC_REF(storage_item_on_drop))
 
@@ -88,6 +91,9 @@
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/I = src.linked_item
 		I.tooltip_rebuild = TRUE
+		// If the item didn't had the flag set previously, remove it with the storage datum
+		if (!(initial(I.item_function_flags) & OBVIOUS_INTERACTION_BAR))
+			I.item_function_flags &= ~ OBVIOUS_INTERACTION_BAR
 
 	src.linked_item = null
 	src.stored_items = null
@@ -273,6 +279,9 @@
 			return
 		if (issilicon(user))
 			src.storage_item_attack_by(target, user)
+			return
+		if(ismob(target.loc) && target.loc != user) // Prevent's storages to be used for quick-stealing
+			boutput(user, SPAN_NOTICE("You aren't able to stuff [target] into [src.linked_item.name]. Someone else is carrying it!"))
 			return
 		user.swap_hand()
 		if (user.equipped() == null)

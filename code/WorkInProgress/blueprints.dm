@@ -263,6 +263,7 @@
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
 				var/obj/spawned_object = new O.objecttype(pos)
+				spawned_object.after_abcu_spawn()
 				if(!is_valid_abcu_object(spawned_object))
 					qdel(spawned_object)
 

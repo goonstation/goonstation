@@ -1501,6 +1501,9 @@
 						/obj/item/reagent_containers/food/snacks/pizza/cargo/mushroom)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
 
+	one
+		amt2spawn = 1
+
 /obj/random_item_spawner/cola
 	name = "random cola spawner"
 	icon_state = "rand_pizza"
@@ -1513,6 +1516,9 @@
 						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
 						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+	one
+		amt2spawn = 1
 
 /obj/random_item_spawner/hat
 	name = "random hat spawner"

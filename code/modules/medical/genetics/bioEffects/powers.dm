@@ -1861,6 +1861,7 @@
 
 		modifier *= linked_power.power
 
+		. = ..()
 		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> makes a gesture at [T.name]!"))
 
 		for (var/obj/O in view(7, owner))
@@ -1970,9 +1971,11 @@
 	cooldown = 0
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
+		. = ..()
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
@@ -2048,9 +2051,11 @@
 	cooldown = FALSE
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/chameleon/CH = linked_power
+		. = ..()
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0

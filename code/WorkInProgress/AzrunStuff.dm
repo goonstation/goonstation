@@ -619,6 +619,7 @@
 	cooldown = 2 SECONDS
 
 	cast(atom/target)
+		. = ..()
 		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
 		expansion.turret.lasers = !expansion.turret.lasers
 		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"

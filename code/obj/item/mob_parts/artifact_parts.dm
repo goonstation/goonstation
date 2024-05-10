@@ -291,6 +291,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
 
 	cast(atom/target)
 		playsound(get_turf(holder.owner), pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
+		. = ..()
 		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, PROC_REF(eldritch_move))
 		SPAWN(10 SECONDS)
 			UnregisterSignal(holder.owner, COMSIG_MOVABLE_MOVED)
@@ -310,6 +311,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
 
 	cast(atom/target)
 		var/dist = GET_DIST(holder.owner, target)
+		. = ..()
 		if (dist > 6)
 			boutput(holder.owner, SPAN_ALERT("The target is too far away!"))
 			return TRUE
@@ -443,6 +445,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/artifact_part/precursor/leg)
 		if (holder.owner.z == Z_LEVEL_NULL)
 			return TRUE
 
+		. = ..()
 		var/mob/living/M = target
 
 		if (length(M.ailments))

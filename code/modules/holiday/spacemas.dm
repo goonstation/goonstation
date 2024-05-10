@@ -1167,7 +1167,7 @@ proc/compare_ornament_score(list/a, list/b)
 			boutput(user, SPAN_ALERT("There is a pissed off snake in the stocking! It bites you! What the hell?!"))
 			modify_christmas_cheer(-5)
 			if (user.reagents)
-				user.reagents.add_reagent("venom", 5)
+				user.reagents.add_reagent("cytotoxin", 5)
 		else
 			modify_christmas_cheer(2)
 			var/dangerous = 0

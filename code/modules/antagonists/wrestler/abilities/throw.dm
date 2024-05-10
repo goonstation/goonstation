@@ -28,6 +28,7 @@
 
 
 
+		. = ..()
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
 			M.visible_message(SPAN_ALERT("You seem to attack [HH]!"))

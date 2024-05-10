@@ -912,7 +912,8 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		T?.hotspot_expose(700, 50)
+		if(src.holder && (src.holder.loc == T))
+			T?.hotspot_expose(700, 50)
 
 /obj/item/mob_part/humanoid_part/silicon_part/leg/right/thruster
 	name = "right thruster assembly"
@@ -928,7 +929,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part/silicon_part/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		if(src.holder.loc == T)
+		if(src.holder && (src.holder.loc == T))
 			T?.hotspot_expose(700, 50)
 
 /obj/item/mob_part/humanoid_part/silicon_part/robot_frame

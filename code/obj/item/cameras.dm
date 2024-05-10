@@ -229,7 +229,7 @@ TYPEINFO(/obj/item/camera_film/large)
 		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 		IM.pixel_y = 1
 		IM.layer = layer
-		src.UpdateOverlays(IM, "photo")
+		src.AddOverlays(IM, "photo")
 
 	// Update overlay layer for photo to show in hand/backpack
 	pickup()

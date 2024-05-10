@@ -1039,7 +1039,7 @@ var/list/fun_images = list()
 		if("Heavenly")
 			src.respawn_as_self()
 			var/mob/M = src.mob
-			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()

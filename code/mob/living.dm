@@ -296,7 +296,7 @@
 
 /mob/living/Logout()
 	. = ..()
-	src.UpdateOverlays(null, "speech_bubble")
+	src.ClearSpecificOverlays("speech_bubble")
 	src.is_npc = initial(src.is_npc)
 
 
@@ -1954,7 +1954,7 @@
 		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
-			if(src != V && !V.reagents?.has_reagent("CBD"))
+			if(src != V && !V.reagents?.has_reagent("CBD") && !V.hasStatus("paralysis"))
 				V.emote("scream")
 				V.changeStatus("stunned", 2 SECONDS)
 
