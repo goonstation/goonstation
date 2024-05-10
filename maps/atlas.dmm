@@ -10544,6 +10544,13 @@
 	dir = 8
 	},
 /area/listeningpost)
+"aOj" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "aOk" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -16250,13 +16257,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
-"jfm" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-L"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/magnet)
 "jiT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16627,13 +16627,6 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
-"kou" = (
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining/magnet)
 "koZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20955,6 +20948,13 @@
 	dir = 8
 	},
 /area/station/crew_quarters/cafeteria)
+"wYz" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "xce" = (
 /obj/storage/closet,
 /obj/item/tank/oxygen,
@@ -45975,11 +45975,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aiW
 aaa
 mqJ
 aaa
-aaa
+aiW
 aaa
 aaa
 aaa
@@ -46277,11 +46277,11 @@ aaa
 aaa
 aaa
 aaa
-aiW
+aOj
 mqJ
 mqJ
 mqJ
-aiW
+wYz
 aaa
 aaa
 aaa
@@ -46579,11 +46579,11 @@ aaa
 aaa
 aaa
 aaa
-jfm
 mqJ
 mqJ
 mqJ
-kou
+mqJ
+mqJ
 aaa
 aaa
 aaa
