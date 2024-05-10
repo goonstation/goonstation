@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NETID(null, src.frequency)
 		..()
 
 	disposing()

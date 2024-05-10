@@ -379,9 +379,9 @@
 
 			src.net_id = generate_net_id(src)
 
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NETID("control", control_freq)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NETID("beacon", beacon_freq)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT_NETID("pda", FREQ_PDA)
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
