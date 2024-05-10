@@ -1,4 +1,10 @@
 
+(t)fri may 10 24
+(u)TDHooligan
+(p)18435
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Stuns now get shortened by taking melee damage.
+(*)Shorter stuns are affected less.
 (t)thu may 09 24
 (u)Colossusqw
 (p)18795
