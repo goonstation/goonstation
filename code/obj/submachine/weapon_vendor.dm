@@ -42,9 +42,7 @@
 #endif
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
-
 	var/log_purchase = FALSE
-
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -86,14 +84,12 @@
 					src.vended(A)
 					usr.put_in_hand_or_eject(A)
 
-
-					if (usr.mind.is_antagonist() && track_credits) // name == "Syndicate Weapons Vendor") // okie so considering that this function is also the sec dispensers this check might uh... yeah...
-
+					// Keep track of each purchase for the crew credits
+					if (usr.mind.is_antagonist() && track_credits)
 						var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP)
 						var/datum/antagonist/nuclear_operative/commander = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
-
 						if (nukie != null)
-							nukie.purchased_items.Add(M) // this does cause exception btw
+							nukie.purchased_items.Add(M)
 						if (commander != null)
 							commander.purchased_items.Add(M)
 

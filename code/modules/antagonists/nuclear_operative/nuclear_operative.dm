@@ -8,10 +8,8 @@
 
 	var/static/commander_title
 	var/static/available_callsigns
-
 	var/list/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
 	var/list/uplink_items = list() // Same but for custom uplinks
-
 
 	New(datum/mind/new_owner)
 		if (!src.commander_title)
@@ -104,7 +102,6 @@
 		. = ..()
 
 	get_statistics()
-
 		var/list/purchases = list()
 		// Add items purchased from the nukies weapon vendor
 		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
@@ -122,11 +119,9 @@
 			purchases += list(
 				list(
 					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+					"name" = "[purchased_item.name]", // Dont include TC cost bc commander uplink doesnt use TC
 				)
 			)
-
-
 
 		. = list(
 			list(
@@ -135,8 +130,6 @@
 				"value" = purchases,
 			)
 		)
-
-
 
 
 	proc/assign_name()

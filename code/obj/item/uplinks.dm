@@ -439,8 +439,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 						antagonist_role.uplink_items.Add(I)
 
-
-
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
 			if (I.item)
@@ -1303,8 +1301,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							if(isnull(loadnum))
 								loadnum = 0
 							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
-
-
 							. = TRUE
 							break
 
