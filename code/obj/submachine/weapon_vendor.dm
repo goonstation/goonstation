@@ -31,7 +31,6 @@
 	flags = TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER //cry about it
 	layer = OBJ_LAYER - 0.1	// Match vending machines
-	var/track_credits = FALSE // True for nukies vendor, false for others
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -83,16 +82,6 @@
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
 					usr.put_in_hand_or_eject(A)
-
-					// Keep track of each purchase for the crew credits
-					if (usr.mind.is_antagonist() && track_credits)
-						var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP)
-						var/datum/antagonist/nuclear_operative/commander = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
-						if (nukie != null)
-							nukie.purchased_items.Add(M)
-						if (commander != null)
-							commander.purchased_items.Add(M)
-
 					return TRUE
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -173,7 +162,6 @@
 	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
-	track_credits = TRUE
 
 	ex_act()
 		return
@@ -224,6 +212,20 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			// Keep track of each purchase for the crew credits
+			var/datum/materiel/M = locate(params["ref"]) in materiel_stock
+			if (usr.mind.is_antagonist())
+				var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+				// var/datum/antagonist/nuclear_operative/commander = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+				if (nukie != null)
+					nukie.purchased_items.Add(M)
+				//if (commander != null)
+				//	commander.purchased_items.Add(M)
+
 
 /obj/submachine/weapon_vendor/pirate
 	name = "Pirate Weapons Vendor"
