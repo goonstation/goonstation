@@ -299,6 +299,9 @@
 			return
 		owner.visible_message(SPAN_NOTICE("[owner] assembles \the [obj_name]!"))
 		var/obj/item/R = new obj_type(obj_turf)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.put_in_hand_or_drop(R)
 		R.setMaterial(obj_mat)
 		if (istype(R))
 			R.amount = obj_amt
