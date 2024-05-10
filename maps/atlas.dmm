@@ -5690,7 +5690,7 @@
 /area/space)
 "aws" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
+	dir = 6
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -8039,8 +8039,8 @@
 /area/station/science/artifact)
 "aEJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
-	layer = 2.13
+	can_rupture = 0;
+	dir = 5
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
@@ -13938,9 +13938,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "cgi" = (
 /obj/cable{
@@ -14103,6 +14101,11 @@
 	},
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "cxW" = (
@@ -14338,7 +14341,7 @@
 /obj/machinery/mining_magnet{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "dil" = (
 /obj/cable{
@@ -14390,10 +14393,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "drl" = (
 /obj/machinery/vending/monkey/kitchen,
@@ -14532,9 +14532,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "dGc" = (
 /obj/cable{
@@ -14640,7 +14638,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "ecZ" = (
 /obj/disposalpipe/segment,
@@ -15015,7 +15013,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "fim" = (
 /obj/disposalpipe/segment/ejection,
@@ -15552,9 +15550,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "gTj" = (
 /obj/cable{
@@ -15801,26 +15797,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/recharger/wall{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
-"hGS" = (
-/obj/grille/catwalk,
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 1;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "hHp" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
@@ -16111,7 +16089,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "izG" = (
 /obj/machinery/computer3/generic/communications{
@@ -16168,6 +16146,12 @@
 	dir = 6
 	},
 /area/station/quartermaster/office)
+"iIW" = (
+/obj/machinery/atmospherics/unary/vent{
+	dir = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/space)
 "iLG" = (
 /obj/shrub{
 	dir = 1
@@ -16271,7 +16255,7 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/turf/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/magnet)
 "jiT" = (
 /obj/cable{
@@ -16340,6 +16324,10 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
+"jyt" = (
+/obj/machinery/atmospherics/unary/vent,
+/turf/simulated/floor/plating/random,
+/area/space)
 "jzZ" = (
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/engine,
@@ -16430,7 +16418,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "jPB" = (
 /obj/machinery/light/small/floor,
@@ -16644,7 +16632,7 @@
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
-/turf/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/magnet)
 "koZ" = (
 /obj/cable{
@@ -16818,9 +16806,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "kNc" = (
 /obj/lattice{
@@ -17032,7 +17018,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "luG" = (
 /obj/table/reinforced/auto,
@@ -17352,7 +17338,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "mIm" = (
 /obj/machinery/disposal/small{
@@ -17525,7 +17511,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "mWE" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -18071,6 +18057,12 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/maint,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "oOs" = (
@@ -18515,9 +18507,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "pRz" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -18861,7 +18851,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "qSE" = (
 /obj/reagent_dispensers/still,
@@ -18876,9 +18866,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "qTZ" = (
 /obj/cable{
@@ -18900,10 +18888,8 @@
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "qXu" = (
-/obj/machinery/atmospherics/unary/vent{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "qXW" = (
 /obj/machinery/networked/test_apparatus/pitching_machine{
@@ -19203,7 +19189,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "rKX" = (
 /obj/cable{
@@ -19339,6 +19325,12 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/maint,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "snt" = (
@@ -19350,7 +19342,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "srF" = (
 /obj/cable{
@@ -19566,6 +19558,11 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
@@ -20160,9 +20157,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "uDf" = (
 /obj/landmark/gps_waypoint,
@@ -20280,7 +20275,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "uUp" = (
 /obj/cable{
@@ -20604,10 +20599,6 @@
 /obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"vRV" = (
-/obj/grille/catwalk,
-/turf/space,
-/area/space)
 "vSz" = (
 /obj/machinery/alarm{
 	pixel_y = 25
@@ -20683,9 +20674,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "wcc" = (
 /obj/storage/closet/port_a_sci,
@@ -21282,7 +21271,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "xOc" = (
 /obj/decal/mule/dropoff,
@@ -48101,9 +48090,9 @@ jOz
 jOz
 eap
 mVv
-vRV
+qXu
 des
-vRV
+qXu
 mIb
 uTl
 jOz
@@ -48402,10 +48391,10 @@ qSH
 qSH
 qSH
 qSH
-hGS
+qSH
 dqj
 dqj
-hGS
+qSH
 qSH
 qSH
 qSH
@@ -54741,7 +54730,7 @@ aaa
 aax
 aaa
 aaa
-aaa
+anB
 qXu
 snt
 aqO
@@ -54751,7 +54740,7 @@ aaa
 mTy
 izk
 qXu
-aaa
+aJc
 aaa
 aaa
 aax
@@ -55043,7 +55032,7 @@ aaa
 aax
 aaa
 aaa
-aaa
+jyt
 aEJ
 oLf
 apX
@@ -55053,7 +55042,7 @@ aqW
 ato
 sgU
 aws
-aaa
+iIW
 aaa
 aaa
 aax
