@@ -114,26 +114,18 @@
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
-		if (health < maxhealth && isweldingtool(W))
-			var/turf/T = get_turf(src)
-			if(T.active_liquid)
-				if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
-					boutput(user, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
-					return
-#ifdef MAP_OVERRIDE_NADIR
-			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
-				//prevent in-acid welding from extending excursion times indefinitely
-				boutput(user, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
+		if (health < maxhealth && isweldingtool(W) && W:welding)
+			if (actions.hasAction(user, /datum/action/bar/private/welding/loop/vehicle))
 				return
-#endif
-			if(!W:try_weld(user, 1))
-				return
-			src.health += 30
-			checkhealth()
-			src.add_fingerprint(user)
-			src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
-			if(health >= maxhealth)
-				src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
+			var/datum/action/bar/icon/callback/action_bar
+			var/list/positions = src.get_welding_positions()
+			action_bar = new /datum/action/bar/private/welding/loop/vehicle(user, src, \
+			proc_path=/obj/machinery/vehicle/proc/weld_action, \
+			proc_args=list(user), \
+			start=positions[1], \
+			stop=positions[2], \
+			tool=W)
+			actions.start(action_bar, user)
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
@@ -180,6 +172,11 @@
 			src.keyed++
 			src.add_fingerprint(user)
 			return
+
+		if (istype(W, /obj/item/tank/plasma))
+			src.open_parts_panel(user)
+			return
+
 		..()
 
 		attack_particle(user,src)
@@ -192,7 +189,7 @@
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 				return /////ships should pretty much be immune to fire
 			else
@@ -200,7 +197,7 @@
 				if (prob(W.force*3))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 
 		checkhealth()
@@ -579,32 +576,28 @@
 		qdel(P)
 		return
 
-	proc/disrupt(var/disruption as num, var/obj/projectile/P)
-		if(disruption)
-			playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
-			if(pilot)
-				boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
-			//if (P)
-			//	for (var/mob/M in src)
-			//		M.bullet_act_indirect(P)
-			var/chance = disruption * 1
-			for(var/obj/item/shipcomponent/S in src.components)
-				var/my_chance = chance
-				if (istype(S, /obj/item/shipcomponent/engine))
-					my_chance += 40
+	proc/disrupt(disruption, obj/projectile/P)
+		if(disruption <= 0 || !length(src.components))
+			return
+		playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
+		if(pilot)
+			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-				if(prob(my_chance))
-					if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
-						var/obj/item/shipcomponent/engine/E = S
-						if (E.ready)
-							E.ready = 0
-							E.ready()
-					else
-						S.deactivate()
+		var/obj/item/shipcomponent/S = pick(src.components)
+		if (istype(S, /obj/item/shipcomponent/engine))
+			disruption += 40
 
-					chance -= 25
-					if (chance <= 0)
-						return
+		if(prob(disruption))
+			if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
+				var/obj/item/shipcomponent/engine/E = S
+				if (E.ready)
+					E.ready = 0
+					E.ready()
+			else
+				S.deactivate()
+				S.disrupted = TRUE
+				SPAWN(2 SECONDS)
+					S.disrupted = FALSE
 
 	emp_act()
 		src.disrupt(10)
@@ -661,7 +654,7 @@
 				if(M.health > 0)
 					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
-				//M.changeStatus("weakened", 1 SECOND)
+				//M.changeStatus("knockdown", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
@@ -837,6 +830,31 @@
 					return
 				if(-20 to 0)
 					shipcrit()
+
+/// Callback for welding repair actionbar
+/obj/machinery/vehicle/proc/weld_action(mob/user)
+	src.health += 30
+	src.checkhealth()
+	src.add_fingerprint(user)
+	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
+	if(health >= maxhealth)
+		src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
+
+/// Produces a random small welding line across the vehicle
+/obj/machinery/vehicle/proc/get_welding_positions()
+	var/start
+	var/stop
+	// 0,0 coords correspond to 16,16 on sprite of any size
+	// so we need to shift the range by -16
+	var/startX = rand(-8, (src.bound_width-24))
+	var/startY = rand(-8, (src.bound_height-24))
+	var/difference = rand(3, 6) // small x means bigger y, vice versa
+	var/endX = startX + (difference * (prob(50) ? 1 : -1))
+	var/endY = startY + ((8 - difference) * (prob(50) ? 1 : -1))
+
+	start = list(startX, startY)
+	stop = list(endX, endY)
+	. = list(start, stop)
 
 /obj/machinery/vehicle/proc/shipcrit()
 	if (src.engine)
@@ -1049,7 +1067,7 @@
 		boutput(boarder, SPAN_ALERT("[src] is locked!"))
 		return
 
-	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
+	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("knockdown") || boarder.getStatusDuration("unconscious") || !isalive(boarder) || boarder.restrained())
 		boutput(boarder, SPAN_ALERT("You can't enter a pod while incapacitated or restrained."))
 		return
 
@@ -1198,7 +1216,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1214,7 +1232,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1774,8 +1792,6 @@
 
 /obj/machinery/vehicle/proc/go_home()
 	. = src.com_system?.get_home_turf()
-
-
 
 //TODO
 

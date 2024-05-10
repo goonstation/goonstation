@@ -390,7 +390,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -473,13 +473,13 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if(src.occupant)
 			src.occupant.set_loc(src.loc)
-			src.occupant.changeStatus("weakened", 2 SECONDS)
+			src.occupant.changeStatus("knockdown", 2 SECONDS)
 		return
 
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
+		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "unconscious", "knockdown", "handcuffed")))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -603,7 +603,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -741,7 +741,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			return
 		if ((usr in src.contents) || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -931,7 +931,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 			return
 		if (!isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")

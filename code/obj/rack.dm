@@ -58,7 +58,7 @@
 		return 0
 
 /obj/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 		return
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))

@@ -13,6 +13,7 @@
 	voice_fem = 'sound/voice/wizard/CluwneFem.ogg'
 	voice_other = 'sound/voice/wizard/CluwneLoud.ogg'
 	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
+	voice_on_cast_start = FALSE
 
 	cast(mob/target)
 		if(!holder)
@@ -28,6 +29,7 @@
 
 		var/mob/living/carbon/human/H = target
 
+		. = ..()
 		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 

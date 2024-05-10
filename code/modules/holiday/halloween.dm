@@ -125,7 +125,7 @@
 			if(!isdead(M) && M.loc != src) //No transferring to dead dudes.
 				transfer_targets.Add(M)
 
-			M.changeStatus("weakened", 3 SECONDS)
+			M.changeStatus("knockdown", 3 SECONDS)
 
 		if(!src.to_transfer.len || length(src.to_transfer) == 1)
 			src.visible_message("The [src] buzzes.")

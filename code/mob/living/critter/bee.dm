@@ -594,7 +594,7 @@
 			if ((GET_DIST(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message(SPAN_COMBAT("<b>[MT] clutches their temples!</b>"))
 				MT.emote("scream")
-				MT.setStatusMin("paralysis", 20 SECONDS)
+				MT.setStatusMin("unconscious", 20 SECONDS)
 				MT.take_brain_damage(10)
 				var/turf/turf = locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1)
 				logTheThing(LOG_COMBAT, src.holder.owner, "stuns and teleports [constructTarget(target)] to [log_loc(turf)] using teleport stare")
@@ -615,7 +615,7 @@
 		if (holder.owner.reagents.total_volume < holder.owner.reagents.maximum_volume / 2)
 			boutput(holder.owner, "You aren't full enough to make honey yet! Eat more!")
 			return TRUE
-
+		. = ..()
 		var/mob/living/critter/small_animal/bee/us = holder.owner
 		if (istype(us))
 			us.puke_honey()
@@ -797,9 +797,9 @@
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -981,7 +981,7 @@
 		src.pixel_y = 0
 		src.icon_state = "bubsbee"
 		src.sleeping = rand(10, 20)
-		src.setStatus("paralysis", 2 SECONDS)
+		src.setStatus("unconscious", 2 SECONDS)
 		src.UpdateIcon()
 		src.visible_message(SPAN_NOTICE("[src] gets tired from all that work and takes a nap!"))
 		src.is_dancing = 0

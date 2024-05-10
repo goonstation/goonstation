@@ -1329,12 +1329,6 @@
 	dir = 8;
 	icon_state = "pipe-t"
 	},
-/obj/machinery/activation_button/flusher_button{
-	id = "ranch_flusher";
-	name = "Kitchen Chute Activation Button";
-	pixel_x = 22;
-	pixel_y = 31
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "alb" = (
@@ -3202,12 +3196,6 @@
 	icon_state = "wooden"
 	},
 /area/station/chapel/sanctuary)
-"ayf" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/rancher,
-/turf/simulated/floor/plating,
-/area/station/ranch)
 "ayj" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -6463,14 +6451,13 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "aRw" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/computer/operating/small{
+	id = "OR1"
 	},
-/obj/machinery/manufacturer/medical,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "aRz" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -13942,9 +13929,6 @@
 	},
 /area/station/medical/medbay)
 "bXJ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -14490,10 +14474,6 @@
 	},
 /area/station/hallway/primary/north)
 "cqw" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "1-2"
@@ -15232,9 +15212,6 @@
 	},
 /area/station/medical/medbay/lobby)
 "cVE" = (
-/obj/machinery/computer/operating{
-	id = "OR2"
-	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -16681,6 +16658,7 @@
 	dir = 1;
 	icon_state = "railing-reinforced"
 	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ejx" = (
@@ -18075,12 +18053,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "fqI" = (
-/obj/shrub{
-	dir = 9
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -18347,6 +18326,12 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"fDe" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "fDi" = (
 /obj/disposalpipe/segment,
 /obj/landmark/pest,
@@ -24052,7 +24037,6 @@
 	pixel_x = 6
 	},
 /obj/machinery/camera,
-/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -24099,9 +24083,6 @@
 /area/station/medical/staff)
 "jZa" = (
 /obj/machinery/drainage,
-/obj/stool/chair/office{
-	dir = 8
-	},
 /obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -24712,6 +24693,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
+"kyD" = (
+/obj/landmark/start/job/rancher,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kyE" = (
 /obj/airbridge_controller{
 	id = "mining_shuttle";
@@ -25679,10 +25664,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "lkd" = (
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 4
-	},
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -27387,7 +27370,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "mxQ" = (
-/obj/storage/secure/closet/fridge/blood,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -27396,6 +27378,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -29122,9 +29105,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "nPH" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29446,12 +29426,14 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/crew_quarters/barber_shop)
 "obg" = (
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
 /obj/machinery/computer/operating/small{
 	id = "OR1"
 	},
+/obj/item/device/radio/intercom/medical{
+	broadcasting = 1
+	},
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -30635,7 +30617,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/closet/medical/anesthetic,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -30643,6 +30624,7 @@
 	pixel_x = -10;
 	pixel_y = 22
 	},
+/obj/machinery/manufacturer/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -30729,8 +30711,29 @@
 	dir = 8
 	},
 /obj/item_dispenser/latex_gloves,
-/obj/table/auto,
-/obj/machinery/defib_mount,
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -30991,10 +30994,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "pmh" = (
-/obj/machinery/drainage,
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -31657,9 +31656,6 @@
 	},
 /area/station/hallway/primary/south)
 "pKq" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -31746,7 +31742,6 @@
 "pPk" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/item/storage/box/beakerbox,
@@ -33023,33 +33018,11 @@
 	},
 /area/station/bridge)
 "qOu" = (
-/obj/surgery_tray,
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /obj/item_dispenser/medical_mask,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
@@ -34225,9 +34198,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "rKT" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/item/reagent_containers/iv_drip/blood,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
@@ -36693,6 +36663,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tAx" = (
@@ -37473,6 +37444,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -37997,9 +37971,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "uwh" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -38108,11 +38079,10 @@
 	},
 /area/station/hallway/primary/southwest)
 "uzV" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
 /obj/machinery/camera/ranch,
+/obj/shrub{
+	dir = 9
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uAh" = (
@@ -41453,9 +41423,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "xrp" = (
-/obj/machinery/optable{
-	id = "OR2"
-	},
+/obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -42310,6 +42278,35 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"xYv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "xYZ" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/vending/cards,
@@ -42337,6 +42334,11 @@
 /area/station/security/secwing)
 "xZn" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -22
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "xZq" = (
@@ -67332,8 +67334,8 @@ bsL
 gjs
 brX
 udJ
-sYc
 lkd
+sYc
 mxQ
 rKT
 wbK
@@ -67635,7 +67637,7 @@ lfY
 brX
 obg
 jZa
-thE
+aRw
 fAz
 lLh
 eGK
@@ -67937,7 +67939,7 @@ lfY
 brX
 oYr
 oBI
-oBI
+xYv
 pre
 uCQ
 gNH
@@ -69150,7 +69152,7 @@ sVz
 lzT
 aXv
 oTM
-aRw
+aOw
 bXA
 ezo
 ffI
@@ -84203,7 +84205,7 @@ axE
 axE
 ejn
 alF
-alF
+kyD
 iPi
 xZn
 ddX
@@ -84499,7 +84501,7 @@ eZS
 uuf
 hzU
 aem
-axB
+fDe
 xMP
 xMP
 xMP
@@ -84801,7 +84803,7 @@ yfJ
 uuf
 qPG
 aem
-ayf
+axB
 uzV
 axE
 axE

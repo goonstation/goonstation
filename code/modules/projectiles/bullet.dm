@@ -229,10 +229,10 @@ toxic - poisons
 			var/mob/living/carbon/human/M = hit
 			if(proj.power > 40)
 #ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
+				M.do_disorient(75, knockdown = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
 #else
 				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
+				M.changeStatus("knockdown", 3 SECONDS)
 #endif
 			if(proj.power > 80)
 				var/turf/target = get_edge_target_turf(M, dirflag)
@@ -265,10 +265,10 @@ toxic - poisons
 				var/mob/living/carbon/human/H = hit
 				if(power > 40)
 	#ifdef USE_STAMINA_DISORIENT
-					H.do_disorient(50, weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+					H.do_disorient(50, knockdown = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 	#else
 					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 3 SECONDS)
+					H.changeStatus("knockdown", 3 SECONDS)
 	#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, 1, 3, throw_type = THROW_GUNIMPACT)
@@ -633,7 +633,7 @@ toxic - poisons
 			var/mob/living/carbon/human/M = hit
 			if(proj.power > 30)
 				M.changeStatus("slowed", 3 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 			if(proj.power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, 3, 2, throw_type = THROW_GUNIMPACT)
@@ -656,7 +656,7 @@ toxic - poisons
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 
-				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+				M.do_disorient(75, knockdown = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
 
 				if(!M.stat)
 					M.emote("scream")
@@ -691,7 +691,7 @@ toxic - poisons
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(proj.power >= 30)
-				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+				M.do_disorient(75, knockdown = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
 
 			if(proj.power >= 40)
 				var/throw_range = (proj.power > 50) ? 6 : 3
@@ -1151,10 +1151,10 @@ toxic - poisons
 			if(ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				#ifdef USE_STAMINA_DISORIENT
-				H.do_disorient(max(P.power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				H.do_disorient(max(P.power,10), knockdown = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 				#else
 				H.changeStatus("stunned", 4 SECONDS)
-				H.changeStatus("weakened", 3 SECONDS)
+				H.changeStatus("knockdown", 3 SECONDS)
 				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
@@ -1245,7 +1245,6 @@ datum/projectile/bullet/autocannon
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
-		disruption = INFINITY //disrupt every system at once
 		on_hit(atom/hit, angle, obj/projectile/P)
 			if (P.data)
 				..()
@@ -1424,7 +1423,7 @@ datum/projectile/bullet/autocannon
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.changeStatus("stunned", 1 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
@@ -1455,7 +1454,7 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.do_disorient(130, weakened = 15 SECONDS, disorient = 6 SECONDS)
+			L.do_disorient(130, knockdown = 15 SECONDS, disorient = 6 SECONDS)
 
 			L.Virus_ShockCure(33)
 			L.shock_cyberheart(33)
@@ -1843,7 +1842,7 @@ datum/projectile/bullet/autocannon
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.do_disorient(15, weakened = 10)
+			M.do_disorient(15, knockdown = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 
 /datum/projectile/bullet/airzooka/bad
@@ -1866,7 +1865,7 @@ datum/projectile/bullet/autocannon
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.do_disorient(15, weakened = 25)
+			M.do_disorient(15, knockdown = 25)
 			M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
 //misc (i dont know where to place the rest)- owari

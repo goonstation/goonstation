@@ -94,7 +94,7 @@
 		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
-		target.changeStatus("weakened", 4 SECONDS)
+		target.changeStatus("knockdown", 4 SECONDS)
 
 		logTheThing(LOG_COMBAT, source, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 

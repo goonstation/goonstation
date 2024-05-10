@@ -527,7 +527,7 @@ TYPEINFO(/obj/machinery/sleeper)
 					continue
 				O.set_loc(src.loc)
 				src.add_fingerprint(usr)
-			src.occupant.changeStatus("weakened", 1 SECOND)
+			src.occupant.changeStatus("knockdown", 1 SECOND)
 			src.occupant.force_laydown_standup()
 			src.occupant = null
 			src.UpdateIcon()
@@ -711,7 +711,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")

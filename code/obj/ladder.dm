@@ -142,7 +142,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 /obj/ladder/attack_hand(mob/user)
 	if (src.unclimbable) return
-	if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+	if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0)
 		return
 	src.climb(user)
 

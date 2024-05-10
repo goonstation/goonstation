@@ -13,7 +13,7 @@
 
 	var/flash_animation_duration = 60
 	var/flash_stamina_damage = 130
-	var/flash_weakened = 100
+	var/flash_knockdown = 100
 	var/flash_disorient_time = 60
 
 	var/flash_eye_blurry = 4
@@ -115,7 +115,7 @@
 		// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
 		var/blind_success = M.apply_flash(
 			src.flash_animation_duration,
-			src.flash_weakened,
+			src.flash_knockdown,
 			0,
 			0,
 			src.flash_eye_blurry,

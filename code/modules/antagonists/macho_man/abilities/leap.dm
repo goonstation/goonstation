@@ -13,6 +13,7 @@
 		possible_areas += get_areas(/area/sim)
 
 	cast(mob/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			var/area/A = input("Select the area to leap to: ", "Select Area", null) as null|anything in possible_areas
 			if (!A)
@@ -31,8 +32,7 @@
 			if (H)
 				if (H.lying)
 					H.lying = 0
-					H.delStatus("paralysis")
-					H.delStatus("weakened")
+					H.remove_stuns()
 					H.set_clothing_icon_dirty()
 				H.transforming = 1
 				H.set_density(0)
@@ -115,7 +115,7 @@
 			playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 			for (var/mob/M in viewers(holder.owner, 5))
 				if (M != holder.owner)
-					M.changeStatus("weakened", 8 SECONDS)
+					M.changeStatus("knockdown", 8 SECONDS)
 				SPAWN(0)
 					shake_camera(M, 4, 16)
 			if (istype(holder.owner.loc, /turf/simulated/floor))
@@ -132,7 +132,7 @@
 				O.icon_state = "explosion"
 				SPAWN(3.5 SECONDS) qdel(O)
 				random_brute_damage(H, 50)
-				H.changeStatus("weakened", 1 SECOND)
+				H.changeStatus("knockdown", 1 SECOND)
 				H.pixel_x = 0
 				H.pixel_y = 0
 				H.transforming = 0

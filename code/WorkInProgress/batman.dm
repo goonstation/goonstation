@@ -113,7 +113,7 @@
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
-			T.changeStatus("weakened", 7 SECONDS)
+			T.changeStatus("knockdown", 7 SECONDS)
 			T.changeStatus("stunned", 7 SECONDS)
 			T.visible_message(SPAN_ALERT("[T] was struck by the batarang!"), SPAN_ALERT("You were struck by a batarang!"))
 			qdel(A)
@@ -132,7 +132,7 @@
 		usr.emote("flip")
 		playsound(usr.loc, "swing_hit", 40, 1)
 		batman_pow(T.loc)
-		T.setStatus("weakened", T.getStatusDuration("weakened") + 4 SECONDS)
+		T.setStatus("knockdown", T.getStatusDuration("knockdown") + 4 SECONDS)
 		T.setStatus("stunned", T.getStatusDuration("stunned") + 4 SECONDS)
 		T.force_laydown_standup()
 		if(tturf && isturf(tturf))
@@ -143,10 +143,10 @@
 	set name = "Recover \[Support]"
 	set desc = "Unstuns you"
 
-	if(usr.hasStatus("weakened") || usr.hasStatus("stunned"))
+	if(usr.hasStatus("knockdown") || usr.hasStatus("stunned"))
 		playsound(usr.loc, 'sound/effects/flip.ogg', 50, 1)
 		usr.visible_message(SPAN_ALERT("<B>[usr] suddenly recovers!</B>"), SPAN_ALERT("<B>You suddenly recover!</B>"))
-		usr.delStatus("weakened")
+		usr.delStatus("knockdown")
 		usr.delStatus("stunned")
 		usr.emote("flip")
 
@@ -180,7 +180,7 @@
 	if ((zone in list( "eyes", "mouth" )))
 		zone = "head"
 	T.TakeDamage(zone, 4, 0)
-	T.setStatus("weakened", T.getStatusDuration("weakened") + 3 SECONDS)
+	T.setStatus("knockdown", T.getStatusDuration("knockdown") + 3 SECONDS)
 	T.setStatus("stunned", T.getStatusDuration("stunned") + 3 SECONDS)
 	T.force_laydown_standup()
 	var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
@@ -231,7 +231,7 @@
 		playsound(T.loc, "swing_hit", 25, 1, -1)
 		batman_pow(T.loc)
 		//flick("e_flash", T.flash)
-		T.setStatus("weakened", T.getStatusDuration("weakened") + 6 SECONDS)
+		T.setStatus("knockdown", T.getStatusDuration("knockdown") + 6 SECONDS)
 		step_away(T,usr,15)
 		sleep(0.1 SECONDS)
 		step_away(T,usr,15)
@@ -246,7 +246,7 @@
 			usr.pixel_y += 10
 			sleep(0.1 SECONDS)
 		usr.set_loc(T.loc)
-		usr.setStatus("weakened", 10)
+		usr.setStatus("knockdown", 10)
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y -= 8
 			sleep(0.1 SECONDS)
@@ -256,7 +256,7 @@
 		playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 		random_brute_damage(T, 20)
 		T.losebreath += 6
-		T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
+		T.setStatus("knockdown", T.getStatusDuration("knockdown") + 10 SECONDS)
 		T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
 		T.force_laydown_standup()
 
@@ -314,7 +314,7 @@
 			playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			random_brute_damage(T, 30)
 			T.losebreath += 10
-			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
+			T.setStatus("knockdown", T.getStatusDuration("knockdown") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
 			T.visible_message(SPAN_ALERT("<B>[T] lands very violently with a bone-crunching sound!</B>"), SPAN_ALERT("<B>You land violently with a lot of pain!</B>"))
 
@@ -326,7 +326,7 @@
 
 	usr.visible_message(SPAN_ALERT("<B>[usr] drops to the ground, preparing for a jump</B>!"), SPAN_ALERT("<B>You drop to the ground, preparing for a jump</B>!"))
 	playsound(usr.loc, 'sound/effects/bionic_sound.ogg', 50)
-	usr.setStatus("weakened", 8 SECONDS)
+	usr.setStatus("knockdown", 8 SECONDS)
 	usr.force_laydown_standup()
 	sleep(1.5 SECONDS)
 	usr.visible_message(SPAN_ALERT("<B>[usr] launches towards [T]</B>!"), SPAN_ALERT("<B>You launch towards [T]</B>!"))
@@ -334,12 +334,12 @@
 		step_to(usr,T,0)
 		if (BOUNDS_DIST(usr, T) == 0)
 			batman_pow(T.loc)
-			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
+			T.setStatus("knockdown", T.getStatusDuration("knockdown") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
 			usr.visible_message(SPAN_ALERT("<B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!"), SPAN_ALERT("<B>You fly at [T], slamming [him_or_her(T)] in the head</B>!"))
 			playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			random_brute_damage(T, 25)
-			usr.delStatus("weakened")
+			usr.delStatus("knockdown")
 			i=100
 			var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
 			if(tturf && isturf(tturf))
@@ -367,7 +367,7 @@ obj/item/batarang
 		..()
 		if (ishuman(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
-			H.changeStatus("weakened", 1 SECONDS)
+			H.changeStatus("knockdown", 1 SECONDS)
 			H.force_laydown_standup()
 			take_bleeding_damage(H, null, 10)
 			playsound(src, hitsound, 60, TRUE)
