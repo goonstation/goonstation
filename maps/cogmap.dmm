@@ -22881,7 +22881,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bDJ" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -23073,7 +23073,24 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "bEB" = (
-/obj/disposalpipe/segment,
+/obj/item/slag_shovel{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/material_piece/slag{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/tile/steel{
+	pixel_x = -3;
+	pixel_y = -5
+	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bEC" = (
@@ -37514,7 +37531,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cIT" = (
-/obj/machinery/processor,
+/obj/machinery/processor/portable,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -54423,24 +54440,7 @@
 /area/station/storage/primary)
 "pDb" = (
 /obj/machinery/firealarm/south,
-/obj/item/slag_shovel{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/material_piece/slag{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign";
-	pixel_x = -5;
-	pixel_y = 12
-	},
-/obj/item/tile/steel{
-	pixel_x = -3;
-	pixel_y = -5
-	},
+/obj/machinery/processor/portable,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "pER" = (

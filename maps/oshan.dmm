@@ -12143,7 +12143,7 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "aOJ" = (
-/obj/machinery/processor,
+/obj/machinery/processor/portable,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aOK" = (
@@ -13683,7 +13683,7 @@
 /turf/space/fluid,
 /area/space)
 "aUa" = (
-/obj/machinery/processor,
+/obj/machinery/processor/portable,
 /turf/space/fluid,
 /area/space)
 "aUb" = (
@@ -26614,7 +26614,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bRs" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /obj/disposalpipe/segment{
 	dir = 4
 	},

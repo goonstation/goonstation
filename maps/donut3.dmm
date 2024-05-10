@@ -26506,7 +26506,7 @@
 	})
 "hTW" = (
 /obj/decal/stripe_caution,
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
 	icon_state = "line1"

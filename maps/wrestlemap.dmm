@@ -1192,7 +1192,7 @@
 	},
 /area/station/medical/robotics)
 "ayf" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
@@ -34525,7 +34525,7 @@
 	name = "Cargo Hallway"
 	})
 "pkv" = (
-/obj/machinery/processor,
+/obj/machinery/processor/portable,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
