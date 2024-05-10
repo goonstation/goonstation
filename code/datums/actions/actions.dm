@@ -249,13 +249,16 @@
 		if (!obj_turf)
 			return FALSE
 		for (var/obj/O in obj_turf)
-			// girder for soul, window for thindow (fuck thindow)
-			if (istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing))
+			if (src.constructible_check(O))
 				continue
 			if (O.density)
 				boutput(owner, SPAN_ALERT("You try to build \the [obj_name], but there's \the [O] in the way!"))
 				return TRUE
 		return FALSE
+
+	proc/constructible_check(var/obj/O)
+		// girder for soul, window for thindow (fuck thindow) <- ((I have no idea what this means))
+		return istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing)
 
 	onStart()
 		..()
@@ -299,7 +302,7 @@
 			return
 		owner.visible_message(SPAN_NOTICE("[owner] assembles \the [obj_name]!"))
 		var/obj/item/R = new obj_type(obj_turf)
-		if (ishuman(owner))
+		if (!R.density && !src.constructible_check(R) && ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.put_in_hand_or_drop(R)
 		R.setMaterial(obj_mat)
