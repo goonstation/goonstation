@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_pointblank(obj/projectile/O, mob/target)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 	proc/split(var/obj/projectile/P)
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire

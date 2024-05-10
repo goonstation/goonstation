@@ -108,7 +108,7 @@
 	var/image/hair = image(P.AH.customization_first.icon, cust_one_state)
 	hair.color = P.AH.customization_first_color
 	hair.alpha = GHOST_HAIR_ALPHA
-	src.UpdateOverlays(hair, "hair")
+	src.AddOverlays(hair, "hair")
 
 	if(cust_one_state && cust_one_state != "none")
 		wig = new
@@ -129,12 +129,12 @@
 	var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
 	beard.color = P.AH.customization_second_color
 	beard.alpha = GHOST_HAIR_ALPHA
-	src.UpdateOverlays(beard, "beard")
+	src.AddOverlays(beard, "beard")
 
 	var/image/detail = image(P.AH.customization_second.icon, cust_three_state)
 	detail.color = P.AH.customization_third_color
 	detail.alpha = GHOST_HAIR_ALPHA
-	src.UpdateOverlays(detail, "detail")
+	src.AddOverlays(detail, "detail")
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
@@ -417,25 +417,25 @@
 		var/image/glass = image(glasses.wear_image_icon, glasses.icon_state)
 		glass.color = glasses.color
 		glass.alpha = glasses.alpha * 0.75
-		O.UpdateOverlays(glass, "glasses")
+		O.AddOverlays(glass, "glasses")
 	else
-		O.UpdateOverlays(null, "glasses")
+		O.ClearSpecificOverlays("glasses")
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
 		var/image/hair = image(src.bioHolder.mobAppearance.customization_first.icon, src.bioHolder.mobAppearance.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = GHOST_HAIR_ALPHA
-		O.UpdateOverlays(hair, "hair")
+		O.AddOverlays(hair, "hair")
 
 		var/image/beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
 		beard.alpha = GHOST_HAIR_ALPHA
-		O.UpdateOverlays(beard, "beard")
+		O.AddOverlays(beard, "beard")
 
 		var/image/detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
 		detail.alpha = GHOST_HAIR_ALPHA
-		O.UpdateOverlays(detail, "detail")
+		O.AddOverlays(detail, "detail")
 
 		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
 		if(cust_one && cust_one != "none")

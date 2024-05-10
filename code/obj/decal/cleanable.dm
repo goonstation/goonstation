@@ -238,9 +238,9 @@ proc/make_cleanable(var/type,var/loc)
 					src.last_color = add_color
 
 				if (length(src.overlays) >= 4) //stop adding more overlays you're lagging client FPS!!!!
-					src.UpdateOverlays(new_overlay, "cleanablefinal")
+					src.AddOverlays(new_overlay, "cleanablefinal")
 				else
-					src.UpdateOverlays(new_overlay, "cleanble[length(src.overlays)]")
+					src.AddOverlays(new_overlay, "cleanble[length(src.overlays)]")
 
 #define DRY_BLOOD 1
 #define FRESH_BLOOD -1
@@ -429,7 +429,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				break
 			working_image.color = "#3399FF"
 			working_image.alpha = 100
-			B.UpdateOverlays(working_image, i)
+			B.AddOverlays(working_image, i)
 
 		..(B)
 

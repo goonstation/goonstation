@@ -341,7 +341,7 @@ proc/gas_text_color(gas_id)
 //Possible states are "exposed" and "intact". sizes are "short", "medium" and "long". These are strings.
 #define SET_PIPE_UNDERLAY(NODE, DIR, SIZE, COLOUR, HIDDEN) do { \
 	if (UNLINT(HIDDEN)) { \
-		src.UpdateOverlays(null, "[DIR]"); \
+		src.ClearSpecificOverlays("[DIR]"); \
 		break; \
 		}  \
 	var/pipe_state = NODE ? "intact" : "exposed"; \
@@ -354,7 +354,7 @@ proc/gas_text_color(gas_id)
 	pipe_image.color = COLOUR ? COLOUR : "#B4B4B4"; \
 	pipe_image.layer = src.layer - 0.001; \
 	pipe_image.appearance_flags |= RESET_TRANSFORM | RESET_COLOR | KEEP_APART; \
-	src.UpdateOverlays(pipe_image, "[DIR]"); \
+	src.AddOverlays(pipe_image, "[DIR]"); \
 	} while(0)
 
 #define issimplepipe(X) istype(X, /obj/machinery/atmospherics/pipe/simple)

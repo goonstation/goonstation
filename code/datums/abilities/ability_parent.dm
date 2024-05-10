@@ -451,14 +451,14 @@
 
 	update_icon()
 		if (owner.waiting_for_hotkey)
-			UpdateOverlays(src.binding, "binding")
+			AddOverlays(src.binding, "binding")
 		else
-			UpdateOverlays(null, "binding")
+			ClearSpecificOverlays("binding")
 
 		if(owner.action_key_number > -1)
-			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
+			AddOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
 		else
-			UpdateOverlays(null, "action_key_number")
+			ClearSpecificOverlays("action_key_number")
 		return
 
 	proc/set_number_overlay(var/num)
@@ -637,29 +637,29 @@
 
 		if (owner.holder)
 			if (src.owner == src.owner.holder.shiftPower)
-				UpdateOverlays(src.shift_highlight, "shift_highlight")
+				AddOverlays(src.shift_highlight, "shift_highlight")
 			else
-				UpdateOverlays(null, "shift_highlight")
+				ClearSpecificOverlays("shift_highlight")
 
 			if (src.owner == owner.holder.ctrlPower)
-				UpdateOverlays(src.ctrl_highlight, "ctrl_highlight")
+				AddOverlays(src.ctrl_highlight, "ctrl_highlight")
 			else
-				UpdateOverlays(null, "ctrl_highlight")
+				ClearSpecificOverlays("ctrl_highlight")
 
 			if (src.owner == owner.holder.altPower)
-				UpdateOverlays(src.alt_highlight, "alt_highlight")
+				AddOverlays(src.alt_highlight, "alt_highlight")
 			else
-				UpdateOverlays(null, "alt_highlight")
+				ClearSpecificOverlays("alt_highlight")
 
 			if (owner.waiting_for_hotkey)
-				UpdateOverlays(src.binding, "binding")
+				AddOverlays(src.binding, "binding")
 			else
-				UpdateOverlays(null, "binding")
+				ClearSpecificOverlays("binding")
 
 		if(owner.action_key_number > -1)
-			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
+			AddOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
 		else
-			UpdateOverlays(null, "action_key_number")
+			ClearSpecificOverlays("action_key_number")
 
 		update_cooldown_cost()
 		return

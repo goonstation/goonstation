@@ -467,9 +467,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 		//remove problem traits from people on pod_wars
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			H.traitHolder.removeTrait("stowaway")
-			H.traitHolder.removeTrait("pilot")
-			H.traitHolder.removeTrait("sleepy")
+			var/trait_name = H.traitHolder.getTraitWithCategory("background")
+			H.traitHolder.removeTrait(trait_name)
 			H.traitHolder.removeTrait("puritan")
 
 		H.Equip_Job_Slots(JOB)
@@ -542,6 +541,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
+			var/datum/trait/T = src.traitHolder.getTrait("sleepy")
 			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and is trying to spawn")
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
@@ -554,12 +554,79 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
 				logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
-				src.l_hand?.AddComponent(/datum/component/glued, src, 10 SECONDS, 5 SECONDS)
-				src.r_hand?.AddComponent(/datum/component/glued, src, 10 SECONDS, 5 SECONDS)
+				src.l_hand?.AddComponent(/datum/component/glued, src, T.spawn_delay, T.spawn_delay / 2)
+				src.r_hand?.AddComponent(/datum/component/glued, src, T.spawn_delay, T.spawn_delay / 2)
 
 				src.setStatus("resting", INFINITE_STATUS)
-				src.setStatus("unconscious", 10 SECONDS)
+				src.setStatus("unconscious", T.spawn_delay)
 				src.force_laydown_standup()
+
+		if (src.traitHolder && src.traitHolder.hasTrait("partyanimal"))
+			var/datum/trait/T = src.traitHolder.getTrait("partyanimal")
+			var/typeinfo/datum/trait/partyanimal/typeinfo = T.get_typeinfo()
+			logTheThing(LOG_STATION, H, "has the Party Animal trait and is trying to spawn")
+
+			if (isnull(typeinfo.num_bar_turfs)) // Sometimes the bar is called a cafe and sometimes the cafe is called a bar so we'll just do both :)
+				typeinfo.num_bar_turfs = length(get_area_turfs(/area/station/crew_quarters/bar, 1)) + length(get_area_turfs(/area/station/crew_quarters/cafeteria, 1))
+
+			var/list/valid_stools = list()
+
+			// We iterate through stools in the bar to have more natural feeling spawn positions
+			for_by_tcl(stool, /obj/stool)
+				if (stool.z != Z_LEVEL_STATION)
+					continue
+				var/area/stool_area = get_area(stool)
+				var/is_bar = istype(stool_area, /area/station/crew_quarters/bar) || istype(stool_area, /area/station/crew_quarters/cafeteria)
+				if (!is_bar)
+					continue
+				valid_stools+= stool
+
+			logTheThing(LOG_STATION, src, "has the Party Animal trait and has finished iterating through spots.")
+
+			if(!joined_late) // We got special late-join handling
+				var/obj/stool/stool = pick(valid_stools)
+				if (stool)
+					var/list/spawn_range = orange(1, get_turf(stool)) // Skip the actual stool
+					for (var/turf/spot in spawn_range)
+						if (!jpsTurfPassable(spot, source=get_turf(H), passer=H)) // Make sure we can walk there
+							continue
+						if (locate(/mob/living/carbon/human) in spot)
+							continue
+						src.set_loc(spot)
+						logTheThing(LOG_STATION, src, "has the Party Animal trait and spawns at [log_loc(spot)]")
+						break
+
+				// Place clutter near the rascal
+				for (var/turf/spot in range(1, H))
+					if (typeinfo.clutter_count >= nround(typeinfo.num_bar_turfs * 0.5))
+						break
+					if (!jpsTurfPassable(spot, source=get_turf(H), passer=H)) // Make sure we can walk there
+						continue
+					if (prob(50)) // Roll for random items
+						var/picked = pick(typeinfo.allowed_items)
+						if(picked)
+							new picked(spot)
+							typeinfo.clutter_count++
+					if (prob(50)) // Roll for random debris
+						var/picked = pick(typeinfo.allowed_debris)
+						if (picked)
+							new picked(spot)
+							typeinfo.clutter_count++
+
+			// Do the alcohol stuff
+			var/alcohol_amount = rand(0, 60)
+			H.reagents.add_reagent("ethanol", alcohol_amount) // Party hardy
+
+			if (alcohol_amount >= 20 || joined_late) // Chance to spawn HAMMERED
+				H.l_hand?.AddComponent(/datum/component/glued, H, T.spawn_delay, T.spawn_delay / 2)
+				H.r_hand?.AddComponent(/datum/component/glued, H, T.spawn_delay, T.spawn_delay / 2)
+				H.setStatus("resting", INFINITE_STATUS)
+				H.setStatus("unconscious", T.spawn_delay)
+				H.force_laydown_standup()
+
+			if (H.head)
+				H.stow_in_available(H.head)
+			H.equip_if_possible(new /obj/item/clothing/head/party/random(H), SLOT_HEAD) // hehehe funny hat
 
 		// This should be here (overriding most other things), probably? - #11215
 		// Vampires spawning in the chapel is bad. :(
@@ -773,7 +840,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
-			src.drop_from_slot(src.wear_mask)
+			src.stow_in_available(src.wear_mask)
 
 		if(!src.wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)

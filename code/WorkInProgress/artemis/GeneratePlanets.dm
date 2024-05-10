@@ -200,7 +200,7 @@ DEFINE_PLANET(indigo, "Indigo")
 					var/datum/planetData/planet = regions[region]
 					if(planet)
 						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
-						T.UpdateOverlays(planet.ambient_light, "ambient")
+						T.AddOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
 	proc/get_generator(turf/T)
@@ -288,7 +288,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		ambient_light.color = color
 
 	for(T in turfs)
-		T.UpdateOverlays(ambient_light, "ambient")
+		T.AddOverlays(ambient_light, "ambient")
 		LAGCHECK(LAG_LOW)
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
@@ -321,7 +321,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 							space_turfs -= T
 					generator.generate_terrain(space_turfs, reuse_seed=TRUE)
 					for(T in space_turfs)
-						T.UpdateOverlays(ambient_light, "ambient")
+						T.AddOverlays(ambient_light, "ambient")
 						LAGCHECK(LAG_LOW)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")

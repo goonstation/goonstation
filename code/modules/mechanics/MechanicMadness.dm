@@ -2389,9 +2389,9 @@
 	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
 		send_only = !send_only
 		if(send_only)
-			src.UpdateOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
+			src.AddOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
 		else
-			src.UpdateOverlays(null, "sendonly")
+			src.ClearSpecificOverlays("sendonly")
 		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 		tooltip_rebuild = 1
 		return 1
@@ -2463,9 +2463,9 @@
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
 		if(src.level == UNDERFLOOR)
-			src.UpdateOverlays(telelight, "telelight")
+			src.AddOverlays(telelight, "telelight")
 		else
-			src.UpdateOverlays(null, "telelight")
+			src.ClearSpecificOverlays("telelight")
 		return
 
 /obj/item/mechanics/ledcomp

@@ -2387,9 +2387,9 @@ TYPEINFO(/datum/mutantrace/pug)
 	proc/snore()
 		playsound(src.mob, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[src.mob]</B> snores.", "<I>snores</I>")
-		src.mob.UpdateOverlays(snore_bubble, "snore_bubble")
+		src.mob.AddOverlays(snore_bubble, "snore_bubble")
 		SPAWN(1.5 SECONDS)
-			src.mob.UpdateOverlays(null, "snore_bubble")
+			src.mob.ClearSpecificOverlays("snore_bubble")
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
