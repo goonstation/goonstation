@@ -425,17 +425,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.purchase_flags & UPLINK_TRAITOR)
 					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role?.purchased_items.Add(I)
+						antagonist_role.purchased_items.Add(I)
 
 				if (src.purchase_flags & UPLINK_HEAD_REV)
 					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role?.purchased_items.Add(I)
+						antagonist_role.purchased_items.Add(I)
 
 				if (src.purchase_flags & UPLINK_NUKE_OP)
 					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role?.uplink_items.Add(I)
+						antagonist_role.uplink_items.Add(I)
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
@@ -705,17 +705,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.purchase_flags & UPLINK_TRAITOR)
 					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role?.purchased_items.Add(I)
+						antagonist_role.purchased_items.Add(I)
 
 				if (src.purchase_flags & UPLINK_HEAD_REV)
 					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role?.purchased_items.Add(I)
+						antagonist_role.purchased_items.Add(I)
 
 				if (src.purchase_flags & UPLINK_NUKE_OP)
 					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role?.uplink_items.Add(I)
+						antagonist_role.uplink_items.Add(I)
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
