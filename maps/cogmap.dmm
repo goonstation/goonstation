@@ -37531,7 +37531,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cIT" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -54440,7 +54440,7 @@
 /area/station/storage/primary)
 "pDb" = (
 /obj/machinery/firealarm/south,
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "pER" = (

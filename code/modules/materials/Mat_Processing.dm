@@ -3,11 +3,11 @@ TYPEINFO(/obj/machinery/processor)
 	mats = 20
 
 /obj/machinery/processor
-	name = "Material processor"
+	name = "material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
-	icon = 'icons/obj/crafting.dmi'
-	icon_state = "fab3-on"
-	anchored = ANCHORED
+	icon = 'icons/obj/scrap.dmi'
+	icon_state = "reclaimer"
+	anchored = UNANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
@@ -17,6 +17,17 @@ TYPEINFO(/obj/machinery/processor)
 	var/list/atom/processing
 
 	var/atom/output_location = null
+
+	custom_suicide = 1
+
+	suicide(var/mob/user)
+		if (!src.user_can_suicide(user))
+			return 0
+
+		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
+		user.unequip_all()
+		user.set_loc(src)
+		user.make_cube(life = 5 MINUTES, T = src.loc)
 
 	New()
 		. = ..()
@@ -311,23 +322,6 @@ TYPEINFO(/obj/machinery/processor)
 		thing.set_loc(src)
 		src.processing += thing
 		logTheThing(LOG_STATION, user, "adds [log_object(thing)] to a material processor.")
-
-/obj/machinery/processor/portable
-	name = "Portable material processor"
-	icon = 'icons/obj/scrap.dmi'
-	icon_state = "reclaimer"
-	anchored = UNANCHORED
-	density = 1
-
-	custom_suicide = 1
-	suicide(var/mob/user)
-		if (!src.user_can_suicide(user))
-			return 0
-
-		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
-		user.unequip_all()
-		user.set_loc(src)
-		user.make_cube(life = 5 MINUTES, T = src.loc)
 
 /obj/machinery/sheet_extruder
 	name = "sheet extruder"

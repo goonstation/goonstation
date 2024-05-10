@@ -48614,7 +48614,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "cNj" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "cNk" = (

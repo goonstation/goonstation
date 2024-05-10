@@ -34525,7 +34525,7 @@
 	name = "Cargo Hallway"
 	})
 "pkv" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)

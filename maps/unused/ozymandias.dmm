@@ -26571,7 +26571,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "gXp" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /obj/machinery/light/small/harsh{
 	dir = 4;
 	pixel_x = 12

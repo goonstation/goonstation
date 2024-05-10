@@ -36724,7 +36724,7 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "oKu" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "oKv" = (
