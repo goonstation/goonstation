@@ -1744,7 +1744,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
-		icon_state = "ironform"
+		icon_state = "ironfoam"
 
 /turf/simulated/floor/metalfoam/ex_act()
 	ReplaceWithSpace()
