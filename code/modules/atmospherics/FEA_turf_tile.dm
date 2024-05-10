@@ -222,7 +222,6 @@ var/global/list/turf/hotly_processed_turfs = list()
 			air_master.active_singletons.Remove(src)
 
 	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
-		hotspot.dispose() // have to call this now to force the lighting cleanup
 		qdel(hotspot)
 		src.active_hotspots -= null
 

@@ -41,7 +41,6 @@
 	if (length(src.active_hotspots))
 		if (locate(/obj/fire_foam) in src)
 			for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
-				hotspot.dispose() // have to call this now to force the lighting cleanup
 				qdel(hotspot)
 				src.active_hotspots -= hotspot
 			return FALSE
@@ -86,7 +85,6 @@
 /turf/proc/add_hotspot(temperature, volume, chemfire = null)
 	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
 		if ((istype(hotspot, /obj/hotspot/chemfire) && chemfire) || (istype(hotspot, /obj/hotspot/gasfire) && !chemfire))
-			hotspot.dispose()
 			qdel(hotspot)
 			src.active_hotspots -= hotspot
 	var/obj/hotspot/hotspot = !chemfire ? (new /obj/hotspot/gasfire(src)) : (new /obj/hotspot/chemfire(src, chemfire))
