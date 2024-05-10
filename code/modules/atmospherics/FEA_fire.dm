@@ -303,9 +303,9 @@
 			hue_shift[16] = -1
 			hue_shift[20] = base_alpha
 			catalyst_overlay.color = hue_shift
-			UpdateOverlays(catalyst_overlay,"catalyst")
+			AddOverlays(catalyst_overlay,"catalyst")
 	else
-		UpdateOverlays(null,"catalyst")
+		ClearSpecificOverlays("catalyst")
 
 
 	src.catalyst_active = FALSE

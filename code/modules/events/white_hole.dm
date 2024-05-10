@@ -802,7 +802,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		illum.plane = PLANE_LIGHTING
 		illum.blend_mode = BLEND_ADD
 		illum.alpha = 100
-		src.UpdateOverlays(illum, "illum")
+		src.AddOverlays(illum, "illum")
 
 		light = new /datum/light/point
 		light.set_brightness(0.7)
@@ -813,7 +813,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		location_image.alpha = 160
 		location_image.pixel_x = 32
 		location_image.pixel_y = 32
-		src.UpdateOverlays(location_image, "source_location")
+		src.AddOverlays(location_image, "source_location")
 
 		src.transform = matrix(32 / 160, MATRIX_SCALE)
 
@@ -1321,7 +1321,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			illum.plane = PLANE_LIGHTING
 			illum.blend_mode = BLEND_ADD
 			illum.alpha = 6
-			par.UpdateOverlays(illum, "illum")
+			par.AddOverlays(illum, "illum")
 
 			first.Scale(0.1,0.1)
 			par.transform = first
