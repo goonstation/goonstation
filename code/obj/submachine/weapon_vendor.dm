@@ -31,6 +31,7 @@
 	flags = TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER //cry about it
 	layer = OBJ_LAYER - 0.1	// Match vending machines
+	var/track_credits = FALSE // True for nukies vendor, false for others
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -41,7 +42,9 @@
 #endif
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
+
 	var/log_purchase = FALSE
+
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -83,18 +86,16 @@
 					src.vended(A)
 					usr.put_in_hand_or_eject(A)
 
-					// right in here i believe
 
-					if (usr.mind.is_antagonist()) // okie so considering that this function is also the sec dispensers this check might uh... yeah...
-						// this check actualy does work but hgmph
-						// var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP)
-						var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					if (usr.mind.is_antagonist() && track_credits) // name == "Syndicate Weapons Vendor") // okie so considering that this function is also the sec dispensers this check might uh... yeah...
 
-						nukie.purchased_items.Add(M)
+						var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP)
+						var/datum/antagonist/nuclear_operative/commander = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
 
-
-							//for (var/datum/antagonist/antagonist_role in mind.antagonists)
-							//if (istype(antagonist_role, /datum/antagonist/subordinate))
+						if (nukie != null)
+							nukie.purchased_items.Add(M) // this does cause exception btw
+						if (commander != null)
+							commander.purchased_items.Add(M)
 
 					return TRUE
 
@@ -176,6 +177,7 @@
 	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
+	track_credits = TRUE
 
 	ex_act()
 		return

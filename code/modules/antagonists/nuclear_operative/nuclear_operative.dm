@@ -9,8 +9,8 @@
 	var/static/commander_title
 	var/static/available_callsigns
 
-	//Used for adding a nukie's purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
-	var/list/purchased_items = list()
+	var/list/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
+	var/list/uplink_items = list() // Same but for custom uplinks
 
 
 	New(datum/mind/new_owner)
@@ -104,32 +104,40 @@
 		. = ..()
 
 	get_statistics()
-	// this worked omg
 
+		var/list/purchases = list()
+		// Add items purchased from the nukies weapon vendor
 		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
 			var/obj/item_type = initial(purchased_item.path)
-			purchased_items += list(
+			purchases += list(
 				list(
 					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[purchased_item]", //YOU WILL NED TO FIX THIS probly with M
+					"name" = "[purchased_item]",
 				)
 			)
+
+		// Add items from custom uplinks and the commander's special uplink
+		for (var/datum/syndicate_buylist/purchased_item as anything in src.uplink_items)
+			var/obj/item_type = initial(purchased_item.item)
+			purchases += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+				)
+			)
+
+
 
 		. = list(
 			list(
 				"name" = "Purchased Items",
 				"type" = "itemList",
-				"value" = purchased_items,
+				"value" = purchases,
 			)
 		)
 
-/*
-		return list(
-			list(
-				"name" = "Crew Members Fed Upon",
-				"value" = purchased_items,
-			)
-		) */
+
+
 
 	proc/assign_name()
 		if (src.id == ROLE_NUKEOP_COMMANDER)

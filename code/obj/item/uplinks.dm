@@ -432,6 +432,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 						antagonist_role.purchased_items.Add(I)
 
+				if (src.purchase_flags & UPLINK_NUKE_OP)
+					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP)
+					if (antagonist_role == null )
+						antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.uplink_items.Add(I)
+
+
+
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
 			if (I.item)
@@ -706,6 +715,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_NUKE_OP)
+					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP)
+					if (antagonist_role == null )
+						antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.uplink_items.Add(I)
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
@@ -1275,11 +1291,20 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item3(get_turf(src))
 
 							B.run_on_spawn(A, usr, FALSE, src)
+
+							// Remember purchased item for the crew credits
+							var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP)
+							if (antagonist_role == null )
+								antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+							antagonist_role.uplink_items.Add(B)
+
 							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
 							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
+
+
 							. = TRUE
 							break
 
