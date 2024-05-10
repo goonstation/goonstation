@@ -103,9 +103,9 @@
 		. = ..()
 
 		if(weather)
-			src.UpdateOverlays(weather, "weather")
+			src.AddOverlays(weather, "weather")
 		if(ambient)
-			src.UpdateOverlays(ambient, "ambient")
+			src.AddOverlays(ambient, "ambient")
 
 		if(air) // force reverting air to floor turf as this is post replace
 #define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;

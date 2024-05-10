@@ -66,10 +66,10 @@
 		if(loom_cart)
 			src.icon_state = "nanoloom"
 			var/threadlevel = ceil(loom_cart.thread/8)
-			UpdateOverlays(image('icons/obj/items/device.dmi', "nloom-[threadlevel]"), "thread")
+			AddOverlays(image('icons/obj/items/device.dmi', "nloom-[threadlevel]"), "thread")
 		else
 			src.icon_state = "nanoloom-empty"
-			UpdateOverlays(image('icons/obj/items/device.dmi', "nloom-0"), "thread")
+			AddOverlays(image('icons/obj/items/device.dmi', "nloom-0"), "thread")
 		..()
 
 	proc/begin_application(obj/item/I as obj, mob/user as mob)
