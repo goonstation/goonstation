@@ -97,15 +97,15 @@
 
 /mob/living/revenge_stun_reduction(stamina_damage, brute, burn, damage_type )
 	. = ..()
-	if (src.hasStatus("weakened") && !src.hasStatus("paralysis") && (brute > 0 || burn >= 5))
+	if (src.hasStatus("knockdown") && !src.hasStatus("unconscious") && (brute > 0 || burn >= 5))
 
-		var/weak_duration = src.getStatusDuration("weakened")
-		if (weak_duration > 3 SECONDS) //if we have a big stun, we can kick it down a lot
-			var/stun_reduction = min(weak_duration-3 SECONDS,(brute + burn)*0.6 SECONDS) // let's saaay 1 full stun is 50 health.
+		var/stun_duration = src.getStatusDuration("knockdown")
+		if (stun_duration > 3 SECONDS) //if we have a big stun, we can kick it down a lot
+			var/stun_reduction = min(stun_duration-3 SECONDS,(brute + burn)*0.6 SECONDS) // let's saaay 1 full stun is 50 health.
 			var/stunres_penalty = clamp(1-(get_stun_resist_mod()/2)/100,0,1)
-			src.setStatus("weakened", weak_duration-max(1,stun_reduction*stunres_penalty))
-		else if (weak_duration > 0 SECONDS)  // but we also still need a penalty for getting stamcrit which is 5s.
-			src.setStatus("weakened", weak_duration-1)
+			src.setStatus("knockdown", stun_duration-max(1,stun_reduction*stunres_penalty))
+		else if (stun_duration > 0 SECONDS)  // but we also still need a penalty for getting stamcrit which is 5s.
+			src.setStatus("knockdown", stun_duration-1)
 
 /mob/living/carbon/human/remove_stamina(var/x)
 	..()
