@@ -329,6 +329,69 @@ TYPEINFO(/obj/machinery/processor)
 		user.set_loc(src)
 		user.make_cube(life = 5 MINUTES, T = src.loc)
 
+/obj/machinery/sheet_extruder
+	name = "sheet extruder"
+	desc = "A specialised machine for turning material bars into sheets."
+	icon = 'icons/obj/crafting.dmi'
+	icon_state = "fab3-on"
+	density = TRUE
+	anchored = ANCHORED
+	layer = FLOOR_EQUIP_LAYER1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	var/working = FALSE
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/raw_material))
+			boutput(user, SPAN_ALERT("[I] needs to be refined before it can be turned into sheets."))
+			return
+		if (!istype(I, /obj/item/material_piece))
+			return ..()
+		if (src.working || src.is_disabled())
+			return
+		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
+			return
+		var/obj/item/material_piece/taken_piece = null
+		if (I.amount < 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg')
+			return
+		if (I.amount == 1)
+			user.u_equip(I)
+			taken_piece = I
+		else
+			taken_piece = I.split_stack(1)
+		taken_piece.set_loc(src)
+		src.working = TRUE
+		playsound(src, 'sound/machines/hydraulic.ogg', 40, TRUE)
+		SPAWN(2 SECONDS)
+			flick("fab3-work", src)
+			sleep(0.5 SECONDS)
+			src.working = FALSE
+			if (src.is_disabled() || QDELETED(src) || QDELETED(taken_piece))
+				return
+			var/obj/item/sheet/sheets = new(src)
+			sheets.set_stack_amount(10)
+			sheets.setMaterial(taken_piece.material)
+			sheets.set_loc(src.loc)
+			for (var/obj/item/sheet/other_sheets in src.loc?.contents)
+				if (sheets.material.isSameMaterial(other_sheets.material))
+					other_sheets.stack_item(sheets)
+					break
+			qdel(taken_piece)
+
+	power_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon(...)
+		if (src.is_broken())
+			src.icon_state = "fab3-broken"
+		else if (!src.powered())
+			src.icon_state = "fab3-off"
+		else
+			src.icon_state = "fab3-on"
+
+
 /obj/machinery/neosmelter
 	name = "Nano-crucible"
 	desc = "A huge furnace-like machine used to combine materials."
