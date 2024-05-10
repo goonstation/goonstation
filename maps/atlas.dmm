@@ -14709,9 +14709,6 @@
 /area/station/security/brig/genpop)
 "eoM" = (
 /obj/landmark/gps_waypoint,
-/obj/machinery/power/apc/autoname_south{
-	areastring = "Bar"
-	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "epr" = (
