@@ -16387,9 +16387,6 @@
 /obj/machinery/power/apc/autoname_south{
 	areastring = "Bar"
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "iFd" = (
@@ -17316,6 +17313,9 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "mBj" = (
@@ -18034,7 +18034,7 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
@@ -18332,6 +18332,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"pri" = (
+/obj/table/reinforced/bar/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/phone,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "prE" = (
 /obj/disposalpipe/junction,
 /turf/simulated/floor,
@@ -19759,6 +19768,12 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
+"uyb" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "uzo" = (
 /obj/lattice{
 	dir = 4;
@@ -20656,10 +20671,10 @@
 	pixel_x = 6;
 	g_amt = 10
 	},
-/obj/machinery/phone/wall{
-	pixel_x = 7;
-	pixel_y = 34
+/obj/cable{
+	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "xyg" = (
@@ -69305,7 +69320,7 @@ rvp
 bKg
 oQT
 mAM
-hLa
+uyb
 hLa
 mNd
 tzE
@@ -69608,7 +69623,7 @@ klo
 txb
 adF
 xvb
-kxS
+pri
 kxS
 hYb
 iiP

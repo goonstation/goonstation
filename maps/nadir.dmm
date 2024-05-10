@@ -9236,14 +9236,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "ehU" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/machinery/light/emergency,
 /obj/machinery/chem_master{
 	dir = 4
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	dir = null
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/bar)
@@ -13923,6 +13922,9 @@
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "ghj" = (
@@ -14755,6 +14757,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -16479,11 +16484,6 @@
 	})
 "hdI" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -10;
-	pixel_y = 10
-	},
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
@@ -17835,9 +17835,6 @@
 	dir = 4
 	},
 /area/station/science/teleporter)
-"hEa" = (
-/turf/simulated/floor/grey/blackgrime,
-/area/station/crew_quarters/catering)
 "hEe" = (
 /obj/storage/closet/wardrobe/green,
 /turf/simulated/floor/plating,
@@ -23001,6 +22998,9 @@
 /obj/machinery/firealarm/west,
 /obj/machinery/chem_dispenser/alcohol/bar,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -26292,16 +26292,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"kXG" = (
-/obj/disposalpipe/segment/food,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/grey/blackgrime,
-/area/station/crew_quarters/catering)
 "kXK" = (
 /obj/decal/tile_edge/floorguide/science{
 	dir = 1
@@ -29063,6 +29053,12 @@
 	dir = 8
 	},
 /area/listeningpost)
+"mbU" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/bar)
 "mbZ" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -42875,13 +42871,6 @@
 	pixel_x = 2;
 	pixel_y = 9
 	},
-/obj/machinery/power/apc/autoname_east{
-	areastring = "Bar";
-	name = "Bar APC"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "soE" = (
@@ -51013,6 +51002,7 @@
 "vPq" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
+/obj/machinery/light,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "vPx" = (
@@ -89737,7 +89727,7 @@ heV
 nGo
 skp
 skp
-kXG
+skp
 gxc
 skp
 skp
@@ -90040,7 +90030,7 @@ bGA
 nny
 bWh
 soo
-hEa
+aBg
 qLr
 hLA
 gVW
@@ -90644,7 +90634,7 @@ jVz
 iHN
 cla
 fMr
-ptO
+mbU
 jMd
 ehU
 muK

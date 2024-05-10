@@ -7728,12 +7728,8 @@
 /area/station/crew_quarters/kitchen)
 "axP" = (
 /obj/machinery/bot/cleanbot,
-/obj/machinery/power/apc/autoname_west{
-	areastring = "Cafeteria";
-	name = "Cafeteria APC"
-	},
 /obj/cable{
-	dir = null
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -8986,6 +8982,12 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west{
+	name = "Bar APC"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -57206,13 +57208,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/power/apc/autoname_west{
-	areastring = "Bar";
-	name = "Bar APC"
-	},
-/obj/cable{
-	dir = null
-	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "elz" = (
@@ -58749,6 +58744,9 @@
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/access/kitchen,
 /obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "gfu" = (
@@ -71811,6 +71809,13 @@
 	dir = 6
 	},
 /area/station/solar/small_backup1)
+"tpS" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "tqJ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -73615,6 +73620,20 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/routing/security)
+"vxp" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/power/apc/autoname_east{
+	areastring = "Bar";
+	name = "Bar APC"
+	},
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "vxs" = (
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
@@ -108675,9 +108694,9 @@ are
 are
 auW
 apN
-are
+tpS
 gdv
-aAX
+vxp
 aCt
 aCt
 aAX
