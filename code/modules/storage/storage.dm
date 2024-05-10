@@ -274,6 +274,9 @@
 		if (issilicon(user))
 			src.storage_item_attack_by(target, user)
 			return
+		if(ismob(target.loc) && target.loc != user) // Prevent's storages to be used for quick-stealing
+			boutput(user, SPAN_NOTICE("You aren't able to stuff [target] into [src.linked_item.name]. Someone else is carrying it!"))
+			return
 		user.swap_hand()
 		if (user.equipped() == null)
 			target.Attackhand(user)
