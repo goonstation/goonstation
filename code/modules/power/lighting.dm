@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/light_parts)
 	update_icon()
 		..()
 		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
-		src.UpdateOverlays(light_image, "light")
+		src.AddOverlays(light_image, "light")
 
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
@@ -729,7 +729,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
-		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
+		src.AddOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
 
 	bright
 		brightness = 1.8

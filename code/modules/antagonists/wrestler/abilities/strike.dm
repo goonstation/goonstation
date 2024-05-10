@@ -33,6 +33,7 @@
 			M.visible_message(SPAN_ALERT("You seem to attack [target]!"))
 			return 1
 
+		. = ..()
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		var/turf/T = get_turf(M)

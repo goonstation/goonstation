@@ -7850,9 +7850,13 @@
 	pixel_x = 6;
 	pixel_y = 17
 	},
+/obj/item/storage/box/beer{
+	pixel_y = 17;
+	pixel_x = -4
+	},
 /obj/item/storage/box/fruit_wedges{
 	pixel_x = -4;
-	pixel_y = 10
+	pixel_y = 3
 	},
 /obj/item/storage/box/cocktail_umbrellas{
 	pixel_x = 6;
@@ -9233,7 +9237,8 @@
 	pixel_x = -10
 	},
 /obj/machinery/light/emergency,
-/obj/machinery/chem_master{
+/obj/machinery/chem_heater{
+	pixel_x = -4;
 	dir = 4
 	},
 /turf/simulated/floor/engine/caution/east,
@@ -11795,12 +11800,7 @@
 /obj/item/reagent_containers/food/drinks/juicer{
 	pixel_y = 5
 	},
-/obj/item/storage/box/fruit_wedges{
-	pixel_x = 6
-	},
-/obj/item/storage/box/beer{
-	pixel_x = -6
-	},
+/obj/item/storage/box/fruit_wedges,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "fpk" = (
@@ -12993,7 +12993,12 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/light_switch/west,
+/obj/item/storage/wall{
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/glassbox,/obj/item/hand_labeler,/obj/item/storage/firstaid/toxin,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper,/obj/item/reagent_containers/dropper/mechanical,/obj/item/storage/box/ic_cones=2,/obj/item/storage/toolbox/emergency);
+	pixel_x = -32;
+	dir = 4;
+	pixel_y = 4
+	},
 /obj/table/reinforced/chemistry/auto{
 	name = "prep counter"
 	},
@@ -18234,17 +18239,9 @@
 	name = "Drop Capsule"
 	})
 "hLA" = (
-/obj/storage/crate{
-	name = "Cone Crate"
+/obj/machinery/chem_master{
+	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "hLN" = (
@@ -23014,9 +23011,15 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "jMd" = (
-/obj/machinery/firealarm/west,
+/obj/machinery/firealarm/west{
+	pixel_y = -5
+	},
 /obj/machinery/chem_dispenser/alcohol/bar,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/machinery/light_switch/west{
+	pixel_y = 5;
+	pixel_x = -22
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -27173,11 +27176,9 @@
 /area/station/hallway/primary/northeast)
 "lsm" = (
 /obj/table/auto,
-/obj/item/storage/box/glassbox{
-	pixel_x = 6;
-	pixel_y = 10
+/obj/item/gun/russianrevolver{
+	pixel_y = 6
 	},
-/obj/item/gun/russianrevolver,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
@@ -31906,6 +31907,7 @@
 	pixel_x = 5;
 	pixel_y = 13
 	},
+/obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "nnN" = (
@@ -39704,11 +39706,6 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
-	},
-/obj/table/auto,
-/obj/item/storage/box/glassbox{
-	pixel_x = 2;
-	pixel_y = 9
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)

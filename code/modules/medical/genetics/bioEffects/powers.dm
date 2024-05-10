@@ -143,7 +143,7 @@
 		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner.organHolder?.stomach?.stomach_contents
 		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
 				if (istype(A, mattereater.target_path))
@@ -158,7 +158,7 @@
 			using = FALSE
 			return
 
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		var/obj/the_object = tgui_input_list(owner, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
 			using = FALSE
 			return TRUE
@@ -1861,6 +1861,7 @@
 
 		modifier *= linked_power.power
 
+		. = ..()
 		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> makes a gesture at [T.name]!"))
 
 		for (var/obj/O in view(7, owner))
@@ -1970,9 +1971,11 @@
 	cooldown = 0
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
+		. = ..()
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
@@ -2048,9 +2051,11 @@
 	cooldown = FALSE
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/chameleon/CH = linked_power
+		. = ..()
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0

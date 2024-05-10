@@ -1337,9 +1337,9 @@ datum
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
 
-		harmful/spider_venom
-			name = "venom"
-			id = "venom"
+		harmful/cytotoxin
+			name = "cytotoxin"
+			id = "cytotoxin"
 			description = "An incredibly potent poison. Origin unknown."
 			reagent_state = LIQUID
 			fluid_r = 240
@@ -1347,6 +1347,8 @@ datum
 			fluid_b = 240
 			transparency = 200
 			depletion_rate = 0.2
+			var/delimb_counter = 0
+			var/limb_list = list("l_arm", "l_leg", "r_arm", "r_leg")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -1355,31 +1357,52 @@ datum
 				if (prob(25))
 					M.reagents.add_reagent("histamine", rand(5,10) * mult)
 				if (our_amt < 20)
-					M.take_toxin_damage(1 * mult)
-					random_brute_damage(M, 1 * mult)
+					M.take_toxin_damage(0.75 * mult)
+					random_brute_damage(M, 0.75 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
 						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 						M.vomit(0, null, vomit_message)
+					M.take_toxin_damage(1.25 * mult)
+					delimb_counter += 0.6 * mult
+					random_brute_damage(M, 1.25 * mult)
+				else
+					if (probmult(8))
+						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
+						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(2 * mult)
+					delimb_counter += 1.5 * mult
 					random_brute_damage(M, 2 * mult)
 
-				if (our_amt > 40 && probmult(4))
-					M.visible_message(SPAN_ALERT("<B>[M]</B> starts convulsing violently!"), "You feel as if your body is tearing itself apart!")
-					M.setStatusMin("knockdown", 15 SECONDS * mult)
-					M.make_jittery(1000)
-					SPAWN(rand(20, 100))
-						if (M) //ZeWaka: Fix for null.gib
-							logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name].")
-							M.gib()
+				if (delimb_counter > 15)
+					delimb_counter = 0
+
+					M.visible_message(SPAN_ALERT("<B>[M]</B> seems to be melting away!"), "You feel as if your body is tearing itself apart!")
+					M.setStatusMin("knockdown", 4 SECONDS * mult)
+					M.make_jittery(400)
+					if (!isdead(M))
+						M.emote(pick("cry", "tremble", "scream"))
+
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						take_bleeding_damage(H, null, rand(15,35) * mult, DAMAGE_STAB)
+
+						for (var/chosen_limb in limb_list)
+							var/obj/item/parts/limb = H.limbs.get_limb(chosen_limb)
+							if (istype(limb))
+								H.lose_limb(chosen_limb)
+								break
+					else
+						random_brute_damage(M, 25 * mult)
+
 					return
 
 				..()
 				return
 
-		harmful/viper_venom
-			name = "viper venom"
-			id = "viper_venom"
+		harmful/hemotoxin
+			name = "hemotoxin"
+			id = "hemotoxin"
 			description = "A dangerous toxin that causes massive bleeding and tissue damage"
 			reagent_state = LIQUID
 			fluid_r = 210

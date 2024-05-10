@@ -74,7 +74,7 @@
 	if (depth)
 		//if (src.is_submerged)
 		//	src.ClearSpecificOverlays("submerged_image")
-		src.UpdateOverlays(submerged_images[depth], "submerged_image")
+		src.AddOverlays(submerged_images[depth], "submerged_image")
 	else
 		src.ClearSpecificOverlays("submerged_image")
 
@@ -120,7 +120,7 @@
 	if (depth)
 		//if (src.is_submerged)
 		//	src.ClearSpecificOverlays("submerged_image")
-		src.UpdateOverlays(submerged_images[depth], "submerged_image")
+		src.AddOverlays(submerged_images[depth], "submerged_image")
 	else
 		src.ClearSpecificOverlays("submerged_image")
 

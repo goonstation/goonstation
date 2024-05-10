@@ -10,6 +10,17 @@
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
+	if (roundId == 0) //oh no
+		SPAWN(0)
+			var/counter = 0
+			while (roundId == 0)
+				message_admins("Roundstart API query failed, this is very bad, trying again in 5 seconds.")
+				logTheThing(LOG_DEBUG, src, "Roundstart API query failed, this is very bad, trying again in 5 seconds.")
+				sleep(5 SECONDS)
+				roundManagement.recordStart()
+				counter++
+			message_admins("Roundstart API query succeeded after [counter] failed attempts.")
+			logTheThing(LOG_DEBUG, src, "Roundstart API query succeeded after [counter] failed attempts.")
 
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH

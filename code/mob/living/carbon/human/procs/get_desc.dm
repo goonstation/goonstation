@@ -381,10 +381,13 @@
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
-			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]"
+			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]<br>"
+			var/list/trait_names = list()
 			for(var/id in src.traitHolder.traits)
 				var/datum/trait/T = src.traitHolder.traits[id]
-				. += "<br>[SPAN_NOTICE("[T.name]")]"
+				trait_names += T.name
+			. += SPAN_NOTICE(english_list(trait_names))
+
 		else
 			. += "<br>[SPAN_NOTICE("[src] does not appear to possess any special traits.")]"
 
