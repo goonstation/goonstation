@@ -2760,19 +2760,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
-"aiS" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/machinery/power/apc{
-	areastring = "Bar";
-	dir = 4;
-	name = "Bar APC";
-	pixel_x = 24
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/north)
 "aiV" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
@@ -6666,6 +6653,9 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "auU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "auW" = (
@@ -7147,21 +7137,33 @@
 /area/station/crew_quarters/kitchen)
 "awl" = (
 /obj/disposalpipe/segment/mail/bent/east,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "awm" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "awn" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "awo" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
@@ -7685,6 +7687,9 @@
 /area/station/crew_quarters/kitchen)
 "axJ" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "axL" = (
@@ -7723,6 +7728,13 @@
 /area/station/crew_quarters/kitchen)
 "axP" = (
 /obj/machinery/bot/cleanbot,
+/obj/machinery/power/apc/autoname_west{
+	areastring = "Cafeteria";
+	name = "Cafeteria APC"
+	},
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "axQ" = (
@@ -8367,6 +8379,9 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -55730,6 +55745,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
+"dmU" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "dmV" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -57095,6 +57116,16 @@
 	icon_state = "12"
 	},
 /area/shuttle/arrival/station)
+"egT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/lobby)
 "eht" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/specialroom/bar,
@@ -57170,6 +57201,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
+"eki" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc/autoname_west{
+	areastring = "Bar";
+	name = "Bar APC"
+	},
+/obj/cable{
+	dir = null
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "elz" = (
 /obj/item_dispenser/latex_gloves{
 	pixel_x = 24;
@@ -57546,6 +57591,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "eNc" = (
@@ -58669,22 +58717,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
-"gcU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = "Cafeteria";
-	name = "Cafeteria APC"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "gcY" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -59258,11 +59290,6 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/com_dish/auxdish)
-"gJU" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/lobby)
 "gKl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -59905,6 +59932,13 @@
 	dir = 4
 	},
 /area/station/maintenance/central)
+"hwC" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "hxc" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -63507,6 +63541,13 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/central)
+"kQh" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "kQr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -68890,6 +68931,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
+"qzN" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/lobby)
 "qAC" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security{
@@ -71558,6 +71606,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"teY" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "tfp" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable/orange{
@@ -73979,18 +74033,6 @@
 /obj/effects/background_objects/iudicium,
 /turf/space,
 /area/space)
-"vWH" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/lobby)
 "vWT" = (
 /obj/stool/bench/purple/auto,
 /turf/simulated/floor/grey/blackgrime,
@@ -103798,7 +103840,7 @@ anX
 apf
 aqR
 alb
-gcU
+atm
 apw
 alc
 axC
@@ -105915,7 +105957,7 @@ vTP
 ats
 auP
 awl
-axJ
+kQh
 axJ
 aAR
 auT
@@ -107413,7 +107455,7 @@ afP
 aeS
 aeS
 ahU
-aiS
+aeS
 ajS
 alc
 amt
@@ -107423,8 +107465,8 @@ apF
 anG
 ase
 atx
-auT
-awm
+dmU
+hwC
 auT
 auT
 aAU
@@ -108116,8 +108158,8 @@ cze
 cAz
 cCb
 cDy
-vWH
-gJU
+cFm
+cAL
 cSy
 qmO
 ica
@@ -108329,8 +108371,8 @@ apM
 ard
 asf
 atz
-apw
-awr
+teY
+eki
 axP
 azD
 aAW
@@ -108722,7 +108764,7 @@ cCd
 cAL
 cFm
 cAL
-kfF
+qzN
 cxN
 cKU
 xoD
@@ -109024,7 +109066,7 @@ cCe
 cAL
 kXl
 tSW
-tSW
+egT
 nlY
 dGI
 lRi
@@ -109628,7 +109670,7 @@ cCg
 cDA
 cAL
 cAL
-cAL
+kfF
 cxN
 pxm
 cMy
