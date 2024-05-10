@@ -968,6 +968,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
+			if (storage.secure && storage.locked)
+				return // storage provides user feedback
 			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
 			boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
