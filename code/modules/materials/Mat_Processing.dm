@@ -357,6 +357,7 @@ TYPEINFO(/obj/machinery/processor)
 		taken_piece.set_loc(src)
 		src.working = TRUE
 		playsound(src, 'sound/machines/hydraulic.ogg', 40, TRUE)
+		boutput(user, "You load [I] into [src].")
 		SPAWN(2 SECONDS)
 			flick("fab3-work", src)
 			sleep(0.5 SECONDS)
