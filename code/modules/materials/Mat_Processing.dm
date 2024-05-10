@@ -368,9 +368,11 @@ TYPEINFO(/obj/machinery/processor)
 			sheets.setMaterial(taken_piece.material)
 			sheets.set_loc(src.loc)
 			for (var/obj/item/sheet/other_sheets in src.loc?.contents)
+				if (other_sheets == sheets)
+					continue
 				if (sheets.material.isSameMaterial(other_sheets.material))
-					other_sheets.stack_item(sheets)
-					break
+					if (other_sheets.stack_item(sheets))
+						break
 			qdel(taken_piece)
 
 	power_change()
