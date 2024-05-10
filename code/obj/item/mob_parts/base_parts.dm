@@ -238,7 +238,7 @@ ABSTRACT_TYPE(/obj/item/mob_part/humanoid_part)
 		if (ishuman(src.holder))
 			var/mob/living/carbon/human/H = src.holder
 			var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
-			if (H?.mutantrace?.override_limb_icons && (limb_layer_icon_state in typeinfo?.icon_states))
+			if (H.mutantrace?.override_limb_icons && (limb_layer_icon_state in typeinfo?.icon_states))
 				used_icon = typeinfo.icon // monkeys use this to get smaller cyborg/synthlimbs, etc
 
 		src.limb_layer_image = image(used_icon, limb_layer_icon_state, MOB_LIMB_LAYER)

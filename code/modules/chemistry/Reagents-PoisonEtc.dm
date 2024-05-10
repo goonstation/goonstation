@@ -1388,7 +1388,7 @@ datum
 						take_bleeding_damage(H, null, rand(15,35) * mult, DAMAGE_STAB)
 
 						for (var/chosen_limb in limb_list)
-							var/obj/item/parts/limb = H.limbs.get_limb(chosen_limb)
+							var/obj/item/mob_part/humanoid_part/limb = H.limbs.get_limb(chosen_limb)
 							if (istype(limb))
 								H.lose_limb(chosen_limb)
 								break
