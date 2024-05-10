@@ -63,6 +63,7 @@
 	cast(atom/target)
 		if (!holder || !holder.owner)
 			return 1
+		. = ..()
 		if (ispoltergeist(holder.owner))
 			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
@@ -126,6 +127,8 @@
 	targeted = 0
 	cooldown = 0
 	pointCost = 0
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -136,6 +139,7 @@
 		if (!W)
 			return TRUE
 
+		. = ..()
 		//hearghosts is checked in deadsay.dm and chatprocs.dm
 		W.hearghosts = !W.hearghosts
 		if (W.hearghosts)

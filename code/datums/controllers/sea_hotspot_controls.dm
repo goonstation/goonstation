@@ -582,9 +582,9 @@
 
 
 				speech_bubble.icon_state = "[val]"
-				UpdateOverlays(speech_bubble, "speech_bubble")
+				AddOverlays(speech_bubble, "speech_bubble")
 				SPAWN(1.5 SECONDS)
-					UpdateOverlays(null, "speech_bubble")
+					ClearSpecificOverlays("speech_bubble")
 
 	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))

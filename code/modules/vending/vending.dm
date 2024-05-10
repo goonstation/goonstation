@@ -337,7 +337,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			src.scan = card
 			tgui_process.update_uis(src)
 		else
-			boutput(user, SPAN_ALERT("Pin number incorrect."))
+			boutput(user, SPAN_ALERT("PIN incorrect."))
 			src.scan = null
 	else
 		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))

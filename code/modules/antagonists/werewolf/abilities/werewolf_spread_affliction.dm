@@ -10,6 +10,8 @@
 	not_when_handcuffed = 1
 	werewolf_only = 1
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
+	do_logs = FALSE //already logged
+
 	cast(mob/target)
 		if (!holder)
 			return 1
@@ -31,6 +33,7 @@
 		if (target.canmove)
 			boutput(M, SPAN_ALERT("[target] is moving around too much."))
 			return 1
+		. = ..()
 		logTheThing(LOG_COMBAT, M, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_spread_affliction(target, src), M)
 		return 0

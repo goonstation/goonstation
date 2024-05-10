@@ -297,7 +297,7 @@
 					else
 						boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 				else
-					boutput(usr, SPAN_ALERT("Incorrect pin number."))
+					boutput(usr, SPAN_ALERT("Incorrect PIN."))
 
 			if("login")
 				if(TryToFindRecord())
@@ -581,8 +581,8 @@
 						boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 						src.show_message("Cannot find a bank record for this card.", "danger", "login")
 				else
-					boutput(usr, SPAN_ALERT("Incorrect or invalid PIN number."))
-					src.show_message("Incorrect or invalid PIN number entered. Please try again.", "danger", "login")
+					boutput(usr, SPAN_ALERT("Incorrect or invalid PIN."))
+					src.show_message("Incorrect or invalid PIN entered. Please try again.", "danger", "login")
 				. = TRUE
 			if("logout")
 				if(!src.scan)

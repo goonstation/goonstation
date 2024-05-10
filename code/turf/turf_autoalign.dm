@@ -71,9 +71,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 					src.connect_image = image(src.icon, "connect[overlaydir]")
 				else
 					src.connect_image.icon_state = "connect[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 			else
-				src.UpdateOverlays(null, "connect")
+				src.ClearSpecificOverlays("connect")
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
@@ -742,9 +742,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 					src.connect_image = image(src.icon, "connect[overlaydir]")
 				else
 					src.connect_image.icon_state = "connect[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 			else
-				src.UpdateOverlays(null, "connect")
+				src.ClearSpecificOverlays("connect")
 
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
