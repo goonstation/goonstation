@@ -1,5 +1,9 @@
 
 (t)fri may 10 24
+(u)Lord_Earthfire
+(p)18836
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Boxes cannot be used for pickpocketing anymore.
 (u)TDHooligan
 (p)18435
 (e)⚖📦|C-Balance, A-Game-Objects
