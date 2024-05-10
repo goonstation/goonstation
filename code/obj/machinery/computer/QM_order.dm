@@ -65,7 +65,7 @@
 				src.scan = id_card
 				src.Attackhand(user) // refresh console
 			else
-				boutput(user, SPAN_ALERT("Pin number incorrect."))
+				boutput(user, SPAN_ALERT("PIN incorrect."))
 				src.scan = null
 		else
 			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -228,7 +228,7 @@
 						src.scan = id_card
 						src.Attackhand(usr) // refresh console
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))

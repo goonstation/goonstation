@@ -181,6 +181,7 @@
 	max_range = 2
 
 	cast(atom/tar)
+		. = ..()
 		var/turf/T = get_turf(tar)
 		if (isturf(T))
 			//if there's already a marker here, remove it
@@ -263,6 +264,7 @@
 	pointCost = 1
 
 	cast(atom/T)
+		. = ..()
 		var/datum/abilityHolder/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
@@ -356,6 +358,7 @@
 
 	//This is basically all stolen from the seedplanter item.
 	cast(atom/T)
+		. = ..()
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		var/power = 1
 		if (istype(K))
@@ -451,6 +454,7 @@
 	max_range = 1
 
 	cast(atom/target)
+		. = ..()
 		//For giving nutrients to plantpots
 		if (istype(target, /obj/machinery/plantpot) && target.reagents)
 			//replace with kudzu_nutrients when I make it. should be a good thing for plants, maybe kinda good for man.
@@ -508,6 +512,7 @@
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
 
 	cast()
+		. = ..()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
 			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")

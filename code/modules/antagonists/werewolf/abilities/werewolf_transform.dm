@@ -20,6 +20,7 @@
 		if (!M)
 			return TRUE
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/werewolf_transform(src), M)
 		return FALSE
 

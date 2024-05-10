@@ -283,7 +283,7 @@
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
 		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
@@ -466,7 +466,7 @@
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.UpdateOverlays(screen_image, "screen_image")
+			src.AddOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
 			icon_state = src.base_icon_state

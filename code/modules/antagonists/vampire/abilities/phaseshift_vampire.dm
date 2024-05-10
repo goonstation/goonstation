@@ -9,6 +9,8 @@
 	pointCost = 0
 	when_stunned = 1
 	not_when_handcuffed = 0
+	interrupt_action_bars = FALSE
+	do_logs = FALSE
 
 	unlock_message = "You have gained Bat Form. When toggled on, you will be able to enter Bat Form by sprinting."
 
@@ -23,6 +25,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		if (istype(M.special_sprint, /datum/special_sprint/poof/bat))
 			M.special_sprint = null
 			icon_state = "batform"
@@ -71,6 +74,7 @@
 		if (spell_invisibility(M, 1, 1, 0, 1) != 1) // Dry run. Can we phaseshift?
 			return 1
 
+		. = ..()
 		spell_invisibility(M, src.duration, 1)
 		H.locked = 1 // Can't use any powers during phaseshift.
 		SPAWN(src.duration)

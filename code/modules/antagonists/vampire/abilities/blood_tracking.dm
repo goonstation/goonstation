@@ -12,6 +12,8 @@
 	not_when_handcuffed = 0
 	lock_holder = FALSE
 	ignore_holder_lock = 1
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -27,6 +29,7 @@
 			boutput(M, SPAN_ALERT("Critter mobs currently don't have to worry about blood. Lucky you."))
 			return 1
 
+		. = ..()
 		if (H.vamp_blood_tracking == 1)
 			H.vamp_blood_tracking = 0
 		else
