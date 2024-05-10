@@ -204,6 +204,7 @@ proc/ui_describe_reagents(atom/A)
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 
 	/// The number of fluid overlay states that this container has.
 	var/fluid_overlay_states = 0

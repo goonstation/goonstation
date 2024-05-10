@@ -17,6 +17,7 @@ TRASH BAG
 	item_state = "cleaner"
 	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -493,6 +494,7 @@ TRASH BAG
 	stamina_damage = 5
 	throwforce = 0
 	w_class = W_CLASS_SMALL // gross why would you put a sponge in your pocket
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 
 	var/hit_face_prob = 30 // MODULAR SPONGES
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary

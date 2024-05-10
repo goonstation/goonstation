@@ -536,6 +536,7 @@
 				else
 					duration = 2.5 SECONDS
 
+
 		duration += ExtraDuration
 
 		if (source.reagents && source.reagents.has_reagent("crime"))
@@ -637,9 +638,15 @@
 		if(item)
 			var/obj/item/existing_item = target.get_slot(slot)
 			if(existing_item && in_start) // if they have something there, smack it with held item
+				var/hidden_check = FALSE
+				if(src.item.w_class <= W_CLASS_POCKET_SIZED && !(src.item.item_function_flags & OBVIOUS_INTERACTION_BAR))
+					hidden_check = TRUE
 				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
 													[log_object(existing_item)] equipped by [log_object(target)].")
-				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+				if(hidden_check)
+					actions.start(new /datum/action/bar/private/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source)
+				else
+					actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(item != source.equipped())
