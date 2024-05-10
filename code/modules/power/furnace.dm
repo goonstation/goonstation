@@ -74,11 +74,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 			if(src.active)
 				var/image/I = GetOverlayImage("active")
 				if(!I) I = image('icons/obj/power.dmi', "furn-burn")
-				UpdateOverlays(I, "active")
+				AddOverlays(I, "active")
 				src.point_light.enable()
 				src.cone_light.enable()
 			else
-				UpdateOverlays(null, "active", 0, 1) //Keep it in cache for when it's toggled
+				ClearSpecificOverlays(TRUE, "active") //Keep it in cache for when it's toggled
 				src.point_light.disable()
 				src.cone_light.disable()
 
@@ -91,9 +91,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)
 					if(!I) I = image('icons/obj/power.dmi', "furn-c[i]")
-					UpdateOverlays(I, okey)
+					AddOverlays(I, okey)
 				else //Clear the overlay
-					UpdateOverlays(null, okey, 0, 1)
+					ClearSpecificOverlays(TRUE, okey)
 
 
 	was_deconstructed_to_frame(mob/user)

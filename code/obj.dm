@@ -470,3 +470,5 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		var/mob/dead/observer/O = viewer
 		O.insert_observer(occupant)
 		return TRUE
+
+/obj/proc/after_abcu_spawn()

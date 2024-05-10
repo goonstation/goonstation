@@ -233,7 +233,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		AddOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/scorched2
 	burnt = 1
@@ -242,7 +242,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		AddOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/damaged1
 	step_material = "step_plating"
@@ -253,7 +253,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged2
 	step_material = "step_plating"
@@ -264,7 +264,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged3
 	step_material = "step_plating"
@@ -275,7 +275,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged4
 	step_material = "step_plating"
@@ -286,7 +286,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged5
 	step_material = "step_plating"
@@ -297,7 +297,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -323,7 +323,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged2
 	broken = 1
@@ -332,7 +332,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged3
 	broken = 1
@@ -341,7 +341,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -1484,14 +1484,14 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
 		catwalk = locate() in src
-		catwalk.UpdateOverlays(overlay, "wet_overlay")
+		catwalk.AddOverlays(overlay, "wet_overlay")
 
-	src.UpdateOverlays(overlay, "wet_overlay")
+	src.AddOverlays(overlay, "wet_overlay")
 	src.wet = wetType
 
 	SPAWN(timeout)
-		src.UpdateOverlays(null, "wet_overlay")
-		catwalk?.UpdateOverlays(null, "wet_overlay")
+		src.ClearSpecificOverlays("wet_overlay")
+		catwalk?.ClearSpecificOverlays("wet_overlay")
 		src.wet = 0
 
 /turf/simulated/floor/grassify()
@@ -1744,7 +1744,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
-		icon_state = "ironform"
+		icon_state = "ironfoam"
 
 /turf/simulated/floor/metalfoam/ex_act()
 	ReplaceWithSpace()
@@ -1908,8 +1908,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(broken || burnt)
 		boutput(user, SPAN_ALERT("You remove the broken plating."))
-		UpdateOverlays(null,"burn")
-		UpdateOverlays(null,"damage")
+		ClearSpecificOverlays("burn", "damage")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -2472,9 +2471,9 @@ TYPEINFO(/turf/simulated/floor/auto)
 						src.connect_image = image(src.icon, "connect[overlaydir]")
 					else
 						src.connect_image.icon_state = "connect[overlaydir]"
-					src.UpdateOverlays(src.connect_image, "connect")
+					src.AddOverlays(src.connect_image, "connect")
 				else
-					src.UpdateOverlays(null, "connect")
+					src.ClearSpecificOverlays("connect")
 
 	proc/update_neighbors()
 		for (var/turf/simulated/floor/auto/T in orange(1,src))
@@ -2492,7 +2491,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
 				edge_overlay.plane = PLANE_FLOOR
-				T.UpdateOverlays(edge_overlay, "edge_[direction]")
+				T.AddOverlays(edge_overlay, "edge_[direction]")
 
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
@@ -2548,7 +2547,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 
 			tuft = image('icons/turf/outdoors.dmi', "grass_tuft", src, pixel_x=rand_x, pixel_y=rand_y)
 			tuft.color = hsv_transform_color_matrix(h=hue_shift)
-			UpdateOverlays(tuft,"grass_turf")
+			AddOverlays(tuft,"grass_turf")
 
 	rough
 		tuft_prob = 0.8
@@ -2625,7 +2624,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		. = ..()
 		var/image/R = image('icons/turf/water.dmi', "ripple", dir=pick(alldirs),pixel_x=rand(-10,10),pixel_y=rand(-10,10))
 		R.alpha = 180
-		src.UpdateOverlays(R, "ripple")
+		src.AddOverlays(R, "ripple")
 
 /turf/simulated/floor/auto/snow
 	name = "snow"

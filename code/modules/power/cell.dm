@@ -143,13 +143,13 @@
 	if(!I) I = image('icons/obj/power.dmi', "cell-o2")
 
 	if(charge < 0.01)
-		UpdateOverlays(null, "charge_indicator", 0, 1)
+		ClearSpecificOverlays(TRUE, "charge_indicator")
 	else if(charge/maxcharge >=0.995)
 		I.icon_state = "cell-o2"
-		UpdateOverlays(I, "charge_indicator")
+		AddOverlays(I, "charge_indicator")
 	else
 		I.icon_state = "cell-o1"
-		UpdateOverlays(I, "charge_indicator")
+		AddOverlays(I, "charge_indicator")
 
 /obj/item/cell/proc/percent()		// return % charge of cell
 	return 100.0*charge/maxcharge

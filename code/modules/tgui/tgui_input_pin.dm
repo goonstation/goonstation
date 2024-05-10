@@ -31,9 +31,9 @@
 			return
 	if (!user.client) // No NPCs or they hang Mob AI process
 		return
-	if (!isnum_safe(default))
-		CRASH("TGUI input PIN prompt opened with default PIN that is not a number.")
-	if (default > (!isnull(max_value) ? max_value : PIN_MAX) || default < min_value)
+	if (!isnull(default) && !isnum_safe(default))
+		CRASH("TGUI input PIN prompt opened with non-null default PIN that is not a number.")
+	if (!isnull(default) && (default > (!isnull(max_value) ? max_value : PIN_MAX) || default < (!isnull(min_value) ? min_value : PIN_MIN)))
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
 	var/datum/tgui_input_pin/numbox = new(user, message, title, default, max_value, min_value, timeout, theme)
 	numbox.ui_interact(user)
@@ -75,7 +75,7 @@
 			return
 	if (!user.client) // No NPCs or they hang Mob AI process
 		return
-	if (!isnum_safe(default))
+	if (!isnull(default) && !isnum_safe(default))
 		CRASH("TGUI input PIN prompt opened with default PIN that is not a number.")
 	if (default > (!isnull(max_value) ? max_value : PIN_MAX) || default < min_value)
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")

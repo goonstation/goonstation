@@ -6,6 +6,21 @@
 /// mutant races: cheap way to add new "types" of mobs
 TYPEINFO(/datum/mutantrace)
 	var/list/special_styles // special styles which currently change the icon (sprite sheet)
+	/// icon definitions for mutantrace clothing variants. one icon file per slot.
+	var/list/clothing_icons = list()
+	/// list of the icon states for each icon file, put here because for some ungodly reason `icon_states()` can take 200ms randomly
+	var/list/clothing_icon_states = list()
+	/// This is used for static icons if the mutant isn't built from pieces
+	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
+	var/icon = 'icons/effects/genetics.dmi'
+	///The icon states of the above icon, cached because byond is bad
+	var/icon_states
+TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
+	..()
+	for (var/category in src.clothing_icons)
+		src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
+	src.icon_states = icon_states(src.icon)
+
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
@@ -73,11 +88,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/genetics_removable = TRUE
 	/// Should they be able to walk on shards barefoot
 	var/can_walk_on_shards = FALSE
-	/// This is used for static icons if the mutant isn't built from pieces
-	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
-	var/icon = 'icons/effects/genetics.dmi'
-	///The icon states of the above icon, cached because byond is bad
-	var/icon_states = null
 	var/icon_state = "blank_c"
 	/// The icon used to render their eyes
 	var/eye_icon = 'icons/mob/human_hair.dmi'
@@ -99,11 +109,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/list/mutant_organs = list()
 	/// If our mutant has a female variant that has different organs, these will be used instead
 	var/list/mutant_organs_f = null
-
-	/// icon definitions for mutantrace clothing variants. one icon file per slot.
-	var/clothing_icons = list()
-	/// list of the icon states for each icon file, put here because for some ungodly reason `icon_states()` can take 200ms randomly
-	var/clothing_icon_states = list()
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -224,12 +229,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/self_click_fluff //used when clicking self on help intent
 
-	///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
-	proc/load_clothing_icons()
-		SHOULD_CALL_PARENT(TRUE)
-		for (var/category in src.clothing_icons)
-			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
-
 	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
 	/// Each sub-proc passes its obj to this proc, which you can then operate on.
 	/// Should return a filter or list of filters, to be added to the obj's wear_image.filters
@@ -323,12 +322,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/M)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
-		if(ishuman(M) && M?.bioHolder?.mobAppearance)
-			src.load_clothing_icons()
-			src.icon_states = icon_states(src.icon)
-		else
+		if(!(ishuman(M) && M.bioHolder?.mobAppearance))
 			qdel(src)
-		return
 
 	disposing()
 		if (src.mob)
@@ -648,9 +643,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if(src.detail_oversuit_1_color_f)
 				src.detail_oversuit_1_color = src.detail_oversuit_1_color_f
 
+TYPEINFO(/datum/mutantrace/human)
+	icon = 'icons/mob/human.dmi'
 /datum/mutantrace/human
 	name = "human"
-	icon = 'icons/mob/human.dmi'
 	mutant_folder = 'icons/mob/human.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
@@ -658,9 +654,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	dna_mutagen_banned = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/human
 
+TYPEINFO(/datum/mutantrace/blob)
+	icon = 'icons/mob/blob_ambassador.dmi'
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
-	icon = 'icons/mob/blob_ambassador.dmi'
 	mutant_folder = 'icons/mob/blob_ambassador.dmi'
 	icon_state = "blob"
 	human_compatible = 0
@@ -674,9 +671,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
 
+TYPEINFO(/datum/mutantrace/flubber)
+	icon = 'icons/mob/flubber.dmi'
 /datum/mutantrace/flubber
 	name = "flubber"
-	icon = 'icons/mob/flubber.dmi'
 	mutant_folder = 'icons/mob/flubber.dmi'
 	icon_state = "flubber"
 	uses_human_clothes = 0
@@ -721,9 +719,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	say_verb()
 		return "flubbers"
 
+TYPEINFO(/datum/mutantrace/flashy)
+	icon = 'icons/mob/flashy.dmi'
 /datum/mutantrace/flashy
 	name = "flashy"
-	icon = 'icons/mob/flashy.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HEAD_HAS_OWN_COLORS | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES)
 	override_attack = 0
@@ -735,10 +734,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/left
 	dna_mutagen_banned = FALSE
 
-
+TYPEINFO(/datum/mutantrace/virtual)
+	icon = 'icons/mob/virtual.dmi'
 /datum/mutantrace/virtual
 	name = "virtual"
-	icon = 'icons/mob/virtual.dmi'
 	icon_state = "body_m"
 	override_attack = 0
 	mutant_folder = 'icons/mob/virtual.dmi'
@@ -795,9 +794,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		else
 			..()
 
+TYPEINFO(/datum/mutantrace/lizard)
+	icon = 'icons/mob/lizard.dmi'
+TYPEINFO_NEW(/datum/mutantrace/lizard)
+	clothing_icons["overcoats"] = 'icons/mob/lizard/overcoats.dmi'
+	clothing_icons["eyes"] = 'icons/mob/lizard/eyes.dmi'
+	clothing_icons["mask"] = 'icons/mob/lizard/mask.dmi'
+	clothing_icons["head"] = 'icons/mob/lizard/head.dmi'
+	..()
 /datum/mutantrace/lizard
 	name = "lizard"
-	icon = 'icons/mob/lizard.dmi'
 	icon_state = "body_m"
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS | HAS_LONG_NOSE)
@@ -825,13 +831,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
-
-	load_clothing_icons()
-		clothing_icons["overcoats"] = 'icons/mob/lizard/overcoats.dmi'
-		clothing_icons["eyes"] = 'icons/mob/lizard/eyes.dmi'
-		clothing_icons["mask"] = 'icons/mob/lizard/mask.dmi'
-		clothing_icons["head"] = 'icons/mob/lizard/head.dmi'
-		..()
 
 	on_attach(var/mob/living/carbon/human/H)
 		..()
@@ -1026,9 +1025,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.abilityHolder.removeAbility(/datum/targetable/zombie/infect)
 		..()
 
+TYPEINFO(/datum/mutantrace/vampiric_thrall)
+	icon = 'icons/mob/vampiric_thrall.dmi'
 /datum/mutantrace/vampiric_thrall
 	name = "vampiric thrall"
-	icon = 'icons/mob/vampiric_thrall.dmi'
 	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vampiric_thrall/right
@@ -1074,9 +1074,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 		..()
 
+TYPEINFO(/datum/mutantrace/skeleton)
+	icon = 'icons/mob/skeleton.dmi'
 /datum/mutantrace/skeleton
 	name = "skeleton"
-	icon = 'icons/mob/skeleton.dmi'
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
@@ -1218,11 +1219,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	override_attack = 0
 
-
+TYPEINFO(/datum/mutantrace/abomination)
+	icon = 'icons/mob/abomination.dmi'
 /datum/mutantrace/abomination
 	name = "abomination"
 	mutant_folder = 'icons/mob/abomination.dmi'
-	icon = 'icons/mob/abomination.dmi'
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1326,9 +1327,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 /// Probability someone gets bit when patting a werewolf
 #define SNAP_PROB 50
+TYPEINFO(/datum/mutantrace/werewolf)
+	icon = 'icons/mob/werewolf.dmi'
+TYPEINFO_NEW(/datum/mutantrace/werewolf)
+	clothing_icons["back"] = 'icons/mob/werewolf/back.dmi'
+	clothing_icons["mask"] = 'icons/mob/werewolf/mask.dmi'
+	..()
 /datum/mutantrace/werewolf
 	name = "werewolf"
-	icon = 'icons/mob/werewolf.dmi'
 	icon_state = "body_m"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1351,11 +1357,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	head_offset = 5
 	hand_offset = 3
 	arm_offset = 3
-
-	load_clothing_icons()
-		clothing_icons["back"] = 'icons/mob/werewolf/back.dmi'
-		clothing_icons["mask"] = 'icons/mob/werewolf/mask.dmi'
-		..()
 
 	on_attach()
 		..()
@@ -1459,10 +1460,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 #undef SNAP_PROB
 
-
+TYPEINFO(/datum/mutantrace/hunter)
+	icon = 'icons/mob/hunter.dmi'
 /datum/mutantrace/hunter
 	name = "hunter"
-	icon = 'icons/mob/hunter.dmi'
 	icon_state = "full"
 	human_compatible = 0
 	jerk = TRUE
@@ -1496,9 +1497,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	say_verb()
 		return "snarls"
 
+TYPEINFO(/datum/mutantrace/ithillid)
+	icon = 'icons/mob/ithillid.dmi'
 /datum/mutantrace/ithillid
 	name = "ithillid"
-	icon = 'icons/mob/ithillid.dmi'
 	icon_state = "body_m"
 	jerk = FALSE
 	override_attack = 0
@@ -1523,9 +1525,23 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	say_verb()
 		return "glubs"
 
+TYPEINFO(/datum/mutantrace/monkey)
+	icon = 'icons/mob/monkey.dmi'
+TYPEINFO_NEW(/datum/mutantrace/monkey)
+	src.clothing_icons["uniform"] = 'icons/mob/monkey/jumpsuits.dmi'
+	src.clothing_icons["id"] = 'icons/mob/monkey/card.dmi'
+	src.clothing_icons["hands"] = 'icons/mob/monkey/hands.dmi'
+	src.clothing_icons["feet"] = 'icons/mob/monkey/feet.dmi'
+	src.clothing_icons["overcoats"] = 'icons/mob/monkey/overcoats.dmi'
+	src.clothing_icons["back"] = 'icons/mob/monkey/back.dmi'
+	src.clothing_icons["eyes"] = 'icons/mob/monkey/eyes.dmi'
+	src.clothing_icons["ears"] = 'icons/mob/monkey/ears.dmi'
+	src.clothing_icons["mask"] = 'icons/mob/monkey/mask.dmi'
+	src.clothing_icons["head"] = 'icons/mob/monkey/head.dmi'
+	src.clothing_icons["belt"] = 'icons/mob/monkey/belt.dmi'
+	..()
 /datum/mutantrace/monkey
 	name = "monkey"
-	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
 	eye_state = "eyes_monkey"
@@ -1554,20 +1570,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
 	override_limb_icons = TRUE
-
-	load_clothing_icons()
-		src.clothing_icons["uniform"] = 'icons/mob/monkey/jumpsuits.dmi'
-		src.clothing_icons["id"] = 'icons/mob/monkey/card.dmi'
-		src.clothing_icons["hands"] = 'icons/mob/monkey/hands.dmi'
-		src.clothing_icons["feet"] = 'icons/mob/monkey/feet.dmi'
-		src.clothing_icons["overcoats"] = 'icons/mob/monkey/overcoats.dmi'
-		src.clothing_icons["back"] = 'icons/mob/monkey/back.dmi'
-		src.clothing_icons["eyes"] = 'icons/mob/monkey/eyes.dmi'
-		src.clothing_icons["ears"] = 'icons/mob/monkey/ears.dmi'
-		src.clothing_icons["mask"] = 'icons/mob/monkey/mask.dmi'
-		src.clothing_icons["head"] = 'icons/mob/monkey/head.dmi'
-		src.clothing_icons["belt"] = 'icons/mob/monkey/belt.dmi'
-		..()
 
 	on_attach(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1674,10 +1676,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					src.mob.expel_fart_gas(0)
 					src.mob.add_karma(0.5)
 
-
+TYPEINFO(/datum/mutantrace/seamonkey)
+	icon = 'icons/mob/monkey.dmi'
 /datum/mutantrace/monkey/seamonkey
 	name = "sea monkey"
-	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/seamonkey.dmi'
 	icon_state = "seamonkey"
 	special_head = HEAD_SEAMONKEY
@@ -1715,9 +1717,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.stuttering = 120
 			src.mob.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 
+TYPEINFO(/datum/mutantrace/premature_clone)
+	icon = 'icons/mob/human.dmi'
 /datum/mutantrace/premature_clone
 	name = "premature clone"
-	icon = 'icons/mob/human.dmi'
 	mutant_folder = 'icons/mob/human.dmi'
 	icon_state = "mutant3"
 	human_compatible = 1
@@ -1778,10 +1781,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon_state = "cyclops"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 
-
+TYPEINFO(/datum/mutantrace/roach)
+	icon = 'icons/mob/roach.dmi'
 /datum/mutantrace/roach
 	name = "roach"
-	icon = 'icons/mob/roach.dmi'
 	icon_state = "body_m"
 	override_attack = 0
 	voice_override = "roach"
@@ -1820,9 +1823,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 		. = ..()
 
+TYPEINFO(/datum/mutantrace/cat)
+	icon = 'icons/mob/cat.dmi'
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
 	name = "cat"
-	icon = 'icons/mob/cat.dmi'
 	icon_state = "body_m"
 	jerk = TRUE
 	override_attack = 0
@@ -1854,9 +1858,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
+TYPEINFO(/datum/mutantrace/cat/bingus)
+	icon = 'icons/mob/bingus.dmi'
 /datum/mutantrace/cat/bingus // our beloved
 	name = "bingus"
-	icon = 'icons/mob/bingus.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/cat/bingus
 	mutant_organs = list("tail" = /obj/item/organ/tail/cat/bingus)
 	mutant_folder = 'icons/mob/bingus.dmi'
@@ -1869,9 +1874,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
 
+TYPEINFO(/datum/mutantrace/amphibian)
+	icon = 'icons/mob/amphibian.dmi'
 /datum/mutantrace/amphibian
 	name = "amphibian"
-	icon = 'icons/mob/amphibian.dmi'
 	icon_state = "body_m"
 	firevuln = 1.3
 	brutevuln = 0.7
@@ -1939,9 +1945,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					return message
 			else ..()
 
+TYPEINFO(/datum/mutantrace/amphibian/shelter)
+	icon = 'icons/mob/shelterfrog.dmi'
 /datum/mutantrace/amphibian/shelter
 	name = "Shelter Amphibian"
-	icon = 'icons/mob/shelterfrog.dmi'
 	icon_state = "body_m"
 	human_compatible = 1
 	jerk = FALSE
@@ -1955,9 +1962,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#91b978"
 
+TYPEINFO(/datum/mutantrace/kudzu)
+	icon = 'icons/mob/kudzu.dmi'
 /datum/mutantrace/kudzu
 	name = "kudzu"
-	icon = 'icons/mob/kudzu.dmi'
 	icon_state = "kudzu-w"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -2100,9 +2108,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon = 'icons/mob/cow.dmi'
 	icon_state = "backpack_mask"
 
+TYPEINFO(/datum/mutantrace/cow)
+	icon = 'icons/mob/cow.dmi'
 /datum/mutantrace/cow
 	name = "cow"
-	icon = 'icons/mob/cow.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
 	uses_human_clothes = FALSE
@@ -2259,13 +2268,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			T.react_all_cleanables()
 
 TYPEINFO(/datum/mutantrace/pug)
+	icon = 'icons/mob/pug/fawn.dmi'
 	special_styles = list("apricot" = 'icons/mob/pug/apricot.dmi',
 	"black" = 'icons/mob/pug/black.dmi',
 	"chocolate" = 'icons/mob/pug/chocolate.dmi',
 	"fawn" = 'icons/mob/pug/fawn.dmi')
 /datum/mutantrace/pug
 	name = "pug"
-	icon = 'icons/mob/pug/fawn.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
 	override_attack = 0
@@ -2387,9 +2396,9 @@ TYPEINFO(/datum/mutantrace/pug)
 	proc/snore()
 		playsound(src.mob, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[src.mob]</B> snores.", "<I>snores</I>")
-		src.mob.UpdateOverlays(snore_bubble, "snore_bubble")
+		src.mob.AddOverlays(snore_bubble, "snore_bubble")
 		SPAWN(1.5 SECONDS)
-			src.mob.UpdateOverlays(null, "snore_bubble")
+			src.mob.ClearSpecificOverlays("snore_bubble")
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
