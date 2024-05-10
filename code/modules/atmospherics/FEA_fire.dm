@@ -360,34 +360,84 @@ ABSTRACT_TYPE(/obj/hotspot)
 /obj/hotspot/chemfire
 	icon = 'icons/effects/fire_chemical.dmi'
 	icon_state = "red_full-1"
-	plane = PLANE_DEFAULT
+	plane = PLANE_NOSHADOW_BELOW
 	layer = OBJ_LAYER - 0.2 // so that part of the fire appears behind objects. 0.2 to account for vending machine, etc layering
 	blend_mode = BLEND_DEFAULT
 
 	var/fire_color = CHEM_FIRE_RED
 
 	var/color_set = FALSE
+	var/over_state
+	var/under_state
 
 // chemfire - use a chem_fire define
 /obj/hotspot/chemfire/New(turf/newLoc, chemfire)
 	..()
 	src.fire_color = chemfire
 
-	var/state = pick(1, 2)
+	src.over_state = pick(1, 2)
+	src.under_state = pick(1, 2)
 	// base fire that appears behind turf contents
-	src.icon_state = chemfire + "_under-[state]"
+	src.icon_state = chemfire + "_under-[under_state]"
 
 	// fire puff effects that will rise over vertically adjacent fires, for a nicer appearance
-	var/image/im1 = image(src.icon, src, chemfire + "_fx-[state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.01)
+	var/image/im1 = image(src.icon, src, chemfire + "_fx-[under_state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.01)
 	src.UpdateOverlays(im1, "fire-fx")
 
-	// part of fire that appears over turf contents
-	var/image/im2 = image(src.icon, src, chemfire + "_over-[pick(1, 2)]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02)
+	UpdateIcon()
+	src.update_neighbors()
+
+/obj/hotspot/chemfire/disposing()
+	var/turf/T = get_turf(src)
+	. = ..()
+	src.update_neighbors(T)
+
+/obj/hotspot/chemfire/proc/update_neighbors(turf/T)
+	if(!T)
+		T = get_turf(src)
+	for (var/obj/hotspot/chemfire/C in orange(1,T))
+		C.UpdateIcon()
+
+/obj/hotspot/chemfire/update_icon()
+	var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), null, TRUE, FALSE)
+	var/side_connect = connectdir & (EAST | WEST)
+	var/third_row = connectdir & (SOUTH)
+
+	var/image/im2
+	if(side_connect)
+		src.icon_state = src.fire_color + "_under-[under_state]-[side_connect]"
+		im2 = image(src.icon, src, src.fire_color + "_over-[over_state]-[side_connect]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02)
+	else
+		src.icon_state = src.fire_color + "_under-[under_state]"
+		im2 = image(src.icon, src, src.fire_color + "_over-[over_state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02)
+
+	im2.plane = PLANE_NOSHADOW_ABOVE
+	im2.filters += filter(type="alpha", icon=icon('icons/effects/fire_chemical.dmi', "alpha"), y=-10)
 	src.UpdateOverlays(im2, "fire-over")
+
+	if(third_row)
+		var/image/im3
+		var/image/im4
+		if(side_connect)
+			im3 = image(src.icon, src, src.fire_color + "_under-[over_state]-[side_connect]", OBJ_LAYER - 0.2, pixel_y=-20)
+			im4 = image(src.icon, src, src.fire_color + "_under-[over_state]-[side_connect]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02, pixel_y=-20)
+		else
+			im3 = image(src.icon, src, src.fire_color + "_under-[over_state]", OBJ_LAYER - 0.2, pixel_y=-20)
+			im4 = image(src.icon, src, src.fire_color + "_under-[over_state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02, pixel_y=-20)
+
+
+		//Seperate overlay into two parts, one that overlays this one and one that is below
+		src.UpdateOverlays(im3, "fire-under2")
+		im4.plane = PLANE_NOSHADOW_ABOVE
+		im4.filters += filter(type="alpha", icon=icon('icons/effects/fire_chemical.dmi', "alpha"), y=20)
+		src.UpdateOverlays(im4, "fire-over2")
+	else
+		src.ClearSpecificOverlays("fire-under2")
 
 /obj/hotspot/chemfire/set_real_color()
 	if (src.color_set)
 		return
+
 	src.color_set = TRUE
 
 	// no particular reason for color values chosen in this proc, just based off what worked
