@@ -220,11 +220,8 @@
 			var/datum/materiel/M = locate(params["ref"]) in materiel_stock
 			if (usr.mind.is_antagonist())
 				var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
-				// var/datum/antagonist/nuclear_operative/commander = usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
 				if (nukie != null)
 					nukie.purchased_items.Add(M)
-				//if (commander != null)
-				//	commander.purchased_items.Add(M)
 
 
 /obj/submachine/weapon_vendor/pirate
