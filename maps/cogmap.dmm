@@ -41907,9 +41907,6 @@
 /area/station/hallway/primary/east)
 "fFX" = (
 /obj/machinery/space_heater,
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "fFY" = (
