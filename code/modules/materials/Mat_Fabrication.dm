@@ -318,11 +318,14 @@
 					if(howMany > maxAmt || !selectedRecipe) return //ZeWaka: Fix for null.canBuild
 					if(selectedRecipe.canBuild(howMany, src))
 						selectedRecipe.build(howMany, src)
+						var/list/parts = list()
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)
+								parts += "[P.part_name]: [P.assigned]"
 								P.assigned.change_stack_amount(-(P.required_amount*howMany))
 								if(QDELETED(P.assigned))
 									P.assigned = null
+						logTheThing(LOG_STATION, usr, "printed [howMany] [selectedRecipe.name] (parts: [jointext(parts, ", ")])")
 
 						tab = "recipes"
 						selectingPart = null

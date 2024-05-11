@@ -1192,7 +1192,7 @@
 	},
 /area/station/medical/robotics)
 "ayf" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
