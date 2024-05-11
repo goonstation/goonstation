@@ -294,7 +294,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				if(trait == "puritan")
 					is_puritan = TRUE
 
-			if (is_puritan)
+			if (is_puritan && !src.clonehack)
 				src.mess = TRUE
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
