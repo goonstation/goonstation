@@ -53,7 +53,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.read_only = 1
 	hop
 		name = "\improper CaterCoordinate + cartridge"
-		desc = "For everything a person managing a civilian department would need if they actually were going to do that, as if."
+		desc = "For everything a person managing a civilian department would need."
 		icon_state = "cart-hop"
 		file_amount = 64
 
@@ -67,7 +67,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/mopfinder(src))
-			src.root.add_file( new /datum/computer/file/text/handbook_botanist(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.read_only = 1
