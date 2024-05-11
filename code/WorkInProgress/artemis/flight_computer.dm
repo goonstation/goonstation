@@ -112,7 +112,7 @@
 			src.stored_huds.len = 0
 
 		src.occupant.override_movement_controller = null
-		src.occupant.changeStatus("weakened",20)
+		src.occupant.changeStatus("knockdown",20)
 		src.occupant = null
 		src.active = 0
 		src.con_user = null

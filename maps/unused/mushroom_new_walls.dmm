@@ -8918,6 +8918,12 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1;
+	setup_beam_length = 3
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "aTt" = (
@@ -13831,7 +13837,7 @@
 	hardened = 1;
 	id = "medbay_entrance"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "bqO" = (
 /turf/simulated/floor/white,
@@ -14441,6 +14447,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Captains Quarters"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
 "btp" = (
@@ -14680,7 +14689,7 @@
 "buO" = (
 /obj/machinery/light/incandescent,
 /obj/storage/secure/closet/medical/chemical,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/head)
 "bwb" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -15813,6 +15822,14 @@
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor,
 /area/station/engine/inner)
+"csM" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "csY" = (
 /obj/window/reinforced/west,
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
@@ -16544,6 +16561,11 @@
 /obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "inner";
+	name = "Security"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "dgc" = (
@@ -16786,6 +16808,11 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-s"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "inner";
+	name = "Security"
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -17143,6 +17170,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -17805,16 +17835,17 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "enu" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1;
+	setup_beam_length = 8
+	},
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "eol" = (
@@ -19165,6 +19196,11 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "inner";
+	name = "Bridge"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "fDF" = (
@@ -20393,6 +20429,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "inner";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "gKu" = (
@@ -21039,6 +21080,11 @@
 /obj/mapping_helper/access/engineering,
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "outer";
+	name = "Engineering"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "hqX" = (
@@ -21463,6 +21509,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "inner";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "hOw" = (
@@ -22314,11 +22365,6 @@
 /obj/machinery/portableowl/judgementowl,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"iIk" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable,
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/ai_upload)
 "iIt" = (
 /obj/storage/closet/fire,
 /obj/item/crowbar,
@@ -23039,12 +23085,6 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
-"jtk" = (
-/obj/cable{
-	icon_state = "0-9"
-	},
-/turf/space,
-/area/space)
 "juF" = (
 /turf/simulated/floor/airless/solar,
 /area/space)
@@ -23127,6 +23167,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "outer";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "jzN" = (
@@ -24413,6 +24458,9 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start/job/rancher,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "kPj" = (
@@ -25234,6 +25282,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "outer";
+	name = "Bridge"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "lJw" = (
@@ -25887,6 +25940,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "outer";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "mpu" = (
@@ -26305,16 +26363,17 @@
 /turf/simulated/floor/plating/jen,
 /area/station/turret_protected/Zeta)
 "mQj" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
-	detector_id = "AI Core"
+	detector_id = "AI Core";
+	setup_beam_length = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
@@ -26769,6 +26828,11 @@
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -27313,6 +27377,14 @@
 /obj/fudad,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/bar)
+"nLx" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "nLV" = (
 /obj/landmark/shuttle_subwoofer,
 /turf/space,
@@ -28399,11 +28471,13 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/machinery/disposal/botany{
-	name = "Produce Chute - Ranch"
-	},
 /obj/disposalpipe/trunk/produce{
 	dir = 1
+	},
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -31790,6 +31864,10 @@
 /obj/stool/chair/blue{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Genetics Research Morgue";
+	dir = 8
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -32212,6 +32290,11 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "outer";
+	name = "Bridge"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "rzQ" = (
@@ -33256,6 +33339,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "outer";
+	name = "Security"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "sro" = (
@@ -34348,7 +34436,6 @@
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 8
 	},
-/obj/item/clothing/glasses/thermal,
 /turf/simulated/floor,
 /area/station/security/main)
 "tmj" = (
@@ -36345,6 +36432,13 @@
 	},
 /obj/stool/chair/green,
 /obj/disposalpipe/chicken_disposal_pipe/vertical,
+/obj/railing/orange/reinforced,
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -20;
+	pixel_y = -9
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "uPR" = (
@@ -36701,13 +36795,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central)
-"veW" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/ai_upload)
 "vfi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
@@ -37803,7 +37890,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "wdt" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "weD" = (
@@ -39150,6 +39237,19 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"xvI" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4;
+	setup_beam_length = 3
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "xvJ" = (
 /obj/cable,
 /obj/cable{
@@ -94656,7 +94756,7 @@ aaa
 aaa
 aaa
 aaa
-aTs
+xvI
 aTr
 aUY
 aUY
@@ -94966,7 +95066,7 @@ jRG
 aUY
 cEt
 aTr
-veW
+qeZ
 aaa
 aaa
 mBC
@@ -95268,7 +95368,7 @@ aTr
 aTr
 aTr
 aTr
-veW
+qeZ
 giH
 aaa
 aYR
@@ -95563,13 +95663,13 @@ aaa
 aaa
 aaa
 mQj
-iIk
-iIk
-iIk
-iIk
-iIk
-iIk
-iIk
+csM
+nLx
+nLx
+nLx
+nLx
+nLx
+nLx
 enu
 anA
 aaa
@@ -100113,7 +100213,7 @@ kSG
 kSG
 hcV
 aaa
-jtk
+aaa
 aaa
 aaa
 aaa

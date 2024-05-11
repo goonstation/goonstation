@@ -37,6 +37,7 @@
 			boutput(M, SPAN_ALERT("[target] is immune to the disease."))
 			return 1
 
+		. = ..()
 		var/mob/living/L = target
 
 		//playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)

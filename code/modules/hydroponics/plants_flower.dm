@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA?.get_effective_value("cropsize")))) // Creating a temporary chem holder
 		reagents_temp.my_atom = POT
 
-		if (POT.growth > (P.harvtime - DNA?.get_effective_value("growtime")) && prob(spray_prob))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(spray_prob))
 			var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
 			for (var/plantReagent in plant_complete_reagents)
 				reagents_temp.add_reagent(plantReagent, 3 * max(1, HYPfull_potency_calculation(DNA, 0.1 / length(plant_complete_reagents))))

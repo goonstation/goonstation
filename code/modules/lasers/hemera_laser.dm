@@ -81,7 +81,7 @@
 			//telehop + radiation
 			if (iscarbon(hitMob))
 				hitMob.take_radiation_dose(3 SIEVERTS)
-				hitMob.changeStatus("weakened", 2 SECONDS)
+				hitMob.changeStatus("knockdown", 2 SECONDS)
 			telehop(hitMob, src.power, src.power > 2)
 			return
 
@@ -91,7 +91,7 @@
 				hitMob.take_radiation_dose(3 SIEVERTS)
 
 				random_brute_damage(hitMob, 25)
-				hitMob.changeStatus("weakened", 2 SECONDS)
+				hitMob.changeStatus("knockdown", 2 SECONDS)
 				if (ishuman(hitMob) && prob(25))
 					var/mob/living/carbon/human/hitHuman = hitMob
 					if (hitHuman.organHolder && hitHuman.organHolder.brain)

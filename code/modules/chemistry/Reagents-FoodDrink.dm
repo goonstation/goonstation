@@ -48,14 +48,14 @@ datum
 					if(effect <= 1)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
 						M.emote("scream")
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> completely spaces out for a moment."))
 						M.change_misstep_chance(15 * mult)
 					else if(effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
 						M.dizziness += 5
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 7)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> shakes uncontrollably."))
 						M.make_jittery(30)
@@ -63,11 +63,11 @@ datum
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
 							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
-						M.setStatusMin("weakened", 8 SECONDS * mult)
+						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
 						M.dizziness += 5
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 
 		fooddrink/milk
 			name = "milk"
@@ -311,7 +311,7 @@ datum
 				if (method == INGEST)
 					boutput(M, "<em>What a kick!</em>")
 					if (prob(20))
-						M.do_disorient(stamina_damage = 7.5, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+						M.do_disorient(stamina_damage = 7.5, knockdown = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 						M.throw_at(get_edge_target_turf(M, get_dir(get_step(M, M.dir), M)),(5)/2,1, throw_type = THROW_GUNIMPACT)
 						M.emote("twitch_v", "scream")
 
@@ -520,7 +520,7 @@ datum
 					boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 					boutput(M, SPAN_ALERT("You feel a paralyzing shock in your lower torso!"))
 					M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
-					M.changeStatus("weakened", 2 SECONDS) //No hulk immunity when the stun is coming from inside your liver, ok .I
+					M.changeStatus("knockdown", 2 SECONDS) //No hulk immunity when the stun is coming from inside your liver, ok .I
 					M.stuttering = 10
 					M.changeStatus("stunned", 10 SECONDS)
 
@@ -536,7 +536,7 @@ datum
 						boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 						boutput(M, SPAN_ALERT("You feel a paralyzing shock in your lower torso!"))
 						M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
-						M.changeStatus("weakened", 2 SECONDS)
+						M.changeStatus("knockdown", 2 SECONDS)
 						M.stuttering = 10
 						M.changeStatus("stunned", 10 SECONDS)
 
@@ -641,7 +641,7 @@ datum
 								M.visible_message(SPAN_ALERT("[M] pukes everywhere and passes out!"))
 								M.vomit()
 								M.reagents.del_reagent("bojack")
-								M.setStatusMin("paralysis", 3 SECONDS)
+								M.setStatusMin("unconscious", 3 SECONDS)
 
 		fooddrink/alcoholic/cocktail_screwdriver
 			name = "Screwdriver"
@@ -910,7 +910,7 @@ datum
 				if(method == INGEST && do_stunny)
 					boutput(M, SPAN_ALERT("Ugh! Why did you drink that?!"))
 					M.setStatusMin("stunned", 3 SECONDS)
-					M.setStatusMin("weakened", 3 SECONDS)
+					M.setStatusMin("knockdown", 3 SECONDS)
 					if (prob(25))
 
 						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
@@ -1337,7 +1337,7 @@ datum
 				if(method == INGEST && do_stunny)
 					boutput(M, SPAN_ALERT("Drinking that was an awful idea!"))
 					M.setStatusMin("stunned", 3 SECONDS)
-					M.setStatusMin("weakened", 3 SECONDS)
+					M.setStatusMin("knockdown", 3 SECONDS)
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 					if (prob(10))
@@ -2229,9 +2229,9 @@ datum
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
 							boutput(M, SPAN_ALERT("What stunning texture!"))
-							M.setStatusMin("paralysis", 6 SECONDS)
+							M.setStatusMin("unconscious", 6 SECONDS)
 							M.setStatusMin("stunned", 7 SECONDS)
-							M.setStatusMin("weakened", 8 SECONDS)
+							M.setStatusMin("knockdown", 8 SECONDS)
 							M.stuttering += 20
 
 		fooddrink/capsaicin
@@ -2280,7 +2280,7 @@ datum
 						if (volume_passed >= 80)
 							boutput(M, SPAN_ALERT("<b>HOLY FUCK!!!!</b>"))
 							M.stuttering += 30
-							M.setStatusMin("weakened", 5 SECONDS)
+							M.setStatusMin("knockdown", 5 SECONDS)
 						else if (volume_passed >= 40 && volume_passed < 80)
 							boutput(M, SPAN_ALERT("HOT!!!!"))
 							M.emote("cough")
@@ -3174,7 +3174,7 @@ datum
 						boutput(M, SPAN_ALERT("You feel a sharp pain in your chest!"))
 						M.take_oxygen_deprivation(25 * mult)
 						M.setStatusMin("stunned", 10 SECONDS * mult)
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatusMin("unconscious", 6 SECONDS * mult)
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -3401,7 +3401,7 @@ datum
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly starts salivating."))
 						M.emote("drool")
 						M.change_misstep_chance(10 * mult)
-						M.setStatusMin("weakened", 2 SECONDS * mult)
+						M.setStatusMin("knockdown", 2 SECONDS * mult)
 					else if(effect <= 3)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> begins to reminisce about food."))
 						M.changeStatus("stunned", 2 SECONDS * mult)
@@ -3414,7 +3414,7 @@ datum
 					if(effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> enters a food coma!"))
 						M.emote("faint")
-						M.setStatusMin("paralysis", 6 SECONDS * mult)
+						M.setStatusMin("unconscious", 6 SECONDS * mult)
 					else if(effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> wants more delicious food!"))
 						M.emote("scream")
@@ -3423,7 +3423,7 @@ datum
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> appears extremely depressed."))
 						M.emote("moan")
 						M.change_misstep_chance(25 * mult)
-						M.setStatusMin("weakened", 7 SECONDS * mult)
+						M.setStatusMin("knockdown", 7 SECONDS * mult)
 
 		fooddrink/pepperoni //Hukhukhuk presents. pepperoni and acetone
 			name = "pepperoni"
@@ -4028,9 +4028,7 @@ datum
 				M.make_dizzy(5 * mult)
 				M.change_misstep_chance(50 * mult)
 				M.take_brain_damage(1 * mult)
-				if(M.getStatusDuration("paralysis")) M.delStatus("paralysis")
-				M.delStatus("stunned")
-				M.delStatus("weakened")
+				M.remove_stuns()
 				M.delStatus("disorient")
 				if(M.sleeping) M.sleeping = 0
 				..(M)
@@ -4350,7 +4348,7 @@ datum
 				if(method == INGEST && do_stunny)
 					boutput(M, SPAN_ALERT("Ugh! Eating that was a terrible idea!"))
 					M.setStatusMin("stunned", 2 SECONDS)
-					M.setStatusMin("weakened", 2 SECONDS)
+					M.setStatusMin("knockdown", 2 SECONDS)
 					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 		fooddrink/fakecheese
@@ -4517,7 +4515,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(probmult(10))
 					boutput(M, SPAN_ALERT("Your body feels like it's being tickled from the inside out!"))
-					M.changeStatus("weakened", 1 SECONDS)
+					M.changeStatus("knockdown", 1 SECONDS)
 					M.emote("laugh")
 					M.visible_message(SPAN_ALERT("[M] sneezes. [capitalize(his_or_her(M))] sneeze sounds like a honk!"))
 					playsound(M.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)

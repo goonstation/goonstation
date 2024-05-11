@@ -276,7 +276,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "bp" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -8879,7 +8879,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/maintdock)
 "IN" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
