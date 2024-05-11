@@ -1408,39 +1408,59 @@ datum
 			fluid_r = 210
 			fluid_g = 180
 			fluid_b = 25
-			depletion_rate = 0.3
+			depletion_rate = 0.2
 			blob_damage = 1
+			var/counter = 1
+			var/bleeding_mult = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
+				var/our_amt = holder.get_reagent_amount(src.id)
+
+				if (istype(M, /mob/living/critter/small_animal/rattlesnake))
+					M.reagents.remove_reagent(id, M.reagents.get_reagent_amount(id))
+					return // Snakes are immune to hemotoxins
+				if (istype(M, /mob/living/critter/small_animal))
+					our_amt *= 10 // Exeptionally good at killing small animals
+					M.take_toxin_damage(2 * mult)
+
 				M.take_toxin_damage(mult)
+
+				switch(counter += clamp(our_amt/10, 1, 3) * mult)
+					if (1 to 30) // The more there is, the faster it progresses
+						bleeding_mult = 0.5 * mult
+						if (probmult(8))
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+					if (30 to 70)
+						bleeding_mult = 1 * mult
+						if (probmult(14))
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+					if (70 to INFINITY)
+						bleeding_mult = 1.5  * mult
+						if (probmult(24))
+							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+
+				if (probmult(10) && counter > 25)
+					M.make_jittery(50)
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 5 SECONDS))
+					if (!isdead(M))
+						M.emote(pick("cry", "tremble", "scream"))
+				else if (probmult(10) && counter > 15)
+					M.change_eye_blurry(6, 6)
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 5 SECONDS))
+					if (!isdead(M))
+						M.emote(pick("shake", "tremble", "shudder"))
+				if (counter > 20 && !ON_COOLDOWN(M, "Hemotoxin Message", 30 SECONDS))
+					M.visible_message(pick(SPAN_ALERT("<B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!"),\
+											SPAN_ALERT("<B>[M]</B> bleeds [pick("profusely", "from every pore")]!"),\
+											SPAN_ALERT("<B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!")))
 
 				if (isliving(M))
 					var/mob/living/H = M
 					if(H.blood_volume > 300)        //slows down your bleeding when you have less blood to bleed
-						H.blood_volume -= 5 * mult
+						H.blood_volume -= 5 * bleeding_mult
 					else
-						H.blood_volume -= 3 * mult
-				if (probmult(6))
-					M.visible_message(pick(SPAN_ALERT("<B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!"),\
-											SPAN_ALERT("<B>[M]</B> bleeds [pick("profusely", "from every wound")]!"),\
-											SPAN_ALERT("<B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!")))
-					playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE) //some bloody effects
-					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
-				else if (probmult(20))
-					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc) //some extra bloody effects
-				if (probmult(10))
-					M.make_jittery(50)
-					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 5 SECONDS))
-					boutput(M, SPAN_ALERT("<b>Your body hurts so much.</b>"))
-					if (!isdead(M))
-						M.emote(pick("cry", "tremble", "scream"))
-				if (probmult(10))
-					M.change_eye_blurry(6, 6)
-					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 5 SECONDS))
-					boutput(M, SPAN_ALERT("<b>Everything starts hurting.</b>"))
-					if (!isdead(M))
-						M.emote(pick("shake", "tremble", "shudder"))
+						H.blood_volume -= 3 * bleeding_mult
 
 				..()
 				return

@@ -2131,7 +2131,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return
 
 	death()
-		src.reagents.add_reagent("hemotoxin", 40, null)
+		src.reagents.add_reagent("hemotoxin", 20, null)
 		src.friends = null
 		return ..()
 
