@@ -61,6 +61,19 @@
 			return
 		return
 
+/obj/item/shipcomponent/mainweapon/buildTooltipContent()
+	. = ..()
+	if (src.current_projectile)
+		var/b_force = "Bullet damage: [current_projectile.damage] per shot"
+		var/disrupt = ""
+		if (current_projectile.armor_ignored)
+			b_force += " - [round(current_projectile.armor_ignored * 100, 1)]% armor piercing"
+		if (current_projectile.disruption)
+			disrupt += "Pod disruption: [round(current_projectile.disruption, 1)]% chance per shot"
+		. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
+		if (disrupt)
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
+	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
 	if(ON_COOLDOWN(src, "fire", firerate))
