@@ -1,5 +1,9 @@
 
 (t)sat may 11 24
+(u)Cheekybrdy
+(p)18732
+(e)🎨|C-Sprites
+(+)HoP has their own dedicated PDA cartridge related to the civilian department instead of the old general command one.
 (u)LeahTheTech
 (p)18838
 (e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
