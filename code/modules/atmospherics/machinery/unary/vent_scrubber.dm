@@ -31,7 +31,7 @@
 	..()
 	if(src.frequency)
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NETID(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/initialize()
 	..()

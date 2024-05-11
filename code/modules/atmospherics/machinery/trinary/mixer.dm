@@ -32,7 +32,7 @@
 
 /obj/machinery/atmospherics/trinary/mixer/initialize()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NO_NETID(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon()
 	if(!(src.node1 && src.node2 && src.node3))

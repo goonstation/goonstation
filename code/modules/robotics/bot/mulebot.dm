@@ -86,8 +86,8 @@
 			cell.maxcharge = 2000
 		setup_wires()
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NO_NETID("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NO_NETID("beacon", beacon_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "beacon", beacon_freq)
 
 	// set up the wire colours in random order
 	// and the random wire display order

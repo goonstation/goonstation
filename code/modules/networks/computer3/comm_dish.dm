@@ -30,7 +30,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 					src.link.master = src
 
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NETID(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	disposing()
 		STOP_TRACKING

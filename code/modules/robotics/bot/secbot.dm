@@ -258,9 +258,9 @@
 				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 				UpdateOverlays(bothat, "secbot_hat")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NO_NETID("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NO_NETID("beacon", beacon_freq)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT_NO_NETID("pda", FREQ_PDA)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "beacon", beacon_freq)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 		#ifdef I_AM_ABOVE_THE_LAW
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)

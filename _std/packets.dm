@@ -7,44 +7,22 @@ proc/check_for_radio_jammers(atom/source)
 		if (IN_RANGE(source, A, RADIO_JAMMER_RANGE))
 			return TRUE
 
-#define MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NETID(conn_id, freq) src._AddComponent(list( \
+#define MAKE_DEFAULT_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \
 		/datum/component/packet_connected/radio, \
 		conn_id, \
 		freq, \
-		src.net_id, \
+		net_id, \
 		hascall(src, "receive_signal") ? "receive_signal" : null, \
 		FALSE, \
 		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
 		FALSE \
 	))
 
-#define MAKE_DEFAULT_RADIO_PACKET_COMPONENT_NO_NETID(conn_id, freq) src._AddComponent(list( \
+#define MAKE_SENDER_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \
 		/datum/component/packet_connected/radio, \
 		conn_id, \
 		freq, \
-		null, \
-		hascall(src, "receive_signal") ? "receive_signal" : null, \
-		FALSE, \
-		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
-		FALSE \
-	))
-
-#define MAKE_SENDER_RADIO_PACKET_COMPONENT_NETID(conn_id, freq) src._AddComponent(list( \
-		/datum/component/packet_connected/radio, \
-		conn_id, \
-		freq, \
-		src.net_id, \
-		null, \
-		TRUE, \
-		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
-		FALSE \
-	))
-
-#define MAKE_SENDER_RADIO_PACKET_COMPONENT_NO_NETID(conn_id, freq) src._AddComponent(list( \
-		/datum/component/packet_connected/radio, \
-		conn_id, \
-		freq, \
-		null, \
+		net_id, \
 		null, \
 		TRUE, \
 		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\

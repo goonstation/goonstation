@@ -446,7 +446,7 @@ obj/machinery/embedded_controller
 
 		New()
 			..()
-			MAKE_SENDER_RADIO_PACKET_COMPONENT_NO_NETID(null, frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		post_signal(datum/signal/signal)
 			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)

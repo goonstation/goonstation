@@ -134,7 +134,7 @@
 	New()
 		..()
 		src.net_id = format_net_id("\ref[src]")
-		MAKE_SENDER_RADIO_PACKET_COMPONENT_NETID(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)
