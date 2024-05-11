@@ -886,8 +886,8 @@
 			return
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Flavor text"
-		var/message = "(ckey: [ckey], loaded profile: [player.client.preferences.profile_number])"
-		message = "**Flavor text:** [player.client.preferences.flavor_text]\n"
+		ircmsg["name"] = "[ckey], loaded profile: [player.client.preferences.profile_number])"
+		var/message = "**Flavor text:** [player.client.preferences.flavor_text]\n"
 		message += "**Security note:** [player.client.preferences.security_note]\n"
 		message += "**Medical note:** [player.client.preferences.medical_note]\n"
 		message += "**Syndicate intelligence:** [player.client.preferences.synd_int_note]\n"
@@ -897,7 +897,7 @@
 /datum/spacebee_extension_command/show_profile
 	name = "showprofile"
 	argument_types = list(/datum/command_argument/string/ckey = "ckey", /datum/command_argument/number = "profile_num")
-	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 
 	execute(user, ckey, profile_num)
 		if (profile_num < 1 || profile_num > SAVEFILE_PROFILES_MAX)
