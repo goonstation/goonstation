@@ -214,13 +214,13 @@
 		..()
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-		. = ..()
-		if (.)
-			// Keep track of each purchase for the crew credits
-			var/datum/materiel/M = locate(params["ref"]) in materiel_stock
-			if (usr.mind.is_antagonist())
-				var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
-				nukie?.purchased_items.Add(M)
+		switch(action) // Keep track of each purchase for the crew credits
+			if ("redeem")
+				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
+				if (src.credits[M.category] >= M.cost && usr.mind.is_antagonist())
+					var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					nukie?.purchased_items.Add(M)
+		..()
 
 
 /obj/submachine/weapon_vendor/pirate
