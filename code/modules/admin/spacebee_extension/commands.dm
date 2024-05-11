@@ -891,7 +891,7 @@
 		message += "**Security note:** [player.client.preferences.security_note]\n"
 		message += "**Medical note:** [player.client.preferences.medical_note]\n"
 		message += "**Syndicate intelligence:** [player.client.preferences.synd_int_note]\n"
-		ircmsg["msg"] = message
+		ircmsg["msg"] = html_decode(message)
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/show_profile
@@ -924,5 +924,5 @@
 		message += "**Security note:** [prefs.security_note]\n"
 		message += "**Medical note:** [prefs.medical_note]\n"
 		message += "**Syndicate intelligence:** [prefs.synd_int_note]\n"
-		ircmsg["msg"] = message
+		ircmsg["msg"] = html_decode(message)
 		ircbot.export("help", ircmsg)
