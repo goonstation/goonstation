@@ -40894,7 +40894,7 @@
 	},
 /area/station/quartermaster/refinery)
 "cpe" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

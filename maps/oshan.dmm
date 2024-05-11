@@ -26614,7 +26614,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bRs" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /obj/disposalpipe/segment{
 	dir = 4
 	},

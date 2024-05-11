@@ -19061,7 +19061,7 @@
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bBd" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bBe" = (
@@ -37152,7 +37152,6 @@
 /area/station/security/main)
 "hjz" = (
 /obj/machinery/firealarm/east,
-/obj/machinery/processor,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},

@@ -37890,7 +37890,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "wdt" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "weD" = (

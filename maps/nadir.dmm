@@ -31348,7 +31348,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/hallway/primary/northwest)
 "nbQ" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},

@@ -15727,7 +15727,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/refinery)
 "dqM" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "dqV" = (
@@ -31980,7 +31980,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "pXP" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/refinery)
 "pYd" = (
