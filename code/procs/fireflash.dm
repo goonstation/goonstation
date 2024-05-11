@@ -42,7 +42,7 @@
 		var/obj/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400, chemfire)
 		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
 
-		if (hotspot)
+		if (!QDELETED(hotspot))
 			created_hotspots += hotspot
 			affected_turfs += T
 
