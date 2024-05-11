@@ -176,7 +176,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
 	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
-	if(!istype(usr.loc, /obj/machinery/vehicle/))
+	if(usr.loc != src.ship)
 		return
 	switch(loadmode)
 		if("Load")
