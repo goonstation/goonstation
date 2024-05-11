@@ -550,7 +550,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	recoil_stacks = 0
 
 /obj/item/gun/proc/handle_recoil(mob/user, turf/start, turf/target, POX, POY, first_shot = TRUE)
-	if (!recoil_enabled)
+	if (!recoil_enabled || !istype(user))
 		return
 	var/start_recoil = FALSE
 	if (recoil == 0)
