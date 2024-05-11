@@ -249,13 +249,16 @@
 		if (!obj_turf)
 			return FALSE
 		for (var/obj/O in obj_turf)
-			// girder for soul, window for thindow (fuck thindow)
-			if (istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing))
+			if (src.constructible_check(O))
 				continue
 			if (O.density)
 				boutput(owner, SPAN_ALERT("You try to build \the [obj_name], but there's \the [O] in the way!"))
 				return TRUE
 		return FALSE
+
+	proc/constructible_check(var/obj/O)
+		// girder for soul, window for thindow (fuck thindow) <- ((I have no idea what this means))
+		return istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing)
 
 	onStart()
 		..()
@@ -299,6 +302,9 @@
 			return
 		owner.visible_message(SPAN_NOTICE("[owner] assembles \the [obj_name]!"))
 		var/obj/item/R = new obj_type(obj_turf)
+		if (isitem(R))
+			var/mob/living/carbon/human/H = owner
+			H.put_in_hand_or_drop(R)
 		R.setMaterial(obj_mat)
 		if (istype(R))
 			R.amount = obj_amt
@@ -536,6 +542,7 @@
 				else
 					duration = 2.5 SECONDS
 
+
 		duration += ExtraDuration
 
 		if (source.reagents && source.reagents.has_reagent("crime"))
@@ -637,9 +644,15 @@
 		if(item)
 			var/obj/item/existing_item = target.get_slot(slot)
 			if(existing_item && in_start) // if they have something there, smack it with held item
+				var/hidden_check = FALSE
+				if(src.item.w_class <= W_CLASS_POCKET_SIZED && !(src.item.item_function_flags & OBVIOUS_INTERACTION_BAR))
+					hidden_check = TRUE
 				logTheThing(LOG_COMBAT, source, "uses the inventory menu while holding [log_object(item)] to interact with \
 													[log_object(existing_item)] equipped by [log_object(target)].")
-				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
+				if(hidden_check)
+					actions.start(new /datum/action/bar/private/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source)
+				else
+					actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, TYPE_PROC_REF(/mob/living, click), list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(item != source.equipped())

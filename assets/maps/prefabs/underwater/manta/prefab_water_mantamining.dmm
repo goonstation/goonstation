@@ -553,7 +553,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/tunnelsnake)
 "cj" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
 "ck" = (

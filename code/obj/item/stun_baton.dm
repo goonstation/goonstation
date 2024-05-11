@@ -518,5 +518,5 @@ TYPEINFO(/obj/item/baton/ntso)
 		if (state == EXTENDO_BATON_OPEN_AND_ON)
 			state = EXTENDO_BATON_OPEN_AND_OFF
 		src.is_active = FALSE
-		usr.show_text("The [src.name] is now open and unpowered.", "blue")
+		usr?.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
