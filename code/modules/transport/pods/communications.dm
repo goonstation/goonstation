@@ -97,7 +97,7 @@
 
 	proc/External()
 		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
-		if(!broadcast)
+		if(!broadcast || usr.loc != src.ship) // need to check if something wasn't entered or if user isn't in a vehicle
 			return
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
