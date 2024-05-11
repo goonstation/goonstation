@@ -93,7 +93,15 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+			var/b_force = "Bullet damage: [current_projectile.damage]"
+			var/disrupt = ""
+			if (current_projectile.armor_ignored)
+				b_force += " - [round(current_projectile.armor_ignored * 100, 1)]% armor piercing"
+			if (current_projectile.disruption)
+				disrupt += "Pod disruption: [round(current_projectile.disruption, 1)]%"
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
+			if (disrupt)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
 		lastTooltipContent = .
 
 	New()
