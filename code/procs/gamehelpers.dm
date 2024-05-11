@@ -90,7 +90,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
-			if (C.bioHolder.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
+			if (C.bioHolder?.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
