@@ -57698,10 +57698,6 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "ePK" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security's Office"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -57711,6 +57707,10 @@
 	},
 /obj/mapping_helper/access/hos,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/security/hos)
 "ePX" = (
@@ -68367,15 +68367,13 @@
 /obj/strip_door{
 	layer = 3
 	},
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security's Office"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/access/hos,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor,
 /area/station/security/hos)
 "pSU" = (
