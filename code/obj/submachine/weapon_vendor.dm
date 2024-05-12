@@ -213,6 +213,16 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		switch(action) // Keep track of each purchase for the crew credits
+			if ("redeem")
+				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
+				if (src.credits[M.category] >= M.cost && usr.mind.is_antagonist())
+					var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					nukie?.purchased_items.Add(M)
+		..()
+
+
 /obj/submachine/weapon_vendor/pirate
 	name = "Pirate Weapons Vendor"
 	icon = 'icons/obj/vending.dmi'
