@@ -67,10 +67,10 @@ THROWING DARTS
 		owner = M
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			H.implant?.Add(src)
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
-			C.implants.Add(src)
+			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()

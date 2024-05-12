@@ -383,7 +383,7 @@
 			M.changeStatus("knockdown", 2 SECONDS)
 
 	attack_ai(mob/user as mob)
-		if (GET_DIST(user, src) < 2)
+		if (GET_DIST(user, src) < 2 && user.a_intent != INTENT_HARM)
 			return attack_hand(user)
 		else
 			return ..()

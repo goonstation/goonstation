@@ -1,5 +1,63 @@
 
+(t)sun may 12 24
+(u)Ilysen
+(p)18672
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed zombies' Infect ability breaking when interrupted. Also added a new big message in chat when you get infected!
+(u)crunchwarp
+(p)18831
+(e)🆕📄|C-Feature, A-UI
+(+)Nukies purchases are now visible in the crew credits
+(t)sat may 11 24
+(u)Zamujasa
+(+)Visitors to the Afterlife Bar should have more accurate ID cards.
+(u)Cheekybrdy
+(p)18732
+(e)🎨|C-Sprites
+(+)HoP has their own dedicated PDA cartridge related to the civilian department instead of the old general command one.
+(u)LeahTheTech
+(p)18838
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Replaced static material processers with new sheet extruders that make sheets out of metal and glass bars.
+(t)fri may 10 24
+(u)Cheekybrdy
+(p)18607
+(e)🗺|A-Mapping
+(*)Added a mining magnet to atlas.
+(u)Lord_Earthfire
+(p)18820
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Action bars when using many small/tiny items on items in other players inventory are now only visible to the user.
+(u)Lord_Earthfire
+(p)18836
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Boxes cannot be used for pickpocketing anymore.
+(u)TDHooligan
+(p)18435
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Stuns now get shortened by taking melee damage.
+(*)Shorter stuns are affected less.
+(t)thu may 09 24
+(u)Colossusqw
+(p)18795
+(e)🔄⚗📡|C-Rework, A-Chemistry, A-AI
+(+)Viper venom is now called Hemotoxin and has a recipe, 1 heparin, 3 ether, 2 hydrochloric acid at 75C
+(+)Venom is now called cytotoxin, and has had it's gib chance swapped by progressively removing limbs from the affected mob.
+(+)Rattlesnakes now have a slightly lower bite cooldown, but do warning strikes before actually biting.
+(t)wed may 08 24
+(u)Glamurio (Ryou)
+(p)18717
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait, Party Animal, which will have you (and anyone else with the trait) wake up groggy from last night's party.
+(u)Zamujasa
+(e)📦|A-Game-Objects
+(*)Added an (admin-spawnable) "remote music" record that can play YouTube music in the radio equipment.
 (t)tue may 07 24
+(u)Zamujasa
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Visiting Ghost VR and the Afterlife Bar will now send a message to your fellow ghosts (once every five minutes).
+(+)Visiting the Afterlife Bar shows a message about talking on Deadchat (start with :d). The respawn timer is now visible too (it always counted, but now it is also visible).
+(+)Gun components have a shorter cooldown (1 second), and now accept paintball guns.
 (u)tarmunora
 (+)Some internal changes to ability code - using abilities will properly interrupt most actionbars. Make an issue if this breaks any features horribly.
 (u)Klushy225

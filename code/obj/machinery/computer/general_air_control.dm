@@ -354,7 +354,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 	New()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", frequency)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("respond", respond_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("respond", respond_frequency)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("receive", receive_frequency)
 
 	receive_signal(datum/signal/signal)

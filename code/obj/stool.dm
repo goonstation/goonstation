@@ -37,6 +37,7 @@
 	material_amt = 0.1
 
 	New()
+		START_TRACKING
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
 			src.p_class = 2 // so make us easy to move
 		..()

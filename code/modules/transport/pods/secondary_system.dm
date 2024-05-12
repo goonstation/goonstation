@@ -61,7 +61,7 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
-	
+
 	run_component()
 		if (!src.ship.passengers)
 			src.deactivate()
@@ -176,6 +176,8 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
 	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
+	if(usr.loc != src.ship)
+		return
 	switch(loadmode)
 		if("Load")
 			var/atom/movable/AM = null
@@ -624,6 +626,8 @@
 		opencomputer(user)
 		return
 	opencomputer(mob/user as mob)
+		if(user.loc != src.ship)
+			return
 		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
@@ -648,6 +652,8 @@
 		return
 
 	opencomputer(mob/user as mob)
+		if(user.loc != src.ship)
+			return
 		var/dat = "<TT><B>[src] Console</B><BR><HR>"
 		for(var/mob/M in ship)
 			if(M == ship.pilot) continue

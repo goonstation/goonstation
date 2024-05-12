@@ -1233,7 +1233,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				. = TRUE
 			if ("restorebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				xtarget = bm.x
 				ytarget = bm.y
@@ -1243,7 +1243,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 			if ("deletebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				bookmarks.Remove(bm)
 				. = TRUE
@@ -1277,6 +1277,11 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				newsignal.transmission_method = TRANSMISSION_WIRE
 				newsignal.data["command"] = "term_connect"
 				newsignal.data["device"] = src.device_tag
+
+				if (!istype(user_data))
+					user_data = new
+					user_data.fields["userid"] = src.net_id
+					user_data.fields["access"] = "11"
 
 				newsignal.data_file = user_data.copy_file()
 

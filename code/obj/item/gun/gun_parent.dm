@@ -514,6 +514,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 ///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
 /obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
 	src.current_projectile = newProj
+	src.tooltip_rebuild = TRUE
 	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)
 
 /obj/item/gun/proc/do_camera_recoil(mob/user, turf/start, turf/target, POX, POY)
@@ -557,7 +558,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	recoil_stacks = 0
 
 /obj/item/gun/proc/handle_recoil(mob/user, turf/start, turf/target, POX, POY, first_shot = TRUE)
-	if (!recoil_enabled)
+	if (!recoil_enabled || !istype(user))
 		return
 	var/start_recoil = FALSE
 	if (recoil == 0)

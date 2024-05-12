@@ -105,22 +105,23 @@
 							H.say(phrase_log.random_phrase("say"))
 					src.make_evil(H)
 			else
-				src.make_evil()
+				src.make_evil(clone)
 
 			SPAWN(imprison_time)
 				if (!O.disposed)
 					O.ArtifactDeactivated()
 
 	proc/make_evil(mob/living/carbon/human/clone)
-		sleep(evil_delay)
-		clone.attack_alert = 0
-		clone.ai_init()
-		clone.ai_aggressive = 1
-		clone.ai_calm_down = 0
-		sleep(randfloat(3 SECOND, 20 SECONDS))
-		while (!isdead(clone) && isnull(clone.client))
-			clone.say(phrase_log.random_phrase("say"))
+		if(clone)
+			sleep(evil_delay)
+			clone.attack_alert = 0
+			clone.ai_init()
+			clone.ai_aggressive = 1
+			clone.ai_calm_down = 0
 			sleep(randfloat(3 SECOND, 20 SECONDS))
+			while (!isdead(clone) && isnull(clone.client))
+				clone.say(phrase_log.random_phrase("say"))
+				sleep(randfloat(3 SECOND, 20 SECONDS))
 
 	effect_deactivate(obj/O)
 		if (..())
