@@ -21,7 +21,7 @@
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
-	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+	if(src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
 		var/disguisered = FALSE
 		for (var/obj/item/device/disguiser/D in src)
 			disguisered |= D.active

@@ -1506,17 +1506,18 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		return
 
 	proc/heat()
-		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
-		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-		var/old_temperature = air_contents.temperature
+		if(air_contents)
+			var/air_heat_capacity = HEAT_CAPACITY(air_contents)
+			var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
+			var/old_temperature = air_contents.temperature
 
-		if(combined_heat_capacity > 0)
-			var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
-			air_contents.temperature = combined_energy/combined_heat_capacity
+			if(combined_heat_capacity > 0)
+				var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
+				air_contents.temperature = combined_energy/combined_heat_capacity
 
-		if(abs(old_temperature-air_contents.temperature) > 1)
-			if(network)
-				network.update = 1
+			if(abs(old_temperature-air_contents.temperature) > 1)
+				if(network)
+					network.update = 1
 		return 1
 
 TYPEINFO(/obj/machinery/power/furnace/thermo)

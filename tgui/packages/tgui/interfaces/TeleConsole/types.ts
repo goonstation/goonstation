@@ -28,7 +28,7 @@ export interface LongRangeData {
 }
 
 export interface BookmarkData {
-  ref: string;
+  nameRef: string;
   name: string;
   x: number;
   y: number;

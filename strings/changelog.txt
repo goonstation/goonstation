@@ -1,4 +1,15 @@
 
+(t)sat may 11 24
+(u)Zamujasa
+(+)Visitors to the Afterlife Bar should have more accurate ID cards.
+(u)Cheekybrdy
+(p)18732
+(e)🎨|C-Sprites
+(+)HoP has their own dedicated PDA cartridge related to the civilian department instead of the old general command one.
+(u)LeahTheTech
+(p)18838
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Replaced static material processers with new sheet extruders that make sheets out of metal and glass bars.
 (t)fri may 10 24
 (u)Cheekybrdy
 (p)18607
