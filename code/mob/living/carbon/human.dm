@@ -744,7 +744,7 @@
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
-	src.UpdateOverlays(null, "sleep_bubble")
+	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()

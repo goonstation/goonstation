@@ -38228,7 +38228,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "wdt" = (
-/obj/machinery/processor/portable,
+/obj/machinery/processor,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "weD" = (

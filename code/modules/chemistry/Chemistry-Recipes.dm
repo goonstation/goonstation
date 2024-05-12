@@ -2486,6 +2486,19 @@
 		id = "cold_medicine2"
 		required_reagents = list("antihistamine" = 1, "oil" = 1, "salicylic_acid" = 1, "menthol" = 1)
 
+	hemotoxin
+		name = "Hemotoxin"
+		id = "hemotoxin"
+		result = "hemotoxin"
+		required_reagents = list("heparin" = 1, "ether" = 3, "clacid" = 2)
+		min_temperature = T0C + 75 // Reacts dangerously close to ether's combustion point
+		result_amount = 2
+		mix_phrase = "The mixture simmers and gives off a strong acidic smell."
+		instant = FALSE
+		reaction_speed = 1 // Reacts slowly, it's important to keep the temperature in check
+		stateful = TRUE
+		reaction_icon_color = "#6e2e25"
+
 	cyanide
 		name = "Cyanide"
 		id = "cyanide"
@@ -2531,6 +2544,8 @@
 				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) //assuming this is sodium cyanide so it also interacts with water and sulfuric acid
+			if (QDELETED(holder.my_atom) && !length(holder.covered_cache)) //not sure how this is happening but god please stop runtiming
+				return
 			var/amount_to_smoke = 1
 			if(holder.has_reagent("acid"))
 				amount_to_smoke = 20

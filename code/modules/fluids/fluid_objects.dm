@@ -316,7 +316,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		else
 			overlay_istate = "w_off"
 
-		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
+		AddOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 		var/activetext = "OFF"
 		if (slurping) activetext = "IN"

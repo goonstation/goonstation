@@ -115,7 +115,7 @@
 	hop
 		icon_state = "pda-hop"
 		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hop
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 

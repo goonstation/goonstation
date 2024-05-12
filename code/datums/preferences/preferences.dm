@@ -372,6 +372,7 @@ var/list/removed_jobs = list(
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
+					src.traitPreferences.traitDataDirty = TRUE
 					src.update_preview_icon()
 					return TRUE
 

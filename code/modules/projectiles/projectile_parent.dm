@@ -146,14 +146,14 @@
 			src.transform = null
 			facing_dir = angle2dir(angle_override)
 
-	proc/launch()
+	proc/launch(do_delay = FALSE)
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
 		if(proj_data)
 			proj_data.post_setup(src)
 		if (!QDELETED(src))
-			SPAWN(0)
+			SPAWN(do_delay ? 0 : -1)
 				if (!is_processing)
 					process()
 
@@ -869,7 +869,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"
-	Q.launch()
+	Q.launch(do_delay = (Q.reflectcount % 5 == 0))
 	return Q
 
 /*
@@ -967,5 +967,5 @@ ABSTRACT_TYPE(/datum/projectile)
 				return
 
 	Q.name = "reflected [Q.name]"
-	Q.launch()
+	Q.launch(do_delay = (Q.reflectcount % 5 == 0))
 	return Q

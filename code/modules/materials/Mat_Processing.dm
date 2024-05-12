@@ -3,11 +3,11 @@ TYPEINFO(/obj/machinery/processor)
 	mats = 20
 
 /obj/machinery/processor
-	name = "Material processor"
+	name = "material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
-	icon = 'icons/obj/crafting.dmi'
-	icon_state = "fab3-on"
-	anchored = ANCHORED
+	icon = 'icons/obj/scrap.dmi'
+	icon_state = "reclaimer"
+	anchored = UNANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
@@ -17,6 +17,17 @@ TYPEINFO(/obj/machinery/processor)
 	var/list/atom/processing
 
 	var/atom/output_location = null
+
+	custom_suicide = 1
+
+	suicide(var/mob/user)
+		if (!src.user_can_suicide(user))
+			return 0
+
+		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
+		user.unequip_all()
+		user.set_loc(src)
+		user.make_cube(life = 5 MINUTES, T = src.loc)
 
 	New()
 		. = ..()
@@ -35,7 +46,7 @@ TYPEINFO(/obj/machinery/processor)
 			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
 			for(var/obj/item/material_piece/G in output_location)
-				if(G.material.isSameMaterial(current_thing.material))
+				if(G.material?.isSameMaterial(current_thing.material))
 					exists_nearby = G
 					break
 
@@ -69,7 +80,7 @@ TYPEINFO(/obj/machinery/processor)
 					P.set_loc(get_output_location())
 					P.setMaterial(current_thing.material)
 					P.change_stack_amount(out_amount - P.amount)
-					mat_id = P.material.getID()
+					mat_id = P.material?.getID()
 					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
@@ -312,22 +323,71 @@ TYPEINFO(/obj/machinery/processor)
 		src.processing += thing
 		logTheThing(LOG_STATION, user, "adds [log_object(thing)] to a material processor.")
 
-/obj/machinery/processor/portable
-	name = "Portable material processor"
-	icon = 'icons/obj/scrap.dmi'
-	icon_state = "reclaimer"
-	anchored = UNANCHORED
-	density = 1
+/obj/machinery/sheet_extruder
+	name = "sheet extruder"
+	desc = "A specialised machine for turning material bars into sheets."
+	icon = 'icons/obj/crafting.dmi'
+	icon_state = "fab3-on"
+	density = TRUE
+	anchored = ANCHORED
+	layer = FLOOR_EQUIP_LAYER1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	var/working = FALSE
 
-	custom_suicide = 1
-	suicide(var/mob/user)
-		if (!src.user_can_suicide(user))
-			return 0
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/raw_material))
+			boutput(user, SPAN_ALERT("[I] needs to be refined before it can be turned into sheets."))
+			return
+		if (!istype(I, /obj/item/material_piece))
+			return ..()
+		if (src.working || src.is_disabled())
+			return
+		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
+			return
+		var/obj/item/material_piece/taken_piece = null
+		if (I.amount < 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg')
+			return
+		if (I.amount == 1)
+			user.u_equip(I)
+			taken_piece = I
+		else
+			taken_piece = I.split_stack(1)
+		taken_piece.set_loc(src)
+		src.working = TRUE
+		playsound(src, 'sound/machines/hydraulic.ogg', 40, TRUE)
+		boutput(user, "You load [I] into [src].")
+		SPAWN(2 SECONDS)
+			flick("fab3-work", src)
+			sleep(0.5 SECONDS)
+			src.working = FALSE
+			if (src.is_disabled() || QDELETED(src) || QDELETED(taken_piece))
+				return
+			var/obj/item/sheet/sheets = new(src)
+			sheets.set_stack_amount(10)
+			sheets.setMaterial(taken_piece.material)
+			sheets.set_loc(src.loc)
+			for (var/obj/item/sheet/other_sheets in src.loc?.contents)
+				if (other_sheets == sheets)
+					continue
+				if (sheets.material.isSameMaterial(other_sheets.material))
+					if (other_sheets.stack_item(sheets))
+						break
+			qdel(taken_piece)
 
-		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
-		user.unequip_all()
-		user.set_loc(src)
-		user.make_cube(life = 5 MINUTES, T = src.loc)
+	power_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon(...)
+		if (src.is_broken())
+			src.icon_state = "fab3-broken"
+		else if (!src.powered())
+			src.icon_state = "fab3-off"
+		else
+			src.icon_state = "fab3-on"
+
 
 /obj/machinery/neosmelter
 	name = "Nano-crucible"

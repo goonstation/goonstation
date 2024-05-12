@@ -496,7 +496,7 @@
 	M.attack_particle.transform.Turn(rand(0,360))
 
 	SPAWN(1 SECOND)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
 	SPAWN(0.1 SECONDS)
@@ -1706,7 +1706,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(slide, transform=tr, time=time)
 	if(!had_fullbright && T.fullbright) // eww
 		T.fullbright = 0
-		T.UpdateOverlays(null, "fullbright")
+		T.ClearSpecificOverlays("fullbright")
 		T.RL_Init() // turning off fullbright
 		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
 		full_light.color = T.color
@@ -1732,7 +1732,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		qdel(slide)
 	if(initial(T.fullbright))
 		T.fullbright = 1
-		T.UpdateOverlays(new /image/fullbright, "fullbright")
+		T.AddOverlays(new /image/fullbright, "fullbright")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)
@@ -1847,7 +1847,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		if (issimulatedturf(T))
 			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched[rand(1,2)]")
 			burn_overlay.alpha = 200
-			T.UpdateOverlays(burn_overlay,"burn")
+			T.AddOverlays(burn_overlay,"burn")
 	SPAWN(beam_time)
 		qdel(beam)
 

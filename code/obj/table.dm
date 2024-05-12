@@ -91,27 +91,27 @@ TYPEINFO_NEW(/obj/table)
 			else
 				working_image.icon_state = "NE"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "NEcorner")
+			src.AddOverlays(working_image, "NEcorner")
 		else
-			src.UpdateOverlays(null, "NEcorner")
+			src.ClearSpecificOverlays("NEcorner")
 		if((SOUTHEAST & ordinals) == SOUTHEAST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SE")
 			else
 				working_image.icon_state = "SE"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "SEcorner")
+			src.AddOverlays(working_image, "SEcorner")
 		else
-			src.UpdateOverlays(null, "SEcorner")
+			src.ClearSpecificOverlays("SEcorner")
 		if((SOUTHWEST & ordinals) == SOUTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SW")
 			else
 				working_image.icon_state = "SW"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "SWcorner")
+			src.AddOverlays(working_image, "SWcorner")
 		else
-			src.UpdateOverlays(null, "SWcorner")
+			src.ClearSpecificOverlays("SWcorner")
 
 		if((NORTHWEST & ordinals) == NORTHWEST)
 			if (!src.working_image)
@@ -119,9 +119,9 @@ TYPEINFO_NEW(/obj/table)
 			else
 				working_image.icon_state = "NW"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "NWcorner")
+			src.AddOverlays(working_image, "NWcorner")
 		else
-			src.UpdateOverlays(null, "NWcorner")
+			src.ClearSpecificOverlays("NWcorner")
 
 	proc/deconstruct() //feel free to burn me alive because im stupid and couldnt figure out how to properly do it- Ze // im helping - haine
 		var/obj/item/furniture_parts/P
@@ -387,6 +387,11 @@ TYPEINFO_NEW(/obj/table)
 				if (remove_tablepass)
 					REMOVE_FLAG(AM.flags, TABLEPASS)
 				src.harm_slam(thr.thrown_by, AM)
+
+	after_abcu_spawn()
+		if(src.has_drawer)
+			for(var/obj/I in src.storage.get_all_contents())
+				qdel(I)
 
 
 //Replacement for monkies walking through tables: They now parkour over them.
@@ -1186,11 +1191,7 @@ TYPEINFO(/obj/table/glass)
 		set_icon_state(num2text(dirs))
 
 		if (src.glass_broken == GLASS_BROKEN)
-			src.UpdateOverlays(null, "tabletop")
-			src.UpdateOverlays(null, "SWcorner")
-			src.UpdateOverlays(null, "SEcorner")
-			src.UpdateOverlays(null, "NEcorner")
-			src.UpdateOverlays(null, "NWcorner")
+			src.ClearSpecificOverlays("tabletop", "SWcorner", "SEcorner", "NEcorner", "NWcorner")
 			src.set_density(0)
 			return
 
@@ -1201,7 +1202,7 @@ TYPEINFO(/obj/table/glass)
 		else
 			src.working_image.icon_state = "[R]g[num2text(dirs)]"
 			setMaterialAppearanceForImage(working_image)
-		src.UpdateOverlays(working_image, "tabletop")
+		src.AddOverlays(working_image, "tabletop")
 
 		var/obj/table/WT = locate(auto_type) in get_step(src, WEST)
 		var/obj/table/ST = locate(auto_type) in get_step(src, SOUTH)

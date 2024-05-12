@@ -405,7 +405,7 @@
 			UpdateOverlays(leak,"leak")
 		else
 			icon_state = "intact"
-			UpdateOverlays(null,"leak")
+			ClearSpecificOverlays("leak")
 		alpha = invisibility ? 128 : 255
 
 	else
