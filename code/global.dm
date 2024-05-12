@@ -274,7 +274,7 @@ var/global
 	ooc_allowed = 1
 	looc_allowed = 1
 	dooc_allowed = 1
-	player_capa = 0
+	player_capa = 1
 	player_cap = 55
 	player_cap_grace = list()
 	traitor_scaling = 1
