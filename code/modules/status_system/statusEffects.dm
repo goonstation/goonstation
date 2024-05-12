@@ -2751,3 +2751,53 @@
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/graffiti
+	id = "graffiti"
+	name = "Tagged!"
+	desc = "You've been tagged! <br>Movement speed is reduced. Eyesight reduced. "
+	icon_state = "tagged"
+	unique = 1
+	maxDuration = 15 SECONDS
+	var/counter = 0
+	var/sound = 'sound/effects/electric_shock_short.ogg'
+	var/count = 7
+	var/list/tag_images = list()
+	var/list/tag_filters = list()
+	movement_modifier = /datum/movement_modifier/tagged
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/hud/vision_impair_tag/hud = new
+
+	onAdd(optional)
+		..()
+		if (ismob(owner))
+			var/mob/victim = owner
+			victim.attach_hud(src.hud)
+
+	onRemove()
+		..()
+		if (ismob(owner))
+			var/mob/victim = owner
+			victim.detach_hud(src.hud)
+		for (var/i in 1 to length(tag_images))
+			owner.UpdateOverlays(null,"graffitisplat[i]")
+		owner.UpdateIcon()
+
+	onUpdate(timePassed)
+		counter += timePassed
+		if (duration < 40)
+			for (var/i in 1 to length(tag_images))
+				var/image/tag = tag_images[i]
+				var/target_alpha = (duration)*5
+				if (tag.alpha > target_alpha)
+					tag.alpha = target_alpha
+					owner.UpdateOverlays(tag,"graffitisplat[i]")
+					owner.UpdateIcon()
+		if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+			counter -= count
+			if (prob(10) && ismob(owner))
+				var/mob/victim = owner
+				victim.emote(pick("cough", "blink"))
+			playsound(owner, sound, 17, TRUE, 0.4, 1.6)
+			violent_twitch(owner)
+		. = ..(timePassed)

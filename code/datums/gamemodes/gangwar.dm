@@ -898,24 +898,29 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return message
 
-
-/obj/item/spray_paint
-	name = "spraypaint can"
-	desc = "A can of spray paint."
+/obj/item/spray_paint_gang
+	name = "'Red X' Xtra Heavy Spray Paint"
+	desc = "The bane of janitors everywhere. Red X is an extra thick, toxic brand of spray paint, infamous for permanently marking spots all over the galaxy. No points for guessing their slogan."
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "spraycan"
+	icon_state = "spraycan_gang"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
 	var/empty = FALSE
-	var/mode = "graffiti"
-	var/list/turf/graffititargets = list()
-	var/list/image/targetoverlay = list()
-	var/tagging_horizontally = FALSE
-	var/tagging_vertically = FALSE
-	var/tagging_direction
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/graffiti)
+
+	attack_self(mob/user)
+		if (ON_COOLDOWN(src,"shake",1 SECOND))
+			user.visible_message(SPAN_ALERT("[user] shakes the [src.name]!"))
+			playsound(user.loc, 'sound/items/graffitishake.ogg', 50, FALSE)
+
+	afterattack(target, mob/user)
+		do_gang_tag(target,user)
 	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
 		// check it's far enough from another tag to claim
@@ -1000,23 +1005,6 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return validLocation
 
-	attack_self(mob/user)
-		if (ON_COOLDOWN(src,"shake",1 SECOND))
-			user.visible_message(SPAN_ALERT("[user] shakes the [src.name]!"))
-			playsound(user.loc, 'sound/items/graffitishake.ogg', 50, FALSE)
-		if (mode == "graffiti" && user.get_gang())
-			boutput(user, SPAN_NOTICE("You prepare to spray gang tags."))
-			mode = "gangtag"
-		else if (mode == "gangtag")
-			boutput(user, SPAN_NOTICE("You prepare to spray random graffiti."))
-			mode = "graffiti"
-
-	afterattack(target, mob/user)
-		if (mode == "gangtag")
-			do_gang_tag(target,user)
-		else
-			do_graffiti(target,user)
-
 	proc/do_gang_tag(target, mob/user)
 		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
 
@@ -1042,6 +1030,44 @@ proc/broadcast_to_all_gangs(var/message)
 		if (check_tile_unclaimed(turftarget, user))
 			user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
 			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
+/obj/item/spray_paint_graffiti
+	name = "spraypaint can"
+	desc = "A can of gloss spray paint. Great for doing wicked sick art. Not so great when the janitor shows up."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "spraycan"
+	item_state = "spraycan"
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	w_class = W_CLASS_SMALL
+	object_flags = NO_GHOSTCRITTER
+	var/in_use = FALSE
+	var/mode = "graffiti"
+	var/list/turf/graffititargets = list()
+	var/list/image/targetoverlay = list()
+	var/charges = 30
+	inventory_counter_enabled = 1
+	w_class = W_CLASS_TINY
+
+	update_icon()
+		if (charges > 0 )
+			inventory_counter?.update_number(charges)
+		else
+			inventory_counter?.update_text("-")
+		..()
+
+	New()
+		refresh_single_tags()
+		refresh_double_tags()
+		refresh_triple_tags()
+		..()
+		src.setItemSpecial(/datum/item_special/graffiti)
+	attack_self(mob/user)
+		if (ON_COOLDOWN(src,"shake",1 SECOND))
+			user.visible_message(SPAN_ALERT("[user] shakes the [src.name]!"))
+			playsound(user.loc, 'sound/items/graffitishake.ogg', 50, FALSE)
+
+	afterattack(target, mob/user)
+		do_graffiti(target,user)
+
 	proc/clear_targets()
 		graffititargets = list()
 		tagging_horizontally = FALSE
@@ -1057,22 +1083,42 @@ proc/broadcast_to_all_gangs(var/message)
 		target_image.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		user << target_image
 
+
+	var/tagging_horizontally = FALSE
+	var/tagging_vertically = FALSE
+	var/tagging_direction
+	var/list/tags_single
+	var/list/tags_double
+	var/list/tags_triple
+	proc/refresh_single_tags()
+		tags_single = list()
+		for (var/i=1 to 9)
+			tags_single += i
+	proc/refresh_double_tags()
+		tags_double = list()
+		for (var/i=1 to 7)
+			tags_double += i
+	proc/refresh_triple_tags()
+		tags_triple = list()
+		for (var/i=1 to 11)
+			tags_triple += i
+
 	proc/do_graffiti(target, mob/user)
 		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
 
 		if (!user)
 			return
-		if (empty)
+		if (length(graffititargets) + 1 > charges)
 			return
 		var/turf/turftarget = get_turf(target)
 
-		if(BOUNDS_DIST(src, target) > 0)
+		if(BOUNDS_DIST(src, target) > 0 || (turftarget in graffititargets))
 			return
 		if(in_use)
 			var/valid = FALSE
 			for (var/turf/sprayedturf in graffititargets)
 				var/relative_dir = get_dir(turftarget,sprayedturf)
-				if (BOUNDS_DIST(sprayedturf, turftarget) == 0 && relative_dir in cardinal)
+				if (BOUNDS_DIST(sprayedturf, turftarget) == 0 && (relative_dir in cardinal))
 					if (tagging_horizontally && (relative_dir == WEST || relative_dir == EAST))
 						valid = TRUE
 						break
@@ -1086,20 +1132,32 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_ALERT("You are already tagging elsewhere!"))
 				return
 
-		user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
+		user.visible_message(SPAN_ALERT("[user] begins to spray graffiti on the [turftarget.name]!"))
 		if (!actions.hasAction(user,/datum/action/bar/icon/spray_graffiti,FALSE))
 			actions.start(new/datum/action/bar/icon/spray_graffiti(src), user)
 			clear_targets()
 			add_target(user, turftarget)
-			tagging_direction = (get_dir(turftarget,user)) & (EAST | WEST)
+			var/chosen_dir = get_dir(turftarget,user)
+			if (chosen_dir)
+				tagging_direction = chosen_dir
+			else
+				tagging_direction = SOUTH
 		else if (length(graffititargets) == 1)
-			var/direction_check = get_dir(turftarget, graffititargets[1])
+			var/chosen_dir = get_dir(turftarget,user)
+			var/direction_check = get_dir(turftarget,graffititargets[1])
 			if (direction_check == NORTH || direction_check == SOUTH)
 				tagging_vertically = TRUE
-				tagging_direction = (get_dir(turftarget,user)) & (EAST | WEST)
+				if (chosen_dir == 0)
+					tagging_direction = turn(direction_check,-90) & (EAST | WEST)
+				else
+					tagging_direction = chosen_dir & (EAST | WEST)
+
 			else if (direction_check == EAST || direction_check == WEST)
 				tagging_horizontally = TRUE
-				tagging_direction = (get_dir(turftarget,user)) & (NORTH | SOUTH)
+				if (chosen_dir == 0)
+					tagging_direction = turn(direction_check,-90) & (NORTH | SOUTH)
+				else
+					tagging_direction = chosen_dir & (NORTH | SOUTH)
 			add_target(user, turftarget)
 		else if (length(graffititargets) < 3)
 			add_target(user, turftarget)
@@ -1111,7 +1169,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon_state = "spraycan"
 	var/turf/target_turf
 	var/area/target_area
-	var/obj/item/spray_paint/S
+	var/obj/item/spray_paint_gang/S
 	/// the mob spraying this tag
 	var/mob/M
 	/// the gang we're spraying for
@@ -1119,7 +1177,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
 
-	New(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
+	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/S)
 		src.target_turf = target_turf
 		src.target_area = get_area(target_turf)
 		src.S = S
@@ -1158,7 +1216,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || S.mode != "gangtag")
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1189,7 +1247,8 @@ proc/broadcast_to_all_gangs(var/message)
 
 		src.gang.make_tag(target_turf)
 		S.empty = TRUE
-		S.icon_state = "spraycan_crushed"
+		S.icon_state = "spraycan_crushed_gang"
+		S.setItemSpecial(/datum/item_special/simple)
 		var/mob/M = owner
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
@@ -1204,7 +1263,7 @@ proc/broadcast_to_all_gangs(var/message)
 	interrupt_flags = INTERRUPT_STUNNED
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
-	var/obj/item/spray_paint/S
+	var/obj/item/spray_paint_graffiti/S
 	/// the mob spraying this tag
 	var/mob/M
 	/// the gang we're spraying for
@@ -1212,7 +1271,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
 
-	New(var/obj/item/spray_paint/S)
+	New(var/obj/item/spray_paint_graffiti/S)
 		src.S = S
 		..()
 
@@ -1251,11 +1310,11 @@ proc/broadcast_to_all_gangs(var/message)
 			playsound(owner.loc, 'sound/items/graffitispray3.ogg', 100, TRUE)
 		switch (length(S.graffititargets))
 			if (1)
-				duration = 2 SECONDS
+				duration = 4 SECONDS
 			if (2)
-				duration = 2 SECONDS
+				duration = 6 SECONDS
 			if (3)
-				duration = 2 SECONDS
+				duration = 8 SECONDS
 
 
 	onInterrupt(var/flag)
@@ -1279,11 +1338,25 @@ proc/broadcast_to_all_gangs(var/message)
 		var/targets = length(S.graffititargets)
 		switch (targets)
 			if (1)
-				iconstate = "graffiti-single-[rand(1,9)]"
+				var/result = pick(S.tags_single)
+				S.tags_single -= result
+				iconstate = "graffiti-single-[result]"
+				if (length(S.tags_single) == 0)
+					S.refresh_single_tags()
 			if (2)
-				iconstate = "graffiti-dbl-[rand(1,7)]-"
+				var/result = pick(S.tags_double)
+				S.tags_double -= result
+				iconstate = "graffiti-dbl-[result]-"
+				if (length(S.tags_double) == 0)
+					S.refresh_double_tags()
 			if (3)
-				iconstate = "graffiti-trpl-[rand(1,9)]-"
+				var/result = pick(S.tags_triple)
+				S.tags_triple -= result
+				iconstate = "graffiti-trpl-[result]-"
+				if (length(S.tags_triple) == 0)
+					S.refresh_triple_tags()
+		S.charges -= targets
+		S.UpdateIcon()
 		if (targets == 1)
 			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(S.graffititargets[1])
 			tag.icon_state = iconstate
@@ -1306,6 +1379,10 @@ proc/broadcast_to_all_gangs(var/message)
 				tag.icon_state = "[iconstate][i]"
 				tag.dir = S.tagging_direction
 		S.clear_targets()
+		if (S.charges == 0)
+			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
+			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
+			S.icon_state = "spraycan_crushed"
 
 
 /obj/ganglocker
@@ -1460,7 +1537,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if(user.get_gang() == src.gang)
 			if (gang.spray_paint_remaining > 0)
 				gang.spray_paint_remaining--
-				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+				user.put_in_hand_or_drop(new /obj/item/spray_paint_gang(user.loc))
 				boutput(user, SPAN_ALERT("You grab a bottle of spray paint from the locker."))
 		else
 			boutput(user, SPAN_ALERT("The locker's screen briefly displays the message \"Access Denied\"."))
@@ -2255,7 +2332,7 @@ proc/broadcast_to_all_gangs(var/message)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 
-	spawn_contents = list(/obj/item/gang_flyer = 4, /obj/item/spray_paint = 2, /obj/item/tool/quickhack = 1)
+	spawn_contents = list(/obj/item/gang_flyer = 4, /obj/item/spray_paint_gang = 2, /obj/item/tool/quickhack = 1)
 	var/datum/gang/gang = null
 
 	New(turf/newloc, datum/gang/gang)
@@ -2266,7 +2343,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	random_gangs
 		name = "gang equipment case"
-		spawn_contents = list(/obj/item/spray_paint = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
+		spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
 		New(turf/newloc, datum/gang/gang)
 			..()
 			src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."

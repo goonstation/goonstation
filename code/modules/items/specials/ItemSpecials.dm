@@ -1849,6 +1849,84 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
+
+/datum/item_special/graffiti
+	cooldown = 30 //30
+	staminaCost = 5
+	moveDelay = 5
+	moveDelayDuration = 5
+
+	damageMult = 1
+
+	image = "swipe"
+	name = "Spray Burst"
+	desc = "Use a burst of spray paint to harmlessly blind, deface & disorient an opponent."
+	var/spray_color
+	/// If true, the swipe will ignite stuff in it's reach.
+	var/ignition = FALSE
+	var/flipped = FALSE
+
+	pixelaction(atom/target, list/params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+			if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
+				direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
+
+			var/list/attacked = list()
+
+			var/turf/one = get_step(master, direction)
+			var/turf/effect = get_step(one, direction)
+			var/turf/two = get_step(one, turn(direction, 90))
+			var/turf/three = get_step(one, turn(direction, -90))
+			var/obj/itemspecialeffect/graffiti
+			if (flipped)
+				graffiti = new /obj/itemspecialeffect/graffiti_flipped
+			else
+				graffiti = new /obj/itemspecialeffect/graffiti
+			flipped = !flipped
+			graffiti.color = pick("#FF0000","#FF9A00","#FFFF00","#00FF78","#00FFFF","#0081DF","#CC00FF","#FFCCFF","#EBE6EB")
+
+			graffiti.setup(effect)
+			graffiti.set_dir(direction)
+
+			for(var/turf/T in list(one, two, three))
+				for(var/atom/movable/A in T)
+					if(A in attacked) continue
+					if(isliving(A))
+						var/mob/living/loser = A
+						var/tag_int = pick(1,2,3)
+						var/image/tag = image('icons/effects/effects.dmi',"graffiti_mask_[tag_int]")
+						tag.pixel_y = rand(-1,5)
+						if (user.get_gang() && prob(30))
+							var/datum/gang/usergang = user.get_gang()
+							tag = image('icons/obj/decals/gang_tags.dmi', "gangtag[usergang.gang_tag]")
+							tag.pixel_y = 5
+						if (ismonkey(A))
+							tag.pixel_y = tag.pixel_y - 6
+						if (loser.bioHolder.HasEffect("dwarf"))
+							tag.pixel_y = tag.pixel_y - 4
+						tag.blend_mode = BLEND_INSET_OVERLAY
+						tag.alpha = 200
+						tag.color = graffiti.color
+						tag.appearance_flags = KEEP_TOGETHER
+						A.setStatus("graffiti", 8 SECONDS)
+						var/datum/statusEffect/graffiti/status = A.hasStatus("graffiti")
+						A.UpdateOverlays(tag,"graffitisplat[length(status.tag_images)+1]")
+						status.tag_images += tag
+
+						hit_twitch(A)
+						if (ishuman(A) && prob(40))
+							var/mob/living/carbon/human/victim = A
+							victim.emote("cough")
+						attacked += A
+
+			afterUse(user)
+			playsound(master, 'sound/items/graffitispray3.ogg', 50, TRUE)
+		return
+
 /obj/itemspecialeffect
 	name = ""
 	desc = ""
@@ -2117,6 +2195,17 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 		can_clash = 1
+
+	graffiti
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti1"
+		pixel_x = -32
+		pixel_y = -32
+	graffiti_flipped
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti2"
+		pixel_x = -32
+		pixel_y = -32
 
 	spear
 		icon = 'icons/effects/64x64.dmi'
