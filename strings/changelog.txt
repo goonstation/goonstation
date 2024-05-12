@@ -1,4 +1,13 @@
 
+(t)sun may 12 24
+(u)Ilysen
+(p)18672
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed zombies' Infect ability breaking when interrupted. Also added a new big message in chat when you get infected!
+(u)crunchwarp
+(p)18831
+(e)🆕📄|C-Feature, A-UI
+(+)Nukies purchases are now visible in the crew credits
 (t)sat may 11 24
 (u)Zamujasa
 (+)Visitors to the Afterlife Bar should have more accurate ID cards.
