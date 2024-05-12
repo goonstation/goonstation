@@ -49,6 +49,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE
 		return FALSE
 
+	proc/in_crate()
+		if (!isturf(src.loc))
+			return FALSE
+		if (locate(/obj/storage/crate) in src.loc)
+			return TRUE
+		if (locate(/obj/storage/secure/crate) in src.loc)
+			return TRUE
+		if (locate(/obj/storage/cart) in src.loc)
+			return TRUE
+		return FALSE
+
+	proc/in_closet()
+		if (!isturf(src.loc))
+			return FALSE
+		if (locate(/obj/storage/closet) in src.loc)
+			return TRUE
+		if (locate(/obj/storage/secure/closet) in src.loc) //includes fridges, thankfully
+			return TRUE
+		return FALSE
+
+	proc/on_rack()
+		if (!isturf(src.loc))
+			return FALSE
+		if (locate(/obj/rack) in src.loc)
+			return TRUE
+		return FALSE
+
 	proc/get_food_color()
 		if (food_color) // keep manually defined food colors
 			return food_color
@@ -186,7 +213,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	process()
 		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
-			if (!src.disposed && isturf(src.loc) && !on_table())
+			if (!src.disposed && isturf(src.loc) && !on_table() && !on_rack() && !in_crate() && !in_closet())
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
