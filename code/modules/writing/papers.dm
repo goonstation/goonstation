@@ -759,12 +759,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 proc/spawn_kitchen_note()
 	for_by_tcl(table, /obj/table)
 		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
-			var/type = pick(concrete_typesof(/obj/item/paper/recipe))
+			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
 			new type(get_turf(table))
 			return
-
-ABSTRACT_TYPE(/obj/item/paper/recipe)
-/obj/item/paper/recipe
 
 /obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
