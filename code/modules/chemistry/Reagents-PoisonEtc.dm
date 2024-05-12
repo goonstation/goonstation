@@ -1427,15 +1427,15 @@ datum
 				M.take_toxin_damage(mult)
 
 				switch(counter += clamp(our_amt/10, 1, 3) * mult)
-					if (1 to 30) // The more there is, the faster it progresses
+					if (1 to 40) // The more there is, the faster it progresses
 						bleeding_mult = 0.5 * mult
 						if (probmult(8))
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
-					if (30 to 70)
+					if (40 to 80)
 						bleeding_mult = 1 * mult
 						if (probmult(14))
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
-					if (70 to INFINITY)
+					if (80 to INFINITY)
 						bleeding_mult = 1.5  * mult
 						if (probmult(24))
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
