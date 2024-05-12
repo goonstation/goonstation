@@ -14,7 +14,7 @@
 	New()
 		..()
 		console_location = get_area(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'

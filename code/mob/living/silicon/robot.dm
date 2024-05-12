@@ -2598,7 +2598,7 @@
 		var/message = null
 		var/net_id = generate_net_id(src)
 		var/frequency = FREQ_PDA
-		var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
