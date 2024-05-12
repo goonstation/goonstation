@@ -147,6 +147,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/delay = 600
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "fluid_spawn"
+	invisibility = INVIS_ADVENTURE
 
 	var/datum/reagents/R
 
@@ -315,7 +316,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		else
 			overlay_istate = "w_off"
 
-		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
+		AddOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 		var/activetext = "OFF"
 		if (slurping) activetext = "IN"

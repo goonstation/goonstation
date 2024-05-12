@@ -422,6 +422,7 @@
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
+		announce_ghost_afterlife(usr.key, "<b>[usr.name]</b> is logging into Ghost VR.")
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
 
@@ -618,10 +619,20 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
-	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
-		src.mind.assigned_role = "Staff Assistant"
-	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
 
+	// preserve your original role;
+	// gives "???" if not an observer and not assigned a role,
+	// your "special_role" if one exists,
+	// and both your job and special role if both are set.
+	var/bar_role_name = src.observe_round ? "Observer" : (src.mind.assigned_role || "???")
+	if (src.mind.special_role)
+		bar_role_name = "[bar_role_name != "???" ? "[bar_role_name], " : ""][capitalize(replacetext(src.mind.special_role, "_", " "))]"
+
+	// future: maybe different outfits for special roles. cyborg costumes. lol
+	var/role_override = null
+	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
+		role_override = "Staff Assistant"
+	newbody.JobEquipSpawned(role_override || src.mind.assigned_role, no_special_spawn = 1)
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -646,6 +657,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		qdel(to_del)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
+		newbody.wear_id:assignment = bar_role_name
+		newbody.wear_id:update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)
@@ -660,11 +673,19 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
 
+	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")
+	boutput(src, "<h2>You are visiting the Afterlife Bar!</h2>You can still talk to ghosts! Start a message with \"<tt>:d</tt>\" (like \"<tt>:dhello ghosts</tt>\") to talk in deadchat.")
+
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
 		newbody.key = src.key
 
+	// copy the respawn timer to the new body.
+	// since afterlife bodies get trashed when you die it isnt too big of a deal
+	var/atom/movable/screen/respawn_timer/respawn_timer = newbody.ghost.hud?.get_respawn_timer()
+	if (respawn_timer)
+		newbody.hud.add_object(newbody.ghost.hud?.get_respawn_timer())
 
 
 	return

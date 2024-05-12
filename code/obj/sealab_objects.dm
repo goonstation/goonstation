@@ -218,7 +218,7 @@
 			luminant_img.layer = LIGHTING_LAYER_BASE
 			luminant_img.color = src.color
 			luminant_img.dir = src.dir
-			src.UpdateOverlays(luminant_img, "luminant_img")
+			src.AddOverlays(luminant_img, "luminant_img")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/mining_tool))

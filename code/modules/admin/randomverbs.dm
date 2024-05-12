@@ -75,7 +75,7 @@
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
-				M.changeStatus("paralysis", 8 SECONDS)
+				M.changeStatus("unconscious", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
@@ -1063,7 +1063,7 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
+		src.preview_icon = new /icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone

@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
-		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
+		if (usr.stat || usr.getStatusDuration("knockdown") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
 			boutput(usr, SPAN_ALERT("That's too far!"))
 			return
 
@@ -204,6 +204,7 @@ proc/ui_describe_reagents(atom/A)
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 
 	/// The number of fluid overlay states that this container has.
 	var/fluid_overlay_states = 0

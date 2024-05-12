@@ -1,5 +1,210 @@
 
+(t)sun may 12 24
+(u)Ilysen
+(p)18672
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed zombies' Infect ability breaking when interrupted. Also added a new big message in chat when you get infected!
+(u)crunchwarp
+(p)18831
+(e)🆕📄|C-Feature, A-UI
+(+)Nukies purchases are now visible in the crew credits
+(t)sat may 11 24
+(u)Zamujasa
+(+)Visitors to the Afterlife Bar should have more accurate ID cards.
+(u)Cheekybrdy
+(p)18732
+(e)🎨|C-Sprites
+(+)HoP has their own dedicated PDA cartridge related to the civilian department instead of the old general command one.
+(u)LeahTheTech
+(p)18838
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Replaced static material processers with new sheet extruders that make sheets out of metal and glass bars.
+(t)fri may 10 24
+(u)Cheekybrdy
+(p)18607
+(e)🗺|A-Mapping
+(*)Added a mining magnet to atlas.
+(u)Lord_Earthfire
+(p)18820
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Action bars when using many small/tiny items on items in other players inventory are now only visible to the user.
+(u)Lord_Earthfire
+(p)18836
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Boxes cannot be used for pickpocketing anymore.
+(u)TDHooligan
+(p)18435
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Stuns now get shortened by taking melee damage.
+(*)Shorter stuns are affected less.
+(t)thu may 09 24
+(u)Colossusqw
+(p)18795
+(e)🔄⚗📡|C-Rework, A-Chemistry, A-AI
+(+)Viper venom is now called Hemotoxin and has a recipe, 1 heparin, 3 ether, 2 hydrochloric acid at 75C
+(+)Venom is now called cytotoxin, and has had it's gib chance swapped by progressively removing limbs from the affected mob.
+(+)Rattlesnakes now have a slightly lower bite cooldown, but do warning strikes before actually biting.
+(t)wed may 08 24
+(u)Glamurio (Ryou)
+(p)18717
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait, Party Animal, which will have you (and anyone else with the trait) wake up groggy from last night's party.
+(u)Zamujasa
+(e)📦|A-Game-Objects
+(*)Added an (admin-spawnable) "remote music" record that can play YouTube music in the radio equipment.
+(t)tue may 07 24
+(u)Zamujasa
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Visiting Ghost VR and the Afterlife Bar will now send a message to your fellow ghosts (once every five minutes).
+(+)Visiting the Afterlife Bar shows a message about talking on Deadchat (start with :d). The respawn timer is now visible too (it always counted, but now it is also visible).
+(+)Gun components have a shorter cooldown (1 second), and now accept paintball guns.
+(u)tarmunora
+(+)Some internal changes to ability code - using abilities will properly interrupt most actionbars. Make an issue if this breaks any features horribly.
+(u)Klushy225
+(p)18803
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added two donator figures
+(t)mon may 06 24
+(u)glowbold
+(p)18783
+(e)🪲🆕📄🤖|C-Bug, C-Feature, A-UI, A-Silicons
+(+)AI Eyebot Shells can swap between Help and Harm intent via HUD button.
+(u)Sord
+(*)Added a new +1 trait, Plasma Lungs. The trait makes you spawn with plasma breathing lungs as well as a new belt-slot plasma tank.
+(u)glowbold
+(p)18680
+(e)🔄🔨📦|C-Rework, A-Player-Actions, A-Game-Objects
+(+)Pod repair now uses a repeating action bar.
+(u)FlameArrow57
+(p)18773
+(e)⚖💅🧛🔨|C-Balance, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Revolution rounds now properly end immediately after buckle-cuffing the last revolutionary head in a brig cell.
+(u)LeahTheTech
+(+)Syndicate docking stations now require the target to be adjacent to be click-dragged in.
+(+)EMPs now disorient robotic critters (ie gunbots)
+(t)sun may 05 24
+(u)colossusqw
+(p)18671
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Bladed gloves now create standard insulated glove markings, have a smaller attack slowdown, and deal 15 damage(previous 11).
+(u)LeahTheTech
+(+)The medusa pod cloaking system will now deactivate if the pod has no occupants. No more losing your extremely sneaky pod.
+(p)18746
+(e)🎨⚖|C-Sprites, C-Balance
+(*)Fixed corpses being able to be rotated by ghosts.
+(*)Capulettium now prevents you from rotating, pointing and emoting.
+(t)sat may 04 24
+(u)FlameArrow57
+(p)18755
+(e)⚖📦🚗|C-Balance, A-Game-Objects, A-Vehicles
+(+)Increased armory Mk. 3 Disruptor pod weapon damage (from 0 to mobs, ~9 to vehicles -> 10 to mobs, ~15 to vehicles)
+(+)Pod disruption from projectiles now causes a random picked pod component to be disabled for 2 seconds. Manual re-activation still required.
+(u)tarmunora
+(+)Walking over someone while on harm intent will throw a free kick on a moderate cooldown. Trample lube victims and napping staff assistants alike.
+(+)Rebalance syndicate chainsaw.
+(u)DecidedlyUnethical
+(p)18752
+(e)💅📦🍝|C-QoL, A-Game-Objects, A-Catering
+(*)NT has now stocked Booze-O-Mats with bottles of curacao liquor.
+(t)thu may 02 24
+(u)MylieDaniels
+(p)18692
+(e)🗺🎨🔎🔄📦🍝|A-Mapping, C-Sprites, C-Code-Quality, C-Rework, A-Game-Objects, A-Catering
+(+)Pizza has been completely reworked. To get started, roll some dough. To finish it up, bake for 9 seconds on HIGH, or find a way to expose to a terribly high heat. The middle? That's entirely up to you.
+(u)JORJ949
+(p)18550
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Donut 3's AI Upload and Stock Exchange have swapped locations.
+(t)wed may 01 24
+(u)LeahTheTech
+(p)18698
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Unreadied players now contribute 1/2 of a readied player to roundstart gamemode scaling. (Yes this means more antags on average)
+(t)tue apr 30 24
+(u)Zamujasa
+(e)🆕💅|C-Feature,C-QoL
+(*)Josh now sells a paintball gun. You can load it with paint.
+(*)The paint dispenser and paint cans have seen minor QoL improvements.
+(+)The paint crate now includes totally random paint cans.
+(+)Paint cans are named after the colors they contain, and examining them shows how many uses are left.
+(u)Lyy
+(p)18393
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a certain anime martial artist's costume to Geoff Honkington's shop.
+(t)sun apr 28 24
+(u)tarmunora
+(+)Armory shotgun racks have been swapped out for phaser racks (and vice versa phaser crates for shotgun crates). Armory phasers come with a slightly larger default power cell. phaser rack sprites by Flaborized
+(u)Azrun
+(p)18383
+(e)🆕🗺🎨🔄📄🔬💡|C-Feature, A-Mapping, C-Sprites, C-Rework, A-UI, A-Science, A-Station-Systems
+(*)Long Range Teleport has been folded into the normal Teleporter!  Check out the Observatory to go on new adventures!
+(t)sat apr 27 24
+(u)glowbold
+(p)18275
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Using the Authentication Disk on the armory computer will revoke armory access.
+(*)Once per round, the Authentication Disk can authorize armory access, but doing so will prevent revoking armory access.
+(u)glowbold
+(p)18653
+(e)🆕⚖💊|C-Feature, C-Balance, A-Medical
+(+)Puritans recieve major cloning defects when cloned.
+(u)tarmunora
+(+)AI can now use ; instead of :1 to speak over their primary internal radio
+(u)LeahTheTech
+(p)18657
+(e)⚖⚗|C-Balance, A-Chemistry
+(*)Simplified the charcoal recipe: (1) Carbon + (1) Ash => (1) Charcoal + (1) Steam, with additional charcoal yield if the steam is prevented from evaporating.
+(u)FlameArrow57
+(p)18569
+(e)🪲💅🔨|C-Bug, C-QoL, A-Player-Actions
+(+)Added a visible action bar for hand staunching wounds.
+(t)fri apr 26 24
+(u)LeahTheTech
+(*)Item grabs now throw the person being grabbed rather than the item. No more throwing your gun in a hostage situation!
+(p)18621
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Gas pipes can now be reinforced with metal sheets to increase their pressure tolerance based on the material's density.
+(u)tarmunora
+(+)botany produce triggers reactions on harvest
+(u)Terms-On-Dragon
+(p)15272
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(+)The AI has learned a new DEVIOUS face to express across the station.
+(u)TDHooligan
+(p)18475
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Gangs will randomly elect a new leader if their current one dies early into a shift.
+(t)thu apr 25 24
+(u)Sovexe
+(p)18620
+(e)🗺|A-Mapping
+(*)The afterlife bar has undergone renovations, and a new big screen CrewTV has been installed.
+(u)LeahTheTech
+(*)Molitz and molitz-beta now become visibly dull and inert when they are depleted of gas.
 (t)wed apr 24 24
+(u)Sord
+(+)The Donut 2 Research Outpost main hallway is now more publicly accessible. Don't knock on the windows, it scares the science away
+(u)Retrino, Azrun
+(p)18605
+(e)🔨🎩|A-Player-Actions, A-Clothing
+(*)Adds a new "Ballroom Supplies" crate to cargo, containing dress shoes that allow players to use Azrun's social dancing feature.
+(u)Cheekybrdy
+(p)18609
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Gannets variant doors are now compliant with sprite standards
+(u)Lord_Earthfire
+(p)18596
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(+)Consuming too high amounts of liquid space rubber has been found affect the consumers body in unintended ways.
+(+)Bouncing off other people while under the effect of LSR now deals brute damage to both parties.
+(u)Chatauscours
+(p)18516
+(e)🗺🔄|A-Mapping, C-Rework
+(*)NT accumulated enough budget for the most of the Clarion ship to be rebuilt.
+(u)Paaiii
+(p)18614
+(e)🎨|C-Sprites
+(+)Resprites the sunhat clothing item!
 (u)mloccy
 (p)18509
 (e)🔎💅🔨📦|C-Code-Quality, C-QoL, A-Player-Actions, A-Game-Objects

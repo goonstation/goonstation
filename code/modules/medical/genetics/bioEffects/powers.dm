@@ -143,7 +143,7 @@
 		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner.organHolder?.stomach?.stomach_contents
 		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
 				if (istype(A, mattereater.target_path))
@@ -158,7 +158,7 @@
 			using = FALSE
 			return
 
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		var/obj/the_object = tgui_input_list(owner, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
 			using = FALSE
 			return TRUE
@@ -342,8 +342,8 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("paralysis", 5 SECONDS)
-			owner.changeStatus("weakened", 5 SECONDS)
+			owner.changeStatus("unconscious", 5 SECONDS)
+			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
@@ -371,7 +371,7 @@
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			owner.changeStatus("weakened", 10 SECONDS)
+			owner.changeStatus("knockdown", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
 			SPAWN(0)
@@ -389,8 +389,8 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("paralysis", 5 SECONDS)
-			owner.changeStatus("weakened", 5 SECONDS)
+			owner.changeStatus("unconscious", 5 SECONDS)
+			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(owner.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			SPAWN(0)
@@ -801,7 +801,7 @@
 		boutput(read, SPAN_ALERT("Somehow, you sense <b>[owner]</b> trying and failing to read your mind!"))
 		boutput(owner, SPAN_ALERT("You are mentally overwhelmed by a huge barrage of worthless data!"))
 		owner.emote("scream")
-		owner.changeStatus("paralysis", 5 SECONDS)
+		owner.changeStatus("unconscious", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
 
 	/// Mostly stolen from laspgasp() (thanks pali)
@@ -1025,7 +1025,7 @@
 				if (V == owner)
 					continue
 
-				V.changeStatus("weakened", stun_time SECONDS)
+				V.changeStatus("knockdown", stun_time SECONDS)
 				if(!V.anchored)
 					boutput(V, SPAN_ALERT("You are sent flying!"))
 					// why the hell was this set to 12 christ
@@ -1068,7 +1068,7 @@
 
 	proc/indigestion_gib()
 		owner.emote("faint")
-		owner.setStatus("weakened", 20 SECONDS)
+		owner.setStatus("knockdown", 20 SECONDS)
 		owner.make_jittery(50)
 		sleep(1 SECOND)
 		owner.emote("scream")
@@ -1861,6 +1861,7 @@
 
 		modifier *= linked_power.power
 
+		. = ..()
 		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> makes a gesture at [T.name]!"))
 
 		for (var/obj/O in view(7, owner))
@@ -1970,9 +1971,11 @@
 	cooldown = 0
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
+		. = ..()
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
@@ -2048,9 +2051,11 @@
 	cooldown = FALSE
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/chameleon/CH = linked_power
+		. = ..()
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
@@ -2231,7 +2236,7 @@
 						if (ability.cast(T))
 							return //no limbs left, no text!!!
 						boutput(owner, SPAN_ALERT("The pressure in one of your joints built up too high! One of your limbs flew off!"))
-						owner.changeStatus("weakened", 4 SECONDS)
+						owner.changeStatus("knockdown", 4 SECONDS)
 						return
 				while (do_count < 5)
 
@@ -2248,7 +2253,7 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 5 SECONDS)
+			hit.changeStatus("knockdown", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
 

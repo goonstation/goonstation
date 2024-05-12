@@ -28,6 +28,11 @@
 
 		. = ..()
 
+	on_death()
+		if (GANG_LEADER_SOFT_DEATH_TIME > ticker.round_elapsed_ticks)
+			src.gang.handle_leader_early_death()
+		..()
+
 	handle_cryo()
 		src.gang.handle_leader_temp_cryo()
 

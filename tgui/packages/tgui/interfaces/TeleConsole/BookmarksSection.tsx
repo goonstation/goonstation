@@ -33,10 +33,10 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
         {bookmarks.map((bookmark) => {
           return (
             <LabeledList.Item
-              key={bookmark.ref}
+              key={bookmark.nameRef}
               label={formatCoordinates(bookmark.x, bookmark.y, bookmark.z)}
-              buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.ref)} />}>
-              <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.ref)}>
+              buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.nameRef)} />}>
+              <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.nameRef)}>
                 {decodeHtmlEntities(bookmark.name)}
               </Button>
             </LabeledList.Item>

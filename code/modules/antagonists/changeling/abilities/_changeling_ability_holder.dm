@@ -154,7 +154,7 @@
 		var/datum/abilityHolder/changeling/H = holder
 		if (istype(H) && H.in_fakedeath)
 			return 1
-		return M.stat || M.getStatusDuration("paralysis")
+		return M.stat || M.getStatusDuration("unconscious")
 
 	castcheck()
 		if (incapacitationCheck())

@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		value = 300
 
-		setProperty("density", 5)
+		setProperty("density", 6)
 		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
@@ -882,6 +882,16 @@ ABSTRACT_TYPE(/datum/material/crystal)
 			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
 			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
 			return
+
+	expended
+		mat_id = "molitz_expended"
+		name = "depleted molitz"
+		color = "#808080"
+		New()
+			..()
+			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
+			removeTrigger(TRIGGERS_ON_EXPLOSION, /datum/materialProc/molitz_exp)
+
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"

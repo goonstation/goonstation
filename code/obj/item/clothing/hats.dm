@@ -876,7 +876,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(src, src.hitsound, 60, 1)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN(0) // show these messages after the "hit by" ones
 				if (M)
@@ -1167,6 +1167,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+
+	sunhaty
+		icon_state = "sunhaty"
+		item_state = "sunhaty"
 
 	stunhatr
 		stunready = 1

@@ -45,7 +45,7 @@
 				boutput(holder.owner, "You use your powers to create a sound.")
 				return 0
 			if("Csaber unsheathe")
-				sound_choice = "sound/weapons/male_cswordstart.ogg"
+				sound_choice = "sound/weapons/male_cswordturnon.ogg"
 			if("Csaber attack")
 				sound_choice = "sound/weapons/male_cswordattack[rand(1, 2)].ogg"
 			if("Shotgun")

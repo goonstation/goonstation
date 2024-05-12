@@ -115,7 +115,7 @@
 	hop
 		icon_state = "pda-hop"
 		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hop
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
@@ -253,7 +253,7 @@
 				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
 					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
 					if (M.bioHolder.HasEffect("clumsy"))
-						M.changeStatus("weakened", 5 SECONDS)
+						M.changeStatus("knockdown", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
 				else
 					src.on_mob_throw_end(M)

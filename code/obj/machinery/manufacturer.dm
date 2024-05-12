@@ -1171,7 +1171,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.scan = ID
 					return TRUE
 				else
-					boutput(usr, SPAN_ALERT("Pin number incorrect."))
+					boutput(usr, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
@@ -2275,6 +2275,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
+		/datum/manufacture/miniplasmatank,
+		/datum/manufacture/minioxygentank,
 		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
