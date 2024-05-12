@@ -29,7 +29,26 @@
 	Z_LOG_DEBUG("World/Init", "Loading admins...")
 	load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	load_whitelist() //WHY ARE WE UGH-ING
+
+	// NIGHTSHADE
+	load_whitelist("+secret/strings/whitelist.txt") //WHY ARE WE UGH-ING
+
+	// Temp hotpatch for tomato whitelist (as a result of spacebee and the game servers existing on different machines)
+#ifdef LIVE_SERVER
+	// if (serverKey != 13)
+	// 	var/datum/http_request/request = new()
+	// 	request.prepare(RUSTG_HTTP_METHOD_GET, config.irclog_url + "/nightshade_whitelist", "", "") // medass backup of the temp hotpatch
+	// 	request.begin_async()
+	// 	UNTIL(request.is_complete())
+	// 	var/datum/http_response/response = request.into_response()
+	// 	if (!response.errored && response.body && length(response.body) > 150)
+	// 		var/genWhiteFile = file("data/generated-whitelist.txt")
+	// 		fdel(genWhiteFile)
+	// 		genWhiteFile << response.body
+#endif
+	// NIGHTSHADE
+	load_whitelist("data/generated-whitelist.txt")
+
 	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
 	load_playercap_bypass()
 
