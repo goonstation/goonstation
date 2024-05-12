@@ -272,7 +272,7 @@ var/global
 	game_end_delayed = 0
 	game_end_delayer = null
 	ooc_allowed = 1
-	looc_allowed = 0
+	looc_allowed = 1
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
