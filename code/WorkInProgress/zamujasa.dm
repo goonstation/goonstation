@@ -1532,7 +1532,22 @@ Need an admin? Message us with \[F1].
 
 Other Goonstation servers:[serverList]</span>"})
 
+	encourage_nightshade
+		maptext_area = "leftside"
 
+		New()
+			..()
+			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
+				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
+
+			src.maptext_x = 5
+			src.maptext_width = 600
+			src.maptext_height = 400
+			src.set_text({"<span class='ol vga'>
+Welcome to Goonstation Nightshade!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1]."})
 
 
 /obj/overlay/inventory_counter
