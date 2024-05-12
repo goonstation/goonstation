@@ -806,10 +806,10 @@ var/global/curr_day = null
 	else if (y == curr_year && m == curr_month && d >= curr_day - 4)
 		deliver_warning = 1
 	if (deliver_warning)
-		var/msg = "(IP: [address], ID: [computer_id]) has a recent join date of [jd]."
-		message_admins("[key_name(src)] [msg]")
-		logTheThing(LOG_ADMIN, src, msg)
-		logTheThing(LOG_DIARY, src, msg, "admin")
+		// var/msg = "(IP: [address], ID: [computer_id]) has a recent join date of [jd]."
+		// message_admins("[key_name(src)] [msg]")
+		// logTheThing(LOG_ADMIN, src, msg)
+		// logTheThing(LOG_DIARY, src, msg, "admin")
 		var/addr = address
 		var/ck = ckey
 		var/cid = computer_id
