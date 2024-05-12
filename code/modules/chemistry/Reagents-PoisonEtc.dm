@@ -1427,18 +1427,16 @@ datum
 				M.take_toxin_damage(mult)
 
 				switch(counter += clamp(our_amt/10, 1, 3) * mult)
-					if (1 to 40) // The more there is, the faster it progresses
+					if (1 to 20) // The more there is, the faster it progresses
 						bleeding_mult = 0.5 * mult
-						if (probmult(8))
-							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
-					if (40 to 80)
+					if (20 to 40) // The more there is, the faster it progresses
+						bleeding_mult = 0.75 * mult
+					if (40 to 60)
 						bleeding_mult = 1 * mult
-						if (probmult(14))
-							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+					if (60 to 80)
+						bleeding_mult = 1.25 * mult
 					if (80 to INFINITY)
 						bleeding_mult = 1.5  * mult
-						if (probmult(24))
-							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 
 				if (probmult(10) && counter > 25)
 					M.make_jittery(50)
@@ -1454,6 +1452,8 @@ datum
 					M.visible_message(pick(SPAN_ALERT("<B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!"),\
 											SPAN_ALERT("<B>[M]</B> bleeds [pick("profusely", "from every pore")]!"),\
 											SPAN_ALERT("<B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!")))
+				if (probmult(20) && counter > 10)
+					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 
 				if (isliving(M))
 					var/mob/living/H = M
