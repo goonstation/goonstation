@@ -291,8 +291,8 @@
 				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
-		var/datum/eventRecord/GauntletHighScore/gauntletHighScoreEvent = new()
-		gauntletHighScoreEvent.send(moblist_names, score, current_level)
+		// var/datum/eventRecord/GauntletHighScore/gauntletHighScoreEvent = new()
+		// gauntletHighScoreEvent.send(moblist_names, score, current_level)
 
 		SPAWN(0)
 			for (var/obj/item/I in staging)

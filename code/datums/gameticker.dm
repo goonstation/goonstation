@@ -590,7 +590,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
-	save_flock_stats()
+	// save_flock_stats()
 
 	var/pets_rescued = 0
 	for(var/pet in by_cat[TR_CAT_PETS])

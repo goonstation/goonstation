@@ -412,11 +412,11 @@
 	var/target_byond_key = null
 	var/issuer_byond_key = null
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			var/datum/eventRecord/Ticket/ticketEvent = new()
-			ticketEvent.buildAndSend(src, usr)
+	// New()
+	// 	..()
+	// 	SPAWN(1 SECOND)
+	// 		var/datum/eventRecord/Ticket/ticketEvent = new()
+	// 		ticketEvent.buildAndSend(src, usr)
 
 
 /datum/fine
@@ -442,8 +442,8 @@
 		SPAWN(1 SECOND)
 			bank_record = data_core.bank.find_record("name", target)
 			if(!bank_record) qdel(src)
-			var/datum/eventRecord/Fine/fineEvent = new()
-			fineEvent.buildAndSend(src, usr)
+			// var/datum/eventRecord/Fine/fineEvent = new()
+			// fineEvent.buildAndSend(src, usr)
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
