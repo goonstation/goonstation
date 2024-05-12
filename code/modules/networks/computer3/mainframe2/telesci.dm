@@ -1278,6 +1278,11 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				newsignal.data["command"] = "term_connect"
 				newsignal.data["device"] = src.device_tag
 
+				if (!istype(user_data))
+					user_data = new
+					user_data.fields["userid"] = src.net_id
+					user_data.fields["access"] = "11"
+
 				newsignal.data_file = user_data.copy_file()
 
 				newsignal.data["address_1"] = old

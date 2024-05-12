@@ -46,7 +46,7 @@ TYPEINFO(/obj/machinery/processor)
 			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
 			for(var/obj/item/material_piece/G in output_location)
-				if(G.material.isSameMaterial(current_thing.material))
+				if(G.material?.isSameMaterial(current_thing.material))
 					exists_nearby = G
 					break
 
@@ -80,7 +80,7 @@ TYPEINFO(/obj/machinery/processor)
 					P.set_loc(get_output_location())
 					P.setMaterial(current_thing.material)
 					P.change_stack_amount(out_amount - P.amount)
-					mat_id = P.material.getID()
+					mat_id = P.material?.getID()
 					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
