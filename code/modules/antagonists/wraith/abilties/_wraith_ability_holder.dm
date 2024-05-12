@@ -16,8 +16,17 @@
 		.= list()
 		.["Points:"] = round(src.points)
 		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
-		if(istype(owner, /mob/living/intangible/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
-			.["Possess:"] = round(src.possession_points)
+		var/mob/living/intangible/wraith/wraith_trickster/W
+		if (istype(owner, /mob/living/intangible/wraith/wraith_trickster))
+			W = owner
+		else if (istype(owner, /mob/living/critter/wraith/trickster_puppet))
+			var/mob/living/critter/wraith/trickster_puppet/TP = owner
+			W = TP.master
+		if (W != null)
+			if (src.possession_points >= W.points_to_possess)
+				.["Possess:"] = "<font color=#88ff88>READY</font>"
+			else
+				.["Possess:"] = "[round(src.possession_points)]/[W.points_to_possess]"
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19

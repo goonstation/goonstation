@@ -425,13 +425,13 @@
 
 			if (M.reagents)
 				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
-				if (f_amt >= src.formaldehyde_tolerance)
+				if (f_amt > src.formaldehyde_tolerance)
 					string += "[SPAN_NOTICE("This creature is <i>saturated</i> with a most unpleasant substance!")]\n"
 				else if (f_amt > 0)
 					string += "[SPAN_NOTICE("This creature has a somewhat unpleasant <i>taste</i>.")]\n"
 
 				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
-				if (hw_amt >= src.holy_water_tolerance)
+				if (hw_amt > src.holy_water_tolerance)
 					string += "[SPAN_NOTICE("This creature exudes a truly vile <i>aroma</i>!")]\n"
 				else if (hw_amt > 0)
 					string += "[SPAN_NOTICE("This creature has a somewhat vile <i>fragrance</i>!")]\n"
@@ -639,6 +639,8 @@
 	var/copied_name = null
 	var/copied_real_name = null
 	var/copied_pronouns = null
+	var/copied_footstep_sound = null
+	var/copied_voice = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
