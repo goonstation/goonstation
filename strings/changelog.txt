@@ -1,5 +1,9 @@
 
 (t)sun may 12 24
+(u)JORJ949
+(p)18845
+(e)🪲🗺⚖|C-Bug, A-Mapping, C-Balance
+(+)Nadir Armory is now properly equipped.
 (u)Ilysen
 (p)18672
 (e)🪲🔎|C-Bug, C-Code-Quality
