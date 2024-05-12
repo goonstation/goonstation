@@ -20015,10 +20015,9 @@
 	},
 /area/station/chapel/sanctuary)
 "hmP" = (
-/obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "hmQ" = (
@@ -24152,11 +24151,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
 	dir = 4;
-	hardened = 1;
-	id = "medbay_entrance"
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/hallway/primary/south)
