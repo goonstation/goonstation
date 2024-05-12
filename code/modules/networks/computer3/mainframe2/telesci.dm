@@ -1233,7 +1233,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				. = TRUE
 			if ("restorebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				xtarget = bm.x
 				ytarget = bm.y
@@ -1243,7 +1243,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 			if ("deletebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				bookmarks.Remove(bm)
 				. = TRUE
