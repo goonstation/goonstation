@@ -58661,7 +58661,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "sNs" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

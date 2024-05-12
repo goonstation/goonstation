@@ -47751,6 +47751,7 @@
 /area/station/mining/staff_room)
 "cKn" = (
 /obj/item/storage/wall/random,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/caution/west,
 /area/station/mining/staff_room)
 "cKo" = (
