@@ -9,7 +9,7 @@
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
 	else
-		lobby_titlecard = new /datum/titlecard()
+		lobby_titlecard = new /datum/titlecard/nightshade()
 
 	lobby_titlecard.set_pregame_html()
 
