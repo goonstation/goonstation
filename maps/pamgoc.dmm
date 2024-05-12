@@ -34256,7 +34256,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bIf" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -39103,7 +39103,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bRV" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
