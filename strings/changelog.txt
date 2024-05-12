@@ -1,5 +1,9 @@
 
 (t)sun may 12 24
+(u)Ilysen
+(p)18672
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed zombies' Infect ability breaking when interrupted. Also added a new big message in chat when you get infected!
 (u)crunchwarp
 (p)18831
 (e)🆕📄|C-Feature, A-UI
