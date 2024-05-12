@@ -132,7 +132,7 @@
 			src.ClearSpecificOverlays("material_suit")
 
 	else
-		src.ClearSpecificOverlays("material_suit")
+		src.ClearSpecificOverlays("suit_image1", "material_suit")
 
 /mob/living/carbon/human/proc/update_id(head_offset)
 	if (src.wear_id)
