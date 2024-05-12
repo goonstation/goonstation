@@ -11,6 +11,8 @@
 			if (!playerId)
 				boutput(src, "[M.mind.ckey] has no player ID")
 
+/proc/debugWhitelist()
+	boutput(usr, json_encode(whitelistCkeys))
 
 /proc/mapWorldNew(client/C)
 	// future proofing against varied world icon sizes
