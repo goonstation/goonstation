@@ -32,6 +32,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /// Return new gas mixture with the gas variables we start with.
 /turf/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	// TODO this is returning a new air object, but object_tile returns the existing air
 	//  This is used in a lot of places and thrown away, so it should be pooled,
 	//  But there is no way to tell here if it will be retained or discarded, so

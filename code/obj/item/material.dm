@@ -275,6 +275,31 @@
 	burn_possible = TRUE
 	health = 20
 
+	combust(obj/item/W)
+		var/turf/T = get_turf(src)
+		var/obj/fluid/puddle = locate() in T
+		if (puddle)
+			var/datum/reagents/holder = puddle.group.reagents
+			if (holder.get_reagent_amount("hydrogen") > 10)
+				src.visible_message(SPAN_NOTICE("[bicon(src)] [src] begins to liquify and emit noxious black fumes!")) //fake chemical reaction
+				playsound(src, 'sound/effects/bubbles.ogg', 80, TRUE, 3)
+
+				holder.remove_reagent("hydrogen", 10)
+				holder.add_reagent("oil", 10)
+				holder.add_reagent("carbon", rand(2,3))
+				holder.add_reagent("fuel", rand (1,3))
+				if (prob(20))
+					holder.add_reagent("kerosene", 4) //ehhh?
+
+				var/datum/gas_mixture/burnoff = new()
+				burnoff.temperature = T.return_air().temperature
+				burnoff.carbon_dioxide = 50 //hehe
+				T.assume_air(burnoff)
+
+				qdel(src)
+				return
+		..()
+
 /obj/item/raw_material/claretine // relate this to wizardry somehow
 	name = "claretine ore"
 	desc = "A heap of Claretine, a highly conductive salt."
