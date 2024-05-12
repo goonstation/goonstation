@@ -1433,9 +1433,7 @@ datum
 						bleeding_mult = 0.75 * mult
 					if (40 to 60)
 						bleeding_mult = 1 * mult
-					if (60 to 80)
-						bleeding_mult = 1.25 * mult
-					if (80 to INFINITY)
+					if (60 to INFINITY)
 						bleeding_mult = 1.5  * mult
 
 				if (probmult(10) && counter > 25)
