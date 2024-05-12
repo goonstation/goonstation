@@ -1530,7 +1530,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implant/artifact/wizard/wizard_gimmick
 	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
-										 		/datum/mutantrace/pug)
+										 		/datum/mutantrace/pug, /datum/mutantrace/cat/bingus)
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
