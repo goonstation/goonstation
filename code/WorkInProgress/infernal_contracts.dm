@@ -547,6 +547,7 @@ obj/item/contract/macho
 			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.mind?.add_antagonist(ROLE_MACHO_MAN, do_pseudo = TRUE)
+			user.reagents.add_reagent("krokodil", 50)
 
 		return 1
 
@@ -597,15 +598,14 @@ obj/item/contract/genetic
 	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
 		if(!..())
 			return 0
-		boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 		SPAWN(1 DECI SECOND)
 			user.bioHolder.AddEffect("activator", 0, 0, 1)
 			user.bioHolder.AddEffect("mutagenic_field", 0, 0, 1)
+			user.bioHolder.AddEffect("radioactive", 0, 0, 1)
 			boutput(user, SPAN_SUCCESS("You have finally achieved your full potential! Mom would so proud!"))
 			if ((prob(5)) || (src.limiteduse == 1))
 				SPAWN(1 SECOND)
 					boutput(user, SPAN_SUCCESS("You feel an upwelling of additional power!"))
-					user:unkillable = 1
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
 					SPAWN(0.2 SECONDS)
 						boutput(user, SPAN_SUCCESS("You have ascended beyond mere humanity!"))
@@ -669,7 +669,7 @@ obj/item/contract/mummy
 						H.bandaged += target
 						H.update_body()
 			user.reagents?.add_reagent("formaldehyde", 300) //embalming fluid for mummies
-			if((prob(10)) || (src.limiteduse == 1))
+			if((prob(20)) || (src.limiteduse == 1))
 				boutput(user, SPAN_NOTICE("Wow, that contract did a really thorough job of mummifying you! It removed your organs and everything!"))
 				if(isliving(user))
 					var/mob/living/L = user
@@ -737,7 +737,6 @@ obj/item/contract/rested
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.bioHolder.AddEffect("drunk_pentetic", 0, 0, 1)
 			user.bioHolder.AddEffect("regenerator_super", 0, 0, 1)
 			user.bioHolder.AddEffect("narcolepsy_super", 0, 0, 1) //basically, the signer's very vulnerable but exceptionally difficult to actually kill.
 
@@ -821,7 +820,7 @@ obj/item/contract/greed
 				var/obj/item/currency/spacecash/tourist/S = new /obj/item/currency/spacecash/tourist
 				S.setup(user.loc)
 			boutput(user, SPAN_NOTICE("Some money appears at your feet. What, did you expect some sort of catch or trick?"))
-			if (prob(90)) //used to be 50/50, now it's only a 10% chance to get midased
+			if (prob(50))
 				SPAWN(10 SECONDS)
 					boutput(user, SPAN_NOTICE("What, not enough for you? Fine."))
 					var/turf/T = get_turf(user)

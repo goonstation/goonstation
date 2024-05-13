@@ -1244,6 +1244,10 @@ TYPEINFO(/datum/trait/partyanimal)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner) && prob(10))
+		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			randomize_mob_limbs(H)
+			if (prob(10))
+				randomize_mob_limbs(H)
+			if (prob(1))
+				H.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
+
