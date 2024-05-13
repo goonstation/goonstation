@@ -163,7 +163,7 @@ var/datum/job_controller/job_controls
 				continue
 			if (check_job_eligibility(player, job, STAPLE_JOBS))
 				assign_job(player, job)
-				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (medium priority job)")
+				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [job.name] (medium priority job)")
 				return job
 
 		// If no medium priority jobs are available or suitable, check low priority jobs
@@ -174,7 +174,7 @@ var/datum/job_controller/job_controls
 				continue
 			if (check_job_eligibility(player, job, STAPLE_JOBS))
 				assign_job(player, job)
-				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (low priority job)")
+				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [job.name] (low priority job)")
 				return job
 
 		// look, we tried ok? Just be happy you work here at all.
