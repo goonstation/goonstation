@@ -213,11 +213,6 @@ var/datum/job_controller/job_controls
 		logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [fallback_job.name] (emergency fallback job)")
 		return fallback_job
 
-	proc/assign_job(mob/player, datum/job/job)
-		PRIVATE_PROC(TRUE)
-		player.mind.assigned_role = job.name
-		job.assigned++
-
 	proc/job_creator()
 		src.check_user_changed()
 		var/list/dat = list("<html><body><title>Job Creation</title>")
