@@ -2096,11 +2096,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-				M.HealDamage("All", mult * 2.5, mult * 2)
-				M.take_toxin_damage(1.5 * mult)
-				flush(holder, 3 * mult)
+				M.HealDamage("All", mult * 2, mult * 1.5)
+				M.take_toxin_damage(0.5 * mult)
 				if(prob(20))
-					M.setStatusMin("weakened", 3 SECONDS)
+					M.setStatusMin("knockdown", 3 SECONDS)
 				if(prob(10))
 					boutput(M, SPAN_ALERT("[pick("You feel your insides moving around and shifting", "Your body has never felt better, it has also never felt worse.", "The state of your insides make you feel like you're in a boat that got sucked up into a hurricane", "Urgh, you feel really gross!")]"))
 				..()
@@ -2114,7 +2113,7 @@ datum
 					boutput(M, SPAN_ALERT("The pink viscera partially hangs off of your clothes."))
 				if(method == INGEST)
 					boutput(M, "<span class='alert bold'>[pick("The viscera burns your mouth as it goes down", "The texture of the viscera feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "You feel the viscera slide down your throat")]!!</span>")
-					M.setStatusMin("weakened", 3 SECONDS)
+					M.setStatusMin("knockdown", 3 SECONDS)
 
 		flockdrone_fluid
 			name = "coagulated gnesis"
