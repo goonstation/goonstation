@@ -1,5 +1,9 @@
 
 (t)mon may 13 24
+(u)FlameArrow57
+(p)18854
+(e)💅🔄📦|C-QoL, C-Rework, A-Game-Objects
+(+)Gun tooltips (from mouse hovering) now show exact projectile damage, as well as stamina damage, armor pierce, and pod system disruption chance if they exist
 (u)FlameArrow57, Flaborized, and Azrun
 (p)16676
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
