@@ -2083,6 +2083,39 @@ datum
 					if(method == TOUCH)
 						boutput(M, SPAN_ALERT("Well, that was gross."))
 
+		viscerite_viscera
+			name = "viscerite viscera"
+			id = "viscerite_viscera"
+			description = "Looking at this makes you feel queasy... ugh."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 135
+			fluid_b = 200
+			hunger_value = 0.5
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				M.HealDamage("All", mult * 2.5, mult * 2)
+				M.take_toxin_damage(1.5 * mult)
+				flush(holder, 3 * mult)
+				if(prob(20))
+					M.setStatusMin("weakened", 3 SECONDS)
+				if(prob(10))
+					boutput(M, SPAN_ALERT("[pick("You feel your insides moving around and shifting", "Your body has never felt better, it has also never felt worse.", "The state of your insides make you feel like you're in a boat that got sucked up into a hurricane", "Urgh, you feel really gross!")]"))
+				..()
+				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == TOUCH)
+					boutput(M, SPAN_ALERT("The pink viscera partially hangs off of your clothes."))
+				if(method == INGEST)
+					boutput(M, "<span class='alert bold'>[pick("The viscera burns your mouth as it goes down", "The texture of the viscera feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "You feel the viscera slide down your throat")]!!</span>")
+					M.setStatusMin("weakened", 3 SECONDS)
+
 		flockdrone_fluid
 			name = "coagulated gnesis"
 			id = "flockdrone_fluid"
