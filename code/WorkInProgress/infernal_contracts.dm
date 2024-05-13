@@ -231,7 +231,6 @@ proc/is_weak_rollable_contract(type)
 			<li>Step One: Grab a complimentary extra-sharp demonic pen and your infernal contract of choice from your devilish briefcase.</li>
 			<li>Step Two: Present your contract to your victim by clicking on them with said contract, but be sure you have your hellish writing utensil handy in your other hand!</li>
 			<li>Step Three: It takes about four seconds for you to force your victim to sign their name, be sure not to move during this process or the ink will smear!</li></ul>
-			<b>Alternatively, you can just have people sign the contract willingly, but where's the fun in that?</b>
 			<li>Your contracts are written in legalese, so anyone not wearing your lawyer suit is unable to read them!</li>
 			<li>Your lawyer suit, in addition to looking stylish, doubles as a suit of body armor. Similarly, your briefcase is a great bludgeoning tool, and your pens make excellent throwing daggers.</li>
 			<li>As you collect more souls, your briefcase and pens will grow stronger and will gain unique powers.</li>
@@ -455,29 +454,6 @@ END GUIDE
 			if (src.inuse != 1)
 				actions.start(new/datum/action/bar/icon/force_sign(user, target, src), user)
 
-		else
-			return
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/pen))
-			if (isdiabolical(user))
-				boutput(user, SPAN_NOTICE("You can't sell your soul to yourself!"))
-				return
-			else if (user.mind && user.mind.soul < 100)
-				boutput(user, SPAN_NOTICE("You don't have a soul to sell!"))
-				return
-			else if (!isliving(user))
-				return
-			else if(!isliving(user) || isghostdrone(user) || issilicon(user))
-				return
-			else if (istype(W, /obj/item/pen/fancy/satan))
-				MagicEffect(user, src.merchant)
-				SPAWN(1 DECI SECOND)
-					soulcheck(src.merchant)
-					updateuses(user, src.merchant)
-			else
-				user.visible_message(SPAN_ALERT("<b>[user] looks puzzled as [he_or_she(user)] realizes [his_or_her(user)] pen isn't evil enough to sign [src]!</b>"))
-				return
 		else
 			return
 
