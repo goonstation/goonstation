@@ -6,30 +6,27 @@
 	pointCost = 600
 	cooldown = 5 MINUTES
 	ignore_holder_lock = TRUE
-	var/in_use = 0
+	var/in_use = FALSE
 	var/ghost_confirmation_delay = 30 SECONDS
 
 	castcheck(atom/target)
 #ifdef RP_MODE
-		var/mob/living/intangible/wraith/wraith = holder.owner
+		var/mob/living/intangible/wraith/wraith = src.holder.owner
 		if (istype(wraith) && length(wraith.poltergeists) >= 2)
 			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
-			return TRUE
+			return
 #endif
+		var/turf/T = get_turf(src.holder.owner)
+		if (!isturf(T) || istype(T, /turf/space))
+			boutput(src.holder.owner, SPAN_ALERT("You can't summon a poltergeist here!"))
+			return
 		return ..()
 
 	cast(atom/target, params)
-		if (..())
-			return TRUE
-		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
-			src.doCooldown()
-			make_poltergeist(holder.owner, T)
-			return
-		else
-			boutput(holder.owner, SPAN_ALERT("You can't cast this spell on your current tile!"))
-			return TRUE
+		..()
+		boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
+		make_poltergeist(src.holder.owner, get_turf(src.holder.owner))
+		return CAST_ATTEMPT_SUCCESS
 
 	proc/make_poltergeist(mob/living/intangible/wraith/W, turf/T, tries = 0)
 		if (QDELETED(W))
@@ -46,7 +43,7 @@
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50)
+		W.playsound_local(T, 'sound/voice/wraith/wraithportal.ogg', 50)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || length(candidates) <= 0)

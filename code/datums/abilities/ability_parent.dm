@@ -920,6 +920,8 @@
 				doCooldown()
 			afterCast()
 
+		/// Handle actual ability effects. This is the one you want to override.
+		/// Returns for this proc can be found in defines/abilities.dm.
 		cast(atom/target)
 			SHOULD_CALL_PARENT(TRUE)
 			if(do_logs)

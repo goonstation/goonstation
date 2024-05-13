@@ -1,19 +1,19 @@
 /datum/targetable/wraithAbility/choose_haunt_appearance
 	name = "Choose Haunt Appearance"
-	desc = "Copy the appearance of a human. When haunting, you will use it in exacting detail."
+	desc = "Copy the appearance of a human. When haunting, you will use the copied appearance in exact detail."
 	icon_state = "choose_appearance"
 	targeted = TRUE
 	pointCost = 0
 
 	castcheck(atom/target)
-		return istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster)
+		return ..() && istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster)
 
 	cast(atom/target)
 		..()
-		var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
+		var/mob/living/intangible/wraith/wraith_trickster/W = src.holder.owner
 		if ((istype(target, /mob/living/carbon/human/)))
 			var/mob/living/carbon/human/H = target
-			boutput(holder.owner, SPAN_NOTICE("You steal [H]'s appearance for yourself."))
+			boutput(src.holder.owner, SPAN_NOTICE("You steal [H]'s appearance for yourself."))
 			W.copied_appearance = H.appearance
 			W.copied_appearance.transform.Turn(H.rest_mult * -90)	//Find a way to make transform rotate.
 			W.copied_desc = H.get_desc()
@@ -30,7 +30,7 @@
 			W.copied_pronouns = null
 			W.copied_footstep_sound = null
 			W.copied_voice = null
-			boutput(holder.owner, SPAN_NOTICE("You discard your disguise."))
+			boutput(src.holder.owner, SPAN_NOTICE("You discard your disguise."))
 		else
-			boutput(holder.owner, SPAN_ALERT("You cannot copy this appearance."))
-		return
+			boutput(src.holder.owner, SPAN_ALERT("You cannot copy this appearance."))
+		return CAST_ATTEMPT_SUCCESS

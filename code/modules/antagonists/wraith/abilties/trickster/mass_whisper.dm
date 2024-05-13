@@ -10,17 +10,23 @@
 		return message
 
 	cast()
-		if (..())
-			return TRUE
-		var/message = input("What would you like to whisper to everyone?", "Whisper", "") as text|null
+		..()
+		var/message = tgui_input_text(src.holder.owner, "What would you like to whisper to everyone?", name)
+		if (!message)
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		message = ghostify_message(copytext(html_encode(message), 1, MAX_MESSAGE_LEN))
-		if (message)
-			for (var/mob/living/carbon/human/H in range(8, src.holder.owner))
-				if (isdead(H))
-					continue
-				logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
-				boutput(H, "<b>A netherworldly voice whispers into your ears... </b> \"[message]\"")
-				holder.owner.playsound_local(holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
-				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
-			boutput(holder.owner, "<b>You whisper to everyone around you:</b> \"[message]\"")
-		return TRUE
+		var/hearers = 0
+		for (var/mob/living/carbon/human/H in range(8, src.holder.owner))
+			if (isdead(H))
+				continue
+			logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
+			boutput(H, "<b>A netherworldly voice whispers into your ears... </b> \"[message]\"")
+			H.playsound_local(H, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
+			hearers++
+		if (hearers == 0)
+			boutput(holder.owner, SPAN_ALERT("Nobody is around to hear your whispers..."))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else
+			boutput(holder.owner, "<b>You whisper to [get_english_num(hearers)] being\s around you:</b> \"[message]\"")
+			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
+		return CAST_ATTEMPT_SUCCESS
