@@ -142,6 +142,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot)
 	cast(atom/target)
 		if(!holder?.owner)
 			return TRUE
+		. = ..()
 		actions.start(new/datum/action/bar/icon/mob_cleanbot_clean(holder.owner, target), holder.owner)
 
 ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
@@ -154,6 +155,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cast(atom/target)
 		if(!holder?.owner?.reagents)
 			return TRUE
+		. = ..()
 		holder.owner.reagents.add_reagent(reagent_id, 30)
 		playsound(holder.owner.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 	lube
@@ -175,10 +177,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cooldown = 5 SECONDS
 	icon_state = "clean_scan"
 	var/reagent_id = null
+	do_logs = FALSE
 
 	cast(atom/target)
 		if(!holder?.owner?.reagents)
 			return TRUE
+		. = ..()
 		boutput(holder.owner, "[scan_reagents(holder.owner, visible = 1)]")
 
 /datum/targetable/critter/bot/dump_reagents
@@ -191,6 +195,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cast()
 		if (!holder?.owner?.reagents)
 			return TRUE
+		. = ..()
 		holder.owner.setStatus("resting", INFINITE_STATUS) // flop over to spill the reagents
 		holder.owner.force_laydown_standup()
 		holder.owner.reagents.reaction(get_turf(holder.owner), TOUCH)
@@ -314,6 +319,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cast(atom/target)
 		if(!holder?.owner)
 			return TRUE
+		. = ..()
 		flick("firebot-c", holder.owner)
 		playsound(get_turf(holder.owner), 'sound/effects/spray.ogg', 50, 1, -3)
 
@@ -354,7 +360,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			for(var/mob/living/carbon/human/H in view(1, target))
 				var/atom/targetTurf = get_edge_target_turf(H, get_dir(holder.owner, get_step_away(H, holder.owner)))
 				boutput(H, SPAN_ALERT("<b>[holder.owner] knocks you back!</b>"))
-				H.changeStatus("weakened", 2 SECONDS)
+				H.changeStatus("knockdown", 2 SECONDS)
 				H.throw_at(targetTurf, 200, 4)
 
 

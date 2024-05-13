@@ -41,8 +41,8 @@
 
 /obj/machinery/alarm/New()
 	..()
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "alarm", alarm_frequency)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "control", control_frequency) // seems to be unused?
 
 	if(!alarm_zone)
 		var/area/A = get_area(loc)

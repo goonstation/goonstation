@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_pointblank(obj/projectile/O, mob/target)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 	proc/split(var/obj/projectile/P)
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
@@ -747,7 +747,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		. = ..()
 		if(isliving(A)) // pre_hit should filter out any spacemagic people
 			var/mob/living/M = A
-			M.changeStatus("weakened", src.weaken_length)
+			M.changeStatus("knockdown", src.weaken_length)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
@@ -863,7 +863,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				targetTurf = get_edge_target_turf(hit, P.dir)
 
-			L.changeStatus("weakened", 2 SECONDS)
+			L.changeStatus("knockdown", 2 SECONDS)
 			L.force_laydown_standup()
 			L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
@@ -1078,7 +1078,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
-			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			hitguy.do_disorient(15, knockdown = 20 * 10, disorient = 80)
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy

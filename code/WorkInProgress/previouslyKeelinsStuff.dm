@@ -370,7 +370,7 @@ var/reverse_mode = 0
 									qdel(newmob)
 									oldmob.paralysis += 3
 									oldmob.sleeping = 0
-									oldmob.delStatus("weakened")
+									oldmob.delStatus("knockdown")
 
 								using = 0*/
 					if ("Bend the relic's power to your will")
@@ -412,7 +412,7 @@ var/reverse_mode = 0
 							switch(pick(175;1,30;2,25;3,85;4))
 								if (1)
 									boutput(user, SPAN_ALERT("The relic's power overwhelms you!"))
-									user:changeStatus("weakened", 10 SECONDS)
+									user:changeStatus("knockdown", 10 SECONDS)
 									user:TakeDamage("chest", 0, 33)
 								if (2)
 									boutput(user, SPAN_ALERT("The relic explodes in a bright flash, blinding you!"))

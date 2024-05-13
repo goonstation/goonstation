@@ -563,7 +563,7 @@
 		else
 			return 0
 
-	proc/MakeMutantHead(var/mutant_race as num, var/headicon, var/headicon_state)
+	proc/MakeMutantHead(var/mutant_race as num, var/headicon, var/headicon_state, var/skip_update = FALSE)
 		if(!src.transplanted) /// no altering a reattached head
 
 			// rebuild, start with a human head
@@ -667,6 +667,6 @@
 				if(HEAD_FLASHY)
 					src.organ_name = "psychedelic head"
 					src.desc = "Well, that's trippy."
-
-		src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
+		if(!skip_update)
+			src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

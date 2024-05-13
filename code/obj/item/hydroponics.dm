@@ -146,7 +146,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
 	force = 6
-	active_force = 20
+	active_force = 30
 	off_force = 6
 	health = 10
 	throwforce = 5
@@ -160,13 +160,13 @@ TYPEINFO(/obj/item/saw/syndie)
 	arm_icon = "chainsaw_s-D"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
-	stamina_cost = 30
-	stamina_crit_chance = 40
+	stamina_cost = 20
+	stamina_crit_chance = 20
 	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		. = ..()
-		setProperty("deflection", 75)
+		setProperty("deflection", 40)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "redsaw_toggle", 1 SECOND))
@@ -197,10 +197,8 @@ TYPEINFO(/obj/item/saw/syndie)
 			return ..()
 
 		if (!ishuman(target))
-			target.changeStatus("weakened", 3 SECONDS)
 			return ..()
 
-		target.changeStatus("weakened", 3 SECONDS)
 		var/mob/living/carbon/human/H = target
 		if(prob(35))
 			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)

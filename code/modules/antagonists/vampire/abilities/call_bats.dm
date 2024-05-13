@@ -32,6 +32,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		var/turf/T = get_turf(M)
 		if (T && isturf(T))
 			//play sound pls
@@ -98,6 +99,7 @@
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
+		. = ..()
 		var/turf/T = get_turf(M)
 		if (T && isturf(T))
 			M.say("BATT PHAR")

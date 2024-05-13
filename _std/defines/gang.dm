@@ -3,6 +3,13 @@
 /// How long the leader must cryo before gang members can take their role
 #define GANG_CRYO_LOCKOUT 7.5 MINUTES
 
+/// How long into the shift gang leadership is transferable, in the case of the leader's suicide/death.
+// Note: this makes a member REPLACE the dead leader. The leader remains a member.
+#define GANG_LEADER_SOFT_DEATH_TIME 20 MINUTES
+/// If a gang locker exists, how long to wait before picing a new leader
+// This is for the use case where the leader has done the bare minimum.
+#define GANG_LEADER_SOFT_DEATH_DELAY 5 MINUTES
+
 // -------------------------
 // GANG ECONOMY
 // -------------------------
