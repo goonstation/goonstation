@@ -25,8 +25,8 @@
 
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "main", frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", pdafrequency)
 		SPAWN(10 SECONDS)
 			src.post_radio_status()
 

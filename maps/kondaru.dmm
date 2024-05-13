@@ -7828,11 +7828,6 @@
 	},
 /area/station/engine/storage)
 "aDK" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
@@ -7843,6 +7838,10 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -37592,13 +37591,12 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "hzO" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "hzW" = (

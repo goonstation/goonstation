@@ -2544,6 +2544,8 @@
 				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) //assuming this is sodium cyanide so it also interacts with water and sulfuric acid
+			if (QDELETED(holder.my_atom) && !length(holder.covered_cache)) //not sure how this is happening but god please stop runtiming
+				return
 			var/amount_to_smoke = 1
 			if(holder.has_reagent("acid"))
 				amount_to_smoke = 20

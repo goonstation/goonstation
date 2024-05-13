@@ -28234,7 +28234,7 @@
 /turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "bBt" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/industrial,

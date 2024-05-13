@@ -21287,6 +21287,10 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hor)
+"eUx" = (
+/obj/machinery/sheet_extruder,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/magnet)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -36740,7 +36744,7 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "oKu" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "oKv" = (
@@ -82086,7 +82090,7 @@ aaa
 aaa
 aaa
 bGV
-fQm
+eUx
 fQm
 vjI
 fJb
