@@ -193,7 +193,8 @@ var/datum/job_controller/job_controls
 		if(!fallback_job)
 			CRASH("Unable to locate the default fallback job in job controller. [player] has not been assigned a job!")
 		assign_job(player, fallback_job)
-		logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (emergency fallback job)")
+		logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fallback_job.name] (emergency fallback job)")
+		return fallback_job
 
 	proc/assign_job(mob/player, datum/job/job)
 		PRIVATE_PROC(TRUE)
