@@ -91,8 +91,12 @@
 				mind_to_be_transferred.remove_antagonist(antag)
 
 		// Remove any previous hivemind member roles, and add a new one.
+
+		boutput(world, "remobing hivemind member role from [M]")
 		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
+		boutput(world, "giving [M] hivemind member role back. new master mind ref: \ref[src.owner.mind]")
+		var/ret = mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
+		boutput(world, "[ret ? "success" : "FAILED"]")
 		mind_to_be_transferred.current.show_antag_popup("changeling_absorb")
 		return mind_to_be_transferred.current
 
