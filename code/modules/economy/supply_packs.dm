@@ -634,6 +634,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Cocktail Party Supplies"
 
+/datum/supply_packs/robot
+	name = "Robotics Crate"
+	desc = "x1 Floorbot, x1 Cleanbot, x1 Medibot, x1 Firebot"
+	category = "Medical Department"
+	contains = list(/obj/machinery/bot/floorbot,
+					/obj/machinery/bot/cleanbot,
+					/obj/machinery/bot/medbot,
+					/obj/machinery/bot/firebot)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate
+	containername = "Robotics Crate"
+
 /datum/supply_packs/mulebot
 	name = "Replacement Mulebot"
 	desc = "x1 Mulebot"
