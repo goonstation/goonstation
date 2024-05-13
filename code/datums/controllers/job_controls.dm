@@ -123,10 +123,6 @@ var/datum/job_controller/job_controls
 			return
 		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
 			return
-
-		if (P.jobs_unwanted.Find(job.name))
-			return
-
 		return TRUE
 
 	/// Assigns a player a job based on their preferences and job availability
