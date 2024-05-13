@@ -461,7 +461,7 @@ END GUIDE
 	var/mob/living/target
 	var/obj/item/contract/my_contract
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 4 SECONDS
+	duration = 3 SECONDS
 
 	New(owner, target, contract)
 		. = ..()
