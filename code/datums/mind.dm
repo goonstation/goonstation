@@ -276,9 +276,7 @@ datum/mind
 
 	/// Attempts to add the subordinate antagonist datum of ID role_id to this mind.
 	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_CONVERTED, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
-		boutput(world, "add subordinate antagonist...")
 		if (!master)
-			boutput(world, "no master, FAIL")
 			return FALSE
 		// To avoid wacky shenanigans
 		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
@@ -288,11 +286,8 @@ datum/mind
 			if (initial(A.id) == role_id)
 				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
 				if (!new_datum || QDELETED(new_datum))
-					boutput(world, "no new datum, FAIL")
 					return FALSE
-				boutput(world, "datum made right, PASS")
 				return TRUE
-		boutput(world, "else, FAIL")
 		return FALSE
 
 	proc/add_generic_antagonist(role_id, display_name, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)

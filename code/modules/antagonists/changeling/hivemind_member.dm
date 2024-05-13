@@ -30,7 +30,6 @@
 		hivemind_observer.set_owner(master_ability_holder)
 
 	remove_equipment()
-		boutput(world, "ghostizing a hivemind member for some reason")
 		var/mob/dead/target_observer/hivemind_observer/hivemind_observer = src.owner.current
 		var/mob/dead/observer/ghost_mob = src.owner.current.ghostize()
 
