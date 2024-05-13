@@ -92,7 +92,7 @@ var/datum/job_controller/job_controls
 					return
 			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
 				return
-		if (jobban_isbanned(player, job))
+		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
 		if (job.mentor_only && !(player.ckey in mentors))
@@ -143,17 +143,18 @@ var/datum/job_controller/job_controls
 			return random_job
 
 		// antag fall through flag set check
-		var/datum/job/fav_job = find_job_in_controller_by_string(player_preferences.job_favorite)
-		if (fav_job)
-			if (!fav_job.allow_traitors && player.mind.special_role || !fav_job.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
-				player.antag_fallthrough = TRUE
-			else if ((!fav_job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
-				player.antag_fallthrough = TRUE
+		if (player_preferences.job_favorite)
+			var/datum/job/fav_job = find_job_in_controller_by_string(player_preferences.job_favorite)
+			if (fav_job)
+				if (!fav_job.allow_traitors && player.mind.special_role || !fav_job.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+					player.antag_fallthrough = TRUE
+				else if ((!fav_job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+					player.antag_fallthrough = TRUE
 
-		if (check_job_eligibility(player, fav_job, STAPLE_JOBS))
-			assign_job(player, fav_job)
-			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (favorite job)")
-			return fav_job
+			if (check_job_eligibility(player, fav_job, STAPLE_JOBS))
+				assign_job(player, fav_job)
+				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (favorite job)")
+				return fav_job
 
 		// If favorite job isn't available, check medium priority jobs
 		shuffle_list(player_preferences.jobs_med_priority)
@@ -1064,6 +1065,7 @@ var/datum/job_controller/job_controls
 /proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
+		stack_trace("Attempt to find job with bad string in controller detected")
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
