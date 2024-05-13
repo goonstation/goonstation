@@ -140,7 +140,7 @@ var/datum/job_controller/job_controls
 				player.mind.assigned_role = job.name
 				job.assigned++
 				return job
-		return null
+		return
 
 	/// Assigns a player a job based on their preferences and job availability
 	proc/allocate_player_to_job_by_preference(mob/new_player/player)
