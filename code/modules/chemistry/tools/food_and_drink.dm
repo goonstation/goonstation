@@ -40,39 +40,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			owner.organHolder.stomach.eject(src)
 			qdel(src)
 
-	proc/on_table()
+	proc/ant_proofed()
 		if (!isturf(src.loc))
 			return FALSE
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
 			return TRUE
-		return FALSE
-
-	proc/in_crate()
-		if (!isturf(src.loc))
-			return FALSE
-		if (locate(/obj/storage/crate) in src.loc)
-			return TRUE
-		if (locate(/obj/storage/secure/crate) in src.loc)
-			return TRUE
-		if (locate(/obj/storage/cart) in src.loc)
-			return TRUE
-		return FALSE
-
-	proc/in_closet()
-		if (!isturf(src.loc))
-			return FALSE
-		if (locate(/obj/storage/closet) in src.loc)
-			return TRUE
-		if (locate(/obj/storage/secure/closet) in src.loc) //includes fridges, thankfully
-			return TRUE
-		return FALSE
-
-	proc/on_rack()
-		if (!isturf(src.loc))
-			return FALSE
-		if (locate(/obj/rack) in src.loc)
+		if (locate(/obj/rack) in src.loc) //shelving units pretty much
 			return TRUE
 		return FALSE
 
@@ -187,6 +162,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/current_mask = 5
 	var/list/food_effects = list()
 	var/create_time = 0
+	var/time_since_moved = 0
 	var/bites_left = 3
 	var/uneaten_bites_left = null
 
@@ -194,6 +170,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	// Used in Special Order events
 	var/meal_time_flags = 0
+
+	set_loc(newloc)
+		. = ..()
+		time_since_moved = world.time
 
 	New()
 		if (!src.uneaten_bites_left)
@@ -211,9 +191,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 
 	process()
-		if (world.time - create_time >= 3 MINUTES)
+		if ((world.time - create_time >= 3 MINUTES) && (world.time - time_since_moved >= 1 MINUTES))
 			create_time = world.time
-			if (!src.disposed && isturf(src.loc) && !on_table() && !on_rack() && !in_crate() && !in_closet())
+			if (!src.disposed && isturf(src.loc) && !ant_proofed())
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
