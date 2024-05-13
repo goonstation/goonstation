@@ -40,14 +40,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			owner.organHolder.stomach.eject(src)
 			qdel(src)
 
-	proc/ant_proofed()
+	proc/on_table()
 		if (!isturf(src.loc))
 			return FALSE
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
-			return TRUE
-		if (locate(/obj/rack) in src.loc) //shelving units pretty much
 			return TRUE
 		return FALSE
 
@@ -193,7 +191,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	process()
 		if ((world.time - create_time >= 3 MINUTES) && (world.time - time_since_moved >= 1 MINUTES))
 			create_time = world.time
-			if (!src.disposed && isturf(src.loc) && !ant_proofed())
+			if (!src.disposed && isturf(src.loc) && !on_table())
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
