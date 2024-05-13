@@ -24,10 +24,10 @@
 			boutput(holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, it instantly kicks you back into the aether!"))
 			return
 		AH.possession_points = 0
-		actions.start(new/datum/action/bar/private/icon/trickster_possession(target), holder.owner)
+		actions.start(new/datum/action/bar/icon/trickster_possession(target), holder.owner)
 		return
 
-/datum/action/bar/private/icon/trickster_possession
+/datum/action/bar/icon/trickster_possession
 	duration = 32 SECONDS
 	interrupt_flags = INTERRUPT_NONE
 	icon = 'icons/mob/wraith_ui.dmi'
@@ -109,8 +109,6 @@
 		if (isliving(src.owner))
 			var/mob/living/L = src.owner
 			L.take_brain_damage(30)
-		W.set_loc(get_turf(src.owner))
-		W.set_dir(src.owner.dir)
 		src.owner.setStatus("knockdown", 5 SECOND)
 		boutput(src.owner, SPAN_ALERT("The presence has left your body and you are thrust back into it, immediately assaulted with a ringing headache."))
 
@@ -133,6 +131,8 @@
 				boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 				src.SG = O.insert_slasher_observer(T)
 		src.wraith_mind.transfer_to(T)
+		src.W.delStatus("corporeal")
+		src.W.set_loc(T)
 		boutput(T, "<span class='bold' style='color:red;font-size:150%'>You have assumed control of this body! You don't have long...</span>")
 		RegisterSignal(T, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 		APPLY_ATOM_PROPERTY(T, PROP_MOB_NO_SELF_HARM, T)
@@ -141,6 +141,8 @@
 		UnregisterSignal(src.owner, COMSIG_MOB_DEATH)
 		if (QDELETED(src.W) || src.W.mind == src.wraith_mind)
 			return
+		src.W.set_loc(get_turf(src.owner))
+		src.W.set_dir(src.owner.dir)
 		//yes this is expensive as hell, but we need to be SURE
 		var/mob/M = ckey_to_mob_maybe_disconnected(src.wraith_key, FALSE)
 		M.mind.transfer_to(src.W)

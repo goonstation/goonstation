@@ -7,7 +7,7 @@
 	cooldown = 5 MINUTES
 	ignore_holder_lock = TRUE
 	var/in_use = 0
-	var/ghost_confirmation_delay  = 30 SECONDS
+	var/ghost_confirmation_delay = 30 SECONDS
 
 	cast(atom/target, params)
 		if (..())
@@ -47,8 +47,8 @@
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || length(candidates) <= 0)
-			message_admins("Couldn't set up poltergeist; no ghosts responded. Source: [src.holder]")
-			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist; no ghosts responded. Source: [src.holder]")
+			message_admins("Couldn't set up poltergeist; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, SPAN_ALERT("No spirits responded. The portal closes."))
 				qdel(marker)
@@ -66,5 +66,6 @@
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			P.marker = marker
+			message_ghosts("<b>[P]</b>, a poltergeist, has manifested at [log_loc(get_turf(P), ghostjump = TRUE)].")
 			boutput(W, SPAN_NOTICE("The poltergeist you called has entered this realm. Its name is <b>[P]</b>."))
 		W.spawn_marker = null

@@ -223,29 +223,30 @@
 
 	death(gibbed)
 		. = ..()
-		//Back to square one with you!
-
-		var/datum/abilityHolder/wraith/W = src.abilityHolder
-		if(istype(W))
-			W.corpsecount = 0
-			var/datum/targetable/wraithAbility/absorbCorpse/absorb = W.getAbility(/datum/targetable/wraithAbility/absorbCorpse)
-			absorb?.doCooldown()
-		src.abilityHolder.points = 0
-		src.abilityHolder.regenRate = 1
-		src.health = initial(src.health) // oh sweet jesus it spammed so hard
-		src.haunting = 0
-		src.flags |= UNCRUSHABLE
-		src.hauntBonus = 0
-		deaths++
-		src.delStatus("corporeal")
-		if (src.mind)
-			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
-				WO.onWeakened()
 
 		//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
 		drop_following_poltergeists()
 
 		if (deaths < 2)
+			//Back to square one with you!
+
+			var/datum/abilityHolder/wraith/W = src.abilityHolder
+			if(istype(W))
+				W.corpsecount = 0
+				var/datum/targetable/wraithAbility/absorbCorpse/absorb = W.getAbility(/datum/targetable/wraithAbility/absorbCorpse)
+				absorb?.doCooldown()
+			src.abilityHolder.points = 0
+			src.abilityHolder.regenRate = 1
+			src.health = initial(src.health) // oh sweet jesus it spammed so hard
+			src.haunting = 0
+			src.flags |= UNCRUSHABLE
+			src.hauntBonus = 0
+			deaths++
+			src.delStatus("corporeal")
+			if (src.mind)
+				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
+					WO.onWeakened()
+
 			boutput(src, SPAN_ALERT("<b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b>"))
 			logTheThing(LOG_COMBAT, src, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
