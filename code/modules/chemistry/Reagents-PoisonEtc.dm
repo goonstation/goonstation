@@ -1408,7 +1408,7 @@ datum
 			fluid_r = 210
 			fluid_g = 180
 			fluid_b = 25
-			depletion_rate = 0.2
+			depletion_rate = 0.3
 			blob_damage = 1
 			var/counter = 1
 			var/bleeding_mult = 1
@@ -1426,14 +1426,14 @@ datum
 
 				M.take_toxin_damage(mult)
 
-				switch(counter += clamp(our_amt/10, 1, 3) * mult)
-					if (1 to 20) // The more there is, the faster it progresses
+				switch(counter += clamp(our_amt/8, 1, 3) * mult)
+					if (1 to 15) // The more there is, the faster it progresses
 						bleeding_mult = 0.5 * mult
-					if (20 to 40) // The more there is, the faster it progresses
-						bleeding_mult = 0.75 * mult
-					if (40 to 60)
+					if (15 to 30) // The more there is, the faster it progresses
 						bleeding_mult = 1 * mult
-					if (60 to INFINITY)
+					if (30 to 45)
+						bleeding_mult = 1.25 * mult
+					if (45 to INFINITY)
 						bleeding_mult = 1.5  * mult
 
 				if (probmult(10) && counter > 25)
