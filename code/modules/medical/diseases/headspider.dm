@@ -105,7 +105,6 @@
 					D.source.changeling = antag_datum.ability_holder
 					logTheThing(LOG_COMBAT, D.source.mind, "became a changeling by infecting [affected_mob] as [D.source].")
 				// Absorb their DNA. Copies identities and DNA points automatically if victim was another changeling. This also inserts them into the hivemind.
-				D.source.changeling.addDna(affected_mob, TRUE)
 				// Remove changeling AH (if any) and copy our own.
 				if (ischangeling(affected_mob))
 					D.source.show_text("[affected_mob] was a changeling! We have incorporated their entire genetic structure.", "blue")
@@ -117,6 +116,7 @@
 
 				affected_mob.add_existing_ability_holder(D.source.changeling)
 				D.source.changeling.reassign_hivemind_target_mob()
+				D.source.changeling.addDna(affected_mob, TRUE)
 
 
 				D.source.changeling = null //so the spider doesn't have a ref to our holder as well
