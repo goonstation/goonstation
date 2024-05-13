@@ -2109,7 +2109,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	do_special_on_relay(mob/user, dir) //this should probably actually be inside an overriden Move() proc, but I've preserved the original behavior here instead.
 		icon_state = moving_state
 		if(src.power_hotwheels)
-			fireflash(get_turf(src), 0, 100)
+			fireflash(get_turf(src), 0, 100, chemfire = CHEM_FIRE_RED)
 		if(src.power_staticcharge)
 			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
 		if(src.power_bomberbus && prob(power_bomberbus_chance))
