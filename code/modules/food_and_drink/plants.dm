@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
 		if(!T || src.disposed) return
-		fireflash(T,1, checkLos = FALSE)
+		fireflash(T,1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 		if(istype(H))
 			var/p = max(DNA?.get_effective_value("potency"), 0) //no vertical aymptote for you, buster
 			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
