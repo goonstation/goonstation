@@ -755,19 +755,27 @@ Only trained personnel should operate station systems. Follow all procedures car
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
 
-/obj/item/paper/recipe_tandoori
+//is this a bit extra? Yeess but I wanted it on a random table okay!
+proc/spawn_kitchen_note()
+	for_by_tcl(table, /obj/table)
+		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
+			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
+			new type(get_turf(table))
+			return
+
+/obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
 	desc = "It's creased and worn, and smells a little like dried blood."
 	icon_state = "paper_caution_bloody"
 	info = {"<i>In just nine seconds, treat your family to a meal that tastes like it took hours to roast!</i><br><h3>Tandoori Chicken</h3><br><h4>Ingredients:</h4><br> -chicken meat <br> -a heaping helping of curry powder <br> -a nice, hot chili pepper <br> -a head of garlic <br><br><i>Don't even waste your time slashing the meat or slathering it in spices! Just toss it all in your standard-issue industrial oven and set it to high. Your dinner guests can't even tell the difference!</i>"}
 
-/obj/item/paper/recipe_potatocurry
+/obj/item/paper/recipe/potatocurry
 	name = "tattered recipe clipping"
 	desc = "It's very old, and nearly falls apart in your hand."
 	icon_state = "paper_burned"
 	info = {"<i>Rich and full of vegetables, this hearty curry will satisfy any palate!</i><br><h3>Potato Curry</h3><br><h4>Ingredients:</h4><br> -plenty of curry powder <br> -a fresh potato <br> -chopped carrots <br> -a handful of peas <br><br><i>Simply toss the ingredients into a standard-issue industrial oven and let them simmer on low. Treat anyone to the flavor of a home-cooked stew in a fraction of the time!</i>"}
 
-/obj/item/paper/recipe_coconutcurry
+/obj/item/paper/recipe/coconutcurry
 	name = "creased recipe clipping"
 	desc = "Irreparably creased from years of being folded-up. Luckily, you can still make out the text on it."
 	icon_state = "paper_caution_crumple"
@@ -779,7 +787,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Tell the botanists that they can go back to growing weed now. Beg them to, really.</i>
 	"}
 
-/obj/item/paper/recipe_chickenpapplecurry
+/obj/item/paper/recipe/chickenpapplecurry
 	name = "worn recipe clipping"
 	desc = "An old recipe clipped from a lifestyle magazine for space station chefs. Aw, the color's faded from the layout..."
 	icon_state = "paper_caution"

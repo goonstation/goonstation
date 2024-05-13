@@ -86,7 +86,7 @@ TYPEINFO(/obj/health_scanner)
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 		AddComponent(/datum/component/mechanics_holder)
 
 	find_partners(var/in_range = 0)

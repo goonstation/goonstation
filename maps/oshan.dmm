@@ -12146,7 +12146,7 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "aOJ" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aOK" = (
@@ -13693,7 +13693,7 @@
 /turf/space/fluid,
 /area/space)
 "aUa" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/space/fluid,
 /area/space)
 "aUb" = (
@@ -36136,11 +36136,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "hGR" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	dir = 1;
-	name = "Head of Security's Office";
-	req_access_txt = "37"
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -36149,6 +36144,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "hHG" = (
@@ -43072,16 +43068,14 @@
 /turf/simulated/floor/martian,
 /area/evilreaver)
 "scd" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Armory";
-	req_access_txt = "37"
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)

@@ -37610,7 +37610,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "mwc" = (
@@ -54956,7 +54956,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "vqY" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
