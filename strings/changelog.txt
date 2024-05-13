@@ -1,4 +1,10 @@
 
+(t)mon may 13 24
+(u)FlameArrow57, Flaborized, and Azrun
+(p)16676
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added a new type of fire, chemical fire, with sprites by Flaborized! This is a type of fire that acts the same as atmospheric fire but comes from chemical/magical sources, colored depending on the source, and can be on the same tile as atmospheric fire. Replaces all non-atmospheric fires.
+(+)Fire created from the Wizard fireball spell will now be the color of the hat the Wizard is wearing.
 (t)sun may 12 24
 (u)Mordent
 (p)18878
