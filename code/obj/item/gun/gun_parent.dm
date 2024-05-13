@@ -97,7 +97,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			var/b_force = "Bullet damage: [current_projectile.damage]"
 			var/disrupt
 			if (current_projectile.stun)
-				stun += "Max stamina dmg: [clamp(current_projectile.stun * 4, current_projectile.stun * 2, current_projectile.stun + 80)]"
+				stun += "Stamina: [clamp(current_projectile.stun * 4, current_projectile.stun * 2, current_projectile.stun + 80)] dmg"
 			if (current_projectile.armor_ignored)
 				b_force += " - [round(current_projectile.armor_ignored * 100, 1)]% armor piercing"
 			if (current_projectile.disruption)
