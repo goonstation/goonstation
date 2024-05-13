@@ -684,7 +684,7 @@
 			else
 				point_overlay.maptext = "<span class='sh vb r ps2p'>[owner.pointCost]</span>"
 		else
-			src.maptext = null
+			point_overlay.maptext = null
 
 		if (!owner.allowcast())
 			newcolor = rgb(64, 64, 64)

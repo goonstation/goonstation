@@ -10,8 +10,8 @@
 	allowcast()
 		var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 		var/datum/abilityHolder/wraith/AH = holder
-		if (istype(W) && istype(AH))
-			return AH.possession_points >= W.points_to_possess
+		if (istype(W) && istype(AH) && AH.possession_points < W.points_to_possess)
+			return
 		return ..()
 
 	castcheck(atom/target)
@@ -148,11 +148,10 @@
 		RegisterSignal(T, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 		APPLY_ATOM_PROPERTY(T, PROP_MOB_NO_SELF_HARM, T)
 		message_ghosts("<b>[src.W]</b> has possessed <b>[src.owner]</b> at [log_loc(src.owner, ghostjump = TRUE)]!")
-		for (var/client/C in clients)
-			var/mob/M = C.mob
-			if (!isobserver(M) || M.observeMob != src.W)
+		for (var/mob/dead/target_observer/TO in src.W.observers)
+			if (TO == SG)
 				continue
-			M.observeMob(src.owner)
+			TO.set_observe_target(src.owner)
 
 	proc/return_wraith()
 		UnregisterSignal(src.owner, COMSIG_MOB_DEATH)
@@ -161,11 +160,11 @@
 		src.W.set_loc(get_turf(src.owner))
 		src.W.set_dir(src.owner.dir)
 		message_ghosts("<b>[src.W]</b> is no longer possessing <b>[src.owner]</b> at [log_loc(src.W, ghostjump = TRUE)].")
-		for (var/client/C in clients)
-			var/mob/M = C.mob
-			if (!isobserver(M) || M.observeMob != src.owner)
+		var/mob/owner_mob = src.owner
+		for (var/mob/dead/target_observer/TO in owner_mob.observers)
+			if (TO == SG)
 				continue
-			M.observeMob(src.W)
+			TO.set_observe_target(src.W)
 		//yes this is expensive as hell, but we need to be SURE
 		var/mob/M = ckey_to_mob_maybe_disconnected(src.wraith_key, FALSE)
 		M.mind.transfer_to(src.W)

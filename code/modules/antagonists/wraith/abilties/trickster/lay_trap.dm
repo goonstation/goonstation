@@ -92,7 +92,7 @@
 			new trap_choice(T, W, holder.owner)
 			W.traps_laid++
 		else
-			boutput(holder.owner, "attempted to place a trap as a non-wraith and non-puppet, this should never happen!!! report this!!! OR ELSE!!!! >:()")
+			boutput(holder.owner, "attempted to place a trap as a non-wraith and non-puppet, this should never happen!!! report this!!! OR ELSE!!!! >:(")
 			return
 		boutput(holder.owner, SPAN_NOTICE("You place a trap on the floor, and it begins to charge up."))
 		return
