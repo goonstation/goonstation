@@ -64,6 +64,143 @@ var/datum/job_controller/job_controls
 			return 1
 		return 0
 
+	/// Returns TRUE if a player is eligible to play a given job
+	proc/check_job_eligibility(mob/new_player/player, datum/job/job, valid_categories = STAPLE_JOBS | SPECIAL_JOBS | HIDDEN_JOBS)
+		if(!player?.client)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.last_ckey] has no client.")
+			return
+		if (!job)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested check with invalid job datum arg.")
+			return
+		if ((job.limit >= 0) && (job.assigned >= job.limit))
+			return
+		var/list/valid_jobs = list()
+		if (HAS_FLAG(valid_categories, STAPLE_JOBS))
+			valid_jobs.Add(src.staple_jobs)
+		if (HAS_FLAG(valid_categories, SPECIAL_JOBS))
+			valid_jobs.Add(src.special_jobs)
+		if (HAS_FLAG(valid_categories, HIDDEN_JOBS))
+			valid_jobs.Add(src.hidden_jobs)
+		if (!valid_jobs.Find(job))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
+			return
+
+		var/datum/preferences/P = player.client.preferences
+		if(player.mind?.is_antagonist())
+			if (istype(ticker?.mode, /datum/game_mode/revolution))
+				if (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
+					return
+			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
+				return
+		if (jobban_isbanned(player, job))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
+			return
+		if (job.mentor_only && !(player.ckey in mentors))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
+			return
+
+		if (!job.allow_antag_fallthrough && player.antag_fallthrough)
+			return
+
+		// all of the 'serious' check have passed
+		if (global.totally_random_jobs)
+			return TRUE
+
+		if (job.rounds_needed_to_play)
+			var/round_num = player.client.player.get_rounds_participated()
+			if (!isnull(round_num) && round_num < job.rounds_needed_to_play) //they havent played enough rounds!
+				return
+		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
+			return
+		if (job.requires_whitelist && !NT.Find(ckey(player.mind.key)))
+			return
+		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
+			return
+
+		if (P.jobs_unwanted.Find(job.name))
+			return
+
+		return TRUE
+
+	/// Assigns a player a job based on their preferences and job availability
+	proc/allocate_player_to_job_by_preference(mob/new_player/player)
+		RETURN_TYPE(/datum/job)
+		if (!player.client)
+			return
+		var/datum/preferences/player_preferences = player.client.preferences
+		if (!player_preferences)
+			return
+		if (totally_random_jobs)
+			var/datum/job/random_job
+			shuffle_list(staple_jobs)
+			for (var/datum/job/job as anything in src.staple_jobs)
+				if (check_job_eligibility(player, job))
+					random_job = job
+					assign_job(player, job)
+					logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [job.name] (random job)")
+			if (!random_job) // what are you like, banned from everything...?
+				random_job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant) // very random
+			return random_job
+
+		// antag fall through flag set check
+		var/datum/job/fav_job = find_job_in_controller_by_string(player_preferences.job_favorite)
+		if (fav_job)
+			if (!fav_job.allow_traitors && player.mind.special_role || !fav_job.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+				player.antag_fallthrough = TRUE
+			else if ((!fav_job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+				player.antag_fallthrough = TRUE
+
+		if (check_job_eligibility(player, fav_job, STAPLE_JOBS))
+			assign_job(player, fav_job)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (favorite job)")
+			return fav_job
+
+		// If favorite job isn't available, check medium priority jobs
+		shuffle_list(player_preferences.jobs_med_priority)
+		for(var/job_name in player_preferences.jobs_med_priority)
+			var/datum/job/job = find_job_in_controller_by_string(job_name)
+			if (!job)
+				continue
+			if (check_job_eligibility(player, job, STAPLE_JOBS))
+				assign_job(player, job)
+				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (medium priority job)")
+				return job
+
+		// If no medium priority jobs are available or suitable, check low priority jobs
+		shuffle_list(player_preferences.jobs_low_priority)
+		for(var/job_name in player_preferences.jobs_low_priority)
+			var/datum/job/job = find_job_in_controller_by_string(job_name)
+			if (!job)
+				continue
+			if (check_job_eligibility(player, job, STAPLE_JOBS))
+				assign_job(player, job)
+				logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (low priority job)")
+				return job
+
+		// look, we tried ok? Just be happy you work here at all.
+		var/list/low_priority_jobs = list()
+		for(var/datum/job/job in job_controls.staple_jobs)
+			if (job.low_priority_job)
+				low_priority_jobs += job
+		if (length(low_priority_jobs))
+			var/datum/job/job = pick(low_priority_jobs)
+			assign_job(player, job)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Unable to give [player] a preferred job. Assigned [job.name] from the low priority jobs.")
+			return job
+
+		// staffie fallback
+		var/datum/job/fallback_job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant)
+		if(!fallback_job)
+			CRASH("Unable to locate the default fallback job in job controller. [player] has not been assigned a job!")
+		assign_job(player, fallback_job)
+		logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> Assigned [player] job [fav_job.name] (emergency fallback job)")
+
+	proc/assign_job(mob/player, datum/job/job)
+		PRIVATE_PROC(TRUE)
+		player.mind.assigned_role = job.name
+		logTheThing(LOG_DEBUG, player, "assigned job: [player.mind.assigned_role]")
+		job.assigned++
+
 	proc/job_creator()
 		src.check_user_changed()
 		var/list/dat = list("<html><body><title>Job Creation</title>")
