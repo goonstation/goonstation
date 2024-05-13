@@ -91,6 +91,7 @@
 				mind_to_be_transferred.remove_antagonist(antag)
 
 		// Remove any previous hivemind member roles, and add a new one.
+
 		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
 		mind_to_be_transferred.current.show_antag_popup("changeling_absorb")
