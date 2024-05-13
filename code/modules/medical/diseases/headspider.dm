@@ -111,11 +111,13 @@
 					affected_mob.remove_ability_holder(/datum/abilityHolder/changeling)
 
 				//transfer mind first
+				var/datum/mind/M = affected_mob.mind
 				D.source.changeling.addDna(affected_mob, TRUE)
 				D.source.mind.transfer_to(affected_mob)
 
 				affected_mob.add_existing_ability_holder(D.source.changeling)
-				D.source.changeling.insert_into_hivemind(affected_mob)
+				D.source.changeling.insert_into_hivemind(M.current) //aaa aaa aaaaaaaahhhhhhhhhhhhh
+
 				D.source.changeling.reassign_hivemind_target_mob()
 
 
