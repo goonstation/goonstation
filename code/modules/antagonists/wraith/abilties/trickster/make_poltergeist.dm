@@ -9,15 +9,18 @@
 	var/in_use = 0
 	var/ghost_confirmation_delay = 30 SECONDS
 
-	cast(atom/target, params)
-		if (..())
-			return TRUE
+	castcheck(atom/target)
 #ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = holder.owner
 		if (istype(wraith) && length(wraith.poltergeists) >= 2)
 			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
 			return TRUE
 #endif
+		return ..()
+
+	cast(atom/target, params)
+		if (..())
+			return TRUE
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
@@ -66,6 +69,6 @@
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			P.marker = marker
-			message_ghosts("<b>[P]</b>, a poltergeist, has manifested at [log_loc(get_turf(P), ghostjump = TRUE)].")
+			message_ghosts("<b>[P]</b>, a poltergeist, has manifested at [log_loc(P, ghostjump = TRUE)].")
 			boutput(W, SPAN_NOTICE("The poltergeist you called has entered this realm. Its name is <b>[P]</b>."))
 		W.spawn_marker = null

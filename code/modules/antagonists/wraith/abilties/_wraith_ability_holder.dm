@@ -69,6 +69,12 @@
 		B.desc = src.desc
 		src.object = B
 
+	allowcast()
+		var/mob/living/intangible/wraith/W = holder.owner
+		if (istype(W) && W.forced_manifest)
+			return
+		return ..()
+
 	cast(atom/target)
 		if (!holder || !holder.owner)
 			return 1

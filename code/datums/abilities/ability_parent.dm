@@ -686,7 +686,11 @@
 		else
 			src.maptext = null
 
-		if (on_cooldown > 0)
+		if (!owner.allowcast())
+			newcolor = rgb(64, 64, 64)
+			point_overlay.maptext = "<span class='sh vb r ps2p' style='color: #cc2222;'>X</span>"
+			point_overlay.alpha = 255
+		else if (on_cooldown > 0)
 			newcolor = rgb(96, 96, 96)
 			cooldown_overlay.alpha = 255
 			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, on_cooldown)]</span>"
@@ -994,6 +998,14 @@
 			if(!QDELETED(localholder))
 				localholder.updateButtons()
 
+		/// Passive cast checking. Returns TRUE if the cast can proceed.
+		/// Unlike castcheck(), this fires every update, and is currently used to gray out buttons/indicate to players that the ability is unusable.
+		/// Useful for things like different point requirements or only allowing casts under certain conditions.
+		/// Actual logic to prevent the cast from firing should be done in a castcheck() override too!
+		allowcast()
+			return 1
+
+		/// Active cast checking. Use this for checking target validity and the like. Returns TRUE if the cast can proceed.
 		castcheck(atom/target)
 			return 1
 

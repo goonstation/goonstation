@@ -3,19 +3,29 @@
 	icon_state = "possession"
 	desc = "Channel your energy and slowly gain control over a living being. This requires 50 possession points, and the victim will immediately know that something is happening."
 	pointCost = 400
-	targeted = 1
+	targeted = TRUE
 	cooldown = 3 MINUTES
-	ignore_holder_lock = 0
+	ignore_holder_lock = FALSE
 
-	cast(mob/target)
-		if (..())
-			return TRUE
+	allowcast()
+		var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
+		var/datum/abilityHolder/wraith/AH = holder
+		if (istype(W) && istype(AH))
+			return AH.possession_points >= W.points_to_possess
+		return ..()
+
+	castcheck(atom/target)
 		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
-			return TRUE
+			return
 		var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 		var/datum/abilityHolder/wraith/AH = W.abilityHolder
 		if (AH.possession_points < W.points_to_possess)
 			boutput(holder.owner, SPAN_ALERT("You cannot possess with only [AH.possession_points] possession power. You'll need at least [(W.points_to_possess - AH.possession_points)] more."))
+			return
+		return ..()
+
+	cast(mob/target)
+		if (..())
 			return TRUE
 		if (!ishuman(target) || isdead(target))
 			return TRUE
@@ -23,6 +33,7 @@
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, it instantly kicks you back into the aether!"))
 			return
+		var/datum/abilityHolder/wraith/AH = holder
 		AH.possession_points = 0
 		actions.start(new/datum/action/bar/icon/trickster_possession(target), holder.owner)
 		return
@@ -136,6 +147,12 @@
 		boutput(T, "<span class='bold' style='color:red;font-size:150%'>You have assumed control of this body! You don't have long...</span>")
 		RegisterSignal(T, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 		APPLY_ATOM_PROPERTY(T, PROP_MOB_NO_SELF_HARM, T)
+		message_ghosts("<b>[src.W]</b> has possessed <b>[src.owner]</b> at [log_loc(src.owner, ghostjump = TRUE)]!")
+		for (var/client/C in clients)
+			var/mob/M = C.mob
+			if (!isobserver(M) || M.observeMob != src.W)
+				continue
+			M.observeMob(src.owner)
 
 	proc/return_wraith()
 		UnregisterSignal(src.owner, COMSIG_MOB_DEATH)
@@ -143,6 +160,12 @@
 			return
 		src.W.set_loc(get_turf(src.owner))
 		src.W.set_dir(src.owner.dir)
+		message_ghosts("<b>[src.W]</b> is no longer possessing <b>[src.owner]</b> at [log_loc(src.W, ghostjump = TRUE)].")
+		for (var/client/C in clients)
+			var/mob/M = C.mob
+			if (!isobserver(M) || M.observeMob != src.owner)
+				continue
+			M.observeMob(src.W)
 		//yes this is expensive as hell, but we need to be SURE
 		var/mob/M = ckey_to_mob_maybe_disconnected(src.wraith_key, FALSE)
 		M.mind.transfer_to(src.W)
