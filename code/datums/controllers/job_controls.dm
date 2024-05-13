@@ -74,6 +74,7 @@ var/datum/job_controller/job_controls
 			return
 		if ((job.limit >= 0) && (job.assigned >= job.limit))
 			return
+		// prevent someone from trying to sneak their way into a job they shouldn't be able to choose
 		var/list/valid_jobs = list()
 		if (HAS_FLAG(valid_categories, STAPLE_JOBS))
 			valid_jobs.Add(src.staple_jobs)
@@ -84,25 +85,31 @@ var/datum/job_controller/job_controls
 		if (!valid_jobs.Find(job))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
-
 		var/datum/preferences/P = player.client.preferences
+		// antag job exemptions
 		if(player.mind?.is_antagonist())
-			if (istype(ticker?.mode, /datum/game_mode/revolution))
-				if (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
-					return
+			if ((!job.allow_traitors && player.mind.special_role))
+				return
+			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
+				return
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)))
+				return
 			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
 				return
+			else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+				return
+		// job ban check
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
+		// mentor only job check
 		if (job.mentor_only && !(player.ckey in mentors))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
 			return
-
+		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
 		if (!job.allow_antag_fallthrough && player.antag_fallthrough)
 			return
-
-		// all of the 'serious' check have passed
+		// all of the 'serious' check have passed, ignore the rest of the requirements for random job rounds.
 		if (global.totally_random_jobs)
 			return TRUE
 
@@ -146,7 +153,9 @@ var/datum/job_controller/job_controls
 			var/datum/job/fav_job = find_job_in_controller_by_string(player_preferences.job_favorite)
 			if (fav_job)
 				// antag fall through flag set check
-				if (!fav_job.allow_traitors && player.mind.special_role || !fav_job.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+				if ((!fav_job.allow_traitors && player.mind.special_role))
+					player.antag_fallthrough = TRUE
+				else if (!fav_job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
 					player.antag_fallthrough = TRUE
 				else if ((!fav_job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
 					player.antag_fallthrough = TRUE

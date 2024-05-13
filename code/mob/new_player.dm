@@ -471,7 +471,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		if (J.no_late_join)
 			return
 		var/limit = J.limit
-		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS|SPECIAL_JOBS))
+		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
 			// Show unavailable jobs, but no joining them
 			limit = 0
 
