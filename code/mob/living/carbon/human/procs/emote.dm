@@ -36,14 +36,15 @@
 	var/maptext_out = 0
 	var/message = null
 
-	var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
-	if(!islist(mutantrace_emote_stuff))
-		message = mutantrace_emote_stuff
-	else
-		if(length(mutantrace_emote_stuff) >= 1)
-			message = mutantrace_emote_stuff[1]
-		if(length(mutantrace_emote_stuff) >= 2)
-			maptext_out = mutantrace_emote_stuff[2]
+	if (src.mutantrace)
+		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+		if(!islist(mutantrace_emote_stuff))
+			message = mutantrace_emote_stuff
+		else
+			if(length(mutantrace_emote_stuff) >= 1)
+				message = mutantrace_emote_stuff[1]
+			if(length(mutantrace_emote_stuff) >= 2)
+				maptext_out = mutantrace_emote_stuff[2]
 
 	if (!message)
 		switch (act)
