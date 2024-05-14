@@ -17178,27 +17178,33 @@
 /area/flock_trader)
 "huh" = (
 /obj/rack,
-/obj/item/clothing/suit/armor/EOD{
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -13
+	},
+/obj/item/clothing/suit/armor/heavy{
 	pixel_x = -5
 	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -13;
+	pixel_y = 12
+	},
 /obj/item/clothing/suit/armor/EOD{
-	pixel_x = 5
+	pixel_x = 9
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 1
 	},
 /obj/item/clothing/head/helmet/EOD{
-	pixel_x = -5;
-	pixel_y = -3
+	pixel_x = 12;
+	pixel_y = 8
 	},
 /obj/item/clothing/head/helmet/EOD{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 5;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 8
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/ai_monitored/armory)
@@ -17932,21 +17938,53 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "hHe" = (
-/obj/table/reinforced/auto,
+/obj/rack,
 /obj/item/clothing/glasses/thermal{
-	pixel_y = 10
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = 6
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/thermal{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/clothing/glasses/thermal{
-	pixel_y = -2
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -7;
+	pixel_y = -3
 	},
-/obj/item/clothing/glasses/thermal{
-	pixel_y = -6
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 9;
+	pixel_y = 11
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 3;
+	pixel_y = 11
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -9;
+	pixel_y = 11
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
@@ -20597,8 +20635,8 @@
 	},
 /area/station/science/hall)
 "iKJ" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /obj/machinery/recharger/wall/sticky,
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
 /turf/simulated/floor/engine/caution/south,
 /area/station/ai_monitored/armory)
 "iKW" = (
@@ -30695,7 +30733,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "mOd" = (
-/obj/stool/bench/red/auto,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -30708,6 +30745,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -33772,7 +33810,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "oip" = (
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "oiD" = (
@@ -45762,27 +45800,7 @@
 	},
 /area/pasiphae/sys)
 "tzj" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -7
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = 7
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = -6
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -7
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 7
-	},
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/engine/caution/north,
 /area/station/ai_monitored/armory)
 "tzs" = (

@@ -3932,7 +3932,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jH" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jI" = (

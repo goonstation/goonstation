@@ -37540,7 +37540,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cIT" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -45146,14 +45146,13 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/security/hos)
 "ijw" = (
@@ -54465,7 +54464,7 @@
 /area/station/storage/primary)
 "pDb" = (
 /obj/machinery/firealarm/south,
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "pER" = (
@@ -58211,14 +58210,13 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/security/hos)
 "svZ" = (

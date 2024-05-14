@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	New()
 		START_TRACKING
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
 
 		if(!src.link)

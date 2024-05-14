@@ -33,6 +33,7 @@
 #include "defines\camera_coverage.dm"
 #include "defines\chemicompiler.dm"
 #include "defines\chemistry.dm"
+#include "defines\chem_fire.dm"
 #include "defines\client.dm"
 #include "defines\cloner_defects.dm"
 #include "defines\clothing.dm"
