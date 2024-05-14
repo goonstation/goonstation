@@ -609,9 +609,8 @@
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
-	H.changeStatus("knockdown", 3 SECONDS)
-	H.force_laydown_standup()
 	var/zone = pick("l_leg", "r_leg")
+	H.numb_limb(9 SECONDS, 1, FALSE, list(zone))
 	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
 
 /obj/item/raw_material/chitin
