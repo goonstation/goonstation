@@ -1,4 +1,9 @@
 
+(t)tue may 14 24
+(u)Glamurio (Ryou)
+(p)18898
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added a new hand-held device that allows simple communication, available to Ambassadors and Tourists.
 (t)mon may 13 24
 (u)Ikea
 (p)17768
