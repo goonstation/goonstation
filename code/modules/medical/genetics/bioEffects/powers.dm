@@ -861,7 +861,7 @@
 
 		if (linked_power.power > 1)
 			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> erupts into a huge column of flames! Holy shit!"))
-			fireflash_melting(get_turf(owner), 3, 7000, 2000)
+			fireflash_melting(get_turf(owner), 3, 7000, 2000, chemfire = CHEM_FIRE_RED)
 		else if (owner.is_heat_resistant())
 			owner.show_message(SPAN_ALERT("Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh."))
 			return
@@ -1041,7 +1041,7 @@
 				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
 			if (owner.getStatusDuration("burning"))
-				fireflash(get_turf(owner), 3 * linked_power.power)
+				fireflash(get_turf(owner), 3 * linked_power.power, chemfire = CHEM_FIRE_RED)
 
 			SF.farting = 0
 			if (linked_power.power > 1)
@@ -1734,7 +1734,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			fireflash(F,0.5,temp)
+			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1861,6 +1861,7 @@
 
 		modifier *= linked_power.power
 
+		. = ..()
 		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> makes a gesture at [T.name]!"))
 
 		for (var/obj/O in view(7, owner))
@@ -1970,9 +1971,11 @@
 	cooldown = 0
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
+		. = ..()
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
@@ -2048,9 +2051,11 @@
 	cooldown = FALSE
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/chameleon/CH = linked_power
+		. = ..()
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0

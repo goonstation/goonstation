@@ -1192,7 +1192,7 @@
 	},
 /area/station/medical/robotics)
 "ayf" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
@@ -34525,7 +34525,7 @@
 	name = "Cargo Hallway"
 	})
 "pkv" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
@@ -36738,7 +36738,7 @@
 	name = "Corpse Tunnel"
 	})
 "qiq" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay,
 /area/station/quartermaster/refinery)
 "qiB" = (

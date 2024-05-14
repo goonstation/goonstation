@@ -204,6 +204,7 @@ proc/ui_describe_reagents(atom/A)
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 
 	/// The number of fluid overlay states that this container has.
 	var/fluid_overlay_states = 0
@@ -972,7 +973,7 @@ proc/ui_describe_reagents(atom/A)
 	var/makes_noise_when_full = TRUE //here so the tiny ones don't burp on creation lol
 	var/angry = FALSE
 	var/angry_timer = 15
-	var/list/convertible_reagents = list("blood","bloodc","bloody_mary","bloody_scary","hemolymph")
+	var/list/convertible_reagents = list("blood","bloodc","bloody_mary","bloody_scary","hemolymph", "viscerite_viscera")
 
 	New()
 		START_TRACKING
@@ -994,8 +995,19 @@ proc/ui_describe_reagents(atom/A)
 				reagent_to_add = "meat_slurry"
 			if("bloody_mary", "bloody_scary")
 				reagent_to_add = "ethanol"
+			if("viscerite_viscera")
+				reagent_to_add = null
+		if(reagent_to_add)
+			src.reagents.add_reagent(reagent_to_add, volume * chemical_efficiency)
+
+		if(reagent_id == "viscerite_viscera") // Special processing is needed for this chem because its my birthday and I get to have feature bloat
+			src.reagents.add_reagent("martian_flesh", ((volume / chemical_efficiency) * 0.35)) // Large pustules produce half the amount of martian flesh. Apologies for the magic number here, it's avoiding digestion producing net amounts of chems which leads to bugs.
+			src.reagents.add_reagent("synthflesh", ((volume * chemical_efficiency)  * 0.35)) // Large pustules also produce twice the amount of synthflesh
+			if(prob(20 / chemical_efficiency)) // 20% chance of offgassing for medium/small, 10% for large pustules
+				var/datum/reagents/smokeContents = new/datum/reagents()
+				smokeContents.add_reagent("acid", volume / chemical_efficiency)
+				smoke_reaction(smokeContents, 2, get_turf(src), do_sfx = TRUE)
 		src.reagents.remove_reagent(reagent_id, volume)
-		src.reagents.add_reagent(reagent_to_add, volume * chemical_efficiency)
 
 	proc/become_angry() //become dangerous to pick up
 		if (reagents.total_volume >= reagents.maximum_volume) //can't be angry on a full stomach
@@ -1073,6 +1085,31 @@ proc/ui_describe_reagents(atom/A)
 				animate_shake(src, 2 , 0, 3, 0, 0)
 				qdel(organ)
 				reagents.add_reagent("synthflesh", 40 * organ_efficiency)
+				become_unangry()
+
+		if(W.material?.isSameMaterial(getMaterial("viscerite")))
+			var/obj/item/visc = W
+			if (reagents.total_volume >= reagents.maximum_volume)
+				boutput(user, SPAN_ALERT("The [src] is too full!"))
+			else
+				if(visc.amount == 1)
+					reagents.add_reagent("viscerite_viscera", 20 * visc.amount * visc.material_amt) // Gets converted into synthflesh (and some other stuff). Small/medium pustules produce 7 synthflesh and 7 martian flesh per visc, large produce 14 synthflesh and 3.5 martian flesh per visc
+					qdel(visc)
+				else // Oh boy oh boy are you ready for somewhat messy code to deal with stacks
+					var/leftover_space = (reagents.maximum_volume - reagents.total_volume)
+					var/max_amt_removal = round(leftover_space / (20 * visc.material_amt))
+					var/amt_to_remove = 0
+					if(max_amt_removal == 0)
+						return
+					else if (visc.amount > max_amt_removal)
+						amt_to_remove = max_amt_removal
+					else
+						amt_to_remove = visc.amount
+					reagents.add_reagent("viscerite_viscera", 20 * amt_to_remove * visc.material_amt)
+					visc.change_stack_amount(-amt_to_remove)
+				user.visible_message("<span class = 'alert'>[user.name] stuffs the [visc.name] into the [src.name].</span>")
+				playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1)
+				animate_shake(src, 2 , 0, 3, 0, 0)
 				become_unangry()
 
 		else

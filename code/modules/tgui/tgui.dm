@@ -65,7 +65,7 @@
  * Open this UI (and initialize it with data).
  */
 /datum/tgui/proc/open()
-	if(!user.client)
+	if(!user?.client)
 		return null
 	if(window)
 		return null

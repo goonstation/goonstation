@@ -8,11 +8,13 @@
 	cooldown_staff = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
+	voice_on_cast_start = FALSE
 
 	cast()
 		if (!holder)
 			return 1
 
+		. = ..()
 		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(1, 3, spell=src) == 1)
 			return 0
 

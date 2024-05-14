@@ -1025,7 +1025,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	New()
 		..()
 		UnsubscribeProcess()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		if(id)
 			pass = "[id]-[rand(1,50)]"

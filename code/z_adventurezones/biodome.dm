@@ -1399,7 +1399,7 @@ var/satellite_crash_event_status = -1
 		explode.start()
 		playsound(src.loc, 'sound/effects/kaboom.ogg', 90, 1)
 		SPAWN(1 DECI SECOND)
-			fireflash(src.loc, 4)
+			fireflash(src.loc, 4, chemfire = CHEM_FIRE_RED)
 		for (var/mob/living/L in range(src.loc, 2))
 			L.ex_act(GET_DIST(src.loc, L))
 

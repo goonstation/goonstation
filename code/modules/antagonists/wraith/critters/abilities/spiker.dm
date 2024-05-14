@@ -54,6 +54,7 @@
 		if (the_spiker.shuffling)
 			boutput(holder.owner, SPAN_NOTICE("You are already casting this ability!"))
 			return TRUE
+		. = ..()
 
 		the_spiker.remove_stuns()
 		the_spiker.delStatus("slowed")

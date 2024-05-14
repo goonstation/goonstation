@@ -337,7 +337,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			src.scan = card
 			tgui_process.update_uis(src)
 		else
-			boutput(user, SPAN_ALERT("Pin number incorrect."))
+			boutput(user, SPAN_ALERT("PIN incorrect."))
 			src.scan = null
 	else
 		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -1872,7 +1872,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1,)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron/tricolor, rand(2, 2), hidden=1,)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/moustache/Italian , rand(2, 2), hidden=1,)
-		product_list += new/datum/data/vending_product(pick(/obj/item/paper/recipe_tandoori, /obj/item/paper/recipe_potatocurry, /obj/item/paper/recipe_coconutcurry, /obj/item/paper/recipe_chickenpapplecurry), 1, hidden = 1)
+		product_list += new/datum/data/vending_product(pick(concrete_typesof(/obj/item/paper/recipe)), 1, hidden = 1)
 
 //The burden of these machinations weighs on my shoulders
 //And thus you will be burdened

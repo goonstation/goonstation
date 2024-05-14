@@ -214,14 +214,16 @@
 		return
 
 	proc/remove_screen(atom/movable/screen/S)
-		src.objects -= S
+		if(src.objects)
+			src.objects -= S
 		for (var/client/C in src.clients)
 			C.screen -= S
 
 	proc/remove_screen_id(var/id)
 		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
-			src.objects -= S
+			if(src.objects)
+				src.objects -= S
 			for (var/client/C in src.clients)
 				C.screen -= S
 

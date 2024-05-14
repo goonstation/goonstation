@@ -423,7 +423,8 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
-		/client/proc/spawn_all_type
+		/client/proc/spawn_all_type,
+		/client/proc/region_allocator_panel
 		),
 
 	7 = list(
@@ -1038,7 +1039,7 @@ var/list/fun_images = list()
 		if("Heavenly")
 			src.respawn_as_self()
 			var/mob/M = src.mob
-			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()
@@ -2626,3 +2627,15 @@ var/list/fun_images = list()
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
 	logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
 	logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
+
+/client/proc/region_allocator_panel()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Region Allocator"
+	set desc = "Region Allocator front end panel. Allows you to dynamically allocate and deallocate areas of reserved space."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (isnull(src.holder.region_allocator_panel))
+		src.holder.region_allocator_panel = new
+
+	src.holder.region_allocator_panel.ui_interact(src.mob)
