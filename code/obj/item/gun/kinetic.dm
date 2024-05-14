@@ -1895,7 +1895,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/pumpweapon/ks23
 	name = "Kuvalda Carbine"
-	desc = "A *huge* 4-gauge shotgun built with a repurposed 23mm cannon barrel. It's debatable if there's a moral justification for using this against humans."
+	desc = "A *huge* 4-gauge shotgun built with a repurposed 23mm cannon barrel. It's unlikely there's any moral justification for using this against humans."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ks23"
 	item_state = "ks23"
@@ -1916,7 +1916,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = TRUE
 	gildable = TRUE
 	recoil_reset = 15 DECI SECONDS
-	default_magazine = /obj/item/ammo/bullets/kuvalda/buck
+	default_magazine = /obj/item/ammo/bullets/kuvalda
 	recoil_strength = 18
 	recoil_max = 40
 	max_move_amount = 1
@@ -1924,7 +1924,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
 	pushsound = 'sound/weapons/kuvalda_push2.ogg'
 	empty
-		default_magazine = /obj/item/ammo/bullets/kuvalda/slug/empty
+		default_magazine = /obj/item/ammo/bullets/kuvalda/empty
 
 	New()
 		ammo = new default_magazine

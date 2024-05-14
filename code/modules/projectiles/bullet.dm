@@ -814,7 +814,7 @@ toxic - poisons
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/gaseous_projectile)
 		icon_state = "4gauge[rand(1,3)]"
-		impact_image_state = "bullethole-small-cluster[rand(1,3)]"
+		impact_image_state = "bullethole-small-cluster-[rand(1,3)]"
 		blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
 		blood_image.alpha = 0
 		O.UpdateOverlays(blood_image, "blood_image")

@@ -1400,7 +1400,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_x=-7,off_y=-4,scale_x=0.5,scale_y=0.5)
-			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/buck,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
 
 	// GANG_CRATE_GEAR
 
