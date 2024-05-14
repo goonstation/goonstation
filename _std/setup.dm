@@ -85,7 +85,7 @@ var/ZLOG_START_TIME
 #define Z_LOG_ERROR(WHAT, X) Z_LOG("ERROR", WHAT, X)
 #else
 #define Z_LOG(LEVEL, WHAT, X) //
-#define Z_LOG_DEBUG(WHAT, X) logTheThing(LOG_DEBUG, null, "Z_LOG_DEBUG: [WHAT] - [X]")
+#define Z_LOG_DEBUG(WHAT, X) //
 #define Z_LOG_INFO(WHAT, X) //
 #define Z_LOG_WARN(WHAT, X) //
 #define Z_LOG_ERROR(WHAT, X) //
