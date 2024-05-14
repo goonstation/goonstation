@@ -1089,9 +1089,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "axX" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. There are little bits of corroded suit wafting around them."
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/space/fluid/acid/clear,
 /area/space)
 "ayc" = (
@@ -18415,12 +18413,6 @@
 	pixel_x = -4;
 	pixel_y = 12
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Well, there's your problem.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body4";
-	name = "crispy corpse"
-	},
 /obj/decal/cleanable/generic{
 	alpha = 200;
 	desc = "Toasted.";
@@ -18433,6 +18425,9 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	skeletonized = 1
 	},
 /turf/simulated/floor/grey,
 /area/pasiphae/survey)

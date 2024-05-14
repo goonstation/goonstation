@@ -11,8 +11,8 @@
 	pixel_x = -11;
 	pixel_y = 18
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/fakeobjects/lightbulb_broken,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "l" = (

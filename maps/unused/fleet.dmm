@@ -105,11 +105,9 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. There seem to be a few bits missing."
-	},
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "at" = (

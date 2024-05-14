@@ -23,14 +23,11 @@
 /turf/simulated/floor/airless/scorched,
 /area/prefab/crashed_shuttle)
 "aD" = (
-/obj/decal/fakeobjects/skeleton{
-	name = "decomposed corpse";
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1"
-	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human{
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
@@ -255,14 +252,11 @@
 	icon_state = "floattiles1";
 	dir = 1
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
+/obj/item/raw_material/rock,
+/obj/item/raw_material/rock,
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	max_limbs_removed = 2
 	},
-/obj/item/raw_material/rock,
-/obj/item/raw_material/rock,
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
 "lc" = (
@@ -479,12 +473,6 @@
 /area/prefab/crashed_shuttle)
 "Ga" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
@@ -493,6 +481,11 @@
 	},
 /obj/machinery/light/incandescent/broken{
 	dir = 1
+	},
+/obj/stool/chair,
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	headless = 1;
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
@@ -572,11 +565,8 @@
 /area/prefab/crashed_shuttle)
 "OQ" = (
 /obj/item/device/analyzer/atmosanalyzer_upgrade,
-/obj/decal/fakeobjects/skeleton{
-	name = "decomposed corpse";
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3"
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	skeletonized = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)

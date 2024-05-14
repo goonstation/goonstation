@@ -113,11 +113,8 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "dd" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -416,13 +413,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "mM" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 4
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/random,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "mY" = (
@@ -440,11 +431,8 @@
 	},
 /area/centcom/outside)
 "oC" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
@@ -467,13 +455,6 @@
 	layer = 9.1
 	},
 /obj/decal/cleanable/paper,
-/turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"pq" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 4
-	},
-/obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "px" = (
@@ -739,11 +720,8 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -805,13 +783,7 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 4
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/random,
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "BC" = (
@@ -1018,7 +990,9 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "HU" = (
@@ -1162,8 +1136,10 @@
 	},
 /area/centcom/outside)
 "My" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "ME" = (
@@ -1172,12 +1148,10 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "MT" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body7"
-	},
 /obj/decal/cleanable/vomit,
+/obj/mapping_helper/mob_spawn/corpse/human/captain{
+	skeletonized = 1
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "NK" = (
@@ -1237,11 +1211,8 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -1389,11 +1360,8 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -1898,7 +1866,7 @@ wT
 YQ
 BX
 hm
-pq
+zl
 TH
 hu
 Rb

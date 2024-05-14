@@ -60950,9 +60950,6 @@
 /area/station/medical/staff)
 "oGd" = (
 /obj/decal/cleanable/rust/jen,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
-	icon_state = "body5"
-	},
 /obj/item/kitchen/utensil/knife,
 /obj/decal/cleanable/blood{
 	icon_state = "armorblood_c"
@@ -60962,6 +60959,9 @@
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "drip1a"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton{
+	headless = 1
 	},
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/maintenance/northwest)

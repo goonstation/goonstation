@@ -27397,13 +27397,9 @@
 /area/russian/radiation)
 "cQb" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of an engineer. not very handsome.";
-	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
-	name = "engineer's skeleton"
-	},
 /obj/item/casing,
 /obj/disposalpipe/junction/right/east,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg1";
@@ -54626,12 +54622,6 @@
 	},
 /area/russian/radiation)
 "mTO" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "not much of a chef";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "shredded remains of Flesh Utopia"
-	},
 /obj/item/reagent_containers/food/snacks/cereal_box{
 	contraband = 1;
 	desc = "Couldn't be simpler! Just add water, mix, and bake! DO NOT CONSUME RAW";
@@ -54644,6 +54634,7 @@
 	icon_state = "gibhead"
 	},
 /obj/decal/cleanable/blood/splatter,
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/space,
 /area/russian/radiation)
 "mUe" = (
@@ -62702,7 +62693,9 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
@@ -62749,10 +62742,12 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
@@ -63777,13 +63772,10 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/dirt/dirt5,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	icon_state = "floor3";
@@ -63890,15 +63882,10 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/soviet,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
@@ -64303,18 +64290,13 @@
 /area/russian/radiation)
 "rzR" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/fakeobjects/skeleton{
-	desc = "still has his... uh... bedsheet?";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "what used to be Twenty Second Elephant"
-	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "hard to believe...";
 	icon_state = "bedsheet-captain";
 	name = "clown's bedsheet"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/black{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -64392,11 +64374,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	skeletonized = 1
 	},
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
@@ -65023,17 +65002,14 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "corpse"
-	},
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
 	},
 /obj/decal/cleanable/greenpuke,
+/obj/mapping_helper/mob_spawn/corpse/human/captain{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	icon_state = "floor2";
@@ -65759,7 +65735,7 @@
 	},
 /area/russian/radiation)
 "sho" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/space,
 /area/space)
 "shH" = (
@@ -66169,15 +66145,11 @@
 	},
 /area/station/hallway/secondary/exit)
 "ssC" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "She seems to have bled out from her injuries.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	interesting = "large number of bites and scratches";
-	name = "mangled corpse"
-	},
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
@@ -70032,16 +70004,11 @@
 	},
 /area/russian/radiation)
 "uBR" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "this is not right. this is NOT right.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Eldritch Horror the clowne"
-	},
 /obj/item/razor_blade,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/space,
 /area/russian/radiation)
 "uCl" = (
@@ -70878,13 +70845,7 @@
 /area/russian/radiation)
 "vfo" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/fakeobjects/skeleton{
-	desc = "This is very important.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Bill-Bo's body, barely..."
-	},
-/obj/item/clothing/mask/clown_hat,
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/space,
 /area/russian/radiation)
 "vfx" = (

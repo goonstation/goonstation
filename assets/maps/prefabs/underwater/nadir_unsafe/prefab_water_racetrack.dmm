@@ -368,7 +368,11 @@
 	},
 /area/prefab/raceway)
 "bc" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton{
+	armless = 1;
+	legless = 1;
+	skeletonized = 0
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

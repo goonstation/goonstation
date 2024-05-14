@@ -835,9 +835,11 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "db" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /obj/decal/ballpit,
 /obj/decal/cleanable/slime,
+/obj/mapping_helper/mob_spawn/corpse/human/clown{
+	randomise_decomp_stage = 1
+	},
 /turf/unsimulated/floor/ballpit,
 /area/prefab/slimy_honk)
 "dc" = (

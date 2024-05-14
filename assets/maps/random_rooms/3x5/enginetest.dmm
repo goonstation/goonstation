@@ -44,8 +44,10 @@
 /turf/simulated/floor/airless/caution/corner/se,
 /area/dmm_suite/clear_area)
 "C" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /obj/decal/cleanable/dirt/jen,
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	max_limbs_removed = 4
+	},
 /turf/simulated/floor/airless/caution/south,
 /area/dmm_suite/clear_area)
 "F" = (

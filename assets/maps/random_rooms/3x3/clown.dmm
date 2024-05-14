@@ -3,10 +3,10 @@
 /obj/decal/cleanable/blood{
 	icon_state = "gib2"
 	},
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
-	icon_state = "clowncorpse"
-	},
 /mob/living/critter/spider/clown,
+/obj/mapping_helper/mob_spawn/corpse/human/clown{
+	randomise_decomp_stage = 1
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/dmm_suite/clear_area)
 "n" = (

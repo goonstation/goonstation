@@ -4,7 +4,7 @@
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "s" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "B" = (

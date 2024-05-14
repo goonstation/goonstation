@@ -24,9 +24,6 @@
 /turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "G" = (
-/obj/decal/fakeobjects/skeleton{
-	pixel_x = -2
-	},
 /obj/item/clothing/shoes/cowboy{
 	pixel_x = -8;
 	pixel_y = -8
@@ -43,6 +40,7 @@
 /obj/railing{
 	dir = 4
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "L" = (

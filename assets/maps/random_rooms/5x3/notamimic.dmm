@@ -109,10 +109,6 @@
 /turf/simulated/floor/purple/side,
 /area/dmm_suite/clear_area)
 "N" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
-/obj/item/clothing/suit/labcoat/science{
-	pixel_y = -4
-	},
 /obj/item/clothing/glasses/thermal{
 	pixel_x = 7
 	},
@@ -120,6 +116,9 @@
 	info = "oh god, the notes, they do nothing!";
 	pixel_y = -10;
 	pixel_x = -14
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor,
 /area/dmm_suite/clear_area)

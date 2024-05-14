@@ -395,15 +395,12 @@
 /turf/simulated/wall/auto/reinforced/jen/cyan,
 /area/prefab/candy_shop)
 "Df" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a confectioner.";
-	name = "Carlisle"
-	},
 /obj/item/casing/derringer{
 	dir = 5;
 	pixel_x = -9;
 	pixel_y = 9
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "DL" = (

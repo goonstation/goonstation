@@ -4,9 +4,7 @@
 /obj/random_item_spawner/shoe/one_or_zero,
 /obj/random_item_spawner/snacks/one_or_zero,
 /obj/random_item_spawner/medicine/one_or_zero,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
-	icon_state = "body8"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/random,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "r" = (

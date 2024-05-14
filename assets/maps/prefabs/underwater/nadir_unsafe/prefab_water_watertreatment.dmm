@@ -30,8 +30,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/water_treatment)
 "aj" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/drip/high,
 /obj/item/toy/sponge_capsule/syndicate{
 	pixel_y = 9;
@@ -43,6 +41,7 @@
 	},
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "al" = (
@@ -92,6 +91,7 @@
 /obj/decal/cleanable/blood/gibs{
 	color = "#990000"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "as" = (
@@ -915,12 +915,12 @@
 "ZL" = (
 /obj/item/sponge,
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/drip/high{
 	icon_state = "gibdown1"
 	},
 /obj/decal/cleanable/blood/splatter,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 

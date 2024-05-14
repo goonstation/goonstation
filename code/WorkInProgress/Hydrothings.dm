@@ -1158,7 +1158,10 @@
 				src.visible_message(SPAN_ALERT("<b>[src] devours [src.target]! Holy shit!</b>"))
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				M.ghostize()
-				new /obj/decal/fakeobjects/skeleton(M.loc)
+				var/mob/living/carbon/human/H = new /mob/living/carbon/human/normal(M.loc)
+				H.name = M.name
+				H.real_name = M.real_name
+				H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 				M.gib()
 				src.target = null
 

@@ -43865,10 +43865,6 @@
 /area/mining/magnet)
 "hni" = (
 /obj/decal/cleanable/rust/jen,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
-	icon_state = "body5";
-	name = "unfortunate guy"
-	},
 /obj/item/kitchen/utensil/knife,
 /obj/decal/cleanable/blood{
 	icon_state = "armorblood_c"
@@ -43879,6 +43875,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip1a"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/maintenance/northeast)
 "hnu" = (

@@ -146,11 +146,13 @@
 /mob/living/critter/fermid{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/uqill{
 	pixel_y = 5;
 	pixel_x = -5
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/miner{
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)

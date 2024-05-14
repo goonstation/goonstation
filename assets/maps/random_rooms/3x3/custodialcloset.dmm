@@ -4,7 +4,9 @@
 /area/dmm_suite/clear_area)
 "d" = (
 /obj/storage/closet,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/janitor{
+	skeletonized = 1
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/dmm_suite/clear_area)
 "k" = (

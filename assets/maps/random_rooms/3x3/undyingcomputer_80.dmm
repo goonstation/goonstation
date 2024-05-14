@@ -16,14 +16,11 @@
 	uses_default_material_appearance = 1;
 	insulator_default = "flesh"
 	},
-/obj/dialogueobj/engineerscorpse{
-	pixel_y = -5;
-	desc = "A dead engineer with a gnarly dent in their head and a floppy disc...embedded in their chest. Eugh..."
-	},
 /obj/decal/cleanable/blood/drip/high{
 	pixel_y = -18;
 	dry = 1
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer,
 /turf/simulated/floor/industrial,
 /area/dmm_suite/clear_area{
 	sound_fx_1 = 'sound/ambience/station/Machinery_Computers1.ogg';

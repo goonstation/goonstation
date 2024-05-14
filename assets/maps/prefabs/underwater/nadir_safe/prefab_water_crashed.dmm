@@ -170,14 +170,12 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aR" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body7";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/captain{
+	max_organs_removed = 6;
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
@@ -425,8 +423,7 @@
 /area/station/turret_protected/sea_crashed)
 "bM" = (
 /mob/living/critter/robotic/gunbot{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -448,8 +445,7 @@
 /area/station/turret_protected/sea_crashed)
 "bQ" = (
 /mob/living/critter/robotic/gunbot{
-	dir = 8;
-	
+	dir = 8
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -734,14 +730,14 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "cN" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	skeletonized = 1;
+	max_limbs_removed = 2;
+	max_organs_removed = 6;
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
@@ -880,11 +876,11 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	skeletonized = 1;
+	max_limbs_removed = 2;
+	max_organs_removed = 6;
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -1288,8 +1284,7 @@
 /area/noGenerate)
 "sR" = (
 /mob/living/critter/robotic/gunbot{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,

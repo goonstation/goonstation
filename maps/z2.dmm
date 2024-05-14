@@ -1149,11 +1149,8 @@
 /turf/unsimulated/floor/caution/north,
 /area/hospital/samostrel)
 "ago" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Oh.  Gross.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "emaciated corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	delete_id = 1
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -2764,11 +2761,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "anN" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Human remains.  Probably related to all this burnt science equipment and general bad vibes.";
-	layer = 2.5;
-	pixel_y = 8
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "anO" = (
@@ -4175,11 +4168,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "atO" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Human remains.  Probably related to all this burnt science equipment and general bad vibes.";
-	layer = 2.5;
-	pixel_y = 8
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atQ" = (
@@ -8218,7 +8207,7 @@
 /obj/stool/bed,
 /obj/window/cubicle,
 /obj/item/clothing/suit/bedsheet,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aNF" = (
@@ -8884,18 +8873,15 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aPA" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "corpse"
-	},
 /obj/decal/cleanable/vomit{
 	desc = "Someone lost their lunch.  A long time ago.";
 	name = "dried vomit"
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/black/side{
 	dir = 1
@@ -10887,11 +10873,8 @@
 	},
 /area/marsoutpost)
 "aWt" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	delete_id = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -12881,12 +12864,12 @@
 "bcN" = (
 /obj/decal/cleanable/dirt,
 /obj/item/whip,
-/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/head/det_hat,
 /obj/item/coin{
 	desc = "You don't recognize the language on this coin. Huh.";
 	name = "old coin"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcO" = (
@@ -13653,8 +13636,8 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/item/paper/mission_outline,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bfp" = (
@@ -13925,10 +13908,12 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bgk" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /obj/item/gun/kinetic/flaregun,
 /obj/decal/cleanable/blood/tracks,
+/obj/mapping_helper/mob_spawn/corpse/human{
+	randomise_decomp_stage = 1
+	},
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bgm" = (
@@ -14455,12 +14440,12 @@
 /area/precursor)
 "bil" = (
 /obj/item/clothing/glasses/monocle,
-/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/under/gimmick/safari,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
 /obj/item/boomerang,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -20446,12 +20431,7 @@
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bEZ" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Apparently, there is a limit to the electrical protection offered by environment suits.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "burntnerd";
-	name = "charred corpse"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/hazmat,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bFa" = (
@@ -20464,12 +20444,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The FineBargain Model 8 environment suit also doubles as a handy body bag.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "nerd";
-	name = "corpse"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/hazmat,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bFc" = (
@@ -20738,26 +20713,18 @@
 /area/iomoon/robot_ruins/boss_chamber)
 "bGe" = (
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
 /obj/item/clothing/under/misc/syndicate,
 /obj/item/card/id/syndicate,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bGg" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/air,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
 /obj/item/clothing/under/shorts/black,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGi" = (
@@ -20895,12 +20862,8 @@
 /area/crypt/graveyard)
 "bGJ" = (
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
 /obj/item/paper/alchemy/southwest,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bGL" = (
@@ -21308,11 +21271,6 @@
 /area/iomoon/robot_ruins/boss_chamber)
 "bIi" = (
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
 /obj/item/coin{
 	desc = "Through the corrosion, you can  vaguely make out a symbol of a circle with four triangular spokes and four wavy spokes. Huh.";
 	name = "older coin";
@@ -21320,6 +21278,7 @@
 	pixel_y = 9
 	},
 /obj/item/clothing/suit/cultist,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bIj" = (
@@ -21532,21 +21491,13 @@
 /area/iomoon/robot_ruins/boss_chamber)
 "bIU" = (
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
 "bIW" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/incin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bIY" = (
@@ -22044,12 +21995,8 @@
 /area/catacombs)
 "bKN" = (
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
 /obj/item/clothing/under/rank/det,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bKO" = (
@@ -22063,14 +22010,10 @@
 /area/catacombs)
 "bKQ" = (
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Seems like it's been here for hundreds of years. How the hell is that even possible?";
-	icon_state = "skeleton_s";
-	name = "crumbly skeleton"
-	},
 /obj/item/wrench,
 /obj/item/clothing/under/gimmick/mario/wario,
 /obj/item/clothing/head/mario/wario,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bKR" = (
@@ -22125,14 +22068,11 @@
 /turf/unsimulated/floor/ancient,
 /area/crunch)
 "bLb" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
-	},
 /obj/item/remote/busted{
 	name = "West-A-Medbay Remote"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/void,
 /area/crunch)
@@ -22878,11 +22818,8 @@
 	desc = "It has little wheels underneath! How does the plumbing still work? Who the hell knows.";
 	name = "mobile bathtub"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/crypt/sigma/crew)
@@ -23471,16 +23408,12 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
-	layer = 2.5;
-	pixel_y = 8
-	},
 /obj/decal/cleanable/blood/splatter,
 /obj/item/spook,
 /obj/window/cubicle{
 	dir = 2
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -27051,8 +26984,8 @@
 /area/crunch)
 "cdo" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton,
 /obj/item/spook,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/white,
 /area/crunch)
 "cdp" = (
@@ -27151,13 +27084,11 @@
 /area/meat_derelict/guts)
 "cdI" = (
 /obj/stool/chair,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Human remains in the fittings of a Head of Personnel.  Judging by the missing skull chunks, they didn't win.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8"
-	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
@@ -27287,10 +27218,8 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body7"
+/obj/mapping_helper/mob_spawn/corpse/human/captain{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
@@ -29501,8 +29430,8 @@
 /area/meat_derelict/guts)
 "cma" = (
 /obj/stomachacid,
-/obj/decal/fakeobjects/skeleton,
 /obj/map/light/meatland,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/meat_derelict/guts)
 "cmb" = (
@@ -32112,11 +32041,8 @@
 	dir = 1
 	},
 /obj/item/clothing/suit/bedsheet,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Uh oh.";
-	icon = 'icons/misc/exploration.dmi';
-	icon_state = "husk_l";
-	name = "unknown"
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton{
+	husked = 1
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
@@ -32969,13 +32895,9 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cxO" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "He hasn't got a leg to stand on.";
-	dir = 4;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "half corpse";
-	pixel_x = -10
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	legless = 1;
+	delete_id = 1
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
@@ -33613,11 +33535,8 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "czR" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/chef{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
@@ -34145,13 +34064,13 @@
 /area/owlery/gangzone)
 "cBp" = (
 /obj/stool/chair,
-/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/head/flatcap,
 /obj/item/instrument/saxophone,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
@@ -34622,14 +34541,12 @@
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cCF" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse"
-	},
 /obj/item/paper/cleanerorder,
 /obj/item/clothing/under/misc/syndicate,
+/obj/mapping_helper/mob_spawn/corpse/human/janitor{
+	delete_id = 1;
+	max_limbs_removed = 3
+	},
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cCI" = (
@@ -36847,14 +36764,11 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Rest in peace.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "Personnel"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human{
+	headless = 1
 	},
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
@@ -38598,11 +38512,8 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	delete_id = 1
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -39066,18 +38977,14 @@
 /area/owlery/owllock)
 "cPU" = (
 /obj/decal/cleanable/blood/gibs,
-/obj/decal/fakeobjects/skeleton{
-	desc = "He hasn't got a leg to stand on.";
-	dir = 4;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "half corpse";
-	pixel_x = -10
-	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
 	dir = 4;
 	name = "exhibit window"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1;
+	legless = 1
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -39228,13 +39135,9 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "He hasn't got a leg to stand on.";
-	dir = 4;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "half corpse";
-	pixel_x = -10
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1;
+	legless = 1
 	},
 /turf/unsimulated/floor/stairs/dark{
 	dir = 4
@@ -40044,14 +39947,11 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body6";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/blood/tracks{
 	dir = 6
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -40757,11 +40657,8 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cUf" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	delete_id = 1
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -40942,13 +40839,6 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "She seems to have bled out from her injuries.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	interesting = "large number of bites and scratches";
-	name = "mangled corpse"
-	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
@@ -40958,6 +40848,9 @@
 	},
 /obj/machinery/light/emergency{
 	dir = 4
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
@@ -41040,8 +40933,10 @@
 /area/owlery/owleryhall)
 "cVa" = (
 /obj/item/clothing/suit/bedsheet,
-/obj/decal/fakeobjects/skeleton,
 /obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	delete_id = 1
+	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cVe" = (
@@ -41573,19 +41468,20 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "50% of a rotten corpse.";
-	dir = 8;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "pair of legs";
-	pixel_x = 14
-	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
 /obj/machinery/light/emergency{
 	dir = 8
+	},
+/obj/item/parts/human_parts/leg/left{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/parts/human_parts/leg/right{
+	dir = 8;
+	pixel_x = 12;
+	pixel_y = -10
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -42357,11 +42253,8 @@
 "cYq" = (
 /obj/item/raw_material/shard/glass,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
@@ -48251,10 +48144,7 @@
 	name = "DANGER DO NOT OPEN"
 	},
 /obj/item/material_piece/slag,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remnants of lag.";
-	name = "lag"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/drsingh)
 "dxY" = (
@@ -48272,13 +48162,7 @@
 /area/centcom/offices/lyra)
 "dyc" = (
 /obj/machinery/optable,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 4
-	},
+/obj/mapping_helper/mob_spawn/corpse/human,
 /turf/unsimulated/floor/white/checker,
 /area/centcom/offices/gerhazo)
 "dyd" = (
@@ -49020,7 +48904,7 @@
 	dir = 1;
 	on = 1
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -61531,7 +61415,7 @@
 /turf/unsimulated/floor/carpet/wizard/standard/edge/nw,
 /area/wizard_station)
 "kmZ" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
 "kna" = (
@@ -62201,11 +62085,8 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "kQR" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The burnt remains of some poor sod.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body4";
-	name = "crispy corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
@@ -62390,11 +62271,8 @@
 /area/moon/museum)
 "kZz" = (
 /obj/item/crowbar,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -64915,12 +64793,6 @@
 	},
 /area/centcom)
 "nwz" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/blood/tracks,
 /obj/cable{
 	icon_state = "1-4"
@@ -64929,6 +64801,9 @@
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
@@ -66421,7 +66296,7 @@
 	},
 /area/sim/racing_track)
 "oSa" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "oSb" = (
@@ -66919,12 +66794,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/icebase_elevator/upper)
 "pmE" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/soviet,
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "pmV" = (
@@ -71477,10 +71347,6 @@
 /turf/unsimulated/floor/caution/north,
 /area/drone/office)
 "tiD" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. How'd they get out there?";
-	name = "human's skeleton"
-	},
 /obj/item/clothing/head/headband/nyan/random{
 	desc = "Did these belong to that skeleton?";
 	pixel_x = 12;
@@ -71498,6 +71364,7 @@
 	dir = 4;
 	name = "replica of that one chair on cogmap 1"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "tje" = (
@@ -71622,13 +71489,9 @@
 /area/crypt/sigma/crew)
 "trs" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton{
-	desc = "He hasn't got a leg to stand on.";
-	dir = 4;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "half corpse";
-	pixel_x = -10
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	delete_id = 1;
+	legless = 1
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
@@ -72943,13 +72806,14 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "50% of a rotten corpse.";
+/obj/item/parts/human_parts/leg/left{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/parts/human_parts/leg/right{
 	dir = 8;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "pair of legs";
-	pixel_x = 14
+	pixel_x = 12;
+	pixel_y = -10
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
@@ -75049,13 +74913,13 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "wuv" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
 /obj/item/clothing/head/wizard,
 /obj/item/reagent_containers/glass/water_pipe/filled,
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/space,
 /area/wizard_station_space)
 "wvp" = (
@@ -75455,16 +75319,11 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8";
-	name = "decomposed corpse"
-	},
 /mob/living/critter/small_animal/bird/owl{
 	desc = "This Owl seems to be staring at you with both a smug, yet angry face. Somehow.";
 	name = "smug looking space owl"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "wLj" = (

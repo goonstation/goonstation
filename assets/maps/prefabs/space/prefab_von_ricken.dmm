@@ -73,12 +73,7 @@
 "cX" = (
 /obj/item/clothing/suit/bedsheet/green,
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. At least whoever it was died while snuggled into a warm and fuzzy bed.";
-	name = "Cozy skeleton";
-	pixel_x = 4;
-	pixel_y = 2
-	},
+/obj/mapping_helper/mob_spawn/corpse/human,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "db" = (

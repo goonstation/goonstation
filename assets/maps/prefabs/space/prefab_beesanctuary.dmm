@@ -1142,11 +1142,11 @@
 	tag = "icon-intact (NORTHEAST)";
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/small/warm/very{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Jo" = (
@@ -1164,7 +1164,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Jv" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "JF" = (
@@ -1727,7 +1727,7 @@
 /area/prefab/bee_sanctuary)
 "XU" = (
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Yd" = (

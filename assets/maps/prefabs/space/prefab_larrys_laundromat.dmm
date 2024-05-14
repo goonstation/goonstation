@@ -301,13 +301,10 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Et" = (
-/obj/decal/fakeobjects/skeleton{
-	name = "larry";
-	pixel_y = -7
-	},
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "HY" = (

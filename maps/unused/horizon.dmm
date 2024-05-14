@@ -47625,13 +47625,7 @@
 /area/station/security/main)
 "eye" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/fakeobjects/skeleton{
-	desc = "This is very important.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Bill-Bo's body, barely..."
-	},
-/obj/item/clothing/mask/clown_hat,
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/plating/airless/random,
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -47667,13 +47661,9 @@
 /area/station/engine/engineering)
 "eBc" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of an engineer. not very handsome.";
-	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
-	name = "engineer's skeleton"
-	},
 /obj/item/casing,
 /obj/disposalpipe/junction/right/east,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -48641,11 +48631,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	skeletonized = 1
 	},
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
@@ -49502,18 +49489,13 @@
 /area/station/hallway/secondary/entry)
 "hKo" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/fakeobjects/skeleton{
-	desc = "still has his... uh... bedsheet?";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "what used to be Twenty Second Elephant"
-	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "hard to believe...";
 	icon_state = "bedsheet-captain";
 	name = "clown's bedsheet"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/black,
 /area/station/storage/auxillary)
 "hKJ" = (
@@ -49622,17 +49604,14 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "corpse"
-	},
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
 	},
 /obj/decal/cleanable/greenpuke,
+/obj/mapping_helper/mob_spawn/corpse/human/captain{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -50823,10 +50802,12 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
@@ -51922,13 +51903,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lNx" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Ironic, really";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "burntnerd";
-	name = "charred icecream vendor"
-	},
 /obj/decal/cleanable/blood/drip,
+/obj/mapping_helper/mob_spawn/corpse/human/hazmat,
 /turf/simulated/floor/airless,
 /area/space)
 "lOt" = (
@@ -53715,12 +53691,6 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
-	},
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -53728,6 +53698,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/soviet,
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
 "ozO" = (
@@ -55633,15 +55604,11 @@
 /turf/space,
 /area/station/ranch)
 "rHB" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "She seems to have bled out from her injuries.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	interesting = "large number of bites and scratches";
-	name = "mangled corpse"
-	},
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
 "rHD" = (
@@ -55711,17 +55678,14 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
-	},
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
 /obj/decal/cleanable/dirt/dirt5,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -56948,7 +56912,9 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
 "uav" = (
@@ -57904,12 +57870,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "not much of a chef";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "shredded remains of Flesh Utopia"
-	},
 /obj/item/reagent_containers/food/snacks/cereal_box{
 	contraband = 1;
 	desc = "Couldn't be simpler! Just add water, mix, and bake! DO NOT CONSUME RAW";
@@ -57922,6 +57882,7 @@
 	icon_state = "gibhead"
 	},
 /obj/decal/cleanable/blood/splatter,
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
@@ -58883,7 +58844,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "wMY" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "wNj" = (
@@ -58911,16 +58872,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "wOR" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "this is not right. this is NOT right.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	name = "Eldritch Horror the clowne"
-	},
 /obj/item/razor_blade,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/shuttle,
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"

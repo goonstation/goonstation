@@ -798,8 +798,8 @@
 	},
 /area/mining/hangar)
 "oL" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "oM" = (
@@ -909,8 +909,8 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "pu" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "pw" = (
@@ -1645,11 +1645,8 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "tH" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	skeletonized = 1
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
@@ -5826,13 +5823,7 @@
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/genetics)
 "Vg" = (
-/obj/overlay{
-	desc = "Oh.  So THAT'S where he went off to.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	layer = 4;
-	name = "skeleton"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "Vh" = (

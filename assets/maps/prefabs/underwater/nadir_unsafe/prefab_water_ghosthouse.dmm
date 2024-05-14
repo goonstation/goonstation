@@ -523,7 +523,11 @@
 	pixel_y = 11
 	},
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/mapping_helper/mob_spawn/corpse/human/chaplain{
+	empty_bag = 1;
+	empty_pockets = 1;
+	delete_id = 1
+	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "cf" = (
@@ -544,8 +548,10 @@
 /turf/simulated/floor/wood/two,
 /area/prefab/ghost_house)
 "ci" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /obj/item/gun/energy/ghost,
+/obj/mapping_helper/mob_spawn/corpse/human/chaplain{
+	randomise_decomp_stage = 1
+	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "cj" = (

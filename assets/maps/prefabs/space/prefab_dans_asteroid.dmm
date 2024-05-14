@@ -863,7 +863,9 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Jr" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/mapping_helper/mob_spawn/corpse/human/chef{
+	randomise_decomp_stage = 1
+	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Jx" = (
@@ -1142,13 +1144,10 @@
 "QS" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
-/obj/decal/fakeobjects/skeleton{
-	pixel_x = 2;
-	pixel_y = 1
-	},
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "Rg" = (

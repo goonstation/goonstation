@@ -366,7 +366,7 @@
 /turf/unsimulated/floor/void,
 /area/prefab/bee_sanctuary)
 "px" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "pH" = (
@@ -739,11 +739,11 @@
 	tag = "icon-intact (NORTHEAST)";
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/small/warm/very{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "FG" = (
@@ -950,7 +950,7 @@
 /area/prefab/bee_sanctuary)
 "Lp" = (
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "LC" = (

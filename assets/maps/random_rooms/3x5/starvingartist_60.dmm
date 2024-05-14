@@ -17,13 +17,11 @@
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/item/clothing/suit/bedsheet/green,
-/obj/decal/fakeobjects/skeleton/unanchored{
-	pixel_y = -4
-	},
 /obj/item/paper/artists_anger{
 	pixel_x = -8;
 	pixel_y = 9
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/artist,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "G" = (

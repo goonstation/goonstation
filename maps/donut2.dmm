@@ -25505,7 +25505,6 @@
 	},
 /area/station/engine/inner)
 "hOa" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
@@ -25518,6 +25517,7 @@
 	r_speed = 0
 	},
 /obj/item/rubber_chicken,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "hOo" = (

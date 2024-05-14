@@ -45566,7 +45566,7 @@
 /area/station/medical/dome)
 "udG" = (
 /obj/decal/cleanable/rust,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/mapping_helper/mob_spawn/corpse/human,
 /turf/simulated/floor/airless/black,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -49582,7 +49582,7 @@
 /area/station/hallway/secondary/exit)
 "vRO" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/airless/plating,
 /area/abandonedship{
 	name = "Crashed Limo"

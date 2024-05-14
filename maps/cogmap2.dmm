@@ -19090,14 +19090,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "The partially decomposed corpse of some poor chump.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	layer = 4;
-	name = "corpse"
-	},
 /obj/disposalpipe/segment/morgue,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage{
 	name = "Restricted Area"

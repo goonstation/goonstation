@@ -650,14 +650,10 @@
 /area/noGenerate)
 "bF" = (
 /obj/decal/cleanable/vomit,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Still has her monitor headset on...";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 12
-	},
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human{
+	randomise_decomp_stage = 1
+	},
 /turf/simulated/floor/airless/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -1018,13 +1014,9 @@
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cE" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "He hasn't got a leg to stand on.";
-	dir = 4;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "half corpse";
-	pixel_x = -10
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	legless = 1;
+	randomise_decomp_stage = 1
 	},
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
@@ -1091,13 +1083,14 @@
 /area/noGenerate)
 "cN" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
-	desc = "50% of a rotten corpse.";
+/obj/item/parts/human_parts/leg/left{
+	dir = 4;
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/obj/item/parts/human_parts/leg/right{
 	dir = 8;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "pair of legs";
-	pixel_x = 14
+	pixel_x = 12
 	},
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)

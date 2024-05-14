@@ -10,12 +10,12 @@
 /turf/simulated/floor/marslike,
 /area/dmm_suite/clear_area)
 "t" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/poncho/leaf,
 /obj/item/clothing/head/westhat{
 	pixel_x = 11;
 	pixel_y = 2
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/marslike,
 /area/dmm_suite/clear_area)
 "D" = (

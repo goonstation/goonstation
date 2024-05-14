@@ -16,9 +16,9 @@
 	},
 /area/noGenerate)
 "aN" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "aU" = (
@@ -1487,11 +1487,11 @@
 	})
 "WZ" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/shard/glass{
 	pixel_x = -5;
 	pixel_y = 9
 	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "Xi" = (

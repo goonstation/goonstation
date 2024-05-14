@@ -70,17 +70,8 @@
 /area/dmm_suite/clear_area)
 "U" = (
 /obj/disposalpipe/segment/bent/north,
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/mask/clown_hat/yellow{
-	pixel_y = 6;
-	pixel_x = 7
-	},
-/obj/item/clothing/shoes/clown_shoes/yellow{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/item/clothing/under/misc/clown/yellow,
 /obj/machinery/light/emergencyflashing,
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 

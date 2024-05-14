@@ -95,7 +95,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "hw" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "hB" = (
@@ -407,6 +407,10 @@
 	pixel_y = -4
 	},
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	armless = 1;
+	legless = 1
+	},
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "ym" = (

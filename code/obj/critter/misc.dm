@@ -303,7 +303,10 @@
 			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			doomedMob.ghostize()
-			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)
+			var/mob/living/carbon/human/H = new /mob/living/carbon/human/normal(doomedMob.loc)
+			H.name = doomedMob.name
+			H.real_name = doomedMob.real_name
+			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			doomedMob.gib()
 			src.target = null
 

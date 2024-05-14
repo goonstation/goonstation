@@ -110,10 +110,8 @@
 /obj/stool/chair/comfy/shuttle/pilot,
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/vomit,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body7"
+/obj/mapping_helper/mob_spawn/corpse/human/captain{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -205,13 +203,10 @@
 /area/shuttle/escape/centcom)
 "hX" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
-	},
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "hY" = (
@@ -346,14 +341,8 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 4
-	},
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/mob_spawn/corpse/human/random,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ma" = (
@@ -371,21 +360,14 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 4
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "mS" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -555,7 +537,9 @@
 /area/shuttle/escape/centcom)
 "sZ" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/random{
+	skeletonized = 1
+	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "uh" = (
@@ -607,11 +591,9 @@
 /area/shuttle/escape/centcom)
 "wI" = (
 /obj/stool/chair/comfy/shuttle/pilot,
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body8";
-	name = "decomposed corpse"
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	skeletonized = 1;
+	
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
@@ -930,13 +912,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse";
-	pixel_y = 4
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/random,
 /turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "Gj" = (
@@ -1114,10 +1090,6 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/mug_rack{
-	pixel_x = -26;
-	pixel_y = 4
-	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "KU" = (
@@ -1128,16 +1100,6 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
-	},
-/turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"Lt" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -1851,7 +1813,7 @@ op
 sZ
 iG
 Zb
-Lt
+sZ
 os
 TL
 ZL

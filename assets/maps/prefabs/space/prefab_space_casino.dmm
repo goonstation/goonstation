@@ -302,7 +302,9 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib4"
 	},
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/mapping_helper/mob_spawn/corpse/human/chef{
+	randomise_decomp_stage = 1
+	},
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "Gp" = (
@@ -330,11 +332,16 @@
 /turf/simulated/floor/stairs/wood2/wide,
 /area/prefab/space_casino)
 "In" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibup1"
-	},
 /obj/machinery/light/incandescent{
 	dir = 4
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton{
+	armless = 1;
+	legless = 1;
+	skeletonized = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/prefab/space_casino)

@@ -12,11 +12,8 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "s" = (
-/obj/decal/fakeobjects/skeleton{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "t" = (

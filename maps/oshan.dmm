@@ -1828,8 +1828,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "afY" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/suit/labcoat/genetics,
+/obj/mapping_helper/mob_spawn/corpse/human/geneticist,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "agb" = (
@@ -13744,7 +13743,7 @@
 /area/space)
 "aUj" = (
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/space/fluid,
 /area/space)
 "aUk" = (
@@ -14233,8 +14232,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWN" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWO" = (
@@ -14295,18 +14294,12 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aXn" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aXp" = (
-/obj/overlay{
-	desc = "Oh.  So THAT'S where he went off to.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	layer = 4;
-	name = "skeleton"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXu" = (
@@ -18159,7 +18152,7 @@
 /area/station/engine/power)
 "bon" = (
 /obj/item/reagent_containers/food/snacks/hardtack,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "boo" = (
@@ -29515,7 +29508,7 @@
 /area/diner/backroom)
 "cbC" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbD" = (
@@ -37166,7 +37159,6 @@
 /turf/simulated/floor,
 /area/station/ranch)
 "jll" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/pharosium,
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -37175,6 +37167,7 @@
 /obj/item/raw_material/claretine,
 /obj/item/raw_material/uqill,
 /mob/living/critter/fermid,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "jlM" = (
@@ -42621,9 +42614,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "rcn" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
+/obj/mapping_helper/mob_spawn/corpse/human/miner{
+	skeletonized = 1
+	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "rcz" = (
@@ -42812,13 +42807,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "rwc" = (
-/obj/overlay{
-	desc = "Oh.  So THAT'S where he went off to.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "clowncorpse";
-	layer = 4;
-	name = "skeleton"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/clown,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "rwt" = (
@@ -44523,8 +44512,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "uBc" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "uBh" = (
@@ -44605,9 +44594,11 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "uIq" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/item/mining_tool/powered/hammer,
 /mob/living/critter/fermid,
+/obj/mapping_helper/mob_spawn/corpse/human/miner{
+	skeletonized = 1
+	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "uIr" = (
@@ -45977,8 +45968,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "wPY" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/item/oreprospector,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "wRa" = (

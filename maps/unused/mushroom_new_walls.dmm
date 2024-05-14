@@ -38676,10 +38676,8 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "wVZ" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,
+/obj/mapping_helper/mob_spawn/corpse/human/chef,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "wXN" = (

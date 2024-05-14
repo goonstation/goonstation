@@ -99,7 +99,13 @@
 /area/noGenerate)
 "fd" = (
 /obj/decal/cleanable/vomit,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/mapping_helper/mob_spawn/corpse/human/head_of_personnel{
+	randomise_decomp_stage = 1;
+	delete_id = 0;
+	break_headset = 0;
+	empty_bag = 0;
+	empty_pockets = 0
+	},
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/prefab/crashed_hop_shuttle)
 "go" = (

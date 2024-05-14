@@ -612,13 +612,14 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
 "cg" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "50% of a rotten corpse.";
+/obj/item/parts/human_parts/leg/left{
+	dir = 4;
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/obj/item/parts/human_parts/leg/right{
 	dir = 8;
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body5";
-	name = "pair of legs";
-	pixel_x = 14
+	pixel_x = 12
 	},
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
@@ -853,11 +854,10 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
 	},
-/turf/simulated/floor/plating/random,
-/area/prefab/sea_monkey_hideout)
-"cS" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibup1"
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton{
+	armless = 1;
+	legless = 1;
+	skeletonized = 0
 	},
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
@@ -1870,7 +1870,7 @@ bX
 aa
 cx
 cH
-cS
+bV
 aa
 aa
 aw

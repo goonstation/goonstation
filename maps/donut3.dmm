@@ -3639,10 +3639,7 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of an idea.";
-	name = "\proper Jenny's hopes and dreams"
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "aXY" = (

@@ -101,6 +101,11 @@
 		..()
 		JobEquipSpawned("Bartender")
 
+/mob/living/carbon/human/normal/artist
+	New()
+		..()
+		JobEquipSpawned("Artist")
+
 /mob/living/carbon/human/normal/botanist
 	New()
 		..()

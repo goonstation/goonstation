@@ -98,8 +98,8 @@
 /turf/simulated/floor/grass/random,
 /area/noGenerate)
 "U" = (
-/obj/decal/fakeobjects/skeleton,
 /obj/item/saw,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /turf/simulated/floor/grass/random,
 /area/noGenerate)
 "W" = (
