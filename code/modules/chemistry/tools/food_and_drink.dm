@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	set_loc(newloc)
 		. = ..()
-		time_since_moved = world.time
+		time_since_moved = TIME
 
 	New()
 		if (!src.uneaten_bites_left)
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 		if (doants)
 			processing_items.Add(src)
-		create_time = world.time
+		create_time = TIME
 		if (src.amount != 1)
 			stack_trace("[identify_object(src)] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
@@ -189,8 +189,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 
 	process()
-		if ((world.time - create_time >= 3 MINUTES) && (world.time - time_since_moved >= 1 MINUTES))
-			create_time = world.time
+		if ((TIME - create_time >= 3 MINUTES) && (TIME - time_since_moved >= 1 MINUTES))
+			create_time = TIME
 			if (!src.disposed && isturf(src.loc) && !on_table())
 				if (prob(50))
 					made_ants = 1
