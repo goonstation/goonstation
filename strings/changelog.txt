@@ -1,5 +1,15 @@
 
+(t)tue may 14 24
+(u)Glamurio (Ryou)
+(p)18898
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added a new hand-held device that allows simple communication, available to Ambassadors and Tourists.
 (t)mon may 13 24
+(u)Ikea
+(p)17768
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Feeding viscerite to synthflesh pustules generates viscerite viscera. The pustule proceeds to digest this chemical into synthflesh and martian flesh, all while offgassing sulfuric acid. Small/medium pustules produce 7 units of synthflesh and 7 units of martian flesh per viscerite, large pustules produce 14 units of synthflesh and 2.5 units of martian flesh per viscerite.
+(+)A new chem has been added in the form of viscerite viscera. Currently only obtainable from synthflesh pustules, this chem heals 2.5 brute and burn, all while dealing 1.5 tox, purging other chems, and dealing weakened.
 (u)FlameArrow57
 (p)18854
 (e)💅🔄📦|C-QoL, C-Rework, A-Game-Objects

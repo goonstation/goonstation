@@ -70,7 +70,7 @@
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
-		if (.)
+		if (. || GET_COOLDOWN(src, "anti-spam"))
 			return
 
 		switch(action)
@@ -78,6 +78,8 @@
 				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
 				if (src.credits[M.category] >= M.cost)
 					src.credits[M.category] -= M.cost
+					if (!M.cost)
+						ON_COOLDOWN(src, "anti-spam", 1 SECOND)
 					var/atom/A = new M.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
