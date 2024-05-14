@@ -1426,6 +1426,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
+		book.antag_datum.purchased_spells.Add(src) // Remember spell for crew credits
 
 //------------ ENCHANTMENT SPELLS ------------//
 /datum/SWFuplinkspell/soulguard

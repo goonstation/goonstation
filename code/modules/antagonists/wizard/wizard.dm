@@ -5,6 +5,8 @@
 	success_medal = "You're no Elminster!"
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
+	var/list/datum/SWFuplinkspell/purchased_spells = list()
+	var/spell_animation_frame = 5 //
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -124,3 +126,33 @@
 			new objective_set_path(src.owner, src)
 		else if (ispath(objective_set_path, /datum/objective))
 			ticker.mode.bestow_objective(src.owner, objective_set_path, src)
+
+	get_statistics()
+	// Add the wizard's chosen spells to the crew credits
+		var/list/purchases = list()
+
+		for (var/datum/SWFuplinkspell/purchased_spell as anything in src.purchased_spells)
+			//var/obj/item_type = initial(purchased_spell.path)  datum/targetable/spell/purchased_spells			assoc_spell
+
+			if (purchased_spell.assoc_spell )
+				purchases += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(purchased_spell.assoc_spell.icon), initial(purchased_spell.assoc_spell.icon_state), frame = spell_animation_frame, dir = 0))]",
+						"name" = "[purchased_spell.name]",
+					)
+				)
+			else // If there's no spell ability (i.e. for Soulguard) add only the name
+				purchases += list(
+					list(
+						"name" = "[purchased_spell.name]"
+					)
+				)
+
+		. = list(
+			list(
+				"name" = "Spells",
+				"type" = "itemList",
+				"value" = purchases,
+			)
+		)
+
