@@ -2093,6 +2093,7 @@
 	if (check_target_immunity(src))
 		return 0
 	var/prot = 1
+	var/hand_specific = FALSE
 
 	var/mob/living/carbon/human/H = null //ughhh sort this out with proper inheritance later
 	if (ishuman(src))
@@ -2118,6 +2119,8 @@
 		shock_damage = 1 * prot
 
 	if (H)
+		if ( zone == "l_arm" || zone == "r_arm")
+			hand_specific = TRUE
 		for (var/uid in H.pathogens)
 			var/datum/pathogen/P = H.pathogens[uid]
 			shock_damage = P.onshocked(shock_damage, wattage)
@@ -2181,6 +2184,8 @@
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
+	if (hand_specific)
+		H.numb_limb(min(100 * stun_multiplier + stun, 20 SECONDS), 1, FALSE, list(zone))
 	src.do_disorient(100 * stun_multiplier + stun, knockdown = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage
