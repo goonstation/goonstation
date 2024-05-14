@@ -31,7 +31,7 @@
 
 			LAGCHECK(LAG_HIGH)
 
-		logTheThing(LOG_DeBUG, src, "Main /obj initialize loop completed")
+		logTheThing(LOG_DEBUG, src, "Main /obj initialize loop completed")
 
 		detailed_count = new
 
