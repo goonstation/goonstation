@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		value = 300
 
-		setProperty("density", 5)
+		setProperty("density", 6)
 		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
@@ -882,6 +882,16 @@ ABSTRACT_TYPE(/datum/material/crystal)
 			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
 			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
 			return
+
+	expended
+		mat_id = "molitz_expended"
+		name = "depleted molitz"
+		color = "#808080"
+		New()
+			..()
+			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
+			removeTrigger(TRIGGERS_ON_EXPLOSION, /datum/materialProc/molitz_exp)
+
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"
@@ -1677,7 +1687,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	proc/replace_first_consonant_cluster(text, replacement)
 		var/original_text = text
 		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
-		. = regex.Replace(text, PROC_REF(jeplacement))
+		. = regex.Replace(text, /datum/material/fabric/jean/proc/jeplacement)
 		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
 		if(. == original_text)
 			. = "jean [.]"
@@ -1688,6 +1698,20 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	specialNaming(atom/target)
 		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
+/datum/material/fabric/carpet
+	mat_id = "carpet"
+	name = "carpet"
+	desc = "Disgusting grimy carpet which hasn't been cleaned in 40 years. Probably the kind of carpet that is host to all kind of gross bugs"
+	color = "#fcfff2"
+	texture = "carpet"
+	texture_blend = BLEND_MULTIPLY
+
+	New()
+		..()
+		setProperty("density", 1)
+		setProperty("hard", 1)
+		setProperty("thermal", 4)
+		setProperty("flammable", 4)
 
 /datum/material/organic/pickle
 	mat_id = "pickle"

@@ -1307,7 +1307,7 @@
 
 /datum/commodity/medical/injectormask
 	comname = "Vapo-Matic"
-	comtype = /obj/item/clothing/mask/gas/injector_mask
+	comtype = /obj/item/clothing/mask/injector_mask
 	desc = "A gas mask that doses the wearer with chemicals loaded from a container."
 	price = PAY_EMBEZZLED
 
@@ -1375,7 +1375,7 @@
 
 /datum/commodity/medical/cyanide
 	comname = "Cyanide"
-	comtype = /obj/item/reagent_containers/glass/bottle/cyanide
+	comtype = /obj/item/reagent_containers/pill/toxlite
 	desc = "A rapidly acting and highly dangerous chemical."
 	price = PAY_EMBEZZLED
 
@@ -1421,6 +1421,11 @@
 /datum/commodity/costume/wonka
 	comname = "Victorian Confectionery Factory Owner Costume"
 	comtype = /obj/item/storage/box/costume/crap/wonka
+	price = PAY_TRADESMAN
+
+/datum/commodity/costume/goku
+	comname = "Anime Martial Artist Costume"
+	comtype = /obj/item/storage/box/costume/crap/goku
 	price = PAY_TRADESMAN
 
 /datum/commodity/costume/light_borg //YJHGHTFH's light borg costume
@@ -1499,6 +1504,12 @@
 	comtype = /obj/item/storage/box/costume/jester
 	desc = "Travel back in time and become the medieval version of a clown. (Does not provide time travel)"
 	price = PAY_TRADESMAN
+
+/datum/commodity/costume/rabbitsuit
+	comname = "Rabbit Suit"
+	comtype = /obj/item/storage/box/costume/rabbitsuit
+	desc = "A not-at-all scary rabbit suit! Steam clean only."
+	price = PAY_UNTRAINED
 
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"

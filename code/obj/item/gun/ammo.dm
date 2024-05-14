@@ -965,8 +965,24 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 
 //1.05
+/obj/item/ammo/bullets/kuvalda
+	sname = "Shrapnel-10"
+	name = "Shrapnel-10"
+	desc = "A handful of oversized buckshot shells, for a VERY big gun. If you <b>MUST</b> have your opponents splattered into a 10 metre cone of viscera..."
+	ammo_type = new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	icon_state = "shrapnel"
+	icon_short = "shrapnel"
+	icon_empty = ""
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = TRUE
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/kuvaldaload.ogg'
+	empty
+		amount_left = 0
 
-ABSTRACT_TYPE(/obj/item/ammo/bullets/kuvalda)
+
 /obj/item/ammo/bullets/kuvalda/slug
 	sname = "Barrikada Slug"
 	name = "Barrikada Slug"
@@ -981,23 +997,39 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/kuvalda)
 	icon_dynamic = TRUE
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/kuvaldaload.ogg'
-	empty
-		amount_left = 0
-/obj/item/ammo/bullets/kuvalda/buck
-	sname = "Shrapnel-10"
-	name = "Shrapnel-10"
-	desc = "A handful of oversized buckshot shells, for a VERY big gun. If you <b>MUST</b> have your opponents splattered into a 10 metre cone of viscera..."
-	ammo_type = new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
-	icon_state = "shrapnel"
-	icon_short = "shrapnel"
-	icon_empty = ""
-	amount_left = 4
-	max_amount = 4
-	ammo_cat = AMMO_KUVALDA
-	icon_dynamic = TRUE
+/obj/item/ammo/bullets/four_bore
+	sname = "Four-Bore Termination Round"
+	name = "four-bore termination rounds"
+	desc = "A box of inch wide lethal rounds. These are for monsters that shouldn't exist."
+	ammo_type = new/datum/projectile/bullet/four_bore
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4b-6"
+	icon_empty = "4b-0"
+	icon_dynamic = 1
+	icon_short = "4b"
 	delete_on_reload = TRUE
-	sound_load = 'sound/weapons/kuvaldaload.ogg'
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/four_bore/stun
+	sname = "Four-Bore Roundhouse Slug"
+	name = "four-bore roundhouse slugs"
+	desc = "A box of massive rubber slugs. These are sublethal, not nonlethal."
+	ammo_type = new/datum/projectile/bullet/four_bore_stunners
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4bs-6"
+	icon_empty = "4bs-0"
+	icon_dynamic = 1
+	icon_short = "4bs"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	two //spawns in albatross
+		amount_left = 2
+		max_amount = 2
 
 //1.57
 /obj/item/ammo/bullets/autocannon

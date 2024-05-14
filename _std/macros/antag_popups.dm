@@ -327,9 +327,11 @@
 
 		if (!filename)
 			return
-		var/html = grabResource(filename)
-		html = replacetext(html, "{ref}", "\ref[get_singleton(/datum/antagPopups)]")
-		M.Browse(html, "window=antagTips;size=700x450;title=[window_title]")
+
+		SPAWN(0)
+			var/html = grabResource(filename)
+			html = replacetext(html, "{ref}", "\ref[get_singleton(/datum/antagPopups)]")
+			M.Browse(html, "window=antagTips;size=700x450;title=[window_title]")
 
 
 /mob

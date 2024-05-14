@@ -42,7 +42,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "ed" = (
@@ -276,7 +276,7 @@
 "DP" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "Ef" = (
@@ -345,7 +345,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "Mv" = (
@@ -367,7 +367,7 @@
 "NM" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "Od" = (
@@ -437,7 +437,7 @@
 "Wf" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/shuttle/escape/centcom)
 "XU" = (

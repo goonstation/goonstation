@@ -414,7 +414,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
 		return
 	src.toggle(user)
 	src.add_fingerprint(user)
@@ -518,6 +518,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
 	welcome_text = "Welcome, Agent."
+
+/obj/machinery/door_control/ex_act(severity)
+	return
 
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
@@ -1022,7 +1025,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	New()
 		..()
 		UnsubscribeProcess()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		if(id)
 			pass = "[id]-[rand(1,50)]"

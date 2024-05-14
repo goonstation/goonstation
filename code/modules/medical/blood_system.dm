@@ -675,55 +675,27 @@ this is already used where it needs to be used, you can probably ignore it.
 
 /mob/proc/staunch_bleeding(var/mob/some_idiot) // stolen from ISN's shake_awake() proc
 	if (!src || !some_idiot)
-		return 0
+		return
+	if (!isliving(some_idiot))
+		return
 
-	if (isliving(some_idiot))
-		var/mob/living/H = some_idiot
+	var/mob/living/L = some_idiot
 
-		if (H.being_staunched)
-			src.show_text("[H == src ? "You're" : "Someone's"] already putting pressure on [H == src ? "your" : "[H]'s"] wounds!", "red")
-			return
+	if (L.being_staunched)
+		src.show_text("[L == src ? "You're" : "Someone's"] already putting pressure on [L == src ? "your" : "[L]'s"] wounds!", "red")
+		return
 
-		if (H)
-			H.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
+	L.add_fingerprint(src)
+	L.being_staunched = TRUE
 
-//		if (H.w_uniform)
-//			H.w_uniform.add_fingerprint(src)
+	src.tri_message(L, SPAN_NOTICE("<b>[src]</b> puts pressure on [src == L ? "[his_or_her(L)]" : "[L]'s"] wounds, trying to stop the bleeding!"),\
+		SPAN_NOTICE("You put pressure on [src == L ? "your" : "[L]'s"] wounds, trying to stop the bleeding!"),\
+		SPAN_NOTICE("[L == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!"))
 
-		H.being_staunched = 1
+	SETUP_GENERIC_ACTIONBAR(src, L, 10 SECONDS, /mob/living/proc/staunch_wound, list(src), 'icons/mob/mob.dmi', "help", null,
+		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
-		src.tri_message(H, SPAN_NOTICE("<b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!"),\
-			SPAN_NOTICE("You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!"),\
-			SPAN_NOTICE("[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!"))
-
-		if (do_mob(src, H, 100))
-			var/original_bleed = H.bleeding
-			repair_bleeding_damage(H, 20, rand(1,2))
-
-			if (original_bleed > H.bleeding)
-				switch (H.bleeding)
-					if (-INFINITY to 0)
-						src.show_text("The bleeding stops!", "blue")
-					if (1 to 3)
-						src.show_text("The bleeding slows!", "blue")
-					if (4 to INFINITY)
-						src.show_text("It barely helps!", "red")
-
-			else if (original_bleed == H.bleeding)
-				src.show_text("The bleeding doesn't slow at all!", "red")
-
-			else if (original_bleed < H.bleeding) // what
-				src.show_text("Oh fuck somehow the bleeding got WORSE!", "red")
-
-			H.being_staunched = 0
-			return 1
-
-		else
-			src.show_text("You were interrupted!", "red")
-			H.being_staunched = 0
-			return 0
-	else
-		return 0
+	L.being_staunched = FALSE
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=INTERNAL-BLEEDING=-=-=-=-=-=-=-=-=-=-=-*/

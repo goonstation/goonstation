@@ -337,6 +337,83 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 		return "#00000000"
 	return rgb(rSum/total,gSum/total,bSum/total)
 
+/**
+  - Derives a color based on a given hue offset, accepting and returning hex color values.
+
+  - Parameters:
+    - color: Hex color code of the base color.
+    - offset: Degree offset to apply to the hue of the base color.
+
+  - Returns:
+    - A hex color code derived from the adjusted hue.
+*/
+/proc/derive_color_from_hue_offset(color, offset)
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
+	var/alpha
+	if (length(hsl) == 4)
+		alpha = hsl[4]
+	var/new_hue = (hsl[1] + offset) % 360
+	var/new_color = rgb(new_hue, hsl[2], hsl[3], alpha, COLORSPACE_HSL)
+	return new_color
+
+/**
+  - Derives a complementary color based on a given base color
+
+  - Parameters:
+    - color: Hex color code of the base color.
+
+  - Returns:
+    - A hex color that is complementary to the given color.
+*/
+/proc/derive_complementary_color(color)
+	return derive_color_from_hue_offset(color, 180)
+
+/**
+  - Derives analogous colors based on a given base color
+
+  - Parameters:
+    - color: Hex color code of the base color.
+
+  - Returns:
+    - A list of two hex colors that are analogous to the color
+*/
+/proc/derive_analogous_colors(color)
+	return list(
+		derive_color_from_hue_offset(color, 30),
+		derive_color_from_hue_offset(color, -30)
+	)
+
+/**
+  - Derives triadic colors based on a given base color
+
+  - Parameters:
+    - color: Hex color code of the base color.
+
+  - Returns:
+    - A list of three hex colors that are triadic to the color
+*/
+/proc/derive_triadic_colors(color)
+	return list(
+		derive_color_from_hue_offset(color, 120),
+		derive_color_from_hue_offset(color, 240)
+	)
+
+/**
+  - Derives three colors that form a square color scheme with the given color in HSL color space
+
+  - Parameters:
+    - color: Hex color code of the base color.
+
+  - Returns:
+    - A list of three hex colors that, along with the base color, form a square on the color wheel in HSL color space.
+*/
+/proc/derive_square_colors(color)
+	return list(
+		derive_color_from_hue_offset(color, 90),
+		derive_color_from_hue_offset(color, 180),
+		derive_color_from_hue_offset(color, 270)
+	)
+
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(0, s, 1)
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)

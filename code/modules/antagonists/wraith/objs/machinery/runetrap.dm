@@ -144,7 +144,7 @@
 		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
-		fireflash(M, 1, checkLos = FALSE)
+		fireflash(M, 1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 		playsound(src, 'sound/effects/mag_fireballlaunch.ogg', 50, FALSE)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
@@ -201,7 +201,7 @@
 		if(!checkRun(M)) return
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")
 		M.remove_pulling()
-		M.changeStatus("weakened", 3 SECONDS)
+		M.changeStatus("knockdown", 3 SECONDS)
 		boutput(M, SPAN_NOTICE("An ethereal force slips you!"))
 		playsound(M, 'sound/misc/slip.ogg', 50, TRUE, -3)
 		var/atom/target = get_edge_target_turf(M, M.dir)

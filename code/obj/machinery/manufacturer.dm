@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	New()
 		START_TRACKING
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
 
 		if(!src.link)
@@ -563,7 +563,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.broken)
+			if(S.is_disabled())
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
 			var/list/ores = S.ores
@@ -843,7 +843,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/price = OCD.price
 				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
-				if(storage?.broken)
+				if(storage?.is_disabled())
 					return
 
 				if(!scan)
@@ -1171,7 +1171,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.scan = ID
 					return TRUE
 				else
-					boutput(usr, SPAN_ALERT("Pin number incorrect."))
+					boutput(usr, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
@@ -2275,6 +2275,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
+		/datum/manufacture/miniplasmatank,
+		/datum/manufacture/minioxygentank,
 		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
@@ -2605,6 +2607,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/oresatchelL,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/jetpackmkII,
+#endif
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
@@ -2612,9 +2617,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/jetpackmkII,
-#endif
 #ifndef UNDERWATER_MAP
 		/datum/manufacture/mining_magnet
 #endif
@@ -2640,6 +2642,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/pod/armor_heavy,
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
+		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,

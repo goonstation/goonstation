@@ -154,10 +154,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			if (A && src.z == A.z && GET_DIST(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
 					var/obj/machinery/vehicle/C = atom
-					if (C.health < 0) continue
-					if (!istype(C, /obj/machinery/vehicle/pod_smooth/syndicate)) src.attack = 1
-					if (C.name == src.attacker) src.attack = 1
-					src.attack = 1
+					if (C.health < 0)
+						continue
+					if (!(C.faction & FACTION_SYNDICATE))
+						src.attack = 1
+					if (C.name == src.attacker)
+						src.attack = 1
 
 					if (src.attack)
 						select_target(C)
@@ -1043,7 +1045,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
-			poorSoul:changeStatus("weakened", 4 SECONDS)
+			poorSoul:changeStatus("knockdown", 4 SECONDS)
 			if (isdead(poorSoul) && prob(25))
 				poorSoul.gib()
 

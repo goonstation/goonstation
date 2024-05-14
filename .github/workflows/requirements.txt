@@ -1,0 +1,4 @@
+pygithub
+pytz
+requests
+setuptools

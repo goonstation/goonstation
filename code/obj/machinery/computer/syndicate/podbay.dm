@@ -19,6 +19,7 @@
 
 	New()
 		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	initialize()
@@ -26,6 +27,7 @@
 
 	disposing()
 		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 /obj/machinery/computer/battlecruiser_podbay/proc/authorize()

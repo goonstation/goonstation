@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 		var/sting_cooldown = clamp((30 - DNA?.get_effective_value("endurance") / 2), 5, 30) // Cooldown reduced based off endurance
 		var/chem_protection = 1
 
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && !ON_COOLDOWN(POT, "nettle_sting", sting_cooldown SECONDS))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && !ON_COOLDOWN(POT, "nettle_sting", sting_cooldown SECONDS))
 			for (var/mob/living/M in range(1,POT))
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 		if (!(DNA.mutation && istype(DNA.mutation,/datum/plantmutation/stinging_nettle/smooth))) //smooth nettles don't inject histamine
 			H.reagents?.add_reagent("histamine", 5)
 			boutput(user, SPAN_ALERT("Your hands itch from touching [POT]!"))
-			H.changeStatus("weakened", 4 SECONDS)
+			H.changeStatus("knockdown", 4 SECONDS)
 		else
 			boutput(user, SPAN_NOTICE("You feel something brush against you."))
 		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)

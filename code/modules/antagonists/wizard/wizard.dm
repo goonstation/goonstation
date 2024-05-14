@@ -3,7 +3,7 @@
 	display_name = "wizard"
 	antagonist_icon = "wizard"
 	success_medal = "You're no Elminster!"
-	faction = FACTION_WIZARD
+	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
 
 	/// The ability holder of this wizard, containing their respective abilities.
@@ -84,7 +84,7 @@
 					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname)
 					H.real_name = newname
-					H.UpdateName()
+					H.on_realname_change()
 
 	remove_equipment()
 		src.owner.current.UnregisterSignal(src.owner.current, COMSIG_MOB_PICKUP)

@@ -144,12 +144,7 @@
 	boutput(world, "<B>There are spies planted on [station_or_ship()]. They plan to steal valuables and assasinate rival spies  - Do not let them succeed!</B>")
 
 /datum/game_mode/spy_theft/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum

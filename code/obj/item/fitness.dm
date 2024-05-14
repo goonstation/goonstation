@@ -51,6 +51,12 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
+	MouseDrop_T(mob/M, mob/user)
+		// Do not attempt to distantly pump iron.
+		if (M != user || !can_reach(user, src) || !can_reach(user, M))
+			return
+		src.attack_hand(M)
+
 	attack_hand(mob/user)
 		if(in_use)
 			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
@@ -98,6 +104,12 @@
 	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
+
+	MouseDrop_T(mob/M, mob/user)
+		// Do not attempt to distantly pump iron.
+		if (M != user || !can_reach(user, src) || !can_reach(user, M))
+			return
+		src.attack_hand(M)
 
 	attack_hand(mob/user)
 		if(in_use)

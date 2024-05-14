@@ -59,7 +59,7 @@
 
 	var/datum/movement_controller/movement_controller
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	//////////////
 	// Wraith Overrides
@@ -441,7 +441,7 @@
 
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return
 

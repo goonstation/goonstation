@@ -105,7 +105,7 @@
 				var/lData = json_decode(playerNote.legacy_data)
 				if(islist(lData) && lData["oldserver"])
 					id = lData["oldserver"]
-			header = "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			header = "**\[[id]\] [playerNote.game_admin?.name || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 			len += length(header) + length(playerNote.note)
 			if(len >= 4000)
 				message = jointext(message, "\n")
@@ -390,7 +390,7 @@
 				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
-						M.changeStatus("paralysis", 8 SECONDS)
+						M.changeStatus("unconscious", 8 SECONDS)
 						M.set_loc(prison)
 						M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
@@ -683,7 +683,7 @@
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
 		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: https://goonhub.com/admin/logs/[roundId]"
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename
@@ -872,3 +872,57 @@
 			success_msg = SPAN_INTERNAL("[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].")
 		message_admins(success_msg)
 		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")
+
+/datum/spacebee_extension_command/flavor_text
+	name = "flavortext"
+	help_message = "Show current flavor text of a user in round, E.g: `;;flavortext3 leahthetech` See `showprofile` for offline character profile access."
+	argument_types = list(/datum/command_argument/string/ckey = "ckey")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey)
+		var/datum/player/player = find_player(ckey)
+		if (!player)
+			system.reply("Ckey \"[ckey]\" not found", user)
+			return
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Flavor text"
+		ircmsg["name"] = "[ckey], loaded profile: [player.client.preferences.profile_number])"
+		var/message = "**Flavor text:** [player.client.preferences.flavor_text]\n"
+		message += "**Security note:** [player.client.preferences.security_note]\n"
+		message += "**Medical note:** [player.client.preferences.medical_note]\n"
+		message += "**Syndicate intelligence:** [player.client.preferences.synd_int_note]\n"
+		ircmsg["msg"] = html_decode(message)
+		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/show_profile
+	name = "showprofile"
+	argument_types = list(/datum/command_argument/string/ckey = "ckey", /datum/command_argument/number = "profile_num")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey, profile_num)
+		if (profile_num < 1 || profile_num > SAVEFILE_PROFILES_MAX)
+			system.reply("Invalid profile number \"[profile_num]\", please enter 1-[SAVEFILE_PROFILES_MAX]")
+			return
+		var/datum/preferences/prefs = new()
+		var/path = prefs.savefile_path(ckey)
+		if (!fexists(path))
+			system.reply("No savefile found for ckey \"[ckey]\"", user)
+			return
+		var/savefile/F = new /savefile(path, -1)
+		if (!prefs.savefile_load(null, profile_num, F))
+			system.reply("Unable to load savefile for ckey \"[ckey]\"", user)
+			return
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Profile"
+		ircmsg["name"] = "[ckey] ([profile_num])"
+		var/message = "**Profile name**: [prefs.profile_name]\n"
+		message += "**Character name:** [prefs.name_first] [prefs.name_last]\n"
+		message += "**Gender:** [prefs.gender]\n"
+		message += "**Random name:** [prefs.be_random_name ? "true" : "false"]\n"
+		message += "**Random appearance:** [prefs.be_random_look ? "true" : "false"]\n"
+		message += "**Flavor text:** [prefs.flavor_text]\n"
+		message += "**Security note:** [prefs.security_note]\n"
+		message += "**Medical note:** [prefs.medical_note]\n"
+		message += "**Syndicate intelligence:** [prefs.synd_int_note]\n"
+		ircmsg["msg"] = html_decode(message)
+		ircbot.export("help", ircmsg)

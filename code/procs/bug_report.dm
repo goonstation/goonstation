@@ -39,6 +39,7 @@
 [form.data["additional"]]
 
 Reported by: [user_client.key]
+Client version: [user_client.byond_version].[user_client.byond_build]
 On server: [global.config.server_name]
 Active test merges: [english_list(testmerges)]
 Round log date: [global.roundLog_date]

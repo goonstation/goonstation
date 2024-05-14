@@ -6,15 +6,19 @@
 *.dme	text eol=lf
 *.dms	text
 *.dmf	text
-*.dmm text eol=lf
+*.dmm	text eol=lf
 
 # BYOND Images & bytecode
 *.dmi	binary
 *.dmb	binary
 
-# merger hooks, run tools/hooks/install.bat or install.sh to set up
-*.dmm merge=dmm
-*.dmi merge=dmi
+# Merge hooks, run tools/hooks/install.bat or install.sh to set up
+*.dmm	merge=dmm
+*.dmi	merge=dmi
+
+## TGUI bundle merge drivers
+*.bundle.*	binary merge=tgui-merge-bundle
+*.chunk.*	binary merge=tgui-merge-bundle
 
 # Other text stuff
 *.txt	text
@@ -34,8 +38,8 @@
 *.py	text
 *.lua	text
 *.cpp	text
-*.h	text
-*.ps1 text
+*.h		text
+*.ps1	text
 
 # Other binary stuff
 *.png	binary
@@ -55,7 +59,7 @@
 *.pdn	binary
 
 ## Force tab indents on dm files
-*.dm whitespace=indent-with-non-tab
+*.dm	whitespace=indent-with-non-tab
 
 # Not everything actually needs to be here but it doesn't break stuff to
 # make git recognize that yes, some of these dumb byond things really are text

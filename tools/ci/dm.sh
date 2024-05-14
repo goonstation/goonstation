@@ -18,12 +18,12 @@ then
 	exit 1
 fi
 
-if [[ -a $dmepath.mdme ]]
+if [[ -a $dmepath.m.dme ]]
 then
-	rm $dmepath.mdme
+	rm $dmepath.m.dme
 fi
 
-cp $dmepath.dme $dmepath.mdme
+cp $dmepath.dme $dmepath.m.dme
 if [[ $? != 0 ]]
 then
 	echo "Failed to make modified dme, aborting."
@@ -35,7 +35,7 @@ do
 	arg=`echo $var | sed -r 's/^.{2}//'`
 	if [[ $var == -D* ]]
 	then
-		sed -i '1s/^/#define '$arg'\n/' $dmepath.mdme
+		sed -i '1s/^/#define '$arg'\n/' $dmepath.m.dme
 		continue
 	fi
 done
@@ -62,7 +62,7 @@ then
 		exit 3
 	fi
 
-	"$dm" $dmepath.mdme 2>&1 | tee result.log
+	"$dm" $dmepath.m.dme 2>&1 | tee result.log
 	retval=$?
 	if ! grep '\- 0 errors, 0 warnings' result.log
 	then
@@ -71,7 +71,7 @@ then
 else
 	if hash DreamMaker 2>/dev/null
 	then
-		DreamMaker -max_errors 0 $dmepath.mdme 2>&1 | tee result.log
+		DreamMaker -max_errors 0 $dmepath.m.dme 2>&1 | tee result.log
 		retval=$?
 		if ! grep '\- 0 errors, 0 warnings' result.log
 		then
@@ -83,9 +83,9 @@ else
 	fi
 fi
 
-mv $dmepath.mdme.dmb $dmepath.dmb
-mv $dmepath.mdme.rsc $dmepath.rsc
+mv $dmepath.m.dmb $dmepath.dmb
+mv $dmepath.m.rsc $dmepath.rsc
 
-rm $dmepath.mdme
+rm $dmepath.m.dme
 
 exit $retval

@@ -20,6 +20,17 @@ jobs:
           ref: ${{ env.PR_BRANCH }}
           fetch-depth: 0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
       - name: Perform Merge
         run: |
           bash tools/hooks/install.sh

@@ -340,12 +340,12 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/mining/miningoutpost)
 "bj" = (
-/turf/simulated/floor/airless/neutral,
+/turf/simulated/floor/neutral,
 /area/mining/miningoutpost)
 "bk" = (
 /obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/neutral,
+/turf/simulated/floor/neutral,
 /area/mining/miningoutpost)
 "bl" = (
 /obj/table/auto,
@@ -412,15 +412,15 @@
 /area/mining/miningoutpost)
 "bv" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "bw" = (
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "bx" = (
 /obj/storage/closet/emergency,
 /obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "by" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -429,7 +429,7 @@
 "bz" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/airless/neutral,
+/turf/simulated/floor/neutral,
 /area/mining/miningoutpost)
 "bA" = (
 /turf/simulated/floor/arrival{

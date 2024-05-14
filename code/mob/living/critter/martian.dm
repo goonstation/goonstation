@@ -111,7 +111,7 @@
 				teleport.handleCast(pick(randomturfs))
 
 	say(message, involuntary = 0)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		..(message)
 

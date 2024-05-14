@@ -8,6 +8,7 @@
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden placement of armed mousetraps in other peoples backpacks
 	force = null
 	throwforce = null
 	var/armed = FALSE
@@ -357,7 +358,7 @@
 				if ("feet")
 					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
 						zone = pick("l_leg", "r_leg")
-						H.changeStatus("weakened", 3 SECONDS)
+						H.changeStatus("knockdown", 3 SECONDS)
 				if ("l_arm", "r_arm")
 					if (!H.gloves)
 						zone = type

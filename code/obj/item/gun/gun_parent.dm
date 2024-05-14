@@ -7,7 +7,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
-	special_grab = /obj/item/grab/gunpoint
+	special_grab = /obj/item/grab/threat/gunpoint
 
 	item_state = "gun"
 	m_amt = 2000
@@ -93,7 +93,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+			var/stun
+			var/b_force = "Bullet damage: [current_projectile.damage]"
+			var/disrupt
+			if (current_projectile.stun)
+				stun += "Stamina: [clamp(current_projectile.stun * 4, current_projectile.stun * 2, current_projectile.stun + 80)] dmg"
+			if (current_projectile.armor_ignored)
+				b_force += " - [round(current_projectile.armor_ignored * 100, 1)]% armor piercing"
+			if (current_projectile.disruption)
+				disrupt = "Pod disruption: [round(current_projectile.disruption, 1)]% chance"
+
+			if (stun)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stamina.png")]\" width=\"10\" height=\"10\" /> [stun]"
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
+			if (disrupt)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
 		lastTooltipContent = .
 
 	New()
@@ -395,9 +409,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (ismob(user))
 		var/mob/M = user
-		if (M.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(M, COMSIG_MOB_TRIGGER_THREAT)
 		if(slowdown)
 			SPAWN(-1)
 				M.movement_delay_modifier += slowdown
@@ -508,6 +520,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 ///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
 /obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
 	src.current_projectile = newProj
+	src.tooltip_rebuild = TRUE
 	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)
 
 /obj/item/gun/proc/do_camera_recoil(mob/user, turf/start, turf/target, POX, POY)
@@ -551,7 +564,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	recoil_stacks = 0
 
 /obj/item/gun/proc/handle_recoil(mob/user, turf/start, turf/target, POX, POY, first_shot = TRUE)
-	if (!recoil_enabled)
+	if (!recoil_enabled || !istype(user))
 		return
 	var/start_recoil = FALSE
 	if (recoil == 0)

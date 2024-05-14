@@ -186,6 +186,11 @@
 		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
 	)
 
+/datum/robot/module_tool_creator/recursive/module/eyebot
+	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
+		/obj/item/device/radio/intercom/AI/handheld)
+
 //These are not publically used anymore
 /datum/robot/module_tool_creator/recursive/module/construction_ai
 	definitions = list(

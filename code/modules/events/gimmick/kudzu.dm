@@ -431,20 +431,20 @@
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
-
-					H.full_heal()
-					if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
-						if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
-							H.ckey = H.last_client.ckey
-					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
-						var/datum/abilityHolder/composite/Comp = H.abilityHolder
-						Comp.removeHolder(/datum/abilityHolder/kudzu)
-					else if (H.abilityHolder)
-						H.abilityHolder.dispose()
-						H.abilityHolder = null
-					H.set_mutantrace(/datum/mutantrace/kudzu)
+					if(H in src)
+						H.full_heal()
+						if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
+							if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
+								H.ckey = H.last_client.ckey
+						if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+							var/datum/abilityHolder/composite/Comp = H.abilityHolder
+							Comp.removeHolder(/datum/abilityHolder/kudzu)
+						else if (H.abilityHolder)
+							H.abilityHolder.dispose()
+							H.abilityHolder = null
+						H.set_mutantrace(/datum/mutantrace/kudzu)
+						H.show_antag_popup("kudzu")
 					natural_opening = 1
-					H.show_antag_popup("kudzu")
 					qdel(src)
 		else
 			qdel(src)
