@@ -322,21 +322,6 @@
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
 // LANGUAGE - Yellow Border
-
-/datum/trait/muted
-	name = "Muted"
-	desc = "Spawn with permanent muteness and a Speech Pro."
-	id = "muted"
-	icon_state = "muted"
-	points = 0
-	category = list("language")
-	disability_type = TRAIT_DISABILITY_MAJOR
-	disability_name = "Mute"
-	disability_desc = "Permanent speech loss"
-
-	onAdd(var/mob/owner)
-		owner.bioHolder?.AddEffect("mute", 0, 0, 0, 1)
-
 /datum/trait/swedish
 	name = "Swedish"
 	desc = "You are from sweden. Meat balls and so on."
