@@ -133,22 +133,6 @@
 				S.buckle_in(src.corpse, src.corpse, TRUE)
 				src.corpse.dir = S.dir // Face properly
 
-		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
-		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
-		src.corpse.death(FALSE)
-		src.corpse.traitHolder.addTrait("puritan")
-		src.corpse.is_npc = TRUE
-
-		if (src.no_decomp)
-			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_DECOMPOSITION, "corpse_spawn")
-		if (src.no_miasma)
-			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_MIASMA, "corpse_spawn")
-
-		if (src.randomise_decomp_stage)
-			src.corpse.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_HIGHLY_DECAYED)
-		else
-			src.corpse.decomp_stage = src.decomp_stage
-
 		if (src.husked)
 			src.corpse.disfigured = TRUE
 			src.corpse.UpdateName()
@@ -210,6 +194,22 @@
 			var/obj/container = new container_type(src.loc)
 			src.corpse.set_loc(container)
 			container.UpdateIcon()
+
+		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
+		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
+		src.corpse.traitHolder.addTrait("puritan")
+		src.corpse.death(FALSE)
+		src.corpse.is_npc = TRUE
+
+		if (src.no_decomp)
+			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_DECOMPOSITION, "corpse_spawn")
+		if (src.no_miasma)
+			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_MIASMA, "corpse_spawn")
+
+		if (src.randomise_decomp_stage)
+			src.corpse.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_HIGHLY_DECAYED)
+		else
+			src.corpse.decomp_stage = src.decomp_stage
 
 		if (src.appearance_override)
 			src.corpse.bioHolder.CopyOther(src.appearance_override, TRUE, FALSE, FALSE, FALSE)
