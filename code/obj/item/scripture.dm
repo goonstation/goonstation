@@ -50,10 +50,10 @@
 	item_state_base = "greenhb"
 
 /obj/item/scripture/clownhb
-	name = "honkmother's prophecy of hilarity"
+	name = "the great prophecy of hilarity"
 	icon_state = "clownhb"
 	item_state = "clownhb"
-	desc = "This is actually a novel taken from the library written over with crayon drawings of bananas and clown faces."
+	desc = "This is actually a novel taken from a library written over with crayon drawings of bananas and clown faces."
 	item_state_base = "clownhb"
 
 /obj/item/scripture/purplehb
@@ -113,7 +113,7 @@
 	item_state_base = "reddarkhb"
 
 /obj/item/scripture/cluwnehb
-	name = "honkmother's prophecy of end times"
+	name = "cursed prophecy of the fatal laughter"
 	icon_state = "cluwnehb"
 	item_state = "cluwnehb"
 	desc = "Every word inside makes you want to wretch."

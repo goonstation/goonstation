@@ -78,7 +78,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -94,7 +94,7 @@
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 #ifdef DATALOGGER
 		game_stats.ScanText(message)
 #endif

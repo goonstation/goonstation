@@ -171,7 +171,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
-	proc/CopyOther(var/datum/appearanceHolder/toCopy)
+	proc/CopyOther(var/datum/appearanceHolder/toCopy, skip_update_colorful = FALSE)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
 
@@ -221,7 +221,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		voicetype = toCopy.voicetype
 
 		flavor_text = toCopy.flavor_text
-		if(ishuman(owner))
+		if(ishuman(owner) && !skip_update_colorful)
 			var/mob/living/carbon/human/H = owner
 			H.update_colorful_parts()
 		return src
@@ -817,21 +817,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		var/datum/bioEffect/D = effects[id]
 		if (D && !D.removed)
-			D.OnRemove()
-			if (!D.activated_from_pool)
-				src.genetic_stability += D.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
-			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
-
-			if (owner)
-				OutputGainOrLoseMsg(D, FALSE)
-
-			if (mobAppearance)
-				mobAppearance.UpdateMob()
-			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")
-			return effects.Remove(D.id)
+			return src.RemoveEffectInstance(D)
 
 		return 0
+
+	proc/RemoveEffectInstance(var/datum/bioEffect/effect)
+		effect.OnRemove()
+		if (!effect.activated_from_pool)
+			src.genetic_stability += effect.stability_loss
+			src.genetic_stability = max(0,src.genetic_stability)
+		effect.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
+
+		if (owner)
+			OutputGainOrLoseMsg(effect, FALSE)
+
+		if (mobAppearance)
+			mobAppearance.UpdateMob()
+		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
+		return effects.Remove(effect.id)
 
 	proc/RemoveAllEffects(var/type = null)
 		for(var/D as anything in effects)

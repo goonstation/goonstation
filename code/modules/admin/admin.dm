@@ -1875,6 +1875,8 @@ var/global/noir = 0
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue]")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue]")
 				if (length(custom_objective))
 					new /datum/objective/regular(custom_objective, M.mind, M.mind.get_antagonist(antag_options[selected_keyvalue]))
 					tgui_alert(M, "Your objective is: [custom_objective]", "Objective")
@@ -1924,6 +1926,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue] antagonist")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue] antagonist")
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
 			else
 				boutput(usr, SPAN_ALERT("Addition failed with return code [success]. The mob may be incompatible. Report this to a coder."))
@@ -1941,6 +1945,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.remove_antagonist(antag)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed [antag.id] antagonist from [key_name(M)]")
+				message_admins("[key_name(usr)] removed [antag.id] antagonist from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]"))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -1957,6 +1963,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed all antagonists from [key_name(M)]")
+				message_admins("[key_name(usr)] removed all antagonists from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -2366,7 +2374,7 @@ var/global/noir = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
 								continue
-							H.changeStatus("paralysis", 7 SECONDS)
+							H.changeStatus("unconscious", 7 SECONDS)
 							if(H.wear_id)
 								for(var/A in H.wear_id:access)
 									if(A == access_security)
@@ -2561,6 +2569,20 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] bricked all radios forever")
 								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
 								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+					if ("airlock_safety")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Disable all station airlocks safeties?", "Cronch?", list("Yes", "Oops misclick")) == "Yes")
+								for (var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door/airlock])
+									if (D.z != 1)
+										break
+									D.safety = 0
+									LAGCHECK(LAG_LOW)
+								message_admins("[key_name(usr)] disabled the safeties on all station airlocks.")
+								logTheThing(LOG_ADMIN, usr, "disabled the safeties on all station airlocks.")
+								logTheThing(LOG_DIARY, usr, "disabled the safeties on all station airlocks.", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3054,7 +3076,7 @@ var/global/noir = 0
 								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
-									M.changeStatus("weakened", 2 SECONDS)
+									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
 							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
@@ -3288,29 +3310,17 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						if (isnull(src.job_manager))
-							src.job_manager = new
-
-						src.job_manager.ui_interact(src.owner.mob)
+						usr.client.cmd_job_controls()
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
-					if("pathology")
-						pathogen_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
+					if("regionallocator")
+						usr.client.region_allocator_panel()
 					if("artifacts")
 						artifact_controls.config()
-					if("ghostnotifier")
-						ghost_notifier.config()
-					if("unelectrify_all")
-						for(var/obj/machinery/door/airlock/D)
-							D.secondsElectrified = 0
-							LAGCHECK(LAG_LOW)
-						message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
-						logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
-						logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
 					if("DNA")
 						var/dat = "<B>Showing DNA from blood.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
@@ -3707,11 +3717,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=regionallocator'>Region Allocator</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=ghostnotifier'>Ghost Notification Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
@@ -3832,6 +3840,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=airlock_safety'>Disable all airlock's safeties.</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
@@ -4225,7 +4234,7 @@ var/global/noir = 0
 	usr.Browse(built, "window=chatban;size=500x100")
 
 /client/proc/cmd_admin_managebioeffect(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
@@ -4238,7 +4247,7 @@ var/global/noir = 0
 	holder.bioeffectmanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_manageabils(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
@@ -4251,7 +4260,7 @@ var/global/noir = 0
 	holder.abilitymanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_managetraits(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Traits"
 	set desc = "Select a mob to manage its traits."
 	set popup_menu = 0

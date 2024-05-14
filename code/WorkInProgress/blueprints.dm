@@ -67,7 +67,7 @@
 			. += "<br>[SPAN_NOTICE("Someone has uploaded a blueprint named '[current_bp.room_name]'.")]"
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+		if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
@@ -78,7 +78,7 @@
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
 		else
-			if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
 				return
@@ -263,6 +263,7 @@
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
 				var/obj/spawned_object = new O.objecttype(pos)
+				spawned_object.after_abcu_spawn()
 				if(!is_valid_abcu_object(spawned_object))
 					qdel(spawned_object)
 
@@ -395,7 +396,7 @@
 	var/posy = 0
 	var/icon = ""
 
-/verb/adminCreateBlueprint()
+/client/proc/adminCreateBlueprint()
 	set name = "Blueprint Create"
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -407,7 +408,7 @@
 	usr.put_in_hand_or_drop(printed)
 	boutput(usr, SPAN_NOTICE("Spawned the blueprint '[picked["file"]]'."))
 
-/verb/adminDeleteBlueprint()
+/client/proc/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

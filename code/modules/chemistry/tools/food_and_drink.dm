@@ -101,13 +101,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 				return
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			src.onSlice()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
@@ -116,6 +117,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			qdel (src)
 		else
 			..()
+
+	proc/onSlice() //special slice behaviour
+		return
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
 	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
@@ -442,7 +446,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(H, pick(SPAN_ALERT("That tasted <b>HORRIBLE</b>! Your mouth feels numb!"), SPAN_ALERT("You feel like you're about to puke!")))
 		else
 			if (prob(30))
-				H.setStatus("paralysis", 2.5 SECONDS)
+				H.setStatus("unconscious", 2.5 SECONDS)
 				boutput(H, pick(SPAN_ALERT("The sudden assault of displeasing flavors on your tongue dazes you!"), SPAN_ALERT("This ignoble meal makes you blank out!")))
 			else if (prob(30))
 				boutput(H, pick(SPAN_ALERT("You can't keep down this <i>food</i>!"), SPAN_ALERT("You fail to swallow this horrific meal!")))
@@ -554,6 +558,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
@@ -631,9 +636,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			C.u_equip(src)
 			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
 			src.throw_at(target, 7, 1)
-			if (!C.hasStatus("weakened"))
+			if (!C.hasStatus("knockdown"))
 				//Make them fall over, they lost their balance.
-				C.changeStatus("weakened", 2 SECONDS)
+				C.changeStatus("knockdown", 2 SECONDS)
 			return
 
 		actions.start(new /datum/action/bar/icon/chug(C, src), C)
@@ -650,7 +655,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		// in this case m is the consumer and user is the one holding it
-		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))
+		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle))
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
@@ -1043,7 +1048,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
-				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!"))
+				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src.name]!"))
 				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
 				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 				var/damage = rand(1,10)
@@ -1542,10 +1547,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			if (src.reagents.total_volume)
 				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")
 				src.reagents.reaction(H, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(reagents.total_volume/2, (H.reagents?.maximum_volume - H.reagents?.total_volume))))
-				SPAWN(0.5 SECONDS)
-					if (src?.reagents && H?.reagents)
-						src.reagents.trans_to(H, reagents.total_volume/2)
+				if (src?.reagents && H?.reagents)
+					src.reagents.trans_to(H, reagents.total_volume/2)
 		. = ..()
+
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
@@ -1935,7 +1940,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			target.visible_message(SPAN_ALERT("<B>[user] smashes [src] over [target]'s head!</B>"))
 			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
 		target.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		target.changeStatus("weakened", 2 SECONDS)
+		target.changeStatus("knockdown", 2 SECONDS)
 		playsound(target, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(target))
@@ -1992,7 +1997,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	g_amt = 30
 	initial_volume = 50
 	can_recycle = FALSE
-	initial_reagents = list("pumpkinspicelatte"=30)
 
 /obj/item/reagent_containers/food/drinks/energyshake
 	name = "Brotein Shake - Dragon Balls flavor"

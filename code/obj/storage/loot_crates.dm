@@ -52,7 +52,7 @@
 		/obj/item/clothing/gloves/psylink_bracelet = 10,\
 		/obj/item/device/voltron = 5,\
 		/obj/item/injector_belt = 20,\
-		/obj/item/clothing/mask/gas/injector_mask = 10,\
+		/obj/item/clothing/mask/injector_mask = 10,\
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
 		/obj/item/clothing/gloves/ring/titanium = 20,\
 		/obj/item/gun/energy/phaser_gun = 20,\

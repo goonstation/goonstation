@@ -780,8 +780,7 @@ SYNDICATE DRONE FACTORY AREAS
 				src.set_loc(next)
 				for(var/mob/living/carbon/C in next)
 					C.TakeDamageAccountArmor("chest", 33, 0)
-					if(hasvar(C, "weakened"))
-						C:changeStatus("weakened", 5 SECONDS)
+					C.changeStatus("knockdown", 5 SECONDS)
 
 
 /obj/boulder_trap/respawning
@@ -1400,7 +1399,7 @@ var/satellite_crash_event_status = -1
 		explode.start()
 		playsound(src.loc, 'sound/effects/kaboom.ogg', 90, 1)
 		SPAWN(1 DECI SECOND)
-			fireflash(src.loc, 4)
+			fireflash(src.loc, 4, chemfire = CHEM_FIRE_RED)
 		for (var/mob/living/L in range(src.loc, 2))
 			L.ex_act(GET_DIST(src.loc, L))
 
@@ -1420,7 +1419,7 @@ var/satellite_crash_event_status = -1
 		projection.layer = satellite.layer + 1
 		satellite.overlays += projection
 
-		var/obj/perm_portal/portal = new /obj/perm_portal {name="rift in space and time"; desc = "uh...huhh"; pixel_x = 16;} (locate(satellite.x+1,satellite.y-1, satellite.z))
+		var/obj/laser_sink/perm_portal/portal = new /obj/laser_sink/perm_portal {name="rift in space and time"; desc = "uh...huhh"; pixel_x = 16;} (locate(satellite.x+1,satellite.y-1, satellite.z))
 		for (var/obj/O in portal.loc)
 			if (O.density && O.anchored && O != portal)
 				qdel(O)
@@ -1433,7 +1432,7 @@ var/satellite_crash_event_status = -1
 			else
 				portal.target = get_turf(pick( drone_zone.contents ))
 
-			var/obj/perm_portal/portal2 = new /obj/perm_portal {name="rift in space and time"; desc = "uh...huhh";} (get_turf(portal.target))
+			var/obj/laser_sink/perm_portal/portal2 = new /obj/laser_sink/perm_portal {name="rift in space and time"; desc = "uh...huhh";} (get_turf(portal.target))
 			portal2.target = get_turf(portal)
 
 		satellite_crash_event_status = 2

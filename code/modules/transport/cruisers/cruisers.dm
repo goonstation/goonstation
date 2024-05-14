@@ -675,7 +675,7 @@
 
 			for(var/i=0, i<amount, i++)
 				var/turf/A = pick(hotspot_turfs)
-				fireflash(A, 1)
+				fireflash(A, 1, chemfire = CHEM_FIRE_RED)
 		return
 
 	proc/destroy()
@@ -1260,7 +1260,7 @@
 		if(interior.ship)
 			user.visible_message(SPAN_ALERT("<b>[user] throws [M] out of \the [src]!"), SPAN_ALERT("<b>You throw [M] out of \the [src]!</b>"))
 			interior.ship.leaveShip(M)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 		qdel(G)
 		return
 

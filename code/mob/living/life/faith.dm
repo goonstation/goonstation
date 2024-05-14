@@ -4,7 +4,7 @@
 	process(var/datum/gas_mixture/environment)
 		var/mult = get_multiplier()
 
-		if (isunconscious(owner) || isdead(owner) || !owner.mind || isghostcritter(owner) || isintangible(owner) || !isliving(owner))
+		if (isunconscious(owner) || isdead(owner) || isghostcritter(owner) || isintangible(owner) || !isliving(owner) || !owner.client)
 			// do nothing
 		else if (owner.traitHolder.hasTrait("training_chaplain"))
 			modify_chaplain_faith(owner, min(FAITH_STARTING / max(1, get_chaplain_faith(owner)), 5) * mult) // helps chaplains get back to normal

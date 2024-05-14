@@ -22,6 +22,10 @@ ABSTRACT_TYPE(/obj/item)
 	var/inhand_color = null
 	/// storage datum holding it
 	var/datum/storage/stored = null
+	/// Used for the hattable component
+	var/hat_offset_y = 0
+	/// Used for the hattable component
+	var/hat_offset_x = 0
 
 	/*_______*/
 	/*Burning*/
@@ -718,7 +722,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -934,7 +938,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 				smoke.attach(src)
 				smoke.start()
 		if (prob(7) && !(src.item_function_flags & COLD_BURN))
-			fireflash(src, 0)
+			fireflash(src, 0, chemfire = CHEM_FIRE_RED)
 
 		if (prob(40))
 			if (src.health > 4)
@@ -1026,11 +1030,17 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	src.equipped_in_slot = null
 	user.update_equipped_modifiers()
 
+/// Call this proc inplace of afterattack(...)
 /obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, reach, params)
 	. = src.afterattack(target, user, reach, params)
 
+/**
+ * DO NOT CALL THIS PROC - Call AfterAttack(...) Instead!
+ *
+ * Only override this proc!
+ */
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	set waitfor = 0
 	PROTECTED_PROC(TRUE)
@@ -1155,14 +1165,17 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)
-	var/checkloc = src.loc
-	while(checkloc && !istype(checkloc,/turf))
-		if (isliving(checkloc) && checkloc != user)
-			if(src in bible_contents)
-				break
-			else
-				return 0
-		checkloc = checkloc:loc
+	var/obj/item/checkloc = src.loc
+	var/mob/mobloc = src.loc //hehehhohoo
+	// Skip this loop if the FIRST loc is a mob, allowing component/hattable to proc take_hat_off on AIs/ghostdrones
+	if (!ismob(src.loc) || (src in mobloc.equipped_list())) //but don't skip if it's in their hand because that causes DUPE BUGS AAAA
+		while(checkloc && !istype(checkloc,/turf))
+			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
+				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
+					break
+				else
+					return 0
+			checkloc = checkloc.loc // Get the loc of the loc! The loop continues until it's the turf of what you clicked on
 
 	if(!src.can_pickup(user))
 		// unholdable storage items
@@ -1179,20 +1192,21 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		var/obj/container = src.loc
 		container.vis_contents -= src
 
-	if (src.loc == user)
+	if (ismob(mobloc)) //if the location is a mob, we properly remove the item
 		var/in_pocket = 0
-		if(issilicon(user)) //if it's a borg's shit, stop here
+		if(issilicon(user)) //if it's a borg's shit on yourself, stop here
 			return 0
-		// storage items in hands or worn
+		// storage items in your own hands or worn
 		if (src.storage && ((src in user.equipped_list()) || src.storage.opens_if_worn))
 			src.storage.storage_item_attack_hand(user)
 			return FALSE
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
+		// now we check if we can remove the item from the mob-location
+		if (ishuman(mobloc))
+			var/mob/living/carbon/human/H = mobloc
 			if(H.l_store == src || H.r_store == src)
 				in_pocket = 1
-		if (!cant_self_remove || (!cant_drop && (user.l_hand == src || user.r_hand == src)) || in_pocket == 1)
-			user.u_equip(src)
+		if (!cant_self_remove || (!cant_drop && (user.l_hand == mobloc || user.r_hand == mobloc)) || in_pocket == 1)
+			mobloc.u_equip(src)
 		else
 			boutput(user, SPAN_ALERT("You can't remove this item."))
 			return 0
@@ -1595,8 +1609,15 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/registered_owner()
 	.= 0
 
+/// Force the item to drop from the mob's hands.
+/// If `sever` is TRUE, items will be severed from item arms
+/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0, sever=TRUE)
+	if(sever && (src.temp_flags & IS_LIMB_ITEM))
+		if (istype(src.loc, /obj/item/parts/human_parts/arm/left/item) || istype(src.loc, /obj/item/parts/human_parts/arm/right/item))
+			var/obj/item/parts/human_parts/arm/item_arm = src.loc
+			item_arm.sever()
+			return
 
-/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0)
 	if (!possible_mob_holder)
 		if (ismob(src.loc))
 			possible_mob_holder = src.loc

@@ -35,13 +35,13 @@
 			if (!(H?.loc && W?.loc)) return
 			boutput(H, SPAN_ALERT("You hear a cacophony of otherwordly voices in your head."))
 			H.emote("faint")
-			H.setStatusMin("weakened", 5 SECONDS)
+			H.setStatusMin("knockdown", 5 SECONDS)
 			sleep(15 SECONDS)
 			if (!(H?.loc && W?.loc)) return
 			H.change_misstep_chance(-20)
 			H.emote("scream")
-			H.setStatusMin("weakened", 8 SECONDS)
-			H.setStatusMin("paralysis", 8 SECONDS)
+			H.setStatusMin("knockdown", 8 SECONDS)
+			H.setStatusMin("unconscious", 8 SECONDS)
 			sleep(8 SECONDS)
 			if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
 			if(isnull(W.mind))	//Wraith died or was removed in the meantime
@@ -88,7 +88,7 @@
 					playsound(H, 'sound/effects/ghost2.ogg', 50, FALSE)
 			qdel(WG)
 			H.take_brain_damage(30)
-			H.setStatus("weakened", 5 SECOND)
+			H.setStatus("knockdown", 5 SECOND)
 			boutput(H, SPAN_NOTICE("The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache."))
 		return FALSE
 

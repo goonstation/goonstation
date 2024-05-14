@@ -859,6 +859,11 @@ Code:
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
 		signal.data["group"] = list(mailgroup, MGA_CRISIS)
+		// prevent message spam for same-department alert ACKs
+		if (mailgroup in src.master.mailgroups)
+			signal.data["noreply"] = TRUE
+		else
+			signal.data["noreply"] = FALSE
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
@@ -1737,7 +1742,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			. += "<b>Location: [get_area(S)]</b><br>"
-			if(S.broken)
+			if(S.is_disabled())
 				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
 				continue
 			if (!length(S.ores))

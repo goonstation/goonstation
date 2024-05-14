@@ -228,6 +228,9 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	can_use_in_container = 1
 	interrupt_action_bars = 0
 	lock_holder = FALSE
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
+
 	incapacitationCheck()
 		return 0
 

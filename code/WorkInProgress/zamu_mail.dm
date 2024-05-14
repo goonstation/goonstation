@@ -45,15 +45,20 @@
 			qdel(src)
 			return
 
-		var/atom/movable/prize = new src.spawn_type
+		var/atom/movable/prize = src.open(M)
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
 		// 50 credits + 5 more for every successful delivery after the first,
 		// capping at 500 each
-		shippingmarket.mail_delivery_payout += 45 + 5 * min(91, game_stats.GetStat("mail_opened"))
+		shippingmarket.mail_delivery_payout += 90 + 5 * min(91, game_stats.GetStat("mail_opened"))
 
+		return
+
+	proc/open(mob/M, crime = FALSE)
+		var/atom/movable/prize = new src.spawn_type
+		. = prize
 		if (prize && istype(prize, /obj/item))
-			boutput(M, SPAN_NOTICE("You open the package and pull out \a [prize]."))
+			boutput(M, SPAN_NOTICE("You [crime ? "tear " : ""]open the package and pull out \a [prize]."))
 			var/obj/item/P = prize
 			M.u_equip(src)
 			M.put_in_hand_or_drop(P)
@@ -64,12 +69,9 @@
 
 		else
 			boutput(M, SPAN_NOTICE("You have no idea what it is you did, but \the [src] collapses in on itself!"))
-			logTheThing(LOG_STATION, M, "opened their [src] but nothing was there, how the fuck did this happen? It was supposed to be \a [src.spawn_type]!.")
-
+			logTheThing(LOG_STATION, M, "opened [src] but nothing was there, how the fuck did this happen? It was supposed to be \a [src.spawn_type]!.")
 
 		qdel(src)
-		return
-
 
 	attackby(obj/item/I, mob/user)
 		// You know, like a letter opener. It opens letters.
@@ -124,6 +126,10 @@
 		src.the_mail.target_dna = null
 		src.the_mail.desc += " Or at least, at one point, it did."
 		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock!"))
+		logTheThing(LOG_STATION, owner, "commits MAIL FRAUD by cutting open [src]")
+		var/obj/decal/cleanable/mail_fraud/cleanable = new(get_turf(src.the_mail), src.the_mail)
+		cleanable.add_fingerprint(owner)
+		src.the_mail.open(owner, crime = TRUE)
 		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 		// I TOLD YOU IT WAS ILLEGAL!!!
@@ -138,7 +144,19 @@
 				sec_record["criminal"] = "*Arrest*"
 				sec_record["mi_crim"] = "Mail fraud."
 
+/obj/decal/cleanable/mail_fraud
+	name = "torn package"
+	desc = "Some scraps of a mail package opened improperly and messily."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-1-b"
 
+	New(loc, obj/item/random_mail/mail)
+		..()
+		if (mail)
+			src.icon_state = "[mail.icon_state]-b"
+			src.color = mail.color
+		src.pixel_x += rand(-5,5)
+		src.pixel_y += rand(-5,5)
 
 // Creates a bunch of random mail for crewmembers
 // Check shippingmarket.dm for the part that actually calls this.

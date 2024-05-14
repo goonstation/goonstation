@@ -18,14 +18,19 @@
 	icon_closed = "lootcrimegang"
 	icon_opened = "lootcrimeopengang"
 	can_flip_bust = FALSE
+	grab_stuff_on_spawn = FALSE
 	anchored = ANCHORED
 	var/image/light = null
 	var/datum/loot_generator/lootMaster
 
+
+	proc/initialize_loot_master(x,y)
+		src.vis_controller = new(src)
+		lootMaster =  new /datum/loot_generator(x,y)
 	// Default gang crate
 	guns_and_gear
 		New()
-			lootMaster =  new /datum/loot_generator(4,4)
+			initialize_loot_master(4,4)
 			// 3 guns, ammo, 3 bits of gear
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 3)
 			lootMaster.add_random_loot(src, GANG_CRATE_AMMO_LIMITED, 3)
@@ -40,8 +45,7 @@
 		anchored = UNANCHORED
 		locked = FALSE
 		New()
-			..()
-			lootMaster =  new /datum/loot_generator(4,4)
+			initialize_loot_master(4,4)
 			src.open()
 			// 3 guns, ammo, 3 bits of gear
 			for (var/i=1 to 3)
@@ -55,11 +59,12 @@
 				sleep(1 SECOND)
 			// fill the rest with whatever
 			lootMaster.fill_remaining(src, GIMMICK)
+			..()
 	shotguns
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
-			lootMaster.place_loot_instance(src, 1,3, new /obj/randomloot_spawner/long/striker, FALSE)
-			lootMaster.place_loot_instance(src, 1,2, new /obj/randomloot_spawner/long/striker, FALSE)
+			initialize_loot_master(4,4)
+			lootMaster.place_loot_instance(src, 1,3, new /obj/loot_spawner/random/long/striker, FALSE)
+			lootMaster.place_loot_instance(src, 1,2, new /obj/loot_spawner/random/long/striker, FALSE)
 			lootMaster.fill_remaining(src, GANG_CRATE_AMMO, 3)
 			..()
 		unlocked
@@ -75,17 +80,17 @@
 			locked = FALSE
 	only_guns
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.fill_remaining(src, GANG_CRATE_GUN)
 			..()
 	only_gear
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.fill_remaining(src, GANG_CRATE_GEAR)
 			..()
 	gear_and_gimmicks
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
@@ -105,7 +110,7 @@
 			SPAWN(2*GANG_CRATE_LOCK_TIME/3 )
 				src.light = image('icons/obj/large_storage.dmi',"gangcratelowlight")
 				UpdateIcon()
-			SPAWN((GANG_CRATE_LOCK_TIME - 15 SECONDS) )
+			SPAWN((GANG_CRATE_LOCK_TIME - 3 SECONDS) )
 				src.light = image('icons/obj/large_storage.dmi',"gangcrateblinkinglight")
 				UpdateIcon()
 			SPAWN(GANG_CRATE_LOCK_TIME)
@@ -167,12 +172,44 @@
 /obj/item/gang_loot
 	icon = 'icons/obj/items/storage.dmi'
 	name = "suspicious looking duffle bag"
-	desc = "A greasy, black duffle bag, this isn't station issue..."
+	desc = "A greasy, black duffle bag, this isn't station issue, you should probably leave it alone..."
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
+	p_class = 4 //marginally easier than dragging a whole locker with this in
+	throw_range = 4
+	always_slow_pull = TRUE
+	w_class = W_CLASS_GIGANTIC
 	var/hidden = TRUE
 	var/open = FALSE
+	///Whether this bag's trap is active
+	var/trapped = TRUE
+	///Whether this bag is tracking its' location
+	var/tracking = FALSE
+	var/initial_tracking = TRUE
+	///Whether this bag is unopened. If TRUE, it will grant points when opened.
+	var/sealed = TRUE
+	///The gang who should own this duffel bag
+	var/datum/gang/owning_gang
+	///The name of the informant who knows about this bag
+	var/informant
+	///The civilian who has this in their hands, if the trap is active.
+	var/mob/living/idiot = null
+	///The area this bag spawned in.
+	var/area/start_area
+
+	///Items that haven't been removed from the bag. These will travel with it.
+	var/datum/vis_storage_controller/vis_controller
+	var/datum/loot_generator/lootMaster
 	level = UNDERFLOOR
+
+	Eat(mob/M, mob/user)
+		boutput(user, SPAN_ALERT("You can't eat this! It tastes like [pick(list("a video game cartridge","the inside of a clown's shoe","a hooligan's rancid socks"))]!"))
+		return FALSE
+
+	proc/initialize_loot_master(x,y)
+		src.vis_controller = new(src)
+		lootMaster =  new /datum/loot_generator(x,y)
+		toggle_tracking(initial_tracking)
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
@@ -180,53 +217,152 @@
 	only_gimmicks
 		New()
 
-			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
+			initialize_loot_master(3,2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 	gear_and_gimmicks
 		New()
-			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
+			initialize_loot_master(3,2)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
 	guns_and_gear
 		New()
-			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
+			initialize_loot_master(3,2)
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 1)
 			lootMaster.add_random_loot(src, GANG_CRATE_AMMO, 1)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
+	pickup(mob/user)
+		if (open && length(vis_controller.vis_items) > 0)
+			close()
+		..()
+		if (src.layer == UNDERFLOOR)
+			src.layer = OVERFLOOR
+		var/datum/gang = user.get_gang()
+		if (gang && (trapped || tracking))
+			trapped = FALSE //if one gang member gets their mitts on it, this has done its job
+			toggle_tracking(FALSE)
+			boutput(user, SPAN_ALERT("You disarm the trap in the [src]'s handle. It's now safe to carry."))
+		if (!gang && !open && trapped && owning_gang && isliving(user))
+			var/mob/living/H = user
+			idiot = user
+			trapped = FALSE
+			toggle_tracking(FALSE)
+			icon_state = "gang_dufflebag_trap"
+			cant_self_remove = TRUE
+			cant_drop = TRUE
+			var/area/area = get_area(src)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of barbs emerge from the handle, lodging in your hand!"))
+			src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
+			ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer to remind players to remove this
+			idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
+			H.emote("scream")
+			H.bleeding = max(1,H.bleeding)
+			processing_items += src
+
+	handle_other_remove(mob/source, mob/living/carbon/human/target)
+		if (!cant_drop || !idiot || !source.get_gang())
+			return ..()
+
+		source.visible_message("[source] rips the [src] right off [target]! Ouch!","You rip the duffle bag from [target]'s hand.")
+		idiot.emote("scream")
+		playsound(idiot.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+		blood_slash(idiot, 2)
+		unhook()
+		return TRUE
+
+	proc/toggle_tracking(is_tracking)
+		if (src.tracking == is_tracking)
+			return
+
+		src.tracking = is_tracking
+
+		if (src.tracking)
+			RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(alert_gang))
+		else
+			UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
+
+	proc/alert_gang(datum/component/component, area/old_area, area/new_area)
+		src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [new_area.name]")
+		toggle_tracking(FALSE)
+
+	proc/unhook()
+		if (!idiot)
+			return
+		if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it, bub.
+			var/obj/item/gang_loot/left_loot = idiot.l_hand //like, if you hit this use case, you're something else. stealing TWO bags at once.
+			var/obj/item/gang_loot/right_loot = idiot.r_hand
+			if (!(left_loot.idiot && right_loot.idiot)) // if only one trapped bag exists, it means we're untrapping the last one
+				idiot.delStatus("gang_trap")
+		else
+			idiot.delStatus("gang_trap")
+		icon_state = "gang_dufflebag"
+		cant_self_remove = FALSE
+		cant_drop = FALSE
+		idiot = null
+		processing_items -= src
+
+	dropped()
+		unhook()
+		..()
+
+	proc/attempt_unhook(mob/user)
+		if (user == idiot)
+			actions.start(new /datum/action/bar/icon/unhook_gangbag(user, src),user)
+
+	attack_hand(mob/user)
+		if (user == idiot)
+			attempt_unhook(user)
+		else
+			..()
+	process()
+		if(cant_drop)
+			if (!ON_COOLDOWN(src,"bleed_msg", 30 SECONDS))
+				boutput(idiot, SPAN_ALERT("The hooks in the bag are digging into your hands! You should pluck it out..."))
+			bleed(idiot, pick(1,2), 1)//technically doubling bleed. but it looks nice as the loops dont sync perfectly.
+			idiot.bleeding = max(1,idiot.bleeding)
+		..()
+
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)
 		invisibility = floor_intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		if (!invisibility == INVIS_NONE)
-			hidden = FALSE
-			level = OVERFLOOR
-		else
-			hidden = TRUE
-			level = UNDERFLOOR
 		UpdateIcon()
+
+	proc/open(mob/user)
+		open = TRUE
+		user.drop_item(src)
+		vis_controller.show()
+
+	proc/close()
+		open = FALSE
+		icon_state = "gang_dufflebag"
+		vis_controller.hide()
 
 
 	attack_self(mob/user)
 		if (!istype(user, /mob/living/carbon/human))
 			return
 		if (!open)
+			if (idiot && idiot == user)
+				attempt_unhook(user)
+				return
 			var/datum/gang/gang = user.get_gang()
 			if (!gang)
 				boutput(user, "You don't want to get in trouble with whoever owns this! It's FULL of illegal stuff.")
 				return
-			for (var/obj/object as anything in src.contents)
-				object.set_loc(user.loc)
+			unhook() // just in case
 			playsound(src.loc, 'sound/misc/zipper.ogg', 100, TRUE)
 			boutput(user, "You unzip the duffel bag and its' contents spill out!")
-			gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
-			gang.score_event += GANG_CRATE_SCORE
-			user.drop_item(src)
-			open = TRUE
+			if (sealed)
+				sealed = FALSE
+				gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
+				gang.score_event += GANG_CRATE_SCORE
+			open(user)
 			icon_state = "gang_dufflebag_open"
 			UpdateIcon()
 		else
@@ -309,17 +445,35 @@
 		return spawnedLootInstances
 
 	/// place a loot object that's been created externally
-	proc/place_loot_instance(loc, x,y,obj/randomloot_spawner/loot, invisible)
+	proc/place_loot_instance(loc, x,y,obj/loot_spawner/loot, invisible)
 		var/override = add_loot_instance(loc,loot,x,y)
 		if (!invisible && !override)
 			lootGrid.mark_used(x,y,loot.xSize,loot.ySize)
 
 
+	/// Fills all remaining space with as many instances as possible of a loot object that's been created externally
+	/// Ignores override, due to infinite loop.
+	proc/fill_remaining_with_instance(loc, obj/loot_spawner/loot)
+		var/done = FALSE
+		var/pos = new/list(2)
+		pos[1] = 1
+		pos[2] = 1
+		while (!done)
+			pos = lootGrid.get_next_empty_space(pos[1],pos[2])
+			if (!pos) break
+			var/maxSize = lootGrid.get_largest_space(pos[1],pos[2])
+			if (maxSize[1] < loot.xSize)
+				pos[2]++
+			else
+				add_loot_instance(loc,loot,pos[1],pos[2])
+				lootGrid.mark_used(pos[1],pos[2],loot.xSize,loot.ySize)
+
+
 	/// Place a random loot instance of a specific size at a specific position
 	proc/place_random_loot_sized(loc, xPos,yPos,sizeX,sizeY, tier, invisible = FALSE)
 		var/chosenType = pick_weighted_option(sizeX,sizeY,tier)
-		var/obj/randomloot_spawner = new chosenType
-		var/override = add_loot_instance(loc,randomloot_spawner,xPos,yPos)
+		var/obj/new_spawner = new chosenType
+		var/override = add_loot_instance(loc,new_spawner,xPos,yPos)
 		if (!override && !invisible)
 			lootGrid.mark_used(xPos,yPos,sizeX,sizeY)
 		return override
@@ -332,18 +486,18 @@
 		lootGrid = new/datum/loot_grid(xSize, ySize)
 		..()
 
-	/// Initialize spawners & weights for all loot spawners
+	/// Initialize spawners & weights for all random loot spawners
 	proc/populate()
 		// setting these manually to map class names to sizes
 		// this avoids having to instantiate them just to read their xSize & ySize
-		spawners[1][1] = /obj/randomloot_spawner/short
-		spawners[2][1] = /obj/randomloot_spawner/medium
-		spawners[3][1] = /obj/randomloot_spawner/long
-		spawners[4][1] = /obj/randomloot_spawner/xlong
-		spawners[1][2] = /obj/randomloot_spawner/short_tall
-		spawners[2][2] = /obj/randomloot_spawner/medium_tall
-		spawners[3][2] = /obj/randomloot_spawner/long_tall
-		spawners[4][2] = /obj/randomloot_spawner/xlong_tall
+		spawners[1][1] = /obj/loot_spawner/random/short
+		spawners[2][1] = /obj/loot_spawner/random/medium
+		spawners[3][1] = /obj/loot_spawner/random/long
+		spawners[4][1] = /obj/loot_spawner/random/xlong
+		spawners[1][2] = /obj/loot_spawner/random/short_tall
+		spawners[2][2] = /obj/loot_spawner/random/medium_tall
+		spawners[3][2] = /obj/loot_spawner/random/long_tall
+		spawners[4][2] = /obj/loot_spawner/random/xlong_tall
 
 		// determine the total weight of all our spawners
 		for(var/spawnersByLength in spawners)
@@ -353,7 +507,7 @@
 				var/childtypes = concrete_typesof(spawner)
 
 				for(var/childType in childtypes)
-					var/obj/randomloot_spawner/item = new childType()
+					var/obj/loot_spawner/random/item = new childType()
 					if (length(totalWeights[spawner]) < item.tier)
 						totalWeights[spawner].len = item.tier
 						weights[spawner].len = item.tier
@@ -390,13 +544,13 @@
 		// select the largest valid crate (proritizing X size)
 		for (var/xTest = 1 to desiredX)
 			for (var/yTest = 1 to desiredY)
-				var/obj/randomloot_spawner/chosenSpawner = spawners[1+desiredX-xTest][1+desiredY-yTest]
+				var/obj/loot_spawner/random/chosenSpawner = spawners[1+desiredX-xTest][1+desiredY-yTest]
 				if (totalWeights[chosenSpawner][tier])
 					var/size = list(1+desiredX-xTest,1+desiredY-yTest)
 					return size
 
 	/// creates a loot object and offset info
-	proc/add_loot_instance(loc,obj/randomloot_spawner/instance,xPos,yPos)
+	proc/add_loot_instance(loc,obj/loot_spawner/instance,xPos,yPos)
 		src.spawned_instances += instance
 		var/datum/loot_spawner_info/info = new /datum/loot_spawner_info()
 		info.parent = src
@@ -549,22 +703,82 @@
 
 // LOOT SPAWNERS
 //
-// The random loot master checks all definitions of randomloot_spawner when it's first created.
-// To define new loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
-// Uncomment the above item_placer if you'd like to scale the items spawned by this.
+// The non-random base exists for loot you don't want to put in a random pool.
+// In addition, the loot_spawner/specified child allows for definition of an item and size in New(), useful for live use.
 
-ABSTRACT_TYPE(/obj/randomloot_spawner)
-
-
-/obj/randomloot_spawner
+ABSTRACT_TYPE(/obj/loot_spawner)
+/obj/loot_spawner
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-r"
-	var/tier = GIMMICK	//! what tier must be selected to select this spawner.
-	var/weight = 3		//! the weight this spawner has to be selected in its' tier, defaults to 3.
 
 	var/xSize = 1 //! The width of this spawner
 	var/ySize = 1 //! The height of this spawner
 
+	// for testing, or if you want to spawn these into the world for whatever reason
+	attack_hand(mob/user as mob)
+		var/I = new/datum/loot_spawner_info()
+		src.spawn_loot(get_turf(user),I)
+		qdel(src)
+
+	// spawn_item(C,I,off_x,off_y,rot,scale_x,scale_y,layer_offset)
+	// C = Container
+	// I = The spawner info, containing where to spawn this, and tags.
+	//
+	// Optional positioning arguments:
+	// off_x/off_y = Offset of the icon (in pixels)
+	// rot = Rotation of the icon
+	// scale_x/scale_y = Scale of icon
+	// layer_offset = overall offset of layers
+	//
+	/// spawn a given item with the 'transform on pickup' component. Refer to function definition for better docs.
+	proc/spawn_item(loc,datum/loot_spawner_info/I,path,off_x=0,off_y=0, rot=0, scale_x=1,scale_y=1, layer_offset=0)
+		var/obj/lootObject
+		if (istype(loc, /obj/storage/crate))
+			var/obj/storage/container = loc
+			lootObject = new path(container)
+			container.vis_controller.add_item(lootObject)
+		else if (istype(loc, /obj/item/gang_loot))
+			var/obj/item/gang_loot/loot = loc
+			lootObject = new path(loot)
+			loot.vis_controller.add_item(lootObject)
+		else
+			lootObject = new path(loc)
+		lootObject.transform = lootObject.transform.Scale(scale_x,scale_y)
+		lootObject.transform = lootObject.transform.Turn(rot)
+
+		lootObject.pixel_x = I.grid_x * ((I.position_x + xSize/2-1)-I.parent?.lootGrid?.size_x/2) + off_x
+		lootObject.pixel_y = I.grid_y * ((I.position_y + ySize/2-1)-I.parent?.lootGrid?.size_y/2) + off_y
+		lootObject.layer = I.layer + layer_offset
+		lootObject.AddComponent(/datum/component/reset_transform_on_pickup)
+		return lootObject
+
+	/// Calls spawn_loot, then handles disappearing & overrides
+	proc/handle_loot(loc,datum/loot_spawner_info/I)
+		var/override = spawn_loot(loc,I)
+		qdel(src)
+		return override
+
+	/// Spawn the loot for this instance. Return TRUE if this should not take up grid squares.
+	proc/spawn_loot(loc,datum/loot_spawner_info/I)
+
+ABSTRACT_TYPE(/obj/loot_spawner/short)
+/obj/loot_spawner/short //1x1
+	xSize = 1
+	ySize = 1
+
+	two_stx_grenades
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/chem_grenade/saxitoxin,off_y=2,scale_x=0.825,scale_y=0.65)
+			spawn_item(C,I,/obj/item/chem_grenade/saxitoxin,off_y=-2,scale_x=0.825,scale_y=0.65)
+
+// The random loot master checks all definitions of loot_spawner/random when it's first created.
+// To define new random loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
+// Uncomment the above item_placer if you'd like to scale the items spawned by this.
+
+ABSTRACT_TYPE(/obj/loot_spawner/random)
+/obj/loot_spawner/random
+	var/tier = GIMMICK	//! what tier must be selected to select this spawner.
+	var/weight = 3		//! the weight this spawner has to be selected in its' tier, defaults to 3.
 
 	/// generic booze loot pool
 	var/static/booze_items = list(
@@ -590,53 +804,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner)
 	/// uncommon, valuable drugs, for placement in syringes
 	var/static/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","cocktail_triple","energydrink","grog")
 
-
-	// for testing, or if you want to spawn these into the world for whatever reason
-	attack_hand(mob/user as mob)
-		var/I = new/datum/loot_spawner_info()
-		src.spawn_loot(get_turf(user),I)
-		qdel(src)
-
-	// spawn_item(C,I,off_x,off_y,rot,scale_x,scale_y,layer_offset)
-	// C = Container
-	// I = The spawner info, containing where to spawn this, and tags.
-	//
-	// Optional positioning arguments:
-	// off_x/off_y = Offset of the icon (in pixels)
-	// rot = Rotation of the icon
-	// scale_x/scale_y = Scale of icon
-	// layer_offset = overall offset of layers
-	//
-	/// spawn a given item with the 'transform on pickup' component. Refer to function definition for better docs.
-	proc/spawn_item(loc,datum/loot_spawner_info/I,path,off_x=0,off_y=0, rot=0, scale_x=1,scale_y=1, layer_offset=0)
-		var/obj/lootObject
-		if (istype(loc, /obj/storage/crate))
-			var/obj/storage/container = loc
-			lootObject = new path(container)
-			container.vis_items.Add(lootObject)
-			lootObject.AddComponent(/datum/component/storage_viscontents, container = container)
-		else
-			lootObject = new path(loc)
-		lootObject.transform = lootObject.transform.Scale(scale_x,scale_y)
-		lootObject.transform = lootObject.transform.Turn(rot)
-
-		lootObject.pixel_x = I.grid_x * ((I.position_x + xSize/2-1)-I.parent?.lootGrid?.size_x/2) + off_x
-		lootObject.pixel_y = I.grid_y * ((I.position_y + ySize/2-1)-I.parent?.lootGrid?.size_y/2) + off_y
-		lootObject.layer = I.layer + layer_offset
-		lootObject.AddComponent(/datum/component/reset_transform_on_pickup)
-		return lootObject
-
-	/// Calls spawn_loot, then handles disappearing & overrides
-	proc/handle_loot(loc,datum/loot_spawner_info/I)
-		var/override = spawn_loot(loc,I)
-		qdel(src)
-		return override
-
-	/// Spawn the loot for this instance. Return TRUE if this should not take up grid squares.
-	proc/spawn_loot(loc,datum/loot_spawner_info/I)
-
-ABSTRACT_TYPE(/obj/randomloot_spawner/short)
-/obj/randomloot_spawner/short //1x1
+ABSTRACT_TYPE(/obj/loot_spawner/random/short)
+/obj/loot_spawner/random/short //1x1
 	xSize = 1
 	ySize = 1
 
@@ -663,7 +832,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 					newAmmo.amount = 3
 					newAmmo.amount_left = 3
 				else if (ispath(ammoSelected, /obj/item/ammo/bullets/smoke))
-					I.parent.place_loot_instance(C, I.position_x, I.position_y, new /obj/randomloot_spawner/short/flashbang)
+					I.parent.place_loot_instance(C, I.position_x, I.position_y, new /obj/loot_spawner/random/short/flashbang)
 					return TRUE
 				else
 					spawn_item(C,I,ammoSelected)
@@ -694,12 +863,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 				. = ..()
 
 	// GANG_CRATE_GUN:
-	makarov
-		tier = GANG_CRATE_GUN
-		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/makarov,scale_x=0.725,scale_y=0.725)
-			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 	webley
+		weight=10
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/webley,scale_x=0.65,scale_y=0.65)
@@ -800,8 +965,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,pick(drug_items),scale_x=0.75,scale_y=0.75)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
-/obj/randomloot_spawner/medium //2x1
+ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
+/obj/loot_spawner/random/medium //2x1
 	xSize = 2
 	ySize = 1
 	// GANG_CRATE_GUN:
@@ -825,7 +990,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
 	dagger
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/dagger/syndicate/specialist,rot=45,scale_x=0.55,scale_y=0.55)
+			spawn_item(C,I,/obj/item/dagger/throwing_knife/gang,rot=45,scale_x=0.55,scale_y=0.55)
 
 	// GANG_CRATE_GEAR
 	pouch
@@ -911,8 +1076,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=-4,rot=45,scale_x=0.75,scale_y=0.75)
 
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/long)
-/obj/randomloot_spawner/long //3x1
+ABSTRACT_TYPE(/obj/loot_spawner/random/long)
+/obj/loot_spawner/random/long //3x1
 	xSize = 3
 	ySize = 1
 
@@ -961,8 +1126,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=-4,off_y=0,scale_x=0.825,scale_y=0.825)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=-4,off_y=-2,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/xlong)
-/obj/randomloot_spawner/xlong //4x1:// these are rare finds
+ABSTRACT_TYPE(/obj/loot_spawner/random/xlong)
+/obj/loot_spawner/random/xlong //4x1:// these are rare finds
 	xSize = 4
 	ySize = 1
 	// GANG_CRATE_GUN
@@ -984,8 +1149,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong)
 			spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=-8)
 			spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=8)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/short_tall)
-/obj/randomloot_spawner/short_tall //1x2
+ABSTRACT_TYPE(/obj/loot_spawner/random/short_tall)
+/obj/loot_spawner/random/short_tall //1x2
 	xSize = 1
 	ySize = 2
 	// good for tall items, like booze
@@ -1047,8 +1212,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short_tall)
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/instrument/bikehorn/airhorn,scale_x=0.825,scale_y=0.825)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/medium_tall)
-/obj/randomloot_spawner/medium_tall //2x2
+ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
+/obj/loot_spawner/random/medium_tall //2x2
 	xSize = 2
 	ySize = 2
 
@@ -1142,8 +1307,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium_tall)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=4,off_y=-4,scale_x=0.825,scale_y=0.825)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=4,off_y=-6,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
-/obj/randomloot_spawner/long_tall //3x2
+ABSTRACT_TYPE(/obj/loot_spawner/random/long_tall)
+/obj/loot_spawner/random/long_tall //3x2
 	xSize = 3
 	ySize = 2
 
@@ -1169,12 +1334,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
 			A.amount = 4
 			A.amount_left = 4
 
-	/*draco
+	draco
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/draco,off_x=-7,scale_x=0.8,scale_y=0.8)
 			//no mags for you! that would be crazy!
-	*/ // disabled until recoil is in. boo hoo
+
 	greasegun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1220,8 +1385,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
 			spawn_item(C,I,/obj/item/device/light/zippo/syndicate,6,0,scale_x=0.85,scale_y=0.85)
 
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
-/obj/randomloot_spawner/xlong_tall //4x2, these are INCREDIBLY rare and will take up the majority of a crate. can probably be a lil crazy
+ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
+/obj/loot_spawner/random/xlong_tall //4x2, these are INCREDIBLY rare and will take up the majority of a crate. can probably be a lil crazy
 	xSize = 4
 	ySize = 2
 

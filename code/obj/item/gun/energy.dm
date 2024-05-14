@@ -8,6 +8,10 @@ TYPEINFO(/obj/item/gun/energy)
 	m_amt = 2000
 	g_amt = 1000
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
+	recoil_inaccuracy_max = 0 //lasers probably dont shudder as you shoot them
+	icon_recoil_enabled = FALSE // same, this is probably better to visualize inaccuracy anyway
+	camera_recoil_enabled = FALSE // no camera recoil on tasers etc please
+
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
 	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
@@ -248,6 +252,8 @@ TYPEINFO(/obj/item/gun/energy)
 		projectiles = list(current_projectile)
 		..()
 
+/obj/item/gun/energy/phaser_gun/extended_mag
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 
 TYPEINFO(/obj/item/gun/energy/phaser_small)
 	mats = 20
@@ -577,6 +583,8 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	force = 6
 	desc = "I think it stands for Banned For Griefing?"
 	cell_type = /obj/item/ammo/power_cell/high_power
+	recoil_strength = 20
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new/datum/projectile/bfg)
@@ -882,6 +890,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5
 	muzzle_flash = "muzzle_flash_bluezap"
+	recoil_strength = 20
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
@@ -1283,7 +1293,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
-		assign_name(M)
+		src.assign_name(M)
 
 		..()
 
@@ -1293,25 +1303,27 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
+			src.assign_name(user)
 		..()
-
 
 	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
-		else
+		if (owner_prints)
 			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+		else
+			src.assign_name(user)
+		..()
+
 
 	proc/assign_name(var/mob/M)
+		if (owner_prints)
+			return
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
+				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. You are now the owner!"))
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
@@ -1354,26 +1366,31 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, 'sound/vox/detain.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
 					playsound(M, 'sound/vox/exterminate.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, 'sound/vox/smoke.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
 					playsound(M, 'sound/vox/sleep.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
 					playsound(M, 'sound/vox/hot.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("bigshot","highexplosive","he")
 					set_current_projectile(projectiles["bigshot"])
 					current_projectile.cost = 170
@@ -1381,21 +1398,22 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					playsound(M, 'sound/vox/high.ogg', 50)
 					SPAWN(0.4 SECONDS)
 						playsound(M, 'sound/vox/explosive.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, 'sound/vox/clown.ogg', 30)
+					src.toggle_recoil(FALSE)
 				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, 'sound/vox/push.ogg', 50)
-
-					/datum/projectile/energy_bolt/pulse
+					src.toggle_recoil(FALSE)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
 					random_burn_damage(M, 50)
-					M.changeStatus("weakened", 4 SECONDS)
+					M.changeStatus("knockdown", 4 SECONDS)
 					elecflash(src,power=2)
 					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
 					return
@@ -1420,6 +1438,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					return 0
 				else
 					return 1
+
+	proc/toggle_recoil(on)
+		if(on)
+			recoil_inaccuracy_max = 5
+			icon_recoil_enabled = TRUE
+			camera_recoil_enabled = TRUE
+		else
+			recoil_inaccuracy_max = 0
+			icon_recoil_enabled = FALSE
+			camera_recoil_enabled = FALSE
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
@@ -1490,7 +1518,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			// if (!fingerprints_can_shoot(user))
 			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
-			// 	user.changeStatus("weakened", 4 SECONDS)
+			// 	user.changeStatus("knockdown", 4 SECONDS)
 			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
@@ -1525,7 +1553,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			continue
 		if (GET_DIST(user,F) > range)
 			continue
-		fireflash(F,0.5,2400)
+		fireflash(F, 0.5, 2400, chemfire = CHEM_FIRE_RED)
 
 // Pulse Rifle //
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
@@ -1610,6 +1638,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	two_handed = 1
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/howitzer
+	camera_recoil_enabled = TRUE
+	recoil_strength = 50
 
 	New()
 		..()
@@ -1760,6 +1790,8 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
+	camera_recoil_enabled = TRUE
+	recoil_strength = 20
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY

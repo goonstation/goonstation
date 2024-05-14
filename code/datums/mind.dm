@@ -5,7 +5,10 @@ datum/mind
 	var/mob/current
 	var/mob/virtual
 
+	/// stores valuable things about the mind's memory
 	var/memory
+	/// stores custom notes set by the player
+	var/cust_notes
 	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
@@ -188,8 +191,12 @@ datum/mind
 				src.dynamic_memories -= dynamic_memory
 
 	proc/show_memory(mob/recipient)
-		var/output = "<B>[current.real_name]'s Memory</B><HR>"
+		var/output = "<B>[current.real_name]'s Memory</B><br>"
 		output += memory
+
+		if (src.cust_notes)
+			output += "<HR><B>Notes:</B><br>"
+			output += replacetext(src.cust_notes, "\n", "<br>")
 
 		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
 			output += dynamic_memory.memory_text
@@ -207,7 +214,7 @@ datum/mind
 		if (master?.current)
 			output += "<br><b>Your master:</b> [master.current.real_name]"
 
-		recipient.Browse(output,"window=memory;title=Memory")
+		tgui_message(recipient, output, "Notes")
 
 	proc/set_miranda(new_text)
 		miranda = new_text
@@ -321,7 +328,7 @@ datum/mind
 		if (!antagonist_role)
 			return FALSE
 		if (antagonist_role.faction)
-			antagonist_role.owner.current.faction &= ~antagonist_role.faction
+			antagonist_role.owner.current.faction -= antagonist_role.faction
 		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		if (!length(src.antagonists) && src.special_role == antagonist_role.id)

@@ -155,7 +155,12 @@ proc/is_music_playing()
 				show_other_key = TRUE
 			boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration_human"]])")]")
 		C.tgui_panel?.play_music(data["file"], extra_music_data)
-		boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+		if (!adminC || !(adminC.stealth && !adminC.fakekey))
+			// Stealthed admins won't show the "now playing music" message,
+			// for added ability to be spooky.
+			if (remote_music_announcements)
+				boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
+			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 	if (adminC)
 		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
@@ -243,21 +248,26 @@ proc/is_music_playing()
 	var/video = input("Input the Youtube video information\nEither the full URL e.g. https://www.youtube.com/watch?v=145RCdUwAxM\nOr just the video ID e.g. 145RCdUwAxM", "Play Youtube Audio") as null|text
 	if (!video)
 		return
+	play_youtube_remote_url(src.mob, video)
 
+
+/proc/play_youtube_remote_url(mob/M, video_url)
+	message_admins(SPAN_NOTICE("[key_name(M)] started loading remote music: [video_url]"))
 	try
 		var/datum/apiRoute/remoteMusic/playRemoteMusic = new
-		playRemoteMusic.buildBody(video, roundId, src.ckey)
+		playRemoteMusic.buildBody(video_url, roundId, M.ckey)
 		apiHandler.queryAPI(playRemoteMusic)
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
-		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
+		message_admins(SPAN_NOTICE("Error returned from youtube server thing: [error.message]."))
+		boutput(M, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
 		return
 
 	// prevent radio station from interrupting us
 	// Wire note: This essentially means "extend the duration by the time we think it will take the API to download the song and get back to us"
-	EXTEND_COOLDOWN(global, "music", 30 SECONDS)
+	EXTEND_COOLDOWN(global, "music", 60 SECONDS)
 
-	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
+	boutput(M, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
 
 /** Send a dectalk HTTPS URL to the tgui panel
  *

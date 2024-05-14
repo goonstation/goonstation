@@ -118,7 +118,9 @@
 		return
 	#endif
 
-	if(D != "GLOB")
+	if (D == world)
+		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on world")
+	else if (D != "GLOB")
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on [D]: [D.type] [istype(D, /atom) ? "at [D:x], [D:y], [D:z]" : ""]")
 	else
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
@@ -139,6 +141,8 @@
 		#endif
 	if(D == "GLOB")
 		title = "Global Variables"
+	else if (D == world)
+		title = "World Variables"
 	else
 		title = "[D][src.holder.level >= LEVEL_ADMIN ? " (\ref[D])" : ""] = [D.type]"
 

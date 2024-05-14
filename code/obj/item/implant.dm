@@ -41,7 +41,7 @@ THROWING DARTS
 		if (uses_radio)
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, pda_alert_frequency)
 		if (ismob(src.loc))
 			src.implanted(src.loc)
 
@@ -67,10 +67,10 @@ THROWING DARTS
 		owner = M
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			H.implant?.Add(src)
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
-			C.implants.Add(src)
+			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()
@@ -527,13 +527,13 @@ THROWING DARTS
 
 		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 			H.visible_message(SPAN_ALERT("<b>[H] resists the counter-revolutionary implant!</b>"))
-			H.changeStatus("weakened", 1 SECOND)
+			H.changeStatus("knockdown", 1 SECOND)
 			H.force_laydown_standup()
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
 
 		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1, 1, 0)
-			H.changeStatus("weakened", 1 SECOND)
+			H.changeStatus("knockdown", 1 SECOND)
 			H.setStatus("derevving")
 			H.force_laydown_standup()
 			H.emote("scream")
@@ -546,7 +546,7 @@ THROWING DARTS
 		if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 			if (H.health < 0)
-				H.changeStatus("paralysis", 5 SECONDS)
+				H.changeStatus("unconscious", 5 SECONDS)
 				H.changeStatus("newcause", 5 SECONDS)
 				H.delStatus("derevving")
 				H.force_laydown_standup()
@@ -720,7 +720,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		if (istype(M))
-			M.faction &= ~FACTION_BOTANY
+			M.faction -= FACTION_BOTANY
 
 	do_effect(power)
 		// enjoy your wasps
@@ -808,7 +808,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 10 SECONDS)
+		M.changeStatus("knockdown", 10 SECONDS)
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -974,6 +974,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		leaves_wound = FALSE
 		var/barbed = FALSE
 		var/pull_out_name = ""
+
+		proc/on_pull_out(mob/living/puller)
+			return
 
 		on_life(mult)
 			. = ..()
@@ -1382,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				sleep(3 SECONDS)
 				if (H && src)
 					H.emote("faint")
-					H.changeStatus("paralysis", 10 SECONDS)
+					H.changeStatus("unconscious", 10 SECONDS)
 					H.losebreath += 5
 					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
 
@@ -1527,7 +1530,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implant/artifact/wizard/wizard_gimmick
 	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
-										 		/datum/mutantrace/pug)
+										 		/datum/mutantrace/pug, /datum/mutantrace/cat/bingus)
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -2014,6 +2017,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null
+	recoil_strength = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/implanter)
@@ -2140,15 +2144,19 @@ TYPEINFO(/obj/item/gun/implanter)
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M) && prob(5))
-			var/mob/living/carbon/human/H = M
+		if (istype(hit_thing, /obj/item/reagent_containers/balloon))
+			var/obj/item/reagent_containers/balloon/balloon = hit_thing
+			balloon.smash()
+
+		else if (ishuman(hit_thing) && prob(5))
+			var/mob/living/carbon/human/H = hit_thing
 			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			random_brute_damage(M, 1)
-			src.implanted(M)
+			random_brute_damage(H, 1)
+			src.implanted(H)
 
 	attack_hand(mob/user)
 		src.pixel_x = 0
@@ -2168,14 +2176,14 @@ TYPEINFO(/obj/item/gun/implanter)
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(hit_thing))
+			var/mob/living/carbon/human/H = hit_thing
 			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
-			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
-			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
-			src.implanted(M)
+			H.changeStatus("knockdown", 2 SECONDS)
+			random_brute_damage(H, 20)//if it can get in you, it probably doesn't give a damn about your armor
+			take_bleeding_damage(H, null, 10, DAMAGE_CUT)
+			src.implanted(H)

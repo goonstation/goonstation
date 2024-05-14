@@ -40,7 +40,7 @@
 
 /obj/item/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.getStatusDuration("paralysis") || !isalive(usr) || usr.restrained())
+	if (usr.getStatusDuration("unconscious") || !isalive(usr) || usr.restrained())
 		return
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
@@ -51,11 +51,11 @@
 			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
-			attack_self(src.loc)
+			src.AttackSelf(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					src.AttackSelf(M)
 	return
 
 ////////////////////////////////////////////////////// Staves /////////////////////////////////////////////////////
@@ -91,7 +91,7 @@
 		switch (severity)
 			if (0)
 				affected_mob.visible_message(SPAN_ALERT("[affected_mob] is knocked off-balance by the curse upon [src]!"))
-				affected_mob.do_disorient(30, weakened = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
+				affected_mob.do_disorient(30, knockdown = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 2
 				affected_mob.take_brain_damage(2)
 
@@ -101,7 +101,7 @@
 				if (prob(50))
 					affected_mob.emote("scream")
 
-				affected_mob.do_disorient(80, weakened = 5 SECONDS, stunned = 0, paralysis = 2 SECONDS, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
+				affected_mob.do_disorient(80, knockdown = 5 SECONDS, stunned = 0, unconscious = 2 SECONDS, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 10
 				affected_mob.take_brain_damage(6)
 
@@ -110,7 +110,7 @@
 				affected_mob.visible_message(SPAN_ALERT("The curse upon [src] rebukes [affected_mob]!"))
 				boutput(affected_mob, SPAN_ALERT("Horrible visions of depravity and terror flood your mind!"))
 				affected_mob.emote("scream")
-				affected_mob.changeStatus("paralysis", 8 SECONDS)
+				affected_mob.changeStatus("unconscious", 8 SECONDS)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.stuttering += 20
 				affected_mob.take_brain_damage(25)
@@ -306,7 +306,7 @@
 		if (target.bioHolder?.HasEffect("resist_electric"))
 			return
 		else
-			target.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
+			target.do_disorient(stamina_damage = 0, knockdown = 0, stunned = 0, disorient = 20)
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"

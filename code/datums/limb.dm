@@ -46,6 +46,9 @@
 			return
 		target.Attackhand(user, params, location, control)
 
+	proc/attack_self(mob/user)
+		return
+
 	proc/harm(mob/living/target, var/mob/living/user)
 		if (special_next)
 			if(!user || !target)
@@ -231,7 +234,7 @@
 			ON_COOLDOWN(src, "[src] reload", src.reload_time)
 
 	proc/shoot_range(atom/target, var/mob/user, params)
-		shoot_projectile_ST_pixel_spread(user, proj, target, spread_angle = src.spread_angle)
+		shoot_projectile_ST_pixel_spread(user, proj, target, spread_angle = src.spread_angle, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (src.muzzle_flash)
 			if (isturf(user.loc))
 				var/turf/origin = user.loc
@@ -240,7 +243,7 @@
 
 	proc/shoot_pointblank(atom/target, var/mob/user)
 		for (var/i = 0; i < proj.shot_number; i++)
-			var/obj/projectile/P = initialize_projectile_pixel_spread(user, proj, target, 0, 0)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(user, proj, target, 0, 0, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 			if (!P)
 				return FALSE
 			if(BOUNDS_DIST(user, target) == 0)
@@ -251,6 +254,9 @@
 			else
 				P.launch()
 		user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
+
+	proc/alter_projectile(var/obj/projectile/P)
+		return
 
 	attack_hand(atom/target, mob/user, var/reach, params, location, control)
 		return
@@ -297,6 +303,21 @@
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
 
+
+	cannon
+		proj = new /datum/projectile/bullet/cannon
+		shots = 1
+		current_shots = 1
+		cooldown = 3 SECONDS
+		reload_time = 20 SECONDS
+		muzzle_flash = "muzzle_flash_launch"
+
+	clock
+		proj = new /datum/projectile/bullet/nine_mm_NATO/auto
+		shots = 16
+		current_shots = 16
+		reload_time = 60 SECONDS
+
 	smg
 		proj = new/datum/projectile/bullet/bullet_9mm/smg
 		shots = 2
@@ -312,6 +333,28 @@
 		current_shots = 1
 		cooldown = 5 SECONDS
 		reload_time = 5 SECONDS
+
+	minigun
+		proj = new/datum/projectile/bullet/minigun
+		shots = 10
+		current_shots = 10
+		cooldown = 0.1 SECONDS
+		reload_time = 10 SECONDS
+		muzzle_flash = "muzzle_flash"
+
+		New()
+			. = ..()
+			var/datum/projectile/bullet/B = proj
+			B.shot_number = 10
+
+
+	mrl
+		proj = new /datum/projectile/bullet/homing/mrl
+		shots = 6
+		current_shots = 6
+		cooldown = 3 SECONDS
+		reload_time = 120 SECONDS
+		muzzle_flash = "muzzle_flash"
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
@@ -341,6 +384,13 @@
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
 		spread_angle = 0
+
+	striker
+		proj = new /datum/projectile/special/spreader/uniform_burst/bird12
+		shots = 7
+		current_shots = 7
+		cooldown = 2 SECONDS
+		reload_time = 15 SECONDS
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
@@ -424,6 +474,85 @@
 		proj_shot_sound = 'sound/voice/screams/monkey_scream.ogg'
 		proj_hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 		proj_name = "monkey"
+
+/datum/limb/gun/fluid
+	proj = new/datum/projectile/special/shotchem
+
+	var/chem_volume = 40
+	var/initial_reagents = list()
+	var/initial_gas_mixture = list()
+	var/lit = TRUE
+	var/base_temperature = 1000
+
+	alter_projectile(var/obj/projectile/P)
+		if(!P.proj_data)
+			return
+
+		var/list/P_special_data = P.special_data
+		if(!P.reagents)
+			P.create_reagents(chem_volume)
+
+		if (islist(src.initial_reagents) && length(src.initial_reagents))
+			for (var/current_id in src.initial_reagents)
+				if (!istext(current_id))
+					continue
+				var/amt = src.initial_reagents[current_id]
+				if (!isnum(amt))
+					amt = (src.chem_volume / length(src.initial_reagents)) // should put an even amount of each?
+				if (isnum(amt))
+					P.reagents.add_reagent(current_id, amt)
+
+		var/datum/gas_mixture/airgas = new /datum/gas_mixture
+		for(var/gas in src.initial_gas_mixture)
+			switch(gas)
+				if("oxygen")
+					airgas.oxygen = initial_gas_mixture[gas]
+				if("toxins")
+					airgas.toxins = initial_gas_mixture[gas]
+				if("nitrogen")
+					airgas.nitrogen = initial_gas_mixture[gas]
+
+		P_special_data["proj_color"] = P.reagents.get_average_color()
+		P_special_data["IS_LIT"] = src.lit
+		P_special_data["burn_temp"] = src.base_temperature
+
+
+		airgas.volume = 1
+		if(src.lit)
+			airgas.temperature = P_special_data["burn_temp"]
+
+		P_special_data["airgas"] = airgas
+		P_special_data["speed_mult"] = 0.6
+		P_special_data["temp_pct_loss_atom"] = 0.02 // keep the heat, more or less
+
+/datum/limb/gun/fluid/flamethrower
+	shots = 4
+	current_shots = 4
+	cooldown = 2 SECONDS
+	reload_time = 15 SECONDS
+
+	var/mode = 0 //FLAMER_MODE_SINGLE
+	initial_reagents = list("napalm_goo"=40)
+	initial_gas_mixture = list("oxygen"=0.62)
+
+	alter_projectile(var/obj/projectile/P)
+		. = ..()
+
+		var/list/P_special_data = P.special_data
+		switch(mode)
+			if(0)
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.15
+			if(1)
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.20
+			if(2)
+				P_special_data["speed_mult"] = 1
+				P_special_data["chem_pct_app_tile"] = 0.1
+			else //default to backtank??
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.15
+
 
 /datum/limb/mouth
 	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
@@ -512,7 +641,7 @@
 			if (isliving(target) && !issilicon(target))
 				var/mob/living/victim = target
 				//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, unconscious = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
 					//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
 					ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
 				//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
@@ -835,7 +964,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/brullbar
@@ -1158,7 +1287,7 @@
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
 
 			msgs.damage = rand(1,9)
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 			target.stuttering += 1
 
 

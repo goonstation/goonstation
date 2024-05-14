@@ -27,7 +27,6 @@ var/datum/score_tracker/score_tracker
 	var/final_score_civ = 0
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
-	var/tickets_text = null
 	var/mob/richest_escapee = null
 	var/richest_total = 0
 	var/mob/most_damaged_escapee = null
@@ -372,45 +371,7 @@ var/datum/score_tracker/score_tracker
 				. += paper.info ? paper.info : "<BR><BR>"
 		return jointext(., "")
 
-/mob/proc/showtickets()
-	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
+/mob/proc/show_inspector_report()
+	if(!length(score_tracker.inspector_report)) return
 
-	if (!score_tracker.tickets_text)
-		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
-
-		score_tracker.tickets_text = score_tracker.inspector_report
-
-		score_tracker.tickets_text += {"<B>Tickets</B><BR><HR>"}
-
-		if(data_core.tickets.len)
-			var/list/people_with_tickets = list()
-			for (var/datum/ticket/T in data_core.tickets)
-				people_with_tickets |= T.target
-
-			for(var/N in people_with_tickets)
-				score_tracker.tickets_text += "<b>[N]</b><br><br>"
-				for(var/datum/ticket/T in data_core.tickets)
-					if(T.target == N)
-						score_tracker.tickets_text += "[T.text]<br>"
-			score_tracker.tickets_text += "<br>"
-		else
-			score_tracker.tickets_text += "No tickets were issued!<br><br>"
-
-		score_tracker.tickets_text += {"<B>Fines</B><BR><HR>"}
-
-		if(data_core.fines.len)
-			var/list/people_with_fines = list()
-			for (var/datum/fine/F in data_core.fines)
-				people_with_fines |= F.target
-
-			for(var/N in people_with_fines)
-				score_tracker.tickets_text += "<b>[N]</b><br><br>"
-				for(var/datum/fine/F in data_core.fines)
-					if(F.target == N)
-						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
-		else
-			score_tracker.tickets_text += "No fines were issued!<br><br>"
-		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
-
-	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
-	return
+	src.Browse(score_tracker.inspector_report, "window=inspector;size=500x650")

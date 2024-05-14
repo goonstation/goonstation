@@ -60,6 +60,7 @@
 			comms_frequency = rand(1360,1420)
 
 		mode.frequencies_used += comms_frequency
+		protected_frequencies += comms_frequency
 
 
 	proc/accept_initial_players(var/list/players)

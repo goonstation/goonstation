@@ -67,7 +67,7 @@
 	dir = 10
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aT" = (
@@ -1448,7 +1448,7 @@
 /area/tech_outpost)
 "sp" = (
 /obj/table/reinforced/auto,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -2820,9 +2820,10 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/security)
 "AV" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/noGenerate)
 "AY" = (
 /obj/cable{
@@ -3955,7 +3956,7 @@
 	pixel_x = -4;
 	pixel_y = 30;
 	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni)
 	},
 /obj/item/paper/martian_manifest{
 	rand_pos = 1
@@ -4148,7 +4149,7 @@
 /area/mining/refinery)
 "JG" = (
 /obj/rack,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "JI" = (
@@ -5051,7 +5052,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "PQ" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
 "PS" = (

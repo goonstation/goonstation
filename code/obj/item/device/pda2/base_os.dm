@@ -534,7 +534,7 @@
 
 
 					if("message")
-						if(src.message_last + 20 > world.time) //Message sending delay
+						if(src.message_last + 20 > TIME) //Message sending delay
 							return
 
 						//var/obj/item/device/pda2/P = locate(href_list["target"])
@@ -561,6 +561,13 @@
 							src.master.add_fingerprint(usr)
 							return
 
+					if("ack")
+						if(src.message_last + 20 > TIME) //Message sending delay
+							return
+						src.CrisisAck(href_list["alert_group"], href_list["caller"], href_list["noreply"])
+						src.master.add_fingerprint(usr)
+						return
+
 					if("rename")
 						var/datum/computer/file/F = locate(href_list["target"])
 						if(!F || !istype(F))
@@ -577,7 +584,7 @@
 						F.name = capitalize(lowertext(t))
 
 					if("send_file") //Give a file send request thing for current copied file.
-						if(src.message_last + 20 > world.time) //File sending delay.
+						if(src.message_last + 20 > TIME) //File sending delay.
 							return
 
 						src.SendFile(href_list["target"], href_list["group"])
@@ -772,7 +779,7 @@
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
 
-			if(signal.encryption) return
+			if(signal.encryption && signal.encryption != "GDFTHR+\ref[pda]") return
 
 			if(signal.data["address_1"] && signal.data["address_1"] != src.master.net_id)
 				if((signal.data["address_1"] == "ping") && signal.data["sender"])
@@ -877,7 +884,11 @@
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
-							displayMessage += " to [jointext(groupAddress,", ")]"
+							if (MGA_CRISIS in groupAddress)
+								// first other group only sorry
+								displayMessage += " [uppertext((groupAddress[1]))] CRISIS \[<a href='byond://?src=\ref[src];input=ack;alert_group=[groupAddress[1]];responder=[src.master.owner];caller=[signal.data["sender"]];noreply=[signal.data["noreply"]]'>ACK</a>\]"
+							else
+								displayMessage += " to [jointext(groupAddress,", ")]"
 						else
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
@@ -1051,7 +1062,7 @@
 				signal.data["address_1"] = target_id
 			src.post_signal(signal)
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
-			src.message_last = world.time
+			src.message_last = TIME
 
 			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
@@ -1085,7 +1096,7 @@
 			signal.data["sender_assignment"] = src.master.ownerAssignment
 			signal.data["address_1"] = target_id
 			src.post_signal(signal)
-			src.message_last = world.time
+			src.message_last = TIME
 
 			src.master.display_message("<b>Sent file to [target_name]:</b> [clipfile.name]")
 
@@ -1139,7 +1150,7 @@
 			signalinvite.data["sender"] = src.master.net_id
 			signalinvite.data["group"] = group
 			src.post_signal(signalinvite)
-			src.message_last = world.time
+			src.message_last = TIME
 
 		/// check if the message is one of the fileshare passkeys, then try to send them the file
 		proc/CheckForPasskey(var/message, var/sender)
@@ -1167,6 +1178,43 @@
 				return
 			if(!(sender in src.all_callers))
 				src.all_callers[address] = sender
+
+		/// Generates and sends the ACK response to a crisis alert
+		/// * group_id: The group to reply to
+		/// * caller_id: The PDA ID who called the alert
+		/// * noreply: `noreply` data from alert message signal
+		proc/CrisisAck(group_id, caller_id, noreply)
+			var/message = "ACK: Responding to crisis alert!"
+
+			var/caller_reply = TRUE
+			if (noreply == "1") // comes in through href, so it's a string
+				caller_reply = FALSE
+
+ 			// always send group alert
+			var/datum/signal/group_signal = get_free_signal()
+			group_signal.data["command"] = "text_message"
+			group_signal.data["message"] = message
+			group_signal.data["sender_name"] = src.master.owner
+			group_signal.data["sender_assignment"] = src.master.ownerAssignment
+			group_signal.data["group"] = group_id
+			src.post_signal(group_signal)
+
+			var/caller_name = null
+			if(caller_reply && caller_id)
+				if((caller_id in src.detected_pdas))
+					caller_name = detected_pdas[caller_id]
+
+					var/datum/signal/caller_signal = get_free_signal()
+					caller_signal.data["command"] = "text_message"
+					caller_signal.data["message"] = message
+					caller_signal.data["sender_name"] = src.master.owner
+					caller_signal.data["sender_assignment"] = src.master.ownerAssignment
+					caller_signal.data["address_1"] = caller_id
+					src.post_signal(caller_signal)
+
+			src.message_last = TIME
+			src.master.display_message("<b>To [group_id][caller_name ? ", [caller_name]" : ""]:</b> [message]")
+			src.message_note += "<i><b>&rarr; To [group_id][caller_name ? ", [caller_name]" : ""]:</b></i><br>[message]<br>"
 
 #undef RECENT_CALL_COOLDOWN
 #undef MODE_MAINMENU

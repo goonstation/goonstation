@@ -47,61 +47,10 @@
 		return
 	rate_limit_counter++
 	switch(action)
-		if("addPoll") //TODO server specific
+		if ("addPoll")
 			USR_ADMIN_ONLY
-
-			var/question = tgui_input_text(ui.user, "Enter the poll question", "Add Poll", null, MAX_MESSAGE_LEN)
-			question = copytext(html_encode(question), 1, MAX_MESSAGE_LEN)
-			if (!question) return
-
-			var/list/options = list()
-			var/option = TRUE
-			while(option)
-				option = tgui_input_text(ui.user, "Enter a poll option. Press Cancel to stop adding new options", "Add Poll", null, MAX_MESSAGE_LEN)
-				option = copytext(html_encode(option), 1, MAX_MESSAGE_LEN)
-				if (option)
-					options += option
-			if (!options) return
-
-			var/multiple_choice = tgui_alert(ui.user, "Multiple choice?", "Add Poll", list("Yes", "No"))
-			if (multiple_choice == "Yes")
-				multiple_choice = TRUE
-			else
-				multiple_choice = FALSE
-
-			var/servers = pick_servers(ui.user)
-			if (servers == POLL_ACTION_CANCEL) return // user canceled
-			var/expires_at = pick_expiration_date(ui.user)
-			if (expires_at == POLL_ACTION_CANCEL) return // user canceled
-
-			var/list/poll
-			try
-				var/datum/apiRoute/polls/add/addPoll = new
-				addPoll.buildBody(
-					ui.user.ckey,
-					question,
-					multiple_choice,
-					expires_at,
-					options,
-					servers
-				)
-				var/datum/apiModel/Tracked/PollResource/pollResource = apiHandler.queryAPI(addPoll)
-				poll = pollResource.ToList()
-			catch (var/exception/e)
-				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, null, "Failed to add a poll: [error.message]")
-				return FALSE
-
-			// Add this poll to our cached data
-			poll_manager.poll_data.Insert(1, list(poll))
-
-			var/alert_the_players = tgui_alert(ui.user, "Alert the players?", "Add Poll", list("Yes", "No"))
-			if (alert_the_players == "Yes")
-				// alert the players of the new poll!
-				for (var/client/C in clients)
-					boutput(C, SPAN_NOTICE("A new poll is now available. <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>"))
-				playsound_global(world, 'sound/misc/prayerchime.ogg', 100, channel = VOLUME_CHANNEL_MENTORPM)
-
+			var/datum/poll_editor_panel/editor = new(ui.user)
+			editor.ui_interact(ui.user)
 			. = TRUE
 
 		if ("deletePoll")

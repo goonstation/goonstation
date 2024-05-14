@@ -14,7 +14,7 @@
 	New()
 		..()
 		console_location = get_area(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -65,7 +65,7 @@
 				src.scan = id_card
 				src.Attackhand(user) // refresh console
 			else
-				boutput(user, SPAN_ALERT("Pin number incorrect."))
+				boutput(user, SPAN_ALERT("PIN incorrect."))
 				src.scan = null
 		else
 			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -228,7 +228,7 @@
 						src.scan = id_card
 						src.Attackhand(usr) // refresh console
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))

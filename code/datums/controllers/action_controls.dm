@@ -373,6 +373,9 @@ var/datum/action_controller/actions
 	/// Is the icon also on the target if we have one? if this is TRUE, make sure the target only handles overlays by using the UpdateOverlays proc.
 	var/icon_on_target = FALSE
 
+	/// Apply a an outline filter to the icon to be displayed. Default: TRUE
+	var/apply_outline_filter = TRUE
+
 	onStart()
 		..()
 		if (icon && owner)
@@ -384,16 +387,17 @@ var/datum/action_controller/actions
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
 			icon_image.layer = 10
-			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			border.UpdateOverlays(icon_image, "action_icon")
+			if (apply_outline_filter)
+				icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+			border.AddOverlays(icon_image, "action_icon")
 			if (icon_on_target && place_to_put_bar)
-				target_border.UpdateOverlays(icon_image, "action_icon")
+				target_border.AddOverlays(icon_image, "action_icon")
 
 	onDelete()
 		if (icon_on_target && place_to_put_bar && target_border)
-			target_border.UpdateOverlays(null, "action_icon")
+			target_border.ClearSpecificOverlays("action_icon")
 		if (border)
-			border.UpdateOverlays(null, "action_icon")
+			border.ClearSpecificOverlays("action_icon")
 		if (icon_image)
 			qdel(icon_image)
 		..()

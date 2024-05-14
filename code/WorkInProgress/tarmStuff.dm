@@ -175,7 +175,6 @@
 	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
-	var/last_shot_time = 0
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)
@@ -191,10 +190,8 @@
 		. = ..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
 		shotcount = 0
-		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
-		last_shot_time = TIME
+		. = ..()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
@@ -377,7 +374,9 @@
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/deagle50cal
-
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new default_magazine

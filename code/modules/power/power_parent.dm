@@ -149,7 +149,7 @@ var/makingpowernetssince = 0
 	makingpowernets = 0
 
 /client/proc/fix_powernets()
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set desc = "Attempts for fix the powernets."
 	set name = "Fix powernets"
 	ADMIN_ONLY

@@ -61,7 +61,7 @@ var/global/datum/sort_instance/sortInstance = new()
 	var/list/L
 
 	/// The comparator proc-reference
-	var/cmp = /proc/cmp_numeric_asc
+	var/cmp = GLOBAL_PROC_REF(cmp_numeric_asc)
 
 	/// whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
 	var/associative = 0
@@ -145,7 +145,8 @@ var/global/datum/sort_instance/sortInstance = new()
 	if(start <= lo)
 		start = lo + 1
 
-	for( , start < hi, ++start)
+	var/list/L = src.L
+	for(start in start to hi - 1)
 		var/pivot = fetchElement(L,start)
 
 		//set left and right to the index where pivot belongs
@@ -181,6 +182,7 @@ var/global/datum/sort_instance/sortInstance = new()
 	if(runHi >= hi)
 		return 1
 
+	var/list/L = src.L
 	var/last = fetchElement(L,lo)
 	var/current = fetchElement(L,runHi++)
 
@@ -294,6 +296,7 @@ var/global/datum/sort_instance/sortInstance = new()
  * Returns the index at which to insert element 'key'
  */
 /datum/sort_instance/proc/gallopLeft(key, base, len, hint)
+	var/list/L = src.L
 	var/lastOffset = 0
 	var/offset = 1
 	if(call(cmp)(key, fetchElement(L,base+hint)) > 0)
@@ -354,6 +357,7 @@ var/global/datum/sort_instance/sortInstance = new()
  * @return the int k,  0 <= k <= n such that `a[b + k - 1] <= key < a[b + k]`
  */
 /datum/sort_instance/proc/gallopRight(key, base, len, hint)
+	var/list/L = src.L
 	var/offset = 1
 	var/lastOffset = 0
 	if(call(cmp)(key, fetchElement(L,base+hint)) < 0) //key <= L[base+hint]
@@ -396,6 +400,7 @@ var/global/datum/sort_instance/sortInstance = new()
 /// Merges two adjacent runs in-place in a stable fashion.
 /// For performance this method should only be called when len1 <= len2!
 /datum/sort_instance/proc/mergeLo(base1, len1, base2, len2)
+	var/list/L = src.L
 	var/cursor1 = base1
 	var/cursor2 = base2
 
@@ -484,6 +489,7 @@ var/global/datum/sort_instance/sortInstance = new()
 		move_element(L, cursor1, cursor2+len2)
 
 /datum/sort_instance/proc/mergeHi(base1, len1, base2, len2)
+	var/list/L = src.L
 	var/cursor1 = base1 + len1 - 1 //start at end of sublists
 	var/cursor2 = base2 + len2 - 1
 

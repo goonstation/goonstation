@@ -207,6 +207,7 @@
 /client/proc/cmd_create_viewport()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport"
+	set desc = "Creates a cute little popout window to let you monitor an area, just like how AIs can."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
@@ -214,18 +215,10 @@
 	viewport.handler.listens = TRUE
 
 
-/client/proc/cmd_create_viewport_silent()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Create Silent Viewport"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	src.mob.create_viewport(VIEWPORT_ID_ADMIN_SILENT, share_planes=TRUE)
-
-
 /client/proc/cmd_create_viewport_following()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport Following"
+	set desc = "Creates a viewport that follows a selected atom."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
