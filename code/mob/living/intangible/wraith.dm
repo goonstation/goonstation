@@ -407,7 +407,7 @@
 
 	click(atom/target)
 		if (src.targeting_ability)
-			..()
+			return ..()
 		if (!density)
 			src.examine_verb(target)
 
