@@ -17034,20 +17034,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
-"brp" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "brq" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
 	dir = 4
@@ -20464,16 +20450,6 @@
 "bGc" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/science)
-"bGd" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "bGe" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -32297,16 +32273,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
-"dRD" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "dSc" = (
 /obj/stool/chair{
 	dir = 4
@@ -36285,12 +36251,6 @@
 /turf/simulated/floor/caution/corner/misc,
 /area/station/engine/ptl)
 "gFy" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -36697,19 +36657,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"gTx" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "gTZ" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -40248,16 +40195,6 @@
 /obj/item/pen,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
-"jDw" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "jDN" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -44533,15 +44470,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"mOu" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "mOM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/psychiatrist)
@@ -45504,12 +45432,6 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -45658,12 +45580,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -52438,11 +52354,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sNE" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
@@ -52455,6 +52366,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "sNO" = (
@@ -55959,13 +55871,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vnP" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -93126,7 +93031,7 @@ qZZ
 qZZ
 bOf
 bAQ
-bGd
+bAQ
 bSs
 bAR
 bSq
@@ -93709,7 +93614,7 @@ bfZ
 bfZ
 bfZ
 pCV
-brp
+aRu
 aRu
 aRu
 bvq
@@ -125092,7 +124997,7 @@ aMk
 bdy
 aSo
 aSo
-gTx
+aSo
 aSo
 aSo
 bvV
@@ -126030,7 +125935,7 @@ bDX
 bDX
 bDX
 bDX
-jDw
+bDX
 bDX
 bDX
 bDX
@@ -126941,7 +126846,7 @@ pSs
 bzL
 bzL
 bfO
-mOu
+bDX
 bHl
 bHl
 bHl
@@ -127254,7 +127159,7 @@ rAK
 rAK
 rAK
 bnq
-dRD
+bUJ
 bfO
 bnq
 bDX
