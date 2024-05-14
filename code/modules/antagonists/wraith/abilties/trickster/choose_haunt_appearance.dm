@@ -5,9 +5,6 @@
 	targeted = TRUE
 	pointCost = 0
 
-	castcheck(atom/target)
-		return ..() && istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster)
-
 	cast(atom/target)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE

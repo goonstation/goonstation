@@ -20,7 +20,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		if (max_traps)
-			desc += " You can only place up to [max_traps] trap\s at a time."
+			desc += " You can only place up to [max_traps] trap[max_trap == 1 ? "" : "s"] at a time."
 
 	allowcast()
 		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))

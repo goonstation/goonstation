@@ -1001,13 +1001,12 @@
 				localholder.updateButtons()
 
 		/// Passive cast checking. Returns TRUE if the cast can proceed.
-		/// Unlike castcheck(), this fires every update, and is currently used to gray out buttons/indicate to players that the ability is unusable.
+		/// This fires every update, and is currently only used to gray out buttons/indicate to players that the ability is unusable.
 		/// Useful for things like different point requirements or only allowing casts under certain conditions.
-		/// Actual logic to prevent the cast from firing should be done in a castcheck() override too!
+		/// Actual logic to prevent the cast from firing should be done in the cast() override too!
 		allowcast()
 			return 1
 
-		/// Active cast checking. Use this for checking target validity and the like. Returns TRUE if the cast can proceed.
 		castcheck(atom/target)
 			return 1
 

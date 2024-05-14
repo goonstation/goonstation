@@ -21,10 +21,6 @@
 		if (!istype(W))
 			return
 		var/datum/abilityHolder/wraith/AH = src.holder
-		if (src.holder.owner == target)
-			boutput(src.holder.owner, SPAN_ALERT("You try to possess yourself."))
-			boutput(src.holder.owner, SPAN_ALERT("But alas, your puppet strings are not yours to pull..."))
-			return
 		if (AH.possession_points < W.points_to_possess)
 			boutput(src.holder.owner, SPAN_ALERT("You cannot possess with only [AH.possession_points] possession power. You'll need at least [(W.points_to_possess - AH.possession_points)] more."))
 			return

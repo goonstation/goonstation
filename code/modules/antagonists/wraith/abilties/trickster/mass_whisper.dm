@@ -27,6 +27,6 @@
 			boutput(holder.owner, SPAN_ALERT("Nobody is around to hear your whispers..."))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		else
-			boutput(holder.owner, "<b>You whisper to [get_english_num(hearers)] being\s around you:</b> \"[message]\"")
+			boutput(holder.owner, "<b>You whisper to [get_english_num(hearers)] being[hearers == 1 ? "" : "s"] around you:</b> \"[message]\"")
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
 		return CAST_ATTEMPT_SUCCESS
