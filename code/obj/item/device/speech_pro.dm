@@ -33,7 +33,7 @@ TYPEINFO(/obj/item/device/speech_pro)
 	attack_self(mob/user as mob)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	proc/speak(var/string)
+	proc/speak(var/string, var/mob/user)
 		string = trimtext(sanitize(html_encode(string)))
 		var/maptext = null
 		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
@@ -46,3 +46,5 @@ TYPEINFO(/obj/item/device/speech_pro)
 			O.show_message("<span class='radio' style='color: #FFBF00;'>[SPAN_NAME("[src]")]<b> [bicon(src)] [pick("squawks",  \
 			"beeps", "boops", "says", "screeches")], </b> [SPAN_MESSAGE("\"[string]\"")]</span>",1, //Places text in the radio
 				assoc_maptext = maptext) //Places text in world
+
+		logTheThing(LOG_DEBUG, src, "[user] said [string] using [src].")
