@@ -112,18 +112,26 @@
 		if (src.corpse.r_hand)
 			qdel(src.corpse.r_hand)
 
-		if (src.try_buckle)
-			var/obj/stool/S = (locate(/obj/stool) in src.corpse.loc)
-			if (S)
-				S.buckle_in(src.corpse, src.corpse, TRUE)
-				src.corpse.dir = S.dir // Face properly
-
 		SPAWN(1)
 			for (var/obj/item/implant/health/implant as anything in src.corpse.implant)
 				qdel(implant)
 			src.corpse.implant = list()
 			for (var/obj/item/device/pda2/pda in src.corpse.contents)
 				pda.scannable = FALSE
+
+		if (src.skeletonized)
+			src.corpse.decomp_stage = DECOMP_STAGE_SKELETONIZED
+			src.corpse.set_mutantrace(/datum/mutantrace/skeleton)
+			if (prob(90))
+				src.corpse.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+				src.corpse.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+				src.corpse.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+
+		if (src.try_buckle)
+			var/obj/stool/S = (locate(/obj/stool) in src.corpse.loc)
+			if (S)
+				S.buckle_in(src.corpse, src.corpse, TRUE)
+				src.corpse.dir = S.dir // Face properly
 
 		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
 		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
@@ -145,14 +153,6 @@
 			src.corpse.disfigured = TRUE
 			src.corpse.UpdateName()
 			src.corpse.bioHolder?.AddEffect("husk")
-
-		if (src.skeletonized)
-			src.corpse.decomp_stage = DECOMP_STAGE_SKELETONIZED
-			src.corpse.set_mutantrace(/datum/mutantrace/skeleton)
-			if (prob(90))
-				src.corpse.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-				src.corpse.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-				src.corpse.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 
 		if (src.do_damage)
 			src.do_damage(src.corpse)
