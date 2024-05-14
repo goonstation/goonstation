@@ -62,6 +62,7 @@
 		qdel(src.client)
 		return
 	var/list/found
+	var/list/checkBan = null
 	for (var/i in 1 to len)
 		if (QDELETED(src.client))
 			// He got cleaned up before we were done
@@ -70,31 +71,35 @@
 		// Check for a malformed history object
 		if (!row || row.len < 3 || (!row["ckey"] || !row["address"] || !row["computer_id"]))
 			return
-		if (global.checkBan(row["ckey"], row["address"], row["computer_id"]))
+		checkBan = global.bansHandler.check(row["ckey"], row["address"], row["computer_id"])
+		if(length(checkBan))
 			found = row
 			break
-	// This fucker has a history of playing on a banned account.
-	if (found)
-		var/msg = "[key_name(src.client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
-		message_admins(msg)
-		logTheThing(LOG_ADMIN, src, "Telemetry: [msg]")
+		//Uh oh this fucker has a history of playing on a banned account!!
+	if (length(found) && found["ckey"] != src.client.ckey)
+		message_admins("[key_name(src.client)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])")
+		logTheThing(LOG_DEBUG, src.client, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])")
+		logTheThing(LOG_DIARY, src.client, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])", "debug")
 
 		//Irc message too
-		if (src.client)
+		if(client)
 			var/ircmsg[] = new()
-			ircmsg["key"] = src.client.key
-			ircmsg["name"] = stripTextMacros(src.client.mob.name)
-			ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
+			ircmsg["key"] = client.key
+			ircmsg["name"] = stripTextMacros(client.mob.name)
+			ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["address"]], CompID: [found["computer_id"]])"
 			ircbot.export_async("admin", ircmsg)
 
-		var/banData[] = new()
-		banData["ckey"] = src.client.ckey
-		banData["compID"] = (found["compID"] == "N/A" ? "N/A" : src.client.computer_id) // don't add CID if original ban doesn't have one
-		banData["akey"] = "Auto Banner"
-		banData["ip"] = (found["ip"] == "N/A" ? "N/A" : src.client.address) // don't add IP if original ban doesn't have one
-		banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
-		banData["mins"] = 0
-		addBan(banData)
+		//Add evasion ban details
+		var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+		bansHandler.addDetails(
+			ban,
+			TRUE,
+			"bot",
+			src.client.ckey,
+			isnull(found["computer_id"]) ? null : src.client.computer_id,
+			isnull(found["address"]) ? null : src.client.address
+		)
+
 
 #undef TGUI_TELEMETRY_MAX_CONNECTIONS
 #undef TGUI_TELEMETRY_RESPONSE_WINDOW
