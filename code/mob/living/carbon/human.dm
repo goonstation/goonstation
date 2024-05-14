@@ -2193,8 +2193,8 @@
 		if (SLOT_BACK)
 			if (I.c_flags & ONBACK)
 				return TRUE
-		if (SLOT_WEAR_MASK) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
-			if (!src.organHolder.head)
+		if (SLOT_WEAR_MASK)
+			if (!src.organHolder || !src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
@@ -2204,12 +2204,12 @@
 				else
 					return TRUE
 		if (SLOT_EARS)
-			if (!src.organHolder.head)
+			if (!src.organHolder || !src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
 				return TRUE
 		if (SLOT_GLASSES)
-			if (!src.organHolder.head)
+			if (!src.organHolder || !src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/glasses))
 				return TRUE
@@ -2219,7 +2219,7 @@
 			if (istype(I, /obj/item/clothing/gloves))
 				return TRUE
 		if (SLOT_HEAD)
-			if (!src.organHolder.head)
+			if (!src.organHolder || !src.organHolder.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
