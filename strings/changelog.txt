@@ -1,5 +1,8 @@
 
 (t)tue may 14 24
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Phones now announce who's calling.
 (u)Glamurio (Ryou)
 (p)18898
 (e)🆕🎨|C-Feature, C-Sprites
