@@ -2890,6 +2890,9 @@ ABSTRACT_TYPE(/datum/job/daily)
 		..()
 		if (!M)
 			return
+		if (M.l_store)
+			M.stow_in_available(M.l_store)
+		M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 		if(prob(33))
 			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 			M.set_mutantrace(morph)
@@ -2898,9 +2901,6 @@ ABSTRACT_TYPE(/datum/job/daily)
 		var/obj/item/card/id = locate() in M
 		if (id)
 			L.storage.add_contents(id, M, FALSE)
-		if (M.l_store)
-			M.stow_in_available(M.l_store)
-		M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 
 /datum/job/daily/musician
 	day = "Saturday"
