@@ -9,8 +9,11 @@
 		return ..() && istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster)
 
 	cast(atom/target)
-		..()
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/intangible/wraith/wraith_trickster/W = src.holder.owner
+		if (!istype(W))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if ((istype(target, /mob/living/carbon/human/)))
 			var/mob/living/carbon/human/H = target
 			boutput(src.holder.owner, SPAN_NOTICE("You steal [H]'s appearance for yourself."))

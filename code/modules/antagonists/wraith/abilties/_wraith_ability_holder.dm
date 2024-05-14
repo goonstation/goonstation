@@ -75,18 +75,19 @@
 			return
 		return ..()
 
-	castcheck(atom/target)
+	cast(atom/target)
+		. = ..()
 		if (ispoltergeist(src.holder.owner))
 			var/mob/living/intangible/wraith/poltergeist/P = src.holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
 				boutput(src.holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
-				return
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (iswraith(src.holder.owner))
 			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (W.forced_manifest == TRUE)
 				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
-				return
-		return TRUE
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return CAST_ATTEMPT_SUCCESS
 
 	doCooldown()
 		if (!holder)

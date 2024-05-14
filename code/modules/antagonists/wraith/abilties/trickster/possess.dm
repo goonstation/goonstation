@@ -14,11 +14,13 @@
 			return
 		return ..()
 
-	castcheck(atom/target)
-		if (!istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
-			return
+	cast(mob/target)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/intangible/wraith/wraith_trickster/W = src.holder.owner
-		var/datum/abilityHolder/wraith/AH = W.abilityHolder
+		if (!istype(W))
+			return
+		var/datum/abilityHolder/wraith/AH = src.holder
 		if (src.holder.owner == target)
 			boutput(src.holder.owner, SPAN_ALERT("You try to possess yourself."))
 			boutput(src.holder.owner, SPAN_ALERT("But alas, your puppet strings are not yours to pull..."))
@@ -38,13 +40,8 @@
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			boutput(src.holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, it instantly kicks you back into the aether!"))
 			return
-		return ..()
-
-	cast(mob/target)
-		..()
-		var/datum/abilityHolder/wraith/AH = src.holder
 		AH.possession_points = 0
-		actions.start(new/datum/action/bar/icon/trickster_possession(target), holder.owner)
+		actions.start(new/datum/action/bar/icon/trickster_possession(H), holder.owner)
 		return CAST_ATTEMPT_SUCCESS
 
 

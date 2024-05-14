@@ -9,21 +9,19 @@
 	var/in_use = FALSE
 	var/ghost_confirmation_delay = 30 SECONDS
 
-	castcheck(atom/target)
+	cast(atom/target, params)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 #ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = src.holder.owner
 		if (istype(wraith) && length(wraith.poltergeists) >= 2)
 			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
-			return
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 #endif
 		var/turf/T = get_turf(src.holder.owner)
 		if (!isturf(T) || istype(T, /turf/space))
 			boutput(src.holder.owner, SPAN_ALERT("You can't summon a poltergeist here!"))
-			return
-		return ..()
-
-	cast(atom/target, params)
-		..()
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
 		make_poltergeist(src.holder.owner, get_turf(src.holder.owner))
 		return CAST_ATTEMPT_SUCCESS
