@@ -102,7 +102,7 @@
 			src.cmd_boot(target_mob)
 
 		if ("ban")
-			src.addBanDialog(target_mob)
+			src.addBanTempDialog(target_mob)
 
 		if ("gib")
 			src.cmd_admin_gib(target_mob)
