@@ -34,7 +34,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 	var/list/obj/machinery/computer/airbr/computers = null
 
 	var/original_turf = /turf/space
-	var/floor_turf = /turf/simulated/floor/airbridge
+	var/floor_turf = /turf/simulated/floor/glassblock/transparent/cyan
 	var/wall_turf = /turf/simulated/wall/airbridge
 	var/floor_light_type = /obj/machinery/light/small/floor
 

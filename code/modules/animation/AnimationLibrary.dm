@@ -1679,7 +1679,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 
 /proc/animate_turf_slideout_cleanup(turf/T)
 	T.layer++
-	T.underlays.Cut()
+	T.reset_underlays()
 	var/obj/overlay/tile_effect/fake_fullbright/full_light = locate() in T
 	if(full_light)
 		qdel(full_light)

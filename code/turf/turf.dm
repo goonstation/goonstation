@@ -998,6 +998,12 @@ var/global/in_replace_with = 0
   var/area/AR = src.loc
   return AR.sanctuary
 
+/// used to reset turf underlays, when you are replacing a turf with some underlays on it with a new turf that has its own underlays
+/turf/proc/reset_underlays()
+	SHOULD_CALL_PARENT(TRUE)
+	src.underlays.Cut()
+	return
+
 ///turf/simulated/floor/Entered(atom/movable/A, atom/OL) //this used to run on every simulated turf (yes walls too!) -zewaka
 //	..()
 //moved step and slip functions into Carbon and Human files!

@@ -892,11 +892,16 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 /turf/simulated/floor/glassblock/large
 	icon_state = "glass_large"
 
+ABSTRACT_TYPE(/turf/simulated/floor/glassblock/transparent)
 /turf/simulated/floor/glassblock/transparent
 	icon_state = "glasstr_cyan"
 	default_material = "glass"
 
 	New()
+		src.add_space_underlay()
+		..()
+
+	proc/add_space_underlay()
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -917,7 +922,10 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
+
+	reset_underlays()
 		..()
+		src.add_space_underlay()
 
 /turf/simulated/floor/glassblock/transparent/cyan
 	icon_state = "glasstr_cyan"
