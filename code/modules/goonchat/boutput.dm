@@ -93,9 +93,6 @@
 		message["forceScroll"] = forceScroll
 	global.chat.queue_message(target, message)
 
-//Aliases for boutput
-/proc/out(target = 0, message = "", group = "")
-	boutput(target, message, group)
 
 /*
 I spent so long on this regex I don't want to get rid of it :(
