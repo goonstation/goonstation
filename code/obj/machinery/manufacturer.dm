@@ -1915,7 +1915,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
 				// Invalid thing somehow, fuck
 				src.storage.transfer_stored_item(I, src.loc)
-				playsound(src.loc, src.sound_grump, 50, 1)
 		return storage_contents
 
 	/*
