@@ -506,12 +506,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/has_physical_proximity(mob/target)
 		return (BOUNDS_DIST(src, target) == 0) && istype(src.loc, /turf)
 
+	/// Handle checking and outputting for not being close to the machine
+	proc/check_physical_proximity(mob/target)
+		if (!src.has_physical_proximity(user))
+			src.grump_message(usr, "You need to be adjacent to the fabricator to do that!", sound = FALSE)
+			return FALSE
+		return TRUE
+
 	/// Check if the target is allowed to interact with this at range. Silicons can, humans can't.
 	proc/can_use_ranged(mob/target)
 		return isAI(target) || isrobot(target)
 
-	/// Helper to play the grump with or without a grump message/sound
-	proc/grump_message(mob/target = null, var/message = null, var/sound = TRUE)
+	/// Helper to play the grump with or without a grump message/sound. Just as a note the sound is appropriate when the machine is reporting the error,
+	/// if its a grump that the player probably had to think about or find out then theres no "reason" for there to be sound
+	proc/grump_message(mob/target = null, var/message = null, var/sound = FALSE)
 		if (!isnull(message) && !isnull(target))
 			boutput(target, SPAN_ALERT(message))
 		if (sound)
@@ -521,18 +529,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Handle wire stuff first before forbidding for power loss
 		if (action == "wire")
 			if (!src.panel_open)
-				src.grump_message(usr, "The panel is closed!", sound = FALSE)
+				src.grump_message(usr, "The panel is closed!")
 				return FALSE
 
 			switch (params["action"])
 				if ("cut", "mend")
-					if (!src.has_physical_proximity(usr))
-						src.grump_message(usr, "You need physical access to manipulate the wires!", sound = FALSE)
+					if (!src.check_physical_proximity(usr))
 						return
 					if (src.try_shock(usr, 100))
 						return
 					if (!(issnippingtool(usr.equipped())))
-						src.grump_message(usr, "You need to be holding a snipping tool for that!", sound = FALSE)
+						src.grump_message(usr, "You need to be holding a snipping tool for that!")
 					else
 						if (params["action"] == "cut")
 							src.cut(usr, text2num_safe(params["wire"]))
@@ -540,7 +547,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							src.mend(usr, text2num_safe(params["wire"]))
 				if ("pulse")
 					if (!(ispulsingtool(usr.equipped()) || (src.can_use_ranged(usr))))
-						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!", sound = FALSE)
+						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!")
 						return
 					src.pulse(usr, text2num_safe(params["wire"]))
 
@@ -555,13 +562,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return
 
 		if (!src.can_use_ranged(usr) && !src.has_physical_proximity(usr))
-			src.grump_message(usr, "You need to get closer for that!")
 			return
 
 		switch(action)
 			if ("request_product")
 				if (ON_COOLDOWN(src, "product", 1 DECI SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/))
@@ -572,10 +578,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
 					return
 				if (!check_enough_materials(I))
-					src.grump_message(usr, "Insufficient usable materials to manufacture that item.")
+					src.grump_message(usr, "Insufficient usable materials to manufacture that item.", sound = TRUE)
 
 				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
-					src.grump_message(usr, "Manufacturer queue length limit reached.")
+					src.grump_message(usr, "Manufacturer queue length limit reached.", sound = TRUE)
 				else
 					src.queue += I
 					if (src.mode == MODE_READY)
@@ -590,7 +596,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (src.mode == MODE_WORKING || src.mode == MODE_HALT)
 					src.grump_message(usr, "You cannot do that while the unit is working, it is already using the current materials!")
 					return
-				src.swap_materials(locate(params["resource_1"]), locate(params["resource_2"]))
+				src.swap_materials(usr, locate(params["resource_1"]), locate(params["resource_2"]))
 				return TRUE
 
 			if ("card")
@@ -611,13 +617,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("ore_purchase")
 				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				src.buy_ore(params["ore"], params["storage_ref"])
 
 			if ("clear") // clear entire queue
 				if (ON_COOLDOWN(src, "clear", 1 SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				var/queue_length = length(src.queue)
 				if (!queue_length) // Nothing in list
@@ -637,14 +643,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("pause_toggle")
 				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				if (params["action"] == "continue")
 					if (!length(src.queue))
-						src.grump_message(usr, "Cannot find any items in queue to continue production.")
+						src.grump_message(usr, "ERROR: Cannot find any items in queue to continue production.", sound = TRUE)
 						return
 					if (!check_enough_materials(src.queue[1]))
-						src.grump_message(usr, "Insufficient usable materials to manufacture first item in queue.")
+						src.grump_message(usr, "ERROR: Insufficient usable materials to manufacture first item in queue.", sound = TRUE)
 					else
 						src.begin_work( new_production = TRUE )
 						src.time_started = TIME
@@ -656,11 +662,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("remove") // remove queued blueprint
 				if (ON_COOLDOWN(src, "remove", 1 DECI SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				var/operation = text2num_safe(params["index"])
 				if (!isnum(operation) || !length(src.queue) || operation > length(src.queue))
-					src.grump_message(usr, "Invalid Operation.", sound = FALSE)
+					src.grump_message(usr, "ERROR: Invalid Operation.", sound = TRUE)
 					return
 				src.queue -= src.queue[operation]
 				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
@@ -668,14 +674,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("delete") // remove blueprint from storage
 				if (ON_COOLDOWN(src, "delete", 1 SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				if(!src.allowed(usr))
-					src.grump_message(usr, "Access Denied.", sound = FALSE)
+					src.grump_message(usr, "Access Denied.", sound = TRUE)
 					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/mechanics/))
-					src.grump_message(usr, "Cannot delete this schematic.", sound = FALSE)
+					src.grump_message(usr, "ERROR: Cannot delete this type of schematic.", sound = TRUE)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
@@ -683,11 +689,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("manudrive")
 				if (ON_COOLDOWN(src, "manudrive", 1 SECOND))
-					src.grump_message(usr, "Slow down!", sound = FALSE)
+					src.grump_message(usr, "Slow down!")
 					return
 				if (params["action"] == "eject")
 					if (src.mode != MODE_READY)
-						src.grump_message(usr, "You can't do that while the unit is working!", sound = FALSE)
+						src.grump_message(usr, "You can't do that while the unit is working!")
 						return
 					src.eject_manudrive(usr)
 
@@ -779,7 +785,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
-				boutput(user, SPAN_ALERT("This manufacturer unit does not accept blueprints."))
+				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
 				return
 			var/obj/item/paper/manufacturer_blueprint/BP = W
 			if (src.malfunction && prob(75))
@@ -963,8 +969,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
-			boutput(user, SPAN_ALERT("The fabricator rejects the [W]. You'll need to refine them in a reclaimer first."))
-			playsound(src.loc, src.sound_grump, 50, 1)
+			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
@@ -998,13 +1003,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.take_damage(damage)
 
 	/// Swap the "position" of two materials in the manufacturer for the sake of priority use management.
-	proc/swap_materials(var/material_1, var/material_2)
+	proc/swap_materials(mob/user, var/material_1, var/material_2)
 		// Could be ejected by someone else between the time of selecting what to swap and swapping it or be invalid
 		var/list/storage = src.get_contents()
 		var/index_1 = storage.Find(material_1)
 		var/index_2 = storage.Find(material_2)
 		if (!index_1 || !index_2)
-			boutput(usr, SPAN_ALERT("One or both of those materials are not present in storage. Aborting."))
+			src.grump_message(user, "ERROR: One or both of those materials are not present in storage. Aborting.", sound = TRUE)
 			return
 		var/temp_hold = storage[index_1]
 		storage[index_1] = storage[index_2]
@@ -1013,30 +1018,31 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/eject_material(var/mat_id, mob/user = null)
 		if (src.mode != MODE_READY)
-			boutput(user, SPAN_ALERT("You cannot eject materials while the unit is working."))
+			src.grump_message(user, "You cannot eject materials while the unit is working.")
 			return
 		var/ejectamt = 0
 		var/turf/ejectturf = get_output_location(user)
-		var/obj/item/target = null
-		for(var/obj/item/O in src.get_contents())
-			if (O.material && O.material.getID() == mat_id)
+		var/obj/item/target
+		for(var/obj/item/material_piece/P in src.get_contents())
+			if (O.material.getID() == mat_id)
 				target = O
 				break
 		if (isnull(target))
-			boutput(user, SPAN_ALERT("ERROR: Material not found in storage."))
+			src.grump_message(user, "ERROR: Material not found in storage.", sound = TRUE)
 			return
 		if (target.amount < 1)
-			boutput(user, SPAN_ALERT("ERROR: Not enough material to eject bars."))
+			src.grump_message(user, "ERROR: Not enough material to eject bars.", sound = TRUE)
 			return
-		ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0)
-		ejectamt = floor(ejectamt)
-		if (ejectamt <= 0 || src.mode != MODE_READY || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
+		// Since tgui_input_number() is awaited here, make sure they are adjacent before and after
+		if (!src.check_physical_proximity(user))
+			return
+		ejectamt = floor(tgui_input_number(user,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0))
+		if (!src.check_physical_proximity(user) || src.mode != MODE_READY || ejectamt <= 0 || !isnum_safe(ejectamt))
 			return
 		if (!ejectturf)
 			return
 		if (ejectamt > target.amount)
-			playsound(src.loc, src.sound_grump, 50, 1)
-			boutput(user, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
+			src.grump_message(user, "There's not that much material in [name]. It has ejected what it could.", sound = TRUE)
 			ejectamt = floor(target.amount)
 		if (ejectamt == target.amount)
 			if (user)
