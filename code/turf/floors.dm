@@ -1985,8 +1985,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
 				// we use the material variant from the base floor
-				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.getID()]"
-				var/potential_new_base_icon_state = "floor$$[C.material.getID()]"
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material?.getID()]"
+				var/potential_new_base_icon_state = "floor$$[C.material?.getID()]"
 				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
 					src.icon_state = "floor"
 					src.icon = 'icons/turf/floors.dmi'
