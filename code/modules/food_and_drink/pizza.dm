@@ -546,7 +546,7 @@
 	desc = "A cheesy pizza slice topped with fresh picked mushrooms."
 	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "space_fungus" = 4)
 
-/obj/item/reagent_containers/food/snacks/pizzaslice/standard
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor
 	name = "slice of fresh basic pizza"
 	desc = "A slice of base vendor pizza (you shouldn't see this)."
 	fill_amt = 1
