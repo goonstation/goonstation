@@ -135,9 +135,10 @@
 			//var/obj/item_type = initial(purchased_spell.path)  datum/targetable/spell/purchased_spells			assoc_spell
 
 			if (purchased_spell.assoc_spell )
+				var/datum/targetable/spell/S = purchased_spell.assoc_spell
 				purchases += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(purchased_spell.assoc_spell.icon), initial(purchased_spell.assoc_spell.icon_state), frame = spell_animation_frame, dir = 0))]",
+						"iconBase64" = "[icon2base64(icon(initial(S.icon), initial(S.icon_state), frame = spell_animation_frame, dir = 0))]",
 						"name" = "[purchased_spell.name]",
 					)
 				)
