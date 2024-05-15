@@ -27,7 +27,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
 			. += A.examine_hint
 
 	UpdateName()
@@ -86,7 +86,7 @@
 	automatic_activation = 0
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
-	examine_hint = "It kinda looks like it's supposed to be inserted into something."
+	examine_hint = SPAN_ARTHINT("It kinda looks like it's supposed to be inserted into something.")
 
 	New()
 		..()

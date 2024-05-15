@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/detonation_time = INFINITY
 	var/lightColor = list(255,255,255,255)
 	var/recharge_delay = 0
-	examine_hint = "It is covered in very conspicuous markings."
+	examine_hint = SPAN_ARTHINT("It is covered in very conspicuous markings.")
 
 	New()
 		..()

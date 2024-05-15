@@ -20,7 +20,7 @@
 	var/gas_amount_current = 0 MOLES
 	var/gas_amount_growth = 5 MOLES
 	var/temp_text = "lukewarm"
-	examine_hint = "It is covered in very conspicuous markings."
+	examine_hint = SPAN_ARTHINT("It is covered in very conspicuous markings.")
 
 	post_setup()
 		. = ..()

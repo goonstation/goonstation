@@ -37,7 +37,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
 			. += A.examine_hint
 
 	UpdateName()
@@ -105,7 +105,7 @@
 	react_elec = list(0.02,0,5)
 	react_xray = list(10,75,100,11,"CAVITY")
 	var/list/datum/projectile/artifact/bullets = list()
-	examine_hint = "It seems to have a handle you're supposed to hold it by."
+	examine_hint = SPAN_ARTHINT("It seems to have a handle you're supposed to hold it by.")
 
 	New()
 		..()
