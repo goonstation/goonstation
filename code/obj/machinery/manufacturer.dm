@@ -1630,7 +1630,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_available = list()
 
 		var/list/C = src.get_contents()
-		for (var/path_index in 1 to M.item_paths.len)
+		for (var/path_index in 1 to length(M.item_paths))
 			var/required_pattern = M.item_paths[path_index]
 			var/required_amount = M.item_amounts[path_index]
 			for (var/piece_index in 1 to length(C))
@@ -1650,12 +1650,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == M.item_paths.len) // we have enough materials, so return the materials list, else return null
+		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
-		for (var/i = 1 to M.item_paths.len)
+		for (var/i = 1 to length(M.item_paths))
 			var/pattern = M.item_paths[i]
 			var/mat_id = src.materials_in_use[pattern]
 			src.change_contents(-M.item_amounts[i]/10, mat_id)
@@ -1845,7 +1845,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/to_throw = rand(1,4)
 			var/obj/item/X = null
 			while(to_throw > 0)
-				if(!src.nearby_turfs.len) //SpyGuy for RTE "pick() from empty list"
+				if(!length(src.nearby_turfs)) //SpyGuy for RTE "pick() from empty list"
 					break
 				X = pick(src.get_contents())
 				src.storage.transfer_stored_item(X, src.loc)
@@ -2030,7 +2030,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resource_amt = 0
 			return
 
-		if (free_resources.len && free_resource_amt > 0)
+		if (length(free_resources) && free_resource_amt > 0)
 			for (var/typepath in src.free_resources)
 				if (ispath(typepath))
 					src.change_contents(amount = free_resource_amt, mat_path = typepath )
