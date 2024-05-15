@@ -1211,6 +1211,7 @@ proc/ui_describe_reagents(atom/A)
 		burning_light = src.AddComponent(/datum/component/loctargeting/simple_light, 255, 255, 255, 150)
 		burning_light.update(FALSE)
 		..()
+		START_TRACKING
 
 	get_desc()
 		if(!is_currently_burning)
