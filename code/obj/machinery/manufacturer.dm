@@ -505,6 +505,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		if(src.electrified)
+			if (ON_COOLDOWN(src, "electrified_action", 1 DECI SECOND))
+				return // it would be kind to let them continue but this would totally mean people clickspam to bypass shock w/o insuls
 			if (!(src.is_disabled()))
 				if (src.shock(usr, 10))
 					return
@@ -698,7 +700,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 						// This next bit is stolen from PTL Code
 					var/list/accounts = \
-						data_core.bank.find_records("job", "Chief Engineer") + \
 						data_core.bank.find_records("job", "Chief Engineer") + \
 						data_core.bank.find_records("job", "Miner")
 
