@@ -299,7 +299,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// No need to do this if we're depowered/broken though
 		if (should_update_static && !src.is_disabled())
 			should_update_static = FALSE
-			src.update_static_data()
+			src.update_static_data(user)
 
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
