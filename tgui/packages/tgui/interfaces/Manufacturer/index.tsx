@@ -11,9 +11,9 @@ import { is_set } from '../common/bitflag';
 import { clamp } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { pluralize } from '../common/stringUtils';
-import { Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
-import { AccessLevels, MANUDRIVE_UNLIMITED, SETTINGS_WINDOW_WIDTH } from './constant';
+import { AccessLevels, MANUDRIVE_UNLIMITED, RockboxStyle, SETTINGS_WINDOW_WIDTH } from './constant';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
@@ -238,15 +238,22 @@ export const Manufacturer = (_, context) => {
                   textAlign="center"
                 >
                   {data.rockboxes.map((rockbox: RockboxData) => (
-                    <Section
-                      title={rockbox.area_name}
+                    <Box
                       key={rockbox.byondRef}
                     >
-                      {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
-                        <LabeledList
-                          key={ore.name}
-                        >
+                      <Box
+                        mt={RockboxStyle.MarginTop}
+                        textAlign="left"
+                        bold
+                      >
+                        {rockbox.area_name}
+                        <Divider />
+                      </Box>
+
+                      <LabeledList>
+                        {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
+                            key={ore.name}
                             label={ore.name}
                             textAlign="center"
                           >
@@ -258,9 +265,9 @@ export const Manufacturer = (_, context) => {
                               {ore.cost}⪽
                             </Button>
                           </LabeledList.Item>
-                        </LabeledList>
-                      ))) : "No Ores Loaded."}
-                    </Section>
+                        ))) : "No Ores Loaded."}
+                      </LabeledList>
+                    </Box>
                   ))}
                   {data.rockbox_message}
                 </Section>
