@@ -23,14 +23,14 @@ export type ProductionCardProps = {
   Card which shows the blueprint being produced/queued, and if currently being produced,
   a progressbar for how close it is to being done.
 */
-export const ProductionCard = (params:ProductionCardProps) => {
+export const ProductionCard = (props:ProductionCardProps) => {
   const {
     actionQueueRemove,
     img,
     index,
     mode,
     name,
-  } = params;
+  } = props;
 
   // dont display Weird things
   if (img === undefined
