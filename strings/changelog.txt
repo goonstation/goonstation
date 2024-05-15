@@ -1,4 +1,16 @@
 
+(t)wed may 15 24
+(u)Cheffie, ZeWaka and Mordent
+(p)16708
+(e)🔄⛔📄|C-Rework, C-Removal, A-UI
+(*)The chat panel is now a TGUI interface. Please report any chat related issues! Even if its just a styling problem!
+(*)Client darkmode preference is now controlled by the chat panel.
+(*)If chat fails to load, go to commands and try "fix chat". This hopefully shouldn't be an issue though.
+(*)Not all regex will work after import as there is a limitation of allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+(+)Chat filtering options have been expanded, check PR page for details. Report any unsorted messages you think fit
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)PDAs now sorta work like ATMs if you have your ID card inserted into them, allowing you to withdraw and deposit money on the go.
 (t)tue may 14 24
 (u)Zamujasa
 (e)💅📦|C-QoL, A-Game-Objects
