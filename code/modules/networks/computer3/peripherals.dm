@@ -155,9 +155,9 @@ TYPEINFO(/obj/item/peripheral)
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		if(send_only)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT("wireless", frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 		else
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if(..())
@@ -570,7 +570,7 @@ TYPEINFO(/obj/item/peripheral)
 				src.check_wired_connection()
 			//Let's blindy attempt to generate a unique network ID!
 		src.net_id = format_net_id("\ref[src]")
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 
 
 	receive_command(obj/source, command, datum/signal/signal)
@@ -753,7 +753,7 @@ TYPEINFO(/obj/item/peripheral)
 			return 1
 
 		if(!get_radio_connection_by_id(src, "wireless"))
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 			get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 
 		src.check_wired_connection()
@@ -1387,7 +1387,7 @@ TYPEINFO(/obj/item/peripheral)
 					for(var/mob/M in AIviewers(host, null))
 						if(M.client)
 							M.show_message(SPAN_ALERT("<B>The [src.host.name] catches on fire!</B>"), 1)
-						fireflash(src.host.loc, 0)
+						fireflash(src.host.loc, 0, chemfire = CHEM_FIRE_RED)
 						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						//dispose()

@@ -322,7 +322,6 @@
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
 // LANGUAGE - Yellow Border
-
 /datum/trait/swedish
 	name = "Swedish"
 	desc = "You are from sweden. Meat balls and so on."

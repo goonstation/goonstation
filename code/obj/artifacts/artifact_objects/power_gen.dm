@@ -83,7 +83,7 @@
 				playsound(O, 'sound/machines/engine_highpower.ogg', 75, TRUE, 0, 1)
 				if (prob(10))
 					playsound(O, 'sound/effects/screech2.ogg', 75, TRUE)
-					fireflash(O, rand(1,min(5,gen_level)))
+					fireflash(O, rand(1,min(5,gen_level)), chemfire = CHEM_FIRE_RED)
 					O.visible_message(SPAN_ALERT("[O] erupts in flame!"))
 				if (prob(5))
 					playsound(O, 'sound/effects/screech2.ogg', 75, TRUE)
