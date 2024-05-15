@@ -151,7 +151,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
 //#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
 //#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
-//#define MAP_OVERRIDE_NEON      		// Neon by Sord
+#define MAP_OVERRIDE_NEON      		// Neon by Sord
 
 //------------ Unit Test Framework ------------//
 
