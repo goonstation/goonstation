@@ -13,6 +13,7 @@
 	wear_layer = MOB_BELT_LAYER
 	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
+	var/datum/db_record/accessed_record = null // the bank account on the id card
 	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
@@ -576,6 +577,9 @@
 		else if (href_list["eject_id_card"])
 			src.eject_id_card(usr ? usr : null)
 
+		else if (href_list["eject_cash"])
+			src.eject_cash(usr ? usr : null)
+
 		else if (href_list["refresh"])
 			var/obj/item/uplink/integrated/pda/uplink = src.uplink
 			if(istype(uplink))
@@ -682,6 +686,9 @@
 			src.insert_pen(C, user)
 		else
 			boutput(user, SPAN_ALERT("There is already something in [src]'s pen slot!"))
+
+	else if (istype(C, /obj/item/currency/spacecash))
+		src.insert_cash(C, user)
 
 /obj/item/device/pda2/examine()
 	. = ..()
@@ -847,11 +854,47 @@
 
 		return
 
+	proc/eject_cash(var/mob/user as mob)
+		if (src.loc == user && src.ID_card && src.accessed_record)
+			var/amount = tgui_input_number(usr, "How much would you like to withdraw?", "Withdrawal", 0, src.accessed_record["current_money"], 0)
+			if (src.loc != user || !src.ID_card || !src.accessed_record)
+				// no withdrawing after you're gone
+				return
+			if (amount < 1)
+				boutput(usr, SPAN_ALERT("Invalid amount!"))
+				return
+			if(amount > src.accessed_record["current_money"])
+				boutput(usr, SPAN_ALERT("Insufficient funds in account."))
+			else
+				src.accessed_record["current_money"] -= amount
+				var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
+				S.setup(src.loc, amount)
+				usr.put_in_hand_or_drop(S)
+				boutput(user, SPAN_NOTICE("Withdrawal successful. Your account now has [src.accessed_record["current_money"]] credits."))
+				playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
+		return
+
+	proc/insert_cash(var/obj/item/currency/spacecash/cash as obj, var/mob/user as mob)
+		if (src.ID_card && src.accessed_record)
+			src.accessed_record["current_money"] += cash.amount
+			boutput(user, SPAN_NOTICE("You insert [cash] into \the [src]. Your account now has [src.accessed_record["current_money"]] credits."))
+			cash.amount = 0
+			qdel(cash)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 50, 1)
+			src.updateSelfDialog()
+		else
+			if (src.ID_card && !src.accessed_record)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. The inserted ID card doesn't have a bank account associated with it."))
+			else if (!src.ID_card)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. There is no ID card inserted."))
+		return
+
 	proc/eject_id_card(var/mob/user as mob)
 		if (src.ID_card)
 			src.registered = null
 			src.assignment = null
 			src.access = null
+			src.accessed_record = null
 			src.underlays -= src.ID_image
 			if (istype(user))
 				user.put_in_hand_or_drop(src.ID_card)
@@ -873,6 +916,7 @@
 		src.registered = ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
+		src.accessed_record = data_core.bank.find_record("name", ID.registered)
 		if (!src.ID_image)
 			src.ID_image = image(src.icon, "blank")
 		src.ID_image = src.ID_card.icon_state
