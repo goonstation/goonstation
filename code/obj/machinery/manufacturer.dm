@@ -969,8 +969,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (damage >= 5)
 					src.take_damage(damage)
 
-		src.updateUsrDialog()
-
 	/// Swap the "position" of two materials in the manufacturer for the sake of priority use management.
 	proc/swap_materials(var/material_1, var/material_2)
 		// Could be ejected by someone else between the time of selecting what to swap and swapping it or be invalid
@@ -1141,8 +1139,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
 
 		else ..()
-
-		src.updateUsrDialog()
 
 	receive_signal(datum/signal/signal)
 		if (!signal || signal.encryption || signal.transmission_method != TRANSMISSION_WIRE)
@@ -1343,8 +1339,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				src.speed = given_speed
 				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#SPEEDSET"))
-
-		src.updateUsrDialog()
 
 	proc/post_signal(var/list/data)
 		var/datum/signal/new_signal = get_free_signal()
@@ -1668,7 +1662,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.manual_stop = 0
 			src.mode = MODE_READY
 			src.build_icon()
-			src.updateUsrDialog()
 			return
 		if (!istype(src.queue[1],/datum/manufacture/))
 			src.mode = MODE_HALT
