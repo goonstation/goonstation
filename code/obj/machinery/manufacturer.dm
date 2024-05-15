@@ -496,42 +496,86 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
-	ui_act(action, params)
-		if(!(action == "wire"))
-			if (src.is_disabled())
-				return
+	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
+	proc/try_shock(mob/target, var/chance)
+		if (src.electrified)
+			return src.shock(usr, chance)
+		return FALSE
 
-		if(usr.stat || usr.restrained())
+	/// Check if the target is within arm's reach of the machine
+	proc/has_physical_proximity(mob/target)
+		return (BOUNDS_DIST(src, target) == 0) && istype(src.loc, /turf)
+
+	/// Check if the target is allowed to interact with this at range. Silicons can, humans can't.
+	proc/can_use_ranged(mob/target)
+		return isAI(target) || isrobot(target)
+
+	/// Helper to play the grump with or without a grump message/sound
+	proc/grump_message(mob/target = null, var/message = null, var/sound = TRUE)
+		if (!isnull(message) && !isnull(target))
+			boutput(target, SPAN_ALERT(message))
+		if (sound)
+			playsound(src.loc, src.sound_grump, 50, 1)
+
+	ui_act(action, params)
+		// Handle wire stuff first before forbidding for power loss
+		if (action == "wire")
+			if (!src.panel_open)
+				src.grump_message(usr, "The panel is closed!", sound = FALSE)
+				return FALSE
+
+			switch (params["action"])
+				if ("cut", "mend")
+					if (!src.has_physical_proximity(usr))
+						src.grump_message(usr, "You need physical access to manipulate the wires!", sound = FALSE)
+						return
+					if (src.try_shock(usr, 100))
+						return
+					if (!(issnippingtool(usr.equipped())))
+						src.grump_message(usr, "You need to be holding a snipping tool for that!", sound = FALSE)
+					else
+						if (params["action"] == "cut")
+							src.cut(usr, text2num_safe(params["wire"]))
+						else
+							src.mend(usr, text2num_safe(params["wire"]))
+				if ("pulse")
+					if (!(ispulsingtool(usr.equipped()) || (src.can_use_ranged(usr))))
+						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!", sound = FALSE)
+						return
+					src.pulse(usr, text2num_safe(params["wire"]))
+
+		// Call parent AFTER wires so you can at least fix the power on it
+		. = ..()
+
+		if(usr.stat != STAT_ALIVE || usr.restrained())
 			return
 
-		if(src.electrified)
-			if (ON_COOLDOWN(src, "electrified_action", 1 DECI SECOND))
-				return // it would be kind to let them continue but this would totally mean people clickspam to bypass shock w/o insuls
-			if (!(src.is_disabled()))
-				if (src.shock(usr, 10))
-					return
+		if (!ON_COOLDOWN(src, "electrified_action", 1 DECI SECOND))
+			if (src.try_shock(usr, 10))
+				return
 
-		if (((BOUNDS_DIST(src, usr) != 0 && !(isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
+		if (!src.can_use_ranged(usr) && !src.has_physical_proximity(usr))
+			src.grump_message(usr, "You need to get closer for that!")
 			return
 
 		switch(action)
 			if ("request_product")
 				if (ON_COOLDOWN(src, "product", 1 DECI SECOND))
-					boutput(usr, SPAN_ALERT("Slow down!"))
-					return FALSE
+					src.grump_message(usr, "Slow down!", sound = FALSE)
+					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/))
-					return FALSE
+					return
 				// Verify that there is no href fuckery abound
 				if(!validate_disp(I))
 					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
-					return FALSE
+					return
 				if (!check_enough_materials(I))
-					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture that item."))
-					playsound(src.loc, src.sound_grump, 50, 1)
+					src.grump_message(usr, "Insufficient usable materials to manufacture that item.")
+
 				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
-					boutput(usr, SPAN_ALERT("Manufacturer queue length limit reached."))
+					src.grump_message(usr, "Manufacturer queue length limit reached.")
 				else
 					src.queue += I
 					if (src.mode == MODE_READY)
@@ -544,9 +588,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if ("material_swap")
 				// Not doing this would certainly allow for exploits/bugs since resource allocation is greedy and could fail with different orders
 				if (src.mode == MODE_WORKING || src.mode == MODE_HALT)
-					boutput(usr, SPAN_ALERT("You cannot do that while the unit is working, it is already using the current materials!"))
-					return FALSE
-				src.swap_materials(params["resource_1"], params["resource_2"])
+					src.grump_message(usr, "You cannot do that while the unit is working, it is already using the current materials!")
+					return
+				src.swap_materials(locate(params["resource_1"]), locate(params["resource_2"]))
 				return TRUE
 
 			if ("card")
@@ -556,34 +600,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (params["remove"])
 					src.scan = null
 
-			if ("wire")
-				if (!src.panel_open)
-					boutput(usr, SPAN_ALERT("The panel is closed!"))
-					return FALSE
-
-				switch (params["action"])
-					if ("cut", "mend")
-						if (src.electrified)
-							if (src.shock(usr, 100))
-								return FALSE
-						if (!(issnippingtool(usr.equipped())))
-							boutput(usr, SPAN_ALERT("You need to be holding a snipping tool for that!"))
-						else
-							if (params["action"] == "cut")
-								src.cut(usr, text2num_safe(params["wire"]))
-							else
-								src.mend(usr, text2num_safe(params["wire"]))
-
-					if ("pulse")
-						if (!(ispulsingtool(usr.equipped()) || isAI(usr)))
-							boutput(usr, SPAN_ALERT("You need to be holding a pulsing tool or similar for that!"))
-							return FALSE
-						src.pulse(usr, text2num_safe(params["wire"]))
-
 			if ("speed")
 				if (src.mode == MODE_WORKING)
-					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
-					return FALSE
+					src.grump_message(usr, "You cannot alter the speed setting while the unit is working.")
+					return
 				src.speed = clamp(params["value"], 1, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 
 			if ("repeat")
@@ -591,12 +611,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("ore_purchase")
 				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND))
-					return FALSE
+					src.grump_message(usr, "Slow down!", sound = FALSE)
+					return
 				src.buy_ore(params["ore"], params["storage_ref"])
 
 			if ("clear") // clear entire queue
 				if (ON_COOLDOWN(src, "clear", 1 SECOND))
-					return FALSE
+					src.grump_message(usr, "Slow down!", sound = FALSE)
+					return
 				var/queue_length = length(src.queue)
 				if (!queue_length) // Nothing in list
 					return
@@ -615,13 +637,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("pause_toggle")
 				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND))
-					return FALSE
+					src.grump_message(usr, "Slow down!", sound = FALSE)
+					return
 				if (params["action"] == "continue")
 					if (!length(src.queue))
-						boutput(usr, SPAN_ALERT("Cannot find any items in queue to continue production."))
+						src.grump_message(usr, "Cannot find any items in queue to continue production.")
 						return
 					if (!check_enough_materials(src.queue[1]))
-						boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
+						src.grump_message(usr, "Insufficient usable materials to manufacture first item in queue.")
 					else
 						src.begin_work( new_production = TRUE )
 						src.time_started = TIME
@@ -633,34 +656,38 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			if ("remove") // remove queued blueprint
 				if (ON_COOLDOWN(src, "remove", 1 DECI SECOND))
-					boutput(usr, SPAN_ALERT("Slow Down!"))
+					src.grump_message(usr, "Slow down!", sound = FALSE)
 					return
 				var/operation = text2num_safe(params["index"])
 				if (!isnum(operation) || !length(src.queue) || operation > length(src.queue))
-					boutput(usr, SPAN_ALERT("Invalid operation."))
+					src.grump_message(usr, "Invalid Operation.", sound = FALSE)
 					return
 				src.queue -= src.queue[operation]
 				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
 				begin_work( new_production = (operation == 1) )
 
 			if ("delete") // remove blueprint from storage
-				if (ON_COOLDOWN(src, "delete", 1 SECOND)) return
+				if (ON_COOLDOWN(src, "delete", 1 SECOND))
+					src.grump_message(usr, "Slow down!", sound = FALSE)
+					return
 				if(!src.allowed(usr))
-					boutput(usr, SPAN_ALERT("Access denied."))
+					src.grump_message(usr, "Access Denied.", sound = FALSE)
 					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/mechanics/))
-					boutput(usr, SPAN_ALERT("Cannot delete this schematic."))
+					src.grump_message(usr, "Cannot delete this schematic.", sound = FALSE)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
 					should_update_static = TRUE
 
 			if ("manudrive")
-				if (ON_COOLDOWN(src, "manudrive", 1 SECOND)) return
+				if (ON_COOLDOWN(src, "manudrive", 1 SECOND))
+					src.grump_message(usr, "Slow down!", sound = FALSE)
+					return
 				if (params["action"] == "eject")
 					if (src.mode != MODE_READY)
-						boutput(usr, SPAN_ALERT("You can't do that while the unit is working!"))
+						src.grump_message(usr, "You can't do that while the unit is working!", sound = FALSE)
 						return
 					src.eject_manudrive(usr)
 
@@ -980,7 +1007,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			boutput(usr, SPAN_ALERT("One or both of those materials are not present in storage. Aborting."))
 			return
 		var/temp_hold = storage[index_1]
-		storage[index_1] = storage[index_1]
+		storage[index_1] = storage[index_2]
 		storage[index_2] = temp_hold
 		src.should_update_static = TRUE
 
