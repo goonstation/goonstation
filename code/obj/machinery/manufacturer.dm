@@ -508,7 +508,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Handle checking and outputting for not being close to the machine
 	proc/check_physical_proximity(mob/target)
-		if (!src.has_physical_proximity(user))
+		if (!src.has_physical_proximity(target))
 			src.grump_message(usr, "You need to be adjacent to the fabricator to do that!", sound = FALSE)
 			return FALSE
 		return TRUE
@@ -1022,10 +1022,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		var/ejectamt = 0
 		var/turf/ejectturf = get_output_location(user)
-		var/obj/item/target
+		var/obj/item/material_piece/target
 		for(var/obj/item/material_piece/P in src.get_contents())
-			if (O.material.getID() == mat_id)
-				target = O
+			if (P.material.getID() == mat_id)
+				target = P
 				break
 		if (isnull(target))
 			src.grump_message(user, "ERROR: Material not found in storage.", sound = TRUE)
