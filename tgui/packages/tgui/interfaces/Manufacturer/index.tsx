@@ -84,11 +84,8 @@ export const Manufacturer = (_, context) => {
     blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
   );
 
-  const window_width = 1200;
-  const window_height = 600;
-
   return (
-    <Window width={window_width} height={window_height} title={data.fabricator_name}>
+    <Window width={1200} height={600} title={data.fabricator_name}>
       {!data.indicators.hasPower && <PowerAlertModal width={100-SETTINGS_WINDOW_WIDTH} height={"100%"} />}
       <Window.Content scrollable>
         <Stack>
