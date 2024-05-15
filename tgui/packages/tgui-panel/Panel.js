@@ -80,7 +80,7 @@ export const Panel = (props, context) => {
         )}
         <Stack.Item grow>
           <Section fill fitted position="relative">
-            <Pane.Content scrollable>
+            <Pane.Content scrollable className="Chat__background">
               <ChatPanel lineHeight={settings.lineHeight} />
             </Pane.Content>
             <Notifications>

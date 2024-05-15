@@ -1191,18 +1191,6 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
-"ayf" = (
-/obj/machinery/portable_reclaimer,
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/obj/machinery/light/small/cool{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/storage/warehouse)
 "ayr" = (
 /obj/stone,
 /turf/simulated/grass,
@@ -6773,24 +6761,6 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
-"daI" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
-/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
-/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
-/obj/item/pen/pencil,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grey,
-/area/station/storage/warehouse)
 "daR" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -13131,6 +13101,10 @@
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
+"fLP" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay,
+/area/station/quartermaster/refinery)
 "fLT" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -25149,6 +25123,11 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/west)
+"laB" = (
+/obj/machinery/portable_reclaimer,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/warehouse)
 "laH" = (
 /obj/item/device/radio/intercom/engineering{
 	pixel_y = 28
@@ -26216,32 +26195,6 @@
 	},
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
-"lzH" = (
-/obj/storage/crate{
-	name = "Spare Parts"
-	},
-/obj/item/guardbot_frame,
-/obj/item/device/guardbot_tool/taser{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/obj/item/guardbot_core,
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
-/obj/machinery/light/incandescent/greenish,
-/obj/item/device/multitool,
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/random_item_spawner/buddytool/some,
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "lzK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -28595,6 +28548,24 @@
 "mCd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering)
+"mCe" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
+/obj/item/pen/pencil,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/storage/warehouse)
 "mCD" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -34524,11 +34495,6 @@
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
-"pkv" = (
-/obj/machinery/processor,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/orangeblack,
-/area/station/storage/warehouse)
 "pkD" = (
 /obj/stool/bed/moveable/hospital,
 /turf/simulated/floor/carpet/arcade,
@@ -36737,10 +36703,6 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
-"qiq" = (
-/obj/machinery/processor,
-/turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/refinery)
 "qiB" = (
 /obj/item/storage/toolbox/emergency,
 /obj/item/paper/book/from_file/matsci_guide,
@@ -45082,6 +45044,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"tOo" = (
+/obj/machinery/sheet_extruder,
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/machinery/light/small/cool{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/storage/warehouse)
 "tOO" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/line/red{
@@ -53969,6 +53943,32 @@
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
 	})
+"xEp" = (
+/obj/storage/crate{
+	name = "Spare Parts"
+	},
+/obj/item/guardbot_frame,
+/obj/item/device/guardbot_tool/taser{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/guardbot_core,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
+/obj/machinery/light/incandescent/greenish,
+/obj/item/device/multitool,
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/random_item_spawner/buddytool/some,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "xEQ" = (
 /obj/rack,
 /obj/item/clothing/suit/hi_vis,
@@ -87591,7 +87591,7 @@ uSW
 dTU
 nhK
 okf
-lzH
+xEp
 xrc
 kul
 qXN
@@ -99997,7 +99997,7 @@ mVF
 qhz
 olq
 oKx
-pkv
+laB
 sLY
 tLb
 sLY
@@ -100294,7 +100294,7 @@ vlH
 uFB
 dzu
 vlH
-ayf
+tOo
 gZL
 xXI
 otO
@@ -102106,7 +102106,7 @@ xyH
 vlH
 mgf
 dzu
-daI
+mCe
 aSa
 qOg
 vwU
@@ -108144,7 +108144,7 @@ vZu
 vZu
 vZu
 vZu
-qiq
+fLP
 eqA
 rET
 vnX

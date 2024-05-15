@@ -86,7 +86,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 
 	disposing()

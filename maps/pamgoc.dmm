@@ -33276,43 +33276,6 @@
 	dir = 2
 	},
 /area/station/crew_quarters/pool)
-"bFL" = (
-/obj/storage/crate{
-	name = "Spare Parts"
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/guardbot_frame{
-	pixel_x = 9;
-	pixel_y = 7
-	},
-/obj/item/device/guardbot_tool/taser{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/device/guardbot_tool/smoker{
-	pixel_x = -7
-	},
-/obj/item/device/guardbot_tool/medicator{
-	pixel_x = -7;
-	pixel_y = -6
-	},
-/obj/item/guardbot_core{
-	pixel_x = 5;
-	pixel_y = -6
-	},
-/obj/machinery/light,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard{
-	pixel_x = 12;
-	pixel_y = 6
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "bFM" = (
 /obj/machinery/light,
 /obj/storage/secure/closet/brig,
@@ -34255,17 +34218,6 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"bIf" = (
-/obj/machinery/processor,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/refinery)
 "bIg" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -39102,12 +39054,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
-"bRV" = (
-/obj/machinery/processor,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/storage/warehouse)
 "bRW" = (
 /obj/machinery/r_door_control{
 	id = "hangar_artlab"
@@ -57661,6 +57607,19 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"iiZ" = (
+/obj/disposalpipe/segment{
+	dir = 8
+	},
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
 "ikf" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple{
@@ -58812,25 +58771,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/main)
-"kjA" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 8;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	name = "Head of Security";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/security/hos)
 "kjT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -60942,6 +60882,43 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"oDY" = (
+/obj/storage/crate{
+	name = "Spare Parts"
+	},
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/guardbot_frame{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/device/guardbot_tool/taser{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/device/guardbot_tool/smoker{
+	pixel_x = -7
+	},
+/obj/item/device/guardbot_tool/medicator{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/item/guardbot_core{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/machinery/light,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "oFx" = (
 /obj/item/paper/book/from_file/the_trial,
 /obj/decoration/decorativeplant/plant7,
@@ -61514,6 +61491,17 @@
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
+"pQn" = (
+/obj/machinery/portable_reclaimer,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/refinery)
 "pSh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63554,20 +63542,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"utN" = (
-/obj/disposalpipe/segment{
-	dir = 8
-	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	name = "Head of Security";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/security/hos)
 "uuu" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -64513,6 +64487,24 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"wdd" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
 "wen" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
@@ -64950,6 +64942,12 @@
 	dir = 8
 	},
 /area/station/solar/south)
+"xdv" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/storage/warehouse)
 "xeM" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/firedoor_spawn,
@@ -91639,7 +91637,7 @@ cAy
 aZM
 aZM
 bXf
-bIf
+pQn
 bLT
 bOO
 cAy
@@ -103397,7 +103395,7 @@ cCO
 cBg
 cBg
 bXi
-bRV
+xdv
 ctA
 cvb
 bcL
@@ -121538,7 +121536,7 @@ aqb
 alq
 alq
 alT
-bFL
+oDY
 cCu
 caP
 csk
@@ -126908,7 +126906,7 @@ aTC
 cAQ
 cAQ
 aUU
-utN
+iiZ
 cAQ
 cAQ
 bnp
@@ -128418,7 +128416,7 @@ bjk
 bjf
 bjf
 blT
-kjA
+wdd
 aNF
 aFf
 aRz

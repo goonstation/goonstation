@@ -10892,12 +10892,6 @@
 /obj/item/knife/butcher/predspear,
 /turf/unsimulated/floor/circuit/off,
 /area/crater/cave)
-"mVn" = (
-/obj/machinery/processor,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/swampzone/interiors/outbuildings)
 "mWl" = (
 /obj/decal/fakeobjects/azarakrocks,
 /turf/unsimulated/floor/auto/dirt,
@@ -12464,12 +12458,6 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
-"oJX" = (
-/obj/storage/secure/crate,
-/obj/item/mob_part/humanoid_part/carbon_part/arm/right/zombie,
-/obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie,
-/turf/unsimulated/floor/sanitary/white,
-/area/swampzone/interiors/outbuildings)
 "oKk" = (
 /turf/unsimulated/floor/stairs,
 /area/swampzone/ground)
@@ -16276,6 +16264,12 @@
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
+"tyW" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/swampzone/interiors/outbuildings)
 "tzK" = (
 /turf/unsimulated/floor/redblack{
 	dir = 1
@@ -19646,6 +19640,12 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
+"xsw" = (
+/obj/storage/secure/crate,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right/zombie,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left/zombie,
+/turf/unsimulated/floor/sanitary/white,
+/area/swampzone/interiors/outbuildings)
 "xsR" = (
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/swampzone/interiors/bonktek/funktek)
@@ -51425,7 +51425,7 @@ roE
 mDX
 uwP
 uOx
-oJX
+xsw
 mDX
 tKt
 sel
@@ -53130,7 +53130,7 @@ gmv
 pVY
 pVY
 mwe
-mVn
+tyW
 pDC
 pDC
 mwe

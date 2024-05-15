@@ -229,7 +229,7 @@
 			youdied = pick("Congratulations on your recent death!", "Welp, so much for that.", "You are dead. Not big surprise.", "You are no longer alive.", "haha you died loser.", "R.I.P. [src.real_name]", "well, shit.", "Better luck next time.", "MISSING: Life, 100 credit reward", "w a s t e d", "Lost to the Zone", "Your Story Has Ended...", "Game over, man!")
 
 	boutput(src, {"
-	<div style="border: 3px solid red; padding: 3px;">
+	<div style="border: 3px solid red; padding: 3px; white-space: normal;">
 		<div style="background: black; padding: 0.1em; color: #f33; text-align: center; font-size: 150%; font-weight: bold;">
 			[youdied]
 		</div>
@@ -975,7 +975,7 @@
 		rendered += "</span>"
 
 
-		for (var/client/C)
+		for (var/client/C as anything in global.clients)
 			if (!C.mob) continue
 			if (istype(C.mob, /mob/new_player))
 				continue
@@ -983,7 +983,7 @@
 			if ((isblob(C.mob) || (C.holder && C.deadchat && !C.player_mode)))
 				var/thisR = rendered
 				if ((C.mob.mob_flags & MOB_HEARS_ALL || C.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[rendered]</span>"
 				C.mob.show_message(thisR, 2)
 
 		return
@@ -1224,7 +1224,7 @@
 
 	var/viewrange = 0
 	var/list/hearers = hearers(say_location)
-	for (var/client/C)
+	for (var/client/C as anything in global.clients)
 		var/mob/M = C.mob
 
 		if (!M || M.z == 2 && istype(M, /mob/new_player))
@@ -1245,8 +1245,8 @@
 		))
 
 			var/thisR = rendered
-			if (src.mind && M.client.chatOutput && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
+			if (src.mind && M.client && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[rendered]</span>"
 
 			if (isobserver(M) || iswraith(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)

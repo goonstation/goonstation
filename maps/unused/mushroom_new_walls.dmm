@@ -10585,14 +10585,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"bca" = (
-/obj/machinery/processor,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/grime,
-/area/station/mining/magnet)
 "bcc" = (
 /obj/lattice{
 	dir = 1;
@@ -16214,6 +16206,10 @@
 	tag = "icon-L16"
 	},
 /area/station/hallway/secondary/entry)
+"cIj" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "cIr" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -17882,6 +17878,18 @@
 "eqv" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"eqV" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "erm" = (
 /obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
@@ -19502,18 +19510,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
-"fRa" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
-/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
-/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "fRo" = (
 /obj/stool/bee_bed/heisenbee,
 /obj/cable{
@@ -21002,19 +20998,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"hov" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security'";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "hoH" = (
 /obj/machinery/light/incandescent,
 /obj/cable{
@@ -23342,25 +23325,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/central)
-"jGD" = (
-/obj/storage/crate{
-	name = "Spare Parts"
-	},
-/obj/item/guardbot_frame,
-/obj/item/device/guardbot_tool/taser{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/obj/item/device/guardbot_tool/smoker{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/guardbot_core,
-/obj/item/device/multitool,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
-/turf/simulated/floor/purple,
-/area/station/science/hall)
 "jHs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23903,6 +23867,14 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
+"kjB" = (
+/obj/machinery/portable_reclaimer,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/grime,
+/area/station/mining/magnet)
 "kjS" = (
 /obj/landmark/start{
 	name = "predator"
@@ -25908,6 +25880,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
+"mop" = (
+/obj/storage/crate{
+	name = "Spare Parts"
+	},
+/obj/item/guardbot_frame,
+/obj/item/device/guardbot_tool/taser{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/device/guardbot_tool/smoker{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/guardbot_core,
+/obj/item/device/multitool,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/turf/simulated/floor/purple,
+/area/station/science/hall)
 "moy" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 1
@@ -26223,19 +26214,6 @@
 	icon_state = "carpetN"
 	},
 /area/station/security/detectives_office)
-"mFk" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security'";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "mFI" = (
 /obj/table/wood/auto,
 /obj/item/disk/data/floppy/read_only/communications,
@@ -33237,6 +33215,16 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"smG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "smR" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
@@ -33353,6 +33341,16 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"sry" = (
+/obj/mapping_helper/access/hos,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "ssA" = (
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment/produce,
@@ -35548,21 +35546,6 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost)
-"ugM" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
-/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
-/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/turf/simulated/floor/blueblack/corner,
-/area/station/medical/robotics)
 "uhh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
@@ -37889,10 +37872,6 @@
 /mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
-"wdt" = (
-/obj/machinery/processor/portable,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "weD" = (
 /obj/machinery/light/small/broken{
 	dir = 4
@@ -38053,6 +38032,21 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"woO" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/item/mob_part/humanoid_part/silicon_part/head/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/blueblack/corner,
+/area/station/medical/robotics)
 "woP" = (
 /obj/lattice{
 	dir = 8;
@@ -67891,7 +67885,7 @@ bcF
 bcF
 bcF
 bcF
-bca
+kjB
 bog
 kzv
 amz
@@ -80239,7 +80233,7 @@ anY
 aJw
 auV
 avV
-wdt
+cIj
 ayq
 aCH
 aCH
@@ -86081,7 +86075,7 @@ rkX
 rmF
 fjy
 glL
-hov
+smG
 chx
 tPk
 shx
@@ -86317,7 +86311,7 @@ bdc
 bbN
 ulp
 bfW
-fRa
+eqV
 ulp
 bbN
 bbN
@@ -86378,7 +86372,7 @@ ivQ
 wCX
 eKt
 rVd
-mFk
+sry
 agZ
 xxO
 xnD
@@ -95375,7 +95369,7 @@ aYR
 bcy
 bdu
 ben
-ugM
+woO
 bgn
 bWK
 ben
@@ -97508,7 +97502,7 @@ eVf
 fVw
 hgP
 bVj
-jGD
+mop
 lqB
 nje
 oAD

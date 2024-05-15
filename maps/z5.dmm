@@ -53,23 +53,6 @@
 	dir = 1
 	},
 /area/mining/hangar)
-"aM" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 10
-	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/processor,
-/turf/simulated/floor/grime,
-/area/mining/refinery)
 "aT" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side{
@@ -223,6 +206,10 @@
 	},
 /turf/space,
 /area/noGenerate)
+"cW" = (
+/obj/machinery/sheet_extruder,
+/turf/simulated/floor/caution/north,
+/area/mining/manufacturing)
 "du" = (
 /obj/lattice,
 /mob/living/critter/martian/soldier,
@@ -327,6 +314,23 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
+"gt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/grime,
+/area/mining/refinery)
 "gv" = (
 /obj/machinery/dispenser{
 	pltanks = 0
@@ -2358,6 +2362,15 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"xV" = (
+/obj/storage/crate,
+/obj/item/stamp,
+/obj/item/emeter,
+/obj/lattice,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
+/turf/simulated/floor/martian,
+/area/noGenerate)
 "xX" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib4"
@@ -4622,15 +4635,6 @@
 "Mx" = (
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"MA" = (
-/obj/storage/crate,
-/obj/item/stamp,
-/obj/item/emeter,
-/obj/lattice,
-/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
-/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
-/turf/simulated/floor/martian,
-/area/noGenerate)
 "ME" = (
 /obj/decal/cleanable/gangtag{
 	desc = "A hastily-scrawled sequence of numbers: 1-949-415-6298. What does it mean?";
@@ -5051,10 +5055,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
-"PQ" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor/caution/north,
-/area/mining/manufacturing)
 "PS" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttlebay{
@@ -17838,7 +17838,7 @@ ab
 aw
 aw
 aw
-MA
+xV
 Ug
 Ug
 Ug
@@ -51710,7 +51710,7 @@ nn
 wY
 NI
 Hg
-PQ
+cW
 Me
 Md
 wd
@@ -55033,7 +55033,7 @@ sQ
 OT
 Cn
 Hu
-aM
+gt
 YR
 Ra
 Kc

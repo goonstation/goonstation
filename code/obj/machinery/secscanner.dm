@@ -29,7 +29,7 @@ TYPEINFO(/obj/machinery/secscanner)
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 	Crossed(atom/movable/AM)
 		if(isliving(AM) && !isintangible(AM))

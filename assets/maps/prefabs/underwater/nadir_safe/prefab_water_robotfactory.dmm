@@ -35,10 +35,6 @@
 "ai" = (
 /turf/simulated/floor/plating/random,
 /area/prefab/replicant_lab)
-"aj" = (
-/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
 "ak" = (
 /obj/decal/cleanable/blood{
 	icon_state = "tracks"
@@ -111,13 +107,6 @@
 "aw" = (
 /turf/variableTurf/clear,
 /area/space)
-"ax" = (
-/obj/decal/cleanable/oil{
-	icon_state = "streak2"
-	},
-/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
-/turf/simulated/floor/plating/scorched,
-/area/prefab/replicant_lab)
 "ay" = (
 /obj/decal/cleanable/blood{
 	icon_state = "lum"
@@ -279,26 +268,6 @@
 "aW" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/decal/fakeobjects/robot,
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine-blue"
-	},
-/area/prefab/replicant_lab)
-"aX" = (
-/obj/decal/cleanable/blood{
-	icon_state = "drip3"
-	},
-/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
-/obj/decal/cleanable/blood/tracks{
-	dir = 10;
-	icon_state = "tracks"
-	},
-/obj/decal/cleanable/blood/tracks{
-	dir = 5;
-	icon_state = "tracks"
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "smear3"
-	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
@@ -466,14 +435,6 @@
 /obj/decal/fakeobjects/robot,
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
-"bt" = (
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy,
-/obj/decal/cleanable/blood/tracks{
-	dir = 9;
-	icon_state = "tracks"
-	},
-/turf/simulated/floor/plating/scorched,
-/area/prefab/replicant_lab)
 "bv" = (
 /obj/decal/cleanable/oil{
 	icon_state = "floor2"
@@ -496,13 +457,6 @@
 "by" = (
 /obj/item/organ/brain,
 /obj/decal/fakeobjects/robot,
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine-blue"
-	},
-/area/prefab/replicant_lab)
-"bz" = (
-/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
-/obj/item/electronics/fuse,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
@@ -567,10 +521,6 @@
 /obj/machinery/bot/floorbot,
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
-"bJ" = (
-/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
 "bK" = (
 /obj/decal/cleanable/blood{
 	icon_state = "gib4"
@@ -631,12 +581,6 @@
 /obj/item/organ/eye,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
-"bS" = (
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
-/obj/storage/crate/bin,
-/obj/item/organ/brain/synth,
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
 "bT" = (
 /obj/decal/cleanable/blood{
 	icon_state = "gib4"
@@ -679,16 +623,6 @@
 	},
 /obj/item/reagent_containers/patch/synthflesh,
 /obj/item/reagent_containers/patch/mini/bruise,
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
-"bZ" = (
-/obj/decal/cleanable/oil{
-	icon_state = "floor5"
-	},
-/obj/decal/cleanable/robot_debris,
-/obj/item/mob_part/humanoid_part/carbon_part/arm/left,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "ca" = (
@@ -738,29 +672,6 @@
 	icon_state = "engine-blue"
 	},
 /area/prefab/replicant_lab)
-"cg" = (
-/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy,
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
-"ch" = (
-/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
-/obj/item/kitchen/utensil/knife,
-/obj/decal/cleanable/blood{
-	icon_state = "floor5"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
-"ci" = (
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
-/obj/decal/cleanable/blood{
-	icon_state = "drip5"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibup1"
-	},
-/obj/item/reagent_containers/patch/mini/bruise,
-/turf/simulated/floor/shuttlebay,
-/area/prefab/replicant_lab)
 "cj" = (
 /obj/machinery/bot/medbot/terrifying,
 /turf/simulated/floor/stairs{
@@ -804,30 +715,6 @@
 	icon_state = "engine-blue"
 	},
 /area/prefab/replicant_lab)
-"cp" = (
-/obj/decal/cleanable/robot_debris{
-	icon_state = "gib7"
-	},
-/obj/item/mob_part/humanoid_part/carbon_part/arm/right,
-/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
-/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
-/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy,
-/obj/decal/cleanable/blood{
-	icon_state = "drip5"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib4"
-	},
-/turf/simulated/floor/plating/damaged3,
-/area/prefab/replicant_lab)
-"cq" = (
-/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
-/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
-/obj/item/scalpel,
-/obj/item/reagent_containers/patch/synthflesh,
-/turf/simulated/floor/plating/damaged3,
-/area/prefab/replicant_lab)
 "cr" = (
 /obj/item/electronics/resistor,
 /obj/machinery/light/incandescent/blueish,
@@ -870,12 +757,6 @@
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
-/area/prefab/replicant_lab)
-"cw" = (
-/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
-/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
-/obj/item/reagent_containers/patch/mini/burn,
-/turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "cx" = (
 /obj/rack,
@@ -1017,10 +898,6 @@
 /obj/item/reagent_containers/glass/oilcan,
 /turf/simulated/floor/black/grime,
 /area/prefab/replicant_lab)
-"cS" = (
-/obj/machinery/processor,
-/turf/simulated/floor/plating/damaged1,
-/area/prefab/replicant_lab)
 "cT" = (
 /obj/machinery/r_door_control{
 	id = "battledrone_podbay"
@@ -1043,6 +920,129 @@
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
+/area/prefab/replicant_lab)
+"ec" = (
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/sturdy,
+/obj/decal/cleanable/blood/tracks{
+	dir = 9;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/prefab/replicant_lab)
+"uz" = (
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
+/obj/item/scalpel,
+/obj/item/reagent_containers/patch/synthflesh,
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/replicant_lab)
+"wq" = (
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/storage/crate/bin,
+/obj/item/organ/brain/synth,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"CM" = (
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"Fg" = (
+/obj/item/mob_part/humanoid_part/silicon_part/robot_frame,
+/obj/item/electronics/fuse,
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine-blue"
+	},
+/area/prefab/replicant_lab)
+"FP" = (
+/obj/decal/cleanable/oil{
+	icon_state = "floor5"
+	},
+/obj/decal/cleanable/robot_debris,
+/obj/item/mob_part/humanoid_part/carbon_part/arm/left,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"Hm" = (
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
+/obj/item/kitchen/utensil/knife,
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"IG" = (
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/head/antique,
+/obj/item/reagent_containers/patch/mini/burn,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"Lk" = (
+/obj/decal/cleanable/blood{
+	icon_state = "drip3"
+	},
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 5;
+	icon_state = "tracks"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "smear3"
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine-blue"
+	},
+/area/prefab/replicant_lab)
+"Mv" = (
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/light,
+/obj/decal/cleanable/blood{
+	icon_state = "drip5"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/obj/item/reagent_containers/patch/mini/bruise,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"Nd" = (
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"Rc" = (
+/obj/decal/cleanable/oil{
+	icon_state = "streak2"
+	},
+/obj/item/mob_part/humanoid_part/silicon_part/chest/light,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/replicant_lab)
+"Rl" = (
+/obj/item/mob_part/humanoid_part/silicon_part/head/sturdy,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/replicant_lab)
+"Rv" = (
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib7"
+	},
+/obj/item/mob_part/humanoid_part/carbon_part/arm/right,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/left,
+/obj/item/mob_part/humanoid_part/carbon_part/leg/right,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/heavy,
+/obj/decal/cleanable/blood{
+	icon_state = "drip5"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/replicant_lab)
+"Yq" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/plating/damaged1,
 /area/prefab/replicant_lab)
 
 (1,1,1) = {"
@@ -1111,7 +1111,7 @@ aa
 ad
 ad
 ae
-ax
+Rc
 ad
 aI
 ad
@@ -1120,7 +1120,7 @@ ad
 ad
 ad
 bD
-bJ
+CM
 ad
 ad
 ad
@@ -1154,7 +1154,7 @@ ad
 bO
 ad
 bX
-cg
+Rl
 ad
 ad
 aJ
@@ -1244,9 +1244,9 @@ ad
 aJ
 bR
 bY
-ch
-cp
-cw
+Hm
+Rv
+IG
 aa
 ad
 ad
@@ -1272,10 +1272,10 @@ al
 ad
 ad
 aa
-bS
-bZ
-ci
-cq
+wq
+FP
+Mv
+uz
 cx
 aa
 cJ
@@ -1378,7 +1378,7 @@ ab
 (12,1,1) = {"
 aw
 aa
-aj
+Nd
 ao
 as
 ai
@@ -1478,7 +1478,7 @@ aW
 aR
 bk
 br
-bz
+Fg
 bG
 bE
 bP
@@ -1504,7 +1504,7 @@ af
 ap
 aG
 aQ
-aX
+Lk
 aO
 bl
 bs
@@ -1537,7 +1537,7 @@ aR
 aR
 be
 ae
-bt
+ec
 bB
 bH
 bN
@@ -1581,7 +1581,7 @@ aa
 aa
 cN
 cQ
-cS
+Yq
 aa
 aw
 "}

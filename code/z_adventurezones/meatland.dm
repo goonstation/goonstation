@@ -1468,6 +1468,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	cant_self_remove = 1
 	cant_other_remove = 1
 	cant_drop = 1
+	c_flags = null // not on belt
 	var/last_shot = 0
 
 	pickup(var/mob/user)
