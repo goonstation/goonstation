@@ -6,7 +6,7 @@
  */
 
 import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
-import { BlueprintButtonData, ResourceData } from '../type';
+import { ManufacturableData, ResourceData } from '../type';
 import { round } from 'common/math';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
@@ -16,6 +16,14 @@ import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
 };
+
+export type BlueprintButtonProps = {
+  actionVendProduct: (byondRef:string) => void;
+  blueprintData: ManufacturableData;
+  materialData: ResourceData[];
+  manufacturerSpeed: number;
+}
+
 
 /*
 Get whether or not there is a sufficient amount to make. does NOT affect sanity checks on the DM side,
@@ -54,7 +62,7 @@ const getProductionSatisfaction = (
   return patterns_satisfied;
 };
 
-export const BlueprintButton = (props:BlueprintButtonData) => {
+export const BlueprintButton = (props:BlueprintButtonProps) => {
 
   const {
     actionVendProduct,

@@ -9,12 +9,21 @@ import { truncate } from '../../../format';
 import { Button, Stack } from "../../../components";
 import { ButtonWithBadge } from "./ButtonWithBadge";
 import { CenteredText } from "./CenteredText";
-import { ProductionCardData } from "../type";
+
+export type ProductionCardProps = {
+  actionQueueRemove: (index:number) => void;
+  actionQueueTogglePause: (mode:string) => void;
+  img:string;
+  index:number;
+  mode: 'working' | 'halt' | 'ready';
+  name:string;
+}
+
 /*
   Card which shows the blueprint being produced/queued, and if currently being produced,
   a progressbar for how close it is to being done.
 */
-export const ProductionCard = (params:ProductionCardData) => {
+export const ProductionCard = (params:ProductionCardProps) => {
   const {
     actionQueueRemove,
     actionQueueTogglePause,

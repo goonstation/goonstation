@@ -12,6 +12,8 @@
 #define MAX_SPEED_HACKED 5 //! maximum speed manufacturers which are hacked (WIRE_EXTEND has been pulsed) can be set to
 #define MAX_SPEED_DAMAGED 8 //! maximum speed that fabricators which flip_out() can be set to, randomly.
 #define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
+#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
+
 TYPEINFO(/obj/machinery/manufacturer)
 	mats = 20
 
@@ -297,7 +299,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// No need to do this if we're depowered/broken though
 		if (should_update_static && !src.is_disabled())
 			should_update_static = FALSE
-			src.update_static_data(user)
+			src.update_static_data()
 
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
@@ -322,6 +324,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
 
 		return list(
+			"delete_allowed" = src.allowed(user),
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
 			"rockbox_message" = src.temp,
@@ -348,7 +351,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return list (
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
-			"delete_allowed" = src.allowed(user),
 			"available_blueprints" = blueprints_as_list(src.available, user),
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
 			"downloaded_blueprints" = blueprints_as_list(src.download, user),
@@ -376,7 +378,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return null
 
-	#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
+
 	/// Gets rockbox data as list for ui_static_data
 	proc/rockboxes_as_list()
 		var/rockboxes = list()
@@ -400,7 +402,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				"ores" = ore_data,
 			))
 		return rockboxes
-	#undef ORE_TAX
+
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
 	proc/blueprints_as_list(var/list/L, mob/user, var/static_elements = FALSE)
@@ -514,15 +516,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if ("request_product")
 				if (ON_COOLDOWN(src, "product", 1 DECI SECOND))
 					boutput(usr, SPAN_ALERT("Slow down!"))
-					return
+					return FALSE
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/))
-					return
+					return FALSE
 				// Verify that there is no href fuckery abound
 				if(!validate_disp(I))
 					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
-					return
+					return FALSE
 				if (!check_enough_materials(I))
 					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture that item."))
 					playsound(src.loc, src.sound_grump, 50, 1)
@@ -532,16 +534,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.queue += I
 					if (src.mode == MODE_READY)
 						src.begin_work( new_production = TRUE )
-						src.updateUsrDialog()
 
 			if ("material_eject")
 				src.eject_material(params["resource"], usr)
+				return TRUE
 
 			if ("material_swap")
 				// Not doing this would certainly allow for exploits/bugs since resource allocation is greedy and could fail with different orders
 				if (src.mode == MODE_WORKING || src.mode == MODE_HALT)
 					boutput(usr, SPAN_ALERT("You cannot do that while the unit is working, it is already using the current materials!"))
+					return FALSE
 				src.swap_materials(params["resource_1"], params["resource_2"])
+				return TRUE
 
 			if ("card")
 				if (params["scan"])
@@ -550,22 +554,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (params["remove"])
 					src.scan = null
 
-			if ("toggle_panel")
-				if (isscrewingtool(usr.equipped()))
-					src.panel_open = !src.panel_open
-				else
-					boutput(usr, SPAN_ALERT("You need to be holding a screwing tool to unfasten the screws on the panel!"))
-
 			if ("wire")
-				if (!(src.panel_open || isAI(usr)))
+				if (!src.panel_open)
 					boutput(usr, SPAN_ALERT("The panel is closed!"))
-					return
+					return FALSE
 
 				switch (params["action"])
 					if ("cut", "mend")
 						if (src.electrified)
 							if (src.shock(usr, 100))
-								return
+								return FALSE
 						if (!(issnippingtool(usr.equipped())))
 							boutput(usr, SPAN_ALERT("You need to be holding a snipping tool for that!"))
 						else
@@ -577,29 +575,31 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if ("pulse")
 						if (!(ispulsingtool(usr.equipped()) || isAI(usr)))
 							boutput(usr, SPAN_ALERT("You need to be holding a pulsing tool or similar for that!"))
-						else
-							src.pulse(usr, text2num_safe(params["wire"]))
+							return FALSE
+						src.pulse(usr, text2num_safe(params["wire"]))
 
 			if ("speed")
 				if (src.mode == MODE_WORKING)
 					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
-					return
+					return FALSE
 				src.speed = clamp(params["value"], 1, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 
 			if ("repeat")
 				src.repeat = !src.repeat
 
 			if ("ore_purchase")
-				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND)) return
+				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND))
+					return FALSE
 				src.buy_ore(params["ore"], params["storage_ref"])
 
 			if ("clear") // clear entire queue
-				if (ON_COOLDOWN(src, "clear", 1 SECOND)) return
-				var/Qlength = length(src.queue)
-				if (Qlength < 1) // Nothing in list
+				if (ON_COOLDOWN(src, "clear", 1 SECOND))
+					return FALSE
+				var/queue_length = length(src.queue)
+				if (!queue_length) // Nothing in list
 					return
 
-				if (Qlength > 2)
+				if (queue_length > 2)
 					src.queue.Cut(2)
 
 				if (src.mode != MODE_WORKING)
@@ -612,9 +612,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.build_icon()
 
 			if ("pause_toggle")
-				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND)) return
+				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND))
+					return FALSE
 				if (params["action"] == "continue")
-					if (length(src.queue) < 1)
+					if (!length(src.queue))
 						boutput(usr, SPAN_ALERT("Cannot find any items in queue to continue production."))
 						return
 					if (!check_enough_materials(src.queue[1]))
@@ -633,7 +634,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					boutput(usr, SPAN_ALERT("Slow Down!"))
 					return
 				var/operation = text2num_safe(params["index"])
-				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
+				if (!isnum(operation) || !length(src.queue) || operation > length(src.queue))
 					boutput(usr, SPAN_ALERT("Invalid operation."))
 					return
 				src.queue -= src.queue[operation]
@@ -661,7 +662,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 						return
 					src.eject_manudrive(usr)
 
-		tgui_process.try_update_ui(usr, src)
 
 	proc/buy_ore(ore_name, storage_ref)
 		var/obj/machinery/ore_cloud_storage_container/storage = locate(storage_ref)
@@ -674,7 +674,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if(!scan)
 			src.temp = "You have to scan a card in first."
-			src.updateUsrDialog()
 			return
 		else
 			src.temp = null
@@ -1266,11 +1265,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#APPENDED"))
 
 			if ("clear")
-				var/Qlength = length(src.queue)
-				if (Qlength < 1) // Nothing in list
+				var/queue_length = length(src.queue)
+				if (queue_length < 1) // Nothing in list
 					return
 
-				if (Qlength > 2)
+				if (queue_length > 2)
 					src.queue.Cut(2)
 
 				if (src.mode != MODE_WORKING)
@@ -2998,3 +2997,4 @@ TYPEINFO(/obj/machinery/manufacturer)
 #undef MAX_SPEED_HACKED
 #undef MAX_SPEED_DAMAGED
 #undef ALL_BLUEPRINTS
+#undef ORE_TAX

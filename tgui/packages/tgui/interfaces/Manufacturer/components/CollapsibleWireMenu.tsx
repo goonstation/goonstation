@@ -6,7 +6,7 @@
  */
 
 import { Button, Divider, LabeledList, Section } from "../../../components";
-import { MaintenancePanel } from "../type";
+import { WireIndicatorsData } from "../type";
 import { is_set } from '../../common/bitflag';
 import { WIRE_PANEL_BUTTONS_WIDTH } from '../constant';
 
@@ -17,7 +17,15 @@ const ManufacturerWireData = [
   { name: "Lime", colorName: "lime" },
 ];
 
-export const CollapsibleWireMenu = (props:MaintenancePanel) => {
+export type MaintenanceProps = {
+  actionWirePulse: (index:number) => void
+  actionWireCutOrMend: (index:number) => void
+  indicators: WireIndicatorsData;
+  wires: number[];
+  wire_bitflags:number;
+}
+
+export const CollapsibleWireMenu = (props:MaintenanceProps) => {
   const {
     actionWirePulse,
     actionWireCutOrMend,

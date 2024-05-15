@@ -91,14 +91,6 @@ export type OreData = {
   cost: number;
 }
 
-export type MaintenancePanel = {
-  actionWirePulse: (index:number) => void
-  actionWireCutOrMend: (index:number) => void
-  indicators: WireIndicatorsData;
-  wires: number[];
-  wire_bitflags:number;
-}
-
 export type WireIndicatorsData = {
   electrified: number;
   malfunctioning: BooleanLike;
@@ -117,27 +109,4 @@ export type QueueBlueprint = {
   name: string;
   category: string;
   type: 'available' | 'hidden' | 'download' | 'drive_blueprint';
-}
-
-export type CardInfoProps = {
-  actionCardLogin: () => void;
-  actionCardLogout: () => void;
-  card_owner: string;
-  card_balance: number;
-}
-
-export type ProductionCardData = {
-  actionQueueRemove: (index:number) => void;
-  actionQueueTogglePause: (mode:string) => void;
-  img:string;
-  index:number;
-  mode: 'working' | 'halt' | 'ready';
-  name:string;
-}
-
-export type BlueprintButtonData = {
-  actionVendProduct: (byondRef:string) => void;
-  blueprintData: ManufacturableData;
-  materialData: ResourceData[];
-  manufacturerSpeed: number;
 }

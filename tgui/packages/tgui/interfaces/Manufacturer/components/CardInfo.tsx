@@ -6,8 +6,14 @@
  */
 
 import { Button, LabeledList, Section, Stack } from '../../../components';
-import { CardInfoProps } from '../type';
 import { formatMoney } from '../../../format';
+
+export type CardInfoProps = {
+  actionCardLogin: () => void;
+  actionCardLogout: () => void;
+  card_owner: string;
+  card_balance: number;
+}
 
 export const CardInfo = (props:CardInfoProps) => {
   const {
