@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "id" = P.material.getID(), "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -971,28 +971,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.updateUsrDialog()
 
-	/// Helper proc for swap_materials, gets the material index in the storage datum or retuns null if it doesn't exist.
-	proc/get_material_index_by_id(var/mat_id)
-		var/i = 1
-		for (var/obj/item/material_piece/M in src.get_contents())
-			if (!M.material)
-				continue
-			if (mat_id == M.material.getID())
-				return i
-			i++
-		return null
-
-	/// Swap the "position" of two materials for the sake of priority use management. Changes all 3 relevant lists.
-	proc/swap_materials(var/material_id_1, var/material_id_2)
-		var/material_index_1 = src.get_material_index_by_id(material_id_1)
-		var/material_index_2 = src.get_material_index_by_id(material_id_2)
-		// Could be ejected by someone else between the time of selecting what to swap and swapping it
-		if (isnull(material_index_1) || isnull(material_index_2))
+	/// Swap the "position" of two materials in the manufacturer for the sake of priority use management.
+	proc/swap_materials(var/material_1, var/material_2)
+		// Could be ejected by someone else between the time of selecting what to swap and swapping it or be invalid
+		var/list/storage = src.get_contents()
+		var/index_1 = storage.Find(material_1)
+		var/index_2 = storage.Find(material_2)
+		if (!index_1 || !index_2)
 			boutput(usr, SPAN_ALERT("One or both of those materials are not present in storage. Aborting."))
-		var/list/S = src.get_contents()
-		var/held_material_1 = S[material_index_1]
-		S[material_index_1] = S[material_index_2]
-		S[material_index_2] = held_material_1
+			return
+		var/temp_hold = storage[index_1]
+		storage[index_1] = storage[index_1]
+		storage[index_2] = temp_hold
 		src.should_update_static = TRUE
 
 	proc/eject_material(var/mat_id, mob/user = null)
@@ -1922,10 +1912,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 		should_update_static = TRUE
 
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
+	/// Also ejects things w/o material or that aren't pieces, to ensure safety
 	proc/get_contents()
 		if (isnull(src.storage))
 			src.create_storage(/datum/storage/no_hud)
-		return src.storage.get_contents()
+		var/list/storage_contents = src.storage.get_contents()
+		for (var/obj/item/I as anything in storage_contents)
+			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
+				// Invalid thing somehow, fuck
+				src.storage.transfer_stored_item(I, src.loc)
+				playsound(src.loc, src.sound_grump, 50, 1)
+		return storage_contents
 
 	/*
 	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage

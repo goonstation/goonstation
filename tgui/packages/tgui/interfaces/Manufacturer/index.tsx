@@ -32,15 +32,15 @@ export const Manufacturer = (_, context) => {
   const actionWireCutOrMend = (index:number) => act("wire", { action: ((is_set(data.wire_bitflags, data.wires[index]-1)) ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
-  let swapPriority = (materialID: string) => {
+  let swapPriority = (materialRef: string) => {
     if (swap === null) {
-      setSwappingMaterial(materialID);
+      setSwappingMaterial(materialRef);
     }
-    else if (swap === materialID) {
+    else if (swap === materialRef) {
       setSwappingMaterial(null);
     }
     else {
-      act("material_swap", { "resource_1": swap, "resource_2": materialID });
+      act("material_swap", { "resource_1": swap, "resource_2": materialRef });
       setSwappingMaterial(null);
     }
   };
@@ -118,18 +118,18 @@ export const Manufacturer = (_, context) => {
                   <LabeledList>
                     {data.resource_data.map((resourceData: ResourceData) => (
                       <LabeledList.Item
-                        key={resourceData.id}
+                        key={resourceData.byondRef}
                         buttons={[
                           <Button
                             key="eject"
                             icon="eject"
-                            onClick={() => act("material_eject", { "resource": resourceData.id })}
+                            onClick={() => act("material_eject", { "resource": resourceData.byondRef })}
                           />,
                           <Button
                             key="swap"
                             icon="arrows-up-down"
-                            color={(swap !== resourceData.id) ? null : "green"}
-                            onClick={() => swapPriority(resourceData.id)}
+                            color={(swap !== resourceData.byondRef) ? null : "green"}
+                            onClick={() => swapPriority(resourceData.byondRef)}
                           />,
                         ]}
                         label={toTitleCase(resourceData.name)}

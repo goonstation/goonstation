@@ -42,7 +42,7 @@ const getProductionSatisfaction = (
   // Copy values of mats stored to edit in case we need to try the same material twice
   let material_amts_predicted:Record<string, number> = {};
   materials_stored.forEach((value:ResourceData) => (
-    material_amts_predicted[value.id] = value.amount
+    material_amts_predicted[value.byondRef] = value.amount
   ));
   let patterns_satisfied:boolean[] = [];
   for (let i in pattern_requirements) {
