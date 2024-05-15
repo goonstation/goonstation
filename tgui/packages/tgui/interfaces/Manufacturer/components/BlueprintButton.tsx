@@ -18,6 +18,7 @@ const getBlueprintTime = (time, manufacturerSpeed) => {
 };
 
 export type BlueprintButtonProps = {
+  actionRemoveBlueprint: (byondRef:string) => void;
   actionVendProduct: (byondRef:string) => void;
   blueprintData: ManufacturableData;
   materialData: ResourceData[];
@@ -66,6 +67,7 @@ const getProductionSatisfaction = (
 export const BlueprintButton = (props:BlueprintButtonProps) => {
 
   const {
+    actionRemoveBlueprint,
     actionVendProduct,
     blueprintData,
     materialData,
@@ -160,7 +162,10 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
                 height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
                 disabled={canDelete ? false : notProduceable}
-                onClick={() => actionVendProduct(blueprintData.byondRef)}
+                onClick={() => (canDelete ? (
+                  actionRemoveBlueprint(blueprintData.byondRef)
+                ) : actionVendProduct(blueprintData.byondRef)
+                )}
                 py={BlueprintMiniButtonStyle.IconSize/2}
               >
                 <Icon

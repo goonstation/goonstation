@@ -32,6 +32,7 @@ export const Manufacturer = (_, context) => {
   const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
   const actionWireCutOrMend = (index:number) => act("wire", { action: ((is_set(data.wire_bitflags, data.wires[index]-1)) ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
+  const actionRemoveBlueprint = (byondRef:string) => act("delete", { "blueprint_ref": byondRef });
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   let swapPriority = (materialRef: string) => {
     if (swap === null) {
@@ -97,6 +98,7 @@ export const Manufacturer = (_, context) => {
                   >
                     {blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
                       <BlueprintButton
+                        actionRemoveBlueprint={actionRemoveBlueprint}
                         actionVendProduct={actionVendProduct}
                         key={index}
                         blueprintData={blueprint}
