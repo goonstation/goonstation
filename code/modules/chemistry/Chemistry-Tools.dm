@@ -1211,17 +1211,12 @@ proc/ui_describe_reagents(atom/A)
 		burning_light = src.AddComponent(/datum/component/loctargeting/simple_light, 255, 255, 255, 150)
 		burning_light.update(FALSE)
 		..()
-		START_TRACKING
 
 	get_desc()
 		if(!is_currently_burning)
 			. = " It's presently off."
 		else
 			. = " Its flame is set to [temperature_setting]."
-
-	disposing()
-		STOP_TRACKING
-		..()
 
 	process()
 		if (QDELETED(src.current_container))
