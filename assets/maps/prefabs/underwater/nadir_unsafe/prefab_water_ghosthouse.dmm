@@ -523,11 +523,7 @@
 	pixel_y = 11
 	},
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/mapping_helper/mob_spawn/corpse/human/chaplain{
-	empty_bag = 1;
-	empty_pockets = 1;
-	delete_id = 1
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/chaplain,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "cf" = (

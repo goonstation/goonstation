@@ -86,13 +86,13 @@
 	var/max_limbs_removed = 1
 
 	/// If TRUE we delete the contents of the backpack after spawning
-	var/empty_bag = FALSE
+	var/empty_bag = TRUE
 	/// If TRUE delete the pocket contents if any
-	var/empty_pockets = FALSE
+	var/empty_pockets = TRUE
 	/// If TRUE we delete the ID slot contents after spawning
-	var/delete_id = FALSE
+	var/delete_id = TRUE
 	/// If TRUE we break the headset and make it unscannable after spawning
-	var/break_headset = FALSE
+	var/break_headset = TRUE
 	/// Sent in if we are spawned by a human critter that drops a spawner
 	var/datum/bioHolder/appearance_override = null
 	/// Used to track the created corpse after setup
@@ -119,6 +119,28 @@
 			for (var/obj/item/device/pda2/pda in src.corpse.contents)
 				pda.scannable = FALSE
 
+		if (src.try_buckle)
+			var/obj/stool/S = (locate(/obj/stool) in src.corpse.loc)
+			if (S)
+				S.buckle_in(src.corpse, src.corpse, TRUE)
+				src.corpse.dir = S.dir // Face properly
+
+		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
+		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
+		src.corpse.traitHolder.addTrait("puritan")
+		src.corpse.death(FALSE)
+		src.corpse.is_npc = TRUE
+
+		if (src.no_decomp)
+			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_DECOMPOSITION, "corpse_spawn")
+		if (src.no_miasma)
+			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_MIASMA, "corpse_spawn")
+
+		if (src.randomise_decomp_stage)
+			src.corpse.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_HIGHLY_DECAYED)
+		else
+			src.corpse.decomp_stage = src.decomp_stage
+
 		if (src.skeletonized)
 			src.corpse.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			src.corpse.set_mutantrace(/datum/mutantrace/skeleton)
@@ -126,12 +148,6 @@
 				src.corpse.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				src.corpse.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 				src.corpse.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-
-		if (src.try_buckle)
-			var/obj/stool/S = (locate(/obj/stool) in src.corpse.loc)
-			if (S)
-				S.buckle_in(src.corpse, src.corpse, TRUE)
-				src.corpse.dir = S.dir // Face properly
 
 		if (src.husked)
 			src.corpse.disfigured = TRUE
@@ -195,22 +211,6 @@
 			src.corpse.set_loc(container)
 			container.UpdateIcon()
 
-		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
-		APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
-		src.corpse.traitHolder.addTrait("puritan")
-		src.corpse.death(FALSE)
-		src.corpse.is_npc = TRUE
-
-		if (src.no_decomp)
-			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_DECOMPOSITION, "corpse_spawn")
-		if (src.no_miasma)
-			APPLY_ATOM_PROPERTY(src.corpse, PROP_MOB_NO_MIASMA, "corpse_spawn")
-
-		if (src.randomise_decomp_stage)
-			src.corpse.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_HIGHLY_DECAYED)
-		else
-			src.corpse.decomp_stage = src.decomp_stage
-
 		if (src.appearance_override)
 			src.corpse.bioHolder.CopyOther(src.appearance_override, TRUE, FALSE, FALSE, FALSE)
 
@@ -262,17 +262,9 @@
 
 	captain
 		spawn_type = /mob/living/carbon/human/normal/captain
-		empty_bag = TRUE
-		empty_pockets = TRUE
-		delete_id = TRUE
-		break_headset = TRUE
 
 	head_of_personnel
 		spawn_type = /mob/living/carbon/human/normal/headofpersonnel
-		empty_bag = TRUE
-		empty_pockets = TRUE
-		delete_id = TRUE
-		break_headset = TRUE
 
 /obj/mapping_helper/mob_spawn/corpse/human/random
 	name = "Random Human Corpse Spawn"
