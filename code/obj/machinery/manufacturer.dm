@@ -546,8 +546,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 						else
 							src.mend(usr, text2num_safe(params["wire"]))
 				if ("pulse")
-					if (!(ispulsingtool(usr.equipped()) || (src.can_use_ranged(usr))))
+					if (!ispulsingtool(usr.equipped()) || (isAI(usr) || isrobot(usr)))
 						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!")
+						return
+					if (!((src.can_use_ranged(usr) || src.has_physical_proximity(usr))))
+						src.grump_message(usr, "You need to be adjacent to the fabricator for that!")
 						return
 					src.pulse(usr, text2num_safe(params["wire"]))
 

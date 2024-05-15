@@ -23,11 +23,11 @@ export enum BlueprintMiniButtonStyle {
 }
 
 export enum ProductionCardStyle {
-  
+
 }
 
 // Controls the amount of space the blueprint window takes up. The remaining percentage is settings.
-export const BLUEPRINT_WINDOW_WIDTH = "55%";
+export const SETTINGS_WINDOW_WIDTH = "45%";
 
 // Controls the width of buttons on the panel to be constant, so that cut/mend are of equal widths
 export const WIRE_PANEL_BUTTONS_WIDTH = 5;

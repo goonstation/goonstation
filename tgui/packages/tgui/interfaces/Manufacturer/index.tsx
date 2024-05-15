@@ -16,7 +16,7 @@ import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, Resource
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
-import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
+import { SETTINGS_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
 import { ProductionCard } from './components/ProductionCard';
 
 export const Manufacturer = (_, context) => {
@@ -85,7 +85,7 @@ export const Manufacturer = (_, context) => {
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content scrollable>
         <Stack>
-          <Stack.Item grow width={BLUEPRINT_WINDOW_WIDTH}>
+          <Stack.Item grow>
             <Section>
               {data.all_categories.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (
@@ -108,7 +108,7 @@ export const Manufacturer = (_, context) => {
               ))}
             </Section>
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow width={SETTINGS_WINDOW_WIDTH}>
             <Stack vertical>
               <Stack.Item>
                 <Input placeholder="Search..." width="100%" onInput={(_, value) => setSearchData(value)} />
