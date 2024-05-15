@@ -1810,9 +1810,9 @@ datum
 			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
 			fluid_r = 255
-			fluid_g = 255
-			fluid_b = 255
-			transparency = 255
+			fluid_g = 205
+			fluid_b = 205
+			transparency = 205
 			penetrates_skin = 1
 			depletion_rate = 0.1
 			overdose = 25
@@ -1827,48 +1827,41 @@ datum
 					progression_speed = 0.8
 
 				switch(counter+= (progression_speed * mult))
-					if (1 to 15)
-						M.make_jittery(20)
-						if (probmult(20))
-							M.emote(pick("twitch","twitch_v","quiver"))
-					if (16 to 30)
+					if (1 to 5)
+						if (probmult(8))
+							M.emote(pick("drool","quiver"))
+					if (5 to 15)
+						M.take_brain_damage(0.75 * mult)
+						if (probmult(10))
+							M.emote(pick("drool", "gasp","quiver"))
+							M.setStatus("drowsy", 10 SECONDS)
+					if (15 to 30)
+						M.take_brain_damage(1 * mult)
 						if (probmult(25))
-							M.emote(pick("twitch","twitch_v","drool","quiver","tremble"))
+							M.emote(pick("gasp","drool","quiver","tremble"))
+							M.setStatus("drowsy", 10 SECONDS)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
 						if (prob(10))
 							M.change_misstep_chance(15 * mult)
-						if (prob(15))
-							M.setStatusMin("stunned", 2 SECONDS * mult)
-					if (30 to 60)
+					if (30 to 50)
+						M.take_brain_damage(1.5 * mult)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
-						if (prob(10))
-							M.setStatusMin("stunned", 2 SECONDS * mult)
-							M.emote(pick("twitch","twitch_v","drool","shake","tremble"))
-						if (probmult(5))
-							M.emote("collapse")
-						if (prob(5))
-							M.setStatusMin("knockdown", 4 SECONDS * mult)
-							M.visible_message(SPAN_ALERT("<b>[M] has a seizure!</b>"))
-							M.make_jittery(1000)
-						if (prob(5))
-							boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
+						M.setStatus("drowsy", 10 SECONDS)
+						M.change_misstep_chance(15 * mult)
+						if (prob(20) && M.get_oxygen_deprivation() < 40)
+							if (prob(33)) boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
 							M.emote(pick("gasp", "choke", "cough"))
-							M.losebreath += (1 * mult)
-					if (61 to INFINITY)
+							M.losebreath += (5 * mult)
+					if (50 to INFINITY)
 						if (probmult(15))
 							M.emote(pick("gasp", "choke", "cough","twitch", "shake", "tremble","quiver","drool", "twitch_v","collapse"))
 						M.losebreath = max(5, M.losebreath + (5 * mult))
 						M.take_toxin_damage(1 * mult)
-						M.take_brain_damage(1 * mult)
-						M.setStatusMin("knockdown", 5 SECONDS * mult)
-				if (probmult(8))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
-				M.take_toxin_damage(1 * mult)
-				M.take_brain_damage(1 * mult)
-				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
+						M.take_brain_damage(2 * mult)
+						M.setStatusMin("paralysis", 5 SECONDS * mult)
+				M.take_toxin_damage(1.5 * mult)
 				..()
 				return
 

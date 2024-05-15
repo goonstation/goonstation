@@ -22,6 +22,7 @@ datum
 		var/data = null
 		var/volume = 0
 		///Fluids now have colors
+		var/color_weight = 1 // how much does this tint other chems in a mix
 		var/transparency = 150
 		var/fluid_r = 0
 		var/fluid_b = 0

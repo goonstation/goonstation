@@ -1098,6 +1098,38 @@ datum
 				if (prob(50))
 					DNA.endurance++
 
+		algae
+			name = "space algae"
+			id = "algae"
+			description = "Saltwater algae blooms, potentially dangerous."
+			reagent_state = SOLID
+			color_weight = 30 // algae severely alters the color of big water pools
+			fluid_r = 10
+			fluid_g = 230
+			fluid_b = 110
+			transparency = 250
+			value = 2
+			hygiene_value = -0.5
+			viscosity = 0.55
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (probmult(10))
+					boutput(M, SPAN_ALERT("You feel very sick."))
+					M.setStatus("drowsy", 4 SECONDS)
+					M.reagents.add_reagent("toxin", rand(2,4))
+				else if (probmult(15))
+					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+				..()
+				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (prob(15))
+					boutput(M, SPAN_ALERT("You feel somewhat sick."))
+					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+				return
+
 		cryostylane
 			name = "cryostylane"
 			id = "cryostylane"

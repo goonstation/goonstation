@@ -1046,7 +1046,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			// weigh contribution of each reagent to the average color by amount present and it's transparency
 
-			var/weight = current_reagent.volume * current_reagent.transparency / 255
+			var/weight = current_reagent.volume * current_reagent.transparency * current_reagent.color_weight / 255
 			total_weight += weight
 
 			average.r += weight * current_reagent.fluid_r

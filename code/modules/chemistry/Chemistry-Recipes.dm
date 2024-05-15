@@ -2566,15 +2566,63 @@
 				holder.remove_reagent("cyanide", amount_to_smoke)
 				count = 0
 
-	Saxitoxin // replacing Sarin - come back to this with new recipe
+	algae_growth
+		name = "algae growth"
+		id = "algae_growth"
+		result_amount = 1
+		required_reagents = list("water" = 0, "salt" = 0)
+		hidden = TRUE
+		mix_sound = null
+		instant = FALSE
+		stateful = TRUE
+		reaction_speed = 1
+		reaction_icon_state = null
+		var/accelerant_reagents = list("calcium", "phosphorus", "silicon", "ammonia")
+		inhibitors = list("chlorine")
+
+		does_react(var/datum/reagents/holder)
+			if (holder.my_atom && holder.my_atom.is_open_container()\
+				|| (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
+				if (holder.get_reagent_amount("water") < 500\
+				|| holder.get_reagent_amount("water") < (holder.get_reagent_amount("algae") * 20))
+					return FALSE
+				if (holder.has_reagent("vomit") || holder.has_reagent("algae") || holder.has_reagent("space_fungus")\
+					|| holder.has_reagent("blood"))
+					return TRUE
+			return FALSE
+
+		on_reaction(var/datum/reagents/holder, created_volume)
+			if(holder.my_atom && holder.my_atom.is_open_container()\
+				|| (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
+				var/algae_amount = holder.get_reagent_amount("algae")
+				var/total_water_amt = holder.get_reagent_amount("water")
+				var/speed_mult = 1
+
+				for (var/accelerant in accelerant_reagents) // A way to speed this up a bit
+					if (holder.has_reagent(accelerant))
+						holder.remove_reagent(accelerant, reaction_speed/4)
+						speed_mult += 1
+
+				if ((algae_amount * 20) < total_water_amt)
+					holder.add_reagent("algae", reaction_speed * speed_mult)
+					holder.remove_reagent("water", reaction_speed/2)
+
+				if (prob(6) && algae_amount > 10)
+					var/location = get_turf(holder.my_atom)
+					for(var/mob/M in all_viewers(null, location))
+						boutput(M, SPAN_NOTICE("It smells tepid in here."))
+			return
+
+	Saxitoxin
 		name = "Saxitoxin"
 		id = "saxitoxin"
 		result = "saxitoxin"
-		required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "weedkiller" = 1)
-		result_amount = 3 // it is super potent
-		mix_phrase = "The mixture yields a colorless, odorless liquid."
+		required_reagents = list("hydrogen" = 1, "algae" = 5, "pacid" = 1)
+		max_temperature = T0C - 50 // requires thorough freezing
+		result_amount = 5
+		reaction_icon_color = "#d01e1e"
+		mix_phrase = "The algae shrivels and fumes off toxins."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		hidden = TRUE
 
 		on_reaction(var/datum/reagents/holder, created_volume)
 			var/location = get_turf(holder.my_atom)
@@ -2586,6 +2634,26 @@
 				smokeContents.add_reagent("saxitoxin", created_volume / 6)
 				smoke_reaction(smokeContents, 2, location)
 				return
+
+	algae_death
+		name = "algae death"
+		id = "algae_death"
+		result_amount = 1
+		required_reagents = list("algae" = 1)
+		mix_phrase = "The slowly rots away."
+		mix_sound = null
+		instant = FALSE
+		stateful = TRUE
+		reaction_speed = 1
+		reaction_icon_state = null
+		min_temperature = T0C //Frozen algae remains in stasis and thus doesn't die off
+
+		does_react(var/datum/reagents/holder)// 15 multiplier instead of 20 to avoid a cyclic reaction exchange
+			if (holder.get_reagent_amount("water") < (holder.get_reagent_amount("algae") * 15))
+				return TRUE
+			if (holder.has_reagent("chlorine"))
+				return TRUE
+			return FALSE
 
 	menthol
 		name = "Menthol"
