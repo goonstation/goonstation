@@ -411,6 +411,23 @@
 	if (!O)
 		return null
 
+	var/is_mutantrace = FALSE
+	if (istype(src.mutantrace, /datum/mutantrace/lizard))
+		O.icon_state = "ghost-lizard"
+		is_mutantrace = TRUE
+	else if (istype(src.mutantrace, /datum/mutantrace/cow))
+		O.icon_state = "ghost-cow"
+		is_mutantrace = TRUE
+	else if (istype(src.mutantrace, /datum/mutantrace/skeleton))
+		O.icon_state = "ghost-skeleton"
+		is_mutantrace = TRUE
+	else if (istype(src.mutantrace, /datum/mutantrace/roach))
+		O.icon_state = "ghost-roach"
+		is_mutantrace = TRUE
+	else if (istype(src.mutantrace, /datum/mutantrace/pug))
+		O.icon_state = "ghost-pug"
+		is_mutantrace = TRUE
+
 	. = O
 
 	if (glasses)
@@ -421,21 +438,29 @@
 	else
 		O.ClearSpecificOverlays("glasses")
 
+	if (is_mutantrace && !src.traitHolder?.hasTrait("bald"))
+		return O
+
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image(src.bioHolder.mobAppearance.customization_first.icon, src.bioHolder.mobAppearance.customization_first.id)
+		var/image/hair
+		if (!is_mutantrace)
+			hair = image(src.bioHolder.mobAppearance.customization_first.icon, src.bioHolder.mobAppearance.customization_first.id)
+		else
+			hair = image(src.mutantrace_hair_icon, src.mutantrace_hair_id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
-		var/image/beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
-		beard.color = src.bioHolder.mobAppearance.customization_second_color
-		beard.alpha = GHOST_HAIR_ALPHA
-		O.AddOverlays(beard, "beard")
+		if (!is_mutantrace)
+			var/image/beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
+			beard.color = src.bioHolder.mobAppearance.customization_second_color
+			beard.alpha = GHOST_HAIR_ALPHA
+			O.AddOverlays(beard, "beard")
 
-		var/image/detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
-		detail.color = src.bioHolder.mobAppearance.customization_third_color
-		detail.alpha = GHOST_HAIR_ALPHA
-		O.AddOverlays(detail, "detail")
+			var/image/detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
+			detail.color = src.bioHolder.mobAppearance.customization_third_color
+			detail.alpha = GHOST_HAIR_ALPHA
+			O.AddOverlays(detail, "detail")
 
 		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
 		if(cust_one && cust_one != "none")

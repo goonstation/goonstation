@@ -760,6 +760,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
 		trinket = src.create_wig()
+		src.mutantrace_hair_icon = src.bioHolder.mobAppearance.customization_first.icon
+		src.mutantrace_hair_id = src.bioHolder.mobAppearance.customization_first.id
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
