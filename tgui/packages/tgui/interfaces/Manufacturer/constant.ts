@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-// Controls the amount of space the blueprint window takes up. The remaining percentage is settings.
+// Controls the amount of space the settings window takes up.
 export const SETTINGS_WINDOW_WIDTH = 20;
 
 // Controls the width of buttons on the panel to be constant, so that cut/mend are of equal widths

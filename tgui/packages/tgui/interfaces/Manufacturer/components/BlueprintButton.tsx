@@ -24,6 +24,7 @@ export type BlueprintButtonProps = {
   materialData: ResourceData[];
   manufacturerSpeed: number;
   deleteAllowed: boolean;
+  hasPower: boolean;
 }
 
 
@@ -73,6 +74,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     materialData,
     manufacturerSpeed,
     deleteAllowed,
+    hasPower,
   } = props;
   const blueprintSatisfaction = getProductionSatisfaction(
     blueprintData.item_paths,
@@ -136,7 +138,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
           height={BlueprintButtonStyle.Height}
           key={blueprintData.name}
           imagePath={blueprintData.img}
-          disabled={notProduceable}
+          disabled={(!hasPower || notProduceable)}
           onClick={() => actionVendProduct(blueprintData.byondRef)}
         >
           <CenteredText
@@ -161,7 +163,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
                 width={BlueprintMiniButtonStyle.Width}
                 height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
-                disabled={canDelete ? false : notProduceable}
+                disabled={canDelete ? false : (!hasPower || notProduceable)}
                 onClick={() => (canDelete ? (
                   actionRemoveBlueprint(blueprintData.byondRef)
                 ) : actionVendProduct(blueprintData.byondRef)
@@ -185,7 +187,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
                 width={BlueprintMiniButtonStyle.Width}
                 height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
-                disabled={notProduceable}
+                disabled={(!hasPower || notProduceable)}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
                 py={BlueprintMiniButtonStyle.IconSize/2}
               >

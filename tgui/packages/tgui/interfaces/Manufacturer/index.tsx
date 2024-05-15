@@ -11,13 +11,14 @@ import { is_set } from '../common/bitflag';
 import { clamp } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { pluralize } from '../common/stringUtils';
-import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
+import { Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
+import { AccessLevels, MANUDRIVE_UNLIMITED, SETTINGS_WINDOW_WIDTH } from './constant';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
-import { AccessLevels, MANUDRIVE_UNLIMITED, SETTINGS_WINDOW_WIDTH } from './constant';
 import { ProductionCard } from './components/ProductionCard';
+import { PowerAlertModal } from './components/PowerAlertModal';
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
@@ -83,12 +84,17 @@ export const Manufacturer = (_, context) => {
     blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
   );
 
+  const window_width = 1200;
+  const window_height = 600;
+
   return (
-    <Window width={1200} height={600} title={data.fabricator_name}>
+    <Window width={window_width} height={window_height} title={data.fabricator_name}>
+      {!data.indicators.hasPower && <PowerAlertModal width={100-SETTINGS_WINDOW_WIDTH} height={"100%"} />}
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
             <Section>
+              {!data.indicators.hasPower && <Dimmer />}
               {data.all_categories.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (
                   <Collapsible
@@ -105,6 +111,7 @@ export const Manufacturer = (_, context) => {
                         manufacturerSpeed={data.speed}
                         materialData={data.resource_data}
                         deleteAllowed={data.delete_allowed !== AccessLevels.DENIED}
+                        hasPower={data.indicators.hasPower !== 0}
                       />
                     ))}
                   </Collapsible>
