@@ -69,6 +69,7 @@ export type ManufacturableData = {
 
   apply_material:BooleanLike;
   show_cost:BooleanLike;
+  isMechBlueprint:BooleanLike;
 }
 
 export type RockboxData = {

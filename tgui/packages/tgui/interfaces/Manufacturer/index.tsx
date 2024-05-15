@@ -16,7 +16,7 @@ import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, Resource
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
-import { SETTINGS_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
+import { AccessLevels, MANUDRIVE_UNLIMITED, SETTINGS_WINDOW_WIDTH } from './constant';
 import { ProductionCard } from './components/ProductionCard';
 
 export const Manufacturer = (_, context) => {
@@ -26,6 +26,7 @@ export const Manufacturer = (_, context) => {
   // Define some actions for the interface and its children
   const actionCardLogout = () => act("card", { "remove": true });
   const actionCardLogin = () => act("card", { "scan": true });
+  const actionQueueClear = () => act("clear");
   const actionQueueRemove = (index:number) => act("remove", { "index": index+1 });
   const actionQueueTogglePause = (mode:string) => act("pause_toggle", { "action": (mode === "working") ? "pause" : "continue" });
   const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
@@ -101,6 +102,7 @@ export const Manufacturer = (_, context) => {
                         blueprintData={blueprint}
                         manufacturerSpeed={data.speed}
                         materialData={data.resource_data}
+                        deleteAllowed={data.delete_allowed !== AccessLevels.DENIED}
                       />
                     ))}
                   </Collapsible>
@@ -108,7 +110,7 @@ export const Manufacturer = (_, context) => {
               ))}
             </Section>
           </Stack.Item>
-          <Stack.Item grow width={SETTINGS_WINDOW_WIDTH}>
+          <Stack.Item width={SETTINGS_WINDOW_WIDTH}>
             <Stack vertical>
               <Stack.Item>
                 <Input placeholder="Search..." width="100%" onInput={(_, value) => setSearchData(value)} />
@@ -263,6 +265,32 @@ export const Manufacturer = (_, context) => {
                       {data.error}
                     </Section>
                   )}
+                  <Stack
+                    textAlign="center"
+                  >
+                    <Stack.Item
+                      width="50%"
+                    >
+                      <Button
+                        icon="pause"
+                        onClick={() => actionQueueTogglePause(data.mode)}
+                        width="100%"
+                      >
+                        Pause
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item
+                      grow
+                    >
+                      <Button
+                        icon="trash"
+                        onClick={() => actionQueueClear()}
+                        width="100%"
+                      >
+                        Clear Queue
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
                   {data.queue.length > 0 && (
                     <Stack.Item>
                       <ProgressBar
@@ -278,7 +306,6 @@ export const Manufacturer = (_, context) => {
                       key={index}
                       index={index}
                       actionQueueRemove={actionQueueRemove}
-                      actionQueueTogglePause={actionQueueTogglePause}
                       mode={data.mode}
                       img={queued.img}
                       name={queued.name}

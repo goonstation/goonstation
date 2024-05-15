@@ -5,9 +5,23 @@
  * @license ISC
  */
 
-/**
- * Controls the size and spacing of blueprint buttons on the main panel.
- */
+// Controls the amount of space the blueprint window takes up. The remaining percentage is settings.
+export const SETTINGS_WINDOW_WIDTH = 20;
+
+// Controls the width of buttons on the panel to be constant, so that cut/mend are of equal widths
+export const WIRE_PANEL_BUTTONS_WIDTH = 5;
+
+// Manudrives use a non-infinite value to specify there is unlimited uses, improve clarity for now
+export const MANUDRIVE_UNLIMITED = -1;
+
+// Constants for the representation obj proc "allowed" has in its return values of a response
+export enum AccessLevels {
+  DENIED = 0,
+  IMPLICIT = 1,
+  ALLOWED = 2,
+}
+
+// Controls the size and spacing of blueprint buttons on the main panel.
 export enum BlueprintButtonStyle {
   Width = 15.5,
   Height = 5,
@@ -22,15 +36,10 @@ export enum BlueprintMiniButtonStyle {
   Spacing = 0.4,
 }
 
+// Controls the production card styling
 export enum ProductionCardStyle {
-
+  Width = SETTINGS_WINDOW_WIDTH,
+  Height = 4,
+  ButtonWidth = 2,
+  ButtonInternalSpacing = 0.5,
 }
-
-// Controls the amount of space the blueprint window takes up. The remaining percentage is settings.
-export const SETTINGS_WINDOW_WIDTH = "45%";
-
-// Controls the width of buttons on the panel to be constant, so that cut/mend are of equal widths
-export const WIRE_PANEL_BUTTONS_WIDTH = 5;
-
-// Manudrives use a non-infinite value to specify there is unlimited uses, improve clarity for now
-export const MANUDRIVE_UNLIMITED = -1;

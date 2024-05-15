@@ -22,6 +22,7 @@ export type BlueprintButtonProps = {
   blueprintData: ManufacturableData;
   materialData: ResourceData[];
   manufacturerSpeed: number;
+  deleteAllowed: boolean;
 }
 
 
@@ -69,6 +70,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     blueprintData,
     materialData,
     manufacturerSpeed,
+    deleteAllowed,
   } = props;
   const blueprintSatisfaction = getProductionSatisfaction(
     blueprintData.item_paths,
@@ -112,8 +114,15 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     </Section>
   );
 
+  const canDelete = blueprintData.isMechBlueprint && deleteAllowed;
   // /datum/manufacture contains no description of its 'contents', so the first item works
-  let content_info = blueprintData.item_descriptions[0];
+  let content_info = "";
+  if (canDelete) {
+    content_info = "Click this to remove the blueprint from the fabricator.";
+  }
+  else {
+    content_info = blueprintData.item_descriptions[0];
+  }
   return (
     <Stack inline>
       <Stack.Item
@@ -150,12 +159,12 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
                 width={BlueprintMiniButtonStyle.Width}
                 height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
-                disabled={notProduceable}
+                disabled={canDelete ? false : notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
                 py={BlueprintMiniButtonStyle.IconSize/2}
               >
                 <Icon
-                  name="info"
+                  name={canDelete ? "trash" : "info"}
                   size={BlueprintMiniButtonStyle.IconSize}
                 />
               </Button>

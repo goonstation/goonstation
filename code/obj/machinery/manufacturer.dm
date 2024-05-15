@@ -471,6 +471,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"apply_material" = M.apply_material,
 			"img" = img,
 			"byondRef" = "\ref[M]",
+			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
 		)
 
 	attack_hand(mob/user)
@@ -629,7 +630,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "Slow down!")
 					return
 				var/queue_length = length(src.queue)
-				if (!queue_length) // Nothing in list
+				if (queue_length < 1) // Nothing in list
 					return
 
 				if (queue_length > 2)
@@ -642,6 +643,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.manual_stop = FALSE
 					src.error = null
 					src.mode = MODE_READY
+
 					src.build_icon()
 
 			if ("pause_toggle")
