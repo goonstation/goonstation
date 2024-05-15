@@ -427,7 +427,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				M.item_names += get_nice_mat_name_for_manufacturers(i)
 
 		for (var/i in 1 to length(M.item_outputs))
-			// extremely unpleasant to do this
 			var/T
 			if (istype(M, /datum/manufacture/mechanics))
 				var/datum/manufacture/mechanics/mech = M
@@ -435,20 +434,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else
 				T = M.item_outputs[i]
 
-			var/obj/O = new T
-			if (!O || !isobj(O)) continue
-			// Only run this marginally heavy code if we're going to be showing item names
-			if (length(M.item_outputs) > 1 || M.create > 1 || M.apply_material)
-				if (M.apply_material)
-					// fix for "Cannot execute null.update_number()"
-					if (isitem(O))
-						var/obj/item/I = O
-						I.inventory_counter_enabled = FALSE
-					var/obj/item/material_piece/P = get_material_for_pattern(M.item_paths[1])
-					O.setMaterial(P.material, appearance=FALSE)
-			generated_names += O.name
-			generated_descriptions += "[O.desc]"
-			qdel(O)
+			if (ispath(T, /atom/))
+				var/atom/A = T
+				generated_names += initial(A.name)
+				generated_descriptions += "[initial(A.desc)]"
 
 		var/img
 		if (istype(M, /datum/manufacture/mechanics))
