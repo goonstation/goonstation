@@ -1020,10 +1020,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			P.setMaterial(target.material)
 			P.change_stack_amount(ejectamt - P.amount)
 			target.change_stack_amount(-ejectamt)
-			if (user)
-				user.put_in_hand_or_drop(P)
-			else
-				src.storage.transfer_stored_item(P, ejectturf)
+			src.storage.transfer_stored_item(P, ejectturf)
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
