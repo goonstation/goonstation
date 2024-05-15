@@ -10,6 +10,7 @@
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
+#ifdef LIVE_SERVER
 	if (roundId == 0) //oh no
 		SPAWN(0)
 			var/counter = 0
@@ -21,6 +22,7 @@
 				counter++
 			message_admins("Roundstart API query succeeded after [counter] failed attempts.")
 			logTheThing(LOG_DEBUG, src, "Roundstart API query succeeded after [counter] failed attempts.")
+#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
@@ -121,6 +123,7 @@
 
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
+	spawn_kitchen_note()
 
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")

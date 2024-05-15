@@ -21,7 +21,7 @@
 		START_TRACKING
 
 	update_icon()
-		if (reagents.total_volume)
+		if (reagents?.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")

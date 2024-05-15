@@ -10586,7 +10586,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bca" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -21007,12 +21007,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security'";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "hoH" = (
@@ -26224,16 +26221,13 @@
 	},
 /area/station/security/detectives_office)
 "mFk" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security'";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "mFI" = (
@@ -37890,7 +37884,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "wdt" = (
-/obj/machinery/processor/portable,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "weD" = (

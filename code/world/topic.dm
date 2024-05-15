@@ -729,6 +729,7 @@
 				var/ircmsg[] = new()
 				ircmsg["major"] = world.byond_version
 				ircmsg["minor"] = world.byond_build
+				ircmsg["goonhub_api"] = apiHandler.enabled ? "Enabled" : "Disabled"
 				return ircbot.response(ircmsg)
 
 			if ("youtube")

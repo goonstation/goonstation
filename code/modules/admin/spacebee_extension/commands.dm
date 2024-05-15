@@ -872,3 +872,57 @@
 			success_msg = SPAN_INTERNAL("[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].")
 		message_admins(success_msg)
 		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")
+
+/datum/spacebee_extension_command/flavor_text
+	name = "flavortext"
+	help_message = "Show current flavor text of a user in round, E.g: `;;flavortext3 leahthetech` See `showprofile` for offline character profile access."
+	argument_types = list(/datum/command_argument/string/ckey = "ckey")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey)
+		var/datum/player/player = find_player(ckey)
+		if (!player)
+			system.reply("Ckey \"[ckey]\" not found", user)
+			return
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Flavor text"
+		ircmsg["name"] = "[ckey], loaded profile: [player.client.preferences.profile_number])"
+		var/message = "**Flavor text:** [player.client.preferences.flavor_text]\n"
+		message += "**Security note:** [player.client.preferences.security_note]\n"
+		message += "**Medical note:** [player.client.preferences.medical_note]\n"
+		message += "**Syndicate intelligence:** [player.client.preferences.synd_int_note]\n"
+		ircmsg["msg"] = html_decode(message)
+		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/show_profile
+	name = "showprofile"
+	argument_types = list(/datum/command_argument/string/ckey = "ckey", /datum/command_argument/number = "profile_num")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey, profile_num)
+		if (profile_num < 1 || profile_num > SAVEFILE_PROFILES_MAX)
+			system.reply("Invalid profile number \"[profile_num]\", please enter 1-[SAVEFILE_PROFILES_MAX]")
+			return
+		var/datum/preferences/prefs = new()
+		var/path = prefs.savefile_path(ckey)
+		if (!fexists(path))
+			system.reply("No savefile found for ckey \"[ckey]\"", user)
+			return
+		var/savefile/F = new /savefile(path, -1)
+		if (!prefs.savefile_load(null, profile_num, F))
+			system.reply("Unable to load savefile for ckey \"[ckey]\"", user)
+			return
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Profile"
+		ircmsg["name"] = "[ckey] ([profile_num])"
+		var/message = "**Profile name**: [prefs.profile_name]\n"
+		message += "**Character name:** [prefs.name_first] [prefs.name_last]\n"
+		message += "**Gender:** [prefs.gender]\n"
+		message += "**Random name:** [prefs.be_random_name ? "true" : "false"]\n"
+		message += "**Random appearance:** [prefs.be_random_look ? "true" : "false"]\n"
+		message += "**Flavor text:** [prefs.flavor_text]\n"
+		message += "**Security note:** [prefs.security_note]\n"
+		message += "**Medical note:** [prefs.medical_note]\n"
+		message += "**Syndicate intelligence:** [prefs.synd_int_note]\n"
+		ircmsg["msg"] = html_decode(message)
+		ircbot.export("help", ircmsg)

@@ -619,10 +619,20 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
-	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
-		src.mind.assigned_role = "Staff Assistant"
-	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
 
+	// preserve your original role;
+	// gives "???" if not an observer and not assigned a role,
+	// your "special_role" if one exists,
+	// and both your job and special role if both are set.
+	var/bar_role_name = src.observe_round ? "Observer" : (src.mind.assigned_role || "???")
+	if (src.mind.special_role)
+		bar_role_name = "[bar_role_name != "???" ? "[bar_role_name], " : ""][capitalize(replacetext(src.mind.special_role, "_", " "))]"
+
+	// future: maybe different outfits for special roles. cyborg costumes. lol
+	var/role_override = null
+	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
+		role_override = "Staff Assistant"
+	newbody.JobEquipSpawned(role_override || src.mind.assigned_role, no_special_spawn = 1)
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -647,6 +657,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		qdel(to_del)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
+		newbody.wear_id:assignment = bar_role_name
+		newbody.wear_id:update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)
