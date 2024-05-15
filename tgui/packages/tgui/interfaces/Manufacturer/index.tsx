@@ -111,7 +111,7 @@ export const Manufacturer = (_, context) => {
                         manufacturerSpeed={data.speed}
                         materialData={data.resource_data}
                         deleteAllowed={data.delete_allowed !== AccessLevels.DENIED}
-                        hasPower={data.indicators.hasPower !== 0}
+                        hasPower={!!data.indicators.hasPower}
                       />
                     ))}
                   </Collapsible>
