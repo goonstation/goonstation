@@ -588,7 +588,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				if (stool)
 					var/list/spawn_range = orange(1, get_turf(stool)) // Skip the actual stool
 					for (var/turf/spot in spawn_range)
-						if (!jpsTurfPassable(spot, source=get_turf(H), passer=H)) // Make sure we can walk there
+						if (!jpsTurfPassable(spot, source=get_turf(stool), passer=H)) // Make sure we can walk there
 							continue
 						if (locate(/mob/living/carbon/human) in spot)
 							continue
