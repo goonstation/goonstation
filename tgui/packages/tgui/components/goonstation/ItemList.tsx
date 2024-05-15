@@ -7,6 +7,7 @@
  */
 
 import { Flex, Image } from '..';
+
 interface ItemListProps {
   items: ItemListItemProps[];
   nothing_text: string;
