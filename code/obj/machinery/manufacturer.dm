@@ -497,6 +497,24 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
+	/// Clear src.queue but not the current working print if it exists
+	proc/clear_queue()
+		var/queue_length = length(src.queue)
+		if (queue_length < 1) // Nothing in list
+			return
+
+		if (src.mode == MODE_WORKING && queue_length > 1)
+			src.queue.Cut(1)
+		if (src.mode != MODE_WORKING)
+			src.queue.Cut(0)
+
+		if (src.mode == MODE_HALT) // Set ready if halted
+			src.manual_stop = FALSE
+			src.error = null
+			src.mode = MODE_READY
+
+			src.build_icon()
+
 	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
 	proc/try_shock(mob/target, var/chance)
 		if (src.electrified)
@@ -629,22 +647,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (ON_COOLDOWN(src, "clear", 1 SECOND))
 					src.grump_message(usr, "Slow down!")
 					return
-				var/queue_length = length(src.queue)
-				if (queue_length < 1) // Nothing in list
-					return
-
-				if (queue_length > 2)
-					src.queue.Cut(2)
-
-				if (src.mode != MODE_WORKING)
-					src.queue -= src.queue[1]
-
-				if (src.mode == MODE_HALT) // Set ready if halted
-					src.manual_stop = FALSE
-					src.error = null
-					src.mode = MODE_READY
-
-					src.build_icon()
+				src.clear_queue()
 
 			if ("pause_toggle")
 				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND))
@@ -1290,19 +1293,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/queue_length = length(src.queue)
 				if (queue_length < 1) // Nothing in list
 					return
-
-				if (queue_length > 2)
-					src.queue.Cut(2)
-
-				if (src.mode != MODE_WORKING)
-					src.queue -= src.queue[1]
-
-				if (src.mode == MODE_HALT) // Set ready if halted
-					src.manual_stop = FALSE
-					src.error = null
-					src.mode = MODE_READY
-
-					src.build_icon()
+				src.clear_queue()
 
 				if (length(src.queue) < 1)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
