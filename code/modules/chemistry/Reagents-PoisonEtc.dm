@@ -1900,13 +1900,13 @@ datum
 						if (prob(20))
 							boutput(M, SPAN_ALERT("<b>Your chest [pick("burns", "hurts", "stings")] like hell.</b>"))
 							M.change_misstep_chance(15 * mult)
-						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 20 SECONDS))
+						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
 					if (45 to INFINITY) // Paralysis kicks in, heart stops
 						M.setStatusMin("paralysis", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
-						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 20 SECONDS))
+						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							boutput(M, SPAN_ALERT("<b>Your chest clutches in pain!</b>"))
 						if(isliving(M))
 							var/mob/living/L = M
