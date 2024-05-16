@@ -148,6 +148,7 @@
 		/obj/item/tool/omnitool/silicon,
 		/obj/item/robodefibrillator,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/device/analyzer/genetic,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
