@@ -271,31 +271,6 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		else if(!href_list["late_join"])
 			new_player_panel()
 
-	proc/IsJobAvailable(var/datum/job/JOB)
-		if(!ticker || !ticker.mode)
-			return 0
-		if (!JOB || !istype(JOB,/datum/job/) || JOB.limit == 0)
-			return 0
-		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
-			return 0
-		if (JOB.requires_supervisor_job && countJob(JOB.requires_supervisor_job) <= 0)
-			return 0
-		if (JOB.requires_whitelist)
-			if (!(src.ckey in NT))
-				return 0
-		if (JOB.mentor_only)
-			if (!(src.ckey in mentors))
-				return 0
-		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
-			return 0
-		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
-			var/round_num = src.client.player.get_rounds_participated()
-			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
-				return 0
-		if (JOB.limit < 0 || JOB.assigned < JOB.limit)
-			return 1
-		return 0
-
 	proc/IsSiliconAvailableForLateJoin(var/mob/living/silicon/S)
 		if (isdead(S))
 			return 0
@@ -321,7 +296,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			return
 		global.latespawning.lock()
 
-		if (JOB && (force || IsJobAvailable(JOB)))
+		if (JOB && (force || job_controls.check_job_eligibility(src, JOB, STAPLE_JOBS | SPECIAL_JOBS)))
 			var/mob/character = create_character(JOB, JOB.allow_traitors)
 			if (isnull(character))
 				global.latespawning.unlock()
@@ -496,7 +471,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		if (J.no_late_join)
 			return
 		var/limit = J.limit
-		if (!IsJobAvailable(J))
+		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
 			// Show unavailable jobs, but no joining them
 			limit = 0
 
@@ -694,11 +669,11 @@ a.latejoin-card:hover {
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
 				for(var/datum/job/special/J in job_controls.special_jobs)
-					if (IsJobAvailable(J) && !J.no_late_join)
+					if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
 						dat += LateJoinLink(J)
 
 				for(var/datum/job/created/J in job_controls.special_jobs)
-					if (IsJobAvailable(J) && !J.no_late_join)
+					if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
 						dat += LateJoinLink(J)
 
 			dat += "</table></div>"
@@ -728,7 +703,7 @@ a.latejoin-card:hover {
 				D.limit = -1
 				C.enabled_jobs += D
 			for (var/datum/job/J in C.enabled_jobs)
-				if (IsJobAvailable(J) && !J.no_late_join)
+				if (job_controls.check_job_eligibility(src, J, STAPLE_JOBS|SPECIAL_JOBS) && !J.no_late_join)
 					var/hover_text = J.short_description || "Join the round as [J.name]."
 					dat += "<tr><td style='width:100%'>"
 					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' title='[hover_text]'><font color=[J.linkcolor]>[J.name]</font></a> ([J.assigned][J.limit == -1 ? "" : "/[J.limit]"])<br>"}

@@ -8031,7 +8031,7 @@
 	dir = 1
 	},
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza{
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
 	desc = "A plain cheese and tomato pizza. I wonder if you could fit this in a keyhole.";
 	name = "cheese keyzza"
 	},
@@ -29677,7 +29677,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
 "cmJ" = (
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni,
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
