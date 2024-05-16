@@ -171,7 +171,7 @@ export const Manufacturer = (_, context) => {
                         maxValue={data.hacked ? data.max_speed_hacked : data.max_speed_normal}
                         step={1}
                         stepPixelSize={100}
-                        disabled={data.mode !== "working"}
+                        disabled={data.mode === "working"}
                         onChange={(_e: any, value: number) => act("speed", { value })}
                       />
                     </LabeledList.Item>
