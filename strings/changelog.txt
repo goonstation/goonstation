@@ -1,4 +1,9 @@
 
+(t)thu may 16 24
+(u)Sovexe
+(p)18879
+(e)🪲🔎🧫🔄⚙🐣|C-Bug, C-Code-Quality, C-Experimental, C-Rework, A-Internal, A-Respawning
+(*)Refactored job assignment code. Jobs variety should improve overall. Unless this change breaks everything.
 (t)wed may 15 24
 (u)Cheffie, ZeWaka and Mordent
 (p)16708
