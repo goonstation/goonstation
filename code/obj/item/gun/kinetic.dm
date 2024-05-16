@@ -3211,7 +3211,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
 			else if (welder.try_weld(user, 2, 2))
 				boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]."))
-				guaranteed_uses ++2;
+				guaranteed_uses ++
 		else
 			..()
 
@@ -3219,6 +3219,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = TRUE
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "flw-broken"
+	item_state = "quadbarrel"
 	name = "Broken Four Letter Word"
 	desc = "Welp, this thing's toast. You bet you pull a slamgun off it, though."
 	force = MELEE_DMG_RIFLE
