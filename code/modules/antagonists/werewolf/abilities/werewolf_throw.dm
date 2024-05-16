@@ -23,6 +23,7 @@
 		if (M == target)
 			boutput(M, SPAN_ALERT("You can't throw yourself."))
 			return 1
+		. = ..()
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
 		HH.changeStatus("stunned", 4 SECONDS)

@@ -167,6 +167,7 @@
 	desc = "Toggle the Mob AI allowing you to following along with the AI."
 	targeted = FALSE
 	cooldown = 0
+	do_logs = FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
@@ -229,8 +230,10 @@
 	icon_state = "crew-credits"
 	targeted = FALSE
 	cooldown = 1 SECOND
+	do_logs = FALSE
 
 	cast(atom/target)
+		. = ..()
 		holder.owner.show_credits()
 
 /datum/targetable/juggle
@@ -247,5 +250,6 @@
 		if (!src.empowered && (target.anchored || target == src.holder.owner) || target.anchored == ANCHORED_ALWAYS)
 			boutput(src.holder.owner, SPAN_ALERT("Your juggling abilities aren't quite enough to juggle that."))
 			return
+		. = ..()
 		var/mob/living/carbon/human/human = src.holder.owner
 		human.add_juggle(target)

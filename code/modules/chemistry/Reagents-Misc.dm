@@ -605,8 +605,10 @@ datum
 			viscosity = 0.14
 
 			reaction_turf(var/turf/target, var/volume)
-				var/obj/hotspot = (locate(/obj/hotspot) in target)
-				if (hotspot)
+				var/list/hotspots = list()
+				for (var/obj/hotspot/hotspot in target)
+					hotspots += hotspot
+				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (T.air)
@@ -616,7 +618,8 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					qdel(hotspot)
+					for (var/obj/hotspot/hotspot as anything in hotspots)
+						qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
 				if (!F)
@@ -1158,8 +1161,10 @@ datum
 						if (B)
 							B.dispose()
 
-				var/obj/hotspot = (locate(/obj/hotspot) in target)
-				if (hotspot)
+				var/list/hotspots = list()
+				for (var/obj/hotspot/hotspot in target)
+					hotspots += hotspot
+				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (!T.air) return //ZeWaka: Fix for TOTAL_MOLES(null)
@@ -1169,7 +1174,9 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					qdel(hotspot)
+					for (var/obj/hotspot/hotspot as anything in hotspots)
+						qdel(hotspot)
+
 				return
 
 		booster_enzyme
@@ -1273,7 +1280,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
-							fireflash(location, clamp(volume/40, 0, 8))
+							fireflash(location, clamp(volume/40, 0, 8), chemfire = CHEM_FIRE_RED)
 							if (length(covered) < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -2075,6 +2082,38 @@ datum
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, SPAN_ALERT("Well, that was gross."))
+
+		viscerite_viscera
+			name = "viscerite viscera"
+			id = "viscerite_viscera"
+			description = "Looking at this makes you feel queasy... ugh."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 135
+			fluid_b = 200
+			hunger_value = 0.5
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				M.HealDamage("All", mult * 2, mult * 1.5)
+				M.take_toxin_damage(0.5 * mult)
+				if(prob(20))
+					M.setStatusMin("knockdown", 3 SECONDS)
+				if(prob(10))
+					boutput(M, SPAN_ALERT("[pick("You feel your insides moving around and shifting", "Your body has never felt better, it has also never felt worse.", "The state of your insides make you feel like you're in a boat that got sucked up into a hurricane", "Urgh, you feel really gross!")]"))
+				..()
+				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == TOUCH)
+					boutput(M, SPAN_ALERT("The pink viscera partially hangs off of your clothes."))
+				if(method == INGEST)
+					boutput(M, "<span class='alert bold'>[pick("The viscera burns your mouth as it goes down", "The texture of the viscera feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "You feel the viscera slide down your throat")]!!</span>")
+					M.setStatusMin("knockdown", 3 SECONDS)
 
 		flockdrone_fluid
 			name = "coagulated gnesis"

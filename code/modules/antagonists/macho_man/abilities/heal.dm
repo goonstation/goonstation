@@ -3,6 +3,7 @@
 	desc = "Sacrifice your health to heal someone else"
 	icon_state = "speedregen"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

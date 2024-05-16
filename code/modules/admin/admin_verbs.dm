@@ -423,7 +423,8 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
-		/client/proc/spawn_all_type
+		/client/proc/spawn_all_type,
+		/client/proc/region_allocator_panel
 		),
 
 	7 = list(
@@ -655,8 +656,6 @@ var/list/special_pa_observing_verbs = list(
 			if( src.holder.level > LEVEL_PA ) //SHIT GUY PLUS
 				src.verbs += special_pa_observing_verbs
 
-	if (src.chatOutput && src.chatOutput.loaded)
-		src.chatOutput.loadAdmin()
 
 /client/proc/clear_admin_verbs()
 	src.deadchat = 0
@@ -689,10 +688,12 @@ var/list/special_pa_observing_verbs = list(
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
+		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are now invisible."))
 	else
 		src.mob.mouse_opacity = 1
 		src.mob.alpha = 255
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are no longer invisible!"))
 
 /client/proc/admin_observe()
@@ -1038,7 +1039,7 @@ var/list/fun_images = list()
 		if("Heavenly")
 			src.respawn_as_self()
 			var/mob/M = src.mob
-			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()
@@ -1439,7 +1440,7 @@ var/list/fun_images = list()
 		if (M.client && (isblob(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 //say to all changelings hiveminds
@@ -1480,7 +1481,7 @@ var/list/fun_images = list()
 		if (is_in_hivemind || C.holder && !C.player_mode)
 			var/thisR = rendered
 			if (C.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /client/proc/silisay(msg as text)
@@ -1511,7 +1512,7 @@ var/list/fun_images = list()
 		if (M.client && (M.robot_talk_understand || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /client/proc/dronesay(msg as text)
@@ -1543,7 +1544,7 @@ var/list/fun_images = list()
 		if (M.client && (isghostdrone(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 
@@ -1610,15 +1611,12 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "has used the dectalk verb with message: [audio["message"]]")
 		logTheThing(LOG_DIARY, src, "has used the dectalk verb with message: [audio["message"]]", "admin")
 
-		for (var/client/C in clients)
+		for (var/client/C as anything in global.clients)
 			if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 				continue
-			var/trigger = src.key
-			if (src.holder && (src.stealth || src.alt_key))
-				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
-			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
+			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
 			if (vol)
-				C.chatOutput.playDectalk(audio["audio"], trigger, vol * 0.75)
+				C.play_dectalk(audio["audio"], volume = vol * 0.75)
 		return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")
@@ -2626,3 +2624,15 @@ var/list/fun_images = list()
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
 	logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
 	logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
+
+/client/proc/region_allocator_panel()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Region Allocator"
+	set desc = "Region Allocator front end panel. Allows you to dynamically allocate and deallocate areas of reserved space."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (isnull(src.holder.region_allocator_panel))
+		src.holder.region_allocator_panel = new
+
+	src.holder.region_allocator_panel.ui_interact(src.mob)

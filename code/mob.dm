@@ -442,8 +442,10 @@
 	..()
 
 /mob/Login()
-	if (!src.client)
-		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	if (isnull(src.client))
+		return
+		// Guests that get deleted, is how
+		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isnull(src.client.tg_layout))
 		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
 	src.client.set_layout(src.client.tg_layout)
@@ -1508,7 +1510,7 @@
 	. = ..()
 	if(ishuman(AM) && src.lying)
 		var/mob/living/carbon/human/H = AM
-		if(H.a_intent == "harm" && can_act(H, FALSE) && !H.lying && !ON_COOLDOWN(H, "free_kick_on_\ref[src]", 4 SECONDS))
+		if(H.a_intent == "harm" && can_act(H, FALSE) && !H.lying && !ON_COOLDOWN(H, "free_kick_on_\ref[src]", H.trample_cooldown))
 			H.melee_attack_normal(src, 0, 0, DAMAGE_BLUNT)
 
 /mob/proc/update_inhands()
@@ -2417,6 +2419,7 @@
 			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 				if (!src.hasStatus("knockdown"))
+					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
 		else

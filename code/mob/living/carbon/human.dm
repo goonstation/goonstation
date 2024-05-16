@@ -153,6 +153,7 @@
 	var/hair_override = 0 // only really works if they have hair. Barbering might help
 	/// forces the mob to display their special hair, even if their flags tell them not to
 	var/special_hair_override = 0 // only really works if they have any special hair
+	var/trample_cooldown = 4 SECONDS
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
@@ -743,7 +744,7 @@
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
-	src.UpdateOverlays(null, "sleep_bubble")
+	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -2294,6 +2295,8 @@
 ///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
+		return
+	if (src.autoequip_slot(I, SLOT_IN_BELT))
 		return
 	if (src.autoequip_slot(I, SLOT_L_STORE))
 		return

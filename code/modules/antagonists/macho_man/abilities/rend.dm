@@ -3,6 +3,7 @@
 	desc = "Tears a target limb from limb"
 	icon_state = "nostun"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

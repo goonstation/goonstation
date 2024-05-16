@@ -27,6 +27,7 @@
 	var/paint_color = "#ff0000"
 	var/add_orig = 0.2
 	var/paint_intensity = 0.6
+	var/paint_uses = 15
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(user)
@@ -36,11 +37,11 @@
 			var/obj/item/paint_can/rainbow/plaid/P = new/obj/item/paint_can/rainbow/plaid(src.loc)
 			if (user)
 				boutput(user, SPAN_NOTICE("You hear a faint droning sound. Like a tiny set of bagpipes."))
-			P.uses = (15 * 7)
+			P.uses = (paint_uses * 7) // 105
 			P.generate_icon()
 		else
 			var/obj/item/paint_can/rainbow/P = new/obj/item/paint_can/rainbow(src.loc)
-			P.uses = (15 * 7)
+			P.uses = (paint_uses * 7)
 			P.generate_icon()
 
 		return 1
@@ -49,7 +50,7 @@
 		if(istype(W,/obj/item/paint_can) && !(status & (BROKEN|NOPOWER)))
 			var/obj/item/paint_can/can = W
 			boutput(user, SPAN_NOTICE("You refill the paint can."))
-			can.uses = 15
+			can.uses = paint_uses
 			can.generate_icon()
 		else
 			..()
