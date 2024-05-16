@@ -70,7 +70,9 @@
 					dir = turn((connectdir & 0xF), 180)
 					found = TRUE
 			if(!found)
+				var/allow = src.allows_vehicles
 				src.ReplaceWith(/turf/unsimulated/floor/lava/with_warning, force=TRUE)
+				src.allows_vehicles = allow
 				update_neighbors()
 
 /datum/biome/lavamoon/lava

@@ -387,7 +387,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if((src.deadly || src.leggy)  && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
 			return_if_overlay_or_effect(O)
 
-			if (istype(O, /obj/projectile))
+			if (istype(O, /obj/projectile) || istype(O, /obj/arrival_missile))
 				return
 
 			if (isintangible(O))
@@ -395,11 +395,18 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (istype(O, /obj/critter))
 				var/obj/critter/C = O
-				if (C.flying)
+				if (C.flying && !src.no_fly_zone)
+					return
+
+			if (istype(O, /obj/machinery/vehicle) && !src.no_fly_zone)
+				var/obj/machinery/vehicle/V = O
+				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.engine?.active)
 					return
 
 			if (isliving(O))
 				var/mob/living/M = O
+				if(M.isFlying && !src.no_fly_zone)
+					return
 				if (M.mind?.damned)
 					melt_away(M)
 					return
