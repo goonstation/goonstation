@@ -1863,14 +1863,14 @@ datum
 						M.take_toxin_damage(1 * mult)
 						M.take_brain_damage(1 * mult)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
-					M.take_toxin_damage(1 * mult)
-					M.take_brain_damage(1 * mult)
-					M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
-					..()
-					return
+				if (probmult(8))
+					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
+					M.vomit(0, null, vomit_message)
+				M.take_toxin_damage(1 * mult)
+				M.take_brain_damage(1 * mult)
+				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
+				..()
+				return
 
 		harmful/dna_mutagen
 			name = "stable mutagen"
