@@ -1895,7 +1895,7 @@ datum
 					if (32 to 45) // Effects ramp up, breathlessness, drowsiness and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
-						M.take_oxygen_deprivation(4 * mult)
+						M.losebreath = max(5, M.losebreath + (3 * mult))
 						M.setStatusMin("drowsy", 40 SECONDS)
 						if (prob(20))
 							boutput(M, SPAN_ALERT("<b>Your chest [pick("burns", "hurts", "stings")] like hell.</b>"))
@@ -1905,7 +1905,7 @@ datum
 					if (45 to INFINITY) // Paralysis kicks in, heart stops
 						M.setStatusMin("paralysis", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
-						M.take_oxygen_deprivation(4 * mult)
+						M.losebreath = max(5, M.losebreath + (5 * mult))
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 20 SECONDS))
 							boutput(M, SPAN_ALERT("<b>Your chest clutches in pain!</b>"))
 						if(isliving(M))
