@@ -22,7 +22,7 @@
 
 	update_icon()
 		. = ..()
-		var/connectdir = get_connected_directions_bitflag(list(/turf/unsimulated/floor/lava=1), list(), TRUE, 2)
+		var/connectdir = get_connected_directions_bitflag(list(/turf/unsimulated/floor/lava=1,/turf/unsimulated/floor/lava/with_warning=1), list(), TRUE, 2)
 		var/found = FALSE
 		if(connectdir)
 			if((connectdir & 0xF) in cardinal)
@@ -70,11 +70,11 @@
 					dir = turn((connectdir & 0xF), 180)
 					found = TRUE
 			if(!found)
-				src.ReplaceWith(/turf/unsimulated/floor/lava, force=TRUE)
+				src.ReplaceWith(/turf/unsimulated/floor/lava/with_warning, force=TRUE)
 				update_neighbors()
 
 /datum/biome/lavamoon/lava
-	turf_type = /turf/unsimulated/floor/lava
+	turf_type = /turf/unsimulated/floor/lava/with_warning
 	flora_types = list(/obj/map/light/lava=100)
 	flora_density = 95
 
@@ -87,15 +87,6 @@
 /datum/biome/lavamoon/crustwall
 	turf_type = /turf/unsimulated/wall/auto/adventure/iomoon
 	fauna_density = 0
-
-TYPEINFO(/turf/unsimulated/floor/auto/pool/lava)
-	connect_overlay = FALSE
-	connect_diagonal = FALSE
-TYPEINFO_NEW(/turf/unsimulated/floor/auto/pool/lava)
-	. = ..()
-	connects_to = list(/turf/unsimulated/floor/auto/pool/lava=1)
-
-
 /datum/map_generator/lavamoon_generator
 	///2D list of all biomes based on heat and humidity combos.
 	var/list/possible_biomes = list(
@@ -150,11 +141,11 @@ TYPEINFO_NEW(/turf/unsimulated/floor/auto/pool/lava)
 		var/list/station_areas = get_accessible_station_areas()
 		for(var/AR in station_areas)
 			station_turfs = get_area_turfs(station_areas[AR], 1)
-			if(length(turfs))
+			if(length(station_turfs))
 				for(var/j in 1 to 5)
 					near_station.add_target(pick(station_turfs))
 		station_turfs = get_area_turfs(/area/listeningpost, 1)
-		if(length(turfs))
+		if(length(station_turfs))
 			for(var/j in 1 to 5)
 				near_station.add_target(pick(station_turfs))
 

@@ -379,11 +379,12 @@ SYNDICATE DRONE FACTORY AREAS
 	can_burn = FALSE
 	can_break = FALSE
 	var/deadly = TRUE
+	var/leggy = FALSE
 	var/no_fly_zone = FALSE
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
+		if((src.deadly || src.leggy)  && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
 			return_if_overlay_or_effect(O)
 
 			if (istype(O, /obj/projectile))
@@ -426,22 +427,97 @@ SYNDICATE DRONE FACTORY AREAS
 			CRASH("[identify_object(O)] melted in lava at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
 		#endif
 		if (ismob(O))
-			if (isliving(O))
-				var/mob/living/M = O
-				var/mob/living/carbon/human/H = M
-				if (istype(H))
-					H.unkillable = FALSE
-				if(!M.stat)
-					M.emote("scream")
-				src.visible_message(SPAN_ALERT("<B>[M]</B> falls into the [src] and melts away!"))
-				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
-				M.firegib(drop_equipment = FALSE) // thanks ISN!
+			if(src.deadly)
+				if (isliving(O))
+					var/mob/living/M = O
+					var/mob/living/carbon/human/H = M
+					if (istype(H))
+						H.unkillable = FALSE
+					if(!M.stat)
+						M.emote("scream")
+					src.visible_message(SPAN_ALERT("<B>[M]</B> falls into the [src] and melts away!"))
+					logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
+					M.firegib(drop_equipment = FALSE) // thanks ISN!
+			else if(src.leggy)
+				SPAWN(0)
+					var/mob/M = O
+					if(M.loc == src)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							M.canmove = 0
+							M.changeStatus("knockdown", 6 SECONDS)
+							boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+							visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
+							H.set_burning(500)
+							playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							M.emote("scream")
+						if (isrobot(M))
+							M.canmove = 0
+							M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
+							M.emote("scream")
+							playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+							visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
+							M.changeStatus("stunned", 6 SECONDS)
+					sleep(5 SECONDS)
+					if(M.loc == src)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							M.changeStatus("knockdown", 10 SECONDS)
+							M.set_body_icon_dirty()
+							H.set_burning(1000)
+							playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							M.emote("scream")
+							if (H.limbs.l_leg && H.limbs.r_leg)
+								if (H.limbs.l_leg)
+									H.limbs.l_leg.delete()
+								if (H.limbs.r_leg)
+									H.limbs.r_leg.delete()
+								boutput(M, "You can feel how both of your legs melt away!")
+								visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
+							else
+								boutput(M, "You can feel intense heat on the lower part of your torso.")
+								visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
+
+						if (isrobot(M))
+							var/mob/living/silicon/robot/R = M
+							R.canmove = 0
+							R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
+							R.emote("scream")
+							playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+							R.changeStatus("stunned", 10 SECONDS)
+							R.part_leg_r.holder = null
+							qdel(R.part_leg_r)
+							if (R.part_leg_r.slot == "leg_both")
+								R.part_leg_l = null
+								R.update_bodypart("l_leg")
+							R.part_leg_r = null
+							R.update_bodypart("r_leg")
+							R.part_leg_l.holder = null
+							qdel(R.part_leg_l)
+							if (R.part_leg_l.slot == "leg_both")
+								R.part_leg_r = null
+								R.update_bodypart("r_leg")
+							R.part_leg_l = null
+							R.update_bodypart("l_leg")
+							visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
+							boutput(M, "You can feel how both of your legs melt away!")
+						else
+							boutput(M, "You can feel intense heat on the lower part of your torso.")
+							visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
+
+
+
 		else
 			src.visible_message(SPAN_ALERT("<B>[O]</B> falls into the [src] and melts away!"))
 			qdel(O)
 
 /turf/unsimulated/floor/lava/nofly
 	no_fly_zone = TRUE
+
+/turf/unsimulated/floor/lava/with_warning
+	deadly = FALSE
+	leggy = TRUE
 
 /obj/decal/lightshaft
 	name = "light"

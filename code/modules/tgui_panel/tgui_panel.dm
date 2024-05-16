@@ -40,7 +40,7 @@
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	set waitfor = FALSE
 	// Minimal sleep to defer initialization to after client constructor
-	sleep(1 SECOND)
+	sleep(1 DECI SECOND)
 	initialized_at = world.time
 	// Perform a clean initialization
 	window.initialize(inline_assets = list(
@@ -49,7 +49,7 @@
 	))
 	// Other setup
 	request_telemetry()
-	SPAWN(5 SECONDS)
+	SPAWN(4 SECONDS)
 		src.on_initialize_timed_out()
 
 /**
