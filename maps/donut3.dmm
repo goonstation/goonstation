@@ -44267,6 +44267,13 @@
 	dir = 4
 	},
 /area/mining/magnet)
+"npO" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/turret_protected/ai_upload_foyer)
 "npT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -136366,7 +136373,7 @@ iAu
 cFR
 oSt
 cFR
-ouW
+npO
 ggR
 ouW
 avI
