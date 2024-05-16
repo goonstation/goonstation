@@ -22,9 +22,9 @@ const setGlobalFontFamily = fontFamily => {
     fontFamily = null;
   }
   document.documentElement.style
-    .setProperty('font-family', fontFamily);
+    .setProperty('font-family', fontFamily + ", \"Twemoji\", \"Segoe UI Emoji\"");
   document.body.style
-    .setProperty('font-family', fontFamily);
+    .setProperty('font-family', fontFamily + ", \"Twemoji\", \"Segoe UI Emoji\"");
 };
 
 export const settingsMiddleware = store => {
