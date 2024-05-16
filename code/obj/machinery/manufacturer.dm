@@ -46,7 +46,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/output_target = null
 	var/list/nearby_turfs = list()
 	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
-	var/temp = null //! Used as a cache when outputting messages to users
+	var/output_message_user = null //! Used as a cache when outputting messages to users
 	var/frequency = FREQ_PDA
 	var/net_id = null
 	var/device_tag = "PNET_MANUFACTURER"
@@ -327,7 +327,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"delete_allowed" = src.allowed(user),
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
-			"rockbox_message" = src.temp,
+			"rockbox_message" = src.output_message_user,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
@@ -565,7 +565,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Call parent AFTER wires so you can at least fix the power on it
 		. = ..()
 
-		if(usr.stat != STAT_ALIVE || usr.restrained())
+		if(.)
 			return
 
 		if (!ON_COOLDOWN(src, "electrified_action", 1 DECI SECOND))
@@ -674,13 +674,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "Slow down!")
 					return
 				if(!src.allowed(usr))
-					src.grump_message(usr, "Access Denied.", sound = TRUE)
+					src.grump_message(usr, "ERROR: Access Denied.", sound = TRUE)
 					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/mechanics/))
 					src.grump_message(usr, "ERROR: Cannot delete this type of schematic.", sound = TRUE)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
+					if (!src.allowed(usr))
+						src.grump_message(usr, "ERROR: Could not re-validate authenticaion credentials. Aborting.", sound = TRUE)
+						return
+					if (!src.can_use_ranged(src) && !src.check_physical_proximity(usr))
+						return
 					src.download -= I
 					should_update_static = TRUE
 
@@ -705,16 +710,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		if(!scan)
-			src.temp = "You have to scan a card in first."
+			src.output_message_user = "You have to scan a card in first."
 			return
 		else
-			src.temp = null
+			src.output_message_user = null
 		if (src.scan.registered in FrozenAccounts)
 			boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 			return
 		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
 		if (account)
-			var/quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
+			var/quantity = tgui_input_number(usr, "How many units do you want to purchase?", "Ore Purchase", default=1, max_value=OCD.amount, min_value=0)
 			if(!isnum_safe(quantity))
 				return
 			////////////
@@ -752,16 +757,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 
-					src.temp = "Enjoy your purchase!"
+					src.output_message_user = "Enjoy your purchase!"
 				else
-					src.temp = "You don't have enough dosh, bucko."
+					src.output_message_user = "You don't have enough dosh, bucko."
 			else
 				if(quantity > 0)
-					src.temp = "I don't have that many for sale, champ."
+					src.output_message_user = "I don't have that many for sale, champ."
 				else
-					src.temp = "Enter some actual valid number, you doofus!"
+					src.output_message_user = "Enter some actual valid number, you doofus!"
 		else
-			src.temp = "That card doesn't have an account anymore, you might wanna get that checked out."
+			src.output_message_user = "That card doesn't have an account anymore, you might wanna get that checked out."
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
