@@ -11,6 +11,8 @@
 (u)Zamujasa
 (e)💅📦|C-QoL, A-Game-Objects
 (*)PDAs now sorta work like ATMs if you have your ID card inserted into them, allowing you to withdraw and deposit money on the go.
+(*)Player-made vending machines now accept things from satchels properly.
+(*)Player-made vending machines will use the last price you entered as the default for new products, instead of it being 15 every time.
 (t)tue may 14 24
 (u)Zamujasa
 (e)💅📦|C-QoL, A-Game-Objects
