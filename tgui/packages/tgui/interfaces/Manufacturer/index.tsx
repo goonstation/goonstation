@@ -127,23 +127,23 @@ export const Manufacturer = (_, context) => {
                     {data.resource_data.map((resourceData: ResourceData) => (
                       <LabeledList.Item
                         key={resourceData.byondRef}
-                        buttons={[
-                          <Button
-                            key="eject"
-                            icon="eject"
-                            onClick={() => act("material_eject", { "resource": resourceData.byondRef })}
-                          />,
-                          <Button
-                            key="swap"
-                            icon="arrows-up-down"
-                            color={(swap !== resourceData.byondRef) ? null : "green"}
-                            onClick={() => swapPriority(resourceData.byondRef)}
-                          />,
-                        ]}
+                        buttons={
+                          <>
+                            <Button
+                              icon="eject"
+                              onClick={() => act("material_eject", { "resource": resourceData.byondRef })}
+                            />
+                            <Button
+                              icon="arrows-up-down"
+                              color={(swap !== resourceData.byondRef) ? null : "green"}
+                              onClick={() => swapPriority(resourceData.byondRef)}
+                            />
+                          </>
+                        }
                         label={toTitleCase(resourceData.name)}
                         textAlign="center"
                       >
-                        {resourceData.amount}
+                        {resourceData.amount.toFixed(1).padStart(5, '\u2007')}
                       </LabeledList.Item>
                     ))}
                   </LabeledList>
@@ -253,17 +253,17 @@ export const Manufacturer = (_, context) => {
                             key={ore.name}
                             label={ore.name}
                             textAlign="center"
-                            buttons={[
+                            buttons={
                               <Button
                                 key={ore.name}
                                 textAlign="center"
                                 onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
                               >
                                 {ore.cost}⪽
-                              </Button>,
-                            ]}
+                              </Button>
+                            }
                           >
-                            {ore.amount}
+                            {ore.amount.toString().padStart(5, '\u2007')}
                           </LabeledList.Item>
                         ))) : "No Ores Loaded."}
                       </LabeledList>
