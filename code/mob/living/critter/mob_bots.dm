@@ -397,5 +397,5 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				continue
 			if (GET_DIST(holder.owner,F) > max_fire_range)
 				continue
-			fireflash(F,0.5,temp)
+			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 

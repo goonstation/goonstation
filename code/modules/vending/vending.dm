@@ -580,6 +580,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
+							P.lastPlayerPrice = R.product_cost
 				update_static_data(usr)
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
@@ -1903,6 +1904,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			. = icon2base64(dummy_icon)
 			product_base64_cache[key] = .
 
+// Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
+/proc/cmp_player_product_sort(datum/data/vending_product/player_product/a, datum/data/vending_product/player_product/b)
+	return sorttext(b.product_name,a.product_name)
+
+
+
 TYPEINFO(/obj/item/machineboard)
 	mats = 2
 
@@ -2097,6 +2104,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	///Set this var to update all static data at the end of the machine tick, done like this to avoid updating for every item added in a stack
 	var/static_data_invalid = FALSE
 	player_list = list()
+	var/lastPlayerPrice = 0
 	icon_panel = "standard-panel"
 
 	New()
@@ -2212,6 +2220,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		var/obj/item/targetContainer = target
 		if (!targetContainer.storage && !istype(targetContainer, /obj/item/satchel))
 			productListUpdater(target, user)
+			src.sortProducts()
 			if(!quiet)
 				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
@@ -2222,6 +2231,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))
 		if (action == "Place it in the vending machine" && !cantuse)
 			productListUpdater(target, user)
+			src.sortProducts()
 			if(!quiet)
 				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
@@ -2230,12 +2240,21 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if(!quiet)
 			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 
-		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
-			targetContainer.storage.transfer_stored_item(I, src, user = user)
-			productListUpdater(I, user)
-		if (istype(targetContainer, /obj/item/satchel))
-			targetContainer.UpdateIcon()
-			targetContainer.tooltip_rebuild = 1
+		if (istype(targetContainer,/obj/item/satchel) && targetContainer.contents.len)
+			// satchels don't use the storage thing, so this is more or less
+			// copied from the code for chutes
+			var/obj/item/satchel/S = targetContainer
+			for(var/obj/item/I in S.contents)
+				I.set_loc(src)
+				productListUpdater(I, user)
+			src.sortProducts()
+			S.UpdateIcon()
+			S.tooltip_rebuild = 1
+		else
+			for (var/obj/item/I as anything in targetContainer.storage.get_contents())
+				targetContainer.storage.transfer_stored_item(I, src, user = user)
+				productListUpdater(I, user)
+			src.sortProducts()
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
@@ -2264,12 +2283,15 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				existed = TRUE
 				break
 		if (!existed)
-			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
+			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, src.lastPlayerPrice)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if (label) itemEntry.label = label
 			logTheThing(LOG_STATION, user, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
+
+	proc/sortProducts()
+		sortList(src.player_list, /proc/cmp_player_product_sort)
 
 	power_change()
 		. = ..()

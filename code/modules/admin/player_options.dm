@@ -159,7 +159,7 @@
 	[M.client ? "" : "<em>(no client)</em>"]
 	[M.ai ? "<a href='?src=\ref[src];target=\ref[M.ai];action=viewvars'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
-	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
+	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.last_ping || "N/A "]ms</div>
 	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
 </div>
 	"}

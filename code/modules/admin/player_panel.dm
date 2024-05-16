@@ -30,7 +30,7 @@
 				"ip" = M.lastKnownIP ? M.lastKnownIP : "N/A",
 				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
 				"playerLocation" = A?.name ? A.name : "N/A",
-				"ping" = M.client?.chatOutput?.last_ping || -1,
+				"ping" = M.client?.last_ping || -1,
 			)
 	. = list(
 		"players" = players
