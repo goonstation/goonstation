@@ -1881,35 +1881,28 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
-			depletion_rate = 0.3
 			var/counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				switch(counter+= (mult))
-					if (10 to 32)
+				switch(counter+= (mult)) // First 10 cycles produce no result
+					if (10 to 32) // Small signs of trouble
 						if (prob(10))
 							M.change_misstep_chance(10 * mult)
 						if (prob(12))
 							M.stuttering = max(M.stuttering, 5)
-					if (32 to 45)
+					if (32 to 45) // Effects ramp up, breathlessness, drowsiness and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
+						M.take_oxygen_deprivation(4 * mult)
 						M.setStatusMin("drowsy", 40 SECONDS)
-						if (prob(40) && M.get_oxygen_deprivation() < 60)
-							if (prob(25))
-								boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
-								M.emote(pick("gasp", "choke", "cough"))
-							M.take_oxygen_deprivation(5 * mult)
-						else if (M.get_oxygen_deprivation() < 30)
-							M.take_oxygen_deprivation(5 * mult)
 						if (prob(20))
 							boutput(M, SPAN_ALERT("<b>Your chest [pick("burns", "hurts", "stings")] like hell.</b>"))
 							M.change_misstep_chance(15 * mult)
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 20 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
-					if (45 to INFINITY)
+					if (45 to INFINITY) // Paralysis kicks in, heart stops
 						M.setStatusMin("paralysis", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.take_oxygen_deprivation(4 * mult)
