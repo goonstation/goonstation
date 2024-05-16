@@ -1,17 +1,18 @@
 /obj/machinery/turret
 	name = "turret"
-	icon = 'icons/obj/turrets.dmi'
-	icon_state = "grey_target_prism"
+	icon = 'icons/obj/turrets64x64.dmi'
+	icon_state = "turret0"
 	var/raised = 0
 	var/enabled = 1
 	anchored = ANCHORED
-	layer = OBJ_LAYER
-	plane = PLANE_NOSHADOW_BELOW
+	layer = MOB_LAYER+0.1
 	invisibility = INVIS_CLOAK
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
 	power_usage = 50
-	var/lasers = 0
+	pixel_x = -16
+	pixel_y = -16
+	var/lasers = "stun"
 	var/health = 100
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
@@ -27,9 +28,9 @@
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "turretCover"
+	icon_state = "cover0"
 	anchored = ANCHORED
-	layer = OBJ_LAYER+0.5
+	layer = OBJ_LAYER-0.1
 	density = 0
 
 /obj/machinery/turret/New()
@@ -55,20 +56,17 @@
 
 /obj/machinery/turret/power_change()
 	if(status & BROKEN)
-		icon_state = "grey_target_prism"
+		icon_state = "turret1"
 	else
 		if( powered() )
 			if (src.enabled)
-				if (src.lasers)
-					icon_state = "orange_target_prism"
-				else
-					icon_state = "target_prism"
+				src.icon_state = "turret1-[src.lasers]"
 			else
-				icon_state = "grey_target_prism"
+				src.icon_state = "turret1"
 			status &= ~NOPOWER
 		else
 			SPAWN(rand(0, 15))
-				src.icon_state = "grey_target_prism"
+				src.icon_state = "turret1"
 				status |= NOPOWER
 
 /obj/machinery/turret/proc/setState(var/enabled, var/lethal)
@@ -169,8 +167,14 @@
 		invisibility = INVIS_NONE
 		popping = 1
 		if (src.cover!=null)
-			flick("popup", src.cover)
-			src.cover.icon_state = "openTurretCover"
+			flick("cover0a", src.cover)
+			src.cover.icon_state = "cover1"
+		if (src.enabled)
+			flick("turret0a-[src.lasers]", src)
+			src.icon_state = "turret1-[src.lasers]"
+		else
+			flick("turret0a", src)
+			src.icon_state = "turret1"
 		SPAWN(1 SECOND)
 			if (popping==1) popping = 0
 			set_density(1)
@@ -180,8 +184,14 @@
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
 		if (src.cover!=null)
-			flick("popdown", src.cover)
-			src.cover.icon_state = "turretCover"
+			flick("cover1a", src.cover)
+			src.cover.icon_state = "cover0"
+		if (src.enabled)
+			flick("turret1a-[src.lasers]", src)
+			src.icon_state = "turret0"
+		else
+			flick("turret1a", src)
+			src.icon_state = "turret0"
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_CLOAK
@@ -200,14 +210,18 @@
 		return
 	else
 
-		if (src.lasers)
+		flick("turret1f-[src.lasers]", src)
+		src.icon_state = "turret1-[src.lasers]"
+		if (src.lasers == "lethal")
 			use_power(200)
-			shoot_projectile_ST_pixel_spread(src, lethal, U)
-			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_laser")
+			SPAWN(0.4 SECONDS)
+				shoot_projectile_ST_pixel_spread(src.cover, lethal, U)
+				muzzle_flash_any(src.cover, get_angle(src.cover,target), "muzzle_flash_laser")
 		else
 			use_power(100)
-			shoot_projectile_ST_pixel_spread(src, stun, U)
-			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_elec")
+			SPAWN(0.4 SECONDS)
+				shoot_projectile_ST_pixel_spread(src.cover, stun, U)
+				muzzle_flash_any(src.cover, get_angle(src.cover,target), "muzzle_flash_elec")
 
 
 	return
@@ -243,7 +257,7 @@
 /obj/machinery/turret/emp_act()
 	..()
 	src.enabled = 0
-	src.lasers = 0
+	src.lasers = "stun"
 	src.power_change()
 	return
 
@@ -251,13 +265,10 @@
 	src.health = 0
 	src.set_density(0)
 	src.status |= BROKEN
-	src.icon_state = "destroyed_target_prism"
+	robogibs(src.loc)
 	if (cover!=null)
 		qdel(cover)
-	sleep(0.3 SECONDS)
-	flick("explosion", src)
-	SPAWN(1.3 SECONDS)
-		qdel(src)
+	qdel(src)
 
 /*
  *	Network turret, a turret controlled over the wire network instead of a turretid
@@ -310,9 +321,9 @@
 					var/new_enabled_state = text2num_safe(L["active"])
 					if(!isnull(new_lethal_state))
 						if(new_lethal_state)
-							src.lasers = 1
+							src.lasers = "lethal"
 						else
-							src.lasers = 0
+							src.lasers = "stun"
 					if(!isnull(new_enabled_state))
 						if(new_enabled_state)
 							src.enabled = 1
@@ -470,11 +481,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		message_admins("[key_name(user || usr)] set turrets to STUN from control \[[log_loc(src)]].")
 	src.updateTurrets()
 
+/obj/machinery/turretid/proc/isLethal()
+	if(src.lethal == 1)
+		return ("lethal")
+	else
+		return ("stun")
+
 /obj/machinery/turretid/proc/updateTurrets()
 	for_by_tcl(turret, /obj/machinery/turret)
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
-			turret.setState(enabled, lethal)
+			turret.setState(enabled, isLethal())
 			src.UpdateIcon()
 
 /obj/machinery/turretid/update_icon()
