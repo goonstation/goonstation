@@ -3168,4 +3168,54 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
 		UpdateIcon()
+/obj/item/gun/kinetic/sawnoff/flw
 
+	name = "The Four Letter Word"
+	desc = "For when you really need to make a statement."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "coachgun"//for sake of not rewriting a ton of break action code, it uses the same names as the DB, but in a different DMI.
+
+	item_state = "shotty"
+
+	force = MELEE_DMG_RIFLE
+	max_ammo_capacity = 4
+	two_handed = TRUE
+
+	var/guaranteed_uses = 8 // allows for 2 volleys before it starts breaking
+
+
+	New()
+		..()
+		ammo = new/obj/item/ammo/bullets/pipeshot/glass
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/glass)
+
+	shoot(var/target, var/start, var/mob/user)
+		..()
+		if(guaranteed_uses > 0)
+			guaranteed_uses--
+			if(guaranteed_uses == 0)
+				user.visible_message("The [src] makes a concerning sound, but seems fine. You feel like you should keep an eye on it.")
+		else if (prob(10))
+			user.visible_message("The [src] breaks!")
+			var/obj/item/brokenpersuader/broken = new /obj/item/brokenpersuader
+			user.drop_item(src)
+			user.put_in_hand_or_drop(broken)
+			qdel(src)
+
+
+/obj/item/brokenpersuader
+	two_handed = TRUE
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "coachgun"
+	name = "Broken Four Letter Word"
+	desc = "Welp, this thing's toast. You bet you can salvage something from it, though."
+	force = MELEE_DMG_RIFLE
+
+	attack_self(mob/user as mob)//may want to have this spawn some scrap
+		user.visible_message("You pull some scraps off the [src].")
+		user.drop_item(src)
+		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
+		var/obj/item/extraloot = new /obj/item/raw_material/scrap_metal
+		user.put_in_hand_or_drop(newgun)
+		user.put_in_hand_or_drop(extraloot) //dumb but beats grabbing a reference to the floor
+		qdel(src)
