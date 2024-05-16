@@ -14,7 +14,6 @@ export type ManufacturerData = {
   error:string;
   fabricator_name:string;
   mode: 'working' | 'halt' | 'ready';
-  rockbox_message:string;
 
   available_blueprints:Record<string, ManufacturableData[]>;
   downloaded_blueprints:Record<string, ManufacturableData[]>;

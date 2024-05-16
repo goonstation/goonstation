@@ -327,7 +327,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"delete_allowed" = src.allowed(user),
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
-			"rockbox_message" = src.output_message_user,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
@@ -715,12 +714,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		if(!scan)
-			src.output_message_user = "You have to scan a card in first."
+			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
 			return
 		else
 			src.output_message_user = null
 		if (src.scan.registered in FrozenAccounts)
-			boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
+			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows." sound = TRUE)
 			return
 		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
 		if (account)
@@ -762,16 +761,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 
-					src.output_message_user = "Enjoy your purchase!"
+					//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
 				else
-					src.output_message_user = "You don't have enough dosh, bucko."
+					src.grump_message(usr, "ERROR: You don't have enough dosh, bucko.", sound = TRUE)
 			else
 				if(quantity > 0)
-					src.output_message_user = "I don't have that many for sale, champ."
+					src.grump_message(usr, "ERROR: I don't have that many for sale, champ.", sound = TRUE)
 				else
-					src.output_message_user = "Enter some actual valid number, you doofus!"
+					src.grump_message(usr, "Enter some actual valid number, you doofus!", sound = TRUE)
 		else
-			src.output_message_user = "That card doesn't have an account anymore, you might wanna get that checked out."
+			src.grump_message(usr, "That card doesn't have an account anymore, you might wanna get that checked out.", sound = TRUE)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
@@ -1080,6 +1079,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else
 				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
 				src.scan = null
+		else
+			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
 		return FALSE
 
 	mouse_drop(over_object, src_location, over_location)

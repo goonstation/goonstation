@@ -251,22 +251,22 @@ export const Manufacturer = (_, context) => {
                         {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
                             key={ore.name}
-                            label={ore.name}
+                            label={`${ore.amount} x ${ore.name}`}
                             textAlign="center"
-                          >
-                            <Button
-                              textAlign="center"
-                              onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
-                              icon="add"
-                            >
-                              {ore.cost}⪽
-                            </Button>
-                          </LabeledList.Item>
+                            buttons={[
+                              <Button
+                                key={ore.name}
+                                textAlign="center"
+                                onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
+                              >
+                                {ore.cost}⪽
+                              </Button>,
+                            ]}
+                          />
                         ))) : "No Ores Loaded."}
                       </LabeledList>
                     </Box>
                   ))}
-                  {data.rockbox_message}
                 </Section>
               </Stack.Item>
               <Stack.Item>
