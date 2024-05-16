@@ -1881,58 +1881,43 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
-			depletion_rate = 0.1
+			depletion_rate = 0.3
 			var/counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				var/my_amt = holder.get_reagent_amount(src.id)
-				var/progression_speed = 1
 
-				if(M.reagents.has_reagent("saxitoxin"))
-					progression_speed = 0.5 // One of the most effective counteracting agents to this is surprisingly saxitoxin
-
-				if (my_amt > 25) // High doses balancer
-					M.reagents.remove_reagent(src.id, min(my_amt - 25, 5))
-					M.change_eye_blurry(5, 5)
-					if (probmult(25))
-						var/vomit_message = SPAN_ALERT("[M] pukes a bloody mess all over [himself_or_herself(M)].")
-						make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
-						M.vomit(0, null, vomit_message)
-						M.take_toxin_damage(2)
-
-				switch(counter+= (mult * progression_speed))
-					if (30 to 70)
+				switch(counter+= (mult))
+					if (10 to 32)
 						if (prob(10))
 							M.change_misstep_chance(10 * mult)
-						if (prob(15))
+						if (prob(12))
 							M.stuttering = max(M.stuttering, 5)
-					if (70 to 100)
+					if (32 to 45)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
-						if (probmult(15))
-							if (prob(25))
-								boutput(M, SPAN_ALERT("<b>You feel sick!</b>"))
-							M.changeStatus("drowsy", 10 SECONDS)
-						if (prob(20) && M.get_oxygen_deprivation() < 20)
+						M.setStatusMin("drowsy", 40 SECONDS)
+						if (prob(40) && M.get_oxygen_deprivation() < 60)
 							if (prob(25))
 								boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
 								M.emote(pick("gasp", "choke", "cough"))
-							M.losebreath += (3 * mult)
+							M.take_oxygen_deprivation(5 * mult)
+						else if (M.get_oxygen_deprivation() < 30)
+							M.take_oxygen_deprivation(5 * mult)
 						if (prob(20))
-							boutput(M, SPAN_ALERT("<b>Your heart [pick("burns", "hurts", "stings")] like hell.</b>"))
+							boutput(M, SPAN_ALERT("<b>Your chest [pick("burns", "hurts", "stings")] like hell.</b>"))
 							M.change_misstep_chance(15 * mult)
-						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
+						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 20 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
-					if (100 to INFINITY)
-						M.changeStatus("drowsy", 40 SECONDS)
+					if (45 to INFINITY)
+						M.setStatusMin("paralysis", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
-						M.losebreath += (15 * mult)
-						boutput(M, SPAN_ALERT("<b>Your chest clutches in pain!</b>"))
+						M.take_oxygen_deprivation(4 * mult)
+						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 20 SECONDS))
+							boutput(M, SPAN_ALERT("<b>Your chest clutches in pain!</b>"))
 						if(isliving(M))
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
-						M.reagents.remove_reagent(src.id, my_amt)
 				..()
 				return
 
