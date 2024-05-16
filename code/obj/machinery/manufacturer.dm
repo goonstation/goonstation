@@ -1665,9 +1665,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
+		var/list/mats_used = check_enough_materials(M)
+		if (isnull(mats_used))
+			return // how
 		for (var/i = 1 to length(M.item_paths))
 			var/pattern = M.item_paths[i]
-			var/mat_id = src.materials_in_use[pattern]
+			var/mat_id = mats_used[pattern]
 			src.change_contents(-M.item_amounts[i]/10, mat_id)
 
 	/// Get how many more times a drive can produce items it is stocked with
