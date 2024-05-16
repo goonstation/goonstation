@@ -285,11 +285,11 @@ export const Manufacturer = (_, context) => {
                       width="50%"
                     >
                       <Button
-                        icon="pause"
+                        icon={data.mode === "halt" ? "play" : "pause"}
                         onClick={() => actionQueueTogglePause(data.mode)}
                         width="100%"
                       >
-                        Pause
+                        {data.mode === "halt" ? "Resume" : "Pause"}
                       </Button>
                     </Stack.Item>
                     <Stack.Item
