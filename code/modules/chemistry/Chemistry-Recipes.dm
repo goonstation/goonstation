@@ -2583,7 +2583,7 @@
 		does_react(var/datum/reagents/holder)
 			if (holder.my_atom && holder.my_atom.is_open_container()\
 				|| (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
-				if (holder.get_reagent_amount("water") < 500\
+				if (holder.get_reagent_amount("water") < 500 || holder.get_reagent_amount("salt") < 50\
 				|| holder.get_reagent_amount("water") < (holder.get_reagent_amount("algae") * 20))
 					return FALSE
 				if (holder.has_reagent("vomit") || holder.has_reagent("algae") || holder.has_reagent("space_fungus")\
@@ -2606,6 +2606,7 @@
 				if ((algae_amount * 20) < total_water_amt)
 					holder.add_reagent("algae", reaction_speed * speed_mult)
 					holder.remove_reagent("water", reaction_speed/2)
+					holder.remove_reagent("salt", (reaction_speed * speed_mult)/2)
 
 				if (prob(6) && algae_amount > 10)
 					var/location = get_turf(holder.my_atom)
@@ -2617,7 +2618,7 @@
 		name = "Saxitoxin"
 		id = "saxitoxin"
 		result = "saxitoxin"
-		required_reagents = list("hydrogen" = 1, "algae" = 5, "pacid" = 1)
+		required_reagents = list("hydrogen" = 1, "algae" = 2, "pacid" = 1)
 		max_temperature = T0C - 50 // requires thorough freezing
 		result_amount = 5
 		reaction_icon_color = "#d01e1e"
@@ -2647,6 +2648,7 @@
 		reaction_speed = 1
 		reaction_icon_state = null
 		min_temperature = T0C //Frozen algae remains in stasis and thus doesn't die off
+		inhibitors = list("formaldehyde")
 
 		does_react(var/datum/reagents/holder)// 15 multiplier instead of 20 to avoid a cyclic reaction exchange
 			if (holder.get_reagent_amount("water") < (holder.get_reagent_amount("algae") * 15))

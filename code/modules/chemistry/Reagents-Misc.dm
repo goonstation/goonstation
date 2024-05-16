@@ -1123,13 +1123,6 @@ datum
 				..()
 				return
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if (prob(15))
-					boutput(M, SPAN_ALERT("You feel somewhat sick."))
-					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-				return
-
 		cryostylane
 			name = "cryostylane"
 			id = "cryostylane"
