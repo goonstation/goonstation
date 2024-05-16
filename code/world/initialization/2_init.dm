@@ -41,7 +41,7 @@
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
-		if (!response.errored && response.body && length(response.body) > 150)
+		if (!response.errored && response.body)
 			var/genWhiteFile = file("data/generated-whitelist.txt")
 			fdel(genWhiteFile)
 			genWhiteFile << response.body
