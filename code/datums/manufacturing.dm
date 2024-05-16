@@ -2220,7 +2220,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Clothing"
 
 /datum/manufacture/miniplasmatank
-	name = "mini plasma tank"
+	name = "Mini plasma tank"
 	item_paths = list("MET-2")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/tank/mini_plasma/empty)
@@ -2229,7 +2229,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Resource"
 
 /datum/manufacture/minioxygentank
-	name = "mini oxygen tank"
+	name = "Mini oxygen tank"
 	item_paths = list("MET-2")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
