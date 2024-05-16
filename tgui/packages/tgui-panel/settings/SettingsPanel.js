@@ -5,14 +5,16 @@
  */
 
 import { toFixed } from 'common/math';
+import { useLocalState } from 'tgui/backend';
 import { useDispatch, useSelector } from 'common/redux';
 import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Stack, Tabs, TextArea } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
-import { rebuildChat, saveChatToDisk } from '../chat/actions';
+import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { changeSettingsTab, updateSettings } from './actions';
-import { SETTINGS_TABS } from './constants';
-import { selectActiveTab, selectSettings } from './selectors';
+import { addHighlightSetting, changeSettingsTab, removeHighlightSetting, updateHighlightSetting, updateSettings } from './actions';
+import { FONTS, MAX_HIGHLIGHT_SETTINGS, SETTINGS_TABS } from './constants';
+import { selectActiveTab, selectHighlightSettingById, selectHighlightSettings, selectSettings } from './selectors';
+import { doMigration } from './migration';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -42,20 +44,21 @@ export const SettingsPanel = (props, context) => {
         {activeTab === 'chatPage' && (
           <ChatPageSettings />
         )}
+        {activeTab === 'textHighlight' && (
+          <TextHighlightSettings />
+        )}
       </Stack.Item>
     </Stack>
   );
 };
 
 export const SettingsGeneral = (props, context) => {
-  const {
-    theme,
-    fontSize,
-    lineHeight,
-    highlightText,
-    highlightColor,
-  } = useSelector(context, selectSettings);
+  const { theme, oddHighlight, fontFamily, fontSize, lineHeight, messagePruning } = useSelector(
+    context,
+    selectSettings
+  );
   const dispatch = useDispatch(context);
+  const [freeFont, setFreeFont] = useLocalState(context, "freeFont", false);
   return (
     <Section>
       <LabeledList>
@@ -66,6 +69,38 @@ export const SettingsGeneral = (props, context) => {
             onSelected={value => dispatch(updateSettings({
               theme: value,
             }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Font style">
+          <Stack inline align="baseline">
+            <Stack.Item>
+              {!freeFont && (
+                <Dropdown
+                  selected={fontFamily}
+                  options={FONTS}
+                  onSelected={value => dispatch(updateSettings({
+                    fontFamily: value,
+                  }))} />
+              ) || (
+                <Input
+                  value={fontFamily}
+                  onChange={(e, value) => dispatch(updateSettings({
+                    fontFamily: value,
+                  }))}
+                />
+              )}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                content="Custom font"
+                icon={freeFont ? "lock-open" : "lock"}
+                color={freeFont ? "good" : "bad"}
+                ml={1}
+                onClick={() => {
+                  setFreeFont(!freeFont);
+                }}
+              />
+            </Stack.Item>
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Font size">
           <NumberInput
@@ -94,49 +129,172 @@ export const SettingsGeneral = (props, context) => {
               lineHeight: value,
             }))} />
         </LabeledList.Item>
+        <LabeledList.Item label="Zebra Highlight">
+          <Button.Checkbox
+            checked={oddHighlight}
+            tooltip="Highlight odd messages"
+            tooltipPosition="right"
+            onClick={() => dispatch(updateSettings({
+              oddHighlight: !oddHighlight,
+            }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Old Message Pruning">
+          <Button.Checkbox
+            checked={messagePruning}
+            tooltip="Cull old messages from the chat"
+            tooltipPosition="right"
+            onClick={() => dispatch(updateSettings({
+              messagePruning: !messagePruning,
+            }))} />
+          {!messagePruning && (
+            <Box inline fontSize="0.9em" ml={1} bold color="label">
+              This may negatively impact performance!
+            </Box>)}
+        </LabeledList.Item>
       </LabeledList>
       <Divider />
-      <Box>
-        <Flex mb={1} color="label" align="baseline">
-          <Flex.Item grow={1}>
-            Highlight words (comma separated):
-          </Flex.Item>
-          <Flex.Item shrink={0}>
-            <ColorBox mr={1} color={highlightColor} />
-            <Input
-              width="5em"
-              monospace
-              placeholder="#ffffff"
-              value={highlightColor}
-              onInput={(e, value) => dispatch(updateSettings({
-                highlightColor: value,
-              }))} />
-          </Flex.Item>
-        </Flex>
-        <TextArea
-          height="3em"
-          value={highlightText}
-          onChange={(e, value) => dispatch(updateSettings({
-            highlightText: value,
-          }))} />
-      </Box>
-      <Divider />
-      <Box>
-        <Button
-          icon="check"
-          onClick={() => dispatch(rebuildChat())}>
-          Apply now
-        </Button>
-        <Box inline fontSize="0.9em" ml={1} color="label">
-          Can freeze the chat for a while.
-        </Box>
-      </Box>
-      <Divider />
-      <Button
-        icon="save"
-        onClick={() => dispatch(saveChatToDisk())}>
+      <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
         Save chat log
       </Button>
+      <Button.Confirm
+        tooltip="Clear the chat of all messages"
+        tooltipPosition="bottom"
+        icon="trash"
+        confirmContent="Are you sure?"
+        content="Clear chat"
+        onClick={() => dispatch(clearChat())} />
+      <Divider />
+      <Button.Confirm
+        tooltip="Migrate your settings from old chat"
+        tooltipPosition="bottom"
+        icon="cookie-bite"
+        confirmContent="Are you sure?"
+        content="Migrate old settings"
+        onClick={() => {
+          doMigration(context);
+          dispatch(rebuildChat());
+        }} />
+      <Box inline fontSize="0.9em" ml={1} bold color="label">
+        Can replace first highlight setting!
+      </Box>
     </Section>
+  );
+};
+
+const TextHighlightSettings = (props, context) => {
+  const highlightSettings = useSelector(context, selectHighlightSettings);
+  const dispatch = useDispatch(context);
+  return (
+    <Section fill scrollable height="200px">
+      <Box fontSize="1.1em" ml={1}>
+        Regular expressions must be encased within forward slashes (/)
+      </Box>
+      <Section p={0}>
+        <Flex direction="column">
+          {highlightSettings.map((id, i) => (
+            <TextHighlightSetting
+              key={i}
+              id={id}
+              mb={i + 1 === highlightSettings.length ? 0 : '10px'}
+            />
+          ))}
+          {highlightSettings.length < MAX_HIGHLIGHT_SETTINGS && (
+            <Flex.Item>
+              <Button
+                color="transparent"
+                icon="plus"
+                content="Add Highlight Setting"
+                onClick={() => {
+                  dispatch(addHighlightSetting());
+                }}
+              />
+            </Flex.Item>
+          )}
+        </Flex>
+      </Section>
+      <Divider />
+      <Button icon="check" onClick={() => dispatch(rebuildChat())}>
+        Apply now
+      </Button>
+      <Box inline fontSize="0.9em" ml={1} color="label">
+        Can freeze the chat for a while.
+      </Box>
+    </Section>
+  );
+};
+
+const TextHighlightSetting = (props, context) => {
+  const { id, ...rest } = props;
+  const highlightSettingById = useSelector(context, selectHighlightSettingById);
+  const dispatch = useDispatch(context);
+  const {
+    highlightColor,
+    highlightText,
+    highlightWholeMessage,
+    matchWord,
+    matchCase,
+  } = highlightSettingById[id];
+  return (
+    <Flex.Item {...rest}>
+      <Flex mb={1} color="label" align="baseline">
+        <Flex.Item grow>
+          <Button.Confirm
+            content="Delete"
+            confirmContent="Confirm?"
+            color="transparent"
+            icon="times"
+            onClick={() =>
+              dispatch(removeHighlightSetting({
+                id: id,
+              }))} />
+        </Flex.Item>
+        <Flex.Item>
+          <Button.Checkbox
+            checked={highlightWholeMessage}
+            content="Whole Message"
+            tooltip="If this option is selected, the entire message will be highlighted in yellow."
+            mr="5px"
+            onClick={() =>
+              dispatch(updateHighlightSetting({
+                id: id,
+                highlightWholeMessage: !highlightWholeMessage,
+              }))} />
+        </Flex.Item>
+        <Flex.Item>
+          <Button.Checkbox
+            content="Exact"
+            checked={matchWord}
+            tooltipPosition="bottom-start"
+            tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
+            onClick={() =>
+              dispatch(updateHighlightSetting({
+                id: id,
+                matchWord: !matchWord,
+              }))} />
+        </Flex.Item>
+        <Flex.Item shrink={0}>
+          <ColorBox mr={1} color={highlightColor} />
+          <Input
+            width="5em"
+            monospace
+            placeholder="#ffdd44"
+            value={highlightColor}
+            onInput={(e, value) =>
+              dispatch(updateHighlightSetting({
+                id: id,
+                highlightColor: value,
+              }))} />
+        </Flex.Item>
+      </Flex>
+      <TextArea
+        height="3em"
+        value={highlightText}
+        placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
+        onChange={(e, value) =>
+          dispatch(updateHighlightSetting({
+            id: id,
+            highlightText: value,
+          }))} />
+    </Flex.Item>
   );
 };
