@@ -707,6 +707,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/buy_ore(ore_name, storage_ref)
 		var/obj/machinery/ore_cloud_storage_container/storage = locate(storage_ref)
 		var/datum/ore_cloud_data/OCD = storage.ores[ore_name]
+		if (!OCD.amount)
+			src.grump_message(usr, "ERROR: That just ran out, hold your horses!", sound = TRUE)
 		var/price = OCD.price
 		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
@@ -760,6 +762,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
+					src.should_update_static = TRUE
 
 					//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
 				else
