@@ -1,5 +1,9 @@
 
 (t)thu may 16 24
+(u)MeggalBozale
+(p)18144
+(e)🔎💅🔄📄⚙|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Internal
+(*)Fabricators have been converted to use a brand new TGUI interface, as well as becoming more performant.
 (u)Sord
 (*)Most restrooms, quarters, and heads quarters now have door bolters inside them. Use them for crime or to just shower in peace!
 (u)Sovexe
