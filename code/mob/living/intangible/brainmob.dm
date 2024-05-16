@@ -83,7 +83,7 @@
 					if (O)
 						O.hear_talk(src, messages, src.get_heard_name())
 
-			for (var/client/C)
+			for (var/client/C as anything in global.clients)
 				if (!C.mob) continue
 				if (istype(C.mob, /mob/new_player))
 					continue
@@ -91,7 +91,7 @@
 				if ((istype(M, /mob/dead/observer) || (iswraith(M) && !M.density) || (istype(M, /mob/living/intangible/brainmob)) && (get_turf(M) in hearers(src))) || ((!isturf(src.loc) && src.loc == M.loc) && !(M in listening) && !istype(M, /mob/dead/target_observer)))
 					var/thisR = rendered
 					if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+						thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[rendered]</span>"
 
 					if (isobserver(M) && M.client) //if a ghooooost (dead) (and online)
 						if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat

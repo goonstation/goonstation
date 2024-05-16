@@ -1600,7 +1600,7 @@
 /area/station/crew_quarters/bar)
 "aHO" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/fungus,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -43736,7 +43736,7 @@
 /obj/storage/closet,
 /obj/item/razor_blade,
 /obj/item/scissors,
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese,
 /obj/item/kitchen/utensil/knife/pizza_cutter,
 /obj/item/plate,
 /obj/machinery/light/small/cool{
@@ -46799,7 +46799,7 @@
 /area/station/maintenance/inner/central)
 "uGD" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza{
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
 	pixel_y = -10
 	},
 /obj/item/paper/book/from_file/cookbook,

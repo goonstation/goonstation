@@ -46,12 +46,12 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Reconnect"
-		command = ".reconnect\n.output browseroutput:output Reconnecting..."
+		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
 	elem "screenshot"
 		name = "&Quick screenshot\tF2"
-		command = ".screenshot auto\n.output browseroutput:output Screenshot taken"
+		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
 	elem
@@ -238,13 +238,6 @@ menu "menu"
 		category = "&Window"
 		can-check = true
 		saved-params = "is-checked"
-	elem "dark_mode"
-		name = "&Dark mode"
-		command = "sync-dark-mode"
-		category = "&Window"
-		can-check = true
-		saved-params = "is-checked"
-		is-checked = true
 	elem "hide_menu"
 		name = "&Hide menu"
 		command = "disable_menu"
@@ -892,6 +885,14 @@ window "outputwindow"
 		is-disabled = true
 		saved-params = ""
 		auto-format = false
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x456
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		saved-params = ""
 
 window "runtimes"
 	elem "runtimes"

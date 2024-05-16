@@ -1,4 +1,34 @@
 
+(t)thu may 16 24
+(u)Sord
+(*)Most restrooms, quarters, and heads quarters now have door bolters inside them. Use them for crime or to just shower in peace!
+(u)Sovexe
+(p)18879
+(e)🪲🔎🧫🔄⚙🐣|C-Bug, C-Code-Quality, C-Experimental, C-Rework, A-Internal, A-Respawning
+(*)Refactored job assignment code. Jobs variety should improve overall. Unless this change breaks everything.
+(t)wed may 15 24
+(u)Cheffie, ZeWaka and Mordent
+(p)16708
+(e)🔄⛔📄|C-Rework, C-Removal, A-UI
+(*)The chat panel is now a TGUI interface. Please report any chat related issues! Even if its just a styling problem!
+(*)Client darkmode preference is now controlled by the chat panel.
+(*)If chat fails to load, go to commands and try "fix chat". This hopefully shouldn't be an issue though.
+(*)Not all regex will work after import as there is a limitation of allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+(+)Chat filtering options have been expanded, check PR page for details. Report any unsorted messages you think fit
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)PDAs now sorta work like ATMs if you have your ID card inserted into them, allowing you to withdraw and deposit money on the go.
+(*)Player-made vending machines now accept things from satchels properly.
+(*)Player-made vending machines will use the last price you entered as the default for new products, instead of it being 15 every time.
+(*)Adjusted mail drop tables a bit. You should get less garbage!
+(t)tue may 14 24
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Phones now announce who's calling.
+(u)Glamurio (Ryou)
+(p)18898
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added a new hand-held device that allows simple communication, available to Ambassadors and Tourists.
 (t)mon may 13 24
 (u)Ikea
 (p)17768
