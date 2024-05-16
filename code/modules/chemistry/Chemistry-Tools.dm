@@ -1218,10 +1218,6 @@ proc/ui_describe_reagents(atom/A)
 		else
 			. = " Its flame is set to [temperature_setting]."
 
-	disposing()
-		STOP_TRACKING
-		..()
-
 	process()
 		if (QDELETED(src.current_container))
 			src.current_container = null
