@@ -538,7 +538,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (action == "wire")
 			if (!src.panel_open)
 				src.grump_message(usr, "The panel is closed!")
-				return FALSE
+				return
 
 			switch (params["action"])
 				if ("cut", "mend")
@@ -553,6 +553,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							src.cut(usr, text2num_safe(params["wire"]))
 						else
 							src.mend(usr, text2num_safe(params["wire"]))
+						return TRUE
 				if ("pulse")
 					if (!ispulsingtool(usr.equipped()) || (isAI(usr) || isrobot(usr)))
 						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!")
@@ -561,6 +562,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.grump_message(usr, "You need to be adjacent to the fabricator for that!")
 						return
 					src.pulse(usr, text2num_safe(params["wire"]))
+					return TRUE
 
 		// Call parent AFTER wires so you can at least fix the power on it
 		. = ..()
@@ -597,6 +599,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.queue += I
 					if (src.mode == MODE_READY)
 						src.begin_work( new_production = TRUE )
+					return TRUE
 
 			if ("material_eject")
 				src.eject_material(params["resource"], usr)
@@ -616,27 +619,32 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.scan_card(I)
 				if (params["remove"])
 					src.scan = null
+				return TRUE
 
 			if ("speed")
 				if (src.mode == MODE_WORKING)
 					src.grump_message(usr, "You cannot alter the speed setting while the unit is working.")
 					return
 				src.speed = clamp(params["value"], 1, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
+				return TRUE
 
 			if ("repeat")
 				src.repeat = !src.repeat
+				return TRUE
 
 			if ("ore_purchase")
 				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND))
 					src.grump_message(usr, "Slow down!")
 					return
 				src.buy_ore(params["ore"], params["storage_ref"])
+				return TRUE
 
 			if ("clear") // clear entire queue
 				if (ON_COOLDOWN(src, "clear", 1 SECOND))
 					src.grump_message(usr, "Slow down!")
 					return
 				src.clear_queue()
+				return TRUE
 
 			if ("pause_toggle")
 				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND))
@@ -651,11 +659,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 					else
 						src.begin_work( new_production = TRUE )
 						src.time_started = TIME
+					return TRUE
 				else if (params["action"] == "pause")
 					src.mode = MODE_HALT
 					src.build_icon()
 					if (src.action_bar)
 						src.action_bar.interrupt(INTERRUPT_ALWAYS)
+					return TRUE
 
 			if ("remove") // remove queued blueprint
 				if (ON_COOLDOWN(src, "remove", 1 DECI SECOND))
@@ -668,6 +678,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.queue -= src.queue[operation]
 				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
 				begin_work( new_production = (operation == 1) )
+				return TRUE
 
 			if ("delete") // remove blueprint from storage
 				if (ON_COOLDOWN(src, "delete", 1 SECOND))
@@ -688,6 +699,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						return
 					src.download -= I
 					should_update_static = TRUE
+					return TRUE
 
 			if ("manudrive")
 				if (ON_COOLDOWN(src, "manudrive", 1 SECOND))
@@ -698,6 +710,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.grump_message(usr, "You can't do that while the unit is working!")
 						return
 					src.eject_manudrive(usr)
+					return TRUE
 
 
 	proc/buy_ore(ore_name, storage_ref)
