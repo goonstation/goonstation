@@ -2619,7 +2619,7 @@
 		id = "saxitoxin"
 		result = "saxitoxin"
 		required_reagents = list("hydrogen" = 1, "algae" = 2, "pacid" = 1)
-		max_temperature = T0C - 50 // requires thorough freezing
+		max_temperature = T0C - 20 // requires thorough freezing
 		result_amount = 5
 		reaction_icon_color = "#d01e1e"
 		mix_phrase = "The algae shrivels and fumes off toxins."
