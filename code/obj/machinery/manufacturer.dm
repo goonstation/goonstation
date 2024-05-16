@@ -1018,7 +1018,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		storage[index_2] = temp_hold
 		src.should_update_static = TRUE
 
-	proc/eject_material(var/mat_id, mob/user = null)
+	proc/eject_material(var/mat_ref, mob/user = null)
 		if (src.mode != MODE_READY)
 			src.grump_message(user, "You cannot eject materials while the unit is working.")
 			return
@@ -1026,7 +1026,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/turf/ejectturf = get_output_location(user)
 		var/obj/item/material_piece/target
 		for(var/obj/item/material_piece/P in src.get_contents())
-			if (P.material.getID() == mat_id)
+			if ("\ref[P]" == mat_ref)
 				target = P
 				break
 		if (isnull(target))
