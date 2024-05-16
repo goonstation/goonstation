@@ -3168,21 +3168,21 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
 		UpdateIcon()
-/obj/item/gun/kinetic/sawnoff/flw
+
+/obj/item/gun/kinetic/sawnoff/quadbarrel
 
 	name = "The Four Letter Word"
-	desc = "For when you really need to make a statement."
+	desc = "For when you REALLY need to get the point across."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "coachgun"//for sake of not rewriting a ton of break action code, it uses the same names as the DB, but in a different DMI.
 
-	item_state = "shotty"
+	item_state = "quadbarrel"
 
 	force = MELEE_DMG_RIFLE
 	max_ammo_capacity = 4
 	two_handed = TRUE
 
 	var/guaranteed_uses = 8 // allows for 2 volleys before it starts breaking
-
 
 	New()
 		..()
@@ -3191,27 +3191,39 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	shoot(var/target, var/start, var/mob/user)
 		..()
-		if(guaranteed_uses > 0)
+		if(guaranteed_uses >= 0)
 			guaranteed_uses--
 			if(guaranteed_uses == 0)
-				user.visible_message("The [src] makes a concerning sound, but seems fine. You feel like you should keep an eye on it.")
-		else if (prob(10))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				user.visible_message("The [src] makes a deeply concerning sound, but seems otherwise fine. Still, you feel like you should keep an eye on it.")
+		else if (prob(5*guaranteed_uses*-5)) //since we're in the negatives now, we need another minus sign to cancel out
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			user.visible_message("The [src] breaks!")
-			var/obj/item/brokenpersuader/broken = new /obj/item/brokenpersuader
+			var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
 			user.drop_item(src)
 			user.put_in_hand_or_drop(broken)
 			qdel(src)
 
+	attackby(obj/item/W, mob/user)
+		if (isweldingtool(W))
+			var/obj/item/weldingtool/welder = W
+			if(guaranteed_uses>=8)
+				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
+			else if (welder.try_weld(user, 2, 2))
+				boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]."))
+				guaranteed_uses ++2;
+		else
+			..()
 
-/obj/item/brokenpersuader
+/obj/item/brokenquadbarrel
 	two_handed = TRUE
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "coachgun"
+	icon_state = "flw-broken"
 	name = "Broken Four Letter Word"
-	desc = "Welp, this thing's toast. You bet you can salvage something from it, though."
+	desc = "Welp, this thing's toast. You bet you pull a slamgun off it, though."
 	force = MELEE_DMG_RIFLE
 
-	attack_self(mob/user as mob)//may want to have this spawn some scrap
+	attack_self(mob/user as mob)
 		user.visible_message("You pull some scraps off the [src].")
 		user.drop_item(src)
 		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
