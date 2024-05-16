@@ -28,7 +28,7 @@
 		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
 
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, control_frequency)
 
 		/*for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))

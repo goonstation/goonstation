@@ -67,7 +67,7 @@
 	dir = 10
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aT" = (

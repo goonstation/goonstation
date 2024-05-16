@@ -8,6 +8,8 @@
 
 	var/static/commander_title
 	var/static/available_callsigns
+	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
+	var/list/datum/syndicate_buylist/uplink_items = list() // Same but for custom uplinks and the commander uplink
 
 	New(datum/mind/new_owner)
 		if (!src.commander_title)
@@ -98,6 +100,37 @@
 				gamemode.syndicates -= src.owner
 
 		. = ..()
+
+	get_statistics()
+		var/list/purchases = list()
+		// Add items purchased from the nukies weapon vendor
+		for (var/datum/materiel/purchased_item as anything in src.purchased_items)
+			var/obj/item_type = initial(purchased_item.path)
+			purchases += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[purchased_item]",
+				)
+			)
+
+		// Add items from custom uplinks and the commander's special uplink
+		for (var/datum/syndicate_buylist/purchased_item as anything in src.uplink_items)
+			var/obj/item_type = initial(purchased_item.item)
+			purchases += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[purchased_item.name]", // Dont include TC cost bc commander uplink doesnt use TC
+				)
+			)
+
+		. = list(
+			list(
+				"name" = "Purchased Items",
+				"type" = "itemList",
+				"value" = purchases,
+			)
+		)
+
 
 	proc/assign_name()
 		if (src.id == ROLE_NUKEOP_COMMANDER)

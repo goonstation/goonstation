@@ -18145,11 +18145,6 @@
 	},
 /area/station/hydroponics/bay)
 "fvU" = (
-/obj/machinery/illuminated_sign/occupancy{
-	id = "nadirstall_shw2";
-	pixel_x = 11;
-	pixel_y = -6
-	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/barber_shop)
 "fwG" = (

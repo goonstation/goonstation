@@ -41,7 +41,7 @@ THROWING DARTS
 		if (uses_radio)
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, pda_alert_frequency)
 		if (ismob(src.loc))
 			src.implanted(src.loc)
 
@@ -67,10 +67,10 @@ THROWING DARTS
 		owner = M
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			H.implant?.Add(src)
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
-			C.implants.Add(src)
+			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()
@@ -1530,7 +1530,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implant/artifact/wizard/wizard_gimmick
 	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
-										 		/datum/mutantrace/pug)
+										 		/datum/mutantrace/pug, /datum/mutantrace/cat/bingus)
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)

@@ -1042,7 +1042,7 @@ datum/pump_ui/circulator_ui
 				if (grump >= 100 && probmult(5))
 					playsound(src.loc, 'sound/machines/engine_grump1.ogg', 50, 0)
 					src.visible_message(SPAN_ALERT("[src] erupts in flame!"))
-					fireflash(src, 1)
+					fireflash(src, 1, chemfire = CHEM_FIRE_RED)
 					grump -= 10
 			if(22 to 23)
 				playsound(src.loc, sound_engine_alert1, 55, 0)
@@ -1056,7 +1056,7 @@ datum/pump_ui/circulator_ui
 				if (grump >= 100 && probmult(5))
 					playsound(src.loc, 'sound/machines/engine_grump1.ogg', 50, 0)
 					src.visible_message(SPAN_ALERT("[src] erupts in flame!"))
-					fireflash(src, rand(1,3))
+					fireflash(src, rand(1,3), chemfire = CHEM_FIRE_RED)
 					grump -= 30
 
 			if(24 to 25)
@@ -1073,7 +1073,7 @@ datum/pump_ui/circulator_ui
 					playsound(src.loc, 'sound/weapons/rocket.ogg', 50, 0)
 					src.visible_message(SPAN_ALERT("[src] explodes in flame!"))
 					var/firesize = rand(1,4)
-					fireflash(src, firesize)
+					fireflash(src, firesize, chemfire = CHEM_FIRE_RED)
 					for(var/atom/movable/M in view(firesize, src.loc)) // fuck up those jerkbag engineers
 						if(M.anchored) continue
 						if(ismob(M))
@@ -1506,17 +1506,18 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		return
 
 	proc/heat()
-		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
-		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-		var/old_temperature = air_contents.temperature
+		if(air_contents)
+			var/air_heat_capacity = HEAT_CAPACITY(air_contents)
+			var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
+			var/old_temperature = air_contents.temperature
 
-		if(combined_heat_capacity > 0)
-			var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
-			air_contents.temperature = combined_energy/combined_heat_capacity
+			if(combined_heat_capacity > 0)
+				var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
+				air_contents.temperature = combined_energy/combined_heat_capacity
 
-		if(abs(old_temperature-air_contents.temperature) > 1)
-			if(network)
-				network.update = 1
+			if(abs(old_temperature-air_contents.temperature) > 1)
+				if(network)
+					network.update = 1
 		return 1
 
 TYPEINFO(/obj/machinery/power/furnace/thermo)

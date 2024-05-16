@@ -3,198 +3,101 @@
  * SPDX-License-Identifier: MIT
  */
 
- em {
-  font-style: normal;
-  font-weight: bold;
+ @use '../components/Chat.scss';
+
+// THIS FILE IS FOR COLOURS ONLY! STYLES FOR BOTH THEMES IN 'Chat.scss' SEE ABOVE
+
+/*****************************************
+*
+* GLOBAL STYLES
+*
+******************************************/
+
+html,
+body {
+  color: Chat.$color-text;
 }
 
-img {
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: pixelated;
+body {
+  background: #23272a;
 }
 
-img.icon {
-  height: 1em;
-  min-height: 16px;
-  width: auto;
-  vertical-align: bottom;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #6464ff;
 }
 
 a {
-  color: #397ea5;
+  color: #6464ff;
+
+  &:visited {
+    color: #ae6fff;
+  }
 }
 
-a.visited {
-  color: #7c00e6;
-}
+/*****************************************
+*
+* OUTPUT NOT RELATED TO ACTUAL MESSAGES
+*
+******************************************/
 
-a:visited {
-  color: #7c00e6;
-}
+/* TOOLTIPS */
 
-a.popt {
-  text-decoration: none;
+.tooltip .tooltiptext {
+  background: #202020;
+  color: Chat.$color-text;
+
+  &::after {
+    border-color:#202020 transparent transparent transparent;
+  }
 }
 
 /* POPUPS */
-
 .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background: #ddd;
+  background: #5c5c5c;
 }
 
 .popup .close {
-  position: absolute;
   background: #aaa;
-  top: 0;
-  right: 0;
   color: #333;
-  text-decoration: none;
-  z-index: 2;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
 }
 
 .popup .close:hover {
-  background: #999;
+  background: #444;
 }
 
 .popup .head {
-  background: #999;
+  background: #161616;
   color: #ddd;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
-  border-bottom: 2px solid green;
+  border-bottom: 2px solid #035003;
 }
 
 .popup input {
-  border: 1px solid #999;
-  background: #fff;
-  margin: 0;
-  padding: 5px;
-  outline: none;
-  color: #333;
+  border: 1px solid #686868;
+  background: #3d3d3d;
+  color: #cccccc;
 }
 
 .popup input[type=text]:hover,
 .popup input[type=text]:active,
 .popup input[type=text]:focus {
-  border-color: green;
+  border-color: #3fcc3f;
 }
 
 .popup input[type=submit] {
-  padding: 5px 10px;
-  background: #999;
+  background: #464646;
   color: #ddd;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
 }
 
 .popup input[type=submit]:hover,
 .popup input[type=submit]:focus,
 .popup input[type=submit]:active {
-  background: #aaa;
-  cursor: pointer;
+  background: #4b4b4b;
 }
-
-.changeFont {
-  padding: 10px;
-}
-
-.changeFont a {
-  display: block;
-  text-decoration: none;
-  padding: 3px;
-  color: #333;
-}
-
-.changeFont a:hover {
-  background: #ccc;
-}
-
-.highlightPopup {
-  padding: 10px;
-  text-align: center;
-}
-
-.highlightPopup input[type=text] {
-  display: block;
-  width: 215px;
-  text-align: left;
-  margin-top: 5px;
-}
-
-.highlightPopup input.highlightColor {
-  background-color: #FFFF00;
-}
-
-.highlightPopup input.highlightTermSubmit {
-  margin-top: 5px;
-}
-
-
-
-/* ADMIN CONTEXT MENU */
-
-
-.contextMenu {
-  background-color: #ddd;
-  position: fixed;
-  margin: 2px;
-  width: 150px;
-}
-
-.contextMenu a {
-  display: block;
-  padding: 2px 5px;
-  text-decoration: none;
-  color: #333;
-}
-
-.contextMenu a:hover {
-  background-color: #ccc;
-}
-
-
-
-/* ADMIN FILTER MESSAGES MENU */
-
-
-.filterMessages {
-  padding: 5px;
-}
-
-.filterMessages div {
-  padding: 2px 0;
-}
-
-.filterMessages input {
-}
-
-.filterMessages label {
-}
-
-.icon-stack {
-  height: 1em;
-  line-height: 1em;
-  width: 1em;
-  vertical-align: middle;
-  margin-top: -2px;
-}
-
-
-
 
 /*****************************************
 *
@@ -202,17 +105,10 @@ a.popt {
 *
 ******************************************/
 
-
-
-
-
 /* MOTD */
 
-
 .motd {
-  color: #a4bad6;
-  font-family: Verdana, sans-serif;
-  white-space: normal;
+  color: #BEBEBE;
 }
 
 .motd h1,
@@ -221,632 +117,344 @@ a.popt {
 .motd h4,
 .motd h5,
 .motd h6 {
-  color: #a4bad6;
-  text-decoration: underline;
+  color: #fff;
+  border-bottom: 1px solid #aaa;
 }
 
 .motd a,
 .motd a:link,
-.motd a:visited,
+.motd a:visited {
+  color: #6464ff;
+}
+
 .motd a:active,
 .motd a:hover {
-  color: #a4bad6;
+  color: #3030df;
 }
 
-
-
-/* ADD HERE FOR BOLD */
-
-
-.bold,
-.name,
-.prefix,
-.ooc,
-.looc,
-.adminooc,
-.admin,
-.medal,
-.yell {
-  font-weight: bold;
+.odd-highlight {
+  background-color: #191c20;
 }
 
+/* === OUTPUT COLORS === */
 
-
-/* ADD HERE FOR ITALIC */
-
-
-.italic, .italics, .emote {
-  font-style: italic;
+.regular {
+  color: Chat.$color-text;
 }
 
-
-
-/* OUTPUT COLORS */
-
-
-.highlight {
-  background: yellow;
+.internal {
+  color: #92b4ff;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #a4bad6;
-  font-family: Georgia, Verdana, sans-serif;
+.mhelp {
+  color: #e75ae0;
 }
 
-h1.alert, h2.alert {
-  color: #a4bad6;
+.ahelp {
+  color:  #ffa135;
 }
 
-em {
-  font-style: normal;
-  font-weight: bold;
+.success {
+  color: #92E592;
 }
 
-.ooc {
-  color: #cca300;
-  font-weight: bold;
-}
-
-.adminobserverooc {
-  color: #0099cc;
-  font-weight: bold;
-}
-
-.adminooc {
-  color: #3d5bc3;
-  font-weight: bold;
-}
-
-.adminsay {
-  color: #ff4500;
-  font-weight: bold;
-}
-
-.admin {
-  color: #5975da;
-  font-weight: bold;
-}
-
-.name {
-  font-weight: bold;
-}
-
-.say {
-}
-
-.deadsay {
-  color: #e2c1ff;
-}
-
-.binarysay {
-  color: #1e90ff;
-}
-
-.binarysay a {
-  color: #00ff00;
-}
-
-.binarysay a:active, .binarysay a:visited {
-  color: #88ff88;
-}
-
-.radio {
-  color: #1ecc43;
-}
-
-.sciradio {
-  color: #c68cfa;
-}
-
-.comradio {
-  color: #fcdf03;
-}
-
-.secradio {
-  color: #dd3535;
-}
-
-.medradio {
-  color: #57b8f0;
-}
-
-.engradio {
-  color: #f37746;
-}
-
-.suppradio {
-  color: #b88646;
-}
-
-.servradio {
-  color: #6ca729;
-}
-
-.syndradio {
-  color: #8f4a4b;
-}
-
-.centcomradio {
-  color: #2681a5;
-}
-
-.aiprivradio {
-  color: #d65d95;
-}
-
-.redteamradio {
-  color: #ff4444;
-}
-
-.blueteamradio {
-  color: #3434fd;
-}
-
-.yell {
-  font-weight: bold;
-}
-
-.alert {
-  color: #d82020;
-}
-
-.emote {
-  font-style: italic;
-}
-
-.userdanger {
-  color: #c51e1e;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.danger {
-  color: #c51e1e;
-}
-
-.warning {
-  color: #c51e1e;
-  font-style: italic;
-}
-
-.alertwarning {
-  color: #FF0000;
-  font-weight: bold;
-}
-
-.boldwarning {
-  color: #c51e1e;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.announce {
-  color: #c51e1e;
-  font-weight: bold;
-}
-
-.boldannounce {
-  color: #c51e1e;
-  font-weight: bold;
-}
-
-.greenannounce {
-  color: #059223;
-  font-weight: bold;
-}
-
-.rose {
-  color: #ff5050;
-}
-
-.info {
-  color: #9ab0ff;
+.hint {
+  color: #7996ff;
 }
 
 .notice {
-  color: #6685f5;
+  color: #7996ff;
 }
 
-.tinynotice {
-  color: #6685f5;
-  font-style: italic;
-  font-size: 85%;
+.subtle {
+  color: #7A7471
 }
 
-.smallnotice {
-  color: #6685f5;
-  font-style: italic;
-  font-size: 90%;
+.emote {
+  color: #888888;
 }
 
-.boldnotice {
-  color: #6685f5;
-  font-weight: bold;
+.system {
+  color: #FF6D6D;
 }
 
-.hear {
-  color: #6685f5;
-  font-style: italic;
+.medal {
+  color: #caca20;
 }
 
-.adminnotice {
-  color: #6685f5;
-}
-
-.adminhelp {
+.combat {
   color: #ff0000;
-  font-weight: bold;
 }
 
-.unconscious {
-  color: #a4bad6;
-  font-weight: bold;
+.alert {
+  color: #FF6D6D;
 }
 
-.suicide {
-  color: #ff5050;
-  font-style: italic;
+h1.alert,
+h2.alert {
+  color: #cfcfcf;
 }
 
-.green {
-  color: #059223;
+.adminHearing .name[data-ctx] {
+  border-bottom: 1px dotted #dbdbdb;
 }
 
-.red {
-  color: #FF0000;
+.blobalert {
+  color: #9c74fc;
 }
 
-.blue {
-  color: #215cff;
+.lawupdate {
+  color: #6464FF;
 }
 
-.nicegreen {
-  color: #059223;
+.helpmsg {
+  color: #98bdc2;
+  border: 1px solid #98bdc2;
 }
 
-.cult {
-  color: #973e3b;
+/* OOC */
+
+.ooc {
+  color: #688eff;
 }
 
-.cultitalic {
-  color: #973e3b;
-  font-style: italic;
+.mentorooc {
+  color: #a653ff;
 }
 
-.cultbold {
-  color: #973e3b;
-  font-style: italic;
-  font-weight: bold;
+.adminooc {
+  color: #be6e53;
 }
 
-.cultboldtalic {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 185%;
+.gfartooc {
+  color: #0099cc;
 }
 
-.cultlarge {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 185%;
+.newbeeooc {
+  color: #29AB87;
 }
 
-.narsie {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 925%;
+/* LOOC */
+
+.looc {
+  color: #92a9ee;
 }
 
-.narsiesmall {
-  color: #973e3b;
-  font-weight: bold;
-  font-size: 370%;
+.mentorlooc {
+  color: #be81ff;
 }
 
-.colossus {
-  color: #7F282A;
-  font-size: 310%;
+.adminlooc {
+  color: #ce8c76;
 }
 
-.hierophant {
-  color: #b441ee;
-  font-weight: bold;
-  font-style: italic;
+.gfartlooc {
+  color: #4cb7db;
 }
 
-.hierophant_warning {
-  color: #c56bf1;
-  font-style: italic;
+.newbeelooc {
+  color: #8BC16E;
 }
 
-.purple {
-  color: #9956d3;
+/* ADMIN */
+
+.admin,
+.adminLog,
+.coderLog,
+.attackLog {
+  color: #ecc300;
 }
 
-.holoparasite {
-  color: #88809c;
+.coderLog > .prefix {
+  color: #b82e00;
 }
 
-.revennotice {
-  color: #c099e2;
+.attackLog > .prefix {
+  color: #ff0000;
 }
 
-.revenboldnotice {
-  color: #c099e2;
-  font-weight: bold;
+.gfartadmin {
+  color: #c2953c;
 }
 
-.revenbignotice {
-  color: #c099e2;
-  font-weight: bold;
-  font-size: 185%;
+.adminMsgWrap {
+  color: #cb79d4;
 }
 
-.revenminor {
-  color: #823abb;
+/* SPEECH */
+
+.say {
+
 }
 
-.revenwarning {
-  color: #760fbb;
-  font-style: italic;
+.sing {
+  color: #D8BFD8;
 }
 
-.revendanger {
-  color: #760fbb;
-  font-weight: bold;
-  font-size: 185%;
+.robotsing {
+  color: #E0FFFF;
 }
 
-.deconversion_message {
-  color: #a947ff;
-  font-size: 185%;
-  font-style: italic;
+.blobsay {
+  color: #111;
+  background-color: #4ec44e;
 }
 
-.ghostalert {
-  color: #6600ff;
-  font-style: italic;
-  font-weight: bold;
+.bugsay {
+  color: #EA5D17;
 }
 
-.alien {
-  color: #855d85;
+.deadsay {
+  color: #b27eff;
 }
 
-.noticealien {
-  color: #059223;
+.hivesay {
+  color: #e2a059;
 }
 
-.alertalien {
-  color: #059223;
-  font-weight: bold;
-}
-
-.changeling {
-  color: #059223;
-  font-style: italic;
-}
-
-.alertsyndie {
-  color: #FF0000;
-  font-size: 185%;
-  font-weight: bold;
-}
-
-.spider {
-  color: #8800ff;
-  font-weight: bold;
-  font-size: 185%;
-}
-
-.interface {
-  color: #750e75;
-}
-
-.sans {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-
-.papyrus {
-  font-family: "Papyrus", cursive, sans-serif;
-}
-
-.robot {
-  font-family: "Courier New", cursive, sans-serif;
-}
-
-.command_headset {
-  font-weight: bold;
-  font-size: 160%;
-}
-
-.small {
-  font-size: 60%;
-}
-
-.big {
-  font-size: 185%;
-}
-
-.reallybig {
-  font-size: 245%;
-}
-
-.extremelybig {
-  font-size: 310%;
-}
-
-.greentext {
-  color: #059223;
-  font-size: 185%;
-}
-
-.redtext {
-  color: #c51e1e;
-  font-size: 185%;
-}
-
-.clown {
-  color: #ff70c1;
-  font-size: 160%;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-weight: bold;
-}
-
-.singing {
-  font-family: "Trebuchet MS", cursive, sans-serif;
-  font-style: italic;
-}
-
-.his_grace {
-  color: #15D512;
-  font-family: "Courier New", cursive, sans-serif;
-  font-style: italic;
-}
-
-.hypnophrase {
-  color: #202020;
-  font-weight: bold;
-  animation: hypnocolor 1500ms infinite;
-  animation-direction: alternate;
-}
-
-@keyframes hypnocolor {
-  0% {
-    color: #202020;
-  }
-
-  25% {
-    color: #4b02ac;
-  }
-
-  50% {
-    color: #9f41f1;
-  }
-
-  75% {
-    color: #541c9c;
-  }
-
-  100% {
-    color: #7adbf3;
-  }
-}
-
-.phobia {
-  color: #dd0000;
-  font-weight: bold;
-  animation: phobia 750ms infinite;
-}
-
-@keyframes phobia {
-  0% {
-    color: #f75a5a;
-  }
-
-  50% {
-    color: #dd0000;
-  }
-
-  100% {
-    color: #f75a5a;
-  }
-}
-
-.icon {
-  height: 1em;
-  width: auto;
-}
-
-.memo {
-  color: #638500;
-  text-align: center;
-}
-
-.memoedit {
-  text-align: center;
-  font-size: 125%;
-}
-
-.abductor {
-  color: #c204c2;
-  font-style: italic;
-}
-
-.mind_control {
-  color: #df3da9;
-  font-size: 100%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.slime {
-  color: #00CED1;
-}
-
-.drone {
-  color: #848482;
-}
-
-.monkey {
-  color: #975032;
-}
-
-.swarmer {
-  color: #2C75FF;
-}
-
-.resonate {
-  color: #298F85;
-}
-
-.monkeyhive {
-  color: #a56408;
-}
-
-.monkeylead {
-  color: #af6805;
-  font-size: 80%;
-}
-
-.connectionClosed, .fatalError {
-  background: red;
+.thrallsay {
   color: white;
-  padding: 5px;
+  background-color: #6f00a7;
 }
 
-.connectionClosed.restored {
-  background: green;
+.thrallsay .vamp.name {
+  color: #ff0000;
+}
+
+.kudzusay {
+  color: white;
+  background-color: #7B8F68;
+}
+
+.crabsay {
+  color: white;
+  background-color: #AC3232;
+}
+
+.crabsay a {
+  color: #0000ff;
+}
+
+.astralsay {
+  color: #60d4cf;
+}
+
+.martiansay {
+  color: #E89235;
+} /* #BD33D9 is the telepathy colour, possibly more suitable? */
+
+.martianimperial {
+  color: #e26794;
+}
+
+.flocksay {
+  color: #6fbbac;
+}
+
+.flocksay a {
+  color: #6fbbac;
+}
+
+.flocksay a:visited {
+  color: #6ec2b1;
+}
+
+.flocksay.sentient {
+  color: #111;
+  background-color: #82dbc8;
+}
+
+.flocknpc {
+  color:#afc9c3;
+}
+
+.ghostdronesay {
+  color: #ca4ed8;
+}
+
+.roboticsay {
+  color: #111;
+  background-color: #c4c3c3;
+}
+
+/* RADIO */
+
+.green,
+.radio {
+  color: #3fcc3f;
+}
+
+.rstandard {
+  color: #3fcc3f;
+}
+
+.rintercom {
+  color: #81f7ff;
+}
+
+.rcommand {
+  color: #7397c0;
+}
+
+.rsecurity {
+  color: #e43535;
+}
+
+.rdetective {
+  color: #af4242;
+}
+
+.rengineering {
+  color: #dda448;
+}
+
+.rmedical {
+  color: #00bbff;
+}
+
+.rresearch {
+  color: #bf83e2;
+}
+
+.rcivilian {
+  color: #ce45b2;
+}
+
+.rsyndicate {
+  color: #cf5757;
+}
+
+.rintercomai {
+  color: #7F7FE2;
+}
+
+.rother {
+  color: #E896E5;
 }
 
 .internal.boldnshit {
-  color: #3d5bc3;
-  font-weight: bold;
+  color: #5f5ffd;
 }
-
-
 
 /* HELPER CLASSES */
 
-
-.text-normal {
-  font-weight: normal;
-  font-style: normal;
+.who-list {
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
 }
 
-.hidden {
-  display: none;
-  visibility: hidden;
+.help {
+  color: #42CC00;
 }
 
-.ml-1 {
-  margin-left: 1em;
+.harm {
+  color: #D01416;
 }
 
-.ml-2 {
-  margin-left: 2em;
+.disarm {
+  color: #FFFF00;
 }
 
-.ml-3 {
-  margin-left: 3em;
+.grab {
+  color: #FF6A00;
 }

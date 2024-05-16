@@ -77,7 +77,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	if(!src.net_id)
 		src.net_id = generate_net_id(src)
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, report_freq)
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))

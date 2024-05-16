@@ -8,6 +8,7 @@ import { shallowDiffers } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Button } from 'tgui/components';
 import { chatRenderer } from './renderer';
+import { ContextMenu } from '../context/ChatContext';
 
 export class ChatPanel extends Component {
   constructor() {
@@ -15,22 +16,35 @@ export class ChatPanel extends Component {
     this.ref = createRef();
     this.state = {
       scrollTracking: true,
+      showContext: false,
     };
     this.handleScrollTrackingChange = value => this.setState({
       scrollTracking: value,
     });
+    this.handleContext = value => {
+      this.setState({ showContext: value });
+      if (value === true) {
+        window.addEventListener('click', e => {
+          this.handleContext(false);
+        });
+      } else window.removeEventListener('click');
+    };
   }
 
   componentDidMount() {
     chatRenderer.mount(this.ref.current);
     chatRenderer.events.on('scrollTrackingChanged',
       this.handleScrollTrackingChange);
+    chatRenderer.events.on('contextShow',
+      this.handleContext);
     this.componentDidUpdate();
   }
 
   componentWillUnmount() {
     chatRenderer.events.off('scrollTrackingChanged',
       this.handleScrollTrackingChange);
+    chatRenderer.events.off('contextShow',
+      this.handleContext);
   }
 
   componentDidUpdate(prevProps) {
@@ -43,7 +57,7 @@ export class ChatPanel extends Component {
     if (shouldUpdateStyle) {
       chatRenderer.assignStyle({
         'width': '100%',
-        'white-space': 'pre-wrap',
+        'white-space': 'normal',
         'font-size': this.props.fontSize,
         'line-height': this.props.lineHeight,
       });
@@ -53,6 +67,7 @@ export class ChatPanel extends Component {
   render() {
     const {
       scrollTracking,
+      showContext,
     } = this.state;
     return (
       <>
@@ -64,6 +79,11 @@ export class ChatPanel extends Component {
             onClick={() => chatRenderer.scrollToBottom()}>
             Scroll to bottom
           </Button>
+        )}
+        {showContext && (
+          <ContextMenu
+            ref={this.ref}
+          />
         )}
       </>
     );
