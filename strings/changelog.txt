@@ -1,5 +1,7 @@
 
 (t)thu may 16 24
+(u)Sord
+(*)Most restrooms, quarters, and heads quarters now have door bolters inside them. Use them for crime or to just shower in peace!
 (u)Sovexe
 (p)18879
 (e)🪲🔎🧫🔄⚙🐣|C-Bug, C-Code-Quality, C-Experimental, C-Rework, A-Internal, A-Respawning
