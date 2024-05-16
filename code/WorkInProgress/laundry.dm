@@ -111,7 +111,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					H.gloves?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					H.glasses?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					H.head?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
-				H.changeStatus("weakened", 1 SECONDS)
+				H.changeStatus("knockdown", 1 SECONDS)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
 				src.open = 1
@@ -291,6 +291,10 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					if (!(src in processing_items))
 						processing_items.Add(src)
 	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
 
 #undef PRE
 #undef WASH

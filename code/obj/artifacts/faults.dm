@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(user)
 		T.visible_message(SPAN_ALERT("The [cosmeticSource.name] suddenly emits a burst of flame!"))
-		fireflash(T, 0)
+		fireflash(T, 0, chemfire = CHEM_FIRE_RED)
 		playsound(T, 'sound/effects/bamf.ogg', 100, TRUE)
 
 /datum/artifact_fault/irradiate

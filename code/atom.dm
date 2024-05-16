@@ -506,6 +506,8 @@ TYPEINFO(/atom/movable)
 
 	/// how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 	var/p_class = 2.5
+	/// whether it uses p_class regardless of pull_slowing.
+	var/always_slow_pull = FALSE
 
 	// Enables mobs and objs to be mechscannable
 	/// Can this only be scanned with a syndicate mech scanner?
@@ -720,9 +722,7 @@ TYPEINFO(/atom/movable)
 	if (!( src.anchored ))
 		user.set_pulling(src)
 
-		if (user.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
 /atom/movable/set_dir(new_dir)
 	..()

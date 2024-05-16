@@ -876,7 +876,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(src, src.hitsound, 60, 1)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN(0) // show these messages after the "hit by" ones
 				if (M)
@@ -1167,6 +1167,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+
+	sunhaty
+		icon_state = "sunhaty"
+		item_state = "sunhaty"
 
 	stunhatr
 		stunready = 1
@@ -2236,3 +2240,13 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "bushhat"
 	item_state = "bushhat"
 	seal_hair = 1
+
+/obj/item/clothing/head/rabbithat
+	name = "Rabbit Costume Hat"
+	desc = "You're gonna need a psych eval after wearing this. And a shower."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "rabbithat"
+	item_state = "rabbithat"
+	seal_hair = TRUE

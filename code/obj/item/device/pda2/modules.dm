@@ -317,6 +317,7 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["group"] = mailgroups + MGA_CRISIS
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = SPAN_ALERT("<b>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!</b>")
+		signal.data["noreply"] = TRUE
 		src.host.post_signal(signal)
 
 		if(isliving(user))

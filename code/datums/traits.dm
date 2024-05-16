@@ -26,6 +26,9 @@
 		"hemophilia",
 	)
 
+	var/list/traitData = list()
+	var/traitDataDirty = TRUE
+
 	proc/selectTrait(var/id, var/list/parts_selected = null)
 		var/list/future_selected = traits_selected.Copy()
 		if (id in traitList)
@@ -35,6 +38,7 @@
 			return FALSE
 
 		traits_selected = future_selected
+		traitDataDirty = TRUE
 		updateTotal()
 		return TRUE
 
@@ -46,10 +50,12 @@
 			return FALSE
 
 		traits_selected = future_selected
+		traitDataDirty = TRUE
 		updateTotal()
 		return TRUE
 
 	proc/resetTraits()
+		traitDataDirty = TRUE
 		traits_selected = list()
 		updateTotal()
 
@@ -121,6 +127,19 @@
 
 			. += C
 
+	proc/generateTraitData(/mob/user)
+		if(traitDataDirty)
+			traitData = list()
+			for (var/datum/trait/trait as anything in src.getTraits(user))
+				var/selected = (trait.id in src.traits_selected)
+				traitData += list(list(
+					"id" = trait.id,
+					"selected" = selected,
+					"available" = src.isAvailableTrait(trait.id, selected)
+				))
+			traitDataDirty = FALSE
+		return traitData
+
 /datum/traitHolder
 	var/list/traits = list()
 	var/list/moveTraits = list() // differentiate movement traits for Move()
@@ -183,6 +202,12 @@
 	proc/hasTrait(var/id)
 		. = (id in traits)
 
+	proc/getTraitWithCategory(var/cat)
+		for(var/id in traits)
+			var/datum/trait/T = traits[id]
+			if (T.category == cat)
+				. = T
+
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
 	var/name
@@ -200,6 +225,7 @@
 	var/disability_type = TRAIT_DISABILITY_NONE //! Is this a major/minor/not a disability
 	var/disability_name = "" //! Name of the disability for medical records
 	var/disability_desc = "" //! Description of the disability for medical records
+	var/spawn_delay = 0 // To avoid ugly hardcoded spawn delay
 
 	New()
 		ASSERT(src.name)
@@ -262,8 +288,40 @@
 	disability_name = "Legless"
 	disability_desc = "Legs have been severed"
 
-// LANGUAGE - Yellow Border
+/datum/trait/plasmalungs
+	name = "Plasma Lungs"
+	desc = "You signed up for a maintenance experiment involving someone who was definitely a scientist and your lungs are now only capable of breathing in plasma. At least they gave you a free tank to breathe from."
+	id = "plasmalungs"
+	icon_state = "placeholder"
+	category = list("body")
+	points = 1
+	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Plasma Lungs"
+	disability_desc = "Only capable of breathing plasma in a gaseous state"
 
+	onAdd(mob/living/carbon/human/owner)
+		if (!istype(owner))
+			return
+		var/obj/item/organ/created_organ
+		var/obj/item/organ/lung/left = owner?.organHolder?.left_lung
+		var/obj/item/organ/lung/right = owner?.organHolder?.right_lung
+		if(istype(left) && istype(right))
+			created_organ = new /obj/item/organ/lung/plasmatoid/left()
+			owner.organHolder.drop_organ(left.organ_holder_name)
+			qdel(left)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+			created_organ = new /obj/item/organ/lung/plasmatoid/right()
+			owner.organHolder.drop_organ(right.organ_holder_name)
+			qdel(right)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+// LANGUAGE - Yellow Border
 /datum/trait/swedish
 	name = "Swedish"
 	desc = "You are from sweden. Meat balls and so on."
@@ -333,6 +391,18 @@
 		return
 */
 
+
+
+/datum/trait/german
+	name = "German"
+	desc = "You're from somewhere in the middle of Texas. Prost y'all."
+	id = "german"
+	icon_state = "german"
+	points = 0
+	category =  list("language")
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("accent_german")
 /datum/trait/finnish
 	name = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"
@@ -480,6 +550,14 @@
 	desc = "Start with a bee egg as your trinket."
 	id = "beestfriend"
 	icon_state = "bee"
+	points = -1
+	category = list("trinkets")
+
+/datum/trait/petperson
+	name = "Pet Person"
+	desc = "Start with your (possibly lovable) pet!"
+	id = "petperson"
+	icon_state = "petperson"
 	points = -1
 	category = list("trinkets")
 
@@ -687,6 +765,39 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "sleepy"
 	category = list("background")
 	points = 0
+	spawn_delay = 10 SECONDS
+
+TYPEINFO(/datum/trait/partyanimal)
+	var/list/allowed_items = list(
+		/obj/item/clothing/head/party/random,
+		/obj/item/balloon_animal/random,
+		/obj/item/reagent_containers/balloon,
+		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/clothing/head/party/birthday,
+		/obj/random_item_spawner/hat/one,
+		/obj/random_item_spawner/snacks/one,
+		/obj/random_item_spawner/junk/one,
+		/obj/random_item_spawner/mask/one,
+		/obj/random_item_spawner/pizza/one,
+		/obj/random_item_spawner/cola/one
+	)
+	var/list/allowed_debris = list(
+		/obj/decal/cleanable/balloon,
+		/obj/decal/cleanable/vomit,
+		/obj/decal/cleanable/paper,
+		/obj/decal/cleanable/eggsplat,
+		/obj/decal/cleanable/generic
+	)
+	var/num_bar_turfs = null
+	var/clutter_count = 0
+/datum/trait/partyanimal
+	name = "Party Animal"
+	desc = "You don't remember much about last night, but you know you had a good time."
+	id = "partyanimal"
+	icon_state = "partyanimal"
+	category = list("background")
+	points = 0
+	spawn_delay = 3 SECONDS
 
 // NO CATEGORY - Grey Border
 

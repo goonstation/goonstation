@@ -4,6 +4,10 @@
 	var/mob/living/critter/flock/drone/drone = null
 
 /datum/targetable/flockmindAbility/droneControl/cast(atom/target, update_cursor = TRUE)
+	set waitfor = 0
+
+	. = ..() //linter freaks the fuck out about this for no reason, hence the waitfor 0
+
 	//remove the selected outline component
 	var/datum/component/flock_ping/selected/ping = drone.GetComponent(/datum/component/flock_ping/selected)
 	ping.RemoveComponent()

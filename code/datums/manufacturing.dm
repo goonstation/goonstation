@@ -28,15 +28,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 		..()
 		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
 			var/item_type = item_outputs[1]
-			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
-			if(istype(typeinfo) && islist(typeinfo.mats))
-				item_paths = list()
-				for(var/mat in typeinfo.mats)
-					item_paths += mat
-					var/amt = typeinfo.mats[mat]
-					if(isnull(amt))
-						amt = 1
-					item_amounts += amt
+			src.use_generated_costs(item_type)
+
 		if(isnull(item_paths))
 			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!length(src.item_names))
@@ -44,6 +37,17 @@ ABSTRACT_TYPE(/datum/manufacture)
 				src.item_names += get_nice_mat_name_for_manufacturers(path)
 		if (!sanity_check_exemption)
 			src.sanity_check()
+
+	proc/use_generated_costs(obj/item_type)
+		var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+		if(istype(typeinfo) && islist(typeinfo.mats))
+			item_paths = list()
+			for(var/mat in typeinfo.mats)
+				item_paths += mat
+				var/amt = typeinfo.mats[mat]
+				if(isnull(amt))
+					amt = 1
+				item_amounts += amt
 
 	proc/sanity_check()
 		if (length(item_paths) != length(item_amounts)\
@@ -72,6 +76,14 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/electronics/frame)
 	var/frame_path = null
+	///generate costs based off of frame_path in New(), e.g.: for pre-spawned cloner blueprints
+	var/generate_costs = FALSE
+
+	New()
+		. = ..()
+		if(src.generate_costs)
+			src.item_amounts = list()
+			src.use_generated_costs(frame_path)
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
@@ -102,18 +114,21 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
+	generate_costs = TRUE
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
 	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
+	generate_costs = TRUE
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
+	generate_costs = TRUE
 
 
 /******************** Loafer *******************/
@@ -152,6 +167,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	frame_path = /obj/machinery/ai_status_display
+	generate_costs = TRUE
 
 /******************** Laser beam things *******************/
 
@@ -2203,6 +2219,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/miniplasmatank
+	name = "mini plasma tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/mini_plasma/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/minioxygentank
+	name = "mini oxygen tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/patch
 	name = "Chemical Patch"
 	item_paths = list("FAB-1")
@@ -2355,6 +2389,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-2")
 	item_amounts = list(20)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
+	time = 12 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/storagehold
+	name = "Storage Hold"
+	item_paths = list("MET-2")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/storage)
 	time = 12 SECONDS
 	create = 1
 	category = "Resource"

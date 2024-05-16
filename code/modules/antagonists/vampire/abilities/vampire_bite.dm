@@ -139,12 +139,12 @@
 
 			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
-					if (!HH.getStatusDuration("paralysis"))
+					if (!HH.getStatusDuration("unconscious"))
 						boutput(HH, SPAN_ALERT("Your vision fades to blackness."))
-					HH.changeStatus("paralysis", 10 SECONDS)
+					HH.changeStatus("unconscious", 10 SECONDS)
 				else
 					if (prob(65))
-						HH.changeStatus("weakened", 1 SECOND)
+						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
 			if (istype(H)) H.blood_tracking_output()
@@ -286,12 +286,12 @@
 				HH.blood_volume -= 20 * mult
 			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
-					if (!HH.getStatusDuration("paralysis"))
+					if (!HH.getStatusDuration("unconscious"))
 						boutput(HH, SPAN_ALERT("Your vision fades to blackness."))
-					HH.changeStatus("paralysis", 10 SECONDS)
+					HH.changeStatus("unconscious", 10 SECONDS)
 				else
 					if (prob(65))
-						HH.changeStatus("weakened", 1 SECOND)
+						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
@@ -340,6 +340,7 @@
 			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return 1
 
+		. = ..()
 		var/mob/living/carbon/human/HH = target
 
 

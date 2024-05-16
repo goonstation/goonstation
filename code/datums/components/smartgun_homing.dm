@@ -32,7 +32,7 @@
 			aimer.images -= targeting_images[A]
 			targeting_images -= A
 
-// Pod targeting varient.
+// Pod targeting variant.
 /datum/component/holdertargeting/smartgun/homing/pod
 	type_to_target = /obj
 

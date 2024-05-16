@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/electronics/scanner/syndicate
 	cost = 4
 	vr_allowed = FALSE
-	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
+	desc = "A standard Nanotrasen mechanic's analyzer with jailbroken internals. This baby doesn't give a damn about DRM, patents, or \"safety\"!"
 	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 

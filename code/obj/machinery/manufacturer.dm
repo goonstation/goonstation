@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	New()
 		START_TRACKING
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
 
 		if(!src.link)
@@ -1070,7 +1070,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.scan = ID
 					return TRUE
 				else
-					boutput(usr, SPAN_ALERT("Pin number incorrect."))
+					boutput(usr, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
@@ -2117,6 +2117,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
+		/datum/manufacture/miniplasmatank,
+		/datum/manufacture/minioxygentank,
 		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
@@ -2482,6 +2484,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/pod/armor_heavy,
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
+		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,

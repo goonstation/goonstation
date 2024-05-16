@@ -47,6 +47,7 @@
 	var/datum/ban_panel/ban_panel = null
 	var/datum/antagonist_panel/antagonist_panel = null
 	var/datum/job_manager/job_manager = null
+	var/datum/region_allocator_panel/region_allocator_panel = null
 
 	var/list/hidden_categories = null
 
@@ -57,7 +58,6 @@
 		src.owner = C
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
-			src.owner.chatOutput.getContextFlag()
 			src.load_admin_prefs()
 
 		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)

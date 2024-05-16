@@ -44,16 +44,16 @@ var/datum/station_zlevel_repair/station_repair = new
 		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
-					T.UpdateOverlays(src.ambient_light, "ambient")
+					T.AddOverlays(src.ambient_light, "ambient")
 				if(src.ambient_obj)
 					T.vis_contents |= src.ambient_obj
 				if(src.weather_img)
-					T.UpdateOverlays(src.weather_img, "weather")
+					T.AddOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
 						new src.weather_effect(T)
-				T.UpdateOverlays(null, "foreground_parallax_occlusion_overlay")
+				T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
 		mass_driver_fixup()
@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
 				else
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
@@ -334,8 +334,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/caveify
 	name = "Underground Station"
 	desc = "Turns space into a cave system"
-	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_options = list("Mining"=list("None","Normal","Rich"), "Bioluminescent Algae Coverage"=list("None", "Normal", "Heavy", "Extreme", "All"))
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE)
 
 	New()
 		..()
@@ -343,10 +343,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 	convert_station_level(params, mob/user)
 		if(..())
 			var/const/ambient_light = "#222222"
-			var/rain = params["Rain"]
-			rain = (rain == "No") ? null : rain
 
-			station_repair.station_generator = new/datum/map_generator/cave_generator
+			if(params["Asteroid"])
+				station_repair.station_generator = new/datum/map_generator/cave_generator/asteroid
+			else
+				station_repair.station_generator = new/datum/map_generator/cave_generator
 
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
@@ -355,6 +356,32 @@ ABSTRACT_TYPE(/datum/terrainify)
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
 
+			var/algae_coverage = 0
+			switch(params["Bioluminescent Algae Coverage"])
+				if ("Normal")
+					algae_coverage = 0.25
+				if ("Heavy")
+					algae_coverage = 0.5
+				if ("Extreme")
+					algae_coverage = 0.75
+				if ("All")
+					algae_coverage = 1
+			if (algae_coverage)
+				if(!bioluminescent_algae)
+					bioluminescent_algae = new(algae_coverage)
+					bioluminescent_algae.setup()
+				SPAWN(1 MINUTE) // bad hack
+					for (var/turf/simulated/wall/auto/asteroid/wall in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+						if (wall.icon_state == "asteroid-255") continue
+						if (wall.ore) continue // Skip if there's ore here already
+						var/list/color_vals = bioluminescent_algae?.get_color(wall)
+						if (length(color_vals))
+							var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+							algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+							algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
+							wall.AddOverlays(algea, "glow_algae")
+							wall.add_medium_light("glow_algae", color_vals)
+						LAGCHECK(LAG_LOW)
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -364,7 +391,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
 				else
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			if(params["Prefabs"])
 				place_prefabs(10)
@@ -409,7 +436,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	station_repair.station_generator.generate_terrain(space, flags = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 	for (var/turf/S in space)
-		S.UpdateOverlays(station_repair.ambient_light, "ambient")
+		S.AddOverlays(station_repair.ambient_light, "ambient")
 
 	station_repair.clean_up_station_level()
 
@@ -462,7 +489,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(station_repair.ambient_light)
 					ambient_value = lerp(10,50,min(1-T.x/300,0.8))
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
-					T.UpdateOverlays(station_repair.ambient_light, "ambient")
+					T.AddOverlays(station_repair.ambient_light, "ambient")
 			station_repair.land_vehicle_fixup(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
 			var/list/space = list()
@@ -472,13 +499,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 			for (var/turf/S in space)
 				if(snow)
 					if(snow == "Yes")
-						S.UpdateOverlays(station_repair.weather_img, "rain")
+						S.AddOverlays(station_repair.weather_img, "rain")
 					else
 						new station_repair.weather_effect(S)
 				if(station_repair.ambient_light)
 					ambient_value = lerp(10,50,min(1-S.x/300,0.8))
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
 			handle_mining(params, space)
@@ -570,13 +597,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
 						S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
 					if(rain == "Yes")
-						S.UpdateOverlays(station_repair.weather_img, "rain")
+						S.AddOverlays(station_repair.weather_img, "rain")
 					else
 						new station_repair.weather_effect(S)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
 				else
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			if(params["Prefabs"])
 				place_prefabs(10)
@@ -630,7 +657,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				else
 					ambient_value = lerp(20,80,S.x/300)
 					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			for(var/turf/S in get_area_turfs(/area/mining/magnet))
 				if(S.z != Z_LEVEL_STATION) continue
@@ -645,7 +672,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				T.UpdateOverlays(station_repair.weather_img, "weather")
 				ambient_value = lerp(20,80,T.x/300)
 				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-				T.UpdateOverlays(station_repair.ambient_light, "ambient")
+				T.AddOverlays(station_repair.ambient_light, "ambient")
 
 			ambient_value = lerp(20,80,0.5)
 			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
@@ -658,7 +685,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/turf/T in TS)
 			ambient_value = lerp(20,80,T.x/300)
 			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-			T.UpdateOverlays(station_repair.ambient_light, "ambient")
+			T.AddOverlays(station_repair.ambient_light, "ambient")
 
 
 /datum/terrainify/trenchify
@@ -768,7 +795,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
 				else
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 				if(snow)
 					new station_repair.weather_effect(S)
 
@@ -814,7 +841,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
 				else
-					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			if(params["Prefabs"])
 				place_prefabs(10)

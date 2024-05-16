@@ -552,7 +552,7 @@
 
 		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID)
+			if (WG.glove_ID && !(WG.no_prints))
 				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
 			if (!WG.hide_prints)
 				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
@@ -670,11 +670,9 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			var/list/contraband_returned = list()
-			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-				var/contra = max(contraband_returned)
-				if (contra)
-					contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
+			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
+			if (contra)
+				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -809,7 +807,8 @@
 	if (istype(A, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/PP = A
 		if (!PP.current || PP.dead)
-			return SPAN_ALERT("Cannot scan.")
+			boutput(user, SPAN_ALERT("Cannot scan."))
+			return
 
 		P = PP.current
 		DNA = PP.plantgenes
@@ -817,7 +816,8 @@
 	else if (istype(A, /obj/item/seed/))
 		var/obj/item/seed/S = A
 		if (S.isstrange || !S.planttype)
-			return SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned.")
+			boutput(user, SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned."))
+			return
 
 		P = S.planttype
 		DNA = S.plantgenes
@@ -848,10 +848,10 @@
 		animate_scanning(A, "#70e800")
 
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
-		return SPAN_ALERT("Cannot scan.")
+		boutput(user, SPAN_ALERT("Cannot scan."))
+		return
 
 	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
-	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)

@@ -21,7 +21,8 @@
 			for (var/pulses = pulse_amt, pulses > 0, pulses--)
 				pulseloc = pick(random_floor_turfs)
 				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(30); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+				SPAWN(0)
+					pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(30); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 				sleep(pulse_delay)
 
 
@@ -46,14 +47,14 @@
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
-		sleep(lifespan)
-		playsound(src,pulse_sound,50,TRUE)
-		irradiate_turf(get_turf(src))
-		for (var/turf/T in circular_range(src,pulse_range))
-			irradiate_turf(T)
-		SPAWN(0)
-			qdel(src)
-		return
+		SPAWN(lifespan)
+			playsound(src,pulse_sound,50,TRUE)
+			irradiate_turf(get_turf(src))
+			for (var/turf/T in circular_range(src,pulse_range))
+				irradiate_turf(T)
+			SPAWN(0)
+				qdel(src)
+			return
 
 	disposing()
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
@@ -98,15 +99,15 @@
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
-		sleep(lifespan)
-		playsound(src,pulse_sound,50,TRUE)
-		irradiate_turf(get_turf(src))
-		shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron{shot_number = 10}(10), get_step_rand(get_turf(src)), spread_angle = 360)
-		for (var/turf/T in circular_range(src,pulse_range))
-			irradiate_turf(T)
-		SPAWN(0)
-			qdel(src)
-		return
+		SPAWN(lifespan)
+			playsound(src,pulse_sound,50,TRUE)
+			irradiate_turf(get_turf(src))
+			shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron{shot_number = 10}(10), get_step_rand(get_turf(src)), spread_angle = 360)
+			for (var/turf/T in circular_range(src,pulse_range))
+				irradiate_turf(T)
+			SPAWN(0)
+				qdel(src)
+			return
 
 	disposing()
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))

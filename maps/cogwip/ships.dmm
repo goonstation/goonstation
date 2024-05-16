@@ -1354,12 +1354,6 @@
 	icon_state = "floor2"
 	},
 /area/space)
-"ea" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/space)
 "eb" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -1449,7 +1443,7 @@
 "eo" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/noGenerate)
 "ep" = (
@@ -1534,7 +1528,7 @@
 "ez" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
 "eA" = (
@@ -1625,7 +1619,7 @@
 "eM" = (
 /turf/simulated/shuttle/wall{
 	dir = 2;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
 "eN" = (
@@ -4135,7 +4129,7 @@
 "lx" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "ly" = (
@@ -4168,7 +4162,7 @@
 "lD" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "lE" = (
@@ -4187,7 +4181,7 @@
 /area/space)
 "lG" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "lH" = (
@@ -4204,7 +4198,7 @@
 "lI" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "lJ" = (
@@ -4255,7 +4249,7 @@
 "lP" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "lQ" = (
@@ -4304,7 +4298,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "lV" = (
@@ -4693,7 +4687,7 @@
 	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "mS" = (
@@ -4754,7 +4748,7 @@
 	name = "security camera"
 	},
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "mZ" = (
@@ -4799,7 +4793,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "nc" = (
@@ -5017,7 +5011,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "nC" = (
@@ -5143,13 +5137,13 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "nQ" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "nR" = (
@@ -5166,7 +5160,7 @@
 "nT" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "nU" = (
@@ -5258,7 +5252,7 @@
 "of" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "og" = (
@@ -5492,7 +5486,7 @@
 /area/space)
 "oO" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "oP" = (
@@ -5502,7 +5496,7 @@
 "oQ" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "oR" = (
@@ -5924,7 +5918,7 @@
 "pW" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
 	opacity = 0
 	},
@@ -6256,7 +6250,7 @@
 "qU" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
 	opacity = 0
 	},
@@ -6820,7 +6814,7 @@
 "sa" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "sb" = (
@@ -10030,7 +10024,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "zT" = (
@@ -10059,7 +10053,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "zV" = (
@@ -11511,7 +11505,7 @@ aa
 aa
 aa
 aa
-ea
+lI
 zN
 sa
 aa
@@ -11662,7 +11656,7 @@ aa
 aa
 aa
 aa
-ea
+lI
 ee
 ee
 ee
@@ -12715,7 +12709,7 @@ aa
 aa
 aa
 aa
-ea
+lI
 eE
 fH
 eE
@@ -12878,7 +12872,7 @@ aa
 aa
 aa
 aa
-ea
+lI
 zH
 rN
 zS
@@ -14247,7 +14241,7 @@ aa
 aa
 aa
 aa
-ea
+lI
 rR
 sa
 aa
@@ -14702,7 +14696,7 @@ aa
 aa
 aa
 aa
-ea
+lI
 zM
 rT
 zU

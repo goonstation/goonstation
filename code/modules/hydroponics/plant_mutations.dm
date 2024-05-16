@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Spice Pumpkin"
 	name_prefix = "Spiced "
 	iconmod = "PumpkinLatte"
-	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte
 	assoc_reagents = list("pumpkinspicelatte")
 	infusion_chance = 80
 	chance = 0
@@ -360,12 +360,11 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		var/fart_prob = clamp(100, 0, DNA?.get_effective_value("potency"))
 
-		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(fart_prob))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(fart_prob))
 			POT.visible_message(SPAN_ALERT("<b>[POT]</b> farts!"))
 			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
@@ -464,7 +463,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 /datum/plantmutation/soy/soylent
 	name = "Strange soybean"
 	name_prefix = "Strange "
-	crop = /obj/item/reagent_containers/food/snacks/plant/soylent
+	crop = /obj/item/reagent_containers/food/snacks/plant/soy/soylent
 	iconmod = "Soylent"
 
 // Contusine Mutations
@@ -579,10 +578,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(10))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE && prob(10))
 			var/list/nerds = list()
 			// I know that this seems weird, but consider how many plants clutter botany at any given time. Looping through mobs and checking distance is
 			// less of a pain than looping through potentially hundreds of random seeds and crap in view(1) to see if they're mobs.
@@ -699,10 +695,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")) && prob(10))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE && prob(10))
 			var/obj/overlay/B = new /obj/overlay( get_turf(POT) )
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
@@ -799,20 +792,14 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(5))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(5))
 			POT.visible_message(SPAN_COMBAT("<b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!"))
 			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
 	HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED) return 0
 		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, SPAN_ALERT("[POT.name] angrily bites you!"))
 		random_brute_damage(user, 3)
@@ -910,14 +897,14 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Blackberry"
 	iconmod = "Blackberry"
 	dont_rename_crop = TRUE
-	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry
 	assoc_reagents = list("juice_blackberry")
 
 /datum/plantmutation/raspberry/blueraspberry
 	name = "Blue Raspberry"
 	iconmod = "BlueRaspberry"
 	dont_rename_crop = TRUE
-	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
 
 // Flower mutations

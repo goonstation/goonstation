@@ -1423,6 +1423,11 @@
 	comtype = /obj/item/storage/box/costume/crap/wonka
 	price = PAY_TRADESMAN
 
+/datum/commodity/costume/goku
+	comname = "Anime Martial Artist Costume"
+	comtype = /obj/item/storage/box/costume/crap/goku
+	price = PAY_TRADESMAN
+
 /datum/commodity/costume/light_borg //YJHGHTFH's light borg costume
 	comname = "Light Cyborg Costume"
 	comtype = /obj/item/storage/box/costume/light_borg
@@ -1499,6 +1504,12 @@
 	comtype = /obj/item/storage/box/costume/jester
 	desc = "Travel back in time and become the medieval version of a clown. (Does not provide time travel)"
 	price = PAY_TRADESMAN
+
+/datum/commodity/costume/rabbitsuit
+	comname = "Rabbit Suit"
+	comtype = /obj/item/storage/box/costume/rabbitsuit
+	desc = "A not-at-all scary rabbit suit! Steam clean only."
+	price = PAY_UNTRAINED
 
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"

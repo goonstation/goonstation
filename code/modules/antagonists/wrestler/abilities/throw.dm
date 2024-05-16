@@ -28,6 +28,7 @@
 
 
 
+		. = ..()
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
 			M.visible_message(SPAN_ALERT("You seem to attack [HH]!"))
@@ -117,7 +118,7 @@
 				if (!fake)
 					HH.set_loc(get_turf(M))
 					HH.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t
-					HH.changeStatus("weakened", 3 SECONDS)
+					HH.changeStatus("knockdown", 3 SECONDS)
 					HH.force_laydown_standup()
 					HH.change_misstep_chance(50)
 					HH.changeStatus("slowed", 8 SECONDS, 2)
