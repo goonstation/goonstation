@@ -405,7 +405,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
-	proc/blueprints_as_list(var/list/L, mob/user, var/static_elements = FALSE)
+	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category)) // fix for not displaying blueprints/manudrives
@@ -447,7 +447,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			img = getItemIcon(M.item_outputs[1], C = user.client)
 
 		return list(
-			"name" = capitalize(M.name),
+			"name" = M.name,
 			"category" = M.category,
 			"material_names" = M.item_names,
 			"item_paths" = M.item_paths,
