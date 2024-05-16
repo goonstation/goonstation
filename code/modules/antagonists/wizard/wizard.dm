@@ -6,7 +6,7 @@
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
 	var/list/datum/SWFuplinkspell/purchased_spells = list()
-	var/spell_animation_frame = 5 //
+	var/spell_animation_frame = 5 // This will need updating if the spell animations ever change
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -156,4 +156,3 @@
 				"value" = purchases,
 			)
 		)
-
