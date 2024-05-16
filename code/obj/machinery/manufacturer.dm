@@ -488,21 +488,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Clear src.queue but not the current working print if it exists
 	proc/clear_queue()
-		var/queue_length = length(src.queue)
-		if (queue_length < 1) // Nothing in list
+		if (!length(src.queue))
 			return
-
-		if (src.mode == MODE_WORKING && queue_length > 1)
-			src.queue.Cut(1)
-		if (src.mode != MODE_WORKING)
-			src.queue.Cut(0)
-
-		if (src.mode == MODE_HALT) // Set ready if halted
-			src.manual_stop = FALSE
-			src.error = null
-			src.mode = MODE_READY
-
-			src.build_icon()
+		src.queue = list()
 
 	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
 	proc/try_shock(mob/target, var/chance)
@@ -644,6 +632,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "Slow down!")
 					return
 				src.clear_queue()
+				src.mode = MODE_READY
+				src.build_icon()
+				if (src.action_bar)
+					src.action_bar.interrupt(INTERRUPT_ALWAYS)
 				return TRUE
 
 			if ("pause_toggle")
@@ -2000,6 +1992,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		// No same material in storage, create/add the one we have and update the patterns index accordingly
 		if (!isnull(mat_piece))
+			if (isnull(mat_piece.material))
+				return
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
 			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
 			return
