@@ -2499,6 +2499,16 @@
 		stateful = TRUE
 		reaction_icon_color = "#6e2e25"
 
+	batrachotoxin
+		name = "batrachotoxin"
+		id = "batrachotoxin"
+		result = "batrachotoxin" // Ants stand as a hard to mass produce alternative to beetles, which produce this IRL
+		required_reagents = list("water" = 6, "ants" = 6, "mutagen" = 4, "space_fungus" = 4)
+		mix_phrase = "The mixture gives off a strong burning insect smell."
+		min_temperature = T0C + 90
+		result_amount = 1
+		reaction_icon_color = "#6e2e25"
+
 	cyanide
 		name = "Cyanide"
 		id = "cyanide"
