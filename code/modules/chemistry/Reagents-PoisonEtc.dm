@@ -1906,7 +1906,7 @@ datum
 						M.setStatusMin("paralysis", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
-						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
+						if (probmult(25))
 							boutput(M, SPAN_ALERT("<b>Your chest clutches in pain!</b>"))
 						if(isliving(M))
 							var/mob/living/L = M
