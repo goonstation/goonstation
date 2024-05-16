@@ -3183,6 +3183,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = TRUE
 
 	var/guaranteed_uses = 8 // allows for 2 volleys before it starts breaking
+	var/twobarrel = 0
 
 	New()
 		..()
@@ -3191,6 +3192,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	shoot(var/target, var/start, var/mob/user)
 		..()
+		if(twobarrel)
+			guaranteed_uses--
+			..() //shoot a second time
+
 		if(guaranteed_uses >= 0)
 			guaranteed_uses--
 			if(guaranteed_uses == 0)
@@ -3204,15 +3209,23 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			user.put_in_hand_or_drop(broken)
 			qdel(src)
 
-	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W))
-			var/obj/item/weldingtool/welder = W
+	attackby(obj/item/I, mob/user)
+		if (isweldingtool(I)) //are we welding?
+			var/obj/item/weldingtool/welder = I
 			if(guaranteed_uses>=8)
 				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
 			else if (welder.try_weld(user, 2, 2))
 				boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]."))
 				guaranteed_uses ++
-		else
+
+		else if(isscrewingtool(I)) //are we screwing?
+			if(twobarrel) //if so toggle our burst mode
+				twobarrel = 0
+				boutput(user, SPAN_NOTICE("You change the firing on [src] to be single barrel."))
+			else
+				twobarrel = 1
+				boutput(user, SPAN_NOTICE("You change the firing on [src] to be two barrels."))
+		else //no special actions, so do whatever
 			..()
 
 /obj/item/brokenquadbarrel
