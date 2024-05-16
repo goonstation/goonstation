@@ -719,7 +719,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			src.output_message_user = null
 		if (src.scan.registered in FrozenAccounts)
-			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows." sound = TRUE)
+			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows.", sound = TRUE)
 			return
 		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
 		if (account)

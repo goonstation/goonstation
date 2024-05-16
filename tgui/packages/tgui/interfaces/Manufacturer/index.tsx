@@ -251,7 +251,7 @@ export const Manufacturer = (_, context) => {
                         {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
                             key={ore.name}
-                            label={`${ore.amount} x ${ore.name}`}
+                            label={ore.name}
                             textAlign="center"
                             buttons={[
                               <Button
@@ -262,7 +262,9 @@ export const Manufacturer = (_, context) => {
                                 {ore.cost}⪽
                               </Button>,
                             ]}
-                          />
+                          >
+                            {ore.amount}
+                          </LabeledList.Item>
                         ))) : "No Ores Loaded."}
                       </LabeledList>
                     </Box>
