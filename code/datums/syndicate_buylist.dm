@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/surplus
 	name = "Surplus Crate"
 	item = /obj/storage/crate/syndicate_surplus
-	cost = 12
+	cost = 11
 	vr_allowed = FALSE
 	desc = "A crate containing 18-24 credits worth of whatever junk we had lying around."
 	can_buy = UPLINK_TRAITOR
