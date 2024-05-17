@@ -101,6 +101,25 @@
 	if (!P.AH)
 		return
 
+	var/is_mutantrace = FALSE
+	if ("lizard" in P.traitPreferences.traits_selected)
+		src.icon_state = "ghost-lizard"
+		is_mutantrace = TRUE
+	else if ("cow" in P.traitPreferences.traits_selected)
+		src.icon_state = "ghost-cow"
+		is_mutantrace = TRUE
+	else if ("skeleton" in P.traitPreferences.traits_selected)
+		src.icon_state = "ghost-skeleton"
+		is_mutantrace = TRUE
+	else if ("roach" in P.traitPreferences.traits_selected)
+		src.icon_state = "ghost-roach"
+		is_mutantrace = TRUE
+	else if ("pug" in P.traitPreferences.traits_selected)
+		src.icon_state = "ghost-pug"
+		is_mutantrace = TRUE
+
+	var/mutantrace_hair = is_mutantrace && ("bald" in P.traitPreferences.traits_selected)
+
 	var/cust_one_state = P.AH.customization_first.id
 	var/cust_two_state = P.AH.customization_second.id
 	var/cust_three_state = P.AH.customization_third.id
@@ -108,7 +127,19 @@
 	var/image/hair = image(P.AH.customization_first.icon, cust_one_state)
 	hair.color = P.AH.customization_first_color
 	hair.alpha = GHOST_HAIR_ALPHA
-	src.AddOverlays(hair, "hair")
+
+	if (!is_mutantrace || (is_mutantrace && mutantrace_hair))
+		src.AddOverlays(hair, "hair")
+
+		var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
+		beard.color = P.AH.customization_second_color
+		beard.alpha = GHOST_HAIR_ALPHA
+		src.AddOverlays(beard, "beard")
+
+		var/image/detail = image(P.AH.customization_second.icon, cust_three_state)
+		detail.color = P.AH.customization_third_color
+		detail.alpha = GHOST_HAIR_ALPHA
+		src.AddOverlays(detail, "detail")
 
 	if(cust_one_state && cust_one_state != "none")
 		wig = new
@@ -124,17 +155,6 @@
 		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
 		wig.wear_image.color = P.AH.customization_first_color
-
-
-	var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
-	beard.color = P.AH.customization_second_color
-	beard.alpha = GHOST_HAIR_ALPHA
-	src.AddOverlays(beard, "beard")
-
-	var/image/detail = image(P.AH.customization_second.icon, cust_three_state)
-	detail.color = P.AH.customization_third_color
-	detail.alpha = GHOST_HAIR_ALPHA
-	src.AddOverlays(detail, "detail")
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
