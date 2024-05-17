@@ -353,16 +353,3 @@
 
 /datum/controller/process/proc/enable()
 	disabled = 0
-
-/**
- * Return whether the process can be used at that time.
- * By default only counts being hung, disabled or killed as unavailable.
- *
- * If 'immediately' is true the process needs to be not idle as well.
- */
-/datum/controller/process/proc/is_available(var/immediately)
-	if (src.hung || src.disabled || src.killed)
-		return FALSE
-	if (immediately && (src.idle))
-		return FALSE
-	return TRUE

@@ -1063,7 +1063,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			P.setMaterial(target.material)
 			P.change_stack_amount(ejectamt - P.amount)
 			target.change_stack_amount(-ejectamt)
-			src.storage.transfer_stored_item(P, ejectturf)
+			P.set_loc(ejectturf)
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
@@ -1655,7 +1655,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					mats_available[P_id] = P.amount * 10
 				if (mats_available[P_id] < required_amount)
 					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]))
+				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
 					mats_used[required_pattern] = P_id
 					mats_available[P_id] -= required_amount
 					break

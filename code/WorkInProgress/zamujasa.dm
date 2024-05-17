@@ -1526,7 +1526,6 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_height = 400
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-Chat box not working?<a href="byond://winset?command=Fix-chat">Click Me</a> to refresh it.
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
 Have questions? Ask mentors with \[F3]!
 Need an admin? Message us with \[F1].
