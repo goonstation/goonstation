@@ -1042,11 +1042,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		// In case tgui_input_number() misses something or it's 0 (Likely trying to cancel action)
 		if (!isnum(eject_amount) || !isnum_safe(eject_amount) || eject_amount < 1)
-			src.grump_message(user, "ERROR: Cannot eject [eject_amount] bars.", sound = TRUE)
+			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s.", sound = TRUE)
 			return
 		// This should never happen either
 		if (eject_amount > P.amount)
-			src.grump_message(user, "ERROR: Cannot eject [eject_amount] bars, as there are only [floor(P.amount)] bars available to eject.", sound = TRUE)
+			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s, as there are only [floor(P.amount)] piece\s available to eject.", sound = TRUE)
 			eject_amount = floor(P.amount)
 		if (eject_amount == P.amount)
 			P.UpdateStackAppearance()
