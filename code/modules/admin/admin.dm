@@ -13,8 +13,8 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class='adminLog'>[SPAN_PREFIX("[irc ? "DISCORD" : "ADMIN <wbr>LOG"]")]: [SPAN_MESSAGE("[text]")]</span>"
-	for (var/client/C as anything in clients)
+	var/rendered = SPAN_ADMIN("[SPAN_PREFIX("[irc ? "DISCORD" : "ADMIN <wbr>LOG"]")]: [SPAN_MESSAGE("[text]")]")
+	for (var/client/C in clients)
 		if(!C.holder)
 			continue
 		if (!asay && rank_to_level(C.holder.rank) < LEVEL_MOD) // No confidential info for goat farts (Convair880).
@@ -26,22 +26,22 @@ var/global/noir = 0
 
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
-	var/rendered = "<span class='coderLog'>[SPAN_PREFIX("CODER <wbr>LOG")]: [SPAN_MESSAGE("[text]")]</span>"
-	for (var/client/C as anything in clients)
+	var/rendered = SPAN_ADMIN("[SPAN_PREFIX("CODER <wbr>LOG")]: [SPAN_MESSAGE("[text]")]")
+	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_coders_vardbg(var/text, var/datum/d)
 	var/rendered
-	for (var/client/C as anything in clients)
+	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
 			var/dbg_html = C.debug_variable("", d, 0)
-			rendered = "<span class='coderLog'>[SPAN_PREFIX("CODER <wbr>LOG")]: [SPAN_MESSAGE("[text]")][dbg_html]</span>"
+			rendered = SPAN_ADMIN("[SPAN_PREFIX("CODER <wbr>LOG")]: [SPAN_MESSAGE("[text]")][dbg_html]")
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
-	var/rendered = "<span class='attackLog'>[SPAN_PREFIX("ATTACK <wbr>LOG")]: [SPAN_MESSAGE("[text]")]</span>"
-	for (var/client/C as anything in clients)
+	var/rendered = SPAN_ADMIN("[SPAN_PREFIX("ATTACK <wbr>LOG")]: [SPAN_MESSAGE("[text]")]")
+	for (var/client/C)
 		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 

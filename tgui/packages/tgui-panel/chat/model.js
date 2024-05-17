@@ -11,20 +11,14 @@ export const canPageAcceptType = (page, type) => (
   type.startsWith(MESSAGE_TYPE_INTERNAL) || page.acceptedTypes[type]
 );
 
-export const createPage = obj => {
-  const acceptedTypes = {};
-  for (let typeDef of MESSAGE_TYPES) {
-    acceptedTypes[typeDef.type] = true;
-  }
-  return {
-    id: createUuid(),
-    name: 'New Tab',
-    acceptedTypes,
-    unreadCount: 0,
-    createdAt: Date.now(),
-    ...obj,
-  };
-};
+export const createPage = obj => ({
+  id: createUuid(),
+  name: 'New Tab',
+  acceptedTypes: {},
+  unreadCount: 0,
+  createdAt: Date.now(),
+  ...obj,
+});
 
 export const createMainPage = () => {
   const acceptedTypes = {};
@@ -46,8 +40,6 @@ export const serializeMessage = message => ({
   type: message.type,
   text: message.text,
   html: message.html,
-  group: message.group, /* GOON ADD: support for output grouping for spam reduction */
-  forceScroll: message.forceScroll, /* GOON ADD: support for force scrolling messages*/
   times: message.times,
   createdAt: message.createdAt,
 });
@@ -55,9 +47,4 @@ export const serializeMessage = message => ({
 export const isSameMessage = (a, b) => (
   typeof a.text === 'string' && a.text === b.text
   || typeof a.html === 'string' && a.html === b.html
-);
-
-/* GOON ADD: support for output grouping for spam reduction */
-export const isSameGroup = (a, b) => (
-  typeof a.group === 'string' && a.group === b.group
 );
