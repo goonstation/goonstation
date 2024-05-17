@@ -409,6 +409,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
 				M.category = "Miscellaneous"
+				logTheThing(LOG_DEBUG, src, "Manufacturing blueprint [M] has category [M.category], which is not on the list of categories for [src]!")
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
 			as_list[M.category] += list(manufacture_as_list(M, user, static_elements))
