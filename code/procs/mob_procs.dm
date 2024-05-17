@@ -879,7 +879,7 @@
 				thisR = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-			thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[thisR]</span>"
+			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 		M.heard_say(src, message)
 		M.show_message(thisR, 2, assoc_maptext = assoc_maptext)
 

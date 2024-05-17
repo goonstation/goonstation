@@ -169,7 +169,6 @@
 #include "filesystem.dm"
 #include "filters.dm"
 #include "heap.dm"
-#include "icons.dm"
 #include "lists.dm"
 #include "machinery.dm"
 #include "map.dm"

@@ -1655,7 +1655,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					mats_available[P_id] = P.amount * 10
 				if (mats_available[P_id] < required_amount)
 					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]))
+				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
 					mats_used[required_pattern] = P_id
 					mats_available[P_id] -= required_amount
 					break
