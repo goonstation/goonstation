@@ -80,6 +80,7 @@ export type RockboxData = {
 
 export type ResourceData = {
   name: string;
+  id: string;
   byondRef: string;
   amount: number;
   satisfies: string[];

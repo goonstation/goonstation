@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
