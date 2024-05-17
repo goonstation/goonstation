@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/oven/pizza_custom
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza_base
 	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza
+	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
 	specialOutput(obj/submachine/ourCooker)

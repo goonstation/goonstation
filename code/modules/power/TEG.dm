@@ -1042,7 +1042,7 @@ datum/pump_ui/circulator_ui
 				if (grump >= 100 && probmult(5))
 					playsound(src.loc, 'sound/machines/engine_grump1.ogg', 50, 0)
 					src.visible_message(SPAN_ALERT("[src] erupts in flame!"))
-					fireflash(src, 1)
+					fireflash(src, 1, chemfire = CHEM_FIRE_RED)
 					grump -= 10
 			if(22 to 23)
 				playsound(src.loc, sound_engine_alert1, 55, 0)
@@ -1056,7 +1056,7 @@ datum/pump_ui/circulator_ui
 				if (grump >= 100 && probmult(5))
 					playsound(src.loc, 'sound/machines/engine_grump1.ogg', 50, 0)
 					src.visible_message(SPAN_ALERT("[src] erupts in flame!"))
-					fireflash(src, rand(1,3))
+					fireflash(src, rand(1,3), chemfire = CHEM_FIRE_RED)
 					grump -= 30
 
 			if(24 to 25)
@@ -1073,7 +1073,7 @@ datum/pump_ui/circulator_ui
 					playsound(src.loc, 'sound/weapons/rocket.ogg', 50, 0)
 					src.visible_message(SPAN_ALERT("[src] explodes in flame!"))
 					var/firesize = rand(1,4)
-					fireflash(src, firesize)
+					fireflash(src, firesize, chemfire = CHEM_FIRE_RED)
 					for(var/atom/movable/M in view(firesize, src.loc)) // fuck up those jerkbag engineers
 						if(M.anchored) continue
 						if(ismob(M))

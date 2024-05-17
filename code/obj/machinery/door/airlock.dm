@@ -1162,7 +1162,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 /obj/machinery/door/airlock/emp_act()
 	..()

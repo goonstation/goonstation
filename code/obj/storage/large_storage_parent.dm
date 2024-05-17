@@ -973,7 +973,7 @@ TYPEINFO_NEW(/obj/storage/secure)
 		if (isnum(src.radio_control))
 			radio_control = clamp(round(radio_control), 1000, 1500)
 			src.net_id = generate_net_id(src)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, radio_control)
 
 	update_icon()
 		..()

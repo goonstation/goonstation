@@ -28234,7 +28234,7 @@
 /turf/simulated/floor/industrial,
 /area/station/mining/refinery)
 "bBt" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/industrial,
@@ -36671,7 +36671,7 @@
 "kNM" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;

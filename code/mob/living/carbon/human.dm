@@ -2298,6 +2298,8 @@
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
+	if (src.autoequip_slot(I, SLOT_IN_BELT))
+		return
 	if (src.autoequip_slot(I, SLOT_L_STORE))
 		return
 	if (src.autoequip_slot(I, SLOT_R_STORE))

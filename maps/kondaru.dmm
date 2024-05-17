@@ -2712,6 +2712,9 @@
 /obj/machinery/computer3/generic/personal,
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "business2"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "ajJ" = (
@@ -3825,6 +3828,9 @@
 /obj/machinery/computer3/generic/personal,
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "business1"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "anD" = (
@@ -4267,8 +4273,9 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
 "apv" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "n_bathroom2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom{
@@ -7828,11 +7835,6 @@
 	},
 /area/station/engine/storage)
 "aDK" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
@@ -7843,6 +7845,11 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null;
+	id = "quarters_hos"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -8287,6 +8294,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
+"aFJ" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "n_bathroom1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/radio/bathroom{
+	name = "News Office Bathroom"
+	})
 "aFK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9288,6 +9304,9 @@
 /obj/machinery/firealarm/east,
 /obj/item/clipboard,
 /obj/item/pen,
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_mdir"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/md)
 "aJI" = (
@@ -10546,6 +10565,9 @@
 /area/station/crew_quarters/quarters_north)
 "aQe" = (
 /obj/stool/chair,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room7"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/crew_quarters/quarters_north)
 "aQf" = (
@@ -14015,7 +14037,8 @@
 /area/station/crew_quarters/quarters_north)
 "beK" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 4
+	dir = 4;
+	id = "cc_room12"
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_south)
@@ -16030,9 +16053,9 @@
 "bnu" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "door_locked";
-	locked = 1
+	id = "cc_room11"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_south)
 "bnz" = (
@@ -16781,6 +16804,14 @@
 	pixel_y = 11
 	},
 /obj/item/pen,
+/obj/machinery/door_control/bolter/new_walls/south{
+	pixel_x = 8;
+	id = "treatment2"
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	pixel_x = -8;
+	id = "treatment1"
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bql" = (
@@ -22067,6 +22098,9 @@
 /obj/table/wood/auto,
 /obj/machinery/phone,
 /obj/item/pen/crayon/golden,
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_hop"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "bLw" = (
@@ -23927,6 +23961,9 @@
 /obj/machinery/computer/card/department/security{
 	dir = 4
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_hos"
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bSc" = (
@@ -25365,14 +25402,15 @@
 	},
 /area/station/hangar/sec)
 "bZm" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4;
-	name = "Business Accomodations"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Business Accomodations";
+	id = "business1"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "bZn" = (
@@ -29674,6 +29712,9 @@
 /area/station/mining/staff_room)
 "coL" = (
 /obj/stool/chair,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_room2"
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/crew_quarters/quarters_north)
 "coM" = (
@@ -29684,7 +29725,8 @@
 /area/station/crew_quarters/quarters_north)
 "coO" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 4
+	dir = 4;
+	id = "cc_room2"
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_north)
@@ -30824,6 +30866,13 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"cSg" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room7"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_north)
 "cSO" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -31371,6 +31420,13 @@
 	dir = 10
 	},
 /area/station/routing/security)
+"dmh" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room1"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_south)
 "dmz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable/orange{
@@ -31686,7 +31742,8 @@
 /area/station/crew_quarters/ce)
 "dxZ" = (
 /obj/machinery/door/airlock/pyro/medical{
-	name = "Treatment Room Two"
+	name = "Treatment Room Two";
+	id = "treatment2"
 	},
 /obj/mapping_helper/access/medical,
 /obj/cable{
@@ -33681,6 +33738,9 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_room1"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
 "eLr" = (
@@ -34096,6 +34156,9 @@
 "eZq" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/medicine,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room10"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
 "eZD" = (
@@ -34189,6 +34252,13 @@
 "fdF" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/qm)
+"fdH" = (
+/obj/stool/chair,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room5"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/station/crew_quarters/quarters_north)
 "fdN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
@@ -34884,6 +34954,9 @@
 /obj/machinery/light/lamp/black{
 	pixel_x = 1;
 	pixel_y = 10
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room11"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
@@ -36250,7 +36323,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Research Director's Quarters";
-	req_access = null
+	req_access = null;
+	id = "quarters_rd"
 	},
 /obj/mapping_helper/access/research_director,
 /obj/cable{
@@ -36549,6 +36623,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"gPn" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room8"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_south)
 "gPC" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -37592,13 +37673,13 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "hzO" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null;
+	id = "quarters_hos"
+	},
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "hzW" = (
@@ -37796,6 +37877,13 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/primary/south)
+"hKQ" = (
+/obj/stool/chair,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room6"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/station/crew_quarters/quarters_north)
 "hLr" = (
 /obj/machinery/lawrack,
 /obj/cable,
@@ -38104,9 +38192,10 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "idb" = (
-/obj/machinery/door/unpowered/wood/pyro{
+/obj/machinery/door/airlock/pyro{
 	dir = 4;
-	name = "Business Accomodations"
+	name = "Business Accomodations";
+	id = "business2"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -38583,6 +38672,9 @@
 /obj/storage/secure/closet/command/research_director,
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
 	pixel_x = -2
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_rd"
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -39400,6 +39492,9 @@
 	},
 /area/station/security/brig/solitary)
 "iVD" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room12"
+	},
 /turf/simulated/floor/damaged5,
 /area/station/crew_quarters/quarters_south)
 "iVR" = (
@@ -39592,6 +39687,9 @@
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/item/clipboard,
 /obj/item/pen,
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_ce"
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/crew_quarters/ce)
 "jfL" = (
@@ -40293,6 +40391,9 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "n_bathroom2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom{
@@ -42667,7 +42768,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Captain's Quarters";
-	req_access = null
+	req_access = null;
+	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
 /obj/cable{
@@ -43459,6 +43561,13 @@
 	},
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
+"lQv" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room9"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_south)
 "lQz" = (
 /obj/machinery/light{
 	dir = 1;
@@ -43999,6 +44108,13 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/security/main)
+"mqi" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room6"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_north)
 "mqJ" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -47459,6 +47575,7 @@
 	rand_pos = 1
 	},
 /obj/item/pen/fancy,
+/obj/machinery/door_control/bolter/new_walls/west,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
@@ -48816,6 +48933,13 @@
 	dir = 4
 	},
 /area/station/security/brig/solitary)
+"pYH" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room4"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_north)
 "pZc" = (
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/grey/side{
@@ -50707,7 +50831,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Head of Personnel's Quarters";
-	req_access = null
+	req_access = null;
+	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/cable{
@@ -51708,6 +51833,13 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"sjA" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room3"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_north)
 "sjM" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/cable{
@@ -51717,6 +51849,13 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/greenblack,
 /area/station/garden/aviary)
+"sjX" = (
+/obj/stool/chair,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_room4"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/crew_quarters/quarters_north)
 "skD" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
@@ -51973,6 +52112,9 @@
 	},
 /obj/item/reagent_containers/food/drinks/cola{
 	pixel_x = 8
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room9"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
@@ -52299,6 +52441,9 @@
 	tag = ""
 	},
 /obj/machinery/firealarm/east,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_cap"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "sGz" = (
@@ -52772,6 +52917,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"sXh" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room10"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_south)
 "sXS" = (
 /obj/lattice{
 	dir = 10;
@@ -53759,7 +53911,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Head of Personnel's Quarters";
-	req_access = null
+	req_access = null;
+	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/cable{
@@ -54270,6 +54423,12 @@
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
+"ufJ" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "pool_bathroom"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "ufL" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	name = "The Snip"
@@ -54720,6 +54879,13 @@
 /obj/lattice,
 /turf/space,
 /area/station/engine/gas)
+"uwB" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room5"
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/quarters_north)
 "uwM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -55251,8 +55417,10 @@
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "uQI" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Toilet";
+	id = "pool_bathroom"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -56302,6 +56470,13 @@
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/gas)
+"vAN" = (
+/obj/stool/chair,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_room3"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/crew_quarters/quarters_north)
 "vAY" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -56334,7 +56509,8 @@
 /area/station/maintenance/solar/east)
 "vCz" = (
 /obj/machinery/door/airlock/pyro/medical{
-	name = "Treatment Room One"
+	name = "Treatment Room One";
+	id = "treatment1"
 	},
 /obj/mapping_helper/access/medical,
 /obj/cable{
@@ -58180,7 +58356,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Medical Director's Quarters";
-	req_access = null
+	req_access = null;
+	id = "quarters_mdir"
 	},
 /obj/mapping_helper/access/medical_director,
 /obj/cable{
@@ -58236,6 +58413,17 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
+"xav" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cc_room8"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/ne,
+/area/station/crew_quarters/quarters_south)
 "xaw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -59103,7 +59291,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Chief Engineer's Quarters";
-	req_access = null
+	req_access = null;
+	id = "quarters_ce"
 	},
 /obj/mapping_helper/access/engineering_chief,
 /obj/cable{
@@ -59118,6 +59307,21 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/ce)
+"xIr" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "n_bathroom1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/radio/bathroom{
+	name = "News Office Bathroom"
+	})
 "xII" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -100301,7 +100505,7 @@ pmt
 paL
 iBm
 aqA
-apv
+aFJ
 aqA
 apv
 aqA
@@ -100603,7 +100807,7 @@ ajt
 dYP
 gSB
 aqA
-jEH
+xIr
 aqA
 jEH
 aqD
@@ -123271,7 +123475,7 @@ aZc
 bdi
 kaJ
 sAQ
-jdt
+ufJ
 rtZ
 aGW
 aTf
@@ -125697,7 +125901,7 @@ aIS
 aIS
 aIS
 lEw
-coL
+vAN
 gWE
 aIS
 eMP
@@ -125995,7 +126199,7 @@ aRT
 aTL
 aIS
 lfY
-coL
+sjX
 aUa
 aIS
 cSO
@@ -126317,7 +126521,7 @@ uLm
 mmz
 mmz
 mmz
-beK
+dmh
 aZa
 aZa
 vFi
@@ -126603,7 +126807,7 @@ coN
 aZf
 aIS
 aIS
-coO
+sjA
 aIS
 aIS
 aIS
@@ -126901,7 +127105,7 @@ aRT
 aTL
 aIS
 aIS
-coO
+pYH
 aIS
 aIS
 cVi
@@ -127521,13 +127725,13 @@ cXE
 bTr
 aZa
 aZa
-beK
+gPn
 aZa
 aZa
-beK
+lQv
 aZa
 aZa
-beK
+sXh
 aZa
 aZa
 beK
@@ -127807,15 +128011,15 @@ aHa
 brU
 aIS
 aIS
-coO
+uwB
 aIS
 aIS
 aIS
-coO
+mqi
 aIS
 aIS
 aIS
-coO
+cSg
 aIS
 aIS
 aVW
@@ -128426,7 +128630,7 @@ bJK
 aWZ
 mkA
 aZa
-fFj
+xav
 cgR
 aZa
 swJ
@@ -128713,11 +128917,11 @@ gfq
 bty
 aIS
 wBc
-aQe
+fdH
 aMJ
 aIS
 pfc
-aQe
+hKQ
 aQE
 aIS
 ofa
