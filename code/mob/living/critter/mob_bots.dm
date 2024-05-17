@@ -474,8 +474,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 	add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", src.net_id, control_freq)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", src.net_id, FREQ_PDA)
 
 	for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
 		src.contexts += new actionType()
