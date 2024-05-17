@@ -3739,8 +3739,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "amB" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "cc_room5"
 	},
 /turf/simulated/floor/red,
 /area/station/crew_quarters/quartersA)
@@ -4220,8 +4221,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "aoq" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "cc_room4"
 	},
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/quartersA)
@@ -4921,21 +4923,6 @@
 	icon_state = "fred2"
 	},
 /area/station/science/research_director)
-"aqq" = (
-/obj/table/auto,
-/obj/item/paper_bin{
-	pixel_x = 5
-	},
-/obj/item/cigpacket/menthol,
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 20
-	},
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
 "aqr" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/plating/random,
@@ -4991,8 +4978,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "aqB" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "cc_room3"
 	},
 /turf/simulated/floor/green,
 /area/station/crew_quarters/quartersA)
@@ -5361,6 +5349,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "quarters_rd"
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -5702,12 +5693,6 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"asQ" = (
-/obj/item/storage/toilet/random{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
 "asS" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -5788,8 +5773,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
 "atd" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "cc_room2"
 	},
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersA)
@@ -6565,8 +6551,9 @@
 /turf/simulated/floor/darkpurple/side,
 /area/station/hallway/secondary/oshan_arrivals)
 "avI" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "cc_room1"
 	},
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
@@ -6784,7 +6771,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "awp" = (
-/obj/machinery/door/unpowered/wood/stall,
+/obj/machinery/door/airlock/pyro/alt{
+	id = "med_bathroom"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "awq" = (
@@ -12633,6 +12622,9 @@
 	},
 /area/listeningpost)
 "aQz" = (
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_ce"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/ce)
 "aQA" = (
@@ -18912,7 +18904,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bqT" = (
-/obj/machinery/light/incandescent/cool,
 /obj/item/inner_tube/random,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -19156,6 +19147,9 @@
 	layer = 3;
 	pixel_y = 8
 	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "eng_bathroom"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "brA" = (
@@ -19382,18 +19376,22 @@
 /area/station/crew_quarters/observatory)
 "bsu" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/light/incandescent/cool/very,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/showers)
-"bsv" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"bsv" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "gym_bath1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "bsw" = (
 /obj/item/clothing/head/plunger,
-/obj/machinery/light/incandescent/cool/very,
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 12
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bsx" = (
@@ -19606,6 +19604,7 @@
 /obj/rack,
 /obj/item/reagent_containers/glass/bottle/bubblebath,
 /obj/item/clothing/under/gimmick/macho,
+/obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bth" = (
@@ -20499,6 +20498,9 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "bwi" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "quarters_cap"
+	},
 /turf/simulated/floor/carpet/purple/standard/narrow/ne,
 /area/station/crew_quarters/captain)
 "bwj" = (
@@ -21024,6 +21026,9 @@
 "bxV" = (
 /obj/cable{
 	icon_state = "2-5"
+	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "quarters_hop"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -25257,6 +25262,9 @@
 /area/station/crew_quarters/radio/lab)
 "bML" = (
 /obj/stool/chair/comfy,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "radiohost"
+	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_west,
 /area/station/crew_quarters/radio/lab)
 "bMM" = (
@@ -26212,8 +26220,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/lab)
 "bQf" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 1
+/obj/machinery/door/airlock/pyro/alt{
+	id = "radiohost"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
@@ -32077,6 +32085,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "med_bathroom"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "clU" = (
@@ -32433,7 +32444,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+	dir = 8;
+	id = "med_bathroom"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/restroom)
@@ -33300,7 +33312,9 @@
 	},
 /area/station/hallway/primary/south)
 "dLS" = (
-/obj/machinery/door/airlock/pyro/command/alt,
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "quarters_ce"
+	},
 /obj/mapping_helper/access/engineering_chief,
 /obj/cable{
 	icon_state = "1-2"
@@ -33750,7 +33764,8 @@
 "eqP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Medical Director";
-	req_access_txt = "53"
+	req_access_txt = "53";
+	id = "quarters_mdir"
 	},
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/firedoor_spawn,
@@ -33761,7 +33776,9 @@
 /area/station/medical/head)
 "erc" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	id = "treatment1"
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "erh" = (
@@ -34715,7 +34732,8 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
 	name = "Head of Personnel's Office";
-	req_access = list(55)
+	req_access = list(55);
+	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
@@ -35122,6 +35140,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
+"geU" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "gfp" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -35254,7 +35276,8 @@
 "gqh" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Head of Personnel's Office";
-	req_access = list(55)
+	req_access = list(55);
+	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
@@ -35440,7 +35463,8 @@
 "gAk" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
 /obj/mapping_helper/firedoor_spawn,
@@ -36080,11 +36104,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
-"hAg" = (
-/obj/machinery/door/airlock/pyro/alt,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/medical/medbay/restroom)
 "hAD" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/white,
@@ -36144,7 +36163,9 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	id = "quarters_hos"
+	},
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "hHG" = (
@@ -36315,6 +36336,14 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"hVJ" = (
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_mdir"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "hVK" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/manufacturer/qm,
@@ -36609,7 +36638,8 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
 /obj/mapping_helper/firedoor_spawn,
@@ -37074,6 +37104,9 @@
 	pixel_x = -28;
 	pixel_y = 32
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "cc_room3"
+	},
 /turf/simulated/floor/green,
 /area/station/crew_quarters/quartersA)
 "jdV" = (
@@ -37483,6 +37516,9 @@
 	pixel_x = -28;
 	pixel_y = 32
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "cc_room1"
+	},
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "jKL" = (
@@ -37494,7 +37530,9 @@
 	name = "Catering Hangar"
 	})
 "jLH" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	id = "eng_bathroom"
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -37668,7 +37706,8 @@
 "kcY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
 /obj/mapping_helper/firedoor_spawn,
@@ -37966,11 +38005,6 @@
 /obj/table/round/auto,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"kBF" = (
-/obj/machinery/door/airlock/pyro/alt,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/showers)
 "kCm" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -38856,7 +38890,8 @@
 "lSE" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Head of Personnel's Office";
-	req_access = list(55)
+	req_access = list(55);
+	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
@@ -40274,6 +40309,9 @@
 	pixel_x = -28;
 	pixel_y = 32
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "cc_room5"
+	},
 /turf/simulated/floor/red,
 /area/station/crew_quarters/quartersA)
 "nFg" = (
@@ -40890,7 +40928,8 @@
 /area/station/maintenance/northeast)
 "oDE" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
-	dir = 8
+	dir = 8;
+	id = "eng_bathroom"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -40979,7 +41018,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+	dir = 8;
+	id = "treatment1"
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
@@ -41831,6 +41871,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/oshan_arrivals)
+"pPX" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "gym_bath2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "pQm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42294,6 +42340,13 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/chamber)
+"qyw" = (
+/obj/item/storage/toilet/random{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/restroom)
 "qAJ" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -42417,7 +42470,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "qLY" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	id = "eng_bathroom"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -42458,6 +42513,12 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"qOn" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "gym_bath1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "qOV" = (
 /obj/table/reinforced,
 /turf/simulated/floor/circuit/green,
@@ -43075,7 +43136,8 @@
 	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	req_access = null
+	req_access = null;
+	id = "quarters_hos"
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -43834,6 +43896,10 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"tfE" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "tfL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
@@ -43877,6 +43943,19 @@
 /obj/landmark/start/job/miner,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"tlG" = (
+/obj/machinery/door_control/bolter/new_walls/west{
+	pixel_y = -8;
+	id = "treatment1"
+	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	pixel_y = 8;
+	id = "treatment2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/staff)
 "tmm" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -43899,6 +43978,9 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "cc_room2"
 	},
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersA)
@@ -43950,7 +44032,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
 "ttt" = (
-/obj/machinery/door/airlock/pyro/command/alt,
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "quarters_rd"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -44411,6 +44495,12 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"uon" = (
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "gym_bath2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "uor" = (
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -44418,7 +44508,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+	dir = 8;
+	id = "treatment2"
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
@@ -44664,6 +44755,12 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/eeva)
+"uNu" = (
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_hos"
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "uNC" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -46626,7 +46723,9 @@
 /turf/simulated/wall/auto/asteroid,
 /area/station/garden/owlery)
 "xJL" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	id = "med_bathroom"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -46770,6 +46869,9 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "cc_room4"
 	},
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/quartersA)
@@ -76476,7 +76578,7 @@ boW
 bpy
 bqo
 bqS
-boW
+qOn
 bsv
 btf
 boW
@@ -76777,9 +76879,9 @@ boo
 boW
 bpy
 bqp
-bqS
-kBF
-bqS
+geU
+boW
+boW
 boW
 boW
 btZ
@@ -77080,9 +77182,9 @@ boW
 bpy
 bqo
 bqT
-boW
-bsv
-bqS
+pPX
+uon
+tfE
 boW
 bua
 btX
@@ -86690,14 +86792,14 @@ axA
 axA
 ali
 afq
-axA
-axA
-axA
-axA
-axA
-axA
-axA
-axA
+afq
+afq
+afq
+atv
+atv
+atv
+atv
+atv
 ayt
 azt
 aAJ
@@ -86992,12 +87094,12 @@ knY
 axA
 ajF
 akr
-hAg
-ayw
-ayw
+afq
+afq
+afq
 awp
-ayw
 asd
+qyw
 clT
 atv
 ayt
@@ -87294,9 +87396,9 @@ exn
 axA
 akv
 afq
-atv
-aqq
-asQ
+aqc
+awo
+avi
 atv
 ayJ
 ayw
@@ -87596,9 +87698,9 @@ exn
 axA
 aku
 agE
-asc
-asc
-asc
+afA
+afA
+afA
 asc
 asc
 cGH
@@ -89405,7 +89507,7 @@ ahd
 anP
 wSI
 gmC
-amZ
+tlG
 alg
 amZ
 jVC
@@ -93121,7 +93223,7 @@ hGR
 bWb
 bWL
 bXB
-bXB
+uNu
 bVc
 bLr
 bNP
@@ -97263,7 +97365,7 @@ aog
 gUq
 aqa
 arr
-asB
+hVJ
 aoi
 afA
 afA

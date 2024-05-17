@@ -559,7 +559,9 @@
 	},
 /area/station/crew_quarters/market)
 "abB" = (
-/obj/machinery/door/unpowered/wood/stall,
+/obj/machinery/door/airlock/pyro/alt{
+	id = "cc_shower_1"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "abF" = (
@@ -723,7 +725,9 @@
 "acj" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access,
-/obj/machinery/door/airlock/pyro,
+/obj/machinery/door/airlock/pyro{
+	id = "cc_room3"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "acl" = (
@@ -2757,7 +2761,8 @@
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro{
-	dir = 4
+	dir = 4;
+	id = "cc_room1"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
@@ -6769,8 +6774,9 @@
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 1
 	},
-/obj/sign_switch/south{
-	id = "sci_bathroom"
+/obj/machinery/door_control/bolter/new_walls/south{
+	pixel_x = -8;
+	id = "res_bathroom"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/science/lobby)
@@ -9231,6 +9237,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bgY" = (
@@ -12704,7 +12711,7 @@
 	},
 /area/station/medical/dome)
 "bID" = (
-/obj/mapping_helper/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -14413,10 +14420,10 @@
 /area/station/science/bot_storage)
 "cmK" = (
 /obj/storage/closet/dresser/random,
-/obj/item/storage/secure/ssafe{
-	pixel_x = -28
-	},
 /obj/landmark/bill_spawn,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_room1"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_west)
 "cnA" = (
@@ -14895,7 +14902,8 @@
 "cJB" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
-	name = "Research Restroom"
+	name = "Research Restroom";
+	id = "res_bathroom"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research,
@@ -15140,16 +15148,6 @@
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/machinery/illuminated_sign/occupancy{
-	pixel_y = 24;
-	pixel_x = -6;
-	id = "cc_shower_1"
-	},
-/obj/machinery/illuminated_sign/occupancy{
-	pixel_y = 24;
-	pixel_x = 6;
-	id = "cc_shower_2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -16672,6 +16670,12 @@
 /obj/machinery/plantpot,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"ejs" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "cc_shower_2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
 "ejx" = (
 /obj/pool_springboard,
 /obj/pool/perspective{
@@ -18144,6 +18148,14 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"fvy" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/machinery/door/airlock/pyro{
+	id = "cc_room4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters_west)
 "fvU" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/barber_shop)
@@ -18982,6 +18994,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/meter,
 /turf/simulated/floor,
 /area/station/science/lab)
 "gaT" = (
@@ -19245,10 +19258,6 @@
 	desc = "Just what it sounds like.";
 	name = "trash bin"
 	},
-/obj/machinery/illuminated_sign/occupancy{
-	pixel_x = -24;
-	id = "n_bathroom"
-	},
 /turf/simulated/floor/black/side{
 	dir = 9
 	},
@@ -19356,6 +19365,9 @@
 /area/station/engine/core/nuclear)
 "gqa" = (
 /obj/storage/closet/dresser/random,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "cc_room3"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_west)
 "gqn" = (
@@ -20181,6 +20193,9 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/item/gun/russianrevolver,
+/obj/item/storage/secure/ssafe{
+	pixel_x = -28
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_west)
 "gZJ" = (
@@ -22210,10 +22225,6 @@
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
 	},
-/obj/machinery/illuminated_sign/occupancy{
-	pixel_x = -24;
-	id = "med_bathroom"
-	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -22684,6 +22695,9 @@
 /area/station/security/interrogation)
 "iMu" = (
 /obj/storage/closet/dresser/random,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "cc_room4"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_west)
 "iMV" = (
@@ -23906,7 +23920,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "jMU" = (
-/obj/mapping_helper/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "jNa" = (
@@ -23946,7 +23960,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/sign_switch/west{
+/obj/machinery/door_control/bolter/new_walls/west{
 	id = "cc_shower_2"
 	},
 /turf/simulated/floor/sanitary,
@@ -24029,12 +24043,21 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "jSd" = (
-/obj/machinery/door/airlock/pyro/glass/toxins{
+/obj/machinery/door/airlock/pyro/toxins_alt{
 	dir = 4;
 	name = "Chamber Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_one";
+	layer = 4;
+	name = "Chamber One Heat Shield";
+	opacity = 0;
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "jSI" = (
@@ -28569,7 +28592,8 @@
 "nsN" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
-	name = "Research Director's Office"
+	name = "Research Director's Office";
+	id = "res_bathroom"
 	},
 /obj/mapping_helper/access/research_director,
 /obj/mapping_helper/firedoor_spawn,
@@ -31915,7 +31939,7 @@
 "pSt" = (
 /obj/machinery/shower,
 /obj/machinery/drainage,
-/obj/sign_switch/east{
+/obj/machinery/door_control/bolter/new_walls/east{
 	id = "med_bathroom"
 	},
 /turf/simulated/floor/white,
@@ -33558,6 +33582,10 @@
 "rgl" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/market)
 "rgn" = (
@@ -34282,7 +34310,8 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	name = "Toilets"
+	name = "Toilets";
+	id = "n_bathroom"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access,
@@ -34924,6 +34953,9 @@
 "sjl" = (
 /obj/storage/closet/dresser/random,
 /obj/landmark/bill_spawn,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_room2"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_west)
 "sjz" = (
@@ -37014,7 +37046,8 @@
 /area/station/engine/core/nuclear)
 "tIV" = (
 /obj/machinery/door/airlock/pyro/medical{
-	dir = 4
+	dir = 4;
+	id = "med_bathroom"
 	},
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
@@ -37692,6 +37725,15 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
+"ukR" = (
+/obj/mapping_helper/access,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	id = "cc_room2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters_west)
 "ukT" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/tableware,
@@ -41260,10 +41302,6 @@
 /area/station/hallway/primary/north)
 "xgT" = (
 /obj/machinery/vending/jobclothing/medical,
-/obj/machinery/illuminated_sign/occupancy{
-	pixel_x = -24;
-	id = "sci_bathroom"
-	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "xhi" = (
@@ -41481,7 +41519,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/sign_switch/east{
+/obj/machinery/door_control/bolter/new_walls/east{
 	id = "cc_shower_1"
 	},
 /turf/simulated/floor/sanitary,
@@ -41576,7 +41614,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/sign_switch/east{
+/obj/machinery/door_control/bolter/new_walls/east{
 	id = "n_bathroom"
 	},
 /turf/simulated/floor/sanitary,
@@ -41642,6 +41680,11 @@
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
+"xww" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter,
+/turf/simulated/floor,
+/area/station/science/lab)
 "xxz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -74898,7 +74941,7 @@ xkb
 bbn
 abJ
 alP
-avW
+ukR
 alP
 avW
 alP
@@ -77613,7 +77656,7 @@ xkb
 alP
 iMu
 gYT
-acj
+fvy
 xIM
 aal
 xIM
@@ -79122,7 +79165,7 @@ xkb
 xkb
 akz
 jOq
-abB
+ejs
 eqq
 akz
 fZz
@@ -94275,7 +94318,7 @@ bgY
 pBV
 bju
 bkH
-bkH
+xww
 bkH
 jvN
 bpA

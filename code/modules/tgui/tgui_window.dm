@@ -33,10 +33,10 @@
 	..()
 	src.id = id
 	src.client = client
+	src.client.tgui_windows[id] = src
 	src.tgui_pooled = tgui_pooled
 	src.sent_assets = list()
 	if(tgui_pooled)
-		client.tgui_windows[id] = src
 		src.pool_index = TGUI_WINDOW_INDEX(id)
 
 /**
@@ -47,6 +47,8 @@
  * will be put into the queue until the window finishes loading.
  *
  * optional inline_assets list List of assets to inline into the html.
+ * optional inline_html string Custom HTML to inject.
+ * optional fancy bool If TRUE, will hide the window titlebar.
  */
 /datum/tgui_window/proc/initialize(inline_assets = list(), inline_html = "", fancy = FALSE)
 	log_tgui(client,
@@ -155,8 +157,8 @@
  * Acquire the window lock. Pool will not be able to provide this window
  * to other UIs for the duration of the lock.
  *
- * Can be given an optional tgui datum, which will hook its on_message
- * callback into the message stream.
+ * Can be given an optional tgui datum, which will be automatically
+ * subscribed to incoming messages via the on_message proc.
  *
  * optional ui /datum/tgui
  */
@@ -165,6 +167,8 @@
 	locked_by = ui
 
 /**
+ * public
+ *
  * Release the window lock.
  */
 /datum/tgui_window/proc/release_lock()
@@ -329,8 +333,15 @@
 			return
 	// If not locked, handle these message types
 	switch(type)
+		if ("setTheme")
+			var/theme = payload["theme"]
+			if (theme == "dark")
+				src.client?.darkmode = TRUE
+			else if (theme == "light")
+				src.client?.darkmode = FALSE
 		if("ping")
 			send_message("pingReply", payload)
+			src.client?.last_ping = payload["index"]
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
