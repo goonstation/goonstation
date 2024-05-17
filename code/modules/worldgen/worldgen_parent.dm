@@ -6,4 +6,4 @@
 /proc/initialize_worldgen()
 	for(var/turf/U as anything in worldgenCandidates)
 		U.generate_worldgen()
-		sleep(-1)
+		LAGCHECK(LAG_REALTIME)

@@ -8,7 +8,7 @@ proc/RL_Start()
 		if (light.enabled)
 			light.apply()
 	for (var/turf/T in world)
-		sleep(-1)
+		LAGCHECK(LAG_HIGH)
 		RL_UPDATE_LIGHT(T)
 
 proc/RL_Suspend()
