@@ -446,21 +446,28 @@
 		if (!is_mutantrace)
 			hair = image(src.bioHolder.mobAppearance.customization_first.icon, src.bioHolder.mobAppearance.customization_first.id)
 		else
-			hair = image(src.mutantrace_hair_icon, src.mutantrace_hair_id)
+			hair = image(src.mutantrace.hair_custom_style["hair_icon"], src.mutantrace.hair_custom_style["hair_id"])
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
+		var/image/beard
 		if (!is_mutantrace)
-			var/image/beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
-			beard.color = src.bioHolder.mobAppearance.customization_second_color
-			beard.alpha = GHOST_HAIR_ALPHA
-			O.AddOverlays(beard, "beard")
+			beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
+		else
+			beard = image(src.mutantrace.hair_custom_style["beard_icon"], src.mutantrace.hair_custom_style["beard_id"])
+		beard.color = src.bioHolder.mobAppearance.customization_second_color
+		beard.alpha = GHOST_HAIR_ALPHA
+		O.AddOverlays(beard, "beard")
 
-			var/image/detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
-			detail.color = src.bioHolder.mobAppearance.customization_third_color
-			detail.alpha = GHOST_HAIR_ALPHA
-			O.AddOverlays(detail, "detail")
+		var/image/detail
+		if (!is_mutantrace)
+			detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
+		else
+			detail = image(src.mutantrace.hair_custom_style["detail_icon"], src.mutantrace.hair_custom_style["detail_id"])
+		detail.color = src.bioHolder.mobAppearance.customization_third_color
+		detail.alpha = GHOST_HAIR_ALPHA
+		O.AddOverlays(detail, "detail")
 
 		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
 		if(cust_one && cust_one != "none")

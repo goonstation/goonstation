@@ -202,6 +202,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/detail_1_color = CUST_1
 	var/detail_1_color_f
 
+	/// stores info of hair customization style chosen by owning mob
+	var/list/hair_custom_style
+
 	/// These details will show up layered between the backpack and the outer suit
 	/// The image to be inserted into the mob's appearanceholder's mob_oversuit_1
 	/// Will only show up if the mob's appearance flag includes HAS_O
@@ -290,6 +293,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.blood_color_changed = TRUE
 
 		src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
+		src.hair_custom_style = list()
+		src.hair_custom_style["hair_icon"] = src.AH?.customization_first.icon
+		src.hair_custom_style["hair_id"] = src.AH?.customization_first.id
+		src.hair_custom_style["beard_icon"] = src.AH?.customization_second.icon
+		src.hair_custom_style["beard_id"] = src.AH?.customization_second.id
+		src.hair_custom_style["detail_icon"] = src.AH?.customization_third.icon
+		src.hair_custom_style["detail_id"] = src.AH?.customization_third.id
+
 		if (!src.dna_mutagen_banned)
 			AH.original_mutant_race = src
 		if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
