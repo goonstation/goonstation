@@ -38,7 +38,7 @@
 			set desc = "Disables the menu and gives a message about it"
 			set hidden = 1
 			boutput(src, {"
-				<div style="border: 3px solid red; padding: 3px; white-space: normal;">
+				<div style="border: 3px solid red; padding: 3px;">
 					You have disabled the menu. To enable the menu again, you can use the Menu button on the top right corner of the screen!
 					<a href='byond://winset?command=enable_menu'>Or just click here!</a>
 				</div>"})

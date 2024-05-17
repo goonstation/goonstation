@@ -404,8 +404,10 @@ TYPEINFO(/obj/item/plantanalyzer)
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
 			return
-		global.scan_plant(A, user, visible = 1) // Replaced with global proc (Convair880).
+
+		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).
 		src.add_fingerprint(user)
+		return
 
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 

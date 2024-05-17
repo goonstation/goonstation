@@ -114,7 +114,7 @@
 				for (var/mob/O in hearers(src, null))
 					if (!O.client)
 						continue
-					O.client.play_dectalk(audio["audio"], show_chat_message = FALSE, hide_widget = TRUE)
+					ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
 				return 1
 			else
 				return 0
