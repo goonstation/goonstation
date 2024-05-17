@@ -407,7 +407,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
-			if (!(M.category in src.categories)) // fix for not displaying blueprints/manudrives
+			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
 				M.category = "Miscellaneous"
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
