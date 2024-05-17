@@ -76,7 +76,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	// Production options
 	var/search = null
 	var/category = null
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
 	var/list/available = list() //! A list of every option available in this unit subtype by default
 	var/list/download = list() //! Options gained from scanned blueprints
@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -407,8 +407,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
-			if (isnull(M.category)) // fix for not displaying blueprints/manudrives
+			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
 				M.category = "Miscellaneous"
+				logTheThing(LOG_DEBUG, src, "Manufacturing blueprint [M] has category [M.category], which is not on the list of categories for [src]!")
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
 			as_list[M.category] += list(manufacture_as_list(M, user, static_elements))
@@ -542,7 +543,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							src.mend(usr, text2num_safe(params["wire"]))
 						return TRUE
 				if ("pulse")
-					if (!ispulsingtool(usr.equipped()) || (isAI(usr) || isrobot(usr)))
+					if (!ispulsingtool(usr.equipped()))
 						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!")
 						return
 					if (!((src.can_use_ranged(usr) || src.has_physical_proximity(usr))))
@@ -1062,7 +1063,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			P.setMaterial(target.material)
 			P.change_stack_amount(ejectamt - P.amount)
 			target.change_stack_amount(-ejectamt)
-			src.storage.transfer_stored_item(P, ejectturf)
+			P.set_loc(ejectturf)
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
