@@ -1067,6 +1067,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(user, "You have to be able to take that out yourself, you can't reach the bars from here!", sound = TRUE)
 		else
 			return TRUE
+		return FALSE
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
