@@ -1,5 +1,9 @@
 
 (t)fri may 17 24
+(u)crunchwarp
+(p)18939
+(e)📦|A-Game-Objects
+(+)Traitor HoPs can now purchase the Black Market Megaphone. Overthrow the Captain today!
 (u)LeahTheTech
 (p)18973
 (e)⛔|C-Removal
