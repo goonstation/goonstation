@@ -512,7 +512,7 @@
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
 	if(!src.net_id)

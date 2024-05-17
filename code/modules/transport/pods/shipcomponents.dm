@@ -21,7 +21,7 @@
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
-	if(src.loc == ship)
+	if(ship && src.loc == ship)
 		ship.components -= src
 	ship = null
 	..()

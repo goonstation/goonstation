@@ -13,7 +13,7 @@
 	///How much food and other stuff we have (also based on `fill_amt`)
 	var/food_amount = 0
 	///Stomach contents are actually stored in the mob so that things like matsci effects work
-	VAR_PRIVATE/atom/movable/stomach_contents = list()
+	var/atom/movable/stomach_contents = list()
 	///Amount of reagents we digest from each bite per life tick, also how fast the bites dissolve
 	var/digestion_per_tick = 3
 

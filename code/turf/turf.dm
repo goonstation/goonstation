@@ -153,7 +153,7 @@
 			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
 		damage_overlay.alpha = 200
 		src.broken = TRUE
-		UpdateOverlays(damage_overlay, "damage")
+		AddOverlays(damage_overlay, "damage")
 
 	proc/burn_tile(var/force)
 		if (!src.can_burn && !force)
@@ -167,7 +167,7 @@
 			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
 		burn_overlay.alpha = 200
 		src.burnt = TRUE
-		UpdateOverlays(burn_overlay, "burn")
+		AddOverlays(burn_overlay, "burn")
 
 	proc/restore_tile()
 		if(intact)
@@ -180,8 +180,7 @@
 			icon_state = icon_old
 		else
 			icon_state = "floor"
-		UpdateOverlays(null, "burn")
-		UpdateOverlays(null, "damage")
+		ClearSpecificOverlays("burn", "damage")
 		if (name_old)
 			name = name_old
 		levelupdate()

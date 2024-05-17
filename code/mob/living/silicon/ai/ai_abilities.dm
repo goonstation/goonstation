@@ -371,6 +371,7 @@
 		var/obj/machinery/camera/C
 		var/list/obj/machinery/camera/cameras_to_repair = list()
 
+		. = ..()
 		for(C in camnets["SS13"])
 			if(!C.camera_status && istype_exact(C,/obj/machinery/camera))
 				cameras_to_repair |= C

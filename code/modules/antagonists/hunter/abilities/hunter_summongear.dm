@@ -20,6 +20,7 @@
 		if (!M || !ishuman(M))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/hunter_summongear(src), M)
 		return 0
 

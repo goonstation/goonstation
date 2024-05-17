@@ -67,7 +67,7 @@
 	dir = 10
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aT" = (
@@ -5052,7 +5052,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "PQ" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
 "PS" = (

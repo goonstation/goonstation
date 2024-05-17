@@ -3,6 +3,7 @@
 	desc = "Transmutes a living target into gold"
 	icon_state = "grasp"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))
@@ -46,14 +47,21 @@
 						if (N.client)
 							shake_camera(N, 6, 16)
 							N.show_message(SPAN_ALERT("<b>A blinding light envelops [holder.owner]!</b>"), 1)
-
 					playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
-					qdel(G)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.RemoveEffect("fire_resist")
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_touch
-					SPAWN(0)
-						if (H)
-							H.desc = "A really dumb looking statue. Very shiny, though."
-							H.become_statue(getMaterial("gold"), survive=TRUE)
-							H.transforming = 0
+					/// Whoever got grabbed broke the grip so don't statue them, revert state
+					if(G.affecting == null)
+						H.transforming = 0
+						H.layer = holder.owner.layer
+						H.pixel_y = 0
+						H.pixel_x = 0
+					else
+						qdel(G)
+						SPAWN(0)
+							if (H)
+								H.desc = "A really dumb looking statue. Very shiny, though."
+								H.become_statue(getMaterial("gold"), survive=TRUE)
+								H.transforming = 0
+

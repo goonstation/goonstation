@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_pointblank(obj/projectile/O, mob/target)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 	proc/split(var/obj/projectile/P)
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
@@ -392,11 +392,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/temperature = 800
 
 	tick(var/obj/projectile/P)
-		fireflash_melting(get_turf(P), burn_range, temperature)
+		fireflash_melting(get_turf(P), burn_range, temperature, chemfire = CHEM_FIRE_RED)
 
 	on_hit(var/atom/A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
-		fireflash_melting(get_turf(A), blast_size, temperature)
+		fireflash_melting(get_turf(A), blast_size, temperature, chemfire = CHEM_FIRE_RED)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -426,7 +426,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/T1 = get_turf(P)
 		if((!istype(T1,/turf/space))) // so uh yeah this will be pretty mean
-			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE)
+			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE, chemfire = CHEM_FIRE_RED)
 			new /obj/effects/explosion/dangerous(get_step(P.loc,P.dir))
 
 
