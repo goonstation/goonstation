@@ -2089,10 +2089,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
-
 		if (!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
-			return TRUE
+		return TRUE
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
@@ -2122,11 +2121,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 			if (!sting.disabled && sting.cooldowncheck())
-				sting.handleCast(AM)
+				if (!ON_COOLDOWN(src, "warning", 1 MINUTE)) //snake will not immediately bite, gives a warning strike first
+					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					src.visible_message(SPAN_COMBAT("<b>[src] hisses and gives a warning strike!</b>"))
+					if(src.is_npc)
+						src.ai.move_away(AM, 2)
+				else
+					sting.handleCast(AM)
 		return
 
 	death()
-		src.reagents.add_reagent("viper_venom", 40, null)
+		src.reagents.add_reagent("hemotoxin", 40, null)
 		src.friends = null
 		return ..()
 

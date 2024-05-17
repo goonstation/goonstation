@@ -216,3 +216,8 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		AM.set_loc(get_turf(lower))
 	else
 		AM.set_loc(get_turf(src))
+
+/obj/ladder/ex_act(severity)
+	if(isrestrictedz(get_z(src))) //maybe don't strand people in adventure zones? Ought to be a better way to do this kind of thing
+		return
+	. = ..()

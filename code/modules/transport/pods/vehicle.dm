@@ -172,6 +172,11 @@
 			src.keyed++
 			src.add_fingerprint(user)
 			return
+
+		if (istype(W, /obj/item/tank/plasma))
+			src.open_parts_panel(user)
+			return
+
 		..()
 
 		attack_particle(user,src)

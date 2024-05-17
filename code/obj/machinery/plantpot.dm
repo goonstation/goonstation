@@ -77,7 +77,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	if(!src.net_id)
 		src.net_id = generate_net_id(src)
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, report_freq)
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
@@ -720,20 +720,16 @@ TYPEINFO(/obj/machinery/plantpot)
 		average = src.reagents.get_average_color()
 		src.water_sprite.color = average.to_rgba()
 
-	src.UpdateOverlays(src.water_sprite, "water_fluid")
-	src.UpdateOverlays(src.water_meter, "water_meter")
+	src.AddOverlays(src.water_sprite, "water_fluid")
+	src.AddOverlays(src.water_meter, "water_meter")
 
 /obj/machinery/plantpot/update_icon() //plant icon stuffs
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
-	src.UpdateOverlays(water_meter, "water_meter")
+	src.AddOverlays(water_meter, "water_meter")
 	if(!src.current)
-		src.UpdateOverlays(null, "harvest_display")
-		src.UpdateOverlays(null, "health_display")
-		src.UpdateOverlays(null, "plant")
-		src.UpdateOverlays(null, "plantdeath")
-		src.UpdateOverlays(null, "plantoverlay")
+		src.ClearSpecificOverlays("harvest_display", "health_display", "plant", "plantdeath", "plantoverlay")
 		if(status & (NOPOWER|BROKEN))
-			src.UpdateOverlays(null, "water_meter")
+			src.ClearSpecificOverlays("water_meter")
 		return
 
 	var/datum/plant/growing = src.current
@@ -750,39 +746,35 @@ TYPEINFO(/obj/machinery/plantpot)
 			iconname = growing.plant_icon
 
 	if(src.dead)
-		src.UpdateOverlays(hydro_controls.pot_death_display, "plantdeath")
-		src.UpdateOverlays(null, "harvest_display")
-		src.UpdateOverlays(null, "health_display")
+		src.AddOverlays(hydro_controls.pot_death_display, "plantdeath")
+		src.ClearSpecificOverlays("harvest_display", "health_display")
 	else
-		src.UpdateOverlays(null, "plantdeath")
+		src.ClearSpecificOverlays("plantdeath")
 		if(src.harvest_warning)
-			src.UpdateOverlays(hydro_controls.pot_harvest_display, "harvest_display")
+			src.AddOverlays(hydro_controls.pot_harvest_display, "harvest_display")
 		else
-			src.UpdateOverlays(null, "harvest_display")
+			src.ClearSpecificOverlays("harvest_display")
 
 		if(src.health_warning)
-			src.UpdateOverlays(hydro_controls.pot_health_display, "health_display")
+			src.AddOverlays(hydro_controls.pot_health_display, "health_display")
 		else
-			src.UpdateOverlays(null, "health_display")
+			src.ClearSpecificOverlays("health_display")
 
 	var/planticon = growing.getIconState(src.grow_level, MUT)
 
 	src.plant_sprite.icon = iconname
 	src.plant_sprite.icon_state = planticon
 	src.plant_sprite.layer = 4
-	src.UpdateOverlays(plant_sprite, "plant")
+	src.AddOverlays(plant_sprite, "plant")
 
 	var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
 	if(plantoverlay)
-		src.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
+		src.AddOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
 	else
-		src.UpdateOverlays(null, "plantoverlay")
+		src.ClearSpecificOverlays("plantoverlay")
 
 	if(status & (NOPOWER|BROKEN))
-		src.UpdateOverlays(null, "water_meter")
-		src.UpdateOverlays(null, "harvest_display")
-		src.UpdateOverlays(null, "health_display")
-		src.UpdateOverlays(null, "plantdeath")
+		src.ClearSpecificOverlays("water_meter", "harvest_display", "health_display", "plantdeath")
 
 /obj/machinery/plantpot/proc/update_name()
 	if(!src.current)

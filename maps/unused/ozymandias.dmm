@@ -26571,7 +26571,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "gXp" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/machinery/light/small/harsh{
 	dir = 4;
 	pixel_x = 12
@@ -49277,7 +49277,7 @@
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
 "mTT" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /obj/machinery/light/small/harsh{
 	dir = 8;
 	pixel_x = -12
@@ -49285,7 +49285,7 @@
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
 "mTY" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "mUe" = (

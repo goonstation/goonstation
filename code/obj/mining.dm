@@ -169,7 +169,7 @@
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
 				T.ReplaceWith(/turf/space)
-			T.UpdateOverlays(new /image/fullbright, "fullbright")
+			T.AddOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -556,16 +556,16 @@
 		if (length(damage_overlays) == 4)
 			switch(src.health)
 				if (70 to 94)
-					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
+					src.AddOverlays(damage_overlays[1], "magnet_damage")
 				if (40 to 69)
-					src.UpdateOverlays(damage_overlays[2], "magnet_damage")
+					src.AddOverlays(damage_overlays[2], "magnet_damage")
 				if (10 to 39)
-					src.UpdateOverlays(damage_overlays[3], "magnet_damage")
+					src.AddOverlays(damage_overlays[3], "magnet_damage")
 				if (-INFINITY to 10)
-					src.UpdateOverlays(damage_overlays[4], "magnet_damage")
+					src.AddOverlays(damage_overlays[4], "magnet_damage")
 
 		if (src.active)
-			src.UpdateOverlays(src.active_overlay, "magnet_active")
+			src.AddOverlays(src.active_overlay, "magnet_active")
 
 	// Sanity check to make sure we gib on no health
 	proc/check_should_die()
@@ -920,7 +920,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
 					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
-					UpdateOverlays(algea, "glow_algae")
+					AddOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
 		destroy_asteroid(dropOre)
@@ -1053,7 +1053,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/color_vals = list(rand(100,200), rand(100,200), rand(100,200), 30)  // random colors, muted
 			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
 			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
-			UpdateOverlays(algea, "glow_algae")
+			AddOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
 		destroy_asteroid(dropOre)
@@ -1193,7 +1193,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		var/health_prc = (mining_health / mining_max_health)
 
 		if(health_prc >= 1)
-			UpdateOverlays(null, "damage")
+			ClearSpecificOverlays("damage")
 		else if(health_prc > 0.66 && health_prc < 1)
 			setTexture("damage1", BLEND_MULTIPLY, "damage")
 		else if(health_prc > 0.33 && health_prc < 0.66)
@@ -1210,9 +1210,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			light = src.GetOverlayImage("ambient")
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
-			src.UpdateOverlays(light, "ambient")
+			src.AddOverlays(light, "ambient")
 		if(src.fullbright)
-			src.UpdateOverlays(new/image/fullbright, "fullbright")
+			src.AddOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
 
@@ -1224,14 +1224,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			cached = topoverlaycache["mask2[src.icon_state]"]
 		top_overlay.filters += filter(type="alpha", icon=cached)
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
-		UpdateOverlays(top_overlay, "ast_top_rock")
+		AddOverlays(top_overlay, "ast_top_rock")
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
 			var/image/ore_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-			src.UpdateOverlays(ore_overlay, "ast_ore")
+			src.AddOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
 		for (var/turf/A in orange(src,1))
@@ -1254,7 +1254,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.plane = PLANE_NOSHADOW_BELOW
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
 
 	Del()
@@ -1316,7 +1316,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "knockdown"), "asteroid_weakened")
+		src.AddOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -1401,9 +1401,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 #endif
 
 		if(weather)
-			src.UpdateOverlays(weather, "weather")
+			src.AddOverlays(weather, "weather")
 		if(ambient)
-			src.UpdateOverlays(ambient, "ambient")
+			src.AddOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1517,7 +1517,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		src.color = src.stone_color
 		#ifndef UNDERWATER_MAP
 		if (fullbright)
-			src.UpdateOverlays(new /image/fullbright, "fullbright")
+			src.AddOverlays(new /image/fullbright, "fullbright")
 		#endif
 
 		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
@@ -1545,7 +1545,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
 
 	Del()
@@ -2597,7 +2597,7 @@ TYPEINFO(/obj/submachine/cargopad)
 				src.mailgroup = MGD_CARGO
 
 		if (src.active) //in case of map edits etc
-			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
+			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
 	disposing()
@@ -2622,12 +2622,12 @@ TYPEINFO(/obj/submachine/cargopad)
 	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, SPAN_NOTICE("You switch the receiver off."))
-			UpdateOverlays(null, "lights")
+			ClearSpecificOverlays("lights")
 			src.active = FALSE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		else
 			boutput(user, SPAN_NOTICE("You switch the receiver on."))
-			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
+			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
