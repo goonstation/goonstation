@@ -1023,6 +1023,10 @@
 		else
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
+		// Remember purchases for crew credits. We use a different list and not owner.upgrades so we can double track repeated abilities
+		var/datum/antagonist/mob/intangible/blob/antag_role = owner?.mind.get_antagonist(ROLE_BLOB)
+		antag_role.purchased_upgrades += src
+
 		owner.update_buttons()
 
 	proc/tutorial_check()

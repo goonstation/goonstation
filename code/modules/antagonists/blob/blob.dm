@@ -7,13 +7,14 @@
 
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()
-	var/mob/living/intangible/blob_overmind/overmindd
+	var/mob/living/intangible/blob_overmind/bovermind
+	var/list/datum/blob_upgrade/purchased_upgrades = list()
 
 	give_equipment()
 		. = ..()
 
 		SPAWN(0)
-			overmindd = src.owner.current
+			bovermind = src.owner.current
 			var/newname = tgui_input_text(src.owner.current, "You are a blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name Change", max_length = 25)
 			if (newname)
 				phrase_log.log_phrase("name-blob", newname, no_duplicates = TRUE)
@@ -56,7 +57,7 @@
 			else
 				absorbed_lifeforms += "[H.real_name] (played by [H.last_client?.key])"
 
-		for (var/datum/blob_upgrade/upgrade in overmindd.upgrades)
+		for (var/datum/blob_upgrade/upgrade in purchased_upgrades)
 			upgrades += list(
 				list(
 					"iconBase64" = "[icon2base64(icon(initial(upgrade.icon), initial(upgrade.icon_state), frame = 1, dir = 0))]",
@@ -76,34 +77,24 @@
 			),
 			list(
 				"name" = "Living Nuclei",
-				"value" = "[length(overmindd.nuclei)]"
+				"value" = "[length(bovermind.nuclei)]"
 			),
 			list(
 				"name" = "Total Spreads",
-				"value" = "[overmindd.total_placed]"
+				"value" = "[bovermind.total_placed]"
 			),
 			list(
 				"name" = "Final Size",
-				"value" = "[length(overmindd.blobs)]"
+				"value" = "[length(bovermind.blobs)]"
 			),
 			list(
 				"name" = "Final Generation Rate",
-				"value" = "[overmindd.base_gen_rate + overmindd.gen_rate_bonus - overmindd.gen_rate_used]/[overmindd.base_gen_rate + overmindd.gen_rate_bonus] BP"
+				"value" = "[bovermind.base_gen_rate + bovermind.gen_rate_bonus - bovermind.gen_rate_used]/[bovermind.base_gen_rate + bovermind.gen_rate_bonus] BP"
 				// This calculation is copied right from blob_overmind.dm
 			),
 			list(
 				"name" = "Unused Evo Points",
-				"value" = "[overmindd.evo_points]"
+				"value" = "[bovermind.evo_points]"
 			)
 
 		)
-
-
-
-		/*
-		Try: total nuclei (extra_nuclei + 1)
-
-		"total spreads"
-		"size"
-
-		*/
