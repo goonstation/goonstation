@@ -1,4 +1,9 @@
 
+(t)fri may 17 24
+(u)LeahTheTech
+(p)18973
+(e)⛔|C-Removal
+(*)Reverted TG chat due to performance and stability issues.
 (t)thu may 16 24
 (u)MeggalBozale
 (p)18144
