@@ -1895,8 +1895,9 @@ datum
 					if (32 to 45) // Effects ramp up, breathlessness, drowsiness and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
-						M.losebreath = max(5, M.losebreath + (3 * mult))
 						M.setStatusMin("drowsy", 40 SECONDS)
+						if (prob(35))
+							M.losebreath = max(5, M.losebreath + (5 * mult))
 						if (prob(20))
 							boutput(M, SPAN_ALERT("<b>Your chest [pick("burns", "hurts", "stings")] like hell.</b>"))
 							M.change_misstep_chance(15 * mult)
