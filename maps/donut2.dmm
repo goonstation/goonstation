@@ -1340,6 +1340,9 @@
 	network = "Zeta"
 	},
 /obj/cable,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "quarters_rd"
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/station/crew_quarters/hor)
 "agZ" = (
@@ -3687,12 +3690,18 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "auP" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "n_shower1"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "auQ" = (
 /obj/item/paper{
 	info = "Step One: Fill the tub with water or cleansant of your choice. Step 2: Drag yourself or another person onto the bath to clean them. Take them out again with an empty hand, and drain the tub when finished likewise.";
 	name = "Bathing Instructions"
+	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "n_shower2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
@@ -3841,8 +3850,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/west)
 "avt" = (
-/obj/machinery/door/unpowered/wood/stall{
-	name = "shower stall door"
+/obj/machinery/door/airlock/pyro/alt{
+	id = "n_shower1"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
@@ -4141,7 +4150,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 4
+	dir = 4;
+	id = "n_bathroom1"
 	},
 /turf/simulated/floor/white/side{
 	dir = 8
@@ -8835,6 +8845,9 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_cap"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTY" = (
@@ -10409,6 +10422,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "bbz" = (
@@ -10692,6 +10706,9 @@
 "bdB" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "treatment1"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -17334,6 +17351,9 @@
 	frequency = 1485;
 	name = "Station Intercom (Security)"
 	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_hop"
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen6"
@@ -17926,6 +17946,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"cNU" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "sci_stall1";
+	name = "Toilet"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/observatory)
 "cNW" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -21786,7 +21814,9 @@
 	pixel_x = -20;
 	pixel_y = 10
 	},
-/obj/item/device/radio/intercom/bridge,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_mdir"
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "fjy" = (
@@ -22680,6 +22710,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "sci_stall4"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "fTT" = (
@@ -23221,6 +23254,9 @@
 "gmh" = (
 /obj/machinery/light/small,
 /obj/machinery/recharge_station,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "sci_stall2"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "gmK" = (
@@ -23371,6 +23407,14 @@
 	icon_state = "fred2"
 	},
 /area/station/security/hos)
+"grZ" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "sci_stall2";
+	name = "Silicons"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/observatory)
 "gsw" = (
 /obj/landmark/start/job/security_officer,
 /obj/disposalpipe/segment/mail,
@@ -24671,6 +24715,9 @@
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_ce"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/ce)
@@ -27779,7 +27826,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/command/alt{
-	dir = 8
+	dir = 8;
+	id = "quarters_rd"
 	},
 /obj/mapping_helper/access/research_director,
 /obj/mapping_helper/firedoor_spawn,
@@ -29813,7 +29861,9 @@
 /turf/unsimulated/floor,
 /area/station/hangar/arrivals)
 "kIi" = (
-/obj/machinery/door/airlock/pyro/glass/med,
+/obj/machinery/door/airlock/pyro/glass/med{
+	id = "treatment1"
+	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -30524,7 +30574,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command/alt,
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "quarters_cap"
+	},
 /obj/mapping_helper/access/captain,
 /obj/cable{
 	icon_state = "2-8"
@@ -31286,7 +31338,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/command/alt{
-	dir = 4
+	dir = 4;
+	id = "quarters_ce"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -31757,6 +31810,9 @@
 	dir = 8;
 	pixel_x = 8
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "sci_stall1"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "lMB" = (
@@ -31765,6 +31821,12 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/science/lobby)
+"lML" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "n_shower2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/locker)
 "lNk" = (
 /obj/table/reinforced/auto{
 	icon_state = "12"
@@ -33801,6 +33863,9 @@
 "mZV" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "sci_stall3"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "naP" = (
@@ -41795,7 +41860,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	id = "const_zone"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
@@ -42107,6 +42174,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"sdZ" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "sci_stall3";
+	name = "Shower 1"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/observatory)
 "set" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -42837,6 +42912,12 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"sAI" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "const_zone"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
 "sAM" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -44906,7 +44987,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "tNz" = (
-/obj/machinery/door/airlock/pyro/command/alt,
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "quarters_mdir"
+	},
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -48270,10 +48353,10 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "vZH" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 8;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "sci_stall4";
+	name = "Shower 2"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
@@ -49657,7 +49740,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command/alt,
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "quarters_hop"
+	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -50959,6 +51044,9 @@
 	pixel_y = 8
 	},
 /obj/landmark/pest,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "n_bathroom1"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "xNL" = (
@@ -75346,7 +75434,7 @@ aAP
 aIs
 lgW
 auQ
-avt
+lML
 cDZ
 awe
 awe
@@ -84172,7 +84260,7 @@ aaa
 bhY
 rZc
 rZc
-rZc
+sAI
 qbJ
 rZc
 rZc
@@ -122121,12 +122209,12 @@ pcf
 dkS
 ckN
 ajA
-vZH
+cNU
 ajA
-vZH
+grZ
 ajA
 ajA
-vZH
+sdZ
 ajA
 vZH
 ajA

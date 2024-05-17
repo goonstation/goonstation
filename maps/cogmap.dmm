@@ -11307,6 +11307,9 @@
 	icon_state = "1-4"
 	},
 /obj/stool,
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "maintpowerroom"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aOk" = (
@@ -26717,6 +26720,9 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_rd"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bSx" = (
@@ -32234,11 +32240,16 @@
 /obj/stool/bed,
 /obj/machinery/light_switch{
 	name = "E light switch";
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = -6
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	pixel_y = 8;
+	id = "quarters_mdir"
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
@@ -37809,6 +37820,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
+"cTF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "seccourtroom"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2"
+	},
+/area/station/security/main)
 "cUn" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -39199,7 +39221,8 @@
 	dir = 4;
 	name = "Head of Personnel";
 	req_access = null;
-	req_access_txt = null
+	req_access_txt = null;
+	id = "quarters_hop"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42375,6 +42398,9 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "gbf" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_cap"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "gbm" = (
@@ -42989,6 +43015,9 @@
 "gEK" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "medisolation"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -45955,7 +45984,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	id = "quarters_mdir"
+	},
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay,
@@ -46961,7 +46992,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Captain's Quarters";
 	req_access = null;
-	req_access_txt = null
+	req_access_txt = null;
+	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
 /obj/mapping_helper/firedoor_spawn,
@@ -50066,7 +50098,8 @@
 /area/station/hydroponics/bay)
 "mts" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Defendant Stand"
+	name = "Defendant Stand";
+	id = "seccourtroom"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
@@ -50933,6 +50966,10 @@
 	pixel_x = -8
 	},
 /obj/machinery/light_switch/north,
+/obj/machinery/door_control/bolter/new_walls/north{
+	pixel_x = 8;
+	id = "quarters_hop"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "mWX" = (
@@ -51010,7 +51047,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "mZe" = (
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	id = "maintpowerroom"
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -51684,7 +51723,8 @@
 	dir = 4;
 	name = "Research Director's Office";
 	req_access = null;
-	req_access_txt = null
+	req_access_txt = null;
+	id = "quarters_rd"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -51840,7 +51880,8 @@
 	dir = 4;
 	name = "Head of Personnel";
 	req_access = null;
-	req_access_txt = null
+	req_access_txt = null;
+	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
@@ -53441,7 +53482,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Chief Engineer";
 	req_access = null;
-	req_access_txt = null
+	req_access_txt = null;
+	id = "quarters_ce"
 	},
 /obj/mapping_helper/access/engineering_chief,
 /obj/mapping_helper/firedoor_spawn,
@@ -53458,7 +53500,9 @@
 /area/station/hallway/secondary/construction2)
 "oUV" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/door/airlock/pyro/medical,
+/obj/machinery/door/airlock/pyro/medical{
+	id = "medisolation"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/cable{
@@ -59117,7 +59161,13 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/firealarm/south,
+/obj/machinery/firealarm/south{
+	pixel_x = 8
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	pixel_x = -8;
+	id = "medisolation"
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "tjI" = (
@@ -63072,7 +63122,8 @@
 /area/station/engine/power)
 "wng" = (
 /obj/machinery/door/airlock/pyro/medical{
-	dir = 4
+	dir = 4;
+	id = "medisolation"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
@@ -63262,6 +63313,9 @@
 /obj/item/item_box/postit{
 	pixel_x = 10;
 	pixel_y = 5
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_ce"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -96673,7 +96727,7 @@ aKl
 aLx
 lYi
 aNW
-aOX
+cTF
 awK
 aRb
 bSP
