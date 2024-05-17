@@ -132,8 +132,6 @@
 		var/list/purchases = list()
 
 		for (var/datum/SWFuplinkspell/purchased_spell as anything in src.purchased_spells)
-			//var/obj/item_type = initial(purchased_spell.path)  datum/targetable/spell/purchased_spells			assoc_spell
-
 			if (purchased_spell.assoc_spell )
 				var/datum/targetable/spell/S = purchased_spell.assoc_spell
 				purchases += list(
