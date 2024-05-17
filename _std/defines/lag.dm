@@ -26,6 +26,7 @@
 #define LAG_MED 90
 #define LAG_HIGH 90
 #define LAG_REALTIME 90
+#define LAG_INIT 95
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)
