@@ -1502,8 +1502,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			playsound(location, 'sound/effects/bamf.ogg', 100, 0.5)
 			src.invisibility = INVIS_ALWAYS
 
-			fireflash(location, src.expl_range, 2000, checkLos = FALSE, chemfire = CHEM_FIRE_DARKRED)
-
 			for (var/turf/T in range(src.expl_range, location))
 				if( T?.loc:sanctuary ) continue
 				if (!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/floor))
@@ -1555,6 +1553,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					var/obj/machinery/door/firedoor/firelock = O
 					qdel(firelock)
 					continue
+
+			// placed here so that fire appears in place of destroyed turfs
+			fireflash(location, src.expl_range, 2000, checkLos = FALSE, chemfire = CHEM_FIRE_DARKRED)
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
