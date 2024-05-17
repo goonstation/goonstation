@@ -5,8 +5,6 @@
 /// Returns true if the given is a mind datum
 #define ismind(x) istype(x, /datum/mind)
 
-#define CLIENT_FROM_VAR(var) (ismob(var) ? var:client : (istype(var, /client) ? var : istype(var, /datum/mind) ? var:current?:client : null))
-
 #define ADMIN_ONLY if(!src.holder) {boutput(src, SPAN_ADMIN("Only administrators may use this command.")); return}
 #define DENY_TEMPMIN if(!src.holder || src.holder.tempmin) {boutput(src, SPAN_ADMIN("Only administrators may use this command.")); return}
 #define MENTOR_ONLY if(!src.mentor) {boutput(src, SPAN_ADMIN("Only mentors may use this command.")); return}

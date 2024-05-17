@@ -58,6 +58,7 @@
 		src.owner = C
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
+			src.owner.chatOutput.getContextFlag()
 			src.load_admin_prefs()
 
 		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)

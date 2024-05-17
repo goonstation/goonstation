@@ -6,9 +6,8 @@
 
 import { storage } from 'common/storage';
 import { setClientTheme } from '../themes';
-import { addHighlightSetting, loadSettings, removeHighlightSetting, updateHighlightSetting, updateSettings } from './actions';
+import { loadSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
-import { FONTS_DISABLED } from './constants';
 
 const setGlobalFontSize = fontSize => {
   document.documentElement.style
@@ -17,33 +16,17 @@ const setGlobalFontSize = fontSize => {
     .setProperty('font-size', fontSize + 'px');
 };
 
-const setGlobalFontFamily = fontFamily => {
-  if (fontFamily === FONTS_DISABLED) {
-    fontFamily = null;
-  }
-  document.documentElement.style
-    .setProperty('font-family', fontFamily + ", \"Twemoji\", \"Segoe UI Emoji\"");
-  document.body.style
-    .setProperty('font-family', fontFamily + ", \"Twemoji\", \"Segoe UI Emoji\"");
-};
-
 export const settingsMiddleware = store => {
   let initialized = false;
   return next => action => {
     const { type, payload } = action;
     if (!initialized) {
       initialized = true;
-      storage.get('goon-panel-settings').then(settings => {
+      storage.get('panel-settings').then(settings => {
         store.dispatch(loadSettings(settings));
       });
     }
-    if (
-      type === updateSettings.type
-      || type === loadSettings.type
-      || type === addHighlightSetting.type
-      || type === removeHighlightSetting.type
-      || type === updateHighlightSetting.type
-    ) {
+    if (type === updateSettings.type || type === loadSettings.type) {
       // Set client theme
       const theme = payload?.theme;
       if (theme) {
@@ -54,9 +37,8 @@ export const settingsMiddleware = store => {
       const settings = selectSettings(store.getState());
       // Update global UI font size
       setGlobalFontSize(settings.fontSize);
-      setGlobalFontFamily(settings.fontFamily);
       // Save settings to the web storage
-      storage.set('goon-panel-settings', settings);
+      storage.set('panel-settings', settings);
       return;
     }
     return next(action);
