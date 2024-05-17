@@ -42,13 +42,6 @@
 	var/djmode = 0
 	var/non_admin_dj = 0
 
-	/// Context permissions of this client
-	var/ctx_flags = null
-	/// Last value of ping sent by the chat panel
-	var/last_ping
-
-	var/datum/tgui_panel/tgui_panel
-
 	var/last_soundgroup = null
 
 	var/widescreen = 0
@@ -95,6 +88,7 @@
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
+	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
@@ -228,8 +222,10 @@
 	if (!preferences)
 		preferences = new
 
-	// Create new tgui panel
-	src.tgui_panel = new(src)
+
+	//Assign custom interface datums
+	src.chatOutput = new /datum/chatOutput(src)
+	//src.chui = new /datum/chui(src)
 
 	if (!isnewplayer(src.mob))
 		src.loadResources()
@@ -239,11 +235,6 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
 	..()
-
-	// Init tgui panel
-	src.tgui_panel.initialize()
-	SPAWN(3) //see no evil
-		src.nuke_chat()
 
 	if (join_motd)
 		boutput(src, "<div class='motd'>[join_motd]</div>")
@@ -343,6 +334,11 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		SPAWN(-1)
+			src.chatOutput.start()
+
 	// Record a login, sets player.id, which is used by almost every future API call for a player
 	// So we need to do this early, and outside of a spawn
 	src.player.record_login()
@@ -359,9 +355,18 @@
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
 	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
-		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-		tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
-		del(src)
+		var/datum/game_server/game_server = game_servers.get_buddy()
+		if (game_server)
+			boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server.</span>")
+			if(tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected to [game_server.name]", "SERVER FULL", list("Yes", "No"), timeout = 30 SECONDS) == "Yes")
+				changeServer(game_server.id)
+			tgui_process.close_user_uis(src.mob)
+			del(src)
+		else
+			boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+			tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
+			tgui_process.close_user_uis(src.mob)
+			del(src)
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
@@ -538,7 +543,7 @@
 
 	if(src.holder)
 		// when an admin logs in check all clients again per Mordent's request
-		for(var/client/C as anything in global.clients)
+		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 	winset(src, null, "rpanewindow.left=infowindow")
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
@@ -573,6 +578,8 @@
 
 	//End widescreen stuff
 
+	src.sync_dark_mode()
+
 	//blendmode stuff
 
 	var/distort_checked = winget( src, "menu.zoom_distort", "is-checked" ) == "true"
@@ -586,6 +593,8 @@
 
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
+
+	// cursed darkmode end
 
 	//tg controls end
 
@@ -899,8 +908,8 @@ var/global/curr_day = null
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
 	if (server)
-		boutput(usr, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
-		usr << link(game_server.url)
+		boutput(src, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
+		src << link(game_server.url)
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
 	set name = "Download Sprite"
@@ -960,9 +969,6 @@ var/global/curr_day = null
 	if(tgui_Topic(href_list))
 		return
 
-	if(href_list["reload_tguipanel"])
-		nuke_chat()
-
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
@@ -1003,7 +1009,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [target] (Discord)</b>: [t]"))
+						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -1035,14 +1041,14 @@ var/global/curr_day = null
 			var/src_keyname = key_name(src.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='fas fa-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]")
+			var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]")
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
+							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1093,14 +1099,14 @@ var/global/curr_day = null
 				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
 				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
-				var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='fas fa-arrow-right'></i> [target_keyname]</b>: [SPAN_MESSAGE("[t]")]")
+				var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target_keyname]</b>: [SPAN_MESSAGE("[t]")]")
 				for (var/client/C)
 					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						else
 							boutput(C, mentormsg)
 
@@ -1498,3 +1504,76 @@ if([removeOnFinish])
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
+
+#define SKIN_TEMPLATE "\
+rpane.background-color=[_SKIN_BG];\
+rpane.text-color=[_SKIN_TEXT];\
+rpanewindow.background-color=[_SKIN_BG];\
+rpanewindow.text-color=[_SKIN_TEXT];\
+textb.background-color=[_SKIN_BG];\
+textb.text-color=[_SKIN_TEXT];\
+browseb.background-color=[_SKIN_BG];\
+browseb.text-color=[_SKIN_TEXT];\
+infob.background-color=[_SKIN_BG];\
+infob.text-color=[_SKIN_TEXT];\
+menub.background-color=[_SKIN_BG];\
+menub.text-color=[_SKIN_TEXT];\
+bugreportb.background-color=[_SKIN_BG];\
+bugreportb.text-color=[_SKIN_TEXT];\
+githubb.background-color=[_SKIN_BG];\
+githubb.text-color=[_SKIN_TEXT];\
+wikib.background-color=[_SKIN_BG];\
+wikib.text-color=[_SKIN_TEXT];\
+mapb.background-color=[_SKIN_BG];\
+mapb.text-color=[_SKIN_TEXT];\
+forumb.background-color=[_SKIN_BG];\
+forumb.text-color=[_SKIN_TEXT];\
+infowindow.background-color=[_SKIN_BG];\
+infowindow.text-color=[_SKIN_TEXT];\
+info.background-color=[_SKIN_INFO_BG];\
+info.text-color=[_SKIN_TEXT];\
+mainwindow.background-color=[_SKIN_BG];\
+mainwindow.text-color=[_SKIN_TEXT];\
+mainvsplit.background-color=[_SKIN_BG];\
+falsepadding.background-color=[_SKIN_COMMAND_BG];\
+input.background-color=[_SKIN_COMMAND_BG];\
+input.text-color=[_SKIN_TEXT];\
+saybutton.background-color=[_SKIN_COMMAND_BG];\
+saybutton.text-color=[_SKIN_TEXT];\
+info.tab-background-color=[_SKIN_INFO_TAB_BG];\
+info.tab-text-color=[_SKIN_TEXT];\
+mainwindow.hovertooltip.background-color=[_SKIN_BG];\
+mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
+"
+
+/client/verb/sync_dark_mode()
+	set hidden=1
+	if(winget(src, "menu.dark_mode", "is-checked") == "true")
+#define _SKIN_BG "#28292c"
+#define _SKIN_INFO_TAB_BG "#28292c"
+#define _SKIN_INFO_BG "#28292c"
+#define _SKIN_TEXT "#d3d4d5"
+#define _SKIN_COMMAND_BG "#28294c"
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-dark")
+		src.darkmode = TRUE
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#define _SKIN_BG "none"
+#define _SKIN_INFO_TAB_BG "#f0f0f0"
+#define _SKIN_INFO_BG "#ffffff"
+#define _SKIN_TEXT "none"
+#define _SKIN_COMMAND_BG "#d3b5b5"
+	else
+		winset(src, null, SKIN_TEMPLATE)
+		chatOutput.changeTheme("theme-default")
+		src.darkmode = FALSE
+#undef _SKIN_BG
+#undef _SKIN_INFO_TAB_BG
+#undef _SKIN_INFO_BG
+#undef _SKIN_TEXT
+#undef _SKIN_COMMAND_BG
+#undef SKIN_TEMPLATE

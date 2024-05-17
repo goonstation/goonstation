@@ -73,6 +73,10 @@ chui.setPosSize = function(x, y, w, h) {
 	document.location = 'byond://winset?' + chui.window + '.size=' + escape(w+','+h ) + '&' + chui.window + '.pos=' + escape(x+','+y);
 };
 
+chui.chatDebug = function(msg) {
+	document.location = 'byond://winset?command=' + escaper('.output browseroutput:output ' + escaper(msg));
+}
+
 chui.initialize = function() {
 	chui.data = {};
 	$('meta').each(function() {

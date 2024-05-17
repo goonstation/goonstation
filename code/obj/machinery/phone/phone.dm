@@ -410,7 +410,7 @@ TYPEINFO(/obj/machinery/phone)
 			var/phone_ident = "\[ <span style=\"color:[src.parent.stripe_color]\">[bicon(src.handset_icon)] [src.parent.phone_id]</span> \]"
 			var/said_message = SPAN_SAY("[SPAN_BOLD("[heard_name] [phone_ident]")]  [SPAN_MESSAGE(M.say_quote(text[1]))]")
 			if (listener.client.holder && ismob(M) && M.mind)
-				said_message = "<span class='adminHearing' data-ctx='[listener.client.set_context_flags()]'>[said_message]</span>"
+				said_message = "<span class='adminHearing' data-ctx='[listener.client.chatOutput.getContextFlags()]'>[said_message]</span>"
 
 			// chat feedback to let talker know when they are speaking over the phone
 			M.show_message(said_message, 2)
@@ -422,7 +422,7 @@ TYPEINFO(/obj/machinery/phone)
 				if(!listener.say_understands(M, lang_id))
 					said_message = SPAN_SAY("[SPAN_BOLD("[heard_voice] [phone_ident]")] [SPAN_MESSAGE(M.voice_message)]")
 					if (listener.client.holder && ismob(M) && M.mind)
-						said_message = "<span class='adminHearing' data-ctx='[listener.client.set_context_flags()]'>[said_message]</span>"
+						said_message = "<span class='adminHearing' data-ctx='[listener.client.chatOutput.getContextFlags()]'>[said_message]</span>"
 				listener.show_message(said_message, 2)
 
 			// intercoms overhear phone conversations
