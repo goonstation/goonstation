@@ -22,7 +22,6 @@ import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
-import { contextMiddleware, contextReducer } from './context';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -34,7 +33,6 @@ const store = configureStore({
     game: gameReducer,
     ping: pingReducer,
     settings: settingsReducer,
-    context: contextReducer,
   }),
   middleware: {
     pre: [
@@ -44,7 +42,6 @@ const store = configureStore({
       settingsMiddleware,
       audioMiddleware,
       gameMiddleware,
-      contextMiddleware,
     ],
   },
 });
@@ -86,13 +83,10 @@ const setupApp = () => {
     window.update(msg);
   }
 
-  // Hide output
+  // Unhide the panel
   Byond.winset('output', {
     'is-visible': false,
-    'is-disabled': true,
   });
-
-  // Unhide the panel
   Byond.winset('browseroutput', {
     'is-visible': true,
     'is-disabled': false,
@@ -106,7 +100,6 @@ const setupApp = () => {
     module.hot.accept([
       './audio',
       './chat',
-      './context',
       './game',
       './Notifications',
       './Panel',

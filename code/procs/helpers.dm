@@ -777,7 +777,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 				if (isnull(user))
 					user = usr
 				linkSrc = "\ref[user.client.holder]"
-			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='fas fa-circle-info'></i></a>"
+			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='icon-info-sign'></i></a>"
 
 	return text
 

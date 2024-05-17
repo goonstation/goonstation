@@ -1034,7 +1034,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 5
 	vr_allowed = FALSE // no
 	not_in_crates = TRUE
-	job = list("Captain", "VIP", "Regional Director", "Inspector")
+	job = list("Captain", "VIP", "Regional Director", "Inspector", "Head of Personnel")
 
 /datum/syndicate_buylist/traitor/ai_disguised_module
 	name = "Disguised AI Law Module"

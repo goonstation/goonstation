@@ -32,6 +32,9 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 /datum/biome/proc/generate_turf(var/turf/gen_turf, flags=0)
 	gen_turf.ReplaceWith(src.turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 
+	if( flags & MAPGEN_ALLOW_VEHICLES )
+		gen_turf.allows_vehicles = TRUE
+
 	if((flags & MAPGEN_IGNORE_FAUNA) == 0)
 		if(length(fauna_types) && prob(fauna_density))
 			if(!fauna_hashmap || !length(fauna_hashmap.get_nearby(gen_turf, src.minimum_fauna_distance)))
@@ -47,8 +50,6 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 			if(istype(gen_turf.loc, bad_area))
 				return
 
-	if( flags & MAPGEN_ALLOW_VEHICLES )
-		gen_turf.allows_vehicles = TRUE
 
 	if((flags & MAPGEN_IGNORE_FLORA) == 0)
 		if(length(flora_types) && prob(flora_density))

@@ -7,11 +7,10 @@
 
 .Dropdown {
   position: relative;
-  align-items: center;
 }
 
 .Dropdown__control {
-  align-items: center;
+  position: relative;
   display: inline-block;
   font-family: Verdana, sans-serif;
   font-size: base.em(12px);
@@ -31,11 +30,11 @@
 
 .Dropdown__menu {
   position: absolute;
-  overflow-y: scroll;
-  align-items: center;
+  overflow-y: auto;
   z-index: 5;
   width: base.em(100px);
   max-height: base.em(200px);
+  overflow-y: scroll;
   border-radius: 0 0 base.em(2px) base.em(2px);
   color: #fff;
   background-color: #000;
@@ -75,8 +74,6 @@
 .Dropdown__selected-text {
   display: inline-block;
   text-overflow: ellipsis;
-  overflow-y: visible;
-  overflow-x: hidden;
   white-space: nowrap;
   height: base.em(17px);
   width: calc(100% - 1.2em);

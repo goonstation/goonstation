@@ -8026,17 +8026,6 @@
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
-"aMV" = (
-/obj/window/reinforced/west{
-	dir = 1
-	},
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza{
-	desc = "A plain cheese and tomato pizza. I wonder if you could fit this in a keyhole.";
-	name = "cheese keyzza"
-	},
-/turf/unsimulated/floor/specialroom/medbay,
-/area/marsoutpost)
 "aMW" = (
 /obj/machinery/door/window/northleft,
 /turf/unsimulated/floor/specialroom/medbay,
@@ -21476,12 +21465,6 @@
 	},
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/solarium)
-"bIM" = (
-/obj/table/reinforced/auto,
-/obj/item/motherboard,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
-/turf/unsimulated/floor/setpieces/oldfloor,
-/area/solarium)
 "bIN" = (
 /obj/table/reinforced/auto,
 /obj/item/paper{
@@ -29673,11 +29656,6 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
 "cmI" = (
-/obj/table/wood/round/auto,
-/turf/unsimulated/floor/carpet/arcade,
-/area/sim/racing_entry)
-"cmJ" = (
-/obj/item/reagent_containers/food/snacks/pizza,
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
@@ -45265,18 +45243,6 @@
 "dhC" = (
 /turf/unsimulated/floor/white,
 /area/syndicate_station/medbay)
-"dhE" = (
-/obj/storage/crate{
-	name = "Robotic limbs"
-	},
-/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
-/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
-/turf/unsimulated/floor/red,
-/area/syndicate_station/medbay)
 "dhF" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -55676,6 +55642,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"eQt" = (
+/obj/table/reinforced/auto,
+/obj/item/motherboard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/turf/unsimulated/floor/setpieces/oldfloor,
+/area/solarium)
 "eQE" = (
 /obj/machinery/power/solar/east{
 	id = "derelict_ai_sat"
@@ -63488,6 +63460,17 @@
 	icon_state = "floor3"
 	},
 /area/meat_derelict/soviet)
+"mdP" = (
+/obj/window/reinforced/west{
+	dir = 1
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
+	desc = "A plain cheese and tomato pizza. I wonder if you could fit this in a keyhole.";
+	name = "cheese keyzza"
+	},
+/turf/unsimulated/floor/specialroom/medbay,
+/area/marsoutpost)
 "mfw" = (
 /obj/machinery/vending/meat/prefab_grill,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -68258,6 +68241,18 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"qqu" = (
+/obj/storage/crate{
+	name = "Robotic limbs"
+	},
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/treads,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/arm/right/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/left/standard,
+/obj/item/mob_part/humanoid_part/silicon_part/leg/right/standard,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/medbay)
 "qrj" = (
 /obj/table/auto,
 /obj/item/stimpack,
@@ -71538,6 +71533,11 @@
 /mob/living/carbon/human/npc/monkey/oppenheimer,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
+"tlr" = (
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni,
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/arcade,
+/area/sim/racing_entry)
 "tlI" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -103615,7 +103615,7 @@ bqW
 iGH
 lzl
 dhr
-dhE
+qqu
 dhQ
 kJE
 pNn
@@ -109829,7 +109829,7 @@ aab
 aab
 bHD
 jnw
-bIM
+eQt
 bJf
 bJf
 bJf
@@ -115654,7 +115654,7 @@ cku
 ckr
 civ
 lar
-cmJ
+tlr
 cmI
 kqE
 civ
@@ -134796,7 +134796,7 @@ aTs
 aLi
 aLJ
 aLm
-aMV
+mdP
 aNA
 aNA
 aKW

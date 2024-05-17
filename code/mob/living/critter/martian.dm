@@ -295,16 +295,16 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		rendered = "<span class='[class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
 		adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
 
-	for (var/client/myClient as anything in global.clients)
-		if (!myClient.mob) continue
-		if(istype(myClient.mob, /mob/new_player))
+	for (var/client/CC)
+		if (!CC.mob) continue
+		if(istype(CC.mob, /mob/new_player))
 			continue
-		var/mob/M = myClient.mob
+		var/mob/M = CC.mob
 
 		if ((ismartian(M)) || M.client.holder && !M.client.player_mode)
 			var/thisR = rendered
 			if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

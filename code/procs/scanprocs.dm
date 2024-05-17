@@ -807,8 +807,7 @@
 	if (istype(A, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/PP = A
 		if (!PP.current || PP.dead)
-			boutput(user, SPAN_ALERT("Cannot scan."))
-			return
+			return SPAN_ALERT("Cannot scan.")
 
 		P = PP.current
 		DNA = PP.plantgenes
@@ -816,8 +815,7 @@
 	else if (istype(A, /obj/item/seed/))
 		var/obj/item/seed/S = A
 		if (S.isstrange || !S.planttype)
-			boutput(user, SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned."))
-			return
+			return SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned.")
 
 		P = S.planttype
 		DNA = S.plantgenes
@@ -848,10 +846,10 @@
 		animate_scanning(A, "#70e800")
 
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
-		boutput(user, SPAN_ALERT("Cannot scan."))
-		return
+		return SPAN_ALERT("Cannot scan.")
 
 	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
+	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)

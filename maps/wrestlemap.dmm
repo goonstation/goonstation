@@ -1191,6 +1191,18 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
+"ayf" = (
+/obj/machinery/sheet_extruder,
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/machinery/light/small/cool{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/storage/warehouse)
 "ayr" = (
 /obj/stone,
 /turf/simulated/grass,
@@ -1586,13 +1598,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"aHO" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/fungus,
-/turf/simulated/floor/carpet/purple/standard/edge/se,
-/area/ghostdrone_factory)
 "aHX" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
@@ -2607,6 +2612,20 @@
 "bih" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
+"biQ" = (
+/obj/storage/closet,
+/obj/item/razor_blade,
+/obj/item/scissors,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese,
+/obj/item/kitchen/utensil/knife/pizza_cutter,
+/obj/item/plate,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/grey,
+/area/station/storage/warehouse)
 "biY" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire,
@@ -13101,10 +13120,6 @@
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
-"fLP" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor/shuttlebay,
-/area/station/quartermaster/refinery)
 "fLT" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -25123,11 +25138,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/west)
-"laB" = (
-/obj/machinery/portable_reclaimer,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/orangeblack,
-/area/station/storage/warehouse)
 "laH" = (
 /obj/item/device/radio/intercom/engineering{
 	pixel_y = 28
@@ -34495,6 +34505,11 @@
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
+"pkv" = (
+/obj/machinery/portable_reclaimer,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/warehouse)
 "pkD" = (
 /obj/stool/bed/moveable/hospital,
 /turf/simulated/floor/carpet/arcade,
@@ -36703,6 +36718,10 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
+"qiq" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay,
+/area/station/quartermaster/refinery)
 "qiB" = (
 /obj/item/storage/toolbox/emergency,
 /obj/item/paper/book/from_file/matsci_guide,
@@ -43694,20 +43713,6 @@
 /obj/stool/chair/moveable,
 /turf/simulated/floor/green,
 /area/research_outpost/protest)
-"thK" = (
-/obj/storage/closet,
-/obj/item/razor_blade,
-/obj/item/scissors,
-/obj/item/reagent_containers/food/snacks/pizza,
-/obj/item/kitchen/utensil/knife/pizza_cutter,
-/obj/item/plate,
-/obj/machinery/light/small/cool{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/grey,
-/area/station/storage/warehouse)
 "thM" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
@@ -45044,18 +45049,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"tOo" = (
-/obj/machinery/sheet_extruder,
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/obj/machinery/light/small/cool{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/storage/warehouse)
 "tOO" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/line/red{
@@ -45198,6 +45191,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"tSL" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/fungus,
+/turf/simulated/floor/carpet/purple/standard/edge/se,
+/area/ghostdrone_factory)
 "tSM" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -46771,15 +46771,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"uGD" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza{
-	pixel_y = -10
-	},
-/obj/item/paper/book/from_file/cookbook,
-/obj/item/kitchen/utensil/knife/pizza_cutter,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "uGQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -55049,6 +55040,15 @@
 "yeS" = (
 /turf/simulated/floor/caution/west,
 /area/station/hangar/main)
+"yeY" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
+	pixel_y = -10
+	},
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/kitchen/utensil/knife/pizza_cutter,
+/turf/simulated/floor/white/checker2,
+/area/station/crew_quarters/kitchen)
 "yfd" = (
 /obj/machinery/computer/card,
 /obj/machinery/light{
@@ -84630,7 +84630,7 @@ sZs
 wOk
 kiD
 gLp
-aHO
+tSL
 uAP
 uAP
 uAP
@@ -99083,7 +99083,7 @@ kuk
 wfl
 kkv
 vlH
-thK
+biQ
 dzu
 vlH
 foQ
@@ -99997,7 +99997,7 @@ mVF
 qhz
 olq
 oKx
-laB
+pkv
 sLY
 tLb
 sLY
@@ -100294,7 +100294,7 @@ vlH
 uFB
 dzu
 vlH
-tOo
+ayf
 gZL
 xXI
 otO
@@ -108144,7 +108144,7 @@ vZu
 vZu
 vZu
 vZu
-fLP
+qiq
 eqA
 rET
 vnX
@@ -108998,7 +108998,7 @@ bAz
 aTE
 qww
 xbg
-uGD
+yeY
 bKo
 lbj
 uUk

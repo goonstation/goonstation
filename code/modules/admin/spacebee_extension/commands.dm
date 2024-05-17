@@ -225,6 +225,7 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, server, length, reason)
+		var/rpban = FALSE
 		if (!(ckey && server && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
@@ -257,6 +258,8 @@
 			server = "main3"
 		else if(server == "main4" || server == "4" || server == "goon4")
 			server = "main4"
+		else if(server == "rp")
+			rpban = TRUE
 		else
 			system.reply("Invalid server.", user)
 			return
@@ -288,15 +291,35 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		bansHandler.add(
-			ckey(user),
-			data["server"],
-			data["ckey"],
-			data["compID"],
-			data["ip"],
-			data["reason"],
-			data["mins"] * 60 * 10
-		)
+		if(rpban)
+			bansHandler.add(
+				ckey(user),
+				"main3",
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
+			bansHandler.add(
+				ckey(user),
+				"main4",
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
+		else
+			bansHandler.add(
+				ckey(user),
+				data["server"],
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
 
 /datum/spacebee_extension_command/boot
 	name = "boot"

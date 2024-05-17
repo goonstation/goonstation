@@ -482,7 +482,7 @@ var/list/headset_channel_lookup
 					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.name];track2=\ref[R];track=\ref[M]'>[M.name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
-					thisR = "<span class='adminHearing' data-ctx='[R.client.set_context_flags()]'>[thisR]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				// We don't wanna boutput more than once but we gotta make sure all our maptext sends
 				// We also do our client pref checks here and not when forming receive[], so that other things unrelated
@@ -507,7 +507,7 @@ var/list/headset_channel_lookup
 					thisR = "[part_a]<a href='?src=\ref[src];track3=[real_name ? real_name : M.real_name];track2=\ref[R];track=\ref[M]'>[real_name ? real_name : M.real_name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
-					thisR = "<span class='adminHearing' data-ctx='[R.client.set_context_flags()]'>[thisR]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				if (!R.client?.preferences.flying_chat_hidden)
 					var/count = 0
@@ -528,7 +528,7 @@ var/list/headset_channel_lookup
 					thisR = "[part_a][M.voice_name][part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
-					thisR = "<span class='adminHearing' data-ctx='[R.client.set_context_flags()]'>[thisR]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				if (!R.client?.preferences.flying_chat_hidden)
 					var/count = 0
@@ -547,7 +547,7 @@ var/list/headset_channel_lookup
 					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][M.say_quote(messages[2])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) &&  M.mind)
-					thisR = "<span class='adminHearing' data-ctx='[R.client.set_context_flags()]'>[thisR]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 
 				if (!R.client?.preferences.flying_chat_hidden)
 					var/count = 0
@@ -566,7 +566,7 @@ var/list/headset_channel_lookup
 				var/thisR = rendered
 				// there will NEVER be an AI controlled member of this, SO HELP ME IF THERE IS
 				if (R.client && R.client.holder && ismob(M) && M.mind)
-					thisR = "<span class='adminHearing' data-ctx='[R.client.set_context_flags()]'>[thisR]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 				R.show_message(thisR, 2)
 #undef RADIO_MAPTEXT_MAX_RADIOS_DISPLAYING
 

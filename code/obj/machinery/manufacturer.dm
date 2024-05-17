@@ -1,10 +1,18 @@
-#define MAX_QUEUE_LENGTH 20
-#define WIRE_EXTEND 1
-#define WIRE_POWER 2
-#define WIRE_MALF 3
-#define WIRE_SHOCK 4
-#define MAX_SPEED 3
-#define MAX_SPEED_HACKED 5
+#define MAX_QUEUE_LENGTH 20 //! maximum amount of blueprints which may be queued for printing
+#define WIRE_EXTEND 1 //! wire which reveals blueprints in the "hidden" type
+#define WIRE_POWER 2 //! wire which can disable machine power
+#define WIRE_MALF 3 //! wire which causes machine to malfunction
+#define WIRE_SHOCK 4 //! this wire is in the machine specifically to shock curious staff assistants
+#define MODE_READY "ready" //! machine is ready to produce more things
+#define MODE_WORKING "working" //! machine is making some things
+#define MODE_HALT "halt" //! machine had to stop making things or couldnt due to some problem that occured
+#define MIN_SPEED 1 //! lowest speed fabricator can function at
+#define DEFAULT_SPEED 3 //! speed which manufacturers run at by default
+#define MAX_SPEED 3 //! maximum speed default manufacturers can be set to
+#define MAX_SPEED_HACKED 5 //! maximum speed manufacturers which are hacked (WIRE_EXTEND has been pulsed) can be set to
+#define MAX_SPEED_DAMAGED 8 //! maximum speed that fabricators which flip_out() can be set to, randomly.
+#define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
+#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
 
 TYPEINFO(/obj/machinery/manufacturer)
 	mats = 20
@@ -24,11 +32,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
-
 	// General stuff
 	var/health = 100
 	var/supplemental_desc = null //! appended in get_desc() to the base description, to make subtype definitions cleaner
-	var/mode = "ready"
+	var/mode = MODE_READY //! the current status of the machine. Ready, working, or halt are all modes used currently.
 	var/error = null
 	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
 	var/panel_open = FALSE
@@ -39,7 +46,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/output_target = null
 	var/list/nearby_turfs = list()
 	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
-	var/temp = null //! Used as a cache when outputting messages to users
+	var/output_message_user = null //! Used as a cache when outputting messages to users
 	var/frequency = FREQ_PDA
 	var/net_id = null
 	var/device_tag = "PNET_MANUFACTURER"
@@ -47,28 +54,29 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
 
 	// Printing and queues
-	var/time_left = 0
-	var/speed = 3
+	var/original_duration = 0 //! duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
+	var/time_left = 0 //! time the current blueprint will take to manufacture
+	var/time_started = 0 //! time the last blueprint was queued
+	var/speed = DEFAULT_SPEED
 	var/repeat = FALSE
 	var/manual_stop = FALSE
 	var/output_cap = 20
-	var/last_queue_op = 0 //! This is an antispam timer to prevent autoclickers from lagging the server
 	var/list/queue = list()
 
 	// Resources/materials
 	var/base_material_class = /obj/item/material_piece //! Base class for material pieces that the manufacturer accepts. Keep this as material pieces only unless you're making larger changes to the system
 	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
 	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
-	var/obj/item/reagent_containers/glass/beaker = null
-	var/obj/item/disk/data/floppy/manudrive = null
+	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
-	var/list/stored_materials_by_id = list()
+	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
+	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
 
 	// Production options
 	var/search = null
 	var/category = null
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
 	var/list/available = list() //! A list of every option available in this unit subtype by default
 	var/list/download = list() //! Options gained from scanned blueprints
@@ -113,8 +121,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/turf/T in view(5,src))
 			nearby_turfs += T
 
-		src.create_reagents(1000)
-
 		src.work_display = image('icons/obj/manufacturer.dmi', "")
 		src.activity_display = image('icons/obj/manufacturer.dmi', "")
 		src.panel_sprite = image('icons/obj/manufacturer.dmi', "")
@@ -123,12 +129,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	disposing()
 		STOP_TRACKING
+		src.remove_storage()
 		manuf_controls.manufacturing_units -= src
 		src.work_display = null
 		src.activity_display = null
 		src.panel_sprite = null
 		src.output_target = null
-		src.beaker = null
 		src.manudrive = null
 		src.available.len = 0
 		src.available = null
@@ -151,6 +157,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.link = null
 
 		for (var/obj/O in src.contents)
+			// unlikely now that manufacturers use storage datums but as said below
 			O.set_loc(src.loc)
 		for (var/mob/M in src.contents)
 			// unlikely as this is to happen we might as well make sure everything is purged
@@ -186,13 +193,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		..()
 
-		if (src.mode == "working")
+		if (src.mode == MODE_WORKING)
 			use_power(src.active_power_consumption)
 
 		if (src.electrified > 0)
 			src.electrified--
 		/*
-		if (src.mode == "working")
+		if (src.mode == MODE_WORKING)
 			if (src.malfunction && prob(8))
 				src.flip_out()
 			src.time_left -= src.speed * 4.4 * mult
@@ -204,12 +211,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
 						src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
-						src.mode = "ready"
+						src.mode = MODE_READY
 						src.build_icon()
 		*/
 
 	proc/finish_work()
-
 		if(length(src.queue))
 			output_loop(src.queue[1])
 			if (!src.repeat)
@@ -219,7 +225,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.manual_stop = 0
 			playsound(src.loc, src.sound_happy, 50, 1)
 			src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
-			src.mode = "ready"
+			src.mode = MODE_READY
 			src.build_icon()
 
 	ex_act(severity)
@@ -261,16 +267,201 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
-		if(status & BROKEN)
+		if(src.is_broken())
 			src.build_icon()
 		else
-			if(powered() && src.dismantle_stage < 3)
+			if(src.powered() && src.dismantle_stage < 3)
 				status &= ~NOPOWER
 				src.build_icon()
 			else
 				SPAWN(rand(0, 15))
 					status |= NOPOWER
 					src.build_icon()
+
+	// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
+	broken_state_topic(mob/user)
+		. = user.shared_ui_interaction(src)
+		if (src.is_broken())
+			return min(., UI_CLOSE)
+		else if (requires_power && status & (NOPOWER | POWEROFF))
+			return min(., UI_INTERACTIVE)
+		else if (status & MAINT)
+			return min(., UI_UPDATE)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Manufacturer")
+			ui.open()
+
+	ui_data(mob/user)
+		// When we update the UI, we must regenerate the blueprint data if the blueprints known to us has changed since last time
+		// No need to do this if we're depowered/broken though
+		if (should_update_static && !src.is_disabled())
+			should_update_static = FALSE
+			src.update_static_data(user)
+
+		// Send material data as tuples of material name, material id, material amount
+		var/resource_data = list()
+		for (var/obj/item/material_piece/P as anything in src.get_contents())
+			if (!P.material)
+				continue
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+
+		// Package additional information into each queued item for the badges so that it can lookup its already sent information
+		var/queue_data = list()
+		for (var/datum/manufacture/M in src.queue)
+			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M)))
+
+		// This calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
+		// added to the current time that has been elapsed, divided by the total time to be elapsed.
+		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
+		var/progress_pct = null // TODO: use predicted end time to have clientside progress animation instead of sending percentage
+		if (length(src.queue))
+			if (src.mode != MODE_WORKING)
+				progress_pct = 1 - (src.time_left / src.original_duration)
+			else
+				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
+
+		return list(
+			"delete_allowed" = src.allowed(user),
+			"queue" = queue_data,
+			"progress_pct" = progress_pct,
+			"panel_open" = src.panel_open,
+			"hacked" = src.hacked,
+			"malfunction" = src.malfunction,
+			"mode" = src.mode,
+			"wire_bitflags" = src.wires,
+			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
+			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
+			"speed" = src.speed,
+			"repeat" = src.repeat,
+			"error" = src.error,
+			"resource_data" = resource_data,
+			"manudrive_uses_left" = src.get_drive_uses_left(),
+			"indicators" = list("electrified" = src.electrified,
+							    "malfunctioning" = src.malfunction,
+								"hacked" = src.hacked,
+								"hasPower" = !src.is_disabled(),
+							   ),
+		)
+
+	ui_static_data(mob/user)
+		return list (
+			"fabricator_name" = src.name,
+			"all_categories" = src.categories,
+			"available_blueprints" = blueprints_as_list(src.available, user),
+			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
+			"downloaded_blueprints" = blueprints_as_list(src.download, user),
+			"recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
+			"wires" = APCWireColorToIndex,
+			"rockboxes" = rockboxes_as_list(),
+			"manudrive" = list ("name" = "[src.manudrive]",
+							   	"limit" = src.manudrive?.fablimit,
+							   ),
+			"min_speed" = MIN_SPEED,
+			"max_speed_normal" = MAX_SPEED,
+			"max_speed_hacked" = MAX_SPEED_HACKED,
+		)
+
+	/// Get whether a blueprint is available, hidden, downloaded, or a drive recipe. If in multiple print lists, picks the first result. Or null.
+	proc/get_blueprint_type(var/datum/manufacture/M)
+		if (M in src.available)
+			return "available"
+		else if (M in src.hidden)
+			return "hidden"
+		else if (M in src.download)
+			return "download"
+		else if (M in src.drive_recipes)
+			return "drive_recipes"
+		else
+			return null
+
+
+	/// Gets rockbox data as list for ui_static_data
+	proc/rockboxes_as_list()
+		var/rockboxes = list()
+		for_by_tcl(cloud_container, /obj/machinery/ore_cloud_storage_container)
+			if(cloud_container.is_broken())
+				continue
+			var/ore_data = list()
+			for(var/ore_name as anything in cloud_container.ores)
+				var/datum/ore_cloud_data/oredata = cloud_container.ores[ore_name]
+				if(!oredata.for_sale || !oredata.amount)
+					continue
+				ore_data += list(list(
+					"name" = ore_name,
+					"amount" = oredata.amount,
+					"cost" = oredata.price + ORE_TAX(oredata.price),
+				))
+			rockboxes += list(list(
+				"name" = cloud_container.name,
+				"area_name" = get_area(cloud_container),
+				"byondRef" = "\ref[cloud_container]",
+				"ores" = ore_data,
+			))
+		return rockboxes
+
+
+	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
+	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
+		var/list/as_list = list()
+		for (var/datum/manufacture/M as anything in L)
+			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
+				M.category = "Miscellaneous"
+				logTheThing(LOG_DEBUG, src, "Manufacturing blueprint [M] has category [M.category], which is not on the list of categories for [src]!")
+			if (length(as_list[M.category]) == 0)
+				as_list[M.category] = list()
+			as_list[M.category] += list(manufacture_as_list(M, user, static_elements))
+		return as_list
+
+	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
+	proc/manufacture_as_list(datum/manufacture/M, mob/user)
+		var/generated_names = list()
+		var/generated_descriptions = list()
+
+		// Fix not having generated material names for blueprints like multitools
+		if (isnull(M.item_names))
+			M.item_names = list()
+			for (var/i in M.item_paths)
+				M.item_names += get_nice_mat_name_for_manufacturers(i)
+
+		for (var/i in 1 to length(M.item_outputs))
+			var/T
+			if (istype(M, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/mech = M
+				T = mech.frame_path
+			else
+				T = M.item_outputs[i]
+
+			if (ispath(T, /atom/))
+				var/atom/A = T
+				generated_names += initial(A.name)
+				generated_descriptions += "[initial(A.desc)]"
+
+		var/img
+		if (istype(M, /datum/manufacture/mechanics))
+			var/datum/manufacture/mechanics/mech = M
+			img = getItemIcon(mech.frame_path, C = user.client)
+		else
+			img = getItemIcon(M.item_outputs[1], C = user.client)
+
+		return list(
+			"name" = M.name,
+			"category" = M.category,
+			"material_names" = M.item_names,
+			"item_paths" = M.item_paths,
+			"item_names" = generated_names,
+			"item_descriptions" = generated_descriptions,
+			"item_amounts" = M.item_amounts,
+			"item_outputs" = M.item_outputs,
+			"create" = M.create,
+			"time" = M.time,
+			"apply_material" = M.apply_material,
+			"img" = img,
+			"byondRef" = "\ref[M]",
+			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
+		)
 
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
@@ -279,312 +470,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
+		src.ui_interact(user)
 
-		src.add_dialog(user)
-
-		var/HTML = {"
-		<title>[src.name]</title>
-		<style type='text/css'>
-
-			/* will probaby break chui, dont care */
-			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
-			a { color: #88f; }
-
-			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
-			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
-			thead { background: #555555; }
-
-			table {
-				border-collapse: collapse;
-				width: 100%;
-				}
-			td, th { padding: 0.2em; 0.5em; }
-			.outline td, .outline th {
-				border: 1px solid #666;
-			}
-
-			img, a img {
-				border: 0;
-				}
-
-			#info {
-				position: absolute;
-				right: 0.5em;
-				top: 50px;
-				width: 25%;
-				padding: 0.5em;
-				}
-
-			#products {
-				position: absolute;
-				left: 0;
-				top:50px;
-				width: 73%;
-				padding: 0.25em;
-			}
-			.tabs {
-				position:fixed;
-				background-color: inherit;
-				z-index:1;
-				top: 0;
-				left: 0;
-			}
-			.tabs a {
-				background-color: inherit;
-				float: left;
-				border: none;
-				outline: none;
-				padding: 14px 16px;
-                margin-left: 10px;
-                margin-top: 6px;
-                margin-bottom: 6px;
-				border-radius: 5px;
-			}
-			.tabs a:hover {
-				background-color: #ddd;
-			}
-			.tabs a.active {
-				background-color: #ccc;
-			}
-
-			.queue, .product {
-				position: relative;
-				display: inline-block;
-				width: 12em;
-				padding: 0.25em 0.5em;
-				border-radius: 5px;
-				margin: 0.5em;
-				background: #555;
-				box-shadow: 3px 3px 0 2px #000;
-				}
-
-			.queue {
-				vertical-align: middle;
-				clear: both;
-				}
-			.queue .icon {
-				float: left;
-				margin: 0.2em;
-				}
-			.product {
-				vertical-align: top;
-				text-align: center;
-				}
-			.product .time {
-				position: absolute;
-				bottom: 0.3em;
-				right: 0.3em;
-				}
-			.product .mats {
-				position: absolute;
-				bottom: 0.3em;
-				left: 0.3em;
-				}
-			.product .icon {
-				display: block;
-				height: 64px;
-				width: 64px;
-				margin: 0.2em auto 0.5em auto;
-				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
-				}
-			.product.disabled {
-				background: #333;
-				color: #aaa;
-			}
-			.required {
-				display: none;
-				}
-
-			.product:hover {
-				cursor: pointer;
-				background: #666;
-			}
-			.product:hover .required {
-				display: block;
-				position: absolute;
-				left: 0;
-				right: 0;
-				}
-			.product .delete {
-				color: #c44;
-				background: #222;
-				padding: 0.25em 0.5em;
-				border-radius: 10px;
-				}
-			.required div {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				background: #333;
-				border: 1px solid #888888;
-				padding: 0.25em 0.5em;
-				margin: 0.25em 0.5em;
-				font-size: 80%;
-				text-align: left;
-				border-radius: 5px;
-				}
-			.mat-missing {
-				color: #f66;
-			}
-		</style>
-		<script type="text/javascript">
-			function product(ref) {
-				window.location = "?src=\ref[src];disp=" + ref;
-			}
-
-			function delete_product(ref) {
-				window.location = "?src=\ref[src];delete=1;disp=" + ref;
-			}
-		</script>
-		"}
-
-
-		var/list/dat = list()
-		var/delete_allowed = src.allowed(user)
-
-		if (src.panel_open || isAI(user))
-			var/list/manuwires = list(
-			"Amber" = 1,
-			"Teal" = 2,
-			"Indigo" = 3,
-			"Lime" = 4,
-			)
-			var/list/pdat = list("<B>[src] Maintenance Panel</B><hr>")
-			for(var/wiredesc in manuwires)
-				var/is_uncut = src.wires & APCWireColorToFlag[manuwires[wiredesc]]
-				pdat += "[wiredesc] wire: "
-				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Mend</a>"
-				else
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[manuwires[wiredesc]]'>Pulse</a> "
-				pdat += "<br>"
-
-			pdat += "<br>"
-			if (status & BROKEN || status & NOPOWER)
-				pdat += "The yellow light is off.<BR>"
-				pdat += "The blue light is off.<BR>"
-				pdat += "The white light is off.<BR>"
-				pdat += "The red light is off.<BR>"
-			else
-				pdat += "The yellow light is [(src.electrified == 0) ? "off" : "on"].<BR>"
-				pdat += "The blue light is [src.malfunction ? "flashing" : "on"].<BR>"
-				pdat += "The white light is [src.hacked ? "on" : "off"].<BR>"
-				pdat += "The red light is on.<BR>"
-
-			user.Browse(pdat.Join(), "window=manupanel")
-			onclose(user, "manupanel")
-
-		if (status & BROKEN || status & NOPOWER)
-			dat = "The screen is blank."
-			user.Browse(dat, "window=manufact;size=750x500")
-			onclose(user, "manufact")
-			return
-		dat += "<div class='tabs'>"
-		for (var/category in list("All") + src.categories)
-			var/actual_category = category == "All" ? null : category
-			dat += "<a [actual_category == src.category ? "class='active" : ""]' href='?src=\ref[src];category=[category]'>[category]</a>"
-		dat += "</div>"
-		dat += "<div id='products'>"
-
-		// Get the list of stuff we can print ...
-		var/list/products = src.available + src.drive_recipes + src.download
-		if (src.hacked)
-			products += src.hidden
-
-		// Then make it
-		var/can_be_made = 0
-		var/delete_link
-		for(var/datum/manufacture/A in products)
-			var/list/mats_used = get_materials_needed(A)
-
-			if (istext(src.search) && !findtext(A.name, src.search, 1, null))
-				continue
-			else if (istext(src.category) && src.category != A.category)
-				continue
-
-			can_be_made = (length(mats_used) >= A.item_paths.len)
-			if(delete_allowed && src.download.Find(A))
-				delete_link = {"<span class='delete' onclick='delete_product("\ref[A]");'>DELETE</span>"}
-
-			else
-				delete_link = ""
-
-			var/icon_text = "<img class='icon'>"
-			// @todo probably refactor this since it's copy pasted twice now.
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-			var/list/material_text = list()
-			var/list/material_count = 0
-			for (var/i in 1 to A.item_paths.len)
-				material_count += A.item_amounts[i]
-				var/mat_name
-				if(isnull(A.item_names) || isnull(A.item_names[i]))
-					mat_name = get_nice_mat_name_for_manufacturers(A.item_paths[i])
-				else
-					mat_name = A.item_names[i]
-				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]/10] [mat_name]</span>
-				"}
-
-			dat += {"
-		<div class='product[can_be_made ? "" : " disabled"]' onclick='product("\ref[A]");'>
-			<strong>[A.name]</strong>
-			<div class='required'><div>[material_text.Join("<br>")]</div></div>
-			[icon_text]
-			[delete_link]
-			<span class='mats'>[material_count/10] mat.</span>
-			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
-		</div>"}
-
-
-		dat += "</div><div id='info'>"
-		dat += build_material_list(user)
-
-		//Search
-		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
-		// This is not re-formatted yet just b/c i don't wanna mess with it
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
-		if(scan)
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
-				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
-		dat+= src.temp
-		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.is_disabled())
-				continue
-			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
-			var/list/ores = S.ores
-			for(var/ore in ores)
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				if(!OCD.for_sale || !OCD.amount)
-					continue
-				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-				dat += "[ore]: [OCD.amount] ([OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)][CREDIT_SIGN]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
-
-		dat += "</small><HR>"
-
-		dat += build_control_panel(user)
-
-
-		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
-		onclose(user, "manufact")
-
-		interact_particle(user,src)
-
-	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(datum/manufacture/M)
 		. = FALSE
 		if(src.available && (M in src.available))
@@ -599,314 +486,295 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
+	/// Clear src.queue but not the current working print if it exists
+	proc/clear_queue()
+		if (!length(src.queue))
+			return
+		src.queue = list()
 
-	Topic(href, href_list)
+	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
+	proc/try_shock(mob/target, var/chance)
+		if (src.electrified)
+			return src.shock(usr, chance)
+		return FALSE
 
-		if(!(href_list["cutwire"] || href_list["pulsewire"]))
-			if(status & BROKEN || status & NOPOWER)
+	/// Check if the target is within arm's reach of the machine
+	proc/has_physical_proximity(mob/target)
+		return (BOUNDS_DIST(src, target) == 0) && istype(src.loc, /turf)
+
+	/// Handle checking and outputting for not being close to the machine
+	proc/check_physical_proximity(mob/target)
+		if (!src.has_physical_proximity(target))
+			src.grump_message(usr, "You need to be adjacent to the fabricator to do that!", sound = FALSE)
+			return FALSE
+		return TRUE
+
+	/// Check if the target is allowed to interact with this at range. Silicons can, humans can't.
+	proc/can_use_ranged(mob/target)
+		return isAI(target) || isrobot(target)
+
+	/// Helper to play the grump with or without a grump message/sound. Just as a note the sound is appropriate when the machine is reporting the error,
+	/// if its a grump that the player probably had to think about or find out then theres no "reason" for there to be sound
+	proc/grump_message(mob/target = null, var/message = null, var/sound = FALSE)
+		if (!isnull(message) && !isnull(target))
+			boutput(target, SPAN_ALERT(message))
+		if (sound)
+			playsound(src.loc, src.sound_grump, 50, 1)
+
+	ui_act(action, params)
+		// Handle wire stuff first before forbidding for power loss
+		if (action == "wire")
+			if (!src.panel_open)
+				src.grump_message(usr, "The panel is closed!")
 				return
 
-		if(usr.stat || usr.restrained())
+			switch (params["action"])
+				if ("cut", "mend")
+					if (!src.check_physical_proximity(usr))
+						return
+					if (src.try_shock(usr, 100))
+						return
+					if (!(issnippingtool(usr.equipped())))
+						src.grump_message(usr, "You need to be holding a snipping tool for that!")
+					else
+						if (params["action"] == "cut")
+							src.cut(usr, text2num_safe(params["wire"]))
+						else
+							src.mend(usr, text2num_safe(params["wire"]))
+						return TRUE
+				if ("pulse")
+					if (!ispulsingtool(usr.equipped()))
+						src.grump_message(usr, "You need to be holding a pulsing tool or similar for that!")
+						return
+					if (!((src.can_use_ranged(usr) || src.has_physical_proximity(usr))))
+						src.grump_message(usr, "You need to be adjacent to the fabricator for that!")
+						return
+					src.pulse(usr, text2num_safe(params["wire"]))
+					return TRUE
+
+		// Call parent AFTER wires so you can at least fix the power on it
+		. = ..()
+
+		if(.)
 			return
 
-		if(src.electrified)
-			if (!(status & NOPOWER || status & BROKEN))
-				if (src.shock(usr, 10))
+		if (!ON_COOLDOWN(src, "electrified_action", 1 DECI SECOND))
+			if (src.try_shock(usr, 10))
+				return
+
+		if (!src.can_use_ranged(usr) && !src.has_physical_proximity(usr))
+			return
+
+		switch(action)
+			if ("request_product")
+				if (ON_COOLDOWN(src, "product", 1 DECI SECOND))
+					src.grump_message(usr, "Slow down!")
 					return
-
-		if (((BOUNDS_DIST(src, usr) == 0 || (isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
-			src.add_dialog(usr)
-
-			if (src.malfunction && prob(10))
-				src.flip_out()
-
-			if (href_list["eject"])
-				if (src.mode != "ready")
-					boutput(usr, SPAN_ALERT("You cannot eject materials while the unit is working."))
-				else
-					var/mat_id = href_list["eject"]
-					var/ejectamt = 0
-					var/turf/ejectturf = get_turf(usr)
-					for(var/obj/item/O in src.contents)
-						if (O.material && O.material.getID() == mat_id)
-							if (!ejectamt)
-								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
-									break
-								if (round(ejectamt) != ejectamt)
-									boutput(usr, SPAN_ALERT("You can only eject a whole number of a material"))
-									break
-							if (!ejectturf)
-								break
-							if (ejectamt > O.amount)
-								playsound(src.loc, src.sound_grump, 50, 1)
-								boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
-								ejectamt = O.amount
-							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
-							if (ejectamt == O.amount)
-								O.set_loc(get_output_location(O))
-							else
-								var/obj/item/material_piece/P = new O.type
-								P.setMaterial(O.material)
-								P.change_stack_amount(ejectamt - P.amount)
-								O.change_stack_amount(-ejectamt)
-								P.set_loc(get_output_location(O))
-							break
-
-			if (href_list["speed"])
-				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
-				var/given_speed = text2num(href_list["speed"])
-				if (src.mode == "working")
-					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
-				else if (given_speed >= 1 && given_speed <= upperbound)
-					src.speed = given_speed
-				else
-					var/newset = input(usr, "Enter from 1 to [upperbound]. Higher settings consume more power.", "Manufacturing Speed") as num
-					src.speed = clamp(newset, 1, upperbound)
-
-			if (href_list["clearQ"])
-				var/Qlength = length(src.queue)
-				if (Qlength < 1) // Nothing in list
-					return
-
-				if (Qlength > 2)
-					src.queue.Cut(2)
-
-				if (src.mode != "working")
-					src.queue -= src.queue[1]
-
-				if (src.mode == "halt") // Set ready if halted
-					src.manual_stop = FALSE
-					src.error = null
-					src.mode = "ready"
-
-					src.build_icon()
-
-			if (href_list["removefromQ"])
-				var/operation = text2num_safe(href_list["removefromQ"])
-				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
-					boutput(usr, SPAN_ALERT("Invalid operation."))
-					return
-
-				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
-					return
-				else
-					last_queue_op = world.time
-
-				src.queue -= src.queue[operation]
-				begin_work()//pesky exploits
-
-			if (href_list["repeat"])
-				src.repeat = !src.repeat
-
-			if (href_list["search"])
-				src.search = input("Enter text to search for in schematics.","Manufacturing Unit") as null|text
-				if (length(src.search) == 0)
-					src.search = null
-
-			if (href_list["category"])
-				var/category = href_list["category"]
-				if (category == "All")
-					src.category = null
-				else if (category in src.categories)
-					src.category = category
-
-			if (href_list["continue"])
-				if (length(src.queue) < 1)
-					boutput(usr, SPAN_ALERT("Cannot find any items in queue to continue production."))
-					return
-				if (!check_enough_materials(src.queue[1]))
-					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
-				else
-					src.begin_work(0)
-
-			if (href_list["pause"])
-				src.mode = "halt"
-				src.build_icon()
-				if (src.action_bar)
-					src.action_bar.interrupt(INTERRUPT_ALWAYS)
-
-			if (href_list["delete"])
-				if(!src.allowed(usr))
-					boutput(usr, SPAN_ALERT("Access denied."))
-					return
-				var/datum/manufacture/I = locate(href_list["disp"])
-				if (!istype(I,/datum/manufacture/mechanics/))
-					boutput(usr, SPAN_ALERT("Cannot delete this schematic."))
-					return
-				last_queue_op = world.time
-				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
-					src.download -= I
-			else if (href_list["disp"])
-				var/datum/manufacture/I = locate(href_list["disp"])
+				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/))
 					return
-				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
-					return
-				else
-					last_queue_op = world.time
-
 				// Verify that there is no href fuckery abound
 				if(!validate_disp(I))
 					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
 					return
-
 				if (!check_enough_materials(I))
-					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture that item."))
+					src.grump_message(usr, "Insufficient usable materials to manufacture that item.", sound = TRUE)
+
 				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
-					boutput(usr, SPAN_ALERT("Manufacturer queue length limit reached."))
+					src.grump_message(usr, "Manufacturer queue length limit reached.", sound = TRUE)
 				else
 					src.queue += I
-					if (src.mode == "ready")
-						src.begin_work(1)
-						src.updateUsrDialog()
+					if (src.mode == MODE_READY)
+						src.begin_work( new_production = TRUE )
+					return TRUE
 
-				if (length(src.queue) > 0 && src.mode == "ready")
-					src.begin_work(1)
-					src.updateUsrDialog()
-					return
+			if ("material_eject")
+				src.eject_material(params["resource"], usr)
+				return TRUE
 
-			if (href_list["ejectmanudrive"])
-				src.eject_manudrive(usr)
+			if ("material_swap")
+				// Not doing this would certainly allow for exploits/bugs since resource allocation is greedy and could fail with different orders
+				if (src.mode == MODE_WORKING || src.mode == MODE_HALT)
+					src.grump_message(usr, "You cannot do that while the unit is working, it is already using the current materials!")
+					return
+				src.swap_materials(usr, locate(params["resource_1"]), locate(params["resource_2"]))
+				return TRUE
 
-			if (href_list["ejectbeaker"])
-				if (src.beaker)
-					src.beaker.set_loc(get_output_location(beaker))
-				src.beaker = null
-
-			if (href_list["transto"])
-				// reagents are going into beaker
-				var/obj/item/reagent_containers/glass/B = locate(href_list["transto"])
-				if (!istype(B,/obj/item/reagent_containers/glass/))
-					return
-				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
-				if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
-					return
-				src.reagents.trans_to(B,howmuch)
-
-			if (href_list["transfrom"])
-				// reagents are being drawn from beaker
-				var/obj/item/reagent_containers/glass/B = locate(href_list["transfrom"])
-				if (!istype(B,/obj/item/reagent_containers/glass/))
-					return
-				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
-				if (!howmuch || !isnum_safe(howmuch))
-					return
-				B.reagents.trans_to(src,howmuch)
-
-			if (href_list["flush"])
-				var/the_reagent = href_list["flush"]
-				if (!istext(the_reagent))
-					return
-				var/howmuch = input("Flush how much [the_reagent]?","[src.name]",0) as null|num
-				if (!howmuch || !isnum_safe(howmuch))
-					return
-				src.reagents.remove_reagent(the_reagent,howmuch)
-
-			if ((href_list["cutwire"]) && (src.panel_open || isAI(usr)))
-				if (src.electrified)
-					if (src.shock(usr, 100))
-						return
-				var/twire = text2num_safe(href_list["cutwire"])
-				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-					boutput(usr, "You need a snipping tool!")
-					return
-				else if (src.isWireColorCut(twire))
-					src.mend(usr, twire)
-				else
-					src.cut(usr, twire)
-				src.build_icon()
-
-			if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-				var/twire = text2num_safe(href_list["pulsewire"])
-				if ( !(usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
-					boutput(usr, "You need a multitool or similar!")
-					return
-				else if (src.isWireColorCut(twire))
-					boutput(usr, "You can't pulse a cut wire.")
-					return
-				else
-					src.pulse(usr, twire)
-				src.build_icon()
-
-			if (href_list["card"])
-				if (src.scan) src.scan = null
-				else
+			if ("card")
+				if (params["scan"])
 					var/obj/item/I = usr.equipped()
 					src.scan_card(I)
+				if (params["remove"])
+					src.scan = null
+				return TRUE
 
-			if (href_list["purchase"])
-				var/obj/machinery/ore_cloud_storage_container/storage = locate(href_list["storage"])
-				var/ore = href_list["ore"]
-				var/datum/ore_cloud_data/OCD = storage.ores[ore]
-				var/price = OCD.price
-				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+			if ("speed")
+				if (src.mode == MODE_WORKING)
+					src.grump_message(usr, "You cannot alter the speed setting while the unit is working.")
+					return
+				src.speed = clamp(params["value"], 1, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
+				return TRUE
 
-				if(storage?.is_disabled())
-					return
+			if ("repeat")
+				src.repeat = !src.repeat
+				return TRUE
 
-				if(!scan)
-					src.temp = {"You have to scan a card in first.<BR>"}
-					src.updateUsrDialog()
+			if ("ore_purchase")
+				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND))
+					src.grump_message(usr, "Slow down!")
 					return
-				else
-					src.temp = null
-				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
+				src.buy_ore(params["ore"], params["storage_ref"])
+				return TRUE
+
+			if ("clear") // clear entire queue
+				if (ON_COOLDOWN(src, "clear", 1 SECOND))
+					src.grump_message(usr, "Slow down!")
 					return
-				var/datum/db_record/account = null
-				account = FindBankAccountByName(src.scan.registered)
-				if (account)
-					var/quantity = 1
-					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
-					if(!isnum_safe(quantity))
+				src.clear_queue()
+				src.mode = MODE_READY
+				src.build_icon()
+				if (src.action_bar)
+					src.action_bar.interrupt(INTERRUPT_ALWAYS)
+				return TRUE
+
+			if ("pause_toggle")
+				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND))
+					src.grump_message(usr, "Slow down!")
+					return
+				if (params["action"] == "continue")
+					if (!length(src.queue))
+						src.grump_message(usr, "ERROR: Cannot find any items in queue to continue production.", sound = TRUE)
 						return
-					////////////
-
-					if(OCD.amount >= quantity && quantity > 0)
-						var/subtotal = round(price * quantity)
-						var/sum_taxes = round(taxes * quantity)
-						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
-						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account["current_money"] >= total)
-							account["current_money"] -= total
-							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
-
-							 // Chief gets a bigger cut
-							var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Miner"))
-
-							var/datum/signal/minerSignal = get_free_signal()
-							minerSignal.source = src
-							//any non-divisible amounts go to the shipping budget
-							var/leftovers = 0
-							if(length(accounts))
-								leftovers = subtotal % length(accounts)
-								var/divisible_amount = subtotal - leftovers
-								if(divisible_amount)
-									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/db_record/t as anything in accounts)
-										t["current_money"] += amount_per_account
-									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
-							else
-								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
-							wagesystem.shipping_budget += (leftovers + sum_taxes)
-							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
-
-							src.temp = {"Enjoy your purchase!<BR>"}
-						else
-							src.temp = {"You don't have enough dosh, bucko.<BR>"}
+					if (!check_enough_materials(src.queue[1]))
+						src.grump_message(usr, "ERROR: Insufficient usable materials to manufacture first item in queue.", sound = TRUE)
 					else
-						if(quantity > 0)
-							src.temp = {"I don't have that many for sale, champ.<BR>"}
-						else
-							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
-				else
-					src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
+						src.begin_work( new_production = TRUE )
+						src.time_started = TIME
+					return TRUE
+				else if (params["action"] == "pause")
+					src.mode = MODE_HALT
+					src.build_icon()
+					if (src.action_bar)
+						src.action_bar.interrupt(INTERRUPT_ALWAYS)
+					return TRUE
 
-			src.updateUsrDialog()
-		return
+			if ("remove") // remove queued blueprint
+				if (ON_COOLDOWN(src, "remove", 1 DECI SECOND))
+					src.grump_message(usr, "Slow down!")
+					return
+				var/operation = text2num_safe(params["index"])
+				if (!isnum(operation) || !length(src.queue) || operation > length(src.queue))
+					src.grump_message(usr, "ERROR: Invalid Operation.", sound = TRUE)
+					return
+				src.queue -= src.queue[operation]
+				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
+				begin_work( new_production = (operation == 1) )
+				return TRUE
+
+			if ("delete") // remove blueprint from storage
+				if (ON_COOLDOWN(src, "delete", 1 SECOND))
+					src.grump_message(usr, "Slow down!")
+					return
+				if(!src.allowed(usr))
+					src.grump_message(usr, "ERROR: Access Denied.", sound = TRUE)
+					return
+				var/datum/manufacture/I = locate(params["blueprint_ref"])
+				if (!istype(I,/datum/manufacture/mechanics/))
+					src.grump_message(usr, "ERROR: Cannot delete this type of schematic.", sound = TRUE)
+					return
+				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
+					if (!src.allowed(usr))
+						src.grump_message(usr, "ERROR: Could not re-validate authenticaion credentials. Aborting.", sound = TRUE)
+						return
+					if (!src.can_use_ranged(src) && !src.check_physical_proximity(usr))
+						return
+					src.download -= I
+					should_update_static = TRUE
+					return TRUE
+
+			if ("manudrive")
+				if (ON_COOLDOWN(src, "manudrive", 1 SECOND))
+					src.grump_message(usr, "Slow down!")
+					return
+				if (params["action"] == "eject")
+					if (src.mode != MODE_READY)
+						src.grump_message(usr, "You can't do that while the unit is working!")
+						return
+					src.eject_manudrive(usr)
+					return TRUE
+
+
+	proc/buy_ore(ore_name, storage_ref)
+		var/obj/machinery/ore_cloud_storage_container/storage = locate(storage_ref)
+		var/datum/ore_cloud_data/OCD = storage.ores[ore_name]
+		if (!OCD.amount || OCD.amount <= 0)
+			src.grump_message(usr, "ERROR: That just ran out, hold your horses!", sound = TRUE)
+		var/price = OCD.price
+		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+
+		if(storage?.is_disabled())
+			return
+
+		if(!scan)
+			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
+			return
+		else
+			src.output_message_user = null
+		if (src.scan.registered in FrozenAccounts)
+			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows.", sound = TRUE)
+			return
+		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+		if (account)
+			var/quantity = tgui_input_number(usr, "How many units do you want to purchase?", "Ore Purchase", default=1, max_value=OCD.amount, min_value=0)
+			if(!isnum_safe(quantity))
+				return
+			////////////
+
+			if(OCD.amount >= quantity && quantity > 0)
+				var/subtotal = round(price * quantity)
+				var/sum_taxes = round(taxes * quantity)
+				var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
+				var/total = subtotal + sum_taxes + rockbox_fees
+				if(account["current_money"] >= total)
+					account["current_money"] -= total
+					storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
+
+						// This next bit is stolen from PTL Code
+					var/list/accounts = \
+						data_core.bank.find_records("job", "Chief Engineer") + \
+						data_core.bank.find_records("job", "Miner")
+
+
+					var/datum/signal/minerSignal = get_free_signal()
+					minerSignal.source = src
+					//any non-divisible amounts go to the shipping budget
+					var/leftovers = 0
+					if(length(accounts))
+						leftovers = subtotal % length(accounts)
+						var/divisible_amount = subtotal - leftovers
+						if(divisible_amount)
+							var/amount_per_account = divisible_amount/length(accounts)
+							for(var/datum/db_record/t as anything in accounts)
+								t["current_money"] += amount_per_account
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+					else
+						leftovers = subtotal
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+					wagesystem.shipping_budget += (leftovers + sum_taxes)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
+					src.should_update_static = TRUE
+
+					//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
+				else
+					src.grump_message(usr, "ERROR: You don't have enough dosh, bucko.", sound = TRUE)
+			else
+				if(quantity > 0)
+					src.grump_message(usr, "ERROR: I don't have that many for sale, champ.", sound = TRUE)
+				else
+					src.grump_message(usr, "Enter some actual valid number, you doofus!", sound = TRUE)
+		else
+			src.grump_message(usr, "That card doesn't have an account anymore, you might wanna get that checked out.", sound = TRUE)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
@@ -927,7 +795,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
-				boutput(user, SPAN_ALERT("This manufacturer unit does not accept blueprints."))
+				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
 				return
 			var/obj/item/paper/manufacturer_blueprint/BP = W
 			if (src.malfunction && prob(75))
@@ -960,6 +828,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, src.sound_happy, 50, 1)
 			boutput(user, SPAN_NOTICE("The manufacturer accepts and scans the blueprint."))
 			qdel(BP)
+			should_update_static = TRUE
 			return
 
 		else if (istype(W, /obj/item/satchel))
@@ -968,7 +837,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.load_item(M)
+				src.change_contents(mat_piece = M)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
@@ -981,6 +850,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.panel_open = FALSE
 			boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 			src.build_icon()
+			tgui_process.try_update_ui(user, src)
 
 		else if (isweldingtool(W))
 			var/do_action = 0
@@ -992,7 +862,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.load_item(W,user)
+				src.change_contents(mat_piece = W, user = user)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -1013,7 +883,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.load_item(C,user)
+				src.change_contents(mat_piece = C, user = user)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -1035,7 +905,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.load_item(W,user)
+				src.change_contents(mat_piece = W, user = user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == 0)
@@ -1086,21 +956,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.shock(user,100)
 			src.build_icon()
 
-		else if (istype(W,/obj/item/reagent_containers/glass))
-			if (W.cant_drop)
-				boutput(user, SPAN_ALERT("You cannot put the [W] into [src]!"))
-				return
-			if (src.beaker)
-				boutput(user, SPAN_ALERT("There's already a receptacle in the machine. You need to remove it first."))
-			else
-				boutput(user, SPAN_NOTICE("You insert [W]."))
-				W.set_loc(src)
-				src.beaker = W
-				if (user && W)
-					user.u_equip(W)
-					W.dropped(user)
-
-		else if (istype(W,/obj/item/disk/data/floppy))
+		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
 				src.eject_manudrive(user)
@@ -1119,16 +975,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
+			should_update_static = TRUE
 
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
-			boutput(user, SPAN_ALERT("The fabricator rejects the [W]. You'll need to refine them in a reclaimer first."))
-			playsound(src.loc, src.sound_grump, 50, 1)
+			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.load_item(W,user)
+			src.change_contents(mat_piece = W, user = user)
 
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
@@ -1156,7 +1012,58 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (damage >= 5)
 					src.take_damage(damage)
 
-		src.updateUsrDialog()
+	/// Swap the "position" of two materials in the manufacturer for the sake of priority use management.
+	proc/swap_materials(mob/user, var/material_1, var/material_2)
+		// Could be ejected by someone else between the time of selecting what to swap and swapping it or be invalid
+		var/list/storage = src.get_contents()
+		var/index_1 = storage.Find(material_1)
+		var/index_2 = storage.Find(material_2)
+		if (!index_1 || !index_2)
+			src.grump_message(user, "ERROR: One or both of those materials are not present in storage. Aborting.", sound = TRUE)
+			return
+		var/temp_hold = storage[index_1]
+		storage[index_1] = storage[index_2]
+		storage[index_2] = temp_hold
+		src.should_update_static = TRUE
+
+	proc/eject_material(var/mat_ref, mob/user = null)
+		if (src.mode != MODE_READY)
+			src.grump_message(user, "You cannot eject materials while the unit is working.")
+			return
+		var/ejectamt = 0
+		var/turf/ejectturf = get_output_location(user)
+		var/obj/item/material_piece/target
+		for(var/obj/item/material_piece/P in src.get_contents())
+			if ("\ref[P]" == mat_ref)
+				target = P
+				break
+		if (isnull(target))
+			src.grump_message(user, "ERROR: Material not found in storage.", sound = TRUE)
+			return
+		if (target.amount < 1)
+			src.grump_message(user, "ERROR: Not enough material to eject bars.", sound = TRUE)
+			return
+		// Since tgui_input_number() is awaited here, make sure they are adjacent before and after
+		if (!src.check_physical_proximity(user))
+			return
+		ejectamt = floor(tgui_input_number(user,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0))
+		if (!src.check_physical_proximity(user) || src.mode != MODE_READY || ejectamt <= 0 || !isnum_safe(ejectamt))
+			return
+		if (!ejectturf)
+			return
+		if (ejectamt > target.amount)
+			src.grump_message(user, "There's not that much material in [name]. It has ejected what it could.", sound = TRUE)
+			ejectamt = floor(target.amount)
+		if (ejectamt == target.amount)
+			if (user)
+				user.put_in_hand_or_drop(target)
+			src.storage.transfer_stored_item(target, ejectturf)
+		else
+			var/obj/item/material_piece/P = new target.type
+			P.setMaterial(target.material)
+			P.change_stack_amount(ejectamt - P.amount)
+			target.change_stack_amount(-ejectamt)
+			P.set_loc(ejectturf)
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
@@ -1176,6 +1083,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else
 				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
 				src.scan = null
+		else
+			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
 		return FALSE
 
 	mouse_drop(over_object, src_location, over_location)
@@ -1250,7 +1159,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.load_item(M)
+				src.change_contents(mat_piece = M, user = user)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1267,14 +1176,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.load_item(M)
+				src.change_contents(mat_piece = M, user = user)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
 
 		else ..()
-
-		src.updateUsrDialog()
 
 	receive_signal(datum/signal/signal)
 		if (!signal || signal.encryption || signal.transmission_method != TRANSMISSION_WIRE)
@@ -1383,26 +1290,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				else
 					src.queue += item_bp
-					src.begin_work(1)
+					src.begin_work( new_production = TRUE )
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#APPENDED"))
 
 			if ("clear")
-				var/Qlength = length(src.queue)
-				if (Qlength < 1) // Nothing in list
+				var/queue_length = length(src.queue)
+				if (queue_length < 1) // Nothing in list
 					return
-
-				if (Qlength > 2)
-					src.queue.Cut(2)
-
-				if (src.mode != "working")
-					src.queue -= src.queue[1]
-
-				if (src.mode == "halt") // Set ready if halted
-					src.manual_stop = FALSE
-					src.error = null
-					src.mode = "ready"
-
-					src.build_icon()
+				src.clear_queue()
 
 				if (length(src.queue) < 1)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
@@ -1416,13 +1311,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADOPERATION"))
 					return
 
-				if(TIME < last_queue_op + 5)
+				if(ON_COOLDOWN(src, "remove", 1 SECOND))
 					return
-				else
-					last_queue_op = TIME
 
 				src.queue -= src.queue[operation]
-				begin_work()
+				begin_work( new_production = FALSE )
 				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#REMOVED"))
 
 			if ("resume")
@@ -1436,10 +1329,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				else
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#RESUMED"))
-					src.begin_work(0)
+					src.begin_work( new_production = FALSE )
 
 			if ("pause")
-				src.mode = "halt"
+				src.mode = MODE_HALT
 				src.build_icon()
 				if (src.action_bar)
 					src.action_bar.interrupt(INTERRUPT_ALWAYS)
@@ -1467,7 +1360,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if ("speed")
 				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
 				var/given_speed = text2num(signal.data["data"])
-				if (src.mode == "working")
+				if (src.mode == MODE_WORKING)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#WORKING"))
 					return
 
@@ -1477,8 +1370,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				src.speed = given_speed
 				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#SPEEDSET"))
-
-		src.updateUsrDialog()
 
 	proc/post_signal(var/list/data)
 		var/datum/signal/new_signal = get_free_signal()
@@ -1490,7 +1381,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/accept_loading(mob/user,allow_silicon)
 		if (!user)
 			return FALSE
-		if (src.status & BROKEN || src.status & NOPOWER)
+		if (src.is_disabled())
 			return FALSE
 		if (src.dismantle_stage > 0)
 			return FALSE
@@ -1523,13 +1414,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_MALF)
 				src.malfunction = TRUE
 			if(WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
+				if(!src.is_disabled())
 					src.shock(user, 100)
 					src.status |= NOPOWER
 
 	proc/mend(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
+		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires |= wireFlag
 		switch(wireIndex)
 			if(WIRE_SHOCK)
@@ -1551,7 +1442,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (WIRE_MALF)
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
+				if(!src.is_disabled())
 					src.shock(user, 100)
 
 	proc/shock(mob/user, prb)
@@ -1677,85 +1568,160 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
-	proc/get_materials_needed(datum/manufacture/M) // returns associative list of item_paths with the mat_ids they're gonna use; does not guarantee all item_paths are satisfied
-		var/list/mats_used = list()
-		var/list/mats_available = src.resource_amounts.Copy()
+	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
+	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
+	proc/get_patterns_material_satisfies(datum/material/M)
+		. = list()
+		var/material_flags = M.getMaterialFlags()
+		// get properties with getters once, ideally
+		var/density = M.getProperty("density")
+		var/hard = M.getProperty("hard")
+		var/reflective = M.getProperty("reflective")
+		var/electrical = M.getProperty("electrical")
+		var/radioactive = M.getProperty("radioactive")
+		if (!M)
+			return .
+		if (material_flags & MATERIAL_RUBBER)
+			. += "RUB"
+		if (material_flags & MATERIAL_ORGANIC)
+			. += "ORG"
+		if (material_flags & MATERIAL_WOOD)
+			. += "WOOD"
+		if (material_flags & MATERIAL_METAL)
+			var/hardness = (hard * 2) + density
+			if (hardness >= 15)
+				. += "MET-3"
+			if (hardness >= 10)
+				. += "MET-2"
+			. += "MET-1"
+		if (material_flags & MATERIAL_CRYSTAL)
+			if (density >= 7)
+				. += "CRY-2"
+			. += "CRY-1"
+		if (reflective >= 6)
+			. += "REF"
+		if (electrical >= 6)
+			if (electrical >= 8)
+				. += "CON-2"
+			. += "CON-1"
+		if (electrical <= 4 && material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
+			if (electrical <= 2)
+				. += "INS-2"
+			. += "INS-1"
+		if (density >= 4)
+			if (density >= 6)
+				. += "DEN-2"
+			. += "DEN-1"
+		if (material_flags & MATERIAL_ENERGY)
+			if (radioactive >= 2)
+				if (radioactive >= 5)
+					. += "POW-3"
+				. += "POW-2"
+			. += "POW-1"
+		if (material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC))
+			. += "FAB-1"
+		if (istype(M, /datum/material/crystal/gemstone))
+			. += "GEM-1"
 
-		for (var/i in 1 to M.item_paths.len)
-			var/pattern = M.item_paths[i]
-			var/amount = M.item_amounts[i]
-			for (var/mat_id in mats_available)
-				if (mats_available[mat_id] < amount)
+	/// Returns material in storage which first satisfies a pattern, otherwise returns null
+	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
+	proc/get_material_for_pattern(var/pattern)
+		var/list/C = src.get_contents()
+		if (!length(C))
+			return null
+		if (pattern == "ALL")
+			return C[1]
+		for (var/piece_index in 1 to length(C))
+			var/obj/item/material_piece/P = C[piece_index]
+			var/P_id = P.material.getID()
+			if (pattern in src.material_patterns_by_id[P_id])
+				return P
+		return null
+
+	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
+	proc/get_materials_needed(datum/manufacture/M)
+		var/list/mats_used = list()
+		var/list/mats_available = list()
+
+		var/list/C = src.get_contents()
+		for (var/path_index in 1 to length(M.item_paths))
+			var/required_pattern = M.item_paths[path_index]
+			var/required_amount = M.item_amounts[path_index]
+			for (var/piece_index in 1 to length(C))
+				var/obj/item/material_piece/P = C[piece_index]
+				var/P_id = P.material.getID()
+				if (!(P_id in mats_available))
+					mats_available[P_id] = P.amount * 10
+				if (mats_available[P_id] < required_amount)
 					continue
-				var/datum/material/mat = src.get_our_material(mat_id)
-				if (match_material_pattern(pattern, mat)) // TODO: refactor proc cuz this is bad
-					mats_used[pattern] = mat_id
-					mats_available[mat_id] -= amount
+				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
+					mats_used[required_pattern] = P_id
+					mats_available[P_id] -= required_amount
 					break
 
 		return mats_used
 
+	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == M.item_paths.len) // we have enough materials, so return the materials list, else return null
+		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
+	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
-		for (var/i = 1 to M.item_paths.len)
+		var/list/mats_used = check_enough_materials(M)
+		if (isnull(mats_used))
+			return // how
+		for (var/i = 1 to length(M.item_paths))
 			var/pattern = M.item_paths[i]
-			var/mat_id = src.materials_in_use[pattern]
-			if (mat_id)
-				var/amount = M.item_amounts[i]
-				src.update_resource_amount(mat_id, -amount)
-				for (var/obj/item/I in src.contents)
-					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_id)
-						var/target_amount = round(src.resource_amounts[mat_id] / 10)
-						if (!target_amount)
-							src.contents -= I
-							qdel(I)
-						else if (I.amount != target_amount)
-							I.change_stack_amount(-(I.amount - target_amount))
-						break
+			var/mat_id = mats_used[pattern]
+			src.change_contents(-M.item_amounts[i]/10, mat_id)
+
+	/// Get how many more times a drive can produce items it is stocked with
+	proc/get_drive_uses_left()
+		if(src.manudrive)
+			if (src.manudrive.fablimit == -1)
+				return -1 // Represents unlimited with manudrives, we roll with it
+			for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+				if(!isnull(MD.num_working))
+					return src.manudrive.fablimit - MD.num_working
+		return 0 // none loaded
 
 	proc/begin_work(new_production = TRUE)
+		src.error = null
 		if (status & NOPOWER || status & BROKEN)
 			return
 		if (!length(src.queue))
 			src.manual_stop = 0
-			src.mode = "ready"
+			src.mode = MODE_READY
 			src.build_icon()
-			src.updateUsrDialog()
 			return
 		if (!istype(src.queue[1],/datum/manufacture/))
-			src.mode = "halt"
+			src.mode = MODE_HALT
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
 			src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 			playsound(src.loc, src.sound_grump, 50, 1)
 			src.build_icon()
 			return
-
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.drive_recipes + src.download))
-			src.mode = "halt"
+		if (!(M in ALL_BLUEPRINTS) || (!src.hacked && (M in src.hidden)))
+			src.mode = MODE_HALT
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
 			src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 			playsound(src.loc, src.sound_grump, 50, 1)
 			src.build_icon()
 			return
-
-		src.error = null
 
 		if (src.malfunction && prob(40))
 			src.flip_out()
-
 		if (new_production)
 			var/list/mats_used = check_enough_materials(M)
-
 			if (!mats_used)
-				src.mode = "halt"
+				src.mode = MODE_HALT
 				src.error = "Insufficient usable materials to continue queue production."
 				src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 				playsound(src.loc, src.sound_grump, 50, 1)
@@ -1772,21 +1738,27 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// 4:     2.5s   12000   9000
 			// 5:     2.0s   18750  11250
 			src.active_power_consumption = 750 * src.speed ** 2
-			src.time_left = M.time
-			if (src.malfunction)
-				src.active_power_consumption += 3000
-				src.time_left += rand(2,6)
-				src.time_left *= 1.5
-			src.time_left /= src.speed
+			// new item began fabrication, setup time variables
+			if (new_production)
+				src.time_left = M.time
+				src.time_started = TIME
+				if (src.malfunction)
+					src.active_power_consumption += 3000
+					src.time_left += rand(2,6)
+					src.time_left *= 1.5
+				src.time_left /= src.speed
+				src.original_duration = src.time_left
 
 		var/datum/computer/file/manudrive/manudrive_file = null
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
-				var/obj/item/disk/data/floppy/ManuD = src.manudrive
+				var/obj/item/disk/data/floppy/manudrive/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
-						src.mode = "halt"
+						src.mode = MODE_READY
+						playsound(src.loc, src.sound_grump, 50, 1)
 						src.error = "The inserted ManuDrive is unable to operate further."
+						src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 						src.queue = list()
 						return
 					else
@@ -1794,7 +1766,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					manudrive_file = MD
 
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
-		src.mode = "working"
+		src.mode = MODE_WORKING
 		src.build_icon()
 
 		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.time_left, manudrive_file), src)
@@ -1828,7 +1800,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			src.remove_materials(M)
 		else
-			src.mode = "halt"
+			src.mode = MODE_HALT
 			src.error = "Insufficient usable materials to continue queue production."
 			src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 			playsound(src.loc, src.sound_grump, 50, 1)
@@ -1886,14 +1858,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		animate_shake(src,5,rand(3,8),rand(3,8))
 		src.visible_message(SPAN_ALERT("[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!"))
 		playsound(src.loc, pick(src.sounds_malfunction), 50, 2)
-		if (prob(15) && length(src.contents) > 4 && src.mode != "working")
+		if (prob(15) && length(src.get_contents()) > 4 && src.mode != MODE_WORKING)
 			var/to_throw = rand(1,4)
 			var/obj/item/X = null
 			while(to_throw > 0)
-				if(!src.nearby_turfs.len) //SpyGuy for RTE "pick() from empty list"
+				if(!length(src.nearby_turfs)) //SpyGuy for RTE "pick() from empty list"
 					break
-				X = pick(src.contents)
-				X.set_loc(src.loc)
+				X = pick(src.get_contents())
+				src.storage.transfer_stored_item(X, src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
 		if (length(src.queue) > 1 && prob(20))
@@ -1904,15 +1876,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (prob(33))
 					src.queue -= X
-		if (src.mode == "working")
+		if (src.mode == MODE_WORKING)
 			if (prob(5))
-				src.mode = "halt"
+				src.mode = MODE_HALT
 				src.build_icon()
 			else
 				if (prob(10))
 					src.active_power_consumption *= 2
 		if (prob(10))
-			src.speed = rand(1,8)
+			src.speed = rand(MIN_SPEED, MAX_SPEED_DAMAGED)
 		if (prob(5))
 			if (!src.electrified)
 				src.electrified = 5
@@ -1943,7 +1915,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (animspeed < 1 || animspeed > 5 || (src.malfunction && prob(50)))
 				animspeed = "malf"
 
-			if (src.mode == "working")
+			if (src.mode == MODE_WORKING)
 				src.work_display.icon_state = "fab-work[animspeed]"
 			else
 				src.work_display.icon_state = ""
@@ -1957,173 +1929,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			src.UpdateOverlays(null, "panel")
 
-	proc/build_material_list()
-		var/list/dat = list()
-		dat += {"
-<table class="outline" style="width: 100%;">
-	<thead>
-		<tr><th colspan='2'>Loaded Materials</th></tr>
-	</thead>
-	<tbody>
-		"}
-		for(var/mat_id in src.resource_amounts)
-			var/datum/material/mat = src.get_our_material(mat_id)
-			dat += {"
-		<tr>
-			<td><a href='?src=\ref[src];eject=[url_encode(mat_id)]' class='buttonlink'>&#9167;</a>  [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
-		</tr>
-			"}
-		if (length(dat) == 1)
-			dat += {"
-		<tr>
-			<td colspan='2' class='c'>No materials loaded.</td>
-		</tr>
-			"}
-
-		if (src.manudrive)
-			dat += {"
-		<tr><th colspan='2'>Manufacturer drive</th></tr>
-			"}
-
-			dat += {"
-		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
-			"}
-
-			var/obj/item/disk/data/floppy/ManuD = src.manudrive
-			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-				if(MD.fablimit >= 0)
-					dat += {"
-				<tr>
-					<td>ManuDrive Usages</td>
-					<td class='r'>[MD.fablimit]</td>
-				</tr>
-					"}
-
-		if (src.reagents.total_volume > 0)
-			dat += {"
-		<tr><th colspan='2'>Loaded Reagents</th></tr>
-			"}
-			for(var/current_id in src.reagents.reagent_list)
-				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-				dat += {"
-		<tr>
-			<td><a href='?src=\ref[src];flush=[current_reagent.name]'>[current_reagent.name]</a></td>
-			<td class='r'>[current_reagent.volume] units</td>
-		</tr>
-				"}
-		if (QDELETED(src.beaker))
-			src.beaker = null
-		if (src.beaker)
-			dat += {"
-		<tr><th colspan='2'>Container</th></tr>
-			"}
-
-			dat += {"
-		<tr><td colspan='2'><a href='?src=\ref[src];ejectbeaker=\ref[src.beaker]' class='buttonlink'>&#9167;</a> [src.beaker.name]<br>([round(src.beaker.reagents.total_volume)]/[src.beaker.reagents.maximum_volume])</td></tr>
-		<tr><td class='c'>
-			"}
-			if (src.reagents.total_volume && src.beaker.reagents.total_volume < src.beaker.reagents.maximum_volume)
-				dat += {"
-				<a href='?src=\ref[src];transto=\ref[src.beaker]'>Transfer<br>Machine &rarr; Container</a>
-				"}
-			else
-				dat += {"
-				&nbsp;
-				"}
-
-			dat += {"
-		</td><td class='c'>
-			"}
-
-			if (src.beaker.reagents.total_volume > 0)
-				dat += {"
-				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>
-				"}
-
-			dat += {"
-		</td></tr>
-			"}
-		dat += {"
-	</tbody>
-</table>
-			"}
-
-		return dat.Join()
-
-	proc/build_control_panel(mob/user as mob)
-		var/list/dat = list()
-
-		var/list/speed_opts = list()
-		for (var/i in 1 to (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
-			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='[i == src.speed ? "font-weight: bold; background: #6c6;" : ""]'>[i]</a>"
-
-		if (src.speed > (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
-			// sometimes people get these set to wacky values
-			speed_opts += "<a href='?src=\ref[src];speed=[src.speed]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
-
-		dat += {"
-			<br>
-			<table style='width: 100%:'>
-				<thead><tr><th style='width: 50%:'>Speed</th><th style='width: 50%:'>Repeat</th></tr></thead>
-				<tbody><tr>
-					<td class='c'>[speed_opts.Join(" ")]</td>
-					<td class='c'><a href='?src=\ref[src];repeat=1'>[src.repeat ? "Yes" : "No"]</a></td>
-				</tr></tbody>
-			</table>
-
-			"}
-		if (src.error)
-			dat += "<br><b>ERROR: [src.error]</b><br>"
-
-		var/queue_num = 1
-		for(var/datum/manufacture/A in src.queue)
-
-			var/time_number = 0
-			var/remove_link = ""
-			var/pause_link = ""
-			if (queue_num == 1)
-				pause_link = (src.mode == "working" ? "<a href='?src=\ref[src];pause=1' class='buttonlink'>&#9208; Pause</a>" : "<a href='?src=\ref[src];continue=1' class='buttonlink'>&#57914; Resume</a>") + "<br>"
-			else
-				pause_link = ""
-
-			time_number = A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"
-
-			if (src.mode != "working" || queue_num != 1)
-				remove_link = "<a href='?src=\ref[src];removefromQ=[queue_num]' class='buttonlink'>&#128465; Remove</a>"
-			else
-				// shut up
-				remove_link = "&#8987; Working..."
-
-			var/icon_text = "<img class='icon'>"
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-
-			dat += {"
-		<div class='queue'>
-			[icon_text]
-			<strong>[A.name]</strong>
-			<br>[time_number] sec.
-		</div><div style='display: inline-block; vertical-align: middle;'>
-		[pause_link]
-		[remove_link]
-		</div>
-		<br>
-		"}
-
-			queue_num++
-
-		return dat.Join()
-
 	proc/eject_manudrive(mob/living/user)
 		src.drive_recipes = null
 		if (GET_DIST(user, src) <= 1)
@@ -2131,26 +1936,86 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			manudrive.set_loc(src.loc)
 		src.manudrive = null
+		should_update_static = TRUE
 
-	proc/load_item(obj/item/O, mob/living/user)
-		if (!O)
+	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
+	/// Also ejects things w/o material or that aren't pieces, to ensure safety
+	proc/get_contents()
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud, can_hold=list(/obj/item/material_piece))
+		var/list/storage_contents = src.storage.get_contents()
+		for (var/obj/item/I as anything in storage_contents)
+			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
+				// Invalid thing somehow, fuck
+				src.storage.transfer_stored_item(I, src.loc)
+		return storage_contents
+
+	/*
+	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
+	Parameters for selection of material (requires at least one non-null):
+	mat_id = material id to set. creates a new material if none of that id exists
+	mat_path = material path to use. creates material of path with amount arg or default amount if null
+	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
+	material = material datum to add. acts as/overrides mat_id if provided
+	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
+	user = (optional) any mob that may be loading this
+	*/
+	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
+		if (!isnull(mat_path))
+			mat_piece = new mat_path
+			if (amount)
+				mat_piece.amount = amount
+
+		if (!amount)
+			if (isnull(mat_piece))
+				return
+			else
+				amount = mat_piece.amount
+
+		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum) && isnull(mat_path))
+			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
+
+		// Try stacking with existing same material in storage
+		var/list/C = src.get_contents()
+		if (!isnull(mat_datum))
+			mat_id = mat_datum.getID()
+		for (var/obj/item/material_piece/P as anything in C)
+			if (!P.material)
+				continue
+			// Match by material piece or id
+			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
+				mat_id && mat_id == P.material.getID())
+				// fuck floating point, lets pretend we only use tenths
+				P.amount = round(P.amount + amount, 0.1)
+				if (user)
+					user.u_equip(mat_piece)
+					mat_piece.dropped(user)
+				if (!isnull(mat_piece))
+					qdel(mat_piece)
+				if (P.amount <= 0)
+					// Handle removing material from helper lists now that it's gone
+					material_patterns_by_id[P.material.getID()] = null
+					qdel(P)
+				return
+
+		// No same material in storage, create/add the one we have and update the patterns index accordingly
+		if (!isnull(mat_piece))
+			if (isnull(mat_piece.material))
+				return
+			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
+			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
 			return
 
-		if (user)
-			user.u_equip(O)
-			O.dropped(user)
+		if (isnull(mat_datum))
+			// we gave an ID but no M, so override 'M' for this
+			mat_datum = getMaterial(mat_id)
 
-		if (istype(O, src.base_material_class) && O.material)
-			var/obj/item/material_piece/P = O
-			for(var/obj/item/material_piece/M in src.contents)
-				if (istype(M, P) && M.material && M.material.isSameMaterial(P.material))
-					M.change_stack_amount(P.amount)
-					src.update_resource_amount(M.material.getID(), P.amount * 10, M.material)
-					qdel(P)
-					return
-			src.update_resource_amount(P.material.getID(), P.amount * 10, P.material)
+		var/T = getProcessedMaterialForm(mat_datum)
+		var/obj/item/material_piece/P = new T
+		P.amount = max(0, amount)
+		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		O.set_loc(src)
+		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -2179,29 +2044,21 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.build_icon()
 
-	proc/update_resource_amount(mat_id, amt, datum/material/mat_added=null)
-		src.resource_amounts[mat_id] = max(src.resource_amounts[mat_id] + amt, 0)
-		if (src.resource_amounts[mat_id] == 0)
-			stored_materials_by_id -= mat_id
-		else if (mat_added && !(mat_id in stored_materials_by_id))
-			stored_materials_by_id[mat_id] = mat_added
-
 	proc/get_our_material(mat_id)
-		if (mat_id in src.stored_materials_by_id)
-			return src.stored_materials_by_id[mat_id]
-		return getMaterial(mat_id)
+		for (var/obj/item/material_piece/M as anything in src.get_contents())
+			if (M.material && M.material.getID() == mat_id)
+				return M.material
 
 	proc/claim_free_resources()
+
 		if (src.deconstruct_flags & DECON_BUILT)
 			free_resource_amt = 0
-		else if (free_resources.len && free_resource_amt > 0)
-			for (var/X in src.free_resources)
-				if (ispath(X))
-					var/obj/item/material_piece/P = new X
-					P.set_loc(src)
-					if (free_resource_amt > 1)
-						P.change_stack_amount(free_resource_amt - P.amount)
-					src.update_resource_amount(P.material.getID(), free_resource_amt * 10)
+			return
+
+		if (length(free_resources) && free_resource_amt > 0)
+			for (var/typepath in src.free_resources)
+				if (ispath(typepath))
+					src.change_contents(amount = free_resource_amt, mat_path = typepath )
 			free_resource_amt = 0
 		else
 			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
@@ -2529,7 +2386,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric,
-		/obj/item/raw_material/cobryl)
+		/obj/item/material_piece/cobryl)
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
@@ -3108,7 +2965,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		MA.time_left = src.duration - (TIME - src.started)
 		MA.manual_stop = FALSE
 		MA.error = null
-		MA.mode = "ready"
+		MA.mode = MODE_READY
 		MA.build_icon()
 		if(src.manudrive_file)
 			src.manudrive_file.num_working--
@@ -3154,11 +3011,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (I && length(I.item_outputs) && I.item_outputs[1])
 				getItemIcon(I.item_outputs[1])
 
-
+#undef MAX_QUEUE_LENGTH
 #undef WIRE_EXTEND
 #undef WIRE_POWER
 #undef WIRE_MALF
 #undef WIRE_SHOCK
-#undef MAX_QUEUE_LENGTH
+#undef MODE_READY
+#undef MODE_WORKING
+#undef MODE_HALT
+#undef MIN_SPEED
+#undef DEFAULT_SPEED
 #undef MAX_SPEED
 #undef MAX_SPEED_HACKED
+#undef MAX_SPEED_DAMAGED
+#undef ALL_BLUEPRINTS
+#undef ORE_TAX
