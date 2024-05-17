@@ -2522,7 +2522,7 @@
 		does_react(var/datum/reagents/holder)
 			if (ismob(holder.my_atom))
 				var/mob/M = holder.my_atom
-				if (!isalive(M))
+				if (isdead(M))
 					return TRUE
 			return FALSE
 
