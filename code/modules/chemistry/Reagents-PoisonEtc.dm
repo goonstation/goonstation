@@ -1907,8 +1907,6 @@ datum
 						M.setStatusMin("paralysis", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
-						if (probmult(25))
-							boutput(M, SPAN_ALERT("<b>Your chest clutches in pain!</b>"))
 						if(isliving(M))
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
