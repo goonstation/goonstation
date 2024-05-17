@@ -589,9 +589,9 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
 		boutput(world, "<B>The global player cap has been disabled.</B>")
-	logTheThing(LOG_ADMIN, usr, "toggled player cap to [player_cap].")
-	logTheThing(LOG_DIARY, usr, "toggled player cap to [player_cap].", "admin")
-	message_admins("[key_name(usr)] toggled the global player cap [player_cap ? "on" : "off"]")
+	logTheThing(LOG_ADMIN, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled player cap [player_capa ? "on" : "off"].")
 
 /datum/admins/proc/toggleenter()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
