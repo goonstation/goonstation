@@ -76,7 +76,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	// Production options
 	var/search = null
 	var/category = null
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
 	var/list/available = list() //! A list of every option available in this unit subtype by default
 	var/list/download = list() //! Options gained from scanned blueprints
@@ -407,8 +407,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
-			if (isnull(M.category)) // fix for not displaying blueprints/manudrives
+			if (!(M.category in src.categories)) // fix for not displaying blueprints/manudrives
 				M.category = "Miscellaneous"
+				// "WARN: bad category on TYPEPATH"
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
 			as_list[M.category] += list(manufacture_as_list(M, user, static_elements))
