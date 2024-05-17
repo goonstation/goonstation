@@ -409,7 +409,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacture/M as anything in L)
 			if (!(M.category in src.categories)) // fix for not displaying blueprints/manudrives
 				M.category = "Miscellaneous"
-				// "WARN: bad category on TYPEPATH"
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
 			as_list[M.category] += list(manufacture_as_list(M, user, static_elements))
