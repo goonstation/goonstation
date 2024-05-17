@@ -242,6 +242,8 @@
 
 	// Init tgui panel
 	src.tgui_panel.initialize()
+	SPAWN(3) //see no evil
+		src.nuke_chat()
 
 	if (join_motd)
 		boutput(src, "<div class='motd'>[join_motd]</div>")
