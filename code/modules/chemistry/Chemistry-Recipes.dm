@@ -2509,6 +2509,23 @@
 		result_amount = 1
 		reaction_icon_color = "#6e2e25"
 
+	batrachotoxin_ondeath // Quickly removes itself from dead bodies
+		name = "batrachotoxin on death removal"
+		id = "batrachotoxin_ondeath"
+		required_reagents = list("batrachotoxin" = 1)
+		mix_phrase = null
+		mix_sound = null
+		reaction_icon_state = null
+		hidden = TRUE
+		result_amount = 1
+
+		does_react(var/datum/reagents/holder)
+			if (ismob(holder.my_atom))
+				var/mob/M = holder.my_atom
+				if (!isalive(M))
+					return TRUE
+			return FALSE
+
 	cyanide
 		name = "Cyanide"
 		id = "cyanide"
