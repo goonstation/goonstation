@@ -1587,8 +1587,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return .
 		if (material_flags & MATERIAL_RUBBER)
 			. += "RUB"
+			. += "ORG|RUB"
 		if (material_flags & MATERIAL_ORGANIC)
 			. += "ORG"
+			if (!("ORG|RUB" in .))
+				. += "ORG|RUB"
 		if (material_flags & MATERIAL_WOOD)
 			. += "WOOD"
 		if (material_flags & MATERIAL_METAL)
