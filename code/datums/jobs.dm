@@ -457,6 +457,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		if (!M)
 			return
 
+		M.traitHolder.addTrait("training_scientist")
 		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
 			if (!heisenbee.beeMom)
 				heisenbee.beeMom = M
@@ -752,6 +753,12 @@ ABSTRACT_TYPE(/datum/job/research)
 		..()
 		src.access = get_access("Scientist")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/research/medical_doctor
 	name = "Medical Doctor"
