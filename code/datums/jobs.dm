@@ -238,7 +238,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
-	rounds_needed_to_play = 5
+	rounds_needed_to_play = 0
 
 	New()
 		..()
@@ -557,7 +557,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
-	rounds_needed_to_play = 5 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
+	rounds_needed_to_play = 0 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 	wiki_link = "https://wiki.ss13.co/Security_Officer"
 
 	New()
