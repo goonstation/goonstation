@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Table, Tabs } from '../components';
+import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
@@ -104,9 +104,7 @@ const ReagentDisplay = (props, context) => {
   const container = props.container || NoContainer;
 
   return (
-    <SectionEx
-      capitalize
-      title={container.name}>
+    <Section title={capitalize(container.name)}>
       {!!props.container || (
         <Dimmer>
           <Button
@@ -120,7 +118,7 @@ const ReagentDisplay = (props, context) => {
       )}
       <ReagentGraph container={container} />
       <ReagentList container={container} />
-    </SectionEx>
+    </Section>
   );
 };
 
@@ -128,10 +126,7 @@ const PlantOverview = (props, context) => {
   const { act } = useBackend(context);
   const { cat_lens, container } = props;
   return (
-    <SectionEx
-      capitalize
-      title={"Overview"}
-    >
+    <Section title="Overview">
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Box>
@@ -141,7 +136,7 @@ const PlantOverview = (props, context) => {
           <ReagentDisplay container={container} />
         </Flex.Item>
       </Flex>
-    </SectionEx>
+    </Section>
   );
 };
 const TitleRow = (props, context) => {
