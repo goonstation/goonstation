@@ -553,15 +553,17 @@ ABSTRACT_TYPE(/obj/item)
 				message_admins(msg)
 				logTheThing(LOG_BOMBING, W?.fingerprintslast, msg)
 
-	var/image/I = image('icons/effects/fire.dmi', null, "fire_new", pixel_y = 5) // pixel shift for centering
+	var/image/I = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = 5) // pixel shift for centering
 	I.alpha = 180
 	if (src.burn_output >= 1000)
 		I.transform = matrix(I.transform, 1.2, 1.2, MATRIX_SCALE)
 	src.UpdateOverlays(I, "item_ignition")
+	src.add_simple_light("item_ignition", list(255, 110, 135, 110))
 
 /obj/item/proc/combust_ended()
 	if(!src.burning)
 		return
+	src.remove_simple_light("item_ignition")
 	STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning = null
 	firesource = FALSE
@@ -966,7 +968,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	else
 		if (burning_last_process != src.burning)
 			ClearSpecificOverlays("item_ignition")
-			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
+		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning_last_process = src.burning
 
 /// Call this proc inplace of attack_self(...)
