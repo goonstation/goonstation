@@ -818,6 +818,12 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		chin
 			name = "Chinstrap"
 			id = "chin"
+		dwarfbeard
+			name = "Dwarven Beard"
+			id = "dwarfbeard"
+		dwarfbraided
+			name = "Dwarven Braided Beard"
+			id = "dwarfbraided"
 		fullbeard
 			name = "Full Beard"
 			id = "fullbeard"
