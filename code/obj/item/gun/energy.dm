@@ -1315,7 +1315,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			return
 		else
 			src.assign_name(user)
-		..()
 
 
 	proc/assign_name(var/mob/M)
