@@ -357,14 +357,22 @@
 	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
 		var/datum/game_server/game_server = game_servers.get_buddy()
 		if (game_server)
+			var/redirected
 			boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server.</span>")
 			if(tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected to [game_server.name]", "SERVER FULL", list("Yes", "No"), timeout = 30 SECONDS) == "Yes")
 				changeServer(game_server.id)
+				redirected = TRUE
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirected ? "Accepted" : "Declined"] redirect.")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirected ? "Accepted" : "Declined"] redirect.", "admin")
+			message_admins("[key_name(src)] was kicked by popcap limit. [redirected ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect.")
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 		else
 			boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
 			tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
+			message_admins("[key_name(src)] was kicked by popcap limit.")
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 		return
