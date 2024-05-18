@@ -16,10 +16,6 @@ interface SectionProps extends BoxProps {
   fill?: boolean;
   fitted?: boolean;
   scrollable?: boolean;
-  /** @deprecated This property no longer works, please remove it. */
-  level?: boolean;
-  /** @deprecated Please use `scrollable` property */
-  overflowY?: any;
 }
 
 export class Section extends Component<SectionProps> {
