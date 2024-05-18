@@ -378,7 +378,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
-	var/forensic_ID = null
 	burn_possible = FALSE
 
 	small

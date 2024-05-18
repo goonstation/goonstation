@@ -28,8 +28,6 @@
 	var/max_range = PROJ_INFINITE_RANGE
 	/// What kind of implant this projectile leaves in impacted mobs
 	var/implanted = null
-	/// Forensic ID of the gun, etc that shot this projectile, used for forensics on implanted projectiles
-	var/forensic_ID = null
 	/// The mob/thing that fired this projectile
 	var/atom/shooter = null
 	/// Mob-typed copy of `shooter` var to save time on casts later
