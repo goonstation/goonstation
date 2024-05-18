@@ -85,7 +85,7 @@ var/global/list/cycling_airlocks = list()
 	..()
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
 		var/area/station/A = get_area(src)
-		if (!isnull(A)) // Fabricators
+		if (!isnull(A))
 			src.name = A.name
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 	START_TRACKING
