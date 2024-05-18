@@ -1312,6 +1312,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		src.add_fingerprint(user)
 		if (owner_prints != user.bioHolder.Uid)
 			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+			return
 		else
 			src.assign_name(user)
 		..()
