@@ -396,7 +396,7 @@ const FilterEntry = (props, context) => {
             onClick={() => act("remove_filter", { name: name })} />
         </Fragment>
       )}>
-      <Section level={2}>
+      <Section>
         <LabeledList>
           {targetFilterPossibleKeys.map(entryName => {
             const defaults = filterDefaults[type]['defaults'];
