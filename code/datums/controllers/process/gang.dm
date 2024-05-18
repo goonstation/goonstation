@@ -159,7 +159,7 @@
 		var/list/duffle_list = list() ///
 		var/list/vandal_list = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs)
-			if ((prob(30) || TRUE) && length(unvandalised_departments) > 0)
+			if ((prob(30)) && length(unvandalised_departments) > 0)
 				duffle_list[targetGang] = GANG_LOOT_DROP_VOLUME_PER_GANG-1
 				vandal_list[targetGang] = pick(unvandalised_departments)
 				unvandalised_departments -= vandal_list[targetGang]
