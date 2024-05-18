@@ -41,16 +41,7 @@ export class Section extends Component<SectionProps> {
   }
 
   render() {
-    const {
-      className,
-      title,
-      buttons,
-      fill,
-      fitted,
-      scrollable,
-      children,
-      ...rest
-    } = this.props;
+    const { className, title, buttons, fill, fitted, scrollable, children, ...rest } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
     return (
       <div
@@ -66,12 +57,8 @@ export class Section extends Component<SectionProps> {
         {...computeBoxProps(rest)}>
         {hasTitle && (
           <div className="Section__title">
-            <span className="Section__titleText">
-              {title}
-            </span>
-            <div className="Section__buttons">
-              {buttons}
-            </div>
+            <span className="Section__titleText">{title}</span>
+            <div className="Section__buttons">{buttons}</div>
           </div>
         )}
         <div className="Section__rest">
