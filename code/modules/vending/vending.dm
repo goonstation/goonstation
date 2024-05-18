@@ -437,6 +437,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		var/area/T = get_area(src)
 		if(T?.sanctuary)
 			return
+		if (isliving(thr.thrown_by))
+			var/mob/living/dude = thr.thrown_by
+			var/datum/gang/gang = dude.get_gang()
+			if (gang)
+				gang.do_vandalism(GANG_VANDALISM_VENDOR_KO, src.loc)
 		src.fall(M)
 		return
 

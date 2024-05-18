@@ -635,6 +635,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Checks to see if <location> is one the gang has to vandalise. If so, adds <amount> progress.
 	proc/do_vandalism(amount, turf/location)
+		if (amount == 0) return
 		var/area/area = get_area(location)
 		for (var/area/targetArea as anything in vandalism_tracker)
 			if (istype(area,targetArea))
@@ -645,7 +646,13 @@ proc/broadcast_to_all_gangs(var/message)
 					show_vandal_maptext(amount, targetArea, location, TRUE)
 				else
 					show_vandal_maptext(amount, targetArea, location, FALSE)
+
+				if (vandalism_tracker[targetArea] <= 0)
+					src.broadcast_to_gang("You've successfully ruined \the [targetArea.name]! The duffle bag has been delivered to the vandal in question.")
+					new/obj/item/gang_loot/guns_and_gear(location)
+					vandalism_tracker -= targetArea
 				break
+
 
 
 	/// add points to this gang, bonusMob optionally getting a bonus
@@ -655,14 +662,14 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/mind/bonusMind = bonusMob?.mind
 		if (leader)
 			if (gang_points[leader] == null)
-				gang_points[leader] = 0
+				gang_points[leader] = GANG_STARTING_POINTS
 			if (leader == bonusMind)
 				gang_points[leader] += round(amount * 1.25) //give a 25% reward for the one providing
 			else
 				gang_points[leader] += amount
 		for (var/datum/mind/M in members)
 			if (gang_points[M] == null)
-				gang_points[M] = 0
+				gang_points[M] = GANG_STARTING_POINTS
 			if (M == bonusMind)
 				gang_points[M] += round(amount * 1.25)
 			else
@@ -832,10 +839,10 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
-		for(var/area/area in areas)
+		for(var/area in areas)
 			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/solar))
 				continue
-			var/typeinfo/area/typeinfo = area.get_typeinfo()
+			var/typeinfo/area/typeinfo = areas[area].get_typeinfo()
 			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_drop_zones += areas[area]
@@ -1521,7 +1528,7 @@ proc/broadcast_to_all_gangs(var/message)
 		// if (!src.HTML)
 		var/page = src.generate_HTML(user)
 
-		user.Browse(page, "window=gang_locker;size=650x630")
+		user.Browse(page, "window=gang_locker;size=650x660")
 		//onclose(user, "gang_locker")
 
 	ex_act()
@@ -2476,7 +2483,7 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "'ProPaint' Spray Can"
 	desc = "Non-permanent graffiti, great for vandalism & blinding the fuzz. Not able to claim territory."
 	class2 = "consumable"
-	price = 500
+	price = 300
 	item_path = /obj/item/spray_paint_graffiti
 
 /datum/gang_item/weapon/ratstick
@@ -2507,7 +2514,7 @@ proc/broadcast_to_all_gangs(var/message)
 /datum/gang_item/weapon/switchblade
 	name = "Switchblade"
 	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding."
-	price = 1500
+	price = 1750
 	class2 = "weapon"
 	item_path = /obj/item/switchblade
 /datum/gang_item/weapon/Shiv
@@ -2561,16 +2568,16 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang_item/weapon/shuriken
 	name = "Shuriken"
-	desc = "A pouch of 4 Shuriken throwing stars."
+	desc = "A pouch of 4 Shuriken throwing stars that embed on hit."
 	class2 = "weapon"
-	price = 1200
+	price = 800
 	item_path = /obj/item/storage/pouch/shuriken
 
 /datum/gang_item/weapon/throwing_knife
 	name = "Throwing Knife"
-	desc = "A weighty throwable knife that disorients & causes bleed."
+	desc = "A weighty, throwable knife that disorients & causes bleed. Still efficient at murder!"
 	class2 = "weapon"
-	price = 900
+	price = 700
 	item_path = /obj/item/dagger/throwing_knife
 
 /datum/gang_item/weapon/headband

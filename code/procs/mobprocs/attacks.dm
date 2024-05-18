@@ -35,11 +35,11 @@
 			game_stats.Increment("violence")
 #endif
 			var/datum/gang/gang = user.get_gang()
-			if (gang && user != src)
+			if (gang && user != src && src.health > 10)
 				if (isnpc(src))
-					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(user))
+					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(src))
 				else
-					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER,get_turf(user))
+					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER,get_turf(src))
 
 
 		if (!isnull(W))

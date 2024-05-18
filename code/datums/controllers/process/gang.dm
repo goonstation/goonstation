@@ -142,7 +142,7 @@
 		unvandalised_departments += /area/station/engine
 		unvandalised_departments += /area/station/medical
 		unvandalised_departments += /area/station/quartermaster
-		unvandalised_departments += /area/station/janitor
+		//unvandalised_departments += /area/station/janitor
 		unvandalised_departments += /area/station/science
 		unvandalised_departments += /area/station/crew_quarters
 
@@ -160,18 +160,26 @@
 		var/list/vandal_list = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs)
 			if ((prob(30) || TRUE) && length(unvandalised_departments) > 0)
-				duffle_list[targetGang] = 1
+				duffle_list[targetGang] = GANG_LOOT_DROP_VOLUME_PER_GANG-1
 				vandal_list[targetGang] = pick(unvandalised_departments)
 				unvandalised_departments -= vandal_list[targetGang]
 			else
-				duffle_list[targetGang] = 2
+				duffle_list[targetGang] = GANG_LOOT_DROP_VOLUME_PER_GANG
 
-		doDuffles(duffle_list)
-		doVandalism(vandal_list)
+		var/list/duffle_broadcasts = doDuffles(duffle_list)
+		var/list/vandalism_broadcasts = doVandalism(vandal_list)
+
+		for(var/datum/gang/targetGang as anything in gamemode.gangs)
+			var/broadcast = "There are [GANG_LOOT_DROP_VOLUME_PER_GANG] bag[s_es(GANG_LOOT_DROP_VOLUME_PER_GANG)] of weapons & supplies ready for your gang to claim.<br>"
+			broadcast += " - [duffle_broadcasts[targetGang]]"
+			broadcast += "<br>"
+			broadcast += " - [vandalism_broadcasts[targetGang]]"
+			targetGang.broadcast_to_gang(broadcast)
 
 	proc/doDuffles(gang_duffle_list)
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		var/list/civiliansAlreadyPinged = list()// try not to have the same person picked twice
+		var/list/broadcasts = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
 			var/list/datum/mind/gangChosenCivvies = list() //which civilians have been picked for this gang
 			if (gang_duffle_list[targetGang] == 0) continue
@@ -182,7 +190,7 @@
 				if (!(civvie in gangChosenCivvies))
 					gangChosenCivvies += civvie
 				targetGang.target_loot_spawn(civvie,targetGang)
-			var/broadcast_string = "<span style='font-size:20px'> Our associates have hidden [gang_duffle_list[targetGang]] bag[s_es(gang_duffle_list[targetGang])] of weapons & supplies on board. The location[s_es(repeats)] have been tipped off to the PDAs of: "
+			var/broadcast_string = "<span style='font-size:20px'> The location of [gang_duffle_list[targetGang]] bag[s_es(gang_duffle_list[targetGang])] [(gang_duffle_list[targetGang] == 1) ? "is" : "are" ] available on the PDA[s_es(gang_duffle_list[targetGang])] of: "
 			if (length(gangChosenCivvies) > 1)
 				for (var/name=1 to length(gangChosenCivvies)-1)
 					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role], "
@@ -190,15 +198,18 @@
 			else
 				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role]."
 			broadcast_string += "</span>"
-			targetGang.broadcast_to_gang(broadcast_string)
+			broadcasts[targetGang] = broadcast_string
+		return broadcasts
+
 
 	proc/doVandalism(gang_vandalism_list)
 		var/datum/game_mode/gang/gamemode = ticker.mode
+		var/list/broadcasts = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
 			if (gang_vandalism_list[targetGang] == null) continue
 			var/area/chosen_area = gang_vandalism_list[targetGang]
-			var/broadcast_string = "<span style='font-size:20px'> We need to send a message. Go to \the [initial(chosen_area.name)] and wreck it. Cause havoc and cover it in ProPaint bottles!</span>"
-			targetGang.broadcast_to_gang(broadcast_string)
+			var/broadcast_string = "<span style='font-size:20px'> Go to the [initial(chosen_area.name)] and wreck it. Cause havoc, cover it in ProPaint tags for a bag!</span>"
 			targetGang.vandalism_tracker[chosen_area] = GANG_VANDALISM_REQUIRED_SCORE
-
+			broadcasts[targetGang] = broadcast_string
+		return broadcasts
 

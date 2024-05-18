@@ -334,8 +334,8 @@
 
 		if (W.force)
 			var/datum/gang/gang = user.get_gang()
-			if (gang)
-				gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(user))
+			if (gang && src.health > 0)
+				gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(src))
 
 		if (src.defensive)
 			if (src.target == user && src.task == "attacking")
