@@ -1540,6 +1540,15 @@ Other Goonstation servers:[serverList]</span>"})
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
+			var/serverList = ""
+			for (var/serverId in list("streamer1", "streamer2"))
+				var/datum/game_server/server = global.game_servers.find_server(serverId)
+				if (!server)
+					continue
+				if (server.is_me())
+					continue
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
+
 			src.maptext_x = 5
 			src.maptext_width = 600
 			src.maptext_height = 400
@@ -1547,7 +1556,9 @@ Other Goonstation servers:[serverList]</span>"})
 Welcome to Goonstation Nightshade!
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
 Have questions? Ask mentors with \[F3]!
-Need an admin? Message us with \[F1]."})
+Need an admin? Message us with \[F1].
+
+Other Goonstation Nightshade servers:[serverList]</span>"})
 
 
 /obj/overlay/inventory_counter
