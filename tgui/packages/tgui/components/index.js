@@ -38,7 +38,6 @@ export { Popper } from './Popper';
 export { Pointer } from './Pointer';
 export { RoundGauge } from './RoundGauge';
 export { Section } from './Section';
-export { SectionEx } from './goonstation/SectionEx';
 export { Slider } from './Slider';
 export { Stack } from './Stack';
 export { Table } from './Table';

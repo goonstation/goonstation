@@ -5,11 +5,12 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState, useSharedState } from "../backend";
-import { Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
-import { Window } from '../layouts';
 import { Fragment } from 'inferno';
+import { useBackend, useLocalState, useSharedState } from "../backend";
+import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from '../components';
+import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
+import { capitalize } from './common/stringUtils';
 
 // Feel free to adjust this for performance
 const extractablesPerPage = 25;
@@ -67,9 +68,8 @@ const ReagentDisplay = (props, context) => {
   const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
 
   return (
-    <SectionEx
-      capitalize
-      title={container.name}
+    <Section
+      title={capitalize(container.name)}
       buttons={
         <>
           <Button
@@ -167,7 +167,7 @@ const ReagentDisplay = (props, context) => {
           </Flex>
         </Flex.Item>
       </Flex>
-    </SectionEx>
+    </Section>
   );
 };
 
