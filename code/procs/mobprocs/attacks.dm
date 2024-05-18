@@ -30,10 +30,18 @@
 
 	if (!shielded || !(W.flags & NOSHIELD))
 		// drsingh Cannot read null.force
-#ifdef DATALOGGER
 		if (W.force)
+#ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
+			var/datum/gang/gang = user.get_gang()
+			if (gang && user != src)
+				if (isnpc(src))
+					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(user))
+				else
+					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER,get_turf(user))
+
+
 		if (!isnull(W))
 			W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special, params) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
 			if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack

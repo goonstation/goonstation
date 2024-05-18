@@ -268,6 +268,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/tiles_controlled = 0
 	/// Associative list between Gang members -> their points
 	var/gang_points = list()
+	/// Associative list of tracked vandalism zones to the remaining score needed.
+	var/vandalism_tracker = list()
 
 #ifdef BONUS_POINTS
 	street_cred = 99999
@@ -287,6 +289,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/score_drug = 0
 	/// Points gained by this gang from completing events.
 	var/score_event = 0
+	/// Total score. may not be perfectly up to date
+	var/score_total = 0
 	var/static/list/first_names = strings("gangwar.txt", "part1")
 	var/static/list/second_names = strings("gangwar.txt", "part2")
 
@@ -602,8 +606,8 @@ proc/broadcast_to_all_gangs(var/message)
 		score += score_gun
 		score += score_drug
 		score += score_event
-
-		return round(score)
+		score_total = round(score)
+		return score_total
 
 	/// Shows maptext to the gang, with formatting for score increases.
 	proc/show_score_maptext(amount, turf/location)
@@ -614,6 +618,36 @@ proc/broadcast_to_all_gangs(var/message)
 			var/client/userClient = userMind.current.client
 			if (userClient?.preferences?.flying_chat_hidden)
 				chat_text.show_to(userClient)
+
+	/// Shows maptext to the gang, with formatting for score increases.
+	proc/show_vandal_maptext(score, area/targetArea, turf/location, notable)
+		if (vandalism_tracker[targetArea] == null) return
+		var/image/chat_maptext/chat_text = null
+		if (!notable)
+			chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #e60000;'>+[score]</span>", alpha = 180, time = 0.5 SECONDS)
+		else
+			chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #e60000;'>+[score]\n [GANG_VANDALISM_REQUIRED_SCORE-vandalism_tracker[targetArea]]/[GANG_VANDALISM_REQUIRED_SCORE]</span>", alpha = 180, time = 2 SECONDS)
+		chat_text.show_to(src.leader?.current.client)
+		for (var/datum/mind/userMind as anything in src.members)
+			var/client/userClient = userMind.current.client
+			if (userClient?.preferences?.flying_chat_hidden)
+				chat_text.show_to(userClient)
+
+	/// Checks to see if <location> is one the gang has to vandalise. If so, adds <amount> progress.
+	proc/do_vandalism(amount, turf/location)
+		var/area/area = get_area(location)
+		for (var/area/targetArea as anything in vandalism_tracker)
+			if (istype(area,targetArea))
+				var/notable_value_prior = vandalism_tracker[targetArea]
+				vandalism_tracker[targetArea] -= amount
+				var/notable_value_steps = round(notable_value_prior/50)-round(vandalism_tracker[targetArea]/50)
+				if (amount >= 10 || notable_value_steps > 0 )
+					show_vandal_maptext(amount, targetArea, location, TRUE)
+				else
+					show_vandal_maptext(amount, targetArea, location, FALSE)
+				break
+
+
 	/// add points to this gang, bonusMob optionally getting a bonus
 	/// if location is defined, maptext will come from that location, for all members.
 	proc/add_points(amount, mob/bonusMob = null, turf/location = null, showText = FALSE)
@@ -634,6 +668,7 @@ proc/broadcast_to_all_gangs(var/message)
 			else
 				gang_points[M] += amount
 
+		gang_score()
 		if (!showText)
 			return
 		if (location)
@@ -797,8 +832,11 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
-		for(var/area in areas)
-			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked)
+		for(var/area/area in areas)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/solar))
+				continue
+			var/typeinfo/area/typeinfo = area.get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_drop_zones += areas[area]
 
@@ -1031,7 +1069,7 @@ proc/broadcast_to_all_gangs(var/message)
 			user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
 			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
 /obj/item/spray_paint_graffiti
-	name = "spraypaint can"
+	name = "'ProPaint' spray paint can"
 	desc = "A can of gloss spray paint. Great for doing wicked sick art. Not so great when the janitor shows up."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
@@ -1043,7 +1081,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/mode = "graffiti"
 	var/list/turf/graffititargets = list()
 	var/list/image/targetoverlay = list()
-	var/charges = 30
+	var/charges = GANG_VANDALISM_GRAFFITI_MAX
 	inventory_counter_enabled = 1
 	w_class = W_CLASS_TINY
 
@@ -1361,6 +1399,8 @@ proc/broadcast_to_all_gangs(var/message)
 			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(S.graffititargets[1])
 			tag.icon_state = iconstate
 			tag.dir = S.tagging_direction
+			if (gang)
+				gang.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, S.graffititargets[1])
 		else
 			var/list/turf/turfs_ordered = new/list(length(S.graffititargets))
 			var/spraydirection = dir_to_angle(S.tagging_direction)
@@ -1373,11 +1413,24 @@ proc/broadcast_to_all_gangs(var/message)
 				var/dist = (vec[2] * S.graffititargets[sorting].y -vec[1] * S.graffititargets[sorting].x ) - min_distance
 				turfs_ordered[dist+1] = S.graffititargets[sorting]
 
-
+			var/vandal_score = 0
+			var/turf/chosenTurf
 			for (var/i = 1; i<=targets; i++)
 				var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(turfs_ordered[i])
+				var/area = get_area(turfs_ordered[i])
 				tag.icon_state = "[iconstate][i]"
 				tag.dir = S.tagging_direction
+				vandal_score += GANG_VANDALISM_PER_GRAFFITI_TILE
+
+				if (gang && !chosenTurf)
+					for (var/area/targetArea as anything in gang.vandalism_tracker)
+						if (istype(area,targetArea))
+							chosenTurf = turfs_ordered[i]
+							break
+			if (gang)
+				gang.do_vandalism(vandal_score, chosenTurf)
+
+
 		S.clear_targets()
 		if (S.charges == 0)
 			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
@@ -1435,17 +1488,17 @@ proc/broadcast_to_all_gangs(var/message)
 		buyable_items = list(
 			new/datum/gang_item/consumable/medkit,
 			new/datum/gang_item/consumable/omnizine,
-			new/datum/gang_item/misc/armor,
-			new/datum/gang_item/consumable/tipoff,
 			new/datum/gang_item/consumable/quickhack,
-			new/datum/gang_item/misc/ratstick,
-			new/datum/gang_item/street/switchblade,
-			// new/datum/gang_item/ninja/nunchucks, removed for stunning too many secoffs
-			new/datum/gang_item/ninja/throwing_knife,
-			new/datum/gang_item/ninja/shuriken,
-			new/datum/gang_item/ninja/discount_katana,
-			new/datum/gang_item/space/discount_csaber,
-			new/datum/gang_item/street/cop_car)
+			new/datum/gang_item/consumable/tipoff,
+			new/datum/gang_item/equipment/graffiti,
+			new/datum/gang_item/equipment/armor,
+			new/datum/gang_item/weapon/throwing_knife,
+			new/datum/gang_item/weapon/shuriken,
+			new/datum/gang_item/weapon/ratstick,
+			new/datum/gang_item/weapon/switchblade,
+			new/datum/gang_item/weapon/discount_katana,
+			new/datum/gang_item/weapon/discount_csaber,
+			new/datum/gang_item/special/cop_car)
 
 	disposing(var/uncapture = 1)
 		STOP_TRACKING
@@ -1491,41 +1544,63 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/mind/M = user.mind
 		var/dat = {"<HTML>
 		<div style="width: 100%; overflow: hidden;">
-			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
-				<center><font size="5"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
-				<center><font size="5"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
+			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
+				<center style="padding-top: 25px;"><font size="5"><a href='byond://?src=\ref[src];get_gear=1'>Get gear</a></font></center><br>
 				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
-				<center><font size="3"><a href='byond://?src=\ref[src];get_drugs=1'>list drug prices</a></font></center><br>
+				<center><font size="5"><a href='byond://?src=\ref[src];get_spray=1'>Grab spraypaint</a></font></center><br>
 			</div>
-			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
+			<div>
+			<div style="height: 72px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
 				[(is_leader_cryod() || src.gang.leader_claimable) ? {"<font size="3"><a href='byond://?src=\ref[src];claim_leader=1'>Become the leader!</a></font>"}: {"
 				<font size="3">[src.gang.leader == user.mind ? {"You have [gang.street_cred] street cred!"} : {"You aren't the leader!"} ] </font><br>
 				<font size="3"><a href='byond://?src=\ref[src];respawn_new=1'>Recruit a new member:</a></font> [src.gang.current_newmember_price] cred<br>
 				<font size="3"><a href='byond://?src=\ref[src];respawn_syringe=1'>Buy a revival stim:</a></font> [src.gang.current_revival_price] cred<br>
 				"}]
 			</div>
+			<div style="height: 72px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
+				<center><font size="3"><a href='byond://?src=\ref[src];get_drugs=1'>List drug prices</a></font></center><br>
+				<center><font size="3"><a href='byond://?src=\ref[src];get_scoreboard=1'>Scoreboard</a></font></center><br>
+			</div>
+			</div>
 		</div>
+		<HR>
+		<font size="3">You have [src.gang.gang_points[M]] points to spend! These aren't shared with your gang.</font>
 		<HR>
 		"}
 
 
 		dat += {"
-		<font size="3">You have [src.gang.gang_points[M]] points to spend! These aren't shared with your gang.</font>
 		<table>
-		<tr>
-			<th></th>
-			<th>Name</th>
-			<th>Price</th>
-			<th>Desc</th>
-		</tr>
 		"}
-		for (var/datum/gang_item/GI in buyable_items)
-			var/icon_rsc = getItemIcon(GI.item_path, C = user.client)
-			if (istype(GI, /datum/gang_item/misc/janktank))
-				var/datum/gang_item/misc/janktank/JT = GI
-				JT.price = src.janktank_price
 
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Consumables</b></font></td></tr>"
+		var/list/items = list()
+		for (var/datum/gang_item/consumable/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Equipment</b></font></td></tr>"
+		for (var/datum/gang_item/equipment/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Weapons</b></font></td></tr>"
+		for (var/datum/gang_item/weapon/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Special</b></font></td></tr>"
+		for (var/datum/gang_item/special/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+
 
 		dat += "</table></HTML>"
 
@@ -1562,6 +1637,8 @@ proc/broadcast_to_all_gangs(var/message)
 			handle_get_spraypaint(usr)
 		if (href_list["get_drugs"])
 			print_drug_prices(usr)
+		if (href_list["get_scoreboard"])
+			print_scoreboard(usr)
 		if (href_list["claim_leader"])
 			claim_leadership(usr)
 		if (href_list["buy_item"])
@@ -1585,7 +1662,7 @@ proc/broadcast_to_all_gangs(var/message)
 		src.janktank_price = round(src.janktank_price * 1.1)
 
 		for (var/datum/gang/gang in get_all_gangs())
-			var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in gang.locker.buyable_items
+			var/datum/gang_item/equipment/janktank/JT = locate(/datum/gang_item/equipment/janktank) in gang.locker.buyable_items
 			JT.price = janktank_price
 
 	proc/is_leader_cryod()
@@ -2013,6 +2090,15 @@ proc/broadcast_to_all_gangs(var/message)
 		There is additional demand for [GANG_WEED_LIMIT-gang_weed] leaves of cannabis, for 10 points each."}
 		boutput(user, SPAN_ALERT(text))
 
+	proc/print_scoreboard(var/mob/living/carbon/human/user)
+		var/text = {"The current scores are:</br>"}
+		var/list/datum/gang/scores
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		scores = sortListCopy(gamemode.gangs, /proc/cmp_gang_score_desc)
+		for (var/i=1 to length(scores))
+			text += "<b>[i]: [scores[i].gang_name]</b></br>"
+		boutput(user, SPAN_ALERT(text))
+
 
 	proc/cash_amount()
 		var/number = 0
@@ -2361,7 +2447,7 @@ proc/broadcast_to_all_gangs(var/message)
 /datum/gang_item
 	var/name = "commodity"	// Name of the item
 	var/desc = "item"		//Description for item
-	var/class1 = ""			//This should be general category: weapon, clothing/armor, misc
+	var/category = ""			//This should be general category: weapon, clothing/armor, misc
 	var/class2 = ""			//This should be the gang item style: Street Gang, Western Gang, Space Gang
 	var/item_path = null 		// Type Path of the item
 	var/price = 100 			//
@@ -2370,53 +2456,61 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		return FALSE
 /datum/gang_item/street
-	class1 = "Street Gang"
+	category = "Street Gang"
 /datum/gang_item/thirties_chicago
-	class1 = "30s Chicago Gang"
+	category = "30s Chicago Gang"
 /datum/gang_item/kung_fu
-	class1 = "Kung Fu"
+	category = "Kung Fu"
 /datum/gang_item/ninja
-	class1 = "Ninja"
+	category = "Ninja"
 /datum/gang_item/country_western
-	class1 = "Country Western"
+	category = "Country Western"
 /datum/gang_item/space
-	class1 = "Space Gang"
-/datum/gang_item/misc
-	class1 = "Misc Gang"
-	class1 = "Consumable"
+	category = "Space Gang"
+/datum/gang_item/space
+	category = "Weapon"
+/datum/gang_item/equipment
+	category = "Consumable"
 
-/datum/gang_item/misc/ratstick
+/datum/gang_item/equipment/graffiti
+	name = "'ProPaint' Spray Can"
+	desc = "Non-permanent graffiti, great for vandalism & blinding the fuzz. Not able to claim territory."
+	class2 = "consumable"
+	price = 500
+	item_path = /obj/item/spray_paint_graffiti
+
+/datum/gang_item/weapon/ratstick
 	name = "Rat Stick"
-	desc = "A stick for killing rats. Deals both blunt and slashing damage."
+	desc = "A stick for killing rats. Can deal both blunt and slashing damage."
 	class2 = "weapon"
-	price = 1400
+	price = 1200
 	item_path = /obj/item/ratstick
-/datum/gang_item/misc/armor
+/datum/gang_item/equipment/armor
 	name = "Armored Vest"
-	desc = "Grants you protection without cramping your style!"
+	desc = "Grants you protection, and lets you keep your wicked style bonus!"
 	class2 = "clothing"
 	price = 7500
 	item_path = /obj/item/clothing/suit/armor/gang
 
-/datum/gang_item/street/lead_pipe
+/datum/gang_item/weapon/lead_pipe
 	name = "Lead Pipe"
 	desc = "A pipe made of lead... Probably."
 	class2 = "weapon"
 	price = 500
 	// item_path = /obj/item/lead_pipe
-/datum/gang_item/ninja/nunchucks
+/datum/gang_item/weapon/nunchucks
 	name = "Nunchucks"
 	desc = "A pair of nunchucks, trading some raw lethality for pain compliance."
 	class2 = "weapon"
 	price = 1200
 	item_path = /obj/item/nunchucks
-/datum/gang_item/street/switchblade
+/datum/gang_item/weapon/switchblade
 	name = "Switchblade"
 	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding."
-	price = 2000
+	price = 1500
 	class2 = "weapon"
 	item_path = /obj/item/switchblade
-/datum/gang_item/street/Shiv
+/datum/gang_item/weapon/Shiv
 	name = "Shiv"
 	desc = "A single-use stabbing implement, dealing heavy damage and constant BLEED."
 	class2 = "weapon"
@@ -2441,7 +2535,7 @@ proc/broadcast_to_all_gangs(var/message)
 	class2 = "misc"
 	price = 10000
 	// item_path = /obj/item/clothing/gloves/brass_knuckles
-/datum/gang_item/street/cop_car				//let gang members enter cars faster wearing their clothes
+/datum/gang_item/special/cop_car				//let gang members enter cars faster wearing their clothes
 	name = "Stolen Cop Car"
 	desc = "An enterprising member of your gang stole this from the fuzz. Hopefully it doesn't have lojack."
 	class2 = "misc"
@@ -2451,34 +2545,35 @@ proc/broadcast_to_all_gangs(var/message)
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////////NINJA////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/datum/gang_item/ninja/discount_katana
+/datum/gang_item/weapon/discount_katana
 	name = "Katana"
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
-	price = 7000
+	price = 9000
 	item_path = /obj/item/swords_sheaths/katana/reverse
-/datum/gang_item/ninja/katana
+
+/datum/gang_item/weapon/katana
 	name = "Katana"
 	desc = "It's the real McCoy. Folded so many times."
 	class2 = "weapon"
 	price = 25000
 	item_path = /obj/item/swords_sheaths/katana
 
-/datum/gang_item/ninja/shuriken
+/datum/gang_item/weapon/shuriken
 	name = "Shuriken"
 	desc = "A pouch of 4 Shuriken throwing stars."
 	class2 = "weapon"
 	price = 1200
 	item_path = /obj/item/storage/pouch/shuriken
 
-/datum/gang_item/ninja/throwing_knife
+/datum/gang_item/weapon/throwing_knife
 	name = "Throwing Knife"
-	desc = "A weighty throwable knife that stuns & causes bleed."
+	desc = "A weighty throwable knife that disorients & causes bleed."
 	class2 = "weapon"
-	price = 2000
+	price = 900
 	item_path = /obj/item/dagger/throwing_knife
 
-/datum/gang_item/ninja/headband
+/datum/gang_item/weapon/headband
 	name = "Ninja Headband"
 	desc = "A silly headband with a bit of metal on the front."
 	class2 = "clothing"
@@ -2487,7 +2582,7 @@ proc/broadcast_to_all_gangs(var/message)
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////SPACE////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/datum/gang_item/space/discount_csaber
+/datum/gang_item/weapon/discount_csaber
 	name = "Faux C-Saber"
 	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It looks pretty dangerous."
 	class2 = "weapon"
@@ -2534,26 +2629,26 @@ proc/broadcast_to_all_gangs(var/message)
 	item_path = /obj/item/ammo/bullets/c_45
 
 
-/datum/gang_item/misc/bathsalts
+/datum/gang_item/equipment/bathsalts
 	name = "Bathsalts Pill Bottle"
 	desc = "5 pills, 10u each of bathsalts."
 	class2 = "drug"
 	price = 200
 	item_path = /obj/item/storage/pill_bottle/bathsalts
-/datum/gang_item/misc/crank
+/datum/gang_item/equipment/crank
 	name = "Crank Pill Bottle"
 	desc = "5 pills, 10u each of crank."
 	class2 = "drug"
 	price = 300
 	item_path = /obj/item/storage/pill_bottle/crank
-/datum/gang_item/misc/methamphetamine
+/datum/gang_item/equipment/methamphetamine
 	name = "Methamphetamine Pill Bottle"
 	desc = "5 pills, 10u each of methamphetamine."
 	class2 = "drug"
 	price = 500
 	item_path = /obj/item/storage/pill_bottle/methamphetamine
 
-/datum/gang_item/misc/janktank
+/datum/gang_item/equipment/janktank
 	name = "JankTank Implant"
 	desc = "Cartel approved synaptic implant for the common gang footsoldier."
 	class2 = "drug"
@@ -2567,26 +2662,26 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "First Aid Kit"
 	desc = "A simple box of medicine for those expecting to be beaten up."
 	class2 = "Healing"
-	price = 1200
+	price = 800
 	item_path = /obj/item/storage/firstaid/regular
 
 /datum/gang_item/consumable/omnizine
 	name = "Omnizine Injector"
 	desc = "A single, convenient dose of omnizine."
 	class2 = "Healing"
-	price = 1800
+	price = 1100
 	item_path = /obj/item/reagent_containers/emergency_injector/omnizine
 
 /datum/gang_item/consumable/quickhack
 	name = "Quickhack"
 	desc = "An illegal, home-made tool able to fake up to 5 AI 'open' signals to unbolted doors."
 	class2 = "Tools"
-	price = 1000
+	price = 800
 	item_path = /obj/item/tool/quickhack
 
 /datum/gang_item/consumable/tipoff
 	name = "Tip off"
-	desc = "Schedule an early duffle bag drop. A random civilian will be informed of the drop location."
+	desc = "Schedule an immediate duffle bag drop. A random civilian will be informed of the drop location."
 	class2 = "Tools"
 	price = 8000
 	item_path = /obj/item/gang_loot/guns_and_gear

@@ -332,6 +332,11 @@
 			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
 			src.throw_at(T, 2, W.getProperty("impact"))
 
+		if (W.force)
+			var/datum/gang/gang = user.get_gang()
+			if (gang)
+				gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(user))
+
 		if (src.defensive)
 			if (src.target == user && src.task == "attacking")
 				if (prob(50 - attack_force))
