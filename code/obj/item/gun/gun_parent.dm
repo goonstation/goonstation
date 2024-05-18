@@ -175,8 +175,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	..()
 	if(src.projectiles && length(src.projectiles) > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
-		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile]."))
+		src.set_current_projectile(src.projectiles[src.projectiles[src.current_projectile_num]])
+		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
 	return
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
