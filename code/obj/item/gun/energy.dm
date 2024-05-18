@@ -1310,7 +1310,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if (owner_prints !== user.fingerprints)
+		if (owner_prints != user.fingerprints)
 			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
 		else
 			src.assign_name(user)
