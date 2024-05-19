@@ -5,7 +5,6 @@
  * @license MIT
 */
 
-import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Collapsible, Divider, Icon, ItemList, LabeledList, Section, Stack } from '../../components';
 import { AntagonistStatisticsProps, AntagonistTabData, VerboseAntagonistProps } from './type';
@@ -14,7 +13,7 @@ export const AntagonistsTab = (props, context) => {
   const { data } = useBackend<AntagonistTabData>(context);
 
   return (
-    <Fragment>
+    <>
       <GameModeDisplay game_mode={data.game_mode} />
       {data.verbose_antagonist_data?.map((antagonist, index) =>
         (<Antagonist
@@ -29,7 +28,7 @@ export const AntagonistsTab = (props, context) => {
           />
         </Section>
       )}
-    </Fragment>
+    </>
   );
 };
 
@@ -105,7 +104,7 @@ const AntagonistObjectives = (props) => {
   const { objectives } = props;
 
   return (
-    <Fragment>
+    <>
       <Box
         fontSize={1.1}
         bold
@@ -127,7 +126,7 @@ const AntagonistObjectives = (props) => {
           </Stack.Item>
         ))}
       </Stack>
-    </Fragment>
+    </>
   );
 };
 
@@ -135,7 +134,7 @@ const AntagonistStatistics = (props) => {
   const { antagonist_statistics } = props;
 
   return (
-    <Fragment>
+    <>
       <Box
         fontSize={1.1}
         bold
@@ -153,7 +152,7 @@ const AntagonistStatistics = (props) => {
           />
         ))}
       </LabeledList>
-    </Fragment>
+    </>
   );
 };
 
@@ -189,7 +188,7 @@ const SubordinateAntagonists = (props) => {
   const { subordinate_antagonists } = props;
 
   return (
-    <Fragment>
+    <>
       <Box
         fontSize={1.1}
         bold
@@ -200,7 +199,7 @@ const SubordinateAntagonists = (props) => {
       <SuccinctAntagonistData
         succinct_antagonist_data={subordinate_antagonists}
       />
-    </Fragment>
+    </>
   );
 };
 

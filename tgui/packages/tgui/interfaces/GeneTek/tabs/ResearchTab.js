@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend } from "../../../backend";
 import { AnimatedNumber, Button, LabeledList, Section } from "../../../components";
 import { Description } from "../BioEffect";
@@ -31,7 +30,7 @@ export const ResearchTab = (props, context) => {
   } = props;
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Statistics"
         buttons={(
@@ -102,6 +101,6 @@ export const ResearchTab = (props, context) => {
           </Section>
         ))}
       </Section>
-    </Fragment>
+    </>
   );
 };
