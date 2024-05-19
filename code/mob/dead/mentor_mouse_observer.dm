@@ -78,7 +78,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return

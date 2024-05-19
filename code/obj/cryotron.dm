@@ -164,6 +164,8 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
+		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
+			antagonist.handle_cryo()
 		stored_mobs += L
 		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
@@ -219,7 +221,7 @@
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
 							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
-							if (job)
+							if (job && !job.unique)
 								job.assigned = max(0, job.assigned - 1)
 							qdel(user)
 							return 1
@@ -248,11 +250,11 @@
 			boutput(user, "<b>You can't put someone in cryogenic storage if they aren't alive!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to enter storage on their own
-		if (!user && (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping))
+		if (!user && (L.stat || L.restrained() || L.getStatusDuration("unconscious") || L.sleeping))
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
 			return FALSE
 		// Incapacitated or restrained person trying to put someone else in
-		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
+		if (user && (user.stat || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping))
 			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return FALSE
 		// Person entering is too far away
@@ -311,6 +313,9 @@
 			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
 			if (!isnull(crew_record))
 				crew_record["p_stat"] = "Active"
+			var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
+			if (job && !job.unique)
+				job.assigned = min(job.limit, job.assigned + 1)
 			return 1
 		return 0
 

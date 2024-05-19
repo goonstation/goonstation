@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/light_parts)
 	update_icon()
 		..()
 		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
-		src.UpdateOverlays(light_image, "light")
+		src.AddOverlays(light_image, "light")
 
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
@@ -729,7 +729,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
-		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
+		src.AddOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
 
 	bright
 		brightness = 1.8
@@ -1211,7 +1211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // called when on fire
 
-/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(prob(max(0, exposed_temperature - 1650)))   //0% at <400C, 100% at >500C   // previous value for subtraction was -673. tons of lights exploded Azungar edit: Nudged this up a bit just in case.
 		broken()

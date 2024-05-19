@@ -64,6 +64,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	icon_tag = "st"
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/syndicate
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy. Alternatively, throw it at location to auto-deploy it, fully activated, in the direction thrown.")
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -85,6 +86,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	icon_tag = "nt"
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 /obj/item/turret_deployer/outpost
 	name = "Perimeter Turret Deployer"
@@ -99,6 +101,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 //       Turret Code       //
 /////////////////////////////
 ABSTRACT_TYPE(/obj/deployable_turret)
+ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_reaim)
 /obj/deployable_turret
 
 	name = "fucked up abstract turret that should never exist"
@@ -186,6 +189,14 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		current_projectile.shot_number = burst_size
 		current_projectile.shot_delay = 10/fire_rate
 
+	proc/shoot(target)
+		SPAWN(0)
+			for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
+				flick("[src.icon_tag]_fire",src)
+				muzzle_flash_any(src, 0, "muzzle_flash")
+				sleep(src.current_projectile.shot_delay)
+		shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
+
 	proc/process()
 		if(src.active)
 			if(!src.target && !src.seek_target()) //attempt to set the target if no target
@@ -196,13 +207,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 			else //GUN THEM DOWN
 				if(src.target)
-					SPAWN(0)
-						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
-							flick("[src.icon_tag]_fire",src)
-							muzzle_flash_any(src, 0, "muzzle_flash")
-							sleep(src.current_projectile.shot_delay)
-					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
-
+					src.shoot(target)
 
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
@@ -402,7 +407,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return FALSE
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
-			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
+			if (H.hasStatus(list("resting", "knockdown", "stunned", "unconscious"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
 				return FALSE
 		if (is_friend(C))
 			return FALSE
@@ -460,6 +465,30 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // needs to do in multiple steps because byond takes shortcuts
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // :argh:
 
+	get_help_message(dist, mob/user)
+		if (!src.deconstructable || !src.can_toggle_activation)
+			return
+		. = {"Activation/maintenance:
+		1. Use a <b>welding tool</b> to secure it.
+		2. Use a <b>screwdriver</b> to turn it on.
+		3. (Optional) Click it with a <b>wrench</b> and then click a location to rotate the turret in that direction.
+		4. (Optional) While it's on, use a <b>welding tool</b> to repair any damage.
+
+		Disassembly:
+		1. Use a <b>screwdriver</b> to turn it off.
+		2. Use a <b>welding tool</b> to unsecure it.
+		3. Use a <b>wrench</b> to disassemble it."}
+
+/obj/deployable_turret/proc/admincmd_shoot()
+	set name = "Shoot"
+	var/atom/target = pick_ref(usr)
+	playsound(src.loc, 'sound/vox/woofsound.ogg', 40, 1)
+	src.shoot(target)
+
+/obj/deployable_turret/proc/admincmd_reaim()
+	set name = "Re-aim"
+	var/atom/target = pick_ref(usr)
+	src.set_angle(get_angle(src, get_turf(target)))
 
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
@@ -477,7 +506,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && C.faction == FACTION_SYNDICATE) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && (FACTION_SYNDICATE in C.faction)) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED
@@ -559,8 +588,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/turf/user_turf = null
 
 	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+		if (M.client && M.client.holder) //???
 			return TRUE
+		else
+			return ..()
 
 	handleCast(var/atom/target)
 

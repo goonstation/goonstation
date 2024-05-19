@@ -200,7 +200,7 @@ proc/is_weak_rollable_contract(type)
 			if (ismob(usr))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			A.changeStatus("weakened", total_souls_value SECONDS) //scales with souls stolen, was capped, no longer capped, souls much harder to get without monkeys
+			A.changeStatus("knockdown", total_souls_value SECONDS) //scales with souls stolen, was capped, no longer capped, souls much harder to get without monkeys
 			take_bleeding_damage(A, null, total_souls_value, DAMAGE_STAB)
 		..()
 

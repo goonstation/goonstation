@@ -53,15 +53,13 @@ export const MixerMachine = (props, context) => {
         <Stack m="0.25rem" vertical fill>
 
           <Stack.Item grow={1}>
-            {
-              <Section fill title={"Contents: (" + items.length + "/" + data.maxItems + ")"}>
-                {
-                  (items.length > 0)
-                    ? items.map(item => (<MixerItem key={item.index} mixerItem={item} working={data.working} />))
-                    :"No contents in mixer"
-                }
-              </Section>
-            }
+            <Section fill title={`Contents: (${items.length}/${data.maxItems})`}>
+              {
+                (items.length > 0)
+                  ? items.map(item => (<MixerItem key={item.index} mixerItem={item} working={data.working} />))
+                  : 'No contents in mixer'
+              }
+            </Section>
           </Stack.Item>
 
           <Stack.Item m=".25rem">

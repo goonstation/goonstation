@@ -110,12 +110,12 @@ var/global/mutable_appearance/elecflash_ma = null
 	if (isintangible(src) || check_target_immunity(src))
 		return
 	if (power > 1) // pretty light damage and stam damage :)
-		if (src.bioHolder.HasEffect("resist_electric"))
+		if (src.bioHolder?.HasEffect("resist_electric"))
 			boutput(src, SPAN_NOTICE("You feel electricity spark across you harmlessly!"))
 			return 0
-		if (src.hasStatus("weakened"))
-			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 0, stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
+		if (src.hasStatus("knockdown"))
+			src.do_disorient(stamina_damage = 15 + power * 8, knockdown = 0, stunned = 0, unconscious = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		else
-			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
+			src.do_disorient(stamina_damage = 15 + power * 8, knockdown = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, unconscious = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		src.TakeDamage("chest", 0, rand(0,1) * power * 0.2, damage_type=DAMAGE_BURN)
 		src.setStatus("defibbed", sqrt(power) SECONDS)

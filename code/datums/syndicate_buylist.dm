@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/electronics/scanner/syndicate
 	cost = 4
 	vr_allowed = FALSE
-	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
+	desc = "A standard Nanotrasen mechanic's analyzer with jailbroken internals. This baby doesn't give a damn about DRM, patents, or \"safety\"!"
 	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
@@ -1034,7 +1034,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 5
 	vr_allowed = FALSE // no
 	not_in_crates = TRUE
-	job = list("Captain", "VIP", "Regional Director", "Inspector")
+	job = list("Captain", "VIP", "Regional Director", "Inspector", "Head of Personnel")
 
 /datum/syndicate_buylist/traitor/ai_disguised_module
 	name = "Disguised AI Law Module"

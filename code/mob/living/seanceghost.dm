@@ -101,7 +101,7 @@
 		return 0
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 

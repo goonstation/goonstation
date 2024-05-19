@@ -81,7 +81,7 @@
 		who << src
 		src.visible_to += who
 		/*var/mob/whomob = who.mob
-		if(istype(whomob) && !isunconscious(whomob) && isliving(whomob) && !whomob.sleeping && !whomob.getStatusDuration("paralysis"))
+		if(istype(whomob) && !isunconscious(whomob) && isliving(whomob) && !whomob.sleeping && !whomob.getStatusDuration("unconscious"))
 			for (var/mob/dead/target_observer/observer in whomob:observers)
 				if(!observer.client)
 					continue

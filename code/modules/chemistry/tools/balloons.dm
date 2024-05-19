@@ -12,6 +12,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = 0
 	initial_volume = 40
+	pass_unstable = TRUE
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")
 	var/balloon_color = "white"
@@ -233,6 +234,11 @@
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
+
+	Cross(atom/movable/mover)
+		if (istype(mover, /obj/item/implant/projectile/body_visible/dart/bardart))
+			return FALSE
+		return ..()
 
 /obj/item/balloon_animal
 	name = "balloon animal"

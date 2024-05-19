@@ -82,6 +82,9 @@
 
 	src.try_push_in(target, user)
 
+/obj/machinery/atmospherics/unary/cryo_cell/Click(location, control, params)
+	if(!ghost_observe_occupant(usr, src.occupant))
+		. = ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
 	..()

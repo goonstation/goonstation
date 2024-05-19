@@ -35,7 +35,7 @@
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, status_display_freq)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, status_display_freq)
 
 /obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)
@@ -372,7 +372,7 @@
 
 	// sanitize the reason
 	if(call_reason)
-		call_reason = copytext(html_decode(trim(strip_html(html_decode(call_reason)))), 1, 140)
+		call_reason = copytext(html_decode(trimtext(strip_html(html_decode(call_reason)))), 1, 140)
 	if(!call_reason || length(call_reason) < 1)
 		call_reason = "No reason given."
 

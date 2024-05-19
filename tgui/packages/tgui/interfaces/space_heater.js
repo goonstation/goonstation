@@ -67,7 +67,7 @@ const BatteryStatus = (props, context) => {
     set_temperature,
   } = data;
   return (
-    <Section title={Glitch_Text(emagged, "Battery status", 2)} grow={0}>
+    <Section title={Glitch_Text(emagged, "Battery status", 2)}>
       <LabeledList>
         <LabeledList.Item
           label={Glitch_Text(emagged, "Cell", 1)}

@@ -961,7 +961,7 @@
 				M.show_message(thisR, 2)
 
 	say(message = "")
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return
 
@@ -970,7 +970,7 @@
 			return
 		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		if (dd_hasprefix(message, ";"))
-			message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(message, 2, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 		// emotes
@@ -985,7 +985,7 @@
 		var/broadcast = 0
 		if (length(message) >= 2)
 			if (dd_hasprefix(message, ";"))
-				message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
+				message = trimtext(copytext(message, 2, MAX_MESSAGE_LEN))
 				broadcast = 1
 		if (broadcast)
 			return src.drone_broadcast(message)

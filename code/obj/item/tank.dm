@@ -351,7 +351,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	#if defined(MAP_OVERRIDE_MANTA)
 	icon_state = "jetpack_mag0"
 	item_state = "jetpack_mag"
-	c_flags = IS_JETPACK
+	c_flags = IS_JETPACK | ONBACK
 	var/base_icon_state = "jetpack_mag"
 	#else
 	icon_state = "jetpack0"
@@ -412,10 +412,18 @@ TYPEINFO(/obj/item/tank/jetpack)
 	item_state = "jetpack_mk2_0"
 	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
 	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
+	abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
-	New()
-		..()
-		setProperty("negate_fluid_speed_penalty", 0.6)
+	toggle()
+		. = ..()
+		if (src.on)
+			src.setProperty("negate_fluid_speed_penalty", 0.6)
+		else
+			src.delProperty("negate_fluid_speed_penalty")
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_equipped_modifiers()
+
 
 /obj/item/tank/jetpack/syndicate
 	name = "jetpack (oxygen)"
@@ -503,15 +511,15 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
-	item_state = "em_oxtank"
+	item_state = "mini_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
-	force = 3
+	force = 4
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	desc = "A personal oxygen tank meant to keep you alive in an emergency. This one hooks directly to your jumpsuit's belt. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 	compatible_with_TTV = FALSE
@@ -521,6 +529,13 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		src.air_contents.volume = 15
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
+
+	empty
+		New()
+			..()
+			src.air_contents.toxins = null
+			return
+
 
 ////////////////////////////////////////////////////////////
 
@@ -678,3 +693,31 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			S.part2 = null
 			//S = null
 			qdel(S)
+
+/obj/item/tank/mini_plasma
+	name = "mini plasma tank"
+	icon_state = "mini_plastank"
+	item_state = "mini_plastank"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	health = 5
+	w_class = W_CLASS_NORMAL
+	force = 4
+	stamina_damage = 30
+	stamina_cost = 16
+	desc = "This orange gas tank is used to contain toxic, volatile plasma. This one hooks directly to your jumpsuit's belt."
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	distribute_pressure = 17
+	compatible_with_TTV = FALSE
+
+	New()
+		..()
+		src.air_contents.volume = 10
+		src.air_contents.toxins = (ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+		New()
+			..()
+			src.air_contents.toxins = null
+			return

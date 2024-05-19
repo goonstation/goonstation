@@ -197,9 +197,6 @@
 			if (E.acceptable_in_mutini) // for the drink reagent  :T
 				mutini_effects[E.id] = E
 
-		Z_LOG_DEBUG("Preload", "  zoldorf")
-		zoldorfsetup()
-
 		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
 		fluid_turf_setup(first_time=TRUE)
 
@@ -232,6 +229,6 @@
 		if(UNIX) lib = "libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = LIBCALL(lib, "init")()
+	var/init = LIBCALL(lib, "init")("block")
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif

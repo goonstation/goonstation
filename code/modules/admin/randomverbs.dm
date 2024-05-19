@@ -75,7 +75,7 @@
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
-				M.changeStatus("paralysis", 8 SECONDS)
+				M.changeStatus("unconscious", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
@@ -217,7 +217,7 @@
 
 	var/body = "<ol><center>ADMIN PM</center><br><br>"
 
-	var/admin_pm = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	var/admin_pm = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 	var/pm_in_browser = "<center>Click on my name to respond.</center><br><br>"
 
@@ -1063,7 +1063,7 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
+		src.preview_icon = new /icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone
@@ -1232,7 +1232,7 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	target = trim(lowertext(target))
+	target = trimtext(lowertext(target))
 	if (!target) return 0
 
 	var/list/msg = list()
@@ -3114,6 +3114,45 @@ var/global/force_radio_maptext = FALSE
 					message_admins("[spawn_fails] artifact\s failed to spawn")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+
+/// Spawn custom reagent that can transform turfs and objs to whatever material you desire.
+/client/proc/spawn_custom_transmutation()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Spawn Custom Transmutation Reagent"
+	ADMIN_ONLY
+	var/containers = list("Small Beaker" = /obj/item/reagent_containers/glass/beaker,
+	"Large Beaker" = /obj/item/reagent_containers/glass/beaker/large,
+	"Grenade" = /obj/item/chem_grenade/custom)
+
+
+	var/matId = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
+	if (!matId)
+		return
+
+	var/material_selected = getMaterial(matId)
+	if(!material_selected)
+		alert(src, "Invalid material selected: [matId]", "Invalid Material", "Ok")
+		return
+
+	var/containerId = tgui_input_list(src, "Select container for custom reagent:", "Select container", containers)
+	if (!containerId)
+		alert(src, "Invalid container selected: [containerId]", "Invalid Container", "Ok")
+
+	var/containerType = containers[containerId]
+
+	var/obj/item/container = new containerType()
+	if (containerId == "Grenade")
+		var/obj/item/chem_grenade/custom/grenade = container
+		var/obj/item/reagent_containers/glass/beaker/grenadeBeaker = new()
+		grenadeBeaker.reagents.add_reagent("custom_transmutation", 50, sdata=matId)
+		grenade.beakers += grenadeBeaker
+		grenade.stage = 2
+		grenade.icon_state = "grenade-chem3"
+	else
+
+		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
+		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
+	usr.put_in_hand_or_drop(container)
 
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT

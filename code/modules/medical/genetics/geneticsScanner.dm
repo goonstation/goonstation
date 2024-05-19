@@ -24,7 +24,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 			genescanner_addresses += src.net_id
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	disposing()
 		if (src.net_id)
@@ -60,6 +60,10 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		eject_occupant(user)
 
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return
@@ -86,7 +90,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			return 0
 		if (BOUNDS_DIST(src, M) > 0)
 			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
+		if (M.getStatusDuration("unconscious") || M.getStatusDuration("stunned") || M.getStatusDuration("knockdown"))
 			return 0
 		if (src.occupant)
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))

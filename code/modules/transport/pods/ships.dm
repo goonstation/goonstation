@@ -188,6 +188,7 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.7
 	speed = 0.8
 	acid_damage_multiplier = 0
+	faction = FACTION_SYNDICATE
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -966,6 +967,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	maxhealth = 500
 	speed = 0.9
 	acid_damage_multiplier = 0
+	faction = FACTION_SYNDICATE
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed

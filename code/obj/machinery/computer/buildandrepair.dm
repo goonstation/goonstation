@@ -160,6 +160,9 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/qmsupply
 	name = "Circuit board (Quartermaster's Console)"
 	computertype = "/obj/machinery/computer/supplycomp"
+/obj/item/circuitboard/stockexchange
+	name = "Circuit board (Stock Exchange)"
+	computertype = "/obj/machinery/computer/stockexchange"
 /obj/item/circuitboard/transception
 	name = "Circuit board (Transception Interlink)"
 	computertype = "/obj/machinery/computer/transception"

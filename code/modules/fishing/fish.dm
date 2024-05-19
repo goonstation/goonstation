@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 /obj/item/reagent_containers/food/fish/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-		user.changeStatus("weakened", 2 * src.force SECONDS)
+		user.changeStatus("knockdown", 2 * src.force SECONDS)
 		JOB_XP(user, "Clown", 1)
 		..(user, user) // bonk
 	else

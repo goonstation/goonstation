@@ -39,7 +39,6 @@ export { Pointer } from './Pointer';
 export { RestrictedInput } from './RestrictedInput';
 export { RoundGauge } from './RoundGauge';
 export { Section } from './Section';
-export { SectionEx } from './goonstation/SectionEx';
 export { Slider } from './Slider';
 export { Stack } from './Stack';
 export { Table } from './Table';

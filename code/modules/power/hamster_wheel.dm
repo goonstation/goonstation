@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		else if(src.occupant && W.force)
 			W.attack(src.occupant, user)
 			user.lastattacked = src
-			if (occupant.hasStatus(list("weakened", "paralysis", "stunned")))
+			if (occupant.hasStatus(list("knockdown", "unconscious", "stunned")))
 				eject_occupant()
 			W.visible_message(SPAN_ALERT("[user] swings at [src.occupant] with [W]!"))
 		else if(!src.occupant && isgrab(W))
@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		else
 			..()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		..()
 		// Simulate hotspot Crossed/Process so turfs engulfed in flames aren't simply ignored in vehicles
 		if (isliving(src.occupant) && exposed_volume > (CELL_VOLUME * 0.5) && exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
@@ -280,8 +280,8 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 	proc/tumble(mob/user)
 		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
 		animate_spin(user, was_running == WEST ? "L" : "R", 1, 0)
-		user.changeStatus("paralysis", 2 SECONDS)
-		user.changeStatus("weakened", 2 SECONDS)
+		user.changeStatus("unconscious", 2 SECONDS)
+		user.changeStatus("knockdown", 2 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and tumbles inside of [src]."))
 		animate_storage_thump(src)
 		return TRUE
@@ -368,7 +368,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 
 	tumble(mob/user)
 		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
-		user.changeStatus("weakened", 2 SECONDS)
+		user.changeStatus("knockdown", 2 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and slides off [src]."))
 		eject_occupant()
 		var/dx = 2

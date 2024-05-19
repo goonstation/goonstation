@@ -32,7 +32,7 @@
 	var/limbpath = /datum/limb/brullbar
 	var/frenzypath = /datum/targetable/critter/frenzy
 
-	faction = FACTION_ICEMOON
+	faction = list(FACTION_ICEMOON)
 
 	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src))

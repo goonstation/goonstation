@@ -20,6 +20,7 @@
 		if (!M || !ishuman(M))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/hunter_transform(src), M)
 		return 0
 
@@ -39,7 +40,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") > 0 || !transform)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") > 0 || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -50,7 +51,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") > 0 || !transform)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") > 0 || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

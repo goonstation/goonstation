@@ -10,7 +10,7 @@
 	chance_arrive = 35
 
 	max_goods_buy = 3
-	max_goods_sell = 4
+	max_goods_sell = 5
 
 	base_goods_buy = list(/datum/commodity/trader/josh/syringes,
 	/datum/commodity/trader/josh/radios,
@@ -25,7 +25,8 @@
 	/datum/commodity/trader/josh/hoodie,
 	/datum/commodity/trader/josh/flyswatter,
 	/datum/commodity/trader/josh/robustris,
-	/datum/commodity/trader/josh/foamgun,)
+	/datum/commodity/trader/josh/foamgun,
+	/datum/commodity/trader/josh/paintgun,)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
@@ -114,7 +115,7 @@
 
 /datum/commodity/trader/josh/injectormask
 	comname = "Vape-o-matic"
-	comtype = /obj/item/clothing/mask/gas/injector_mask
+	comtype = /obj/item/clothing/mask/injector_mask
 	price_boundary = list(PAY_EXECUTIVE,PAY_EMBEZZLED)
 	possible_names = list("There's a mask out there that lets you consume the vapor form of chemicals. That would be sick.")
 
@@ -190,3 +191,12 @@
 	possible_names = list("Bro, this thing can shoot sooo fast! You gotta have one.",
 	"You could have such a sick battle if you had enough of these.",
 	"You want to become an elite dart sniper like me? You'll need one of these.")
+
+/datum/commodity/trader/josh/paintgun
+	comname = "Portable Paint Popper"
+	comtype = /obj/item/gun/paintball
+	price_boundary = list(PAY_IMPORTANT,PAY_EXECUTIVE)
+	possible_names = list("This'll let you paint the town red! Or any other color!",
+	"Load this bad boy up with some paint and you'll be seeing colors!",
+	"Dude, paintball's season's here!")
+

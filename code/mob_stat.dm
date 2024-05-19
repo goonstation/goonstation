@@ -154,9 +154,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				//BLUEGH ADMIN SHIT
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
-					#if DM_VERSION >= 514
 					stat("Map CPU %:", "[world.map_cpu]")
-					#endif
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif

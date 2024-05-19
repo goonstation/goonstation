@@ -153,7 +153,7 @@ var/list/admin_verbs = list(
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
 		/client/proc/ban_panel,
-		/client/proc/addBanTemp,
+		/client/proc/addBanTempUntargetted,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
@@ -165,6 +165,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_mute,
 		/client/proc/cmd_admin_mute_temp,
 		/client/proc/respawn_as_self,
+		/client/proc/ras,
 		/client/proc/respawn_as_new_self,
 		/client/proc/respawn_as_job,
 		/datum/admins/proc/toggletraitorscaling,
@@ -251,6 +252,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_force_mixed_wraith,
 		/client/proc/toggle_spooky_light_plane,
 		/datum/admins/proc/toggle_radio_audio,
+		/datum/admins/proc/toggle_remote_music_announcements,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -304,6 +306,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
+		/client/proc/spawn_custom_transmutation,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
 		/client/proc/cmd_move_lobby,
@@ -420,7 +423,8 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
-		/client/proc/spawn_all_type
+		/client/proc/spawn_all_type,
+		/client/proc/region_allocator_panel
 		),
 
 	7 = list(
@@ -686,10 +690,12 @@ var/list/special_pa_observing_verbs = list(
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
+		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are now invisible."))
 	else
 		src.mob.mouse_opacity = 1
 		src.mob.alpha = 255
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are no longer invisible!"))
 
 /client/proc/admin_observe()
@@ -813,7 +819,7 @@ var/list/special_pa_observing_verbs = list(
 		if (src.owner:stealth && src.owner:alt_key)
 			src.set_alt_key()
 		if (new_key)
-			new_key = trim(new_key)
+			new_key = trimtext(new_key)
 			//stealth_hide_fakekey = (alert("Hide your fake key when using DSAY?", "Extra stealthy","Yes", "No") == "Yes")
 			// I think if people really wanna be Denmark they can just set themselves to be Denmark
 			new_key = strip_html(new_key)
@@ -866,7 +872,7 @@ var/list/special_pa_observing_verbs = list(
 		if (src.owner:alt_key && src.owner:stealth)
 			src.set_stealth_mode()
 		if (new_key)
-			new_key = trim(new_key)
+			new_key = trimtext(new_key)
 			new_key = strip_html(new_key)
 			if (length(new_key) >= 50)
 				new_key = copytext(new_key, 1, 50)
@@ -1035,7 +1041,7 @@ var/list/fun_images = list()
 		if("Heavenly")
 			src.respawn_as_self()
 			var/mob/M = src.mob
-			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()
@@ -1075,13 +1081,17 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
-/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs))
+/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs|job_controls.savefile_get_job_names(src)))
 	set name = "Respawn As Job"
 	set desc = "Respawn yourself as a given job. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+	if(istext(J))
+		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
+		if(job_controls.savefile_load(src, idx))
+			J = job_controls.create_job(TRUE)
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 
@@ -1106,6 +1116,12 @@ var/list/fun_images = list()
 
 	respawn_as_self_internal(new_self=FALSE)
 
+/client/proc/ras()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "RAS"
+	set popup_menu = 0
+	ADMIN_ONLY
+	respawn_as_self_internal(new_self=FALSE)
 
 /client/proc/respawn_as_self_internal(new_self=FALSE, jobstring = "Staff Assistant")
 	ADMIN_ONLY
@@ -1149,7 +1165,7 @@ var/list/fun_images = list()
 	qdel(mymob)
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
-			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+			M.apply_flash(animation_duration = 30, knockdown = 5, uncloak_prob = 0, stamina_damage = 250)
 
 /client/proc/respawn_list_players()
 	set name = "Respawn List of Players"
@@ -1725,7 +1741,7 @@ var/list/fun_images = list()
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
-			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+			M.apply_flash(animation_duration = 30, knockdown = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
 		sleep(1.5 SECONDS)
 
@@ -2613,3 +2629,15 @@ var/list/fun_images = list()
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
 	logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
 	logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
+
+/client/proc/region_allocator_panel()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Region Allocator"
+	set desc = "Region Allocator front end panel. Allows you to dynamically allocate and deallocate areas of reserved space."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (isnull(src.holder.region_allocator_panel))
+		src.holder.region_allocator_panel = new
+
+	src.holder.region_allocator_panel.ui_interact(src.mob)

@@ -225,7 +225,7 @@
 			return
 
 		if (isdead(src))
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 		// wtf?

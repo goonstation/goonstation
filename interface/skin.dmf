@@ -118,6 +118,13 @@ menu "menu"
 		can-check = true
 		group = "size"
 		saved-params = "is-checked"
+	elem "icon88"
+		name = "&88x88"
+		command = ".winset \"mapwindow.map.icon-size=88\""
+		category = "&Icon Settings"
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
 	elem "icon96"
 		name = "&96x96"
 		command = ".winset \"mapwindow.map.icon-size=96\""
