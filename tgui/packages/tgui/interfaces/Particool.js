@@ -551,10 +551,9 @@ const ParticleEntry = (props, context) => {
   );
 };
 
-
 const GeneratorHelp = () => {
   return (
-    <Collapsible title="Generator Help"><Section />
+    <Collapsible title="Generator Help">
       <Section>
         <table>
           <tbody>
@@ -612,9 +611,9 @@ const GeneratorHelp = () => {
           </tbody>
         </table>
       </Section>
-    </Collapsible>); };
-
-
+    </Collapsible>
+  );
+};
 
 export const Particool = (props, context) => {
   const { act, data } = useBackend(context);
