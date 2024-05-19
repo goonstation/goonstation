@@ -3804,6 +3804,18 @@
 			//This reaction does only happen in carbon-based beings and for only as long as there is less than 15u lungrot in the person
 			return holder.my_atom && iscarbon(holder.my_atom) && (holder.get_reagent_amount("lungrot_bloom") < 15)
 
+	// makes lavender and miasma destroy each other
+	miasma_neutralisation
+		name = "miasma neutralisation"
+		id = "miasma_neutralisation"
+		instant = 1
+		required_reagents = list("miasma" = 1, "lavender_essence" = 1)
+		mix_phrase = "The lavender counteracts the miasma."
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder)
+				holder.del_reagent("miasma")
+				holder.del_reagent("lavender_essence")
+			return
 
 	/*plant_nutrients_mutagenic
 		name = "Mutriant Plant Formula"
