@@ -2218,25 +2218,29 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 
-	chop
+	chop //vertical slash
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/meleeeffects.dmi'
 		icon_state = "chop1"
 		pixel_x = -32
 		pixel_y = -32
 
 	chop_flipped
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/meleeeffects.dmi'
 		icon_state = "chop2"
 		pixel_x = -32
 		pixel_y = -32
 
-	cleave
+	cleave //horizontal slash
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/meleeeffects.dmi'
 		icon_state = "cleave1"
 		pixel_x = -32
 		pixel_y = -32
 
 	cleave_flipped
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/meleeeffects.dmi'
 		icon_state = "cleave2"
 		pixel_x = -32
@@ -2361,8 +2365,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	moveDelayDuration = 10
 	damageMult = 1
 	image = "dagger"
-	name = "Massacre"
-	desc = "Repeatedly attack a target. Deals more damage and costs more stamina cost the more hits landed."
+	name = "Butcher"
+	desc = "Repeatedly attack a target. Deals more damage and costs more stamina for every hit landed."
 
 	var/current_chain = 0
 	/// Maximum number of hits
@@ -2370,11 +2374,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	/// Damage multiplier, initial
 	var/damage_mult_start = 0.4
 	/// Damage multiplier increase per chain
-	var/damage_mult_increment = 0.1
+	var/damage_mult_increment = 0.075
 	///Stamina cost per extra swing
 	var/staminacost_chain = 0
 	///Stamina cost increase per extra swing
 	var/staminacost_chain_additive = 5
+	///Disorient and drain stamina when interrupted
+	var/penalty_disorient = TRUE
 	var/alternate = FALSE
 	onAdd()
 		if(master)
@@ -2450,6 +2456,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				if (!hit)
 					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE, 0.1, 1.4)
 
+			if (current_chain > 3 && current_chain < max_chain && penalty_disorient) // penalise getting interrupted after the third swing
+				var/string ="[H] swings their machete too hard and loses their balance!"
+				H.show_message(SPAN_ALERT(string), 1)
+				H.do_disorient(H.get_stamina(), 0, 0, 0, 4 SECONDS, FALSE)
 			afterUse(user)
 		return
 
@@ -2469,11 +2479,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		return msgs
 
 	slasher
-		desc = "Repeatedly attack a target. Scales in speed & damage the more hits landed."
+		name = "Massacre"
+		desc = "Repeatedly attack a target. Decapitate if left uninterrupted."
 		max_chain = 13
 		staminacost_chain_additive = 0
 		damage_mult_start = 0.6
 		damage_mult_increment = 0.1
+		penalty_disorient = FALSE
 		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
 			..()
 			if (msgs.damage > 0 && isliving(target))
