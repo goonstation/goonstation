@@ -138,29 +138,36 @@ proc/is_music_playing()
 		return 0
 
 	var/client/adminC
-
-	for (var/client/C as anything in clients)
-		if (C.key == data["key"] && !adminC)
+	for (var/client/C in clients)
+		if (C.ckey == data["admin_ckey"])
 			adminC = C
-		var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
-		if (!vol)
-			continue
-		var/list/extra_music_data = list()
-		extra_music_data["volume"] = vol / 100
-		extra_music_data["title"] = data["title"]
-		C.verbs |= /client/verb/stop_the_music
-		if (adminC && (adminC.djmode || adminC.non_admin_dj))
-			var/show_other_key = FALSE
-			if (adminC.stealth || adminC.alt_key)
-				show_other_key = TRUE
-			boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration_human"]])")]")
-		C.tgui_panel?.play_music(data["file"], extra_music_data)
-		if (!adminC || !(adminC.stealth && !adminC.fakekey))
-			// Stealthed admins won't show the "now playing music" message,
-			// for added ability to be spooky.
-			if (remote_music_announcements)
-				boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+
+	SPAWN(0)
+		for (var/client/C in clients)
+			LAGCHECK(LAG_LOW)
+			C.verbs += /client/verb/stop_the_music
+			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
+
+			var/ismuted
+			if (!vol) ismuted = 1
+
+			if (adminC && (adminC.djmode || !isadmin(adminC) || adminC.non_admin_dj))
+				var/show_other_key = 0
+				if (adminC.stealth || adminC.alt_key)
+					show_other_key = 1
+				boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration_human"]])")]")
+
+			if (ismuted) //bullshit BYOND 0 is not null fuck you
+				continue
+
+			C.chatOutput.playMusic(data["file"], vol)
+			if (!adminC || !(adminC.stealth && !adminC.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				if (remote_music_announcements)
+					boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+
 
 	if (adminC)
 		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
@@ -197,7 +204,7 @@ proc/is_music_playing()
 	set popup_menu = 0
 	set hidden = 1
 
-	src.tgui_panel?.stop_music()
+	ehjax.send(src, "browseroutput", "stopaudio") //For client-side audio
 
 	var/mute_channel = 1014
 	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
@@ -213,7 +220,7 @@ proc/is_music_playing()
 	set popup_menu = 0
 	set hidden = 1
 
-	src.tgui_panel?.stop_music()
+	ehjax.send(src, "browseroutput", "stopaudio") //For client-side audio
 
 	src.verbs -= /client/verb/stop_the_radio
 	var/mute_channel = 1013
@@ -268,42 +275,3 @@ proc/is_music_playing()
 	EXTEND_COOLDOWN(global, "music", 60 SECONDS)
 
 	boutput(M, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
-
-/** Send a dectalk HTTPS URL to the tgui panel
- *
- * ARGS
- *
- * Audio - URL of sound to play, should be HTTPS.
- *
- * Title - Optional title for the panel widget.
- *
- * Volume - Optional volume between 0-1 for the passed audio.
- *
- * Hide widget - If true, hide the now playing widget when playing this audio. (can still be manually opened)
- *
- * Show chat message - If true, a chat message will be send as the dectalk message is played.
- *
- * Chat message override - Optional string to use as a chat message, if null use default.
- */
-/client/proc/play_dectalk(url, title, volume = 0.5, hide_widget = FALSE, show_chat_message = TRUE, chat_message_override)
-	var/list/data = list()
-	if (volume)
-		data["volume"] = volume
-	if (hide_widget)
-		data["hide"] = hide_widget
-	if (title)
-		data["title"] = title
-	else
-		data["title"] = "Strange robotic voice"
-	src.tgui_panel?.play_music(url, data)
-	if (show_chat_message || chat_message_override)
-		var/message = null
-		if (chat_message_override)
-			message = "DECTALK: [chat_message_override]"
-		else
-			message = "<a href='#' class='stopAudio icon-stack' title='Stop Audio' style='color: black;'> \
-			<i class='fas fa-volume-off'></i> \
-			<i class='fas fa-ban' style='color: red;'></i> \
-			</a><span class='italic'>You hear a strange robotic voice...</span>"
-		if (message)
-			boutput(src, message)

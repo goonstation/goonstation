@@ -1621,7 +1621,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	alt_names = list("Assistants Union Rep", "Cyborgs Union Rep", "Union Rep", "Security Union Rep", "Doctors Union Rep", "Engineers Union Rep", "Miners Union Rep")
+	alt_names = list("Assistants Union Rep", "Cargo Union Rep", "Catering Union Rep", "Union Rep", "Security Union Rep", "Doctors Union Rep", "Engineers Union Rep", "Miners Union Rep")
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	special_setup(var/mob/living/carbon/human/M)

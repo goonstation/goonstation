@@ -145,7 +145,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
-		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
@@ -204,7 +203,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 							continue
 						if (O.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 							continue
-						O.client.play_dectalk(audio["audio"], show_chat_message = FALSE, hide_widget = TRUE)
+						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
 
 /obj/machinery/bot/examine()
 	. = ..()
@@ -216,11 +215,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			. += SPAN_ALERT("<B>[src]'s parts look very loose!</B>")
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
-	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
-		P.initial_power -= 10
-		if(P.initial_power <= 0)
-			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
-			P.die()
+	hit_twitch(src)
+	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)))
+		if (!ON_COOLDOWN(src, "projectile_bot_hit", 0.5 SECONDS))
+			var/obj/particle/attack/bot_hit/hit_particle = new
+			hit_particle.set_loc(src.loc)
+			hit_particle.transform.Turn(rand(0, 360))
+			if (P.proj_data.damage > 1)
+				flick("block_spark", hit_particle)
+				if (P.proj_data.damage_type & D_KINETIC)
+					playsound(src, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE) // replace with more unique sound if found later
+			else
+				flick("block_spark_armor", hit_particle)
+				if (P.proj_data.damage_type & D_ENERGY)
+					playsound(src, 'sound/effects/sparks6.ogg', 40, TRUE)
+		if (P.proj_data.ks_ratio > 0)
+			P.initial_power -= 10
+			if(P.initial_power <= 0)
+				src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
+				P.die()
 	if(!src.density)
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
 

@@ -41,20 +41,20 @@
 
 	var/keyname = key_name(client.mob, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
-	for (var/client/C as anything in global.clients)
+	for (var/client/C)
 		if (C.holder)
 			if (C.player_mode && !C.player_mode_ahelp)
 				continue
 			else
-				boutput(C, SPAN_AHELP("<font size='3'><b>[SPAN_ALERT("HELP: ")][keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [msg]</font>"))
+				boutput(C, SPAN_AHELP("<font size='3'><b>[SPAN_ALERT("HELP: ")][keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font>"))
 				switch(C.holder.audible_ahelps)
 					if(PM_AUDIBLE_ALERT)
 						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
 					if(PM_DECTALK_ALERT)
 						var/audio = dectalk(msg)
-						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
+						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 						if(vol)
-							C.play_dectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
+							C.chatOutput.playDectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
 
 #ifdef DATALOGGER
 	game_stats.Increment("adminhelps")
@@ -136,24 +136,22 @@
 
 	var/audio
 
-	for (var/client/C as anything in global.clients)
-		if (!C.holder)
-			continue
-		if (!C.mob)
-			continue
+	for (var/client/C)
+		if (!C.mob) continue
 		var/mob/M = C.mob
-		if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
-			continue
-		else
-			boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='fas fa-circle-info'></i>: <I>[SPAN_NOTICE(msg)]</I></span>")
-			if(M.client.holder.audible_prayers == 1)
-				M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
-			else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
-				if(!audio)
-					audio = dectalk(msg)
-				var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN) / 100
-				if(vol)
-					M.client.play_dectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
+		if (C.holder)
+			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
+				continue
+			else
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
+				if(M.client.holder.audible_prayers == 1)
+					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
+				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
+					if(!audio)
+						audio = dectalk(msg)
+					var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN)
+					if(vol)
+						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
 	return msg
 
 /proc/do_admin_pm(var/C, var/mob/user, previous_msgid=null) //C is a passed ckey
@@ -197,8 +195,8 @@
 		if (user.client.holder)
 			// Sender is admin
 			boutput(M, {"
-				<div class='bigPM' style='border: 2px solid red; white-space: normal;'>
-					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;;">
+				<div style='border: 2px solid red; font-size: 110%;'>
+					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
 						Admin PM from [user_keyname]
 					</div>
 					<div style="padding: 0.2em 0.5em;">
@@ -210,13 +208,13 @@
 				</div>
 				"}, forceScroll=TRUE)
 			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp bigPM'>Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [t]</span>")
+			boutput(user, "<span class='ahelp bigPM'>Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 			M.client.make_sure_chat_is_open()
 		else
 			// Sender is not admin
 			if (M.client && M.client.holder)
 				// But recipient is
-				boutput(M, "<span class='ahelp bigPM'>Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [t]</span>")
+				boutput(M, "<span class='ahelp bigPM'>Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			else
 				boutput(M, "<span class='alert bigPM'>Reply PM from-<b>[user_keyname]</b>: [t]</span>")
@@ -234,4 +232,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, SPAN_AHELP("<b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [t]"))
+					boutput(K, SPAN_AHELP("<b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]"))

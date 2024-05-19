@@ -36671,7 +36671,7 @@
 "kNM" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;

@@ -12,6 +12,10 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 								"/proc/getWorldMins",
 								"/datum/chui/proc/debug",
 								"/datum/chui/proc/close",
+								"/datum/chatOutput/proc/doneLoading",
+								"/datum/chatOutput/proc/ping",
+								"/datum/chatOutput/proc/handleContextMenu",
+								"/datum/chatOutput/proc/analyzeClientData"
 							)
 
 	proc
