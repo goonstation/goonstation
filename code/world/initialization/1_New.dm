@@ -6,7 +6,7 @@
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
-	lobby_titlecard = new /datum/titlecard/nightshade()
+	lobby_titlecard = pick(list(new/datum/titlecard/nightshade, new/datum/titlecard/nightshade_2))
 
 	lobby_titlecard.set_pregame_html()
 
