@@ -1442,6 +1442,9 @@ TYPEINFO(/obj/item/swords/captain)
 	red
 		icon_state = "red_cap_sword"
 
+	purple
+		icon_state = "purple_cap_sword"
+
 /obj/item/swords/nukeop
 	icon_state = "syndie_sword"
 	name = "Syndicate Commander's Sabre"
@@ -1660,6 +1663,16 @@ TYPEINFO(/obj/item/swords/captain)
 		ih_sheathed_state = "red_scabbard-cap1"
 		ih_sheath_state = "red_scabbard-cap0"
 		sword_path = /obj/item/swords/captain/red
+
+	purple //for royal medal reward
+		icon_state = "purple_cap_sword_scabbard"
+		item_state = "purple_scabbard-cap1"
+
+		sheathed_state = "purple_cap_sword_scabbard"
+		sheath_state = "purple_cap_scabbard"
+		ih_sheathed_state = "purple_scabbard-cap1"
+		ih_sheath_state = "purple_scabbard-cap0"
+		sword_path = /obj/item/swords/captain/purple
 
 /obj/item/swords_sheaths/nukeop
 	name = "Syndicate Commander's Scabbard"
