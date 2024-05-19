@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
 import { toTitleCase } from 'common/string';
 import { Box, Button, Divider, Icon, LabeledList, ProgressBar, Section, Stack, Table, Tooltip } from '../../components';
@@ -25,7 +24,7 @@ export const AntagonistTypeTabBody = (props: AntagonistPanelData) => (
 );
 
 const GeneralInformation = (props: AntagonistPanelData) => (
-  <Fragment>
+  <>
     <Section>
       <Stack vertical align="center" my={3}>
         <Stack.Item mb={-2.5} italic>
@@ -80,7 +79,7 @@ const GeneralInformation = (props: AntagonistPanelData) => (
         </Section>
       </Stack.Item>
     </Stack>
-  </Fragment>
+  </>
 );
 
 const AntagonistTabSection = (props: TabSectionData) => {
@@ -136,7 +135,7 @@ const TableAntagonistEntry = (props: AntagonistData, context) => {
     a.real_name.localeCompare(b.real_name)) || [];
 
   return (
-    <Fragment>
+    <>
       <Table.Row>
         <Table.Cell py="0.5em">
           <Tooltip
@@ -199,7 +198,7 @@ const TableAntagonistEntry = (props: AntagonistData, context) => {
           <TableButtonsCell {...antagonist} />
         </Table.Row>
       ))}
-    </Fragment>
+    </>
   );
 };
 
