@@ -700,6 +700,17 @@
 				overrideStaminaDamage = master.stamina_damage * 0.8
 			return
 
+	baseball
+		name = "Baseball Swing"
+		desc = "An AoE attack with a chance for a home run."
+
+		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
+			if (msgs.damage > 0 && msgs.stamina_crit)
+				var/turf/target_turf = get_edge_target_turf(target, get_dir(user, target))
+				target.throw_at(target_turf, 4, 1, throw_type = THROW_NORMAL)
+				msgs.played_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
+			return msgs
+
 /datum/item_special/launch_projectile
 	cooldown = 3 SECONDS
 	staminaCost = 30
@@ -2207,6 +2218,31 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 
+	chop
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop1"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop_flipped
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop2"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave1"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave_flipped
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave2"
+		pixel_x = -32
+		pixel_y = -32
+
+
 	spear
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "spear"
@@ -2316,3 +2352,147 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(progress == 1)
 			state = ACTIONSTATE_FINISH
 			return
+
+
+/datum/item_special/massacre
+	cooldown = 20
+	staminaCost = 0
+	moveDelay = 5
+	moveDelayDuration = 10
+	damageMult = 1
+	image = "dagger"
+	name = "Massacre"
+	desc = "Repeatedly attack a target. Deals more damage and costs more stamina cost the more hits landed."
+
+	var/current_chain = 0
+	/// Maximum number of hits
+	var/max_chain = 10
+	/// Damage multiplier, initial
+	var/damage_mult_start = 0.4
+	/// Damage multiplier increase per chain
+	var/damage_mult_increment = 0.1
+	///Stamina cost per extra swing
+	var/staminacost_chain = 0
+	///Stamina cost increase per extra swing
+	var/staminacost_chain_additive = 5
+	var/alternate = FALSE
+	onAdd()
+		if(master)
+			overrideStaminaDamage = master.stamina_damage * 0.8
+		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		damageMult = damage_mult_start
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user) || !isliving(user)) return
+
+		var/mob/living/H = user
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			current_chain = 0
+			var/direction = get_dir_pixel(user, target, params)
+			var/turf/turf = get_step(master, direction)
+
+			var/obj/itemspecialeffect/cleave/S = new /obj/itemspecialeffect/cleave
+			S.set_dir(direction)
+			S.setup(turf)
+			alternate = TRUE
+			var/hit = 0
+			for(var/atom/A in turf)
+				if(isTarget(A))
+					A.Attackby(master, user, params, 1)
+					hit = 1
+					break
+			if (!hit)
+				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE, 0.1, 1.4)
+
+			while (hit && H.stamina > (staminacost_chain + staminacost_chain_additive*current_chain) && H.equipped() == master && current_chain < max_chain)
+				H.next_click = world.time + 5 SECONDS
+				last_use = world.time
+				current_chain++
+				H.remove_stamina(staminacost_chain + staminacost_chain_additive*current_chain)
+				if (current_chain == 13)
+					sleep(0.2 SECONDS)
+					var/string ="[H] raises the machete up high!"
+					H.show_message(SPAN_ALERT(string), 1, assoc_maptext = make_chat_maptext(H, "<I>[string]</I>", "color: #C2BEBE;", alpha = 140))
+					sleep(2 SECONDS)
+					damageMult = 5
+				else if (current_chain == 3)
+					sleep(0.2 SECONDS)
+					var/string ="[H] twirls the machete with a grin."
+					H.show_message(SPAN_ALERT(string), 1, assoc_maptext = make_chat_maptext(H, "<I>[string]</I>", "color: #C2BEBE;", alpha = 140))
+					master.on_spin_emote(user)
+					sleep(1.4 SECONDS)
+					damageMult = damage_mult_start+(current_chain*damage_mult_increment)
+				else if (current_chain < 3)
+					damageMult = damage_mult_start+(current_chain*damage_mult_increment)
+					sleep(rand(7,9))
+				else
+					sleep(rand(4,6))
+				turf = get_step(master, direction)
+				var/obj/itemspecialeffect/SS
+				if (alternate)
+					SS = new/obj/itemspecialeffect/cleave_flipped
+				else
+					SS = new/obj/itemspecialeffect/cleave
+				alternate = !alternate
+				SS.set_dir(direction)
+				SS.setup(turf)
+				if (prob(10) && current_chain > 3)
+					user.emote(pick("laugh","cackle","grin"))
+
+				hit = 0
+				for(var/atom/A in turf)
+					if(isTarget(A))
+						A.Attackby(master, user, params, 1)
+						hit = 1
+						break
+				if (!hit)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE, 0.1, 1.4)
+
+			afterUse(user)
+		return
+
+	afterUse(mob/user)
+		last_use = world.time
+		user.next_click = world.time + 5 SECONDS
+		..()
+
+	modify_attack_result(mob/user, mob/target, datum/attackResults/msgs) //bleed on crit!
+		if (msgs.damage > 0 && (msgs.stamina_crit || current_chain > 3))
+			msgs.bleed_always = TRUE
+			var/slash_flipped = (current_chain%2) * 180
+			var/blood_dir = angle2dir(get_angle(user,target)+90 - slash_flipped)
+			blood_slash(target,1,null, blood_dir, 3)
+			if (current_chain > 3)
+				msgs.played_sound= pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg')
+		return msgs
+
+	slasher
+		desc = "Repeatedly attack a target. Scales in speed & damage the more hits landed."
+		max_chain = 13
+		staminacost_chain_additive = 0
+		damage_mult_start = 0.6
+		damage_mult_increment = 0.1
+		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
+			..()
+			if (msgs.damage > 0 && isliving(target))
+				var/mob/living/carbon/human/H = target
+				var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
+				var/the_limb = null
+				if (current_chain > 10 && current_chain < 13)
+					msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+					if (user.zone_sel.selecting in limbs)
+						the_limb = user.zone_sel.selecting
+					else
+						the_limb = pick("l_arm","r_arm","l_leg","r_leg")
+
+					if (the_limb)
+						H.sever_limb(the_limb)
+				else if (current_chain == 13)
+					msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+					H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
+					user.emote("laugh")
+			return msgs
+
+

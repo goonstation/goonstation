@@ -1439,6 +1439,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		S.clear_targets()
+		playsound(S.loc, 'sound/effects/graffiti_hit.ogg', 100, TRUE)
 		if (S.charges == 0)
 			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
@@ -1503,6 +1504,8 @@ proc/broadcast_to_all_gangs(var/message)
 			new/datum/gang_item/weapon/shuriken,
 			new/datum/gang_item/weapon/ratstick,
 			new/datum/gang_item/weapon/switchblade,
+			new/datum/gang_item/weapon/baseball,
+			new/datum/gang_item/weapon/machete,
 			new/datum/gang_item/weapon/discount_katana,
 			new/datum/gang_item/weapon/discount_csaber,
 			new/datum/gang_item/special/cop_car)
@@ -1528,7 +1531,7 @@ proc/broadcast_to_all_gangs(var/message)
 		// if (!src.HTML)
 		var/page = src.generate_HTML(user)
 
-		user.Browse(page, "window=gang_locker;size=650x660")
+		user.Browse(page, "window=gang_locker;size=650x670")
 		//onclose(user, "gang_locker")
 
 	ex_act()
@@ -2513,10 +2516,22 @@ proc/broadcast_to_all_gangs(var/message)
 	item_path = /obj/item/nunchucks
 /datum/gang_item/weapon/switchblade
 	name = "Switchblade"
-	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding."
-	price = 1750
+	desc = "A stylish knife you can hide in your clothes. Special attacks do extreme bleeding damage."
+	price = 1700
 	class2 = "weapon"
 	item_path = /obj/item/switchblade
+/datum/gang_item/weapon/baseball
+	name = "Baseball Bat"
+	desc = "A wooden baseball bat. Deflects thrown weapons while equipped. Special attacks can launch enemies."
+	price = 2000
+	class2 = "weapon"
+	item_path = /obj/item/bat
+/datum/gang_item/weapon/machete
+	name = "Machete"
+	desc = "A sharp, heavy machete for the real sadists. Special attacks start a flurry of attacks."
+	price = 10000
+	class2 = "weapon"
+	item_path = /obj/item/gang_machete
 /datum/gang_item/weapon/Shiv
 	name = "Shiv"
 	desc = "A single-use stabbing implement, dealing heavy damage and constant BLEED."
@@ -2556,7 +2571,7 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "Katana"
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
-	price = 9000
+	price = 10000
 	item_path = /obj/item/swords_sheaths/katana/reverse
 
 /datum/gang_item/weapon/katana
@@ -2575,7 +2590,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang_item/weapon/throwing_knife
 	name = "Throwing Knife"
-	desc = "A weighty, throwable knife that disorients & causes bleed. Still efficient at murder!"
+	desc = "A weighty, throwable knife that disorients & causes bleed. Makes for a capable melee weapon in a pinch."
 	class2 = "weapon"
 	price = 700
 	item_path = /obj/item/dagger/throwing_knife
@@ -2593,7 +2608,7 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "Faux C-Saber"
 	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It looks pretty dangerous."
 	class2 = "weapon"
-	price = 9000
+	price = 10000
 	item_path = /obj/item/sword/discount/gang
 /datum/gang_item/space/csaber
 	name = "C-Saber"

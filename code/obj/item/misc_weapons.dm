@@ -13,6 +13,7 @@
 // - Nukeop Commander's Sword
 // - Bloodthirsty Blade
 // - Fragile Sword
+// - Gang Machete
 
 
 /// Cyalume saber/esword, famed traitor item
@@ -1085,7 +1086,7 @@ TYPEINFO(/obj/item/bat)
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/swipe)
+		src.setItemSpecial(/datum/item_special/swipe/baseball)
 		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -1136,6 +1137,9 @@ TYPEINFO(/obj/item/bat)
 	w_class = W_CLASS_SMALL
 	HELP_MESSAGE_OVERRIDE({"This knife can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it.\n
 	While unfolded, using this weapon's special attack grants increased critical chance & bleed effects."})
+	New()
+		src.AddComponent(/datum/component/bloodflick)
+		..()
 
 	attack_self(mob/user)
 		toggle_active(user)
@@ -1990,7 +1994,7 @@ obj/item/whetstone
 	New()
 		. = ..()
 		START_TRACKING
-		src.setItemSpecial(/datum/item_special/swipe)
+		src.setItemSpecial(/datum/item_special/massacre/slasher)
 
 	disposing()
 		. = ..()
@@ -2201,3 +2205,34 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+
+
+
+
+/obj/item/gang_machete
+	name = "machete"
+	desc = "A hefty, unbalanced blade. Wielding it fills you with thoughts of savagery."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "machete"
+	item_state = "welder_machete"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hit_type = DAMAGE_CUT
+	flags = FPRINT | USEDELAY
+	force = 25
+	click_delay = 16 //unbalanced blade
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 5
+	contraband = 4
+	w_class = W_CLASS_NORMAL
+	tool_flags = TOOL_CUTTING
+	attack_verbs = "slashes"
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+
+	New()
+		..()
+		src.AddComponent(/datum/component/bloodflick)
+		src.setItemSpecial(/datum/item_special/massacre)
+	on_spin_emote(mob/user)
+		SEND_SIGNAL(src, COMSIG_ITEM_TWIRLED, user, src)
+		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
