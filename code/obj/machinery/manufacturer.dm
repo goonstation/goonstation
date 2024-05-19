@@ -2007,8 +2007,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!isnull(mat_piece))
 					qdel(mat_piece)
 				if (P.amount <= 0)
-					// Handle removing material from helper lists now that it's gone
-					material_patterns_by_id[P.material.getID()] = null
 					qdel(P)
 				return
 
