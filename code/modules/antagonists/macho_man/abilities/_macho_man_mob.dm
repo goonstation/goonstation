@@ -25,7 +25,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (!src.reagents)
 			src.create_reagents(1000)
 
-		src.changeStatus("stimulants", 15 MINUTES)
+		src.changeStatus("stimulants", pseudo ? 15 MINUTES : 3 MINUTES)
 
 		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, SLOT_W_UNIFORM)

@@ -547,7 +547,6 @@ obj/item/contract/macho
 			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.mind?.add_antagonist(ROLE_MACHO_MAN, do_pseudo = TRUE)
-			user.reagents.add_reagent("krokodil", 50)
 
 		return 1
 
@@ -568,6 +567,7 @@ obj/item/contract/wrestle
 			user.traitHolder.addTrait("leftfeet")
 			user.traitHolder.addTrait("nervous")
 			user.reagents.add_reagent(pick("methamphetamine", "crank", "LSD"), rand(1,75))
+			user.setStatus("stimulant_withdrawl", rand(3, 5) MINUTES)
 			boutput(user, SPAN_NOTICE("Oh cripes, looks like your years of drug abuse caught up with you! "))
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.visible_message(SPAN_ALERT("[user]'s pupils dilate."))
@@ -680,21 +680,6 @@ obj/item/contract/mummy
 obj/item/contract/mummy/thorough
 	limiteduse = 1
 
-obj/item/contract/vampire
-	desc = "A contract that promises to bestow upon whomever signs it near immortality, great power, and some other stuff you can't be bothered to read. There's some warning about not using this one in the chapel written on the back."
-	limiteduse = 1
-	contractlines = 1
-	strong = 1
-
-	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
-		if(!..())
-			return 0
-		SPAWN(1 DECI SECOND)
-			user.mind?.add_antagonist(ROLE_VAMPIRE, do_pseudo = TRUE)
-			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-
-		return 1
-
 obj/item/contract/juggle
 	desc = "It's a piece of paper with a portait of a person juggling skulls. Something about this image is both vaguely familiar and deeply unsettling."
 
@@ -737,7 +722,7 @@ obj/item/contract/rested
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.bioHolder.AddEffect("regenerator_super", 0, 0, 1)
+			user.bioHolder.AddEffect("regenerator", 0, 0, 1)
 			user.bioHolder.AddEffect("narcolepsy_super", 0, 0, 1) //basically, the signer's very vulnerable but exceptionally difficult to actually kill.
 
 		return 1
@@ -780,7 +765,7 @@ obj/item/contract/chemical
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.bioHolder.AddEffect("drunk_random", 0, 0, 1)
+			user.bioHolder.AddEffect("drunk_random_unstable", 0, 0, 1)
 
 		return 1
 
