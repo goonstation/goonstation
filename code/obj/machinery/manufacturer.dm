@@ -71,7 +71,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
-	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
+	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 
 	// Production options
 	var/search = null
@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P]"]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -1641,7 +1641,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/piece_index in 1 to length(C))
 			var/obj/item/material_piece/P = C[piece_index]
 			var/P_id = P.material.getID()
-			if (pattern in src.material_patterns_by_id[P_id])
+			if (pattern in src.material_patterns_by_ref["\ref[P]"])
 				return P
 		return null
 
@@ -1669,7 +1669,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					mats_available[P_id] = P.amount * 10
 				if (mats_available[P_id] < required_amount)
 					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
+				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_ref["\ref[P]"]) || P_id == required_pattern)
 					mats_used[required_pattern] = P_id
 					mats_available[P_id] -= required_amount
 					break
@@ -2015,7 +2015,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (isnull(mat_piece.material))
 				return
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
+			material_patterns_by_ref["\ref[mat_piece]"] = src.get_patterns_material_satisfies(mat_piece.material)
 			return
 
 		if (isnull(mat_datum))
@@ -2027,7 +2027,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		P.amount = max(0, amount)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
+		material_patterns_by_ref["\ref[P]"] = src.get_patterns_material_satisfies(P.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
