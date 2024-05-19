@@ -6,7 +6,6 @@
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
 	var/list/datum/SWFuplinkspell/purchased_spells = list()
-	var/spell_animation_frame = 5 // This will need updating if the spell animations ever change
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -130,13 +129,14 @@
 	get_statistics()
 	// Add the wizard's chosen spells to the crew credits
 		var/list/purchases = list()
+		#define SPELL_ANIMATION_FRAME 5
 
 		for (var/datum/SWFuplinkspell/purchased_spell as anything in src.purchased_spells)
 			if (purchased_spell.assoc_spell )
 				var/datum/targetable/spell/S = purchased_spell.assoc_spell
 				purchases += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(S.icon), initial(S.icon_state), frame = spell_animation_frame, dir = 0))]",
+						"iconBase64" = "[icon2base64(icon(initial(S.icon), initial(S.icon_state), frame = SPELL_ANIMATION_FRAME, dir = 0))]",
 						"name" = "[purchased_spell.name]",
 					)
 				)

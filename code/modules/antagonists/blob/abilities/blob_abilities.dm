@@ -952,6 +952,7 @@
 	var/mob/living/intangible/blob_overmind/owner
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
+	var/purchased_times = 0 // For crew credits
 
 	New()
 		..()
@@ -1023,10 +1024,7 @@
 		else
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
-		// Remember purchases for crew credits. We use a different list and not owner.upgrades so we can double track repeated abilities
-		var/datum/antagonist/mob/intangible/blob/antag_role = owner?.mind.get_antagonist(ROLE_BLOB)
-		antag_role.purchased_upgrades += src
-
+		purchased_times++
 		owner.update_buttons()
 
 	proc/tutorial_check()

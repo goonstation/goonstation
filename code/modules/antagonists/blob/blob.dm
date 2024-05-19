@@ -8,7 +8,6 @@
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()
 	var/mob/living/intangible/blob_overmind/bovermind
-	var/list/datum/blob_upgrade/purchased_upgrades = list()
 
 	give_equipment()
 		. = ..()
@@ -57,11 +56,14 @@
 			else
 				absorbed_lifeforms += "[H.real_name] (played by [H.last_client?.key])"
 
-		for (var/datum/blob_upgrade/upgrade in purchased_upgrades)
+		for (var/datum/blob_upgrade/upgrade in bovermind.upgrades)
+			var/repeater = ""
+			if (upgrade.repeatable)
+				repeater += " x[upgrade.purchased_times]"
 			upgrades += list(
 				list(
 					"iconBase64" = "[icon2base64(icon(initial(upgrade.icon), initial(upgrade.icon_state), frame = 1, dir = 0))]",
-					"name" = "[upgrade.name]",
+					"name" = "[upgrade.name][repeater]",
 				)
 			)
 
