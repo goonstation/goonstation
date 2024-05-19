@@ -1,5 +1,87 @@
 
+(t)sat may 18 24
+(u)MeggalBozale
+(p)18995
+(e)🪲📡|C-Bug, A-AI
+(+)Rockworms properly eat rocks again.
+(t)fri may 17 24
+(u)crunchwarp
+(p)18939
+(e)📦|A-Game-Objects
+(+)Traitor HoPs can now purchase the Black Market Megaphone. Overthrow the Captain today!
+(u)LeahTheTech
+(p)18973
+(e)⛔|C-Removal
+(*)Reverted TG chat due to performance and stability issues.
+(t)thu may 16 24
+(u)MeggalBozale
+(p)18144
+(e)🔎💅🔄📄⚙|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Internal
+(*)Fabricators have been converted to use a brand new TGUI interface, as well as becoming more performant.
+(u)Sord
+(*)Most restrooms, quarters, and heads quarters now have door bolters inside them. Use them for crime or to just shower in peace!
+(u)Sovexe
+(p)18879
+(e)🪲🔎🧫🔄⚙🐣|C-Bug, C-Code-Quality, C-Experimental, C-Rework, A-Internal, A-Respawning
+(*)Refactored job assignment code. Jobs variety should improve overall. Unless this change breaks everything.
+(t)wed may 15 24
+(u)Cheffie, ZeWaka and Mordent
+(p)16708
+(e)🔄⛔📄|C-Rework, C-Removal, A-UI
+(*)The chat panel is now a TGUI interface. Please report any chat related issues! Even if its just a styling problem!
+(*)Client darkmode preference is now controlled by the chat panel.
+(*)If chat fails to load, go to commands and try "fix chat". This hopefully shouldn't be an issue though.
+(*)Not all regex will work after import as there is a limitation of allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+(+)Chat filtering options have been expanded, check PR page for details. Report any unsorted messages you think fit
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)PDAs now sorta work like ATMs if you have your ID card inserted into them, allowing you to withdraw and deposit money on the go.
+(*)Player-made vending machines now accept things from satchels properly.
+(*)Player-made vending machines will use the last price you entered as the default for new products, instead of it being 15 every time.
+(*)Adjusted mail drop tables a bit. You should get less garbage!
+(t)tue may 14 24
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Phones now announce who's calling.
+(u)Glamurio (Ryou)
+(p)18898
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added a new hand-held device that allows simple communication, available to Ambassadors and Tourists.
+(t)mon may 13 24
+(u)Ikea
+(p)17768
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Feeding viscerite to synthflesh pustules generates viscerite viscera. The pustule proceeds to digest this chemical into synthflesh and martian flesh, all while offgassing sulfuric acid. Small/medium pustules produce 7 units of synthflesh and 7 units of martian flesh per viscerite, large pustules produce 14 units of synthflesh and 2.5 units of martian flesh per viscerite.
+(+)A new chem has been added in the form of viscerite viscera. Currently only obtainable from synthflesh pustules, this chem heals 2.5 brute and burn, all while dealing 1.5 tox, purging other chems, and dealing weakened.
+(u)FlameArrow57
+(p)18854
+(e)💅🔄📦|C-QoL, C-Rework, A-Game-Objects
+(+)Gun tooltips (from mouse hovering) now show exact projectile damage, as well as stamina damage, armor pierce, and pod system disruption chance if they exist
+(u)FlameArrow57, Flaborized, and Azrun
+(p)16676
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added a new type of fire, chemical fire, with sprites by Flaborized! This is a type of fire that acts the same as atmospheric fire but comes from chemical/magical sources, colored depending on the source, and can be on the same tile as atmospheric fire. Replaces all non-atmospheric fires.
+(+)Fire created from the Wizard fireball spell will now be the color of the hat the Wizard is wearing.
+(t)sun may 12 24
+(u)Mordent
+(p)18878
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Civilian cyborgs get a free Recharge Pack instead of an Efficiency upgrade.
+(u)JORJ949
+(p)18845
+(e)🪲🗺⚖|C-Bug, A-Mapping, C-Balance
+(+)Nadir Armory is now properly equipped.
+(u)Ilysen
+(p)18672
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed zombies' Infect ability breaking when interrupted. Also added a new big message in chat when you get infected!
+(u)crunchwarp
+(p)18831
+(e)🆕📄|C-Feature, A-UI
+(+)Nukies purchases are now visible in the crew credits
 (t)sat may 11 24
+(u)Zamujasa
+(+)Visitors to the Afterlife Bar should have more accurate ID cards.
 (u)Cheekybrdy
 (p)18732
 (e)🎨|C-Sprites

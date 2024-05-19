@@ -24,7 +24,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/name = "Youshouldneverseemeium"
 	/// Description of the material, used for scanning
 	VAR_PROTECTED/desc = "This is a custom material."
-	/// List of all the various [/datum/material_property] that apply.
+	/// Associated list of all the various [/datum/material_property] that apply.
+	/// list[/datum/material_property] = value
 	VAR_PROTECTED/list/properties = list()
 	/// Various flags. See [material_properties.dm]
 	VAR_PROTECTED/material_flags = 0

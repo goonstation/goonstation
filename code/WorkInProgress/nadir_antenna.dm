@@ -646,7 +646,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	New()
 		START_TRACKING
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.pad_id = "[pick(vowels_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]-[rand(0,9)][rand(0,9)][rand(0,9)]"
 		src.name = "transception pad [pad_id]"
 		..()
@@ -914,7 +914,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 		if(prob(1))
 			desc = "A console capable of remotely connecting to and operating cargo transception pads. Smells faintly of cilantro."
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
 	receive_signal(datum/signal/signal)
 		if(status & NOPOWER)

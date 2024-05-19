@@ -2451,7 +2451,6 @@ proc/init_vox()
 "welcome" = new/datum/VOXsound("welcome", "sound/vox/welcome.ogg", NOUN|VERB|ADJECTIVE),
 "welcomes" = new/datum/VOXsound("welcomes", "sound/vox/welcomes.ogg", VERB),
 "well" = new/datum/VOXsound("well", "sound/vox/well.ogg", VERB | ADVERB | NOUN),
-"wendigo" = new/datum/VOXsound("wendigo", "sound/vox/wendigo.ogg", NOUN),
 "wepon" = new/datum/VOXsound("wepon", "sound/vox/wepon.ogg", NOUN),
 "werewolf" = new/datum/VOXsound("werewolf", "sound/vox/werewolf.ogg", NOUN),
 "west" = new/datum/VOXsound("west", "sound/vox/west.ogg", NOUN),

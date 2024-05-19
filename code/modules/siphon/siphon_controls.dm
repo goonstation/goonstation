@@ -119,7 +119,7 @@
 	New()
 		..()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_HARMONIC_SIPHON)
 
 	receive_signal(datum/signal/signal)
 		if(status & NOPOWER)

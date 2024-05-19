@@ -1443,7 +1443,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aeb" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aec" = (
