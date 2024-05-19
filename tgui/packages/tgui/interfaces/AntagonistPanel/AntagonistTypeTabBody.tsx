@@ -27,28 +27,18 @@ export const AntagonistTypeTabBody = (props: AntagonistPanelData) => (
 const GeneralInformation = (props: AntagonistPanelData) => (
   <Fragment>
     <Section>
-      <Stack
-        vertical
-        align="center"
-        my={3}>
-        <Stack.Item
-          mb={-2.5}
-          italic>
+      <Stack vertical align="center" my={3}>
+        <Stack.Item mb={-2.5} italic>
           The Game Mode Is:
         </Stack.Item>
-        <Stack.Item
-          fontSize={2.75}
-          bold>
+        <Stack.Item fontSize={2.75} bold>
           {toTitleCase(props.gameMode)}
         </Stack.Item>
       </Stack>
     </Section>
-    <Stack
-      justify="space-around">
-      <Stack.Item
-        grow>
-        <Section
-          title="Antagonist Mortality Rate">
+    <Stack justify="space-around">
+      <Stack.Item grow>
+        <Section title="Antagonist Mortality Rate">
           <ProgressBar
             minValue={0}
             maxValue={(props.mortalityRates.antagonistsAlive + props.mortalityRates.antagonistsDead) || 1}
@@ -58,21 +48,17 @@ const GeneralInformation = (props: AntagonistPanelData) => (
             mb={1}
           />
           <LabeledList>
-            <LabeledList.Item
-              label="Alive Antagonists">
+            <LabeledList.Item label="Alive Antagonists">
               {props.mortalityRates.antagonistsAlive}
             </LabeledList.Item>
-            <LabeledList.Item
-              label="Dead Antagonists">
+            <LabeledList.Item label="Dead Antagonists">
               {props.mortalityRates.antagonistsDead}
             </LabeledList.Item>
           </LabeledList>
         </Section>
       </Stack.Item>
-      <Stack.Item
-        grow>
-        <Section
-          title="Crew Mortality Rate">
+      <Stack.Item grow>
+        <Section title="Crew Mortality Rate">
           <ProgressBar
             minValue={0}
             maxValue={(props.mortalityRates.crewAlive + props.mortalityRates.crewDead) || 1}
@@ -116,9 +102,7 @@ const AntagonistList = (props: TabSectionData) => {
 
   return (
     <Section>
-      <Table
-        fill
-        vertical>
+      <Table fill vertical>
         <Table.Row bold>
           <Table.Cell> {props.sectionName ? props.sectionName : "Name"} </Table.Cell>
           <Table.Cell> Location </Table.Cell>
@@ -154,8 +138,7 @@ const TableAntagonistEntry = (props: AntagonistData, context) => {
   return (
     <Fragment>
       <Table.Row>
-        <Table.Cell
-          py="0.5em">
+        <Table.Cell py="0.5em">
           <Tooltip
             content={
               <LabeledList>
@@ -163,8 +146,7 @@ const TableAntagonistEntry = (props: AntagonistData, context) => {
                 <JobTooltip {...props} />
               </LabeledList>
             }>
-            <Box
-              inline>
+            <Box inline>
               {!!props.has_subordinate_antagonists && (
                 <Button
                   width={2}
@@ -227,8 +209,7 @@ const AntagonistRoleTooltip = (props) => {
   } = props;
 
   return (
-    <LabeledList.Item
-      label="Antagonist Role">
+    <LabeledList.Item label="Antagonist Role">
       {toTitleCase(props.display_name)}
     </LabeledList.Item>
   );
@@ -240,8 +221,7 @@ const ClientTooltip = (props) => {
   } = props;
 
   return (
-    <LabeledList.Item
-      label="Client">
+    <LabeledList.Item label="Client">
       {props.ckey ? props.ckey : <Box inline italic>No Client</Box>}
     </LabeledList.Item>
   );
@@ -253,8 +233,7 @@ const JobTooltip = (props) => {
   } = props;
 
   return (
-    <LabeledList.Item
-      label="Job">
+    <LabeledList.Item label="Job">
       {props.job ? props.job : <Box inline italic>N/A</Box>}
     </LabeledList.Item>
   );
@@ -359,10 +338,8 @@ const NuclearBombReadout = (props: TabSectionData, context) => {
   const nuclearBombData: NuclearBombData = props.sectionData;
 
   return (
-    <Section
-      title={toTitleCase(props.sectionName)}>
-      <Stack
-        align="center">
+    <Section title={toTitleCase(props.sectionName)}>
+      <Stack align="center">
         <Stack.Item>
           <Box
             textAlign="center"
@@ -374,12 +351,9 @@ const NuclearBombReadout = (props: TabSectionData, context) => {
             {nuclearBombData.timeRemaining}
           </Box>
         </Stack.Item>
-        <Stack.Item
-          grow>
+        <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item
-              label="Health"
-              verticalAlign="middle">
+            <LabeledList.Item label="Health" verticalAlign="middle">
               <ProgressBar
                 minValue={0}
                 maxValue={nuclearBombData.maxHealth}
@@ -389,9 +363,7 @@ const NuclearBombReadout = (props: TabSectionData, context) => {
                 mb={1}
               />
             </LabeledList.Item>
-            <LabeledList.Item
-              label="Location"
-              verticalAlign="middle">
+            <LabeledList.Item label="Location" verticalAlign="middle">
               {nuclearBombData.area}
               <Button
                 color="transparent"
@@ -427,9 +399,7 @@ const HeadsList = (props: TabSectionData) => {
 
   return (
     <Section>
-      <Table
-        fill
-        vertical>
+      <Table fill vertical>
         <Table.Row bold>
           <Table.Cell> Role </Table.Cell>
           <Table.Cell> Name </Table.Cell>
@@ -493,8 +463,7 @@ const GangReadout = (props: TabSectionData) => {
   }
 
   return (
-    <Section
-      title={props.sectionName}>
+    <Section title={props.sectionName}>
       {gangData.map((section, index) => (
         <AntagonistTabSection
           key={index}
@@ -515,8 +484,7 @@ const GangLockerReadout = (props: TabSectionData, context) => {
 
   return (
     <Section>
-      <Box
-        bold>
+      <Box bold>
         {toTitleCase(props.sectionName)}
       </Box>
       <Divider />
