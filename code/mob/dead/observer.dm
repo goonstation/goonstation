@@ -102,23 +102,13 @@
 		return
 
 	var/is_mutantrace = FALSE
-	if ("lizard" in P.traitPreferences.traits_selected)
-		src.icon_state = "ghost-lizard"
-		is_mutantrace = TRUE
-	else if ("cow" in P.traitPreferences.traits_selected)
-		src.icon_state = "ghost-cow"
-		is_mutantrace = TRUE
-	else if ("skeleton" in P.traitPreferences.traits_selected)
-		src.icon_state = "ghost-skeleton"
-		is_mutantrace = TRUE
-	else if ("roach" in P.traitPreferences.traits_selected)
-		src.icon_state = "ghost-roach"
-		is_mutantrace = TRUE
-	else if ("pug" in P.traitPreferences.traits_selected)
-		src.icon_state = "ghost-pug"
-		is_mutantrace = TRUE
-
-	var/mutantrace_hair = is_mutantrace && ("bald" in P.traitPreferences.traits_selected)
+	var/datum/trait/trait
+	for (var/trait_id in P.traitPreferences.traits_selected)
+		trait = getTraitById(trait_id)
+		if (trait.mutantRace)
+			src.icon_state = trait.mutantRace.ghost_icon_state
+			is_mutantrace = TRUE
+			break
 
 	var/cust_one_state = P.AH.customization_first.id
 	var/cust_two_state = P.AH.customization_second.id
@@ -128,7 +118,7 @@
 	hair.color = P.AH.customization_first_color
 	hair.alpha = GHOST_HAIR_ALPHA
 
-	if (!is_mutantrace || (is_mutantrace && mutantrace_hair))
+	if (!is_mutantrace || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
 		src.AddOverlays(hair, "hair")
 
 		var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
@@ -431,22 +421,8 @@
 	if (!O)
 		return null
 
-	var/is_mutantrace = FALSE
-	if (istype(src.mutantrace, /datum/mutantrace/lizard))
-		O.icon_state = "ghost-lizard"
-		is_mutantrace = TRUE
-	else if (istype(src.mutantrace, /datum/mutantrace/cow))
-		O.icon_state = "ghost-cow"
-		is_mutantrace = TRUE
-	else if (istype(src.mutantrace, /datum/mutantrace/skeleton))
-		O.icon_state = "ghost-skeleton"
-		is_mutantrace = TRUE
-	else if (istype(src.mutantrace, /datum/mutantrace/roach))
-		O.icon_state = "ghost-roach"
-		is_mutantrace = TRUE
-	else if (istype(src.mutantrace, /datum/mutantrace/pug))
-		O.icon_state = "ghost-pug"
-		is_mutantrace = TRUE
+	if (src.mutantrace)
+		O.icon_state = src.mutantrace.ghost_icon_state
 
 	. = O
 
@@ -458,33 +434,21 @@
 	else
 		O.ClearSpecificOverlays("glasses")
 
-	if (is_mutantrace && !src.traitHolder?.hasTrait("bald"))
+	if (src.mutantrace && !src.traitHolder?.hasTrait("bald"))
 		return O
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair
-		if (!is_mutantrace)
-			hair = image(src.bioHolder.mobAppearance.customization_first.icon, src.bioHolder.mobAppearance.customization_first.id)
-		else
-			hair = image(src.mutantrace.hair_custom_style["hair_icon"], src.mutantrace.hair_custom_style["hair_id"])
+		var/image/hair = image(src.AH_we_spawned_with.customization_first.icon, src.AH_we_spawned_with.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
-		var/image/beard
-		if (!is_mutantrace)
-			beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
-		else
-			beard = image(src.mutantrace.hair_custom_style["beard_icon"], src.mutantrace.hair_custom_style["beard_id"])
+		var/image/beard = image(src.AH_we_spawned_with.customization_second.icon, src.AH_we_spawned_with.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
 		beard.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(beard, "beard")
 
-		var/image/detail
-		if (!is_mutantrace)
-			detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
-		else
-			detail = image(src.mutantrace.hair_custom_style["detail_icon"], src.mutantrace.hair_custom_style["detail_id"])
+		var/image/detail = image(src.AH_we_spawned_with.customization_third.icon, src.AH_we_spawned_with.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")
