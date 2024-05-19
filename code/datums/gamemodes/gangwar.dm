@@ -822,7 +822,7 @@ proc/broadcast_to_all_gangs(var/message)
 					disposalList.Add(O)
 				else if (istype(O,/obj/storage))
 					var/obj/storage/crate = O
-					if (!crate.secure && !crate.locked)
+					if (!crate.secure && !crate.locked && !crate.open)
 						crateList.Add(O)
 				else if (istype(O,/obj/table) && !istype(O,/obj/table/glass))
 					tableList.Add(O)
