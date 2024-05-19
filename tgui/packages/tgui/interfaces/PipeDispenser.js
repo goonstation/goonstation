@@ -109,8 +109,7 @@ export const AutoPipeLaying = (props, context) => {
   } = props;
 
   return (
-    <Section
-      title="Automatic Pipe Options">
+    <Section title="Automatic Pipe Options">
       <Button
         color={laying_pipe ? "average" : "green"}
         content={laying_pipe ? "Stop Laying Pipe Automatically" : "Start Laying Pipe Automatically"}
