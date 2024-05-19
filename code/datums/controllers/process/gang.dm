@@ -119,6 +119,11 @@
 		imgroup.add_image(objective_image)
 		broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off weapons & ammunition at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
 
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
+			var/datum/targetable/abil = targetGang.leader.current.getAbility(/datum/targetable/gang/move_gang_base)
+			abil.last_cast = world.time + GANG_CRATE_DROP_TIME + 5 MINUTES
+			targetGang.leader.current.abilityHolder.updateButtons()
 
 		SPAWN(GANG_CRATE_DROP_TIME - 30 SECONDS)
 			if(drop_zone != null)
