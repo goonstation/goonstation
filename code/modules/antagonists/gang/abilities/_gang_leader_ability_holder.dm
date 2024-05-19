@@ -308,6 +308,7 @@
 		return TRUE
 
 	cast()
+		..()
 		var/mob/M = holder.owner
 		var/area/area = get_area(M)
 
