@@ -118,7 +118,12 @@
 	hair.color = P.AH.customization_first_color
 	hair.alpha = GHOST_HAIR_ALPHA
 
-	if (!is_mutantrace || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
+	var/force_hair = FALSE
+	if (istype(C.mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = C.mob
+		force_hair = H.hair_override
+
+	if (!is_mutantrace || force_hair || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
 		src.AddOverlays(hair, "hair")
 
 		var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
