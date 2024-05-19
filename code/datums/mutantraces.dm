@@ -293,7 +293,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.blood_color_changed = TRUE
 
 		src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
-
 		if (!src.dna_mutagen_banned)
 			AH.original_mutant_race = src
 		if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
