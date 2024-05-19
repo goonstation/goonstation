@@ -1526,10 +1526,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 
 		if (src.emagged)
-			if (prob(1))
-				boutput(user, SPAN_ALERT("You let it slip."))
-				user.say("I AM THE LAW")
-				src.are_you_the_law(user, "I AM THE LAW") // the thoughts won
 			src.change_mode(user, pick(src.projectiles), sound = FALSE)
 
 		if (canshoot(user))
