@@ -1,5 +1,9 @@
 
 (t)sun may 19 24
+(u)FlameArrow57
+(p)18991
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Added attack sparks, sound effects, and hit twitches to bots, for projectile collisions
 (u)LeahTheTech
 (p)19009
 (e)🆕🎨⚖|C-Feature, C-Sprites, C-Balance
