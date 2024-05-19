@@ -342,6 +342,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			curly_bob
 				name = "Curly Bob"
 				id = "curly_bob"
+			curly_bob_fade
+				name = "Curly Bob: Faded"
+				id = "curly_bob_fade"
 			charming
 				name = "Charming"
 				id = "charming"
@@ -362,9 +365,13 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
+
 			jelly
 				name = "Jelly"
 				id = "jelly"
+			jelly_fade
+				name = "Jelly: Fade"
+				id = "jelly_fade"
 		long
 			chub2_s
 				name = "Bang: Left"
