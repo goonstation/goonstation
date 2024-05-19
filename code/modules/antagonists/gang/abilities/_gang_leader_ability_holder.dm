@@ -225,7 +225,8 @@
 	can_cast_anytime = 1
 
 	proc/check_valid(mob/M, area/targetArea)
-		if(!istype(targetArea, /area/station))
+		var/turf/T = get_turf(M)
+		if(!istype(targetArea, /area/station) || get_z(T) != Z_LEVEL_STATION)
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return FALSE
 
@@ -234,7 +235,6 @@
 			return FALSE
 
 		//stop people setting up a locker they can't place
-		var/turf/T = get_turf(M)
 		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return FALSE
