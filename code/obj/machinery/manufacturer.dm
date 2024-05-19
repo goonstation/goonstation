@@ -1640,7 +1640,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return C[1]
 		for (var/piece_index in 1 to length(C))
 			var/obj/item/material_piece/P = C[piece_index]
-			var/P_id = P.material.getID()
 			if (pattern in src.material_patterns_by_ref["\ref[P]"])
 				return P
 		return null
