@@ -2,7 +2,7 @@
  * @file
  * @copyright 2021
  * @author jlsnow301 (https://github.com/jlsnow301)
- * @license
+ * @license MIT
  */
 
 import { classes } from 'common/react';
