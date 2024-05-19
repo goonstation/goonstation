@@ -928,7 +928,7 @@
 				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
 					response += canvas.id
 				for_by_tcl(art_exhibit, /obj/decal/exhibit)
-					if (art_exhibit.data)
+					if (art_exhibit.data?.art)
 						response += art_exhibit.exhibit_id
 				return json_encode(response)
 

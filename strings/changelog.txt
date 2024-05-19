@@ -1,4 +1,18 @@
 
+(t)sun may 19 24
+(u)FlameArrow57
+(p)18991
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Added attack sparks, sound effects, and hit twitches to bots, for projectile collisions
+(u)LeahTheTech
+(p)19009
+(e)🆕🎨⚖|C-Feature, C-Sprites, C-Balance
+(*)Added a "methane" canister, sometimes sold by Buford Tenin.
+(t)sat may 18 24
+(u)MeggalBozale
+(p)18995
+(e)🪲📡|C-Bug, A-AI
+(+)Rockworms properly eat rocks again.
 (t)fri may 17 24
 (u)crunchwarp
 (p)18939
