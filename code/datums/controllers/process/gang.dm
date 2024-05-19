@@ -124,7 +124,7 @@
 			var/datum/targetable/abil = targetGang.leader?.current?.getAbility(/datum/targetable/gang/move_gang_base)
 			if (abil)
 				abil.last_cast = world.time + GANG_CRATE_DROP_TIME + 5 MINUTES
-				targetGang.leader.current.abilityHolder.updateButtons()
+				targetGang.leader.current.abilityHolder?.updateButtons()
 
 		SPAWN(GANG_CRATE_DROP_TIME - 30 SECONDS)
 			if(drop_zone != null)
