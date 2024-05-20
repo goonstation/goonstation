@@ -1,11 +1,3 @@
-proc/get_nice_mat_name_for_manufacturers(mat)
-	if(mat in material_category_names)
-		return material_category_names[mat]
-	else
-		var/datum/material/nice_mat = getMaterial(mat)
-		if (istype(nice_mat))
-			return capitalize(nice_mat.getName())
-		return capitalize(mat) //if all else fails (probably a category instead of a material)
 
 ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture
@@ -32,8 +24,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 		if(isnull(item_requirements))
 			item_requirements = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!length(src.item_names))
-			for (var/path in src.item_requirements)
-				src.item_names += get_nice_mat_name_for_manufacturers(path)
+			for (var/datum/manufacturing_requirement/R in src.item_requirements)
+				src.item_names += R.name
 		if (!sanity_check_exemption)
 			src.sanity_check()
 
@@ -969,8 +961,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		coil.setInsulator(getMaterial(materials[item_paths[1]]))
-		coil.setConductor(getMaterial(materials[item_paths[2]]))
+		coil.setInsulator(getMaterial(materials[item_requirements[1]]))
+		coil.setConductor(getMaterial(materials[item_requirements[2]]))
 		return 1
 
 /datum/manufacture/cable/reinforced

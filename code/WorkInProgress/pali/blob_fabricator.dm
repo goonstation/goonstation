@@ -1,7 +1,7 @@
 
 /datum/manufacture/mechanics/blob
 	name = "blob"
-	item_requirements = list(/datum/manufacture_requirement/organic_or_rubber = 3)
+	item_requirements = list(/datum/manufacturing_requirement/organic_or_rubber = 3)
 	time = 10 SECONDS
 	create = 1
 	frame_path = /obj/blob
@@ -10,12 +10,12 @@
 	base
 		name = "blob"
 		frame_path = /obj/blob
-		item_requirements = list(/datum/manufacture_requirement/organic_or_rubber = 1)
+		item_requirements = list(/datum/manufacturing_requirement/organic_or_rubber = 1)
 
 	nucleus
 		name = "nucleus blob"
 		time = 1 MINUTE
-		item_requirements = list(/datum/manufacture_requirement/organic_or_rubber = 30)
+		item_requirements = list(/datum/manufacturing_requirement/organic_or_rubber = 30)
 		frame_path = /obj/blob/nucleus
 
 	launcher

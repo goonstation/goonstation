@@ -51,6 +51,9 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
                     PLEASE ALPHABETIZE THANKS
 ***************************************************************/
 
+	blob
+		name = "Blob"
+		material_id = "blob"
 	cardboard
 		name = "Cardboard"
 		material_id = "cardboard"
@@ -66,6 +69,10 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 	cobryl
 		name = "Cobryl"
 		material_id = "cobryl"
+
+	ectoplasm
+		name = "Ectoplasm"
+		material_id = "ectoplasm"
 
 	electrum
 		name = "Electrum"

@@ -424,7 +424,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (isnull(M.item_names))
 			M.item_names = list()
 			for (var/i in M.item_requirements)
-				var/datum/manufacture_requirement/R = M.item_requirements[i]
+				var/datum/manufacturing_requirement/R = M.item_requirements[i]
 				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
@@ -1659,7 +1659,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_available = list()
 		var/list/C = src.get_contents()
 
-		for (var/datum/manufacture_requirement/R as anything in M.item_requirements)
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
 			for (var/obj/item/material_piece/P in C)
 				var/P_ref = "\ref[P]"
@@ -1671,7 +1671,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					mats_used[R] = P_ref
 					mats_available[P_ref] -= required_amount
 					break
-	
+
 		return mats_used
 
 	/// Check if a blueprint can be manufactured with the current materials.
@@ -1685,7 +1685,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_used = check_enough_materials(M)
 		if (isnull(mats_used))
 			return // how
-		for (var/datum/manufacture_requirement/R as anything in M.item_requirements)
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
 			src.change_contents(-required_amount/10, mat_piece = locate(mats_used[R]))
 
