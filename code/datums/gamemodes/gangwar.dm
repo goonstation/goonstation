@@ -2029,6 +2029,10 @@ proc/broadcast_to_all_gangs(var/message)
 	var/max_charges = 5
 	var/charges = 5
 
+	syndicate
+		max_charges = 10
+		charges = 10
+
 	update_icon()
 		if (charges > 0 )
 			inventory_counter?.update_number(charges)
