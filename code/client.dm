@@ -375,7 +375,8 @@
 			var/datum/game_server/redirect_choice = valid_servers[idx]
 			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
 			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
-			message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
 			if (redirect_choice)
 				changeServer(redirect_choice.id)
 			tgui_process.close_user_uis(src.mob)
@@ -385,7 +386,8 @@
 			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
 			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
 			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
-			message_admins("[key_name(src)] was kicked by popcap limit.")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit.")
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 		return
