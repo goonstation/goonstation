@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/exact_material)
 		New()
 			..()
 			var/datum/material/M = getMaterial(src.id)
-			src.name = initial(M.getName())
+			src.name = M.getName()
 			src.material_id = initial(src.id)
 
 		is_match(var/datum/material/M)
