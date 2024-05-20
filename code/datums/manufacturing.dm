@@ -71,8 +71,10 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/mechanics
 	name = "Reverse-Engineered Schematic"
-	item_paths = list("MET-1","CON-1","CRY-1")
-	item_amounts = list(1,1,1)
+	item_requirements = list(/datum/manufacturing_requirement/metal = 1,
+							 /datum/manufacturing_requirement/conductive = 1,
+							 /datum/manufacturing_requirement/crystal = 1,
+							)
 	item_outputs = list(/obj/item/electronics/frame)
 	var/frame_path = null
 	///generate costs based off of frame_path in New(), e.g.: for pre-spawned cloner blueprints
