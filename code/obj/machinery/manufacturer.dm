@@ -1652,24 +1652,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return P
 		return null
 
-	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
-	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
+	/// Returns associative list of manufacturing requirement to material piece reference, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
 	proc/get_materials_needed(datum/manufacture/M)
-		var/list/mats_used = list()
-		var/list/mats_available = list()
 		var/list/C = src.get_contents()
+
+		var/list/mats_used = list()
+		var/list/mats_projected = list()
+		for (var/obj/item/material_piece/P in C)
+			mats_projected["\ref[P]"] = P.amount * 10
 
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
 			for (var/obj/item/material_piece/P in C)
 				var/P_ref = "\ref[P]"
-				if (!(P_ref in mats_available))
-					mats_available[P_ref] = P.amount * 10
-				if (mats_available[P_ref] < required_amount)
+				if (mats_projected[P_ref] < required_amount)
 					continue
 				if (R.is_match(P))
 					mats_used[R] = P_ref
-					mats_available[P_ref] -= required_amount
+					mats_projected[P_ref] -= required_amount
 					break
 
 		return mats_used
