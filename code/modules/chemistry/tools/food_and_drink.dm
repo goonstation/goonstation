@@ -40,12 +40,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			owner.organHolder.stomach.eject(src)
 			qdel(src)
 
-	proc/on_table()
+	proc/ant_safe()
 		if (!isturf(src.loc))
 			return FALSE
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
+			return TRUE
+		if (locate(/obj/storage/secure/closet/fridge) in src.loc) // includes fridges
 			return TRUE
 		return FALSE
 
@@ -186,12 +188,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	process()
 		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
-			if (!src.disposed && isturf(src.loc) && !on_table())
+			if (!src.disposed && isturf(src.loc) && !ant_safe())
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
 					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
 						new/obj/reagent_dispensers/cleanable/ants(src.loc)
+						src.reagents.add_reagent("ants", 5)
 
 
 	attackby(obj/item/W, mob/user)
