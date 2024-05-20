@@ -1061,7 +1061,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
-	mats = list(/datum/manufacturing_requirement/metal/superdense=20, /datum/manufacturing_requirement/uqil=10, /datum/manufacturing_requirement/conductive/high = 10, /datum/manufacturing_requirement/energy/high = 10)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=20, /datum/manufacturing_requirement/uqill=10, /datum/manufacturing_requirement/conductive/high = 10, /datum/manufacturing_requirement/energy/high = 10)
 
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"

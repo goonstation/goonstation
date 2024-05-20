@@ -4,10 +4,28 @@
    If you want any piece of flock and it must be dense, it'd look like:
    /datum/manufacture_requirement/dense/flock
 */
-ABSTRACT_TYPE(/datum/manufacture_requirement)
+
+var/global/list/manufacturing_requirement_cache
+
+/// Helps get an exact material when otherwise it would need to be pre-initialized.
+/// Shameless rip off Mat_ProcsDefines.dm since the functionality is p much identical, as we ID specific mat reqs with material ID for this purpose
+/proc/getExactMaterialRequirement(var/mat)
+	#ifdef CHECK_MORE_RUNTIMES
+	if (!istext(mat))
+		CRASH("getExactMaterialRequirement() called with a non-text argument [mat].")
+	if (!(mat in material_cache))
+		CRASH("getExactMaterialRequirement() called with an invalid material id [mat].")
+	#endif
+	if(!istext(mat))
+		return null
+	return manufacturing_requirement_cache?[material_id]
+
+ABSTRACT_TYPE(/datum/manufacturing_requirement)
 /datum/manufacturing_requirement
 	/// Player-facing name of the requirement.
 	var/name = "Unknown"
+	/// Internal, unique ID of the requirement to use for the cache list.
+	var/id = null
 	/// Material ID of the material to checl. None if null, some string like "erebite" if used. Meant for exact material checks.
 	var/material_id = null
 	/// Material flags of the material to check. None of null, can be made like MATERIAL_A | MATERIAL_B if needed to check for either.
@@ -44,6 +62,7 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 
 	any
 		name = "Any"
+		id = "any"
 
 /***************************************************************
                       EXACT MATERIAL MATCH
@@ -51,28 +70,46 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
                     PLEASE ALPHABETIZE THANKS
 ***************************************************************/
 
+	exact_material
+
+		New(var/material_id)
+			var/datum/material/M = getMaterial(material_id)
+			name = initial(M.name)
+			material_id = initial(M.getID())
+			id = initial(M.getID())
 	blob
 		name = "Blob"
 		material_id = "blob"
+		id = "blob"
+
+	butt
+		name = "Butt"
+		material_id = "butt"
+		id = "butt"
 	cardboard
 		name = "Cardboard"
 		material_id = "cardboard"
+		id = "cardboard"
 
 	cerenkite
 		name = "Cerenkite"
 		material_id = "cerenkite"
+		id = "cerenkite"
 
 	char
 		name = "Char"
 		material_id = "char"
+		id = "char"
 
 	cobryl
 		name = "Cobryl"
 		material_id = "cobryl"
+		id = "cobryl"
 
 	ectoplasm
 		name = "Ectoplasm"
 		material_id = "ectoplasm"
+		id = "ectoplasm"
 
 	electrum
 		name = "Electrum"
@@ -82,9 +119,17 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 		name = "Erebite"
 		material_id = "erebite"
 
+	exoweave
+		name = "ExoWeave"
+		material_id = "exoweave"
+
 	gold
 		name = "Gold"
 		material_id = "gold"
+
+	honey
+		name = "Honey"
+		material_id = "honey"
 
 	ice
 		name = "Ice"
@@ -94,9 +139,16 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 		name = "Koshmarite"
 		material_id = "koshmarite"
 
+	miracle
+		name = "Miracle Matter"
+		material_id = "miracle"
 	molitz
 		name = "Molitz"
 		material_id = "molitz"
+
+	neutronium
+		name = "Neutronium"
+		material_id = "neutronium"
 
 	pharosium
 		name = "Pharosium"
@@ -106,6 +158,9 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 		name = "Plasmastone"
 		material_id = "plasmastone"
 
+	starstone
+		name = "Starstone"
+		material_id = "starstone"
 	syreline
 		name = "Syreline"
 		material_id = "Syreline"

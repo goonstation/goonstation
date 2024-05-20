@@ -82,6 +82,8 @@
 		buildMaterialPropertyCache()	//Order is important.
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
+		Z_LOG_DEBUG("Preload") "Building manufacturing requirement cache..."
+		buildManufacturingRequirementCache()
 
 		// no log because this is functionally instant
 		global_signal_holder = new
@@ -220,6 +222,17 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
+
+/// All our special requirement types, and all potential materials we could want to check
+/proc/buildManufacturingRequirementCache()
+	requirement_cache = list()
+	for(var/datum/manufacturing_requirement/req as anything in concrete_typesof(/datum/manufacturing_requirement))
+		var/datum/manufacturing_requirement/R = new req()
+		manufacturing_requirement_cache[R.id] = R
+	for (var/datum/material/M as anything in material_cache)
+		var/datum/manufacturing_requirement/exact_material/R = new /datum/manufacturing_requirement/exact_material(M.getID())
+		manufacturing_requirement_cache[R.id] = R
+
 
 #ifdef TRACY_PROFILER_HOOK
 /proc/prof_init()
