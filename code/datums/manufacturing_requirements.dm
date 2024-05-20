@@ -18,7 +18,7 @@ var/global/list/manufacturing_requirement_cache
 	#endif
 	if(!istext(mat))
 		return null
-	return manufacturing_requirement_cache?[material_id]
+	return manufacturing_requirement_cache?[mat]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
 ABSTRACT_TYPE(/datum/manufacturing_requirement/exact_material)
@@ -69,8 +69,9 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/exact_material)
 	match_material
 		/// All you need to do is define the material id. we can take it from there ;P
 		New()
+			..()
 			var/datum/material/M = getMaterial(src.id)
-			src.name = initial(M.name)
+			src.name = initial(M.getName())
 			src.material_id = initial(src.id)
 
 		is_match(var/datum/material/M)
