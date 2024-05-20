@@ -605,7 +605,7 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
-	mats = list("viscerite"=25)
+	mats = list(/datum/manufacturing_requirement/viscerite=25)
 
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"

@@ -16,7 +16,7 @@
 		return
 
 TYPEINFO(/obj/item/rcd/material/cardboard)
-	mats = list("CRY-2" = 10, "POW-2" = 10, "cardboard" = 30)
+	mats = list(/datum/manufacturing_requirement/crystal/dense = 10, /datum/manufacturing_requirement/energy/high = 10, /datum/manufacturing_requirement/cardboard = 30)
 
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"

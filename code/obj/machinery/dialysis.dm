@@ -1,5 +1,5 @@
 TYPEINFO(/obj/machinery/dialysis)
-	mats = list("MET-1" = 20, "CRY-1" = 5, "CON-2" = 5)
+	mats = list(/datum/manufacturing_requirement/metal = 20, /datum/manufacturing_requirement/crystal = 5, /datum/manufacturing_requirement/conductive/high = 5)
 
 /obj/machinery/dialysis
 	name = "dialysis machine"

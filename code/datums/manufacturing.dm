@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 		if(isnull(item_requirements))
 			item_requirements = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!length(src.item_names))
-			for (var/datum/manufacturing_requirement/R in src.item_requirements)
+			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
 				src.item_names += R.name
 		if (!sanity_check_exemption)
 			src.sanity_check()
@@ -43,6 +43,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 		for (var/requirement in src.item_requirements)
 			if (isnull(src.item_requirements[requirement]))
 				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement list not properly configured")
+				qdel(src)
+				return
 		if (length(src.item_requirements) != length(src.item_names))
 			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement list not properly configured")
 			qdel(src)
@@ -682,7 +684,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		S.set_reinforcement(getMaterial(materials["MET-1"]))
+		S.set_reinforcement(getMaterial(materials[/datum/manufacturing_requirement/metal]))
 
 /datum/manufacture/glass
 	name = "Glass Panel"
@@ -708,7 +710,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		S.set_reinforcement(getMaterial(materials["CRY-1"]))
+		S.set_reinforcement(getMaterial(materials[/datum/manufacturing_requirement/crystal]))
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"

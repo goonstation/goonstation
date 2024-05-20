@@ -1,6 +1,6 @@
 //handheld device for manual calibration of siphon systems
 TYPEINFO(/obj/item/device/calibrator)
-	mats = list("CRY-1", "CON-1")
+	mats = list(/datum/manufacturing_requirement/crystal, /datum/manufacturing_requirement/conductive)
 
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"

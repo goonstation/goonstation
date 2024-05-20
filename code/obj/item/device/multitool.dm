@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/device/multitool)
-	mats = list("CRY-1", "CON-2")
+	mats = list(/datum/manufacturing_requirement/crystal, /datum/manufacturing_requirement/conductive/high)
 
 /obj/item/device/multitool
 	name = "multitool"

@@ -5,7 +5,7 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
-	mats = list("MET-3"=10, "CON-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=10, /datum/manufacturing_requirement/conductive/high=10)
 
 /obj/item/baton
 	name = "stun baton"
@@ -352,7 +352,7 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list("MET-3"=10, "CON-2"=10, "GEM-1"=10, "gold"=1)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=10, /datum/manufacturing_requirement/conductive/high=10, /datum/manufacturing_requirement/crystal/gemstone=10, /datum/manufacturing_requirement/gold=1)
 
 /obj/item/baton/cane
 	name = "stun cane"
@@ -401,7 +401,7 @@ TYPEINFO(/obj/item/baton/classic)
 
 
 TYPEINFO(/obj/item/baton/ntso)
-	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=10, /datum/manufacturing_requirement/conductive/high=10, /datum/manufacturing_requirement/energy=5)
 
 /obj/item/baton/ntso
 	name = "extendable stun baton"

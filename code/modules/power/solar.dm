@@ -10,7 +10,7 @@
 //As long as this is working, solar panels on same powernet will track automatically
 
 TYPEINFO(/obj/machinery/power/tracker)
-	mats = list("CRY-1"=15, "CON-1"=20)
+	mats = list(/datum/manufacturing_requirement/crystal=15, /datum/manufacturing_requirement/conductive=20)
 
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
@@ -84,7 +84,7 @@ TYPEINFO(/obj/machinery/power/tracker)
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/power/solar)
-	mats = list("MET-2"=15, "CON-1"=15)
+	mats = list(/datum/manufacturing_requirement/metal/dense=15, /datum/manufacturing_requirement/conductive=15)
 
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"

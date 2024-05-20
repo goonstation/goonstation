@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/device/flash)
-	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
+	mats = list(/datum/manufacturing_requirement/metal = 3, /datum/manufacturing_requirement/conductive = 5, /datum/manufacturing_requirement/crystal = 5)
 
 /obj/item/device/flash
 	name = "flash"

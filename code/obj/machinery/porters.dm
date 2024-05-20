@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/remote/porter)
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
-	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
+	mats = list(/datum/manufacturing_requirement/metal = 5, /datum/manufacturing_requirement/conductive = 5, /datum/manufacturing_requirement/telecrystal = 10)
 
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"

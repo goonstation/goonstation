@@ -4,7 +4,7 @@
 
 // moves items/mobs/movables in set direction every ptick
 TYPEINFO(/obj/machinery/conveyor) {
-	mats = list("MET-1" = 1, "CON-1" = 1, "CRY-1" = 1)
+	mats = list(/datum/manufacturing_requirement/metal = 1, /datum/manufacturing_requirement/conductive = 1, /datum/manufacturing_requirement/crystal = 1)
 }
 
 /obj/machinery/conveyor
@@ -882,7 +882,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 TYPEINFO(/obj/machinery/conveyor_switch) {
-	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
+	mats = list(/datum/manufacturing_requirement/metal = 10, /datum/manufacturing_requirement/conductive = 10, /datum/manufacturing_requirement/crystal = 10)
 }
 
 

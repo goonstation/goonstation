@@ -895,7 +895,7 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list("bamboo"=3, "MET-1"=10)
+	mats = list(/datum/manufacturing_requirement/bamboo=3, /datum/manufacturing_requirement/metal=10)
 
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
@@ -1108,7 +1108,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list("neutronium"=3, "MET-1"=10)
+	mats = list(/datum/manufacturing_requirement/neutronium=3, /datum/manufacturing_requirement/metal=10)
 
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"

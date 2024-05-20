@@ -276,7 +276,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/phaser_huge)
-	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
+	mats = list(/datum/manufacturing_requirement/metal=15, /datum/manufacturing_requirement/metal/dense=10, /datum/manufacturing_requirement/conductive/high=10, /datum/manufacturing_requirement/energy/high=15, /datum/manufacturing_requirement/crystal=10)
 
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
@@ -302,7 +302,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 ///////////////////////////////////////Rad Crossbow
 TYPEINFO(/obj/item/gun/energy/crossbow)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal=5, /datum/manufacturing_requirement/conductive/high=5, /datum/manufacturing_requirement/energy/high=10)
 
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
@@ -345,7 +345,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
-	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
+	mats = list(/datum/manufacturing_requirement/metal=15, /datum/manufacturing_requirement/conductive=5, /datum/manufacturing_requirement/energy=5)
 
 /obj/item/gun/energy/egun
 	name = "energy gun"
@@ -484,7 +484,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 ////////////////////////////////////VUVUV
 TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal=5, /datum/manufacturing_requirement/conductive/high=5, /datum/manufacturing_requirement/energy/high=10)
 
 /obj/item/gun/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
@@ -1070,7 +1070,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 ///////////////////////////////////////Hunter
 TYPEINFO(/obj/item/gun/energy/plasma_gun)
-	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=7, /datum/manufacturing_requirement/crystal=13, /datum/manufacturing_requirement/energy/high=10)
 
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
 	name = "plasma rifle"
@@ -1127,7 +1127,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 TYPEINFO(/obj/item/gun/energy/pickpocket)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal=5, /datum/manufacturing_requirement/conductive/high=5, /datum/manufacturing_requirement/energy/high=10)
 
 /obj/item/gun/energy/pickpocket
 	name = "pickpocket grapple gun" // absurdly shitty name
@@ -1237,7 +1237,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 TYPEINFO(/obj/item/gun/energy/alastor)
-	mats = list("MET-2"=15, "CON-2"=10, "POW-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal/dense=15, /datum/manufacturing_requirement/conductive/high=10, /datum/manufacturing_requirement/energy/high=10)
 
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
@@ -1269,7 +1269,7 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 
 ///////////////////////////////////////////////////
 TYPEINFO(/obj/item/gun/energy/lawbringer)
-	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
+	mats = list(/datum/manufacturing_requirement/metal=15, /datum/manufacturing_requirement/conductive/high=5, /datum/manufacturing_requirement/energy/high=5)
 
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
@@ -1579,7 +1579,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
+	mats = list(/datum/manufacturing_requirement/metal=5, /datum/manufacturing_requirement/conductive/high=5, /datum/manufacturing_requirement/energy/high=10)
 
 /obj/item/gun/energy/wasp
 	name = "mini wasp-egg-crossbow"
@@ -1647,7 +1647,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
 TYPEINFO(/obj/item/gun/energy/optio1)
-	mats = list("iridiumalloy" = 30, "plutonium" = 15, "electrum" = 25)
+	mats = list("iridiumalloy" = 30, "plutonium" = 15, /datum/manufacturing_requirement/electrum = 25)
 /obj/item/gun/energy/optio1
 	name = "\improper Optio I"
 	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
@@ -1664,7 +1664,7 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/signifer2)
-	mats = list("POW-2" = 15, "CON-2" = 15, "MET-3" = 20)
+	mats = list(/datum/manufacturing_requirement/energy/high = 15, /datum/manufacturing_requirement/conductive/high = 15, /datum/manufacturing_requirement/metal/superdense = 20)
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
@@ -1726,7 +1726,7 @@ TYPEINFO(/obj/item/gun/energy/signifer2)
 		. = ..()
 
 TYPEINFO(/obj/item/gun/energy/cornicen3)
-	mats = list("iridiumalloy" = 50, "starstone" = 30, "plutonium" = 25, "electrum" = 50, "exoweave" = 5)
+	mats = list("iridiumalloy" = 50, "starstone" = 30, "plutonium" = 25, "electrum" = 50, /datum/manufacturing_requirement/exoweave = 5)
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
 	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
@@ -1777,7 +1777,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 		M.update_inhands()
 
 TYPEINFO(/obj/item/gun/energy/vexillifer4)
-	mats = list("iridiumalloy" = 50, "starstone" = 10, "MET-3" = 150, "CRY-2" = 100, "CON-2" = 100, "POW-3" = 50)
+	mats = list("iridiumalloy" = 50, /datum/manufacturing_requirement/starstone = 10, /datum/manufacturing_requirement/metal/superdense = 150, /datum/manufacturing_requirement/crystal/dense = 100, /datum/manufacturing_requirement/conductive/high = 100, /datum/manufacturing_requirement/energy/extreme = 50)
 /obj/item/gun/energy/vexillifer4
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."

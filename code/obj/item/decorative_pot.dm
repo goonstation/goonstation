@@ -1,5 +1,5 @@
 TYPEINFO(/obj/decorative_pot)
-	mats = list("ALL" = 1)
+	mats = list(/datum/manufacturing_requirement/any = 1)
 
 /obj/decorative_pot
 		name = "plant pot"

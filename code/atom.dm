@@ -475,8 +475,8 @@ TYPEINFO(/atom)
 	..()
 
 TYPEINFO(/atom/movable)
-	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
-	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	/// Either a number or a list of the form list(/datum/manufacturing_requirement/metal=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what /datum/manufacturing_requirement/crystal/dense is supposed to mean
 	var/list/mats = null
 
 /atom/movable

@@ -12,7 +12,7 @@ Contains:
 //////////////////////////////////////////////// T-ray scanner //////////////////////////////////
 
 TYPEINFO(/obj/item/device/t_scanner)
-	mats = list("CRY-1", "CON-1")
+	mats = list(/datum/manufacturing_requirement/crystal, /datum/manufacturing_requirement/conductive)
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"

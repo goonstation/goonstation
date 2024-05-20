@@ -17,7 +17,7 @@
 
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+	mats = list(/datum/manufacturing_requirement/metal=5, /datum/manufacturing_requirement/conductive/high=5, /datum/manufacturing_requirement/energy/extreme=10)
 
 /obj/item/sword
 	name = "cyalume saber"
@@ -1064,7 +1064,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
 TYPEINFO(/obj/item/bat)
-	mats = list("wood" = 8)
+	mats = list(/datum/manufacturing_requirement/wood = 8)
 
 /obj/item/bat
 	name = "Baseball Bat"
@@ -1326,7 +1326,7 @@ TYPEINFO(/obj/item/bat)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
-	mats = list("MET-3"=20, "FAB-1"=5)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=20, /datum/manufacturing_requirement/fabric=5)
 
 /obj/item/swords/katana
 	name = "katana"
@@ -1416,7 +1416,7 @@ TYPEINFO(/obj/item/swords/katana)
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
 TYPEINFO(/obj/item/swords/captain)
-	mats = list("MET-2"=15)
+	mats = list(/datum/manufacturing_requirement/metal/dense=15)
 
 /obj/item/swords/captain
 	icon_state = "cap_sword"

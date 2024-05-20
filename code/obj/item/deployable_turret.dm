@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		..()
 
 TYPEINFO(/obj/item/turret_deployer/riot)
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+	mats = list(/datum/manufacturing_requirement/insulated=10, /datum/manufacturing_requirement/conductive=10, /datum/manufacturing_requirement/crystal=3, /datum/manufacturing_requirement/metal/dense=2)
 
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"

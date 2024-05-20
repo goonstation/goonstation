@@ -685,7 +685,7 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
 TYPEINFO(/obj/item/clothing/head/helmet/camera)
-	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
+	mats = list(/datum/manufacturing_requirement/metal=4, /datum/manufacturing_requirement/crystal=2, /datum/manufacturing_requirement/conductive=2)
 
 /obj/item/clothing/head/helmet/camera
 	name = "camera helmet"
@@ -1061,7 +1061,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
-	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
+	mats = list(/datum/manufacturing_requirement/metal/superdense=20, /datum/manufacturing_requirement/uqil=10, /datum/manufacturing_requirement/conductive/high = 10, /datum/manufacturing_requirement/energy/high = 10)
 
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"
