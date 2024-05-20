@@ -1382,6 +1382,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 
 /datum/syndicate_buylist/surplus/quickhack
 	name = "Quickhack"
-	item = /obj/item/quickhack/syndicate
+	item = /obj/item/tool/quickhack/syndicate
 	cost = 1
 	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."
