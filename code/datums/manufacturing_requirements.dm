@@ -21,7 +21,8 @@ var/global/list/manufacturing_requirement_cache
 	return manufacturing_requirement_cache?[mat]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
-ABSTRACT_TYPE(/datum/manufacturing_requirement/exact_material)
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_material)
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement
 	/// Player-facing name of the requirement.
 	var/name = "Unknown"
