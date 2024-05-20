@@ -33,25 +33,25 @@
 		if (owner.bleeding)
 
 
-			var/decrease_chance = 2 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
+			var/decrease_chance = 0 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
 			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
 
-			if (owner.bleeding > 1)
+			if (owner.bleeding < 4)
 				decrease_chance += 3
 			else
 				surgery_increase_chance += 10
 
 
 			if (anticoag_amt) // anticoagulant
-				decrease_chance -= rand(1,2)
+				decrease_chance -= 5
 			if (coag_amt) // coagulant
-				decrease_chance += rand(2,4)
+				decrease_chance += 5
 
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
 
 			if (probmult(decrease_chance))
-				owner.bleeding -= 1 * mult
+				owner.bleeding -= 1
 				boutput(owner, SPAN_NOTICE("Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")]."))
 
 			if (prob(surgery_increase_chance) && owner.get_surgery_status())
@@ -65,6 +65,10 @@
 
 				if (anticoag_amt)
 					final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
+				if (owner.blood_volume < 200)
+					final_bleed *= 0.25 // this guy's basically dead anyway. more bleed just means its less likely they get a transfusion
+				else if (owner.blood_volume < 300)
+					final_bleed *= 0.75 // less blood to bleed. negative blood fx taking place
 				final_bleed *= mult
 				if (prob(clamp(final_bleed, 0, 10) * 5)) // up to 50% chance to make a big bloodsplatter
 					bleed(owner, final_bleed, 5)
@@ -169,10 +173,32 @@
 				if (prob(30))
 					owner.changeStatus("shivering", 6 SECONDS)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
-				owner.add_stam_mod_max("hypotension", -15)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -5)
+				owner.add_stam_mod_max("hypotension", -50)
 
-			if (1 to 300) // very low (70/50)
+			if (1 to 200) // very VERY low (70/50)
+				owner.take_oxygen_deprivation(0.9 * mult)
+				owner.take_brain_damage(0.9 * mult)
+				owner.losebreath += (0.9* mult)
+				owner.change_eye_blurry(5, 5)
+				owner.setStatus("drowsy", rand(8, 10) SECONDS)
+				if (prob(10))
+					owner.change_misstep_chance(rand(1,2) * mult)
+				if (prob(10))
+					owner.emote(pick("faint", "collapse", "pale", "shudder", "gasp", "moan"))
+				if (prob(14))
+					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
+					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
+					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
+					owner.changeStatus("knockdown", 3 SECONDS * mult)
+				if (prob(25))
+					owner.changeStatus("shivering", 6 SECONDS) // Getting very cold (same duration as shivers from cold)
+				if (prob(55))
+					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
+				owner.add_stam_mod_max("hypotension", -25)
+
+			if (200 to 300) // very low (70/50)
 				owner.take_oxygen_deprivation(0.8 * mult)
 				owner.take_brain_damage(0.8 * mult)
 				owner.losebreath += (0.8 * mult)
