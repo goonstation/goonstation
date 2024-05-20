@@ -28,7 +28,10 @@ var/global/current_state = GAME_STATE_INVALID
 	var/tmp/useTimeDilation = TIME_DILATION_ENABLED
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
-	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
+	/// how many times in a row has the cpu been high
+	var/tmp/highCpuCount = 0
+	/// how many times in a row has the map_cpu been high
+	var/tmp/highMapCpuCount = 0
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -456,6 +459,13 @@ var/global/current_state = GAME_STATE_INVALID
 				last_try_dilate = world.time
 
 				// adjust the counter up or down and keep it within the set boundaries
+				if (world.cpu >= TICKLAG_CPU_MAX)
+					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						highCpuCount++
+				else if (world.cpu <= TICKLAG_CPU_MIN)
+					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						highCpuCount--
+
 				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
 					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
 						highMapCpuCount++
@@ -465,9 +475,9 @@ var/global/current_state = GAME_STATE_INVALID
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
-				if (highMapCpuCount >= TICKLAG_INCREASE_THRESHOLD)
+				if (max(highCpuCount, highMapCpuCount) >= TICKLAG_INCREASE_THRESHOLD)
 					dilated_tick_lag = min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
-				else if (highMapCpuCount <= -TICKLAG_DECREASE_THRESHOLD)
+				else if (max(highCpuCount, highMapCpuCount) <= -TICKLAG_DECREASE_THRESHOLD)
 					dilated_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
 
 				// only set the value if it changed! earlier iteration of this was
