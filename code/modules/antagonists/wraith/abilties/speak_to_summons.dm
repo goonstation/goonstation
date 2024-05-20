@@ -7,11 +7,13 @@
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast(mob/target)
 		if (!holder)
 			return 1
-
+		. = ..()
 		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W)

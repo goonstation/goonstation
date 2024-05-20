@@ -59,8 +59,7 @@ var/global/current_state = GAME_STATE_INVALID
 	var/did_reminder = FALSE
 
 	#ifdef LIVE_SERVER
-	if (!player_capa)
-		new /obj/overlay/zamujasa/round_start_countdown/encourage()
+	new /obj/overlay/zamujasa/round_start_countdown/encourage()
 	#endif
 	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
 	while (current_state <= GAME_STATE_PREGAME)
@@ -356,8 +355,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 				if (player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					SPAWN(0)
-						participationRecorder.record(P)
+					participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()

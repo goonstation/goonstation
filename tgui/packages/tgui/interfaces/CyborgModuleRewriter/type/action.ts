@@ -5,30 +5,6 @@
  * @license ISC
  */
 
-export interface CyborgModuleRewriterData {
-  modules: ModulesData;
-}
-
-interface AvailableModule {
-  name: string;
-  item_ref: string;
-}
-
-interface SelectedModule {
-  item_ref: string;
-  tools: Array<ToolData>;
-}
-
-export interface ModulesData {
-  available: Array<AvailableModule>;
-  selected: SelectedModule;
-}
-
-export interface ToolData {
-  name: string;
-  item_ref: string;
-}
-
 export enum Action {
   EjectModule = 'module-eject',
   MoveTool = 'tool-move',
@@ -41,8 +17,6 @@ export enum Direction {
   Up = 'up',
   Down = 'down',
 }
-
-export type Act = (action: string, payload?: object) => void;
 
 interface ItemActionPayload {
   itemRef: string;

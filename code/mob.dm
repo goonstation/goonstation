@@ -442,8 +442,10 @@
 	..()
 
 /mob/Login()
-	if (!src.client)
-		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	if (isnull(src.client))
+		return
+		// Guests that get deleted, is how
+		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isnull(src.client.tg_layout))
 		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
 	src.client.set_layout(src.client.tg_layout)
@@ -616,7 +618,9 @@
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
 				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
-
+				if(!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS))
+					random_brute_damage(tmob, 7, TRUE)
+					random_brute_damage(src, 7, TRUE)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
 				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
 
@@ -1502,6 +1506,13 @@
 	else
 		return (!mover.density || !src.density || src.lying)
 
+/mob/Crossed(atom/movable/AM)
+	. = ..()
+	if(ishuman(AM) && src.lying)
+		var/mob/living/carbon/human/H = AM
+		if(H.a_intent == "harm" && can_act(H, FALSE) && !H.lying && !ON_COOLDOWN(H, "free_kick_on_\ref[src]", H.trample_cooldown))
+			H.melee_attack_normal(src, 0, 0, DAMAGE_BLUNT)
+
 /mob/proc/update_inhands()
 
 /mob/proc/has_any_hands()
@@ -1534,11 +1545,11 @@
 		if (D_ENERGY)
 			TakeDamage("All", 0, damage)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*1.5 SECONDS)
+				src.changeStatus("unconscious", stun*1.5 SECONDS)
 			else if (prob(90))
 				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
+				src.changeStatus("knockdown", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
@@ -1567,11 +1578,11 @@
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*1.5 SECONDS)
+				src.changeStatus("unconscious", stun*1.5 SECONDS)
 			else if (prob(90))
 				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
+				src.changeStatus("knockdown", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 			src.show_text(SPAN_ALERT("You are shocked by the impact of [P]!"))
 		if (D_RADIOACTIVE)
@@ -2407,8 +2418,9 @@
 		if (thr?.get_throw_travelled() <= 410)
 			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-				if (!src.hasStatus("weakened"))
-					src.changeStatus("weakened", 2 SECONDS)
+				if (!src.hasStatus("knockdown"))
+					src.lastgasp()
+					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
 		else
 			src.gib()
@@ -2439,9 +2451,7 @@
 	src.stuttering = 0
 	src.losebreath = 0
 	src.delStatus("drowsy")
-	src.delStatus("paralysis")
-	src.delStatus("stunned")
-	src.delStatus("weakened")
+	src.remove_stuns()
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
@@ -3322,3 +3332,19 @@
 
 /mob/proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 	src.mind?.add_antagonist(role_id, do_equip, do_objectives, do_relocate, silent, source, respect_mutual_exclusives, do_pseudo, do_vr, late_setup)
+
+/mob/proc/inhale_ampoule(obj/item/reagent_containers/ampoule/amp, mob/user)
+	if(user != src)
+		user.visible_message(SPAN_ALERT("[user] forces [src] to inhale [amp]!"), SPAN_ALERT("You force [src] to inhale [amp]!"))
+	logTheThing(LOG_COMBAT, user, "[user == src ? "inhales" : "makes [constructTarget(src,"combat")] inhale"] an ampoule [log_reagents(amp)] at [log_loc(user)].")
+	amp.reagents.reaction(src, INGEST, 5, paramslist = list("inhaled"))
+	amp.reagents.trans_to(src, 5)
+	amp.expended = TRUE
+	amp.icon_state = "amp-broken"
+	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)
+
+/mob/proc/remove_stuns()
+	src.delStatus("stunned")
+	src.delStatus("knockdown")
+	src.delStatus("unconscious")
+	src.delStatus("paralysis")

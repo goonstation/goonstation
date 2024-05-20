@@ -1051,7 +1051,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 	New()
 		..()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, status_display_freq)
 		SPAWN(0.5 SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -1400,7 +1400,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 					src.link.master = src
 
 	proc/add_frequency(newFreq)
-		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
+		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "f[newFreq]", newFreq)
 
 	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))

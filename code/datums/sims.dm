@@ -72,9 +72,9 @@
 				src.image_change = image(src.icon, "change[change]", layer = HUD_LAYER+2)
 			else
 				src.image_change.icon_state = "change[change]"
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		else
-			src.hud.UpdateOverlays(null, "change")
+			src.hud.ClearSpecificOverlays("change")
 		//var/a_change = value - last_life_value
 		var/maptext_color = "#ffffff"
 		var/round_value = round(value)
@@ -98,7 +98,7 @@
 		if (!src.image_meter)
 			src.image_meter = image(src.icon, "[src.icon_state]-o", layer = HUD_LAYER+1)
 		src.image_meter.color = rgb((1 - ratio) * 255, ratio * 255, 0)
-		src.hud.UpdateOverlays(src.image_meter, "meter")
+		src.hud.AddOverlays(src.image_meter, "meter")
 
 	proc/updateHudIcon(var/icon/I)
 		if (!I || !src.hud)
@@ -106,9 +106,8 @@
 		src.icon = I
 		src.hud.icon = I
 		if (src.image_change)
-			src.hud.UpdateOverlays(null, "change")
 			src.image_change.icon = I
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		if (src.image_meter)
 			src.image_meter.icon = I
 			src.updateHud()
@@ -406,9 +405,9 @@
 		mayStandardDeplete()
 			if (..())
 				// JFC fuck mobs
-				if (holder.owner.getStatusDuration("weakened"))
+				if (holder.owner.getStatusDuration("knockdown"))
 					return 0
-				if (holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("unconscious"))
 					return 0
 				if (holder.owner.lying)
 					return 0

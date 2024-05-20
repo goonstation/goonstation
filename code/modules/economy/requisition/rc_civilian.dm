@@ -308,7 +308,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.payout += rand(0,50) * 10
 
 		if (prob(70)) //pizza party
-			src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(2,3)*6)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(2,3)*12)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(10,20)*10)
 
 		switch (rand(1, 50)) //Special Outcomes Zone
@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/food/pizza
-	name = "slices' worth of pizza"
+	name = "bites' worth of whole pizza"
 	commodity = /datum/commodity/
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
 	food_integrity = FOOD_REQ_BY_BITE

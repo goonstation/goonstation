@@ -412,7 +412,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 					shake_camera(L,10,32)
 					boutput(L, SPAN_ALERT("You are sent flying!"))
 
-					L.changeStatus("weakened", stun_time SECONDS)
+					L.changeStatus("knockdown", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)

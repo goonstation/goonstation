@@ -1,5 +1,8 @@
 // Hydroponics procs not specific to the plantpot start here.
 
+
+
+
 proc/HYPchem_scaling(var/scaling_statistics)
 	//! This proc causes all chem production of botany to have a diminishing return with potency (or other stats for e.g. maneaters)
 	//For the graph in question with explanation, refer to this link: https://www.desmos.com/calculator/gy7tn43s6b
@@ -80,7 +83,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
-			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
+			I?.reagents?.add_reagent(X,putamount) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
 

@@ -43,6 +43,7 @@
 *.md @ZeWaka
 /.github/ @ZeWaka
 /tools/ @ZeWaka
+/code/datums/actions/ @ZeWaka
 
 # Pali
 /code/datums/components/ @pali6

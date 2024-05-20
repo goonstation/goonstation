@@ -443,7 +443,7 @@
 			return 0
 
 	proc/ai_pickpocket(priority_only=FALSE)
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket)
+		if (src.getStatusDuration("knockdown") || src.getStatusDuration("stunned") || src.getStatusDuration("unconscious") || src.stat || src.ai_picking_pocket)
 			return
 		var/list/possible_targets = list()
 		var/list/priority_targets = list()
@@ -513,7 +513,7 @@
 		. = ..()
 
 	proc/ai_knock_from_hand(priority_only=FALSE)
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket || src.r_hand)
+		if (src.getStatusDuration("knockdown") || src.getStatusDuration("stunned") || src.getStatusDuration("unconscious") || src.stat || src.ai_picking_pocket || src.r_hand)
 			return
 		var/list/possible_targets = list()
 		var/list/priority_targets = list()
