@@ -10,7 +10,7 @@
 	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
-	var/const/setup_max_teams = 6
+	var/const/setup_max_teams = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -23,9 +23,9 @@
 	boutput(world, "<B>Gang members are antagonists and can kill or be killed!</B>")
 
 #ifdef RP_MODE
-#define PLAYERS_PER_GANG_GENERATED 12
+#define PLAYERS_PER_GANG_GENERATED 15
 #else
-#define PLAYERS_PER_GANG_GENERATED 9
+#define PLAYERS_PER_GANG_GENERATED 12
 #endif
 /datum/game_mode/gang/pre_setup()
 	var/num_players = 0
