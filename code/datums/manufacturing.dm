@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/bagpipe
 	name = "Bagpipe"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 10,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 10,
 							 /datum/manufacturing_requirement/metal/dense = 25,
 							)
 	item_outputs = list(/obj/item/instrument/bagpipe)
@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/fiddle
 	name = "Fiddle"
 	item_requirements = list(/datum/manufacturing_requirement/wood = 25,
-							 /datum/manufacturing_requirement/fabric 10,
+							 /datum/manufacturing_requirement/fabric = 10,
 							)
 	item_outputs = list(/obj/item/instrument/fiddle)
 	time = 5 SECONDS
@@ -1040,7 +1040,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_assistant
 	name = "Staff Assistant Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/rank/assistant)
 	time = 5 SECONDS
@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/grey)
 	time = 5 SECONDS
@@ -1058,7 +1058,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/shoes
 	name = "Black Shoes"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							)
 	item_outputs = list(/obj/item/clothing/shoes/black)
 	time = 5 SECONDS
@@ -1067,7 +1067,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/shoes_white
 	name = "White Shoes"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							)
 	item_outputs = list(/obj/item/clothing/shoes/white)
 	time = 5 SECONDS
@@ -1215,7 +1215,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/latex_gloves
 	name = "Latex Gloves"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 1,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 1,
 							)
 	item_outputs = list(/obj/item/clothing/gloves/latex)
 	time = 5 SECONDS
@@ -1224,7 +1224,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/body_bag
 	name = "Body Bag"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							)
 	item_outputs = list(/obj/item/body_bag)
 	time = 15 SECONDS
@@ -1505,7 +1505,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 #endif
 /datum/manufacture/stress_ball
 	name = "Stress Ball"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 1,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 1,
 							)
 	item_outputs = list(/obj/item/toy/plush/small/stress_ball)
 	time = 5 SECONDS
@@ -2149,7 +2149,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/biosuit
 	name = "Biosuit Set"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 5,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 5,
 							 /datum/manufacturing_requirement/crystal = 2,
 							)
 	item_outputs = list(/obj/item/clothing/suit/hazard/bio_suit,/obj/item/clothing/head/bio_hood)
@@ -2169,7 +2169,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/gasmask
 	name = "Gas Mask"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							 /datum/manufacturing_requirement/metal/dense = 4,
 							 /datum/manufacturing_requirement/crystal = 2,
 							)
@@ -2222,7 +2222,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/artifactforms
 	name ="Artifact Analysis Forms"
 	item_requirements = list(/datum/manufacturing_requirement/metal = 2,
-							 /datum/manufacturing_requirement/fabric 5,
+							 /datum/manufacturing_requirement/fabric = 5,
 							)
 	item_outputs = list(/obj/item/paper_bin/artifact_paper)
 	time = 10 SECONDS
@@ -2431,7 +2431,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/breathmask
 	name = "Breath Mask"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 1,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 1,
 							)
 	item_outputs = list(/obj/item/clothing/mask/breath)
 	time = 5 SECONDS
@@ -2467,7 +2467,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/patch
 	name = "Chemical Patch"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 1,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 1,
 							)
 	item_outputs = list(/obj/item/reagent_containers/patch)
 	time = 5 SECONDS
@@ -2507,7 +2507,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/spacesuit
 	name = "Space Suit Set"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							 /datum/manufacturing_requirement/metal = 3,
 							 /datum/manufacturing_requirement/crystal = 2,
 							)
@@ -2518,7 +2518,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/engspacesuit
 	name = "Engineering Space Suit Set"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							 /datum/manufacturing_requirement/metal = 3,
 							 /datum/manufacturing_requirement/crystal = 2,
 							)
@@ -2529,7 +2529,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/engdivesuit
 	name = "Engineering Diving Suit Set"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							 /datum/manufacturing_requirement/metal = 3,
 							 /datum/manufacturing_requirement/crystal = 2,
 							)
@@ -2540,7 +2540,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/lightengspacesuit
 	name = "Light Engineering Space Suit Set"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 10,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 10,
 							 /datum/manufacturing_requirement/metal/superdense = 5,
 							 /datum/manufacturing_requirement/crystal = 2,
 							 /datum/manufacturing_requirement/organic_or_rubber = 5,
@@ -2552,7 +2552,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/oresatchel
 	name = "Ore Satchel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 5,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 5,
 							)
 	item_outputs = list(/obj/item/satchel/mining)
 	time = 5 SECONDS
@@ -2561,7 +2561,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/oresatchelL
 	name = "Large Ore Satchel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 25,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 25,
 							 /datum/manufacturing_requirement/metal/superdense = 3,
 							)
 	item_outputs = list(/obj/item/satchel/mining/large)
@@ -2708,7 +2708,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/backpack
 	name = "Backpack"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack)
 	time = 10 SECONDS
@@ -2717,7 +2717,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/backpack_red
 	name = "Red Backpack"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/empty/red)
 	time = 10 SECONDS
@@ -2726,7 +2726,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/backpack_green
 	name = "Green Backpack"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/empty/green)
 	time = 10 SECONDS
@@ -2735,7 +2735,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/backpack_blue
 	name = "Blue Backpack"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/empty/blue)
 	time = 10 SECONDS
@@ -2744,7 +2744,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/satchel
 	name = "Satchel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty)
 	time = 10 SECONDS
@@ -2753,7 +2753,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/satchel_red
 	name = "Red Satchel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/red)
 	time = 10 SECONDS
@@ -2762,7 +2762,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/satchel_green
 	name = "Green Satchel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/green)
 	time = 10 SECONDS
@@ -2771,7 +2771,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/satchel_blue
 	name = "Blue Satchel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/blue)
 	time = 10 SECONDS
@@ -2780,7 +2780,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/shoes_brown
 	name = "Brown Shoes"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/shoes/brown)
 	time = 2 SECONDS
@@ -2789,7 +2789,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_white
 	name = "White Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/white)
 	time = 2 SECONDS
@@ -2798,7 +2798,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_black
 	name = "Black Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/black)
 	time = 2 SECONDS
@@ -2807,7 +2807,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_blue
 	name = "Blue Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/blue)
 	time = 2 SECONDS
@@ -2816,7 +2816,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_red
 	name = "Red Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/red)
 	time = 2 SECONDS
@@ -2825,7 +2825,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_green
 	name = "Green Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/green)
 	time = 2 SECONDS
@@ -2834,7 +2834,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_yellow
 	name = "Yellow Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/yellow)
 	time = 2 SECONDS
@@ -2843,7 +2843,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_pink
 	name = "Pink Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/pink)
 	time = 2 SECONDS
@@ -2852,7 +2852,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_orange
 	name = "Orange Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/orange)
 	time = 2 SECONDS
@@ -2861,7 +2861,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_purple
 	name = "Purple Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 2,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 2,
 							)
 	item_outputs = list(/obj/item/clothing/head/purple)
 	time = 2 SECONDS
@@ -2870,7 +2870,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_tophat
 	name = "Top Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 3,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 3,
 							)
 	item_outputs = list(/obj/item/clothing/head/that)
 	time = 3 SECONDS
@@ -2879,7 +2879,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hat_ltophat
 	name = "Large Top Hat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 5,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 5,
 							)
 	item_outputs = list(/obj/item/clothing/head/longtophat)
 	time = 5 SECONDS
@@ -2888,7 +2888,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/white)
 	time = 5 SECONDS
@@ -2897,7 +2897,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_red
 	name = "Red Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/red)
 	time = 5 SECONDS
@@ -2906,7 +2906,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_yellow
 	name = "Yellow Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/yellow)
 	time = 5 SECONDS
@@ -2915,7 +2915,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_green
 	name = "Green Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/green)
 	time = 5 SECONDS
@@ -2924,7 +2924,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_pink
 	name = "Pink Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/pink)
 	time = 5 SECONDS
@@ -2933,7 +2933,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_blue
 	name = "Blue Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/blue)
 	time = 5 SECONDS
@@ -2943,7 +2943,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_purple
 	name = "Purple Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/purple)
 	time = 5 SECONDS
@@ -2952,7 +2952,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_brown
 	name = "Brown Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/brown)
 	time = 5 SECONDS
@@ -2961,7 +2961,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_black
 	name = "Black Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color)
 	time = 5 SECONDS
@@ -2970,7 +2970,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jumpsuit_orange
 	name = "Orange Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/color/orange)
 	time = 5 SECONDS
@@ -2979,7 +2979,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/tricolor
 	name = "Tricolor Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
 	time = 5 SECONDS
@@ -2988,7 +2988,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_lgbt
 	name = "LGBT Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride)
 	time = 5 SECONDS
@@ -2997,7 +2997,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_ace
 	name = "Asexual Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/ace)
 	time = 5 SECONDS
@@ -3006,7 +3006,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_aro
 	name = "Aromantic Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/aro)
 	time = 5 SECONDS
@@ -3015,7 +3015,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_bi
 	name = "Bisexual Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/bi)
 	time = 5 SECONDS
@@ -3024,7 +3024,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_inter
 	name = "Intersex Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/inter)
 	time = 5 SECONDS
@@ -3033,7 +3033,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_lesb
 	name = "Lesbian Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/lesb)
 	time = 5 SECONDS
@@ -3042,7 +3042,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_gay
 	name = "Gay Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/gaymasc)
 	time = 5 SECONDS
@@ -3051,7 +3051,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_nb
 	name = "Non-binary Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/nb)
 	time = 5 SECONDS
@@ -3060,7 +3060,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_pan
 	name = "Pansexual Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/pan)
 	time = 5 SECONDS
@@ -3069,7 +3069,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_poly
 	name = "Polysexual Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/poly)
 	time = 5 SECONDS
@@ -3078,7 +3078,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/pride_trans
 	name = "Trans Pride Jumpsuit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/pride/trans)
 	time = 5 SECONDS
@@ -3087,7 +3087,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/suit/black)
 	time = 5 SECONDS
@@ -3096,7 +3096,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/dress_black
 	name = "Fancy Black Dress"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/suit/black/dress)
 	time = 5 SECONDS
@@ -3105,7 +3105,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/labcoat
 	name = "Labcoat"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/suit/labcoat)
 	time = 5 SECONDS
@@ -3114,7 +3114,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_white
 	name = "White Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub)
 	time = 5 SECONDS
@@ -3123,7 +3123,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_teal
 	name = "Teal Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub/teal)
 	time = 5 SECONDS
@@ -3132,7 +3132,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_maroon
 	name = "Maroon Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub/maroon)
 	time = 5 SECONDS
@@ -3141,7 +3141,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_blue
 	name = "Navy Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
 	time = 5 SECONDS
@@ -3150,7 +3150,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_purple
 	name = "Violet Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
 	time = 5 SECONDS
@@ -3159,7 +3159,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_orange
 	name = "Orange Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub/orange)
 	time = 5 SECONDS
@@ -3168,7 +3168,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/scrubs_pink
 	name = "Hot Pink Scrubs"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
 	time = 5 SECONDS
@@ -3177,7 +3177,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/medical_backpack
 	name = "Medical Backpack"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/storage/backpack/medic)
 	time = 5 SECONDS
@@ -3186,7 +3186,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/patient_gown
 	name = "Gown"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/under/patient_gown)
 	time = 5 SECONDS
@@ -3195,7 +3195,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/surgical_mask
 	name = "Sterile Mask"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 1,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 1,
 							)
 	item_outputs = list(/obj/item/clothing/mask/surgical)
 	time = 5 SECONDS
@@ -3204,7 +3204,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/surgical_shield
 	name = "Surgical Face Shield"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 1,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 1,
 							)
 	item_outputs = list(/obj/item/clothing/mask/surgical_shield)
 	time = 5 SECONDS
@@ -3213,7 +3213,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/eyepatch
 	name = "Medical Eyepatch"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 5,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 5,
 							)
 	item_outputs = list(/obj/item/clothing/glasses/eyepatch)
 	time = 15 SECONDS
@@ -3222,7 +3222,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/blindfold
 	name = "Blindfold"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/clothing/glasses/blindfold)
 	time = 5 SECONDS
@@ -3231,7 +3231,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/muzzle
 	name = "Muzzle"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							 /datum/manufacturing_requirement/metal = 2,
 							)
 	item_outputs = list(/obj/item/clothing/mask/muzzle)
@@ -3245,7 +3245,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 							 /datum/manufacturing_requirement/conductive/high = 30,
 							 /datum/manufacturing_requirement/energy/extreme = 6,
 							 /datum/manufacturing_requirement/crystal/dense = 1,
-							 /datum/manufacturing_requirement/fabric 30,
+							 /datum/manufacturing_requirement/fabric = 30,
 							 /datum/manufacturing_requirement/insulated = 30,
 							)
 	item_outputs = list(/obj/item/clothing/shoes/hermes)
@@ -3255,7 +3255,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/towel
 	name = "Towel"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 8,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 8,
 							)
 	item_outputs = list(/obj/item/cloth/towel/white)
 	time = 8 SECONDS
@@ -3264,7 +3264,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/handkerchief
 	name = "Handkerchief"
-	item_requirements = list(/datum/manufacturing_requirement/fabric 4,
+	item_requirements = list(/datum/manufacturing_requirement/fabric = 4,
 							)
 	item_outputs = list(/obj/item/cloth/handkerchief/colored/white)
 	time = 4 SECONDS
@@ -3701,7 +3701,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_requirements = list(/datum/manufacturing_requirement/metal/dense = 4,
 							 /datum/manufacturing_requirement/conductive = 2,
 							 /datum/manufacturing_requirement/cobryl = 1,
-							 /datum/manufacturing_requirement/fabric 3,
+							 /datum/manufacturing_requirement/fabric = 3,
 							)
 	item_outputs = list(/obj/item/device/nanoloom)
 	time = 15 SECONDS
@@ -3712,7 +3712,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Nanoloom Cartridge"
 	item_requirements = list(/datum/manufacturing_requirement/metal/dense = 1,
 							 /datum/manufacturing_requirement/cobryl = 1,
-							 /datum/manufacturing_requirement/fabric 3,
+							 /datum/manufacturing_requirement/fabric = 3,
 							)
 	item_outputs = list(/obj/item/nanoloom_cartridge)
 	time = 8 SECONDS

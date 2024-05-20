@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 		material_property = "density"
 		material_threshold = 4
 
-		superdense
+		super
 			name = "Very High Density Matter"
 			material_threshold = 6
 
