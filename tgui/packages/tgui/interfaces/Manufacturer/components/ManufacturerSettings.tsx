@@ -63,7 +63,7 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
                   value={speed}
                   maxValue={max_speed}
                   step={1}
-                  stepPixelSize={100}
+                  stepPixelSize={50}
                   disabled={mode === "working"}
                   onChange={(_e: any, value: number) => actionSetSpeed(value)}
                 />
