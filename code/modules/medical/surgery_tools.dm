@@ -518,21 +518,21 @@ TYPEINFO(/obj/item/robodefibrillator)
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.002 * adjust, 10) SECONDS)
+				patient.changeStatus("unconscious", min(0.002 * adjust, 10) SECONDS)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
 			else if (faulty)
-				patient.changeStatus("paralysis", 1.5 SECONDS)
+				patient.changeStatus("unconscious", 1.5 SECONDS)
 				patient.stuttering += 5
 			else
 #ifdef USE_STAMINA_DISORIENT
 				if (emagged)
-					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
+					patient.do_disorient(130, knockdown = 50, stunned = 50, unconscious = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 5 SECONDS)
+					patient.changeStatus("unconscious", 5 SECONDS)
 #else
-				patient.changeStatus("paralysis", 5 SECONDS)
+				patient.changeStatus("unconscious", 5 SECONDS)
 
 #endif
 				patient.stuttering += 10
@@ -564,7 +564,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 				user.visible_message(SPAN_ALERT("<b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!"),\
 				SPAN_ALERT("You shock [user == patient ? "yourself" : patient] with [src]!"))
 				logTheThing(LOG_COMBAT, patient, "was defibrillated by [constructTarget(user,"combat")] with [src] when they didn't need it at [log_loc(patient)]")
-				patient.changeStatus("weakened", 0.1 SECONDS)
+				patient.changeStatus("knockdown", 0.1 SECONDS)
 				patient.force_laydown_standup()
 				patient.remove_stamina(45)
 				if (isdead(patient) && !patient.bioHolder.HasEffect("resist_electric"))
@@ -1055,7 +1055,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 0.5 SECONDS)
+			M.changeStatus("knockdown", 0.5 SECONDS)
 			M.set_loc(get_turf(src))
 		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
 		B.icon_state = "balloon_black_pop"
@@ -1068,7 +1068,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 0.5 SECONDS)
+			M.changeStatus("knockdown", 0.5 SECONDS)
 			SPAWN(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1

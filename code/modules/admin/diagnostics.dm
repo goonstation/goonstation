@@ -169,7 +169,7 @@ proc/debug_map_apc_count(delim,zlim)
 		var/burning = 0
 		if(istype(target, /turf/simulated))
 			var/turf/simulated/T = target
-			if(T.active_hotspot)
+			if(length(T.active_hotspots))
 				burning = 1
 
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")

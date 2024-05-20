@@ -605,8 +605,10 @@ datum
 			viscosity = 0.14
 
 			reaction_turf(var/turf/target, var/volume)
-				var/obj/hotspot = (locate(/obj/hotspot) in target)
-				if (hotspot)
+				var/list/hotspots = list()
+				for (var/obj/hotspot/hotspot in target)
+					hotspots += hotspot
+				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (T.air)
@@ -616,7 +618,8 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					qdel(hotspot)
+					for (var/obj/hotspot/hotspot as anything in hotspots)
+						qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
 				if (!F)
@@ -645,7 +648,7 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(SPAN_ALERT("<b>[M] sputters and begins to dim!</b>"), 1)
 							boutput(L, SPAN_ALERT("The foam starts to smother your flames!"))
-						L.changeStatus("weakened", 2 SECONDS)
+						L.changeStatus("knockdown", 2 SECONDS)
 						L.force_laydown_standup()
 						var/brutedmg = volume * 1.5 //elementals take 1.15x damage, 65 is 74.75. 2 maxcap pitchers goes to .50 brute under death.
 						brutedmg = min(brutedmg, 65) //Ideally acts like vampire with holy water, capping it so they don't instadie.
@@ -1084,7 +1087,7 @@ datum
 					if (ranchance == 1)
 						boutput(M, SPAN_ALERT("You feel very sick."))
 						M.reagents.add_reagent("toxin", rand(1,5))
-					else if (ranchance <= 5 && ranchance != 1)
+					else if (ranchance <= 5)
 						boutput(M, SPAN_ALERT("That tasted absolutely FOUL."))
 						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 					else boutput(M, SPAN_ALERT("Yuck!"))
@@ -1158,8 +1161,10 @@ datum
 						if (B)
 							B.dispose()
 
-				var/obj/hotspot = (locate(/obj/hotspot) in target)
-				if (hotspot)
+				var/list/hotspots = list()
+				for (var/obj/hotspot/hotspot in target)
+					hotspots += hotspot
+				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (!T.air) return //ZeWaka: Fix for TOTAL_MOLES(null)
@@ -1169,7 +1174,9 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					qdel(hotspot)
+					for (var/obj/hotspot/hotspot as anything in hotspots)
+						qdel(hotspot)
+
 				return
 
 		booster_enzyme
@@ -1273,7 +1280,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
-							fireflash(location, clamp(volume/40, 0, 8))
+							fireflash(location, clamp(volume/40, 0, 8), chemfire = CHEM_FIRE_RED)
 							if (length(covered) < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -1344,10 +1351,10 @@ datum
 					if (10 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 					if (19 to INFINITY)
-						M.changeStatus("weakened", 3 SECONDS * mult)
+						M.changeStatus("paralysis", 3 SECONDS * mult)
 						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
-					M.setStatusMin("weakened", 3 SECONDS * mult)
+					M.setStatusMin("paralysis", 3 SECONDS * mult)
 					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
@@ -1547,7 +1554,7 @@ datum
 
 				else if (probmult(4))
 					M.visible_message(SPAN_ALERT("<B>[M]</B> starts convulsing violently!"), "You feel as if your body is tearing itself apart!")
-					M.setStatusMin("weakened", 15 SECONDS * mult)
+					M.setStatusMin("knockdown", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
@@ -1588,7 +1595,7 @@ datum
 					random_brute_damage(M, 2 * mult)
 				else if (probmult(4))
 					M.visible_message(SPAN_ALERT("<B>[M]</B> starts hooting violently!"), "You feel as if your body is hooting itself apart!")
-					M.setStatusMin("weakened", 15 SECONDS * mult)
+					M.setStatusMin("knockdown", 15 SECONDS * mult)
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (ishuman(M))
@@ -1784,7 +1791,7 @@ datum
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
 					M.emote("twitch")
-					M.setStatusMin("weakened", 2 SECONDS * mult)
+					M.setStatusMin("knockdown", 2 SECONDS * mult)
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at their own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
 				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
@@ -2006,7 +2013,7 @@ datum
 						boutput(M, SPAN_NOTICE("That tasted amazing!"))
 					else
 						boutput(M, SPAN_ALERT("Ugh! Eating that was a terrible idea!"))
-						M.setStatusMin("weakened", 3 SECONDS)
+						M.setStatusMin("knockdown", 3 SECONDS)
 
 		martian_flesh
 			name = "martian flesh"
@@ -2071,10 +2078,42 @@ datum
 				else
 					if(method == INGEST)
 						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
-						M.setStatusMin("weakened", 3 SECONDS)
+						M.setStatusMin("knockdown", 3 SECONDS)
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, SPAN_ALERT("Well, that was gross."))
+
+		viscerite_viscera
+			name = "viscerite viscera"
+			id = "viscerite_viscera"
+			description = "Looking at this makes you feel queasy... ugh."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 135
+			fluid_b = 200
+			hunger_value = 0.5
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				M.HealDamage("All", mult * 2, mult * 1.5)
+				M.take_toxin_damage(0.5 * mult)
+				if(prob(20))
+					M.setStatusMin("knockdown", 3 SECONDS)
+				if(prob(10))
+					boutput(M, SPAN_ALERT("[pick("You feel your insides moving around and shifting", "Your body has never felt better, it has also never felt worse.", "The state of your insides make you feel like you're in a boat that got sucked up into a hurricane", "Urgh, you feel really gross!")]"))
+				..()
+				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == TOUCH)
+					boutput(M, SPAN_ALERT("The pink viscera partially hangs off of your clothes."))
+				if(method == INGEST)
+					boutput(M, "<span class='alert bold'>[pick("The viscera burns your mouth as it goes down", "The texture of the viscera feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "You feel the viscera slide down your throat")]!!</span>")
+					M.setStatusMin("knockdown", 3 SECONDS)
 
 		flockdrone_fluid
 			name = "coagulated gnesis"
@@ -2425,7 +2464,7 @@ datum
 					if (effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
 						M.change_misstep_chance(33 * mult)
-						M.setStatusMin("weakened", 3 SECONDS * mult)
+						M.setStatusMin("knockdown", 3 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.drop_item()
@@ -2444,7 +2483,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor and flails uncontrollably!"))
 						M.make_jittery(5)
-						M.setStatusMin("weakened", 6 SECONDS * mult)
+						M.setStatusMin("knockdown", 6 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 
@@ -2650,7 +2689,7 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if(effect <= 4)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 8)
 						M.change_misstep_chance(12 * mult)
 						M.make_dizzy(5 * mult)
@@ -2658,7 +2697,7 @@ datum
 						M.emote("faint")
 				else if (severity == 2)
 					if(effect <= 6)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 12)
 						M.change_misstep_chance(12 * mult)
 						M.make_dizzy(5 * mult)
@@ -4266,7 +4305,7 @@ datum
 				playsound(src.loc, pick(sounds_punch), 50, 1, -1)
 				deathtarget.emote("scream")
 				deathtarget.setStatusMin("stunned", 5 SECONDS)
-				deathtarget.setStatusMin("weakened", 5 SECONDS)
+				deathtarget.setStatusMin("knockdown", 5 SECONDS)
 				deathtarget.unlock_medal("OW! MY BALLS!", 1)
 				var/deathturf = get_turf(src)
 				animate_slide(deathturf, 0, -24, 25)

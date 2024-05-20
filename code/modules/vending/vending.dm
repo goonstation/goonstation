@@ -304,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
 	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
-		if((src.can_fall) && prob(P.power))
+		if((src.can_fall) && prob(P.power * P.proj_data?.ks_ratio))
 			src.fall()
 	..()
 
@@ -337,7 +337,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			src.scan = card
 			tgui_process.update_uis(src)
 		else
-			boutput(user, SPAN_ALERT("Pin number incorrect."))
+			boutput(user, SPAN_ALERT("PIN incorrect."))
 			src.scan = null
 	else
 		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -580,6 +580,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
+							P.lastPlayerPrice = R.product_cost
 				update_static_data(usr)
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
@@ -1872,7 +1873,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1,)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/apron/tricolor, rand(2, 2), hidden=1,)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/moustache/Italian , rand(2, 2), hidden=1,)
-		product_list += new/datum/data/vending_product(pick(/obj/item/paper/recipe_tandoori, /obj/item/paper/recipe_potatocurry, /obj/item/paper/recipe_coconutcurry, /obj/item/paper/recipe_chickenpapplecurry), 1, hidden = 1)
+		product_list += new/datum/data/vending_product(pick(concrete_typesof(/obj/item/paper/recipe)), 1, hidden = 1)
 
 //The burden of these machinations weighs on my shoulders
 //And thus you will be burdened
@@ -1902,6 +1903,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			var/icon/dummy_icon = getFlatIcon(src.contents[1], no_anim=TRUE)
 			. = icon2base64(dummy_icon)
 			product_base64_cache[key] = .
+
+// Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
+/proc/cmp_player_product_sort(datum/data/vending_product/player_product/a, datum/data/vending_product/player_product/b)
+	return sorttext(b.product_name,a.product_name)
+
+
 
 TYPEINFO(/obj/item/machineboard)
 	mats = 2
@@ -2097,6 +2104,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	///Set this var to update all static data at the end of the machine tick, done like this to avoid updating for every item added in a stack
 	var/static_data_invalid = FALSE
 	player_list = list()
+	var/lastPlayerPrice = 0
 	icon_panel = "standard-panel"
 
 	New()
@@ -2212,6 +2220,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		var/obj/item/targetContainer = target
 		if (!targetContainer.storage && !istype(targetContainer, /obj/item/satchel))
 			productListUpdater(target, user)
+			src.sortProducts()
 			if(!quiet)
 				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
@@ -2222,6 +2231,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))
 		if (action == "Place it in the vending machine" && !cantuse)
 			productListUpdater(target, user)
+			src.sortProducts()
 			if(!quiet)
 				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
@@ -2230,12 +2240,21 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if(!quiet)
 			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 
-		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
-			targetContainer.storage.transfer_stored_item(I, src, user = user)
-			productListUpdater(I, user)
-		if (istype(targetContainer, /obj/item/satchel))
-			targetContainer.UpdateIcon()
-			targetContainer.tooltip_rebuild = 1
+		if (istype(targetContainer,/obj/item/satchel) && targetContainer.contents.len)
+			// satchels don't use the storage thing, so this is more or less
+			// copied from the code for chutes
+			var/obj/item/satchel/S = targetContainer
+			for(var/obj/item/I in S.contents)
+				I.set_loc(src)
+				productListUpdater(I, user)
+			src.sortProducts()
+			S.UpdateIcon()
+			S.tooltip_rebuild = 1
+		else
+			for (var/obj/item/I as anything in targetContainer.storage.get_contents())
+				targetContainer.storage.transfer_stored_item(I, src, user = user)
+				productListUpdater(I, user)
+			src.sortProducts()
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
@@ -2264,12 +2283,15 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				existed = TRUE
 				break
 		if (!existed)
-			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
+			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, src.lastPlayerPrice)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if (label) itemEntry.label = label
 			logTheThing(LOG_STATION, user, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
+
+	proc/sortProducts()
+		sortList(src.player_list, /proc/cmp_player_product_sort)
 
 	power_change()
 		. = ..()
@@ -2356,22 +2378,32 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/mushroom, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/meatball, 1, cost=src.price, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/cheese, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/pepperoni, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/mushroom, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/meatball, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/vendor/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
 		if (src.sharpen)
+			pizza.set_loc(src) // to hide the pizza while it slices it up slowly
 			pizza.sharpened = TRUE
-			var/list/slices = pizza.make_slices()
-			for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
-				slice.throw_at(usr, 16, 3)
-			return slices[1]
-		else
-			return pizza
+			var/amount_to_transfer = round(pizza.reagents.total_volume / pizza.slice_amount) // unfortunately a partial copy paste from slice code
+			pizza.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			pizza.onSlice()
+			var/turf/T = get_turf(src)
+			SPAWN(0)
+				for (var/i in 1 to pizza.slice_amount)
+					var/atom/slice_result = new pizza.slice_product(T)
+					if(istype(slice_result, /obj/item/reagent_containers/food))
+						var/obj/item/reagent_containers/food/slice = slice_result
+						pizza.process_sliced_products(slice, amount_to_transfer)
+						slice.throw_at(usr, 16, 3)
+						sleep(1 DECI SECOND) // introduced because this actually just instacrit you before
+				qdel(pizza)
+				return
+		return pizza
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
@@ -2767,6 +2799,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/rum, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/champagne, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/curacao, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bojackson, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_umbrellas, 4)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/cocktail_doodads, 4)

@@ -7,22 +7,22 @@ proc/check_for_radio_jammers(atom/source)
 		if (IN_RANGE(source, A, RADIO_JAMMER_RANGE))
 			return TRUE
 
-#define MAKE_DEFAULT_RADIO_PACKET_COMPONENT(conn_id, freq) src._AddComponent(list( \
+#define MAKE_DEFAULT_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \
 		/datum/component/packet_connected/radio, \
 		conn_id, \
 		freq, \
-		("net_id" in src.vars) ? src.vars["net_id"] : null, \
+		net_id, \
 		hascall(src, "receive_signal") ? "receive_signal" : null, \
 		FALSE, \
 		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
 		FALSE \
 	))
 
-#define MAKE_SENDER_RADIO_PACKET_COMPONENT(conn_id, freq) src._AddComponent(list( \
+#define MAKE_SENDER_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \
 		/datum/component/packet_connected/radio, \
 		conn_id, \
 		freq, \
-		("net_id" in src.vars) ? src.vars["net_id"] : null, \
+		net_id, \
 		null, \
 		TRUE, \
 		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\

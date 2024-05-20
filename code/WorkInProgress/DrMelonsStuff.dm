@@ -146,7 +146,7 @@
 	mouse_drop(obj/over_object, src_location, over_location)
 		if (isintangible(usr))
 			return
-		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
+		if (usr.stat || usr.getStatusDuration("knockdown") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, SPAN_ALERT("That's too far!"))
 			return
 		if (src.occupant)

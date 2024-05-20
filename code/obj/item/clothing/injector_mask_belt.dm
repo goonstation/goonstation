@@ -409,7 +409,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		return 1
 
 	check_trigger(mob/M)
-		if(M.getStatusDuration("stunned") || M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || isunconscious(M)) return 1
+		if(M.getStatusDuration("stunned") || M.getStatusDuration("unconscious") || M.getStatusDuration("knockdown") || isunconscious(M)) return 1
 		else return 0
 
 /datum/injector_belt_condition/life

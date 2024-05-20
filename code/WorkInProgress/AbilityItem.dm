@@ -534,7 +534,7 @@
 	requires_equip = TRUE
 
 	ability_allowed()
-		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("unconscious"))
 			boutput(the_mob, SPAN_ALERT("You need to be ready on your feet to use this ability."))
 			return 0
 

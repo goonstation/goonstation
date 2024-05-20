@@ -59,8 +59,7 @@ var/global/current_state = GAME_STATE_INVALID
 	var/did_reminder = FALSE
 
 	#ifdef LIVE_SERVER
-	if (!player_capa)
-		new /obj/overlay/zamujasa/round_start_countdown/encourage()
+	new /obj/overlay/zamujasa/round_start_countdown/encourage()
 	#endif
 	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
 	while (current_state <= GAME_STATE_PREGAME)

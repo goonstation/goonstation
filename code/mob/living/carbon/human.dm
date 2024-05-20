@@ -153,6 +153,7 @@
 	var/hair_override = 0 // only really works if they have hair. Barbering might help
 	/// forces the mob to display their special hair, even if their flags tell them not to
 	var/special_hair_override = 0 // only really works if they have any special hair
+	var/trample_cooldown = 4 SECONDS
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
@@ -743,7 +744,7 @@
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
-	src.UpdateOverlays(null, "sleep_bubble")
+	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -872,7 +873,7 @@
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
 		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
-		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.setStatus("unconscious", 10 SECONDS)
 		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
@@ -1107,9 +1108,7 @@
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 		src.next_click = world.time + src.combat_click_delay
 
@@ -2297,6 +2296,8 @@
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
+	if (src.autoequip_slot(I, SLOT_IN_BELT))
+		return
 	if (src.autoequip_slot(I, SLOT_L_STORE))
 		return
 	if (src.autoequip_slot(I, SLOT_R_STORE))
@@ -3347,7 +3348,7 @@
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")
-				src.changeStatus("weakened", 3 SECONDS)
+				src.changeStatus("knockdown", 3 SECONDS)
 			else if (src.shoes.laces == LACES_CUT) // Laces cut
 				var/obj/item/clothing/shoes/S = src.shoes
 				src.u_equip(S)

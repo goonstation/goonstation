@@ -285,8 +285,8 @@ ABSTRACT_TYPE(/datum/ion_category)
 		alarm.alarm()
 
 /datum/ion_category/pda_alerts
-	amount_min = 3
-	amount_max = 6
+	amount_min = 1
+	amount_max = 2
 
 	valid_instance(var/obj/item/device/pda2/pda)
 		return ..() && pda.owner
@@ -319,3 +319,17 @@ ABSTRACT_TYPE(/datum/ion_category)
 	action(obj/machinery/bot/bot)
 		bot.emp_act()
 
+/datum/ion_category/cameras
+	amount_min = 2
+	amount_max = 5
+
+	valid_instance(obj/machinery/camera/camera)
+		. = ..() && camera.type == /obj/machinery/camera && camera.network == "SS13" && get_z(camera) == Z_LEVEL_STATION
+
+	build_targets()
+		for_by_tcl(camera, /obj/machinery/camera)
+			if (valid_instance(camera))
+				targets += camera
+
+	action(obj/machinery/camera/camera)
+		camera.break_camera()

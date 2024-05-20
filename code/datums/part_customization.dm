@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 				limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f || limb_type
 			if (!limb_type)
 				limb_type = src.part_type
-			if(human.limbs.l_arm.type != limb_type)
+			if(human.limbs.l_arm?.type != limb_type)
 				human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	default_right
@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 				limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
 			if (!limb_type)
 				limb_type = src.part_type
-			if(!human.limbs.r_arm.type == limb_type)
+			if(!human.limbs.r_arm?.type == limb_type)
 				human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	robo_left

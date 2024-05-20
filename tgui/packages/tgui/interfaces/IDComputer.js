@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { classes } from 'common/react';
 import { useBackend } from "../backend";
 import { Box, Button, Divider, Image, LabeledList, NoticeBox, Section, Stack, Tabs } from "../components";
 import { Window } from '../layouts';
@@ -23,7 +24,10 @@ const DeptBox = (props, context) => {
     target_accesses,
   } = props;
   return (
-    <Section title={name} class={`IDComputer__DeptBox ${(colour && `IDComputer__DeptBox_color_${colour}`)}`} mb="0.25rem">
+    <Section
+      title={name}
+      className={classes(['IDComputer__DeptBox', colour && `IDComputer__DeptBox_color_${colour}`])}
+    >
       {jobs && jobs.map((job, index) => {
         return (
           <>

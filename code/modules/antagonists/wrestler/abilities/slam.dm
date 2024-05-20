@@ -30,6 +30,7 @@
 		if(check_target_immunity( HH ))
 			M.visible_message(SPAN_ALERT("You seem to attack [M]!"))
 			return 1
+		. = ..()
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.set_loc(M.loc)
@@ -148,7 +149,7 @@
 
 			if (!fake)
 				if (!isdead(HH))
-					HH.changeStatus("weakened", 3 SECONDS)
+					HH.changeStatus("knockdown", 3 SECONDS)
 					HH.changeStatus("stunned", 3 SECONDS)
 					HH.force_laydown_standup()
 

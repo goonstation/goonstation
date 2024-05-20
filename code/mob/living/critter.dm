@@ -148,7 +148,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
-
 	health_update_queue |= src
 
 	if(!src.abilityHolder)
@@ -224,7 +223,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	//used for critters that have overlays for their bioholder (hair color eye color etc)
 
 /mob/living/critter/proc/add_health_holder(var/T)
-	var/datum/healthHolder/HH = new T
+	var/datum/healthHolder/HH = new T(src)
 	if (!istype(HH))
 		return null
 	if (HH.associated_damage_type in healthlist)
@@ -503,7 +502,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			var/mob/living/carbon/C = I
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 			if ( ishuman(C) )
-				C.changeStatus("weakened", 1 SECOND)
+				C.changeStatus("knockdown", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
@@ -518,9 +517,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 /mob/living/critter/proc/can_pull(atom/A)
 	if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
@@ -734,9 +731,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (HH.can_attack)
 		if (ismob(target))
 			if (a_intent != INTENT_HELP)
-				if (mob_flags & AT_GUNPOINT)
-					for(var/obj/item/grab/gunpoint/G in grabbed_by)
-						G.shoot()
+				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 			switch (a_intent)
 				if (INTENT_HELP)
@@ -1559,7 +1554,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	if (damage > 4.9)
 		if (prob(50))
-			changeStatus("weakened", 5 SECONDS)
+			changeStatus("knockdown", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(SPAN_ALERT("<B>The blob has knocked down [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 		else
@@ -1639,6 +1634,8 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	emp_act()
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+		//gunbots have a LOT of disorient resist which is usually good but we want to bypass it here because EMPs are meant to mess with robots goddamnit!
+		src.changeStatus("disorient", 4 SECONDS)
 
 	can_eat()
 		return FALSE

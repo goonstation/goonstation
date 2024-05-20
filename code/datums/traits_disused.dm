@@ -46,7 +46,7 @@
 		if(!owner.stat && can_act(owner) && istype(owner.loc, /turf/space))
 			if(prob(2))
 				owner.emote("faint")
-				owner.changeStatus("paralysis", 8 SECONDS)
+				owner.changeStatus("unconscious", 8 SECONDS)
 			else if (prob(8))
 				owner.emote("scream")
 				owner.changeStatus("stunned", 2 SECONDS)

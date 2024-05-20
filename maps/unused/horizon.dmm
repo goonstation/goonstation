@@ -1050,7 +1050,6 @@
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -12222,7 +12221,7 @@
 	},
 /area/shuttle/arrival/station)
 "aKx" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 4;
@@ -14576,7 +14575,6 @@
 	},
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
@@ -41445,7 +41443,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/maintenance/outer/se)
 "cnZ" = (
