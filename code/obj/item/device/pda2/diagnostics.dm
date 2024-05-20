@@ -268,7 +268,8 @@
 		// ruck kit lock packets use this
 		if(signal.encryption)
 			t += "[signal.encryption]"
-			t2 = stars(t2, 15)
+			if (!signal.encryption_full)
+				t2 = stars(t2, 15)
 
 		result += "[t][t2]"
 
