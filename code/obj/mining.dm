@@ -2002,7 +2002,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 									qdel(target)
 							qdel(src)
 							return
-					else if (src.hacked) ..()
+					else if (src.hacked)
+						var/turf/T = get_turf(target)
+						if(!IS_ARRIVALS(T.loc))
+							..()
 					else boutput(user, SPAN_ALERT("These will only work on asteroids."))
 			return
 
