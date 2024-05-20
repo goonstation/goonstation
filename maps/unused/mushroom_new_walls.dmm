@@ -1316,6 +1316,7 @@
 	cycle_id = "escape";
 	enter_id = "inner"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/escape{
 	dir = 4
 	},
@@ -14163,6 +14164,14 @@
 "bwb" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
+"bwn" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoormid1"
+	},
+/turf/simulated/floor/engine,
+/area/station/maintenance/southeast)
 "bwx" = (
 /obj/lattice{
 	dir = 10;
@@ -14227,6 +14236,15 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
+"bzj" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoormid1"
+	},
+/turf/space,
+/turf/simulated/floor/engine,
+/area/space)
 "bzn" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -16664,6 +16682,13 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"dEd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "dEe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18329,6 +18354,15 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"fjU" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/space,
+/turf/simulated/floor/white/checker{
+	dir = 9
+	},
+/area/station/hallway/secondary/exit)
 "flu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19233,6 +19267,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"gdT" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/Zeta)
 "ges" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -24018,6 +24059,12 @@
 /obj/disposalpipe/trunk/brig,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/checkpoint/arrivals)
+"kMd" = (
+/obj/machinery/vehicle/escape_pod{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/maintenance/southeast)
 "kMO" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -27123,14 +27170,16 @@
 	},
 /area/station/hallway/secondary/entry)
 "nNN" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
 /area/station/maintenance/southeast)
 "nNY" = (
 /obj/disposalpipe/segment/mail{
@@ -28820,6 +28869,13 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/crew_quarters/quarters)
+"pen" = (
+/obj/machinery/vehicle/escape_pod{
+	dir = 4
+	},
+/turf/space,
+/turf/simulated/floor/engine,
+/area/space)
 "peK" = (
 /turf/simulated/floor{
 	icon_state = "L6";
@@ -30046,6 +30102,11 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
+"qgc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/space,
+/turf/simulated/floor/plating,
+/area/space)
 "qgp" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -30435,6 +30496,9 @@
 "qvx" = (
 /obj/cable{
 	icon_state = "4-10"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -34575,6 +34639,7 @@
 	cycle_id = "escape";
 	enter_id = "inner"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -36532,6 +36597,16 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"vmA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "vmJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37619,6 +37694,9 @@
 "wnP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "woP" = (
@@ -37772,6 +37850,10 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/processing)
+"wxj" = (
+/turf/space,
+/turf/simulated/wall/auto/supernorn,
+/area/space)
 "wxD" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/red/side{
@@ -89462,9 +89544,9 @@ iNk
 iNk
 iNk
 aaZ
+fjU
 fEr
-fEr
-fEr
+fjU
 aaY
 lWd
 acb
@@ -89763,10 +89845,10 @@ iNk
 iNk
 iNk
 iNk
-aaa
-aaa
-aaa
-aaa
+wxj
+pen
+qgc
+pen
 aaY
 aaY
 acj
@@ -90065,10 +90147,10 @@ iNk
 iNk
 iNk
 aaa
-aaa
-aaa
-aaa
-aaa
+wxj
+bzj
+qgc
+bzj
 fEr
 rkh
 abS
@@ -91685,8 +91767,8 @@ mGW
 mGW
 mGW
 mGW
-aaa
-aDR
+kMd
+vmA
 mGW
 aaa
 aaa
@@ -91986,9 +92068,9 @@ aaa
 aaa
 aaa
 mGW
-aLg
-aaa
-aaa
+mGW
+bwn
+dEd
 aaa
 aaa
 aaa
@@ -95601,7 +95683,7 @@ vLa
 wDA
 xCX
 pFN
-wIj
+gdT
 ncL
 gkG
 gkG
