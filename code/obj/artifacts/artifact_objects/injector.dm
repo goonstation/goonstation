@@ -35,8 +35,8 @@
 				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
 				"amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pancuronium","polonium",
-				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","saxitoxin","viper_venom","ricin")
+				"sodium_thiopental","ketamine","sulfonal","toxin","cytotoxin","neurotoxin","mutagen","wolfsbane",
+				"toxic_slurry","histamine","saxitoxin","hemotoxin","ricin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids

@@ -28,11 +28,7 @@
 #define PLAYERS_PER_GANG_GENERATED 12
 #endif
 /datum/game_mode/gang/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if(player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
 	logTheThing(LOG_GAMEMODE, src, "Counted [num_players] available, with [PLAYERS_PER_GANG_GENERATED] per gang that means [num_teams] gangs.")
@@ -772,6 +768,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
+		newsignal.encryption_obfuscation = 90 // too easy to decipher these
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -802,7 +799,10 @@ proc/broadcast_to_all_gangs(var/message)
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area in areas)
-			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/solar))
+				continue
+			var/typeinfo/area/typeinfo = areas[area].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_drop_zones += areas[area]
 
@@ -828,7 +828,7 @@ proc/broadcast_to_all_gangs(var/message)
 					disposalList.Add(O)
 				else if (istype(O,/obj/storage))
 					var/obj/storage/crate = O
-					if (!crate.secure && !crate.locked)
+					if (!crate.secure && !crate.locked && !crate.open)
 						crateList.Add(O)
 				else if (istype(O,/obj/table) && !istype(O,/obj/table/glass))
 					tableList.Add(O)
@@ -862,7 +862,7 @@ proc/broadcast_to_all_gangs(var/message)
 			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
-		else if(length(tableList) && prob(65))
+		else if(length(tableList) && (length(uncoveredTurfList) > 0 || prob(65))) // only spawn on uncovered turf as a last resort
 			var/turf/target = get_turf(pick(tableList))
 			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
@@ -946,7 +946,7 @@ proc/broadcast_to_all_gangs(var/message)
 						validLocation = TRUE
 				for_by_tcl(otherTag, /obj/decal/gangtag)
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
-					if (otherTag.owners && otherTag.owners == user.get_gang())
+					if (otherTag.owners && otherTag.owners == user.get_gang() && otherTag.active)
 						validLocation = TRUE
 			else
 				boutput(user, SPAN_ALERT("You can't spray over your own tags!"))
@@ -957,7 +957,7 @@ proc/broadcast_to_all_gangs(var/message)
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
-				else if (tag.owners)
+				else if (tag.owners && tag.active)
 					boutput(user, SPAN_ALERT("You can't spray in another gang's territory! Spray over their tag, instead!"))
 					if (user.GetComponent(/datum/component/tracker_hud))
 						return
@@ -2004,7 +2004,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.delStatus("resting")
 			H.hud.update_resting()
 			H.delStatus("stunned")
-			H.delStatus("weakened")
+			H.delStatus("knockdown")
 			H.force_laydown_standup()
 			#ifdef USE_STAMINA_DISORIENT
 			H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = TRUE, target_type = DISORIENT_NONE)
@@ -2031,6 +2031,10 @@ proc/broadcast_to_all_gangs(var/message)
 	w_class = W_CLASS_TINY
 	var/max_charges = 5
 	var/charges = 5
+
+	syndicate
+		max_charges = 10
+		charges = 10
 
 	update_icon()
 		if (charges > 0 )

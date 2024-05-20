@@ -37,6 +37,7 @@
 	material_amt = 0.1
 
 	New()
+		START_TRACKING
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
 			src.p_class = 2 // so make us easy to move
 		..()
@@ -96,7 +97,7 @@
 			return FALSE
 		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
-		if (user.hasStatus("weakened"))
+		if (user.hasStatus("knockdown"))
 			return FALSE
 		if (src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
 			user.show_text("There's already someone buckled in [src]!", "red")
@@ -426,6 +427,12 @@ TYPEINFO(/obj/stool/wooden)
 		to_buckle.set_clothing_icon_dirty()
 		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
+
+		if (istype(ticker?.mode, /datum/game_mode/revolution) && to_buckle.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+			to_buckle.update_canmove()
+			SPAWN(1 SECOND) // so no abrupt ending
+				ticker.mode.check_win()
+
 		return TRUE
 
 	unbuckle()
@@ -697,7 +704,7 @@ TYPEINFO(/obj/stool/chair)
 				chair_chump.visible_message(SPAN_ALERT("<b>[chair_chump.name] falls off of [src]!</b>"))
 				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
-				chair_chump.changeStatus("weakened", 1 SECOND)
+				chair_chump.changeStatus("knockdown", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
@@ -909,9 +916,9 @@ TYPEINFO(/obj/stool/chair)
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
+		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("knockdown"))
 			src.visible_message(SPAN_ALERT("[src] trips [AM]!"), SPAN_ALERT("You hear someone fall."))
-			AM.changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("knockdown", 2 SECONDS)
 		return
 
 /* ======================================================= */
@@ -1155,7 +1162,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 3, 1)
 				M.changeStatus("stunned", 5 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
+				M.changeStatus("knockdown", 3 SECONDS)
 			else
 				src.visible_message(SPAN_ALERT("[src] tips [T ? "as it rolls over [T]" : "over"]!"))
 		else

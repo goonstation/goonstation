@@ -2020,7 +2020,7 @@ Returns:
 			for(var/turf/T in affected)
 				animate_flash_color_fill(T,"#aaddff",1,5)
 				for(var/mob/M in T)
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 					random_burn_damage(M, 10)
 
 				if(istype(T, /turf/simulated/floor))
@@ -2678,8 +2678,8 @@ Returns:
 					user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 					user.changeStatus("stunned", 5 SECONDS)
-					user.changeStatus("weakened", 3 SECONDS)
-					user.changeStatus("paralysis", 2 SECONDS)
+					user.changeStatus("knockdown", 3 SECONDS)
+					user.changeStatus("unconscious", 2 SECONDS)
 					user.force_laydown_standup()
 				else
 					src.Attackhand(user)
@@ -2689,7 +2689,7 @@ Returns:
 					var/mob/living/carbon/human/H = hit_atom
 					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
 						H.changeStatus("stunned", 4 SECONDS)
-						H.changeStatus("weakened", 2 SECONDS)
+						H.changeStatus("knockdown", 2 SECONDS)
 						H.force_laydown_standup()
 						//H.paralysis++
 						playsound(H.loc, "swing_hit", 50, 1)

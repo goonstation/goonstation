@@ -339,7 +339,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.attacking = 1
 		src.visible_message(SPAN_ALERT("[src] slaps [M] with a meaty tendril!"))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-		M.changeStatus("weakened", 10 SECONDS)
+		M.changeStatus("knockdown", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
 		M.throw_at(get_edge_target_turf(M, get_dir(src, get_step_away(M, src))), 200, 4)
 
@@ -1253,7 +1253,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return attack_hand(user)
 
 	attack_hand(mob/user)
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
+		if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 
 		user.visible_message(SPAN_ALERT("[user] presses against [src]."), SPAN_ALERT("You press against [src].  Ew."))
@@ -1468,6 +1468,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	cant_self_remove = 1
 	cant_other_remove = 1
 	cant_drop = 1
+	c_flags = null // not on belt
 	var/last_shot = 0
 
 	pickup(var/mob/user)

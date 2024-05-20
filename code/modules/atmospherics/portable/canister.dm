@@ -119,6 +119,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "orange"
 	casecolor = "orange"
 
+/obj/machinery/portable_atmospherics/canister/methane
+	name = "Canister \[Methane\]"
+	icon_state = "darkgreen"
+	casecolor = "darkgreen"
+
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
@@ -355,7 +360,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 					if(A.anchored) continue
 					if(ismob(A))
 						var/mob/M = A
-						M.changeStatus("weakened", 8 SECONDS)
+						M.changeStatus("knockdown", 8 SECONDS)
 						random_brute_damage(M, 20)//armor won't save you from the pressure wave or something
 						var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 						M.throw_at(targetTurf, 200, 4)
@@ -788,3 +793,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	src.UpdateIcon()
 	return 1
 
+/obj/machinery/portable_atmospherics/canister/methane/New()
+	..()
+	if (!src.isempty)
+		src.air_contents.farts = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	src.UpdateIcon()
+	return 1

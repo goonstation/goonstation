@@ -219,8 +219,8 @@
 
 	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		boutput(user, SPAN_ALERT("Antag fishing is against the rules!"))
-		if (!user.hasStatus("weakened"))
-			user.changeStatus("weakened", 1 SECONDS)
+		if (!user.hasStatus("knockdown"))
+			user.changeStatus("knockdown", 1 SECONDS)
 			user.force_laydown_standup()
 			playsound(user, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
 		return FALSE

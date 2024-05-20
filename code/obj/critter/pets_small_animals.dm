@@ -380,10 +380,10 @@
 
 		if (ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 
 	attack_ai(mob/user as mob)
-		if (GET_DIST(user, src) < 2)
+		if (GET_DIST(user, src) < 2 && user.a_intent != INTENT_HARM)
 			return attack_hand(user)
 		else
 			return ..()
@@ -992,7 +992,7 @@
 
 		if (ismob(M))
 			M.changeStatus("stunned", 2 SECONDS)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 
 	patrol_to(var/turf/towhat)
 		.=..()
@@ -1098,7 +1098,7 @@
 			if (toweak)
 				M.visible_message(SPAN_COMBAT("<B>[M]</B> trips!"))
 			M.changeStatus("stunned", tostun SECONDS)
-			M.changeStatus("weakened", toweak SECONDS)
+			M.changeStatus("knockdown", toweak SECONDS)
 
 	CritterAttack(mob/M)
 		..()

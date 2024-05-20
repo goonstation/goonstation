@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/mine)
 		if (!src || !istype(src))
 			return
 
-		fireflash_melting(get_turf(src), 3, 3000, 500)
+		fireflash_melting(get_turf(src), 3, 3000, 500, chemfire = CHEM_FIRE_RED)
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
 /obj/item/mine/stun

@@ -641,7 +641,7 @@
 			if (isliving(target) && !issilicon(target))
 				var/mob/living/victim = target
 				//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, unconscious = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
 					//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
 					ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
 				//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
@@ -964,7 +964,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/brullbar
@@ -1287,7 +1287,7 @@
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
 
 			msgs.damage = rand(1,9)
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 			target.stuttering += 1
 
 

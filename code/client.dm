@@ -354,10 +354,42 @@
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
-	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
-		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-		tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
-		del(src)
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+#if defined(LIVE_SERVER) && defined(NIGHTSHADE)
+		var/list/servers_to_offer = list("streamer1", "streamer2", "main3", "main4")
+#elif defined(LIVE_SERVER)
+		var/list/servers_to_offer = list("main1", "main3", "main4")
+#else
+		var/list/servers_to_offer = list()
+#endif
+		var/list/valid_servers = list()
+		for (var/server in servers_to_offer)
+			if (config.server_id == server)
+				continue
+			var/datum/game_server/game_server = game_servers.find_server(server)
+			if (game_server)
+				valid_servers[game_server.name] = game_server
+		if (length(valid_servers))
+			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server.</span>")
+			var/idx = tgui_input_list(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected?", "SERVER FULL", valid_servers, timeout = 30 SECONDS)
+			var/datum/game_server/redirect_choice = valid_servers[idx]
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			if (redirect_choice)
+				changeServer(redirect_choice.id)
+			tgui_process.close_user_uis(src.mob)
+			del(src)
+		else
+			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit.")
+			tgui_process.close_user_uis(src.mob)
+			del(src)
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
@@ -899,8 +931,8 @@ var/global/curr_day = null
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
 	if (server)
-		boutput(usr, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
-		usr << link(game_server.url)
+		boutput(src, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
+		src << link(game_server.url)
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
 	set name = "Download Sprite"

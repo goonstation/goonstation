@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/electronics/scanner/syndicate
 	cost = 4
 	vr_allowed = FALSE
-	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
+	desc = "A standard Nanotrasen mechanic's analyzer with jailbroken internals. This baby doesn't give a damn about DRM, patents, or \"safety\"!"
 	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
@@ -1034,7 +1034,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 5
 	vr_allowed = FALSE // no
 	not_in_crates = TRUE
-	job = list("Captain", "VIP", "Regional Director", "Inspector")
+	job = list("Captain", "VIP", "Regional Director", "Inspector", "Head of Personnel")
 
 /datum/syndicate_buylist/traitor/ai_disguised_module
 	name = "Disguised AI Law Module"
@@ -1373,3 +1373,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	cost = 1
 	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
 
+
+/datum/syndicate_buylist/surplus/switchblade
+	name = "Switchblade"
+	item = /obj/item/switchblade
+	cost = 2
+	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding"
+
+/datum/syndicate_buylist/surplus/quickhack
+	name = "Quickhack"
+	item = /obj/item/tool/quickhack/syndicate
+	cost = 1
+	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."

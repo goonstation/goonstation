@@ -722,7 +722,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -938,7 +938,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 				smoke.attach(src)
 				smoke.start()
 		if (prob(7) && !(src.item_function_flags & COLD_BURN))
-			fireflash(src, 0)
+			fireflash(src, 0, chemfire = CHEM_FIRE_RED)
 
 		if (prob(40))
 			if (src.health > 4)
@@ -1166,7 +1166,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/attack_hand(mob/user)
 	var/obj/item/checkloc = src.loc
-	if (!ismob(src.loc)) // Skip this loop if the FIRST loc is a mob, allowing component/hattable to proc take_hat_off on AIs/ghostdrones
+	var/mob/mobloc = src.loc //hehehhohoo
+	// Skip this loop if the FIRST loc is a mob, allowing component/hattable to proc take_hat_off on AIs/ghostdrones
+	if (!ismob(src.loc) || (src in mobloc.equipped_list())) //but don't skip if it's in their hand because that causes DUPE BUGS AAAA
 		while(checkloc && !istype(checkloc,/turf))
 			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
 				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
@@ -1190,20 +1192,21 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		var/obj/container = src.loc
 		container.vis_contents -= src
 
-	if (src.loc == user)
+	if (ismob(mobloc)) //if the location is a mob, we properly remove the item
 		var/in_pocket = 0
-		if(issilicon(user)) //if it's a borg's shit, stop here
+		if(issilicon(user)) //if it's a borg's shit on yourself, stop here
 			return 0
-		// storage items in hands or worn
+		// storage items in your own hands or worn
 		if (src.storage && ((src in user.equipped_list()) || src.storage.opens_if_worn))
 			src.storage.storage_item_attack_hand(user)
 			return FALSE
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
+		// now we check if we can remove the item from the mob-location
+		if (ishuman(mobloc))
+			var/mob/living/carbon/human/H = mobloc
 			if(H.l_store == src || H.r_store == src)
 				in_pocket = 1
-		if (!cant_self_remove || (!cant_drop && (user.l_hand == src || user.r_hand == src)) || in_pocket == 1)
-			user.u_equip(src)
+		if (!cant_self_remove || (!cant_drop && (user.l_hand == mobloc || user.r_hand == mobloc)) || in_pocket == 1)
+			mobloc.u_equip(src)
 		else
 			boutput(user, SPAN_ALERT("You can't remove this item."))
 			return 0

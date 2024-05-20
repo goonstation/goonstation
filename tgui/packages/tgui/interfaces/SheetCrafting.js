@@ -20,14 +20,14 @@ export const SheetCrafting = (_props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow={1}>
-            <Section title={"Recipes"} fill scrollable>
+            <Section title="Recipes" fill scrollable>
               {itemList.map(item => {
                 return <Recipe key={item.recipeID} item={item} disabled={availableAmount < item.sheetCost} />;
               })}
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title={"Amount Left"}>
+            <Section title="Amount Left">
               {labeledAvailableAmount}
             </Section>
           </Stack.Item>
