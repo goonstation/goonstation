@@ -3,6 +3,7 @@
 	desc = "Stares deeply at a victim, causing them to explode"
 	icon_state = "glare"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

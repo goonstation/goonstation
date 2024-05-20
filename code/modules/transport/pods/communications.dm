@@ -97,7 +97,7 @@
 
 	proc/External()
 		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
-		if(!broadcast)
+		if(!broadcast || usr.loc != src.ship) // need to check if something wasn't entered or if user isn't in a vehicle
 			return
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
@@ -134,7 +134,7 @@
 	New()
 		..()
 		src.net_id = format_net_id("\ref[src]")
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)

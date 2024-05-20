@@ -2041,7 +2041,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
-				src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
+				if(Q)
+					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

@@ -340,6 +340,7 @@
 			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return 1
 
+		. = ..()
 		var/mob/living/carbon/human/HH = target
 
 

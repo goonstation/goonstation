@@ -11,6 +11,8 @@
 	cast(atom/T)
 		var/list/thrown = list()
 		var/current_prob = 100
+		if(..())
+			return 1
 		if (ishuman(T))
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = T

@@ -419,7 +419,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 								var/burning = 0
 								if(istype(scanTurf, /turf/simulated))
 									var/turf/simulated/T = scanTurf
-									if(T.active_hotspot)
+									if(length(T.active_hotspots))
 										burning = 1
 								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else
@@ -827,7 +827,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				src.visible_message(SPAN_ALERT("A bright green pulse emanates from the [src]!"))
 				return
 			if("fire")
-				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
+				fireflash(src.loc, 6, chemfire = CHEM_FIRE_RED) // cogwerks - lowered from 8, too laggy
 				for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("A huge wave of fire explodes out from the [src]!"), 1)
 				return
 			if("widescatter")
@@ -903,7 +903,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 							new /mob/living/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
-				fireflash(src.loc, 3)
+				fireflash(src.loc, 3, chemfire = CHEM_FIRE_RED)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message(SPAN_ALERT("The area surrounding the [src] bursts into flame!"), 1)
 				return
@@ -1233,7 +1233,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				. = TRUE
 			if ("restorebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				xtarget = bm.x
 				ytarget = bm.y
@@ -1243,7 +1243,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 			if ("deletebookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in src.bookmarks
 				if(!bm) return
 				bookmarks.Remove(bm)
 				. = TRUE
@@ -1277,6 +1277,11 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				newsignal.transmission_method = TRANSMISSION_WIRE
 				newsignal.data["command"] = "term_connect"
 				newsignal.data["device"] = src.device_tag
+
+				if (!istype(user_data))
+					user_data = new
+					user_data.fields["userid"] = src.net_id
+					user_data.fields["access"] = "11"
 
 				newsignal.data_file = user_data.copy_file()
 

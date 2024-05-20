@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/oven/pizza_custom
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza_base
 	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza
+	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
 	specialOutput(obj/submachine/ourCooker)
@@ -1735,7 +1735,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 		B.food_color = S ? S.get_food_color() : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
-		B.UpdateOverlays(overlay,"first")
+		B.AddOverlays(overlay,"first")
 		B.cake_bases = list("base_custom")
 		if(S)
 			B.cake_types += S.type

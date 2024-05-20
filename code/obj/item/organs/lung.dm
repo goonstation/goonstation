@@ -25,6 +25,11 @@
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
 
+	attach_organ(mob/living/carbon/M, mob/user)
+		. = ..()
+		if (M.traitHolder?.hasTrait("plasmalungs") && src.breaths_oxygen)
+			src.broken = TRUE
+
 	on_life(var/mult = 1)
 		if (!..())
 			return 0

@@ -1,3 +1,6 @@
+(t)wed may 07 24
+(u)Sovexe
+(*)Added the Region Allocator admin panel. Easily manage regions of space for prefabs and custom map loading on demand. Accessible by both its verb and the game panel.
 (t)wed may  1 24
 (u)Zamujasa
 (*)"Intercom Help", the VOX sound list, now has links to play the sounds for everyone.

@@ -42,6 +42,7 @@
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 1
 
+		. = ..()
 		M.visible_message(SPAN_ALERT("<B>[M] stares into [target]'s eyes!</B>"))
 		boutput(M, SPAN_ALERT("You have to stand still..."))
 

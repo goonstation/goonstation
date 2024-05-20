@@ -424,7 +424,7 @@
 			if(holder)
 				var/list/covered = holder.covered_turf()
 				for(var/turf/t in covered)
-					SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
+					SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6), chemfire = CHEM_FIRE_RED)
 		if(holder)
 			holder.del_reagent(id)
 

@@ -142,6 +142,8 @@
 	name = "Show locker location"
 	desc = "Points you towards the location of your locker."
 	icon_state = "find_locker"
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast()
 		if (!holder)
@@ -162,6 +164,7 @@
 			return TRUE
 		if (M.GetComponent(/datum/component/tracker_hud/gang))
 			return TRUE
+		. = ..()
 		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(locker))
 		SPAWN(3 SECONDS)
 			var/datum/component/tracker_hud/gang/component = M.GetComponent(/datum/component/tracker_hud/gang)
@@ -173,6 +176,8 @@
 	name = "Toggle gang territory overlay"
 	desc = "Toggles the colored gang overlay."
 	icon_state = "toggle_overlays"
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 	var/datum/mind/ownerMind
 
 	proc/remove_self(mind)
@@ -191,7 +196,7 @@
 		if (!M.mind && !M.get_gang())
 			boutput(M, SPAN_ALERT("Gang territory? What? You'd need to be in a gang to get it."))
 			return TRUE
-
+		. = ..()
 		ownerMind = M.mind
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/togglingOn = FALSE
@@ -220,7 +225,8 @@
 	can_cast_anytime = 1
 
 	proc/check_valid(mob/M, area/targetArea)
-		if(!istype(targetArea, /area/station))
+		var/turf/T = get_turf(M)
+		if(!istype(targetArea, /area/station) || get_z(T) != Z_LEVEL_STATION)
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return FALSE
 
@@ -229,7 +235,6 @@
 			return FALSE
 
 		//stop people setting up a locker they can't place
-		var/turf/T = get_turf(M)
 		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return FALSE
@@ -253,6 +258,7 @@
 		if (!antag_role)
 			return
 
+		. = ..()
 		antag_role.gang.select_gang_uniform()
 
 		if (!check_valid(M, area))

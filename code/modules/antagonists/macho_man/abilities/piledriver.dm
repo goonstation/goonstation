@@ -3,6 +3,7 @@
 	desc = "Piledrive a target"
 	icon_state = "Drop"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))

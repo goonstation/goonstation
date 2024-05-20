@@ -13,6 +13,7 @@
 		possible_areas += get_areas(/area/sim)
 
 	cast(mob/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			var/area/A = input("Select the area to leap to: ", "Select Area", null) as null|anything in possible_areas
 			if (!A)

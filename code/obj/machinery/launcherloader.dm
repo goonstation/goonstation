@@ -407,7 +407,7 @@
 					src.scan = id_card
 					src.updateUsrDialog()
 				else
-					boutput(user, SPAN_ALERT("Pin number incorrect."))
+					boutput(user, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))

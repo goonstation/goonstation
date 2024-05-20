@@ -110,7 +110,7 @@ TYPEINFO(/obj/item/pinpointer)
 					arrow.icon_state = "pinonmedium"
 				if(16 to INFINITY)
 					arrow.icon_state = "pinonfar"
-			UpdateOverlays(arrow, "arrow")
+			AddOverlays(arrow, "arrow")
 
 			sleep(0.5 SECONDS)
 

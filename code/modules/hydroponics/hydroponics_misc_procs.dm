@@ -1,5 +1,8 @@
 // Hydroponics procs not specific to the plantpot start here.
 
+
+
+
 proc/HYPchem_scaling(var/scaling_statistics)
 	//! This proc causes all chem production of botany to have a diminishing return with potency (or other stats for e.g. maneaters)
 	//For the graph in question with explanation, refer to this link: https://www.desmos.com/calculator/gy7tn43s6b

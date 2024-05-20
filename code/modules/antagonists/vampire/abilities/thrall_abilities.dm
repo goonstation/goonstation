@@ -11,6 +11,8 @@
 	when_stunned = 1
 	not_when_handcuffed = 0
 	unlock_message = ""
+	interrupt_action_bars = FALSE
+	do_logs = FALSE
 
 	incapacitation_check()
 		.= 1
@@ -25,6 +27,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return

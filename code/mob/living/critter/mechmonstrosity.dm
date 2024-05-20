@@ -237,6 +237,7 @@
 			boutput(M, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return TRUE
 
+		. = ..()
 		M.visible_message(SPAN_ALERT("<B>[M] glares angrily at [target]!</B>"))
 		target.apply_flash(5, 5)
 		boutput(target, SPAN_ALERT("You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes."))
@@ -325,6 +326,7 @@
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
+		. = ..()
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
 		return FALSE
@@ -356,6 +358,7 @@
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
 
+		. = ..()
 		M.visible_message(SPAN_ALERT("<B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B>"))
 		H.sever_limb("r_arm")
 		H.sever_limb("l_arm")
