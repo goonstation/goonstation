@@ -120,7 +120,7 @@ this is already used where it needs to be used, you can probably ignore it.
 /* ---------- take_bleeding_damage() ---------- */
 /* ============================================ */
 
-/proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0, var/is_crit = FALSE)
+/proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0, var/is_crit = FALSE, var/override_bleed_level = -1)
 	if (!T) // I forget why I set T as a variable OH WELL
 		T = get_turf(some_idiot)
 	var/area/area = get_area(some_idiot)
@@ -208,6 +208,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (H.traitHolder && H.traitHolder.hasTrait("hemophilia"))
 		increase_amount += rand(0,1)
+
+	if (override_bleed_level >= 0)
+		bleed_level = override_bleed_level
 
 	var/desired_bleed_level = is_crit ? 5 : bleed_level //crits always increase bleeds
 	var/final_increase_amount = clamp(increase_amount, 0, desired_bleed_level-H.bleeding)
