@@ -14244,7 +14244,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/hallway/secondary/exit)
 "bzn" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -28875,7 +28875,7 @@
 	},
 /turf/space,
 /turf/simulated/floor/engine,
-/area/space)
+/area/station/hallway/secondary/exit)
 "peK" = (
 /turf/simulated/floor{
 	icon_state = "L6";
@@ -30106,7 +30106,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hallway/secondary/exit)
 "qgp" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -37853,7 +37853,7 @@
 "wxj" = (
 /turf/space,
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/station/hallway/secondary/exit)
 "wxD" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/red/side{
