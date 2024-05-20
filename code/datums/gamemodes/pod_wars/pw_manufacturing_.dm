@@ -313,7 +313,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	name = "NanoMed Refill Cartridge"
 	item_outputs = list(/obj/item/vending/restock_cartridge/medical)
 	item_requirements = list(/datum/manufacturing_requirement/metal = 25,
-							 /datum/manufacturing_requirement/ = 25,
+							 /datum/manufacturing_requirement/fabric 25,
 							 /datum/manufacturing_requirement/dense = 20,
 							)
 	time = 60 SECONDS

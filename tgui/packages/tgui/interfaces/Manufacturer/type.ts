@@ -54,9 +54,8 @@ export type ManufacturableData = {
   name:string
 
   material_names:string[];
-  item_paths:string[];
+  item_requirements:Record<string, number>;
   item_names:string[];
-  item_amounts:number[];
   item_descriptions:string[];
 
   create:number;

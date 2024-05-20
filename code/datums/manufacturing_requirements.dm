@@ -5,7 +5,7 @@
    /datum/manufacture_requirement/dense/flock
 */
 ABSTRACT_TYPE(/datum/manufacture_requirement)
-/datum/manufacture_requirement
+/datum/manufacturing_requirement
 	/// Player-facing name of the requirement.
 	var/name = "Unknown"
 	/// Material ID of the material to checl. None if null, some string like "erebite" if used. Meant for exact material checks.
@@ -102,6 +102,10 @@ ABSTRACT_TYPE(/datum/manufacture_requirement)
 	syreline
 		name = "Syreline"
 		material_id = "Syreline"
+
+	telecrystal
+		name = "Telecrystal"
+		material_id = "telecrystal"
 
 	uqill
 		name = "Uqill"

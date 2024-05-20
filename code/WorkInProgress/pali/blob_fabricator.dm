@@ -1,8 +1,7 @@
 
 /datum/manufacture/mechanics/blob
 	name = "blob"
-	item_paths = list("ORG|RUB")
-	item_amounts = list(3)
+	item_requirements = list(/datum/manufacture_requirement/organic_or_rubber = 3)
 	time = 10 SECONDS
 	create = 1
 	frame_path = /obj/blob
@@ -11,12 +10,12 @@
 	base
 		name = "blob"
 		frame_path = /obj/blob
-		item_amounts = list(1)
+		item_requirements = list(/datum/manufacture_requirement/organic_or_rubber = 1)
 
 	nucleus
 		name = "nucleus blob"
 		time = 1 MINUTE
-		item_amounts = list(30)
+		item_requirements = list(/datum/manufacture_requirement/organic_or_rubber = 30)
 		frame_path = /obj/blob/nucleus
 
 	launcher
@@ -57,8 +56,9 @@
 
 /datum/manufacture/mechanics/blob_overmind
 	name = "blob overmind"
-	item_paths = list("blob", "ectoplasm")
-	item_amounts = list(10, 10)
+	item_requirements = list(/datum/manufacturing_requirement/blob = 10,
+							 /datum/manufacturing_requirement/ectoplasm = 10,
+							)
 	time = 1 MINUTE
 	create = 1
 	frame_path = /mob/living/intangible/blob_overmind/ai/start_here

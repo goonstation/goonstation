@@ -423,8 +423,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Fix not having generated material names for blueprints like multitools
 		if (isnull(M.item_names))
 			M.item_names = list()
-			for (var/i in M.item_paths)
-				M.item_names += get_nice_mat_name_for_manufacturers(i)
+			for (var/i in M.item_requirements)
+				var/datum/manufacture_requirement/R = M.item_requirements[i]
+				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -450,10 +451,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"name" = M.name,
 			"category" = M.category,
 			"material_names" = M.item_names,
-			"item_paths" = M.item_paths,
+			"item_requirements" = M.item_requirements,
 			"item_names" = generated_names,
 			"item_descriptions" = generated_descriptions,
-			"item_amounts" = M.item_amounts,
 			"item_outputs" = M.item_outputs,
 			"create" = M.create,
 			"time" = M.time,
@@ -1657,29 +1657,27 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/get_materials_needed(datum/manufacture/M)
 		var/list/mats_used = list()
 		var/list/mats_available = list()
-
 		var/list/C = src.get_contents()
-		for (var/path_index in 1 to length(M.item_paths))
-			var/required_pattern = M.item_paths[path_index]
-			var/required_amount = M.item_amounts[path_index]
-			for (var/piece_index in 1 to length(C))
-				var/obj/item/material_piece/P = C[piece_index]
-				var/P_id = P.material.getID()
-				if (!(P_id in mats_available))
-					mats_available[P_id] = P.amount * 10
-				if (mats_available[P_id] < required_amount)
-					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
-					mats_used[required_pattern] = P_id
-					mats_available[P_id] -= required_amount
-					break
 
+		for (var/datum/manufacture_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			for (var/obj/item/material_piece/P in C)
+				var/P_ref = "\ref[P]"
+				if (!(P_ref in mats_available))
+					mats_available[P_ref] = P.amount * 10
+				if (mats_available[P_ref] < required_amount)
+					continue
+				if (R.is_match(P))
+					mats_used[R] = P_ref
+					mats_available[P_ref] -= required_amount
+					break
+	
 		return mats_used
 
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
+		if (length(mats_used) == length(M.item_requirements)) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
@@ -1687,10 +1685,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_used = check_enough_materials(M)
 		if (isnull(mats_used))
 			return // how
-		for (var/i = 1 to length(M.item_paths))
-			var/pattern = M.item_paths[i]
-			var/mat_id = mats_used[pattern]
-			src.change_contents(-M.item_amounts[i]/10, mat_id)
+		for (var/datum/manufacture_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			src.change_contents(-required_amount/10, mat_piece = locate(mats_used[R]))
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1969,7 +1966,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	Parameters for selection of material (requires at least one non-null):
 	mat_id = material id to set. creates a new material if none of that id exists
 	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
+	mat_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
 	material = material datum to add. acts as/overrides mat_id if provided
 	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
 	user = (optional) any mob that may be loading this

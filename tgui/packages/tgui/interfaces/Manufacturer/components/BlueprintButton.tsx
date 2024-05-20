@@ -38,10 +38,10 @@ Only the DM checks matter for actually making the item though, this just enables
 shows what materials are missing.
 */
 const getProductionSatisfaction = (
-  pattern_requirements:string[],
-  amount_requirements:number[],
+  requirements:Record<string, number>,
   materials_stored:ResourceData[]) =>
 {
+  /*
   // Copy values of mats stored to edit in case we need to try the same material twice
   let material_amts_predicted:Record<string, number> = {};
   materials_stored.forEach((value:ResourceData) => (
@@ -52,7 +52,8 @@ const getProductionSatisfaction = (
     const target_pattern = pattern_requirements[i];
     const target_amount = amount_requirements[i];
     const matchingMaterial = materials_stored.find((material:ResourceData) => (
-      (material.amount >= target_amount/10) && (target_pattern === "ALL" || material.satisfies?.includes(target_pattern) || material.id === target_pattern)
+      (material.amount >= target_amount/10) && (target_pattern === "ALL"
+      || material.satisfies?.includes(target_pattern) || material.id === target_pattern)
     ));
     if (matchingMaterial !== undefined) {
       material_amts_predicted[i] -= target_amount/10;
@@ -63,6 +64,12 @@ const getProductionSatisfaction = (
     }
   }
   return patterns_satisfied;
+  */ // fuck
+  let gahh = [];
+  for (let i in Object.keys(requirements)) {
+    gahh.push(false);
+  }
+  return gahh;
 };
 
 export const BlueprintButton = (props:BlueprintButtonProps) => {
@@ -77,8 +84,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     hasPower,
   } = props;
   const blueprintSatisfaction = getProductionSatisfaction(
-    blueprintData.item_paths,
-    blueprintData.item_amounts,
+    blueprintData.item_requirements,
     materialData,
   );
   // Condense producability
@@ -110,7 +116,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
             label={value}
             textAlign="right"
           >
-            {blueprintData.item_amounts[index]/10}
+            {blueprintData.item_requirements[index]/10}
           </LabeledList.Item>
         ))}
       </LabeledList>
