@@ -184,10 +184,15 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		if (1 to 9)
 			bleed_level += 1
-		if (10 to 30)
+		if (10 to 29)
 			bleed_level += 2 //can cause unstoppable bleeding on crit
+			if (prob(30))
+				increase_amount += 1
 		if (30 to INFINITY)
 			bleed_level += 3 //regularly causes unstoppable bleeding
+			if (prob(60))
+				increase_amount += 1
+
 
 	if (H.reagents)
 		var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
@@ -226,9 +231,11 @@ this is already used where it needs to be used, you can probably ignore it.
 			if (old_bleeding <= 0)
 				H.visible_message(SPAN_ALERT("[H] starts bleeding!"),\
 				SPAN_ALERT("<b>You start bleeding!</b>"))
-			else if (old_bleeding >= 1)
+			else if (H.bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")
-			else if (old_bleeding >= 4)//9)
+			else if (H.bleeding > 3)
+				H.show_text("<b>That nicked an artery!</b>", "red")
+			else if (H.bleeding > 4)//9)
 				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
 
 		//BLOOD_DEBUG("[H] rolls bleeding increase, bleeding is now [H.bleeding]</b>")
