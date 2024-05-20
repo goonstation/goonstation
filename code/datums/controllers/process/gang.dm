@@ -121,7 +121,7 @@
 
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
-			var/datum/targetable/abil = targetGang.leader?.current?.getAbility(/datum/targetable/gang/move_gang_base)
+			var/datum/targetable/abil = targetGang.leader?.current?.getAbility(/datum/targetable/gang/set_gang_base/migrate)
 			if (abil)
 				abil.last_cast = world.time + GANG_CRATE_DROP_TIME + 5 MINUTES
 				targetGang.leader.current.abilityHolder?.updateButtons()
