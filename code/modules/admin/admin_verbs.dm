@@ -424,7 +424,8 @@ var/list/admin_verbs = list(
 #endif
 		/client/proc/distribute_tokens,
 		/client/proc/spawn_all_type,
-		/client/proc/region_allocator_panel
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
 		),
 
 	7 = list(
