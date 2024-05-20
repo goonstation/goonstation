@@ -766,7 +766,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
-		newsignal.encryption_obfuscation = 90 // too easy to decipher these
+		newsignal.encryption_obfuscation = 10 // too easy to decipher these
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -944,7 +944,7 @@ proc/broadcast_to_all_gangs(var/message)
 						validLocation = TRUE
 				for_by_tcl(otherTag, /obj/decal/gangtag)
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
-					if (otherTag.owners && otherTag.owners == user.get_gang())
+					if (otherTag.owners && otherTag.owners == user.get_gang() && otherTag.active)
 						validLocation = TRUE
 			else
 				boutput(user, SPAN_ALERT("You can't spray over your own tags!"))
@@ -955,7 +955,7 @@ proc/broadcast_to_all_gangs(var/message)
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
-				else if (tag.owners)
+				else if (tag.owners && tag.active)
 					boutput(user, SPAN_ALERT("You can't spray in another gang's territory! Spray over their tag, instead!"))
 					if (user.GetComponent(/datum/component/tracker_hud))
 						return
