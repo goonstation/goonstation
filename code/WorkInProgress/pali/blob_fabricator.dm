@@ -8,50 +8,50 @@
 	frame_path = /obj/blob
 	apply_material = 1
 
-	base
+/datum/manufacture/mechanics/blob/base
 		name = "blob"
 		frame_path = /obj/blob
 		item_amounts = list(1)
 
-	nucleus
+/datum/manufacture/mechanics/blob/nucleus
 		name = "nucleus blob"
 		time = 1 MINUTE
 		item_amounts = list(30)
 		frame_path = /obj/blob/nucleus
 
-	launcher
+/datum/manufacture/mechanics/blob/launcher
 		name = "slime launcher blob"
 		frame_path = /obj/blob/launcher
 
-	mitochondria
+/datum/manufacture/mechanics/blob/mitochondria
 		name = "mitochondria blob"
 		frame_path = /obj/blob/mitochondria
 
-	reflective
+/datum/manufacture/mechanics/blob/reflective
 		name = "reflective blob"
 		frame_path = /obj/blob/reflective
 
-	ectothermid
+/datum/manufacture/mechanics/blob/ectothermid
 		name = "ectothermid blob"
 		frame_path = /obj/blob/ectothermid
 
-	plasmaphyll
+/datum/manufacture/mechanics/blob/plasmaphyll
 		name = "plasmaphyll blob"
 		frame_path = /obj/blob/plasmaphyll
 
-	lipid
+/datum/manufacture/mechanics/blob/lipid
 		name = "lipid blob"
 		frame_path = /obj/blob/lipid
 
-	ribosome
+/datum/manufacture/mechanics/blob/ribosome
 		name = "ribosome blob"
 		frame_path = /obj/blob/ribosome
 
-	wall
+/datum/manufacture/mechanics/blob/wall
 		name = "thick blob"
 		frame_path = /obj/blob/wall
 
-	firewall
+/datum/manufacture/mechanics/blob/firewall
 		name = "fire-resistant blob"
 		frame_path = /obj/blob/firewall
 
