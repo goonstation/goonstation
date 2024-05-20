@@ -1,5 +1,5 @@
 
-(u)mon may 20 24
+(t)mon may 20 24
 (u)Zamujasa
 (e)🔄|C-Rework
 (*)Attempt to rework Mail Courier into a latejoin role. Their headset has command + cargo, and their ID has  access to the medical, research, and cargo lobbies. Reduced to 1 job slot as well.
