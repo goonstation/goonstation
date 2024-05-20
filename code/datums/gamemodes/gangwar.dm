@@ -766,6 +766,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
+		newsignal.encryption_obfuscation = 90 // too easy to decipher these
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -796,7 +797,10 @@ proc/broadcast_to_all_gangs(var/message)
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area in areas)
-			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/solar))
+				continue
+			var/typeinfo/area/typeinfo = areas[area].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_drop_zones += areas[area]
 
@@ -822,7 +826,7 @@ proc/broadcast_to_all_gangs(var/message)
 					disposalList.Add(O)
 				else if (istype(O,/obj/storage))
 					var/obj/storage/crate = O
-					if (!crate.secure && !crate.locked)
+					if (!crate.secure && !crate.locked && !crate.open)
 						crateList.Add(O)
 				else if (istype(O,/obj/table) && !istype(O,/obj/table/glass))
 					tableList.Add(O)
@@ -856,7 +860,7 @@ proc/broadcast_to_all_gangs(var/message)
 			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
-		else if(length(tableList) && prob(65))
+		else if(length(tableList) && (length(uncoveredTurfList) > 0 || prob(65))) // only spawn on uncovered turf as a last resort
 			var/turf/target = get_turf(pick(tableList))
 			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
@@ -2025,6 +2029,10 @@ proc/broadcast_to_all_gangs(var/message)
 	w_class = W_CLASS_TINY
 	var/max_charges = 5
 	var/charges = 5
+
+	syndicate
+		max_charges = 10
+		charges = 10
 
 	update_icon()
 		if (charges > 0 )
