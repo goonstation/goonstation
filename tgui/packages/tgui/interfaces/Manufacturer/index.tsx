@@ -35,7 +35,7 @@ export const Manufacturer = (_, context) => {
   const actionWireCutOrMend = (index:number) => act("wire", { action: ((is_set(data.wire_bitflags, data.wires[index]-1)) ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
   const actionRemoveBlueprint = (byondRef:string) => act("delete", { "blueprint_ref": byondRef });
-  const actionSetSpeed = (speed:number) => act("speed", { "value": speed });
+  const actionSetSpeed = (new_speed:number) => act("speed", { "value": new_speed });
   const actionRepeat = () => act("repeat");
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   let swapPriority = (materialRef: string) => {
@@ -153,8 +153,8 @@ export const Manufacturer = (_, context) => {
                 </Section>
               </Stack.Item>
               <ManufacturerSettings
-                repeat={data.repeat === true}
-                hacked={data.hacked === true}
+                repeat={data.repeat}
+                hacked={data.hacked}
                 speed={data.speed}
                 max_speed_normal={data.max_speed_normal}
                 max_speed_hacked={data.max_speed_hacked}

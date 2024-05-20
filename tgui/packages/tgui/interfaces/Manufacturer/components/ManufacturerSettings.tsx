@@ -6,10 +6,11 @@
  */
 
 import { Button, LabeledList, Section, Slider, Stack } from "../../../components";
+import { BooleanLike } from "common/react";
 
 type ManufacturerSettingsProps = {
-  repeat: boolean;
-  hacked: boolean;
+  repeat: BooleanLike;
+  hacked: BooleanLike;
   speed: number;
   max_speed_normal: number;
   max_speed_hacked:number;
@@ -29,6 +30,9 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
     actionSetSpeed,
     actionRepeat,
   } = props;
+
+  const max_speed = hacked ? max_speed_hacked : max_speed_normal;
+
   return (
     <Stack.Item>
       <Section
@@ -50,14 +54,14 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
               <Stack.Item>
                 <Button
                   icon="angle-double-left"
-                  onClick={actionSetSpeed(1)}
+                  onClick={() => actionSetSpeed(1)}
                 />
               </Stack.Item>
               <Stack.Item grow>
                 <Slider
                   minValue={1}
                   value={speed}
-                  maxValue={hacked ? max_speed_hacked : max_speed_normal}
+                  maxValue={max_speed}
                   step={1}
                   stepPixelSize={100}
                   disabled={mode === "working"}
@@ -67,7 +71,7 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
               <Stack.Item>
                 <Button
                   icon="angle-double-right"
-                  onClick={actionSetSpeed(hacked ? max_speed_hacked : max_speed_normal)}
+                  onClick={() => actionSetSpeed(max_speed)}
                 />
               </Stack.Item>
             </Stack>
