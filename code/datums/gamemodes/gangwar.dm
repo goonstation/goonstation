@@ -856,7 +856,7 @@ proc/broadcast_to_all_gangs(var/message)
 			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
-		else if(length(tableList) && prob(65))
+		else if(length(tableList) && (length(uncoveredTurfList) > 0 || prob(65))) // only spawn on uncovered turf as a last resort
 			var/turf/target = get_turf(pick(tableList))
 			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
