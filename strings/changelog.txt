@@ -1,6 +1,9 @@
 
 (u)mon may 20 24
 (u)Zamujasa
+(e)🔄|C-Rework
+(*)Attempt to rework Mail Courier into a latejoin role. Their headset has command + cargo, and their ID has  access to the medical, research, and cargo lobbies. Reduced to 1 job slot as well.
+(*)Waiter was moved to Wednesday instead of being a speical (40%) job.
 (+)The clothing booth in the afterlife is completely free.
 (+)Roles that don't have jumpsuits in the afterlife bar are given a random color one.
 (t)sun may 19 24
