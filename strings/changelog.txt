@@ -1,5 +1,11 @@
 
 (t)mon may 20 24
+(u)TDHooligan
+(p)19034
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Gang members are no longer required to recover duffle bags from under the floortiles of a burning combustion chamber, etc.
+(+)Duffle bags can no longer enter superpositions both above & below the floor.
+(+)Switchblades and quickhacks can spawn in Surplus crates.
 (u)Zamujasa
 (e)🔄|C-Rework
 (*)Attempt to rework Mail Courier into a latejoin role. Their headset has command + cargo, and their ID has  access to the medical, research, and cargo lobbies. Reduced to 1 job slot as well.
