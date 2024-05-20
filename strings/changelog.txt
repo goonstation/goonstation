@@ -1,4 +1,8 @@
 
+(u)mon may 20 24
+(u)Zamujasa
+(+)The clothing booth in the afterlife is completely free.
+(+)Roles that don't have jumpsuits in the afterlife bar are given a random color one.
 (t)sun may 19 24
 (u)FlameArrow57
 (p)18991
