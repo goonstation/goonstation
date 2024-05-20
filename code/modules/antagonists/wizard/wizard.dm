@@ -129,7 +129,7 @@
 	get_statistics()
 	// Add the wizard's chosen spells to the crew credits
 		var/list/purchases = list()
-		#define SPELL_ANIMATION_FRAME 5 // This will break if ever the wizard spells are changed
+		#define SPELL_ANIMATION_FRAME 5 // This will break if ever the wizard spell animations are changed
 
 		for (var/datum/SWFuplinkspell/purchased_spell as anything in src.purchased_spells)
 			if (purchased_spell.assoc_spell )
