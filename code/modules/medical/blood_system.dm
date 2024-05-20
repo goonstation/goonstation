@@ -182,9 +182,9 @@ this is already used where it needs to be used, you can probably ignore it.
 	switch (damage)
 		if (-INFINITY to 1)
 
-		if (1 to 9)
+		if (6 to 10)
 			bleed_level += 1
-		if (10 to 29)
+		if (11 to 29)
 			bleed_level += 2 //can cause unstoppable bleeding on crit
 			if (prob(30))
 				increase_amount += 1
@@ -196,15 +196,19 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (H.reagents)
 		var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
-		if (anticoag_amt > 10)
+		if (anticoag_amt > 20) //you blood fall out
+			bleed_level += 3
+		else if (anticoag_amt > 10)
 			bleed_level += 2
-		if (anticoag_amt > 0)
+		else if (anticoag_amt > 0)
 			bleed_level += 1
 
 		var/coag_amt = H.reagents.get_reagent_amount("proconvertin")
-		if (coag_amt > 10) // blood clot time. odds are they're functionally immune to bleed anyway
+		if (coag_amt > 10) // blood clot time. odds are they're functionally immune to bleed at this pt anyway, why not.
+			bleed_level -= 3
+		else if (coag_amt > 5)
 			bleed_level -= 2
-		if (coag_amt > 0)
+		else if (coag_amt > 0)
 			bleed_level -= 1
 
 	if (ischangeling(H) && bleed_level > 2) //changelings resistant to serious bleeds
