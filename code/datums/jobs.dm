@@ -1338,6 +1338,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Toxins Researcher")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
+
 /datum/job/special/chemist
 	name = "Chemist"
 	linkcolor = "#9900FF"
@@ -1353,6 +1359,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Chemist")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/special/research_assistant
 	name = "Research Assistant"
@@ -1370,6 +1382,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Research Assistant")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
