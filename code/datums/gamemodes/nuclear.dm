@@ -244,6 +244,7 @@ var/global/list/nuke_op_camo_matrix = null
 			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), SLOT_R_HAND)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	the_bomb.gives_medal = TRUE
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 

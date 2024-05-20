@@ -1042,6 +1042,29 @@ proc/spawn_kitchen_note()
 	S.L.
 	"}
 
+#ifdef NIGHTSHADE
+/obj/item/paper/gallery
+	name = "Gallery submission guide"
+	info = {"
+		<span style="color:null;font-family:Georgia;">
+		<p>Thank you for your interest in making a submission to the Nanotrasen Applied Paints Art Gallery!</p>
+		<p>To make a submission:</p>
+		<ol>
+		<li>Use your completed canvas in hand on any gallery exhibit</li>
+		<li>Pay the fee (see pricing below)</li>
+		<li>(Optional) Title your submission and publicly display your BYOND key as the submitter</li>
+		</ol>
+		<p>Your artwork will remain on display indefinitely unless another artist decides to purchase your exhibit.</p>
+		<p>Pricing (in Spacebux):</p>
+		<ul>
+		<li>Lowend (6x available) - 500</li>
+		<li>Midrange (6x available) - 1,000</li>
+		<li>Highend (2x available) - 2,500 </li>
+		<li>Premium (1x available) - 5,000</li>
+		</ul>
+		</span>
+	"}
+#else
 /obj/item/paper/gallery
 	name = "Gallery submission guide"
 	info = {"
@@ -1063,6 +1086,7 @@ proc/spawn_kitchen_note()
 		</ul>
 		</span>
 	"}
+#endif
 
 /obj/item/paper/magnetconstruction
 	name = "How to set up a new mining magnet"
