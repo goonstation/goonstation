@@ -1915,6 +1915,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 							var/datum/gang/usergang = user.get_gang()
 							tag = image('icons/obj/decals/gang_tags.dmi', "gangtag[usergang.gang_tag]")
 							tag.pixel_y = 5
+							SPAWN (2 DECI SECONDS)
+								playsound(A.loc, 'sound/effects/graffiti_hit.ogg', 10, TRUE)
 						if (ismonkey(A))
 							tag.pixel_y = tag.pixel_y - 6
 						if (loser.bioHolder.HasEffect("dwarf"))

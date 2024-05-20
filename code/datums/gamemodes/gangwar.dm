@@ -648,8 +648,9 @@ proc/broadcast_to_all_gangs(var/message)
 					show_vandal_maptext(amount, targetArea, location, FALSE)
 
 				if (vandalism_tracker[targetArea] <= 0)
-					src.broadcast_to_gang("You've successfully ruined \the [targetArea.name]! The duffle bag has been delivered to the vandal in question.")
-					new/obj/item/gang_loot/guns_and_gear(location)
+					src.broadcast_to_gang("You've successfully ruined \the [targetArea.name]! The duffle bag has been delivered to where the last act of vandalism occurred.")
+					var/obj/item/loot = new/obj/item/gang_loot/guns_and_gear(location)
+					showswirl(loot)
 					vandalism_tracker -= targetArea
 				break
 
@@ -1157,7 +1158,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 		var/turf/turftarget = get_turf(target)
 
-		if(BOUNDS_DIST(src, target) > 0 || (turftarget in graffititargets))
+		if(BOUNDS_DIST(src, target) > 0 || (turftarget in graffititargets) || turftarget == get_turf(user)) //spraying at your feet messes with math
 			return
 		if(in_use)
 			var/valid = FALSE
@@ -1439,7 +1440,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		S.clear_targets()
-		playsound(S.loc, 'sound/effects/graffiti_hit.ogg', 100, TRUE)
+		playsound(S.loc, 'sound/effects/graffiti_hit.ogg', 10, TRUE)
 		if (S.charges == 0)
 			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
