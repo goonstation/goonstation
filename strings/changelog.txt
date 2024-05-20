@@ -1,6 +1,10 @@
 
 (t)mon may 20 24
 (u)TDHooligan
+(p)18561
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Gang leaders can now move their locker to somewhere in their territory.
+(u)TDHooligan
 (p)19034
 (e)⚖🧛|C-Balance, A-Gamemodes
 (+)Gang members are no longer required to recover duffle bags from under the floortiles of a burning combustion chamber, etc.
