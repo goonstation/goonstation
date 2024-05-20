@@ -796,7 +796,10 @@ proc/broadcast_to_all_gangs(var/message)
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area in areas)
-			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/solar))
+				continue
+			var/typeinfo/area/typeinfo = areas[area].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_drop_zones += areas[area]
 
