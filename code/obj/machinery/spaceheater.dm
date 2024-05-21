@@ -8,7 +8,6 @@ TYPEINFO(/obj/machinery/space_heater)
 	icon_state = "sheater0"
 	name = "space HVAC"
 	desc = "Made by Space Amish using traditional space techniques, this space heater is guaranteed not to set the station on fire."
-	var/baseDesc
 	var/emagged = FALSE
 	var/obj/item/cell/cell
 	var/open = FALSE
@@ -28,7 +27,6 @@ TYPEINFO(/obj/machinery/space_heater)
 		src.cell = new(src)
 		src.cell.charge = 1000
 		src.cell.maxcharge = 1000
-		baseDesc = desc
 		UpdateIcon()
 		return
 
@@ -96,7 +94,7 @@ TYPEINFO(/obj/machinery/space_heater)
 		if (src.emagged)
 			src.desc = "Made by Space Syndicates using traditional space techniques, this heater is guaranteed to set the station on fire."
 		else
-			src.desc = baseDesc
+			src.desc = initial(src.desc)
 		. += "The HVAC is [src.on ? "on" : "off"], and [src.heating ? "heating" : "cooling"] the environment."
 		. += "The power cell is [src.cell ? "installed" : "missing"]."
 		if(src.open)
