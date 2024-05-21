@@ -14255,6 +14255,8 @@
 "bzn" = (
 /obj/table/auto,
 /obj/machinery/recharger,
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor,
 /area/station/security/main)
 "bAn" = (
