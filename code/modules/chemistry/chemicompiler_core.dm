@@ -215,6 +215,15 @@
 	//boutput(world, "calling window func [function] with data: '[url_encode(data)]'")
 	usr << output(data, "chemicompiler.browser:[function]")
 
+/datum/chemicompiler_core/proc/get_ui_data()
+	. = list()
+	.["reservoirs"] = getReservoirStatuses()
+	.["buttons"] = buttons
+	.["output"] = output
+	.["sx"] = sx
+	.["tx"] = tx
+	.["ax"] = ax
+
 /datum/chemicompiler_core/proc/updatePanel()
 	var json = "{\"reservoirs\":\[null"
 	var/i
@@ -886,3 +895,25 @@
 		return 0
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
 	return holder.reagents.total_volume
+
+/datum/chemicompiler_executor/proc/get_ui_data()
+	return core.get_ui_data()
+
+
+/datum/chemicompiler_executor/proc/execute_ui_act(action, list/params)
+	switch(action)
+		if("reservoir")
+			reservoirClick(params["index"] + 1)
+			return TRUE
+		if("save")
+			core.buttons[params["index"] + 1] = params["input"]
+			core.cbf[params["index"] + 1] = core.parseCBF(params["input"], params["index"] + 1)
+			core.output = ""
+			return TRUE
+		if("load")
+			core.output = core.buttons[params["index"] + 1]
+			return TRUE
+		if("run")
+			if(islist(core.cbf[params["index"] + 1]))
+				core.runCBF(core.cbf[params["index"] + 1])
+				return TRUE
