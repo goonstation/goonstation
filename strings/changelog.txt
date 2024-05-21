@@ -1,4 +1,11 @@
 
+(t)tue may 21 24
+(u)Lord_Earthfire
+(p)18587
+(e)🔎🔄🌱|C-Code-Quality, C-Rework, A-Hydroponics
+(+)Chemicals in hydroponic trays now should show a lower varience.
+(+)Plants accept compost and holy water as alternatives to water. Man-Eating plants accept blood as an alternative to water.
+(+)Fast/slow metabolism gene strain now affect many processes around chems in trays or gene strains instead of just improving growth speed.
 (t)mon may 20 24
 (u)TDHooligan
 (p)18561
