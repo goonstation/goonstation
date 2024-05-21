@@ -179,7 +179,7 @@
 		return 0
 
 	proc/can_arm_attach()
-		return !(src.object_flags & NO_ARM_ATTACH || src.cant_drop || src.two_handed)
+		return !(src.object_flags & NO_ARM_ATTACH )
 
 	assume_air(datum/air_group/giver)
 		if (loc)
