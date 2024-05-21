@@ -1001,6 +1001,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
 			src.visible_message(SPAN_COMBAT("<b>[src]</b> pets [user]!"))
+		else
+			..()
 
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
