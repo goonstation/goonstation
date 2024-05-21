@@ -16,6 +16,7 @@
 	var/list/buttons[6]
 	var/list/cbf[6]
 	var/output = ""
+	var/timestamp
 	var/maxExpensiveOperations = 5 // maximum number of transfers per machine tick
 
 	var/list/currentProg
@@ -220,6 +221,7 @@
 	.["reservoirs"] = getReservoirStatuses()
 	.["buttons"] = buttons
 	.["output"] = output
+	.["timestamp"] = timestamp
 	.["sx"] = sx
 	.["tx"] = tx
 	.["ax"] = ax
@@ -912,6 +914,7 @@
 			return TRUE
 		if("load")
 			core.output = core.buttons[params["index"] + 1]
+			core.timestamp = world.timeofday
 			return TRUE
 		if("run")
 			if(islist(core.cbf[params["index"] + 1]))

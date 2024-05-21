@@ -12,7 +12,7 @@ import { Button, Input } from '../../components';
 
 export const ChemiCompiler = (_props, context) => {
   const { act, data } = useBackend<ChemiCompilerData>(context);
-  const { reservoirs, buttons, output, sx, tx, ax } = data;
+  const { reservoirs, buttons, output, timestamp, sx, tx, ax } = data;
   const [input, setInput] = useLocalState(context, 'input', '');
 
   return (
@@ -51,7 +51,8 @@ export const ChemiCompiler = (_props, context) => {
           value={output || input}
           onInput={(_event, value) => { setInput(value); }}
           height={7}
-          width={'100%'} />
+          width={'100%'}
+          key={timestamp} />
         <br />
 
         output: {output} /

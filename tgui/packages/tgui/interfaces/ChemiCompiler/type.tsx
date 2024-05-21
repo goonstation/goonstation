@@ -9,6 +9,7 @@ export interface ChemiCompilerData {
   reservoirs: Array<boolean>;
   buttons: Array<any>;
   output: string;
+  timestamp: number;
   sx: string;
   tx: string;
   ax: string;
