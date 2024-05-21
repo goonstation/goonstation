@@ -369,9 +369,6 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			jelly
 				name = "Jelly"
 				id = "jelly"
-			jelly_fade
-				name = "Jelly: Fade"
-				id = "jelly_fade"
 		long
 			chub2_s
 				name = "Bang: Left"
