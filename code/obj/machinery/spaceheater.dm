@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/space_heater)
 	get_desc()
 		. = ..()
 		if (src.emagged)
-			src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
+			src.desc = "Made by Space Syndicates using traditional space techniques, this heater is guaranteed to set the station on fire."
 		else
 			src.desc = baseDesc
 		. += "The HVAC is [src.on ? "on" : "off"], and [src.heating ? "heating" : "cooling"] the environment."
