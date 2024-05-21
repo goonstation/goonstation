@@ -32,11 +32,11 @@
 
 		if (owner.bleeding)
 
-
-			var/decrease_chance = 0 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
+			/// odds that your bleeding naturally heals
+			var/decrease_chance = 0
 			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
 
-			if (owner.bleeding < 4)
+			if (owner.bleeding < 4) //let small bleeds passively heal
 				decrease_chance += 3
 			else
 				surgery_increase_chance += 10
@@ -54,15 +54,13 @@
 				owner.bleeding -= 1
 				boutput(owner, SPAN_NOTICE("Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")]."))
 
-			if (prob(surgery_increase_chance) && owner.get_surgery_status())
-				owner.bleeding += (1*mult)
+			if (probmult(surgery_increase_chance) && owner.get_surgery_status())
+				owner.bleeding += 1
 
 			owner.bleeding = clamp(owner.bleeding, 0, 5)
 
 			if (owner.blood_volume)
-				var/final_bleed = clamp(owner.bleeding, 0, 5) // trying this at 5 being the max
-				//var/final_bleed = clamp(src.bleeding, 0, 10) // still don't want this above 10
-
+				var/final_bleed = clamp(owner.bleeding, 0, 5)
 				if (anticoag_amt)
 					final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
 				if (owner.blood_volume < 200)
@@ -161,8 +159,8 @@
 				owner.take_brain_damage(2 * mult)
 				owner.losebreath += (1 * mult)
 				owner.setStatus("drowsy", rand(15, 20) SECONDS)
-				if (prob(10))
-					owner.change_misstep_chance(rand(3,4) * mult)
+				if (prob(20))
+					owner.change_misstep_chance(max(0,clamp(rand(1,2) * mult, 70-owner.misstep_chance, 80-owner.misstep_chance)))
 				if (prob(10))
 					owner.emote(pick("faint", "collapse", "pale", "shudder", "shiver", "gasp", "moan"))
 				if (prob(18))
@@ -174,16 +172,16 @@
 					owner.changeStatus("shivering", 6 SECONDS)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -5)
-				owner.add_stam_mod_max("hypotension", -50)
+				owner.add_stam_mod_max("hypotension", -100)
 
-			if (1 to 200) // very VERY low (70/50)
+			if (1 to 200) // very VERY low. external assistance pls. missteps & chilling
 				owner.take_oxygen_deprivation(0.9 * mult)
 				owner.take_brain_damage(0.9 * mult)
 				owner.losebreath += (0.9* mult)
 				owner.change_eye_blurry(5, 5)
-				owner.setStatus("drowsy", rand(8, 10) SECONDS)
-				if (prob(10))
-					owner.change_misstep_chance(rand(1,2) * mult)
+				owner.changeStatus("drowsy", rand(8, 10) SECONDS)
+				if (prob(33)) //really bad missteps
+					owner.change_misstep_chance(max(0,clamp(rand(1,2) * mult, 70-owner.misstep_chance, 80-owner.misstep_chance)))
 				if (prob(10))
 					owner.emote(pick("faint", "collapse", "pale", "shudder", "gasp", "moan"))
 				if (prob(14))
@@ -191,19 +189,19 @@
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("knockdown", 3 SECONDS * mult)
-				if (prob(25))
+				if (prob(50))
 					owner.changeStatus("shivering", 6 SECONDS) // Getting very cold (same duration as shivers from cold)
 				if (prob(55))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
-				owner.add_stam_mod_max("hypotension", -25)
+				owner.add_stam_mod_max("hypotension", -50)
 
 			if (200 to 300) // very low (70/50)
 				owner.take_oxygen_deprivation(0.8 * mult)
 				owner.take_brain_damage(0.8 * mult)
 				owner.losebreath += (0.8 * mult)
 				owner.change_eye_blurry(5, 5)
-				owner.setStatus("drowsy", rand(5, 10) SECONDS)
+				owner.changeStatus("drowsy", rand(5, 10) SECONDS)
 				if (prob(6))
 					owner.change_misstep_chance(rand(1,2) * mult)
 				if (prob(8))
