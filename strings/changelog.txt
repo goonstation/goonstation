@@ -1,5 +1,7 @@
 
 (t)tue may 21 24
+(u)Sord
+(+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.
 (u)TDHooligan
 (p)19065
 (e)⚖|C-Balance
