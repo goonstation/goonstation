@@ -750,29 +750,27 @@ toxic - poisons
 	shot_sound = 'sound/weapons/kuvalda.ogg'
 	dissipation_delay = 6
 	casing = /obj/item/casing/shotgun/gray
-	var/image/blood_image
-	var/bleeding = FALSE // if we're spitting blood
-	var/mob/living/unfortunate  // who was last hit, by this bullet
-	var/turf/last_projectile_loc //1:many data:projectile pairing
-	var/turf/last_turf
-	on_launch(obj/projectile/O)
-		O.AddComponent(/datum/component/gaseous_projectile)
+	on_launch(obj/projectile/P)
+		P.AddComponent(/datum/component/nonwall_pierce)
 		icon_state = "4gauge-slug"
 		impact_image_state = "bullethole"
-		blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
+		var/image/blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
 		blood_image.alpha = 0
-		O.UpdateOverlays(blood_image, "blood_image")
+		P.special_data["blood_image"] = blood_image
+		P.special_data["bleeding"] = FALSE
+		P.UpdateOverlays(P.special_data["blood_image"], "blood_image")
 		. = ..()
-	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		if (isliving(hit))
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		if (isliving(hit) && !isrobot(hit))
 			var/mob/living/M = hit
-			take_bleeding_damage(M, proj.shooter, 2, DAMAGE_CUT, 1)
-			bleeding = TRUE
-			last_projectile_loc = get_turf(proj)
-			unfortunate = M
+			take_bleeding_damage(M, P.shooter, 2, DAMAGE_CUT, 1)
+			P.special_data["bleeding"] = FALSE
+			P.special_data["last_projectile_loc"] = get_turf(P)
+			P.special_data["unfortunate"] = M
+			var/image/blood_image = P.special_data["blood_image"]
 			blood_image?.color = M.blood_color
 			blood_image?.alpha = 255
-			proj.UpdateOverlays(blood_image, "blood_image")
+			P.UpdateOverlays(blood_image, "blood_image")
 			for (var/x in 1 to 3)
 				var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(M) )
 				gib.streak_cleanable(dirflag)
@@ -780,18 +778,19 @@ toxic - poisons
 			M.throw_at(target, 3, 1, throw_type = THROW_GUNIMPACT)
 		..()
 
-	on_end(var/obj/projectile/O)
-		if (bleeding)
-			bleed(unfortunate,10,4,get_turf(O))
-			playsound(O.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+	on_end(var/obj/projectile/P)
+		if (P.special_data["bleeding"])
+			bleed(P.special_data["unfortunate"],10,4,get_turf(P))
+			playsound(P.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 		..()
-	tick(var/obj/projectile/O)
-		if (!bleeding || last_projectile_loc == get_turf(O))
+	tick(var/obj/projectile/P)
+		var/turf/last_projectile_loc = P.special_data["last_projectile_loc"]
+		if (!P.special_data["bleeding"] || last_projectile_loc == get_turf(P))
 			..()
 			return
-		if (bleeding)
-			last_projectile_loc = get_turf(O)
-			bleed(unfortunate,0,1,last_projectile_loc)
+		if (P.special_data["bleeding"])
+			last_projectile_loc = get_turf(P)
+			bleed(P.special_data["unfortunate"],0,1,last_projectile_loc)
 		..()
 
 
@@ -806,32 +805,30 @@ toxic - poisons
 	shot_sound = 'sound/weapons/kuvalda.ogg'
 	dissipation_delay = 6
 	casing = /obj/item/casing/shotgun/gray
-	var/image/blood_image
-	var/list/bleeding = list() // which bullets are bleeding
-	var/list/mob/living/unfortunates = list() // who was last hit, by each bullet
-	var/list/turf/last_projectile_locs = list() //1:many data:projectile pairing
-	var/turf/last_turf
-	on_launch(obj/projectile/O)
-		O.AddComponent(/datum/component/gaseous_projectile)
+
+	on_launch(obj/projectile/P)
+		P.AddComponent(/datum/component/nonwall_pierce)
 		icon_state = "4gauge[rand(1,3)]"
 		impact_image_state = "bullethole-small-cluster-[rand(1,3)]"
-		blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
+		var/image/blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
 		blood_image.alpha = 0
-		O.UpdateOverlays(blood_image, "blood_image")
-		flick(icon_state,O) // this is a bit hacky - guarantees the full spread animation will play before swapping to bloodloop
+		P.special_data["blood_image"] = blood_image
+		P.UpdateOverlays(blood_image, "blood_image")
+		flick(icon_state,P) // this is a bit hacky - guarantees the full spread animation will play before swapping to bloodloop
 		. = ..()
-	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		if (isliving(hit))
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		if (isliving(hit) && !isrobot(hit))
 			var/mob/living/M = hit
-			take_bleeding_damage(M, proj.shooter, 2, DAMAGE_CUT, 1)
-			bleeding[proj] = TRUE
-			last_projectile_locs[proj] = get_turf(proj)
-			unfortunates[proj] = M
-			proj.icon_state  = icon_state+"-bloodloop"
+			take_bleeding_damage(M, P.shooter, 2, DAMAGE_CUT, 1)
+			P.special_data["bleeding"] = TRUE
+			P.special_data["last_projectile_locs"] = get_turf(P)
+			P.special_data["unfortunate"] = M
+			P.icon_state  = icon_state+"-bloodloop"
+			var/image/blood_image = P.special_data["blood_image"]
 			blood_image?.color = M.blood_color
 			blood_image?.alpha = 255
-			proj.color = M.blood_color
-			proj.UpdateOverlays(blood_image, "blood_image")
+			P.color = M.blood_color
+			P.UpdateOverlays(blood_image, "blood_image")
 			//the poor sod who eats all 3 of these can lose some GORE
 			if (ON_COOLDOWN(hit,"kuvalda_multihit", 2 DECI SECONDS))
 				if (ON_COOLDOWN(hit,"kuvalda_multihit2", 2 DECI SECONDS))
@@ -848,18 +845,18 @@ toxic - poisons
 				. *= 0.5
 
 
-	on_end(var/obj/projectile/O)
-		if (bleeding[O])
-			bleed(unfortunates[O],10,4,get_turf(O))
-			playsound(O.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+	on_end(var/obj/projectile/P)
+		if (P.special_data["bleeding"])
+			bleed(P.special_data["unfortunate"],10,4,get_turf(P))
+			playsound(P.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 		..()
-	tick(var/obj/projectile/O)
-		if (!bleeding[O] || last_projectile_locs[O] == get_turf(O))
+	tick(var/obj/projectile/P)
+		if (!P.special_data["bleeding"] || P.special_data["last_projectile_locs"] == get_turf(P))
 			..()
 			return
-		if (bleeding[O])
-			last_projectile_locs[O] = get_turf(O)
-			bleed(unfortunates[O],0,1,last_projectile_locs[O])
+		if (P.special_data["bleeding"])
+			P.special_data["last_projectile_locs"] = get_turf(P)
+			bleed(P.special_data["unfortunate"],0,1,P.special_data["last_projectile_locs"])
 		..()
 
 
