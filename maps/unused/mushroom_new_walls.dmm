@@ -1127,6 +1127,9 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "agG" = (
@@ -10053,6 +10056,9 @@
 /turf/simulated/floor/greenblack/corner,
 /area/station/bridge)
 "bbG" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -10160,6 +10166,10 @@
 /turf/simulated/floor/carpet/green/standard/edge/north,
 /area/station/engine/engineering/private)
 "bcp" = (
+/obj/cable{
+	dir = null
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/station/engine/engineering/private)
 "bcq" = (
@@ -15857,6 +15867,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "cMw" = (
@@ -16887,6 +16900,9 @@
 /obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "dOD" = (
@@ -17443,6 +17459,12 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
+"emP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
 "emW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
@@ -17800,6 +17822,15 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"eIV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
 "eIY" = (
 /obj/decal/cleanable/writing{
 	words = "Erik wuz here!! 2k16"
@@ -18910,6 +18941,9 @@
 	},
 /obj/cable,
 /obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
@@ -19109,8 +19143,8 @@
 	icon_state = "1-8-thick"
 	},
 /obj/decal/tile_edge/stripe/big{
-	dir = 9;
-	icon_state = "bigstripe-corner2"
+	icon_state = "xtra_bigstripe-corner2";
+	dir = 9
 	},
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/ptl)
@@ -21648,6 +21682,8 @@
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
 /obj/item/cable_coil,
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "ikU" = (
@@ -24900,6 +24936,9 @@
 	req_access = null
 	},
 /obj/mapping_helper/access/engineering,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/private)
 "lAM" = (
@@ -32115,6 +32154,20 @@
 /obj/item/device/radio/intercom/detnet/security,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"rzv" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
 "rzw" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
@@ -33257,6 +33310,9 @@
 /area/station/security/brig)
 "sxn" = (
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "sxO" = (
@@ -36223,6 +36279,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/courtroom)
+"uIA" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/elect)
 "uIX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -80463,7 +80525,7 @@ aYD
 aZl
 jIT
 lcI
-beR
+bis
 gwe
 bcT
 bdR
@@ -80765,7 +80827,7 @@ aYE
 tWr
 jIT
 lcI
-rhT
+uIA
 kcI
 bcU
 bdS
@@ -81369,7 +81431,7 @@ aYE
 tWr
 jIT
 dPB
-rhT
+uIA
 kcI
 kao
 hEA
@@ -86153,7 +86215,7 @@ fEr
 fEr
 aaY
 aaY
-ftS
+rzv
 ftS
 adX
 aiD
@@ -86757,8 +86819,8 @@ adA
 adA
 adA
 adA
-agG
-acq
+eIV
+emP
 ikn
 abq
 ahc
