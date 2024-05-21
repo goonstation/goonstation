@@ -1090,7 +1090,13 @@ proc/broadcast_to_all_gangs(var/message)
 	var/list/turf/graffititargets = list()
 	var/list/image/targetoverlay = list()
 	var/charges = GANG_VANDALISM_GRAFFITI_MAX
-	inventory_counter_enabled = 1
+	var/tagging_horizontally = FALSE
+	var/tagging_vertically = FALSE
+	var/tagging_direction
+	var/list/tags_single
+	var/list/tags_double
+	var/list/tags_triple
+	inventory_counter_enabled = TRUE
 	w_class = W_CLASS_TINY
 
 	update_icon()
@@ -1130,12 +1136,7 @@ proc/broadcast_to_all_gangs(var/message)
 		user << target_image
 
 
-	var/tagging_horizontally = FALSE
-	var/tagging_vertically = FALSE
-	var/tagging_direction
-	var/list/tags_single
-	var/list/tags_double
-	var/list/tags_triple
+
 	proc/refresh_single_tags()
 		tags_single = list()
 		for (var/i=1 to 9)
@@ -1256,13 +1257,13 @@ proc/broadcast_to_all_gangs(var/message)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = TRUE
+		spraycan.in_use = TRUE
 		playsound(target_turf, 'sound/items/graffitishake.ogg', 50, FALSE)
 		next_spray += rand(10,15) DECI SECONDS
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner )
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1272,7 +1273,7 @@ proc/broadcast_to_all_gangs(var/message)
 	onInterrupt(var/flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
 		if (S)
-			S.in_use = FALSE
+			spraycan.in_use = FALSE
 		..()
 
 	onEnd()
@@ -1280,11 +1281,11 @@ proc/broadcast_to_all_gangs(var/message)
 		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if(!S.check_tile_unclaimed(target_turf, owner))
+		if(!spraycan.check_tile_unclaimed(target_turf, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = FALSE
+		spraycan.in_use = FALSE
 		target_area.being_captured = FALSE
 		var/sprayOver = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
@@ -1292,9 +1293,9 @@ proc/broadcast_to_all_gangs(var/message)
 			sprayOver = TRUE
 
 		src.gang.make_tag(target_turf)
-		S.empty = TRUE
-		S.icon_state = "spraycan_crushed_gang"
-		S.setItemSpecial(/datum/item_special/simple)
+		spraycan.empty = TRUE
+		spraycan.icon_state = "spraycan_crushed_gang"
+		spraycan.setItemSpecial(/datum/item_special/simple)
 		var/mob/M = owner
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
@@ -1309,7 +1310,7 @@ proc/broadcast_to_all_gangs(var/message)
 	interrupt_flags = INTERRUPT_STUNNED
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
-	var/obj/item/spray_paint_graffiti/S
+	var/obj/item/spray_paint_graffiti/spraycan
 	/// the mob spraying this tag
 	var/mob/M
 	/// the gang we're spraying for
@@ -1317,44 +1318,40 @@ proc/broadcast_to_all_gangs(var/message)
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
 
-	New(var/obj/item/spray_paint_graffiti/S)
-		src.S = S
+	New(obj/item/spray_paint_graffiti/S)
+		src.spraycan = S
 		..()
 
 	onStart()
-		try
-			if (ismob(owner))
-				M = owner
-				var/ownerGang = M?.get_gang()
-				if (ownerGang)
-					gang = ownerGang
-			..()
-		catch(var/exception/e)
-			..()
-			throw e
+		if (ismob(owner))
+			M = owner
+			var/ownerGang = M?.get_gang()
+			if (ownerGang)
+				gang = ownerGang
+		..()
 
-		for (var/turf/sprayedturf in S.graffititargets)
+		for (var/turf/sprayedturf in spraycan.graffititargets)
 			if (BOUNDS_DIST(owner, sprayedturf) > 0)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-		if( !M || S.mode != "graffiti")
+		if(!M || spraycan.mode != "graffiti")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = TRUE
+		spraycan.in_use = TRUE
 		next_spray += rand(10,15) DECI SECONDS
 
 	onUpdate()
 		..()
-		for (var/turf/sprayedturf in S.graffititargets)
+		for (var/turf/sprayedturf in spraycan.graffititargets)
 			if (BOUNDS_DIST(owner, sprayedturf) > 0)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if(src.time_spent() > next_spray)
 			next_spray += rand(18,26) DECI SECONDS
 			playsound(owner.loc, 'sound/items/graffitispray3.ogg', 100, TRUE)
-		switch (length(S.graffititargets))
+		switch (length(spraycan.graffititargets))
 			if (1)
 				duration = 4 SECONDS
 			if (2)
@@ -1363,71 +1360,72 @@ proc/broadcast_to_all_gangs(var/message)
 				duration = 8 SECONDS
 
 
-	onInterrupt(var/flag)
+	onInterrupt(flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
 		if (S)
-			S.in_use = FALSE
-			S.clear_targets()
+			spraycan.in_use = FALSE
+			spraycan.clear_targets()
 		..()
 
 	onEnd()
 		..()
-		for (var/turf/sprayedturf in S.graffititargets)
+		for (var/turf/sprayedturf in spraycan.graffititargets)
 			if (BOUNDS_DIST(owner, sprayedturf) > 0)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if(!owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		S.in_use = FALSE
+		spraycan.in_use = FALSE
 		var/iconstate
-		var/targets = length(S.graffititargets)
+		var/targets = length(spraycan.graffititargets)
 		switch (targets)
 			if (1)
-				var/result = pick(S.tags_single)
-				S.tags_single -= result
+				var/result = pick(spraycan.tags_single)
+				spraycan.tags_single -= result
 				iconstate = "graffiti-single-[result]"
-				if (length(S.tags_single) == 0)
-					S.refresh_single_tags()
+				if (length(spraycan.tags_single) == 0)
+					spraycan.refresh_single_tags()
 			if (2)
-				var/result = pick(S.tags_double)
-				S.tags_double -= result
+				var/result = pick(spraycan.tags_double)
+				spraycan.tags_double -= result
 				iconstate = "graffiti-dbl-[result]-"
-				if (length(S.tags_double) == 0)
-					S.refresh_double_tags()
+				if (length(spraycan.tags_double) == 0)
+					spraycan.refresh_double_tags()
 			if (3)
-				var/result = pick(S.tags_triple)
-				S.tags_triple -= result
+				var/result = pick(spraycan.tags_triple)
+				spraycan.tags_triple -= result
 				iconstate = "graffiti-trpl-[result]-"
-				if (length(S.tags_triple) == 0)
-					S.refresh_triple_tags()
-		S.charges -= targets
-		S.UpdateIcon()
+				if (length(spraycan.tags_triple) == 0)
+					spraycan.refresh_triple_tags()
+		spraycan.charges -= targets
+		spraycan.UpdateIcon()
 		if (targets == 1)
-			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(S.graffititargets[1])
+			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(spraycan.graffititargets[1])
 			tag.icon_state = iconstate
-			tag.dir = S.tagging_direction
-			if (gang)
-				gang.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, S.graffititargets[1])
+			tag.dir = spraycan.tagging_direction
+			gang?.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
 		else
-			var/list/turf/turfs_ordered = new/list(length(S.graffititargets))
-			var/spraydirection = dir_to_angle(S.tagging_direction)
+			var/list/turf/turfs_ordered = list()
+			var/spraydirection = dir_to_angle(spraycan.tagging_direction)
 			var/vec = angle_to_vector(spraydirection)
 			var/min_distance = 1000
-			for (var/i = 1; i<=targets; i++)
-				min_distance = min(vec[2] * S.graffititargets[i].y - vec[1] * S.graffititargets[i].x , min_distance)
+			// the smallest X/Y coord, depending on if X/Y used
+			for (var/i = 1 to targets)
+				min_distance = min(vec[2] * spraycan.graffititargets[i].y - vec[1] * spraycan.graffititargets[i].x , min_distance)
 
-			for (var/sorting = 1; sorting<=targets; sorting++)
-				var/dist = (vec[2] * S.graffititargets[sorting].y -vec[1] * S.graffititargets[sorting].x ) - min_distance
-				turfs_ordered[dist+1] = S.graffititargets[sorting]
+			//sorts tags by their distance from min_distance, 1-3
+			for (var/sorting = 1 to targets)
+				var/dist = (vec[2] * spraycan.graffititargets[sorting].y -vec[1] * spraycan.graffititargets[sorting].x ) - min_distance
+				turfs_ordered[dist+1] = spraycan.graffititargets[sorting]
 
 			var/vandal_score = 0
 			var/turf/chosenTurf
-			for (var/i = 1; i<=targets; i++)
+			for (var/i = 1 to targets)
 				var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(turfs_ordered[i])
 				var/area = get_area(turfs_ordered[i])
 				tag.icon_state = "[iconstate][i]"
-				tag.dir = S.tagging_direction
+				tag.dir = spraycan.tagging_direction
 				vandal_score += GANG_VANDALISM_PER_GRAFFITI_TILE
 
 				if (gang && !chosenTurf)
@@ -1435,16 +1433,15 @@ proc/broadcast_to_all_gangs(var/message)
 						if (istype(area,targetArea))
 							chosenTurf = turfs_ordered[i]
 							break
-			if (gang)
-				gang.do_vandalism(vandal_score, chosenTurf)
+			gang?.do_vandalism(vandal_score, chosenTurf)
 
 
-		S.clear_targets()
-		playsound(S.loc, 'sound/effects/graffiti_hit.ogg', 10, TRUE)
-		if (S.charges == 0)
+		spraycan.clear_targets()
+		playsound(spraycan.loc, 'sound/effects/graffiti_hit.ogg', 10, TRUE)
+		if (spraycan.charges == 0)
 			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
-			S.icon_state = "spraycan_crushed"
+			spraycan.icon_state = "spraycan_crushed"
 
 
 /obj/ganglocker
@@ -1929,9 +1926,9 @@ proc/broadcast_to_all_gangs(var/message)
 		if (istype(item, /obj/item/currency/spacecash))
 			var/obj/item/currency/spacecash/S = item
 
-			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, S.amount))
+			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, spraycanamount))
 
-			if (S.hasStatus("freshly_laundered"))
+			if (spraycan.hasStatus("freshly_laundered"))
 				superlaunder_stacks += round(cash_to_take/(GANG_LAUNDER_RATE*1.5))
 
 			if (cash_to_take == 0)
@@ -1939,13 +1936,13 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 			if (stored_cash == 0)
 				boutput(user, SPAN_ALERT("The [src] boots up and starts laundering the money. This will take some time, so defend it!"))
-			if (cash_to_take < S.amount)
+			if (cash_to_take < spraycan.amount)
 				stored_cash += cash_to_take
-				S.amount -= cash_to_take
+				spraycan.amount -= cash_to_take
 				boutput(user, SPAN_ALERT("<b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b>"))
-				S.UpdateStackAppearance()
+				spraycan.UpdateStackAppearance()
 				return
-			stored_cash += S.amount
+			stored_cash += spraycan.amount
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
@@ -2115,7 +2112,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/number = 0
 
 		for(var/obj/item/currency/spacecash/S in contents)
-			number += S.amount
+			number += spraycan.amount
 
 		return round(number)
 
@@ -2146,10 +2143,10 @@ proc/broadcast_to_all_gangs(var/message)
 			var/obj/item/satchel/S = W
 			var/hadcannabis = 0
 
-			for(var/obj/item/plant/herb/cannabis/C in S.contents)
+			for(var/obj/item/plant/herb/cannabis/C in spraycan.contents)
 				insert_item(C,user)
-				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				spraycan.UpdateIcon()
+				spraycan.tooltip_rebuild = 1
 				hadcannabis = 1
 
 			if(hadcannabis)

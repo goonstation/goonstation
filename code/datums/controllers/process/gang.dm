@@ -142,7 +142,7 @@
 		unvandalised_departments += /area/station/engine
 		unvandalised_departments += /area/station/medical
 		unvandalised_departments += /area/station/quartermaster
-		//unvandalised_departments += /area/station/janitor
+		unvandalised_departments += /area/station/janitor
 		unvandalised_departments += /area/station/science
 		unvandalised_departments += /area/station/crew_quarters
 
@@ -156,10 +156,10 @@
 		else if (duffle_spawn_repeats == 2)
 			schedule_interval = GANG_LOOT_DROP_FREQUENCY
 		var/datum/game_mode/gang/gamemode = ticker.mode
-		var/list/duffle_list = list() ///
+		var/list/duffle_list = list()
 		var/list/vandal_list = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs)
-			if ((prob(30)) && length(unvandalised_departments) > 0)
+			if ((prob(30)) && length(unvandalised_departments))
 				duffle_list[targetGang] = GANG_LOOT_DROP_VOLUME_PER_GANG-1
 				vandal_list[targetGang] = pick(unvandalised_departments)
 				unvandalised_departments -= vandal_list[targetGang]
@@ -209,7 +209,10 @@
 			if (gang_vandalism_list[targetGang] == null) continue
 			var/area/chosen_area = gang_vandalism_list[targetGang]
 			var/broadcast_string = "<span style='font-size:20px'> Go to the [initial(chosen_area.name)] and wreck it. Cause havoc, cover it in ProPaint tags for a bag!</span>"
-			targetGang.vandalism_tracker[chosen_area] = GANG_VANDALISM_REQUIRED_SCORE
+			if (istype(chosen_area, /area/station/janitor))
+				targetGang.vandalism_tracker[chosen_area] = GANG_VANDALISM_REQUIRED_SCORE/2 // usually very small and unlikely to get caught anyway. but funny
+			else
+				targetGang.vandalism_tracker[chosen_area] = GANG_VANDALISM_REQUIRED_SCORE
 			broadcasts[targetGang] = broadcast_string
 		return broadcasts
 
