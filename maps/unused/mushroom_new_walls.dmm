@@ -13954,6 +13954,9 @@
 	pixel_x = 10;
 	pixel_y = 6
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/ptl)
 "btn" = (
@@ -14484,6 +14487,7 @@
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
 	},
+/obj/machinery/firealarm/east,
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/ptl)
 "bET" = (
@@ -17241,6 +17245,9 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/ptl)
 "eeq" = (
@@ -19145,6 +19152,9 @@
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "xtra_bigstripe-corner2";
 	dir = 9
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/ptl)
@@ -25463,6 +25473,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/proto)
+"mbJ" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/ptl)
 "mcf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -72055,7 +72071,7 @@ aaa
 aaa
 aaa
 jSR
-ahF
+mbJ
 ahF
 ahF
 xBw
