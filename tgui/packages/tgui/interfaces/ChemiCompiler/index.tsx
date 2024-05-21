@@ -48,13 +48,14 @@ export const ChemiCompiler = (_props, context) => {
         ))}
 
         <Input
-          value={input}
-          onChange={(_event, value) => { setInput(value); }}
+          value={output || input}
+          onInput={(_event, value) => { setInput(value); }}
           height={7}
           width={'100%'} />
         <br />
 
         output: {output} /
+        input: {input} /
         sx: {sx} /
         tx: {tx} /
         ax: {ax}
