@@ -1091,12 +1091,12 @@
 	icon_state = "bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "agC" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "agD" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1107,7 +1107,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "agE" = (
 /obj/cable{
@@ -1280,7 +1280,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "ahM" = (
 /turf/simulated/floor/yellow/side{
@@ -1402,14 +1402,14 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aiC" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aiD" = (
 /obj/disposalpipe/segment/mail{
@@ -1891,7 +1891,7 @@
 	},
 /area/station/mining/staff_room)
 "alm" = (
-/turf/simulated/floor/airless/engine,
+/turf/simulated/floor/engine,
 /area/station/engine/singcore)
 "alo" = (
 /obj/machinery/manufacturer/engineering,
@@ -3263,7 +3263,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "asl" = (
 /obj/machinery/power/smes{
@@ -3324,7 +3324,7 @@
 	dir = 4
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "asK" = (
 /obj/grille/catwalk{
@@ -3412,7 +3412,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "ata" = (
 /obj/rack,
@@ -4037,7 +4037,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "avP" = (
 /obj/machinery/door/poddoor/blast/pyro{
@@ -8909,7 +8909,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aVV" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -8920,7 +8920,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aVW" = (
 /obj/machinery/power/data_terminal,
@@ -8934,7 +8934,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aVX" = (
 /obj/machinery/power/data_terminal,
@@ -9030,7 +9030,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aWQ" = (
 /obj/decal/tile_edge/stripe/big{
@@ -9140,14 +9140,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/engine,
+/turf/simulated/floor/engine,
 /area/station/engine/singcore)
 "aXM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aXN" = (
 /obj/disposalpipe/segment{
@@ -9268,7 +9268,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aYv" = (
 /obj/disposalpipe/segment{
@@ -9635,7 +9635,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "aZO" = (
 /obj/cable{
@@ -9797,7 +9797,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "bay" = (
 /obj/machinery/power/data_terminal,
@@ -9813,7 +9813,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/map/light/cyan,
-/turf/simulated/floor/airless/engine/glow/blue,
+/turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
 "baB" = (
 /obj/cable,
@@ -25599,7 +25599,7 @@
 /obj/machinery/the_singularitygen,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/airless/engine,
+/turf/simulated/floor/engine,
 /area/station/engine/singcore)
 "miW" = (
 /turf/simulated/floor/bluegreen,
@@ -37567,7 +37567,7 @@
 /area/station/turret_protected/Zeta)
 "vSC" = (
 /mob/living/carbon/human/npc/monkey/mr_rathen,
-/turf/simulated/floor/airless/engine,
+/turf/simulated/floor/engine,
 /area/station/engine/singcore)
 "vSL" = (
 /obj/machinery/camera{
