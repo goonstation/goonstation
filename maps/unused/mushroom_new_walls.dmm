@@ -1712,6 +1712,13 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"akj" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "akk" = (
 /obj/table/auto,
 /obj/item/device/audio_log,
@@ -89625,7 +89632,7 @@ tKY
 tvv
 aSo
 hFm
-tKY
+akj
 xpg
 swh
 oyV
