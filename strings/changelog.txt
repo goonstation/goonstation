@@ -1,5 +1,9 @@
 
 (t)tue may 21 24
+(u)TDHooligan
+(p)19065
+(e)⚖|C-Balance
+(*)Gangs have shrunk to 4 people. It should be easier keeping track of all your dudes as a leader, and less chaos overall.
 (u)Lord_Earthfire
 (p)18587
 (e)🔎🔄🌱|C-Code-Quality, C-Rework, A-Hydroponics
