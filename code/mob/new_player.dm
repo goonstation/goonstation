@@ -10,6 +10,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
+	/// indicates if a player is currently barred from joining the game
+	var/blocked_from_joining = FALSE
 
 	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
 
@@ -857,6 +859,8 @@ a.latejoin-card:hover {
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return
+		if (src.blocked_from_joining)
+			return
 
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
@@ -877,6 +881,8 @@ a.latejoin-card:hover {
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
+			return
+		if (src.blocked_from_joining)
 			return
 
 		if (ticker)
@@ -939,6 +945,8 @@ a.latejoin-card:hover {
 		set name = ".observe_round"
 
 		if (src.client.has_login_notice_pending(TRUE))
+			return
+		if (src.blocked_from_joining)
 			return
 
 		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
