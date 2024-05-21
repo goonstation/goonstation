@@ -625,6 +625,13 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 
 /turf/simulated/floor/pool/lightbluewhite
 	icon_state = "pooltiles_lightbluew"
+
+/turf/simulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/simulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
 ////////////////////////////////////////////////
 /turf/simulated/floor/airless/sanitary
 	icon_state = "freezerfloor"
