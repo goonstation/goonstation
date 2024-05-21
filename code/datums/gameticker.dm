@@ -485,6 +485,7 @@ var/global/current_state = GAME_STATE_INVALID
 				// the networking. do not spam change world.tick_lag! you will regret it!
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
+					highCpuCount = 0
 					highMapCpuCount = 0
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
