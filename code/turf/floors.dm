@@ -778,6 +778,23 @@ DEFINE_FLOORS(carpet/clowncarpet/innercorner,
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/simulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/simulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/simulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/simulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+//////////////////////////////////////////
+
 /turf/simulated/floor/sanitary
 	icon_state = "freezerfloor"
 
