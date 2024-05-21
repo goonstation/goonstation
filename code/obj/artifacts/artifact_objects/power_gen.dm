@@ -21,7 +21,7 @@
 	activated = 0
 	activ_text = "begins to emit an electric hum!"
 	deact_text = "sparks and shuts down!"
-	examine_hint = SPAN_ARTHINT("It is sparking with electricity.")
+	examine_hint = "It is sparking with electricity."
 	deact_sound = 'sound/effects/singsuck.ogg'
 	react_xray = list(10,90,80,10,"NONE")
 	touch_descriptors = list("You can feel the electricity flowing through this thing.")

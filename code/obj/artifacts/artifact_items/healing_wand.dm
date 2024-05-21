@@ -27,7 +27,7 @@
 	var/recharging = FALSE
 	var/canhealself = FALSE
 	var/sound/healsound = null
-	examine_hint = SPAN_ARTHINT("It seems to have a handle you're supposed to hold it by.")
+	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
 	New()
 		..()

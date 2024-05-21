@@ -26,7 +26,7 @@
 	var/dmg_amount = 5
 	var/stamina_dmg = 0
 	var/sound/hitsound = null
-	examine_hint = SPAN_ARTHINT("It seems to have a handle you're supposed to hold it by.")
+	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
 	New()
 		..()

@@ -25,7 +25,7 @@
 	var/wall_size = 1
 	var/icon_state = "shieldsparkles"
 	var/sound/wand_sound = 'sound/effects/mag_forcewall.ogg'
-	examine_hint = SPAN_ARTHINT("It seems to have a handle you're supposed to hold it by.")
+	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
 	New()
 		..()

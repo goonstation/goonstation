@@ -31,7 +31,7 @@
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
 	var/field_radius = 7
 	var/gravity_type = 0 // push or pull?
-	examine_hint = SPAN_ARTHINT("It is covered in very conspicuous markings.")
+	examine_hint = "It is covered in very conspicuous markings."
 	var/obj/effect/grav_pulse/lense
 
 	New()

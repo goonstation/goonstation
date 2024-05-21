@@ -28,7 +28,7 @@
 	var/datum/projectile/artifact/bullet = null
 	var/mob/living/friend = null
 	var/mob/living/current_target = null
-	examine_hint = SPAN_ARTHINT("It is covered in very conspicuous markings.")
+	examine_hint = "It is covered in very conspicuous markings."
 
 	New()
 		..()
