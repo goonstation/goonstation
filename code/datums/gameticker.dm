@@ -540,6 +540,10 @@ var/global/current_state = GAME_STATE_INVALID
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
 					ircbot.export_async("admin", ircmsg)
+
+					if (game_end_delayer)
+						var/client/delayerClient = find_client(ckey(game_end_delayer))
+						if (delayerClient) delayerClient.flash_window()
 				else
 					ircbot.event("roundend")
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] REBOOTING THE SERVER!!!!!!!!!!!!!!!!!")
