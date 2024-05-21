@@ -1671,7 +1671,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 		if(src.default_cell)
 			AddComponent(/datum/component/cell_holder, new default_cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down_callback))
 		src.setItemSpecial(unpowered_item_special)
 		src.power_up()
 
@@ -1768,6 +1768,9 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		playsound(user, 'sound/items/miningtool_on.ogg', 30, 1)
 		src.setItemSpecial(src.powered_item_special)
 		return
+
+	proc/power_down_callback(obj/item/mining_tool/powered/tool, obj/item/ammo/power_cell/cell, mob/user)
+		src.power_down(user)
 
 	proc/power_down(var/mob/user = null)
 		ON_COOLDOWN(src, "depowered", 1 SECOND)
@@ -2002,7 +2005,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 									qdel(target)
 							qdel(src)
 							return
-					else if (src.hacked) ..()
+					else if (src.hacked)
+						var/turf/T = get_turf(target)
+						if(!IS_ARRIVALS(T.loc))
+							..()
 					else boutput(user, SPAN_ALERT("These will only work on asteroids."))
 			return
 
