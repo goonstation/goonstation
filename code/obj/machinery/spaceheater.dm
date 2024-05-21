@@ -87,8 +87,8 @@ TYPEINFO(/obj/machinery/space_heater)
 		if (user)
 			user.show_text("You repair the temperature regulator in the [src].", "blue")
 		src.emagged = FALSE
-		src.max = T0C+90
-		src.min = T0C-90
+		src.max = initial(src.max)
+		src.min = initial(src.min)
 		return TRUE
 
 	get_desc()
