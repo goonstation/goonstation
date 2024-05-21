@@ -770,6 +770,25 @@ ABSTRACT_TYPE(/obj/loot_spawner/short)
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/chem_grenade/saxitoxin,off_y=2,scale_x=0.825,scale_y=0.65)
 			spawn_item(C,I,/obj/item/chem_grenade/saxitoxin,off_y=-2,scale_x=0.825,scale_y=0.65)
+/obj/loot_spawner/medium //1x1
+	xSize = 2
+	ySize = 1
+	ks23_shrapnel
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_y=3,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_y=-3,scale_x=0.5,scale_y=0.5)
+	ks23_slug
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_y=3,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_y=-3,scale_x=0.5,scale_y=0.5)
+
+/obj/loot_spawner/xlong_tall //4x2
+	xSize = 4
+	ySize = 2
+
+	ks23_empty
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
 
 // The random loot master checks all definitions of loot_spawner/random when it's first created.
 // To define new random loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
