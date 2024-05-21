@@ -12929,7 +12929,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aLd" = (
-/obj/machinery/sauna_stove,
+/obj/machinery/space_heater/sauna_stove,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
