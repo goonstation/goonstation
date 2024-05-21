@@ -13,11 +13,11 @@ TYPEINFO(/datum/component/nonwall_pierce)
 /datum/component/nonwall_pierce/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)
 	if (isrestrictedz(T.z))
-		return 0
-	if (istype(hit, /obj/machinery/door))
+		return FALSE
+	if (istype(hit, /obj/machinery/door) || iswall(hit))
 		var/obj/machinery/door/door = hit
 		return !door.density
-	return PROJ_ATOM_PASSTHROUGH * (!iswall(T) || (istype(hit, /obj/machinery/door)))
+	return PROJ_ATOM_PASSTHROUGH
 
 /datum/component/nonwall_pierce/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE)
