@@ -29,6 +29,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/started_light_animation = 0
 	///Does this nuke give the "brown pants" medal when authed by a captain? Only true by default for the specific nuke spawned by the nukies gamemode
 	var/gives_medal = FALSE
+	///skips the prompt asking if you want to arm the bomb. For 'pranks'
+	var/no_warning = FALSE
 
 	flags = FPRINT
 	var/image/image_light = null
@@ -184,7 +186,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			boutput(user, SPAN_ALERT("Deployment area definition missing or invalid! Please report this to a coder."))
 		else if (!NUKE_AREA_CHECK)
 			boutput(user, SPAN_ALERT("You need to deploy the bomb in [target_name]."))
-		else if(tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes")
+		else if(no_warning ? FALSE : (tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes"))
 			return
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
 			boutput(user, SPAN_ALERT("Deploying aborted due to you or [src] not being in [target_name]."))
