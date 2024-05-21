@@ -16446,6 +16446,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/ptl)
 "dsK" = (
@@ -26769,15 +26771,14 @@
 /area/station/turret_protected/armory_outside)
 "nms" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
-	},
 /obj/mapping_helper/access/engineering_mechanic,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "nmM" = (
 /obj/machinery/port_a_brig,
@@ -38847,9 +38848,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/access/engineering_mechanic,
-/turf/simulated/floor,
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "xlK" = (
 /obj/cable{
