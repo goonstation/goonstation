@@ -22212,7 +22212,7 @@
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "iSX" = (
-/obj/storage/closet/office,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "iTR" = (
@@ -23027,7 +23027,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bluegreen,
+/turf/simulated/floor/bluegreen/side{
+	dir = 8
+	},
 /area/station/crew_quarters)
 "jKz" = (
 /obj/machinery/disposal/small{
@@ -35825,7 +35827,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/bluegreen,
+/turf/simulated/floor/bluegreen/side{
+	dir = 4
+	},
 /area/station/crew_quarters)
 "uEl" = (
 /turf/simulated/floor/black,
