@@ -2603,6 +2603,9 @@
 						holder.remove_reagent(accelerant, reaction_speed/4)
 						speed_mult += 1
 
+				if (speed_mult > 2) // Any accelerant after the first one only has half the effect
+					speed_mult = 2 + (speed_mult - 2)/2 // Gets to a max of 3.5 instead of 5
+
 				if ((algae_amount * 20) < total_water_amt)
 					holder.add_reagent("algae", reaction_speed * speed_mult)
 					holder.remove_reagent("water", reaction_speed/2)
