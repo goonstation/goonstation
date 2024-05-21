@@ -15409,7 +15409,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
 /obj/item/clothing/suit/bedsheet/green,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cvE" = (
 /obj/lattice{
@@ -15797,11 +15797,11 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cMd" = (
 /obj/storage/closet/wardrobe/grey,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cMn" = (
 /obj/cable{
@@ -15877,7 +15877,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
 /obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cPJ" = (
 /obj/grille/catwalk{
@@ -16297,9 +16297,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
-"dlW" = (
-/turf/simulated/floor/neutral,
-/area/station/crew_quarters)
 "dml" = (
 /obj/machinery/teleport/portal_generator,
 /obj/cable/blue{
@@ -16573,7 +16570,7 @@
 /area/station/turret_protected/AIsat)
 "dzt" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "dzv" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -16737,7 +16734,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "dIy" = (
 /obj/disposalpipe/segment{
@@ -17414,12 +17411,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"epb" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/neutral,
-/area/station/crew_quarters)
 "ept" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17671,7 +17662,7 @@
 /area/station/maintenance/east)
 "eHM" = (
 /obj/machinery/clothingbooth,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "eIi" = (
 /obj/cable{
@@ -18552,7 +18543,7 @@
 "fvH" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/manufacturer/uniform,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "fwr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -20933,7 +20924,7 @@
 /area/station/hydroponics/bay)
 "hBp" = (
 /obj/storage/closet/wardrobe/black,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "hBq" = (
 /obj/machinery/light/incandescent{
@@ -22134,7 +22125,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "iOF" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -22413,7 +22404,7 @@
 /obj/item/clothing/suit/jacket/yellow,
 /obj/item/clothing/under/gimmick/princess,
 /obj/item/clothing/suit/jacket/plastic/random_color,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "jeA" = (
 /obj/machinery/door/firedoor/pyro,
@@ -23036,7 +23027,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "jKz" = (
 /obj/machinery/disposal/small{
@@ -23921,7 +23912,7 @@
 /area/station/hangar/qm)
 "kIj" = (
 /mob/living/carbon/human/npc/monkey/mrs_muggles,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "kIl" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -24101,7 +24092,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "kPj" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -25469,7 +25460,7 @@
 /turf/simulated/floor/airless/engine,
 /area/station/engine/singcore)
 "miW" = (
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "mje" = (
 /obj/cable{
@@ -27781,7 +27772,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "oqt" = (
 /obj/machinery/power/data_terminal,
@@ -28210,7 +28201,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
 /obj/item/clothing/suit/bedsheet/pink,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "oKL" = (
 /obj/machinery/power/data_terminal,
@@ -28362,7 +28353,7 @@
 	pixel_x = 8
 	},
 /obj/storage/secure/closet/personal,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "oQf" = (
 /obj/disposalpipe/segment/produce,
@@ -30335,7 +30326,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "qqe" = (
 /obj/machinery/light/small{
@@ -30602,7 +30593,7 @@
 "qBl" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/closet/wardrobe/green,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "qBm" = (
 /obj/landmark/gps_waypoint,
@@ -30619,7 +30610,7 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "qBG" = (
 /obj/cable,
@@ -31516,7 +31507,7 @@
 	name = "VR Combat Goggles";
 	network = "gunsim"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "rhu" = (
 /obj/stool/bed/brig,
@@ -31651,7 +31642,7 @@
 /area/station/security/hos)
 "rmY" = (
 /obj/storage/closet/wardrobe/pink,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "rni" = (
 /turf/simulated/floor/red/corner{
@@ -32418,7 +32409,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "rRc" = (
 /turf/simulated/floor/circuit/red,
@@ -32823,7 +32814,7 @@
 /area/station/hallway/secondary/exit)
 "skv" = (
 /obj/landmark/start/job/assistant,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "skG" = (
 /obj/rack,
@@ -34657,7 +34648,7 @@
 /obj/machinery/light/incandescent,
 /obj/machinery/disposal/mail/autoname/public/crew,
 /obj/disposalpipe/trunk/mail/north,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "tHA" = (
 /obj/lattice{
@@ -34907,7 +34898,7 @@
 /area/station/science/hall)
 "tNk" = (
 /obj/storage/secure/closet/personal,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "tNn" = (
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -34996,7 +34987,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/vending/snack,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "tVe" = (
 /turf/simulated/floor/shuttlebay,
@@ -35834,7 +35825,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "uEl" = (
 /turf/simulated/floor/black,
@@ -36137,7 +36128,7 @@
 /obj/item/item_box/assorted/stickers/stickers_limited,
 /obj/item/camera,
 /obj/item/camera,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "uPR" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -36380,7 +36371,7 @@
 /obj/storage/crate,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/under/misc/vice,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "vbm" = (
 /obj/machinery/door/airlock/pyro{
@@ -36530,7 +36521,7 @@
 /area/space)
 "vkx" = (
 /obj/storage/closet/wardrobe/orange,
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "vkK" = (
 /turf/simulated/floor/greenblack/corner{
@@ -37198,7 +37189,7 @@
 /obj/cryotron{
 	layer = 3.9
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "vOX" = (
 /obj/mapping_helper/access/research_foyer,
@@ -37592,7 +37583,7 @@
 /obj/item/clothing/shoes/clown_shoes,
 /obj/item/clothing/under/misc/barber,
 /obj/item/clothing/shoes/brown,
-/turf/simulated/floor/neutral,
+/turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "whD" = (
 /obj/cable{
@@ -83557,7 +83548,7 @@ dzt
 uPd
 oKs
 dHY
-dlW
+miW
 miW
 eHM
 bda
@@ -84159,9 +84150,9 @@ bji
 bda
 jew
 miW
-epb
+dHY
 miW
-dlW
+miW
 miW
 rmY
 bda
@@ -84462,9 +84453,9 @@ bda
 bda
 rQX
 vOA
-dlW
 miW
-dlW
+miW
+miW
 vkx
 bda
 egl
@@ -84763,7 +84754,7 @@ bjo
 sYZ
 bda
 miW
-epb
+dHY
 miW
 kIj
 miW
@@ -85064,9 +85055,9 @@ aVs
 aPu
 bji
 uvI
-dlW
+miW
 dHY
-dlW
+miW
 miW
 skv
 qBl
@@ -85367,9 +85358,9 @@ aWj
 bji
 uvI
 rhk
-epb
+dHY
 miW
-dlW
+miW
 miW
 hBp
 bda
@@ -85670,7 +85661,7 @@ bji
 uvI
 cuF
 dHY
-dlW
+miW
 miW
 tNk
 bda
