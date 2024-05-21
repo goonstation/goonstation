@@ -1018,7 +1018,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/replicant_lab)
 "cS" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating/damaged1,
 /area/prefab/replicant_lab)
 "cT" = (

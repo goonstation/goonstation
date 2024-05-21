@@ -1496,10 +1496,13 @@
 	min_amt2spawn = 2
 	max_amt2spawn = 2
 	rare_chance = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/bad,
-						/obj/item/reagent_containers/food/snacks/pizza/pepperbad,
-						/obj/item/reagent_containers/food/snacks/pizza/mushbad)
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/cargo/cheese,
+						/obj/item/reagent_containers/food/snacks/pizza/cargo/pepperoni,
+						/obj/item/reagent_containers/food/snacks/pizza/cargo/mushroom)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+	one
+		amt2spawn = 1
 
 /obj/random_item_spawner/cola
 	name = "random cola spawner"
@@ -1513,6 +1516,9 @@
 						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
 						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+	one
+		amt2spawn = 1
 
 /obj/random_item_spawner/hat
 	name = "random hat spawner"

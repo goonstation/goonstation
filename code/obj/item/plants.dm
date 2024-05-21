@@ -381,7 +381,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			return
 		boutput(user, SPAN_ALERT("Your hands itch from touching [src]!"))
 		random_brute_damage(user, 1)
-		H.changeStatus("weakened", 1 SECONDS)
+		H.changeStatus("knockdown", 1 SECONDS)
 
 /obj/item/plant/herb/nettle/smooth
 	name = "smooth nettle leaves"
@@ -418,7 +418,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user)
 		if (iswerewolf(user))
-			user.changeStatus("weakened", 4 SECONDS)
+			user.changeStatus("knockdown", 4 SECONDS)
 			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 			boutput(user, SPAN_ALERT("You try to pick up [src], but it hurts and you fall over!"))
 			return
@@ -429,7 +429,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if(iswerewolf(M))
 			var/stun_duration
 			if (!GET_COOLDOWN(M, "aconite_stun"))
-				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 4 SECONDS)
+				var/datum/statusEffect/stun_effect = M.changeStatus("knockdown", 4 SECONDS)
 				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 				M.visible_message(SPAN_ALERT("The [M] steps too close to [src] and falls down!"))
 				if (stun_effect)

@@ -739,7 +739,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_jump = list(/obj/item/clothing/under/rank/scientist)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/science)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_mask = list(/obj/item/clothing/mask/gas)
 	slot_lhan = list(/obj/item/tank/air)
@@ -1157,7 +1157,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
-		return M.Robotize_MK2()
+		var/mob/living/silicon/S = M.Robotize_MK2()
+		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		return S
 
 // Special Cases
 
@@ -1439,6 +1441,27 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Space Cowboy")
 		return
 
+/datum/job/special/mail_courier
+	name = "Mail Courier"
+	linkcolor = "#0099FF"
+	alias_names = "Mailman"
+	wages = PAY_TRADESMAN
+	limit = 1
+	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
+	slot_head = list(/obj/item/clothing/head/mailcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_ears = list(/obj/item/device/radio/headset/mail)
+	slot_poc1 = list(/obj/item/pinpointer/mail_recepient)
+	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
+	alt_names = list("Head of Deliverying", "Mail Bringer")
+	wiki_link = "https://wiki.ss13.co/Mailman"
+
+	New()
+		..()
+		src.access = get_access("Mail Courier")
+		return
+
 // randomizd gimmick jobs
 
 /datum/job/special/random
@@ -1600,6 +1623,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 		M.set_mutantrace(morph)
+		if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+		else
+			if (M.l_store)
+				M.stow_in_available(M.l_store)
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 
 /datum/job/special/random/testsubject
 	name = "Test Subject"
@@ -1616,7 +1645,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	alt_names = list("Assistants Union Rep", "Cyborgs Union Rep", "Union Rep", "Security Union Rep", "Doctors Union Rep", "Engineers Union Rep", "Miners Union Rep")
+	alt_names = list("Assistants Union Rep", "Cargo Union Rep", "Catering Union Rep", "Union Rep", "Security Union Rep", "Doctors Union Rep", "Engineers Union Rep", "Miners Union Rep")
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1770,23 +1799,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_chef")
-
-/datum/job/special/random/waiter
-	name = "Waiter"
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/rank/bartender)
-	slot_suit = list(/obj/item/clothing/suit/wcoat)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_lhan = list(/obj/item/plate/tray)
-	slot_poc1 = list(/obj/item/cloth/towel/white)
-	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
-	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
-	New()
-		..()
-		src.access = get_access("Waiter")
-		return
 
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
@@ -2825,24 +2837,22 @@ ABSTRACT_TYPE(/datum/job/daily)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/daily/mail_courier
+/datum/job/daily/waiter
 	day = "Wednesday"
-	name = "Mail Courier"
-	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
-	limit = 2
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
-	slot_head = list(/obj/item/clothing/head/mailcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_ears = list(/obj/item/device/radio/headset/mail)
-	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Mail Bringer")
-	wiki_link = "https://wiki.ss13.co/Mailman"
+	name = "Waiter"
+	wages = PAY_UNTRAINED
+	slot_jump = list(/obj/item/clothing/under/rank/bartender)
+	slot_suit = list(/obj/item/clothing/suit/wcoat)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_lhan = list(/obj/item/plate/tray)
+	slot_poc1 = list(/obj/item/cloth/towel/white)
+	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
+	wiki_link = "https://wiki.ss13.co/Jobs#Job_of_the_Day" // no wiki page yet
 
 	New()
 		..()
-		src.access = get_access("Mail Courier")
+		src.access = get_access("Waiter")
 		return
 
 /datum/job/daily/lawyer
@@ -2888,6 +2898,12 @@ ABSTRACT_TYPE(/datum/job/daily)
 		if(prob(33))
 			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 			M.set_mutantrace(morph)
+		if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+		else
+			if (M.l_store)
+				M.stow_in_available(M.l_store)
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
 		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
 		var/obj/item/card/id = locate() in M

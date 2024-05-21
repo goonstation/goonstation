@@ -329,7 +329,7 @@
 
 		var/mob/living/carbon/Ctarget = target
 		boutput(Ctarget, SPAN_ALERT("<b>[src] knocks you back!</b>"))
-		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.changeStatus("knockdown", 2 SECONDS)
 		Ctarget.throw_at(targetTurf, 200, 4)
 
 	if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.

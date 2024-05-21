@@ -814,6 +814,9 @@ Frequency:
 		text = voidSpeak(text)
 	var/ending = copytext(text, length(text))
 
+	if (singing)
+		return singify_text(text)
+
 	if (ending == "?")
 		return "queries, \"[text]\"";
 	else if (ending == "!")
@@ -909,6 +912,14 @@ Frequency:
 			if (I && (I.tool_flags & tool_flag))
 				return src.module_states[i]
 	return 0
+
+/mob/living/silicon/hivebot/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
+
+/mob/living/silicon/hivebot/set_pulling(atom/movable/A)
+	. = ..()
+	src.hud?.update_pulling()
 
 /*-----Actual AI Shells---------------------------------------*/
 
@@ -1219,3 +1230,4 @@ Frequency:
 			else
 				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
 		..()
+

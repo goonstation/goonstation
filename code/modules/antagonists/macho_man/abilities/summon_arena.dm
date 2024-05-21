@@ -10,6 +10,7 @@
 			clean_up_arena_turfs(src.macho_arena_turfs)
 
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			if(!macho_arena_turfs) // no arena exists
 				var/ring_radius = 4

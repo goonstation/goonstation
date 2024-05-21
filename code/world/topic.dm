@@ -729,6 +729,7 @@
 				var/ircmsg[] = new()
 				ircmsg["major"] = world.byond_version
 				ircmsg["minor"] = world.byond_build
+				ircmsg["goonhub_api"] = apiHandler.enabled ? "Enabled" : "Disabled"
 				return ircbot.response(ircmsg)
 
 			if ("youtube")
@@ -926,6 +927,9 @@
 				var/list/response = list()
 				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
 					response += canvas.id
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if (art_exhibit.data?.art)
+						response += art_exhibit.exhibit_id
 				return json_encode(response)
 
 			if("lazy_canvas_get")
@@ -935,6 +939,11 @@
 						if(!canvas.initialized)
 							canvas.load_from_id(canvas.id)
 						response[canvas.id] = icon2base64(canvas.art)
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if(art_exhibit.exhibit_id == plist["id"])
+						if (!art_exhibit.data?.art)
+							break
+						response[art_exhibit.exhibit_id] = icon2base64(art_exhibit.data.art)
 				return json_encode(response)
 
 			if("ban_added")

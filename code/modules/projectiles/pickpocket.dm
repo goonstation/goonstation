@@ -114,7 +114,7 @@
 			switch (targetZone)
 				if ("chest")
 					boutput(M, "Out of nowhere, you suddenly receive a huge wedgie!") // TODO: Add kick-me signs?
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					M.reagents.add_reagent("helium", 30)
 					M.emote("scream")
 				if ("head")

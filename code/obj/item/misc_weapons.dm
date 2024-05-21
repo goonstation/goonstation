@@ -42,7 +42,6 @@ TYPEINFO(/obj/item/sword)
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	leaves_slash_wound = TRUE
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -106,7 +105,6 @@ TYPEINFO(/obj/item/sword)
 
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
-		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		AddComponent(/datum/component/itemblock/reflect/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -121,7 +119,7 @@ TYPEINFO(/obj/item/sword)
 		if (handle_parry(target, user))
 			return 1
 		if (do_stun)
-			target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
+			target.do_disorient(150, knockdown = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
 		var/age_modifier = 0
 		if(ishuman(user))
@@ -138,7 +136,7 @@ TYPEINFO(/obj/item/sword)
 				SPAWN(0.2 SECONDS)
 					target.visible_message("[SPAN_BOLD("[target.name]")] flops over in shame!")
 					target.changeStatus("stunned", 5 SECONDS)
-					target.changeStatus("weakened", 5 SECONDS)
+					target.changeStatus("knockdown", 5 SECONDS)
 		else
 			..()
 
@@ -170,7 +168,7 @@ TYPEINFO(/obj/item/sword)
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "weakened", "paralysis"))))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "knockdown", "unconscious"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
@@ -227,6 +225,8 @@ TYPEINFO(/obj/item/sword)
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
+		src.leaves_slash_wound = TRUE
+		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
@@ -241,6 +241,8 @@ TYPEINFO(/obj/item/sword)
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.w_class = off_w_class
+		src.leaves_slash_wound = FALSE
+		src.setItemSpecial(null)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
@@ -508,9 +510,9 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	if (active)
 		if (strong_disorient)
-			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+			target.do_disorient(0, knockdown = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 		else
-			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
+			target.do_disorient(0, knockdown = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
 
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
@@ -553,7 +555,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ismob(usr))
 			M.lastattacker = usr
 			M.lastattackertime = world.time
-		M.changeStatus("weakened", 6 SECONDS)
+		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
@@ -618,7 +620,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -703,7 +705,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.implanted(M)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			H.do_disorient(stamina_damage = 30, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 		random_brute_damage(M, 18)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
@@ -829,7 +831,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
-		C.changeStatus("weakened", 6 SECONDS)
+		C.changeStatus("knockdown", 6 SECONDS)
 		C.force_laydown_standup()
 		random_brute_damage(C, 20,1)
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
@@ -1827,7 +1829,7 @@ obj/item/whetstone
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
-	contraband = 5
+	contraband = 8
 	w_class = W_CLASS_BULKY
 	force = 25
 	throwforce = 25
@@ -2006,7 +2008,7 @@ obj/item/whetstone
 			else
 				random_brute_damage(user, 2*src.force)
 				boutput(user,SPAN_ALERT("You feel immense pain!"))
-				user.changeStatus("weakened", 80)
+				user.changeStatus("knockdown", 80)
 				return
 		else ..()
 
@@ -2022,7 +2024,7 @@ obj/item/whetstone
 		else
 			random_brute_damage(user, 2*src.force)
 			boutput(user,SPAN_ALERT("You feel immense pain!"))
-			user.changeStatus("weakened", 80)
+			user.changeStatus("knockdown", 80)
 			return
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -2031,7 +2033,7 @@ obj/item/whetstone
 			if (ismob(usr))
 				C.lastattacker = usr
 				C.lastattackertime = world.time
-			C.changeStatus("weakened", 3 SECONDS)
+			C.changeStatus("knockdown", 3 SECONDS)
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
 			random_brute_damage(C, round(throwforce * 0.75),1)

@@ -483,7 +483,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 				i--
 			current_rolls++
 			if (current_rolls > max_rolls)
-				stack_trace("Failed to generate a foodlist objective for chef. Aborting.")
+				stack_trace("Failed to generate a cake objective for chef. Aborting.")
 				return
 		explanation_text = "Create a custom, three-tier cake with layers of "
 		for (var/ingredient in names)
@@ -503,14 +503,20 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 	set_up()
 		..()
 		var/list/names[PIZZA_OBJ_COUNT]
+		var/current_rolls = 0
+		var/max_rolls = 30
 		for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)
 			choices[i] = pick(allowed_favorite_ingredients)
 			var/choiceType = choices[i]
 			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
-			if(!instance.custom_food || !instance.name)
+			if(instance.custom_food && instance.w_class <= W_CLASS_SMALL)
+				names[i] = instance.name
+			else
 				i--
-				continue
-			names[i] = instance.name
+			current_rolls++
+			if (current_rolls > max_rolls)
+				stack_trace("Failed to generate a pizza objective for chef. Aborting.")
+				return
 		explanation_text = "Create a custom pizza with "
 		for (var/ingredient in names)
 			if (ingredient != names[PIZZA_OBJ_COUNT])

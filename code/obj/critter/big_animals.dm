@@ -47,7 +47,7 @@
 		..()
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 40, 1, -1)
 		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 10 SECONDS)
+		M.changeStatus("knockdown", 10 SECONDS)
 
 	CritterAttack(mob/M)
 		if (ishuman(M))
@@ -336,7 +336,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if (prob(30)) M.changeStatus("weakened", 2 SECONDS)
+		if (prob(30)) M.changeStatus("knockdown", 2 SECONDS)
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat
 	name = "bat egg"

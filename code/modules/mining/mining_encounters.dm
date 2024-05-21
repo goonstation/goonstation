@@ -996,7 +996,7 @@
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			if(fullbright)
-				AST.UpdateOverlays(new /image/fullbright, "fullbright")
+				AST.AddOverlays(new /image/fullbright, "fullbright")
 #endif
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
@@ -1051,7 +1051,7 @@
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			if(fullbright)
-				AST.UpdateOverlays(new /image/fullbright, "fullbright")
+				AST.AddOverlays(new /image/fullbright, "fullbright")
 #endif
 
 			O.onGenerate(AST)
