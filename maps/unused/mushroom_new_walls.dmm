@@ -31972,8 +31972,8 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "mechanics";
-	name = "Mail Junction - Mechanics"
+	name = "Mail Junction - Emergency Storage";
+	mail_tag = "emergency storage"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
