@@ -1,5 +1,9 @@
 
 (t)wed may 22 24
+(u)MeggalBozale
+(p)19004
+(e)🆕|C-Feature
+(+)The emag effect for the lawbringer has been modified slightly.
 (u)Glamurio (Ryou)
 (p)19051
 (e)🆕💅🐣|C-Feature, C-QoL, A-Respawning
