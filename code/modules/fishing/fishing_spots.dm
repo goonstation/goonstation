@@ -827,3 +827,17 @@ datum/fishing_spot/golden_toilet
 	/obj/item/cable_coil/blue/cut = 40,\
 	/obj/item/cell = 10,\
 	/obj/item/raw_material/cotton = 20, )
+
+//gibber
+/datum/fishing_spot/gibber
+	fishing_atom_type = /obj/machinery/gibber
+	rod_tier_required = 2
+	fish_available = list(/obj/decal/cleanable/blood/gibs = 25,\
+	/obj/decal/cleanable/blood/gibs/core = 25,\
+	/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 10,\
+	/obj/item/clothing/glasses/blindfold = 5,\
+	/obj/item/parts/human_parts/arm/mutant/monkey/left = 5,\
+	/obj/item/parts/human_parts/arm/mutant/monkey/right = 5,\
+	/obj/item/parts/human_parts/leg/mutant/monkey/left = 5,\
+	/obj/item/parts/human_parts/leg/mutant/monkey/right =5)

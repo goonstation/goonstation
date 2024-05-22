@@ -71,7 +71,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
-	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
+	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 
 	// Production options
 	var/search = null
@@ -306,7 +306,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P]"]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -1026,44 +1026,48 @@ TYPEINFO(/obj/machinery/manufacturer)
 		storage[index_2] = temp_hold
 		src.should_update_static = TRUE
 
-	proc/eject_material(var/mat_ref, mob/user = null)
-		if (src.mode != MODE_READY)
-			src.grump_message(user, "You cannot eject materials while the unit is working.")
+	proc/eject_material(var/mat_ref, mob/user)
+		var/obj/item/material_piece/P = src.get_material_by_ref(mat_ref)
+		if (!src.can_eject_material(P, user))
 			return
-		var/ejectamt = 0
-		var/turf/ejectturf = get_output_location(user)
-		var/obj/item/material_piece/target
-		for(var/obj/item/material_piece/P in src.get_contents())
-			if ("\ref[P]" == mat_ref)
-				target = P
-				break
-		if (isnull(target))
-			src.grump_message(user, "ERROR: Material not found in storage.", sound = TRUE)
+		var/eject_amount = tgui_input_number(user,
+											 "How many material pieces do you want to eject?",
+											 title = "Eject Materials",
+											 default = 0,
+											 max_value = ceil(P.amount),
+											 min_value = 0,
+											 round_input = TRUE,
+											)
+		if (!src.can_eject_material(P, user))
 			return
-		if (target.amount < 1)
-			src.grump_message(user, "ERROR: Not enough material to eject bars.", sound = TRUE)
+		// In case tgui_input_number() misses something or it's 0 (Likely trying to cancel action)
+		if (!isnum(eject_amount) || !isnum_safe(eject_amount) || eject_amount < 1)
+			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s.", sound = TRUE)
 			return
-		// Since tgui_input_number() is awaited here, make sure they are adjacent before and after
-		if (!src.check_physical_proximity(user))
-			return
-		ejectamt = floor(tgui_input_number(user,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0))
-		if (!src.check_physical_proximity(user) || src.mode != MODE_READY || ejectamt <= 0 || !isnum_safe(ejectamt))
-			return
-		if (!ejectturf)
-			return
-		if (ejectamt > target.amount)
-			src.grump_message(user, "There's not that much material in [name]. It has ejected what it could.", sound = TRUE)
-			ejectamt = floor(target.amount)
-		if (ejectamt == target.amount)
-			if (user)
-				user.put_in_hand_or_drop(target)
-			src.storage.transfer_stored_item(target, ejectturf)
+		// This should never happen either
+		if (eject_amount > P.amount)
+			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s, as there are only [floor(P.amount)] piece\s available to eject.", sound = TRUE)
+			eject_amount = floor(P.amount)
+		if (eject_amount == P.amount)
+			P.UpdateStackAppearance()
+			P.set_loc(src.get_output_location())
 		else
-			var/obj/item/material_piece/P = new target.type
-			P.setMaterial(target.material)
-			P.change_stack_amount(ejectamt - P.amount)
-			target.change_stack_amount(-ejectamt)
-			P.set_loc(ejectturf)
+			var/obj/item/material_piece/output = P.split_stack(eject_amount)
+			output.set_loc(src.get_output_location())
+
+	/// Helper proc to check whether or not we can eject the material from storage or not.
+	proc/can_eject_material(var/obj/item/material_piece/material_in_storage, mob/user)
+		if (src.mode != MODE_READY)
+			src.grump_message(user, "ERROR: Cannot eject materials while the unit is working.", sound = TRUE)
+		else if (isnull(material_in_storage))
+			src.grump_message(user, "ERROR: Cannot find material in storage. Aborting.", sound = TRUE)
+		else if (material_in_storage.amount < 1)
+			src.grump_message(user, "ERROR: Not enough material to eject whole amounts of bars.", sound = TRUE)
+		else if (!src.check_physical_proximity(user))
+			src.grump_message(user, "You have to be able to take that out yourself, you can't reach the bars from here!", sound = TRUE)
+		else
+			return TRUE
+		return FALSE
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
@@ -1583,8 +1587,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return .
 		if (material_flags & MATERIAL_RUBBER)
 			. += "RUB"
+			. += "ORG|RUB"
 		if (material_flags & MATERIAL_ORGANIC)
 			. += "ORG"
+			if (!("ORG|RUB" in .))
+				. += "ORG|RUB"
 		if (material_flags & MATERIAL_WOOD)
 			. += "WOOD"
 		if (material_flags & MATERIAL_METAL)
@@ -1633,8 +1640,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return C[1]
 		for (var/piece_index in 1 to length(C))
 			var/obj/item/material_piece/P = C[piece_index]
-			var/P_id = P.material.getID()
-			if (pattern in src.material_patterns_by_id[P_id])
+			if (pattern in src.material_patterns_by_ref["\ref[P]"])
+				return P
+		return null
+
+	/// Returns material which matches ref from storage, else returns null
+	proc/get_material_by_ref(var/mat_ref)
+		for (var/obj/item/material_piece/P as anything in src.get_contents())
+			if ("\ref[P]" == mat_ref)
 				return P
 		return null
 
@@ -1655,7 +1668,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					mats_available[P_id] = P.amount * 10
 				if (mats_available[P_id] < required_amount)
 					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
+				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_ref["\ref[P]"]) || P_id == required_pattern)
 					mats_used[required_pattern] = P_id
 					mats_available[P_id] -= required_amount
 					break
@@ -1993,8 +2006,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!isnull(mat_piece))
 					qdel(mat_piece)
 				if (P.amount <= 0)
-					// Handle removing material from helper lists now that it's gone
-					material_patterns_by_id[P.material.getID()] = null
 					qdel(P)
 				return
 
@@ -2003,7 +2014,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (isnull(mat_piece.material))
 				return
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
+			material_patterns_by_ref["\ref[mat_piece]"] = src.get_patterns_material_satisfies(mat_piece.material)
 			return
 
 		if (isnull(mat_datum))
@@ -2015,7 +2026,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		P.amount = max(0, amount)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
+		material_patterns_by_ref["\ref[P]"] = src.get_patterns_material_satisfies(P.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)

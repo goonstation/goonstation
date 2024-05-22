@@ -18,6 +18,7 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/toggleoocdead,
 /datum/admins/proc/toggletraitorscaling,
 /datum/admins/proc/pcap,
+/datum/admins/proc/toggle_pcap_kick_messages,
 /datum/admins/proc/toggleenter,
 /datum/admins/proc/toggleAI,
 /datum/admins/proc/toggle_soundpref_override,
@@ -589,9 +590,20 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
 		boutput(world, "<B>The global player cap has been disabled.</B>")
-	logTheThing(LOG_ADMIN, usr, "toggled player cap to [player_cap].")
-	logTheThing(LOG_DIARY, usr, "toggled player cap to [player_cap].", "admin")
-	message_admins("[key_name(usr)] toggled the global player cap [player_cap ? "on" : "off"]")
+	logTheThing(LOG_ADMIN, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled player cap [player_capa ? "on" : "off"].")
+
+/datum/admins/proc/toggle_pcap_kick_messages()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle pcap kick and redicrection acceptance messages on or off"
+	set name = "Toggle PCap Kick Alerts"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
+	global.pcap_kick_messages = !(global.pcap_kick_messages)
+	logTheThing(LOG_ADMIN, usr, "toggled player cap kick and redirection acceptance messages [global.pcap_kick_messages ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled player cap kick and redirection acceptance messages [global.pcap_kick_messages ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled player cap kick and redirection acceptance messages [global.pcap_kick_messages ? "on" : "off"].")
 
 /datum/admins/proc/toggleenter()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

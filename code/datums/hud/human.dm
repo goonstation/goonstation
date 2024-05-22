@@ -336,7 +336,6 @@
 					if (!master.r_store)
 						master.autoequip_slot(I, SLOT_R_STORE)
 					return
-
 				show_inventory = !show_inventory
 				if (show_inventory)
 					for (var/atom/movable/screen/hud/S in inventory_bg)
