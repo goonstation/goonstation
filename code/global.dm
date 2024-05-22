@@ -43,6 +43,7 @@ var/global
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
+	list/figure_patreon_online = list()
 	list/mobs = list()
 	list/ai_mobs = list()
 	list/processing_items = list()

@@ -398,6 +398,7 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
