@@ -5,15 +5,14 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { ChemiCompilerData } from './type';
 import { Button, Input } from '../../components';
 
 export const ChemiCompiler = (_props, context) => {
   const { act, data } = useBackend<ChemiCompilerData>(context);
-  const { reservoirs, buttons, output, timestamp, sx, tx, ax } = data;
-  const [input, setInput] = useLocalState(context, 'input', '');
+  const { reservoirs, buttons, inputValue, loadTimestamp, sx, tx, ax } = data;
 
   return (
     <Window width={400} height={325}>
@@ -32,7 +31,7 @@ export const ChemiCompiler = (_props, context) => {
           <>
             M{index+1}
             <Button
-              onClick={() => act('save', { index, input })}>
+              onClick={() => act('save', { index })}>
               Save
             </Button>
             <Button
@@ -48,15 +47,17 @@ export const ChemiCompiler = (_props, context) => {
         ))}
 
         <Input
-          value={output || input}
-          onInput={(_event, value) => { setInput(value); }}
+          value={inputValue}
+          onInput={(_event, value) => { act('updateInputValue', { value }); }}
           height={7}
           width={'100%'}
-          key={timestamp} />
+          // The load button would break if we pressed it between the input's act and the next refresh.
+          // This ensures a refresh after every load button click
+          key={loadTimestamp}
+        />
         <br />
 
-        output: {output} /
-        input: {input} /
+        inputValue: {inputValue} /
         sx: {sx} /
         tx: {tx} /
         ax: {ax}

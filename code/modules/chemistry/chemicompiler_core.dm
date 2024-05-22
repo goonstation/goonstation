@@ -16,7 +16,7 @@
 	var/list/buttons[6]
 	var/list/cbf[6]
 	var/output = ""
-	var/timestamp
+	var/loadTimestamp
 	var/maxExpensiveOperations = 5 // maximum number of transfers per machine tick
 
 	var/list/currentProg
@@ -220,8 +220,8 @@
 	. = list()
 	.["reservoirs"] = getReservoirStatuses()
 	.["buttons"] = buttons
-	.["output"] = output
-	.["timestamp"] = timestamp
+	.["inputValue"] = output
+	.["loadTimestamp"] = loadTimestamp
 	.["sx"] = sx
 	.["tx"] = tx
 	.["ax"] = ax
@@ -908,15 +908,17 @@
 			reservoirClick(params["index"] + 1)
 			return TRUE
 		if("save")
-			core.buttons[params["index"] + 1] = params["input"]
-			core.cbf[params["index"] + 1] = core.parseCBF(params["input"], params["index"] + 1)
-			core.output = ""
+			core.buttons[params["index"] + 1] = core.output
+			core.cbf[params["index"] + 1] = core.parseCBF(core.output, params["index"] + 1)
 			return TRUE
 		if("load")
 			core.output = core.buttons[params["index"] + 1]
-			core.timestamp = world.timeofday
+			core.loadTimestamp = world.timeofday
 			return TRUE
 		if("run")
 			if(islist(core.cbf[params["index"] + 1]))
 				core.runCBF(core.cbf[params["index"] + 1])
 				return TRUE
+		if ("updateInputValue")
+			core.output = params["value"]
+			return FALSE
