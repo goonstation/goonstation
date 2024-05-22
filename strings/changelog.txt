@@ -1,5 +1,32 @@
 
+(t)wed may 22 24
+(u)Glamurio (Ryou)
+(p)19089
+(e)💅|C-QoL
+(+)Trippy people now trip less often.
+(u)FlameArrow57
+(p)18855
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pod weapon tooltips (from mouse hover) now show their damage and pod disruption chance.
+(u)MeggalBozale
+(p)18981
+(e)🪲⚖🐁|C-Bug, C-Balance, A-Critters
+(+)Robotic critters can now throw items.
+(u)MeggalBozale
+(p)19004
+(e)🆕|C-Feature
+(+)The emag effect for the lawbringer has been modified slightly.
+(u)Glamurio (Ryou)
+(p)19051
+(e)🆕💅🐣|C-Feature, C-QoL, A-Respawning
+(+)Martian and Blob ambassadors are now legally allowed to wear hats per a NT decree.
+(u)Cheekybrdy
+(p)19035
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds Scientist Training, all this does currently is lock artifact hints to research staff.
 (t)tue may 21 24
+(u)Sord
+(+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.
 (u)TDHooligan
 (p)19065
 (e)⚖|C-Balance
