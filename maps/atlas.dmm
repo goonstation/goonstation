@@ -4131,7 +4131,8 @@
 /area/station/engine/engineering)
 "are" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Captain's Office"
+	name = "Captain's Office";
+	id = "quarters_cap"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -6519,7 +6520,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "azr" = (
-/obj/machinery/door/unpowered/wood/stall,
+/obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "azs" = (
@@ -6745,6 +6746,7 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/landmark/bill_spawn,
+/obj/machinery/door_control/bolter/new_walls/east,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "aAf" = (
@@ -6759,6 +6761,7 @@
 	},
 /obj/machinery/drainage,
 /obj/item/sponge,
+/obj/machinery/door_control/bolter/new_walls/west,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "aAg" = (
@@ -11761,7 +11764,8 @@
 /area/station/bridge/united_command)
 "aSY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Head of Personnel's Office"
+	name = "Head of Personnel's Office";
+	id = "quarters_hop"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -16091,6 +16095,9 @@
 	dir = 4;
 	pixel_x = -15
 	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "quarters_cap"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "iAi" = (
@@ -16100,6 +16107,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_hop"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)

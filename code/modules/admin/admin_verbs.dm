@@ -424,7 +424,8 @@ var/list/admin_verbs = list(
 #endif
 		/client/proc/distribute_tokens,
 		/client/proc/spawn_all_type,
-		/client/proc/region_allocator_panel
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
 		),
 
 	7 = list(
@@ -690,10 +691,12 @@ var/list/special_pa_observing_verbs = list(
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
+		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are now invisible."))
 	else
 		src.mob.mouse_opacity = 1
 		src.mob.alpha = 255
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are no longer invisible!"))
 
 /client/proc/admin_observe()

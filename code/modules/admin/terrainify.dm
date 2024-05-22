@@ -110,7 +110,6 @@ var/datum/station_zlevel_repair/station_repair = new
 			if(istype(T, /turf/simulated/wall/auto/asteroid))
 				var/turf/simulated/wall/auto/asteroid/AST = T
 				AST.destroy_asteroid(dropOre=FALSE)
-				continue
 			else if(!istype(T, /turf/unsimulated))
 				continue
 
@@ -486,6 +485,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 			traveling_crate_turfs |= shipping_path
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
+				if(station_repair.allows_vehicles)
+					T.allows_vehicles = station_repair.allows_vehicles
 				if(station_repair.ambient_light)
 					ambient_value = lerp(10,50,min(1-T.x/300,0.8))
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
@@ -537,6 +538,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 			traveling_crate_turfs |= shipping_path
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/auto/iomoon)
+				if(station_repair.allows_vehicles)
+					T.allows_vehicles = station_repair.allows_vehicles
 
 			station_repair.land_vehicle_fixup(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
@@ -666,9 +669,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
+			var/list/turf/traveling_crate_turfs = station_repair.get_mass_driver_turfs()
 			var/list/turf/shipping_path = shippingmarket.get_path_to_market()
-			for(var/turf/unsimulated/wall/setpieces/martian/auto/T in shipping_path)
+			traveling_crate_turfs |= shipping_path
+			for(var/turf/unsimulated/wall/setpieces/martian/auto/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
+				if(station_repair.allows_vehicles)
+					T.allows_vehicles = station_repair.allows_vehicles
 				T.UpdateOverlays(station_repair.weather_img, "weather")
 				ambient_value = lerp(20,80,T.x/300)
 				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding

@@ -21,16 +21,13 @@ export const TankInfo = (_props, context) => {
     <Section
       title={tankNum === 1 ? "Tank One" : "Tank Two"}
       buttons={tank.name !== null ? button_eject : button_add}
-      style={{
-        "height": "100%",
-      }}
+      height="100%"
     >
       <LabeledList>
-        <LabeledList.Item label={"Holding"}>
+        <LabeledList.Item label="Holding">
           {tank.name !== null ? toTitleCase(tank.name) : "None"}
         </LabeledList.Item>
-        <LabeledList.Item
-          label="Pressure">
+        <LabeledList.Item label="Pressure">
           <RoundGauge
             size={1.75}
             value={tank.pressure !== null ? tank.pressure : 0}
@@ -64,9 +61,8 @@ export const TTV = (_props, context) => {
           <Stack.Item>
             <TankInfo tank={tank_one} tankNum={1} />
           </Stack.Item>
-
           <Stack.Item>
-            <Section title="Valve" px={1}>
+            <Section title="Valve">
               <Stack vertical textAlign="center">
                 <Stack.Item color={opened ? "red" : "green"}>
                   Valve is {opened ? "open" : "closed"}

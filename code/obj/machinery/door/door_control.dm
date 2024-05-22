@@ -22,6 +22,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/welcome_text_alpha = 140
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
+	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -445,12 +446,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 					SPAWN(src.timer)
 						M.open()
 
-	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			if (M.density)
-				M.open()
-			else
-				M.close()
+	if(src.controlmode == 1)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				if (M.density)
+					M.open()
+				else
+					M.close()
+
+	if(src.controlmode == 2)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				if (M.locked)
+					M.set_unlocked()
+				else
+					if (M.density)
+						M.set_locked()
+					else
+						M.close()
+						SPAWN(5 DECI SECONDS)
+							M.set_locked()
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
@@ -1135,3 +1150,18 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		signal.source = src
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+/obj/machinery/door_control/bolter
+	name = "Remote Door Bolt Control"
+	desc = "A remote control switch for a door's locking bolts."
+	controlmode = 2
+
+	new_walls
+		north
+			pixel_y = 24
+		east
+			pixel_x = 22
+		south
+			pixel_y = -19
+		west
+			pixel_x = -22
