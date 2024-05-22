@@ -212,3 +212,19 @@
 		name = "Syndicate Announcement computer"
 		voice_name = "Syndicate Announcement Computer"
 		theme = "syndicate"
+
+/obj/machinery/computer/announcement/clown
+	req_access = null
+	name = "Clown Announcement Computer"
+
+	send_message(mob/user, message)
+		. = ..()
+		playsound(src.loc, "explosion", 50, 1)
+		//robogibs(src.loc)
+		var/turf/T = get_turf(src.loc)
+		if(T)
+			src.visible_message("<b>[src] explodes!</b>")
+			explosion_new(src, T, 5)
+		sleep(10 SECONDS)
+		robogibs(src.loc)
+
