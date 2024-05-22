@@ -51933,12 +51933,6 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon_state = "ladder";
-	name = "ladder"
-	},
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -51946,6 +51940,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/pool/ladder,
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
 "dLd" = (
@@ -52111,14 +52106,10 @@
 	desc = "Probably waterproof. You never really knew how these things worked.";
 	name = "cool pool lighting"
 	},
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
+/turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "dLF" = (
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
+/turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "dLG" = (
 /obj/pool/perspective{
@@ -52230,9 +52221,7 @@
 /area/centcom/garden)
 "dLU" = (
 /obj/item/inner_tube,
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
+/turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "dLV" = (
 /obj/table/round/auto,
@@ -52680,15 +52669,11 @@
 /obj/fluid_spawner{
 	amount = 10000
 	},
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
+/turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "dNo" = (
 /obj/item/beach_ball,
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
+/turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "dNp" = (
 /obj/pool/perspective{
