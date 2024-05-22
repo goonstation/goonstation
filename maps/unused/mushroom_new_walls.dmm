@@ -11537,6 +11537,9 @@
 	},
 /area/station/engine/engineering)
 "bia" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bic" = (
@@ -11718,6 +11721,9 @@
 "biU" = (
 /obj/cable{
 	icon_state = "6-9"
+	},
+/obj/cable{
+	icon_state = "1-6"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -15029,6 +15035,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"cdQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "cdX" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/courtroom)
@@ -30748,6 +30760,9 @@
 	},
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "qwm" = (
@@ -76936,8 +76951,8 @@ baG
 bcH
 cfk
 qvH
-axu
-axu
+cdQ
+cdQ
 bia
 biU
 nbE
