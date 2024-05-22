@@ -34256,7 +34256,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bIf" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -39103,7 +39103,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bRV" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -58821,14 +58821,13 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/security/hos)
 "kjT" = (
@@ -63558,14 +63557,13 @@
 /obj/disposalpipe/segment{
 	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	name = "Head of Security";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/security/hos)
 "uuu" = (

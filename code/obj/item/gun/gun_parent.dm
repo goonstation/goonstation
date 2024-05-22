@@ -91,9 +91,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 
 	buildTooltipContent()
-		. = ..()
-		if(current_projectile)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
+		. = ..() + src.current_projectile?.get_tooltip_content()
 		lastTooltipContent = .
 
 	New()

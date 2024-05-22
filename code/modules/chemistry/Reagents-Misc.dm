@@ -605,8 +605,10 @@ datum
 			viscosity = 0.14
 
 			reaction_turf(var/turf/target, var/volume)
-				var/obj/hotspot = (locate(/obj/hotspot) in target)
-				if (hotspot)
+				var/list/hotspots = list()
+				for (var/obj/hotspot/hotspot in target)
+					hotspots += hotspot
+				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (T.air)
@@ -616,7 +618,8 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					qdel(hotspot)
+					for (var/obj/hotspot/hotspot as anything in hotspots)
+						qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
 				if (!F)
@@ -918,11 +921,10 @@ datum
 			value = 2 // 1c + 1c
 			hygiene_value = 0.25
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.growth += 4
-				if (prob(66))
-					P.health++
-				P.reagents.remove_any(4)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 4
+				growth_tick.health_change += 0.66
+				growth_tick.water_consumption += 4
 
 		diethylamine
 			name = "diethylamine"
@@ -935,9 +937,8 @@ datum
 			transparency = 255
 			value = 4 // 2c + 1c + heat
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(66))
-					P.growth+=2
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 1.23
 
 		acetone
 			name = "acetone"
@@ -1090,10 +1091,8 @@ datum
 					else boutput(M, SPAN_ALERT("Yuck!"))
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(50))
-					DNA.endurance++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.endurance_bonus += 0.5
 
 		cryostylane
 			name = "cryostylane"
@@ -1158,8 +1157,10 @@ datum
 						if (B)
 							B.dispose()
 
-				var/obj/hotspot = (locate(/obj/hotspot) in target)
-				if (hotspot)
+				var/list/hotspots = list()
+				for (var/obj/hotspot/hotspot in target)
+					hotspots += hotspot
+				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
 						if (!T.air) return //ZeWaka: Fix for TOTAL_MOLES(null)
@@ -1169,7 +1170,9 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					qdel(hotspot)
+					for (var/obj/hotspot/hotspot as anything in hotspots)
+						qdel(hotspot)
+
 				return
 
 		booster_enzyme
@@ -1273,7 +1276,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
-							fireflash(location, clamp(volume/40, 0, 8))
+							fireflash(location, clamp(volume/40, 0, 8), chemfire = CHEM_FIRE_RED)
 							if (length(covered) < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -2075,6 +2078,38 @@ datum
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, SPAN_ALERT("Well, that was gross."))
+
+		viscerite_viscera
+			name = "viscerite viscera"
+			id = "viscerite_viscera"
+			description = "Looking at this makes you feel queasy... ugh."
+			reagent_state = LIQUID
+			fluid_r = 200
+			fluid_g = 135
+			fluid_b = 200
+			hunger_value = 0.5
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				M.HealDamage("All", mult * 2, mult * 1.5)
+				M.take_toxin_damage(0.5 * mult)
+				if(prob(20))
+					M.setStatusMin("knockdown", 3 SECONDS)
+				if(prob(10))
+					boutput(M, SPAN_ALERT("[pick("You feel your insides moving around and shifting", "Your body has never felt better, it has also never felt worse.", "The state of your insides make you feel like you're in a boat that got sucked up into a hurricane", "Urgh, you feel really gross!")]"))
+				..()
+				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == TOUCH)
+					boutput(M, SPAN_ALERT("The pink viscera partially hangs off of your clothes."))
+				if(method == INGEST)
+					boutput(M, "<span class='alert bold'>[pick("The viscera burns your mouth as it goes down", "The texture of the viscera feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "You feel the viscera slide down your throat")]!!</span>")
+					M.setStatusMin("knockdown", 3 SECONDS)
 
 		flockdrone_fluid
 			name = "coagulated gnesis"
@@ -3115,11 +3150,11 @@ datum
 						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
 						. = 0
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "weed")
-					P.HYPdamageplant("poison",2)
-					P.growth -= 3
+					growth_tick.poison_damage += 2
+					growth_tick.growth_rate -= 3
 
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O, /obj/spacevine))
@@ -3146,11 +3181,8 @@ datum
 			fluid_b = 0
 			fluid_flags = FLUID_STACKING_BANNED
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80))
-					P.growth++
-				if (prob(80))
-					P.health++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.health_change += 1.6
 
 		potash
 			name = "potash"
@@ -3161,7 +3193,7 @@ datum
 			fluid_g = 240
 			fluid_b = 240
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				/*if (prob(80))
 					P.growth+=2
 				if (prob(80))
@@ -3169,16 +3201,13 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(24))
-					DNA.cropsize++
-				if (DNA.harvests > 1 && prob(24))
-					DNA.harvests--
-				if (growing.isgrass && prob(66) && P.growth > 2)
-					P.growth -= 2
-				if (prob(50))
-					P.growth++
-					P.health++
-
+				growth_tick.cropsize_bonus += 0.24
+				if (DNA.harvests > 1)
+					growth_tick.harvests_bonus -= 0.24
+				if (growing.isgrass && P.growth > 2)
+					growth_tick.growth_rate -= 1.23
+				growth_tick.growth_rate += 0.5
+				growth_tick.health_change += 0.5
 
 		plant_nutrients
 			name = "saltpetre"
@@ -3190,14 +3219,13 @@ datum
 			fluid_b = 240
 			hunger_value = 0.048
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80))
-					P.growth+=3
-				if (prob(80))
-					P.health+=3
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 2.4
+				growth_tick.growth_rate += 2.4
+				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(50)) DNA.potency++
-				if (DNA.cropsize > 1 && prob(24)) DNA.cropsize--
+				if (DNA.cropsize > 1)
+					growth_tick.cropsize_bonus -= 0.24
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
@@ -3295,13 +3323,11 @@ datum
 					holder.del_reagent(src.id)
 				return
 */
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
-				var/datum/plantgenes/DNA = P.plantgenes
 				if (growing.growthmode == "carnivore")
-					P.growth += 3
-					if (prob(80))
-						DNA.endurance++
+					growth_tick.endurance_bonus += 0.8
+					growth_tick.growth_rate += 3
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
 				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
@@ -3430,9 +3456,8 @@ datum
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(66))
-					P.health++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.health_change += 0.66
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"
@@ -3990,8 +4015,8 @@ datum
 				if (ismob(holder.my_atom))
 					holder.my_atom.delStatus("miasma")
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 			syndicate
 				name = "syndicate miasma"

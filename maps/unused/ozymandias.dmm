@@ -26571,7 +26571,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "gXp" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/machinery/light/small/harsh{
 	dir = 4;
 	pixel_x = 12
@@ -86370,7 +86370,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/north)
 "wgA" = (
-/obj/machinery/sauna_stove,
+/obj/machinery/space_heater/sauna_stove,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

@@ -125,7 +125,7 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit, dir, obj/projectile/P)
-		fireflash(get_turf(hit), 0)
+		fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_BLUE)
 		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
 			hit.ex_act(2)
 		else

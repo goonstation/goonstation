@@ -811,7 +811,7 @@
 			if (!MAT)
 				return
 
-		var/output_location = src.get_output_location()
+		var/atom/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = new bar_type
@@ -822,9 +822,15 @@
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
-			M.load_item(BAR)
+			M.change_contents(mat_piece = BAR)
 		else
 			BAR.set_loc(output_location)
+			for (var/obj/item/material_piece/other_bar in output_location.contents)
+				if (other_bar == BAR)
+					continue
+				if (BAR.material.isSameMaterial(other_bar.material))
+					if (other_bar.stack_item(BAR))
+						break
 
 		playsound(src.loc, sound_process, 40, 1)
 
