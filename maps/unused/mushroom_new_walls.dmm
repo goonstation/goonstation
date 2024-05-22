@@ -18675,7 +18675,11 @@
 /area/station/science/storage)
 "fvH" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/uniform,
+/obj/table/auto,
+/obj/item/clothing/head/fruithat,
+/obj/item/golf_club,
+/obj/item/golf_ball,
+/obj/item/storage/golf_goal,
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "fwr" = (
@@ -20783,6 +20787,10 @@
 /obj/machinery/disposal/chemlink,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"hoQ" = (
+/obj/machinery/manufacturer/uniform,
+/turf/simulated/floor/bluegreen,
+/area/station/crew_quarters)
 "hoZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28986,6 +28994,11 @@
 	},
 /turf/space,
 /area/space)
+"pca" = (
+/obj/landmark/start/job/assistant,
+/obj/stool/chair,
+/turf/simulated/floor/bluegreen,
+/area/station/crew_quarters)
 "pcb" = (
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -37799,6 +37812,11 @@
 /obj/item/dice,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"waT" = (
+/obj/table/auto,
+/obj/item/football,
+/turf/simulated/floor/bluegreen,
+/area/station/crew_quarters)
 "wbU" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -83891,9 +83909,9 @@ dzt
 uPd
 oKs
 dHY
-miW
-miW
 eHM
+hoQ
+waT
 bda
 bdX
 beU
@@ -84194,7 +84212,7 @@ opK
 kNl
 qBt
 miW
-skv
+pca
 fvH
 bcZ
 bIC
