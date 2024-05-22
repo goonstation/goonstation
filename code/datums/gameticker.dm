@@ -476,9 +476,9 @@ var/global/current_state = GAME_STATE_INVALID
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag = world.tick_lag
 				if (max(highCpuCount, highMapCpuCount) >= TICKLAG_INCREASE_THRESHOLD)
-					dilated_tick_lag = min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound)
+					dilated_tick_lag = round(min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
 				else if (max(highCpuCount, highMapCpuCount) <= -TICKLAG_DECREASE_THRESHOLD)
-					dilated_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
+					dilated_tick_lag = round(max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
 
 				// only set the value if it changed! earlier iteration of this was
 				// setting world.tick_lag very often, which caused instability with
