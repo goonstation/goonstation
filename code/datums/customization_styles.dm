@@ -345,6 +345,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			curly_bob_fade
 				name = "Curly Bob: Faded"
 				id = "curly_bob_fade"
+				random_allowed = FALSE
 			charming
 				name = "Charming"
 				id = "charming"
