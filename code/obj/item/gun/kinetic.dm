@@ -1191,7 +1191,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = FALSE // non detachable mag, for now...
 	w_class = W_CLASS_BULKY
 	force = MELEE_DMG_RIFLE
-	ammo_cats = 0
+	ammo_cats = list(AMMO_PISTOL_22)
 	max_ammo_capacity = 177
 	two_handed = TRUE
 	auto_eject = TRUE
@@ -1276,6 +1276,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "hipoint"
 	item_state = "hipoint"
 	shoot_delay = 4
+	ammo_cats = list(AMMO_PISTOL_9MM)
 	spread_angle = 3
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
