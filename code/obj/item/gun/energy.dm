@@ -1311,11 +1311,11 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if (owner_prints)
+		if (owner_prints != user.bioHolder.Uid)
 			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+			return
 		else
 			src.assign_name(user)
-		..()
 
 
 	proc/assign_name(var/mob/M)
