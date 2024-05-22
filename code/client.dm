@@ -355,6 +355,9 @@
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+		if (istype(src.mob, /mob/new_player))
+			var/mob/new_player/new_player = src.mob
+			new_player.blocked_from_joining = TRUE
 #if defined(LIVE_SERVER) && defined(NIGHTSHADE)
 		var/list/servers_to_offer = list("streamer1", "streamer2", "main3", "main4")
 #elif defined(LIVE_SERVER)
@@ -375,7 +378,8 @@
 			var/datum/game_server/redirect_choice = valid_servers[idx]
 			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
 			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
-			message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
 			if (redirect_choice)
 				changeServer(redirect_choice.id)
 			tgui_process.close_user_uis(src.mob)
@@ -385,7 +389,8 @@
 			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
 			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
 			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
-			message_admins("[key_name(src)] was kicked by popcap limit.")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit.")
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 		return
@@ -1598,3 +1603,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #undef _SKIN_TEXT
 #undef _SKIN_COMMAND_BG
 #undef SKIN_TEMPLATE
+
+/// Flashes the window in the Windows titlebar
+/client/proc/flash_window(times = -1)
+	winset(src, "mainwindow", "flash=[times]")
