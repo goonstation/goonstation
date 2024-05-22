@@ -3169,21 +3169,26 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		UpdateIcon()
 
+
+#define ONE_BARREL 1
+#define TWO_BARRELS 2
+#define ALL_BARRELS 3
+#define MAX_USES 10
+
 /obj/item/gun/kinetic/sawnoff/quadbarrel
 
-	name = "The Four Letter Word"
+	name = "Four Letter Word"
 	desc = "For when you REALLY need to get the point across."
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "coachgun"//for sake of not rewriting a ton of break action code, it uses the same names as the DB, but in a different DMI.
+	icon_state = "coachgun" //for sake of not rewriting a ton of break action code, it uses the same names as the DB, but in a different DMI. (change?)
+	item_state = "quadbarrel" //custom inhands, though.
 
-	item_state = "quadbarrel"
+	var/guaranteed_uses = MAX_USES	// allows for just over two volleys before it starts breaking
+	var/firemode = ONE_BARREL
 
 	force = MELEE_DMG_RIFLE
 	max_ammo_capacity = 4
 	two_handed = TRUE
-
-	var/guaranteed_uses = 8 // allows for 2 volleys before it starts breaking
-	var/twobarrel = 0
 
 	New()
 		..()
@@ -3192,40 +3197,55 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	shoot(var/target, var/start, var/mob/user)
 		..()
-		if(twobarrel)
-			guaranteed_uses--
-			..() //shoot a second time
+		guaranteed_uses--
 
-		if(guaranteed_uses >= 0)
+		//now, see if we're shooting any more times. Run this before checking condition to get the shots off BEFORE the gun breaks
+		if(firemode == TWO_BARRELS) //shoot a second time
 			guaranteed_uses--
-			if(guaranteed_uses == 0)
+			..()
+		else if(firemode == ALL_BARRELS) //shoot a second, third, and fourth time
+			guaranteed_uses-=3
+			..() //this is unbelievably stupid.
+			..()
+			..()
+			//this might seem punishing, but keep in mind: four shotgun shells at the exact same time.
+			boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
+			user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+
+		if(guaranteed_uses < 0) //now, we're in the danger zone
+			user.visible_message(SPAN_ALERT("The [src] [pick(list("rattles!", "bulges!", "thunks!", "makes an odd click...", "cracks!"))]"))
+			if (prob(5*guaranteed_uses*-5)) //roll for failure. Since we're in the negatives now, we need another minus sign to cancel out
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-				user.visible_message("The [src] makes a deeply concerning sound, but seems otherwise fine. Still, you feel like you should keep an eye on it.")
-		else if (prob(5*guaranteed_uses*-5)) //since we're in the negatives now, we need another minus sign to cancel out
-			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
-			user.visible_message("The [src] breaks!")
-			var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
-			user.drop_item(src)
-			user.put_in_hand_or_drop(broken)
-			qdel(src)
+				user.visible_message(SPAN_ALERT("The [src] breaks!"), SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"))
+
+				if(firemode == ALL_BARRELS) //ohhh, you REALLY fucked up now.
+					explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
+
+				var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
+				user.drop_item(src)
+				user.put_in_hand_or_drop(broken)
+				qdel(src)
 
 	attackby(obj/item/I, mob/user)
-		if (isweldingtool(I)) //are we welding?
+		if (isweldingtool(I)) //are we repairing?
 			var/obj/item/weldingtool/welder = I
-			if(guaranteed_uses>=8)
+			if(guaranteed_uses >= MAX_USES)
 				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
 			else if (welder.try_weld(user, 2, 2))
 				boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]."))
 				guaranteed_uses ++
 
-		else if(isscrewingtool(I)) //are we screwing?
-			if(twobarrel) //if so toggle our burst mode
-				twobarrel = 0
-				boutput(user, SPAN_NOTICE("You change the firing on [src] to be single barrel."))
+		else if(isscrewingtool(I)) //are we cycling through firing modes?
+			if(firemode == ONE_BARREL)
+				firemode = TWO_BARRELS
+				boutput(user, SPAN_NOTICE("You set [src] to fire two barrels at a time."))
+			else if(firemode == TWO_BARRELS)
+				firemode = ALL_BARRELS
+				boutput(user, SPAN_NOTICE("You set [src] to fire all four barrels! You're not so sure about this..."))
 			else
-				twobarrel = 1
-				boutput(user, SPAN_NOTICE("You change the firing on [src] to be two barrels."))
-		else //no special actions, so do whatever
+				firemode = ONE_BARREL
+				boutput(user, SPAN_NOTICE("You set [src] to fire one barrel at a time"))
+		else //no special interactions, got to default
 			..()
 
 /obj/item/brokenquadbarrel
@@ -3234,7 +3254,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "flw-broken"
 	item_state = "quadbarrel"
 	name = "Broken Four Letter Word"
-	desc = "Welp, this thing's toast. You bet you pull a slamgun off it, though."
+	desc = "Welp, this thing's toast. You feel like you can recover a slamgun from it, though."
 	force = MELEE_DMG_RIFLE
 
 	attack_self(mob/user as mob)
