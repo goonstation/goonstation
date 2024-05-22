@@ -651,6 +651,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is a proficient surgeon."
 	id = "training_medical"
 
+/datum/trait/job/scientist
+	name = "Scientist Training."
+	desc = "Subject is a experienced researcher."
+	id = "training_scientist"
+
 /datum/trait/job/headsurgeon
 	name = "Party Surgeon"
 	desc = "Subject was a blast at med-school parties."

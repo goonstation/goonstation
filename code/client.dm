@@ -1603,3 +1603,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #undef _SKIN_TEXT
 #undef _SKIN_COMMAND_BG
 #undef SKIN_TEMPLATE
+
+/// Flashes the window in the Windows titlebar
+/client/proc/flash_window(times = -1)
+	winset(src, "mainwindow", "flash=[times]")

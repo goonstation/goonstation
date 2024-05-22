@@ -1,4 +1,45 @@
 
+(t)wed may 22 24
+(u)LeahTheTech
+(+)Pressing V will no longer hide your inventory. Why did it ever do that?
+(+)Reverted pressing V no longer hiding your inventory.
+(u)Glamurio (Ryou)
+(p)19089
+(e)💅|C-QoL
+(+)Trippy people now trip less often.
+(u)FlameArrow57
+(p)18855
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pod weapon tooltips (from mouse hover) now show their damage and pod disruption chance.
+(u)MeggalBozale
+(p)18981
+(e)🪲⚖🐁|C-Bug, C-Balance, A-Critters
+(+)Robotic critters can now throw items.
+(u)MeggalBozale
+(p)19004
+(e)🆕|C-Feature
+(+)The emag effect for the lawbringer has been modified slightly.
+(u)Glamurio (Ryou)
+(p)19051
+(e)🆕💅🐣|C-Feature, C-QoL, A-Respawning
+(+)Martian and Blob ambassadors are now legally allowed to wear hats per a NT decree.
+(u)Cheekybrdy
+(p)19035
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds Scientist Training, all this does currently is lock artifact hints to research staff.
+(t)tue may 21 24
+(u)Sord
+(+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.
+(u)TDHooligan
+(p)19065
+(e)⚖|C-Balance
+(*)Gangs have shrunk to 4 people. It should be easier keeping track of all your dudes as a leader, and less chaos overall.
+(u)Lord_Earthfire
+(p)18587
+(e)🔎🔄🌱|C-Code-Quality, C-Rework, A-Hydroponics
+(+)Chemicals in hydroponic trays now should show a lower varience.
+(+)Plants accept compost and holy water as alternatives to water. Man-Eating plants accept blood as an alternative to water.
+(+)Fast/slow metabolism gene strain now affect many processes around chems in trays or gene strains instead of just improving growth speed.
 (t)mon may 20 24
 (u)TDHooligan
 (p)18561

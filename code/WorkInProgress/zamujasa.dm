@@ -1347,13 +1347,13 @@
 		get_value()
 			var/lagc = "#ffffff"
 			switch (world.tick_lag)
-				if (0 to 0.4)
+				if (0   to 0.2)
 					lagc = "#00ff00"
-				if (0.4 to 0.6)
+				if (0.2 to 0.4)
 					lagc = "#ffff00"
-				if (0.6 to 0.8)
+				if (0.4 to 0.6)
 					lagc = "#ff8800"
-				if (0.8 to INFINITY)
+				if (0.6 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
@@ -1365,6 +1365,8 @@
 			New()
 				..()
 				src.maptext_y += 35	// appear *over* the fake server.
+				src.maptext_prefix = "<span class='c pixel sh' style='font-size: 6px;'>"
+				src.maptext_suffix = "</span>"
 
 				the_server = new(get_turf(src))
 				the_server.name = "server rack"
@@ -1382,19 +1384,19 @@
 			get_value()
 				if (src.the_server)
 					switch (world.tick_lag)
-						if (0 to 0.4)
+						if (0   to 0.2)
 							the_server.icon_state = "server0"
-						if (0.4 to 0.6)
+						if (0.2 to 0.4)
 							the_server.icon_state = "server"
-						if (0.6 to 0.8)
+						if (0.4 to 0.6)
 							the_server.icon_state = "server2"
-						if (0.8 to INFINITY)
+						if (0.6 to INFINITY)
 							the_server.icon_state = "serverf"
 
-					if (world.tick_lag > 1.0 && !src.is_smoking)
-						// starts smoking over 1.0, not at it
+					if (world.tick_lag >= 0.8 && !src.is_smoking)
+						// starts smoking
 						src.update_smoking(1)
-					else if (world.tick_lag <= 1.0 && src.is_smoking)
+					else if (world.tick_lag <= 0.8 && src.is_smoking)
 						src.update_smoking(0)
 
 				. = ..()
