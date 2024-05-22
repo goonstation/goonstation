@@ -1191,7 +1191,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = FALSE // non detachable mag, for now...
 	w_class = W_CLASS_BULKY
 	force = MELEE_DMG_RIFLE
-	ammo_cats = list(AMMO_PISTOL_22)
+	ammo_cats = 0
 	max_ammo_capacity = 177
 	two_handed = TRUE
 	auto_eject = TRUE
