@@ -1,5 +1,7 @@
 
 (t)wed may 22 24
+(u)LeahTheTech
+(+)Pressing V will no longer hide your inventory. Why did it ever do that?
 (u)Glamurio (Ryou)
 (p)19089
 (e)💅|C-QoL
