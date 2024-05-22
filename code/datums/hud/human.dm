@@ -196,7 +196,7 @@
 			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+7, SOUTH+1", HUD_LAYER, SOUTHEAST)
 			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+7, SOUTH", HUD_LAYER, WEST)
 
-		invtoggle = create_screen("invtoggle", "auto equip", src.icon_hud, "invtoggle", layouts[layout_style]["invtoggle"], HUD_LAYER+1)
+		invtoggle = create_screen("invtoggle", "toggle inventory", src.icon_hud, "invtoggle", layouts[layout_style]["invtoggle"], HUD_LAYER+1)
 		belt = create_screen("belt", "belt", src.icon_hud, "belt", layouts[layout_style]["belt"], HUD_LAYER+1)
 		storage1 = create_screen("storage1", "pocket", src.icon_hud, "pocket", layouts[layout_style]["storage1"], HUD_LAYER+1)
 		storage2 = create_screen("storage2", "pocket", src.icon_hud, "pocket", layouts[layout_style]["storage2"], HUD_LAYER+1)
@@ -336,6 +336,23 @@
 					if (!master.r_store)
 						master.autoequip_slot(I, SLOT_R_STORE)
 					return
+				if (params["equip_only"])
+					return
+				show_inventory = !show_inventory
+				if (show_inventory)
+					for (var/atom/movable/screen/hud/S in inventory_bg)
+						src.add_screen(S)
+					for (var/obj/O in inventory_items)
+						src.add_object(O, HUD_LAYER+2)
+					if (layout_style == "tg")
+						src.add_screen(legend)
+				else
+					for (var/atom/movable/screen/hud/S in inventory_bg)
+						src.remove_screen(S)
+					for (var/obj/O in inventory_items)
+						src.remove_object(O)
+					if (layout_style == "tg")
+						src.remove_screen(legend)
 
 			if ("lhand")
 				master.swap_hand(1)

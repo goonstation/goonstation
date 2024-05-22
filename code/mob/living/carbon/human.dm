@@ -970,7 +970,7 @@
 			if (W)
 				src.click(W, list())
 		if ("equip")
-			src.hud.relay_click("invtoggle", src, list()) // this is incredibly dumb, it's also just as dumb as what was here previously
+			src.hud.relay_click("invtoggle", src, list("equip_only" = TRUE)) // this is incredibly dumb, it's also just as dumb as what was here previously
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")
