@@ -205,6 +205,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	proc/shoot(target)
 		SPAWN(0)
 			var/list/casing_turfs
+			var/turf/picked_turf
 			if (src.current_projectile.casing)
 				casing_turfs = list()
 				for (var/direction in alldirs)
@@ -215,7 +216,13 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 				flick("[src.icon_tag]_fire",src)
 				muzzle_flash_any(src, 0, "muzzle_flash")
 				if (src.current_projectile.casing)
-					new src.current_projectile.casing(pick(casing_turfs), src.forensic_ID)
+					picked_turf = pick(casing_turfs)
+					var/obj/item/casing/turret_casing = new src.current_projectile.casing(picked_turf, src.forensic_ID)
+					// prevent infinite casing stacks
+					if (length(picked_turf.contents) > 10)
+						SPAWN(30 SECONDS)
+							if (!QDELETED(turret_casing) && get_turf(turret_casing) == picked_turf)
+								qdel(turret_casing)
 				sleep(src.current_projectile.shot_delay)
 		shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
