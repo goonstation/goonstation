@@ -474,7 +474,7 @@ var/global/current_state = GAME_STATE_INVALID
 						highMapCpuCount--
 
 				// adjust the tick_lag, if needed
-				var/dilated_tick_lag = world.tick_lag
+				var/dilated_tick_lag
 				if (max(highCpuCount, highMapCpuCount) >= TICKLAG_INCREASE_THRESHOLD)
 					dilated_tick_lag = round(min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
 				else if (max(highCpuCount, highMapCpuCount) <= -TICKLAG_DECREASE_THRESHOLD)
@@ -483,7 +483,7 @@ var/global/current_state = GAME_STATE_INVALID
 				// only set the value if it changed! earlier iteration of this was
 				// setting world.tick_lag very often, which caused instability with
 				// the networking. do not spam change world.tick_lag! you will regret it!
-				if (world.tick_lag != dilated_tick_lag)
+				if (dilated_tick_lag && (round(world.tick_lag, 0.1) != dilated_tick_lag))
 					world.tick_lag = dilated_tick_lag
 					highCpuCount = 0
 					highMapCpuCount = 0
