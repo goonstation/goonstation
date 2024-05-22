@@ -663,6 +663,7 @@ TYPEINFO(/datum/mutantrace/blob)
 	human_compatible = 0
 	uses_human_clothes = 0
 	hand_offset = -1
+	head_offset = -3
 	body_offset = -8
 	voice_override = "bloop"
 	firevuln = 1.5
@@ -1695,6 +1696,9 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 /datum/mutantrace/martian
 	name = "martian"
 	icon_state = "martian"
+	hand_offset = -6
+	head_offset = -2
+	body_offset = -9
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = "martian"
