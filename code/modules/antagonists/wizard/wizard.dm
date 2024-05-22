@@ -146,6 +146,7 @@
 						"name" = "[purchased_spell.name]"
 					)
 				)
+		#undef SPELL_ANIMATION_FRAME
 
 		. = list(
 			list(
