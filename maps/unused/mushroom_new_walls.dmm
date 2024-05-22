@@ -15864,15 +15864,16 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cMn" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
