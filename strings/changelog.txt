@@ -1,4 +1,9 @@
 
+(t)wed may 22 24
+(u)Cheekybrdy
+(p)19035
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds Scientist Training, all this does currently is lock artifact hints to research staff.
 (t)tue may 21 24
 (u)Sord
 (+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.
