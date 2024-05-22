@@ -1,6 +1,10 @@
 
 (t)wed may 22 24
 (u)MeggalBozale
+(p)18981
+(e)🪲⚖🐁|C-Bug, C-Balance, A-Critters
+(+)Robotic critters can now throw items.
+(u)MeggalBozale
 (p)19004
 (e)🆕|C-Feature
 (+)The emag effect for the lawbringer has been modified slightly.
