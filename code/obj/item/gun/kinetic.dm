@@ -1316,7 +1316,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
-	ammo_cats = list(AMMO_SMG_9MM)
+	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
 	auto_eject = 0
 
