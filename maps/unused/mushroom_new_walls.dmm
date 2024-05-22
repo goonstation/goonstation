@@ -32384,7 +32384,10 @@
 "rCD" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/turf/space,
+/turf/simulated/floor{
+	icon_state = "0,6";
+	tag = "icon-0,6"
+	},
 /area/station/crew_quarters/fitness)
 "rCF" = (
 /turf/simulated/wall/auto/supernorn,
