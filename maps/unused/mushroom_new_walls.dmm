@@ -8896,10 +8896,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/greenblack,
-/area/station/bridge)
+/area/station/bridge/customs)
 "aVM" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/bridge)
+/area/station/bridge/customs)
 "aVU" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -9094,7 +9094,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
-/area/station/bridge)
+/area/station/bridge/customs)
 "aXf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9483,7 +9483,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
 	},
-/area/station/bridge)
+/area/station/bridge/customs)
 "aZk" = (
 /obj/shrub,
 /turf/simulated/floor/yellow/side{
@@ -10054,7 +10054,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/greenblack/corner,
-/area/station/bridge)
+/area/station/bridge/customs)
 "bbG" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -18976,7 +18976,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
-/area/station/bridge)
+/area/station/bridge/customs)
 "fGI" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 1
@@ -20294,7 +20294,7 @@
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
-/area/station/bridge)
+/area/station/bridge/customs)
 "gUr" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -20537,9 +20537,6 @@
 	},
 /area/station/medical/medbay/surgery)
 "hft" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
 /turf/simulated/floor/escape{
 	dir = 4
 	},
@@ -26061,7 +26058,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
 	},
-/area/station/bridge)
+/area/station/bridge/customs)
 "mBc" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -26088,7 +26085,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area/station/bridge/customs)
 "mEf" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/plating,
@@ -26105,7 +26102,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area/station/bridge/customs)
 "mEh" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/purple/side{
@@ -26429,7 +26426,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/grey/side,
-/area/station/bridge)
+/area/station/bridge/customs)
 "mYU" = (
 /obj/item/storage/wall/fire{
 	dir = 1;
@@ -28880,7 +28877,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area/station/bridge/customs)
 "pan" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -32470,7 +32467,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/bridge/customs)
 "rIk" = (
 /obj/table/auto,
 /obj/item/crowbar,
@@ -35028,7 +35025,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area/station/bridge/customs)
 "tJA" = (
 /obj/machinery/door/airlock/pyro/command{
 	name = "Computer Core"
@@ -36268,7 +36265,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area/station/bridge/customs)
 "uHZ" = (
 /obj/cable/yellow{
 	icon_state = "2-8"
@@ -36863,7 +36860,7 @@
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor,
-/area/station/bridge)
+/area/station/bridge/customs)
 "vmu" = (
 /obj/table/wood/auto,
 /obj/item/plate,
@@ -37963,7 +37960,7 @@
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
 	},
-/area/station/bridge)
+/area/station/bridge/customs)
 "wnP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -40150,6 +40147,9 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"yiJ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/customs)
 "yjo" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -83323,7 +83323,7 @@ aRp
 bno
 wrZ
 toB
-mKo
+yiJ
 aVM
 aVM
 tga
@@ -84531,10 +84531,10 @@ pcD
 wrZ
 wrZ
 sWI
-mKo
+yiJ
 uHQ
 mEg
-mKo
+yiJ
 mKo
 bxK
 pDx
