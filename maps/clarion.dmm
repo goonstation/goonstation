@@ -7838,9 +7838,6 @@
 	pixel_y = -5
 	},
 /obj/cable/orange{
-	icon_state = "2-8"
-	},
-/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/white,
@@ -10980,15 +10977,12 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/computer/power_monitor/smes{
-	dir = 1;
-	name = "Engine Output Monitoring"
-	},
 /obj/machinery/power/data_terminal,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
 /obj/machinery/disposal/mail/small/autoname/engineering/north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "btB" = (
@@ -11249,6 +11243,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/engine/engineering)
@@ -20594,9 +20591,6 @@
 "hrp" = (
 /obj/cable/blue{
 	icon_state = "1-2"
-	},
-/obj/cable/blue{
-	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor{
@@ -32368,16 +32362,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"qfO" = (
-/obj/machinery/computer/power_monitor{
-	dir = 8
-	},
-/obj/cable/blue{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
-/area/station/engine/core/nuclear)
 "qfW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76221,7 +76205,7 @@ ycm
 uVN
 wtl
 ezM
-qfO
+tJp
 tJp
 tJp
 gfl
