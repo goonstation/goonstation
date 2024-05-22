@@ -8090,6 +8090,7 @@
 /obj/table/auto,
 /obj/item/instrument/bagpipe,
 /obj/machinery/light/small/sticky/frostedred,
+/obj/item/paper_bin,
 /turf/simulated/floor/plating/damaged1,
 /area/station/chapel/sanctuary)
 "aQD" = (
@@ -31414,7 +31415,10 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "qTZ" = (
-/obj/storage/closet/emergency,
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_x = -25
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
