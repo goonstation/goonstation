@@ -4224,7 +4224,7 @@
 	name = "Emergency Engine Fuel Crate";
 	spawn_contents = list(/obj/item/raw_material/char = 40)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "awG" = (
 /obj/cable{
@@ -13686,7 +13686,7 @@
 /area/station/medical/medbay/lobby)
 "bsg" = (
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "bsh" = (
 /obj/cable{
@@ -21119,7 +21119,7 @@
 /area/station/turret_protected/AIbaseoutside)
 "hDx" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "hDA" = (
 /obj/lattice,
@@ -22912,6 +22912,9 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/science/lab)
+"jxw" = (
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "jzi" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -25608,7 +25611,7 @@
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "mgZ" = (
 /obj/machinery/camera{
@@ -27645,7 +27648,7 @@
 /area/station/maintenance/southwest)
 "oaT" = (
 /obj/storage/closet/emergency,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "oaV" = (
 /obj/cable{
@@ -27742,7 +27745,7 @@
 	mailgroup = "botany"
 	},
 /obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "ogC" = (
 /obj/critter/parrot/random,
@@ -30210,7 +30213,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "qcy" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -30418,7 +30421,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/reagent_dispensers/foamtank,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "qkk" = (
 /obj/machinery/power/apc/autoname_south,
@@ -34574,7 +34577,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "tsq" = (
 /obj/machinery/firealarm/north,
@@ -35934,7 +35937,7 @@
 "utY" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "uuN" = (
 /obj/cable{
@@ -35948,7 +35951,7 @@
 	c_tag = "Detectives Office"
 	},
 /obj/machinery/shieldgenerator/meteorshield,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "uvf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -35965,7 +35968,7 @@
 /area/station/crew_quarters)
 "uww" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
+/turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "uwO" = (
 /obj/cable{
@@ -36744,6 +36747,12 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
+"vfs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "vfU" = (
 /obj/lattice{
 	dir = 10;
@@ -37165,6 +37174,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"vzJ" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/neutral,
+/area/station/storage/emergency)
 "vzP" = (
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk{
@@ -87213,11 +87226,11 @@ uSK
 kNc
 ejW
 bcX
-qjR
+vfs
 bcX
+jxw
 bcX
-bcX
-urp
+vzJ
 bac
 mpb
 urS
@@ -87514,11 +87527,11 @@ jlr
 uSK
 kNc
 jkp
-bcX
+jxw
 qjR
+jxw
 bcX
-bcX
-bcX
+jxw
 urp
 bac
 mpb
@@ -87817,9 +87830,9 @@ kJO
 mEh
 bac
 rEQ
-qjR
+vfs
 bcX
-bcX
+jxw
 bcX
 utY
 bac
@@ -88120,9 +88133,9 @@ bac
 bac
 awE
 qjR
+jxw
 bcX
-bcX
-bcX
+jxw
 baX
 bac
 mpb
@@ -88421,7 +88434,7 @@ kNc
 bac
 oaT
 baV
-qjR
+vfs
 bcX
 hDx
 bcX
@@ -88722,9 +88735,9 @@ joQ
 kNc
 iLH
 bcX
-bcX
+jxw
 qjR
-bcX
+jxw
 bcX
 bsg
 qUF
