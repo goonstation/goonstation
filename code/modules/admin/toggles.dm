@@ -1281,7 +1281,7 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	var/enabled = toggle_tracy_profiling()
+	var/enabled = toggle_tracy_profiling_file()
 	logTheThing(LOG_ADMIN, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
 	logTheThing(LOG_DIARY, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
 	message_admins("[key_name(usr)] [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")

@@ -8,9 +8,7 @@
 #ifdef TRACY_PROFILER_HOOK
 		prof_init()
 #else
-		if (fexists("data/tracy_profiling_enabled"))
-			fdel("data/tracy_profiling_enabled")
-			prof_init()
+		check_tracy_toggle()
 #endif
 		enable_auxtools_debugger()
 
