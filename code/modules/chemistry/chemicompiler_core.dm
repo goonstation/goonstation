@@ -662,7 +662,11 @@
 	. = core.get_ui_data()
 	var/list/ui_data_reservoirs = list()
 	for (var/i = 1, i <= length(src.reservoirs), i++)
-		ui_data_reservoirs.Add(src.reservoirs[i] ? "[src.reservoirs[i].reagents.total_volume]/[src.reservoirs[i].reagents.maximum_volume]" : null)
+		var/obj/item/reagent_containers/R = src.reservoirs[i]
+		if (istype(R))
+			ui_data_reservoirs.Add("[R.reagents.total_volume]/[R.reagents.maximum_volume]")
+		else
+			ui_data_reservoirs.Add(null)
 	.["reservoirs"] = ui_data_reservoirs
 
 /datum/chemicompiler_executor/proc/execute_ui_act(action, list/params)
