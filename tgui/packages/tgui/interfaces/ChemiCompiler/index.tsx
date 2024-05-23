@@ -72,13 +72,13 @@ export const ChemiCompiler = (_props, context) => {
                       tooltip="Load"
                       color="yellow"
                       icon="download"
-                      disabled={!button} />
+                      disabled={!button.button} />
                     <Button
                       onClick={() => act('run', { index })}
                       tooltip="Run"
                       color="green"
                       icon="play"
-                      disabled={!button} />
+                      disabled={!button.cbf} />
                   </Stack.Item>
                 ))}
               </Stack>

@@ -219,12 +219,15 @@
 /datum/chemicompiler_core/proc/get_ui_data()
 	. = list()
 	.["reservoirs"] = getReservoirStatuses()
-	.["buttons"] = buttons
 	.["inputValue"] = output
 	.["loadTimestamp"] = loadTimestamp
 	.["sx"] = sx
 	.["tx"] = tx
 	.["ax"] = ax
+
+	.["buttons"] = new/list(6)
+	for(var/i = 1, i <= 6, i++)
+		.["buttons"][i] = list(button = !!buttons[i], cbf = !!cbf[i])
 
 /datum/chemicompiler_core/proc/updatePanel()
 	var json = "{\"reservoirs\":\[null"
