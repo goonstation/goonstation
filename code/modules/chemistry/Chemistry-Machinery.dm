@@ -1284,13 +1284,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			src.executor.on_process()
 
 	proc
-		topicPermissionCheck(action)
-			if (!(src in range(1)))
-				return 0
-			if(executor.core.running)
-				return action in list("getUIState", "reportError", "abortCode")
-			return 1
-
 		statusChange(oldStatus, newStatus)
 			power_change()
 

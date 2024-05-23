@@ -35,8 +35,6 @@
 
 	var/running = 0
 	var/is_heating = 0
-	var/html
-	var/datum/tag/page/htmlTag
 	var/errorCallback = "err"
 	var/transferCallback = "transferReagents"
 	var/isolateCallback = "isolateReagent"
@@ -44,7 +42,6 @@
 	var/messageCallback = "showMessage"
 	var/reservoirClickCallback = "reservoirClick"
 	var/reservoirCheckCallback = "reservoirCheck"
-	var/topicPermissionCheckCallback = "topicPermissionCheck"
 	var/statusChangeCallback
 	var/minReservoir = 1
 	var/maxReservoir = 10
@@ -61,78 +58,8 @@
 		return
 
 	src.holder = holder
-	initHtml()
-
-/datum/chemicompiler_core/Topic(href, href_list)
-	if(!topicPermissionCheck(href_list["action"]))
-		return
-	switch(href_list["action"])
-		if("getUIState")
-			updatePanel()
-
-		if("reservoir")
-			var/resId = text2num_safe(href_list["id"])
-			if(resId < minReservoir || resId > maxReservoir)
-				return
-
-			reservoirClick(resId)
-			updatePanel()
-
-		if("loadCode")
-			var/buttId = validateButtId(href_list["id"])
-			if(!buttId)
-				return
-			if(buttons[buttId] == 0)
-				throwError(CC_ERROR_CODE_PROTECTED)
-				output = "E5.NOACC"
-			else
-				output = html_encode(buttons[buttId])
-
-			windowCall("loadCodeCallback")
-			updatePanel()
-
-		if("saveCode")
-			var/buttId = validateButtId(href_list["id"])
-			if(!buttId)
-				return
-			var/code = href_list["code"]
-			buttons[buttId] = code
-			cbf[buttId] = parseCBF(code, buttId)
-			output = ""
-			updatePanel()
-			throwError(CC_NOTIFICATION_SAVED) // Saved!
-
-			windowCall("saveCodeCallback")
-
-		if("executeCode")
-			var/buttId = validateButtId(href_list["id"])
-			if(!buttId)
-				return
-			//var/code = buttons[buttId]
-			//boutput(world, "Executing CBF code: '[code]'")
-			if(islist(cbf[buttId]))
-				runCBF(cbf[buttId])
-
-		if("abortCode")
-			running = 0
-			updatePanel()
-			statusChange(CC_STATUS_IDLE)
-			throwError(CC_ERROR_MANUAL_ABORT)
-
-		if("reportError")
-			var/errorMessage = href_list["message"]
-			CRASH("Error reported from chemicompiler frontend: [errorMessage]")
-
-/*	attack_self(mob/user as mob)
-		panel()*/
 
 /** Callbacks */
-/datum/chemicompiler_core/proc/topicPermissionCheck(action)
-	if(!istype(src.holder))
-		qdel(src)
-		return
-	if(topicPermissionCheckCallback)
-		return call(src.holder, topicPermissionCheckCallback)(action)
 
 /datum/chemicompiler_core/proc/showMessage(message)
 	if(!istype(src.holder))
@@ -213,10 +140,6 @@
 		ret[i] = reservoirCheck(i)
 	return ret
 
-/datum/chemicompiler_core/proc/windowCall(var/function, var/data = null)
-	//boutput(world, "calling window func [function] with data: '[url_encode(data)]'")
-	usr << output(data, "chemicompiler.browser:[function]")
-
 /datum/chemicompiler_core/proc/get_ui_data()
 	. = list()
 	.["inputValue"] = output
@@ -229,21 +152,6 @@
 	for(var/i = 1, i <= 6, i++)
 		.["buttons"][i] = list(button = !!buttons[i], cbf = !!cbf[i])
 
-/datum/chemicompiler_core/proc/updatePanel()
-	var json = "{\"reservoirs\":\[null"
-	var/i
-	var/list/reservoirs = getReservoirStatuses()
-	for(i = minReservoir,i<=maxReservoir,i++)
-		json += ",[!isnull(reservoirs[i])? "true" : "false"]"
-	json += "],\"buttons\":\[null"
-	for(i = 1,i <= 6, i++)
-		json += ",[!isnull(buttons[i])? "true" : "false"]"
-	json += "], \"output\": \"[url_encode(output)]\","
-	json += "\"sx\":\"[sx]\","
-	json += "\"tx\":\"[tx]\","
-	json += "\"ax\":\"[ax]\""
-	json += "}"
-	windowCall("setUIState", json)
 
 /datum/chemicompiler_core/proc/parseCBF(string, button)
 	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@", "#", "*")
@@ -397,7 +305,6 @@
 			if(length(textBuffer) > 80)
 				output += "[textBuffer]<br>"
 				textBuffer = ""
-				updatePanel()
 				var/datum/chemicompiler_executor/E = src.holder
 				tgui_process.update_uis(E.holder)
 
@@ -408,7 +315,6 @@
 			*/
 	if(!running)
 		output += textBuffer
-		updatePanel()
 		statusChange(CC_STATUS_IDLE)
 		throwError(CC_NOTIFICATION_COMPLETE)
 
@@ -457,153 +363,6 @@
 
 	heat(rid, temp)
 
-/datum/chemicompiler_core/proc/panel()
-	set background = 1
-
-	// HTML is built only once, via New() -- all subsequent updates are done using javascript. Slick.
-	usr.Browse(html, "window=chemicompiler;size=420x600")
-
-/datum/chemicompiler_core/proc/initHtml()
-	set background = 1
-	var/i
-	htmlTag = new
-
-	var/datum/tag/script/controlscr = new
-	controlscr.setContent( {"
-	var ref = '\ref[src]';
-	"})
-	htmlTag.addToHead(controlscr)
-
-	var/datum/tag/heading/h = new(1)
-	h.setText("ChemiCompiler")
-	h.setStyle("color", "#F3F1FC")
-	h.setStyle("padding", "10px")
-	h.setStyle("border-bottom", "3px solid #243030")
-	h.setStyle("border-right", "2px solid #243030")
-	htmlTag.addToBody(h)
-
-	var/datum/tag/div/dataDiv = new
-	dataDiv.setId("data")
-	htmlTag.addToBody(dataDiv)
-
-	var/datum/tag/div/codeDiv = new
-	codeDiv.setId("code-container")
-	htmlTag.addToBody(codeDiv)
-	var/datum/tag/textarea/codeInput = new
-	codeInput.setId("code-input")
-	codeDiv.addChildElement(codeInput)
-
-	var/datum/tag/div/container = new
-	container.addClass("container-fluid")
-	htmlTag.addToBody(container)
-	var/datum/tag/div/row = new
-	row.addClass("row-fluid")
-	container.addChildElement(row)
-
-	var/datum/tag/button/butt_load = new
-	var/datum/tag/button/butt_save = new
-	butt_load.setText("load")
-	butt_save.setText("save")
-	butt_load.setId("butt-load")
-	butt_save.setId("butt-save")
-	butt_load.addClass("btn btn-primary btn-sl")
-	butt_save.addClass("btn btn-danger btn-sl")
-	row.addChildElement(butt_load)
-	row.addChildElement(butt_save)
-
-	row = new
-	row.addClass("row-fluid")
-	container.addChildElement(row)
-
-	// lol butts
-	var/datum/tag/button/butt
-	for(i=minStored,i<=maxStored,i++)
-		butt = new
-		butt.setText(i)
-		butt.setId("butt-[i]")
-		butt.addClass("btn btn-default btn-c")
-		butt.setAttribute("data-btn-id", i)
-		row.addChildElement(butt)
-
-	row = new
-	row.addClass("row-fluid")
-	container.addChildElement(row)
-	var/datum/tag/button/resBtn
-	for(i=minReservoir,i<=maxReservoir,i++)
-		resBtn = new
-		resBtn.setText("r[i]")
-		resBtn.setId("reservoir-[i]")
-		resBtn.addClass("btn reservoir-button")
-		resBtn.setAttribute("data-id", i)
-		row.addChildElement(resBtn)
-
-		if(i % 5 == 0)
-			row = new
-			row.addClass("row-fluid")
-			container.addChildElement(row)
-
-	row = new
-	row.addClass("row-fluid")
-	container.addChildElement(row)
-	var/datum/tag/label/sxLabel = new
-	var/datum/tag/label/txLabel = new
-	var/datum/tag/label/axLabel = new
-	sxLabel.setText("sx ")
-	txLabel.setText("tx ")
-	axLabel.setText("ax ")
-	var/datum/tag/input/sx = new
-	var/datum/tag/input/tx = new
-	var/datum/tag/input/ax = new
-	sxLabel.addChildElement(sx)
-	txLabel.addChildElement(tx)
-	axLabel.addChildElement(ax)
-	sx.setId("sx-input")
-	tx.setId("tx-input")
-	ax.setId("ax-input")
-	sx.setAttribute("onfocus", "$(this).blur()")
-	tx.setAttribute("onfocus", "$(this).blur()")
-	ax.setAttribute("onfocus", "$(this).blur()")
-
-	var/datum/tag/button/butt_abort = new
-	butt_abort.setText("abort")
-	butt_abort.setId("butt-abort")
-	butt_abort.addClass("btn btn-danger abort-button")
-
-	row.addChildElement(sxLabel)
-	row.addChildElement(txLabel)
-	row.addChildElement(axLabel)
-	row.addChildElement(butt_abort)
-
-	var/datum/tag/cssinclude/bootstrap = new
-	bootstrap.setHref(resource("vendor/css/bootstrap.min.css"))
-	htmlTag.addToHead(bootstrap)
-
-	var/datum/tag/cssinclude/chemicss = new
-	chemicss.setHref(resource("css/chemicompiler.css"))
-	htmlTag.addToHead(chemicss)
-
-	var/datum/tag/scriptinclude/json2 = new
-	json2.setSrc(resource("vendor/js/json2.min.js"))
-	htmlTag.addToHead(json2)
-
-	var/datum/tag/scriptinclude/jquery = new
-	jquery.setSrc(resource("vendor/js/jquery.min.js"))
-	htmlTag.addToHead(jquery)
-
-	var/datum/tag/scriptinclude/jqueryMigrate = new
-	jqueryMigrate.setSrc(resource("vendor/js/jquery.migrate.js"))
-	htmlTag.addToHead(jqueryMigrate)
-
-	var/datum/tag/scriptinclude/bootstrapJs = new
-	bootstrapJs.setSrc(resource("vendor/js/bootstrap.min.js"))
-	htmlTag.addToBody(bootstrapJs)
-
-	var/datum/tag/scriptinclude/chemicompilerJs = new
-	chemicompilerJs.setSrc(resource("js/chemicompiler.js"))
-	htmlTag.addToBody(chemicompilerJs)
-
-	html = htmlTag.toHtml()
-
 /datum/chemicompiler_core/testCore
 	errorCallback = "err"
 	transferCallback = "transfer"
@@ -611,7 +370,6 @@
 	messageCallback = "msg"
 	reservoirClickCallback = "reservoirClick"
 	reservoirCheckCallback = "reservoirCheck"
-	topicPermissionCheckCallback = "topicPermissionCheck"
 
 /datum/testChemicompilerHolder
 	var/datum/chemicompiler_core/cc
@@ -661,9 +419,6 @@
 		reservoirCheck(rid)
 			boutput(world, "Checked existence for reservoir #[rid]")
 			return 1
-		topicPermissionCheck(action)
-			boutput(world, "Topic permission check for \ref[usr], [action]")
-			return 1
 
 /datum/chemicompiler_executor
 	var/list/reservoirs = list()
@@ -685,9 +440,6 @@
 
 	for(var/i=src.core.minReservoir,i<=src.core.maxReservoir,i++)
 		reservoirs[i] = null
-
-/datum/chemicompiler_executor/proc/panel()
-	core.panel()
 
 /datum/chemicompiler_executor/proc/err(errorCode)
 	switch(errorCode)
@@ -752,12 +504,6 @@
 			usr.drop_item()
 			I.set_loc(holder)
 			reservoirs[resId] = I
-
-/datum/chemicompiler_executor/proc/topicPermissionCheck(action)
-	if(!istype(src.holder))
-		qdel(src)
-		return
-	return call(src.holder, "topicPermissionCheck")(action)
 
 /**
  * beep codes

@@ -47,13 +47,6 @@
 
 		return executor.execute_ui_act(action, params)
 
-	proc/topicPermissionCheck(action)
-		if(src.loc != usr)
-			return 0
-		if(executor.core.running)
-			return action in list("getUIState", "reportError", "abortCode")
-		return 1
-
 	process()
 		. = ..()
 		executor?.on_process()
