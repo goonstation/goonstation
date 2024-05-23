@@ -11,7 +11,7 @@ import { Button, Section, Stack } from '../../components';
 
 export const ChemiCompilerMemory = (_props, context) => {
   const { act, data } = useBackend<ChemiCompilerData>(context);
-  const { buttons, sx, tx, ax } = data;
+  const { buttons, sx, tx, ax, theme } = data;
   return (
     <Section title="Memory">
       sx: <em>{sx}</em> -
@@ -19,7 +19,7 @@ export const ChemiCompilerMemory = (_props, context) => {
       tx: <em>{ax}</em>
       <Stack wrap>
         {buttons.map((button, index) => (
-          <Stack.Item key={index} style={{ border: "1px solid #88bfff", "border-radius": "0.2rem" }} p={1} m={1}>
+          <Stack.Item key={index} style={{ border: `1px solid ${theme === "syndicate" ? "#397439" : "#88bfff"}`, "border-radius": "0.2rem" }} p={1} m={1}>
             M{index+1}<br />
             <Button
               onClick={() => act('save', { index })}

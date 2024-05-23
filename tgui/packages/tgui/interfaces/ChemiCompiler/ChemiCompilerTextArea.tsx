@@ -11,7 +11,7 @@ import { TextArea } from '../../components';
 
 export const ChemiCompilerTextArea = (_props, context) => {
   const { act, data } = useBackend<ChemiCompilerData>(context);
-  const { inputValue, loadTimestamp } = data;
+  const { inputValue, loadTimestamp, theme } = data;
   return (
     <TextArea
       value={inputValue}
@@ -22,7 +22,7 @@ export const ChemiCompilerTextArea = (_props, context) => {
       key={loadTimestamp}
       fontFamily="Consolas"
       fontSize="13px"
-      style={{ "word-break": "break-all" }}
+      style={{ "word-break": "break-all", "border-color": (theme === "syndicate" ? "#397439" : null) }}
     />
   );
 };
