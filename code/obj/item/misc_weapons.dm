@@ -2219,7 +2219,7 @@ obj/item/whetstone
 	hit_type = DAMAGE_CUT
 	flags = FPRINT | USEDELAY
 	force = 25
-	click_delay = 16 //unbalanced blade
+	click_delay = 16 DECI SECONDS //unbalanced blade
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5

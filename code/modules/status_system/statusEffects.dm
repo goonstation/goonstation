@@ -2757,7 +2757,7 @@
 	name = "Tagged!"
 	desc = "You've been tagged! <br>Movement speed is reduced. Eyesight reduced. "
 	icon_state = "tagged"
-	unique = 1
+	unique = TRUE
 	maxDuration = 15 SECONDS
 	var/counter = 0
 	var/sound = 'sound/effects/electric_shock_short.ogg'
@@ -2780,20 +2780,20 @@
 			var/mob/victim = owner
 			victim.detach_hud(src.hud)
 		for (var/i in 1 to length(tag_images))
-			owner.UpdateOverlays(null,"graffitisplat[i]")
+			owner.ClearSpecificOverlays("graffitisplat[i]")
 		owner.UpdateIcon()
 
 	onUpdate(timePassed)
 		counter += timePassed
-		if (duration < 40)
+		if (duration < 4 SECONDS)
 			for (var/i in 1 to length(tag_images))
 				var/image/tag = tag_images[i]
-				var/target_alpha = (duration)*5
+				var/target_alpha = duration * 5
 				if (tag.alpha > target_alpha)
 					tag.alpha = target_alpha
 					owner.UpdateOverlays(tag,"graffitisplat[i]")
 					owner.UpdateIcon()
-		if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+		if (counter >= count && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
 			counter -= count
 			if (prob(10) && ismob(owner))
 				var/mob/victim = owner
@@ -2801,3 +2801,7 @@
 			playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 			violent_twitch(owner)
 		. = ..(timePassed)
+	onRemove()
+		qdel(hud)
+		hud = null
+		. = ..()
