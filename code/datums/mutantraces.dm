@@ -202,6 +202,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/detail_1_color = CUST_1
 	var/detail_1_color_f
 
+	/// dead mob icon state this mutantrace uses
+	var/ghost_icon_state = "ghost"
+
 	/// These details will show up layered between the backpack and the outer suit
 	/// The image to be inserted into the mob's appearanceholder's mob_oversuit_1
 	/// Will only show up if the mob's appearance flag includes HAS_O
@@ -833,6 +836,8 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
 
+	ghost_icon_state = "ghost-lizard"
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
@@ -1096,6 +1101,8 @@ TYPEINFO(/datum/mutantrace/skeleton)
 	var/obj/item/organ/head/head_tracker
 	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
 	blood_id = "calcium"
+
+	ghost_icon_state = "ghost-skeleton"
 
 	on_attach(var/mob/living/carbon/human/M)
 		..()
@@ -1807,6 +1814,8 @@ TYPEINFO(/datum/mutantrace/roach)
 	self_click_fluff = list("thorax", "exoskeleton", "antenna")
 	blood_id = "hemolymph"
 
+	ghost_icon_state = "ghost-roach"
+
 	on_attach(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
@@ -2147,6 +2156,8 @@ TYPEINFO(/datum/mutantrace/cow)
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
 
+	ghost_icon_state = "ghost-cow"
+
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
 	var/obj/effect/rt/cow_distorts/under/distort_under = new
 	var/obj/effect/rt/cow_distorts/suit/distort_suit = new
@@ -2301,6 +2312,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
 	self_click_fluff = "fur"
+
+	ghost_icon_state = "ghost-pug"
 
 	on_attach(var/mob/living/carbon/human/H)
 		if (prob(1)) // need to modify flags before calling parent

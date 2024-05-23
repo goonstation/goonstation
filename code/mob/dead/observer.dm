@@ -101,6 +101,15 @@
 	if (!P.AH)
 		return
 
+	var/is_mutantrace = FALSE
+	var/datum/trait/trait
+	for (var/trait_id in P.traitPreferences.traits_selected)
+		trait = getTraitById(trait_id)
+		if (trait.mutantRace)
+			src.icon_state = trait.mutantRace.ghost_icon_state
+			is_mutantrace = TRUE
+			break
+
 	var/cust_one_state = P.AH.customization_first.id
 	var/cust_two_state = P.AH.customization_second.id
 	var/cust_three_state = P.AH.customization_third.id
@@ -108,7 +117,24 @@
 	var/image/hair = image(P.AH.customization_first.icon, cust_one_state)
 	hair.color = P.AH.customization_first_color
 	hair.alpha = GHOST_HAIR_ALPHA
-	src.AddOverlays(hair, "hair")
+
+	var/force_hair = FALSE
+	if (istype(C.mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = C.mob
+		force_hair = H.hair_override
+
+	if (!is_mutantrace || force_hair || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
+		src.AddOverlays(hair, "hair")
+
+		var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
+		beard.color = P.AH.customization_second_color
+		beard.alpha = GHOST_HAIR_ALPHA
+		src.AddOverlays(beard, "beard")
+
+		var/image/detail = image(P.AH.customization_second.icon, cust_three_state)
+		detail.color = P.AH.customization_third_color
+		detail.alpha = GHOST_HAIR_ALPHA
+		src.AddOverlays(detail, "detail")
 
 	if(cust_one_state && cust_one_state != "none")
 		wig = new
@@ -124,17 +150,6 @@
 		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
 		wig.wear_image.color = P.AH.customization_first_color
-
-
-	var/image/beard = image(P.AH.customization_second.icon, cust_two_state)
-	beard.color = P.AH.customization_second_color
-	beard.alpha = GHOST_HAIR_ALPHA
-	src.AddOverlays(beard, "beard")
-
-	var/image/detail = image(P.AH.customization_second.icon, cust_three_state)
-	detail.color = P.AH.customization_third_color
-	detail.alpha = GHOST_HAIR_ALPHA
-	src.AddOverlays(detail, "detail")
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
@@ -411,6 +426,9 @@
 	if (!O)
 		return null
 
+	if (src.mutantrace)
+		O.icon_state = src.mutantrace.ghost_icon_state
+
 	. = O
 
 	if (glasses)
@@ -421,18 +439,21 @@
 	else
 		O.ClearSpecificOverlays("glasses")
 
+	if (src.mutantrace && !istype(src.mutantrace, /datum/mutantrace/human) && !src.hair_override && !src.traitHolder?.hasTrait("bald"))
+		return O
+
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image(src.bioHolder.mobAppearance.customization_first.icon, src.bioHolder.mobAppearance.customization_first.id)
+		var/image/hair = image(src.AH_we_spawned_with.customization_first.icon, src.AH_we_spawned_with.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
-		var/image/beard = image(src.bioHolder.mobAppearance.customization_second.icon, src.bioHolder.mobAppearance.customization_second.id)
+		var/image/beard = image(src.AH_we_spawned_with.customization_second.icon, src.AH_we_spawned_with.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
 		beard.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(beard, "beard")
 
-		var/image/detail = image(src.bioHolder.mobAppearance.customization_third.icon, src.bioHolder.mobAppearance.customization_third.id)
+		var/image/detail = image(src.AH_we_spawned_with.customization_third.icon, src.AH_we_spawned_with.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")
