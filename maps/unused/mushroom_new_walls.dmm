@@ -10152,6 +10152,9 @@
 	dir = 4
 	},
 /obj/landmark/start/job/engineer,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
