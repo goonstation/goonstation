@@ -1024,27 +1024,14 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
 	SPAWN(1 DECI SECOND)
-		if(!M || !M.client || M.shakecamera)
+		if(!M || !M.client)
 			return
-		M.shakecamera = 1
 		var/client/client = M.client
-		// track total offsets to reset (rather than lazily setting pixel_x to 0)
-		var/total_off_x = 0
-		var/total_off_y = 0
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			total_off_x -= off_x
-			total_off_y -= off_y
-			if(client)
-				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE | (i != 0 ? ANIMATION_CONTINUE : ANIMATION_PARALLEL))
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			sleep(delay)
-
-		if (client)
-			animate(client, pixel_x = total_off_x, pixel_y = total_off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			M.shakecamera = 0
-		animate(pixel_x = total_off_x*-1, pixel_y = total_off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 
 /proc/recoil_camera(mob/M, dir, strength=1, spread=3)
 	if(!M || !M.client || !M.client.recoil_controller)
