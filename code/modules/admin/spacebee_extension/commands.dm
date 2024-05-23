@@ -949,3 +949,15 @@
 		message += "**Syndicate intelligence:** [prefs.synd_int_note]\n"
 		ircmsg["msg"] = html_decode(message)
 		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/toggle_tracy_profiling
+	name = "toggletracy"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Toggle Tracy profiling on the next round"
+	argument_types = list()
+	execute(user)
+		var/enabled = toggle_tracy_profiling_file()
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
+		message_admins("[user] (Discord) [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+		system.reply("[enabled ? "Enabled" : "Disabled"] Tracy profiling for the next round.", user)
