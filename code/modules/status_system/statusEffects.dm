@@ -2775,7 +2775,7 @@
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
 
 /datum/statusEffect/graffiti
-	id = "graffiti"
+	id = "graffiti_blind"
 	name = "Tagged!"
 	desc = "You've been tagged! <br>Movement speed is reduced. Eyesight reduced. "
 	icon_state = "tagged"
