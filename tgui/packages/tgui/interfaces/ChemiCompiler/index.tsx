@@ -13,7 +13,7 @@ import { Stack } from '../../components';
 
 export const ChemiCompiler = (_props, _context) => {
   return (
-    <Window width={600} height={475}>
+    <Window width={600} height={500}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
