@@ -272,8 +272,8 @@ datum
 		proc/on_mob_life_complete(var/mob/M)
 			.=0
 
-		proc/on_plant_life(var/obj/machinery/plantpot/P)
-			if (!P) return
+		proc/on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+			if (!P || !growth_tick) return
 
 		proc/check_overdose(var/mob/M, var/mult = 1)
 			if (!M || !M.reagents)

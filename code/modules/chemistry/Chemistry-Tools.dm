@@ -855,7 +855,7 @@ proc/ui_describe_reagents(atom/A)
 		//this is a mess but we need it to disconnect if ANYTHING happens
 		if (!(container in src.connected_containers))
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
-			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container_xsig))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
 		add_line(container)
 		src.connected_containers.Add(container)
@@ -868,6 +868,8 @@ proc/ui_describe_reagents(atom/A)
 		UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
 
+	proc/remove_container_xsig(datum/component/complexsignal, old_movable, new_movable)
+		src.remove_container(complexsignal.parent)
 
 	proc/remove_all_containers()
 		for(var/obj/container in src.connected_containers)
@@ -943,10 +945,13 @@ proc/ui_describe_reagents(atom/A)
 						UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 						UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
 
+		remove_container_xsig(datum/component/complexsignal, old_movable, new_movable)
+			src.remove_container(complexsignal.parent)
+
 		add_container(var/obj/container)
 			if (!(container in src.connected_containers))
 				RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
-				RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+				RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container_xsig))
 				RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
 			var/id = 1
 			for(var/i= 1 to max_amount_of_containers)
@@ -1319,8 +1324,11 @@ proc/ui_describe_reagents(atom/A)
 		src.UpdateIcon()
 		RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //only register this on the container since attackhand opens menu
 		for(var/item in list(src, container))
-			RegisterSignal(item, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			RegisterSignal(item, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container_xsig))
 			RegisterSignal(item, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+
+	proc/remove_container_xsig(datum/component/complexsignal, old_movable, new_movable)
+		src.remove_container(complexsignal.parent)
 
 	proc/remove_container()
 		UnregisterSignal(current_container, COMSIG_ATTACKHAND, PROC_REF(remove_container))

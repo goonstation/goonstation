@@ -1509,24 +1509,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/floor))
 					continue
 
-				T.hotspot_expose(2000, 125)
-
-				var/obj/overlay/O = new/obj/overlay(T)
-				O.name = "Thermite"
-				O.desc = "A searing wall of flames."
-				O.icon = 'icons/effects/fire.dmi'
-				O.anchored = ANCHORED
-				O.layer = TURF_EFFECTS_LAYER
-				O.color = "#ff9a3a"
-				var/datum/light/point/light = new
-				light.set_brightness(1)
-				light.set_color(0.5, 0.3, 0.0)
-				light.attach(O)
-
-				if (istype(T,/turf/simulated/wall))
-					O.set_density(1)
-				else
-					O.set_density(0)
 
 				var/distance = GET_DIST(T, location)
 				if (distance < 2)
@@ -1535,7 +1517,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					if (istype(T, /turf/simulated/wall/auto/feather))
 						var/turf/simulated/wall/auto/feather/flockwall = T
 						flockwall.takeDamage("fire", 1)
-						O.icon_state = "2"
 						if (flockwall.health <= 0)
 							flockwall.destroy()
 					else if (istype(T, /turf/simulated/wall))
@@ -1546,12 +1527,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 					if (F && istype(F))
 						F.to_plating()
-						F.burn_tile()
-						O.icon_state = "2"
-				else
-					O.icon_state = "1"
-					if (istype(T, /turf/simulated/floor))
-						var/turf/simulated/floor/F = T
 						F.burn_tile()
 
 			for (var/obj/machinery/door/DR in src.loc)
@@ -1581,6 +1556,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					qdel(firelock)
 					continue
 
+			// placed here so that fire appears in place of destroyed turfs
+			fireflash(location, src.expl_range, 2000, checkLos = FALSE, chemfire = CHEM_FIRE_DARKRED)
+
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
 				var/damage = 30 / (GET_DIST(M, src) + 1)
@@ -1588,11 +1566,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				M.update_burning(damage)
 
 			SPAWN(10 SECONDS)
-				if (src)
-					for (var/obj/overlay/O in range(src.expl_range, location))
-						if (O.name == "Thermite")
-							qdel(O)
-					qdel(src)
+				qdel(src)
 		else
 			qdel(src)
 

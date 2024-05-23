@@ -992,7 +992,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "TransceptionInterlink")
-	ui.open()
+		ui.open()
 
 /obj/machinery/computer/transception/ui_data(mob/user)
 	. = ..()

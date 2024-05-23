@@ -1734,3 +1734,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/safe_delete()
 	src.force_drop()
 	..()
+
+/obj/item/can_arm_attach()
+	return ..() && !(src.cant_drop || src.two_handed)
