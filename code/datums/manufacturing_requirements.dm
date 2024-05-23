@@ -42,6 +42,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		SHOULD_CALL_PARENT(TRUE)
 		if (isnull(M))
 			return FALSE
+		if (!isnull(src.material_property) && !isnull(src.material_threshold) && !src.matches_property(M))
+			return FALSE
 		if (!isnull(src.material_flags) && !src.matches_flags(M.getMaterialFlags()))
 			return FALSE
 		return TRUE
@@ -163,109 +165,102 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
                     PLEASE ALPHABETIZE THANKS
 ***************************************************************/
+	conductive
+		name = "Conductive"
+		material_threshold = 6
 
-	match_property
-		is_match(var/datum/material/M)
-			if (!isnull(src.material_property) && !isnull(src.material_threshold) && !src.matches_property(M))
-				return FALSE
-			. = ..()
+		high
+			name = "High Energy Conductor"
+			material_threshold = 8
 
-		conductive
-			name = "Conductive"
-			material_threshold = 6
-
-			high
-				name = "High Energy Conductor"
-				material_threshold = 8
-
-		crystal
-			name = "Crystal"
-			material_flags = MATERIAL_CRYSTAL
-
-			dense
-				name = "Extraordinarily Dense Crystalline Matter"
-				material_property = "density"
-				material_threshold = 7
-
-			gemstone
-				name = "Gemstone"
-
-				is_match(var/datum/material/M)
-					if (!(istype(M, /datum/material/crystal/gemstone)))
-						return FALSE
-					. = ..()
+	crystal
+		name = "Crystal"
+		material_flags = MATERIAL_CRYSTAL
 
 		dense
-			name = "High Density Matter"
+			name = "Extraordinarily Dense Crystalline Matter"
 			material_property = "density"
-			material_threshold = 4
+			material_threshold = 7
 
-			super
-				name = "Very High Density Matter"
-				material_threshold = 6
+		gemstone
+			name = "Gemstone"
 
-		energy
-			name = "Power Source"
-			material_property = "radioactive"
-			material_flags = MATERIAL_ENERGY
-
-			high
-				name = "Significant Power Source"
-				material_threshold = 3
-
-			extreme
-				name = "Extreme Power Source"
-				material_threshold = 5
-
-		fabric
-			name = "Fabric"
-			material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC
-
-		insulated
-			name = "Insulative"
-			material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
-			material_threshold = 4
-
-			super
-				name = "Highly Insulative"
-
-			matches_property(datum/material/M)
-				if (!(M.getProperty("electrical") <= src.material_threshold))
+			is_match(var/datum/material/M)
+				if (!(istype(M, /datum/material/crystal/gemstone)))
 					return FALSE
-				return TRUE
+				. = ..()
 
-		metal
-			name = "Metal"
-			material_flags = MATERIAL_METAL
+	dense
+		name = "High Density Matter"
+		material_property = "density"
+		material_threshold = 4
 
-			dense
-				name = "Sturdy Metal"
-				material_threshold = 10
-
-			superdense
-				name = "Extremely Tough Metal"
-				material_threshold = 15
-
-			matches_property(var/datum/material/M)
-				// This specific check is based off the hardness of mauxite and bohrum.
-				// Mauxite ends up being 15 in here, while bohrum ends up being 33.
-				if (!(M.getProperty("hard") * 2 + M.getProperty("density") >= src.material_threshold))
-					return FALSE
-				return TRUE
-
-		organic_or_rubber
-			name = "Organic or Rubber"
-			material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
-
-		reflective
-			name = "Reflective"
-			material_property = "reflective"
+		super
+			name = "Very High Density Matter"
 			material_threshold = 6
 
-		rubber
-			name = "Rubber"
-			material_flags = MATERIAL_RUBBER
+	energy
+		name = "Power Source"
+		material_property = "radioactive"
+		material_flags = MATERIAL_ENERGY
 
-		wood
-			name = "Wood"
-			material_flags = MATERIAL_WOOD
+		high
+			name = "Significant Power Source"
+			material_threshold = 3
+
+		extreme
+			name = "Extreme Power Source"
+			material_threshold = 5
+
+	fabric
+		name = "Fabric"
+		material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC
+
+	insulated
+		name = "Insulative"
+		material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
+		material_threshold = 4
+
+		super
+			name = "Highly Insulative"
+
+		matches_property(datum/material/M)
+			if (!(M.getProperty("electrical") <= src.material_threshold))
+				return FALSE
+			return TRUE
+
+	metal
+		name = "Metal"
+		material_flags = MATERIAL_METAL
+
+		dense
+			name = "Sturdy Metal"
+			material_threshold = 10
+
+		superdense
+			name = "Extremely Tough Metal"
+			material_threshold = 15
+
+		matches_property(var/datum/material/M)
+			// This specific check is based off the hardness of mauxite and bohrum.
+			// Mauxite ends up being 15 in here, while bohrum ends up being 33.
+			if (!(M.getProperty("hard") * 2 + M.getProperty("density") >= src.material_threshold))
+				return FALSE
+			return TRUE
+
+	organic_or_rubber
+		name = "Organic or Rubber"
+		material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
+
+	reflective
+		name = "Reflective"
+		material_property = "reflective"
+		material_threshold = 6
+
+	rubber
+		name = "Rubber"
+		material_flags = MATERIAL_RUBBER
+
+	wood
+		name = "Wood"
+		material_flags = MATERIAL_WOOD

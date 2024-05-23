@@ -627,9 +627,9 @@
 	time = 12 SECONDS
 	category = "Resource"
 	apply_material = 1
-	var/obj/item/sheet/S = A
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		var/obj/item/sheet/S = A
 		..()
 		S.set_reinforcement(getMaterial(materials["MET-1"]))
 
@@ -651,11 +651,11 @@
 	time = 12 SECONDS
 	category = "Resource"
 	apply_material = 1
-	var/obj/item/sheet/S = A
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
-		S.set_reinforcement(getMaterial(materials["CRY-1"]))
+		var/obj/item/sheet/S = A
+		S.set_reinforcement(getMaterial(materials[/datum/manufacturing_requirement/crystal]))
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
@@ -664,10 +664,10 @@
 	time = 3 SECONDS
 	category = "Resource"
 	apply_material = 1
-	var/obj/item/sheet/S = A // this way they are instantly stacked rather than just 2 rods
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
 		..()
+		var/obj/item/sheet/S = A // this way they are instantly stacked rather than just 2 rods
 		S.amount = 2
 		S.inventory_counter.update_number(S.amount)
 
@@ -879,12 +879,12 @@
 	time = 3 SECONDS
 	category = "Resource"
 	apply_material = 0
-	var/obj/item/cable_coil/coil = A
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
-		coil.setInsulator(getMaterial(materials[item_paths[1]]))
-		coil.setConductor(getMaterial(materials[item_paths[2]]))
+		var/obj/item/cable_coil/coil = A
+		coil.setInsulator(getMaterial(materials[item_requirements[1]]))
+		coil.setConductor(getMaterial(materials[item_requirements[2]]))
 		return 1
 
 /datum/manufacture/cable/reinforced
@@ -1852,7 +1852,7 @@
 	name = "Teleport Upgrade"
 	item_requirements = list(/datum/manufacturing_requirement/conductive = 10,
 							 /datum/manufacturing_requirement/dense = 1,
-							 /datum/manufacturing_requirement/POW-2)//Okayenoughroundstartteleportborgs.Fuck. = 10)
+							 /datum/manufacturing_requirement/energy/high)//Okayenoughroundstartteleportborgs.Fuck. = 10)
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS

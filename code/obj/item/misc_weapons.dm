@@ -1065,7 +1065,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
 TYPEINFO(/obj/item/bat)
-	mats = list(/datum/manufacturing_requirement/wood=8 = 1)
+	mats = list(/datum/manufacturing_requirement/wood = 8)
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -1416,7 +1416,7 @@ TYPEINFO(/obj/item/swords/katana)
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
 TYPEINFO(/obj/item/swords/captain)
-	mats = list(/datum/manufacturing_requirement/MET-2=15 = 1)
+	mats = list(/datum/manufacturing_requirement/metal/dense = 15)
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
