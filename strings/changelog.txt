@@ -1,5 +1,12 @@
 
 (t)wed may 22 24
+(u)LeahTheTech
+(+)Pressing V will no longer hide your inventory. Why did it ever do that?
+(+)Reverted pressing V no longer hiding your inventory.
+(u)Glamurio (Ryou)
+(p)19089
+(e)💅|C-QoL
+(+)Trippy people now trip less often.
 (u)FlameArrow57
 (p)18855
 (e)💅📦|C-QoL, A-Game-Objects

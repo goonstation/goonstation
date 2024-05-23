@@ -2,11 +2,12 @@
 /datum/preMapLoad
 	New()
 		global.current_state = GAME_STATE_PRE_MAP_LOAD
-#ifdef TRACY_PROFILER_HOOK
-		prof_init()
-#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
+#endif
+#ifdef TRACY_PROFILER_HOOK
+		world.log << "Enabling the Tracy Profiler Hook."
+		prof_init()
 #endif
 		enable_auxtools_debugger()
 
