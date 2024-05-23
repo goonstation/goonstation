@@ -1,5 +1,9 @@
 
 (t)thu may 23 24
+(u)aloe
+(p)18797
+(e)⚖📄💪|C-Balance, A-UI, A-Traits
+(*)You can now select as many traits as you like.
 (u)Glamurio (Ryou)
 (p)19109
 (e)🎨🏅|C-Sprites, A-Medal
