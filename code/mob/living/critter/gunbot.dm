@@ -1,6 +1,7 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
-	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
-
+	mats = list(/datum/manufacturing_requirement/metal/dense = 12,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense = 6)
 /mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
@@ -299,8 +300,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
-	mats = list("MET-2" = 16, "CON-2" = 12, "DEN-2" = 6, "POW-1"=4)
-
+	mats = list(/datum/manufacturing_requirement/metal/dense = 16,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense/super = 6,
+				/datum/manufacturing_requirement/energy = 4)
 /mob/living/critter/robotic/gunbot/mrl
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -315,8 +318,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
 		src.UpdateOverlays(image(src.icon,"gunbot-mrls"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
-	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-2"=4)
-
+	mats = list(/datum/manufacturing_requirement/metal/dense = 12,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense = 6,
+				/datum/manufacturing_requirement/energy/high = 4)
 /mob/living/critter/robotic/gunbot/flame
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -331,7 +336,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
 		src.UpdateOverlays(image(src.icon, "gunbot-flamethrower"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
-	mats = list("MET-3" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
+	mats = list(/datum/manufacturing_requirement/metal/superdense = 12,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense = 6,
+				/datum/manufacturing_requirement/energy = 4)
 /mob/living/critter/robotic/gunbot/cannon
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -359,7 +367,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
 		src.UpdateOverlays(image(src.icon, "gunbot-striker"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
-	mats = list("MET-2" = 18, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
+	mats = list(/datum/manufacturing_requirement/metal/dense = 18,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense = 6,
+				/datum/manufacturing_requirement/energy = 4)
 /mob/living/critter/robotic/gunbot/minigun
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -375,7 +386,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
 		src.UpdateOverlays(image(src.icon, "gunbot-heavy"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
-	mats = list("MET-3" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
+	mats = list(/datum/manufacturing_requirement/metal/superdense = 12,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense = 6,
+				/datum/manufacturing_requirement/energy = 4)
 /mob/living/critter/robotic/gunbot/chainsaw
 	icon_state = "gunbot-base"
 	setup_hands()
