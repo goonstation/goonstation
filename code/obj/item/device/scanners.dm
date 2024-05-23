@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 				playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
-					P.set_loc(get_turf(src))
+					usr.put_in_hand_or_drop(P)
 
 					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 					P.info = scans[index]
@@ -1017,7 +1017,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
-			p.set_loc(get_turf(src))
+			user.put_in_hand_or_drop(p)
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
 			p.icon_state = "paper_caution"

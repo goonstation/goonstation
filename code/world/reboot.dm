@@ -25,6 +25,7 @@
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	logTheThing(LOG_ADMIN, null, "Gamelogger stats BANDAID. [json_encode(game_stats.stats)]")
 	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
 	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]", spacemas_ornaments)
 	global.save_noticeboards()
