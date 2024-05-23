@@ -327,10 +327,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 	proc/spikes_protected(mob/living/carbon/human/H)
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0
-			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
 				return TRUE
 		else
-			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
 				return TRUE
 		if(H.gloves)
 			return TRUE

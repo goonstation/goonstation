@@ -1889,12 +1889,15 @@ datum
 				if (!M) M = holder.my_atom
 
 				switch(counter+= (mult * progression_speed))
-					if (12 to 30) // Small signs of trouble
+					if (10 to 27) // Small signs of trouble
 						if (prob(15))
 							M.change_misstep_chance(15 * mult)
 						if (prob(12))
-							M.stuttering = max(M.stuttering, 5)
-					if (30 to 45) // Effects ramp up, breathlessness, early paralysis signs and heartache
+							boutput(M, SPAN_NOTICE("<b>You feel a [pick("sudden palpitation", "numbness", "slight burn")] in your chest.</b>"))
+							M.stuttering = max(M.stuttering, 10)
+						if (probmult(10))
+							M.emote(pick("twitch","drool","tremble"))
+					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
 						M.setStatusMin("slowed", 40 SECONDS)
@@ -1905,8 +1908,8 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
-					if (45 to INFINITY) // Paralysis kicks in, heart stops
-						M.setStatusMin("paralysis", 40 SECONDS)
+					if (47 to INFINITY) // Heart effects kick in
+						M.setStatusMin("slowness", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
 						if(isliving(M))
