@@ -289,9 +289,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	name = "pufferfish"
 	desc = "Adorable. Quite poisonous."
 	icon_state = "pufferfish"
-	inhand_color = "#87d1db"
+	inhand_color = "#8d754e"
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/pufferfish
 	category = FISH_CATEGORY_AQUARIUM
-	rarity = ITEM_RARITY_RARE
+	rarity = ITEM_RARITY_UNCOMMON
 
 	New()
 		global.processing_items += src
@@ -311,9 +312,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 			H.setStatusMin("stunned", 2 SECONDS)
 			take_bleeding_damage(H, null, 3, DAMAGE_STAB)
 
-	make_reagents()
-		..()
-		src.reagents.add_reagent("tetrodotoxin",30) // REALLY don't eat raw pufferfish
+	make_reagents() // No fish oil on this one, more space for poison
+		src.reagents.add_reagent("tetrodotoxin",50) // REALLY don't eat raw pufferfish
 
 	onSlice(var/mob/user) // Don't eat pufferfish the staff assistant made
 		if (user.traitHolder?.hasTrait("training_chef"))
@@ -323,6 +323,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 		else if (prob(25)) // Don't try doing it if you don't know what you're doing
 			boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
 			user.reagents.add_reagent("tetrodotoxin", 20)
+			src.reagents.remove_reagent("tetrodotoxin", 20)
 
 	proc/spikes_protected(mob/living/carbon/human/H)
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0

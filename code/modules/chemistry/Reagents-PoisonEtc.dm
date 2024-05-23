@@ -1881,21 +1881,23 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
+			depletion_rate = 0.3
+			var/progression_speed = 1
 			var/counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				switch(counter+= (mult)) // First 10 cycles produce no result
-					if (10 to 32) // Small signs of trouble
-						if (prob(10))
-							M.change_misstep_chance(10 * mult)
+				switch(counter+= (mult * progression_speed))
+					if (12 to 30) // Small signs of trouble
+						if (prob(15))
+							M.change_misstep_chance(15 * mult)
 						if (prob(12))
 							M.stuttering = max(M.stuttering, 5)
-					if (32 to 45) // Effects ramp up, breathlessness, drowsiness and heartache
+					if (30 to 45) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
-						M.setStatusMin("drowsy", 40 SECONDS)
+						M.setStatusMin("slowed", 40 SECONDS)
 						if (prob(35))
 							M.losebreath = max(5, M.losebreath + (5 * mult))
 						if (prob(20))
@@ -1912,7 +1914,6 @@ datum
 							L.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 				..()
 				return
-
 
 		harmful/dna_mutagen
 			name = "stable mutagen"

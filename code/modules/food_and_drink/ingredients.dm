@@ -100,9 +100,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
 	pufferfish
 		name = "pufferfish fillet"
-		icon_state = "fillet-white"
-		food_color = "#e0dbce"
+		icon_state = "fillet-pufferfish"
+		food_color = "#eeedec"
 		real_name = "pufferfish"
+		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/pufferfish
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	name = "slice of fish fillet"
@@ -127,7 +128,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		real_name = "small fish"
 	pufferfish
 		name = "slice of pufferfish fillet"
-		icon_state = "filletslice-white"
+		icon_state = "filletslice-pufferfish"
 		food_color = "#e0dbce"
 		real_name = "pufferfish"
 
@@ -136,11 +137,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	name = "pufferfish liver"
 	desc = "The most toxic part of pufferfish."
 	icon_state = "pufferfish-liver"
+	initial_volume = 70
 	food_color = "#693576"
 
 	New()
-		..()
-		reagents.add_reagent("tetrodotoxin", 50)
+		..() // Contains more than the whole fish, as the chef can isolate it properly
+		reagents.add_reagent("tetrodotoxin", 70)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
 	name = "raw shrimp meat"
