@@ -218,7 +218,6 @@
 
 /datum/chemicompiler_core/proc/get_ui_data()
 	. = list()
-	.["reservoirs"] = getReservoirStatuses()
 	.["inputValue"] = output
 	.["loadTimestamp"] = loadTimestamp
 	.["sx"] = sx
@@ -902,8 +901,11 @@
 	return holder.reagents.total_volume
 
 /datum/chemicompiler_executor/proc/get_ui_data()
-	return core.get_ui_data()
-
+	. = core.get_ui_data()
+	var/list/ui_data_reservoirs = list()
+	for (var/i = 1, i <= length(src.reservoirs), i++)
+		ui_data_reservoirs.Add(src.reservoirs[i] ? "[src.reservoirs[i].reagents.total_volume]/[src.reservoirs[i].reagents.maximum_volume]" : null)
+	.["reservoirs"] = ui_data_reservoirs
 
 /datum/chemicompiler_executor/proc/execute_ui_act(action, list/params)
 	switch(action)

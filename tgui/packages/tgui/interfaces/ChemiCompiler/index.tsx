@@ -42,7 +42,8 @@ export const ChemiCompiler = (_props, context) => {
                       key={index}
                       onClick={() => act('reservoir', { index })}
                       width={7}
-                      tooltip={reservoir && "Eject"}>
+                      tooltip={reservoir && "Eject"}
+                      ellipsis>
                       {
                         reservoir
                           ? <><Icon name="eject" /> {reservoir}</>
