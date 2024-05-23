@@ -1,39 +1,61 @@
 TYPEINFO(/obj/critter/gunbot/drone)
-	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
-
+	mats = list(/datum/manufacturing_requirement/energy = 5,
+				/datum/manufacturing_requirement/metal/dense = 12,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense = 6)
 TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
 	mats = null
 
 TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
-	mats = list("POW-2" = 10, "MET-3" = 12, "CON-2" = 12, "DEN-2" =9)
-
+	mats = list(/datum/manufacturing_requirement/energy/high = 10,
+				/datum/manufacturing_requirement/metal/superdense = 12,
+				/datum/manufacturing_requirement/conductive/high = 12,
+				/datum/manufacturing_requirement/dense/super = 9)
 TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
-	mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "CRY-2" =17, "erebite" =16)
-
+	mats = list(/datum/manufacturing_requirement/energy/extreme = 15,
+				/datum/manufacturing_requirement/metal/superdense = 17,
+				/datum/manufacturing_requirement/conductive/high = 13,
+				/datum/manufacturing_requirement/crystal/dense = 17,
+				/datum/manufacturing_requirement/erebite = 16)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
-	mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
-
+	mats = list(/datum/manufacturing_requirement/energy/extreme = 13,
+				/datum/manufacturing_requirement/metal/superdense = 24,
+				/datum/manufacturing_requirement/conductive/high = 20,
+				/datum/manufacturing_requirement/crystal/dense = 17)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
-	mats = 	list("POW-3" = 19, "MET-3" = 20, "CON-2" = 24, "DEN-2" =16)
-
+	mats = list(/datum/manufacturing_requirement/energy/extreme = 19,
+				/datum/manufacturing_requirement/metal/superdense = 20,
+				/datum/manufacturing_requirement/conductive/high = 24,
+				/datum/manufacturing_requirement/dense/super = 16)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone)
-	mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
-
+	mats = list(/datum/manufacturing_requirement/energy/high = 19,
+				/datum/manufacturing_requirement/metal/dense = 12,
+				/datum/manufacturing_requirement/conductive/high = 14,
+				/datum/manufacturing_requirement/dense/super = 26)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone/fish)
 	mats = 	24
 
 TYPEINFO(/obj/critter/gunbot/drone/laser)
-	mats = 	list("POW-2" =11, "MET-2" = 14, "CON-2" = 13, "DEN-2" =12)
-
+	mats = list(/datum/manufacturing_requirement/energy/high = 11,
+				/datum/manufacturing_requirement/metal/dense = 14,
+				/datum/manufacturing_requirement/conductive/high = 13,
+				/datum/manufacturing_requirement/dense/super = 12)
 TYPEINFO(/obj/critter/gunbot/drone/cutterdrone)
-	mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "CRY-2" =20)
-
+	mats = list(/datum/manufacturing_requirement/energy = 9,
+				/datum/manufacturing_requirement/metal/superdense = 15,
+				/datum/manufacturing_requirement/conductive = 7,
+				/datum/manufacturing_requirement/crystal/dense = 20)
 TYPEINFO(/obj/critter/gunbot/drone/assdrone)
-	mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "CRY-2" =22, "butt"=10) //heh
-
+	mats = list(/datum/manufacturing_requirement/energy/extreme = 30,
+				/datum/manufacturing_requirement/metal/superdense = 14,
+				/datum/manufacturing_requirement/conductive/high = 23,
+				/datum/manufacturing_requirement/crystal/dense = 22,
+				/datum/manufacturing_requirement/butt = 10)
 TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
-	mats = 	list("POW-1" = 10, "MET-1" = 15, "CON-2" = 15, "DEN-1" =10)
-
+	mats = list(/datum/manufacturing_requirement/energy = 10,
+				/datum/manufacturing_requirement/metal = 15,
+				/datum/manufacturing_requirement/conductive/high = 15,
+				/datum/manufacturing_requirement/dense = 10)
 TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	mats = null
 
