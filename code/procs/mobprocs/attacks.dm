@@ -5,7 +5,7 @@
 
 	// why is this not in human/attackby?
 
-	if (!(W.object_flags & NO_ARM_ATTACH || W.cant_drop || W.two_handed) && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
+	if (W.can_arm_attach() && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
 		var/mob/living/carbon/human/H = src
 
 		if (!H.limbs.vars[user.zone_sel.selecting])
@@ -14,9 +14,7 @@
 
 	user.lastattacked = src
 
-	if (user.mob_flags & AT_GUNPOINT)
-		for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
-			G.shoot()
+	SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
 	var/obj/item/grab/block/block = user.check_block()
 	if (block)

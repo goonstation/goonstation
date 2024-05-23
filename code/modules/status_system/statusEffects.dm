@@ -583,11 +583,11 @@
 					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
 				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel sick."))
 					M.vomit()
 
@@ -771,7 +771,7 @@
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
+			if (!owner.hasStatus(list("stunned", "knockdown", "unconscious", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -801,11 +801,11 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
-		weakened
-			id = "weakened"
+		knockdown
+			id = "knockdown"
 			name = "Knocked-down"
 			desc = "You are knocked-down.<br>Unable to take any actions, prone."
-			icon_state = "weakened"
+			icon_state = "knockdown"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -858,11 +858,11 @@
 
 
 
-		paralysis
-			id = "paralysis"
+		unconscious
+			id = "unconscious"
 			name = "Unconscious"
 			desc = "You are unconscious.<br>Unable to take any actions, blinded."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -878,11 +878,33 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
+		paralysis
+			id = "paralysis"
+			name = "Paralyzed" //I'm going to scream
+			desc = "You are completely paralyzed."
+			unique = 1
+			maxDuration = 30 SECONDS
+			icon_state = "paralysis"
+
+			onAdd(optional=null)
+				. = ..()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+
+			onRemove()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+				. = ..()
+
 		dormant
 			id = "dormant"
 			name = "Dormant"
 			desc = "You are dormant.<br>Unable to take any actions, until you power yourself."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			duration = INFINITE_STATUS
 
@@ -974,7 +996,7 @@
 
 		onUpdate(timePassed)
 			counter += timePassed
-			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+			if (counter >= count && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1329,12 +1351,12 @@
 
 			var/list/statusList = H.getStatusList()
 
-			if(statusList["paralysis"])
-				H.changeStatus("paralysis", -1)
+			if(statusList["unconscious"])
+				H.changeStatus("unconscious", -1)
 			if(statusList["stunned"])
 				H.changeStatus("stunned", -1)
-			if(statusList["weakened"])
-				H.changeStatus("weakened", -1)
+			if(statusList["knockdown"])
+				H.changeStatus("knockdown", -1)
 
 		getTooltip()
 			if (GET_DIST(owner,gang.locker) < 4)
@@ -2147,7 +2169,7 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.changeStatus("paralysis", 5 SECONDS)
+			M.changeStatus("unconscious", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
 

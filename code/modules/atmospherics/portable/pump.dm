@@ -39,7 +39,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		tank_hatch.icon_state = "psiphon-T-overlay"
 	else
 		tank_hatch.icon_state = ""
-	src.UpdateOverlays(tank_hatch, "tankhatch")
+	src.AddOverlays(tank_hatch, "tankhatch")
 
 
 /obj/machinery/portable_atmospherics/pump/process()

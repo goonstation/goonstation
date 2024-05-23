@@ -33,6 +33,7 @@
 		if (!ishuman(target))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src, pointCost), M)
 		return 1 //not 0, we dont awnna deduct points until cast finishes
 
@@ -49,6 +50,8 @@
 	when_stunned = 1
 	not_when_handcuffed = 0
 	unlock_message = "You have gained 'Speak to Thralls'. It allows you to telepathically speak to all of your undead thralls."
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -59,6 +62,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return

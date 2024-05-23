@@ -47,7 +47,7 @@
 				target.lastattackertime = world.time
 				target.TakeDamage("chest", 0, 80, 0, DAMAGE_BURN)
 				target.changeStatus("stunned", 10 SECONDS)
-				target.changeStatus("weakened", 10 SECONDS)
+				target.changeStatus("knockdown", 10 SECONDS)
 				target.stuttering += 15
 		else
 			return 1 // no cooldown if it fails

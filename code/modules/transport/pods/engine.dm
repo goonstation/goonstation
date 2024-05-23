@@ -18,7 +18,7 @@
 
 	activate()
 		..()
-		if(ship.fueltank.air_contents.toxins <= 0)
+		if(ship.fueltank?.air_contents.toxins <= 0)
 			boutput(usr, "[ship.ship_message("No plasma located inside of the fuel tank!")]")
 			src.deactivate()
 			return
@@ -109,7 +109,7 @@
 			beacons["[T.name][count[T.name] == 1 ? null : " #[count[T.name]]"]"] = T
 	wormholeQueued = 1
 	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons, /proc/cmp_text_asc))]
-	if(!target)
+	if(!target || usr.loc != src.ship) // we need to make sure the user is still in the vehicle or selected a target
 		wormholeQueued = 0
 		return
 

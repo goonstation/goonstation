@@ -137,7 +137,7 @@
 			if(prob(5))
 				user.visible_message("<span class='alert bold'>[user] tries to shove [src.name], but overbalances and falls over!</span>",
 				"<span class='alert bold'>You try to shove [src.name] too forcefully and topple over!</span>")
-				user.changeStatus("weakened", 2 SECONDS)
+				user.changeStatus("knockdown", 2 SECONDS)
 		if(INTENT_GRAB)
 			user.visible_message(SPAN_ALERT("[user] tries to grab [src.name], but they're only a trick of light!"),
 				SPAN_ALERT("You try to grab [src.name] but they're intangible! It's like trying to pull a cloud!"))

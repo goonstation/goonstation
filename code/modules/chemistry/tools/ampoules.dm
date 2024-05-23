@@ -23,8 +23,9 @@
 	if(expended || reagents.total_volume <= 0)
 		boutput(user, SPAN_ALERT("[src] is empty!"))
 		return
-	else if(target == user)
+	if(target == user)
 		boutput(user, SPAN_NOTICE("You crack open and inhale [src]."))
+		user.inhale_ampoule(src, user)
 	else
 		user.visible_message(SPAN_ALERT("[user] attempts to force [target] to inhale [src]!"))
 		SETUP_GENERIC_ACTIONBAR(user, target, 3 SECONDS, /mob/proc/inhale_ampoule, list(src, user), src.icon, src.icon_state, null, \

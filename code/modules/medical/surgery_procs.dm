@@ -42,7 +42,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if(patient.lying || patient == surgeon)
 			return . // surgery is okay
 
-	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("paralysis") || patient.stat)) // is the patient on a table and paralyzed or dead?
+	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("unconscious") || patient.stat)) // is the patient on a table and paralyzed or dead?
 		return . // surgery is okay
 	else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying))) // is the patient really drunk and also the surgeon?
 		return . // surgery is okay
@@ -127,7 +127,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (patient.stat) // is the patient dead?
 		screw_up_prob -= 30
-	if (patient.getStatusDuration("paralysis")) // unable to move?
+	if (patient.getStatusDuration("unconscious")) // unable to move?
 		screw_up_prob -= 15
 	if (patient.sleeping) // asleep?
 		screw_up_prob -= 10
@@ -301,7 +301,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
 		SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 		surgeon.bioHolder.AddEffect("blind")
-		surgeon.changeStatus("weakened", 4 SECONDS)
+		surgeon.changeStatus("knockdown", 4 SECONDS)
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
 		random_brute_damage(surgeon, damage)
@@ -608,7 +608,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!"),\
 		SPAN_ALERT("You mishandle [src] and cut yourself!"))
-		surgeon.changeStatus("weakened", 1 SECOND)
+		surgeon.changeStatus("knockdown", 1 SECOND)
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(10, 20)
 		random_brute_damage(surgeon, damage)
@@ -849,7 +849,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		//surgeon.bioHolder.AddEffect("blind") // oh my god I'm the biggest idiot ever I forgot to get rid of this part
 		// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
 		// - Haine
-		surgeon.changeStatus("weakened", 4 SECONDS)
+		surgeon.changeStatus("knockdown", 4 SECONDS)
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(1, 10)
 		random_brute_damage(surgeon, damage)
@@ -1004,7 +1004,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		SPAN_ALERT("You burn yourself with [src]"))
 
 		JOB_XP(surgeon, "Clown", 1)
-		surgeon.changeStatus("weakened", 4 SECONDS)
+		surgeon.changeStatus("knockdown", 4 SECONDS)
 		random_burn_damage(surgeon, damage)
 		return TRUE
 
@@ -1262,7 +1262,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
 		SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 		surgeon.bioHolder.AddEffect("blind")
-		patient.changeStatus("weakened", 0.4 SECONDS)
+		patient.changeStatus("knockdown", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
@@ -1338,7 +1338,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!"), \
 		SPAN_ALERT("You fumble and club yourself in the head with [src]!"))
-		patient.changeStatus("weakened", 0.4 SECONDS)
+		patient.changeStatus("knockdown", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
@@ -1512,7 +1512,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	onInterrupt()
 		..()
 		var/damage = calc_surgery_damage(src.surgeon, damage = rand(5,10))
-		var/slipup_message = "messes up mid-surgery"
+		var/slipup_message = " messes up mid-surgery"
 		if (src.rip_out_organ)
 			slipup_message = " loses [his_or_her(src.surgeon)] grips on the [src.organ_name]"
 		do_slipup(src.surgeon, src.target, "chest", damage, slipup_message)

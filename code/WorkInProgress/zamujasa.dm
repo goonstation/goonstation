@@ -1799,6 +1799,7 @@ Other Goonstation servers:[serverList]</span>"})
 	var/tmp/obj/maptext_junk/price_text = null
 	var/tmp/obj/maptext_junk/quantity_text = null
 	var/tmp/list/purchaser_ckeys = list()
+	var/admin_ckey = null
 
 	get_desc()
 		if (set_up)
@@ -1810,7 +1811,7 @@ Other Goonstation servers:[serverList]</span>"})
 				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
 				return
 
-			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
+			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type", "Cancel")
 			if (copyOrType == "Copies")
 				// copy
 				alert(user, "Click on the thing you want to sell copies of.")
@@ -1824,7 +1825,7 @@ Other Goonstation servers:[serverList]</span>"})
 				src.appearance = thing.appearance
 				src.thing_name = thing.name
 
-			else
+			else if (copyOrType == "Type")
 
 				alert(user, "Click on something for the store to copy the appearance of (the actual item you're selling comes after this; you might have to varedit the store later)")
 				var/atom/thing = pick_ref(user)
@@ -1840,9 +1841,14 @@ Other Goonstation servers:[serverList]</span>"})
 				copy_mode = FALSE
 				src.type_to_spawn = objpath
 
+			else
+				// cancel
+				return
+
 			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
 			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
 			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
+			src.admin_ckey = (alert(user, "Attach it to your adminness? This will tell you when people buy it (and also give you the money they spend).", "FEED ME SPACEBUX", "Yes", "No") == "Yes") ? user.ckey : null
 
 			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
 			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
@@ -1891,6 +1897,14 @@ Other Goonstation servers:[serverList]</span>"})
 					return FALSE
 
 				user.client.add_to_bank(-src.price)
+				if (src.admin_ckey)
+					try
+						var/client/A = getClientFromCkey(src.admin_ckey)
+						A.add_to_bank(src.price)
+						boutput(A, SPAN_ALERT("[usr.real_name] bought \a [src.name] for [src.price]."))
+
+					catch
+						// do nothing. if they're offline we dont care.
 
 			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
 

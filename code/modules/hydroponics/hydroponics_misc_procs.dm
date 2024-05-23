@@ -1,5 +1,8 @@
 // Hydroponics procs not specific to the plantpot start here.
 
+
+
+
 proc/HYPchem_scaling(var/scaling_statistics)
 	//! This proc causes all chem production of botany to have a diminishing return with potency (or other stats for e.g. maneaters)
 	//For the graph in question with explanation, refer to this link: https://www.desmos.com/calculator/gy7tn43s6b
@@ -434,3 +437,9 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		if(upperbound && checkedvariable > upperbound) return 0
 		return 1
 	else return 1
+
+proc/HYPstat_rounding(var/input_number)
+	// Since plantstats are integers, but we want to accomodate for fractional plantgrowth_tick-multipliers, we need some special behaviour
+	// This proc will take a value and round up with a chance equal to the first two fractional numbers
+	// this means e.g. 4,24 in this proc will output a 5 with a 24% chance and a 4 with a 76% chance
+	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))

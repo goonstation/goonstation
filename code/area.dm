@@ -5890,6 +5890,34 @@ area/station/security/visitation
 	name = "NSV Pytheas Mineral Magnet"
 	icon_state = "purple"
 
+/area/pod_wars/team1/crewlounge
+	name = "NSV Pytheas Crew Lounge"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/storageA
+	name = "NSV Pytheas Storage Room A"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/storageB
+	name = "NSV Pytheas Storage Room B"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/primaryhall
+	name = "NSV Pytheas Primary Hallway"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/foreprimaryhall
+	name = "NSV Pytheas Fore Primary Hallway"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/equipmentroom
+	name = "NSV Pytheas Equipment Room"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/teleporter
+	name = "NSV Pytheas Teleporter"
+	icon_state = "yellow"
+
 /area/pod_wars/team2
 	station_map_colour = MAPC_SYNDICATE
 
@@ -5932,6 +5960,39 @@ area/station/security/visitation
 /area/pod_wars/team2/magnet
 	name = "Lodbrok Mineral Magnet"
 	icon_state = "purple"
+
+/area/pod_wars/team2/aftprimaryhall
+	name = "Lodbrok Aft Primary Hallway"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/foreprimaryhall
+	name = "Lodbrok Fore Primary Hallway"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/storageA
+	name = "Lodbrok Storage Room A"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/storageB
+	name = "Lodbrok Storage Room B"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/storageC
+	name = "Lodbrok Storage Room C"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/crewlounge
+	name = "Lodbrok Crew Lounge"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/equipmentroom
+	name = "Lodbrok Equipment Room"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/teleporter
+	name = "Lodbrok Teleporter"
+	icon_state = "yellow"
+
 
 /area/pod_wars/team2
 	station_map_colour = MAPC_SYNDICATE

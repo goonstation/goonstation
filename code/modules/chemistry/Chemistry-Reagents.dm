@@ -162,7 +162,7 @@ datum
 							did_not_react = 0
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.mutantrace.aquaphobic && istype(src, /datum/reagent/water))
+						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water))
 							animate_shake(H)
 							if (prob(50))
 								H.emote("scream")
@@ -272,8 +272,8 @@ datum
 		proc/on_mob_life_complete(var/mob/M)
 			.=0
 
-		proc/on_plant_life(var/obj/machinery/plantpot/P)
-			if (!P) return
+		proc/on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+			if (!P || !growth_tick) return
 
 		proc/check_overdose(var/mob/M, var/mult = 1)
 			if (!M || !M.reagents)

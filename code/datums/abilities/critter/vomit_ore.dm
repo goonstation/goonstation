@@ -9,6 +9,7 @@
 	target_anything = TRUE
 
 	cast(atom/T)
+		. = ..()
 		var/mob/living/critter/C = holder.owner
 		if (istype(C, /mob/living/critter/rockworm))
 			var/mob/living/critter/rockworm/worm = C

@@ -550,7 +550,7 @@ proc/filter_carrier_pets(var/type)
 		if ((src.catnip || prob(2) ) && (!ON_COOLDOWN(src, "claw_fury", 20 SECONDS)))
 			var/attackCount = rand(5, 9)
 			var/iteration = 0
-			target.setStatus("weakened", 2 SECONDS)
+			target.setStatus("knockdown", 2 SECONDS)
 			src.visible_message(SPAN_COMBAT("[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!"))
 			SPAWN(0)
 				while (iteration <= attackCount && (get_dist(src, target) <= 1))
@@ -744,16 +744,16 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			return 1
 		if (prob(30))
 			src.icon_state = "[src.dogtype]-lying"
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] flops on [his_or_her(src)] back! Scratch that belly!"),\
 			SPAN_NOTICE("You flop on your back!"))
 			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
-					src.delStatus("paralysis")
+					src.delStatus("unconscious")
 					src.changeStatus("stunned", 10 SECONDS)
-					src.delStatus("weakened")
+					src.delStatus("knockdown")
 					src.icon_state = src.dogtype
 
 	Life(datum/controller/process/mobs/parent)
@@ -935,9 +935,9 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -1001,6 +1001,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
 			src.visible_message(SPAN_COMBAT("<b>[src]</b> pets [user]!"))
+		else
+			..()
 
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
@@ -1861,7 +1863,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return
 				else
 					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
-					M.setStatus("weakened", 5 SECONDS)
+					M.setStatus("knockdown", 5 SECONDS)
 					return
 		. = ..()
 
@@ -2089,10 +2091,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
-
 		if (!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
-			return TRUE
+		return TRUE
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
@@ -2122,11 +2123,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 			if (!sting.disabled && sting.cooldowncheck())
-				sting.handleCast(AM)
+				if (!ON_COOLDOWN(src, "warning", 1 MINUTE)) //snake will not immediately bite, gives a warning strike first
+					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					src.visible_message(SPAN_COMBAT("<b>[src] hisses and gives a warning strike!</b>"))
+					if(src.is_npc)
+						src.ai.move_away(AM, 2)
+				else
+					sting.handleCast(AM)
 		return
 
 	death()
-		src.reagents.add_reagent("viper_venom", 40, null)
+		src.reagents.add_reagent("hemotoxin", 40, null)
 		src.friends = null
 		return ..()
 
@@ -2391,9 +2398,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 6 SECONDS)
+			src.setStatus("unconscious", 6 SECONDS)
 			src.setStatus("stunned", 6 SECONDS)
-			src.setStatus("weakened", 6 SECONDS)
+			src.setStatus("knockdown", 6 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -2441,6 +2448,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pet_text = list("gently baps", "pets", "cuddles")
 	density = TRUE
 	player_can_spawn_with_pet = TRUE
+	var/obj/item/armadillo_ball/our_ball
 	var/infected
 
 	New()
@@ -2451,6 +2459,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	disposing()
 		. = ..()
 		STOP_TRACKING
+		qdel(our_ball)
+		our_ball = null
 
 	setup_hands()
 		..()
@@ -2492,6 +2502,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			ball_up(emote=FALSE, force=TRUE)
 		..()
 
+	set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+		if(is_balled() && !QDELETED(our_ball))
+			qdel(our_ball)
+		..()
+
 	proc/is_balled()
 		. = istype(src.loc, /obj/item/armadillo_ball)
 
@@ -2500,10 +2515,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			. = SPAN_ALERT("<b>[src]</b> wiggles!")
 			return
 		if(is_balled())
-			var/obj/item/armadillo_ball/ball = src.loc
-			if(ismob(ball.loc))
-				var/mob/M = ball.loc
-				M.remove_item(ball)
+			if(ismob(our_ball.loc))
+				var/mob/M = our_ball.loc
+				M.remove_item(our_ball)
 				boutput(M,SPAN_ALERT("The <b>[src]</b> slips out of your possession!"))
 			src.set_loc(get_turf(src))
 			if(!emote)
@@ -2511,7 +2525,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						SPAN_ALERT("<b>You relax out of your ball!</b>"))
 			else
 				. = SPAN_ALERT("<b>[src]</b> uncurls from a ball!")
-			qdel(ball)
+			qdel(our_ball)
+			our_ball = null
 		else
 			if(!emote)
 				src.visible_message(SPAN_ALERT("<b>[src]</b> curls into a ball!"),\
@@ -2523,10 +2538,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					G.affecting.visible_message(SPAN_ALERT("[G.affecting] slips free of [G.assailant]'s grip!"))
 					G.assailant.u_equip(G)
 					qdel(G)
-				var/obj/item/armadillo_ball/ball = new(get_turf(src))
-				src.set_loc(ball)
-				ball.dir = src.dir
-				ball.icon = src.icon
+				our_ball = new(get_turf(src))
+				src.set_loc(our_ball)
+				our_ball.dir = src.dir
+				our_ball.icon = src.icon
 
 	Move(var/atom/NewLoc, direct)
 		if(src.is_balled())
@@ -3948,12 +3963,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mentordisappear"
 	needs_turf = FALSE //always castable
 	var/const/disappearance_time = 0.5 SECONDS
+	do_logs = FALSE //we're already logged
 
 	cast(mob/target)
 
 		var/mob/living/M = holder.owner
 		if (!holder)
 			return 1
+		. = ..()
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
 		animate_bouncy(src)
@@ -3971,8 +3988,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
 	needs_turf = FALSE //always castable
+	do_logs = FALSE
 
 	cast(mob/target)
+		. = ..()
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, SPAN_NOTICE("You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]"))

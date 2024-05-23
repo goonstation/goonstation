@@ -15,6 +15,8 @@
 			robot_owner.hud.update_environment()
 
 		if (hivebot_owner)
+			hivebot_owner.hud.update_charge()
+			hivebot_owner.hud.update_pulling()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
 				hivebot_owner.see_invisible = INVIS_CONSTRUCTION
 

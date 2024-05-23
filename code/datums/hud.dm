@@ -36,60 +36,60 @@
 	var/tooltipTheme
 	var/obj/item/item
 
-	disposing()
-		qdel(src.master)
-		src.master = null
-		// TODO: Eject on floor? Probably not for cyborg tools...
-		src.item = null
-		. = ..()
+/atom/movable/screen/hud/disposing()
+	qdel(src.master)
+	src.master = null
+	// TODO: Eject on floor? Probably not for cyborg tools...
+	src.item = null
+	. = ..()
 
-	clicked(list/params)
-		sendclick(params, usr)
+/atom/movable/screen/hud/clicked(list/params)
+	sendclick(params, usr)
 
-	proc/sendclick(list/params,mob/user = null)
-		if (master && (!master.click_check || (user in master.mobs)))
-			master.relay_click(src.id, user, params)
+/atom/movable/screen/hud/proc/sendclick(list/params,mob/user = null)
+	if (master && (!master.click_check || (user in master.mobs)))
+		master.relay_click(src.id, user, params)
 
-	//WIRE TOOLTIPS
-	MouseEntered(location, control, params)
-		if (src.id == "stats" && istype(master, /datum/hud/human))
-			var/datum/hud/human/H = master
-			H.update_stats()
-		if (usr.client.tooltipHolder && src.tooltipTheme)
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = (src.desc ? src.desc : null),
-				"theme" = src.tooltipTheme
-			))
-		else
-			if (master && (!master.click_check || (usr in master.mobs)))
-				master.MouseEntered(src, location, control, params)
-
-	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+//WIRE TOOLTIPS
+/atom/movable/screen/hud/MouseEntered(location, control, params)
+	if (src.id == "stats" && istype(master, /datum/hud/human))
+		var/datum/hud/human/H = master
+		H.update_stats()
+	if (usr.client.tooltipHolder && src.tooltipTheme)
+		usr.client.tooltipHolder.showHover(src, list(
+			"params" = params,
+			"title" = src.name,
+			"content" = (src.desc ? src.desc : null),
+			"theme" = src.tooltipTheme
+		))
+	else
 		if (master && (!master.click_check || (usr in master.mobs)))
-			master.MouseExited(src)
+			master.MouseEntered(src, location, control, params)
 
-	MouseWheel(dx, dy, loc, ctrl, parms)
-		if (master && (!master.click_check || (usr in master.mobs)))
-			master.scrolled(src.id, dx, dy, usr, parms, src)
-			return TRUE
+/atom/movable/screen/hud/MouseExited()
+	if (usr.client.tooltipHolder)
+		usr.client.tooltipHolder.hideHover()
+	if (master && (!master.click_check || (usr in master.mobs)))
+		master.MouseExited(src)
 
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if (master && (!master.click_check || (usr in master.mobs)))
-			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
+/atom/movable/screen/hud/MouseWheel(dx, dy, loc, ctrl, parms)
+	if (master && (!master.click_check || (usr in master.mobs)))
+		master.scrolled(src.id, dx, dy, usr, parms, src)
+		return TRUE
 
-	MouseDrop_T(atom/movable/O as obj, mob/user as mob, src_location, over_location, over_control, src_control, params)
-		if (master && (!master.click_check || (user in master.mobs)))
-			master.MouseDrop_T(src, O, user, params)
+/atom/movable/screen/hud/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+	if (master && (!master.click_check || (usr in master.mobs)))
+		master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
-	disposing()
-		src.master = null
-		src.item = null
-		src.screen_loc = null // idk if this is necessary but im writing it anyways so there
-		..()
+/atom/movable/screen/hud/MouseDrop_T(atom/movable/O as obj, mob/user as mob, src_location, over_location, over_control, src_control, params)
+	if (master && (!master.click_check || (user in master.mobs)))
+		master.MouseDrop_T(src, O, user, params)
+
+/atom/movable/screen/hud/disposing()
+	src.master = null
+	src.item = null
+	src.screen_loc = null // idk if this is necessary but im writing it anyways so there
+	..()
 
 /datum/hud
 	var/list/mob/living/mobs = list()
@@ -214,14 +214,16 @@
 		return
 
 	proc/remove_screen(atom/movable/screen/S)
-		src.objects -= S
+		if(src.objects)
+			src.objects -= S
 		for (var/client/C in src.clients)
 			C.screen -= S
 
 	proc/remove_screen_id(var/id)
 		var/atom/movable/screen/S = get_by_id(id)
 		if(S)
-			src.objects -= S
+			if(src.objects)
+				src.objects -= S
 			for (var/client/C in src.clients)
 				C.screen -= S
 
