@@ -457,6 +457,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		if (!M)
 			return
 
+		M.traitHolder.addTrait("training_scientist")
 		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
 			if (!heisenbee.beeMom)
 				heisenbee.beeMom = M
@@ -752,6 +753,12 @@ ABSTRACT_TYPE(/datum/job/research)
 		..()
 		src.access = get_access("Scientist")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/research/medical_doctor
 	name = "Medical Doctor"
@@ -1331,6 +1338,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Toxins Researcher")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
+
 /datum/job/special/chemist
 	name = "Chemist"
 	linkcolor = "#9900FF"
@@ -1346,6 +1359,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Chemist")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/special/research_assistant
 	name = "Research Assistant"
@@ -1363,6 +1382,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Research Assistant")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
