@@ -1138,6 +1138,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"agH" = (
+/obj/cable{
+	dir = null
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/south)
 "agO" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -33610,6 +33617,18 @@
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/main)
+"sHW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "sIe" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grass{
@@ -39726,6 +39745,18 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"xMD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "xMO" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -89682,8 +89713,8 @@ eII
 uGI
 wuu
 hUT
-joQ
-kNc
+sHW
+agH
 wuu
 oKk
 swA
@@ -90588,7 +90619,7 @@ aYR
 aYR
 wuu
 hQH
-joQ
+xMD
 ocg
 wuu
 bdT
