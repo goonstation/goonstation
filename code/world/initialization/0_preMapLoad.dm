@@ -227,7 +227,7 @@
 	var/lib
 	switch(world.system_type)
 		if(MS_WINDOWS) lib = "prof.dll"
-		if(UNIX) lib = "libprof.so"
+		if(UNIX) lib = "./libprof.so"
 		else CRASH("unsupported platform")
 
 	var/init = LIBCALL(lib, "init")("block")
