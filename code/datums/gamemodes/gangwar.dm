@@ -1406,7 +1406,7 @@ proc/broadcast_to_all_gangs(var/message)
 			tag.dir = spraycan.tagging_direction
 			gang?.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
 		else
-			var/list/turf/turfs_ordered = new/list(length(S.graffititargets))
+			var/list/turf/turfs_ordered = new/list(length(spraycan.graffititargets))
 			var/spraydirection = dir_to_angle(spraycan.tagging_direction)
 			var/vec = angle_to_vector(spraydirection)
 			var/min_distance = 1000
