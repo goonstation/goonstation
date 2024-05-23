@@ -972,8 +972,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /* -------------------- Wrestling Belt -------------------- */
 
 TYPEINFO(/obj/item/storage/belt/wrestling)
-	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
-
+	mats = list(/datum/manufacturing_requirement/metal/dense = 5,
+				/datum/manufacturing_requirement/dense/super = 10,
+				/datum/manufacturing_requirement/fabric = 5)
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."

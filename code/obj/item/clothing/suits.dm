@@ -1574,8 +1574,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		item_state = "syndie_specialist-heavy"
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
-	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list(/datum/manufacturing_requirement/metal/superdense = 20,
+				/datum/manufacturing_requirement/uqil = 10,
+				/datum/manufacturing_requirement/conductive/high = 10,
+				/datum/manufacturing_requirement/energy/high = 10)
 /obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."

@@ -1,6 +1,6 @@
 TYPEINFO(/obj/item/device/borg_linker)
-	mats = list("CRY-1", "CON-2")
-
+	mats = list(/datum/manufacturing_requirement/crystal = 1,
+				/datum/manufacturing_requirement/conductive/high = 1)
 /obj/item/device/borg_linker
 	name = "cyborg law linker"
 	icon_state = "cyborg_linker"

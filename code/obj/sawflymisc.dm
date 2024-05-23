@@ -12,8 +12,9 @@
 
 // -------------------grenades-------------
 TYPEINFO(/obj/item/old_grenade/sawfly)
-	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
-
+	mats = list(/datum/manufacturing_requirement/metal/dense = 7,
+				/datum/manufacturing_requirement/conductive = 7,
+				/datum/manufacturing_requirement/energy = 5)
 /obj/item/old_grenade/sawfly
 
 	name = "Compact sawfly"

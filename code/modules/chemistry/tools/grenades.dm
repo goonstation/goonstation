@@ -250,8 +250,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 // If it's not, the foam resp. smoke reaction occurs prematurely without carrying the target reagents with them.
 
 TYPEINFO(/obj/item/chem_grenade/custom)
-	mats = list("MET-2" = 4, "POW-1" = 2)
-
+	mats = list(/datum/manufacturing_requirement/metal/dense = 4,
+				/datum/manufacturing_requirement/energy = 2)
 /obj/item/chem_grenade/custom
 	name = "disassembled chemical grenade"
 	icon_state = "grenade-chem1"

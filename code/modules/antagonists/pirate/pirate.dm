@@ -194,8 +194,10 @@ TYPEINFO(/obj/gold_bee)
 	access_type = list(POD_ACCESS_PIRATE)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
-	mats = list("MET-1" = 5, "POW-1"=5, "CON-2" = 5, "telecrystal" = 30)
-
+	mats = list(/datum/manufacturing_requirement/metal = 5,
+				/datum/manufacturing_requirement/energy = 5,
+				/datum/manufacturing_requirement/conductive/high = 5,
+				/datum/manufacturing_requirement/telecrystal = 30)
 /obj/item/pirate_hand_tele
 	name = "makeshift teleporter"
 	icon = 'icons/obj/items/device.dmi'
