@@ -28,7 +28,6 @@
 
 	New(loc, var/datum/figure_info/newInfo)
 		..()
-		message_admins(json_encode(figure_patreon_online))
 		if (istype(newInfo))
 			src.info = newInfo
 		else if (!istype(src.info))
@@ -36,18 +35,25 @@
 
 			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
+			var/list/figure_patreon_online_nouser = figure_patreon_online
+
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
 					if (initial(fig.ckey) == potential_donator_ckey)
 						donator_figtype = fig
+						figure_patreon_online_nouser -= fig
 						src.patreon_prob *= 2	// x2 chance of getting patreon figure
+
 			if (prob(src.patreon_prob))
-				if (donator_figtype && prob(30)) // 30% additional chance of donators getting their fig
-					randomInfo = donator_figtype
-				else if (prob(30) && figure_patreon_online)  // If someone doesn't get their own fig,
-					randomInfo = pick(figure_patreon_online) // then 30% chance it's someone's in the server
-				else
-					randomInfo = pick(figure_patreon_rarity)
+					if (1 to 20)
+						randomInfo = donator_figtype
+					if (20 to 40)
+						if (figure_patreon_online_nouser.len)
+							randomInfo = pick(figure_patreon_online_nouser)
+					if (40 to 100)
+						randomInfo = pick(figure_patreon_rarity)
+				if (!randomInfo) randomInfo = pick(figure_patreon_rarity)
+
 			else if (prob(src.rare_prob))
 				randomInfo = pick(figure_high_rarity)
 			else
@@ -152,7 +158,6 @@
 			return ..()
 
 proc/add_to_donator_list(var/potential_donator_ckey)
-	message_admins("Chosen game mode: DEBUG.")
 	for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
 		if (initial(fig.ckey) == potential_donator_ckey)
 			figure_patreon_online += fig
