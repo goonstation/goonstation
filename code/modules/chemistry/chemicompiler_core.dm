@@ -220,9 +220,9 @@
 	. = list()
 	.["inputValue"] = output
 	.["loadTimestamp"] = loadTimestamp
-	.["sx"] = sx
-	.["tx"] = tx
-	.["ax"] = ax
+	.["sx"] = sx || 0
+	.["tx"] = tx || 0
+	.["ax"] = ax || 0
 
 	.["buttons"] = new/list(6)
 	for(var/i = 1, i <= 6, i++)
