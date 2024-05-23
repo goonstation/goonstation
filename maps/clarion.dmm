@@ -22452,9 +22452,8 @@
 	})
 "iEy" = (
 /obj/pool/perspective,
-/obj/pool/perspective{
-	dir = 8;
-	tag = "icon-pool (WEST)"
+/obj/pool/perspective/innercorners{
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
