@@ -1060,6 +1060,8 @@ var/list/removed_jobs = list(
 		message["hash"] << null
 		if(hash == sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]"))
 			savefile_load(usr.client, 1, message)
+			src.traitPreferences.traitDataDirty = TRUE
+			src.update_preview_icon()
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
