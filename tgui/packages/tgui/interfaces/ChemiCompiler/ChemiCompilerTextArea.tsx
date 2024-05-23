@@ -16,9 +16,7 @@ export const ChemiCompilerTextArea = (_props, context) => {
     <TextArea
       value={inputValue}
       onInput={(_event, value) => { act('updateInputValue', { value }); }}
-      grow
       height="100%"
-      width="100%"
       // The load button would break if we pressed it between the input's act and the next refresh.
       // This ensures a refresh after every load button click
       key={loadTimestamp}

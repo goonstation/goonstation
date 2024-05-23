@@ -19,7 +19,7 @@ export const ChemiCompilerMemory = (_props, context) => {
       tx: <em>{ax}</em>
       <Stack wrap>
         {buttons.map((button, index) => (
-          <Stack.Item key={index} style={{ border: "1px solid white", "border-radius": "0.2rem" }} p={1} m={1}>
+          <Stack.Item key={index} style={{ border: "1px solid #88bfff", "border-radius": "0.2rem" }} p={1} m={1}>
             M{index+1}<br />
             <Button
               onClick={() => act('save', { index })}

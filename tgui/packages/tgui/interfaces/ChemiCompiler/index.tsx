@@ -11,7 +11,7 @@ import { ChemiCompilerReservoirs } from './ChemiCompilerReservoirs';
 import { ChemiCompilerMemory } from './ChemiCompilerMemory';
 import { Stack } from '../../components';
 
-export const ChemiCompiler = (_props, context) => {
+export const ChemiCompiler = (_props, _context) => {
   return (
     <Window width={600} height={475}>
       <Window.Content>
