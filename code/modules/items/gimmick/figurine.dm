@@ -45,6 +45,7 @@
 						src.patreon_prob *= 2	// x2 chance of getting patreon figure
 
 			if (prob(src.patreon_prob))
+				switch (rand(1,100))
 					if (1 to 20)
 						randomInfo = donator_figtype
 					if (20 to 40)
