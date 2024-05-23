@@ -1,18 +1,7 @@
-proc/get_nice_mat_name_for_manufacturers(mat)
-	if(mat in material_category_names)
-		return material_category_names[mat]
-	else
-		var/datum/material/nice_mat = getMaterial(mat)
-		if (istype(nice_mat))
-			return capitalize(nice_mat.getName())
-		return capitalize(mat) //if all else fails (probably a category instead of a material)
-
-ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture
 	var/name = null                // Name of the schematic
-	var/list/item_paths = null   // Materials required (generate from `mats` if null)
+	var/list/item_requirements = null   // Materials required to Amount required (generate from `mats` if null)
 	var/list/item_names = list()   // Player-read name of each material
-	var/list/item_amounts = list() // How many of each material is needed
 	var/list/item_outputs = list() // What the schematic outputs
 	var/randomise_output = 0
 	// 0 - will create each item in the list once per loop (see manufacturer.dm Line 755)
@@ -26,37 +15,39 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	New()
 		..()
-		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
+		if(isnull(item_requirements) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
 			var/item_type = item_outputs[1]
 			src.use_generated_costs(item_type)
 
-		if(isnull(item_paths))
-			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
+		if(isnull(item_requirements))
+			item_requirements = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!length(src.item_names))
-			for (var/path in src.item_paths)
-				src.item_names += get_nice_mat_name_for_manufacturers(path)
+			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
+				src.item_names += R.name
 		if (!sanity_check_exemption)
 			src.sanity_check()
 
 	proc/use_generated_costs(obj/item_type)
 		var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
 		if(istype(typeinfo) && islist(typeinfo.mats))
-			item_paths = list()
+			item_requirements = list()
 			for(var/mat in typeinfo.mats)
-				item_paths += mat
 				var/amt = typeinfo.mats[mat]
 				if(isnull(amt))
 					amt = 1
-				item_amounts += amt
+				item_requirements[mat] = amt
 
 	proc/sanity_check()
-		if (length(item_paths) != length(item_amounts)\
-		    || length(item_paths) != length(item_names)\
-			|| length(item_names) != length(item_amounts))
-			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
+		for (var/requirement in src.item_requirements)
+			if (isnull(src.item_requirements[requirement]))
+				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement list not properly configured")
+				qdel(src)
+				return
+		if (length(src.item_requirements) != length(src.item_names))
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement list not properly configured")
 			qdel(src)
 			return
-		if (!item_outputs.len)
+		if (!src.item_outputs.len)
 			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
 			qdel(src)
 			return
@@ -83,7 +74,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	New()
 		. = ..()
 		if(src.generate_costs)
-			src.item_amounts = list()
+			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
