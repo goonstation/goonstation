@@ -537,9 +537,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
+	var/pierces_armor = FALSE
+
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
+
+		if (src.pierces_armor)
+			src.setProperty("piercing", 80)
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
 	. = ..()
@@ -579,6 +584,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
+	pierces_armor = TRUE
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
@@ -589,6 +595,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
+	pierces_armor = FALSE
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
