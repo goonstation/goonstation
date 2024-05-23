@@ -2438,7 +2438,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			else
 				sleep(rand(4,6) DECI SECONDS)
 			turf = get_step(master, direction)
-			var/obj/itemspecialeffect/cleave_effect
 			if (alternate)
 				cleave_effect = new/obj/itemspecialeffect/cleave_flipped
 			else

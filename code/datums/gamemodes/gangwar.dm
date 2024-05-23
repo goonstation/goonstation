@@ -1216,7 +1216,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon_state = "spraycan"
 	var/turf/target_turf
 	var/area/target_area
-	var/obj/item/spray_paint_gang/S
+	var/obj/item/spray_paint_gang/spraycan
 	/// the mob spraying this tag
 	var/mob/M
 	/// the gang we're spraying for
@@ -1224,10 +1224,10 @@ proc/broadcast_to_all_gangs(var/message)
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
 
-	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/S)
+	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can)
 		src.target_turf = target_turf
 		src.target_area = get_area(target_turf)
-		src.S = S
+		src.spraycan = can
 		..()
 
 	onStart()
@@ -1272,7 +1272,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onInterrupt(var/flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
-		if (S)
+		if (spraycan)
 			spraycan.in_use = FALSE
 		..()
 
@@ -1362,7 +1362,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onInterrupt(flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
-		if (S)
+		if (spraycan)
 			spraycan.in_use = FALSE
 			spraycan.clear_targets()
 		..()
@@ -1406,7 +1406,7 @@ proc/broadcast_to_all_gangs(var/message)
 			tag.dir = spraycan.tagging_direction
 			gang?.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
 		else
-			var/list/turf/turfs_ordered = list()
+			var/list/turf/turfs_ordered = new/list(length(S.graffititargets))
 			var/spraydirection = dir_to_angle(spraycan.tagging_direction)
 			var/vec = angle_to_vector(spraydirection)
 			var/min_distance = 1000
@@ -1924,11 +1924,11 @@ proc/broadcast_to_all_gangs(var/message)
 
 		//cash score
 		if (istype(item, /obj/item/currency/spacecash))
-			var/obj/item/currency/spacecash/S = item
+			var/obj/item/currency/spacecash/cash = item
 
-			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, spraycanamount))
+			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, cash.amount))
 
-			if (spraycan.hasStatus("freshly_laundered"))
+			if (cash.hasStatus("freshly_laundered"))
 				superlaunder_stacks += round(cash_to_take/(GANG_LAUNDER_RATE*1.5))
 
 			if (cash_to_take == 0)
@@ -1936,13 +1936,13 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 			if (stored_cash == 0)
 				boutput(user, SPAN_ALERT("The [src] boots up and starts laundering the money. This will take some time, so defend it!"))
-			if (cash_to_take < spraycan.amount)
+			if (cash_to_take < cash.amount)
 				stored_cash += cash_to_take
-				spraycan.amount -= cash_to_take
+				cash.amount -= cash_to_take
 				boutput(user, SPAN_ALERT("<b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b>"))
-				spraycan.UpdateStackAppearance()
+				cash.UpdateStackAppearance()
 				return
-			stored_cash += spraycan.amount
+			stored_cash += cash.amount
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
@@ -2111,8 +2111,8 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/cash_amount()
 		var/number = 0
 
-		for(var/obj/item/currency/spacecash/S in contents)
-			number += spraycan.amount
+		for(var/obj/item/currency/spacecash/cash in contents)
+			number += cash.amount
 
 		return round(number)
 
@@ -2140,19 +2140,19 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 
 		if(istype(W,/obj/item/satchel))
-			var/obj/item/satchel/S = W
+			var/obj/item/satchel/satchel = W
 			var/hadcannabis = 0
 
-			for(var/obj/item/plant/herb/cannabis/C in spraycan.contents)
-				insert_item(C,user)
-				spraycan.UpdateIcon()
-				spraycan.tooltip_rebuild = 1
+			for(var/obj/item/plant/herb/cannabis/herb in satchel.contents)
+				insert_item(herb,user)
+				satchel.UpdateIcon()
+				satchel.tooltip_rebuild = 1
 				hadcannabis = 1
 
 			if(hadcannabis)
-				boutput(user, SPAN_NOTICE("You empty the cannabis from [S] into the [src]."))
+				boutput(user, SPAN_NOTICE("You empty the cannabis from [satchel] into the [src]."))
 			else
-				boutput(user, SPAN_NOTICE("[S] doesn't contain any cannabis."))
+				boutput(user, SPAN_NOTICE("[satchel] doesn't contain any cannabis."))
 			return
 
 		user.lastattacked = src
