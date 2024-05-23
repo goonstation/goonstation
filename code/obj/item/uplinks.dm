@@ -1360,6 +1360,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				// convert deciseconds to seconds
 				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
 				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+			else if (spell.icon && spell.icon_state)
+				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
 			spellbook_contents[spell.eqtype] += list(list(
 				cooldown = cooldown_contents,
 				cost = spell.cost,
@@ -1401,6 +1403,9 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	var/assoc_spell = null
 	var/vr_allowed = 1
 	var/obj/item/assoc_item = null
+	/// backup icon in case spell has no associated spell ability
+	var/icon = 'icons/mob/spell_buttons.dmi'
+	var/icon_state = "fixme"
 
 	proc/SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
@@ -1433,6 +1438,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	eqtype = "Enchantment"
 	vr_allowed = 0
 	desc = "Soulguard is basically a one-time do-over that teleports you back to the wizard shuttle and restores your life in the event that you die. However, the enchantment doesn't trigger if your body has been gibbed or otherwise destroyed. Also note that you will respawn completely naked."
+	icon_state = "soulguard"
 
 	SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		. = ..()
