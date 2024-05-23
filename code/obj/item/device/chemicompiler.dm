@@ -29,7 +29,23 @@
 		processing_items -= src
 
 	attack_self(mob/user as mob)
-		executor.panel()
+		ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemiCompiler", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = executor.get_ui_data()
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+
+		return executor.execute_ui_act(action, params)
 
 	proc/topicPermissionCheck(action)
 		if(src.loc != usr)

@@ -6,8 +6,8 @@
  */
 
 export interface ChemiCompilerData {
-  reservoirs: Array<boolean>;
-  buttons: Array<any>;
+  reservoirs: Array<string>;
+  buttons: Array<string>;
   inputValue: string;
   loadTimestamp: number;
   sx: string;

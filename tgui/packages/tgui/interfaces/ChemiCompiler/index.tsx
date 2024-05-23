@@ -55,11 +55,9 @@ export const ChemiCompiler = (_props, context) => {
             </Section>
 
             <Section title="Memory">
-              <em>
-                SX: {sx} -
-                AX: {tx} -
-                TX: {ax}
-              </em>
+              SX: <em>{sx}</em> -
+              AX: <em>{tx}</em> -
+              TX: <em>{ax}</em>
               <Stack wrap>
                 {buttons.map((button, index) => (
                   <Stack.Item key={index} style={{ border: "1px solid white", "border-radius": "0.2rem" }} p={1} m={1}>
