@@ -1319,6 +1319,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	throw_range = 20
 	m_amt = 100
 	var/vr = FALSE
+	/// The name of the spellbook's wizard for display purposes
+	var/wizard_name = null
 #ifdef BONUS_POINTS
 	uses = 9999
 #endif
@@ -1340,14 +1342,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			ui.open()
 
 	ui_data(mob/user)
-		. = list()
-		.["spell_slots"] = src.uses
+		. = list(
+			"spell_slots" = src.uses
+		)
 
 	ui_static_data(mob/user)
-		. = list()
-		.["owner_name"] = user.real_name
-		.["vr"] = src.vr
-
 		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell as anything in src.spells)
 			var/cooldown_contents = null
@@ -1370,12 +1369,18 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				spell_img = spell_icon,
 				vr_allowed = spell.vr_allowed,
 			))
-		.["spellbook_contents"] = spellbook_contents
+		. = list(
+			"owner_name" = src.wizard_name,
+			"spellbook_contents" = spellbook_contents,
+			"vr" = src.vr
+		)
 
 	attack_self(mob/user)
 		if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
 			boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
 			return
+		// update regardless, in case the wizard read their spellbook before setting their name
+		src.wizard_name = user.real_name
 		ui_interact(user)
 
 	ui_act(action, list/params)
