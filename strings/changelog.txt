@@ -1,6 +1,10 @@
 
 (t)wed may 22 24
 (u)FlameArrow57
+(p)18903
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(+)Added unique ghost sprites for each mutantrace when you die. If you want hair, be sure to select the Bald trait!
+(u)FlameArrow57
 (p)18965
 (e)⚖🔄🧛📦|C-Balance, C-Rework, A-Gamemodes, A-Game-Objects
 (+)Thermite breaching charges now create a dark red chemical fire and are a bit more dangerous
