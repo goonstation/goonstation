@@ -237,10 +237,10 @@ this is already used where it needs to be used, you can probably ignore it.
 				SPAN_ALERT("<b>You start bleeding!</b>"))
 			else if (H.bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")
+			else if (H.bleeding > 3 && old_bleeding < 3)
+				H.show_text("<b>That nicked an artery! Get medical attention ASAP!</b>", "red")
 			else if (H.bleeding > 3)
-				H.show_text("<b>That nicked an artery!</b>", "red")
-			else if (H.bleeding > 4)//9)
-				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
+				H.show_text("<b>You're seriously bleeding out!</b>", "red")
 
 		//BLOOD_DEBUG("[H] rolls bleeding increase, bleeding is now [H.bleeding]</b>")
 	else
