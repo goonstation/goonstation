@@ -66,7 +66,7 @@
 			if(loc_storage.storage.max_wclass < src.w_class)
 				var/turf/T = get_turf(src)
 				src.set_loc(T)
-				src.visible_message(SPAN_ALERT("[src] is too full to fit into [loc_storage] and tubmles onto [T]."))
+				src.visible_message(SPAN_ALERT("[src] is too full to fit into [loc_storage] and tumbles onto [T]."))
 
 	get_desc(dist, mob/user)
 		. = ..()
