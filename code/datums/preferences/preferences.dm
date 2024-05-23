@@ -384,6 +384,13 @@ var/list/removed_jobs = list(
 					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
 					return TRUE
 
+			if ("profile-file-export")
+				src.profile_export()
+
+			if ("profile-file-import")
+				src.profile_import()
+				return TRUE
+
 			if ("update-profileName")
 				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
