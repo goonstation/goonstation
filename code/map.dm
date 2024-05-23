@@ -1091,7 +1091,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
-	goonhub_map = "https://i.imgur.com/COYgNvN.jpg"
+	goonhub_map = "https://goonhub.com/maps/ozymandias"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
