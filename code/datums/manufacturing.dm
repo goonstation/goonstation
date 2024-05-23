@@ -1399,10 +1399,10 @@
 
 /datum/manufacture/full_cyborg_standard
 	name = "Standard Cyborg Parts"
-	item_requirements = list(/datum/manufacturing_requirement/metal/dense = ROBOT_CHEST_COST+ROBOT_HEAD_COST+ROBOT_LIMB_COST*4)*10)
+	item_requirements = list(/datum/manufacturing_requirement/metal/dense = (ROBOT_CHEST_COST+ROBOT_HEAD_COST+ROBOT_LIMB_COST*4)*10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard,/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/right/standard,/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
+						/obj/item/parts/robot_parts/arm/right/standard,/obj/item/parts/robot_parts/arm/left/standard,
+						/obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
@@ -1410,7 +1410,7 @@
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
-	item_requirements = list(/datum/manufacturing_requirement/metal/dense = ROBOT_CHEST_COST+ROBOT_HEAD_COST+ROBOT_LIMB_COST*4)*ROBOT_LIGHT_COST_MOD*10)
+	item_requirements = list(/datum/manufacturing_requirement/metal/dense = (ROBOT_CHEST_COST+ROBOT_HEAD_COST+ROBOT_LIMB_COST*4)*ROBOT_LIGHT_COST_MOD*10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light,/obj/item/parts/robot_parts/head/light,
 /obj/item/parts/robot_parts/arm/right/light,/obj/item/parts/robot_parts/arm/left/light,
 /obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
