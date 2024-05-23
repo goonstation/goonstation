@@ -21408,19 +21408,12 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "hTx" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = null
 	},
-/obj/deployable_turret/riot/active{
-	dir = 1
+/turf/simulated/floor/redblack{
+	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "hUj" = (
 /obj/shrub{
@@ -23897,13 +23890,20 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "jMf" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir";
-	tag = "icon-lattice-dir (SOUTHEAST)"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
 	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
+/obj/deployable_turret/riot/active{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "jMO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/left,
@@ -24688,9 +24688,18 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/machinery/alarm{
 	pixel_y = 23
+	},
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
+	pixel_x = -1;
+	pixel_y = 2;
+	rand_pos = 0
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
@@ -39527,7 +39536,6 @@
 	dir = 1;
 	pixel_y = -28
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
@@ -41008,15 +41016,11 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "wPp" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/redblack{
+	dir = 4
 	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "wQr" = (
 /obj/machinery/manufacturer/general,
 /obj/cable{
@@ -85282,7 +85286,7 @@ csQ
 csQ
 csQ
 csQ
-bIO
+uPa
 bIO
 bIO
 bFo
@@ -85580,11 +85584,11 @@ bgz
 pop
 iyl
 uDF
+hTx
 qLR
 txc
 oxR
 uPa
-wPp
 bIO
 bIO
 bFo
@@ -85883,10 +85887,10 @@ rtM
 biM
 biM
 biM
-hTx
+biM
+jMf
 ozI
 uPa
-bIO
 bIO
 bIO
 bFo
@@ -86185,10 +86189,10 @@ kwA
 glL
 glL
 glL
+glL
 pzC
 hjZ
 uPa
-bIO
 bIO
 bIO
 bFo
@@ -86487,10 +86491,10 @@ bHH
 kcn
 jOO
 cUY
+wPp
 rTC
 hjZ
 uPa
-bIO
 bIO
 bIO
 bFo
@@ -86790,9 +86794,9 @@ sPv
 sPv
 sPv
 sPv
+sPv
 htj
 uPa
-bIO
 bIO
 bIO
 bFo
@@ -87094,7 +87098,7 @@ uPa
 uPa
 uPa
 uPa
-jMf
+uPa
 bXM
 bXM
 mUF
