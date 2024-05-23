@@ -42,6 +42,7 @@
 			src.unlocked = check_access(ID, 1)
 			boutput(user, SPAN_NOTICE("You insert [W]."))
 			update_status()
+			tgui_process.update_uis(src)
 			return
 		..()
 
@@ -162,11 +163,12 @@
 		return L.get_messages(message)
 
 	proc/announce_arrival(var/mob/living/person)
+		var/background_trait = person.traitHolder.getTraitWithCategory("background")
 		if (!src.announces_arrivals)
 			return 1
 		if (!src.arrivalalert)
 			return 1
-		if ((person.traitHolder.hasTrait("stowaway")) || (person.traitHolder.hasTrait("pilot")) || (person.traitHolder.hasTrait("sleepy")))
+		if (background_trait)
 			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)

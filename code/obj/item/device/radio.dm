@@ -68,7 +68,7 @@ var/list/headset_channel_lookup
 		world.log << "[src] ([src.type]) has a frequency of [src.frequency], sanitizing."
 		src.frequency = sanitize_frequency(src.frequency)
 
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "main", frequency)
 
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -97,7 +97,7 @@ var/list/headset_channel_lookup
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
 				if (!src.secure_connections["[sayToken]"])
-					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -115,7 +115,7 @@ var/list/headset_channel_lookup
 	if (oldConnection)
 		qdel(oldConnection)
 
-	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFrequency]", newFrequency)
+	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "f[newFrequency]", newFrequency)
 	src.secure_frequencies["[frequencyToken]"] = newFrequency
 	return
 
@@ -648,9 +648,9 @@ var/list/headset_channel_lookup
 		bubbleOverride = global.living_speech_bubble
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
-			UpdateOverlays(bubbleOverride, "speech_bubble")
+			AddOverlays(bubbleOverride, "speech_bubble")
 			SPAWN(1.5 SECONDS)
-				UpdateOverlays(null, "speech_bubble")
+				ClearSpecificOverlays("speech_bubble")
 
 /obj/item/device/radio/examine(mob/user)
 	. = ..()
@@ -735,16 +735,15 @@ TYPEINFO(/obj/item/radiojammer)
 	proc/add_portal(obj/portal)
 		LAZYLISTADD(portals_pointed_at_us, portal)
 		if(length(portals_pointed_at_us) == 1)
-			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
-			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
+			src.AddOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
+			src.AddOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
 				plane=PLANE_SELFILLUM, blend_mode=BLEND_ADD, alpha=100), "portal_indicator_light")
 
 	proc/remove_portal(obj/portal)
 		if(portal in portals_pointed_at_us)
 			LAZYLISTREMOVE(portals_pointed_at_us, portal)
 			if(!length(portals_pointed_at_us))
-				src.UpdateOverlays(null, "portal_indicator")
-				src.UpdateOverlays(null, "portal_indicator_light")
+				src.ClearSpecificOverlays("portal_indicator", "portal_indicator_light")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))

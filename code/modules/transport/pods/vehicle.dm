@@ -172,6 +172,11 @@
 			src.keyed++
 			src.add_fingerprint(user)
 			return
+
+		if (istype(W, /obj/item/tank/plasma))
+			src.open_parts_panel(user)
+			return
+
 		..()
 
 		attack_particle(user,src)
@@ -1931,7 +1936,7 @@
 		..()
 		name = "mining minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
-		Install(new /obj/item/shipcomponent/secondary_system/cargo(src))
+		Install(new /obj/item/shipcomponent/secondary_system/orescoop(src))
 
 /obj/machinery/vehicle/tank/minisub/civilian
 	body_type = "minisub"

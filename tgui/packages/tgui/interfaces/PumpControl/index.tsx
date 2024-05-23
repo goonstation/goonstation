@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Section, Slider, Stack } from '../../components';
+import { Button, Section, Slider, Stack } from '../../components';
 import { Window } from '../../layouts';
 
 // Responsible for providing information and settings for a pump.
@@ -27,40 +27,44 @@ const PumpSettings = (props:any, context:any) => {
   };
 
   return (
-    <Box>
-      <Stack py={1}>
+    <Stack.Item>
+      <Stack vertical>
         <Stack.Item>
-          {pump.tag}
+          <Stack>
+            <Stack.Item>
+              {pump.tag}
+            </Stack.Item>
+            <Stack.Item textAlign="right" grow={1}>
+              {pump.alive === -1 ? "Establishing Connection..." : "Connected"}
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
-        {
-          <Stack.Item textAlign={"right"} grow={1}>
-            {pump.alive === -1 ? "Establishing Connection..." : "Connected"}
-          </Stack.Item>
-        }
-      </Stack>
-      <Stack>
         <Stack.Item>
-          <Button
-            width={4}
-            icon="power-off"
-            color={(power === 'on') ? "green" : "red"}
-            onClick={() => togglePump()}>
-            {(power === 'on') ? 'On' : 'Off'}
-          </Button>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Slider
-            disabled={pump.alive !== 1}
-            value={target_output}
-            minValue={pump.min_output}
-            maxValue={pump.max_output}
-            unit={"kPa"}
-            stepPixelSize={0.05}
-            onChange={(_e: any, value: number) => setPressure(value)}
-          />
+          <Stack>
+            <Stack.Item>
+              <Button
+                width={4}
+                icon="power-off"
+                color={(power === 'on') ? "green" : "red"}
+                onClick={() => togglePump()}>
+                {(power === 'on') ? 'On' : 'Off'}
+              </Button>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Slider
+                disabled={pump.alive !== 1}
+                value={target_output}
+                minValue={pump.min_output}
+                maxValue={pump.max_output}
+                unit="kPa"
+                stepPixelSize={0.05}
+                onChange={(_e: any, value: number) => setPressure(value)}
+              />
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       </Stack>
-    </Box>
+    </Stack.Item>
   );
 };
 
@@ -78,21 +82,15 @@ const PumpArea = (props:any, context:any) => {
   // All pumps were dead
   if (pump_controls.length === 0) {
     pump_controls.push(
-      <p>No pumps found for {area}, please refresh and check connection.</p>
+      <Stack.Item>No pumps found for {area}, please refresh and check connection.</Stack.Item>
     );
   }
 
   return (
-    <Section
-      title={area}
-      textAlign="left"
-      mb={1}
-      style={{
-        "padding": "5px",
-        "padding-top": "1px",
-      }}
-    >
-      {pump_controls}
+    <Section title={area}>
+      <Stack vertical>
+        {pump_controls}
+      </Stack>
     </Section>
   );
 };
@@ -110,17 +108,16 @@ export const PumpControl = (props, context) => {
     <Window
       title="Pump Control Computer"
       width={400}
-      height={500}>
+      height={550}>
       <Window.Content scrollable>
-        <Button
-          style={{
-            "margin-bottom": "10px",
-          }}
-          icon="wifi"
-          onClick={() => refresh()}
-        >
-          Requery Pumps
-        </Button>
+        <Section>
+          <Button
+            icon="wifi"
+            onClick={() => refresh()}
+          >
+            Requery Pumps
+          </Button>
+        </Section>
         {areas.map((area) => (<PumpArea area={area} key={area} />))}
       </Window.Content>
     </Window>

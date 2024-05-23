@@ -241,7 +241,7 @@ TYPEINFO(/obj/item/device/gps)
 		serial = rand(4201,7999)
 		START_TRACKING
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	get_desc(dist, mob/user)
 		. = "<br>Its serial code is [src.serial]-[identifier]."

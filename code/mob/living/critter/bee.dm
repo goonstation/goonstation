@@ -615,7 +615,7 @@
 		if (holder.owner.reagents.total_volume < holder.owner.reagents.maximum_volume / 2)
 			boutput(holder.owner, "You aren't full enough to make honey yet! Eat more!")
 			return TRUE
-
+		. = ..()
 		var/mob/living/critter/small_animal/bee/us = holder.owner
 		if (istype(us))
 			us.puke_honey()

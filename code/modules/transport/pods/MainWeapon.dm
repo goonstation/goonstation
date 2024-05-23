@@ -61,6 +61,9 @@
 			return
 		return
 
+/obj/item/shipcomponent/mainweapon/buildTooltipContent()
+	. = ..() + src.current_projectile?.get_tooltip_content()
+	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
 	if(ON_COOLDOWN(src, "fire", firerate))

@@ -2,11 +2,12 @@
 /datum/preMapLoad
 	New()
 		global.current_state = GAME_STATE_PRE_MAP_LOAD
-#ifdef TRACY_PROFILER_HOOK
-		prof_init()
-#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
+#endif
+#ifdef TRACY_PROFILER_HOOK
+		world.log << "Enabling the Tracy Profiler Hook."
+		prof_init()
 #endif
 		enable_auxtools_debugger()
 
@@ -226,9 +227,9 @@
 	var/lib
 	switch(world.system_type)
 		if(MS_WINDOWS) lib = "prof.dll"
-		if(UNIX) lib = "libprof.so"
+		if(UNIX) lib = "./libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = LIBCALL(lib, "init")()
+	var/init = LIBCALL(lib, "init")("block")
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif

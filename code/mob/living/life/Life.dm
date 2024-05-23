@@ -355,10 +355,11 @@
 				D.foreign_limb_effect()
 
 	if (!isdead(src)) // Marq was here, breaking everything.
-		src.limbs.l_arm?.on_life(parent)
-		src.limbs.r_arm?.on_life(parent)
-		src.limbs.l_leg?.on_life(parent)
-		src.limbs.r_leg?.on_life(parent)
+		if(src.limbs)
+			src.limbs.l_arm?.on_life(parent)
+			src.limbs.r_arm?.on_life(parent)
+			src.limbs.l_leg?.on_life(parent)
+			src.limbs.r_leg?.on_life(parent)
 
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
@@ -532,11 +533,11 @@
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, SPAN_ALERT("[stinkString()]"))
+				boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, SPAN_ALERT("[stinkString()]"))
+					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]

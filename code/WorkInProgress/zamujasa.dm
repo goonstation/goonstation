@@ -1347,13 +1347,13 @@
 		get_value()
 			var/lagc = "#ffffff"
 			switch (world.tick_lag)
-				if (0 to 0.4)
+				if (0   to 0.2)
 					lagc = "#00ff00"
-				if (0.4 to 0.6)
+				if (0.2 to 0.4)
 					lagc = "#ffff00"
-				if (0.6 to 0.8)
+				if (0.4 to 0.6)
 					lagc = "#ff8800"
-				if (0.8 to INFINITY)
+				if (0.6 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
@@ -1365,6 +1365,8 @@
 			New()
 				..()
 				src.maptext_y += 35	// appear *over* the fake server.
+				src.maptext_prefix = "<span class='c pixel sh' style='font-size: 6px;'>"
+				src.maptext_suffix = "</span>"
 
 				the_server = new(get_turf(src))
 				the_server.name = "server rack"
@@ -1382,19 +1384,19 @@
 			get_value()
 				if (src.the_server)
 					switch (world.tick_lag)
-						if (0 to 0.4)
+						if (0   to 0.2)
 							the_server.icon_state = "server0"
-						if (0.4 to 0.6)
+						if (0.2 to 0.4)
 							the_server.icon_state = "server"
-						if (0.6 to 0.8)
+						if (0.4 to 0.6)
 							the_server.icon_state = "server2"
-						if (0.8 to INFINITY)
+						if (0.6 to INFINITY)
 							the_server.icon_state = "serverf"
 
-					if (world.tick_lag > 1.0 && !src.is_smoking)
-						// starts smoking over 1.0, not at it
+					if (world.tick_lag >= 0.8 && !src.is_smoking)
+						// starts smoking
 						src.update_smoking(1)
-					else if (world.tick_lag <= 1.0 && src.is_smoking)
+					else if (world.tick_lag <= 0.8 && src.is_smoking)
 						src.update_smoking(0)
 
 				. = ..()
@@ -1799,6 +1801,7 @@ Other Goonstation servers:[serverList]</span>"})
 	var/tmp/obj/maptext_junk/price_text = null
 	var/tmp/obj/maptext_junk/quantity_text = null
 	var/tmp/list/purchaser_ckeys = list()
+	var/admin_ckey = null
 
 	get_desc()
 		if (set_up)
@@ -1810,7 +1813,7 @@ Other Goonstation servers:[serverList]</span>"})
 				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
 				return
 
-			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
+			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type", "Cancel")
 			if (copyOrType == "Copies")
 				// copy
 				alert(user, "Click on the thing you want to sell copies of.")
@@ -1824,7 +1827,7 @@ Other Goonstation servers:[serverList]</span>"})
 				src.appearance = thing.appearance
 				src.thing_name = thing.name
 
-			else
+			else if (copyOrType == "Type")
 
 				alert(user, "Click on something for the store to copy the appearance of (the actual item you're selling comes after this; you might have to varedit the store later)")
 				var/atom/thing = pick_ref(user)
@@ -1840,9 +1843,14 @@ Other Goonstation servers:[serverList]</span>"})
 				copy_mode = FALSE
 				src.type_to_spawn = objpath
 
+			else
+				// cancel
+				return
+
 			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
 			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
 			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
+			src.admin_ckey = (alert(user, "Attach it to your adminness? This will tell you when people buy it (and also give you the money they spend).", "FEED ME SPACEBUX", "Yes", "No") == "Yes") ? user.ckey : null
 
 			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
 			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
@@ -1891,6 +1899,14 @@ Other Goonstation servers:[serverList]</span>"})
 					return FALSE
 
 				user.client.add_to_bank(-src.price)
+				if (src.admin_ckey)
+					try
+						var/client/A = getClientFromCkey(src.admin_ckey)
+						A.add_to_bank(src.price)
+						boutput(A, SPAN_ALERT("[usr.real_name] bought \a [src.name] for [src.price]."))
+
+					catch
+						// do nothing. if they're offline we dont care.
 
 			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
 

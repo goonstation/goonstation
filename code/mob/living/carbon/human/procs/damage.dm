@@ -102,7 +102,7 @@
 				if (istype(P.proj_data, /datum/projectile/laser))
 					var/wound_num = rand(0, 4)
 					var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "laser_wound-[wound_num]", layer = MOB_EFFECT_LAYER)
-					src.UpdateOverlays(I, "laser_wound-[wound_num]")
+					src.AddOverlays(I, "laser_wound-[wound_num]")
 
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
@@ -452,21 +452,19 @@
 	if (type == "single")
 		for (var/i in 0 to 2)
 			if (src.GetOverlayImage("slash_wound-[i]"))
-				src.UpdateOverlays(null, "slash_wound-[i]")
+				src.ClearSpecificOverlays( "slash_wound-[i]")
 				break
 	else if (type == "all")
-		for (var/i in 0 to 2)
-			src.UpdateOverlays(null, "slash_wound-[i]")
+		src.ClearSpecificOverlays("slash_wound-0", "slash_wound-1", "slash_wound-2")
 
 /mob/living/carbon/human/proc/heal_laser_wound(type)
 	if (type == "single")
 		for (var/i in 0 to 4)
 			if (src.GetOverlayImage("laser_wound-[i]"))
-				src.UpdateOverlays(null, "laser_wound-[i]")
+				src.ClearSpecificOverlays("laser_wound-[i]")
 				break
 	else if (type == "all")
-		for (var/i in 0 to 4)
-			src.UpdateOverlays(null, "laser_wound-[i]")
+		src.ClearSpecificOverlays("laser_wound-0", "laser_wound-1", "laser_wound-2", "laser_wound-3", "laser_wound-4")
 
 /mob/living/carbon/human/take_eye_damage(var/amount, var/tempblind = 0, var/side)
 	if (!src || !ishuman(src) || (!isnum(amount) || amount == 0))

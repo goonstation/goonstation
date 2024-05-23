@@ -50,11 +50,12 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		"oil" = 10,
 		"fuel" = 8,
 		"pyrosium" = 7,
+		"diesel" = 7,
 		"ethanol" = 6,
 		"hydrogen" = 6,
 		"plasma" = 6,
 		"phosphorus" = 5,
-		"magnesium" = 5
+		"magnesium" = 5,
 	) // kilowattage (returns about half for a default setup)
 
 	// bit wierd but a bunch of type checks feels bad

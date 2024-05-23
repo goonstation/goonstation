@@ -194,6 +194,19 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/hand_labeler,
 	/obj/item/cargotele)
 
+/obj/item/storage/wall/bar
+	name = "bartending supplies"
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,
+	/obj/item/storage/box/cocktail_doodads,
+	/obj/item/storage/box/cocktail_umbrellas,
+	/obj/item/storage/box/glassbox,
+	/obj/item/hand_labeler,
+	/obj/item/storage/firstaid/toxin,
+	/obj/item/device/reagentscanner,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/dropper/mechanical,
+	/obj/item/storage/box/ic_cones = 2)
+
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
 	icon = 'icons/obj/large_storage.dmi'

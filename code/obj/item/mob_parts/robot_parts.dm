@@ -564,6 +564,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		return
 
+	can_arm_attach()
+		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
+
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
@@ -909,7 +912,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		T?.hotspot_expose(700, 50)
+		if(src.holder && (src.holder.loc == T))
+			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
@@ -925,7 +929,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		if(src.holder.loc == T)
+		if(src.holder && (src.holder.loc == T))
 			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame

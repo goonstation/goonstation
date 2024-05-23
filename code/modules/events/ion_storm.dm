@@ -285,8 +285,8 @@ ABSTRACT_TYPE(/datum/ion_category)
 		alarm.alarm()
 
 /datum/ion_category/pda_alerts
-	amount_min = 3
-	amount_max = 6
+	amount_min = 1
+	amount_max = 2
 
 	valid_instance(var/obj/item/device/pda2/pda)
 		return ..() && pda.owner

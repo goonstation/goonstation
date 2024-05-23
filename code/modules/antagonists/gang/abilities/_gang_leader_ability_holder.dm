@@ -142,6 +142,8 @@
 	name = "Show locker location"
 	desc = "Points you towards the location of your locker."
 	icon_state = "find_locker"
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 
 	cast()
 		if (!holder)
@@ -162,6 +164,7 @@
 			return TRUE
 		if (M.GetComponent(/datum/component/tracker_hud/gang))
 			return TRUE
+		. = ..()
 		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(locker))
 		SPAWN(3 SECONDS)
 			var/datum/component/tracker_hud/gang/component = M.GetComponent(/datum/component/tracker_hud/gang)
@@ -173,6 +176,8 @@
 	name = "Toggle gang territory overlay"
 	desc = "Toggles the colored gang overlay."
 	icon_state = "toggle_overlays"
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
 	var/datum/mind/ownerMind
 
 	proc/remove_self(mind)
@@ -191,7 +196,7 @@
 		if (!M.mind && !M.get_gang())
 			boutput(M, SPAN_ALERT("Gang territory? What? You'd need to be in a gang to get it."))
 			return TRUE
-
+		. = ..()
 		ownerMind = M.mind
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/togglingOn = FALSE
@@ -220,21 +225,21 @@
 	can_cast_anytime = 1
 
 	proc/check_valid(mob/M, area/targetArea)
-		if(!istype(targetArea, /area/station))
+		var/turf/T = get_turf(M)
+		if(!istype(targetArea, /area/station) || get_z(T) != Z_LEVEL_STATION)
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return FALSE
 
 		if(M.stat)
 			boutput(M, SPAN_ALERT("Not when you're incapacitated."))
 			return FALSE
-
+		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
 		//stop people setting up a locker they can't place
-		var/turf/T = get_turf(M)
-		if (length(T.controlling_gangs))
+		if (T.controlling_gangs && !T.controlling_gangs[antag_role.gang])
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return FALSE
-		for (var/obj/ganglocker/locker in range(1.5*GANG_TAG_INFLUENCE, T))
-			if(!IN_EUCLIDEAN_RANGE(locker, T, 1.5*GANG_TAG_INFLUENCE)) continue
+		for (var/obj/ganglocker/locker in range(2*GANG_TAG_INFLUENCE, T))
+			if(locker.gang == antag_role.gang || !IN_EUCLIDEAN_RANGE(locker, T, 2*GANG_TAG_INFLUENCE)) continue
 			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
 			return FALSE
 
@@ -242,22 +247,12 @@
 			boutput(M, SPAN_ALERT("You can't place your base here!"))
 			return FALSE
 		return TRUE
-
-	cast()
-		var/mob/M = holder.owner
-		var/area/area = get_area(M)
-
-		if (!check_valid(M, area))
-			return
+	proc/confirm(mob/M)
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
-		if (!antag_role)
-			return
-
 		antag_role.gang.select_gang_uniform()
+		return TRUE
 
-		if (!check_valid(M, area))
-			return
-
+	proc/after_cast(mob/M, area/area, datum/antagonist/gang_leader/antag_role)
 		for(var/datum/mind/member in antag_role.gang.members)
 			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
 
@@ -266,5 +261,67 @@
 		antag_role.gang.locker = locker
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
+		var/datum/targetable/gang/set_gang_base/migrate/newAbil = M.abilityHolder.addAbility(/datum/targetable/gang/set_gang_base/migrate)
+		newAbil.doCooldown()
 
+	cast()
+		var/mob/M = holder.owner
+		var/area/area = get_area(M)
+
+		if (!check_valid(M, area))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
+		if (!antag_role)
+			return
+
+		. = ..()
+		if (!src.confirm(M))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!check_valid(M, area))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+		after_cast(M,area,antag_role)
 		return
+
+
+
+	migrate
+		name = "Migrate Gang Base"
+		desc = "Moves your locker to another area inside your gang's territory."
+		icon_state = "reset-gang-base"
+		targeted = 0
+		can_cast_anytime = 1
+		cooldown = 15 MINUTES
+
+		check_valid(mob/M, area/targetArea)
+
+			var/datum/gang/userGang = M.get_gang()
+			//stop people setting up a locker they can't place
+			var/turf/T = get_turf(M)
+			if (!T.controlling_gangs || !T.controlling_gangs[userGang])
+				boutput(M, SPAN_ALERT("You can only move your base to your turf!"))
+				return FALSE
+			. = ..()
+			return .
+
+		confirm(mob/M)
+			var/result = tgui_alert(M, "Are you sure you want to move your locker here?", "Move Gang Base", list("Yes", "No"), 30 SECONDS)
+			return (result == "Yes")
+
+
+		after_cast(mob/M, area/area, datum/antagonist/gang_leader/antag_role)
+			for(var/datum/mind/member in antag_role.gang.members)
+				boutput(member.current, SPAN_ALERT("Your gang's base has been moved to \the [area]!"))
+
+			var/obj/ganglocker/locker = antag_role.gang.locker
+			if (!locker) //just in case some Wicked Loser has managed to find out a locker-deleting exploit or something
+				locker = new /obj/ganglocker(get_turf(M))
+				locker.set_gang(antag_role.gang)
+				antag_role.gang.locker = locker
+			else
+				antag_role.gang.unclaim_tiles(locker.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+				locker.set_loc(get_turf(M))
+				antag_role.gang.claim_tiles(locker.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+
+
+			return CAST_ATTEMPT_SUCCESS
