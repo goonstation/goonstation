@@ -1085,7 +1085,6 @@ proc/broadcast_to_all_gangs(var/message)
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
-	var/mode = "graffiti"
 	var/list/turf/graffititargets = list()
 	var/list/image/targetoverlay = list()
 	var/charges = GANG_VANDALISM_GRAFFITI_MAX
@@ -1333,10 +1332,6 @@ proc/broadcast_to_all_gangs(var/message)
 			if (BOUNDS_DIST(owner, sprayedturf) > 0)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-
-		if(!M || spraycan.mode != "graffiti")
-			interrupt(INTERRUPT_ALWAYS)
-			return
 
 		spraycan.in_use = TRUE
 		next_spray += rand(10,15) DECI SECONDS

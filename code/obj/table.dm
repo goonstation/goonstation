@@ -1170,6 +1170,7 @@ TYPEINFO(/obj/table/glass)
 					var/mob/living/dude = thr.thrown_by
 					var/datum/gang/gang = dude.get_gang()
 					gang?.do_vandalism(GANG_VANDALISM_TABLING, src.loc)
+				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
 				if (ishuman(M))
 					random_brute_damage(M, rand(30,50),1)

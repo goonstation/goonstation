@@ -1930,8 +1930,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					tag.alpha = 200
 					tag.color = graffiti.color
 					tag.appearance_flags = KEEP_TOGETHER
-					A.setStatus("graffiti", 8 SECONDS)
-					var/datum/statusEffect/graffiti/status = A.hasStatus("graffiti")
+					A.setStatus("graffiti_blind", 8 SECONDS)
+					var/datum/statusEffect/graffiti/status = A.hasStatus("graffiti_blind")
 					A.UpdateOverlays(tag,"graffitisplat[length(status.tag_images)+1]")
 					status.tag_images += tag
 
