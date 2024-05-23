@@ -6,14 +6,18 @@
  */
 
 import { Window } from '../../layouts';
+import { useBackend } from '../../backend';
+import { ChemiCompilerData } from './type';
 import { ChemiCompilerTextArea } from './ChemiCompilerTextArea';
 import { ChemiCompilerReservoirs } from './ChemiCompilerReservoirs';
 import { ChemiCompilerMemory } from './ChemiCompilerMemory';
 import { Stack } from '../../components';
 
-export const ChemiCompiler = (_props, _context) => {
+export const ChemiCompiler = (_props, context) => {
+  const { data } = useBackend<ChemiCompilerData>(context);
+  const { theme } = data;
   return (
-    <Window width={600} height={500}>
+    <Window width={600} height={500} theme={theme}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>

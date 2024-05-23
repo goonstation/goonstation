@@ -18,4 +18,5 @@ export interface ChemiCompilerData {
   sx: string;
   tx: string;
   ax: string;
+  theme?: string;
 }

@@ -39,6 +39,7 @@
 
 	ui_data(mob/user)
 		. = executor.get_ui_data()
+		.["theme"] = "syndicate"
 
 	ui_act(action, list/params)
 		. = ..()
