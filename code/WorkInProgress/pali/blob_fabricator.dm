@@ -1,66 +1,65 @@
 
 /datum/manufacture/mechanics/blob
 	name = "blob"
-	item_paths = list("ORG|RUB")
-	item_amounts = list(3)
-	time = 10 SECONDS
+	item_requirements = list(/datum/manufacturing_requirement/organic_or_rubber = 3)
 	create = 1
-	frame_path = /obj/blob
+	time = 10 SECONDS
 	apply_material = 1
+	frame_path = /obj/blob
 
 /datum/manufacture/mechanics/blob/base
-		name = "blob"
-		frame_path = /obj/blob
-		item_amounts = list(1)
+	name = "blob"
+	item_requirements = list(/datum/manufacturing_requirement/organic_or_rubber = 1)
+	frame_path = /obj/blob
 
 /datum/manufacture/mechanics/blob/nucleus
-		name = "nucleus blob"
-		time = 1 MINUTE
-		item_amounts = list(30)
-		frame_path = /obj/blob/nucleus
+	name = "nucleus blob"
+	item_requirements = list(/datum/manufacturing_requirement/organic_or_rubber = 30)
+	time = 1 MINUTE
+	frame_path = /obj/blob/nucleus
 
 /datum/manufacture/mechanics/blob/launcher
-		name = "slime launcher blob"
-		frame_path = /obj/blob/launcher
+	name = "slime launcher blob"
+	frame_path = /obj/blob/launcher
 
 /datum/manufacture/mechanics/blob/mitochondria
-		name = "mitochondria blob"
-		frame_path = /obj/blob/mitochondria
+	name = "mitochondria blob"
+	frame_path = /obj/blob/mitochondria
 
 /datum/manufacture/mechanics/blob/reflective
-		name = "reflective blob"
-		frame_path = /obj/blob/reflective
+	name = "reflective blob"
+	frame_path = /obj/blob/reflective
 
 /datum/manufacture/mechanics/blob/ectothermid
-		name = "ectothermid blob"
-		frame_path = /obj/blob/ectothermid
+	name = "ectothermid blob"
+	frame_path = /obj/blob/ectothermid
 
 /datum/manufacture/mechanics/blob/plasmaphyll
-		name = "plasmaphyll blob"
-		frame_path = /obj/blob/plasmaphyll
+	name = "plasmaphyll blob"
+	frame_path = /obj/blob/plasmaphyll
 
 /datum/manufacture/mechanics/blob/lipid
-		name = "lipid blob"
-		frame_path = /obj/blob/lipid
+	name = "lipid blob"
+	frame_path = /obj/blob/lipid
 
 /datum/manufacture/mechanics/blob/ribosome
-		name = "ribosome blob"
-		frame_path = /obj/blob/ribosome
+	name = "ribosome blob"
+	frame_path = /obj/blob/ribosome
 
 /datum/manufacture/mechanics/blob/wall
-		name = "thick blob"
-		frame_path = /obj/blob/wall
+	name = "thick blob"
+	frame_path = /obj/blob/wall
 
 /datum/manufacture/mechanics/blob/firewall
-		name = "fire-resistant blob"
-		frame_path = /obj/blob/firewall
+	name = "fire-resistant blob"
+	frame_path = /obj/blob/firewall
 
 /datum/manufacture/mechanics/blob_overmind
 	name = "blob overmind"
-	item_paths = list("blob", "ectoplasm")
-	item_amounts = list(10, 10)
-	time = 1 MINUTE
+	item_requirements = list(/datum/manufacturing_requirement/blob = 10,
+							 /datum/manufacturing_requirement/ectoplasm = 10)
 	create = 1
+	time = 1 MINUTE
 	frame_path = /mob/living/intangible/blob_overmind/ai/start_here
 
 /obj/machinery/manufacturer/blob
