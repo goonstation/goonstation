@@ -662,10 +662,17 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
+	if(!newbody.w_uniform)
+		// you get some random clothes if you don't have any
+		newbody.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/color)), SLOT_W_UNIFORM)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
-		newbody.wear_id:assignment = bar_role_name
-		newbody.wear_id:update_name()
+	else
+		// if you dont have an id, you get one anyway
+		newbody.spawnId(new /datum/job/command/captain)
+
+	newbody.wear_id:assignment = bar_role_name
+	newbody.wear_id:update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)
