@@ -192,6 +192,7 @@
 			showMessage("[E.holder] clicks.") // Relay kicking off
 		else
 			ip-- //repeat the heat command until it succeeds
+		tgui_process.update_uis(E.holder)
 
 
 /datum/chemicompiler_core/proc/statusChange(oldStatus, newStatus)
@@ -348,14 +349,20 @@
 					data[dp + 1] = sx
 				if("}")
 					sx = data[dp + 1]
+					var/datum/chemicompiler_executor/E = src.holder
+					tgui_process.update_uis(E.holder)
 				if("(")
 					data[dp + 1] = tx
 				if(")")
 					tx = data[dp + 1]
+					var/datum/chemicompiler_executor/E = src.holder
+					tgui_process.update_uis(E.holder)
 				if("^")
 					data[dp + 1] = ax
 				if("'")
 					ax = data[dp + 1]
+					var/datum/chemicompiler_executor/E = src.holder
+					tgui_process.update_uis(E.holder)
 				if("$") //heat
 					loopUsed = 30
 					var/heatTo = (273 - tx) + ax
@@ -391,6 +398,8 @@
 				output += "[textBuffer]<br>"
 				textBuffer = ""
 				updatePanel()
+				var/datum/chemicompiler_executor/E = src.holder
+				tgui_process.update_uis(E.holder)
 
 			/*if(exec % 100 == 0) //NO RECURSION. NO.
 				SPAWN(0)
@@ -844,6 +853,8 @@
 			RS.clear_reagents()
 			showMessage("Something drips out the side of [src.holder].")
 
+	tgui_process.update_uis(src.holder)
+
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
 		qdel(src)
@@ -898,6 +909,7 @@
 		beepCode(3, 1) // No reservoir loaded in specified position
 		return 0
 	var/obj/item/reagent_containers/holder = reservoirs[rid]
+	tgui_process.update_uis(src.holder)
 	return holder.reagents.total_volume
 
 /datum/chemicompiler_executor/proc/get_ui_data()
