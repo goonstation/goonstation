@@ -1957,12 +1957,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 					qdel(P)
 				return
 
-		// No same material in storage, create/add the one we have and update the patterns index accordingly
+		// No same material in storage, create/add the one we have and update the requirements index accordingly
 		if (!isnull(mat_piece))
 			if (isnull(mat_piece.material))
 				return
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
+			material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(mat_piece.material)
 			return
 
 		if (isnull(mat_datum))
@@ -1974,7 +1974,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		P.amount = max(0, amount)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
+		material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(P.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
