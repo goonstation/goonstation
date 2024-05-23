@@ -21408,11 +21408,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "hTx" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
-	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/redblack{
-	dir = 8
+	dir = 4
 	},
 /area/station/ai_monitored/armory)
 "hUj" = (
@@ -23902,7 +23900,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "jMO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -33022,57 +33021,9 @@
 	},
 /area/station/medical/head)
 "qLR" = (
-/obj/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = 8
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = null
 	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -15;
-	pixel_y = 8
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -13
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -13;
-	pixel_y = 12
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 9
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 1
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 11;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 12;
-	pixel_y = 8
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/hos,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -41016,9 +40967,58 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "wPp" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/rack,
+/obj/item/clothing/mask/gas{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -15;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -13
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 9
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 1
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 11;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 12;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_x = -24;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
 /turf/simulated/floor/redblack{
-	dir = 4
+	dir = 8
 	},
 /area/station/ai_monitored/armory)
 "wQr" = (
@@ -85584,8 +85584,8 @@ bgz
 pop
 iyl
 uDF
-hTx
 qLR
+wPp
 txc
 oxR
 uPa
@@ -86491,7 +86491,7 @@ bHH
 kcn
 jOO
 cUY
-wPp
+hTx
 rTC
 hjZ
 uPa
