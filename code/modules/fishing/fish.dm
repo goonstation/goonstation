@@ -285,6 +285,57 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 
+/obj/item/reagent_containers/food/fish/pufferfish
+	name = "pufferfish"
+	desc = "Adorable. Quite poisonous."
+	icon_state = "pufferfish"
+	inhand_color = "#87d1db"
+	category = FISH_CATEGORY_AQUARIUM
+	rarity = ITEM_RARITY_RARE
+
+	New()
+		global.processing_items += src
+		return ..()
+
+	disposing()
+		global.processing_items -= src
+		. = ..()
+
+	process() // the part where the puffed up fish hurts you
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (src.spikes_protected(H))
+				return
+			boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
+			random_brute_damage(H, 3)
+			H.setStatusMin("stunned", 2 SECONDS)
+			take_bleeding_damage(H, null, 3, DAMAGE_STAB)
+
+	make_reagents()
+		..()
+		src.reagents.add_reagent("tetrodotoxin",30) // REALLY don't eat raw pufferfish
+
+	onSlice(var/mob/user) // Don't eat pufferfish the staff assistant made
+		if (user.traitHolder?.hasTrait("training_chef"))
+			src.reagents.remove_reagent("tetrodotoxin", src.reagents.get_reagent_amount("tetrodotoxin"))
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> carefully separates the toxic parts out of the [src]."))
+			new/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver(src.loc)
+		else if (prob(25)) // Don't try doing it if you don't know what you're doing
+			boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
+			user.reagents.add_reagent("tetrodotoxin", 20)
+
+	proc/spikes_protected(mob/living/carbon/human/H)
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				return TRUE
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				return TRUE
+		if(H.gloves)
+			return TRUE
+		if(H.traitHolder?.hasTrait("training_chef"))
+			return TRUE
+
 /obj/item/reagent_containers/food/fish/flounder
 	name = "flounder"
 	desc = "A flatfish found at the bottom of oceans around the world. It's got it's eyes on you!"

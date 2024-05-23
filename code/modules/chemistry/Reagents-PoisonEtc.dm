@@ -1872,10 +1872,10 @@ datum
 				..()
 				return
 
-		harmful/batrachotoxin
-			name = "batrachotoxin"
-			id = "batrachotoxin"
-			description = "An extremely dangerous cardiotoxin. Most commonly obtained from poison dart frogs."
+		harmful/tetrodotoxin
+			name = "tetrodotoxin"
+			id = "tetrodotoxin"
+			description = "An extremely dangerous neurotoxin which paralyses the heart, most commonly found in incorrectly prepared pufferfish."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 180
