@@ -1618,6 +1618,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	name = "a fucked up robot"
 	butcherable = BUTCHER_NOT_ALLOWED
 	can_bleed = FALSE
+	can_throw = TRUE
 	metabolizes = FALSE
 	var/emp_vuln = 1
 	blood_id = null
