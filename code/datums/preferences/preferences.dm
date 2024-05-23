@@ -1028,6 +1028,39 @@ var/list/removed_jobs = list(
 				src.update_preview_icon()
 				return TRUE
 
+#ifndef SECRETS_ENABLED
+#define CHAR_EXPORT_SECRET "input_validation_is_hell_sorry"
+#endif
+
+	proc/profile_export()
+		var/savefile/message = src.savefile_save(usr.ckey, 1, 1)
+		var/fname
+		message["1_profile_name"] >> fname
+		fname = "[usr.ckey]_[fname].sav"
+		if(fexists(fname))
+			fdel(fname)
+		var/F = file(fname)
+		message["hash"] << null
+		var/hash = sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]")
+		message["hash"] << hash
+		message.ExportText("/", F)
+		usr << ftp(F, fname)
+		SPAWN(15 SECONDS)
+			var/tries = 0
+			while(fexists(fname) && tries++ < 10)
+				fdel(fname)
+				sleep(30 SECONDS)
+
+	proc/profile_import()
+		var/F = input(usr) as file
+		var/savefile/message = new()
+		message.ImportText("/", file2text(F))
+		var/hash
+		message["hash"] >> hash
+		message["hash"] << null
+		if(hash == sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]"))
+			savefile_load(usr.client, 1, message)
+
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
