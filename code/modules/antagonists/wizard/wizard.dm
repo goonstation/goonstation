@@ -140,9 +140,10 @@
 						"name" = "[purchased_spell.name]",
 					)
 				)
-			else // If there's no spell ability (i.e. for Soulguard) add only the name
+			else // If there's no assoc_spell (i.e. for Soulguard) the icon state is stored in a different spot
 				purchases += list(
 					list(
+						"iconBase64" = "[icon2base64(icon(initial(purchased_spell.icon), initial(purchased_spell.icon_state), frame = 1, dir = 0))]",
 						"name" = "[purchased_spell.name]"
 					)
 				)
