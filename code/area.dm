@@ -3374,10 +3374,6 @@ ABSTRACT_TYPE(/area/station/science)
 	name = "Spectral Studies Lab"
 	icon_state = "purple"
 
-/area/station/science/staff
-	name = "Research Staffroom"
-	icon_state = "purple"
-
 /area/station/science/construction
 	name = "Research Sector Construction Area"
 	icon_state = "yellow"
@@ -3513,6 +3509,8 @@ ABSTRACT_TYPE(/area/station/hangar)
 		requires_power = 1
 /area/station/hangar/starboard
 		name = "Submarine Bay (Starboard)"
+/area/station/hangar/north
+		name = "North Dock"
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
 		station_map_colour = MAPC_MINING

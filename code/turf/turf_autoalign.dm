@@ -423,7 +423,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/walp)
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 		/turf/simulated/wall/auto/reinforced/jen, /obj/strip_door, /turf/simulated/wall/auto/reinforced/walp
 	))
-/turf/simulated/wall/auto/walp
+/turf/simulated/wall/auto/reinforced/walp
 	icon = 'icons/turf/walls/walp/walp_base.dmi'
 	mod = "walp-R-"
 	light_mod = "wall-"
