@@ -439,7 +439,7 @@
 	else
 		O.ClearSpecificOverlays("glasses")
 
-	if (src.mutantrace && !src.hair_override && !src.traitHolder?.hasTrait("bald"))
+	if (src.mutantrace && !istype(src.mutantrace, /datum/mutantrace/human) && !src.hair_override && !src.traitHolder?.hasTrait("bald"))
 		return O
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
