@@ -367,12 +367,15 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-load")
+				var/profilenum_old = src.profile_number
 				var/ret = src.cloudsave_load(client, params["name"])
+				src.profile_number = profilenum_old
 				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
 					src.traitPreferences.traitDataDirty = TRUE
+					src.profile_modified = TRUE
 					src.update_preview_icon()
 					return TRUE
 
@@ -383,6 +386,13 @@ var/list/removed_jobs = list(
 				else
 					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
 					return TRUE
+
+			if ("profile-file-export")
+				src.profile_export()
+
+			if ("profile-file-import")
+				src.profile_import()
+				return TRUE
 
 			if ("update-profileName")
 				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
@@ -1059,9 +1069,12 @@ var/list/removed_jobs = list(
 		message["hash"] >> hash
 		message["hash"] << null
 		if(hash == sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]"))
+			var/profilenum_old = profile_number
 			savefile_load(usr.client, 1, message)
+			src.profile_modified = TRUE
+			src.profile_number = profilenum_old
 			src.traitPreferences.traitDataDirty = TRUE
-			src.update_preview_icon()
+
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
