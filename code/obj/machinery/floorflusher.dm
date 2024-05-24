@@ -243,7 +243,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
 					nameToCheck = H.face_visible() ? H.real_name : H.name
 				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
-				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
+				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*") || (R["criminal"] == "*Detain*")))
 					R["criminal"] = "Released"
 
 	// timed process

@@ -751,9 +751,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	#define PRISONER_MODE_PAROLED 2
 	#define PRISONER_MODE_RELEASED 3
 	#define PRISONER_MODE_INCARCERATED 4
+	#define PRISONER_MODE_SUSPECT 5
 
 	///List of record settings
-	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED, PRISONER_MODE_SUSPECT)
 	///The current setting
 	var/mode = PRISONER_MODE_NONE
 	/// The sechud flag that will be applied when scanning someone
@@ -780,6 +781,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			mode_string = "Released"
 		else if (src.mode == PRISONER_MODE_INCARCERATED)
 			mode_string = "Incarcerated"
+		else if (src.mode == PRISONER_MODE_SUSPECT)
+			mode_string = "Suspect"
 
 		. += "<br>Arrest mode: [SPAN_NOTICE("[mode_string]")]"
 		if (sechud_flag != initial(src.sechud_flag))
@@ -849,6 +852,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 				if(PRISONER_MODE_INCARCERATED)
 					E["criminal"] = "Incarcerated"
+
+				if(PRISONER_MODE_SUSPECT)
+					E["criminal"] = "Suspect"
 			E["sec_flag"] = src.sechud_flag
 			return
 
@@ -867,6 +873,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 			if(PRISONER_MODE_INCARCERATED)
 				src.active2["criminal"] = "Incarcerated"
+
+			if(PRISONER_MODE_SUSPECT)
+				src.active2["criminal"] = "Suspect"
 
 		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
@@ -903,6 +912,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 				if(PRISONER_MODE_INCARCERATED)
 					boutput(user, SPAN_NOTICE("you switch the record mode to Incarcerated."))
+
+				if(PRISONER_MODE_SUSPECT)
+					boutput(user, SPAN_NOTICE("you switch the record mode to Suspect."))
 
 		add_fingerprint(user)
 		return
@@ -949,6 +961,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		name = "Released"
 		icon_state = "released"
 		mode = PRISONER_MODE_RELEASED
+	suspect
+		name = "Suspect"
+		icon_state = "suspect"
+		mode = PRISONER_MODE_SUSPECT
 	none
 		name = "None"
 		icon_state = "none"
@@ -958,6 +974,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 #undef PRISONER_MODE_PAROLED
 #undef PRISONER_MODE_RELEASED
 #undef PRISONER_MODE_INCARCERATED
+#undef PRISONER_MODE_SUSPECT
 
 /obj/item/device/ticket_writer
 	name = "security TicketWriter 2000"

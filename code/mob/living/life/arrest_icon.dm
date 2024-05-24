@@ -14,12 +14,12 @@
 			var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 			if(record)
 				var/criminal = record["criminal"]
-				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
+				if(criminal == "*Arrest*" || criminal == "*Detain*" || criminal == "Suspect" ||  criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
 					arrestState = criminal
 			else if(H.traitHolder.hasTrait("stowaway") && H.traitHolder.hasTrait("jailbird"))
 				arrestState = "*Arrest*"
 
-			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
+			if (arrestState != "*Arrest*") // Arrest overrides every other criminal state.
 				if (locate(/obj/item/implant/counterrev) in H.implant)
 					if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 						arrestState = "RevHead"
@@ -27,7 +27,7 @@
 						arrestState = "Loyal_Progress"
 					else
 						arrestState = "Loyal"
-				else
+				else if (arrestState != "*Detain*") //Revolution overrides Detain - Detain overrides contraband.
 					var/obj/item/card/id/myID = 0
 					//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
 					//this does mean that if an ID has no registered owner + carry permit enabled it will blink off as contraband. however i dont care!
