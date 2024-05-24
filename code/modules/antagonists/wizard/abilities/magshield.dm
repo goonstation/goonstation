@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 600
 	requires_robes = 1
+	defensive = TRUE
 	cooldown_staff = 1
 	voice_grim = 'sound/voice/wizard/MagicShieldGrim.ogg'
 	voice_fem = 'sound/voice/wizard/MagicShieldFem.ogg'

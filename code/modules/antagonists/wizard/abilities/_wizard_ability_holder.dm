@@ -164,6 +164,8 @@
 	var/requires_being_on_turf = FALSE
 	var/requires_robes = 0
 	var/offensive = 0
+	/// if the spell is a defensive category wizard spell
+	var/defensive = FALSE
 	var/cooldown_staff = 0
 	var/prepared_count = 0
 	var/casting_time = 0
@@ -192,10 +194,11 @@
 			qdel(object)
 		..()
 
-	doCooldown()
-		src.last_cast = world.time + calculate_cooldown()
-		SPAWN(calculate_cooldown() + 5)
-			holder.updateButtons()
+	doCooldown(custom_cd)
+		if (!custom_cd)
+			..(src.calculate_cooldown())
+		else
+			..(custom_cd)
 
 	//mbc : i don't see why the wizard needs a specialized tryCast() proc. someone fix it later for me!
 	tryCast(atom/target)
@@ -299,3 +302,8 @@
 
 		var/log_target = constructTarget(target,"combat")
 		logTheThing(LOG_COMBAT, holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")
+
+		if (src.defensive)
+			for(var/datum/targetable/spell/spell in (src.holder.abilities - src))
+				if (spell.defensive && ((spell.last_cast - world.time) / 10 < 5 SECONDS))
+					spell.doCooldown(5 SECONDS)

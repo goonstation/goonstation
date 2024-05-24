@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 10 SECONDS
 	requires_robes = 1
+	defensive = TRUE
 	requires_being_on_turf = TRUE
 	voice_grim = 'sound/voice/wizard/ForcewallGrim.ogg'
 	voice_fem = 'sound/voice/wizard/ForcewallFem.ogg'

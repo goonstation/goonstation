@@ -988,9 +988,9 @@
 		updateObject()
 			return
 
-		doCooldown()
+		doCooldown(custom_cd)
 			var/datum/abilityHolder/localholder = src.holder
-			src.last_cast = world.time + src.cooldown
+			src.last_cast = world.time + custom_cd || src.cooldown
 			if(!QDELETED(localholder))
 				localholder.updateButtons()
 
