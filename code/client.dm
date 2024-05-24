@@ -84,7 +84,7 @@
 	var/proc_logging = 0
 #endif
 
-	// authenticate = 0
+	authenticate = 0
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
@@ -709,6 +709,11 @@
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
+		var/ircmsg[] = new()
+		ircmsg["key"] =  src.key
+		ircmsg["name"] = src.ckey
+		ircmsg["msg"] = "Logged in as an Administrator"
+		ircbot.export_async("admin", ircmsg)
 		return 1
 
 	return 0
