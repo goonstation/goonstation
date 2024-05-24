@@ -537,6 +537,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 	New()
 		..()
@@ -580,9 +581,12 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
-/obj/item/dagger/syndicate/specialist //Infiltrator class knife
+	New()
+		..()
+		src.setProperty("piercing", 80)
+
+/obj/item/dagger/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
 	desc = "A light but robust combat knife that allows you to move faster in fights. Knocks down targets when thrown."
 	icon_state = "combat_knife"
@@ -605,6 +609,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
 	gang
 		name = "familiar fighting knife"
 		force = 17

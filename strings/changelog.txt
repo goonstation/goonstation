@@ -1,5 +1,31 @@
 
+(t)fri may 24 24
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
+(t)thu may 23 24
+(u)Tarmunora, Mordent
+(p)19120
+(e)💅📄|C-QoL, A-UI
+(*)Added import/export to character setup window to enable storing of additional character profiles in local storage.
+(u)aloe
+(p)18797
+(e)⚖📄💪|C-Balance, A-UI, A-Traits
+(*)You can now select as many traits as you like.
+(u)Glamurio (Ryou)
+(p)19109
+(e)🎨🏅|C-Sprites, A-Medal
+(+)Particularly pet-savvy people may find a new reward waiting for them.
 (t)wed may 22 24
+(u)TealSeer
+(p)19081
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Security's departmental score is now influenced by the fate of Monsieur Stirstir.
+(u)FlameArrow57
+(p)18903
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(+)Added unique ghost sprites for each mutantrace when you die. If you want hair, be sure to select the Bald trait!
 (u)FlameArrow57
 (p)18965
 (e)⚖🔄🧛📦|C-Balance, C-Rework, A-Gamemodes, A-Game-Objects

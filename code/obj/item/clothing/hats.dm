@@ -553,12 +553,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
     icon_state = "cheftall"
     item_state = "cheftall"
 
-/obj/item/clothing/head/policecap
-	name = "Police hat"
-	desc = "An old surplus-issue police hat."
-	icon_state = "mailcap"
-	item_state = "mailcap"
-
 /obj/item/clothing/head/plunger
 	name = "plunger"
 	desc = "get dat fukken clog"

@@ -91,7 +91,7 @@ export const TraitsTab = (_props, context) => {
             </Stack.Item>
             <Stack.Item grow basis={0}>
               <Section
-                title={`Selected (${selectedAmount}/${data.traitsMax})`}
+                title={`Selected (${selectedAmount}${data.traitsMax !== Infinity ? `/${data.traitsMax}` : ''})`}
                 fill
                 scrollable
                 buttons={<Button onClick={() => act('reset-traits')}>Reset traits</Button>}>

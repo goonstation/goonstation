@@ -542,7 +542,7 @@ proc/filter_carrier_pets(var/type)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (pounce && !pounce.disabled && pounce.cooldowncheck() && prob(50))
 			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE

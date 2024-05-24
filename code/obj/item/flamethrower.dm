@@ -462,8 +462,6 @@ A Flamethrower in various states of assembly
 			boutput(user, SPAN_ALERT("You need to be holding [src] to work on it!"))
 			return
 		var/obj/item/device/igniter/I = W
-		if (!( I.status ))
-			return
 		user.show_message(SPAN_NOTICE("You put the igniter in place, it still needs to be firmly attached."), 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
