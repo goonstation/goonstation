@@ -1,5 +1,9 @@
 
 (t)thu may 23 24
+(u)Tarmunora, Mordent
+(p)19120
+(e)💅📄|C-QoL, A-UI
+(*)Added import/export to character setup window to enable storing of additional character profiles in local storage.
 (u)aloe
 (p)18797
 (e)⚖📄💪|C-Balance, A-UI, A-Traits
