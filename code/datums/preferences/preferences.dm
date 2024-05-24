@@ -1073,6 +1073,8 @@ var/list/removed_jobs = list(
 			savefile_load(usr.client, 1, message)
 			src.profile_modified = TRUE
 			src.profile_number = profilenum_old
+			src.traitPreferences.traitDataDirty = TRUE
+
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
