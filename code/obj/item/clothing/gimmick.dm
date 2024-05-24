@@ -262,7 +262,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "headset" // lol
 
 /obj/item/clothing/under/gimmick/police
-	name = "police uniform"
+	name = "guard uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
 	item_state = "police"
