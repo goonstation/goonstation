@@ -326,8 +326,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 				src.reagents.trans_to(liver, src.reagents.total_volume)
 		else if (prob(25)) // Don't try doing it if you don't know what you're doing
 			boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
-			user.reagents.add_reagent("tetrodotoxin", 15)
-			src.reagents.remove_reagent("tetrodotoxin", 15)
+			src.reagents.trans_to(user, 20)
 
 	proc/spikes_protected(mob/living/carbon/human/H)
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0
