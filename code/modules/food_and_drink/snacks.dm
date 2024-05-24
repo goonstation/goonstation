@@ -2376,8 +2376,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if("filletslice-pufferfish")
 					nigiri.icon_state = "nigiri_pufferfish"
 					nigiri.desc = "A ball of sticky rice with a thin slice of pufferfish fillet ontop. Hopefully properly prepared."
-			// We don't need to be transfering fish oil to nigiri rolls
-			W.reagents.remove_reagent("fish_oil", W.reagents.get_reagent_amount("fish_oil"))
 			if (W.reagents?.total_volume > 0)
 				W.reagents.trans_to(nigiri, W.reagents.total_volume)
 			user.u_equip(W)

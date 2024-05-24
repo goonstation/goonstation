@@ -312,18 +312,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 			H.setStatusMin("stunned", 2 SECONDS)
 			take_bleeding_damage(H, null, 3, DAMAGE_STAB)
 
-	make_reagents() // No fish oil on this one, more space for poison
-		src.reagents.add_reagent("tetrodotoxin",50) // REALLY don't eat raw pufferfish
+	make_reagents()
+		..() //it still contains fish oil
+		src.reagents.add_reagent("tetrodotoxin",40) // REALLY don't eat raw pufferfish
 
 	onSlice(var/mob/user) // Don't eat pufferfish the staff assistant made
 		if (user.traitHolder?.hasTrait("training_chef"))
-			src.reagents.remove_reagent("tetrodotoxin", src.reagents.get_reagent_amount("tetrodotoxin"))
 			user.visible_message(SPAN_NOTICE("<b>[user]</b> carefully separates the toxic parts out of the [src]."))
-			new/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver(src.loc)
+
+			var/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver/liver =\
+			new /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver(src.loc)
+			if (src.reagents?.total_volume > 0)
+				src.reagents.trans_to(liver, src.reagents.total_volume)
 		else if (prob(25)) // Don't try doing it if you don't know what you're doing
 			boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
-			user.reagents.add_reagent("tetrodotoxin", 20)
-			src.reagents.remove_reagent("tetrodotoxin", 20)
+			user.reagents.add_reagent("tetrodotoxin", 15)
+			src.reagents.remove_reagent("tetrodotoxin", 15)
 
 	proc/spikes_protected(mob/living/carbon/human/H)
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0

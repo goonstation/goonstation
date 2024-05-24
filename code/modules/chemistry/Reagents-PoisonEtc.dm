@@ -1888,7 +1888,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				switch(counter+= (mult * progression_speed))
+				switch(src.counter+= (mult * src.progression_speed))
 					if (10 to 27) // Small signs of trouble
 						if (prob(15))
 							M.change_misstep_chance(15 * mult)
@@ -1909,7 +1909,7 @@ datum
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
 					if (47 to INFINITY) // Heart effects kick in
-						M.setStatusMin("slowness", 40 SECONDS)
+						M.setStatusMin("slowed", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
 						if(isliving(M))
