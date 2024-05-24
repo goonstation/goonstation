@@ -103,6 +103,13 @@ var/global/datum/game_servers/game_servers = new
 			return null
 		return pick_list[text_result]
 
+	proc/request_player_count(server_id)
+		var/datum/game_server/server = src.servers[server_id]
+		if (!server)
+			return FALSE
+		var/datum/cross_server_message/player_count_request/player_count_request_csm = get_singleton(/datum/cross_server_message/player_count_request)
+		return player_count_request_csm.send(server)
+
 /datum/game_server
 	var/id
 	var/name
@@ -112,6 +119,8 @@ var/global/datum/game_servers/game_servers = new
 	var/ghost_notif_target = TRUE
 	var/ip_port = null
 	var/waiting_for_ip_port_auth = null
+	/// last known player count
+	var/player_count
 
 	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
