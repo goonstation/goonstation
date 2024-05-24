@@ -1,7 +1,7 @@
 TYPEINFO(/obj/item/device/flash)
-	mats = list(/datum/manufacturing_requirement/metal = 3,
-				/datum/manufacturing_requirement/conductive = 5,
-				/datum/manufacturing_requirement/crystal = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal = 3,
+				/datum/manufacturing_requirement/match_property/conductive = 5,
+				/datum/manufacturing_requirement/match_property/crystal = 5)
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."

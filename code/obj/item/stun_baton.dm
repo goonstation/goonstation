@@ -5,8 +5,8 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 10,
-				/datum/manufacturing_requirement/conductive/high = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 10,
+				/datum/manufacturing_requirement/match_property/conductive/high = 10)
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
@@ -352,10 +352,10 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 10,
-				/datum/manufacturing_requirement/conductive/high = 10,
-				/datum/manufacturing_requirement/crystal/gemstone = 10,
-				/datum/manufacturing_requirement/gold = 1)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 10,
+				/datum/manufacturing_requirement/match_property/conductive/high = 10,
+				/datum/manufacturing_requirement/match_property/crystal/gemstone = 10,
+				/datum/manufacturing_requirement/match_material/gold = 1)
 /obj/item/baton/cane
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
@@ -403,9 +403,9 @@ TYPEINFO(/obj/item/baton/classic)
 
 
 TYPEINFO(/obj/item/baton/ntso)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 10,
-				/datum/manufacturing_requirement/conductive/high = 10,
-				/datum/manufacturing_requirement/energy = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 10,
+				/datum/manufacturing_requirement/match_property/conductive/high = 10,
+				/datum/manufacturing_requirement/match_property/energy = 5)
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."

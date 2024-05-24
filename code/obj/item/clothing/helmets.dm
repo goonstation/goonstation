@@ -686,9 +686,9 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
 TYPEINFO(/obj/item/clothing/head/helmet/camera)
-	mats = list(/datum/manufacturing_requirement/metal = 4,
-				/datum/manufacturing_requirement/crystal = 2,
-				/datum/manufacturing_requirement/conductive = 2)
+	mats = list(/datum/manufacturing_requirement/match_property/metal = 4,
+				/datum/manufacturing_requirement/match_property/crystal = 2,
+				/datum/manufacturing_requirement/match_property/conductive = 2)
 /obj/item/clothing/head/helmet/camera
 	name = "camera helmet"
 	desc = "A helmet with a built in camera."
@@ -1063,10 +1063,10 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 20,
-				/datum/manufacturing_requirement/uqil = 10,
-				/datum/manufacturing_requirement/conductive/high = 10,
-				/datum/manufacturing_requirement/energy/high = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 20,
+				/datum/manufacturing_requirement/match_material/uqill = 10,
+				/datum/manufacturing_requirement/match_property/conductive/high = 10,
+				/datum/manufacturing_requirement/match_property/energy/high = 10)
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."

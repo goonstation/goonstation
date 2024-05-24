@@ -895,8 +895,8 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list(/datum/manufacturing_requirement/bamboo = 3,
-				/datum/manufacturing_requirement/metal = 10)
+	mats = list(/datum/manufacturing_requirement/match_material/bamboo = 3,
+				/datum/manufacturing_requirement/match_property/metal = 10)
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
@@ -1108,8 +1108,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list(/datum/manufacturing_requirement/neutronium = 3,
-				/datum/manufacturing_requirement/metal = 10)
+	mats = list(/datum/manufacturing_requirement/match_material/neutronium = 3,
+				/datum/manufacturing_requirement/match_property/metal = 10)
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
 	color = list(0,0,1, 0,1,0, 1,0,0)

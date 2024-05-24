@@ -626,9 +626,9 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 #define INTERLINK_RANGE 100
 
 TYPEINFO(/obj/machinery/transception_pad)
-	mats = list(/datum/manufacturing_requirement/metal/dense = 5,
-				/datum/manufacturing_requirement/conductive/high = 2,
-				/datum/manufacturing_requirement/conductive = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 5,
+				/datum/manufacturing_requirement/match_property/conductive/high = 2,
+				/datum/manufacturing_requirement/match_property/conductive = 5)
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"

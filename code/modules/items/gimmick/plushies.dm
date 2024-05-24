@@ -1,8 +1,8 @@
 TYPEINFO(/obj/submachine/claw_machine)
-	mats = list(/datum/manufacturing_requirement/metal = 5,
-				/datum/manufacturing_requirement/conductive = 5,
-				/datum/manufacturing_requirement/crystal = 5,
-				/datum/manufacturing_requirement/fabric = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal = 5,
+				/datum/manufacturing_requirement/match_property/conductive = 5,
+				/datum/manufacturing_requirement/match_property/crystal = 5,
+				/datum/manufacturing_requirement/match_property/fabric = 5)
 /obj/submachine/claw_machine
 	name = "claw machine"
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"

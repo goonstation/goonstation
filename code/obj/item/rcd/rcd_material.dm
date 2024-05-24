@@ -16,9 +16,9 @@
 		return
 
 TYPEINFO(/obj/item/rcd/material/cardboard)
-	mats = list(/datum/manufacturing_requirement/crystal/dense = 10,
-				/datum/manufacturing_requirement/energy/high = 10,
-				/datum/manufacturing_requirement/cardboard = 30)
+	mats = list(/datum/manufacturing_requirement/match_property/crystal/dense = 10,
+				/datum/manufacturing_requirement/match_property/energy/high = 10,
+				/datum/manufacturing_requirement/match_material/cardboard = 30)
 /obj/item/rcd/material/cardboard
 	name = "cardboard rapid construction Device"
 	icon_state = "base_cardboard"

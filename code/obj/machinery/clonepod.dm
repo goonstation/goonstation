@@ -10,8 +10,8 @@
 #define MAX_FAILED_CLONE_TICKS 200 // vOv
 
 TYPEINFO(/obj/machinery/clonepod)
-	mats = list(/datum/manufacturing_requirement/metal = 35,
-				/datum/manufacturing_requirement/honey = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal = 35,
+				/datum/manufacturing_requirement/match_material/honey = 5)
 /obj/machinery/clonepod
 	anchored = ANCHORED
 	name = "cloning pod"

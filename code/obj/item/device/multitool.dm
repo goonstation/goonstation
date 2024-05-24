@@ -1,6 +1,6 @@
 TYPEINFO(/obj/item/device/multitool)
-	mats = list(/datum/manufacturing_requirement/crystal = 1,
-				/datum/manufacturing_requirement/conductive/high = 1)
+	mats = list(/datum/manufacturing_requirement/match_property/crystal = 1,
+				/datum/manufacturing_requirement/match_property/conductive/high = 1)
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."

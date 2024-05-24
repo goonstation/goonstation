@@ -691,10 +691,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		return
 
 TYPEINFO(/obj/item/old_grenade/oxygen)
-	mats = list(/datum/manufacturing_requirement/metal/dense = 2,
-				/datum/manufacturing_requirement/conductive = 2,
-				/datum/manufacturing_requirement/molitz = 10,
-				/datum/manufacturing_requirement/char = 1)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 2,
+				/datum/manufacturing_requirement/match_property/conductive = 2,
+				/datum/manufacturing_requirement/match_material/molitz = 10,
+				/datum/manufacturing_requirement/match_material/char = 1)
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."

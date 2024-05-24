@@ -3,11 +3,11 @@
 */
 
 TYPEINFO(/obj/item/rcd/construction)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 100,
-				/datum/manufacturing_requirement/crystal/dense = 50,
-				/datum/manufacturing_requirement/conductive/high = 50,
-				/datum/manufacturing_requirement/energy/extreme = 50,
-				/datum/manufacturing_requirement/starstone = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 100,
+				/datum/manufacturing_requirement/match_property/crystal/dense = 50,
+				/datum/manufacturing_requirement/match_property/conductive/high = 50,
+				/datum/manufacturing_requirement/match_property/energy/extreme = 50,
+				/datum/manufacturing_requirement/match_material/starstone = 10)
 /// Construction mode RCD variant
 /obj/item/rcd/construction
 	name = "rapid construction device deluxe"
@@ -156,10 +156,10 @@ TYPEINFO(/obj/item/rcd/construction)
 
 
 TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 20,
-				/datum/manufacturing_requirement/crystal/dense = 10,
-				/datum/manufacturing_requirement/conductive/high = 10,
-				/datum/manufacturing_requirement/energy/high = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 20,
+				/datum/manufacturing_requirement/match_property/crystal/dense = 10,
+				/datum/manufacturing_requirement/match_property/conductive/high = 10,
+				/datum/manufacturing_requirement/match_property/energy/high = 10)
 /// Chief Engineer RCD has fancy door functions and a mild discount, but no capacity increase
 /obj/item/rcd/construction/chiefEngineer
 	name = "rapid construction device custom"

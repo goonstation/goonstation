@@ -3,10 +3,10 @@
 
 ABSTRACT_TYPE(/obj/machinery/power/power_wheel)
 TYPEINFO(/obj/machinery/power/power_wheel)
-	mats = list(/datum/manufacturing_requirement/conductive = 5,
-				/datum/manufacturing_requirement/metal = 25,
-				/datum/manufacturing_requirement/insulated = 3,
-				/datum/manufacturing_requirement/energy/high = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/conductive = 5,
+				/datum/manufacturing_requirement/match_property/metal = 25,
+				/datum/manufacturing_requirement/match_property/insulated = 3,
+				/datum/manufacturing_requirement/match_property/energy/high = 10)
 /obj/machinery/power/power_wheel
 	name = "Kinetic Generator"
 	desc = "A large wheel used to generate power."

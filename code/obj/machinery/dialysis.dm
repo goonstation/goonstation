@@ -1,7 +1,7 @@
 TYPEINFO(/obj/machinery/dialysis)
-	mats = list(/datum/manufacturing_requirement/metal = 20,
-				/datum/manufacturing_requirement/crystal = 5,
-				/datum/manufacturing_requirement/conductive/high = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal = 20,
+				/datum/manufacturing_requirement/match_property/crystal = 5,
+				/datum/manufacturing_requirement/match_property/conductive/high = 5)
 /obj/machinery/dialysis
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."

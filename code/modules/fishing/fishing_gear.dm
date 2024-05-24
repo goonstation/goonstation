@@ -448,10 +448,10 @@ TYPEINFO(/obj/item/fish_portal)
 	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
-	mats = list(/datum/manufacturing_requirement/metal/superdense = 15,
-				/datum/manufacturing_requirement/wood = 5,
-				/datum/manufacturing_requirement/energy/high = 5,
-				/datum/manufacturing_requirement/conductive/high = 5)
+	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 15,
+				/datum/manufacturing_requirement/match_property/wood = 5,
+				/datum/manufacturing_requirement/match_property/energy/high = 5,
+				/datum/manufacturing_requirement/match_property/conductive/high = 5)
 /obj/item/syndie_fishing_rod
 	name = "\improper Glaucus fishing rod"
 	desc = "A high grade tactical fishing rod, completely impractical for reeling in bass."

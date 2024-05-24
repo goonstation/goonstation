@@ -1,61 +1,61 @@
 TYPEINFO(/obj/critter/gunbot/drone)
-	mats = list(/datum/manufacturing_requirement/energy = 5,
-				/datum/manufacturing_requirement/metal/dense = 12,
-				/datum/manufacturing_requirement/conductive/high = 12,
-				/datum/manufacturing_requirement/dense = 6)
+	mats = list(/datum/manufacturing_requirement/match_property/energy = 5,
+				/datum/manufacturing_requirement/match_property/metal/dense = 12,
+				/datum/manufacturing_requirement/match_property/conductive/high = 12,
+				/datum/manufacturing_requirement/match_property/dense = 6)
 TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
 	mats = null
 
 TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
-	mats = list(/datum/manufacturing_requirement/energy/high = 10,
-				/datum/manufacturing_requirement/metal/superdense = 12,
-				/datum/manufacturing_requirement/conductive/high = 12,
-				/datum/manufacturing_requirement/dense/super = 9)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 10,
+				/datum/manufacturing_requirement/match_property/metal/superdense = 12,
+				/datum/manufacturing_requirement/match_property/conductive/high = 12,
+				/datum/manufacturing_requirement/match_property/dense/super = 9)
 TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
-	mats = list(/datum/manufacturing_requirement/energy/extreme = 15,
-				/datum/manufacturing_requirement/metal/superdense = 17,
-				/datum/manufacturing_requirement/conductive/high = 13,
-				/datum/manufacturing_requirement/crystal/dense = 17,
-				/datum/manufacturing_requirement/erebite = 16)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 15,
+				/datum/manufacturing_requirement/match_property/metal/superdense = 17,
+				/datum/manufacturing_requirement/match_property/conductive/high = 13,
+				/datum/manufacturing_requirement/match_property/crystal/dense = 17,
+				/datum/manufacturing_requirement/match_material/erebite = 16)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
-	mats = list(/datum/manufacturing_requirement/energy/extreme = 13,
-				/datum/manufacturing_requirement/metal/superdense = 24,
-				/datum/manufacturing_requirement/conductive/high = 20,
-				/datum/manufacturing_requirement/crystal/dense = 17)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 13,
+				/datum/manufacturing_requirement/match_property/metal/superdense = 24,
+				/datum/manufacturing_requirement/match_property/conductive/high = 20,
+				/datum/manufacturing_requirement/match_property/crystal/dense = 17)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
-	mats = list(/datum/manufacturing_requirement/energy/extreme = 19,
-				/datum/manufacturing_requirement/metal/superdense = 20,
-				/datum/manufacturing_requirement/conductive/high = 24,
-				/datum/manufacturing_requirement/dense/super = 16)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 19,
+				/datum/manufacturing_requirement/match_property/metal/superdense = 20,
+				/datum/manufacturing_requirement/match_property/conductive/high = 24,
+				/datum/manufacturing_requirement/match_property/dense/super = 16)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone)
-	mats = list(/datum/manufacturing_requirement/energy/high = 19,
-				/datum/manufacturing_requirement/metal/dense = 12,
-				/datum/manufacturing_requirement/conductive/high = 14,
-				/datum/manufacturing_requirement/dense/super = 26)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 19,
+				/datum/manufacturing_requirement/match_property/metal/dense = 12,
+				/datum/manufacturing_requirement/match_property/conductive/high = 14,
+				/datum/manufacturing_requirement/match_property/dense/super = 26)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone/fish)
 	mats = 	24
 
 TYPEINFO(/obj/critter/gunbot/drone/laser)
-	mats = list(/datum/manufacturing_requirement/energy/high = 11,
-				/datum/manufacturing_requirement/metal/dense = 14,
-				/datum/manufacturing_requirement/conductive/high = 13,
-				/datum/manufacturing_requirement/dense/super = 12)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 11,
+				/datum/manufacturing_requirement/match_property/metal/dense = 14,
+				/datum/manufacturing_requirement/match_property/conductive/high = 13,
+				/datum/manufacturing_requirement/match_property/dense/super = 12)
 TYPEINFO(/obj/critter/gunbot/drone/cutterdrone)
-	mats = list(/datum/manufacturing_requirement/energy = 9,
-				/datum/manufacturing_requirement/metal/superdense = 15,
-				/datum/manufacturing_requirement/conductive = 7,
-				/datum/manufacturing_requirement/crystal/dense = 20)
+	mats = list(/datum/manufacturing_requirement/match_property/energy = 9,
+				/datum/manufacturing_requirement/match_property/metal/superdense = 15,
+				/datum/manufacturing_requirement/match_property/conductive = 7,
+				/datum/manufacturing_requirement/match_property/crystal/dense = 20)
 TYPEINFO(/obj/critter/gunbot/drone/assdrone)
-	mats = list(/datum/manufacturing_requirement/energy/extreme = 30,
-				/datum/manufacturing_requirement/metal/superdense = 14,
-				/datum/manufacturing_requirement/conductive/high = 23,
-				/datum/manufacturing_requirement/crystal/dense = 22,
-				/datum/manufacturing_requirement/butt = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 30,
+				/datum/manufacturing_requirement/match_property/metal/superdense = 14,
+				/datum/manufacturing_requirement/match_property/conductive/high = 23,
+				/datum/manufacturing_requirement/match_property/crystal/dense = 22,
+				/datum/manufacturing_requirement/match_material/butt = 10)
 TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
-	mats = list(/datum/manufacturing_requirement/energy = 10,
-				/datum/manufacturing_requirement/metal = 15,
-				/datum/manufacturing_requirement/conductive/high = 15,
-				/datum/manufacturing_requirement/dense = 10)
+	mats = list(/datum/manufacturing_requirement/match_property/energy = 10,
+				/datum/manufacturing_requirement/match_property/metal = 15,
+				/datum/manufacturing_requirement/match_property/conductive/high = 15,
+				/datum/manufacturing_requirement/match_property/dense = 10)
 TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	mats = null
 
@@ -1105,7 +1105,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		..()
 
 /obj/critter/gunbot/drone/iridium/whydrone
-	name = "Battledronì4?½&?aÄ	ÏbçÇ~¥D??õ®×³?£"
+	name = "Battledronì4?½&?aÄ	�bçÇ~¥D??õ®×³?£"
 	desc = "Run."
 	health = 5000
 	maxhealth = 5000 // per stage
@@ -1128,7 +1128,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 	New()
 		..()
-		name = "Battledronì4?½&?aÄ	ÏbçÇ~¥D??õ®×³?£-[rand(1,5)]"
+		name = "Battledronì4?½&?aÄ	�bçÇ~¥D??õ®×³?£-[rand(1,5)]"
 
 	// copied and modified to fuck from the Y-drone, murder me
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
