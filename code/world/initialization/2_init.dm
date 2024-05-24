@@ -35,7 +35,7 @@
 
 	// Temp hotpatch for tomato whitelist (as a result of spacebee and the game servers existing on different machines)
 #ifdef LIVE_SERVER
-	if (serverKey != 13)
+	if (serverKey != 14)
 		var/datum/http_request/request = new()
 		request.prepare(RUSTG_HTTP_METHOD_GET, config.irclog_url + "/nightshade_whitelist", "", "") // medass backup of the temp hotpatch
 		request.begin_async()
