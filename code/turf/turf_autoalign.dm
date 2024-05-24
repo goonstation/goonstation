@@ -339,6 +339,136 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	blue
 		color = "#87befd"
 
+TYPEINFO(/turf/simulated/wall/auto/walp)
+	connect_overlay = 1
+TYPEINFO_NEW(/turf/simulated/wall/auto/walp)
+	. = ..()
+	connects_to = typecacheof(list(
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/strip_door,
+		/turf/simulated/wall/auto/walp, /turf/simulated/wall/auto/reinforced/walp
+	))
+	connects_with_overlay = typecacheof(list(
+		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
+		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/reinforced/jen, /obj/strip_door, /turf/simulated/wall/auto/reinforced/walp
+	))
+/turf/simulated/wall/auto/walp
+	icon = 'icons/turf/walls/walp/walp_base.dmi'
+	mod = "walp-"
+	light_mod = "wall-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
+	icon_state = "mapwall"
+#endif
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+
+	update_neighbors()
+		..()
+		for (var/obj/window/auto/O in orange(1,src))
+			O.UpdateIcon()
+
+	the_tuff_stuff
+		explosion_resistance = 7
+
+	black
+		icon = 'icons/turf/walls/walp/walp_black.dmi'
+
+	blue
+		icon = 'icons/turf/walls/walp/walp_blue.dmi'
+
+	darkblue
+		icon = 'icons/turf/walls/walp/walp_dblue.dmi'
+
+	darkpurple
+		icon = 'icons/turf/walls/walp/walp_dpurple.dmi'
+
+	green
+		icon = 'icons/turf/walls/walp/walp_green.dmi'
+
+	pink
+		icon = 'icons/turf/walls/walp/walp_pink.dmi'
+
+	purple
+		icon = 'icons/turf/walls/walp/walp_purple.dmi'
+
+	red
+		icon = 'icons/turf/walls/walp/walp_red.dmi'
+
+	yellow
+		icon = 'icons/turf/walls/walp/walp_yellow.dmi'
+
+
+TYPEINFO(/turf/simulated/wall/auto/reinforced/walp)
+	connect_overlay = 1
+	connect_diagonal = 1
+TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/walp)
+	. = ..()
+	connects_to = typecacheof(list(
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/strip_door,
+		/turf/simulated/wall/auto/walp, /turf/simulated/wall/auto/reinforced/walp
+	))
+	connects_with_overlay = typecacheof(list(
+		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
+		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/reinforced/jen, /obj/strip_door, /turf/simulated/wall/auto/reinforced/walp
+	))
+/turf/simulated/wall/auto/walp
+	icon = 'icons/turf/walls/walp/walp_base.dmi'
+	mod = "walp-R-"
+	light_mod = "wall-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
+	icon_state = "mapwall_r"
+#endif
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+
+	update_neighbors()
+		..()
+		for (var/obj/window/auto/O in orange(1,src))
+			O.UpdateIcon()
+
+	the_tuff_stuff
+		explosion_resistance = 7
+
+	black
+		icon = 'icons/turf/walls/walp/walp_black.dmi'
+
+	blue
+		icon = 'icons/turf/walls/walp/walp_blue.dmi'
+
+	darkblue
+		icon = 'icons/turf/walls/walp/walp_dblue.dmi'
+
+	darkpurple
+		icon = 'icons/turf/walls/walp/walp_dpurple.dmi'
+
+	green
+		icon = 'icons/turf/walls/walp/walp_green.dmi'
+
+	pink
+		icon = 'icons/turf/walls/walp/walp_pink.dmi'
+
+	purple
+		icon = 'icons/turf/walls/walp/walp_purple.dmi'
+
+	red
+		icon = 'icons/turf/walls/walp/walp_red.dmi'
+
+	yellow
+		icon = 'icons/turf/walls/walp/walp_yellow.dmi'
+
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn)
 	connect_overlay = 1
