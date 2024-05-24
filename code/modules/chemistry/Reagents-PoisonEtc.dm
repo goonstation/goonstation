@@ -1892,10 +1892,10 @@ datum
 					if (10 to 27) // Small signs of trouble
 						if (prob(15))
 							M.change_misstep_chance(15 * mult)
-						if (prob(12))
+						if (probmult(13))
 							boutput(M, SPAN_NOTICE("<b>You feel a [pick("sudden palpitation", "numbness", "slight burn")] in your chest.</b>"))
 							M.stuttering = max(M.stuttering, 10)
-						if (probmult(10))
+						if (probmult(13))
 							M.emote(pick("twitch","drool","tremble"))
 					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
