@@ -72,7 +72,7 @@ export const Manufacturer = (_, context) => {
         continue;
       }
       for (let blueprint of blueprint_list[category]) {
-        if (blueprint.name.toLowerCase().includes(search)) {
+        if (blueprint.name?.toLowerCase().includes(search)) {
           blueprints_by_category[blueprint.category].push(blueprint);
         }
       }

@@ -11,7 +11,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "AbilityManager")
-	ui.open()
+		ui.open()
 
 /datum/abilitymanager/ui_data(mob/user)
 	var/list/ability_props = list()

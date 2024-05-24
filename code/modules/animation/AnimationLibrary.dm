@@ -210,8 +210,11 @@
 	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
 /obj/particle/attack
+	var/belongs_to_mob = TRUE
 
 	disposing() //kinda slow but whatever, block that gc ok
+		if (!src.belongs_to_mob)
+			return
 		for (var/mob/M in mobs)
 			if (M.attack_particle == src)
 				M.attack_particle = null
@@ -231,6 +234,9 @@
 		plane = PLANE_OVERLAY_EFFECTS
 		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
+	bot_hit
+		icon = 'icons/mob/mob.dmi'
+		belongs_to_mob = FALSE
 
 
 /mob/var/obj/particle/attack/attack_particle
