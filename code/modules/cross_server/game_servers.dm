@@ -103,13 +103,6 @@ var/global/datum/game_servers/game_servers = new
 			return null
 		return pick_list[text_result]
 
-	proc/request_player_count(server_id)
-		var/datum/game_server/server = src.servers[server_id]
-		if (!server)
-			return FALSE
-		var/datum/cross_server_message/player_count_request/player_count_request_csm = get_singleton(/datum/cross_server_message/player_count_request)
-		return player_count_request_csm.send(server)
-
 /datum/game_server
 	var/id
 	var/name
@@ -163,3 +156,9 @@ var/global/datum/game_servers/game_servers = new
 
 	proc/send_message(list/data)
 		return world.Export("[src.url]?[list2params(data)]")
+
+	proc/update_player_count()
+		if (src.is_me())
+			return
+		var/datum/cross_server_message/player_count_request/player_count_request_csm = get_singleton(/datum/cross_server_message/player_count_request)
+		player_count_request_csm.send(src)
