@@ -1621,7 +1621,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/animatedead
 	name = "Animate Dead"
 	eqtype = "Utility"
-	desc = "This spell infuses an adjacent human corpse with necromantic energy, creating a durable skeleton minion that seeks to pummel your enemies into oblivion."
+	desc = "This spell infuses an adjacent human corpse or monkey with necromantic energy, creating a durable skeleton minion that seeks to pummel your enemies into oblivion."
 	assoc_spell = /datum/targetable/spell/animatedead
 
 //------------ MISC SPELLS ------------//

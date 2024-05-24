@@ -3,7 +3,7 @@
 	desc = "Create a forcewall which extends out to your sides."
 	icon_state = "forcewall"
 	targeted = 0
-	cooldown = 20 SECONDS
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	voice_grim = 'sound/voice/wizard/ForcewallGrim.ogg'
@@ -40,7 +40,7 @@
 			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
 			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
-		SPAWN(30 SECONDS)
+		SPAWN(20 SECONDS)
 			qdel(forcefield1)
 			qdel(forcefield2)
 			qdel(forcefield3)

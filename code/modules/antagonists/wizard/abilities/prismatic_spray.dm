@@ -43,49 +43,50 @@
 		return !(proj_type in src.blacklist)
 
 	cast(atom/target)
-		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
-			. = ..()
-			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
-			//var/mob/living/carbon/human/O = holder.owner
-			logTheThing(LOG_COMBAT, holder.owner, "casts Prismatic spray at [constructTarget(target,"combat")].")
-			// Put voice stuff here in the future
-			if(src.random == 0)
-				for(var/i=0, i<num_projectiles, i++)
-					var/turf/S = get_turf(holder.owner)
-					ps_proj.randomise()
-					if (get_turf(target) == S)
-						var/obj/projectile/P = shoot_projectile_XY(S, ps_proj, cos(rand(0,360)), sin(rand(0,360)))
-						if (P)
-							P.mob_shooter = holder.owner
-							sleep(0.1 SECONDS)
-					else
-						var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, ps_proj, target )
-						if (P)
-							P.mob_shooter = holder.owner
-							var/angle = (rand(spread * -1000, spread * 1000))/1000
-							P.rotateDirection(angle)
-							P.launch()
-							sleep(0.1 SECONDS)
-			else
-				for(var/i=0, i<num_projectiles, i++)
-					var/turf/S = get_turf(holder.owner)
-					if (get_turf(target) == S)
-						var/obj/projectile/P = shoot_projectile_XY(S, pick(proj_types), cos(rand(0,360)), sin(rand(0,360)))
-						if (P)
-							P.mob_shooter = holder.owner
-							sleep(0.1 SECONDS)
-					else
-						var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, pick(proj_types), target )
-						if (P)
-							P.mob_shooter = holder.owner
-							var/angle = (rand(spread * -1000, spread * 1000))/1000
-							P.rotateDirection(angle)
-							P.launch()
-							sleep(0.1 SECONDS)
+		if (holder.owner.wizard_spellpower(src) && !istype(src, /datum/targetable/spell/prismatic_spray/admin))
+			src.num_projectiles = 5
+			boutput(holder.owner, SPAN_ALERT("Your spell isn't as strong without a staff to refract the light!"))
 		else
-			boutput(holder.owner, SPAN_ALERT("Your spell doesn't work without a staff to refract the light!"))
-			return 1
+			src.num_projectiles = initial(src.num_projectiles)
+		. = ..()
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
+		//var/mob/living/carbon/human/O = holder.owner
+		logTheThing(LOG_COMBAT, holder.owner, "casts Prismatic spray at [constructTarget(target,"combat")].")
+		// Put voice stuff here in the future
+		if(src.random == 0)
+			for(var/i=0, i<num_projectiles, i++)
+				var/turf/S = get_turf(holder.owner)
+				ps_proj.randomise()
+				if (get_turf(target) == S)
+					var/obj/projectile/P = shoot_projectile_XY(S, ps_proj, cos(rand(0,360)), sin(rand(0,360)))
+					if (P)
+						P.mob_shooter = holder.owner
+						sleep(0.1 SECONDS)
+				else
+					var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, ps_proj, target )
+					if (P)
+						P.mob_shooter = holder.owner
+						var/angle = (rand(spread * -1000, spread * 1000))/1000
+						P.rotateDirection(angle)
+						P.launch()
+						sleep(0.1 SECONDS)
+		else
+			for(var/i=0, i<num_projectiles, i++)
+				var/turf/S = get_turf(holder.owner)
+				if (get_turf(target) == S)
+					var/obj/projectile/P = shoot_projectile_XY(S, pick(proj_types), cos(rand(0,360)), sin(rand(0,360)))
+					if (P)
+						P.mob_shooter = holder.owner
+						sleep(0.1 SECONDS)
+				else
+					var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, pick(proj_types), target )
+					if (P)
+						P.mob_shooter = holder.owner
+						var/angle = (rand(spread * -1000, spread * 1000))/1000
+						P.rotateDirection(angle)
+						P.launch()
+						sleep(0.1 SECONDS)
 
 /datum/targetable/spell/prismatic_spray/admin
 	random = 1
