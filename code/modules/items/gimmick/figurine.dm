@@ -55,8 +55,8 @@
 						if (length(online_donator_ckeys_nouser))
 							fig_ckey = pick(online_donator_ckeys_nouser)
 					if (40 to 100)
-						fig_ckey = pick(online_donator_ckeys)
-				if (!fig_ckey) fig_ckey = pick(online_donator_ckeys)
+						fig_ckey = pick(donator_ckeys)
+				if (!fig_ckey) fig_ckey = pick(donator_ckeys)
 
 				//Now that we've picked the ckey to look for, find its randomInfo
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
