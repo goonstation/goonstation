@@ -3,12 +3,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"at" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
 "av" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -35,15 +29,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"ci" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	hardened = 1
-	},
-/obj/mapping_helper/access/heads,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/centcom/outside)
 "cQ" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 10;
@@ -58,7 +43,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "dd" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -69,12 +54,6 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/outside)
-"df" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttle,
 /area/centcom/outside)
 "dj" = (
 /obj/rack,
@@ -120,6 +99,11 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"eq" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
 "eP" = (
 /obj/shrub{
 	dir = 1
@@ -153,12 +137,12 @@
 "fF" = (
 /turf/unsimulated/floor/arrival,
 /area/centcom)
-"gn" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 4
+"ht" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
 	},
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "hI" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -178,25 +162,25 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"iJ" = (
-/turf/unsimulated/wall/auto/lead/blue,
-/area/centcom)
-"ky" = (
-/obj/machinery/door/airlock/pyro/external{
+"hX" = (
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
-"kW" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 1
+/area/shuttle/escape/centcom)
+"iJ" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"jW" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
 	},
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "lk" = (
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line1"
@@ -204,20 +188,10 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"lI" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Secure Transport";
-	hardened = 1
-	},
-/obj/mapping_helper/access/security,
-/turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
 "lR" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 1
-	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "lW" = (
 /obj/decal/poster/wallsign/danger_highvolt{
 	pixel_x = -32
@@ -225,9 +199,11 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "mz" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 1
+	},
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "mY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
@@ -251,10 +227,6 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/floor/black,
-/area/centcom/outside)
-"qd" = (
-/obj/machinery/light,
-/turf/unsimulated/floor/shuttle,
 /area/centcom/outside)
 "qO" = (
 /obj/decal/tile_edge/line/orange{
@@ -313,11 +285,21 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"sM" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "sS" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "14"
+	icon_state = "4"
 	},
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "tb" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -399,11 +381,10 @@
 	},
 /area/centcom)
 "vB" = (
-/obj/machinery/door/airlock/pyro/glass/med{
-	hardened = 1
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
 	},
-/turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "vD" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -413,25 +394,18 @@
 	dir = 1
 	},
 /area/centcom)
-"vO" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
 "wO" = (
-/turf/simulated/wall/auto/shuttle,
-/area/centcom/outside)
-"wV" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
+"wV" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "xQ" = (
 /obj/decal/poster/wallsign/danger_highvolt{
 	pixel_y = -32
@@ -467,8 +441,20 @@
 	},
 /area/centcom/outside)
 "Aa" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
+"AJ" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	hardened = 1
+	},
+/obj/mapping_helper/access/heads,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
 "AL" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 6;
@@ -514,12 +500,17 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"BJ" = (
-/obj/machinery/sleeper/compact{
-	dir = 4
+"BD" = (
+/obj/machinery/computer/shuttle,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
+"BJ" = (
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "BV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -548,20 +539,6 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/outside)
-"Cv" = (
-/obj/stool/chair/comfy/shuttle/green{
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
-"CM" = (
-/obj/machinery/computer/shuttle,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/unsimulated/floor/shuttle,
 /area/centcom/outside)
 "CU" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -602,6 +579,12 @@
 	dir = 10
 	},
 /area/centcom)
+"Ey" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
 "FC" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor{
@@ -621,7 +604,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "Hc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
@@ -637,6 +620,12 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"HN" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
 "HP" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/arrival,
@@ -645,12 +634,6 @@
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 4
 	},
-/area/centcom/outside)
-"Ij" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttle,
 /area/centcom/outside)
 "Iz" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -717,27 +700,17 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"LT" = (
-/obj/stool/chair/comfy/shuttle/red{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/unsimulated/floor/shuttle,
-/area/centcom/outside)
 "LV" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 5
 	},
 /area/centcom/outside)
-"Mr" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
+"MA" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
 	},
-/turf/unsimulated/floor/shuttlebay,
-/area/centcom/outside)
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "Nu" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -758,34 +731,38 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"NI" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "NQ" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
+/obj/machinery/door/airlock/pyro/security{
+	name = "Secure Transport";
+	hardened = 1
 	},
-/area/centcom/outside)
+/obj/mapping_helper/access/security,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"NR" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "Oa" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ol" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "4"
+	icon_state = "14"
 	},
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "Op" = (
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"Pe" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/centcom/outside)
 "PT" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/centcom/outside)
+/turf/simulated/wall/auto/shuttle,
+/area/shuttle/escape/centcom)
 "Qq" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -814,7 +791,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "Rz" = (
 /turf/unsimulated/wall/generic{
 	dir = 4;
@@ -888,11 +865,22 @@
 "TV" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/outside)
-"Uj" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "13"
+"UG" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
 	},
-/area/centcom/outside)
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"UM" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
 "UR" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -928,6 +916,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"VX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "Wy" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -950,7 +944,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/centcom/outside)
+/area/shuttle/escape/centcom)
 "Xz" = (
 /turf/simulated/wall/auto/shuttle,
 /area/centcom)
@@ -962,6 +956,12 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"YX" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "ZD" = (
 /obj/stool/chair/blue,
 /turf/unsimulated/floor{
@@ -1154,12 +1154,12 @@ Oa
 UX
 SF
 Oa
-Pe
-ky
-mz
-mz
-ky
-Mr
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
 Oa
 Oa
 Oa
@@ -1182,15 +1182,15 @@ Oa
 Iz
 Oa
 Oa
-NQ
-Aa
-Aa
-Aa
-Aa
-sS
-Xi
-Xi
-Mr
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
 Oa
 Oa
 Oa
@@ -1208,18 +1208,18 @@ UX
 yd
 yd
 SF
-Pe
-mz
-Uj
-kW
-lR
-lR
-Aa
-NQ
-LT
-gn
-Rg
-GF
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
+Oa
 Oa
 Oa
 Oa
@@ -1235,19 +1235,19 @@ Hc
 SF
 Oa
 Oa
-Pe
-Ij
-Cv
-NQ
+Oa
+Oa
+Oa
+HN
+YX
 lR
 lR
-lR
-Aa
-lI
-Aa
-Aa
-da
-GF
+YX
+wO
+Oa
+Oa
+Oa
+Oa
 Oa
 Oa
 Oa
@@ -1263,14 +1263,14 @@ Iz
 Oa
 Oa
 Oa
-mz
-CM
-df
-ci
-Aa
-Aa
-Aa
-qd
+Oa
+Oa
+Oa
+vB
+BJ
+BJ
+BJ
+BJ
 Ol
 Xi
 Xi
@@ -1291,16 +1291,16 @@ Iz
 Oa
 Oa
 Oa
-wV
-at
-Cv
-NQ
+Oa
+HN
 lR
-lR
-lR
-Aa
+eq
+UG
+NR
+NR
+BJ
 vB
-Aa
+sM
 Aa
 Rg
 GF
@@ -1319,16 +1319,16 @@ Iz
 Oa
 Oa
 Oa
-Oa
+HN
 wV
 mz
-Uj
-kW
-lR
-lR
-Aa
+vB
+NR
+NR
+NR
+BJ
 NQ
-vO
+BJ
 BJ
 da
 GF
@@ -1347,14 +1347,14 @@ Iz
 Oa
 Oa
 Oa
-Oa
-Oa
-Oa
-NQ
-Aa
-Aa
-Aa
-Aa
+lR
+BD
+ht
+AJ
+BJ
+BJ
+BJ
+NI
 sS
 Xi
 Xi
@@ -1375,19 +1375,19 @@ Iz
 Oa
 Oa
 Oa
-Oa
-Oa
-Oa
-wV
-ky
+Ey
+VX
 mz
-mz
-ky
-PT
-Oa
-Oa
-Oa
-Oa
+vB
+NR
+NR
+NR
+BJ
+MA
+BJ
+BJ
+Rg
+GF
 Oa
 Oa
 Oa
@@ -1404,18 +1404,18 @@ Oa
 Oa
 Oa
 Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
+Ey
+lR
+eq
+UG
+NR
+NR
+BJ
+vB
+jW
+hX
+da
+GF
 Oa
 Oa
 Oa
@@ -1434,15 +1434,15 @@ Oa
 Oa
 Oa
 Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
+vB
+BJ
+BJ
+BJ
+BJ
+Ol
+Xi
+Xi
+UM
 Oa
 Oa
 Oa
@@ -1462,12 +1462,12 @@ LR
 Cf
 Oa
 Oa
-Oa
-Oa
-Oa
-Oa
-Oa
-Oa
+Ey
+YX
+lR
+lR
+YX
+UM
 Oa
 Oa
 Oa
