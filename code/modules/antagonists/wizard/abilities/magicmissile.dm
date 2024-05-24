@@ -3,7 +3,7 @@
 	desc = "Attacks nearby foes with stunning projectiles."
 	icon_state = "missile"
 	targeted = 0
-	cooldown = 200
+	cooldown = 25 SECONDS
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
