@@ -2369,7 +2369,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_COMMAND
 
-		private
+	private
 		name = "Head of Security's Private Quarters"
 
 /area/station/crew_quarters/md
