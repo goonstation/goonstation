@@ -694,6 +694,25 @@ ABSTRACT_TYPE(/datum/projectile)
 		post_setup(obj/projectile/P)
 			return
 
+		/// returns projectile stats that can be displayed in a tooltip
+		get_tooltip_content()
+			. = ""
+			var/stam
+			var/b_force = "Bullet damage: [src.damage]"
+			var/disrupt
+			if (src.stun)
+				stam += "Stamina: [clamp(src.stun * 4, src.stun * 2, src.stun + 80)] dmg"
+			if (src.armor_ignored)
+				b_force += " - [round(src.armor_ignored * 100, 1)]% armor piercing"
+			if (src.disruption)
+				disrupt = "Pod disruption: [round(src.disruption, 1)]% chance"
+
+			if (stam)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stamina.png")]\" width=\"10\" height=\"10\" /> [stam]"
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
+			if (disrupt)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
+
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
 	if (!S || !T)

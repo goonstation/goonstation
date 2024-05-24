@@ -595,8 +595,19 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 /obj/machinery/activation_button/driver_button
 	name = "Mass Driver Button"
 	desc = "A remote control switch for a Mass Driver."
+	var/emagged = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if (user && !emagged)
+			boutput(user, SPAN_NOTICE("You fry the control circuits beyond repair!"))
+		emagged = TRUE
+
 
 	activate()
+		if(emagged)
+			return
+
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				M.open()
