@@ -1,4 +1,9 @@
 
+(t)fri may 24 24
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
 (t)thu may 23 24
 (u)Tarmunora, Mordent
 (p)19120
