@@ -1057,12 +1057,13 @@ var/list/removed_jobs = list(
 		usr << ftp(F, fname)
 		SPAWN(15 SECONDS)
 			var/tries = 0
-			while(fexists(fname) && tries++ < 10)
-				fdel(fname)
+			while((fdel(fname) == 0) && tries++ < 10)
 				sleep(30 SECONDS)
 
 	proc/profile_import()
-		var/F = input(usr) as file
+		var/F = input(usr) as file|null
+		if(!F)
+			return
 		var/savefile/message = new()
 		message.ImportText("/", file2text(F))
 		var/hash
