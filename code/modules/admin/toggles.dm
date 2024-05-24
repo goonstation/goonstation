@@ -13,6 +13,7 @@ var/list/server_toggles_tab_verbs = list(
 /client/proc/toggle_spooky_light_plane,\
 /client/proc/toggle_cloning_with_records,
 /client/proc/toggle_random_job_selection,
+/client/proc/toggle_tracy_profiling,
 /datum/admins/proc/toggleooc,
 /datum/admins/proc/togglelooc,
 /datum/admins/proc/toggleoocdead,
@@ -1272,3 +1273,15 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
 	logTheThing(LOG_DIARY, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
+
+/client/proc/toggle_tracy_profiling()
+	set name = "Toggle Tracy Profiling"
+	set desc = "Toggle Tracy profiling on the next round"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/enabled = toggle_tracy_profiling_file()
+	logTheThing(LOG_ADMIN, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+	logTheThing(LOG_DIARY, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
+	message_admins("[key_name(usr)] [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")

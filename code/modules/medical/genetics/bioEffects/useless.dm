@@ -237,11 +237,11 @@
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"))
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"), "stink_message")
 				else if (src.personalized_stink)
-					boutput(C, SPAN_ALERT("[src.personalized_stink]"))
+					boutput(C, SPAN_ALERT("[src.personalized_stink]"), "stink_message")
 				else
-					boutput(C, SPAN_ALERT("[stinkString()]"))
+					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 
 
 /obj/effect/rt/dwarf

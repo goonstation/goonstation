@@ -1,5 +1,65 @@
 
+(t)fri may 24 24
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
+(t)thu may 23 24
+(u)Tarmunora, Mordent
+(p)19120
+(e)💅📄|C-QoL, A-UI
+(*)Added import/export to character setup window to enable storing of additional character profiles in local storage.
+(u)aloe
+(p)18797
+(e)⚖📄💪|C-Balance, A-UI, A-Traits
+(*)You can now select as many traits as you like.
+(u)Glamurio (Ryou)
+(p)19109
+(e)🎨🏅|C-Sprites, A-Medal
+(+)Particularly pet-savvy people may find a new reward waiting for them.
+(t)wed may 22 24
+(u)TealSeer
+(p)19081
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Security's departmental score is now influenced by the fate of Monsieur Stirstir.
+(u)FlameArrow57
+(p)18903
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(+)Added unique ghost sprites for each mutantrace when you die. If you want hair, be sure to select the Bald trait!
+(u)FlameArrow57
+(p)18965
+(e)⚖🔄🧛📦|C-Balance, C-Rework, A-Gamemodes, A-Game-Objects
+(+)Thermite breaching charges now create a dark red chemical fire and are a bit more dangerous
+(u)LeahTheTech
+(+)Pressing V will no longer hide your inventory. Why did it ever do that?
+(+)Reverted pressing V no longer hiding your inventory.
+(u)Glamurio (Ryou)
+(p)19089
+(e)💅|C-QoL
+(+)Trippy people now trip less often.
+(u)FlameArrow57
+(p)18855
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pod weapon tooltips (from mouse hover) now show their damage and pod disruption chance.
+(u)MeggalBozale
+(p)18981
+(e)🪲⚖🐁|C-Bug, C-Balance, A-Critters
+(+)Robotic critters can now throw items.
+(u)MeggalBozale
+(p)19004
+(e)🆕|C-Feature
+(+)The emag effect for the lawbringer has been modified slightly.
+(u)Glamurio (Ryou)
+(p)19051
+(e)🆕💅🐣|C-Feature, C-QoL, A-Respawning
+(+)Martian and Blob ambassadors are now legally allowed to wear hats per a NT decree.
+(u)Cheekybrdy
+(p)19035
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds Scientist Training, all this does currently is lock artifact hints to research staff.
 (t)tue may 21 24
+(u)Sord
+(+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.
 (u)TDHooligan
 (p)19065
 (e)⚖|C-Balance
