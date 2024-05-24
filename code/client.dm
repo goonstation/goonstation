@@ -359,7 +359,7 @@
 			var/mob/new_player/new_player = src.mob
 			new_player.blocked_from_joining = TRUE
 #if defined(LIVE_SERVER) && defined(NIGHTSHADE)
-		var/list/servers_to_offer = list("streamer1", "streamer2", "main3", "main4")
+		var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
 #elif defined(LIVE_SERVER)
 		var/list/servers_to_offer = list("main1", "main3", "main4")
 #else
