@@ -1872,7 +1872,7 @@
 	name = "Teleport Upgrade"
 	item_requirements = list("conductive" = 10,
 							 "dense" = 1,
-							 "energy_high")//Okayenoughroundstartteleportborgs.Fuck. = 10)
+							 "energy_high" = 10)//Okayenoughroundstartteleportborgs.Fuck.
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS
