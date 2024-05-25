@@ -525,7 +525,12 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 		if (!src.group || !src.group.reagents) return
 
-
+		if (my_depth_level != last_depth_level && icon_state == "15")
+				// apply highlights if we made it this far.
+			var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
+			I.appearance_flags = RESET_COLOR
+			I.blend_mode = BLEND_ADD
+			src.UpdateOverlays(I,"highlight")
 
 		var/color_changed = 0
 		var/datum/color/average = src.group.average_color ? src.group.average_color : src.group.reagents.get_average_color()
@@ -553,12 +558,30 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 			if (src.overlay_refs && length(src.overlay_refs))
 				src.clear_overlay()
+				if(last_depth_level == 4) // full
+					src.layer = EFFECTS_LAYER_4
+				else
+					src.layer = initial(src.layer)
+
 
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
 			src.update_perspective_overlays()
+			if(last_depth_level == 4) // full
+				src.layer = EFFECTS_LAYER_4
+			else
+				src.layer = initial(src.layer)
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
 		if (icon_state != "15") return
+
+		// apply highlights if we made it this far.
+		var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
+		I.appearance_flags = RESET_COLOR
+		I.blend_mode = BLEND_ADD
+		src.UpdateOverlays(I,"highlight")
+		I.alpha = 70
+
+
 		var/blocked = 0
 		for( var/dir in cardinal )
 			if (dir == SOUTH) //No south perspective
@@ -605,6 +628,18 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		wall_overlay_images[overlay_key] = overlay
 
 		src.UpdateOverlays(overlay, overlay_key)
+
+
+		// fluid sprite highlights to make it look pretty
+		var/image/I = image('icons/obj/fluid.dmi', "highlights_[overlay_key]_[last_depth_level]")
+		I.layer = over_obj ? 4 : src.layer
+		I.appearance_flags = RESET_COLOR
+		I.pixel_x = pox
+		I.pixel_y = poy
+		I.blend_mode = BLEND_ADD
+		I.alpha = 70
+
+		src.UpdateOverlays(I,"highlight_[overlay_key]")
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)
