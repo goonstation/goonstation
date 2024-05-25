@@ -1,5 +1,7 @@
 
 (t)fri may 24 24
+(u)tarmunora
+(+)Fix savefile import exploit. This will break existing local savefiles.
 (u)FlameArrow57
 (p)19115
 (e)⚖📦|C-Balance, A-Game-Objects
