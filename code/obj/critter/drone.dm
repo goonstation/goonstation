@@ -1105,7 +1105,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		..()
 
 /obj/critter/gunbot/drone/iridium/whydrone
-	name = "Battledronì4?½&?aÄ	�bçÇ~¥D??õ®×³?£"
+	name = "Battledronì4?½&?aÄ ÏbçÇ~¥D??õ®×³?£"
 	desc = "Run."
 	health = 5000
 	maxhealth = 5000 // per stage
@@ -1128,7 +1128,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 	New()
 		..()
-		name = "Battledronì4?½&?aÄ	�bçÇ~¥D??õ®×³?£-[rand(1,5)]"
+		name = "Battledronì4?½&?aÄ ÏbçÇ~¥D??õ®×³?£-[rand(1,5)]"
 
 	// copied and modified to fuck from the Y-drone, murder me
 	Shoot(var/target, var/start, var/user, var/bullet = 0)
