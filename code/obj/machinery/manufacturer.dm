@@ -27,6 +27,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	density = TRUE
 	anchored = ANCHORED
 	power_usage = 200
+
 	/// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
@@ -98,9 +99,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 
-	// Production options
-	var/search = null
-	var/category = null
+	/* Production options */
 	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
 	var/list/available = list() //! A list of every option available in this unit subtype by default
