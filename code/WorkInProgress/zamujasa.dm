@@ -1530,6 +1530,7 @@ Read the rules, don't grief, and have fun!</div>"}
 				sleep(update_delay)
 
 		proc/update_text()
+			set waitfor = FALSE
 			var/serverList = ""
 			for (var/serverId in global.game_servers.servers)
 				var/datum/game_server/server = global.game_servers.servers[serverId]
