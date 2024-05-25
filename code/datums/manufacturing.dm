@@ -19,13 +19,20 @@
 			var/item_type = item_outputs[1]
 			src.use_generated_costs(item_type)
 
-		if(isnull(item_requirements))
-			item_requirements = list() // a bunch of places expect this to be non-null, like the sanity check
+		src.setup_manufacturing_requirements()
 		if (!length(src.item_names))
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
 				src.item_names += R.name
 		if (!sanity_check_exemption)
 			src.sanity_check()
+
+	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
+	proc/setup_manufacturing_requirements()
+		if (isnull(src.item_requirements))
+			src.item_requirements = list()
+			return
+		for (var/datum/manufacturing_requirement/R_path as anything in src.item_requirements)
+			R_path = getRequirement(R_path)
 
 	proc/use_generated_costs(obj/item_type)
 		var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
