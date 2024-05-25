@@ -11,7 +11,6 @@ var/global/list/requirement_cache
 	return requirement_cache?[R_id]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
-ABSTRACT_TYPE(/datum/manufacturing_requirement/match_material)
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement
 	/// Player-facing name of the requirement.
@@ -49,22 +48,15 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		name = "Any"
 		id = "any"
 
-/***************************************************************
-                      EXACT MATERIAL MATCH
-
-	     These are subtypes so only one instance is needed.
-       If you're adding one, just add the material id as the
-			       id property and type name.
-
-                    PLEASE ALPHABETIZE THANKS
-***************************************************************/
+	/// All instances of this are generated at runtime for the cache
 	match_material
 		/// All you need to do is define the material id. we can take it from there ;P
-		New()
-			..()
+		New(var/material_id)
+			src.id = material_id
+			src.material_id = material_id
 			var/datum/material/M = getMaterial(src.id)
-			src.name = M.getName()
-			src.material_id = initial(src.id)
+			src.name = capitalize(M.getName())
+			. = ..()
 
 		is_match(var/datum/material/M)
 			if (!isnull(src.material_id) && !src.matches_id(M.getID()))
@@ -74,90 +66,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		/// Returns whether the material id is an exact match for the required id.
 		proc/matches_id(var/material_id)
 			return src.material_id == material_id
-
-		bamboo
-			id = "bamboo"
-
-		blob
-			id = "blob"
-
-		butt
-			id = "butt"
-
-		cardboard
-			id = "cardboard"
-
-		cerenkite
-			id = "cerenkite"
-
-		char
-			id = "char"
-
-		claretine
-			id = "claretine"
-
-		cobryl
-			id = "cobryl"
-
-		ectoplasm
-			id = "ectoplasm"
-
-		electrum
-			id = "electrum"
-
-		erebite
-			id = "erebite"
-
-		exoweave
-			id = "exoweave"
-
-		gold
-			id = "gold"
-
-		honey
-			id = "honey"
-
-		ice
-			id = "ice"
-
-		iridiumalloy
-			id = "iridiumalloy"
-
-		koshmarite
-			id = "koshmarite"
-
-		miracle
-			id = "miracle"
-
-		molitz
-			id = "molitz"
-
-		neutronium
-			id = "neutronium"
-
-		pharosium
-			id = "pharosium"
-
-		plasmastone
-			id = "plasmastone"
-
-		plutonium
-			id = "plutonium"
-
-		starstone
-			id = "starstone"
-
-		syreline
-			id = "syreline"
-
-		telecrystal
-			id = "telecrystal"
-
-		uqill
-			id = "uqill"
-
-		viscerite
-			id = "viscerite"
 
 /***************************************************************
                       MATERIAL PROPERTIES

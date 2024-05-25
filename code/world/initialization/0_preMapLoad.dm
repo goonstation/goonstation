@@ -227,7 +227,10 @@
 
 /proc/buildManufacturingRequirementCache()
 	requirement_cache = list()
-	var/requirementList = concrete_typesof(/datum/manufacturing_requirement)
+	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material
 	for (var/datum/manufacturing_requirement/R_path as anything in requirementList)
 		var/datum/manufacturing_requirement/R = new R_path()
+		requirement_cache[R.id] = R
+	for (var/datum/material/mat as anything in material_cache)
+		var/datum/manufacturing_requirement/match_material/R = new /datum/manufacturing_requirement/match_material(mat)
 		requirement_cache[R.id] = R
