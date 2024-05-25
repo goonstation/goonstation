@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/power/tracker)
 				"conductive" = 20)
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
-	desc = "The XIANG|GIESEL model '�羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
+	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
 	anchored = ANCHORED
