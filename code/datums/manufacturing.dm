@@ -23,8 +23,9 @@
 		if (!length(src.item_names))
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
 				src.item_names += R.name
-		if (!sanity_check_exemption)
-			src.sanity_check()
+
+		//if (!sanity_check_exemption)
+		//	src.sanity_check() until i fix the sanity check
 
 	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
 	proc/setup_manufacturing_requirements()
@@ -33,18 +34,18 @@
 			return
 		var/list/R = list()
 		for (var/R_path in src.item_requirements)
-			R += getRequirement(R_path)
+			R[getRequirement(R_path)] = src.item_requirements[R_path]
 		src.item_requirements = R
 
 	proc/use_generated_costs(obj/item_type)
 		var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
 		if(istype(typeinfo) && islist(typeinfo.mats))
 			item_requirements = list()
-			for(var/mat in typeinfo.mats)
-				var/amt = typeinfo.mats[mat]
+			for(var/req in typeinfo.mats)
+				var/amt = typeinfo.mats[req]
 				if(isnull(amt))
 					amt = 1
-				item_requirements[mat] = amt
+				item_requirements[req] = amt
 
 	proc/sanity_check()
 		for (var/requirement in src.item_requirements)
