@@ -69,6 +69,16 @@
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
+/obj/decal/wizard_shield
+	name = ""
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "enshield"
+	layer = MOB_LAYER + 1
+	anchored = ANCHORED
+	mouse_opacity = 0
+	blend_mode = BLEND_ADD
+	plane = PLANE_NOSHADOW_ABOVE
+
 /obj/decal/floatingtiles
 	name = "floating tiles"
 	desc = "These tiles are just floating around in the void."

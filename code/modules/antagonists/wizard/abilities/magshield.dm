@@ -13,29 +13,23 @@
 	maptext_colors = list("#24639a", "#24bdc6")
 
 	cast()
-		if(!holder)
+		if(!istype(holder?.owner, /mob/living/carbon/human))
 			return
-		if(holder.owner.spellshield)
+
+		var/mob/living/carbon/human/H = src.holder.owner
+		var/obj/item/clothing/suit/wizrobe/robe = H.wear_suit
+
+		if(istype(robe, /obj/item/clothing/suit/wizrobe) && SEND_SIGNAL(robe, COMSIG_CHECK_SHIELD_ACTIVE))
 			boutput(holder.owner, SPAN_ALERT("You already have a Spell Shield active!"))
-			return
+			return TRUE
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("XYZZYX", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/image/shield_overlay = null
+		SEND_SIGNAL(robe, COMSIG_SHIELD_TOGGLE)
 
-		holder.owner.spellshield = 1
-		shield_overlay = image('icons/effects/effects.dmi', holder.owner, "enshield", MOB_LAYER+1)
-		holder.owner.underlays += shield_overlay
-		boutput(holder.owner, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
-		holder.owner.visible_message(SPAN_ALERT("[holder.owner] is encased in a protective shield."))
-		playsound(holder.owner, 'sound/effects/MagShieldUp.ogg', 50,1)
 		SPAWN(10 SECONDS)
-			if(holder.owner && holder.owner.spellshield)
-				holder.owner.spellshield = 0
-				holder.owner.underlays -= shield_overlay
-				shield_overlay = null
-				boutput(holder.owner, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
-				holder.owner.visible_message(SPAN_ALERT("The shield protecting [holder.owner] fades away."))
-				playsound(usr, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+			if(!QDELETED(H) && !QDELETED(robe))
+				if (SEND_SIGNAL(robe, COMSIG_CHECK_SHIELD_ACTIVE))
+					SEND_SIGNAL(robe, COMSIG_SHIELD_TOGGLE)

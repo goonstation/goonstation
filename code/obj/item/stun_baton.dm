@@ -212,8 +212,10 @@ TYPEINFO(/obj/item/baton)
 		else
 			dude_to_stun = victim
 
-
-		dude_to_stun.do_disorient(src.disorient_stamina_damage, knockdown = src.stun_normal_knockdown * 10, disorient = 60)
+		var/list/shield_amt = list()
+		SEND_SIGNAL(victim, COMSIG_MOB_SHIELD_ACTIVATE, src.stun_normal_knockdown * 2, shield_amt)
+		var/mod = max(0, 1 - shield_amt["shield_strength"])
+		dude_to_stun.do_disorient(src.disorient_stamina_damage * mod, knockdown = src.stun_normal_knockdown * 10 * mod, disorient = 60)
 
 		if (isliving(dude_to_stun))
 			var/mob/living/L = dude_to_stun

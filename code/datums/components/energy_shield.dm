@@ -1,12 +1,12 @@
 /**
- * Personal energy shield component
+ * Personal shield component
  *
  * Wearer-targeting?
  * Add ability button to item to toggle component
  * Uses power cell in the item - automatically create a cell_holder component if one does not exist?
  *
  * How it blocks damage:
- *  attack code Sends a COMSIG_MOB_SHIELD_ACTIVATE(imcoming_damage, return_list) to the mob, energy shield component drains power cell of parent item if possible
+ *  attack code Sends a COMSIG_MOB_SHIELD_ACTIVATE(imcoming_damage, return_list) to the mob, shield component drains power cell of parent item if possible
  *  Addnl: Send a RETURNED_LIST, in the case of a partial block
  *  Proc sending the signal decides how to handle the damage
  *   Bleedthrough? On all hits, or only on shield-break? Determined by initialization var
@@ -21,7 +21,7 @@
  * TODO: support for granting mob properties? Consider subtype for CE shield - low efficiency but strong environmental resists
  */
 
-TYPEINFO(/datum/component/wearertargeting/energy_shield)
+TYPEINFO(/datum/component/wearertargeting/shield)
 	initialization_args = list(
 		ARG_INFO("valid_slots", DATA_INPUT_LIST_BUILD, "List of wear slots that the component should function in \[1-19\]"),
 		ARG_INFO("shield_strength", DATA_INPUT_NUM, "Fraction of damage blocked by shield \[0-1\]", 1),
@@ -30,7 +30,8 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		ARG_INFO("power_drain", DATA_INPUT_NUM, "Cell power use per process cycle when active", 0)
 	)
 
-/datum/component/wearertargeting/energy_shield
+ABSTRACT_TYPE(/datum/component/wearertargeting/shield)
+/datum/component/wearertargeting/shield
 	//no transfer, highlander dupe
 
 	///what percent of damage should be blocked by the shield
@@ -43,13 +44,19 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	var/power_drain
 	///are we turned on 😳
 	var/active
+	/// if set to something other than null, this will be the health of the shield, rather than a power cell
+	var/internal_power
+	var/initial_internal_power
 
-	var/obj/decal/ceshield/overlay
+	/// overlay object that appears over the wearer
+	var/overlay
+	/// type for the overlay object
+	var/overlay_type
 
 	signals = list(COMSIG_MOB_SHIELD_ACTIVATE)
 	proctype = PROC_REF(activate)
 
-/datum/component/wearertargeting/energy_shield/Initialize(_valid_slots, _shield_strength = 1, _shield_efficiency = 1, _bleedthrough = TRUE, _power_drain = 0)
+/datum/component/wearertargeting/shield/Initialize(_valid_slots, _shield_strength = 1, _shield_efficiency = 1, _bleedthrough = TRUE, _power_drain = 0, _internal_power = null)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -57,33 +64,26 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	src.shield_efficiency = _shield_efficiency
 	src.bleedthrough = _bleedthrough
 	src.power_drain = _power_drain
-	overlay = new
+	src.internal_power = _internal_power
+	src.initial_internal_power = _internal_power
+	if (src.overlay_type)
+		overlay = new src.overlay_type
 	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, PROC_REF(toggle))
+	RegisterSignal(parent, COMSIG_CHECK_SHIELD_ACTIVE, PROC_REF(return_shield_active))
 	if((SLOT_L_HAND in valid_slots) || (SLOT_R_HAND in valid_slots))
 		parent:c_flags |= EQUIPPED_WHILE_HELD
 
-/datum/component/wearertargeting/energy_shield/on_equip(datum/source, mob/equipper, slot)
-	var/obj/item/I = parent
-	I.add_item_ability(equipper, /obj/ability_button/toggle_shield)
-	. = ..()
-
-/datum/component/wearertargeting/energy_shield/on_unequip(datum/source, mob/user)
-	var/obj/item/I = parent
-	I.remove_item_ability(user, /obj/ability_button/toggle_shield)
-	if(active)
-		src.turn_off()
-	. = ..()
-
-/datum/component/wearertargeting/energy_shield/proc/activate(datum/source, incoming_damage, list/return_list)
+/datum/component/wearertargeting/shield/proc/activate(datum/source, incoming_damage, list/return_list)
 	if(!src.active)
 		return
 	var/list/charge_list = list()
-	var/charge = null
+	var/charge = src.internal_power
 
-	if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE, charge_list) & CELL_RETURNED_LIST)
-		charge = charge_list["charge"]
-	else
-		return
+	if (isnull(src.internal_power))
+		if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE, charge_list) & CELL_RETURNED_LIST)
+			charge = charge_list["charge"]
+		else
+			return
 
 	var/cost = incoming_damage * shield_strength * shield_efficiency
 	var/blocked = shield_strength
@@ -92,33 +92,105 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 			blocked *= charge/cost
 		turn_off(TRUE)
 	else
-		playsound(current_user, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
+		src.block_hit_fx()
 
 	return_list["shield_strength"] += blocked
-	SEND_SIGNAL(parent, COMSIG_CELL_USE, cost)
+	if (isnull(src.internal_power))
+		SEND_SIGNAL(parent, COMSIG_CELL_USE, cost)
+	else
+		src.internal_power -= cost
 
 	return //return code?
 
-/datum/component/wearertargeting/energy_shield/proc/process(datum/source)
-	if(SEND_SIGNAL(parent, COMSIG_CELL_USE, power_drain) & CELL_INSUFFICIENT_CHARGE)
+/datum/component/wearertargeting/shield/on_unequip(datum/source, mob/user)
+	if(src.active)
 		src.turn_off()
+	..()
+
+/datum/component/wearertargeting/shield/proc/block_hit_fx()
 	return
 
-/datum/component/wearertargeting/energy_shield/disposing()
+/datum/component/wearertargeting/shield/proc/process(datum/source)
+	if (isnull(src.internal_power))
+		if(SEND_SIGNAL(parent, COMSIG_CELL_USE, power_drain) & CELL_INSUFFICIENT_CHARGE)
+			src.turn_off()
+	else
+		src.internal_power = max(src.internal_power - power_drain, 0)
+	return
+
+/datum/component/wearertargeting/shield/disposing()
 	processing_items -= src
 	. = ..()
 
-/datum/component/wearertargeting/energy_shield/proc/turn_on()
+/datum/component/wearertargeting/shield/proc/turn_on()
 	processing_items |= src
 	src.active = TRUE
-	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, FALSE, -5, 1.5)
-	boutput(current_user, SPAN_NOTICE("You power up your energy shield."))
-	current_user.vis_contents += overlay
+	if (src.overlay)
+		current_user.vis_contents += overlay
+	src.turn_on_effects()
 
-/datum/component/wearertargeting/energy_shield/proc/turn_off(shatter = FALSE)
+/datum/component/wearertargeting/shield/proc/turn_on_effects()
+	return
+
+/datum/component/wearertargeting/shield/proc/turn_off(shatter = FALSE)
 	processing_items -= src
 	src.active = FALSE
-	current_user.vis_contents -= overlay
+	if (src.overlay)
+		current_user.vis_contents -= overlay
+	src.turn_off_effects(shatter)
+	src.internal_power = src.initial_internal_power
+
+/datum/component/wearertargeting/shield/proc/turn_off_effects(shatter = FALSE)
+	return
+
+/datum/component/wearertargeting/shield/proc/toggle()
+	if(active)
+		src.turn_off()
+	else if (isnull(src.internal_power))
+		if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
+			src.turn_on()
+		else
+			src.no_power_effects()
+	else
+		if (src.internal_power > 0)
+			src.turn_on()
+		else
+			src.no_power_effects()
+
+/datum/component/wearertargeting/shield/proc/no_power_effects()
+	return
+
+/datum/component/wearertargeting/shield/proc/return_shield_active()
+	return src.active
+
+// --- standard energy shield ---
+
+/datum/component/wearertargeting/shield/energy
+	overlay_type = /obj/decal/ceshield
+
+/datum/component/wearertargeting/shield/energy/on_equip(datum/source, mob/equipper, slot)
+	var/obj/item/I = parent
+	I.add_item_ability(equipper, /obj/ability_button/toggle_shield)
+	. = ..()
+
+/datum/component/wearertargeting/shield/energy/on_unequip(datum/source, mob/user)
+	var/obj/item/I = parent
+	I.remove_item_ability(user, /obj/ability_button/toggle_shield)
+	if(active)
+		src.turn_off()
+	. = ..()
+
+/datum/component/wearertargeting/shield/energy/block_hit_fx()
+	..()
+	playsound(current_user, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
+
+/datum/component/wearertargeting/shield/energy/turn_on_effects()
+	..()
+	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, FALSE, -5, 1.5)
+	boutput(current_user, SPAN_NOTICE("You power up your energy shield."))
+
+/datum/component/wearertargeting/shield/energy/turn_off_effects(shatter = FALSE)
+	..()
 	if(shatter)
 		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
 		current_user.visible_message(SPAN_ALERT("[current_user]'s energy shield violently pops!"))
@@ -127,15 +199,10 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		playsound(current_user, 'sound/items/miningtool_off.ogg', 25, FALSE, -5, 1.5)
 		boutput(current_user, SPAN_NOTICE("Your energy shield powers down."))
 
-/datum/component/wearertargeting/energy_shield/proc/toggle()
-	if(active)
-		src.turn_off()
-	else
-		if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
-			src.turn_on()
-		else
-			playsound(current_user, "sparks", 75, 1, -1)
-			boutput(current_user, SPAN_ALERT("Your energy shield is depleted!"))
+/datum/component/wearertargeting/shield/energy/no_power_effects()
+	..()
+	playsound(current_user, "sparks", 75, 1, -1)
+	boutput(current_user, SPAN_ALERT("Your energy shield is depleted!"))
 
 /obj/ability_button/toggle_shield //TODO: percentage inventory-counter for remaining power?
 	name = "Toggle Energy Shield"
@@ -149,12 +216,28 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 //TODO: Add tooltip/desc info to item
 
 
-/datum/component/wearertargeting/energy_shield/ceshield/turn_on()
+/datum/component/wearertargeting/shield/energy/ceshield/turn_on()
 	. = ..()
 	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src, 100)
 	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_HEATPROT, src, 100)
 
-/datum/component/wearertargeting/energy_shield/ceshield/turn_off(shatter = FALSE)
+/datum/component/wearertargeting/shield/energy/ceshield/turn_off(shatter = FALSE)
 	. = ..()
 	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src)
 	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_HEATPROT, src)
+
+// wizard specific energy shield
+/datum/component/wearertargeting/shield/wizard
+	overlay_type = /obj/decal/wizard_shield
+
+/datum/component/wearertargeting/shield/wizard/turn_on_effects()
+	..()
+	boutput(current_user, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
+	current_user.visible_message(SPAN_ALERT("[current_user] is encased in a protective shield."))
+	playsound(current_user, 'sound/effects/MagShieldUp.ogg', 50, TRUE)
+
+/datum/component/wearertargeting/shield/wizard/turn_off_effects(shatter = FALSE)
+	..()
+	boutput(current_user, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
+	current_user.visible_message(SPAN_ALERT("The shield protecting [current_user] fades away."))
+	playsound(current_user, 'sound/effects/MagShieldDown.ogg', 50, TRUE)

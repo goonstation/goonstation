@@ -1369,7 +1369,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		. = ..()
 		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{max_charge = 100; recharge_rate = 25; recharge_delay = 10 SECONDS}
 		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
-		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 1, 1, TRUE, 0) //blocks 100% of damage taken, up to 100 damage total. No drain
+		AddComponent(/datum/component/wearertargeting/shield/energy, list(SLOT_WEAR_SUIT), 1, 1, TRUE, 0) //blocks 100% of damage taken, up to 100 damage total. No drain
 
 /obj/item/clothing/suit/space/engineer
 	name = "engineering space suit"
@@ -1715,6 +1715,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	hides_from_examine = C_UNIFORM
 	contraband = 4
 	duration_remove = 10 SECONDS
+
+	New()
+		..()
+		// this can really be added on the hat or robe, but should be tied to a wizard clothing item to work with clothes being required for spells
+		AddComponent(/datum/component/wearertargeting/shield/wizard, list(SLOT_WEAR_SUIT), 1, 1, TRUE, 0, 250)
 
 	setupProperties()
 		..()

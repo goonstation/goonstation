@@ -739,6 +739,14 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	item_function_flags = IMMUNE_TO_ACID
 	duration_remove = 10 SECONDS
 
+	unequipped(mob/user)
+		if (istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) && SEND_SIGNAL(H.wear_suit, COMSIG_CHECK_SHIELD_ACTIVE))
+				SEND_SIGNAL(H.wear_suit, COMSIG_SHIELD_TOGGLE)
+		..()
+
+
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
