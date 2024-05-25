@@ -24,8 +24,8 @@
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
 				src.item_names += R.name
 
-		//if (!sanity_check_exemption)
-		//	src.sanity_check() until i fix the sanity check
+		if (!sanity_check_exemption)
+			src.sanity_check()
 
 	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
 	proc/setup_manufacturing_requirements()
@@ -47,18 +47,28 @@
 					amt = 1
 				item_requirements[req] = amt
 
+	/// Assert various things about a manufacturing datum which should be true, and if not true, log the error and qdel the print
 	proc/sanity_check()
 		for (var/requirement in src.item_requirements)
-			if (isnull(src.item_requirements[requirement]))
-				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement list not properly configured")
+			if (isnull(requirement))
+				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] has null requirement in list")
+				qdel(src)
+				return
+			if (!ispath(requirement, /datum/manufacturing_requirement))
+				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] has requirement\
+											  which is not instantiated or not of /datum/manufacturing_requirement")
+				qdel(src)
+				return
+			if (!isnum(src.item_requirements[requirement]))
+				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] has non-numeric amount requirement in list")
 				qdel(src)
 				return
 		if (length(src.item_requirements) != length(src.item_names))
-			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement list not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] item names list does not match item requirements list length")
 			qdel(src)
 			return
 		if (!src.item_outputs.len)
-			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list has no contents")
 			qdel(src)
 			return
 
