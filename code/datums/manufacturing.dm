@@ -1,16 +1,27 @@
 /datum/manufacture
-	var/name = null                // Name of the schematic
-	var/list/item_requirements = null   // Materials required to Amount required (generate from `mats` if null)
-	var/list/item_names = list()   // Player-read name of each material
-	var/list/item_outputs = list() // What the schematic outputs
+	/// Player-read name of the blueprint
+	var/name = null
+	// Player-read name of each material
+	var/list/item_names = list()
+	/// An associated list of requirement datum to amount of requirement to use. See manufacturing_requirements.dm for more on those.
+	/// This list is overriden on children, and on New() the requirement ID strings are resolved to their datum instances in the cache
+	var/list/item_requirements = null
+	/// List of object types which the blueprint outputs upon satisfaction of requirements
+	var/list/item_outputs = list()
+	/// 0 - will create each item in the list once per loop (see manufacturer.dm Line 755)
+	/// 1 - will pick() a random item in the list once per loop
+	/// 2 - will pick() a random item before the loop begins then output one of the selected item each loop
 	var/randomise_output = 0
-	// 0 - will create each item in the list once per loop (see manufacturer.dm Line 755)
-	// 1 - will pick() a random item in the list once per loop
-	// 2 - will pick() a random item before the loop begins then output one of the selected item each loop
-	var/create = 1                 // How many times it'll make each thing in the list
-	var/time = 5                   // How long it takes to build
-	var/category = null            // Tool, Clothing, Resource, Component, Machinery or Miscellaneous
-	var/apply_material = 0
+	/// How many times it'll make each thing in the list - or not, depending on randomize_output
+	var/create = 1
+	/// How many seconds it takes to complete the blueprint
+	var/time = 5 SECONDS
+	/// Named category which the blueprint will reside in for manufacturers. See manufacturer.dm for list.
+	/// If a blueprint has an invalid category, it will be assigned "Miscellaneous".
+	var/category = null
+	/// Whether or not to apply a material onto the object upon completion. By default, this is the material used
+	/// For the first material requirement specified.
+	var/apply_material = FALSE
 
 	New()
 		..()
@@ -610,7 +621,7 @@
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/metalR
 	name = "Reinforced Metal"
@@ -619,7 +630,7 @@
 	create = 1
 	time = 12 SECONDS
 	category = "Resource"
-	apply_material = 1
+	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		var/obj/item/sheet/S = A
@@ -634,7 +645,7 @@
 	create = 5
 	time = 8 SECONDS
 	category = "Resource"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/glassR
 	name = "Reinforced Glass Panel"
@@ -644,7 +655,7 @@
 	create = 1
 	time = 12 SECONDS
 	category = "Resource"
-	apply_material = 1
+	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
@@ -658,7 +669,7 @@
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
 	category = "Resource"
-	apply_material = 1
+	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
 		..()
@@ -873,7 +884,7 @@
 	create = 1
 	time = 3 SECONDS
 	category = "Resource"
-	apply_material = 0
+	apply_material = FALSE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
@@ -1392,7 +1403,7 @@
 	create = 1
 	time = 45 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/full_cyborg_standard
 	name = "Standard Cyborg Parts"
@@ -1403,7 +1414,7 @@
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
@@ -1414,7 +1425,7 @@
 	time = 62 SECONDS
 	create = 1
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
@@ -1423,7 +1434,7 @@
 	create = 1
 	time = 30 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_chest_light
 	name = "Light Cyborg Chest"
@@ -1432,7 +1443,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_head
 	name = "Cyborg Head"
@@ -1441,7 +1452,7 @@
 	create = 1
 	time = 30 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_head_screen
 	name = "Cyborg Screen Head"
@@ -1452,7 +1463,7 @@
 	create = 1
 	time = 24 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_head_light
 	name = "Light Cyborg Head"
@@ -1461,7 +1472,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_arm_r
 	name = "Cyborg Arm (Right)"
@@ -1470,7 +1481,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_arm_r_light
 	name = "Light Cyborg Arm (Right)"
@@ -1479,7 +1490,7 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_arm_l
 	name = "Cyborg Arm (Left)"
@@ -1488,7 +1499,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_arm_l_light
 	name = "Light Cyborg Arm (Left)"
@@ -1497,7 +1508,7 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r
 	name = "Cyborg Leg (Right)"
@@ -1506,7 +1517,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r_light
 	name = "Light Cyborg Leg (Right)"
@@ -1515,7 +1526,7 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l
 	name = "Cyborg Leg (Left)"
@@ -1524,7 +1535,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l_light
 	name = "Light Cyborg Leg (Left)"
@@ -1533,7 +1544,7 @@
 	create = 1
 	time = 8 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_leg_treads
 	name = "Cyborg Treads"
@@ -1543,7 +1554,7 @@
 	create = 1
 	time = 15 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /datum/manufacture/robo_module
 	name = "Blank Cyborg Module"
@@ -1944,7 +1955,7 @@
 	create = 1
 	time = 120 SECONDS
 	category = "Component"
-	apply_material = 1
+	apply_material = TRUE
 
 /******************** Science **************************/
 

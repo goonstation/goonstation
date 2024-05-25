@@ -4,7 +4,7 @@
 	item_requirements = list("organic_or_rubber" = 3)
 	create = 1
 	time = 10 SECONDS
-	apply_material = 1
+	apply_material = TRUE
 	frame_path = /obj/blob
 
 /datum/manufacture/mechanics/blob/base
