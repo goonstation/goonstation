@@ -263,9 +263,9 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 						s_connect_image = image(src.icon, "connect[overlaydir]")
 					else
 						s_connect_image.icon_state = "connect[overlaydir]"
-					src.UpdateOverlays(s_connect_image, "connect")
+					src.AddOverlays(s_connect_image, "connect")
 				else
-					src.UpdateOverlays(null, "connect")
+					src.ClearSpecificOverlays("connect")
 
 
 	get_desc()

@@ -367,11 +367,15 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-load")
+				var/profilenum_old = src.profile_number
 				var/ret = src.cloudsave_load(client, params["name"])
+				src.profile_number = profilenum_old
 				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
+					src.traitPreferences.traitDataDirty = TRUE
+					src.profile_modified = TRUE
 					src.update_preview_icon()
 					return TRUE
 
@@ -382,6 +386,13 @@ var/list/removed_jobs = list(
 				else
 					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
 					return TRUE
+
+			if ("profile-file-export")
+				src.profile_export()
+
+			if ("profile-file-import")
+				src.profile_import()
+				return TRUE
 
 			if ("update-profileName")
 				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
@@ -538,9 +549,9 @@ var/list/removed_jobs = list(
 					src.pin	= null
 					return TRUE
 				else
-					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || 1000, 9999, 1000)
+					var/new_pin = tgui_input_pin(usr, "Please select a PIN between [PIN_MIN] and [PIN_MAX]", "Character Generation", src.pin || null, PIN_MAX, PIN_MIN)
 					if (new_pin)
-						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
+						src.pin = new_pin
 						src.profile_modified = TRUE
 						return TRUE
 
@@ -1026,6 +1037,45 @@ var/list/removed_jobs = list(
 				src.blType = "A+"
 				src.update_preview_icon()
 				return TRUE
+
+#ifndef SECRETS_ENABLED
+#define CHAR_EXPORT_SECRET "input_validation_is_hell_sorry"
+#endif
+
+	proc/profile_export()
+		var/savefile/message = src.savefile_save(usr.ckey, 1, 1)
+		var/fname
+		message["1_profile_name"] >> fname
+		fname = "[usr.ckey]_[fname].sav"
+		if(fexists(fname))
+			fdel(fname)
+		var/F = file(fname)
+		message["hash"] << null
+		var/hash = sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
+		message["hash"] << hash
+		message.ExportText("/", F)
+		usr << ftp(F, fname)
+		SPAWN(15 SECONDS)
+			var/tries = 0
+			while((fdel(fname) == 0) && tries++ < 10)
+				sleep(30 SECONDS)
+
+	proc/profile_import()
+		var/F = input(usr) as file|null
+		if(!F)
+			return
+		var/savefile/message = new()
+		message.ImportText("/", file2text(F))
+		var/hash
+		message["hash"] >> hash
+		message["hash"] << null
+		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
+			var/profilenum_old = profile_number
+			savefile_load(usr.client, 1, message)
+			src.profile_modified = TRUE
+			src.profile_number = profilenum_old
+			src.traitPreferences.traitDataDirty = TRUE
+
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.

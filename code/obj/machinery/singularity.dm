@@ -1399,22 +1399,19 @@ TYPEINFO(/obj/machinery/power/collector_array)
 
 
 /obj/machinery/power/collector_array/update_icon()
-	if(status & (NOPOWER|BROKEN))
-		overlays = null
-	if(P)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
+	if (src.active || src.magic)
+		src.UpdateOverlays(image('icons/obj/singularity.dmi', "on"), "on")
 	else
-		overlays = null
-	overlays += image('icons/obj/singularity.dmi', "on")
-	if(P)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
-	if(magic == 1)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
-		overlays += image('icons/obj/singularity.dmi', "on")
+		src.UpdateOverlays(null, "on")
+
+	if(src.P || src.magic)
+		src.UpdateOverlays(image('icons/obj/singularity.dmi', "ptank"), "ptank")
+	else
+		src.UpdateOverlays(null, "ptank")
 
 /obj/machinery/power/collector_array/power_change()
-	UpdateIcon()
 	..()
+	UpdateIcon()
 
 /obj/machinery/power/collector_array/process()
 
@@ -1437,6 +1434,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
+		UpdateIcon()
 		CU?.updatecons()
 		boutput(user, "You turn off the collector array.")
 		return
@@ -1444,6 +1442,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	if(src.active==0)
 		src.active = 1
 		icon_state = "ca_active"
+		UpdateIcon()
 		CU?.updatecons()
 		boutput(user, "You turn on the collector array.")
 		return
@@ -1593,12 +1592,8 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			updatecons()
 
 /obj/machinery/power/collector_control/update_icon()
+	overlays = null
 	if(magic != 1)
-
-		if(status & (NOPOWER|BROKEN))
-			overlays = null
-		else
-			overlays = null
 		if(src.active == 0)
 			return
 		overlays += image('icons/obj/singularity.dmi', "cu on")

@@ -808,7 +808,7 @@
 
 		boutput(C, rendered)
 		var/mob/M = C.mob
-		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
+		if(looc_text && speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
 			looc_text.show_to(C)
 
 	logTheThing(LOG_OOC, src, "LOOC: [msg]")

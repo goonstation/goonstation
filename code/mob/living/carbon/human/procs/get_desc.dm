@@ -21,7 +21,7 @@
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
-	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+	if(src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
 		var/disguisered = FALSE
 		for (var/obj/item/device/disguiser/D in src)
 			disguisered |= D.active
@@ -381,10 +381,13 @@
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
-			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]"
+			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]<br>"
+			var/list/trait_names = list()
 			for(var/id in src.traitHolder.traits)
 				var/datum/trait/T = src.traitHolder.traits[id]
-				. += "<br>[SPAN_NOTICE("[T.name]")]"
+				trait_names += T.name
+			. += SPAN_NOTICE(english_list(trait_names))
+
 		else
 			. += "<br>[SPAN_NOTICE("[src] does not appear to possess any special traits.")]"
 

@@ -2533,7 +2533,7 @@
 	},
 /area/russian/radiation)
 "aVJ" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
 /turf/space,
 /area/russian/radiation)
@@ -67435,7 +67435,7 @@
 	},
 /area/russian/radiation)
 "tgD" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/space,
 /area/russian/radiation)
 "thr" = (

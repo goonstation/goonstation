@@ -178,6 +178,9 @@
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return 0
 
+	proc/can_arm_attach()
+		return !(src.object_flags & NO_ARM_ATTACH )
+
 	assume_air(datum/air_group/giver)
 		if (loc)
 			return loc.assume_air(giver)
@@ -470,3 +473,5 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		var/mob/dead/observer/O = viewer
 		O.insert_observer(occupant)
 		return TRUE
+
+/obj/proc/after_abcu_spawn()

@@ -391,13 +391,14 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
-						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
-							switch(pick(1,2))
-								if(1)
-									hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
-								if(2)
-									src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
+						if(istype(W))
+							W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
+							if(src.bioHolder.HasEffect("coprolalia") && prob(10))
+								switch(pick(1,2))
+									if(1)
+										hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
+									if(2)
+										src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
 				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D

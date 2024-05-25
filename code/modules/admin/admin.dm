@@ -1875,6 +1875,8 @@ var/global/noir = 0
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue]")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue]")
 				if (length(custom_objective))
 					new /datum/objective/regular(custom_objective, M.mind, M.mind.get_antagonist(antag_options[selected_keyvalue]))
 					tgui_alert(M, "Your objective is: [custom_objective]", "Objective")
@@ -1924,6 +1926,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue] antagonist")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue] antagonist")
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
 			else
 				boutput(usr, SPAN_ALERT("Addition failed with return code [success]. The mob may be incompatible. Report this to a coder."))
@@ -1941,6 +1945,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.remove_antagonist(antag)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed [antag.id] antagonist from [key_name(M)]")
+				message_admins("[key_name(usr)] removed [antag.id] antagonist from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]"))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -1957,6 +1963,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed all antagonists from [key_name(M)]")
+				message_admins("[key_name(usr)] removed all antagonists from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -3309,6 +3317,8 @@ var/global/noir = 0
 						random_events.event_config()
 					if("motives")
 						simsController.showControls(usr)
+					if("regionallocator")
+						usr.client.region_allocator_panel()
 					if("artifacts")
 						artifact_controls.config()
 					if("DNA")
@@ -3707,6 +3717,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=regionallocator'>Region Allocator</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |

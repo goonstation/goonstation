@@ -148,7 +148,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
-
 	health_update_queue |= src
 
 	if(!src.abilityHolder)
@@ -1619,6 +1618,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	name = "a fucked up robot"
 	butcherable = BUTCHER_NOT_ALLOWED
 	can_bleed = FALSE
+	can_throw = TRUE
 	metabolizes = FALSE
 	var/emp_vuln = 1
 	blood_id = null
@@ -1635,6 +1635,8 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	emp_act()
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+		//gunbots have a LOT of disorient resist which is usually good but we want to bypass it here because EMPs are meant to mess with robots goddamnit!
+		src.changeStatus("disorient", 4 SECONDS)
 
 	can_eat()
 		return FALSE

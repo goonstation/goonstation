@@ -207,9 +207,9 @@
 		name = "Bite"
 		desc = "Bite a mob, injecting them with venom."
 		icon_state = "snake_bite"
-		cooldown = 12 SECONDS
+		cooldown = 8 SECONDS
 		attack_verb = "bite"
-		venom1 = "viper_venom"
+		venom1 = "hemotoxin"
 		amt1 = 12
 		amt2 = 0
 

@@ -1022,29 +1022,23 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
-/proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
-	SPAWN(1 DECI SECOND)
-		if(!M || !M.client || M.shakecamera)
-			return
-		M.shakecamera = 1
-		var/client/client = M.client
-		// track total offsets to reset (rather than lazily setting pixel_x to 0)
-		var/total_off_x = 0
-		var/total_off_y = 0
-		for(var/i=0, i<duration, i++)
-			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
-			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			total_off_x -= off_x
-			total_off_y -= off_y
-			if(client)
-				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			sleep(delay)
-
-		if (client)
-			animate(client, pixel_x = total_off_x, pixel_y = total_off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			M.shakecamera = 0
-		animate(pixel_x = total_off_x*-1, pixel_y = total_off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+/proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
+	if(!M || !M.client)
+		return
+	var/client/client = M.client
+	var/initial_x = client.pixel_x
+	var/initial_y = client.pixel_y
+	for(var/i=0, i<duration, i++)
+		var/magnitude = randfloat(0, strength)
+		var/angle = randfloat(0, 360)
+		var/target_x = magnitude * cos(angle) + initial_x
+		var/target_y = magnitude * sin(angle) + initial_y
+		var/offset_x = target_x - client.pixel_x
+		var/offset_y = target_y - client.pixel_y
+		animate(client, pixel_x = offset_x, pixel_y = offset_y, easing = LINEAR_EASING, time = delay, flags = ANIMATION_RELATIVE | (i != 0 ? ANIMATION_CONTINUE : ANIMATION_PARALLEL))
+	var/offset_x = initial_x - client.pixel_x
+	var/offset_y = initial_y - client.pixel_y
+	animate(pixel_x = offset_x, pixel_y = offset_y, easing = LINEAR_EASING, time = delay, flags = ANIMATION_RELATIVE)
 
 /proc/recoil_camera(mob/M, dir, strength=1, spread=3)
 	if(!M || !M.client || !M.client.recoil_controller)
@@ -2644,3 +2638,85 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 				continue
 
 		. += container
+
+/// returns the position of the last matching needle in haystack, case sensitive
+/proc/findLastMatch(haystack, needle)
+	var/last_index = length(haystack)  // Start at the end of the data
+	var/last_match_found = 0
+
+	// Search from the end towards the beginning
+	while(last_index > 0)
+	{
+		last_index = findtext(haystack, needle, -last_index)  // Search from near the end
+		if(last_index > last_match_found)
+		{
+			last_match_found = last_index  // Update the last valid match
+			last_index = length(haystack) - last_index  // Adjust search start closer to the beginning
+		}
+		else
+		{
+			break  // Exit the loop if no further matches are found
+		}
+	}
+
+	return last_match_found
+
+/// returns the position of the last matching needle in haystack, case insensitive
+/proc/findLastMatchEx(haystack, needle)
+	var/last_index = length(haystack)  // Start at the end of the data
+	var/last_match_found = 0
+
+	// Search from the end towards the beginning
+	while(last_index > 0)
+	{
+		last_index = findtextEx(haystack, needle, -last_index)  // Search from near the end
+		if(last_index > last_match_found)
+		{
+			last_match_found = last_index  // Update the last valid match
+			last_index = length(haystack) - last_index  // Adjust search start closer to the beginning
+		}
+		else
+		{
+			break  // Exit the loop if no further matches are found
+		}
+	}
+
+	return last_match_found
+
+/// returns the maxx value of a TGM formatted map. Accepts either a map file or preread map text data
+/proc/get_tgm_maxx(map_data)
+	if (isfile(map_data))
+		map_data = file2text(map_data)
+	var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+	var/x_max = 0
+
+	// Extract X from the last valid match
+	if(idx > 0)
+	{
+		var/end_of_tuple = findtextEx(map_data, ")", idx)  // Find the end of the tuple
+		x_max = text2num(copytext(map_data, idx + 1, end_of_tuple))  // Extract the X value
+	}
+	return x_max
+
+/// returns the maxy value of a TGM formatted map. Accepts either a map file or preread map text data
+/proc/get_tgm_maxy(map_data)
+	if (isfile(map_data))
+		map_data = file2text(map_data)
+	var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+	var/y_max = 0
+
+	// Start counting newlines from the first newline after the last match
+	if(idx > 0)
+	{
+		var/line_start = findtextEx(map_data, "\n", idx) + 1
+		while(line_start > 0 && line_start < length(map_data))
+		{
+			line_start = findtextEx(map_data, "\n", line_start + 1)  // Find the next newline
+			if(line_start)
+				y_max++
+		}
+		// Decrement Y count if there's an extra newline at the end of the data
+		if(map_data[length(map_data)] == "\n")
+			y_max--
+	}
+	return y_max
