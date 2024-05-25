@@ -4,7 +4,7 @@
 	spread = "Airborne"
 	virulence = 30 // Reduced from 100 %. Station-wide, basically incurable and unavoidable epidemics weren't fun (Convair880).
 	resistance_prob = 25 // Increased from 0 %.
-	cure = "Sleep"
+	cure_flags = CURE_SLEEP
 	associated_reagent = "green mucus"
 	affected_species = list("Human")
 

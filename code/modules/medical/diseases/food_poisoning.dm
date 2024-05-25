@@ -2,9 +2,8 @@
 	name = "Food Poisoning"
 	max_stages = 3
 	spread = "Non-Contagious"
-	cure = "Sleep"
+	cure_flags = (CURE_SLEEP | CURE_ANTIBIOTICS)
 	associated_reagent = "salmonella"
-	reagentcure = list("spaceacillin")
 	affected_species = list("Human")
 //
 /datum/ailment/disease/food_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
@@ -57,4 +56,4 @@
 					for(var/mob/O in viewers(affected_mob, null))
 						O.show_message(SPAN_ALERT("[affected_mob] gags and retches!"), 1)
 					affected_mob.changeStatus("stunned", 2 SECONDS)
-					affected_mob.changeStatus("weakened", 2 SECONDS)
+					affected_mob.changeStatus("knockdown", 2 SECONDS)

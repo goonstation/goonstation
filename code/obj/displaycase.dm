@@ -113,7 +113,7 @@
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			boutput(SPAN_NOTICE("You disassemble the broken display case."))
+			boutput(user, SPAN_NOTICE("You disassemble the broken display case."))
 			qdel(src)
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken
@@ -172,7 +172,7 @@
 	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	item_state = "gun"
+	item_state = "capgun"
 	force = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
@@ -344,7 +344,6 @@
 		return
 
 /datum/action/bar/icon/captaingun_assembly
-	id = "captaingun_assembly"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"

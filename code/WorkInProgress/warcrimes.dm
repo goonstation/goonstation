@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	proc/pacify()
 		src.set_a_intent(INTENT_HELP)
 		src.target = null
-		src.ai_state = 0
+		src.ai_set_state(AI_PASSIVE)
 		src.ai_target = null
 
 	proc/speak()
@@ -493,7 +493,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.set_a_intent(INTENT_HARM)
@@ -620,14 +620,14 @@ Urs' Hauntdog critter
 		..()
 
 	proc/flip()
-		src.visible_message("<b>[src]</b> does a flip!",2)
+		src.visible_message("<b>[src]</b> does a flip!")
 		flick("hauntdog-flip",src)
 		sleep(1.3 SECONDS)
 
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		src.visible_message("<b>[src]</b> stops moving.",2)
+		src.visible_message("<b>[src]</b> stops moving.")
 		var/obj/item/reagent_containers/food/snacks/hotdog/H = new /obj/item/reagent_containers/food/snacks/hotdog(get_turf(src))
 
 		H.bun = 5

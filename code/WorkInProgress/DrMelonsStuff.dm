@@ -139,10 +139,14 @@
 		else
 			. = ..()
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	mouse_drop(obj/over_object, src_location, over_location)
 		if (isintangible(usr))
 			return
-		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
+		if (usr.stat || usr.getStatusDuration("knockdown") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, SPAN_ALERT("That's too far!"))
 			return
 		if (src.occupant)
@@ -211,10 +215,10 @@
 		if (is_incapacitated(user))
 			return
 		if (issilicon(user) || isAI(user))
-			boutput(SPAN_ALERT("You can't quite lift [src.occupant] out of the tub!"))
+			boutput(user, SPAN_ALERT("You can't quite lift [src.occupant] out of the tub!"))
 			return
 		if (!src.occupant)
-			boutput(SPAN_ALERT("There's no one inside!"))
+			boutput(user, SPAN_ALERT("There's no one inside!"))
 			return
 		src.occupant.set_loc(get_turf(src))
 

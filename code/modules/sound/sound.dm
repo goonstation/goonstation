@@ -104,7 +104,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
-	cloud_put("audio_volume", json_encode(volumes))
+	src.player.cloudSaves.putData("audio_volume", json_encode(volumes))
 
 	var/list/playing = src.SoundQuery()
 	if( channel == VOLUME_CHANNEL_MASTER )
@@ -245,7 +245,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
-				if(listener_location != source_location)
+				if(listener_location != source_location) // are they in a different area?
 					//boutput(M, "You barely hear a [source] at [source_location]!")
 					S.echo = ECHO_AFAR //Sound is occluded
 				else
@@ -328,7 +328,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 		src << S
 
-		if (src.observers.len)
+		if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
@@ -367,7 +367,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	src << S
 
-	if (src.observers.len)
+	if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 		for (var/mob/M in src.observers)
 			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 				continue

@@ -107,7 +107,7 @@
 	proc/speak(var/message)
 		if (!message)
 			return
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\""))
 		if (src.text2speech)
 			var/audio = dectalk("\[:nk\][message]")
 			if (audio["audio"])

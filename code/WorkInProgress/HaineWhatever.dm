@@ -1,112 +1,3 @@
-// hey look at me I'm changing a file
-// again, again, again
-
-// How 2 use: run /proc/test_disposal_system via Advanced ProcCall
-// locate the X and Y where normally disposed stuff should end up (usually the last bit of conveyor belt in front of the crusher door
-// wait and see what comes up!
-/proc/test_disposal_system(var/expected_x, var/expected_y, var/sleep_time = 600, var/include_mail = 1)
-	if (!usr && (isnull(expected_x) || isnull(expected_y)))
-		return
-	if (isnull(expected_x))
-		expected_x = input(usr,"Please enter X coordinate") as null|num
-		if (isnull(expected_x))
-			return
-	if (isnull(expected_y))
-		expected_y = input(usr,"Please enter Y coordinate") as null|num
-		if (isnull(expected_y))
-			return
-
-	var/list/dummy_list = list()
-	for (var/obj/machinery/disposal/D in world)
-		if (D.z != 1)
-			break
-		/*
-		if (D.type != text2path(test_path))
-			continue
-		*/
-		var/obj/item/disposal_test_dummy/TD
-		// Mail chute test
-		if(istype(D, /obj/machinery/disposal/mail))
-			if(include_mail)
-				var/obj/machinery/disposal/mail/mail_chute = D
-
-				mail_chute.Topic("?rescan=1", params2list("rescan=1"))
-				SPAWN(2 SECONDS)
-					for(var/dest in mail_chute.destinations)
-						var/obj/item/disposal_test_dummy/mail_test/MD = new /obj/item/disposal_test_dummy/mail_test(mail_chute, sleep_time)
-						MD.source_disposal = mail_chute
-						MD.destination_tag = dest
-						mail_chute.destination_tag = dest
-						//dummy_list.Add(MD)
-						mail_chute.flush()
-
-		else
-			//Regular chute
-			TD = new /obj/item/disposal_test_dummy(D)
-			TD.expected_x = expected_x
-			TD.expected_y = expected_y
-			dummy_list.Add(TD)
-			TD.source_disposal = D
-			SPAWN(0)
-				D.flush()
-
-	message_coders("test_disposal_system() sleeping [sleep_time] and spawned [dummy_list.len] dummies")
-	sleep(sleep_time)
-
-	var/successes = 0
-	for (var/obj/item/disposal_test_dummy/TD in dummy_list)
-		if (!TD.report_fail())
-			successes ++
-
-		qdel(TD)
-
-	message_coders("Disposal test completed with [successes] successes")
-
-/obj/item/disposal_test_dummy
-	icon = 'icons/misc/bird.dmi'
-	icon_state = "bhooty"
-	name = "wtf"
-	var/obj/machinery/disposal/source_disposal = null
-	var/expected_x = 0
-	var/expected_y = 0
-
-
-	New(var/atom/loc, var/TTL=0)
-		..(loc)
-		if(TTL)
-			SPAWN(TTL)
-				die()
-
-	proc/report_fail()
-		if(src.x != expected_x || src.y != expected_y)
-			message_coders("test dummy misrouted at [log_loc(src)][src.source_disposal ? " from [log_loc(src.source_disposal)]" : " (source disposal destroyed)"]")
-			return 1
-
-		return 0
-
-	proc/die()
-		report_fail()
-		qdel(src)
-
-/obj/item/disposal_test_dummy/mail_test
-	var/obj/machinery/disposal/mail/destination_disposal = null
-	var/destination_tag = null
-	var/success = 0
-
-/obj/item/disposal_test_dummy/mail_test/pipe_eject()
-	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
-	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
-		success = 1
-	SPAWN(5 SECONDS)
-		die()
-	..()
-
-/obj/item/disposal_test_dummy/mail_test/report_fail()
-	if(!success)
-		message_coders("mail dummy misrouted at [log_loc(src)] from [log_loc(source_disposal)], destination: [destination_tag], reached: [log_loc(destination_disposal)]")
-		return 1
-	return 0
-
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-ADMIN-STUFF-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -209,7 +100,7 @@
 	p_class = 1
 	burn_point = 220
 	burn_output = 300
-	burn_possible = 1
+	burn_possible = TRUE
 	rand_pos = 1
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -938,7 +829,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			"I hope you don't like how your face looks, [target_name], cause it's about to get rearranged!",\
 			"I told you to [pick("stop that shit", "cut that shit out")], and you [pick("ain't", "didn't", "didn't listen")]! [pick("So now", "It's time", "And now", "Ypu best not be suprised that")] you're gunna [pick("reap what you sewed", "get it", "get what's yours", "get what's comin' to you")]!")
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.im_mad = 0
@@ -969,7 +860,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.say(kicked_their_ass)
 
 			src.target = null
-			src.ai_state = 0
+			src.ai_set_state(AI_PASSIVE)
 			src.ai_target = null
 			src.im_mad = 0
 			walk_towards(src,null)
@@ -984,7 +875,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.say(kicked_my_ass)
 
 			src.target = null
-			src.ai_state = 0
+			src.ai_set_state(AI_PASSIVE)
 			src.ai_target = null
 			src.im_mad = 0
 			walk_towards(src,null)
@@ -1000,7 +891,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.say(got_away)
 
 			src.target = null
-			src.ai_state = 0
+			src.ai_set_state(AI_PASSIVE)
 			src.ai_target = null
 			src.im_mad = 0
 			walk_towards(src,null)
@@ -1189,7 +1080,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	cooldown = 100
 
 	ability_allowed()
-		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("unconscious"))
 			boutput(the_mob, SPAN_ALERT("You are incapacitated."))
 			return 0
 
@@ -1323,6 +1214,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/possible_bling_uncommon = list(/obj/item/currency/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
 	default_material = "gold"
+	recoil_strength = 4
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
@@ -1447,7 +1339,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 /datum/action/bar/icon/apply_makeup // yee
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "apply_makeup"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick1"
 	var/mob/living/carbon/human/target
@@ -1533,7 +1424,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			icon_state = "bangflag[icon_state]"
 			return
 		else
-			boutput(user, SPAN_NOTICE("The gun is still cooling down from it's last incredibly powerful shot! Or at least you pretend that it is."))
+			boutput(user, SPAN_NOTICE("The gun is still cooling down from its last incredibly powerful shot! Or at least you pretend that it is."))
 
 	attack_self(mob/user)
 		if (src.bangfired)
@@ -1558,6 +1449,53 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"
 	description = "A bang flag unfurls out of the barrel!"
 	two_handed = 1
+
+/obj/item/bang_gun/lawlbringer
+	name = "\improper Lawlbringer"
+	icon = 'icons/obj/items/guns/energy.dmi'
+	item_state = "lawg-detain"
+	icon_state = "lawbringer0"
+	desc = "A gun with a microphone. Fascinating."
+	description = "A bang flag unfurls out of the barrel!"
+	inventory_counter_enabled = TRUE
+
+	New()
+		src.create_inventory_counter()
+		inventory_counter.update_percent(1, 1)
+		..()
+
+	attack_hand(mob/user)
+		boutput(user, SPAN_ALERT("\The [src] has accepted your DNA string. You are its owner!"))
+		assign_name(user)
+		..()
+
+	proc/assign_name(var/mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.bioHolder)
+				src.name = "HoS [H.real_name]'s Lawlbringer"
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(reach || src.bangfired)
+			// this falling through is ok since it won't activate the else/if there either,
+			// so it will fall through once more
+			..()
+		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
+			src.bangfired = TRUE
+			user?.visible_message(SPAN_ALERT("[user] fires [src][target ? " at [target]" : null]! [description]"))
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, TRUE)
+			inventory_counter.update_percent(0, 1)
+			return
+		else
+			boutput(user, SPAN_NOTICE("The gun is still cooling down from its last incredibly powerful shot! Or at least you pretend that it is."))
+
+	attack_self(mob/user)
+		if (src.bangfired)
+			src.bangfired = FALSE
+			icon_state = initial(src.icon_state)
+			boutput(user, SPAN_NOTICE("You awkwardly jam the tiny flag back into the barrel."))
+			inventory_counter.update_percent(1, 1)
+
 
 /*
 /obj/item // if I accidentally commit this uncommented PLEASE KILL ME tia <3
@@ -1589,11 +1527,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/hexnum = copytext(num1, 2)
 	var/num2 = num2hex(hex2num(hexnum) - 554040)
 */
-
-/turf/simulated/tempstuff
-	name = "floor"
-	icon = 'icons/misc/HaineSpriteDump.dmi'
-	icon_state = "gooberything_small"
 
 /obj/item/blessed_ball_bearing
 	name = "blessed ball bearing" // fill claymores with them for all your nazi-vampire-protection needs
@@ -1756,7 +1689,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
-			if(src.getStatusDuration("paralysis") || src.getStatusDuration("weakened") || src.stunned > 0)
+			if(src.getStatusDuration("unconscious") || src.getStatusDuration("knockdown") || src.stunned > 0)
 				boutput(src, "You can't do that while incapacitated!")
 				return
 
@@ -1778,8 +1711,8 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						var/mob/living/H = G.affecting
 						if(H.lying)
 							H.lying = 0
-							H.delStatus("paralysis")
-							H.delStatus("weakened")
+							H.delStatus("unconscious")
+							H.delStatus("knockdown")
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
 						src.transforming = 1
@@ -1957,7 +1890,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_mob_life(var/mob/M)
 		if(!M) M = holder.my_atom
 		M.drowsyness = max(M.drowsyness-15, 0)
-		if(M.getStatusDuration("paralysis")) M.paralysis-=3
+		if(M.getStatusDuration("unconscious")) M.paralysis-=3
 		if(M.stunned) M.stunned-=3
 		if(M.weakened) M.weakened-=3
 		if(M.sleeping) M.sleeping = 0

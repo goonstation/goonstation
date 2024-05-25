@@ -118,7 +118,7 @@
 			<td><a href="javascript:goBYOND('action=field;field=id');">[src.active_record_general["id"]]</a></td>
 		</tr>
 		<tr>
-			<th>Gender</th>
+			<th>Body Type</th>
 			<td><a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general["sex"]]</a></td>
 		</tr>
 		<tr>

@@ -22,6 +22,7 @@ TRAYS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 2
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -54,13 +55,14 @@ TRAYS
 
 	New()
 		..()
-		if(prob(60))
+		if(src.pixel_y == 0 && prob(60)) // Don't adjust map-set pixel adjustments
 			src.pixel_y = rand(0, 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 		return
 
 	attack_self(mob/user as mob)
 		src.rotate()
+		..()
 
 	proc/rotate()
 		if(rotatable)
@@ -371,6 +373,7 @@ TRAYS
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	c_flags = ONBELT
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
@@ -430,7 +433,6 @@ TRAYS
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "donutbox"
-	uses_multiple_icon_states = 1
 	var/count = 6
 	var/max_count = 6
 	var/box_type = "donutbox"
@@ -498,6 +500,9 @@ TRAYS
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tongs))
 			return src.Attackhand(user)
+		// Stops trying to fit sticker in the box when we want it ON the box
+		if (istype(W, /obj/item/sticker))
+			return
 		if(src.count >= src.max_count)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
@@ -517,14 +522,21 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
+	proc/find_food()
+		// First in, last out food search
+		// Mostly needed since stickers add themselves to contents and need to stay there to be able to be removed...
+		for (var/i = length(src.contents) to 1 step -1)
+			var/obj/content = src.contents[i]
+			if (istype(content, /obj/item/reagent_containers/food/snacks))
+				return content
+
 	attack_hand(mob/user)
 		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.count == 0)
 			..()
 			return
 		src.add_fingerprint(user)
-		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(length(myFoodList) >= 1)
-			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
+		var/obj/item/reagent_containers/food/snacks/myFood = find_food(src.contents)
+		if(myFood)
 			if(src.count >= 1)
 				src.count--
 				tooltip_rebuild = 1
@@ -598,6 +610,8 @@ TRAYS
 	var/stackable = TRUE
 	/// Do we have a plate stacked on us?
 	var/plate_stacked = FALSE
+	/// Can this smash someone on the head?
+	var/can_headsmash = TRUE
 
 	New()
 		..()
@@ -699,8 +713,6 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (!(food in src.contents))
-			return
 		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
@@ -715,17 +727,21 @@ TRAYS
 
 		src.UpdateIcon()
 
-	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
-	proc/indirect_pickup(var/food, mob/user, atom/over_object)
-		if (user == over_object && in_interact_range(src, user) && can_act(user))
+	/// Handles food being dragged around
+	proc/indirect_pickup(var/obj/item/food, mob/user, atom/over_object)
+		if (!in_interact_range(src, user) || !can_act(user))
+			return
+		if (user == over_object)
 			src.Attackhand(user)
+		else if (over_object == src || isturf(over_object))
+			src.remove_contents(food)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere(depth = 1)
 		if (length(src.contents))
 			src.visible_message(SPAN_ALERT("Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!"))
 		for (var/atom/movable/food in src)
-			food.set_loc(get_turf(src))
+			src.remove_contents(food)
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
@@ -805,7 +821,7 @@ TRAYS
 				src.remove_contents(pick(src.contents))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(user.a_intent == INTENT_HARM && src.is_plate)
+		if(user.a_intent == INTENT_HARM && src.can_headsmash)
 			if(target == user)
 				boutput(user, SPAN_ALERT("<B>You smash [src] over your own head!</b>"))
 			else
@@ -817,9 +833,9 @@ TRAYS
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(istype(H.head, /obj/item/clothing/head/helmet))
-					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else if(ismobcritter(target))
 				var/mob/living/critter/L = target
@@ -829,12 +845,12 @@ TRAYS
 						has_helmet = TRUE
 						break
 				if(has_helmet)
-					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else //borgs, ghosts, whatever
-				target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 		else
 			target.visible_message(SPAN_ALERT("[user] taps [target] over the head with [src]."))
 			playsound(src, src.hit_sound, 30, 1)
@@ -887,6 +903,7 @@ TRAYS
 	is_plate = FALSE
 	max_space = 6
 	space_left = 6
+	can_headsmash = FALSE
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -903,7 +920,24 @@ TRAYS
 			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
 			return
 
+		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
+			return
+
 		. = ..()
+
+	proc/mousetrap_check(mob/user)
+		for(var/obj/item/mousetrap/MT in src.food_inside)
+			if (MT.armed)
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a mousetrap!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live mousetrap in there!</B>"))
+				MT.triggered(user, user?.hand ? "l_hand" : "r_hand")
+				return TRUE
+		for(var/obj/item/mine/M in src.food_inside)
+			if (M.armed && M.used_up != TRUE)
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a [M.name]!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live [M.name] in there!</B>"))
+				M.triggered(user)
+				return TRUE
 
 	proc/toggle_box(mob/user)
 		if (length(src.contents - src.food_inside) > 0)
@@ -930,6 +964,9 @@ TRAYS
 			src.UpdateIcon()
 
 		else
+			if (src.mousetrap_check(user))
+				return FALSE
+
 			if (isnull(user)) // We only need a null-check here because of the shit_goes_everywhere proc
 				icon_state = "pizzabox_open"
 				src.open = TRUE
@@ -1056,6 +1093,50 @@ TRAYS
 		tray_health--
 
 	shatter() // don't
+		return
+
+/obj/item/plate/cooling_rack // because grilled and fried foods always scalding you is annoying. This also lets you cook things in plasma fires.
+	name = "cooling rack"
+	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
+	icon = 'icons/obj/foodNdrink/food_related.dmi'
+	icon_state = "coolingrack"
+	flags = FPRINT | TABLEPASS
+	force = 3
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 5
+	pickup_sfx = "step_lattice"
+	w_class = W_CLASS_NORMAL
+	hit_sound = "step_lattice"
+	can_headsmash = FALSE // no unbreakable smashing tool for you!
+	stackable = FALSE // and no stacking them on plates!
+
+	New()
+		. = ..()
+		processing_items |= src
+
+	disposing()
+		. = ..()
+		processing_items.Remove(src)
+
+	process()
+		if (!length(src.contents)) return
+		var/turf/simulated/T = get_turf(src.loc)
+		if (!T) return
+		var/temp_to_expose = istype(T) ? T.air.temperature : T.temperature
+		for (var/obj/item/reagent_containers/food in src.contents)
+			var/datum/reagents/R = food.reagents
+			R.temperature_reagents(temp_to_expose, exposed_volume = (150 + R.total_volume * 2), change_cap = 75)
+
+	add_contents(obj/item/food, mob/user, click_params)
+		if (!food.edible)
+			boutput(user, SPAN_ALERT("That's not food, it doesn't belong on \the [src]!"))
+			return
+		..()
+
+	shatter()//mesh trays don't shatter
+		shit_goes_everywhere()
+
 		return
 
 //sushiiiiiii
@@ -1215,13 +1296,6 @@ TRAYS
 /obj/surgery_tray/kitchen_island
 	name = "kitchen island"
 	desc = "a table! with WHEELS!"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "kitchen_island"
-
-//kitchen island
-/obj/surgery_tray/kitchen_island
-	name = "kitchen island"
-	desc = "a table! with wheels!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 

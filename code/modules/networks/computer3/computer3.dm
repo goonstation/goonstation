@@ -25,7 +25,7 @@
 	var/setup_drive_size = 64
 	var/setup_drive_type = null //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
-	var/setup_starting_program = null //This program will start out installed on the drive
+	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
 	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
 	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
@@ -100,7 +100,7 @@
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
-			setup_starting_program = /datum/computer/file/terminal_program/communications
+			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
 			setup_drive_size = 80
@@ -283,7 +283,7 @@
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
 		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
@@ -305,13 +305,13 @@
 					src.hd = new /obj/item/disk/data/fixed_disk(src)
 				src.hd.file_amount = src.setup_drive_size
 
-			if(ispath(src.setup_starting_program))
-				var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
+			for (var/program_path in (list() + src.setup_starting_program)) //neat hack to make it work with lists or a single path
+				if(ispath(program_path))
+					var/datum/computer/file/terminal_program/starting = new program_path
 
-				src.hd.file_amount = max(src.hd.file_amount, starting.size)
+					src.hd.file_amount = max(src.hd.file_amount, starting.size)
 
-				starting.transfer_holder(src.hd)
-				//src.processing_programs += src.active_program
+					starting.transfer_holder(src.hd)
 
 			if(ispath(src.setup_starting_os) && src.hd)
 				var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
@@ -466,7 +466,7 @@
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.UpdateOverlays(screen_image, "screen_image")
+			src.AddOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
 			icon_state = src.base_icon_state
@@ -854,6 +854,7 @@
 
 		if (src.loc == user)
 			user.drop_item()
+			user.u_equip(src)
 		src.luggable.set_loc(T)
 		src.luggable.case = src
 		src.luggable.deployed = 1

@@ -38,7 +38,6 @@
 @include meta.load-css('./components/ProgressBar.scss');
 @include meta.load-css('./components/RoundGauge.scss');
 @include meta.load-css('./components/Section.scss');
-@include meta.load-css('./components/goonstation/SectionEx.scss');
 @include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Stack.scss');
 @include meta.load-css('./components/Table.scss');
@@ -51,6 +50,7 @@
 @include meta.load-css('./interfaces/common/ListSearch.scss');
 @include meta.load-css('./interfaces/Airlock.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/BanPanel.scss');
 @include meta.load-css('./interfaces/Cashreg.scss');
 @include meta.load-css('./interfaces/ColorPicker.scss');
 @include meta.load-css('./interfaces/ComUplink.scss');
@@ -68,6 +68,7 @@
 @include meta.load-css('./interfaces/MinimapController.scss');
 @include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/Phone.scss');
+@include meta.load-css('./interfaces/PINInputModal.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');
 @include meta.load-css('./interfaces/WeaponVendor.scss');
 

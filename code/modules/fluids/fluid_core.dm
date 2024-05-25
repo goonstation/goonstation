@@ -253,7 +253,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			var/mob/M = AM
 			M.set_clothing_icon_dirty()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		..()
 		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
@@ -627,7 +627,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		overlay.pixel_y = poy
 		wall_overlay_images[overlay_key] = overlay
 
-		src.UpdateOverlays(overlay, overlay_key)
+		src.AddOverlays(overlay, overlay_key)
 
 
 		// fluid sprite highlights to make it look pretty
@@ -754,14 +754,14 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 						SPAN_ALERT("You slip on [F]!"))
 				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
 					src.remove_pulling()
-					src.changeStatus("weakened", 3.5 SECONDS)
+					src.changeStatus("knockdown", 3.5 SECONDS)
 					boutput(src, SPAN_NOTICE("You slipped on [F]!"))
 					playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 				if(-2) //superlibe
 					src.remove_pulling()
-					src.changeStatus("weakened", 6 SECONDS)
+					src.changeStatus("knockdown", 6 SECONDS)
 					playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 					boutput(src, SPAN_NOTICE("You slipped on [F]!"))
 					var/atom/target = get_edge_target_turf(src, src.dir)

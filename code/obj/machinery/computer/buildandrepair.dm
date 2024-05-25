@@ -160,6 +160,9 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/qmsupply
 	name = "Circuit board (Quartermaster's Console)"
 	computertype = "/obj/machinery/computer/supplycomp"
+/obj/item/circuitboard/stockexchange
+	name = "Circuit board (Stock Exchange)"
+	computertype = "/obj/machinery/computer/stockexchange"
 /obj/item/circuitboard/transception
 	name = "Circuit board (Transception Interlink)"
 	computertype = "/obj/machinery/computer/transception"
@@ -172,6 +175,10 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/announcement
 	name = "Circuit board (Announcement Computer)"
 	computertype = "/obj/machinery/computer/announcement"
+
+/obj/item/circuitboard/siphon_control
+	name = "Circuit board (Siphon Control)"
+	computertype = /obj/machinery/computer/siphon_control
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)

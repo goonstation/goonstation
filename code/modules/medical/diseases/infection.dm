@@ -2,9 +2,7 @@
 	name = "MRSA"
 	max_stages = 3
 	spread = "The patient has an aggressive Staph infection."
-	cure = "Antibiotics"
-	reagentcure = list("spaceacillin")
-	recureprob = 5
+	cure_flags = CURE_ANTIBIOTICS
 	affected_species = list("Human")
 	stage_prob = 3
 

@@ -327,8 +327,8 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -564,8 +564,8 @@
 	slots = 7
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -765,7 +765,7 @@
 	check_wclass = 1
 
 /obj/item/storage/belt/mining/prepared
-	spawn_contents = list(/obj/item/mining_tool/power_pick,
+	spawn_contents = list(/obj/item/mining_tool/powered/pickaxe,
 		/obj/item/ore_scoop/prepared,
 		/obj/item/satchel/mining,
 		/obj/item/device/geiger,

@@ -5,7 +5,7 @@
 	var/breathtimernotifredundant = 0
 	var/breathstate = 0
 
-	proc/update_breath_hud(datum/organ/lung/status/status_updates)
+	proc/update_breath_hud(datum/organ_status/lung/status_updates)
 		src.human_owner?.hud.update_breathing_indicators(status_updates)
 		src.critter_owner?.hud.update_breathing_indicators(status_updates)
 
@@ -16,7 +16,7 @@
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
 			breathtimer += get_multiplier()
-			var/datum/organ/lung/status/status_updates = new
+			var/datum/organ_status/lung/status_updates = new
 
 			switch(breathtimer)
 				if (0 to 15)
@@ -63,7 +63,7 @@
 
 	proc/breathe(datum/gas_mixture/environment)
 		var/mult = get_multiplier()
-		var/datum/organ/lung/status/status_updates = new
+		var/datum/organ_status/lung/status_updates = new
 
 		var/atom/underwater = 0
 		if (isturf(owner.loc))
@@ -168,10 +168,10 @@
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
 						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME, mult)
-					else if (isturf(owner.loc))
+					else if (isturf(owner.loc) || ismob(owner.loc))
 						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
-
-						breath = owner.loc.remove_air(breath_moles)
+						var/turf/T = get_turf(owner)
+						breath = T?.remove_air(breath_moles)
 
 				else //Still give containing object the chance to interact
 					underwater = 0 // internals override underwater state
@@ -213,7 +213,7 @@
 
 	///Return value is the number of lungs that successfully breathed
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
-		var/datum/organ/lung/status/status_updates = new
+		var/datum/organ_status/lung/status_updates = new
 		if (owner.nodamage)
 			src.update_breath_hud(status_updates)
 			return

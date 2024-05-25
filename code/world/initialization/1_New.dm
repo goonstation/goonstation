@@ -17,15 +17,13 @@
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
 	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
 
-	//This is used by bans for checking, so we want it very available
+	// Global handlers that should be highly available
 	apiHandler = new()
-
+	eventRecorder = new()
+	roundManagement = new()
 	participationRecorder = new()
-	//participationRecorder = new(1) //Enable debug
-
 	antagWeighter = new()
-
-	if(!chui) chui = new()
+	if (!chui) chui = new()
 
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")

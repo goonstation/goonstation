@@ -24,7 +24,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
-	var/datum/flock/flock = null
+	var/tmp/datum/flock/flock = null
 
 
 /turf/simulated/floor/feather/New()

@@ -110,7 +110,7 @@ TYPEINFO(/obj/item/pinpointer)
 					arrow.icon_state = "pinonmedium"
 				if(16 to INFINITY)
 					arrow.icon_state = "pinonfar"
-			UpdateOverlays(arrow, "arrow")
+			AddOverlays(arrow, "arrow")
 
 			sleep(0.5 SECONDS)
 
@@ -194,8 +194,8 @@ TYPEINFO(/obj/item/pinpointer)
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -403,6 +403,28 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 		else
 			src.turn_off()
 			boutput(user, SPAN_NOTICE("You deactivate the pinpointer"))
+
+/obj/item/pinpointer/mail_recepient
+	name = "mail recipient pinpointer"
+
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if (istype(W, /obj/item/random_mail))
+			var/obj/item/random_mail/package = W
+			src.target = find_by_dna(package.target_dna)
+			user.show_message(SPAN_NOTICE("Target updated."))
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (istype(target, /obj/item/random_mail))
+			var/obj/item/random_mail/package = target
+			src.target = find_by_dna(package.target_dna)
+			user.show_message(SPAN_NOTICE("Target updated."))
+
+	proc/find_by_dna(var/dna)
+		for_by_tcl(H, /mob/living/carbon/human)
+			if (H.bioHolder?.Uid == dna)
+				return H
 
 //lets you click on something to pick it as a target, good for gimmicks
 /obj/item/pinpointer/picker

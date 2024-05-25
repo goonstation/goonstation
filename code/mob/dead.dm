@@ -64,11 +64,12 @@
 	return P.hits_ghosts
 
 /mob/dead/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return
 
+	..()
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
@@ -88,16 +89,16 @@
 		if (!M.stat)
 			if (M.job == "Chaplain")
 				if (prob (80))
-					M.show_message(SPAN_GAME("<i>You hear muffled speech... but nothing is there...</i>"), 2)
+					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
 				else
-					M.show_message(SPAN_GAME("<i>[stutter(message)]</i>"), 2)
+					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
 			else
 				if (prob(90))
 					return
 				else if (prob (95))
-					M.show_message(SPAN_GAME("<i>You hear muffled speech... but nothing is there...</i>"), 2)
+					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
 				else
-					M.show_message(SPAN_GAME("<i>[stutter(message)]</i>"), 2)
+					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!deadchat_allowed)
@@ -197,7 +198,7 @@
 
 #endif
 		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
-		src.visible_message("<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]</span>",group = "[src]_[lowertext(act)]")
+		src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]"),group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
 

@@ -68,9 +68,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -130,7 +129,7 @@
 	slot_foot = list()
 	slot_back = list()
 	slot_belt = list()
-	spawn_id = 0
+	spawn_id = FALSE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 

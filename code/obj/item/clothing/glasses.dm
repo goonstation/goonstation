@@ -333,7 +333,6 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "medical eyepatch"
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
-	uses_multiple_icon_states = 1
 	item_state = "headset"
 	block_eye = "R"
 	var/pinhole = 0
@@ -511,7 +510,6 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
-	uses_multiple_icon_states = 1
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	color_r = 0.85
@@ -714,16 +712,44 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	color_r = 0.9
 	color_g = 1
 	color_b = 0.9
+	var/freq = FREQ_AIRLOCK
+
+	get_desc()
+		return "A little dial on the side is set to [format_frequency(src.freq)]."
+
+	attack_self(mob/user)
+		. = ..()
+		src.ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "PacketVision")
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		.["frequency"] = src.freq
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		if (action == "set-frequency" && params["finish"])
+			var/old_freq = src.freq
+			src.freq = sanitize_frequency_diagnostic(params["value"])
+			if (src.freq != old_freq && src.equipped_in_slot == SLOT_GLASSES && ismob(src.loc))
+				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][old_freq]").remove_mob(src.loc)
+				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").add_mob(src.loc)
+			return TRUE
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_mob(user)
+			get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").add_mob(user)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
+			get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").remove_mob(user)
 		..()
+
 TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	mats = 6
 /obj/item/clothing/glasses/toggleable/atmos

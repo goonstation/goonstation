@@ -24,9 +24,14 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, SPAN_ALERT("That is too far away to bite."))
 			return 1
-		playsound(target,'sound/items/drink.ogg', rand(10,50), 1, pitch = 1.4)
+
 		var/mob/M = target
 
+		if (issilicon(M))
+			boutput(holder.owner, SPAN_ALERT("You detect no blood to suck!"))
+			return 1
+
+		playsound(target,'sound/items/drink.ogg', rand(10,50), 1, pitch = 1.4)
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] sucks some blood from [M]!</b>"), SPAN_ALERT("You suck some blood from [M]!"))
 		holder.owner.reagents.add_reagent("blood", 1)
 		if (isliving(M))

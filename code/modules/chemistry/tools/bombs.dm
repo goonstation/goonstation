@@ -58,6 +58,7 @@
 		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()
+	. = ..()
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
 	SPAWN( 0 )
@@ -117,7 +118,7 @@
 	if (isnull(src) || isnull(src.triggering_device))
 		return
 
-	src.triggering_device.attack_self(user, 1)
+	src.triggering_device.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 

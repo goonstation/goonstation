@@ -29,7 +29,7 @@ var/list/planet_seeds = list()
 			var/num_to_place = PLANET_NUMPREFABS + GALAXY.Rand.xor_rand(0, PLANET_NUMPREFABSEXTRA)
 			for (var/n = 1, n <= num_to_place, n++)
 				game_start_countdown?.update_status("Setting up planet level...\n(Prefab [n]/[num_to_place])")
-				var/datum/mapPrefab/planet/M = pick_map_prefab(/datum/mapPrefab/planet)
+				var/datum/mapPrefab/planet/M = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 				if (M)
 					var/maxX = (world.maxx - M.prefabSizeX - PLANET_MAPBORDER)
 					var/maxY = (world.maxy - M.prefabSizeY - PLANET_MAPBORDER)
@@ -200,7 +200,7 @@ DEFINE_PLANET(indigo, "Indigo")
 					var/datum/planetData/planet = regions[region]
 					if(planet)
 						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
-						T.UpdateOverlays(planet.ambient_light, "ambient")
+						T.AddOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
 	proc/get_generator(turf/T)
@@ -215,7 +215,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
 	var/turf/T
-
+	if(istext(generator)) generator = text2path(generator)
 	if(ispath(generator)) generator = new generator()
 	if(!width)	width = rand(80,130)
 	if(!height)	height = rand(80,130)
@@ -253,6 +253,9 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
 		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/forest()
 
+	else if(istype(generator, /datum/map_generator/lavamoon_generator) && prob(95))
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/lava_moon()
+
 	// Occlude overlays on edges
 	if(planet_area.area_parallax_render_source_group)
 		planet_area.no_prefab_ref.area_parallax_render_source_group = planet_area.area_parallax_render_source_group
@@ -269,7 +272,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		for(var/y in 1 to region.height)
 			if(x == 1 || y == 1 || x == region.width || y == region.height)
 				T = region.turf_at(x, y)
-				border_area.contents += T
+				if(T)
+					border_area.contents += T
 
 			if (current_state >= GAME_STATE_PLAYING)
 				LAGCHECK(LAG_LOW)
@@ -284,7 +288,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		ambient_light.color = color
 
 	for(T in turfs)
-		T.UpdateOverlays(ambient_light, "ambient")
+		T.AddOverlays(ambient_light, "ambient")
 		LAGCHECK(LAG_LOW)
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
@@ -292,7 +296,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	var/failsafe = 800
 	//Make it interesting, slap some prefabs on that thing
 	for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
-		var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
+		var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 		if (P)
 			var/maxX = (region.bottom_left.x + region.width - P.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (region.bottom_left.y + region.height - P.prefabSizeY - AST_MAPBORDER)
@@ -317,7 +321,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 							space_turfs -= T
 					generator.generate_terrain(space_turfs, reuse_seed=TRUE)
 					for(T in space_turfs)
-						T.UpdateOverlays(ambient_light, "ambient")
+						T.AddOverlays(ambient_light, "ambient")
 						LAGCHECK(LAG_LOW)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")

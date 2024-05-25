@@ -38,13 +38,12 @@
 		H.cure_disease_by_path(/datum/ailment/malady/flatline)
 		H.TakeDamage("chest", 0, 30, 0, DAMAGE_BURN)
 		H.take_oxygen_deprivation(-100)
-		H.changeStatus("paralysis", 5 SECONDS)
+		H.changeStatus("unconscious", 5 SECONDS)
 		H.force_laydown_standup()
 
 /datum/action/bar/private/icon/jolt
 	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "jolt"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "jolt_icon"
 

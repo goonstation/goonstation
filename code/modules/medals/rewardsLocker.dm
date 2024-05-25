@@ -343,7 +343,10 @@
 			var/mob/living/carbon/human/H = activator
 			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
 				var/obj/item/clothing/head/M = H.head
+				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
+				M.item_state = "beret_base"
+				M.wear_state = "beret_base"
 				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
 				M.color = random_saturated_hex_color(1)
 				M.name = "beret"
@@ -372,9 +375,12 @@
 			var/prev = skin_target.name
 			skin_target.name = "round-bottom flask"
 			skin_target.desc = "A large round-bottom flask, for all your chemistry needs. (Base Item: [prev])"
-			skin_target.icon_style = "flask"
-			skin_target.item_state = "flask"
-			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
+			skin_target.icon_state = "large_flask"
+			skin_target.item_state = "large_flask"
+			skin_target.original_icon_state = "large_flask"
+			skin_target.fluid_overlay_states = 11
+			skin_target.container_style = "large_flask"
+			skin_target.fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
 			skin_target.UpdateIcon()
 			activator.set_clothing_icon_dirty()
 			return 1
@@ -404,8 +410,13 @@
 			skin_target.fingerprints = null
 			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
+			// Update borg's bucket in their module, don't drop it
+			if (issilicon(activator))
+				var/mob/living/silicon/robot/borg_activator = activator
+				borg_activator.swap_individual_tool(skin_target, new_bucket)
+			else
+				activator.put_in_hand(new_bucket)
 			qdel(skin_target)
-			activator.put_in_hand(new_bucket)
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a bucket in your hands."))
@@ -483,10 +494,23 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
+					M.icon = initial(M.icon)
+					M.inhand_image_icon = initial(M.inhand_image_icon)
+					M.wear_image_icon = initial(M.wear_image_icon)
+					M.item_state = initial(M.item_state)
+					M.name = initial(M.name)
+					M.real_name = initial(M.real_name)
+					M.desc = initial(M.desc)
 					M.icon_state = "hos-old"
 					H.set_clothing_icon_dirty()
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
+					M.icon = initial(M.icon)
+					M.inhand_image_icon = initial(M.inhand_image_icon)
+					M.wear_image_icon = initial(M.wear_image_icon)
+					M.name = initial(M.name)
+					M.real_name = initial(M.real_name)
+					M.desc = initial(M.desc)
 					M.icon_state = "security-old"
 					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
@@ -1222,12 +1246,44 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
-			gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
+			if(gunmod.wear_state)
+				gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
 			gunmod.gilded = TRUE
 			gunmod.UpdateIcon()
 			H.update_inhands()
 			return 1
 
+/datum/achievementReward/goldenCarrier
+	title = "Golden Carrier"
+	desc = "Gold plates a pet carrier."
+	required_medal = "Noah's Shuttle"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			var/obj/item/pet_carrier/carrier
+			if (istype(H.l_hand, /obj/item/pet_carrier))
+				carrier = H.l_hand
+			else if (istype(H.r_hand, /obj/item/pet_carrier))
+				carrier = H.r_hand
+			if (!carrier)
+				boutput(activator, SPAN_ALERT("You attempt to plate your non-existant pet carrier to no avail."))
+				return
+			if (carrier.gilded)
+				boutput(activator, SPAN_ALERT("That's enough gold plating for now."))
+				return
+
+			carrier.name = "Golden [carrier.name]"
+			carrier.empty_carrier_icon_state = "[initial(carrier.empty_carrier_icon_state)]-golden"
+			carrier.icon_state = carrier.empty_carrier_icon_state
+			carrier.carrier_open_item_state = "[initial(carrier.carrier_open_item_state)]-golden"
+			carrier.carrier_closed_item_state = "[initial(carrier.carrier_closed_item_state)]-golden"
+			carrier.trap_mob_icon_state = "[carrier.trap_mob_icon_state]-golden"
+			carrier.release_mob_icon_state = "[carrier.release_mob_icon_state]-golden"
+			carrier.gilded = TRUE
+			carrier.UpdateIcon()
+			H.update_inhands()
+			return 1
 
 /datum/achievementReward/smug
 	title = "(Emote) Smug"

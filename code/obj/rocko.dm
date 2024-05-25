@@ -100,7 +100,7 @@ obj/item/rocko
 
 		for(var/mob/O in targets)
 			if(src.can_mob_observe(O))
-				O.show_message("<span class='game say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
+				O.show_message("<span class='say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
 
 	proc/emote(message, maptext_out)
 		var/list/targets

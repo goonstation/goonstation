@@ -150,7 +150,7 @@
 					return
 				if(!target)
 					return
-				var/obj/perm_portal/P = new /obj/perm_portal(get_turf(src))
+				var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal(get_turf(src))
 				P.target = get_turf(target)
 				if(src.invisible_portal)
 					P.invisibility = 20
@@ -330,7 +330,7 @@
 				if (M.client)
 					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
-				M.show_message("<span class='game say bold'>[SPAN_MESSAGE("<span style='color: [src.text_color]'>[message]")]</span></span>", 2)
+				M.show_message("<span class='say bold'>[SPAN_MESSAGE("<span style='color: [src.text_color]'>[message]")]</span></span>", 2)
 
 /area/adventure/urs_dungeon
 	teleport_blocked = 2

@@ -11,7 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
-	var/list/the_poison = list("coniine", "cyanide", "curare")
+	var/list/the_poison = list("coniine", "toxin", "curare")
 	var/amount_per_poison = 7
 
 	cast(mob/target)
@@ -30,7 +30,7 @@
 		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
-
+		. = ..()
 		// Written in such a way that adding other reagent containers (e.g. medicine) would be trivial.
 		var/obj/item/reagent_containers/RC = null
 		var/attempt_success = 0

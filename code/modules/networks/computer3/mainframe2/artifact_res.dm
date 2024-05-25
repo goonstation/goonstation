@@ -923,6 +923,7 @@
 //very WIP ok
 /obj/machinery/networked/artifact_console
 	name = "artifact research console"
+	desc = "It just sorta showed up in a giant box of test equipment."
 	density = 1
 	anchored = ANCHORED
 	device_tag = "PNET_ARTCONSOL"
@@ -938,6 +939,8 @@
 
 	New()
 		..()
+		if (prob(10))
+			src.desc = "Giant mystery science doodad."
 
 		entries = list("","","","","|cLoading...","","","")
 		SPAWN(0.5 SECONDS)

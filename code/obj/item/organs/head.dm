@@ -230,9 +230,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
+		src.head_image_cust_one = image(icon = AHead.customization_first.icon, icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
+		src.head_image_cust_two = image(icon = AHead.customization_second.icon, icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
+		src.head_image_cust_three = image(icon = AHead.customization_third.icon, icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
@@ -563,7 +563,7 @@
 		else
 			return 0
 
-	proc/MakeMutantHead(var/mutant_race as num, var/headicon, var/headicon_state)
+	proc/MakeMutantHead(var/mutant_race as num, var/headicon, var/headicon_state, var/skip_update = FALSE)
 		if(!src.transplanted) /// no altering a reattached head
 
 			// rebuild, start with a human head
@@ -667,6 +667,6 @@
 				if(HEAD_FLASHY)
 					src.organ_name = "psychedelic head"
 					src.desc = "Well, that's trippy."
-
-		src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
+		if(!skip_update)
+			src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

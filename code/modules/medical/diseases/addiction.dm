@@ -5,7 +5,8 @@
 	scantype = "Chemical Dependency"
 	max_stages = 5
 	stage_prob = 3
-	cure = "Time"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Time"
 	affected_species = list("Human")
 
 /datum/ailment/addiction/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D, mult)
@@ -67,7 +68,7 @@
 						affected_mob.visible_message(SPAN_ALERT("[affected_mob] gags and retches!"),\
 						SPAN_ALERT("Your stomach lurches painfully!"))
 						affected_mob.changeStatus("stunned", 2 SECONDS)
-						affected_mob.changeStatus("weakened", 2 SECONDS)
+						affected_mob.changeStatus("knockdown", 2 SECONDS)
 			if (prob(8))
 				affected_mob.emote(pick("twitch", "twitch_s", "shiver"))
 			if (prob(4))

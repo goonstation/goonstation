@@ -49,7 +49,7 @@
 		switch (act)
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 5 SECONDS))
 					if(src.bioHolder?.HasEffect("mute"))
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
@@ -90,6 +90,33 @@
 						m_type = 2
 					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
 						src.emote("fart") //We can still fart if we're muzzled.
+
+			if ("monsterscream")
+				// three things:
+				// 1. monsters can scream through a muzzle
+				// 2. omnitraitors make all of these noises
+				// 3. this is bullshit copy paste. rework emotes and then sue me, in that order
+				if (src.emote_check(voluntary, 5 SECONDS))
+					var/screamed = FALSE
+					if (src.get_ability_holder(/datum/abilityHolder/werewolf)) // is_werewolf only checks mutantrace also kill me
+						playsound(src, 'sound/voice/animal/werewolf_howl.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (ischangeling(src))
+						playsound(src, 'sound/voice/creepyshriek.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (isvampire(src))
+						playsound(src, 'sound/effects/screech_tone.ogg', 90, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (isarcfiend(src))
+						playsound(src, 'sound/effects/elec_bzzz.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					#ifdef HALLOWEEN
+					spooktober_GH.change_points(src.ckey, 100)
+					#endif
+
+					if (!screamed)
+						boutput(src, SPAN_ALERT("You don't feel monstrous enough to do that."))
+
 
 			if ("fart")
 				var/oxyplasmafart = 0
@@ -272,7 +299,7 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
-				if(src.bioHolder && src.bioHolder.HasEffect("training_miner") && prob(1))
+				if(src.bioHolder && src.traitHolder.hasTrait("training_miner") && prob(1))
 					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
@@ -519,14 +546,16 @@
 			if ("listbasic")
 				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, nod, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
 				think, ponder, clap, wave, salute, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, moan, sneeze, \
-				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
+				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
-
+			if ("list")
+				src.emote("listbasic")
+				src.emote("listtarget")
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
 
@@ -1066,21 +1095,21 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
+					if(src.emote_check(voluntary))
+						for (var/obj/item/C as anything in src.get_equipped_items())
+							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
+								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
+								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								drop_item()
+								O.set_loc(src)
+								equip_if_possible(O, drophand)
+								src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+								playsound(src.loc, "rustle", 60, 1)
+								break
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
 					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
-
-				for (var/obj/item/C as anything in src.get_equipped_items())
-					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
-						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-						drop_item()
-						O.set_loc(src)
-						equip_if_possible(O, drophand)
-						src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
-						playsound(src.loc, "rustle", 60, 1)
-						break
 
 			if ("facepalm")
 				if (!src.restrained())
@@ -1452,7 +1481,7 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
-							message = "<span class='alert'><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</span>"
+							message = SPAN_ALERT("<B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!")
 							/*
 							if (src.bioHolder)
 								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")
@@ -1462,8 +1491,23 @@
 							playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
 							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
-							playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+							playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+
+							var/hasSwitch = FALSE
+							for (var/obj/item/container as anything in src.get_equipped_items())
+								if (!(locate(/obj/item/switchblade) in container))
+									continue
+								var/obj/item/switchblade/blade = (locate(/obj/item/switchblade) in container)
+								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								drop_item()
+								blade.set_loc(get_turf(src))
+								equip_if_possible(blade, drophand)
+								src.visible_message("<span class='alert'><B>[src] pulls a [blade] out of \the [container]!</B></span>")
+								playsound(src.loc, "rustle", 60, TRUE)
+								hasSwitch = TRUE
+								break
+
+							if(!hasSwitch && !ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))
 									var/obj/item/clothing/gloves/bladed/blades = src.gloves
 									blades.sheathe_blades_toggle(src)
@@ -1590,24 +1634,25 @@
 				m_type = 1
 
 			if ("wink")
-				for (var/obj/item/C as anything in src.get_equipped_items())
-					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
-						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-						drop_item()
-						D.set_loc(src)
-						equip_if_possible(D, drophand)
-						src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
-						playsound(src.loc, "rustle", 60, 1)
-						break
+				if (!src.restrained() && src.emote_check(voluntary))
+					for (var/obj/item/C as anything in src.get_equipped_items())
+						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
+							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
+							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+							drop_item()
+							D.set_loc(src)
+							equip_if_possible(D, drophand)
+							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
+							playsound(src.loc, "rustle", 60, 1)
+							break
 
 				message = "<B>[src]</B> winks."
 				maptext_out = "<I>winks</I>"
 				m_type = 1
 
 			if ("collapse", "trip")
-				if (!src.getStatusDuration("paralysis"))
-					src.changeStatus("paralysis", 3 SECONDS)
+				if (!src.getStatusDuration("unconscious"))
+					src.changeStatus("unconscious", 3 SECONDS)
 				message = "<B>[src]</B> [lowertext(act)]s!"
 				m_type = 2
 
@@ -1819,7 +1864,7 @@
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
 							boutput(src, SPAN_ALERT("You fall over, panting and wheezing."))
 							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
-							src.changeStatus("weakened", 2 SECONDS)
+							src.changeStatus("knockdown", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
 							src.emote_allowed = 0
 							SPAWN(1 SECOND)
@@ -1835,7 +1880,7 @@
 						if (!src.lying)
 							if ((src.restrained()) || (src.reagents && src.reagents.get_reagent_amount("ethanol") > 30) || (src.bioHolder.HasEffect("clumsy")))
 								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> slips!")
-								src.changeStatus("weakened", 4 SECONDS)
+								src.changeStatus("knockdown", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
 								JOB_XP(src, "Clown", 1)
 							else
@@ -1927,9 +1972,9 @@
 										combatflipped |= M
 										message = SPAN_ALERT("<B>[src]</B> flips into [M]!")
 										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
-										src.changeStatus("weakened", 6 SECONDS)
+										src.changeStatus("knockdown", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
-										M.changeStatus("weakened", 2 SECONDS)
+										M.changeStatus("knockdown", 2 SECONDS)
 										M.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
 										playsound(src.loc, pick(sounds_punch), 100, 1)
 										var/turf/newloc = M.loc
@@ -1984,102 +2029,8 @@
 
 			if ("pee", "piss", "urinate")
 				if (src.emote_check(voluntary))
-					var/bladder = sims?.getValue("Bladder")
-					if (!isnull(bladder))
-						var/obj/item/storage/toilet/toilet = locate() in src.loc
-						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
-						if (bladder > 75)
-							boutput(src, SPAN_NOTICE("You don't need to go right now."))
-							return
-						else if (bladder > 50)
-							if(toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.1
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss in the beaker."))
-							else if(wear_suit || w_uniform)
-								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"]."))
-							else
-								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss on the floor."))
-							return
-						else if (bladder > 25)
-							if(toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.1
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
-								else
-									message = "<B>[src]</B> takes aim and pees in the beaker."
-								beaker.reagents.add_reagent("urine", 4)
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -25)
-							else
-								if(wear_suit || w_uniform)
-									boutput(src, SPAN_ALERT("You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"]."))
-									return
-								else
-									src.urinate()
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -50)
-						else
-							if (toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.1
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and fills the beaker with pee."
-								else
-									message = "<B>[src]</B> takes aim and fills the beaker with pee."
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -25)
-								beaker.reagents.add_reagent("urine", 4)
-							else
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -100)
-									if (w_uniform)
-										w_uniform.name = "piss-soaked [initial(w_uniform.name)]"
-									else
-										wear_suit.name = "piss-soaked [initial(wear_suit.name)]"
-								else
-									src.urinate()
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -50)
-
-					else
-						var/obj/item/storage/toilet/toilet = locate() in src.loc
-
-						if (toilet && (src.buckled != null))
-							if (src.urine >= 1)
-								for (var/obj/item/storage/toilet/T in src.loc)
-									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", SPAN_NOTICE("Ahhh, sweet relief."))
-									src.urine = 0
-									T.clogged += 0.1
-									break
-							else
-								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"
-						else if (src.urine < 1)
-							message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
-						else
-							src.urine--
-							src.urinate()
+					message = "<B>[src]</B> grunts for a moment. [prob(1) ? "Something" : "Nothing"] happens."
+					maptext_out = "<I>grunts</I>"
 
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))
@@ -2447,15 +2398,15 @@
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
-		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
+		G.affecting.changeStatus("knockdown", max(G.affecting.getStatusDuration("knockdown"), 4.4 SECONDS))
 		G.affecting.force_laydown_standup()
 		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-		src.changeStatus("weakened", 1.5 SECONDS)
+		src.changeStatus("knockdown", 1.5 SECONDS)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	else
-		src.changeStatus("weakened", 3.9 SECONDS)
+		src.changeStatus("knockdown", 3.9 SECONDS)
 
-		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
+		G.affecting.changeStatus("knockdown", max(G.affecting.getStatusDuration("knockdown"), 4.4 SECONDS))
 
 
 		G.affecting.force_laydown_standup()
@@ -2471,10 +2422,10 @@
 			if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))))
 				SPAWN(0)
 					g_tabl.smash()
-					src.changeStatus("weakened", 7 SECONDS)
+					src.changeStatus("knockdown", 7 SECONDS)
 					random_brute_damage(src, rand(20,40))
 					take_bleeding_damage(src, src, rand(20,40))
-					G.affecting.changeStatus("weakened", 4 SECONDS)
+					G.affecting.changeStatus("knockdown", 4 SECONDS)
 					random_brute_damage(G.affecting, rand(20,40))
 					take_bleeding_damage(G.affecting, src, rand(20,40))
 					G.affecting.force_laydown_standup()

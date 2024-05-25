@@ -10,6 +10,8 @@
 	not_when_handcuffed = 1
 	werewolf_only = 1
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
+	do_logs = FALSE //already logged
+
 	cast(mob/target)
 		if (!holder)
 			return 1
@@ -31,13 +33,13 @@
 		if (target.canmove)
 			boutput(M, SPAN_ALERT("[target] is moving around too much."))
 			return 1
+		. = ..()
 		logTheThing(LOG_COMBAT, M, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_spread_affliction(target, src), M)
 		return 0
 /datum/action/bar/private/icon/werewolf_spread_affliction
 	duration = 100
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "werewolf_spread_affliction"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "werewolf_spread_affliction"
 	var/mob/living/target
@@ -125,7 +127,7 @@
 					if (!HH.disease_resistance_check("/datum/ailment/disease/lycanthropy","Lycanthropy"))
 						HH.mind.add_antagonist(ROLE_WEREWOLF, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_MUTANT)
 						HH.full_heal()
-						HH.setStatus("weakened", 15 SECONDS)
+						HH.setStatus("knockdown", 15 SECONDS)
 						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						M.mind.remove_antagonist(ROLE_WEREWOLF)
 						boutput(W, SPAN_ALERT("You passed your terribly affliction onto [HH]! You are no longer a werewolf!"))

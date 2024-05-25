@@ -195,14 +195,14 @@ TYPEINFO(/obj/gravity_well_generator)
 
 	attack_hand(mob/user)
 		if (active)
-			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
+			src.visible_message(SPAN_NOTICE("[bicon(src)] [user] deactivated the gravity well."), group = "gravity_well")
 
 			icon_state = "gravgen-off"
 			src.anchored = UNANCHORED
 			src.active = 0
 
 		else
-			src.visible_message("<font color='blue'>[bicon(src)] [user] activated the gravity well.</font>")
+			src.visible_message(SPAN_NOTICE("[bicon(src)] [user] activated the gravity well."), group = "gravity_well")
 
 			icon_state = "gravgen-on"
 			src.active = 1

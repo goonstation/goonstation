@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	butcherable = BUTCHER_ALLOWED
 	max_skins = 1
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	blood_id = "miasma"
 	/// venom injected per bite
@@ -112,6 +112,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 			if ("scream","hiss")
 				return 2
 		return ..()
+
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
 
 	death(var/gibbed)
 		if (src.master && istype(src.master, /mob/living/intangible/wraith))

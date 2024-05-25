@@ -204,7 +204,7 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, SLOT_W_UNIFORM)
 		src.traitHolder.addTrait("training_chaplain")
 		if(prob(20))
-			src.bioHolder.AddEffectInstance(random_accent())
+			src.bioHolder.AddEffectInstance(random_accent().GetCopy())
 
 	initializeBioholder()
 		. = ..()
@@ -231,9 +231,9 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 	proc/chatter()
 		set name = "Chatter"
 		var/phrase = pick_smart_string("father_grife.txt", "say", list(
-			"job" = PROC_REF(say_helper_job),
-			"crewmember" = PROC_REF(say_helper_crewmember),
-			"logged_phrase" = PROC_REF(say_helper_logged_phrase)
+			"job" = /mob/living/carbon/human/fathergrife/proc/say_helper_job,
+			"crewmember" = /mob/living/carbon/human/fathergrife/proc/say_helper_crewmember,
+			"logged_phrase" = /mob/living/carbon/human/fathergrife/proc/say_helper_logged_phrase
 		))
 		src.say(phrase)
 
@@ -250,7 +250,7 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -691,7 +691,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.set_a_intent(INTENT_HARM)
@@ -748,7 +748,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		src.changeStatus("weakened", 5 SECONDS)
+		src.changeStatus("knockdown", 5 SECONDS)
 		if(prob(15))
 			SPAWN(0) emote(pick("giggle", "laugh"))
 		if(prob(1))
@@ -803,7 +803,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	proc/illusion_expire(mob/user)
 		if(user)
 			boutput(user, SPAN_ALERT("<B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B>"))
-			user.changeStatus("weakened", 4 SECONDS)
+			user.changeStatus("knockdown", 4 SECONDS)
 		for(var/mob/M in viewers(src, null))
 			if(M.client && M != user)
 				M.show_message(SPAN_ALERT("<b>The Waldo illusion explodes into smoke!</b>"))
@@ -858,7 +858,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 

@@ -73,8 +73,12 @@
 
 	return results
 
+/obj/machinery/atmospherics/unary/return_air()
+	return air_contents
+
 /obj/machinery/atmospherics/unary/disconnect(obj/machinery/atmospherics/reference)
 	if(reference==node)
 		network?.dispose()
 		network = null
 		node = null
+	UpdateIcon()

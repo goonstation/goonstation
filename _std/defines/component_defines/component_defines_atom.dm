@@ -38,7 +38,7 @@
 	#define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
 	/// When the atom reflects a projectile
 	#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
-	/// When something enters the contents of this atom (i.e. Entered())
+	/// When something enters the contents of this atom (i.e. Entered()'s args: atom/movable, atom/OldLoc)
 	#define COMSIG_ATOM_ENTERED "atom_entered"
 	/// When this atom is analyzed with a device analyzer (item, user)
 	#define COMSIG_ATOM_ANALYZE "atom_analyze"
@@ -78,10 +78,10 @@
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 	/// when an AM is teleported by do_teleport
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
-	/// when an AM changes nested contraband
+	/// when an AM changes contraband level (self_applied)
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
-	/// get contraband level of movable (check_nonfirearms, check_firearms)
-	#define COMSIG_MOVABLE_GET_CONTRABAND "mov_get_contraband"
+	/// when an AM is revealed from under a floor tile (turf revealed from)
+	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
 
 	// ---- complex ----
 
@@ -229,6 +229,10 @@
 	#define COMSIG_MOB_POINT "mob_point"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
+	/// Sent when the mob says something (message)
+	#define COMSIG_MOB_SAY "mob_say"
+	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
+	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 
 	// ---- cloaking device signal ----
 

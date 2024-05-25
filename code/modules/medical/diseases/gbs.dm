@@ -2,7 +2,8 @@
 	name = "GBS"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Cryoxadone"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Cryoxadone"
 	reagentcure = list("cryoxadone")
 	recureprob = 10
 	associated_reagent = "gibbis"
@@ -34,7 +35,7 @@
 			if(probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> starts convulsing violently!"), 1)
-				affected_mob.changeStatus("weakened", 15 SECONDS)
+				affected_mob.changeStatus("knockdown", 15 SECONDS)
 				affected_mob.make_jittery(1000)
 				SPAWN(rand(20, 100))
 					if (affected_mob)

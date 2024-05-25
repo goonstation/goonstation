@@ -354,7 +354,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 /obj/flock_screen/proc/say(var/message)
 	if(!message)
 		return
-	src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[gradientText("#3cb5a3", "#124e43", message)]\"")
+	src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[gradientText("#3cb5a3", "#124e43", message)]\""))
 
 ////////////////////////////////
 // FLOCKTRADER DONATE RECLAIMER

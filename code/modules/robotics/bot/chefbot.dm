@@ -168,7 +168,7 @@
 							sleep(4 SECOND)
 							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
 							src.visible_message(SPAN_ALERT("[src] flares up in anger!"))
-							fireflash(src, 1, checkLos = FALSE)
+							fireflash(src, 1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 						else
 							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
 				else
@@ -244,12 +244,12 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	if (src.emagged)
-		fireflash(src, 1, checkLos = FALSE)
+		fireflash(src, 1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 	new /obj/item/clothing/head/dramachefhat(Tsec)
 	qdel(src)
 	return

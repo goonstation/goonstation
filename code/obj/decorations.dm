@@ -308,22 +308,27 @@
 				#else
 				var/thing = new something(src.loc)
 				#endif
-				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"), 1)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 				last_use = world.time
 				max_uses--
+			else if (istype(something, /obj))
+				var/obj/thing = something
+				additional_items -= something
+				thing.set_loc(src.loc)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 		else
-			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"), 1)
+			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"))
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
-			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
+			if (!L.getStatusDuration("knockdown") && !L.hasStatus("resting"))
 				boutput(L, SPAN_ALERT("<b>A branch from [src] smacks you right in the face!</b>"))
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
 				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
-						L.changeStatus("weakened", 4 SECONDS)
+						L.changeStatus("knockdown", 4 SECONDS)
 					if (2)
 						L.changeStatus("stunned", 2 SECONDS)
 
@@ -361,7 +366,7 @@
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
-			user.setStatus("weakened", 3 SECONDS)
+			user.setStatus("knockdown", 3 SECONDS)
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the plastic leaves."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!"))
 			user.take_oxygen_deprivation(20)
 			user.losebreath += 2
@@ -405,8 +410,11 @@
 		icon_state = "shrub-dead"
 
 //It'll show up on multitools
+TYPEINFO(/obj/shrub/syndicateplant)
+	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
+	is_syndicate = TRUE
 	New()
 		. = ..()
 		var/turf/T = get_turf(src.loc)
@@ -472,7 +480,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -526,7 +534,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
@@ -1324,8 +1332,8 @@ obj/decoration/gibberBroken
 	icon_state = "syndiepc1"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1469,7 +1477,7 @@ obj/decoration/gibberBroken
 /obj/decoration/bullethole
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "bhole"
+	icon_state = "bullethole"
 	mouse_opacity = 0
 
 	examine()

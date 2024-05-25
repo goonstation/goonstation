@@ -77,6 +77,13 @@ export interface CharacterPreferencesData {
   traitsAvailable: CharacterPreferencesTraitData[];
   traitsMax: number;
   traitsPointsTotal: number;
+  partsData: Record<string, CharacterPreferencesPartData>;
+}
+export interface CharacterPreferencesPartData {
+  id: string;
+  name: string;
+  points: number;
+  img: string;
 }
 
 export interface CharacterPreferencesTraitStaticData {

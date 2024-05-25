@@ -36,7 +36,6 @@
 /datum/action/bar/icon/zombify_ability
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_zombify"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "zomb_over"
 	var/mob/living/target
@@ -66,7 +65,7 @@
 			zombify.disabled = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"), 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"))
 		zombify.disabled = TRUE
 
 	onEnd()

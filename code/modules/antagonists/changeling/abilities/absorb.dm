@@ -1,7 +1,6 @@
 /datum/action/bar/icon/abominationDevour
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "abom_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar-changeling"
@@ -117,7 +116,6 @@
 /datum/action/bar/private/icon/changelingAbsorb
 	duration = 250
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "change_absorb"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar-changeling"
@@ -191,6 +189,12 @@
 			target.UpdateName()
 			target.bioHolder.AddEffect("husk")
 			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
+
+			if (ishuman(ownerMob))
+				var/mob/living/carbon/human/H = ownerMob
+				if (H.sims)
+					H.sims.affectMotive("Thirst", 10)
+					H.sims.affectMotive("Hunger", 10)
 
 	onInterrupt()
 		..()

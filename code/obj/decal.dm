@@ -513,6 +513,17 @@ obj/decal/fakeobjects/teleport_pad
 		icon_state = "eldritch-[rand(1, 7)]"
 		..()
 
+/obj/decal/fakeobject/crashed_arrivals
+	name = "crashed human capsule missile"
+	desc = "Some kind of deliver means to get humans from here to there."
+	anchored = ANCHORED
+	density = 0
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "arrival_missile_synd-crash"
+	bound_width = 32
+	bound_height = 64
+
+
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
@@ -567,6 +578,7 @@ obj/decal/fakeobjects/teleport_pad
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
+	deconstructable = FALSE
 
 	rotatable = 0
 	foldable = 0
@@ -660,7 +672,7 @@ obj/decal/fakeobjects/teleport_pad
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes
 
-		if (M.getStatusDuration("weakened") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
+		if (M.getStatusDuration("knockdown") || M.getStatusDuration("stunned") || M.getStatusDuration("frozen"))
 			return
 
 		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
@@ -670,7 +682,7 @@ obj/decal/fakeobjects/teleport_pad
 				M.visible_message(SPAN_ALERT("<b>[M]</b> hits their head on [src]!"))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
-/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	. = ..()
 	if (exposed_temperature > T0C)
 		if(prob((exposed_temperature - T0C) * 0.1))

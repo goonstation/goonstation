@@ -38,8 +38,9 @@
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = FALSE
+	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
+	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
-	var/sticky = FALSE
 	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
@@ -152,7 +153,7 @@
 			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
 		damage_overlay.alpha = 200
 		src.broken = TRUE
-		UpdateOverlays(damage_overlay, "damage")
+		AddOverlays(damage_overlay, "damage")
 
 	proc/burn_tile(var/force)
 		if (!src.can_burn && !force)
@@ -166,7 +167,7 @@
 			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
 		burn_overlay.alpha = 200
 		src.burnt = TRUE
-		UpdateOverlays(burn_overlay, "burn")
+		AddOverlays(burn_overlay, "burn")
 
 	proc/restore_tile()
 		if(intact)
@@ -179,8 +180,7 @@
 			icon_state = icon_old
 		else
 			icon_state = "floor"
-		UpdateOverlays(null, "burn")
-		UpdateOverlays(null, "damage")
+		ClearSpecificOverlays("burn", "damage")
 		if (name_old)
 			name = name_old
 		levelupdate()
@@ -333,12 +333,14 @@
 /turf/space/New()
 	..()
 	if(global.dont_init_space) return
-	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
-	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "d2placeholder") icon_state = "near_blank"
-	if (blowout == 1)
-		icon_state = "blowout[rand(1,5)]"
+	switch(icon_state)
+		if ("placeholder")
+			icon_state = "[rand(1,25)]"
+		if ("aplaceholder")
+			icon_state = "a[rand(1,10)]"
+		if ("dplaceholder")
+			icon_state = "[rand(1,25)]"
+
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
@@ -417,7 +419,9 @@ proc/generate_space_color()
 	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "starlight", pixel_x = -32, pixel_y = -32)
+			starlight = mutable_appearance('icons/effects/overlays/simplelight.dmi', "starlight")
+			starlight.pixel_x = -32
+			starlight.pixel_y = -32
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
@@ -465,6 +469,9 @@ proc/generate_space_color()
 		return 0 // nope
 
 	proc/process_cell()
+		return
+
+	meteorhit(obj/meteor)
 		return
 
 /turf/New()
@@ -611,7 +618,7 @@ proc/generate_space_color()
 /turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(src.density)
-		if(AM.throwforce >= 80)
+		if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 
@@ -853,13 +860,17 @@ var/global/in_replace_with = 0
 
 				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
-
+			if(N.air)
+				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
 				air_master.tiles_to_update |= N
+		else if (air_master)
+			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+
 
 	if (istype(new_turf, /turf/simulated))
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
@@ -1099,6 +1110,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
+	explosion_resistance = 999999
 	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors

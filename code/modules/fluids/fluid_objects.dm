@@ -147,6 +147,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/delay = 600
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "fluid_spawn"
+	invisibility = INVIS_ADVENTURE
 
 	var/datum/reagents/R
 
@@ -315,7 +316,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		else
 			overlay_istate = "w_off"
 
-		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
+		AddOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 		var/activetext = "OFF"
 		if (slurping) activetext = "IN"
@@ -472,20 +473,24 @@ TYPEINFO(/obj/item/sea_ladder)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	afterattack(atom/target, mob/user as mob)
-		if (istype(target,/turf/space/fluid/warp_z5))
+		. = ..()
+		if (istype(target,/turf/space/fluid/warp_z5/realwarp))
+			var/turf/space/fluid/warp_z5/realwarp/hole = target
+			var/datum/component/pitfall/target_coordinates/targetzcomp = hole.GetComponent(/datum/component/pitfall/target_coordinates)
+			targetzcomp.update_targets()
+			deploy_ladder(hole, pick(targetzcomp.TargetList), user)
+
+		else if (istype(target,/turf/space/fluid/warp_z5))
 			var/turf/space/fluid/warp_z5/hole = target
-			hole.try_build_turf_list() //in case we dont have one yet
+			var/datum/component/pitfall/target_area/targetacomp = hole.GetComponent(/datum/component/pitfall/target_area)
+			deploy_ladder(hole, pick(get_area_turfs(targetacomp.TargetArea)), user)
 
-			deploy_ladder(hole, pick(hole.L), user)
-
-			..()
 		else if(istype(target, /turf/space/fluid))
 			var/turf/space/fluid/T = target
 			if(T.linked_hole)
 				deploy_ladder(T, T.linked_hole, user)
 			else if(istype(T.loc, /area/trench_landing))
 				deploy_ladder(T, pick(by_type[/turf/space/fluid/warp_z5/edge]), user)
-			..()
 
 	proc/deploy_ladder(turf/source, turf/dest, mob/user)
 		user.show_text("You deploy [src].")

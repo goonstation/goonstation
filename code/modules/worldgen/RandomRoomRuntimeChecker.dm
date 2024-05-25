@@ -23,15 +23,15 @@
 #if defined(CI_RUNTIME_CHECKING)
 	var/startTime = world.timeofday
 	boutput(world, SPAN_ALERT("Generating random rooms..."))
-	var/list/room_types = concrete_typesof(/datum/mapPrefab/random_room)
+	var/list/room_types = get_map_prefabs(/datum/mapPrefab/random_room)
 	boutput(world, SPAN_ALERT("Found [length(room_types)] random rooms..."))
 	for (var/room_type in room_types)
-		var/datum/mapPrefab/random_room/R = new room_type()
+		var/datum/mapPrefab/random_room/R = room_types[room_type]
 		var/turf/T = locate(1+AST_MAPBORDER, 1+AST_MAPBORDER, Z_LEVEL_STATION)
 		var/loaded = file2text(R.prefabPath)
 		var/dmm_suite/D = new/dmm_suite()
 		D.read_map(loaded, T.x, T.y, T.z, R.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
-		boutput(world, SPAN_ALERT("Prefab placement [R.type][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]"))
+		boutput(world, SPAN_ALERT("Prefab placement [R.prefabPath][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]"))
 		check_map_correctness()
 		sleep(1 SECOND)
 		// cleanup

@@ -1445,7 +1445,8 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Run()
 		if (..())
-			SpawnParticle()
+			for(var/i in 1 to rand(1, 5))
+				SpawnParticle()
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke

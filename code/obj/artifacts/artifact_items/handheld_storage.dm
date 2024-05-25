@@ -66,6 +66,15 @@
 		src.reset_visible_state()
 		..()
 
+	Artifact_attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/artifact/activator_key))
+			return ..()
+		// skip stimulus checks
+		if (src.artifact.activated)
+			src.ArtifactHitWith(W, user)
+			return TRUE
+		return ..()
+
 	// reset state to pre-worn state
 	proc/reset_visible_state()
 		if (src.icon == initial(src.icon))
@@ -91,6 +100,13 @@
 
 		src.create_storage(/datum/storage/artifact_bag_of_holding/martian, max_wclass = pick(W_CLASS_TINY, W_CLASS_SMALL, W_CLASS_NORMAL, W_CLASS_BULKY),
 			slots = rand(3, 13), opens_if_worn = TRUE)
+
+		if (src.storage.slots <= 5)
+			src.w_class = W_CLASS_SMALL
+		else if (src.storage.slots <= 8)
+			src.w_class = W_CLASS_NORMAL
+		else if (prob(95))
+			src.w_class = W_CLASS_BULKY
 
 		for (var/atom/A as anything in prev_contents)
 			if (src.storage.check_can_hold(A) == STORAGE_CAN_HOLD)
@@ -127,6 +143,8 @@
 				else if (slots >= 9)
 					wclass = pick(prob(30); W_CLASS_TINY, prob(100); W_CLASS_SMALL, prob(10); W_CLASS_NORMAL)
 
+				if (slots <= 5)
+					boh.w_class = W_CLASS_SMALL
 				// allow it to be worn if it can hold a lot of items
 				// if eldritch belt is sprited -
 				//if (slots > 4)
@@ -154,8 +172,6 @@
 				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
 					slots = rand(20, 40), opens_if_worn = TRUE, params = list("visible_slots" = rand(2, 5)))
 
-		if (boh.c_flags & ONBELT || boh.c_flags & ONBACK)
-			boh.uses_multiple_icon_states = TRUE
 
 	effect_deactivate(obj/O)
 		if (..())
@@ -167,7 +183,6 @@
 		boh.reset_visible_state()
 		boh.w_class = initial(boh.w_class)
 		boh.c_flags = initial(boh.c_flags)
-		boh.uses_multiple_icon_states = initial(boh.uses_multiple_icon_states)
 
 		for (var/atom/A as anything in boh.storage.get_contents())
 			boh.storage.transfer_stored_item(A, get_turf(boh))

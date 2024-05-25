@@ -206,6 +206,7 @@ TYPEINFO(/obj/flock_structure/relay)
 		radio.frequency = rand(R_FREQ_MINIMUM, 10000)
 		radio.secure_frequencies = list()
 		radio.set_secure_frequencies()
+		no_more_radios = TRUE
 	qdel(entrypoint)
 
 /obj/flock_structure/relay/takeDamage(var/damageType, var/amount)

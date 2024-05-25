@@ -317,6 +317,14 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	furniture_type = /obj/table/endtable_gothic
 	furniture_name = "gothic endtable"
 
+/obj/item/furniture_parts/endtable_honey
+	name = "block of solidified honey parts"
+	desc = "Not sure how you accomplished this considering that it was a single solid block of crystallized honey, but sure."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney-parts"
+	furniture_type = /obj/table/endtable_honey
+	furniture_name = "block of solidified honey"
+
 /obj/item/furniture_parts/podium_wood
 	name = "wooden podium parts"
 	desc = "A collection of parts that can be used to make a wooden podium."
@@ -438,6 +446,10 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	furniture_type = /obj/stool/bench/yellow/auto
 
+/obj/item/furniture_parts/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	furniture_type = /obj/stool/bench/purple/auto
+
 /obj/item/furniture_parts/bench/wooden
 	name = "wooden bench parts"
 	desc = "A collection of parts that can be used to make a wooden bench."
@@ -457,6 +469,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	icon = 'icons/obj/furniture/chairs.dmi'
 	stamina_damage = 15
 	stamina_cost = 15
+	furniture_name = "chair"
 
 	wood
 		name = "wooden chair parts"
@@ -605,7 +618,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 /* -------------------- Furniture Actions -------------------- */
 /datum/action/bar/icon/furniture_build
-	id = "furniture_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -673,7 +685,6 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		parts.construct(owner, target_turf)
 
 /datum/action/bar/icon/furniture_deconstruct
-	id = "furniture_deconstruct"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	duration = 50
 	icon = 'icons/ui/actions.dmi'

@@ -32,7 +32,7 @@
 	var/limbpath = /datum/limb/brullbar
 	var/frenzypath = /datum/targetable/critter/frenzy
 
-	faction = FACTION_ICEMOON
+	faction = list(FACTION_ICEMOON)
 
 	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src))
@@ -58,7 +58,7 @@
 			return TRUE
 		if (prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] laughs!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] laughs!</b>"))
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

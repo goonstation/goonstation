@@ -92,9 +92,18 @@ Contents:
 	desc = "An elevator shaft.  It's probably a bad idea to try to walk over this, unless you're Wile E. Coyote and don't look down."
 	pathable = 0
 	var/isHemera = 0
+	var/landmarktarget = LANDMARK_FALL_MOON_MUSEUM
 
 	New()
 		..()
+		if (isHemera)
+			src.landmarktarget = LANDMARK_FALL_MOON_HEMERA
+
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = src.landmarktarget)
+
 		SPAWN(0.5 SECONDS)
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
@@ -113,19 +122,6 @@ Contents:
 				else
 					//Upper left
 					set_dir(SOUTH)
-
-
-	Entered(atom/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-			return ..()
-
-		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
-		if (T)
-			fall_to(T, A)
-			return
-
-		else
-			..()
 
 /turf/unsimulated/floor/lunar
 	name = "lunar surface"

@@ -41,7 +41,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			if(new_color)
 				screen_image.color = new_color
 		screen_image.alpha = 180
-		src.UpdateOverlays(screen_image, "screen")
+		src.AddOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			update_pixel_offset_dir(src,null,src.dir)
 
@@ -51,12 +51,12 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
 	SPAWN(0)
-		attack_self(user)
+		src.AttackSelf(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	SPAWN(0)
-		attack_self(user)
+		src.AttackSelf(user)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/reagent_containers/food/fish))
@@ -92,7 +92,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	for(var/image/chat_maptext/I in src.chat_text?.lines)
 		I.bump_up()
 	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
-	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+	if(maptext)
+		target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
 	..()
@@ -101,7 +102,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		return
 
 	if (!isAIeye(user))
-		boutput("Deploy to an AI Eye first to override intercoms.")
+		boutput(user, "Deploy to an AI Eye first to override intercoms.")
 		return
 
 	if(user.client.check_key(KEY_BOLT))
@@ -357,3 +358,11 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	update_pixel_offset_dir()
 		return // no
+
+/obj/item/device/radio/intercom/AI/handheld
+	name = "Portable Intercom"
+	desc = "A portable intercom that's useful to do all the things intercoms normally do, which is mostly listening in on people."
+	broadcasting = FALSE
+	listening = FALSE
+	anchored = UNANCHORED
+	icon_state = "intercom_pot"

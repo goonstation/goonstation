@@ -141,6 +141,3 @@ proc/register_machine_time(var/datum/machine, var/time)
 			machines[machine]+=amount
 
 #endif MACHINE_PROCESSING_DEBUG
-
-
-

@@ -2,9 +2,8 @@
 	name = "Toxoplasmosis"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Antibiotics"
+	cure_flags = CURE_ANTIBIOTICS
 	associated_reagent = "mewtini"
-	reagentcure = list("spaceacillin")
 	affected_species = list("Human")
 
 /datum/ailment/disease/going_catty/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

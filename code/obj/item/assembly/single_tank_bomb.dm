@@ -53,7 +53,7 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
-
+	. = ..()
 	SPAWN( 0 )
 		src.part1.sense()
 		return
@@ -111,7 +111,7 @@
 /obj/item/assembly/proximity_bomb/attack_self(mob/user as mob)
 
 	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
-	src.part1.attack_self(user, 1)
+	src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -169,6 +169,10 @@
 
 	SPAWN(1 SECOND)
 		prox_check()
+
+/obj/item/assembly/proximity_bomb/return_air()
+	return src.part3?.return_air()
+
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////
 
@@ -239,7 +243,7 @@
 /obj/item/assembly/time_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		src.part1.attack_self(user, 1)
+		src.part1.AttackSelf(user, 1)
 		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
@@ -257,6 +261,9 @@
 		if (!src.status && src.force_dud == 0)
 			src.part3.release()
 	return
+
+/obj/item/assembly/time_bomb/return_air()
+	return src.part3?.return_air()
 
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
 
@@ -325,7 +332,7 @@
 
 	if (src.part1)
 		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
-		src.part1.attack_self(user, 1)
+		src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -342,3 +349,6 @@
 		if (!src.status && src.force_dud == 0)
 			src.part3.release()
 	return
+
+/obj/item/assembly/radio_bomb/return_air()
+	return src.part3?.return_air()

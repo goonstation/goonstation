@@ -11,11 +11,14 @@
 		/obj/item/material_piece/molitz
 	)
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/cargohold,
+		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
@@ -57,11 +60,14 @@
 	name = "\improper NanoTrasen ship component fabricator"
 	team_num = TEAM_NANOTRASEN
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/cargohold,
+		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
@@ -84,11 +90,14 @@
 	name = "\improper Syndicate ship component fabricator"
 	team_num = TEAM_SYNDICATE
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/cargohold,
+		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,

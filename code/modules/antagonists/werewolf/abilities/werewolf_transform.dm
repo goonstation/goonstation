@@ -20,13 +20,13 @@
 		if (!M)
 			return TRUE
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/werewolf_transform(src), M)
 		return FALSE
 
 /datum/action/bar/private/icon/werewolf_transform
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "werewolf_transform"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/datum/targetable/werewolf/werewolf_transform/transform
@@ -40,7 +40,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") || !transform)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -51,7 +51,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") || !transform)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

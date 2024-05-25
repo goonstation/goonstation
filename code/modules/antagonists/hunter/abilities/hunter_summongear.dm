@@ -20,13 +20,13 @@
 		if (!M || !ishuman(M))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/hunter_summongear(src), M)
 		return 0
 
 /datum/action/bar/private/icon/hunter_summongear
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "hunter_gearteleport"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
@@ -35,7 +35,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") > 0)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -46,7 +46,7 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("knockdown") || M.getStatusDuration("unconscious") > 0 || !isalive(M) || M.restrained())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

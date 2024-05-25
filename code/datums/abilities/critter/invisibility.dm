@@ -3,7 +3,6 @@
 // ----------------------
 /datum/action/invisibility
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "invisibility"
 	var/icon = 'icons/mob/critter_ui.dmi'
 	var/icon_state = "invisible_over"
 	var/obj/overlay/iicon = null

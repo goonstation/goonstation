@@ -145,7 +145,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
-		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
@@ -174,9 +173,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		var/image/chat_maptext/chatbot_text = null
 		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
-				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
+				AddOverlays(bot_speech_bubble, "bot_speech_bubble")
 				SPAWN(1.5 SECONDS)
-					UpdateOverlays(null, "bot_speech_bubble")
+					ClearSpecificOverlays("bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
 				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
@@ -193,7 +192,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
@@ -216,11 +215,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			. += SPAN_ALERT("<B>[src]'s parts look very loose!</B>")
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
-	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
-		P.initial_power -= 10
-		if(P.initial_power <= 0)
-			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
-			P.die()
+	hit_twitch(src)
+	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)))
+		if (!ON_COOLDOWN(src, "projectile_bot_hit", 0.5 SECONDS))
+			var/obj/particle/attack/bot_hit/hit_particle = new
+			hit_particle.set_loc(src.loc)
+			hit_particle.transform.Turn(rand(0, 360))
+			if (P.proj_data.damage > 1)
+				flick("block_spark", hit_particle)
+				if (P.proj_data.damage_type & D_KINETIC)
+					playsound(src, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE) // replace with more unique sound if found later
+			else
+				flick("block_spark_armor", hit_particle)
+				if (P.proj_data.damage_type & D_ENERGY)
+					playsound(src, 'sound/effects/sparks6.ogg', 40, TRUE)
+		if (P.proj_data.ks_ratio > 0)
+			P.initial_power -= 10
+			if(P.initial_power <= 0)
+				src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
+				P.die()
 	if(!src.density)
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
 
@@ -289,6 +302,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	var/adjacent = 0
 	var/scanrate = 10
 	var/max_dist = 600
+	var/max_seen = 1000
 
 	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
@@ -337,7 +351,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			return
 		var/compare_movepath = src.current_movepath
 		master.path = get_path_to(src.master, src.the_target, mintargetdist = adjacent ? 1 : 0, \
-			max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
+			max_distance=src.max_dist, max_seen=src.max_seen, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return

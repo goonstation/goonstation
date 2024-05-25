@@ -1,5 +1,6 @@
-/mob/proc/say()
-	return
+/mob/proc/say(message)
+	if (message)
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 /mob/proc/whisper(message, forced=FALSE)
 	return
@@ -198,7 +199,7 @@
 		boutput(usr, "<b>Deadchat is currently disabled.</b>")
 		return
 
-	message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
@@ -256,7 +257,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 	//logit( "chat", 0, "([name])", src, message )
 	for (var/client/C)
 		if (C.deadchatoff) continue
@@ -298,7 +299,7 @@
 		message = L.check_singing_prefix(message)
 
 	//i guess this caused some real ugly text huh
-	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
+	//message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
@@ -332,7 +333,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to hivemind
 	var/list/mob/hivemind = hivemind_owner.get_current_hivemind()
@@ -341,7 +342,7 @@
 			continue
 		try_render_chat_to_admin(C, rendered)
 	if (isabomination(hivemind_owner.owner))
-		var/abomination_rendered = SPAN_GAME("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
+		var/abomination_rendered = SPAN_REGULAR("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
 		src.audible_message(abomination_rendered)
 	else
 		for (var/mob/member in hivemind)
@@ -374,7 +375,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game thrallsay'>[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to ghouls
 	for (var/client/C in clients)
@@ -406,7 +407,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game kudzusay'>[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_KUDZUSAY("[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
@@ -554,7 +555,7 @@
 		return speechverb
 
 	if(class)
-		class = " class='game [class]'"
+		class = " class='[class]'"
 	if (loudness > 1)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness > 0)
@@ -575,7 +576,7 @@
 		if (dead_check && isdead(src))
 			src.emote_allowed = FALSE
 			return FALSE
-		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
+		if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
 			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
@@ -609,7 +610,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
+	msg = trimtext(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_ooc)
@@ -666,7 +667,7 @@
 			ooc_class = "newbeeooc"
 			ooc_icon = "Newbee"
 
-		if( src.client.cloud_available() && src.client.cloud_get("donor") )
+		if (src.client.player.cloudSaves.getData("donor") )
 			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
 
 		if (src.client.has_contestwinner_medal)
@@ -706,7 +707,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
+	msg = trimtext(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_looc)
@@ -807,7 +808,7 @@
 
 		boutput(C, rendered)
 		var/mob/M = C.mob
-		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
+		if(looc_text && speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
 			looc_text.show_to(C)
 
 	logTheThing(LOG_OOC, src, "LOOC: [msg]")
@@ -964,7 +965,7 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
+	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("unconscious")))
 		if (prob(20))
 			boutput(src, "<I>... You can almost hear something ...</I>")
 			if (isliving(src))
@@ -1134,13 +1135,13 @@
 		var/show_other_key = FALSE
 		if (C.stealth || C.alt_key)
 			show_other_key = TRUE
-		rendered = "<span class='game [class]'>[SPAN_BOLD("")][SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] informs, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		rendered = "<span class='[class]'>[SPAN_BOLD("")][SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] informs, [SPAN_MESSAGE("\"[message]\"")]</span>"
 		flockmindRendered = rendered // no need for URLs
 	else
-		rendered = "<span class='game [class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
-		flockmindRendered = "<span class='game [class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
+		rendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
+		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
 		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
-			siliconrendered = "<span class='game [class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
+			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue

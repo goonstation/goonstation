@@ -272,7 +272,7 @@
 	//cogwerks - burn vars
 	burn_point = 450
 	burn_output = 1600
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 20
 
 /obj/item/raw_material/claretine // relate this to wizardry somehow
@@ -368,7 +368,7 @@
 	//cogwerks - burn vars
 	burn_point = 1000
 	burn_output = 10000
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 40
 	powersource = 1
 	crystal = 1
@@ -517,7 +517,7 @@
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
 	icon_state = "scrap"
 	stack_type = /obj/item/raw_material/scrap_metal
-	burn_possible = 0
+	burn_possible = FALSE
 	mat_changename = TRUE
 	material_name = "Steel"
 	default_material = "steel"
@@ -547,7 +547,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	burn_possible = 0
+	burn_possible = FALSE
 	event_handler_flags = USE_FLUID_ENTER
 	material_amt = 0.1
 	material_name = "Glass"
@@ -590,7 +590,7 @@
 		default_material = "plasmaglass"
 
 /obj/item/raw_material/shard/proc/walked_over(mob/living/carbon/human/H as mob)
-	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("knockdown")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 		return
 	if(isabomination(H))
 		return
@@ -609,7 +609,7 @@
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
-	H.changeStatus("weakened", 3 SECONDS)
+	H.changeStatus("knockdown", 3 SECONDS)
 	H.force_laydown_standup()
 	var/zone = pick("l_leg", "r_leg")
 	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
@@ -726,7 +726,7 @@
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 	var/atom/output_location = null
-	var/list/atom/leftovers = null
+	var/list/atom/leftovers = list()
 
 	attack_hand(var/mob/user)
 		if (active)
@@ -735,7 +735,6 @@
 		if (length(src.contents) < 1)
 			boutput(user, SPAN_ALERT("There's nothing inside to reclaim."))
 			return
-		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
 		anchored = ANCHORED
@@ -765,14 +764,6 @@
 		if (reject)
 			src.reject = 0
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
-			playsound(src.loc, sound_grump, 40, 1)
-
-		var/waste = 0
-		for(var/matID in leftovers)
-			if(leftovers[matID] > 0)
-				waste = 1
-		if (waste)
-			src.visible_message("<b>[src]</b> emits a grumpy buzz and disintegrates some leftovers.")
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
@@ -820,7 +811,7 @@
 			if (!MAT)
 				return
 
-		var/output_location = src.get_output_location()
+		var/atom/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = new bar_type
@@ -831,15 +822,21 @@
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
-			M.load_item(BAR)
+			M.change_contents(mat_piece = BAR)
 		else
 			BAR.set_loc(output_location)
+			for (var/obj/item/material_piece/other_bar in output_location.contents)
+				if (other_bar == BAR)
+					continue
+				if (BAR.material.isSameMaterial(other_bar.material))
+					if (other_bar.stack_item(BAR))
+						break
 
 		playsound(src.loc, sound_process, 40, 1)
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if (src.is_valid(W))
+		if (src.is_valid(W) && brain_check(W, user, TRUE))
 			if (W.stored)
 				W.stored.transfer_stored_item(W, src, user = user)
 			else
@@ -867,12 +864,14 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, TRUE)
+				logTheThing(LOG_STATION, user, "loads [W] into \the [src] at [log_loc(src)].")
 		else if (W?.cant_drop)
 			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, TRUE)
+			logTheThing(LOG_STATION, user, "loads [W] into \the [src] at [log_loc(src)].")
 		else
 			. = ..()
 
@@ -971,7 +970,7 @@
 				continue
 			if (M.name != O.name)
 				continue
-			if(!src.is_valid(M))
+			if(!(src.is_valid(M) && brain_check(M, user, FALSE)))
 				continue
 			M.set_loc(src)
 			playsound(src, sound_load, 40, TRUE)
@@ -1006,3 +1005,23 @@
 		if (!istype(I))
 			return
 		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
+
+	proc/brain_check(var/obj/item/I, var/mob/user, var/ask)
+		if (!istype(I))
+			return
+		var/obj/item/organ/brain/brain = null
+		if (istype(I, /obj/item/parts/robot_parts/head))
+			var/obj/item/parts/robot_parts/head/head = I
+			brain = head.brain
+		else if (istype(I, /obj/item/organ/brain))
+			brain = I
+
+		if (brain)
+			if (!ask)
+				boutput(user, SPAN_ALERT("[I] turned the intelligence detection light on! You decide to not load it for now."))
+				return FALSE
+			var/accept = tgui_alert(user, "Possible intelligence detected. Are you sure you want to reclaim [I]?", "Incinerate brain?", list("Yes", "No")) == "Yes" && can_reach(user, src) && user.equipped() == I
+			if (accept)
+				logTheThing(LOG_COMBAT, user, "loads [brain] (owner's ckey [brain.owner ? brain.owner.ckey : null]) into a portable reclaimer.")
+			return accept
+		return TRUE

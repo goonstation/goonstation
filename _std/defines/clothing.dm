@@ -1,22 +1,25 @@
 // human equipment slots
-#define SLOT_BACK 1
-#define SLOT_WEAR_MASK 2
-#define SLOT_L_HAND 4
-#define SLOT_R_HAND 5
-#define SLOT_BELT 6
-#define SLOT_WEAR_ID 7
-#define SLOT_EARS 8
-#define SLOT_GLASSES 9
-#define SLOT_GLOVES 10
-#define SLOT_HEAD 11
-#define SLOT_SHOES 12
-#define SLOT_WEAR_SUIT 13
-#define SLOT_W_UNIFORM 14
-#define SLOT_L_STORE 15
-#define SLOT_R_STORE 16
+// if the variable names of slots on human are ever changed make sure these match the new names
+#define SLOT_BACK "back"
+#define SLOT_WEAR_MASK "wear_mask"
+#define SLOT_L_HAND "l_hand"
+#define SLOT_R_HAND "r_hand"
+#define SLOT_BELT "belt"
+#define SLOT_WEAR_ID "wear_id"
+#define SLOT_EARS "ears"
+#define SLOT_GLASSES "glasses"
+#define SLOT_GLOVES "gloves"
+#define SLOT_HEAD "head"
+#define SLOT_SHOES "shoes"
+#define SLOT_WEAR_SUIT "wear_suit"
+#define SLOT_W_UNIFORM "w_uniform"
+#define SLOT_L_STORE "l_store"
+#define SLOT_R_STORE "r_store"
 //#define SLOT_W_RADIO 17
 #define SLOT_IN_BACKPACK 18
 #define SLOT_IN_BELT 19
+
+var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 
 // bitflags for clothing parts
 #define HEAD			1

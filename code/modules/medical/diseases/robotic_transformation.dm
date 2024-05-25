@@ -5,7 +5,7 @@
 	scantype = "Nano-Infection"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "nanites"
 	affected_species = list("Human","Monkey")
 
@@ -37,7 +37,7 @@
 				random_brute_damage(affected_mob, 5)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You feel a stabbing pain in your head."))
-				affected_mob.changeStatus("paralysis", 4 SECONDS)
+				affected_mob.changeStatus("unconscious", 4 SECONDS)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You can feel something move...inside."))
 		if(4)
@@ -79,7 +79,7 @@
 	scantype = "Nano-Infection"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "goodnanites"
 	affected_species = list("Human")
 
@@ -108,7 +108,7 @@
 				boutput(affected_mob, "Your skin feels loose.")
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You feel a stabbing pain in your abdomen."))
-				affected_mob.changeStatus("paralysis", 4 SECONDS)
+				affected_mob.changeStatus("unconscious", 4 SECONDS)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You can feel something move...inside."))
 		if(4)

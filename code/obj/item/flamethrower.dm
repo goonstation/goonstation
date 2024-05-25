@@ -68,13 +68,14 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 	spread_angle = 0
 	shoot_delay = 1 SECOND
+	recoil_strength = 6
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
 		set_current_projectile(new/datum/projectile/special/shotchem)
-		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay)
 
 	/// Just check if there's a usable air and fuel tank
 	canshoot(mob/user)
@@ -174,6 +175,9 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 
+/obj/item/gun/flamethrower/return_air()
+	return src.gastank?.return_air()
+
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -207,8 +211,8 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
@@ -304,8 +308,8 @@ A Flamethrower in various states of assembly
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
-	uses_multiple_icon_states = 1
 	force = 6
+	contraband = 7
 	two_handed = 1
 	swappable_tanks = 0 // Backpack or bust
 	spread_angle = 10
@@ -458,8 +462,6 @@ A Flamethrower in various states of assembly
 			boutput(user, SPAN_ALERT("You need to be holding [src] to work on it!"))
 			return
 		var/obj/item/device/igniter/I = W
-		if (!( I.status ))
-			return
 		user.show_message(SPAN_NOTICE("You put the igniter in place, it still needs to be firmly attached."), 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
@@ -733,7 +735,7 @@ A Flamethrower in various states of assembly
 					src.shoot_delay = 2 DECI SECONDS
 					src.chem_divisor = 1 //hehehe
 
-			AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
+			AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay)
 			set_current_projectile(src.current_projectile)
 
 		if ("change_temperature")

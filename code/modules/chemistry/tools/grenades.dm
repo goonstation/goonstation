@@ -3,6 +3,8 @@
 /* -------------------- Grenades -------------------- */
 /* ================================================== */
 
+ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
+
 /obj/item/chem_grenade
 	name = "imcoder chemical grenade"
 	icon_state = "grenade-chem1"
@@ -374,6 +376,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 	// completed grenade + wrench -> disassembling of the grenade
 	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
+	logTheThing(LOG_CHEMISTRY, user, "Assembles a custom chemical grenade (beaker 1: [beakers[1]]; beaker 2: [beakers[2]])")
 	return TRUE
 
 /// chem grenade disassembly

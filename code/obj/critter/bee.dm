@@ -73,7 +73,8 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		START_TRACKING
 		src.create_reagents(honey_production_amount)
 
-		statlog_bees(src)
+		var/datum/eventRecord/BeeSpawn/beeSpawnEvent = new()
+		beeSpawnEvent.send(src.name)
 
 		//SPAWN(1 SECOND)
 		src.pixel_x = rand(-max_offset,max_offset)
@@ -154,7 +155,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				fellow_bee.task = "chasing"
 
 	attack_ai(mob/user as mob)
-		if (GET_DIST(user, src) < 2)
+		if (GET_DIST(user, src) < 2 && user.a_intent != INTENT_HARM)
 			return attack_hand(user)
 		else
 			return ..()
@@ -259,7 +260,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -273,7 +274,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return
 		if (prob(20))
 			return CritterAttack(M)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			return
 		src.visible_message(SPAN_ALERT("<B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!"), group = "beeattack")
@@ -376,7 +377,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!")
 				user.add_karma(-1)
 
 				if (user != src.target)
@@ -396,7 +397,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> buzzes delightedly.", 1)
+			src.visible_message("<b>[src]</b> buzzes delightedly.")
 			src.health = min(initial(src.health), src.health+10)
 			W.reagents.del_reagent("nectar")
 
@@ -407,7 +408,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass))
 			if (W.reagents.has_reagent("menthol") && length(W.reagents.reagent_list) == 1)
-				src.visible_message("<b>[src]</b> sniffles a bit.", 1)
+				src.visible_message("<b>[src]</b> sniffles a bit.")
 				src.health = min(initial(src.health), src.health+5)
 		else
 			src.lastattacker = user
@@ -569,12 +570,11 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	proc/puke_honey()
 		var/turf/honeyTurf = get_turf(src)
 		var/obj/item/reagent_containers/food/snacks/pizza/floor_pizza = locate() in honeyTurf
-		var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey
+		var/obj/item/reagent_containers/food/snacks/honey
 		if (istype(floor_pizza))
-			honey = new /obj/item/reagent_containers/food/snacks/pizza(honeyTurf)
+			honey = floor_pizza
 			src.visible_message("<b>[src]</b> regurgitates a blob of honey directly onto [floor_pizza]![prob(10) ? " This is a thing that makes sense." : null]")
 			honey.name = replacetext(floor_pizza.name, "pizza", "beezza")
-			qdel(floor_pizza)
 
 		else
 			honey = new /obj/item/reagent_containers/food/snacks/ingredient/honey(honeyTurf)
@@ -678,7 +678,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (!istype(M)) return
 		if (prob(20))
 			return CritterAttack(M)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			return
 		src.visible_message(SPAN_ALERT("<B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!"))
@@ -730,7 +730,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1030,7 +1030,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1144,7 +1144,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (attacking)
 			return
 
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -1161,7 +1161,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if ((GET_DIST(src, M) <= 6) && src.alive)
 				M.visible_message(SPAN_ALERT("<b>[M.name] clutches their temples!</b>"))
 				M.emote("scream")
-				M.setStatusMin("paralysis", 10 SECONDS)
+				M.setStatusMin("unconscious", 10 SECONDS)
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -1733,7 +1733,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee")) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> squeals in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> squeals in a repulsed manner!")
 
 				if (user != src.target)
 					walk_away(src,user,10,1)
@@ -1750,7 +1750,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> squeals delightedly.", 1)
+			src.visible_message("<b>[src]</b> squeals delightedly.")
 			src.health = min(initial(src.health), src.health+10)
 			royal = 1
 
@@ -2104,7 +2104,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		src.visible_message(SPAN_ALERT("<B>[src]</B> bites [M]!"))
 		logTheThing(LOG_COMBAT, src.name, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			src.attacking = 0
 			return
@@ -2114,7 +2114,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	ChaseAttack(mob/M)
 		if (!istype(M)) return
 
-		if (M.stat || M.getStatusDuration("paralysis"))
+		if (M.stat || M.getStatusDuration("unconscious"))
 			src.task = "thinking"
 			return
 

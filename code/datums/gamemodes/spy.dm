@@ -28,13 +28,7 @@
 	if (!leaders_possible.len)
 		return 0
 
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/i = rand(5)
 	var/num_teams = clamp(round((num_players + i) / 7), setup_min_teams, setup_max_teams)
@@ -261,7 +255,7 @@
 
 		if (override == -1)
 			logTheThing(LOG_COMBAT, M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
-			boutput(M, "<h1><span class='alert'>Your loyalties are unaffected! You have resisted this new implant!</span></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("Your loyalties are unaffected! You have resisted this new implant!")]</h1>")
 			return
 
 		var/datum/game_mode/spy/spymode = ticker.mode
@@ -277,7 +271,7 @@
 		//todo - implantation when there is another XL already in here
 		boutput(M, SPAN_ALERT("A brilliant pain flashes through your brain!"))
 		if (override)
-			boutput(M, "<h1><span class='alert'>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</span></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!")]</h1>")
 			SPAWN(0)
 				alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
 			if (istype(leader_mind) && leader_mind.current && M.client)
@@ -286,7 +280,7 @@
 						qdel(I)
 						break
 		else
-			boutput(M, "<h1><span class='alert'>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</span></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!")]</h1>")
 			SPAWN(0)
 				alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
@@ -307,7 +301,7 @@
 		..()
 
 		if (leader_name)
-			boutput(M, "<h1><span class='alert'>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</span></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!")]</h1>")
 
 			if (istype(ticker.mode, /datum/game_mode/spy))
 				var/datum/game_mode/spy/spymode = ticker.mode

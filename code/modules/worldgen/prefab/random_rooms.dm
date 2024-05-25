@@ -45,6 +45,7 @@ proc/buildRandomRooms()
 	opacity = 1
 	invisibility = 0 // To see landmarks if NO_RANDOM_ROOM is defined
 	plane = PLANE_FLOOR
+	var/list/additional_tags = null //! All of these tags must be present on the random room prefab for it to be chosen
 
 	New()
 		..()
@@ -55,13 +56,17 @@ proc/buildRandomRooms()
 		..()
 
 	proc/apply()
-		var/datum/mapPrefab/random_room/room_prefab = pick_map_prefab(/datum/mapPrefab/random_room, list(size))
+		var/tags = list(size)
+		if(!isnull(additional_tags))
+			tags += additional_tags
+		var/datum/mapPrefab/random_room/room_prefab = pick_map_prefab(/datum/mapPrefab/random_room, wanted_tags_all=tags)
 		if(isnull(room_prefab))
-			CRASH("No random room prefab found for size: " + size)
+			CRASH("No random room prefab found for [src.type] (size: [size], additional tags: [json_encode(additional_tags)]")
 		room_prefab.applyTo(src.loc)
 		logTheThing(LOG_DEBUG, null, "Applied random room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
 
+	// TODO these should likely also be organized into an additional tag for actual rooms, I just don't feel like causing myriad merge conflicts in maps rn
 	size3x3
 		size = "3x3"
 		icon = 'icons/effects/mapeditor/3x3tiles.dmi'
@@ -74,6 +79,7 @@ proc/buildRandomRooms()
 		size = "5x3"
 		icon = 'icons/effects/mapeditor/5x3tiles.dmi'
 
-	size7x5
+	nadir_rocks_7x5
 		size = "7x5"
 		icon = 'icons/effects/mapeditor/7x5tiles.dmi'
+		additional_tags = list("nadir_rocks")

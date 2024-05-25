@@ -927,7 +927,7 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE)), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -1130,7 +1130,7 @@
 		src.update()
 		user.update_inhands()
 		SPAWN(0)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 		return
 
@@ -1235,11 +1235,10 @@
 	desc = "A stack of papers stapled together in a sequence intended for reading in."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "booklet-thin"
-	uses_multiple_icon_states = 1
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 	w_class = W_CLASS_TINY
 
@@ -1328,7 +1327,7 @@
 					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
-					cur_page.attack_self(usr)
+					cur_page.AttackSelf(usr)
 			if ("title_book")
 				src.give_title(usr)
 			if ("first_page")
@@ -1367,7 +1366,7 @@
 	amount = 10
 	burn_point = 220
 	burn_output = 200
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 2
 
 	// @TODO

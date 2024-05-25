@@ -25,6 +25,9 @@
 	var/tmp/roundstart_dir
 	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
 	var/explosion_immune = FALSE
+	///Things that are hidden "in" this turf that are revealed when it is pried up.
+	///Kept in a hidden object on the turf so that `get_turf` works as normal. Yes this is crime, fight me I have a possum.
+	var/obj/effects/hidden_contents_holder/hidden_contents = null
 
 	New()
 		..()
@@ -230,7 +233,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		AddOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/scorched2
 	burnt = 1
@@ -239,7 +242,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		AddOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/damaged1
 	step_material = "step_plating"
@@ -250,7 +253,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged2
 	step_material = "step_plating"
@@ -261,7 +264,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged3
 	step_material = "step_plating"
@@ -272,7 +275,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged4
 	step_material = "step_plating"
@@ -283,7 +286,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged5
 	step_material = "step_plating"
@@ -294,7 +297,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -320,7 +323,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged2
 	broken = 1
@@ -329,7 +332,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged3
 	broken = 1
@@ -338,7 +341,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -1443,7 +1446,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 	default_material = "synthrubber"
 
-	#ifdef XMAS
+	#ifdef SEASON_WINTER
 	New()
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
@@ -1457,6 +1460,39 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/proc/grassify()
 	.=0
+
+/// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
+/// silent: makes the overlay invisible and prevents the sound effect
+/turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
+	var/obj/grille/catwalk/catwalk = null
+	var/image/overlay = null
+	var/alpha = 60
+
+	if (wetType <= 0)
+		overlay = image('icons/effects/water.dmi', "sticky_floor")
+	else
+		overlay = image('icons/effects/water.dmi', "wet_floor")
+
+	if (!silent)
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
+	else
+		alpha = 0
+
+	overlay.blend_mode = BLEND_ADD
+	overlay.alpha = alpha
+	overlay.color = color
+
+	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
+		catwalk = locate() in src
+		catwalk.AddOverlays(overlay, "wet_overlay")
+
+	src.AddOverlays(overlay, "wet_overlay")
+	src.wet = wetType
+
+	SPAWN(timeout)
+		src.ClearSpecificOverlays("wet_overlay")
+		catwalk?.ClearSpecificOverlays("wet_overlay")
+		src.wet = 0
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
@@ -1551,8 +1587,31 @@ TYPEINFO(/turf/simulated/floor/stone)
 
 /////////////////////////////////////////
 
+/* Misc Adventure tilesets - Walp */
+
+TYPEINFO(/turf/simulated/floor/honeyblocks)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+
+DEFINE_FLOORS(honeyblocks,
+	name = "crystallized honey";\
+	desc = "Probably not edible.";\
+	icon = 'icons/turf/adventure_walpvrgis.dmi';\
+	icon_state = "honeyblock";\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(honeyblocks/border,
+	icon_state = "honeyblock_border")
+
+DEFINE_FLOORS(honeyblocks/corner,
+	icon_state = "honeyblock_corner")
+
+/////////////////////////////////////////
 
 /* Outdoors tilesets - Walp */
+
 TYPEINFO(/turf/simulated/floor/grasslush)
 	mat_appearances_to_ignore = list("steel","synthrubber")
 TYPEINFO(/turf/simulated/floor/grasslush/airless)
@@ -1685,7 +1744,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
-		icon_state = "ironform"
+		icon_state = "ironfoam"
 
 /turf/simulated/floor/metalfoam/ex_act()
 	ReplaceWithSpace()
@@ -1849,8 +1908,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(broken || burnt)
 		boutput(user, SPAN_ALERT("You remove the broken plating."))
-		UpdateOverlays(null,"burn")
-		UpdateOverlays(null,"damage")
+		ClearSpecificOverlays("burn", "damage")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1863,6 +1921,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
+
+/turf/simulated/floor/levelupdate()
+	..()
+	if (!src.intact && src.hidden_contents)
+		for(var/atom/movable/AM as anything in src.hidden_contents)
+			AM.set_loc(src)
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_FLOOR_REVEALED, src)
+		qdel(src.hidden_contents) //it's an obj, see the definition for crime justification
+		src.hidden_contents = null
+
 
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -1899,24 +1967,26 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		var/do_hide = TRUE
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
 			src.Attackby(P, user)
+			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			if(T.amount >= 1)
-				restore_tile()
+				restore_tile(do_hide)
 				src.default_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
 				// we use the material variant from the base floor
-				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.getID()]"
-				var/potential_new_base_icon_state = "floor$$[C.material.getID()]"
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material?.getID()]"
+				var/potential_new_base_icon_state = "floor$$[C.material?.getID()]"
 				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
 					src.icon_state = "floor"
 					src.icon = 'icons/turf/floors.dmi'
@@ -2075,6 +2145,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	ReplaceWithFloor()
 	src.to_plating()
 
+/turf/simulated/floor/proc/hide_inside(atom/movable/AM)
+	if (!src.hidden_contents)
+		src.hidden_contents = new(src)
+	AM.set_loc(src.hidden_contents)
+
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
 	if(istype(A,/turf/simulated/floor))
@@ -2085,6 +2160,38 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, 0, src)
+
+/turf/simulated/floor/ReplaceWith(what, keep_old_material, handle_air, handle_dir, force)
+	var/obj/effects/hidden_contents_holder/old_hidden_contents = src.hidden_contents //we have to do this because src will be the new turf after the replace due to byond
+	var/turf/simulated/floor/newfloor = ..()
+	if (istype(newfloor))
+		newfloor.hidden_contents = old_hidden_contents
+	else
+		qdel(old_hidden_contents)
+	return newfloor
+
+/turf/simulated/floor/restore_tile(do_hide = TRUE)
+	..()
+	if (!do_hide)
+		return
+	for (var/obj/item/item in src.contents)
+		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
+			src.hide_inside(item)
+
+///CRIME
+/obj/effects/hidden_contents_holder
+	name = ""
+	desc = ""
+	icon = null
+	anchored = ANCHORED_ALWAYS
+	invisibility = INVIS_ALWAYS
+	alpha = 0
+
+	set_loc(newloc)
+		if (!isnull(newloc))
+			return
+		. = ..()
+
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
@@ -2214,28 +2321,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
-	if(istype(A, /obj/overlay) || A.anchored == 2)
-		return
-	#ifdef CHECK_MORE_RUNTIMES
-	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
-	#endif
-	if (isturf(T))
-		visible_message(SPAN_ALERT("[A] falls into [src]!"))
-		if (ismob(A))
-			var/mob/M = A
-			if(!M.stat && ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN(0)
-				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		A.set_loc(T)
-		return
-
 /turf/unsimulated/floor/setpieces
 	icon = 'icons/misc/worlds.dmi'
 	fullbright = 0
@@ -2244,39 +2329,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
-		var/target_landmark = LANDMARK_FALL_ANCIENT
+		var/falltarget = LANDMARK_FALL_ANCIENT
 
-		Entered(atom/A as mob|obj)
-			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-				return ..()
-
-			var/turf/T = pick_landmark(target_landmark)
-			if(T)
-				fall_to(T, A)
-				return
-			else ..()
+		New()
+			. = ..()
+			src.AddComponent(/datum/component/pitfall/target_landmark,\
+				BruteDamageMax = 50,\
+				FallTime = 0 SECONDS,\
+				TargetLandmark = src.falltarget)
 
 		shaft
 			name = "Elevator Shaft"
-			target_landmark = LANDMARK_FALL_BIO_ELE
+			falltarget = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
-				return ..()
+				..()
 
 		hole_xy
 			name = "deep pit"
-			target_landmark = LANDMARK_FALL_DEBUG
-			Entered(atom/A as mob|obj)
-				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-					return ..()
-
-				if(warptarget)
-					fall_to(warptarget, A)
-					return
-				else ..()
-
+			falltarget = LANDMARK_FALL_DEBUG
 
 	bloodfloor
 		name = "bloody floor"
@@ -2308,15 +2381,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			desc = "You can't see the bottom."
 			icon_state = "deeps"
 
-			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-					return ..()
-
-				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
-				if(T)
-					fall_to(T, A)
-					return
-				else ..()
+			New()
+				. = ..()
+				src.AddComponent(/datum/component/pitfall/target_landmark,\
+					BruteDamageMax = 50,\
+					FallTime = 0 SECONDS,\
+					TargetLandmark = LANDMARK_FALL_DEEP)
 
 	hivefloor
 		name = "hive floor"
@@ -2341,9 +2411,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "swampgrass_edge"
 
+TYPEINFO(/turf/simulated/floor/auto)
+	/// List of types this autowall connects to
+	var/list/connects_to = null
+	/// Because connections now work by parent type searches, this is for when you don't want certain subtypes to connect.
+	/// This must be a typecache ([/proc/typecachesof]) list
+	var/list/connects_to_exceptions = null
+	/// do we have wall connection overlays, ex nornwalls?
+	var/connect_overlay = 0
+	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = null // same as above comment
+	var/connect_across_areas = TRUE
+	/// 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+	var/connect_diagonal = 0
+
 /turf/simulated/floor/auto
 	name = "auto edging turf"
 
+	var/mod = null
+	var/light_mod = null
+	/// The image we're using to connect to stuff with
+	var/image/connect_image = null
 	///turf won't draw edges on turfs with higher or equal priority
 	var/edge_priority_level = 0
 	var/icon_state_edge = null
@@ -2351,21 +2439,59 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+		if (current_state > GAME_STATE_WORLD_NEW)
+			SPAWN(0) //worldgen overrides ideally
+				UpdateIcon()
+				if(istype(src))
+					update_neighbors()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		src.UpdateIcon()
+		if(istype(src))
+			update_neighbors()
+
+	update_icon()
+		. = ..()
+		src.edge_overlays()
+		if(src.mod)
+			var/typeinfo/turf/simulated/floor/auto/typinfo = get_typeinfo()
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
+			var/the_state = "[mod][connectdir]"
+			icon_state = the_state
+
+			// if (light_mod)
+			// 	src.RL_SetSprite("[light_mod][connectdir]")
+
+			if (typinfo.connect_overlay)
+				var/overlaydir = get_connected_directions_bitflag(typinfo.connects_with_overlay, typinfo.connects_with_overlay_exceptions, typinfo.connect_across_areas)
+				if (overlaydir)
+					if (!src.connect_image)
+						src.connect_image = image(src.icon, "connect[overlaydir]")
+					else
+						src.connect_image.icon_state = "connect[overlaydir]"
+					src.AddOverlays(src.connect_image, "connect")
+				else
+					src.ClearSpecificOverlays("connect")
+
+	proc/update_neighbors()
+		for (var/turf/simulated/floor/auto/T in orange(1,src))
+			T.UpdateIcon()
 
 	proc/edge_overlays()
-		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/simulated/floor/auto))
-				var/turf/simulated/floor/auto/TA = T
-				if (TA.edge_priority_level >= src.edge_priority_level)
-					continue
-			var/direction = get_dir(T,src)
-			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[direction]")
+		if(src.icon_state_edge)
+			for (var/turf/T in orange(src,1))
+				if (istype(T, /turf/simulated/floor/auto))
+					var/turf/simulated/floor/auto/TA = T
+					if (TA.edge_priority_level >= src.edge_priority_level)
+						continue
+				var/direction = get_dir(T,src)
+				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+				edge_overlay.plane = PLANE_FLOOR
+				T.AddOverlays(edge_overlay, "edge_[direction]")
 
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
@@ -2421,7 +2547,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 			tuft = image('icons/turf/outdoors.dmi', "grass_tuft", src, pixel_x=rand_x, pixel_y=rand_y)
 			tuft.color = hsv_transform_color_matrix(h=hue_shift)
-			UpdateOverlays(tuft,"grass_turf")
+			AddOverlays(tuft,"grass_turf")
 
 	rough
 		tuft_prob = 0.8
@@ -2498,7 +2624,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		. = ..()
 		var/image/R = image('icons/turf/water.dmi', "ripple", dir=pick(alldirs),pixel_x=rand(-10,10),pixel_y=rand(-10,10))
 		R.alpha = 180
-		src.UpdateOverlays(R, "ripple")
+		src.AddOverlays(R, "ripple")
 
 /turf/simulated/floor/auto/snow
 	name = "snow"

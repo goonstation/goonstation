@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/tank
 	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi'
-	icon_state = "intact"
+	icon_state = "tank-map"
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 	density = TRUE
@@ -12,7 +12,7 @@
 	src.air_contents.temperature = T20C
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
-	src.icon_state = src.node ? "intact" : "exposed"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide

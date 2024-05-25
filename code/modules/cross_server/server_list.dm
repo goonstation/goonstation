@@ -30,18 +30,18 @@
 	add_server(new/datum/game_server(
 		"streamer1",
 		"Goonstation Nightshade 1",
-		"byond://tomato.goonhub.com:27111",
+		"byond://tomato1.goonhub.com:27111",
 		11, publ=FALSE
 		))
 	add_server(new/datum/game_server(
 		"streamer2",
 		"Goonstation Nightshade 2",
-		"byond://tomato.goonhub.com:27112",
+		"byond://tomato2.goonhub.com:27112",
 		12, publ=FALSE
 		))
 	add_server(new/datum/game_server(
 		"streamer3",
 		"Goonstation Nightshade 3",
-		"byond://tomato.goonhub.com:27113",
+		"byond://tomato3.goonhub.com:27113",
 		13, publ=FALSE
 		))

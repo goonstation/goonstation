@@ -113,8 +113,8 @@ TYPEINFO(/turf/variableTurf/clear)
 	var/width = length(L)
 	var/height = length(L[1])
 	var/count = 0
-	for(var/xx=-1, xx<=1, xx++)
-		for(var/yy=-1, yy<=1, yy++)
+	for(var/xx in -1 to 1)
+		for(var/yy in -1 to 1)
 			if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
 				count += L[currentX+xx][currentY+yy]
 			else //OOB, count as wall.
@@ -122,8 +122,8 @@ TYPEINFO(/turf/variableTurf/clear)
 
 	var/count2 = 0
 	if(fillLarge)
-		for(var/xx=-passTwoRange, xx<=passTwoRange, xx++)
-			for(var/yy=-passTwoRange, yy<=passTwoRange, yy++)
+		for(var/xx in -passTwoRange to passTwoRange)
+			for(var/yy in -passTwoRange to passTwoRange)
 				if(abs(xx)==passTwoRange && abs(yy)==passTwoRange) continue //Skip diagonals for this one. Better results
 				if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
 					count2 += L[currentX+xx][currentY+yy]
@@ -168,14 +168,14 @@ TYPEINFO(/turf/variableTurf/clear)
 
 		for(var/i in 0 to n_iterations-1) //5 Passes to smooth it out.
 			var/mapnew[width][height]
-			for(var/x=1,x<=width,x++)
-				for(var/y=1,y<=height,y++)
+			for(var/x in 1 to width)
+				for(var/y in 1 to height)
 					mapnew[x][y] = CAGetSolid(map, x, y, i)
-					LAGCHECK(LAG_REALTIME)
+					sleep(-1)
 			map = mapnew
 
 		for(var/x in 1 to width)
-			for(var/y=1,y<=height,y++)
+			for(var/y in 1 to height)
 				var/map_x = clamp(round(x * x_scale), 1, width)
 				var/map_y = clamp(round(y * y_scale), 1, height)
 				var/turf/T = locate(min_x+x-1,min_y+y-1,z_level)
@@ -185,7 +185,7 @@ TYPEINFO(/turf/variableTurf/clear)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
-				LAGCHECK(LAG_REALTIME)
+				sleep(-1)
 
 		var/list/used = list()
 		for(var/s in 0 to 19)
@@ -263,7 +263,7 @@ TYPEINFO(/turf/variableTurf/clear)
 
 			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate) && !isgenplanet(X)))
 				X = pick(miningZ)
-				LAGCHECK(LAG_REALTIME)
+				sleep(-1)
 
 			var/list/solidTiles = list()
 			var/list/edgeTiles = list(X)
@@ -294,7 +294,7 @@ TYPEINFO(/turf/variableTurf/clear)
 				if(decideSolid(west, X, sizeMod))
 					solidTiles.Add(west)
 					edgeTiles.Add(west)
-				LAGCHECK(LAG_REALTIME)
+				sleep(-1)
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
@@ -302,7 +302,7 @@ TYPEINFO(/turf/variableTurf/clear)
 					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
-				LAGCHECK(LAG_REALTIME)
+				sleep(-1)
 
 			if(prob(15))
 				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))
@@ -345,7 +345,7 @@ TYPEINFO(/turf/variableTurf/clear)
 	for (var/n in 1 to num_to_place)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/list/wanted_tags = get_prefab_tags()
-		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags)
+		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags_any=wanted_tags)
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
@@ -403,6 +403,13 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 	var/perlin_zoom = 65
 	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
 	var/const/color_alpha = 30
+	/// percentage of map to cover, used as salinity cutoff
+	var/coverage = 0.25
+
+	New(coverage_override)
+		. = ..()
+		if (coverage_override)
+			src.coverage = coverage_override
 
 	proc/setup()
 		seeds = list()
@@ -416,7 +423,7 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
 		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > 0.25) // no algae for you :(
+		if (salinity > coverage) // no algae for you :(
 			return
 		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
 		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))

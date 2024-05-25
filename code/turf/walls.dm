@@ -77,7 +77,7 @@ TYPEINFO(/turf/simulated/wall)
 		if(istype(get_area(src), /area/station/crew_quarters/cafeteria) && fixed_random(src.x / world.maxx + 0.001, src.y / world.maxy - 0.00001) <= 0.4)
 			SPAWN(1 SECOND)
 				var/turf/T = get_step(src, SOUTH)
-				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T) && !(locate(/obj/mapping_helper/wingrille_spawn) in T))
 					var/obj/stocking/stocking = new(T)
 					stocking.pixel_y = 26
 
@@ -278,7 +278,7 @@ TYPEINFO(/turf/simulated/wall)
 	else
 		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
-		//return attack_hand(user)
+		//return src.Attackhand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
 	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
@@ -484,7 +484,7 @@ TYPEINFO(/turf/simulated/wall)
 	src.material_trigger_when_attacked(W, user, 1)
 
 	src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
-	//return attack_hand(user)
+	//return src.Attackhand(user)
 
 
 /turf/simulated/wall/meteorhit(obj/M as obj)

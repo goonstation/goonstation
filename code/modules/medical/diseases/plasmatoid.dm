@@ -2,7 +2,8 @@
 	name = "Plasmatoid"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Mutadone"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Mutadone"
 	reagentcure = list("mutadone")
 	recureprob = 15
 	associated_reagent = "liquid plasma"

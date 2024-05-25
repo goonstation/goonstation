@@ -40,6 +40,7 @@
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
+	var/surrounded = 0 //! bitfield of dirs we have other blob tiles around us on
 
 	New()
 		..()
@@ -298,8 +299,10 @@
 			tolerance *= 3
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
-
-			src.take_damage(temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3)), 1, "burn")
+			var/damage = temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3))
+			if(air)
+				damage *= clamp(MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE, 0, 1)
+			src.take_damage(damage, 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -495,6 +498,7 @@
 				if (B)
 					dirs |= dir
 			icon_state = num2text(dirs)
+			src.surrounded = dirs
 
 		//else if(istext( special_icon ))
 		//	if(!BLOB_OVERLAYS[ special_icon ])
@@ -919,7 +923,7 @@
 		. = ..()
 		dead = 1
 		if(absorbed_temp > 1000)
-			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
+			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range, chemfire = CHEM_FIRE_RED)
 
 
 /obj/blob/plasmaphyll

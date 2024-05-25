@@ -72,9 +72,9 @@
 				src.image_change = image(src.icon, "change[change]", layer = HUD_LAYER+2)
 			else
 				src.image_change.icon_state = "change[change]"
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		else
-			src.hud.UpdateOverlays(null, "change")
+			src.hud.ClearSpecificOverlays("change")
 		//var/a_change = value - last_life_value
 		var/maptext_color = "#ffffff"
 		var/round_value = round(value)
@@ -98,7 +98,7 @@
 		if (!src.image_meter)
 			src.image_meter = image(src.icon, "[src.icon_state]-o", layer = HUD_LAYER+1)
 		src.image_meter.color = rgb((1 - ratio) * 255, ratio * 255, 0)
-		src.hud.UpdateOverlays(src.image_meter, "meter")
+		src.hud.AddOverlays(src.image_meter, "meter")
 
 	proc/updateHudIcon(var/icon/I)
 		if (!I || !src.hud)
@@ -106,9 +106,8 @@
 		src.icon = I
 		src.hud.icon = I
 		if (src.image_change)
-			src.hud.UpdateOverlays(null, "change")
 			src.image_change.icon = I
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		if (src.image_meter)
 			src.image_meter.icon = I
 			src.updateHud()
@@ -301,40 +300,6 @@
 			else
 				return null
 
-	bladder
-		name = "Bladder"
-		icon_state = "bladder"
-		desc = "You can raise your bladder by releasing your urges in the toilet. Be sure to stand above a toilet and type '*pee'."
-		depletion_rate = 0.067 //53
-		gain_rate = 1
-
-		getWarningMessage()
-			var/list/urination = list("urinate", "piss", "pee", "answer the call of nature", "wee-wee", "spend a penny", "have a leak", "take a leak", "relieve yourself", "have a Jimmy", "have a whizz", "have a piddle", "pass water", "empty the tank", "flush the buffers", "lower the water level", "pay the water bill", "park your breakfast", "make your bladder gladder", "release the pressure", "put out the fire", "visit the urination station", "drain the tank")
-			var/to_urinate = pick(urination)
-			if (value < 25)
-				return SPAN_ALERT("You feel like you could [pick("wet", "piss", "pee", "urinate into", "leak into")] your pants any minute now!")
-			else if (value < 50)
-				return SPAN_ALERT("You feel a [pick("serious", "pressing", "critical", "dire", "burning")] [pick("inclination", "desire", "need", "call", "urge", "motivation")] to [to_urinate]!")
-			else
-				return null
-
-		onDeplete()
-			showOwner(SPAN_ALERT("<b>You piss all over yourself!</b>"))
-			modifyValue(100)
-			holder.affectMotive("Hygiene", -100)
-			holder.owner.changeStatus("stunned", 2 SECONDS)
-			if (ishuman(holder.owner))
-				var/mob/living/carbon/human/H = holder.owner
-				if (H.w_uniform)
-					var/obj/item/clothing/U = H.w_uniform
-					U.add_stain("piss-soaked")
-					//U.name = "piss-soaked [initial(U.name)]"
-				else if (H.wear_suit)
-					var/obj/item/clothing/U = H.wear_suit
-					U.add_stain("piss-soaked")
-					//U.name = "piss-soaked [initial(U.name)]"
-			make_cleanable(/obj/decal/cleanable/urine,holder.owner.loc)
-
 	comfort
 		name = "comfort"
 		icon_state = "comfort"
@@ -440,9 +405,9 @@
 		mayStandardDeplete()
 			if (..())
 				// JFC fuck mobs
-				if (holder.owner.getStatusDuration("weakened"))
+				if (holder.owner.getStatusDuration("knockdown"))
 					return 0
-				if (holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("unconscious"))
 					return 0
 				if (holder.owner.lying)
 					return 0
@@ -636,7 +601,6 @@ var/global/datum/simsControl/simsController = new()
 			addMotive(/datum/simsMotive/hunger/thirst)
 			addMotive(/datum/simsMotive/social)
 			addMotive(/datum/simsMotive/hygiene)
-			addMotive(/datum/simsMotive/bladder)
 			addMotive(/datum/simsMotive/comfort)
 			addMotive(/datum/simsMotive/fun)
 			addMotive(/datum/simsMotive/energy)

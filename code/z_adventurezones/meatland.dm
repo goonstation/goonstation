@@ -339,7 +339,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.attacking = 1
 		src.visible_message(SPAN_ALERT("[src] slaps [M] with a meaty tendril!"))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-		M.changeStatus("weakened", 10 SECONDS)
+		M.changeStatus("knockdown", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
 		M.throw_at(get_edge_target_turf(M, get_dir(src, get_step_away(M, src))), 200, 4)
 
@@ -428,7 +428,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		playsound(src.loc, pick(meathead_noises), 40, 1)
 
 		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
-			O.show_message("<span class='game say'>[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\""), 2)
 		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
@@ -1039,7 +1039,8 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	var/tmp/inPasswordRequestMode = 0
 
 	initialize()
-		..()
+		if (..())
+			return TRUE
 		src.master.temp = ""
 		src.master.temp_add = ""
 		src.print_text("&#x041F;&#x043E;&#x0436;a&#x043B;y&#x0439;c&#x0442;a, &#x0432;c&#x0442;a&#x0432;&#x044C;&#x0442;e &#x043A;&#x043B;&#x044E;&#x0447;&#x0438; a&#x0432;&#x0442;o&#x0440;&#x0438;&#x044D;a&#x0446;&#x0438;&#x0438;.")
@@ -1252,7 +1253,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return attack_hand(user)
 
 	attack_hand(mob/user)
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
+		if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 
 		user.visible_message(SPAN_ALERT("[user] presses against [src]."), SPAN_ALERT("You press against [src].  Ew."))
@@ -1467,6 +1468,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	cant_self_remove = 1
 	cant_other_remove = 1
 	cant_drop = 1
+	c_flags = null // not on belt
 	var/last_shot = 0
 
 	pickup(var/mob/user)

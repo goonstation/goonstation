@@ -4,7 +4,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's respiratory is starting to fail"
-	cure = "Oxygen-healing drugs or surgery"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Oxygen-healing drugs or surgery"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1

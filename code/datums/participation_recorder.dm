@@ -21,31 +21,43 @@ var/global/datum/participationRecorder/participationRecorder
 		boutput(world, msg)
 
 
+	proc/getJob(datum/player/P)
+		if (!P?.client?.mob?.mind) return null
+		var/job = P.client.mob.mind.assigned_role
+		if (job == "MODE") return null
+		return job || null
+
+
 	//Record a participation for a player (or add it to a queue if holding)
-	proc/record(ckey)
-		if (!ckey)
-			throw EXCEPTION("No ckey given")
+	proc/record(datum/player/P)
+		set waitfor = FALSE
+		if (!P)
+			throw EXCEPTION("No player given")
+
+		if (!P.id)
+			logTheThing(LOG_DEBUG, null, "No player ID for player during player participation recording. Player: [P.ckey]")
+			logTheThing(LOG_DIARY, null, "No player ID for player during player participation recording. Player: [P.ckey]", "admin")
+			return
 
 		if (!ticker || !ticker.mode || !ticker.mode.name)
 			throw EXCEPTION("Invalid ticker found")
 
 		if (src.debug)
-			src.debugLog("(participationRecorder) Called record. ckey: [ckey]. holding: [src.holding]")
+			src.debugLog("(participationRecorder) Called record. player ID: [P.id]. holding: [src.holding]")
 
 		//queue up for eventual transmission via releaseHold
 		if (src.holding)
-			src.queue += ckey
+			src.queue += list(list("player_id" = P.id, "job" = src.getJob(P)))
 
 		//send our shiiiit
 		else
-			var/list/payload = list(
-				"ckey" = ckey,
-				"round_mode" = ticker.mode.name
-			)
-			#ifdef RP_MODE
-			payload["rp_mode"] = TRUE
-			#endif
-			apiHandler.queryAPI("participation/record", payload)
+			try
+				var/datum/apiRoute/players/participations/addParticipation = new
+				addParticipation.buildBody(P.id, roundId, src.getJob(P))
+				apiHandler.queryAPI(addParticipation)
+			catch
+				logTheThing(LOG_DEBUG, null, "failed to record player participation. Player: [P.ckey]")
+				logTheThing(LOG_DIARY, null, "failed to record player participation. Player: [P.ckey]", "admin")
 
 
 	//Set holding on, which enables queuing of participation data for the duration
@@ -62,18 +74,12 @@ var/global/datum/participationRecorder/participationRecorder
 		src.holding = 0
 
 		if (src.debug)
-			src.debugLog("(participationRecorder) Release hold called. round_name: [ticker.mode.name]. queue: [json_encode(src.queue)]")
+			src.debugLog("(participationRecorder) Release hold called. queue: [json_encode(src.queue)]")
 
-		var/list/payload = list(
-			"round_mode" = ticker.mode.name
-		)
-		#ifdef RP_MODE
-		payload["rp_mode"] = TRUE
-		#endif
-
-		var/count = 0
-		for (var/ckey in src.queue)
-			payload["ckeys\[[count]]"] = ckey
-			count++
-
-		apiHandler.queryAPI("participation/record-multiple", payload)
+		try
+			var/datum/apiRoute/players/participationsBulk/addBulkParticipations = new
+			addBulkParticipations.buildBody(src.queue, roundId)
+			apiHandler.queryAPI(addBulkParticipations)
+		catch
+			logTheThing(LOG_DEBUG, null, "failed to bulk record player participations. Queue: [json_encode(src.queue)]")
+			logTheThing(LOG_DIARY, null, "failed to bulk record player participations. Queue: [json_encode(src.queue)]", "admin")

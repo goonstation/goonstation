@@ -226,7 +226,8 @@
 /area/prefab/crashed_shuttle)
 "iW" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/molten_item,
 /obj/item/raw_material/rock,
@@ -247,7 +248,8 @@
 "kz" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles1";
@@ -279,7 +281,7 @@
 "mH" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact"
+	icon_state = "vent-map"
 	},
 /obj/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/plating/airless,
@@ -327,7 +329,7 @@
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
@@ -363,8 +365,8 @@
 /area/prefab/crashed_shuttle)
 "vy" = (
 /obj/decal/fakeobjects/pipe{
-	icon_state = "intact";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/item/reagent_containers/pill/crank,
 /turf/simulated/floor/plating/airless,
@@ -558,7 +560,8 @@
 "Nw" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/plating/airless,
@@ -614,7 +617,8 @@
 "Rx" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4";

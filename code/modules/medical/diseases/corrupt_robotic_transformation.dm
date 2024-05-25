@@ -5,7 +5,7 @@
 	scantype = "Nano-Infection"
 	max_stages = 6
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "corruptnanites"
 	affected_species = list("Human","Monkey")
 
@@ -37,7 +37,7 @@
 				random_brute_damage(affected_mob, 5)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You feel a stabbing pain in your head."))
-				affected_mob.changeStatus("paralysis", 4 SECONDS)
+				affected_mob.changeStatus("unconscious", 4 SECONDS)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You can feel something move...inside."))
 		if(4)
@@ -51,7 +51,7 @@
 				random_brute_damage(affected_mob, 5)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You feel a stabbing pain in your head."))
-				affected_mob.changeStatus("paralysis", 4 SECONDS)
+				affected_mob.changeStatus("unconscious", 4 SECONDS)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You can feel something move...inside."))
 		if(5)

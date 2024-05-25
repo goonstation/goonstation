@@ -68,7 +68,7 @@
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
-				if (disease.cure == "Heart Transplant")
+				if (disease.cure_flags & CURE_HEART_TRANSPLANT)
 					src.donor.cure_disease(disease)
 			src.donor.blood_id = (ischangeling(src.donor) && src.blood_id == "blood") ? "bloodc" : src.blood_id
 		if (ishuman(M) && islist(src.diseases))
@@ -84,7 +84,7 @@
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
 
 			if (!ischangeling(donor) && !donor.nodamage)
-				donor.changeStatus("weakened", 8 SECONDS)
+				donor.changeStatus("knockdown", 8 SECONDS)
 				donor.losebreath += 20
 				donor.take_oxygen_deprivation(20)
 

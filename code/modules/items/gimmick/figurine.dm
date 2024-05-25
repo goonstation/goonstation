@@ -119,7 +119,7 @@
 		if (!ishuman(user))
 			return
 		var/message = input("What should [src] say?")
-		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
@@ -177,7 +177,7 @@ var/list/figure_high_rarity = list(\
 /datum/figure_info/boxer,
 /datum/figure_info/lawyer,
 /datum/figure_info/barber,
-/datum/figure_info/mailman,
+/datum/figure_info/mailcourier,
 /datum/figure_info/tourist,
 /datum/figure_info/vice,
 /datum/figure_info/clown,
@@ -268,8 +268,8 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 		name = "barber"
 		icon_state = "barber"
 
-	mailman
-		name = "mailman"
+	mailcourier
+		name = "mail courier"
 		icon_state = "mailman"
 
 	atmos
@@ -986,16 +986,67 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bowlofnuts"
 
 	joeled
-		name = "\improper Lawrence Crowley"
-		icon_state = "lawrencecrowley"
+		name = "\improper Tank Transfer"
+		icon_state = "tanktransfer"
 		ckey = "joeled"
+
+	firekestrel
+		name = "\improper Merryn Morse"
+		icon_state = "morse"
+		ckey = "firekestrel"
+
+	lyy
+		name = "\improper Jelly Fish"
+		icon_state = "jellyfish"
+		ckey = "lyy"
+
+	avanth
+		name = "\improper Sally MacCaa"
+		icon_state = "sallymaccaa"
+		ckey = "avanth"
+
+	rukert
+		name = "\improper Rupert Crimehanson"
+		icon_state = "rupertcrimehanson"
+		ckey = "rukert"
+
+	kirdy2
+		name = "\improper Old Longbert"
+		icon_state = "oldlongbert"
+		ckey = "kirdy2"
+
+	O514
+		name = "\improper Emma Nureni"
+		icon_state = "emmanureni"
+		ckey = "O514"
+
+	sockssq
+		name = "\improper Hot Fudge"
+		icon_state = "hotfudge"
+		ckey = "sockssq"
+
+	torchwick
+		name = "\improper Sam Relius"
+		icon_state = "samrelius"
+		ckey = "torchwick"
+	klushy225
+		name = "\improper Munches Paper"
+		icon_state = "munchespaper"
+		ckey = "klushy225"
+	linkey
+		name = "\improper Kate Smith"
+		icon_state = "katesmith"
+		ckey = "linkey"
+	gibusgame
+		name = "\improper Harper Costache"
+		icon_state = "harpercostache"
+		ckey = "gibusgame"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "cap-y"
-	uses_multiple_icon_states = 1
 	contained_item = /obj/item/toy/figure
 	item_amount = 1
 	max_item_amount = 1

@@ -396,7 +396,7 @@
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
-			src.visible_message(SPAN_NOTICE("<b>[user]</b> [pet_verb] [src]![post_pet_verb]"), 1)
+			src.visible_message(SPAN_NOTICE("<b>[user]</b> [pet_verb] [src]![post_pet_verb]"))
 			on_pet(user)
 
 	proc/patrol_step()

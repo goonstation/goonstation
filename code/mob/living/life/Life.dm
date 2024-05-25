@@ -174,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
@@ -193,6 +194,7 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
@@ -213,9 +215,9 @@
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 
 /mob/living/silicon/drone/restore_life_processes()
@@ -353,6 +355,11 @@
 				D.foreign_limb_effect()
 
 	if (!isdead(src)) // Marq was here, breaking everything.
+		if(src.limbs)
+			src.limbs.l_arm?.on_life(parent)
+			src.limbs.r_arm?.on_life(parent)
+			src.limbs.l_leg?.on_life(parent)
+			src.limbs.r_leg?.on_life(parent)
 
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
@@ -398,10 +405,12 @@
 	process_locks()
 	update_canmove()
 
+	for (var/obj/item/parts/robot_parts/part in src.contents)
+		part.on_life(src)
+
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
 		src.show_text(voidSpeak(msg))
-		src.emagged = 1
 
 /mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -524,11 +533,11 @@
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, SPAN_ALERT("[stinkString()]"))
+				boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, SPAN_ALERT("[stinkString()]"))
+					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
@@ -563,7 +572,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
+			setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)

@@ -606,11 +606,12 @@ var/list/radio_brains = list()
 		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1
 			boutput(owner, SPAN_ALERT("You suddenly feel very weak."))
-			H.changeStatus("weakened", 3 SECONDS)
+			H.changeStatus("knockdown", 3 SECONDS)
 			H.emote("collapse")
 
 /datum/bioEffect/hulk/hidden
 	name = "Hidden Gamma Ray Exposure"
+	id = "hulk_hidden"
 	visible = FALSE
 	occur_in_genepools = 0
 	probability = 0

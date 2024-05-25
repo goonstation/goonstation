@@ -5,6 +5,7 @@
 	icon_state = "mopbucket"
 	density = 1
 	flags = FPRINT
+	pass_unstable = TRUE
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	HELP_MESSAGE_OVERRIDE("You can drag and drop yourself to move onto the bucket.<br>The bucket has 7 storage slots inside of it.<br>To pour reagents into the bucket from a <b>cup</b> or similar, drag and drop the cup to the bucket.")
@@ -20,7 +21,7 @@
 		START_TRACKING
 
 	update_icon()
-		if (reagents.total_volume)
+		if (reagents?.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
@@ -30,6 +31,15 @@
 	on_reagent_change()
 		..()
 		src.UpdateIcon()
+
+	Cross(atom/movable/mover)
+		if(isliving(mover)) // let people climb onto the bucket if the bucket is against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
+		. = ..()
+
 
 /obj/mopbucket/disposing()
 	. = ..()
@@ -67,7 +77,7 @@
 	src.transfer_all_reagents(over_object, usr)
 
 /obj/mopbucket/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!in_interact_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
+	if (!in_interact_range(user, src) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying || user.buckled)
 		return
 
 	if (O == user)
@@ -91,7 +101,7 @@
 				SPAN_ALERT("You trip over [src]!"))
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 				user.set_loc(src.loc)
-				user.changeStatus("weakened", 1 SECOND)
+				user.changeStatus("knockdown", 1 SECOND)
 				JOB_XP(user, "Clown", 1)
 				return
 			else

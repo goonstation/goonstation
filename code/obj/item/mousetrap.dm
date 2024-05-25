@@ -1,4 +1,6 @@
 // Added support for old-style grenades (Convair880).
+
+#define HAS_TRIGGERABLE(x) (x.grenade || x.grenade_old || x.pipebomb || x.arm || x.signaler || x.butt || x.gimmickbomb)
 /obj/item/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
@@ -6,6 +8,7 @@
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden placement of armed mousetraps in other peoples backpacks
 	force = null
 	throwforce = null
 	var/armed = FALSE
@@ -16,7 +19,7 @@
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
 	var/obj/item/clothing/head/butt/butt = null
-	var/obj/item/gimmickbomb/butt/buttbomb = null
+	var/obj/item/gimmickbomb/gimmickbomb = null
 	var/mob/armer = null
 	stamina_damage = 0
 	stamina_cost = 0
@@ -32,9 +35,13 @@
 
 			New()
 				..()
-				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 				src.grenade = new /obj/item/chem_grenade/cleaner(src)
 				return
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(triggered))
 
 	examine()
 		. = ..()
@@ -74,6 +81,7 @@
 
 	disposing()
 		clear_armer()
+		UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 		. = ..()
 
 	attack_hand(mob/user)
@@ -102,7 +110,7 @@
 		return ..()
 
 	attackby(obj/item/C, mob/user)
-		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
+		if (istype(C, /obj/item/chem_grenade) && !HAS_TRIGGERABLE(src))
 			var/obj/item/chem_grenade/CG = C
 			var/grenade_ready = TRUE
 			if(istype(CG, /obj/item/chem_grenade/custom))
@@ -120,14 +128,14 @@
 				CG.set_loc(src)
 				user.show_text("You attach [CG]'s detonator to [src].", "blue")
 				src.grenade = CG
-				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 				src.w_class = max(src.w_class, C.w_class)
 
 				if(CG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing(LOG_BOMBING, user, "rigs [src] with [CG] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
+		else if (istype(C, /obj/item/old_grenade/) && !HAS_TRIGGERABLE(src))
 			var/obj/item/old_grenade/OG = C
 			if (OG.not_in_mousetraps == 0 && !OG.armed)
 				if(!(src in user.equipped_list()))
@@ -138,14 +146,14 @@
 				OG.set_loc(src)
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
 				src.grenade_old = OG
-				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 				src.w_class = max(src.w_class, C.w_class)
 
 				if(OG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
+		else if (istype(C, /obj/item/pipebomb/bomb) && !HAS_TRIGGERABLE(src))
 			var/obj/item/pipebomb/bomb/PB = C
 			if (!PB.armed)
 				if(!(src in user.equipped_list()))
@@ -156,13 +164,13 @@
 				PB.set_loc(src)
 				user.show_text("You attach [PB]'s detonator to [src].", "blue")
 				src.pipebomb = PB
-				src.overlays += image('icons/obj/items/weapons.dmi', "trap-pipebomb")
+				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-pipebomb"), "triggerable")
 				src.w_class = max(src.w_class, C.w_class)
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
 				logTheThing(LOG_BOMBING, user, "rigs [src] with [PB] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
+		else if (istype(C, /obj/item/device/radio/signaler) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -172,13 +180,13 @@
 			S.set_loc(src)
 			user.show_text("You attach [S]'s detonator to [src].", "blue")
 			src.signaler = S
-			src.overlays += image('icons/obj/items/weapons.dmi', "trap-signaler")
+			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-signaler"), "triggerable")
 			src.w_class = max(src.w_class, C.w_class)
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
-		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -186,10 +194,10 @@
 			user.u_equip(C)
 			src.arm = C
 			C.set_loc(src)
-			src.overlays += image(C.icon, C.icon_state)
+			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
 			user.show_text("You add [C] to [src].", "blue")
-
-		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+		//this check needs to exclude the arm one
+		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.gimmickbomb)
 			if (src.pie)
 				user.show_text("There's already a pie attached to [src]!", "red")
 				return
@@ -206,13 +214,13 @@
 			user.u_equip(C)
 			src.pie = C
 			C.set_loc(src)
-			src.overlays += image(C.icon, C.icon_state)
+			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
 			src.w_class = max(src.w_class, C.w_class)
 			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
 
 			logTheThing(LOG_BOMBING, user, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+		else if (istype(C, /obj/item/clothing/head/butt) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -222,9 +230,9 @@
 			B.set_loc(src)
 			user.show_text("You attach [B] to [src].", "blue")
 			src.butt = B
-			src.overlays += image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]")
+			src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]"), "triggerable")
 
-		else if (istype(C, /obj/item/gimmickbomb/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+		else if (istype(C, /obj/item/gimmickbomb) && !HAS_TRIGGERABLE(src))
 			if(!(src in user.equipped_list()))
 				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
@@ -233,54 +241,50 @@
 			user.u_equip(BB)
 			BB.set_loc(src)
 			user.show_text("You attach [BB] to [src].", "blue")
-			src.buttbomb = BB
-			src.overlays += image('icons/obj/items/weapons.dmi', "trap-buttbomb")
+			src.gimmickbomb = BB
+			if (istype(BB, /obj/item/gimmickbomb/butt))
+				src.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-buttbomb"), "triggerable")
+			else
+				src.UpdateOverlays(image(BB.icon, BB.icon_state), "triggerable")
 
 		else if (iswrenchingtool(C))
 			if (src.grenade)
 				user.show_text("You detach [src.grenade].", "blue")
 				src.grenade.set_loc(get_turf(src))
 				src.grenade = null
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 			else if (src.grenade_old)
 				user.show_text("You detach [src.grenade_old].", "blue")
 				src.grenade_old.set_loc(get_turf(src))
 				src.grenade_old = null
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 			else if (src.pipebomb)
 				user.show_text("You detach [src.pipebomb].", "blue")
 				src.pipebomb.set_loc(get_turf(src))
 				src.pipebomb = null
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			else if (src.signaler)
 				user.show_text("You detach [src.signaler].", "blue")
 				src.signaler.set_loc(get_turf(src))
 				src.signaler = null
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-signaler")
 			else if (src.pie)
 				user.show_text("You remove [src.pie] from [src].", "blue")
-				src.overlays -= image(src.pie.icon, src.pie.icon_state)
 				src.pie.layer = initial(src.pie.layer)
 				src.pie.set_loc(get_turf(src))
 				src.pie = null
 			else if (src.arm)
 				user.show_text("You remove [src.arm] from [src].", "blue")
-				src.overlays -= image(src.arm.icon, src.arm.icon_state)
 				src.arm.layer = initial(src.arm.layer)
 				src.arm.set_loc(get_turf(src))
 				src.arm = null
 			else if (src.butt)
 				user.show_text("You remove [src.butt] from [src].", "blue")
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]")
 				src.butt.layer = initial(src.butt.layer)
 				src.butt.set_loc(get_turf(src))
 				src.butt = null
-			else if (src.buttbomb)
-				user.show_text("You remove [src.buttbomb] from [src].", "blue")
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")
-				src.buttbomb.layer = initial(src.buttbomb.layer)
-				src.buttbomb.set_loc(get_turf(src))
-				src.buttbomb = null
+			else if (src.gimmickbomb)
+				user.show_text("You remove [src.gimmickbomb] from [src].", "blue")
+				src.gimmickbomb.layer = initial(src.gimmickbomb.layer)
+				src.gimmickbomb.set_loc(get_turf(src))
+				src.gimmickbomb = null
+			src.UpdateOverlays(null, "triggerable")
 		else
 			..()
 		return
@@ -354,7 +358,7 @@
 				if ("feet")
 					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
 						zone = pick("l_leg", "r_leg")
-						H.changeStatus("weakened", 3 SECONDS)
+						H.changeStatus("knockdown", 3 SECONDS)
 				if ("l_arm", "r_arm")
 					if (!H.gloves)
 						zone = type
@@ -377,17 +381,14 @@
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
 			src.grenade = null
-			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.grenade_old)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
 			src.grenade_old.detonate()
 			src.grenade_old = null
-			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.pipebomb)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 
@@ -399,7 +400,6 @@
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message(SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at [target]!</b>"),\
 			SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at you!</b>"))
-			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
 			var/datum/thrown_thing/thr = new
@@ -407,6 +407,11 @@
 			thr.thing = src.pie
 			src.pie.throw_impact(target, thr)
 			src.pie = null
+			src.arm.set_loc(get_turf(src))
+			src.arm = null
+		else if (src.arm)
+			src.arm.set_loc(get_turf(src))
+			src.arm = null
 
 		else if (src.butt)
 			if (src.butt.sound_fart)
@@ -414,13 +419,11 @@
 			else
 				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
 
-		else if (src.buttbomb)
-			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")
-			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
-			E.fingerprintslast = src.fingerprintslast
-			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
-			qdel(src.buttbomb)
-			src.buttbomb = null
+		else if (src.gimmickbomb)
+			src.gimmickbomb.detonate()
+			qdel(src.gimmickbomb)
+			src.gimmickbomb = null
+		src.UpdateOverlays(null, "triggerable")
 		clear_armer()
 		return
 
@@ -447,9 +450,9 @@
 			src.mousetrap = new /obj/item/mousetrap(src)
 
 		// Fallback in case something goes wrong.
-		if (!src.mousetrap.grenade && !src.mousetrap.grenade_old && !src.mousetrap.pipebomb && !src.mousetrap.buttbomb)
+		if (!HAS_TRIGGERABLE(src.mousetrap))
 			src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
-			src.mousetrap.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+			src.mousetrap.UpdateOverlays(image('icons/obj/items/weapons.dmi', "trap-grenade"), "triggerable")
 
 		if (src.mousetrap.grenade)
 			src.payload = src.mousetrap.grenade.name
@@ -460,9 +463,9 @@
 		else if (src.mousetrap.pipebomb)
 			src.payload = src.mousetrap.pipebomb.name
 			src.name = "mousetrap/pipe bomb/roller assembly"
-		else if (src.mousetrap.buttbomb)
-			src.payload = src.mousetrap.buttbomb.name
-			src.name = "mousetrap/butt bomb/roller assembly"
+		else if (src.mousetrap.gimmickbomb)
+			src.payload = src.mousetrap.gimmickbomb.name
+			src.name = "mousetrap/bomb/roller assembly"
 		else
 			src.payload = "*unknown or null*"
 
@@ -520,6 +523,7 @@
 			src.mousetrap.set_armer(user)
 		src.set_density(1)
 		user.u_equip(src)
+		src.set_loc(get_turf(user))
 
 		src.layer = initial(src.layer)
 		src.set_dir(user.dir)
@@ -542,6 +546,8 @@
 				qdel(src)
 
 	Move(var/turf/new_loc,direction)
-		if (src.mousetrap.buttbomb && src.armed)
+		if (istype(src.mousetrap.gimmickbomb, /obj/item/gimmickbomb/butt) && src.armed)
 			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()
+
+#undef HAS_TRIGGERABLE

@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/vent
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
-	icon_state = "intact"
+	icon_state = "vent-map"
 	name = "Vent"
 	desc = "A large air vent"
 	level = UNDERFLOOR
@@ -59,7 +59,6 @@
 	src.hide(T.intact)
 
 /obj/machinery/atmospherics/unary/vent/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if (intact && issimulatedturf(src.loc) && level == UNDERFLOOR)
-		src.icon_state = "hvent"
-	else
-		src.icon_state = src.node ? "intact" : "exposed"
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	src.icon_state = hide_pipe ? "hvent" : "vent"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)

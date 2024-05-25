@@ -11,6 +11,7 @@
 	not_when_handcuffed = 1
 	werewolf_only = 1
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
+	do_logs = FALSE //already logged
 
 	cast(mob/target)
 		if (!holder)
@@ -41,6 +42,7 @@
 			boutput(M, SPAN_ALERT("[target] needs to be lying on the ground first."))
 			return 1
 
+		. = ..()
 		logTheThing(LOG_COMBAT, M, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_feast(target, src), M)
 		return 0
@@ -48,7 +50,6 @@
 /datum/action/bar/private/icon/werewolf_feast
 	duration = 250
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "werewolf_feast"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target

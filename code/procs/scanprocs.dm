@@ -379,35 +379,44 @@
 			data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
+/// Returns the datacore general record, or null if none found
+/proc/get_general_record(mob/living/carbon/human/H)
+	if (!istype(H))
+		return null
+	var/patientname = H.name
+	if (H:wear_id && H:wear_id:registered)
+		patientname = H.wear_id:registered
+	return data_core.general.find_record("name", patientname)
+
 /proc/update_medical_record(var/mob/living/carbon/human/M)
-	if (!M || !ishuman(M))
+	var/datum/db_record/E = get_general_record(M)
+	if(!istype(E))
 		return
 
-	var/patientname = M.name
-	if (M:wear_id && M:wear_id:registered)
-		patientname = M.wear_id:registered
-
-	var/datum/db_record/E = data_core.general.find_record("name", patientname)
-	if(E)
-		switch (M.stat)
-			if (0)
-				if (M.bioHolder && M.bioHolder.HasEffect("strong"))
-					E["p_stat"] = "Very Active"
-				else
-					E["p_stat"] = "Active"
-			if (1)
-				E["p_stat"] = "*Unconscious*"
-			if (2)
-				E["p_stat"] = "*Deceased*"
-		var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
-		if(R)
-			R["bioHolder.bloodType"] = M.bioHolder.bloodType
-			R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
-			if (M.ailments.len)
-				R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+	switch (M.stat)
+		if (STAT_ALIVE)
+			if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+				E["p_stat"] = "Very Active"
 			else
-				R["cdi_d"] = "No notes."
-	return
+				E["p_stat"] = "Active"
+		if (STAT_UNCONSCIOUS)
+			E["p_stat"] = "*Unconscious*"
+		if (STAT_DEAD)
+			E["p_stat"] = "*Deceased*"
+
+	var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+	if(!R)
+		return
+
+	R["bioHolder.bloodType"] = M.bioHolder.bloodType
+	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	if (M.ailments.len)
+		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+	else
+		R["cdi_d"] = "No notes."
+
+	record_cloner_defects(M)
+
 
 /proc/scan_health_generate_text(var/mob/M)
 	var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
@@ -418,7 +427,7 @@
 	var/burn = round(M.get_burn_damage())
 	var/brute = round(M.get_brute_damage())
 
-	return "<span class='ol c pixel'>[SPAN_VGA("[h_pct]%")]\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
 
 
 // output a health pop-up overhead thing to the client
@@ -543,7 +552,7 @@
 
 		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID)
+			if (WG.glove_ID && !(WG.no_prints))
 				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
 			if (!WG.hide_prints)
 				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
@@ -661,11 +670,9 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			var/list/contraband_returned = list()
-			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-				var/contra = max(contraband_returned)
-				if (contra)
-					contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
+			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
+			if (contra)
+				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -735,33 +742,9 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = null
+	var/datum/gas_mixture/check_me = A.return_air()
 	var/pressure = null
 	var/total_moles = null
-
-	if (hasvar(A, "air_contents"))
-		check_me = A:air_contents // Not pretty, but should be okay here.
-	if (isturf(A))
-		check_me = A.return_air()
-	if (istype(A, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = A
-		check_me = P.parent.air
-	if (istype(A, /obj/item/assembly/time_bomb))
-		var/obj/item/assembly/time_bomb/TB = A
-		if (TB.part3)
-			check_me = TB.part3.air_contents
-	if (istype(A, /obj/item/assembly/radio_bomb))
-		var/obj/item/assembly/radio_bomb/RB = A
-		if (RB.part3)
-			check_me = RB.part3.air_contents
-	if (istype(A, /obj/item/assembly/proximity_bomb))
-		var/obj/item/assembly/proximity_bomb/PB = A
-		if (PB.part3)
-			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/gun/flamethrower/assembled/))
-		var/obj/item/gun/flamethrower/assembled/FT = A
-		if (FT.gastank)
-			check_me = FT.gastank.air_contents
 
 	if (!check_me || !istype(check_me, /datum/gas_mixture/))
 		if (pda_readout == 1)

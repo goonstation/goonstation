@@ -26,7 +26,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "armor vest"
 	desc = "An armored vest that protects against some damage. Contains carbon fibres."
 	icon_state = "armorvest"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
@@ -71,7 +70,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "light armor vest"
 	desc = "A cheap armored vest that gives a little bit of protection."
 	icon_state = "armorvest-old"
-	uses_multiple_icon_states = 0
 	item_state = "armorvest-old"
 
 	setupProperties()
@@ -90,7 +88,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "suicide bomb vest"
 	desc = "A makeshift mechanical vest set to trigger a payload when the user dies."
 	icon_state = "bombvest0"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
@@ -499,3 +496,17 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/gang
+	name = "light armor vest"
+	desc = "A minimalist plate carrier strapped to your torso. Provides as much protection as you can get without cramping your style."
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "lightvest"
+	item_state = "lightvest"
+	body_parts_covered = TORSO
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 0.5)

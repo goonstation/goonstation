@@ -143,6 +143,13 @@ ABSTRACT_TYPE(/obj/item/parts)
 				if (H.r_hand == remove_object)
 					H.r_hand = null
 				src.remove_object = null
+
+			if (src.slot == "l_arm")
+				H.drop_from_slot(H.l_hand)
+				H.hud.update_hands()
+			else if (src.slot == "r_arm")
+				H.drop_from_slot(H.r_hand)
+				H.hud.update_hands()
 			H.update_clothing()
 			H.update_body()
 			H.set_body_icon_dirty()
@@ -367,6 +374,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 		return "[src.partlistPart][decomp]"
 
 	proc/on_holder_examine()
+		return
+
+	///Called every life tick when attached to a mob
+	proc/on_life(datum/controller/process/mobs/parent)
 		return
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs

@@ -4,7 +4,6 @@ TYPEINFO(/obj/item/device/disguiser)
 /obj/item/device/disguiser
 	name = "holographic disguiser"
 	icon_state = "enshield0"
-	uses_multiple_icon_states = 1
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
 	c_flags = ONBELT
@@ -135,6 +134,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		// Restore original appearance.
 		else
 			user.real_name = src.real_name
+			user.on_realname_change()
 			AH.CopyOther(oldAH)
 			if (user.limbs)
 				user.limbs.reset_stone()

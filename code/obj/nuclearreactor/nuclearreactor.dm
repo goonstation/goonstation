@@ -102,29 +102,29 @@
 		//status lights
 		//gas input/output
 		if(air1 && TOTAL_MOLES(air1) > 100)
-			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
+			src.AddOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
-			src.UpdateOverlays(null, "gas_input_lights")
+			src.ClearSpecificOverlays("gas_input_lights")
 		if(air2 && TOTAL_MOLES(air2) > 100)
-			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
+			src.AddOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
-			src.UpdateOverlays(null, "gas_output_lights")
+			src.ClearSpecificOverlays("gas_output_lights")
 
 		//temperature & radiation warning
 		if(src.temperature >= REACTOR_TOO_HOT_TEMP || src.radiationLevel > 50)
 			if(temperature >= REACTOR_ON_FIRE_TEMP || src.radiationLevel > 75)
-				src.UpdateOverlays(image(icon, "lights_meltdown"), "temp_warn_lights")
+				src.AddOverlays(image(icon, "lights_meltdown"), "temp_warn_lights")
 			else
-				src.UpdateOverlays(image(icon, "lights_warning"), "temp_warn_lights")
+				src.AddOverlays(image(icon, "lights_warning"), "temp_warn_lights")
 		else
-			src.UpdateOverlays(null, "temp_warn_lights")
+			src.ClearSpecificOverlays("temp_warn_lights")
 
 		//status lights
 		switch(src.temperature)
-			if(-INFINITY to T20C) src.UpdateOverlays(null, "status_display")
-			if(T20C to REACTOR_TOO_HOT_TEMP) src.UpdateOverlays(image(icon, "status_active"), "status_display")
-			if(REACTOR_TOO_HOT_TEMP to REACTOR_ON_FIRE_TEMP) src.UpdateOverlays(image(icon, "status_overheat"), "status_display")
-			if(REACTOR_ON_FIRE_TEMP to INFINITY) src.UpdateOverlays(image(icon, "status_meltdown"), "status_display")
+			if(-INFINITY to T20C) src.ClearSpecificOverlays("status_display")
+			if(T20C to REACTOR_TOO_HOT_TEMP) src.AddOverlays(image(icon, "status_active"), "status_display")
+			if(REACTOR_TOO_HOT_TEMP to REACTOR_ON_FIRE_TEMP) src.AddOverlays(image(icon, "status_overheat"), "status_display")
+			if(REACTOR_ON_FIRE_TEMP to INFINITY) src.AddOverlays(image(icon, "status_meltdown"), "status_display")
 
 		//and finally, component grid
 		if(_comp_grid_overlay_update)
@@ -140,14 +140,14 @@
 			var/image/old_grid = src.GetOverlayImage("reactor_grid")
 			if(old_grid)
 				old_grid.layer -= 0.1
-				src.UpdateOverlays(old_grid, "old_grid")
+				src.AddOverlays(old_grid, "old_grid")
 				_pending_grid_updates++
 				SPAWN(0.5 SECONDS)
 					if(_pending_grid_updates <= 1)
-						src.UpdateOverlays(null, "old_grid")
+						src.ClearSpecificOverlays("old_grid")
 					_pending_grid_updates--
 
-			src.UpdateOverlays(image(base_grid), "reactor_grid")
+			src.AddOverlays(image(base_grid), "reactor_grid")
 			_comp_grid_overlay_update = FALSE
 
 
@@ -283,6 +283,7 @@
 		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
 		if(crisis)
 			signal.data["group"] += MGA_CRISIS
+			signal.data["noreply"] = TRUE
 		signal.data["message"] = msg
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
@@ -406,7 +407,7 @@
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 
-		for(var/i = 1 to rand(5,20))
+		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
@@ -682,7 +683,8 @@
 			return
 		. = ..()
 
-
+	return_air()
+		return air_contents
 
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
@@ -833,8 +835,18 @@
 			//finally, moderation
 			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
 			O.power -= density*multiplier
+			var/datum/gas_mixture/gasmix = hit.return_air()
 			if(O.power < 1)
 				O.power = 0
+			else if (istype(gasmix) && !ON_COOLDOWN(hit, "world_gas_neutron_interaction", 3 SECONDS))
+				var/neutron_count = gasmix.neutron_interact()
+				if(neutron_count > 1) //if it returns more than one, new neutrons were created
+					for(var/i in 1 to neutron_count)
+						shoot_projectile_XY(hit, new /datum/projectile/neutron(rand(5,80)), rand(-10,10), rand(-10,10))
+				else if(neutron_count < 1) //less than one, neutron was consumed
+					O.power = 0
+				// 1 = no reaction
+
 			return TRUE //don't hit this, lose power and pass through it
 		return TRUE
 
@@ -842,6 +854,16 @@
 		if(P.power <= 0)
 			P.die()
 			return
+		var/turf/simulated/T = get_turf(P)
+		if (issimulatedturf(T) && istype(T.air) && !ON_COOLDOWN(T, "world_gas_neutron_interaction", 3 SECONDS))
+			var/neutron_count = T.air.neutron_interact()
+			if(neutron_count > 1)
+				for(var/i in 1 to neutron_count)
+					shoot_projectile_XY(T, new /datum/projectile/neutron(rand(5,80)), rand(-10,10), rand(-10,10))
+			else if(neutron_count < 1)
+				P.power = 0
+				P.die()
+				return
 
 	get_power(obj/projectile/P, atom/A)
 		return P.power

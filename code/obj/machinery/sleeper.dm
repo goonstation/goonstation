@@ -89,7 +89,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 		// non-anchored sleeper assumed to be portable, don't want to eject
 		// in case someone is using it for body transport
 		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
-			src.our_sleeper.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			src.our_sleeper.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"")) // TODO maptext-ize
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.time = 0
 			src.timing = 0
@@ -289,6 +289,10 @@ TYPEINFO(/obj/machinery/sleeper)
 			MOVE_OUT_TO_TURF_SAFE(src.occupant, src)
 			occupant = null
 		..()
+
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
@@ -523,7 +527,7 @@ TYPEINFO(/obj/machinery/sleeper)
 					continue
 				O.set_loc(src.loc)
 				src.add_fingerprint(usr)
-			src.occupant.changeStatus("weakened", 1 SECOND)
+			src.occupant.changeStatus("knockdown", 1 SECOND)
 			src.occupant.force_laydown_standup()
 			src.occupant = null
 			src.UpdateIcon()
@@ -593,12 +597,6 @@ TYPEINFO(/obj/machinery/sleeper)
 	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
-
-	mouse_drop(mob/user as mob)
-		if (can_operate(user))
-			eject_occupant(user)
-		else
-			..()
 
 	verb/eject()
 		set src in oview(1)
@@ -684,7 +682,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	disposing()
 		..()
@@ -713,7 +711,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")

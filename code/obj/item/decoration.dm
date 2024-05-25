@@ -23,7 +23,6 @@
 	desc = "The rarely visited graveyard for cigarettes."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "ashtray"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	var/butts = 0 // heh
 

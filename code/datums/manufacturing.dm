@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture
 	var/name = null                // Name of the schematic
 	var/list/item_paths = null   // Materials required (generate from `mats` if null)
-	var/list/item_names = null   // Name of each material (generated automatically if null)
+	var/list/item_names = list()   // Player-read name of each material
 	var/list/item_amounts = list() // How many of each material is needed
 	var/list/item_outputs = list() // What the schematic outputs
 	var/randomise_output = 0
@@ -28,22 +28,31 @@ ABSTRACT_TYPE(/datum/manufacture)
 		..()
 		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
 			var/item_type = item_outputs[1]
-			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
-			if(istype(typeinfo) && islist(typeinfo.mats))
-				item_paths = list()
-				for(var/mat in typeinfo.mats)
-					item_paths += mat
-					var/amt = typeinfo.mats[mat]
-					if(isnull(amt))
-						amt = 1
-					item_amounts += amt
+			src.use_generated_costs(item_type)
+
 		if(isnull(item_paths))
 			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
+		if (!length(src.item_names))
+			for (var/path in src.item_paths)
+				src.item_names += get_nice_mat_name_for_manufacturers(path)
 		if (!sanity_check_exemption)
 			src.sanity_check()
 
+	proc/use_generated_costs(obj/item_type)
+		var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+		if(istype(typeinfo) && islist(typeinfo.mats))
+			item_paths = list()
+			for(var/mat in typeinfo.mats)
+				item_paths += mat
+				var/amt = typeinfo.mats[mat]
+				if(isnull(amt))
+					amt = 1
+				item_amounts += amt
+
 	proc/sanity_check()
-		if (item_paths.len != item_amounts.len || !isnull(item_names) && (item_paths.len != item_names.len || item_names.len != item_amounts.len))
+		if (length(item_paths) != length(item_amounts)\
+		    || length(item_paths) != length(item_names)\
+			|| length(item_names) != length(item_amounts))
 			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
 			qdel(src)
 			return
@@ -67,6 +76,14 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/electronics/frame)
 	var/frame_path = null
+	///generate costs based off of frame_path in New(), e.g.: for pre-spawned cloner blueprints
+	var/generate_costs = FALSE
+
+	New()
+		. = ..()
+		if(src.generate_costs)
+			src.item_amounts = list()
+			src.use_generated_costs(frame_path)
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
@@ -97,18 +114,21 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
+	generate_costs = TRUE
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
 	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
+	generate_costs = TRUE
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
+	generate_costs = TRUE
 
 
 /******************** Loafer *******************/
@@ -119,6 +139,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
+
+/******************** Communications Dish *******************/
+
+/datum/manufacture/mechanics/comms_dish
+	name = "Communications Dish"
+	item_paths = list("MET-1", "MET-2", "INS-1" , "CON-1")
+	item_amounts = list(20,10,20,20)
+	time = 60 SECONDS
+	create = 1
+	frame_path = /obj/machinery/communications_dish
 
 /******************** AI Law Rack *******************/
 
@@ -137,6 +167,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	frame_path = /obj/machinery/ai_status_display
+	generate_costs = TRUE
 
 /******************** Laser beam things *******************/
 
@@ -990,6 +1021,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pocketoxyex
+	name = "Extended Capacity Pocket Oxygen Tank"
+	item_paths = list("DEN-2","INS-1", "RUB")
+	item_amounts = list(10, 20, 5)
+	item_outputs = list(/obj/item/tank/emergency_oxygen/extended/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
@@ -1352,159 +1392,176 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_frame
 	name = "Cyborg Frame"
 	item_paths = list("MET-2")
-	item_amounts = list(18)
+	item_amounts = list(ROBOT_FRAME_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/robot_frame)
 	time = 45 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/full_cyborg_standard
 	name = "Standard Cyborg Parts"
 	item_paths = list("MET-2")
-	item_amounts = list(48)
+	item_amounts = list((ROBOT_CHEST_COST + ROBOT_HEAD_COST + ROBOT_LIMB_COST * 4) * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard,/obj/item/parts/robot_parts/head/standard,
 /obj/item/parts/robot_parts/arm/right/standard,/obj/item/parts/robot_parts/arm/left/standard,
 /obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
 	item_paths = list("MET-2")
-	item_amounts = list(24)
+	item_amounts = list((ROBOT_CHEST_COST + ROBOT_HEAD_COST + ROBOT_LIMB_COST * 4) * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light,/obj/item/parts/robot_parts/head/light,
 /obj/item/parts/robot_parts/arm/right/light,/obj/item/parts/robot_parts/arm/left/light,
 /obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
 	time = 62 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
 	item_paths = list("MET-2")
-	item_amounts = list(12)
+	item_amounts = list(ROBOT_CHEST_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_chest_light
 	name = "Light Cyborg Chest"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_CHEST_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_head
 	name = "Cyborg Head"
 	item_paths = list("MET-2")
-	item_amounts = list(12)
+	item_amounts = list(ROBOT_HEAD_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/head/standard)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_head_screen
 	name = "Cyborg Screen Head"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(6,2,6)
+	item_amounts = list(ROBOT_SCREEN_METAL_COST * 10,2,6)
 	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
 	time = 24 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_head_light
 	name = "Light Cyborg Head"
 	item_paths = list("MET-1")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_HEAD_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/head/light)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_r
 	name = "Cyborg Arm (Right)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_r_light
 	name = "Light Cyborg Arm (Right)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_l
 	name = "Cyborg Arm (Left)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_l_light
 	name = "Light Cyborg Arm (Left)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_r
 	name = "Cyborg Leg (Right)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_r_light
 	name = "Light Cyborg Leg (Right)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_l
 	name = "Cyborg Leg (Left)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/standard)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_l_light
 	name = "Light Cyborg Leg (Left)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/light)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_treads
 	name = "Cyborg Treads"
 	item_paths = list("MET-2","CON-1")
-	item_amounts = list(12,6)
+	item_amounts = list(ROBOT_TREAD_METAL_COST * 2 * 10,6)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_module
 	name = "Blank Cyborg Module"
@@ -1702,7 +1759,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1","MET-2","CON-1","ALL")
 	item_amounts = list(15,5,10,5)
 	item_outputs = list(/obj/machinery/bot/mining)
-	time = 0 SECONDS
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1720,6 +1777,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/roboupgrade/speed)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/robup_mag
+	name = "Magnetic Traction Upgrade"
+	item_paths = list("CON-1","CRY-1")
+	item_amounts = list(5,3)
+	item_outputs = list(/obj/item/roboupgrade/magboot)
 	time = 60 SECONDS
 	create = 1
 	category = "Component"
@@ -1881,11 +1947,12 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/thrusters
 	name = "Alastor Pattern Thrusters"
 	item_paths = list("MET-2")
-	item_amounts = list(50)
+	item_amounts = list(ROBOT_THRUSTER_COST * 2 * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /******************** Science **************************/
 
@@ -2004,7 +2071,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Powered Pick"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(2,5)
-	item_outputs = list(/obj/item/mining_tool/power_pick)
+	item_outputs = list(/obj/item/mining_tool/powered/pickaxe)
 	time = 10 SECONDS
 	create = 1
 	category = "Tool"
@@ -2029,18 +2096,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/powerhammer
 	name = "Power Hammer"
-	item_paths = list("DEN-1","CON-1")
-	item_amounts = list(1,8)
-	item_outputs = list(/obj/item/mining_tool/powerhammer)
+	item_paths = list("MET-2","MET-3","CON-1")
+	item_amounts = list(15,7,10)
+	item_outputs = list(/obj/item/mining_tool/powered/hammer)
 	time = 70 SECONDS
 	create = 1
 	category = "Tool"
 
 /datum/manufacture/drill
 	name = "Laser Drill"
-	item_paths = list("MET-2","MET-3","CON-2")
-	item_amounts = list(15,7,10)
-	item_outputs = list(/obj/item/mining_tool/drill)
+	item_paths = list("MET-2","CON-2")
+	item_amounts = list(15,10)
+	item_outputs = list(/obj/item/mining_tool/powered/drill)
 	time = 90 SECONDS
 	create = 1
 	category = "Tool"
@@ -2151,6 +2218,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
+
+/datum/manufacture/miniplasmatank
+	name = "Mini plasma tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/mini_plasma/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/minioxygentank
+	name = "Mini oxygen tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
 
 /datum/manufacture/patch
 	name = "Chemical Patch"
@@ -2304,6 +2389,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-2")
 	item_amounts = list(20)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
+	time = 12 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/storagehold
+	name = "Storage Hold"
+	item_paths = list("MET-2")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/storage)
 	time = 12 SECONDS
 	create = 1
 	category = "Resource"

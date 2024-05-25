@@ -12,7 +12,6 @@
 	item_state = "syringe_0"
 	var/icon_prefix = "syringe"
 	icon_state = "syringe_0"
-	uses_multiple_icon_states = 1
 	initial_volume = 15
 	amount_per_transfer_from_this = 5
 	/// The amount each visual stage of the icon increments by. Defaults to amount_per_transfer_from_this
@@ -270,11 +269,6 @@
 	initial_reagents = "filgrastim"
 
 // drugs
-
-/obj/item/reagent_containers/syringe/jenkem
-	name = "syringe (jenkem)"
-	desc = "Contains jenkem, a low quality sewage drug used by no one in the right state of mind."
-	initial_reagents = "jenkem"
 
 /obj/item/reagent_containers/syringe/krokodil
 	name = "syringe (krokodil)"

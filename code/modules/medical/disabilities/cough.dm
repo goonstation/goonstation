@@ -1,7 +1,8 @@
 /datum/ailment/disability/cough
 	name = "Chronic Cough"
 	max_stages = 1
-	cure = "styptic_powder"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Styptic powder "
 	reagentcure = list("styptic_powder")
 	recureprob = 10
 	affected_species = list("Human")

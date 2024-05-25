@@ -72,6 +72,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
 
+	var/aggressive = FALSE
+	var/random_name = FALSE
+	var/random_look = FALSE
+	var/name_list = "names/pets.txt"
+	var/player_can_spawn_with_pet = FALSE //! For the Pet Person trait that makes you spawn with a pet (do not confuse with is_pet!!!)
+
 	var/fur_color = 0
 	var/eye_color = 0
 
@@ -91,6 +97,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
 		if (src.real_name == "critter")
 			src.real_name = src.name
+		if (src.random_name)
+			src.randomize_name()
 
 	disposing()
 		if(src.is_pet)
@@ -123,6 +131,15 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	animate_lying(lying)
 		animate_180_rest(src, !lying)
 
+	proc/randomize_name()
+		src.name = pick_string_autokey(name_list)
+		src.real_name = src.name
+		src.update_name_tag(src.name)
+
+proc/filter_carrier_pets(var/type)
+	var/mob/living/critter/small_animal/coolpet = type
+	return initial(coolpet.player_can_spawn_with_pet)
+
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
 /* =============================================== */
@@ -141,10 +158,11 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	ai_type = /datum/aiHolder/mouse
 	ai_retaliate_patience = 0 //retaliate when hit immediately
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
+	player_can_spawn_with_pet = TRUE
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 
@@ -237,6 +255,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		return can_act(src,TRUE)
 
 /mob/living/critter/small_animal/mouse/dead
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		. = ..()
@@ -247,7 +266,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 2
 
 /mob/living/critter/small_animal/mouse/mad
-	faction = null
+	faction = list()
+	player_can_spawn_with_pet = FALSE
 	ai_type = /datum/aiHolder/mouse/mad
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
@@ -268,9 +288,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 //for mice spawned by plaguerat dens
 /mob/living/critter/small_animal/mouse/mad/rat_den
 	var/obj/machinery/wraith/rat_den/linked_den = null
+	player_can_spawn_with_pet = FALSE
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -286,6 +307,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	pull_w_class = W_CLASS_NORMAL
 	ai_type = /datum/aiHolder/mouse_remy
 	use_custom_color = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	setup_overlays()
 		return
@@ -329,19 +351,18 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_retaliate_patience = 2 //hit back when you've been hit twice
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until they're knocked down
 	ai_type = /datum/aiHolder/cat
+	random_name = TRUE
+	random_look = TRUE
+	name_list = "names/cats.txt"
+	player_can_spawn_with_pet = TRUE
 	var/cattype = 1
-	var/randomize_name = TRUE
-	var/randomize_look = TRUE
 	var/catnip = 0
 	var/is_annoying = FALSE
 	var/attack_damage = 3
 
 	New()
 		..()
-		if (src.randomize_name)
-			src.name = pick_string_autokey("names/cats.txt")
-			src.real_name = src.name
-		if (src.randomize_look)
+		if (src.random_look)
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
 #else
@@ -521,7 +542,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (pounce && !pounce.disabled && pounce.cooldowncheck() && prob(50))
 			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
@@ -529,7 +550,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if ((src.catnip || prob(2) ) && (!ON_COOLDOWN(src, "claw_fury", 20 SECONDS)))
 			var/attackCount = rand(5, 9)
 			var/iteration = 0
-			target.setStatus("weakened", 2 SECONDS)
+			target.setStatus("knockdown", 2 SECONDS)
 			src.visible_message(SPAN_COMBAT("[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!"))
 			SPAWN(0)
 				while (iteration <= attackCount && (get_dist(src, target) <= 1))
@@ -571,13 +592,14 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	add_abilities = list()
 	health_brute = 10
 	health_burn = 10
+	player_can_spawn_with_pet = FALSE
 
 /mob/living/critter/small_animal/cat/synth
 	icon_state = "catsynth"
 	icon_state_dead = "catsynth-dead"
 	cattype = "synth"
-	randomize_name = FALSE
-	randomize_look = FALSE
+	random_name = FALSE
+	random_look = FALSE
 	desc = "Although this cat is vegan, it's still a carnivore."
 
 /* -------------------- Jones -------------------- */
@@ -589,13 +611,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	name = "Jones"
 	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."
 	health = 30
-	randomize_name = FALSE
-	randomize_look = FALSE
+	random_name = FALSE
+	random_look = FALSE
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = TRUE
+	is_pet = 2
 	is_syndicate = 1
+	player_can_spawn_with_pet = FALSE
 	var/swiped = 0
 
 	New()
@@ -629,9 +652,10 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	desc = "How long has this cat been here?"
 	icon_state = "cat6"
 	icon_state_dead = "cat6-dead"
-	randomize_look = FALSE
-	randomize_name = FALSE
+	random_name = FALSE
+	random_look = FALSE
 	is_pet = TRUE
+	player_can_spawn_with_pet = FALSE
 	is_annoying = TRUE
 
 /* ============================================= */
@@ -654,6 +678,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
 	ai_type = /datum/aiHolder/dog
+	name_list = "names/dogs.txt"
+	player_can_spawn_with_pet = TRUE
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
 	var/gabe = 0 //sniff. bark bork. brork.
@@ -718,16 +744,16 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			return 1
 		if (prob(30))
 			src.icon_state = "[src.dogtype]-lying"
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] flops on [his_or_her(src)] back! Scratch that belly!"),\
 			SPAN_NOTICE("You flop on your back!"))
 			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
-					src.delStatus("paralysis")
+					src.delStatus("unconscious")
 					src.changeStatus("stunned", 10 SECONDS)
-					src.delStatus("weakened")
+					src.delStatus("knockdown")
 					src.icon_state = src.dogtype
 
 	Life(datum/controller/process/mobs/parent)
@@ -788,11 +814,12 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	speechverb_ask = "spiy"
 	speechverb_stammer = "sremmats"
 	speechverb_gasp = "spsag"
+	player_can_spawn_with_pet = FALSE
 
 	mob_flags = SPEECH_REVERSE
 	/*
 	say(var/message)
-		message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+		message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 		if (!message)
 			return
 		if (dd_hasprefix(message, "*") && !src.stat)
@@ -846,6 +873,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 100
 	dogtype = "george"
 	var/playing_dead = 0 // code mostly just c/p from possums, I'll shove this up on the parent somewhere at some point
+	player_can_spawn_with_pet = FALSE
 
 	New(loc)
 		..()
@@ -907,9 +935,9 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -947,6 +975,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "illegal"
 	icon_state_dead = "illegal-lying"
 	dogtype = "illegal"
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Vaguely Illegal -------------------- */
 
@@ -957,6 +986,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "patrick"
 	icon_state_dead = "patrick-dead"
 	dogtype = "patrick"
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Blair -------------------- */
 
@@ -965,16 +995,22 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
+	is_pet = 2
+	player_can_spawn_with_pet = FALSE
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
 			src.visible_message(SPAN_COMBAT("<b>[src]</b> pets [user]!"))
+		else
+			..()
 
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+	is_pet = 2
+	player_can_spawn_with_pet = FALSE
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -1011,6 +1047,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_brute = 15
 	health_burn = 15
 	pull_w_class = W_CLASS_BULKY
+	player_can_spawn_with_pet = TRUE
 
 	New(loc, nspecies)
 		..()
@@ -1228,6 +1265,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/random
 	species = null
+	player_can_spawn_with_pet = TRUE
 	New()
 		..()
 		if (!src.species)
@@ -1241,6 +1279,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/selected
 	species = null
+	player_can_spawn_with_pet = FALSE
 	New()
 		..()
 		SPAWN(0)
@@ -1346,6 +1385,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "hooty-dead"
 	species = "hooty"
 	feather_color = "#806055"
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Hooter -------------------- */
 
@@ -1356,6 +1396,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "A space owl wearing a bikini. Hang on. That's not a bikini! That's just pink feathers!"
 	feather_color = list("#806055","#ff0066")
 	add_abilities = list(/datum/targetable/critter/hootat)
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Turkey -------------------- */
 
@@ -1443,6 +1484,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 35
 	health_burn = 35
 	good_grip = 1
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		. = ..()
@@ -1512,12 +1554,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/bird/crow/strong
 	health_brute = 30
 	health_burn = 30
+	player_can_spawn_with_pet = FALSE
 
 /mob/living/critter/small_animal/bird/crow/strong/strongest
 	name = "starry crow"
 	icon_state = "space"
 	health_brute = 100
 	health_burn = 100
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Goose -------------------- */
 
@@ -1550,7 +1594,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!")
 			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -1624,6 +1668,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "peeps"
 	health_brute = 8
 	health_burn = 8
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		..()
@@ -1693,6 +1738,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/sparrow/weak
 	health_brute = 2
 	health_burn = 2
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Robin -------------------- */
 
@@ -1747,10 +1793,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 5
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	fits_under_table = 1
 	ai_type = /datum/aiHolder/roach
 	ai_retaliates = FALSE
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		.=..()
@@ -1816,7 +1863,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return
 				else
 					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
-					M.setStatus("weakened", 5 SECONDS)
+					M.setStatus("knockdown", 5 SECONDS)
 					return
 		. = ..()
 
@@ -1843,7 +1890,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	var/aggressive = TRUE
+	aggressive = TRUE
+	player_can_spawn_with_pet = TRUE
 
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
@@ -1889,7 +1937,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -1935,7 +1983,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-			src.visible_message(SPAN_ALERT("<B>[src]</B> snips it's pincers!"))
+			src.visible_message(SPAN_ALERT("<B>[src]</B> snips [his_or_her(src)] pincers!"))
 
 	death()
 		src.reagents.add_reagent("toxin", 20, null)
@@ -1965,7 +2013,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //annoy a snake enough and pay the price
-	var/aggressive = TRUE
+	aggressive = TRUE
+	player_can_spawn_with_pet = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting/snake_bite)
 
 	New()
@@ -2013,7 +2062,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -2030,8 +2079,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					icon_state = "rattlesnake_rattle"
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
-						icon_state = "rattlesnake"
-					return SPAN_EMOTE("<b>[src]</b> rattles it's tail!")
+						if(isalive(src))
+							icon_state = "rattlesnake"
+					return SPAN_EMOTE("<b>[src]</b> rattles [his_or_her(src)] tail!")
 		return null
 
 	specific_emote_type(var/act)
@@ -2041,10 +2091,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
-
 		if (!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
-			return TRUE
+		return TRUE
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
@@ -2074,11 +2123,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 			if (!sting.disabled && sting.cooldowncheck())
-				sting.handleCast(AM)
+				if (!ON_COOLDOWN(src, "warning", 1 MINUTE)) //snake will not immediately bite, gives a warning strike first
+					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					src.visible_message(SPAN_COMBAT("<b>[src] hisses and gives a warning strike!</b>"))
+					if(src.is_npc)
+						src.ai.move_away(AM, 2)
+				else
+					sting.handleCast(AM)
 		return
 
 	death()
-		src.reagents.add_reagent("viper_venom", 40, null)
+		src.reagents.add_reagent("hemotoxin", 40, null)
 		src.friends = null
 		return ..()
 
@@ -2144,6 +2199,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 	var/freakout = 0
 	add_abilities = list(/datum/targetable/critter/trip)
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		..()
@@ -2161,8 +2217,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
-
 		HH = hands[2]
+
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
@@ -2217,6 +2273,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
+	player_can_spawn_with_pet = TRUE
 	var/frog_sound = list('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg', 'sound/voice/screams/frogscream4.ogg')
 
 	New()
@@ -2277,6 +2334,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
+	player_can_spawn_with_pet = TRUE
 	var/playing_dead = 0
 
 	New()
@@ -2340,9 +2398,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 6 SECONDS)
+			src.setStatus("unconscious", 6 SECONDS)
 			src.setStatus("stunned", 6 SECONDS)
-			src.setStatus("weakened", 6 SECONDS)
+			src.setStatus("knockdown", 6 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -2370,6 +2428,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Morty"
 	real_name = "Morty"
 	is_pet = TRUE
+	player_can_spawn_with_pet = FALSE
 
 /* ================================================ */
 /* ----------------- Armadillo -------------------- */
@@ -2388,6 +2447,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
 	density = TRUE
+	player_can_spawn_with_pet = TRUE
+	var/obj/item/armadillo_ball/our_ball
 	var/infected
 
 	New()
@@ -2398,6 +2459,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	disposing()
 		. = ..()
 		STOP_TRACKING
+		qdel(our_ball)
+		our_ball = null
 
 	setup_hands()
 		..()
@@ -2439,6 +2502,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			ball_up(emote=FALSE, force=TRUE)
 		..()
 
+	set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+		if(is_balled() && !QDELETED(our_ball))
+			qdel(our_ball)
+		..()
+
 	proc/is_balled()
 		. = istype(src.loc, /obj/item/armadillo_ball)
 
@@ -2447,10 +2515,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			. = SPAN_ALERT("<b>[src]</b> wiggles!")
 			return
 		if(is_balled())
-			var/obj/item/armadillo_ball/ball = src.loc
-			if(ismob(ball.loc))
-				var/mob/M = ball.loc
-				M.remove_item(ball)
+			if(ismob(our_ball.loc))
+				var/mob/M = our_ball.loc
+				M.remove_item(our_ball)
 				boutput(M,SPAN_ALERT("The <b>[src]</b> slips out of your possession!"))
 			src.set_loc(get_turf(src))
 			if(!emote)
@@ -2458,7 +2525,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						SPAN_ALERT("<b>You relax out of your ball!</b>"))
 			else
 				. = SPAN_ALERT("<b>[src]</b> uncurls from a ball!")
-			qdel(ball)
+			qdel(our_ball)
+			our_ball = null
 		else
 			if(!emote)
 				src.visible_message(SPAN_ALERT("<b>[src]</b> curls into a ball!"),\
@@ -2470,10 +2538,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					G.affecting.visible_message(SPAN_ALERT("[G.affecting] slips free of [G.assailant]'s grip!"))
 					G.assailant.u_equip(G)
 					qdel(G)
-				var/obj/item/armadillo_ball/ball = new(get_turf(src))
-				src.set_loc(ball)
-				ball.dir = src.dir
-				ball.icon = src.icon
+				our_ball = new(get_turf(src))
+				src.set_loc(our_ball)
+				our_ball.dir = src.dir
+				our_ball.icon = src.icon
 
 	Move(var/atom/NewLoc, direct)
 		if(src.is_balled())
@@ -2521,6 +2589,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pet_text = list("gently baps", "pets", "cuddles")
 	density = 1
 	fits_under_table = TRUE
+	player_can_spawn_with_pet = TRUE
 	var/on_tree
 
 	New()
@@ -2635,11 +2704,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
 	is_pet = TRUE
-
-	New()
-		..()
-		src.name = pick_string_autokey("names/seals.txt")
-		src.real_name = src.name
+	name_list = "names/seals.txt"
+	random_name = TRUE
+	player_can_spawn_with_pet = FALSE
 
 	setup_hands()
 		..()
@@ -2702,9 +2769,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
 				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
-				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
+				walrus.ai.target = M
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2784,7 +2851,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "floateye-dead"
 	health_brute = 10
 	health_burn = 10
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	isFlying = TRUE
 
 	setup_hands()
@@ -2818,6 +2885,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	is_npc = FALSE // needs special AI will come later
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		..()
@@ -2875,6 +2943,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "scarybat"
 	health_brute = 25
 	health_burn = 25
+	player_can_spawn_with_pet = FALSE
 
 /* -------------------- Dr. Acula -------------------- */
 
@@ -2886,7 +2955,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
-	is_pet = TRUE
+	is_pet = 2
+	player_can_spawn_with_pet = FALSE
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
@@ -2909,6 +2979,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	isFlying = TRUE
+	player_can_spawn_with_pet = TRUE
 
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
@@ -2917,7 +2988,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
 	ai_attacks_per_ability = 0
 
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 	setup_hands()
 		..()
@@ -2982,6 +3053,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute_vuln = 1
 	health_burn = 10
 	health_burn_vuln = 0.8
+	player_can_spawn_with_pet = FALSE
 
 /mob/living/critter/small_animal/wasp/strong // Polymorph and admin spawn
 	desc = "A wasp in space. it looks buff... somehow."
@@ -2990,6 +3062,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 25
 	health_burn_vuln = 0.8
 	is_npc = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	setup_hands() // Stronger grip
 		..()
@@ -3030,6 +3103,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
+	player_can_spawn_with_pet = TRUE
 
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
@@ -3103,10 +3177,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+	player_can_spawn_with_pet = TRUE
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()
@@ -3130,6 +3209,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 10
 	health_burn = 10
 	slime_chance = 11
+	player_can_spawn_with_pet = TRUE
 
 /mob/living/critter/small_animal/slug/snail/diner
 	name = "Snaily Softserve"
@@ -3149,6 +3229,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	memory = "i love being a snail..."
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	dir_locked = 1
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		..()
@@ -3188,6 +3269,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	var/butterflytype = 1
 	isFlying = TRUE
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		..()
@@ -3240,6 +3322,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/butterfly/weak
 	health_brute = 2
 	health_burn = 2
+	player_can_spawn_with_pet = FALSE
 
 
 /* =============================================== */
@@ -3251,6 +3334,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "moth"
 	desc = "Ew a moth. Hope it doesn't get into the wardrobe."
 	blood_id = "hemolymph"
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		..()
@@ -3427,7 +3511,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					SPAWN(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
-					return SPAN_EMOTE("<b>[src]</b> clacks their claws!")
+					return SPAN_EMOTE("<b>[src]</b> clacks [his_or_her(src)] claws!")
 		return null
 
 	specific_emote_type(var/act)
@@ -3580,6 +3664,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = W_CLASS_NORMAL
 	var/pick_random_icon_state = 1
 	is_npc = FALSE
+	player_can_spawn_with_pet = TRUE
 
 	New()
 		..()
@@ -3678,6 +3763,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
 				src.setMaterial(getMaterial(pick(material_varieties)))
+		// true when making the mob to not make the respawn timer reset...false here to allow for crime
+		ghost_spawned = FALSE
 
 	death(var/gibbed)
 		. = ..()
@@ -3756,6 +3843,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	use_custom_color = FALSE
 	var/allow_pickup_requests = TRUE
 	void_mindswappable = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		..()
@@ -3799,10 +3887,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				boutput(src, "[M] already has a mouse in [his_or_her(M)] pocket.")
 			return
 		if(voluntary && M != src.last_poked) // if we poked that person it means we implicitly agree
-			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
+			boutput(M, "You extend your hand to the mouse, waiting for [him_or_her(src)] to accept.")
 			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
 				return
-			if (tgui_alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
+			if (tgui_alert(src, "[M] wants to pick you up and put you in [his_or_her(M)] pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return
 		if(!src || !src.mind || !src.client)
@@ -3812,7 +3900,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket, can talk to [him_or_her(M)], and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
@@ -3825,9 +3913,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		M.setStatus(src.status_name, duration = null)
 
 	hand_attack(atom/target, params, location, control, origParams)
-		if(istype(target, /mob/living) && target != src)
+		if(istype(target, /mob/living) && target != src && !is_admin)
 			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help [him_or_her(target)].</span>")
-			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
+			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on [him_or_her(src)] with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)
 				flick(src.icon_state_exclaim, src)
@@ -3875,14 +3963,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mentordisappear"
 	needs_turf = FALSE //always castable
 	var/const/disappearance_time = 0.5 SECONDS
+	do_logs = FALSE //we're already logged
 
 	cast(mob/target)
 
 		var/mob/living/M = holder.owner
 		if (!holder)
 			return 1
+		. = ..()
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
-		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
+		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
 		animate_bouncy(src)
 		animate(M, alpha=0, time=disappearance_time)
 		SPAWN(disappearance_time)
@@ -3898,8 +3988,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
 	needs_turf = FALSE //always castable
+	do_logs = FALSE
 
 	cast(mob/target)
+		. = ..()
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, SPAN_NOTICE("You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]"))
@@ -3920,6 +4012,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = W_CLASS_BULKY
 	is_npc = FALSE
 	use_custom_color = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		. = ..()
@@ -3935,7 +4028,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "claws"
 
 	hand_attack(atom/target, params, location, control, origParams)
-		if(istype(target, /mob/living))
+		if(istype(target, /mob/living) && src.a_intent == INTENT_HELP)
 			var/mob/living/M = target
 			src.into_pocket(M, 0)
 		else
@@ -3969,9 +4062,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
+	player_can_spawn_with_pet = TRUE
 	var/can_hat = TRUE
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -4048,6 +4142,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 	is_npc = FALSE
 	can_hat = FALSE
+	player_can_spawn_with_pet = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
 
 /mob/living/critter/small_animal/crab/lava
@@ -4084,6 +4179,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "deep magma crab"
 	health_brute = 30
 	health_burn = 30
+	player_can_spawn_with_pet = FALSE
 
 /* =============================================== */
 /* ------------------- trilobite ----------------- */
@@ -4113,7 +4209,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	New()
 		..()
@@ -4194,7 +4290,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	ai_type = /datum/aiHolder/spike
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	New()
 		..()
@@ -4257,7 +4353,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	New()
 		..()
@@ -4438,10 +4534,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	butcherable = BUTCHER_YOU_MONSTER
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	ai_type = /datum/aiHolder/bunny
 	ai_retaliate_patience = 0 //retaliate when hit immediately
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
+	player_can_spawn_with_pet = TRUE
 	var/attack_damage = 2
 
 	New()

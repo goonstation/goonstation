@@ -2,7 +2,8 @@
 	name = "Tissue Necrosis"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Formaldehyde"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Formaldehyde"
 	associated_reagent = "rotting"
 	affected_species = list("Human")
 	reagentcure = list("formaldehyde")

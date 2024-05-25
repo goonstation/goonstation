@@ -41,6 +41,7 @@ TYPEINFO_NEW(/obj/table)
 
 	New(loc)
 		..()
+		START_TRACKING
 		if (src.has_drawer)
 			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
 
@@ -90,27 +91,27 @@ TYPEINFO_NEW(/obj/table)
 			else
 				working_image.icon_state = "NE"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "NEcorner")
+			src.AddOverlays(working_image, "NEcorner")
 		else
-			src.UpdateOverlays(null, "NEcorner")
+			src.ClearSpecificOverlays("NEcorner")
 		if((SOUTHEAST & ordinals) == SOUTHEAST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SE")
 			else
 				working_image.icon_state = "SE"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "SEcorner")
+			src.AddOverlays(working_image, "SEcorner")
 		else
-			src.UpdateOverlays(null, "SEcorner")
+			src.ClearSpecificOverlays("SEcorner")
 		if((SOUTHWEST & ordinals) == SOUTHWEST)
 			if (!src.working_image)
 				src.working_image = image(src.icon, "SW")
 			else
 				working_image.icon_state = "SW"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "SWcorner")
+			src.AddOverlays(working_image, "SWcorner")
 		else
-			src.UpdateOverlays(null, "SWcorner")
+			src.ClearSpecificOverlays("SWcorner")
 
 		if((NORTHWEST & ordinals) == NORTHWEST)
 			if (!src.working_image)
@@ -118,9 +119,9 @@ TYPEINFO_NEW(/obj/table)
 			else
 				working_image.icon_state = "NW"
 			setMaterialAppearanceForImage(working_image)
-			src.UpdateOverlays(working_image, "NWcorner")
+			src.AddOverlays(working_image, "NWcorner")
 		else
-			src.UpdateOverlays(null, "NWcorner")
+			src.ClearSpecificOverlays("NWcorner")
 
 	proc/deconstruct() //feel free to burn me alive because im stupid and couldnt figure out how to properly do it- Ze // im helping - haine
 		var/obj/item/furniture_parts/P
@@ -138,8 +139,8 @@ TYPEINFO_NEW(/obj/table)
 
 	/// Slam a dude on a table (harmfully)
 	proc/harm_slam(mob/user, mob/victim)
-		if (!victim.hasStatus("weakened"))
-			victim.changeStatus("weakened", 3 SECONDS)
+		if (!victim.hasStatus("knockdown"))
+			victim.changeStatus("knockdown", 3 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
@@ -148,8 +149,8 @@ TYPEINFO_NEW(/obj/table)
 
 	/// Slam a dude on the table (gently, with great care)
 	proc/gentle_slam(mob/user, mob/victim)
-		if (!victim.hasStatus("weakened"))
-			victim.changeStatus("weakened", 2 SECONDS)
+		if (!victim.hasStatus("knockdown"))
+			victim.changeStatus("knockdown", 2 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("[user] puts [victim] on \the [src]."))
 
@@ -329,7 +330,7 @@ TYPEINFO_NEW(/obj/table)
 		return FALSE
 
 	MouseDrop_T(atom/O, mob/user as mob)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (ismob(O) && O == user)
@@ -376,10 +377,26 @@ TYPEINFO_NEW(/obj/table)
 			return
 		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (ismob(AM))
+			if (AM != thr.thrown_by && (BOUNDS_DIST(thr.thrown_by, src) <= 0))
+				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
+				AM.flags |= TABLEPASS
+				step(AM, get_dir(AM, src))
+				if (remove_tablepass)
+					REMOVE_FLAG(AM.flags, TABLEPASS)
+				src.harm_slam(thr.thrown_by, AM)
+
+	after_abcu_spawn()
+		if(src.has_drawer)
+			for(var/obj/I in src.storage.get_all_contents())
+				qdel(I)
+
+
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
-	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
 	resumable = TRUE
@@ -409,7 +426,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
+			thr.end_throw_callback = CALLBACK(src, PROC_REF(unset_tablepass_callback))
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
@@ -572,8 +589,8 @@ TYPEINFO_NEW(/obj/table/mauxite)
 		return
 
 	harm_slam(mob/user, mob/victim)
-		if (!victim.hasStatus("weakened"))
-			victim.changeStatus("weakened", 4 SECONDS)
+		if (!victim.hasStatus("knockdown"))
+			victim.changeStatus("knockdown", 4 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src], collapsing it instantly!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
@@ -590,8 +607,8 @@ TYPEINFO_NEW(/obj/table/syndicate)
 	parts_type = /obj/item/furniture_parts/table/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -630,6 +647,13 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	icon = 'icons/obj/furniture/single_tables.dmi'
 	icon_state = "endtable-gothic"
 	parts_type = /obj/item/furniture_parts/endtable_gothic
+
+/obj/table/endtable_honey
+	name = "block of solidified honey"
+	desc = "Preferred work surface of Space Bees."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney"
+	parts_type = /obj/item/furniture_parts/endtable_honey
 
 /obj/table/podium_wood
 	name = "wooden podium"
@@ -766,7 +790,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "basic supply lab counter"
 	desc = "Everything an aspiring chemist needs to start making chemicals!"
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
-				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
 				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner = 2,
@@ -776,8 +800,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 /obj/table/reinforced/chemistry/auto/auxsup
 	name = "auxiliary supply lab counter"
 	desc = "Extra supplies for the discerning chemist."
-	drawer_contents = list(/obj/item/storage/box/beakerbox,
-				/obj/item/storage/box/patchbox,
+	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
 				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner,
@@ -1116,7 +1139,7 @@ TYPEINFO(/obj/table/glass)
 		if(src.glass_broken != GLASS_INTACT)
 			return ..()
 		victim.set_loc(src.loc)
-		victim.changeStatus("weakened", 4 SECONDS)
+		victim.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.material_trigger_when_attacked(victim, user, 1)
@@ -1168,11 +1191,8 @@ TYPEINFO(/obj/table/glass)
 		set_icon_state(num2text(dirs))
 
 		if (src.glass_broken == GLASS_BROKEN)
-			src.UpdateOverlays(null, "tabletop")
-			src.UpdateOverlays(null, "SWcorner")
-			src.UpdateOverlays(null, "SEcorner")
-			src.UpdateOverlays(null, "NEcorner")
-			src.UpdateOverlays(null, "NWcorner")
+			src.ClearSpecificOverlays("tabletop", "SWcorner", "SEcorner", "NEcorner", "NWcorner")
+			src.set_density(0)
 			return
 
 		// check it out a new piece of hacky nonsense
@@ -1182,7 +1202,7 @@ TYPEINFO(/obj/table/glass)
 		else
 			src.working_image.icon_state = "[R]g[num2text(dirs)]"
 			setMaterialAppearanceForImage(working_image)
-		src.UpdateOverlays(working_image, "tabletop")
+		src.AddOverlays(working_image, "tabletop")
 
 		var/obj/table/WT = locate(auto_type) in get_step(src, WEST)
 		var/obj/table/ST = locate(auto_type) in get_step(src, SOUTH)
@@ -1255,7 +1275,6 @@ TYPEINFO(/obj/table/glass)
 /* ======================================== */
 
 /datum/action/bar/icon/table_tool_interact
-	id = "table_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
@@ -1356,7 +1375,6 @@ TYPEINFO(/obj/table/glass)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_table]."))
 
 /datum/action/bar/icon/fold_folding_table
-	id = "fold_folding_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/ui/actions.dmi'
@@ -1399,7 +1417,6 @@ TYPEINFO(/obj/table/glass)
 		the_table.deconstruct()
 
 /datum/action/bar/icon/furnish_table
-	id = "furnish_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

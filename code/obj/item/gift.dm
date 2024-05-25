@@ -5,7 +5,6 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "wrap_paper-r"
 	item_state = "wrap_paper"
-	uses_multiple_icon_states = 1
 	amount = 20
 	desc = "Used for wrapping gifts. It's got a neat design!"
 	stamina_damage = 0

@@ -114,7 +114,7 @@ def three_way_merge(base: dmm.DMM, left: dmm.DMM, right: dmm.DMM):
 
         # fall back to requiring manual conflict resolution
         # TODO: more advanced strategies?
-         if select_movable == SELECT_LEFT:
+        if select_movable == SELECT_LEFT:
             tile += left_movables
         elif select_movable == SELECT_RIGHT:
             tile += right_movables

@@ -45,26 +45,13 @@
 			return 0
 		else if(src.shotsLeft == 1)
 			if(ishuman(user))
-				var/list/nearby_turfs = list()
-				for(var/turf/T in view(5, user))
-					nearby_turfs += T
 				var/mob/living/carbon/human/H = user
-				var/obj/brain = H.organHolder.drop_organ("brain")
-				var/obj/l_eye = H.organHolder.drop_organ("left_eye")
-				var/obj/r_eye = H.organHolder.drop_organ("right_eye")
-				var/obj/head = H.organHolder.drop_organ("head")
-				brain?.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				l_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				r_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				qdel(head)
+				H.head_explosion()
 			else
 				user.TakeDamage("head", 300, 0)
-			take_bleeding_damage(user, null, 500, DAMAGE_STAB)
+				take_bleeding_damage(user, null, 500, DAMAGE_STAB)
 			src.shotsLeft = 0
 			playsound(user, 'sound/weapons/Gunshot.ogg', 100, TRUE)
-			user.visible_message(SPAN_ALERT("<B>BOOM!</B> [user]'s head explodes."),\
-				SPAN_ALERT("<B>BOOM!</B>"),\
-				SPAN_ALERT("You hear someone's head explode."))
 			logTheThing(LOG_COMBAT, user, "shoots themselves with [src] at [log_loc(user)].")
 			inventory_counter.update_number(0)
 			return 1

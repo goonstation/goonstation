@@ -42,7 +42,7 @@
 
 	process()
 		if(contained) return
-		if(!connected_port) //only react when pipe_network will ont it do it for you
+		if(!connected_port) //only react when pipe_network wont it do it for you
 			//Allow for reactions
 			air_contents?.react() //ZeWaka: Fix for null.react()
 
@@ -143,3 +143,6 @@
 				return
 
 	return
+
+/obj/machinery/portable_atmospherics/return_air()
+	return air_contents

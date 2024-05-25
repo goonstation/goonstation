@@ -351,8 +351,8 @@
 			return list(access_maint_tunnels)
 		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host")
 			return list(access_maint_tunnels, access_tech_storage)
-		if("Mailman")
-			return list(access_maint_tunnels, access_mail, access_heads, access_cargo, access_hangar)
+		if("Mail Courier")
+			return list(access_mail, access_heads, access_cargo, access_hangar, access_medical, access_researchfoyer, access_research, access_tech_storage)
 
 		//////////////////////////// Other or gimmick
 		if("VIP")

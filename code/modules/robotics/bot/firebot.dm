@@ -329,7 +329,7 @@
 
 		var/mob/living/carbon/Ctarget = target
 		boutput(Ctarget, SPAN_ALERT("<b>[src] knocks you back!</b>"))
-		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.changeStatus("knockdown", 2 SECONDS)
 		Ctarget.throw_at(targetTurf, 200, 4)
 
 	if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
@@ -369,7 +369,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 

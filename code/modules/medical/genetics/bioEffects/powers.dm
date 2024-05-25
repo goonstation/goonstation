@@ -143,7 +143,7 @@
 		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner.organHolder?.stomach?.stomach_contents
 		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
 				if (istype(A, mattereater.target_path))
@@ -158,7 +158,7 @@
 			using = FALSE
 			return
 
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		var/obj/the_object = tgui_input_list(owner, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
 			using = FALSE
 			return TRUE
@@ -195,6 +195,7 @@
 			var/obj/item/I = the_object
 			if(I)
 				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					I.storage?.hide_hud(owner)
 					logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 					// Organs and body parts have special behaviors we need to account for
 					if (ishuman(owner))
@@ -341,8 +342,8 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("paralysis", 5 SECONDS)
-			owner.changeStatus("weakened", 5 SECONDS)
+			owner.changeStatus("unconscious", 5 SECONDS)
+			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
@@ -370,7 +371,7 @@
 			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
-			owner.changeStatus("weakened", 10 SECONDS)
+			owner.changeStatus("knockdown", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
 			SPAWN(0)
@@ -388,8 +389,8 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("paralysis", 5 SECONDS)
-			owner.changeStatus("weakened", 5 SECONDS)
+			owner.changeStatus("unconscious", 5 SECONDS)
+			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(owner.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			SPAWN(0)
@@ -800,7 +801,7 @@
 		boutput(read, SPAN_ALERT("Somehow, you sense <b>[owner]</b> trying and failing to read your mind!"))
 		boutput(owner, SPAN_ALERT("You are mentally overwhelmed by a huge barrage of worthless data!"))
 		owner.emote("scream")
-		owner.changeStatus("paralysis", 5 SECONDS)
+		owner.changeStatus("unconscious", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
 
 	/// Mostly stolen from laspgasp() (thanks pali)
@@ -860,7 +861,7 @@
 
 		if (linked_power.power > 1)
 			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> erupts into a huge column of flames! Holy shit!"))
-			fireflash_melting(get_turf(owner), 3, 7000, 2000)
+			fireflash_melting(get_turf(owner), 3, 7000, 2000, chemfire = CHEM_FIRE_RED)
 		else if (owner.is_heat_resistant())
 			owner.show_message(SPAN_ALERT("Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh."))
 			return
@@ -1023,20 +1024,24 @@
 				shake_camera(V,10,64)
 				if (V == owner)
 					continue
-				boutput(V, SPAN_ALERT("You are sent flying!"))
 
-				V.changeStatus("weakened", stun_time SECONDS)
-				// why the hell was this set to 12 christ
-				while (throw_repeat > 0)
-					throw_repeat--
-					step_away(V,get_turf(owner),throw_speed)
+				V.changeStatus("knockdown", stun_time SECONDS)
+				if(!V.anchored)
+					boutput(V, SPAN_ALERT("You are sent flying!"))
+					// why the hell was this set to 12 christ
+					while (throw_repeat > 0)
+						throw_repeat--
+						step_away(V,get_turf(owner),throw_speed)
+				else
+					boutput(V, SPAN_ALERT("You are knocked down!"))
+
 			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
 			if (owner.getStatusDuration("burning"))
-				fireflash(get_turf(owner), 3 * linked_power.power)
+				fireflash(get_turf(owner), 3 * linked_power.power, chemfire = CHEM_FIRE_RED)
 
 			SF.farting = 0
 			if (linked_power.power > 1)
@@ -1063,7 +1068,7 @@
 
 	proc/indigestion_gib()
 		owner.emote("faint")
-		owner.setStatus("weakened", 20 SECONDS)
+		owner.setStatus("knockdown", 20 SECONDS)
 		owner.make_jittery(50)
 		sleep(1 SECOND)
 		owner.emote("scream")
@@ -1548,7 +1553,7 @@
 			SPAWN(0.7 SECONDS)
 				owner.canmove = 1
 				owner.restrain_time = 0
-				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
+				var/obj/dummy/spell_invis/dimshift/invis_object = new /obj/dummy/spell_invis/dimshift(get_turf(owner), owner, P)
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
 				P.processing = FALSE
@@ -1565,13 +1570,6 @@
 				qdel(invis_object)
 			P.last_loc = null
 
-			owner.visible_message(SPAN_ALERT("<b>[owner] appears in a burst of blue light!</b>"))
-			playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
-			SPAWN(0.7 SECONDS)
-				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
-				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = FALSE
-				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1736,7 +1734,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			fireflash(F,0.5,temp)
+			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1863,6 +1861,7 @@
 
 		modifier *= linked_power.power
 
+		. = ..()
 		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> makes a gesture at [T.name]!"))
 
 		for (var/obj/O in view(7, owner))
@@ -1972,9 +1971,11 @@
 	cooldown = 0
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/darkcloak/DC = linked_power
+		. = ..()
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
@@ -2050,9 +2051,11 @@
 	cooldown = FALSE
 	can_act_check = FALSE
 	has_misfire = FALSE
+	do_logs = FALSE
 
 	cast(atom/T)
 		var/datum/bioEffect/power/chameleon/CH = linked_power
+		. = ..()
 		if (CH.active)
 			boutput(usr, "You stop using your chameleon cloaking.")
 			CH.active = 0
@@ -2233,7 +2236,7 @@
 						if (ability.cast(T))
 							return //no limbs left, no text!!!
 						boutput(owner, SPAN_ALERT("The pressure in one of your joints built up too high! One of your limbs flew off!"))
-						owner.changeStatus("weakened", 4 SECONDS)
+						owner.changeStatus("knockdown", 4 SECONDS)
 						return
 				while (do_count < 5)
 
@@ -2250,7 +2253,7 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 5 SECONDS)
+			hit.changeStatus("knockdown", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
 
@@ -2278,7 +2281,7 @@
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
 					thrown_limb.throwforce = limb_force* (throw_power+1)	//double damage if empowered
-					var/callback = (SL?.stun_mode) ? /datum/targetable/geneticsAbility/shoot_limb/proc/hit_callback : null
+					var/datum/callback/callback = (SL?.stun_mode) ? CALLBACK(src, PROC_REF(hit_callback)) : null
 					thrown_limb.throw_at(target, range, throw_power * (linked_power.power), end_throw_callback=callback)
 					//without snychronizer, you take damage and bleed on usage of the power
 					if (!linked_power.safety)

@@ -369,7 +369,12 @@
 
 	New()
 		. = ..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.connect_to_minimap()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		. = ..()
 
 	attack_self(mob/user)
 		. = ..()
@@ -409,7 +414,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/pod_wars_minimap_controller)
 		screen_light.blend_mode = BLEND_ADD
 		screen_light.layer = LIGHTING_LAYER_BASE
 		screen_light.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_light, "screen_light")
+		src.AddOverlays(screen_light, "screen_light")
 
 	attack_hand(mob/user)
 		if(status & (BROKEN|NOPOWER))

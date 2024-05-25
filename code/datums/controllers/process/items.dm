@@ -19,6 +19,8 @@
 		for(var/obj/object in world)
 			totalcount++
 
+		logTheThing(LOG_DEBUG, src, "Starting main /obj initialize loop")
+
 		for(var/obj/object in world)
 			object.initialize()
 			itemcount++
@@ -28,6 +30,8 @@
 					game_start_countdown.update_status("Initializing items\n([itemcount], [round(itemcount / totalcount * 100)]%)")
 
 			LAGCHECK(LAG_HIGH)
+
+		logTheThing(LOG_DEBUG, src, "Main /obj initialize loop completed")
 
 		detailed_count = new
 

@@ -60,6 +60,18 @@ var/list/clothingbooth_paths = list()
 	var/open = TRUE
 	var/preview_direction
 	var/preview_direction_default = SOUTH
+	var/everything_is_free = FALSE
+	/// optional dye color or matrix to apply to all sold objects
+	var/dye
+
+	gbr
+		name = "Strange Clothing Booth"
+		color = list(0,1,0,1,0,1,1,1,0)
+		dye = list(0,1,0,0,0,1,1,0,0)
+	brg
+		name = "Unusual Clothing Booth"
+		color = list(1,0,1,1,1,0,0,1,1)
+		dye = list(0,0,1,1,0,0,0,1,0)
 
 	New()
 		..()
@@ -72,6 +84,13 @@ var/list/clothingbooth_paths = list()
 		src.preview = new()
 		src.preview.add_background()
 		src.preview_direction = src.preview_direction_default
+		if (istype(get_area(src), /area/afterlife))
+			src.everything_is_free = TRUE
+			src.money = 999999
+			src.maptext_y = 34
+			src.maptext = "<span class='pixel c vb'>FREE</span>"
+			src.name = "completely free [src]"
+			src.desc += " This one happens to not need any money."
 
 	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/currency/spacecash))
@@ -186,10 +205,14 @@ var/list/clothingbooth_paths = list()
 		switch(action)
 			if("purchase")
 				if(src.item_to_purchase)
-					if(text2num_safe(src.item_to_purchase.cost) <= src.money)
-						src.money -= text2num_safe(src.item_to_purchase.cost)
+					if(src.everything_is_free || text2num_safe(src.item_to_purchase.cost) <= src.money)
+						if (!src.everything_is_free)
+							src.money -= text2num_safe(src.item_to_purchase.cost)
 						var/purchased_item_path = src.item_to_purchase.path
-						usr.put_in_hand_or_drop(new purchased_item_path(src))
+						var/atom/item = new purchased_item_path(src)
+						if (dye)
+							item.color = dye
+						usr.put_in_hand_or_drop(item)
 					else
 						boutput(usr, SPAN_ALERT("Insufficient funds!"))
 						animate_shake(src, 12, 3, 3)
@@ -215,6 +238,8 @@ var/list/clothingbooth_paths = list()
 					qdel(src.preview_item)
 					src.preview_item = null
 				src.preview_item = new selected_item_path
+				if (dye)
+					preview_item.color = dye
 				preview_mob.force_equip(src.preview_item, selected_item.slot)
 				src.item_to_purchase = selected_item
 				update_preview()
@@ -248,17 +273,17 @@ var/list/clothingbooth_paths = list()
 				occupant = locate(/mob/living/carbon/human) in src
 			if (occupant?.loc == src) //ensure mob wasn't otherwise removed during out spawn call
 				occupant.set_loc(T)
-				if(src.money > 0)
+				if(src.money > 0 && !src.everything_is_free)
 					occupant.put_in_hand_or_drop(new /obj/item/currency/spacecash(T, src.money))
-				src.money = 0
+					src.money = 0
 				for (var/obj/item/I in src.contents)
 					occupant.put_in_hand_or_drop(I)
 				for (var/atom/movable/AM in contents)
 					AM.set_loc(T) //dump anything that's left in there on out
 			else
-				if(src.money > 0)
+				if(src.money > 0 && !src.everything_is_free)
 					new /obj/item/currency/spacecash(T, src.money)
-				src.money = 0
+					src.money = 0
 				for (var/atom/movable/AM in contents)
 					AM.set_loc(T)
 

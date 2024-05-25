@@ -332,6 +332,15 @@
 		qdel(pulse2)
 	return
 
+/obj/machinery/proc/is_broken()
+	return (src.status & BROKEN)
+
+/obj/machinery/proc/has_no_power()
+	return (src.status & NOPOWER)
+
+/obj/machinery/proc/is_disabled()
+	return src.is_broken() || src.has_no_power()
+
 /obj/machinery/sec_lock
 	name = "Security Pad"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -432,7 +441,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.machine.visible_message(SPAN_ALERT("<b>[owner]</b> begins to rotate [src.machine]"), 1)
+		src.machine.visible_message(SPAN_ALERT("<b>[owner]</b> begins to rotate [src.machine]"))
 
 	onEnd()
 		..()
