@@ -447,11 +447,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			img = getItemIcon(M.item_outputs[1], C = user.client)
 
+		var/requirement_data = list()
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
+
 		return list(
 			"name" = M.name,
 			"category" = M.category,
-			"material_names" = M.item_names,
-			"item_requirements" = M.item_requirements,
+			"requirement_data" = requirement_data,
 			"item_names" = generated_names,
 			"item_descriptions" = generated_descriptions,
 			"item_outputs" = M.item_outputs,
@@ -1576,9 +1579,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
 	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
-		for (var/datum/manufacturing_requirement/R as anything in concrete_typesof(/datum/manufacturing_requirement))
+		for (var/R_id as anything in requirement_cache)
+			var/datum/manufacturing_requirement/R = getRequirement(R_id)
 			if (R.is_match(M))
-				. += R
+				. += R.id
 
 	/// Returns material in storage which first satisfies a pattern, otherwise returns null
 	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
@@ -1617,7 +1621,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/P_ref = "\ref[P]"
 				if (mats_projected[P_ref] < required_amount)
 					continue
-				if (R.is_match(P))
+				if (R.is_match(P.material))
 					mats_used[R] = P_ref
 					mats_projected[P_ref] -= required_amount
 					break

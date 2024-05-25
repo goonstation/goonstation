@@ -7,18 +7,8 @@
 
 var/global/list/requirement_cache
 
-/// Helps get an exact requirement when otherwise it would need to be pre-initialized.
-/// Shameless rip off Mat_ProcsDefines.dm since the functionality is p much identical
-/proc/getRequirement(var/datum/manufacturing_requirement/R)
-	#ifdef CHECK_MORE_RUNTIMES
-	if (!istype(R, /datum/manufacturing_requirement/))
-		CRASH("getMaterialsRequirementSatisfies() called with non-datum argument [R].")
-	if (!(R in requirement_cache))
-		CRASH("getMaterialsRequirementSatisfies() called with an invalid datum [R].")
-	#endif
-	if (!istype(R, /datum/manufacturing_requirement/))
-		return null
-	return requirement_cache?[R]
+/proc/getRequirement(var/R_id)
+	return requirement_cache?[R_id]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_material)
@@ -44,6 +34,9 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (isnull(id))
 			CRASH("[src] created with a null id")
 	#endif
+
+	proc/get_id()
+		return src.id
 
 	/// Returns whether or not the material in question matches our criteria. Defaults to true
 	proc/is_match(var/datum/material/M)
@@ -227,23 +220,23 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 			super
 				name = "Very High Density Matter"
-				id = "dense_high"
+				id = "dense_super"
 				material_threshold = 6
 
 		energy
 			name = "Power Source"
-			id = "power"
+			id = "energy"
 			material_property = "radioactive"
 			material_flags = MATERIAL_ENERGY
 
 			high
 				name = "Significant Power Source"
-				id = "power_high"
+				id = "energy_high"
 				material_threshold = 3
 
 			extreme
 				name = "Extreme Power Source"
-				id = "power_extreme"
+				id = "energy_extreme"
 				material_threshold = 5
 
 		fabric
@@ -253,7 +246,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 		insulated
 			name = "Insulative"
-			id = "insulative"
+			id = "insulated"
 			material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
 			material_threshold = 4
 
@@ -273,12 +266,12 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 			dense
 				name = "Sturdy Metal"
-				id = "metal_high"
+				id = "metal_dense"
 				material_threshold = 10
 
 			superdense
 				name = "Extremely Tough Metal"
-				id = "metal_extreme"
+				id = "metal_superdense"
 				material_threshold = 15
 
 			matches_property(var/datum/material/M)
