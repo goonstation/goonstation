@@ -1,6 +1,6 @@
 /datum/targetable/spell/mutate
 	name = "Empower"
-	desc = "Temporarily superpowers your body."
+	desc = "Temporarily superpowers your body and grants a burst of strength"
 	icon_state = "mutate"
 	targeted = 0
 	cooldown = 30 SECONDS

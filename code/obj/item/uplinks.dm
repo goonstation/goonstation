@@ -1554,7 +1554,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/forcewall
 	name = "Forcewall"
 	eqtype = "Defensive"
-	desc = "This spell creates an unbreakable wall from where you stand that extends to your sides. It lasts for 30 seconds."
+	desc = "This spell creates an unbreakable wall from where you stand that extends to your sides. It lasts for 10 seconds."
 	assoc_spell = /datum/targetable/spell/forcewall
 
 /datum/SWFuplinkspell/blink
@@ -1602,7 +1602,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/empower
 	name = "Empower"
 	eqtype = "Utility"
-	desc = "This spell causes you to turn into a hulk, and gain passive wrestling powers for a short while."
+	desc = "This spell causes you to turn into a hulk, and gain passive wrestling powers for a short while. Also reduces active stuns on cast."
 	assoc_spell = /datum/targetable/spell/mutate
 
 /datum/SWFuplinkspell/summongolem
