@@ -1930,8 +1930,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc2 = list(/obj/item/scissors)
 	slot_lhan = list(/obj/item/screwdriver)
 
-	items_in_backpack = list()
-	rounds_needed_to_play = 0 // It would really suck ass to play this as a new player
+	items_in_backpack = list(/obj/item/currency/spacecash/buttcoin = 2)
+	rounds_needed_to_play = 10 // It would really suck ass to play this as a new player
 	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1940,41 +1940,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.traitHolder.addTrait("stowaway")
 
-/datum/job/special/random/private_eye
-	name = "Private Eye"
-	wages = PAY_TRADESMAN
-	receives_badge = TRUE
-	cant_spawn_as_rev = TRUE
-	can_join_gangs = FALSE
-	allow_antag_fallthrough = FALSE
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
-	slot_poc1 = list(/obj/item/device/pda2/forensic)
-	slot_jump = list(/obj/item/clothing/under/rank/det)
-	slot_foot = list(/obj/item/clothing/shoes/detective)
-	slot_head = list(/obj/item/clothing/head/det_hat)
-	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_suit = list(/obj/item/clothing/suit/det_suit)
-	slot_ears = list(/obj/item/device/radio/headset/detective)
-	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
-	map_can_autooverride = FALSE
-	rounds_needed_to_play = 30 // it's stowaway detective, it's intrinsically problematic
-	wiki_link = "https://wiki.ss13.co/Detective"
-
-	New()
-		..()
-		src.access = get_access("Detective")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_drinker")
-		M.traitHolder.addTrait("stowaway")
-
-		if (M.traitHolder && !M.traitHolder.hasTrait("smoker"))
-			items_in_backpack += list(/obj/item/device/light/zippo) //Smokers start with a trinket version
 #ifdef HALLOWEEN
 /*
  * Halloween jobs
