@@ -3,7 +3,7 @@
 
 	receive(list/data, datum/game_server/server)
 		// Create and send the response with the player count
-		logTheThing(LOG_DEBUG, null, "<b>Sov:</b> Received player count request from [server.name]")
+		logTheThing(LOG_DEBUG, null, "<b>CSM:</b> Received player count request from [server.id]")
 
 		var/player_count = 0
 		for(var/client/C)
@@ -16,5 +16,5 @@
 		return TRUE
 
 	send(datum/game_server/server)
-		logTheThing(LOG_DEBUG, null, "<b>Sov:</b> Sending player count request to [server.name]")
+		logTheThing(LOG_DEBUG, null, "<b>CSM:</b> Sending player count request to [server.id]")
 		return src._send(server, list())
