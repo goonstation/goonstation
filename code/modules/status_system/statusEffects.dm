@@ -1909,12 +1909,13 @@
 	maxDuration = 3 MINUTES
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/charge = null
+	var/ignore_unionized = FALSE
 
 	onAdd(optional)
 		. = ..()
 		if (!ismob(owner)) return
 		var/mob/M = owner
-		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || (!ignore_unionized && M.traitHolder.hasTrait("unionized")))
 			SPAWN(0)
 				M.delStatus("magnetized")
 			return
@@ -1929,6 +1930,10 @@
 		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+/datum/statusEffect/magnetized/arcfiend
+	id = "magnetized_arcfiend"
+	ignore_unionized = TRUE
 
 //I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
 /datum/statusEffect/changeling_regrow
