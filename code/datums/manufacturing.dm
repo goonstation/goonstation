@@ -107,7 +107,9 @@
 				if(src.apply_material && length(materials) > 0)
 					F.removeMaterial()
 					var/atom/thing = new frame_path(F)
-					thing.setMaterial(M.get_our_material(materials[materials[1]]))
+					// Locate the reference of the first item requirment we use
+					var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
+					thing.setMaterial(applicable_material.material)
 					F.deconstructed_thing = thing
 				else
 					F.store_type = src.frame_path
@@ -651,7 +653,8 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		var/obj/item/sheet/S = A
 		..()
-		S.set_reinforcement(getMaterial(materials["MET-1"]))
+		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("metal")])
+		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/glass
 	name = "Glass Panel"
@@ -675,7 +678,8 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		S.set_reinforcement(getMaterial(materials["crystal"]))
+		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("crystal")])
+		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
@@ -903,8 +907,10 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		coil.setInsulator(getMaterial(materials[item_requirements[1]]))
-		coil.setConductor(getMaterial(materials[item_requirements[2]]))
+		var/obj/item/material_piece/applicable_insulator = locate(materials[getRequirement("insulated")])
+		var/obj/item/material_piece/applicable_conductor = locate(materials[getRequirement("conductive")])
+		coil.setInsulator(applicable_insulator.material)
+		coil.setConductor(applicable_conductor.material)
 		return 1
 
 /datum/manufacture/cable/reinforced
