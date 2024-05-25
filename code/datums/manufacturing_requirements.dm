@@ -43,17 +43,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		SHOULD_CALL_PARENT(TRUE)
 		if (isnull(M))
 			return FALSE
-		if (!isnull(src.material_flags) && !src.matches_flags(M.getMaterialFlags()))
-			return FALSE
 		return TRUE
-
-	/// Returns whether the material flags are matched. This will return true should any flag match.
-	proc/matches_flags(var/material_flags)
-		return material_flags & src.material_flags
-
-	/// Returns whether the material property matches the given criterion. Default behavior is to check if >=, override w/o calling parent for diff behavior.
-	proc/matches_property(var/datum/material/M)
-		return M.getProperty(src.material_property) >= src.material_threshold
 
 	any
 		name = "Any"
@@ -181,7 +171,18 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		is_match(var/datum/material/M)
 			if (!isnull(src.material_property) && !isnull(src.material_threshold) && !src.matches_property(M))
 				return FALSE
+			if (!isnull(src.material_flags) && !src.matches_flags(M.getMaterialFlags()))
+				return FALSE
 			. = ..()
+
+		/// Returns whether the material flags are matched. This will return true should any flag match.
+		proc/matches_flags(var/material_flags)
+			return material_flags & src.material_flags
+
+		/// Returns whether the material property matches the given criterion. Default behavior is to check if >=, override w/o calling parent for diff behavior.
+		proc/matches_property(var/datum/material/M)
+			return M.getProperty(src.material_property) >= src.material_threshold
+
 		conductive
 			name = "Conductive"
 			id = "conductive"
