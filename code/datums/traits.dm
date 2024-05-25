@@ -754,6 +754,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	icon_state = "stowaway"
 	category = list("background")
 	points = 1
+	unselectable = TRUE
 
 /datum/trait/pilot
 	name = "Pilot"
