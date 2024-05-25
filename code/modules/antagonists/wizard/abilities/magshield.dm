@@ -1,6 +1,6 @@
 /datum/targetable/spell/magshield
 	name = "Spell Shield"
-	desc = "Temporarily shield yourself from melee attacks and projectiles. It also absorbs some of the blast of explosions."
+	desc = "Temporarily shield yourself from melee attacks, projectiles, and explosions"
 	icon_state = "spellshield"
 	targeted = 0
 	cooldown = 600

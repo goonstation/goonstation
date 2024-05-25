@@ -70,8 +70,8 @@
 		/// Cell is fully charged
 		#define CELL_FULL 32
 
-// ---- energy shield thing ----
-	/// Sent by the itemability to toggle the energyshield component
+// ---- shield component signals ----
+	/// Sent by the itemability to toggle the shield component
 	#define COMSIG_SHIELD_TOGGLE "energy_shield_toggle"
 	/// Used by the item to check if the shield is active or not
 	#define COMSIG_CHECK_SHIELD_ACTIVE "check_energy_shield_active"

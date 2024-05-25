@@ -73,6 +73,11 @@ ABSTRACT_TYPE(/datum/component/wearertargeting/shield)
 	if((SLOT_L_HAND in valid_slots) || (SLOT_R_HAND in valid_slots))
 		parent:c_flags |= EQUIPPED_WHILE_HELD
 
+/datum/component/wearertargeting/shield/on_unequip(datum/source, mob/user)
+	if(src.active)
+		src.turn_off()
+	..()
+
 /datum/component/wearertargeting/shield/proc/activate(datum/source, incoming_damage, list/return_list)
 	if(!src.active)
 		return
@@ -101,11 +106,6 @@ ABSTRACT_TYPE(/datum/component/wearertargeting/shield)
 		src.internal_power -= cost
 
 	return //return code?
-
-/datum/component/wearertargeting/shield/on_unequip(datum/source, mob/user)
-	if(src.active)
-		src.turn_off()
-	..()
 
 /datum/component/wearertargeting/shield/proc/block_hit_fx()
 	return
@@ -176,8 +176,6 @@ ABSTRACT_TYPE(/datum/component/wearertargeting/shield)
 /datum/component/wearertargeting/shield/energy/on_unequip(datum/source, mob/user)
 	var/obj/item/I = parent
 	I.remove_item_ability(user, /obj/ability_button/toggle_shield)
-	if(active)
-		src.turn_off()
 	. = ..()
 
 /datum/component/wearertargeting/shield/energy/block_hit_fx()

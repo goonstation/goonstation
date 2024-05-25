@@ -746,7 +746,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				SEND_SIGNAL(H.wear_suit, COMSIG_SHIELD_TOGGLE)
 		..()
 
-
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)

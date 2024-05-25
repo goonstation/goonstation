@@ -1582,7 +1582,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/spellshield
 	name = "Spell Shield"
 	eqtype = "Defensive"
-	desc = "This spell encases you in a magical shield that protects you from melee attacks and projectiles for 10 seconds. It also absorbs some of the blast of explosions."
+	desc = "This spell encases you in a limited-health magical shield that can protect you from melee attacks, projectiles, and explosions for up to 10 seconds."
 	assoc_spell = /datum/targetable/spell/magshield
 
 /datum/SWFuplinkspell/doppelganger
