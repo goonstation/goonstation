@@ -1519,8 +1519,8 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_x = 0
 			src.maptext_width = 600
 			src.maptext_height = 400
-			update_text()
-			SPAWN(10 SECONDS) // wait for replied for initial setup
+			update_text() // kick start initial count
+			SPAWN(10 SECONDS) // wait for reply
 				do_loop()
 
 		proc/do_loop()
