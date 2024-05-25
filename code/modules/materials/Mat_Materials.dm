@@ -355,7 +355,7 @@ ABSTRACT_TYPE(/datum/material)
 	proc/hasTrigger(var/triggerListName as text, materialProcType)
 		var/list/L = src.vars[triggerListName]
 		for(var/datum/materialProc/P in L)
-			if(istype(P.type, materialProcType)) return 1
+			if(istype(P, materialProcType)) return 1
 		return 0
 
 	///Triggers is specified using one of the TRIGGER_ON_ defines
