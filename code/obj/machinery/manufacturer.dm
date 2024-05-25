@@ -1952,11 +1952,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 				mat_id && mat_id == P.material.getID())
 				// fuck floating point, lets pretend we only use tenths
 				P.amount = round(P.amount + amount, 0.1)
-				if (user)
-					user.u_equip(mat_piece)
-					mat_piece.dropped(user)
-				if (!isnull(mat_piece))
-					qdel(mat_piece)
+				// Handle inserting pieces into the machine
+				if (!isloc(mat_piece, src))
+					if (user)
+						user.u_equip(mat_piece)
+						mat_piece.dropped(user)
+					if (!isnull(mat_piece))
+						qdel(mat_piece)
 				if (P.amount <= 0)
 					qdel(P)
 				return
