@@ -1,7 +1,7 @@
 
 TYPEINFO(/obj/health_scanner)
-	mats = list(/datum/manufacturing_requirement/match_property/conductive = 5,
-				/datum/manufacturing_requirement/match_property/crystal = 2)
+	mats = list("conductive" = 5,
+				"crystal" = 2)
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'
 	anchored = ANCHORED

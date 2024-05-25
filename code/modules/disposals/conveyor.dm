@@ -4,9 +4,9 @@
 
 // moves items/mobs/movables in set direction every ptick
 TYPEINFO(/obj/machinery/conveyor) {
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 1,
-				/datum/manufacturing_requirement/match_property/conductive = 1,
-				/datum/manufacturing_requirement/match_property/crystal = 1)
+	mats = list("metal" = 1,
+				"conductive" = 1,
+				"crystal" = 1)
 }
 
 /obj/machinery/conveyor
@@ -884,9 +884,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 TYPEINFO(/obj/machinery/conveyor_switch) {
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 10,
-				/datum/manufacturing_requirement/match_property/conductive = 10,
-				/datum/manufacturing_requirement/match_property/crystal = 10)}
+	mats = list("metal" = 10,
+				"conductive" = 10,
+				"crystal" = 10)}
 
 
 #define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)

@@ -1,7 +1,7 @@
 
 /datum/manufacture/mechanics/blob
 	name = "blob"
-	item_requirements = list(/datum/manufacturing_requirement/match_property/organic_or_rubber = 3)
+	item_requirements = list("organic_or_rubber" = 3)
 	create = 1
 	time = 10 SECONDS
 	apply_material = 1
@@ -9,12 +9,12 @@
 
 /datum/manufacture/mechanics/blob/base
 	name = "blob"
-	item_requirements = list(/datum/manufacturing_requirement/match_property/organic_or_rubber = 1)
+	item_requirements = list("organic_or_rubber" = 1)
 	frame_path = /obj/blob
 
 /datum/manufacture/mechanics/blob/nucleus
 	name = "nucleus blob"
-	item_requirements = list(/datum/manufacturing_requirement/match_property/organic_or_rubber = 30)
+	item_requirements = list("organic_or_rubber" = 30)
 	time = 1 MINUTE
 	frame_path = /obj/blob/nucleus
 
@@ -56,8 +56,8 @@
 
 /datum/manufacture/mechanics/blob_overmind
 	name = "blob overmind"
-	item_requirements = list(/datum/manufacturing_requirement/match_material/blob = 10,
-							 /datum/manufacturing_requirement/match_material/ectoplasm = 10)
+	item_requirements = list("blob" = 10,
+							 "ectoplasm" = 10)
 	create = 1
 	time = 1 MINUTE
 	frame_path = /mob/living/intangible/blob_overmind/ai/start_here

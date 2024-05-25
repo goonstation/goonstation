@@ -605,7 +605,7 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
-	mats = list(/datum/manufacturing_requirement/match_material/viscerite = 25)
+	mats = list("viscerite" = 25)
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
 	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."

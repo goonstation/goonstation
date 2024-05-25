@@ -1,10 +1,10 @@
 ///
 
 TYPEINFO(/obj/item/rcd)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 20,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 10,
-				/datum/manufacturing_requirement/match_property/conductive/high = 10,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal_superdense" = 20,
+				"crystal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /// Base RCD this is the variant actually used in most scenarios
 /obj/item/rcd
 	name = "rapid construction device"

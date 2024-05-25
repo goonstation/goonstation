@@ -442,9 +442,9 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 5,
-				/datum/manufacturing_requirement/match_property/crystal = 4,
-				/datum/manufacturing_requirement/match_material/gold = 5)
+	mats = list("metal_dense" = 5,
+				"crystal" = 4,
+				"gold" = 5)
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."

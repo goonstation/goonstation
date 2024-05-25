@@ -10,8 +10,8 @@
 //As long as this is working, solar panels on same powernet will track automatically
 
 TYPEINFO(/obj/machinery/power/tracker)
-	mats = list(/datum/manufacturing_requirement/match_property/crystal = 15,
-				/datum/manufacturing_requirement/match_property/conductive = 20)
+	mats = list("crystal" = 15,
+				"conductive" = 20)
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
 	desc = "The XIANG|GIESEL model '�羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
@@ -84,8 +84,8 @@ TYPEINFO(/obj/machinery/power/tracker)
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/power/solar)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 15,
-				/datum/manufacturing_requirement/match_property/conductive = 15)
+	mats = list("metal_dense" = 15,
+				"conductive" = 15)
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"
 	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."

@@ -1872,10 +1872,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 15,
-				/datum/manufacturing_requirement/match_property/conductive = 8,
-				/datum/manufacturing_requirement/match_material/claretine = 10,
-				/datum/manufacturing_requirement/match_material/koshmarite = 2)
+	mats = list("metal_dense" = 15,
+				"conductive" = 8,
+				"claretine" = 10,
+				"koshmarite" = 2)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"

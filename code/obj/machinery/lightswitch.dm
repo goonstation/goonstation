@@ -10,8 +10,8 @@
 #define SWITCH_SPAM_MAJOR_THRESHOLD 50
 
 TYPEINFO(/obj/machinery/light_switch)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 10,
-				/datum/manufacturing_requirement/match_property/conductive = 15)
+	mats = list("metal" = 10,
+				"conductive" = 15)
 ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
 	desc = "A light switch"
