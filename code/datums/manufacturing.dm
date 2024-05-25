@@ -54,8 +54,8 @@
 				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] has null requirement in list")
 				qdel(src)
 				return
-			if (!ispath(requirement, /datum/manufacturing_requirement))
-				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] has requirement\
+			if (!istype(requirement, /datum/manufacturing_requirement))
+				logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] has requirement \
 											  which is not instantiated or not of /datum/manufacturing_requirement")
 				qdel(src)
 				return
