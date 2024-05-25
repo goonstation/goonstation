@@ -1,4 +1,5 @@
 #define MAX_QUEUE_LENGTH 20 //! maximum amount of blueprints which may be queued for printing
+#define MAX_OUTPUT 20 //! maximum amount of items produced for a blueprint at once
 #define WIRE_EXTEND 1 //! wire which reveals blueprints in the "hidden" type
 #define WIRE_POWER 2 //! wire which can disable machine power
 #define WIRE_MALF 3 //! wire which causes machine to malfunction
@@ -6,11 +7,11 @@
 #define MODE_READY "ready" //! machine is ready to produce more things
 #define MODE_WORKING "working" //! machine is making some things
 #define MODE_HALT "halt" //! machine had to stop making things or couldnt due to some problem that occured
-#define MIN_SPEED 1 //! lowest speed fabricator can function at
+#define MIN_SPEED 1 //! lowest speed manufacturer can function at
 #define DEFAULT_SPEED 3 //! speed which manufacturers run at by default
 #define MAX_SPEED 3 //! maximum speed default manufacturers can be set to
 #define MAX_SPEED_HACKED 5 //! maximum speed manufacturers which are hacked (WIRE_EXTEND has been pulsed) can be set to
-#define MAX_SPEED_DAMAGED 8 //! maximum speed that fabricators which flip_out() can be set to, randomly.
+#define MAX_SPEED_DAMAGED 8 //! maximum speed that manufacturers which flip_out() can be set to, randomly.
 #define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
 #define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
 
@@ -26,41 +27,60 @@ TYPEINFO(/obj/machinery/manufacturer)
 	density = TRUE
 	anchored = ANCHORED
 	power_usage = 200
-	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
+	/// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
-	// General stuff
+	/* General stuff */
 	var/health = 100
-	var/supplemental_desc = null //! appended in get_desc() to the base description, to make subtype definitions cleaner
-	var/mode = MODE_READY //! the current status of the machine. Ready, working, or halt are all modes used currently.
+	/// Appended in get_desc() to the base description, to make subtype definitions cleaner
+	var/supplemental_desc = null
+	/// The current status of the machine.
+	/// "ready" / MODE_READY - The machine is ready to produce more blueprints.
+	/// "working" / MODE_WORKING - The machine is currently producing a blueprint.
+	/// "halt" / MODE_HALT - The machine stopped due to some problem arising.
+	var/mode = MODE_READY
+	/// A somewhat legacy variable to output silent yet visible errors to the user in the UI.
+	/// Current uses include when there is a lack of materials, an invalid blueprint, and when there is not enough manudrive uses.
 	var/error = null
-	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
+	/// How much power is consumed while active. This is determined automatically when the unit starts a production cycle
+	var/active_power_consumption = 0
 	var/panel_open = FALSE
+	/// The stage of dismantlement this machine is currently at.
 	var/dismantle_stage = 0
 	var/hacked = FALSE
 	var/malfunction = FALSE
-	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
+	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
+	/// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
+	var/time_left_electrified = 0
+	/// A turf or object which the manufacturer will attempt to output items into.
 	var/output_target = null
+	/// A list populated in New() which stores turfs which are nearby this manufacturer.
 	var/list/nearby_turfs = list()
-	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
-	var/output_message_user = null //! Used as a cache when outputting messages to users
+	/// This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
+	var/wires = 15
 	var/frequency = FREQ_PDA
 	var/net_id = null
 	var/device_tag = "PNET_MANUFACTURER"
+	/// The data terminal attached underfloor to this manufacturer. Allows use of PNET packets
 	var/obj/machinery/power/data_terminal/link = null
-	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
+	/// Card currently scanned into the machine, used when deducting payment for ores from a Rockbox
+	var/obj/item/card/id/scan = null
 
-	// Printing and queues
-	var/original_duration = 0 //! duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
-	var/time_left = 0 //! time the current blueprint will take to manufacture
-	var/time_started = 0 //! time the last blueprint was queued
+	/* Printing and queues */
+	/// Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
+	var/original_duration = 0
+	/// Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
+	var/time_left = 0
+	/// Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
+	var/time_started = 0
+	/// Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
 	var/speed = DEFAULT_SPEED
 	var/repeat = FALSE
-	var/manual_stop = FALSE
-	var/output_cap = 20
+	var/output_cap = MAX_OUTPUT
+	/// A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
 	var/list/queue = list()
 
 	// Resources/materials
@@ -196,8 +216,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.mode == MODE_WORKING)
 			use_power(src.active_power_consumption)
 
-		if (src.electrified > 0)
-			src.electrified--
+		if (src.time_left_electrified > 0)
+			src.time_left_electrified--
 		/*
 		if (src.mode == MODE_WORKING)
 			if (src.malfunction && prob(8))
@@ -208,7 +228,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.output_loop(src.queue[1])
 				SPAWN(0)
 					if (length(src.queue) < 1)
-						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
 						src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
 						src.mode = MODE_READY
@@ -222,7 +241,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.queue -= src.queue[1]
 
 		if (length(src.queue) < 1)
-			src.manual_stop = 0
 			playsound(src.loc, src.sound_happy, 50, 1)
 			src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
 			src.mode = MODE_READY
@@ -339,7 +357,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"error" = src.error,
 			"resource_data" = resource_data,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
-			"indicators" = list("electrified" = src.electrified,
+			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
 								"hasPower" = !src.is_disabled(),
@@ -466,11 +484,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 			claim_free_resources()
-		if(src.electrified)
+		if(src.is_electrified())
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
 		src.ui_interact(user)
+
+	proc/is_electrified()
+		return src.electrified > 0
 
 	proc/validate_disp(datum/manufacture/M)
 		. = FALSE
@@ -494,7 +515,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
 	proc/try_shock(mob/target, var/chance)
-		if (src.electrified)
+		if (src.is_electrified())
 			return src.shock(usr, chance)
 		return FALSE
 
@@ -719,8 +740,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(!scan)
 			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
 			return
-		else
-			src.output_message_user = null
 		if (src.scan.registered in FrozenAccounts)
 			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows.", sound = TRUE)
 			return
@@ -764,8 +783,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
-
-					//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
 				else
 					src.grump_message(usr, "ERROR: You don't have enough dosh, bucko.", sound = TRUE)
 			else
@@ -785,7 +802,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return FALSE
 
 	attackby(obj/item/W, mob/user)
-		if (src.electrified)
+		if (src.is_electrified())
 			if (src.shock(user, 33))
 				return
 
@@ -1414,7 +1431,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_EXTEND)
 				src.hacked = FALSE
 			if(WIRE_SHOCK)
-				src.electrified = -1
+				src.time_left_electrified = 0
 			if(WIRE_MALF)
 				src.malfunction = TRUE
 			if(WIRE_POWER)
@@ -1428,7 +1445,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.wires |= wireFlag
 		switch(wireIndex)
 			if(WIRE_SHOCK)
-				src.electrified = 0
+				src.time_left_electrified = 0
 			if(WIRE_MALF)
 				src.malfunction = FALSE
 			if(WIRE_POWER)
@@ -1442,7 +1459,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_EXTEND)
 				src.hacked = !src.hacked
 			if (WIRE_SHOCK)
-				src.electrified = 30
+				src.time_left_electrified = 30
 			if (WIRE_MALF)
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
@@ -1706,7 +1723,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (status & NOPOWER || status & BROKEN)
 			return
 		if (!length(src.queue))
-			src.manual_stop = 0
 			src.mode = MODE_READY
 			src.build_icon()
 			return
@@ -1899,8 +1915,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (prob(10))
 			src.speed = rand(MIN_SPEED, MAX_SPEED_DAMAGED)
 		if (prob(5))
-			if (!src.electrified)
-				src.electrified = 5
+			if (!src.is_electrified())
+				src.time_left_electrified = 5
 
 	proc/build_icon()
 		icon_state = "fab[src.icon_base ? "-[src.icon_base]" : null]"
@@ -2974,7 +2990,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	onInterrupt()
 		..()
 		MA.time_left = src.duration - (TIME - src.started)
-		MA.manual_stop = FALSE
 		MA.error = null
 		MA.mode = MODE_READY
 		MA.build_icon()
