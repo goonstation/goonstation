@@ -276,11 +276,11 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/phaser_huge)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 15,
-				/datum/manufacturing_requirement/match_property/metal/dense = 10,
-				/datum/manufacturing_requirement/match_property/conductive/high = 10,
-				/datum/manufacturing_requirement/match_property/energy/high = 15,
-				/datum/manufacturing_requirement/match_property/crystal = 10)
+	mats = list("metal" = 15,
+				"metal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 15,
+				"crystal" = 10)
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
@@ -305,9 +305,9 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 ///////////////////////////////////////Rad Crossbow
 TYPEINFO(/obj/item/gun/energy/crossbow)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 5,
-				/datum/manufacturing_requirement/match_property/conductive/high = 5,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
 	desc = "The XIANG|GIESEL Wenshen (瘟神) crossbow favored by many of the Syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Giesel Radiofabrik."
@@ -349,9 +349,9 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 15,
-				/datum/manufacturing_requirement/match_property/conductive = 5,
-				/datum/manufacturing_requirement/match_property/energy = 5)
+	mats = list("metal" = 15,
+				"conductive" = 5,
+				"energy" = 5)
 /obj/item/gun/energy/egun
 	name = "energy gun"
 	icon_state = "energy"
@@ -489,9 +489,9 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 ////////////////////////////////////VUVUV
 TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 5,
-				/datum/manufacturing_requirement/match_property/conductive/high = 5,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
 	icon_state = "vuvuzela"
@@ -1076,9 +1076,9 @@ TYPEINFO(/obj/item/gun_parts)
 
 ///////////////////////////////////////Hunter
 TYPEINFO(/obj/item/gun/energy/plasma_gun)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 7,
-				/datum/manufacturing_requirement/match_property/crystal = 13,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal_superdense" = 7,
+				"crystal" = 13,
+				"energy_high" = 10)
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
 	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
@@ -1134,9 +1134,9 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 TYPEINFO(/obj/item/gun/energy/pickpocket)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 5,
-				/datum/manufacturing_requirement/match_property/conductive/high = 5,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/pickpocket
 	name = "pickpocket grapple gun" // absurdly shitty name
 	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It steals shit."
@@ -1245,9 +1245,9 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 TYPEINFO(/obj/item/gun/energy/alastor)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 15,
-				/datum/manufacturing_requirement/match_property/conductive/high = 10,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal_dense" = 15,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1278,9 +1278,9 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 
 ///////////////////////////////////////////////////
 TYPEINFO(/obj/item/gun/energy/lawbringer)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 15,
-				/datum/manufacturing_requirement/match_property/conductive/high = 5,
-				/datum/manufacturing_requirement/match_property/energy/high = 5)
+	mats = list("metal" = 15,
+				"conductive_high" = 5,
+				"energy_high" = 5)
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	item_state = "lawg-detain"
@@ -1606,9 +1606,9 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 5,
-				/datum/manufacturing_requirement/match_property/conductive/high = 5,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/wasp
 	name = "mini wasp-egg-crossbow"
 	desc = "A weapon favored by many of the syndicate's stealth apiarists, which does damage over time using swarms of angry wasps. Utilizes a self-recharging atomic power cell to synthesize more wasp eggs. Somehow."
@@ -1675,9 +1675,9 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
 TYPEINFO(/obj/item/gun/energy/optio1)
-	mats = list(/datum/manufacturing_requirement/match_material/iridiumalloy = 30,
-				/datum/manufacturing_requirement/match_material/plutonium = 15,
-				/datum/manufacturing_requirement/match_material/electrum = 25)
+	mats = list("iridiumalloy" = 30,
+				"plutonium" = 15,
+				"electrum" = 25)
 /obj/item/gun/energy/optio1
 	name = "\improper Optio I"
 	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
@@ -1694,9 +1694,9 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/signifer2)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 15,
-				/datum/manufacturing_requirement/match_property/conductive/high = 15,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 20)
+	mats = list("energy_high" = 15,
+				"conductive_high" = 15,
+				"metal_superdense" = 20)
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
@@ -1758,11 +1758,11 @@ TYPEINFO(/obj/item/gun/energy/signifer2)
 		. = ..()
 
 TYPEINFO(/obj/item/gun/energy/cornicen3)
-	mats = list(/datum/manufacturing_requirement/match_material/iridiumalloy = 50,
-				/datum/manufacturing_requirement/match_material/starstone = 30,
-				/datum/manufacturing_requirement/match_material/plutonium = 25,
-				/datum/manufacturing_requirement/match_material/electrum = 50,
-				/datum/manufacturing_requirement/match_material/exoweave = 5)
+	mats = list("iridiumalloy" = 50,
+				"starstone" = 30,
+				"plutonium" = 25,
+				"electrum" = 50,
+				"exoweave" = 5)
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
 	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
@@ -1813,12 +1813,12 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 		M.update_inhands()
 
 TYPEINFO(/obj/item/gun/energy/vexillifer4)
-	mats = list(/datum/manufacturing_requirement/match_material/iridiumalloy = 50,
-				/datum/manufacturing_requirement/match_material/starstone = 10,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 150,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 100,
-				/datum/manufacturing_requirement/match_property/conductive/high = 100,
-				/datum/manufacturing_requirement/match_property/energy/extreme = 50)
+	mats = list("iridiumalloy" = 50,
+				"starstone" = 10,
+				"metal_superdense" = 150,
+				"crystal_dense" = 100,
+				"conductive_high" = 100,
+				"energy_extreme" = 50)
 /obj/item/gun/energy/vexillifer4
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."

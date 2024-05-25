@@ -1027,10 +1027,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 27,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 25,
-				/datum/manufacturing_requirement/match_property/conductive/high = 13,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 15) //haha this is a bad idea
+	mats = list("energy_extreme" = 27,
+				"metal_superdense" = 25,
+				"conductive_high" = 13,
+				"crystal_dense" = 15) //haha this is a bad idea
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS

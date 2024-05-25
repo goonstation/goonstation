@@ -217,9 +217,9 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/superdense = 15,
-				/datum/manufacturing_requirement/match_property/conductive/high = 10,
-				/datum/manufacturing_requirement/match_property/energy/high = 10)
+	mats = list("metal_superdense" = 15,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
 	name = "mechanised diving boots"

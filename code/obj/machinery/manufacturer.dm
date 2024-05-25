@@ -1576,7 +1576,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
 	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
-		for (var/datum/manufacturing_requirement/R as anything in concrete_typesof(/datum/manufacturing_requirement))
+		for (var/R_id as anything in requirement_cache)
+			var/datum/manufacturing_requirement/R = getRequirement(R_id)
 			if (R.is_match(M))
 				. += R
 

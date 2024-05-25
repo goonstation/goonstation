@@ -515,9 +515,9 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 		src.light.enable()
 
 TYPEINFO(/obj/item/device/light/floodlight)
-	mats = list(/datum/manufacturing_requirement/match_property/crystal = 10,
-				/datum/manufacturing_requirement/match_property/conductive = 1,
-				/datum/manufacturing_requirement/match_property/metal = 4)
+	mats = list("crystal" = 10,
+				"conductive" = 1,
+				"metal" = 4)
 /obj/item/device/light/floodlight
 	name = "floodlight"
 	desc = "A floodlight that can illuminate a large area. It can be wrenched to activate it."

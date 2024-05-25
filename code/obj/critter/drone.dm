@@ -1,61 +1,61 @@
 TYPEINFO(/obj/critter/gunbot/drone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy = 5,
-				/datum/manufacturing_requirement/match_property/metal/dense = 12,
-				/datum/manufacturing_requirement/match_property/conductive/high = 12,
-				/datum/manufacturing_requirement/match_property/dense = 6)
+	mats = list("energy" = 5,
+				"metal_dense" = 12,
+				"conductive_high" = 12,
+				"dense" = 6)
 TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
 	mats = null
 
 TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 10,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 12,
-				/datum/manufacturing_requirement/match_property/conductive/high = 12,
-				/datum/manufacturing_requirement/match_property/dense/super = 9)
+	mats = list("energy_high" = 10,
+				"metal_superdense" = 12,
+				"conductive_high" = 12,
+				"dense_super" = 9)
 TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 15,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 17,
-				/datum/manufacturing_requirement/match_property/conductive/high = 13,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 17,
-				/datum/manufacturing_requirement/match_material/erebite = 16)
+	mats = list("energy_extreme" = 15,
+				"metal_superdense" = 17,
+				"conductive_high" = 13,
+				"crystal_dense" = 17,
+				"erebite" = 16)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 13,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 24,
-				/datum/manufacturing_requirement/match_property/conductive/high = 20,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 17)
+	mats = list("energy_extreme" = 13,
+				"metal_superdense" = 24,
+				"conductive_high" = 20,
+				"crystal_dense" = 17)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 19,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 20,
-				/datum/manufacturing_requirement/match_property/conductive/high = 24,
-				/datum/manufacturing_requirement/match_property/dense/super = 16)
+	mats = list("energy_extreme" = 19,
+				"metal_superdense" = 20,
+				"conductive_high" = 24,
+				"dense_super" = 16)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 19,
-				/datum/manufacturing_requirement/match_property/metal/dense = 12,
-				/datum/manufacturing_requirement/match_property/conductive/high = 14,
-				/datum/manufacturing_requirement/match_property/dense/super = 26)
+	mats = list("energy_high" = 19,
+				"metal_dense" = 12,
+				"conductive_high" = 14,
+				"dense_super" = 26)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone/fish)
 	mats = 	24
 
 TYPEINFO(/obj/critter/gunbot/drone/laser)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/high = 11,
-				/datum/manufacturing_requirement/match_property/metal/dense = 14,
-				/datum/manufacturing_requirement/match_property/conductive/high = 13,
-				/datum/manufacturing_requirement/match_property/dense/super = 12)
+	mats = list("energy_high" = 11,
+				"metal_dense" = 14,
+				"conductive_high" = 13,
+				"dense_super" = 12)
 TYPEINFO(/obj/critter/gunbot/drone/cutterdrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy = 9,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 15,
-				/datum/manufacturing_requirement/match_property/conductive = 7,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 20)
+	mats = list("energy" = 9,
+				"metal_superdense" = 15,
+				"conductive" = 7,
+				"crystal_dense" = 20)
 TYPEINFO(/obj/critter/gunbot/drone/assdrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy/extreme = 30,
-				/datum/manufacturing_requirement/match_property/metal/superdense = 14,
-				/datum/manufacturing_requirement/match_property/conductive/high = 23,
-				/datum/manufacturing_requirement/match_property/crystal/dense = 22,
-				/datum/manufacturing_requirement/match_material/butt = 10)
+	mats = list("energy_extreme" = 30,
+				"metal_superdense" = 14,
+				"conductive_high" = 23,
+				"crystal_dense" = 22,
+				"butt" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
-	mats = list(/datum/manufacturing_requirement/match_property/energy = 10,
-				/datum/manufacturing_requirement/match_property/metal = 15,
-				/datum/manufacturing_requirement/match_property/conductive/high = 15,
-				/datum/manufacturing_requirement/match_property/dense = 10)
+	mats = list("energy" = 10,
+				"metal" = 15,
+				"conductive_high" = 15,
+				"dense" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	mats = null
 

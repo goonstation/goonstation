@@ -369,9 +369,9 @@ TYPEINFO(/obj/machinery/status_display)
 	mode = 6
 
 TYPEINFO(/obj/machinery/ai_status_display)
-	mats = list(/datum/manufacturing_requirement/match_property/metal = 2,
-				/datum/manufacturing_requirement/match_property/conductive = 6,
-				/datum/manufacturing_requirement/match_property/crystal = 6)
+	mats = list("metal" = 2,
+				"conductive" = 6,
+				"crystal" = 6)
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "ai_frame"

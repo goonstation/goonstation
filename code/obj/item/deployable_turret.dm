@@ -75,10 +75,10 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		..()
 
 TYPEINFO(/obj/item/turret_deployer/riot)
-	mats = list(/datum/manufacturing_requirement/match_property/insulated = 10,
-				/datum/manufacturing_requirement/match_property/conductive = 10,
-				/datum/manufacturing_requirement/match_property/crystal = 3,
-				/datum/manufacturing_requirement/match_property/metal/dense = 2)
+	mats = list("insulated" = 10,
+				"conductive" = 10,
+				"crystal" = 3,
+				"metal_dense" = 2)
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."

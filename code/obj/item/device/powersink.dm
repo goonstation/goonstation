@@ -4,9 +4,9 @@
 #define POWERSINK_OPERATING 2
 
 TYPEINFO(/obj/item/device/powersink)
-	mats = list(/datum/manufacturing_requirement/match_property/metal/dense = 20,
-				/datum/manufacturing_requirement/match_property/conductive/high = 20,
-				/datum/manufacturing_requirement/match_property/crystal = 10)
+	mats = list("metal_dense" = 20,
+				"conductive_high" = 20,
+				"crystal" = 10)
 /obj/item/device/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
