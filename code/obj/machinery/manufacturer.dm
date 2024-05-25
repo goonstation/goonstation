@@ -83,13 +83,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
 	var/list/queue = list()
 
-	// Resources/materials
-	var/base_material_class = /obj/item/material_piece //! Base class for material pieces that the manufacturer accepts. Keep this as material pieces only unless you're making larger changes to the system
-	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
-	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
+	/* Resources/materials */
+	/// Base class for material pieces that the manufacturer accepts.
+	/// Keep this as material pieces only unless you're making larger changes to the system,
+	/// Various parts of the code are coupled to assuming that this is a material piece w/ a material.
+	var/base_material_class = /obj/item/material_piece
+	/// The amount of each free resource that the manufacturer comes preloaded with.
+	/// Separate from free_resources() as typically manufacturers use the same amount of each type.
+	var/free_resource_amt = 0
+	/// The types of material pieces of which the manufacturer will be spawned with.
+	/// The amount of each resource is defined on free_resource_amt
+	var/list/obj/item/material_piece/free_resources = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
-	var/list/resource_amounts = list()
-	var/list/materials_in_use = list()
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 
@@ -491,7 +496,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.ui_interact(user)
 
 	proc/is_electrified()
-		return src.electrified > 0
+		return src.time_left_electrified > 0
 
 	proc/validate_disp(datum/manufacture/M)
 		. = FALSE
@@ -1698,7 +1703,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
-	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
+	/// Go through the material requirements of a blueprint, removing the respective used materials
 	proc/remove_materials(datum/manufacture/M)
 		var/list/mats_used = check_enough_materials(M)
 		if (isnull(mats_used))
@@ -1756,8 +1761,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				playsound(src.loc, src.sound_grump, 50, 1)
 				src.build_icon()
 				return
-			else
-				src.materials_in_use = mats_used
 
 			// speed/power usage
 			// spd   time    new     old (1500 * speed * 1.5)
@@ -1808,23 +1811,23 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (length(M.item_outputs) <= 0)
 			return
-		var/mcheck = check_enough_materials(M)
-		if(mcheck)
+		var/materials_used = check_enough_materials(M)
+		if(materials_used)
 			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop
 					while (make > 0)
-						src.dispense_product(pick(M.item_outputs),M)
+						src.dispense_product(pick(M.item_outputs), M, materials_used)
 						make--
 				if(2) // get a random item from the list and produce it
 					var/to_make = pick(M.item_outputs)
 					while (make > 0)
-						src.dispense_product(to_make,M)
+						src.dispense_product(to_make, M, materials_used)
 						make--
 				else // produce every item in the list once per loop
 					while (make > 0)
 						for (var/X in M.item_outputs)
-							src.dispense_product(X,M)
+							src.dispense_product(X, M, materials_used)
 						make--
 
 			src.remove_materials(M)
@@ -1837,13 +1840,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return
 
-	proc/dispense_product(product,datum/manufacture/M)
+	proc/dispense_product(product, datum/manufacture/M var/list/materials_used)
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
 				var/atom/movable/A = new product(src)
 				if (isitem(A))
 					var/obj/item/I = A
-					M.modify_output(src, I, src.materials_in_use)
+					M.modify_output(src, I, materials_used)
 					I.set_loc(src.get_output_location(I))
 				else
 					A.set_loc(src.get_output_location(A))
