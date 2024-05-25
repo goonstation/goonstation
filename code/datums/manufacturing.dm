@@ -69,8 +69,9 @@
 							 "conductive" = 1,
 							 "crystal" = 1)
 	item_outputs = list(/obj/item/electronics/frame)
+	/// Path to an item or mob which will be created in a frame upon completion.
 	var/frame_path = null
-	///generate costs based off of frame_path in New(), e.g.: for pre-spawned cloner blueprints
+	/// Whether or not to use the default cost assignment in New(), e.g.: for pre-spawned cloner blueprints
 	var/generate_costs = FALSE
 
 	New()
