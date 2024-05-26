@@ -1441,8 +1441,10 @@
 /area/station/hallway/primary/northeast)
 "aEY" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 1
-	},
+	free_resources = list(/obj/item/material_piece/steel = 1,
+	/obj/item/material_piece/copper = 1,
+	/obj/item/material_piece/glass = 1)
+},
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
 "aEZ" = (
@@ -9127,7 +9129,9 @@
 /area/shuttle/arrival/station)
 "eez" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 1
+	free_resources = list(/obj/item/material_piece/steel = 1,
+	/obj/item/material_piece/copper = 1,
+	/obj/item/material_piece/glass = 1)
 	},
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)

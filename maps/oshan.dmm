@@ -44377,8 +44377,7 @@
 	dir = 4
 	},
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 0;
-	free_resources = null
+	free_resources = list()
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
