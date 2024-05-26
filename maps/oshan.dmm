@@ -37321,7 +37321,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "kpv" = (
@@ -43021,12 +43021,12 @@
 /area/diner/dining)
 "sDC" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 4
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)

@@ -38487,7 +38487,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/weapons{
+/obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
 	},
 /turf/simulated/floor/engine/caution/westeast,

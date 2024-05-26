@@ -41586,7 +41586,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "fsG" = (
@@ -62757,7 +62757,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "vVq" = (

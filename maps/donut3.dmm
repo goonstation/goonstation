@@ -12572,11 +12572,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hos,
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -25938,7 +25938,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "hJG" = (

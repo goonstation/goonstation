@@ -17961,7 +17961,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/hos,
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ogX" = (

@@ -67082,7 +67082,7 @@
 	},
 /obj/mapping_helper/access/hos,
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/weapons{
+/obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
 	},
 /turf/simulated/floor,

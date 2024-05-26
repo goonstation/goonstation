@@ -52596,7 +52596,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "sNO" = (

@@ -30295,7 +30295,7 @@
 "kTp" = (
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kTw" = (
@@ -45013,7 +45013,7 @@
 	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/weapons{
+/obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
 	},
 /turf/simulated/floor/black,
