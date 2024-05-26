@@ -203,6 +203,7 @@
 		fluid_turf_setup(first_time=TRUE)
 
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
+		station_name() // generate station name and set it
 		..()
 		global.current_state = GAME_STATE_MAP_LOAD
 
