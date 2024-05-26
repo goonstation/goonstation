@@ -1431,6 +1431,115 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+
+/turf/unsimulated/floor/plating/asteroid
+	name = "asteroid"
+	icon = 'icons/turf/walls/asteroid.dmi'
+	icon_state = "astfloor1"
+	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+	default_material = null
+	var/sprite_variation = 1
+	var/stone_color = "#D1E6FF"
+	var/image/coloration_overlay = null
+	var/list/space_overlays = null
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
+
+#ifdef UNDERWATER_MAP
+	fullbright = 0
+	luminosity = 3
+#else
+	luminosity = 1
+#endif
+
+	New()
+		..()
+		src.space_overlays = list()
+		src.name = initial(src.name)
+		src.sprite_variation = rand(1,3)
+		icon_state = "astfloor" + "[sprite_variation]"
+		coloration_overlay = image(src.icon,"color_overlay")
+		coloration_overlay.blend_mode = 4
+		UpdateIcon()
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(1)
+				if(istype(src, /turf/unsimulated/floor/plating/asteroid))
+					space_overlays()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
+
+	ex_act(severity)
+		return
+
+	proc/destroy_asteroid()
+		return
+
+	proc/damage_asteroid(var/power)
+		return
+
+	proc/weaken_asteroid()
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tile/))
+			var/obj/item/tile/tile = W
+			tile.build(src)
+
+	update_icon()
+		. = ..()
+
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
+
+		src.ClearAllOverlays()
+		src.color = src.stone_color
+		#ifndef UNDERWATER_MAP
+		if (fullbright)
+			src.AddOverlays(new /image/fullbright, "fullbright")
+		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
+
+	proc/space_overlays() //For overlays ON THE SPACE TILE
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			edge_overlay.color = src.stone_color
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
+			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
+
+
 TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid

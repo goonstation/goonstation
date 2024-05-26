@@ -148,7 +148,7 @@ TYPEINFO(/obj/item/baton)
 			if (user && ismob(user))
 				var/list/ret = list()
 				if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-					if (ret["charge"] > src.cost_normal)
+					if (ret["charge"] >= src.cost_normal)
 						user.show_text("The [src.name] now has [ret["charge"]]/[ret["max_charge"]] PUs remaining.", "blue")
 					else
 						user.show_text("The [src.name] is now out of charge!", "red")
