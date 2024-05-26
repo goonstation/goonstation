@@ -77,6 +77,8 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 /obj/machinery/door/airlock/pyro/weapons/secure
 	icon_state = "secure_closed"
 	icon_base = "secure"
+	hardened = FALSE
+	cant_hack = TRUE
 
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"
