@@ -1552,18 +1552,29 @@ Other Goonstation servers:[serverList]</span>"})
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
 
+			src.maptext_x = 5
+			src.maptext_width = 600
+			src.maptext_height = 400
+			update_text() // kick start
+			SPAWN(10 SECONDS) // wait for server sync reply
+				do_loop()
+
+		proc/do_loop()
+			set waitfor = FALSE
+			while (update_delay)
+				update_text()
+				sleep(update_delay)
+
+		proc/update_text()
 			var/serverList = ""
-			for (var/serverId in list("streamer1", "streamer2"))
+			for (var/serverId in list("streamer1", "streamer2", "streamer3"))
 				var/datum/game_server/server = global.game_servers.find_server(serverId)
 				if (!server)
 					continue
 				if (server.is_me())
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][server.player_count ? " ([server.player_count] players)" : ""]</a>"}
 
-			src.maptext_x = 5
-			src.maptext_width = 600
-			src.maptext_height = 400
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation Nightshade!
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
