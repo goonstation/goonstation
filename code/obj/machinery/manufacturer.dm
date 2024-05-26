@@ -96,6 +96,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// The amount of each resource is defined on free_resource_amt
 	var/list/free_resources = list()
 	/// Supposedly used by podwards manufacturers, but not really
+	/// Kind of legacy is this is removed soon
 	var/list/resource_amounts = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
