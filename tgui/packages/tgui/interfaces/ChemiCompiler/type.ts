@@ -5,14 +5,14 @@
  * @license ISC
  */
 
-interface button {
+interface ButtonData {
   button: boolean;
   cbf: boolean;
 }
 
 export interface ChemiCompilerData {
   reservoirs: Array<string>;
-  buttons: Array<button>;
+  buttons: Array<ButtonData>;
   inputValue: string;
   loadTimestamp: number;
   sx: string;

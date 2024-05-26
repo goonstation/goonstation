@@ -141,13 +141,13 @@
 	return ret
 
 /datum/chemicompiler_core/proc/get_ui_data()
-	. = list()
-	.["inputValue"] = output
-	.["loadTimestamp"] = loadTimestamp
-	.["sx"] = sx || 0
-	.["tx"] = tx || 0
-	.["ax"] = ax || 0
-
+	. = list(
+		"inputValue" = output,
+		"loadTimestamp" = loadTimestamp,
+		"sx" = sx || 0,
+		"tx" = tx || 0,
+		"ax" = ax || 0
+	)
 	.["buttons"] = new/list(6)
 	for(var/i = 1, i <= 6, i++)
 		.["buttons"][i] = list(button = !!buttons[i], cbf = !!cbf[i])
@@ -680,7 +680,7 @@
 			return TRUE
 		if("load")
 			core.output = core.buttons[params["index"] + 1]
-			core.loadTimestamp = world.timeofday
+			core.loadTimestamp = TIME
 			return TRUE
 		if("run")
 			if(islist(core.cbf[params["index"] + 1]))

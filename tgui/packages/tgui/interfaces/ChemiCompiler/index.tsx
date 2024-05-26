@@ -13,6 +13,8 @@ import { ChemiCompilerReservoirs } from './ChemiCompilerReservoirs';
 import { ChemiCompilerMemory } from './ChemiCompilerMemory';
 import { Stack } from '../../components';
 
+const SIDEBAR_WIDTH = 18;
+
 export const ChemiCompiler = (_props, context) => {
   const { data } = useBackend<ChemiCompilerData>(context);
   const { theme } = data;
@@ -23,7 +25,7 @@ export const ChemiCompiler = (_props, context) => {
           <Stack.Item grow>
             <ChemiCompilerTextArea />
           </Stack.Item>
-          <Stack.Item basis={18} textAlign="center">
+          <Stack.Item basis={SIDEBAR_WIDTH} textAlign="center">
             <ChemiCompilerReservoirs />
             <ChemiCompilerMemory />
           </Stack.Item>

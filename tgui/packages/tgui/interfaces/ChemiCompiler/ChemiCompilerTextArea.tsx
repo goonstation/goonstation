@@ -15,12 +15,12 @@ export const ChemiCompilerTextArea = (_props, context) => {
   return (
     <TextArea
       value={inputValue}
-      onInput={(_event, value) => { act('updateInputValue', { value }); }}
+      onInput={(_event, value) => act('updateInputValue', { value })}
       height="100%"
       // The load button would break if we pressed it between the input's act and the next refresh.
       // This ensures a refresh after every load button click
       key={loadTimestamp}
-      fontFamily="Consolas"
+      fontFamily="Consolas, monospace"
       fontSize="13px"
       style={{ "word-break": "break-all", "border-color": (theme === "syndicate" ? "#397439" : null) }}
     />
