@@ -230,21 +230,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (src.time_left_electrified > 0)
 			src.time_left_electrified--
-		/*
-		if (src.mode == MODE_WORKING)
-			if (src.malfunction && prob(8))
-				src.flip_out()
-			src.time_left -= src.speed * 4.4 * mult
-			use_power(src.active_power_consumption)
-			if (src.time_left < 1)
-				src.output_loop(src.queue[1])
-				SPAWN(0)
-					if (length(src.queue) < 1)
-						playsound(src.loc, src.sound_happy, 50, 1)
-						src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
-						src.mode = MODE_READY
-						src.build_icon()
-		*/
 
 	proc/finish_work()
 		if(length(src.queue))
