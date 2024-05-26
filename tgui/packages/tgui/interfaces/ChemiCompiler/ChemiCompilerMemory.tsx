@@ -14,30 +14,39 @@ export const ChemiCompilerMemory = (_props, context) => {
   const { buttons, sx, tx, ax, theme } = data;
   return (
     <Section title="Memory">
-      sx: <em>{sx}</em> -
-      ax: <em>{tx}</em> -
-      tx: <em>{ax}</em>
-      <Stack wrap>
+      <Stack>
+        <Stack.Item grow>
+          sx: {sx}
+        </Stack.Item>
+        <Stack.Item grow>
+          tx: {tx}
+        </Stack.Item>
+        <Stack.Item grow>
+          ax: {ax}
+        </Stack.Item>
+      </Stack>
+      <Stack wrap justify="space-around" mt={1}>
         {buttons.map((button, index) => (
-          <Stack.Item key={index} style={{ border: `1px solid ${theme === "syndicate" ? "#397439" : "#88bfff"}`, "border-radius": "0.2rem" }} p={1} m={1}>
-            M{index+1}<br />
-            <Button
-              onClick={() => act('save', { index })}
-              tooltip="Save"
-              color="blue"
-              icon="save" />
-            <Button
-              onClick={() => act('load', { index })}
-              tooltip="Load"
-              color="yellow"
-              icon="download"
-              disabled={!button.button} />
-            <Button
-              onClick={() => act('run', { index })}
-              tooltip="Run"
-              color="green"
-              icon="play"
-              disabled={!button.cbf} />
+          <Stack.Item key={index} ml={0}>
+            <Section title={`M${index+1}`}>
+              <Button
+                onClick={() => act('save', { index })}
+                tooltip="Save"
+                color="blue"
+                icon="save" />
+              <Button
+                onClick={() => act('load', { index })}
+                tooltip="Load"
+                color="yellow"
+                icon="download"
+                disabled={!button.button} />
+              <Button
+                onClick={() => act('run', { index })}
+                tooltip="Run"
+                color="green"
+                icon="play"
+                disabled={!button.cbf} />
+            </Section>
           </Stack.Item>
         ))}
       </Stack>
