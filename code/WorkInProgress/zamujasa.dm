@@ -1519,8 +1519,8 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_x = 0
 			src.maptext_width = 600
 			src.maptext_height = 400
-			update_text() // kick start initial count
-			SPAWN(10 SECONDS) // wait for reply
+			update_text() // kick start
+			SPAWN(10 SECONDS) // wait for server sync reply
 				do_loop()
 
 		proc/do_loop()
@@ -1530,13 +1530,11 @@ Read the rules, don't grief, and have fun!</div>"}
 				sleep(update_delay)
 
 		proc/update_text()
-			set waitfor = FALSE
 			var/serverList = ""
 			for (var/serverId in global.game_servers.servers)
 				var/datum/game_server/server = global.game_servers.servers[serverId]
 				if (server.is_me() || !server.publ)
 					continue
-				server.update_player_count()
 				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][server.player_count ? " ([server.player_count] players)" : ""]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
