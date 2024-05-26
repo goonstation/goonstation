@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	anchored = ANCHORED
 	power_usage = 200
 
-	/// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
+	/// req_access is used to lock out specific features and not limit deconstruction therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
