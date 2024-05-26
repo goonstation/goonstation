@@ -891,7 +891,7 @@
 								displayMessage += " to [jointext(groupAddress,", ")]"
 						else
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
-					displayMessage += ":</b></i> [signal.data["message"]]"
+					displayMessage += ":</b></i> [html_encode(signal.data["message"])]"
 					src.master.display_message(displayMessage)
 
 					if(length(src.hosted_files) >= 1)
@@ -1030,6 +1030,9 @@
 					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [stripTextMacros(src.master.cartridge.name)]</a><br>"
 				if (!isnull(src.master.ID_card))
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
+					if (src.master.accessed_record)
+						. += "Account balance: [src.master.accessed_record["current_money"]] credits - <a href='byond://?src=\ref[src.master];eject_cash=1'>Withdraw</a><br>"
+
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)
 			if (!src.master || !src.master.is_user_in_interact_range(usr))

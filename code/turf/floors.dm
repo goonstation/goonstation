@@ -778,6 +778,29 @@ DEFINE_FLOORS(carpet/clowncarpet/innercorner,
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/simulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/simulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/simulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/simulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/simulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/simulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+//////////////////////////////////////////
+
 /turf/simulated/floor/sanitary
 	icon_state = "freezerfloor"
 
@@ -1985,8 +2008,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
 				// we use the material variant from the base floor
-				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.getID()]"
-				var/potential_new_base_icon_state = "floor$$[C.material.getID()]"
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material?.getID()]"
+				var/potential_new_base_icon_state = "floor$$[C.material?.getID()]"
 				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
 					src.icon_state = "floor"
 					src.icon = 'icons/turf/floors.dmi'
