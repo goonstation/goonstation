@@ -7,6 +7,7 @@
 #ifdef LIVE_SERVER
 		src.doWork()
 	doWork()
-		for(var/datum/game_server/game_server as anything in game_servers.servers)
+		for(var/server in game_servers.servers)
+			var/datum/game_server/game_server = game_servers[server]
 			game_server.sync_server_data()
 #endif
