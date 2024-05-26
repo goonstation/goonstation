@@ -1281,7 +1281,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOITEMBLUEPRINT"))
 					return
 				// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
-				if (free_resources > 0)
+				if (length(free_resources) > 0)
 					claim_free_resources()
 
 				if (!check_enough_materials(item_bp))
@@ -2067,9 +2067,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resources = list()
 			return
 
-		if (length(free_resources) > 0)
-			for (var/mat_path in src.free_resources)
-				src.change_contents(amount = src.free_resources[mat_path], mat_path = mat_path)
+		for (var/mat_path in src.free_resources)
+			src.change_contents(amount = src.free_resources[mat_path], mat_path = mat_path)
 
 		free_resources = list()
 
