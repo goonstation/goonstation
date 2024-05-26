@@ -1040,6 +1040,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		storage[index_2] = temp_hold
 		src.should_update_static = TRUE
 
+	/// Handles allowing the user to eject integer amounts of material
 	proc/eject_material(var/mat_ref, mob/user)
 		var/obj/item/material_piece/P = src.get_material_by_ref(mat_ref)
 		if (!src.can_eject_material(P, user))
@@ -1510,81 +1511,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (ispath(X))
 				src.add_schematic(X,"hidden")
 				src.hidden -= X
-
-	proc/match_material_pattern(pattern, datum/material/mat)
-		if (!mat) // Marq fix for various cannot read null. runtimes
-			return FALSE
-
-		if (pattern == "ALL") // anything at all
-			return TRUE
-		if (pattern == "ORG|RUB")
-			return mat.getMaterialFlags() & MATERIAL_RUBBER || mat.getMaterialFlags() & MATERIAL_ORGANIC
-		if (pattern == "RUB")
-			return mat.getMaterialFlags() & MATERIAL_RUBBER
-		if (pattern == "WOOD")
-			return mat.getMaterialFlags() & MATERIAL_WOOD
-		else if (copytext(pattern, 4, 5) == "-") // wildcard
-			var/firstpart = copytext(pattern, 1, 4)
-			var/secondpart = text2num_safe(copytext(pattern, 5))
-			switch(firstpart)
-				// this was kind of thrown together in a panic when i felt shitty so if its horrible
-				// go ahead and clean it up a bit
-				if ("MET")
-
-					if (mat.getMaterialFlags() & MATERIAL_METAL)
-						// maux hardness = 15
-						// bohr hardness = 33
-						switch(secondpart)
-							if(2)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
-							if(3 to INFINITY)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
-							else
-								return TRUE
-				if ("CRY")
-					if (mat.getMaterialFlags() & MATERIAL_CRYSTAL)
-
-						switch(secondpart)
-							if(2)
-								return mat.getProperty("density") >= 7
-							else
-								return TRUE
-				if ("REF")
-					return (mat.getProperty("reflective") >= 6)
-				if ("CON")
-					switch(secondpart)
-						if(2)
-							return (mat.getProperty("electrical") >= 8)
-						else
-							return (mat.getProperty("electrical") >= 6)
-				if ("INS")
-					switch(secondpart)
-						if(2)
-							return mat.getProperty("electrical") <= 2 && (mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-						else
-							return mat.getProperty("electrical") <= 4 && (mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-				if ("DEN")
-					switch(secondpart)
-						if(2)
-							return mat.getProperty("density") >= 6
-						else
-							return mat.getProperty("density") >= 4
-				if ("POW")
-					if (mat.getMaterialFlags() & MATERIAL_ENERGY)
-						switch(secondpart)
-							if(3)
-								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
-							if(2)
-								return mat.getProperty("radioactive") >= 2
-							else
-								return TRUE
-				if ("FAB")
-					return mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
-				if ("GEM")
-					return istype(mat, /datum/material/crystal/gemstone)
-		else if (pattern == mat.getID()) // specific material id
-			return TRUE
-		return FALSE
 
 	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
