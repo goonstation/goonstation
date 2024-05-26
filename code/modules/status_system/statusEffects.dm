@@ -1917,7 +1917,7 @@
 		var/mob/M = owner
 		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || (!ignore_unionized && M.traitHolder.hasTrait("unionized")))
 			SPAWN(0)
-				M.delStatus("magnetized")
+				M.delStatus(src.id)
 			return
 		if (optional)
 			src.charge = optional
