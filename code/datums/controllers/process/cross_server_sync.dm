@@ -1,4 +1,4 @@
-/// proocess for flock_structure objects
+/// proocess for cross server data syncing
 /datum/controller/process/cross_server_sync
 	setup()
 		name = "Cross Server Sync"
