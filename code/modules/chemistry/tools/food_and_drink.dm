@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
 						new/obj/reagent_dispensers/cleanable/ants(src.loc)
 						src.reagents.add_reagent("ants", 5)
-						src.name = "[name_prefix("Ant-covered", 1)][src.name][name_suffix(null, 1)]"
+						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
 
 	attackby(obj/item/W, mob/user)
