@@ -1758,7 +1758,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return
 
-	proc/dispense_product(product, datum/manufacture/M,  var/list/materials_used)
+	proc/dispense_product(product, datum/manufacture/M, var/list/materials_used)
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
 				var/atom/movable/A = new product(src)
