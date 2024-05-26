@@ -357,7 +357,7 @@
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
-	if (prob(80))
+	if(!ON_COOLDOWN(src, "floorbeep", 30 SECONDS))
 		src.visible_message("[src] makes an excited booping beeping sound!")
 	if (istype(src.target, /obj/item/tile))
 		src.eattile(src.target)
