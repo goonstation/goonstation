@@ -1444,7 +1444,7 @@
 	free_resources = list(/obj/item/material_piece/steel = 1,
 	/obj/item/material_piece/copper = 1,
 	/obj/item/material_piece/glass = 1)
-},
+	},
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
 "aEZ" = (
@@ -45771,7 +45771,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/manufacturer/uniform{
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric)
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5)
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
