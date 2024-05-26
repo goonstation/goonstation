@@ -1546,6 +1546,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 	encourage_nightshade
 		maptext_area = "leftside"
+		var/update_delay = 1 MINUTE
 
 		New()
 			..()
