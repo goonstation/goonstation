@@ -95,17 +95,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// The types of material pieces of which the manufacturer will be spawned with.
 	/// The amount of each resource is defined on free_resource_amt
 	var/list/obj/item/material_piece/free_resources = list()
+	/// Supposedly used by podwards manufacturers, but not really
+	var/list/resource_amounts = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
-	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	/// Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	var/list/material_patterns_by_ref = list()
 
 	/* Production options */
+	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
 	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
-	var/list/available = list() //! A list of every option available in this unit subtype by default
-	var/list/download = list() //! Options gained from scanned blueprints
-	var/list/drive_recipes = list() //! Options provided by an inserted manudrive
-	var/list/hidden = list() //! These options are available by default, but can't be printed unless the machine is hacked
+	/// A list of every option available in this unit subtype by default
+	var/list/available = list()
+	/// Options gained from scanned blueprints
+	var/list/download = list()
+	/// Options provided by an inserted manudrive
+	var/list/drive_recipes = list()
+	/// These options are available by default, but can't be printed or seen unless the machine is hacked
+	var/list/hidden = list()
 
 	// Unsorted stuff. The names for these should (hopefully!) be self-explanatory
 	var/image/work_display = null
