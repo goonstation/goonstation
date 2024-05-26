@@ -306,6 +306,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\controllers\process\camnet.dm"
 #include "code\datums\controllers\process\chemistry.dm"
 #include "code\datums\controllers\process\critters.dm"
+#include "code\datums\controllers\process\cross_server_sync.dm"
 #include "code\datums\controllers\process\delete_queue.dm"
 #include "code\datums\controllers\process\events.dm"
 #include "code\datums\controllers\process\explosions.dm"
