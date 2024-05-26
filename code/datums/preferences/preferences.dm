@@ -1051,7 +1051,7 @@ var/list/removed_jobs = list(
 			fdel(fname)
 		var/F = file(fname)
 		message["hash"] << null
-		var/hash = sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]")
+		var/hash = sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
 		message["hash"] << hash
 		message.ExportText("/", F)
 		usr << ftp(F, fname)
@@ -1069,7 +1069,7 @@ var/list/removed_jobs = list(
 		var/hash
 		message["hash"] >> hash
 		message["hash"] << null
-		if(hash == sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]"))
+		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
 			var/profilenum_old = profile_number
 			savefile_load(usr.client, 1, message)
 			src.profile_modified = TRUE

@@ -112,6 +112,8 @@ var/global/datum/game_servers/game_servers = new
 	var/ghost_notif_target = TRUE
 	var/ip_port = null
 	var/waiting_for_ip_port_auth = null
+	/// last known player count
+	var/player_count
 
 	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
@@ -154,3 +156,9 @@ var/global/datum/game_servers/game_servers = new
 
 	proc/send_message(list/data)
 		return world.Export("[src.url]?[list2params(data)]")
+
+	proc/update_player_count()
+		if (src.is_me())
+			return
+		var/datum/cross_server_message/player_count_request/player_count_request_csm = get_singleton(/datum/cross_server_message/player_count_request)
+		player_count_request_csm.send(src)

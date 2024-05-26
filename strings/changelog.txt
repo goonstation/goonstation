@@ -1,4 +1,16 @@
 
+(t)sat may 25 24
+(u)crunchwarp
+(p)18980
+(e)🆕📄|C-Feature, A-UI
+(+)Blobs and Wizards now have enhanced crew credits!
+(t)fri may 24 24
+(u)tarmunora
+(+)Fix savefile import exploit. This will break existing local savefiles.
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
 (t)thu may 23 24
 (u)Tarmunora, Mordent
 (p)19120
