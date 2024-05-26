@@ -98,6 +98,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Supposedly used by podwards manufacturers, but not really
 	/// Kind of legacy is this is removed soon
 	var/list/resource_amounts = list()
+	/// Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	/// Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
