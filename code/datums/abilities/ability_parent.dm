@@ -321,14 +321,15 @@
 			else
 				src.owner?.remove_ability_holder(src)
 
-	proc/pointCheck(cost)
+	proc/pointCheck(cost, quiet = FALSE)
 		if (!usesPoints)
 			return 1
 		if (src.points < 0) // Just-in-case fallback.
 			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			src.points = 0
 		if (cost > points)
-			boutput(owner, notEnoughPointsMessage)
+			if (!quiet)
+				boutput(owner, notEnoughPointsMessage)
 			return 0
 		return 1
 
@@ -1314,7 +1315,7 @@
 				return R
 		return null
 
-	pointCheck(cost)
+	pointCheck(cost, quiet = FALSE)
 		return 1
 
 	deepCopy()
