@@ -84653,7 +84653,7 @@
 /area/station/quartermaster/office)
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
-	free_resource_amt = list()
+	free_resources = list()
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
