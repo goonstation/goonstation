@@ -1,5 +1,8 @@
 
 (t)sun may 26 24
+(u)ZeWaka
+(e)⛔|C-Removal
+(*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
 (u)FlameArrow57
 (p)18987
 (e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
