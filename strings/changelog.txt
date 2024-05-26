@@ -1,4 +1,9 @@
+
 (t)sun may 26 24
+(u)FlameArrow57
+(p)18987
+(e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
+(+)Deployable turrets like N.A.R.C.S. turrets now eject bullet casings and have their own forensics profile.
 (u)LeahTheTech
 (+)B.I.F.F now buys rather than sells THE MONSTER.
 (t)sat may 25 24
