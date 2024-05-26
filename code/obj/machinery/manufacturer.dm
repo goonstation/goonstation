@@ -293,7 +293,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					status |= NOPOWER
 					src.build_icon()
 
-	// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
+	/// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
 	broken_state_topic(mob/user)
 		. = user.shared_ui_interaction(src)
 		if (src.is_broken())
@@ -419,7 +419,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
-	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
+	proc/blueprints_as_list(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
@@ -490,7 +490,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/is_electrified()
 		return src.time_left_electrified > 0
 
-	proc/validate_disp(datum/manufacture/M)
+	/// Returns whether or not a blueprint is able to be used for printing
+	proc/blueprint_is_available(datum/manufacture/M)
 		. = FALSE
 		if(src.available && (M in src.available))
 			return TRUE
@@ -505,9 +506,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 
 	/// Clear src.queue but not the current working print if it exists
+	/// Functionally does nothing special, but allows for future changes to be mirrored easier
 	proc/clear_queue()
-		if (!length(src.queue))
-			return
 		src.queue = list()
 
 	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
@@ -592,7 +592,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!istype(I,/datum/manufacture/))
 					return
 				// Verify that there is no href fuckery abound
-				if(!validate_disp(I))
+				if(!blueprint_is_available(I))
 					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
 					return
