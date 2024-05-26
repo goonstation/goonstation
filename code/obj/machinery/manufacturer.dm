@@ -108,13 +108,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
 	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE
-	/// A list of every option available in this unit subtype by default
+	/// A list of every manufacture datum typepath available in this unit subtype by default
 	var/list/available = list()
-	/// Options gained from scanned blueprints
+	/// Manufacture datum typepaths gained from scanned blueprints
 	var/list/download = list()
-	/// Options provided by an inserted manudrive
+	/// Manufacture datum typepaths provided by an inserted manudrive
 	var/list/drive_recipes = list()
-	/// These options are available by default, but can't be printed or seen unless the machine is hacked
+	/// These manufacture datum typepaths are available by default, but can't be printed or seen unless the machine is hacked
 	var/list/hidden = list()
 
 	// Unsorted stuff. The names for these should (hopefully!) be self-explanatory
