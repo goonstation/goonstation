@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/free_resource_amt = 0
 	/// The types of material pieces of which the manufacturer will be spawned with.
 	/// The amount of each resource is defined on free_resource_amt
-	var/list/obj/item/material_piece/free_resources = list()
+	var/list/free_resources = list()
 	/// Supposedly used by podwards manufacturers, but not really
 	var/list/resource_amounts = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
