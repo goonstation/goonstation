@@ -1,4 +1,9 @@
 
+(t)sat may 25 24
+(u)crunchwarp
+(p)18980
+(e)🆕📄|C-Feature, A-UI
+(+)Blobs and Wizards now have enhanced crew credits!
 (t)fri may 24 24
 (u)tarmunora
 (+)Fix savefile import exploit. This will break existing local savefiles.
