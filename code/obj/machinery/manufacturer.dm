@@ -65,10 +65,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	// Resources/materials
 	var/base_material_class = /obj/item/material_piece //! Base class for material pieces that the manufacturer accepts. Keep this as material pieces only unless you're making larger changes to the system
-	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
-	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
-	var/list/resource_amounts = list()
+	/// Associated list of material ID strings to amount (in bars) to add to the manufacturer.
+	var/list/free_resources = list()
 	var/list/materials_in_use = list()
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
@@ -464,7 +463,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		)
 
 	attack_hand(mob/user)
-		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
+		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
+		if (len(free_resources) > 0)
 			claim_free_resources()
 		if(src.electrified)
 			if (!(status & NOPOWER || status & BROKEN))
@@ -1280,8 +1280,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!item_bp)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOITEMBLUEPRINT"))
 					return
-
-				if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+				// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+				if (free_resources > 0)
 					claim_free_resources()
 
 				if (!check_enough_materials(item_bp))
@@ -2060,19 +2060,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (M.material && M.material.getID() == mat_id)
 				return M.material
 
+	/// Adds the resources we define in free_resources to our storage, and clears the list when we're done
+	/// to represent we do not have more resources to claim
 	proc/claim_free_resources()
-
 		if (src.deconstruct_flags & DECON_BUILT)
-			free_resource_amt = 0
+			free_resources = list()
 			return
 
-		if (length(free_resources) && free_resource_amt > 0)
-			for (var/typepath in src.free_resources)
-				if (ispath(typepath))
-					src.change_contents(amount = free_resource_amt, mat_path = typepath )
-			free_resource_amt = 0
-		else
-			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+		if (length(free_resources) > 0)
+			for (var/mat_id in src.free_resources)
+				src.change_contents(amount = src.free_resources[mat_id], mat_id = mat_id)
+
+		free_resources = list()
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
