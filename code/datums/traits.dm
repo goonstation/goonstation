@@ -645,6 +645,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(mob/living/owner)
 		if(owner.traitHolder?.hasTrait("atheist"))
 			src.faith_mult = 0.2
+		if (prob(15))
+			owner.see_invisible = INVIS_GHOST
 
 /datum/trait/job/medical
 	name = "Medical Training"
