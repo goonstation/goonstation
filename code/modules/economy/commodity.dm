@@ -933,6 +933,11 @@
 	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	price = PAY_TRADESMAN*2
 
+/datum/commodity/diner/monster
+	comname = "THE MONSTER"
+	comtype = /obj/item/reagent_containers/food/snacks/burger/monsterburger
+	price = PAY_TRADESMAN*2
+
 // sell
 
 /datum/commodity/diner
@@ -943,11 +948,6 @@
 	comname = "Mystery Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/mysteryburger
 	price = PAY_UNTRAINED/10
-
-/datum/commodity/diner/monster
-	comname = "THE MONSTER"
-	comtype = /obj/item/reagent_containers/food/snacks/burger/monsterburger
-	price = PAY_UNTRAINED/2
 
 /datum/commodity/diner/sloppyjoe
 	comname = "Sloppy Joe"

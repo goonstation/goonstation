@@ -18,5 +18,5 @@
 			"player_count" = player_count,
 			"map" = mapSwitcher.current,
 			"next_map" = mapSwitcher.next,
-			"round_time" = round(ticker.round_elapsed_ticks / 600),
+			"round_time" = round(ticker?.round_elapsed_ticks / 600),
 		))

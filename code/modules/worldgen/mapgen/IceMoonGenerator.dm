@@ -56,7 +56,7 @@
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/icemoon
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
+	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/icemoon
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/icemoon_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -117,7 +117,7 @@
 	name = "ice wall"
 	desc = "You're inside a glacier. Wow."
 	fullbright = 0
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
+	replace_type = /turf/unsimulated/floor/plating/asteroid/icemoon
 	default_material = "ice"
 	color = "#8df"
 	stone_color = "#8df"
@@ -131,7 +131,7 @@
 			default_ore = /obj/item/raw_material/ice
 		. = ..()
 
-/turf/simulated/floor/plating/airless/asteroid/icemoon
+/turf/unsimulated/floor/plating/asteroid/icemoon
 	name = "floor"
 	desc = "A tunnel through the glacier. This doesn't seem to be water ice..."
 	carbon_dioxide = 100
