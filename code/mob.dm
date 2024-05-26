@@ -93,7 +93,6 @@
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null
-	var/shakecamera = 0
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null
@@ -442,8 +441,10 @@
 	..()
 
 /mob/Login()
-	if (!src.client)
-		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	if (isnull(src.client))
+		return
+		// Guests that get deleted, is how
+		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isnull(src.client.tg_layout))
 		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
 	src.client.set_layout(src.client.tg_layout)

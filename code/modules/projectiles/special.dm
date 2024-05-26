@@ -392,11 +392,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/temperature = 800
 
 	tick(var/obj/projectile/P)
-		fireflash_melting(get_turf(P), burn_range, temperature)
+		fireflash_melting(get_turf(P), burn_range, temperature, chemfire = CHEM_FIRE_RED)
 
 	on_hit(var/atom/A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
-		fireflash_melting(get_turf(A), blast_size, temperature)
+		fireflash_melting(get_turf(A), blast_size, temperature, chemfire = CHEM_FIRE_RED)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -426,7 +426,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/T1 = get_turf(P)
 		if((!istype(T1,/turf/space))) // so uh yeah this will be pretty mean
-			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE)
+			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE, chemfire = CHEM_FIRE_RED)
 			new /obj/effects/explosion/dangerous(get_step(P.loc,P.dir))
 
 

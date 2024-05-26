@@ -24,7 +24,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/name = "Youshouldneverseemeium"
 	/// Description of the material, used for scanning
 	VAR_PROTECTED/desc = "This is a custom material."
-	/// List of all the various [/datum/material_property] that apply.
+	/// Associated list of all the various [/datum/material_property] that apply.
+	/// list[/datum/material_property] = value
 	VAR_PROTECTED/list/properties = list()
 	/// Various flags. See [material_properties.dm]
 	VAR_PROTECTED/material_flags = 0
@@ -354,7 +355,7 @@ ABSTRACT_TYPE(/datum/material)
 	proc/hasTrigger(var/triggerListName as text, materialProcType)
 		var/list/L = src.vars[triggerListName]
 		for(var/datum/materialProc/P in L)
-			if(istype(P.type, materialProcType)) return 1
+			if(istype(P, materialProcType)) return 1
 		return 0
 
 	///Triggers is specified using one of the TRIGGER_ON_ defines

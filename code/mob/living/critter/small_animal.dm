@@ -542,7 +542,7 @@ proc/filter_carrier_pets(var/type)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (pounce && !pounce.disabled && pounce.cooldowncheck() && prob(50))
 			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
@@ -1001,6 +1001,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
 			src.visible_message(SPAN_COMBAT("<b>[src]</b> pets [user]!"))
+		else
+			..()
 
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"

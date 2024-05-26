@@ -156,7 +156,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = clamp((volume/covered.len)*0.25, 0, 5)
-						fireflash(t, radius, rand(2000, 3000), 500)
+						fireflash(t, radius, rand(2000, 3000), 500, chemfire = CHEM_FIRE_RED)
 				holder?.del_reagent(id)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -1124,22 +1124,22 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (!prob(20) && P.growth > 5)
-					P.growth -= 5
-				if (DNA.growtime < 0 && prob(50))
-					DNA.growtime++
-				if (DNA.harvtime < 0 && prob(50))
-					DNA.harvtime++
-				if (DNA.harvests < 0 && prob(50))
-					DNA.harvests++
-				if (DNA.cropsize < 0 && prob(50))
-					DNA.cropsize++
-				if (DNA.potency < 0 && prob(50))
-					DNA.potency++
-				if (DNA.endurance < 0 && prob(50))
-					DNA.endurance++
+				if (P.growth > 5)
+					growth_tick.growth_rate -= 4
+				if (DNA.growtime < 0)
+					growth_tick.growtime_bonus += 0.5
+				if (DNA.harvtime < 0)
+					growth_tick.harvtime_bonus += 0.5
+				if (DNA.harvests < 0)
+					growth_tick.harvests_bonus += 0.5
+				if (DNA.cropsize < 0)
+					growth_tick.cropsize_bonus += 0.5
+				if (DNA.potency < 0)
+					growth_tick.potency_bonus += 0.5
+				if (DNA.endurance < 0)
+					growth_tick.endurance_bonus += 0.5
 
 		medical/promethazine // This stops you from vomiting
 			name = "promethazine"
@@ -1573,7 +1573,7 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				if(P.reagents.has_reagent("toxin"))
 					P.reagents.remove_reagent("toxin", 2)
 				if(P.reagents.has_reagent("toxic_slurry"))

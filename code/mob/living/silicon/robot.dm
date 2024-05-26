@@ -2352,10 +2352,10 @@
 					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Civilian module. It comes with a free Efficiency Upgrade."))
+				boutput(src, SPAN_NOTICE("You chose the Civilian module. It comes with a free recharge pack."))
 				src.set_module(new /obj/item/robot_module/civilian(src))
 				if(length(src.upgrades) < src.max_upgrades)
-					src.upgrades += new /obj/item/roboupgrade/efficiency(src)
+					src.upgrades += new /obj/item/roboupgrade/rechargepack(src)
 			if("Engineering")
 				src.freemodule = 0
 				boutput(src, SPAN_NOTICE("You chose the Engineering module. It comes with a free Meson Vision Upgrade."))

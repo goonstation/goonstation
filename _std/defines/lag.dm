@@ -42,6 +42,10 @@
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
 #define TICKLAG_DILATION_DEC 0.2
+/// what cpu percent is too high in the dilation check
+#define TICKLAG_CPU_MAX 90
+/// what cpu percent is low enough in the dilation check
+#define TICKLAG_CPU_MIN 70
 /// what map_cpu percent is too high in the dilation check
 #define TICKLAG_MAPCPU_MAX 70
 /// what map_cpu percent is low enough in the dilation check

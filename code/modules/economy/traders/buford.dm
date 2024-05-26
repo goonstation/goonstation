@@ -149,6 +149,14 @@
 	possible_names = list("Selling some good ol' weedkiller. Got any shitty plants, douse em with this.",
 	"Weedkiller for sale. Like, for shitty weeds, not good weed. Ha ha.")
 
+/datum/commodity/trader/buford/methane
+	comname = "Methane canister"
+	comtype = /obj/machinery/portable_atmospherics/canister/methane
+	amount = 1
+	price_boundary = list(PAY_EXECUTIVE, PAY_EMBEZZLED) //a little expensive
+	possible_names = list("Big ol' canister of stink, don't ask where it comes from.",
+	"Probably won't get you high but it's worth a shot. Maybe.")
+
 // Buford wants these things
 
 /datum/commodity/trader/buford/vennecure
