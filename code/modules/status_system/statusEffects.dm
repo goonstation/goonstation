@@ -719,21 +719,23 @@
 					damage_burn = 5 * prot
 					howMuch = "extremely "
 
-			if (duration > 20 SECONDS)
+			// doesn't need to happen super often, more like a life process in priority
+			if (!ON_COOLDOWN(owner, "burning_nearby_status_effect", LIFE_PROCESS_TICK_SPACING))
+				if (duration > 20 SECONDS)
+					for (var/atom/A as anything in owner.contents)
+						if (A.event_handler_flags & HANDLE_STICKER)
+							if (A:active)
+								owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
+								qdel(A)
+				if (isturf(owner.loc))
+					var/turf/location = owner.loc
+					location.hotspot_expose(T0C + 300, 400)
 				for (var/atom/A as anything in owner.contents)
-					if (A.event_handler_flags & HANDLE_STICKER)
-						if (A:active)
-							owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
-							qdel(A)
-			if (isturf(owner.loc))
-				var/turf/location = owner.loc
-				location.hotspot_expose(T0C + 300, 400)
-			for (var/atom/A as anything in owner.contents)
-				A.material_trigger_on_temp(T0C + 900)
-			if (istype(owner, /mob))
-				var/mob/M = owner
-				for (var/atom/A as anything in M.equipped())
 					A.material_trigger_on_temp(T0C + 900)
+				if (istype(owner, /mob))
+					var/mob/M = owner
+					for (var/atom/A as anything in M.equipped())
+						A.material_trigger_on_temp(T0C + 900)
 
 			return ..(timePassed)
 
