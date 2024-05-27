@@ -1472,7 +1472,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alias_names = "Mailman"
 	wages = PAY_TRADESMAN
 	limit = 1
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
+	slot_jump = list(/obj/item/clothing/under/misc/mail)
 	slot_head = list(/obj/item/clothing/head/mailcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/satchel)
@@ -1487,6 +1487,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Mail Courier")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_mail")
 
 // randomizd gimmick jobs
 

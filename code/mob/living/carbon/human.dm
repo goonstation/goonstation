@@ -3068,7 +3068,7 @@
 /mob/living/carbon/human/canRideMailchutes()
 	if (ismonkey(src)) // Why not, I guess?
 		return 1
-	else if (src.w_uniform && istype(src.w_uniform, /obj/item/clothing/under/misc/mail/syndicate))
+	else if (src.traitHolder.hasTrait("training_mail"))
 		return 1
 	else
 		return 0

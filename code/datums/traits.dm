@@ -711,6 +711,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained at carving out asteroids."
 	id = "training_miner"
 
+/datum/trait/job/mail_courier
+	name = "Postal Service Training"
+	desc = "Subject is a master of delivery."
+	id = "training_mail"
+
 // Stats - Undetermined Border
 /datum/trait/athletic
 	name = "Athletic"
