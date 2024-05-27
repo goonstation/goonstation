@@ -159,7 +159,6 @@
 	add_lifeprocess(/datum/lifeprocess/critical)
 	add_lifeprocess(/datum/lifeprocess/decomposition)
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/health_mon)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)

@@ -205,10 +205,11 @@
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	prodoc_icons = list()
-	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	// 0.01 layering increases to guarantee layering over the health monitor icon
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
 	for (var/implant in prodoc_icons)
 		var/image/image = prodoc_icons[implant]
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
@@ -3622,3 +3623,32 @@
 	src.hud.update_resting()
 	src.set_loc(get_turf(table))
 	table.victim = src
+
+/mob/living/carbon/human/proc/update_health_monitor_icon()
+	if (!src.health_mon)
+		return
+	if (src.bioHolder.HasEffect("dead_scan") || isdead(src))
+		src.health_mon.icon_state = "-1"
+		return
+	// Handle possible division by zero
+	var/health_prc = (src.health / (src.max_health != 0 ? src.max_health : 1)) * 100
+	switch (health_prc)
+		// There's 5 "regular" health states (ignoring 100% and < 0)
+		// but the health icons were set up as if there were 4
+		// (25, 50, 75, 100) / (20, 40, 60, 80, 100)
+		// The "75" state was only used for 75-80!
+		// Spread these out to make it more represenative
+		if (98 to INFINITY) //100
+			src.health_mon.icon_state = "100"
+		if (80 to 98) //80
+			src.health_mon.icon_state = "80"
+		if (60 to 80) //75
+			src.health_mon.icon_state = "75"
+		if (40 to 60) //50
+			src.health_mon.icon_state = "50"
+		if (20 to 40) //25
+			src.health_mon.icon_state = "25"
+		if ( 0 to 20) //10
+			src.health_mon.icon_state = "10"
+		if (-INFINITY to 0) //0
+			src.health_mon.icon_state = "0"
