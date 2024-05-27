@@ -89,6 +89,7 @@
 	var/datum/special_sprint/special_sprint = null
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
+	var/sprint_boost_mod = 2 // Modifier that determines how much faster sprinting makes you
 	var/sustained_moves = 0
 
 	var/metabolizes = 1
@@ -1887,10 +1888,10 @@
 			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
 			src.next_move = world.time
 			attempt_move(src)
+
 			if (src.special_sprint?.no_sprint_boost)
-				src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED)
-			else
-				src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+				src.sprint_boost_mod = 1
+			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * src.sprint_boost_mod
 
 			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 				sprint_particle(src, last)
