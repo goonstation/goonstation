@@ -1361,7 +1361,7 @@ or don't if it uses a custom topopen overlay
 			recipients += M.client
 
 	else if (m_type & 2)
-		for (var/mob/M as anything in hearers(src, null))
+		for (var/mob/M in hearers(src, null))
 			if (!M.client)
 				continue
 

@@ -136,10 +136,6 @@
 
 TODO:
 
-//------------- DEADLINE -------------//
-			Monday, 27th May
-//------------- DEADLINE -------------//
-
 Contributing:
 - Authors: Mr. Moriarty, Amylizzle, & DisturbHerb
 - If you make a PR to the say rework branch, feel free to add your name to the above list.

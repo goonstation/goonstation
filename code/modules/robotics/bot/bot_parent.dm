@@ -127,7 +127,7 @@
 			if (!audio || !audio["audio"])
 				return
 
-			for (var/mob/M as anything in hearers(src, null))
+			for (var/mob/M in hearers(src, null))
 				if (!M.client || (M.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL)))
 					continue
 

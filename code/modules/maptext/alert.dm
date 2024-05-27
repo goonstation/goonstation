@@ -15,7 +15,7 @@
 /proc/display_alert_maptext(atom/target, content, alert_colour)
 	target.maptext_manager ||= new /atom/movable/maptext_manager(target)
 
-	for (var/mob/M as anything in hearers(target))
+	for (var/mob/M in hearers(target))
 		if (!M.client)
 			continue
 

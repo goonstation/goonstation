@@ -22,7 +22,7 @@
 	if (!(src.wires & WIRE_RECEIVE) || !signal || !signal.data || ("[signal.data["code"]]" != "[code]"))
 		return
 
-	for (var/mob/M as anything in hearers(1, src.loc))
+	for (var/mob/M in hearers(1, src.loc))
 		M.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 
 	if (!(src.wires & WIRE_SIGNAL))
