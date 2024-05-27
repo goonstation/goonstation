@@ -879,12 +879,12 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	</table>
 	<br>
 	<table class = "keypad">
-		<tr><td><a href='javascript:keypadIn(7);'>7</a></td><td><a href='javascript:keypadIn(8);'>8</a></td><td><a href='javascript:keypadIn(9);'>9</a></td></td><td><a href='javascript:keypadIn("A");'>A</a></td></tr>
-		<tr><td><a href='javascript:keypadIn(4);'>4</a></td><td><a href='javascript:keypadIn(5);'>5</a></td><td><a href='javascript:keypadIn(6)'>6</a></td></td><td><a href='javascript:keypadIn("B");'>&#x0411;</a></td></tr>
-		<tr><td><a href='javascript:keypadIn(1);'>1</a></td><td><a href='javascript:keypadIn(2);'>2</a></td><td><a href='javascript:keypadIn(3)'>3</a></td></td><td><a href='javascript:keypadIn("V");'>&#x0412;</a></td></tr>
-		<tr><td><a href='javascript:keypadIn(0);'>0</a></td><td><a href='javascript:keypadIn("E");'>&#x0415;</a></td><td><a href='javascript:keypadIn("D");'>&#x0414;</a></td></td><td><a href='javascript:keypadIn("G");'>&#x0413;</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(7); return false;'>7</a></td><td><a href='#' onclick='keypadIn(8); return false;'>8</a></td><td><a href='#' onclick='keypadIn(9); return false;'>9</a></td></td><td><a href='#' onclick='keypadIn("A"); return false'>A</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(4); return false;'>4</a></td><td><a href='#' onclick='keypadIn(5); return false;'>5</a></td><td><a href='#' onclick='keypadIn(6); return false;'>6</a></td></td><td><a href='#' onclick='keypadIn("B"); return false'>&#x0411;</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(1); return false;'>1</a></td><td><a href='#' onclick='keypadIn(2); return false;'>2</a></td><td><a href='#' onclick='keypadIn(3); return false;'>3</a></td></td><td><a href='#' onclick='keypadIn("V"); return false'>&#x0412;</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(0); return false;'>0</a></td><td><a href='#' onclick='keypadIn("E"); return false'>&#x0415;</a></td><td><a href='#' onclick='keypadIn("D"); return false'>&#x0414;</a></td></td><td><a href='#' onclick='keypadIn("G"); return false;'>&#x0413;</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>&#x041F;&#x0423;&#x0421;&#x041A;</a></td><td colspan = 2 width = 100px><a href='javascript:keypadIn("reset");'>&#x0421;&#x0411;&#x0420;&#x041E;&#x0421;</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>&#x041F;&#x0423;&#x0421;&#x041A;</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>&#x0421;&#x0411;&#x0420;&#x041E;&#x0421;</a></td></tr>
 	</table>
 
 <script language="JavaScript">
@@ -1116,58 +1116,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		return src.inserted_key ? "UNLOCKED" : "LOCKED"
 
 	return_badge()
-		if(src.inserted_key)
-			. = "Key: <A HREF='?src=\ref[src];eject_key=1'>[src.inserted_key.name]</A>"
-		else
-			. = "Key: <a href='?src=\ref[src];key=1'>-----</a>"
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if(BOUNDS_DIST(host, usr) > 0)
-			return
-
-		src.host?.add_dialog(usr)
-
-		if(href_list["key"])
-			if(istype(usr.equipped(), /obj/item/device/key/cheget) && !src.inserted_key)
-				var/obj/item/device/key/cheget/C = usr.equipped()
-				usr.drop_item()
-				C.set_loc(src)
-				src.inserted_key = C
-				boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
-				playsound(host.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-				SPAWN(1 SECOND)
-					if(src.inserted_key)
-						host.visible_message(SPAN_ALERT("[host] emits a satisfied boop and a little green light comes on."))
-						playsound(host.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
-						var/datum/signal/authSignal = get_free_signal()
-						authSignal.data = list("authcode"="\ref[src]")
-						send_command("key_auth", authSignal)
-
-			else if(istype(usr.equipped(), /obj/item/device/key))
-				boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
-				host.visible_message(SPAN_ALERT("[host] emits a grumpy boop."))
-				playsound(host.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
-
-		else if (href_list["eject_key"])
-			if(src.inserted_key)
-				boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
-				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-				src.inserted_key.set_loc(get_turf(src.loc))
-				src.inserted_key = null
-				SPAWN(1 SECOND)
-					if(!src.inserted_key)
-						host.visible_message(SPAN_ALERT("[host] emits a dour boop and a small red light flickers on."))
-						playsound(host.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
-						var/datum/signal/deauthSignal = get_free_signal()
-						deauthSignal.data = list("authcode"="\ref[src]")
-						send_command("key_deauth", deauthSignal)
-			else
-				boutput(usr, SPAN_ALERT("You reach to remove the key from the computer... only to find it missing! Where did it go? ...mysterious."))
-
-		host.updateUsrDialog()
+		. = list("label" = "Key","icon" = "key","contents" = src.inserted_key)
 
 /turf/unsimulated/floor/key_floor
 	var/found_thing = 0
