@@ -162,7 +162,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 
-		remove_lifeprocess(/datum/lifeprocess/canmove)
 		remove_lifeprocess(/datum/lifeprocess/disability)
 		remove_lifeprocess(/datum/lifeprocess/fire)
 		remove_lifeprocess(/datum/lifeprocess/hud)
