@@ -133,6 +133,7 @@
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
+		return TRUE
 
 	proc/get_time(mob/user)
 		return round(GET_COOLDOWN(user,"announcement_computer") / 10)
@@ -216,15 +217,26 @@
 /obj/machinery/computer/announcement/clown
 	req_access = null
 	name = "Clown Announcement Computer"
+	announcement_delay = 120 // DONT FORGET TO REMOVE THIS
 
 	send_message(mob/user, message)
 		. = ..()
-		playsound(src.loc, "explosion", 50, 1)
-		//robogibs(src.loc)
-		var/turf/T = get_turf(src.loc)
-		if(T)
-			src.visible_message("<b>[src] explodes!</b>")
-			explosion_new(src, T, 5)
-		sleep(10 SECONDS)
-		robogibs(src.loc)
+		if(.)
+			sleep(5)
+			new /obj/effects/explosion (src.loc)
+			playsound(src.loc, "explosion", 50, 1)
+			src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
+			user.shock(user, 50, stun_multiplier = 3,  ignore_gloves = 1)
+			//shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
+
+			var/mob/living/carbon/clown = user
+			if(istype(clown))
+				var/datum/db_record/S = data_core.security.find_record("id", clown.datacore_id)
+				S?["criminal"] = "*Arrest*"
+				S?["mi_crim"] = "Making a very irritating announcement."
+
+			if(ID)
+				user.put_in_hand_or_eject(ID)
+			qdel(src)
+
 

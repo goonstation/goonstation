@@ -1344,6 +1344,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/computer/announcement/clown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
