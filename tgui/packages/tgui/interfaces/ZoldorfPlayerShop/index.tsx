@@ -83,7 +83,7 @@ const ZoldorfProductListItem = (props: ZoldorfProductListItemProps) => {
             height="20px" // 20 px height - 32 px sprite = -12 px of offset
             top="-6px" // -12px / 2 = -6px top offset to keep them centered
           >
-            {img && <Image pixelated src={`data:image/png;base64,${img}`} />}
+            {img && <Image src={`data:image/png;base64,${img}`} />}
           </Box>
         </Stack.Item>
         <Stack.Item grow>
