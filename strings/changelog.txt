@@ -1,5 +1,9 @@
 
 (t)sun may 26 24
+(u)Glamurio (Ryou)
+(p)18790
+(e)💅🐣|C-QoL, A-Respawning
+(*)Daily Jobs may now be selected as a Job Preference.
 (u)ZeWaka
 (e)⛔|C-Removal
 (*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
