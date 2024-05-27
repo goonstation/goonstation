@@ -683,6 +683,11 @@
 		usr.cancel_camera()
 		..()
 
+	ability_allowed()
+		return TRUE //yea
+
+/obj/ability_button/reset_view/console //just.. don't ask
+
 //////////////////////////////////////////////////////////////////////////////
 /mob/var/list/item_abilities = new/list()
 /mob/var/need_update_item_abilities = 0
