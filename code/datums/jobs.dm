@@ -1492,15 +1492,99 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 2
 	wages = 0
 	low_priority_job = TRUE
-	slot_back = list(/obj/item/storage/backpack/satchel/anello)
-	slot_belt = list(/obj/item/crowbar)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/color/grey)
-	slot_head = list(/obj/item/clothing/head/green)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_back = list(\
+	/obj/item/storage/backpack,
+	/obj/item/storage/backpack/anello,
+	/obj/item/storage/backpack/security,
+	/obj/item/storage/backpack/engineering,
+	/obj/item/storage/backpack/robotics,
+	/obj/item/storage/backpack/research)
+	slot_belt = list(\
+	/obj/item/crowbar = 6,
+	/obj/item/crowbar/red,
+	/obj/item/crowbar/yellow,
+	/obj/item/crowbar/blue,
+	/obj/item/crowbar/grey,
+	/obj/item/crowbar/orange)
+	slot_foot = list(\
+	/obj/item/clothing/shoes/brown = 6,
+	/obj/item/clothing/shoes/red,
+	/obj/item/clothing/shoes/white,
+	/obj/item/clothing/shoes/black = 4,
+	/obj/item/clothing/shoes/swat,
+	/obj/item/clothing/shoes/orange,
+	/obj/item/clothing/shoes/westboot/brown/rancher,
+	/obj/item/clothing/shoes/galoshes,
+	0)
+	slot_jump = list(\
+	/obj/item/clothing/under/color/grey,
+	/obj/item/clothing/under/rank/security/assistant,
+	/obj/item/clothing/under/rank/roboticist,
+	/obj/item/clothing/under/rank/engineer,
+	/obj/item/clothing/under/rank/orangeoveralls,
+	/obj/item/clothing/under/rank/orangeoveralls/yellow,
+	/obj/item/clothing/under/gimmick/maid,
+	/obj/item/clothing/under/rank/bartender,
+	/obj/item/clothing/under/misc/souschef,
+	/obj/item/clothing/under/rank/hydroponics,
+	/obj/item/clothing/under/rank/rancher,
+	/obj/item/clothing/under/rank/overalls,
+	/obj/item/clothing/under/rank/cargo,
+	/obj/item/clothing/under/rank/assistant = 10,
+	/obj/item/clothing/under/rank/janitor)
+	slot_suit = list(\
+	/obj/item/clothing/suit/wintercoat/engineering,
+	/obj/item/clothing/suit/wintercoat/robotics,
+	/obj/item/clothing/suit/labcoat,
+	/obj/item/clothing/suit/labcoat/robotics,
+	/obj/item/clothing/suit/wintercoat/research,
+	0)
+	slot_head = list(\
+	/obj/item/clothing/head/green,
+	/obj/item/clothing/head/red,
+	/obj/item/clothing/head/constructioncone,
+	/obj/item/clothing/head/helmet/welding,
+	/obj/item/clothing/head/helmet/hardhat,
+	/obj/item/clothing/head/serpico,
+	/obj/item/clothing/head/souschefhat,
+	/obj/item/clothing/head/maid,
+	/obj/item/clothing/head/cowboy,
+	0 = 8)
+	slot_mask = list(\
+	/obj/item/clothing/mask/gas,
+	/obj/item/clothing/mask/surgical,
+	/obj/item/clothing/mask/skull,
+	/obj/item/clothing/mask/bandana/white,
+	0 = 6)
+	slot_glov = list(\
+	/obj/item/clothing/gloves/yellow/unsulated,
+	/obj/item/clothing/gloves/black,
+	/obj/item/clothing/gloves/fingerless,
+	/obj/item/clothing/gloves/long,
+	0 = 4)
+	slot_ears = list(\
+	/obj/item/device/radio/headset/civilian = 8,
+	/obj/item/device/radio/headset/engineer,
+	/obj/item/device/radio/headset/research,
+	/obj/item/device/radio/headset/shipping,
+	/obj/item/device/radio/headset/medical,
+	/obj/item/device/radio/headset/miner)
 	slot_poc1 = list(/obj/item/currency/spacecash/fivehundred)
-	slot_poc2 = list(/obj/item/scissors)
-	slot_lhan = list(/obj/item/screwdriver)
+	slot_poc2 = list(\
+	/obj/item/scissors,
+	/obj/item/wirecutters/red,
+	/obj/item/wirecutters/yellow,
+	/obj/item/wirecutters/blue,
+	/obj/item/wirecutters/gray,
+	/obj/item/wirecutters/orange,
+	/obj/item/scissors/surgical_scissors)
+	slot_lhan = list(\
+	/obj/item/screwdriver,
+	/obj/item/screwdriver/red,
+	/obj/item/screwdriver/yellow,
+	/obj/item/screwdriver/blue,
+	/obj/item/screwdriver/gray,
+	/obj/item/screwdriver/orange)
 
 	items_in_backpack = list(/obj/item/currency/spacecash/buttcoin = 2)
 	rounds_needed_to_play = 10 // It would really suck ass to play this as a new player
