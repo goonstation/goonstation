@@ -4,8 +4,7 @@
 
 /datum/unit_test/manufacturing_requirement_id_uniqueness/Run()
 	var/list/ids = list()
-	for(var/requirement in concrete_typesof(/datum/manufacturing_requirement))
-		var/datum/manufacturing_requirement/R = new requirement
+	for(var/datum/manufacturing_requirement/R in requirement_cache)
 		var/id = R.id
 		if(!istext(id))
 			Fail("Manufacturing requirement [R.type] has non-text id: [id]")
