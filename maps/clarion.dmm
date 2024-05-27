@@ -9579,6 +9579,7 @@
 /obj/stool/chair/office/purple{
 	dir = 8
 	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -19461,6 +19462,7 @@
 	dir = 8
 	},
 /obj/item/storage/wall/office,
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "gtj" = (
@@ -20877,6 +20879,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"hAW" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/science/lobby)
 "hBv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22404,6 +22415,12 @@
 	dir = 4
 	},
 /area/station/crew_quarters/bar)
+"iDb" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "iDw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27100,6 +27117,7 @@
 /area/station/ranch)
 "miq" = (
 /obj/stool/chair/office/purple,
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "mjj" = (
@@ -28002,6 +28020,7 @@
 	anchored = 0;
 	dir = 8
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblack"
@@ -37761,6 +37780,11 @@
 /obj/submachine/claw_machine,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
+"ulP" = (
+/obj/stool/chair/office,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/carpet,
+/area/station/science/lobby)
 "ulV" = (
 /obj/machinery/rkit,
 /turf/simulated/floor/yellow,
@@ -39427,6 +39451,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/engine/engineering)
 "vwS" = (
@@ -70151,7 +70176,7 @@ crF
 srk
 cFO
 sNf
-iRg
+iDb
 qrc
 nbU
 cFO
@@ -90976,7 +91001,7 @@ xYZ
 omE
 kaQ
 lSW
-jiQ
+hAW
 kut
 aQj
 nUd
@@ -91275,7 +91300,7 @@ asm
 nuT
 aHM
 jgf
-omE
+ulP
 aLo
 mgQ
 jiQ

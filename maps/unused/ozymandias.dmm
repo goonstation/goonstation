@@ -21460,6 +21460,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/equipment)
+"fIM" = (
+/obj/disposalpipe/segment/vertical,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/greenblack{
+	dir = 4
+	},
+/area/station/hallway/secondary/west)
 "fIR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -26003,6 +26010,14 @@
 /area/station/crew_quarters/locker{
 	name = "North Dock Restroom"
 	})
+"gPJ" = (
+/obj/stool/chair/yellow,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/engineering/private)
 "gPK" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 8
@@ -26909,6 +26924,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
 	},
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -29163,6 +29179,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "hEe" = (
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -39604,6 +39621,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "ktJ" = (
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/greenblack{
 	dir = 5
 	},
@@ -57346,6 +57364,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"paE" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor,
+/area/station/engine/engineering/private)
 "paJ" = (
 /obj/machinery/light{
 	dir = 8;
@@ -127385,7 +127413,7 @@ wJq
 qVa
 sAZ
 hnN
-hnN
+fIM
 hnN
 pnG
 wXZ
@@ -169062,7 +169090,7 @@ tcH
 arV
 oAF
 dvk
-qaR
+gPJ
 hkf
 bYJ
 xkj
@@ -170875,7 +170903,7 @@ bYJ
 mua
 awt
 oMR
-oMR
+paE
 oMR
 oMR
 sNo

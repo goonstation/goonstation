@@ -8545,6 +8545,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/staff)
 "aSB" = (
@@ -14160,6 +14161,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -16655,6 +16657,13 @@
 "bWR" = (
 /turf/simulated/floor,
 /area/station/janitor/supply)
+"bXh" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "bXr" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -31010,6 +31019,7 @@
 /area/space)
 "lrt" = (
 /obj/stool,
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "lrM" = (
@@ -38346,6 +38356,10 @@
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"pDG" = (
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/observatory)
 "pDR" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -44035,6 +44049,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "tiL" = (
@@ -66111,7 +66126,7 @@ vVR
 gcs
 wLH
 aSE
-kfb
+bXh
 aSE
 fHr
 qbr
@@ -121002,7 +121017,7 @@ wSY
 ckN
 ajA
 xxA
-ajD
+pDG
 ajD
 akY
 alj

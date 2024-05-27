@@ -24528,7 +24528,7 @@
 /area/station/engine/engineering)
 "bvg" = (
 /obj/stool/chair/comfy,
-/obj/landmark/start/job/engineer,
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -59730,6 +59730,10 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"hgc" = (
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/engineering)
 "hgr" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -74366,6 +74370,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
+"woU" = (
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "wpW" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -111232,7 +111240,7 @@ boc
 bpE
 bof
 rMQ
-bvd
+hgc
 bxc
 byR
 bsQ
@@ -134527,7 +134535,7 @@ crt
 csQ
 csM
 hNh
-csM
+woU
 cyG
 czU
 cBD

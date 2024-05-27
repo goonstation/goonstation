@@ -10590,6 +10590,7 @@
 /obj/stool/chair/purple{
 	dir = 8
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aJi" = (
@@ -11099,6 +11100,7 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKR" = (
@@ -17259,6 +17261,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "blK" = (
@@ -18423,6 +18426,7 @@
 /area/station/engine/elect)
 "bpU" = (
 /obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -34226,6 +34230,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
@@ -39469,6 +39474,11 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor,
 /area/station/security/processing)
+"mXI" = (
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "mXZ" = (
 /obj/item/a_gift,
 /turf/simulated/floor/plating/random,
@@ -92791,7 +92801,7 @@ akR
 anm
 anY
 fha
-apN
+mXI
 ard
 gNA
 ovi

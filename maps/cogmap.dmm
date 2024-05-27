@@ -26548,6 +26548,7 @@
 /area/station/engine/elect)
 "bRF" = (
 /obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRT" = (
@@ -27499,6 +27500,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -42364,6 +42366,7 @@
 /area/station/maintenance/northwest)
 "fZo" = (
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "fZG" = (
@@ -42997,6 +43000,7 @@
 /area/station/hangar/sec)
 "gEa" = (
 /obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "gEu" = (
@@ -51295,6 +51299,10 @@
 "nkI" = (
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
+"nkK" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "nlf" = (
 /obj/stool/chair{
 	dir = 1
@@ -57865,6 +57873,7 @@
 /area/station/maintenance/northwest)
 "sfM" = (
 /obj/stool/chair/comfy/blue,
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "sfR" = (
@@ -100431,7 +100440,7 @@ dmk
 cox
 cpy
 cqB
-cqB
+nkK
 cqB
 cqB
 jIo

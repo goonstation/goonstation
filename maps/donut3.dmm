@@ -7431,6 +7431,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/medical/breakroom)
 "cdU" = (
@@ -9642,6 +9643,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/breakroom)
 "cKj" = (
@@ -24212,6 +24214,7 @@
 /obj/stool/chair/yellow{
 	dir = 1
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -28154,6 +28157,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "ixv" = (
@@ -59548,9 +59552,9 @@
 	},
 /area/station/hallway/primary/west)
 "rXb" = (
-/obj/landmark/start/job/medical_doctor,
 /obj/stool/chair/office,
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/carpet/green/fancy/narrow,
 /area/station/medical/medbay/lobby)
 "rXd" = (
@@ -68481,6 +68485,7 @@
 /area/station/crew_quarters/hor)
 "uHV" = (
 /obj/stool/chair/couch/purple,
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "uHW" = (
@@ -74283,6 +74288,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "wua" = (

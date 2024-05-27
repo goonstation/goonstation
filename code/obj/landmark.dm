@@ -139,6 +139,9 @@ var/global/list/job_start_locations = list()
 	name = "Engineer"
 	icon_state = "engineer"
 
+/obj/landmark/start/job/technical_assistant
+	name = "Technical Assistant"
+	icon_state = "engineer"
 /obj/landmark/start/job/miner
 	name = "Miner"
 	icon_state = "miner"
@@ -153,6 +156,10 @@ var/global/list/job_start_locations = list()
 	name = "Medical Doctor"
 	icon_state = "medical_doctor"
 
+/obj/landmark/start/job/medical_assistant
+	name = "Medical Assistant"
+	icon_state = "medical_doctor"
+
 /obj/landmark/start/job/geneticist
 	name = "Geneticist"
 	icon_state = "geneticist"
@@ -163,6 +170,10 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/start/job/scientist
 	name = "Scientist"
+	icon_state = "scientist"
+
+/obj/landmark/start/job/research_assistant
+	name = "Research Assistant"
 	icon_state = "scientist"
 
 // Security

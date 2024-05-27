@@ -8862,6 +8862,7 @@
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "aHY" = (
@@ -11674,6 +11675,7 @@
 /area/station/medical/medbay/cloner)
 "aUn" = (
 /obj/stool/chair/office,
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -13703,6 +13705,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bdm" = (
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -15745,6 +15748,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bmn" = (
@@ -24081,6 +24085,7 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/orange/side{
 	dir = 1
 	},
@@ -24550,10 +24555,10 @@
 /area/station/storage/emergency)
 "bUx" = (
 /obj/stool/chair/office,
-/obj/landmark/start/job/medical_doctor,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bUA" = (
@@ -43477,8 +43482,8 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
-/obj/landmark/start/job/medical_doctor,
 /obj/disposalpipe/segment/morgue,
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -58611,10 +58616,10 @@
 /area/station/maintenance/southeast)
 "xhB" = (
 /obj/stool/chair/office,
-/obj/landmark/start/job/scientist,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "xhM" = (
@@ -58913,6 +58918,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"xrX" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/white,
+/area/station/science/lobby)
 "xsj" = (
 /obj/machinery/conveyor/EW{
 	id = "qmin"
@@ -95739,7 +95752,7 @@ uyR
 rQB
 bEc
 bFc
-bDc
+xrX
 bDc
 bIS
 bDc

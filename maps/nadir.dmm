@@ -564,6 +564,7 @@
 /obj/stool/chair/office/purple{
 	dir = 8
 	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "alG" = (
@@ -2179,6 +2180,7 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -8638,7 +8640,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "dTB" = (
@@ -9439,10 +9441,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start/job/medical_doctor,
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/start/job/medical_assistant,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "emN" = (
@@ -14370,10 +14372,10 @@
 	},
 /area/station/security/equipment)
 "grf" = (
-/obj/landmark/start/job/scientist,
 /obj/stool/chair/purple{
 	dir = 4
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "grh" = (
@@ -14699,6 +14701,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -18056,6 +18059,7 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
@@ -24204,11 +24208,11 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/landmark/start/job/engineer,
 /obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "kjV" = (
@@ -33274,6 +33278,7 @@
 /obj/stool/chair/yellow{
 	dir = 1
 	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -46183,6 +46188,7 @@
 /obj/stool/chair/blue{
 	dir = 4
 	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -47208,10 +47214,10 @@
 	name = "Southwest Breach Hull"
 	})
 "ubT" = (
-/obj/landmark/start/job/scientist,
 /obj/stool/chair/purple{
 	dir = 8
 	},
+/obj/landmark/start/job/research_assistant,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -53015,7 +53021,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/landmark/start/job/engineer,
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "wHl" = (
