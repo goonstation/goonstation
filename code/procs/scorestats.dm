@@ -25,6 +25,10 @@ var/datum/score_tracker/score_tracker
 	// CIVILIAN DEPARTMENT
 	var/score_cleanliness = 0
 	var/score_expenses = 0
+	var/score_mailing = 0
+	var/mail_sent = 0
+	var/mail_received = 0
+	var/mail_fraud = 0
 	var/final_score_civ = 0
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
@@ -176,6 +180,12 @@ var/datum/score_tracker/score_tracker
 
 		score_expenses = clamp(score_expenses,0,100)
 		score_cleanliness = clamp(score_cleanliness,0,100)
+
+		mail_sent = game_stats.GetStat("mail_sent")
+		mail_received = game_stats.GetStat("mail_opened")
+		mail_fraud = game_stats.GetStat("mail_fraud")
+		if (mail_sent)
+			score_mailing = (mail_received / mail_sent) * 100 - (mail_fraud / mail_sent) * 100
 		final_score_civ = (score_expenses + score_cleanliness) * 0.5
 
 		var/xp_winner = null

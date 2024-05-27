@@ -398,6 +398,10 @@
 			"value" = round(score_tracker.score_expenses),
 		),
 		list(
+			"name" = "Mail Delivery Score",
+			"value" = "[round(score_tracker.score_mailing)]% (Sent: [score_tracker.mail_sent] | Opened: [score_tracker.mail_received] | Frauded: [score_tracker.mail_fraud])"
+		),
+		list(
 			"name" = "Total Department Score",
 			"type" = "colorPercent",
 			"value" = round(score_tracker.final_score_civ),
