@@ -1876,11 +1876,8 @@
 		return
 
 /mob/living/proc/do_sprint_boost()
-	if (!next_step_delay && world.time >= src.next_sprint_boost)
+	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && src.next_sprint_boost && world.time >= src.next_sprint_boost)
 		if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
-			//if (src.hasStatus("blocking"))
-			//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
-			//		qdel(G)
 
 			var/last = src.loc
 			var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
@@ -1889,8 +1886,6 @@
 			src.next_move = world.time
 			attempt_move(src)
 
-			if (src.special_sprint?.no_sprint_boost)
-				src.sprint_boost_mod = 1
 			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * src.sprint_boost_mod
 
 			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
