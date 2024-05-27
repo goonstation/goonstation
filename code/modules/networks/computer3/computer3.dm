@@ -463,7 +463,7 @@
 								cheget_key.send_command("key_auth", authSignal)
 					else if(istype(I, /obj/item/device/key))
 						boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
-						src.visible_message(SPAN_ALERT("[host] emits a grumpy boop."))
+						src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
 						playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 					update_static_data(usr)
 	. = TRUE
