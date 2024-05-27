@@ -1,5 +1,26 @@
 
+(t)sun may 26 24
+(u)Glamurio (Ryou)
+(p)18790
+(e)💅🐣|C-QoL, A-Respawning
+(*)Daily Jobs may now be selected as a Job Preference.
+(u)ZeWaka
+(e)⛔|C-Removal
+(*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
+(u)FlameArrow57
+(p)18987
+(e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
+(+)Deployable turrets like N.A.R.C.S. turrets now eject bullet casings and have their own forensics profile.
+(u)LeahTheTech
+(+)B.I.F.F now buys rather than sells THE MONSTER.
+(t)sat may 25 24
+(u)crunchwarp
+(p)18980
+(e)🆕📄|C-Feature, A-UI
+(+)Blobs and Wizards now have enhanced crew credits!
 (t)fri may 24 24
+(u)tarmunora
+(+)Fix savefile import exploit. This will break existing local savefiles.
 (u)FlameArrow57
 (p)19115
 (e)⚖📦|C-Balance, A-Game-Objects

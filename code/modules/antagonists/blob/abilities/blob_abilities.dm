@@ -952,6 +952,7 @@
 	var/mob/living/intangible/blob_overmind/owner
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
+	var/purchased_times = 0 // For crew credits
 
 	New()
 		..()
@@ -1023,6 +1024,7 @@
 		else
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
+		purchased_times++
 		owner.update_buttons()
 
 	proc/tutorial_check()

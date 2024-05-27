@@ -891,7 +891,10 @@
 								displayMessage += " to [jointext(groupAddress,", ")]"
 						else
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
-					displayMessage += ":</b></i> [signal.data["message"]]"
+					var/signal_message = html_encode(signal.data["message"])
+					if (signal.data["is_alert"])
+						signal_message = SPAN_ALERT("<b>[signal_message]</b>")
+					displayMessage += ":</b></i> [signal_message]"
 					src.master.display_message(displayMessage)
 
 					if(length(src.hosted_files) >= 1)
