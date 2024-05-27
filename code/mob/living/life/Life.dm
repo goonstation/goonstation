@@ -138,7 +138,6 @@
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
@@ -160,7 +159,6 @@
 	add_lifeprocess(/datum/lifeprocess/critical)
 	add_lifeprocess(/datum/lifeprocess/decomposition)
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
 	add_lifeprocess(/datum/lifeprocess/health_mon)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
@@ -497,30 +495,6 @@
 		sleeping = clamp(sleeping, 0, 20)
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
-
-	proc/handle_burning()
-		if (src.getStatusDuration("burning"))
-
-			if (src.getStatusDuration("burning") > 200)
-				for (var/atom/A as anything in src.contents)
-					if (A.event_handler_flags & HANDLE_STICKER)
-						if (A:active)
-							src.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
-							qdel(A)
-
-			if (isturf(src.loc))
-				var/turf/location = src.loc
-				location.hotspot_expose(T0C + 300, 400)
-
-			for (var/atom/A in src.contents)
-				A.material_trigger_on_temp(T0C + 900)
-
-			for (var/atom/equipped_stuff in src.equipped())
-				equipped_stuff.material_trigger_on_temp(T0C + 900)
-
-			if(src.traitHolder && src.traitHolder.hasTrait("burning"))
-				if(prob(50))
-					src.update_burning(1)
 
 	proc/stink()
 		if (prob(15))
