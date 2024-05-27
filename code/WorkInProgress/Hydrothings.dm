@@ -1437,7 +1437,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	desc = "Gregs adopted son! He seems to have gotten caught up with a bad crowd."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "gregjr"
-
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
 	var/seensol = 0
 	var/cantalk = 1
 
@@ -1467,7 +1467,8 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 					sleep(2 SECONDS)
 					return
 
-	hear_talk(var/mob/living/carbon/speaker, text, real_name)
-		if(prob(10))
-			usr.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\""))
+	hear(datum/say_message/message)
+		if (prob(90) && ismob(message.speaker))
 			return
+
+		src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah [message.speaker] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\""))

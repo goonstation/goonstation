@@ -14,6 +14,14 @@
 
 	var/datum/tutorial_base/regional/flock/tutorial = null
 
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_FLOCKMIND, LISTEN_INPUT_RADIO_DISTORTED, LISTEN_INPUT_SILICONCHAT_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_FLOCK, SPEECH_OUTPUT_SPOKEN_FLOCKMIND, SPEECH_OUTPUT_EQUIPPED)
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	start_listen_languages = list(LANGUAGE_ALL)
+	say_language = LANGUAGE_FEATHER
+
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
 	src.flock = F || new /datum/flock()
@@ -82,11 +90,11 @@
 	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
 		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
-			boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b>"))
+			src.flock.system_say_source.say("Sentience pause detected. Preparing promotion routines.", atom_listeners_override = list(src))
 		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
 			var/list/traces = src.flock.getActiveTraces()
 			if (length(traces))
-				boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b>"))
+				src.flock.system_say_source.say("Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.", atom_listeners_override = list(src))
 				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
 				chosen_trace.promoteToFlockmind(FALSE)
 			src.afk_counter = 0
@@ -242,4 +250,4 @@
 		var/mob/living/trace = winner.mind.current
 		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)
+		src.flock.system_say_source.say("Trace partition \[ [trace.real_name] \] has been instantiated.")

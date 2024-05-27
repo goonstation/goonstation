@@ -100,7 +100,11 @@
 	equipped()
 		return 0
 
-	say(var/message)
+	say(message, flags, message_params, atom_listeners_override)
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..()
+#endif
 		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)

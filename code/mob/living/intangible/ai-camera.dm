@@ -26,6 +26,20 @@
 	metabolizes = FALSE
 	blood_id = null
 
+	speech_verb_say = "states"
+	speech_verb_ask = "queries"
+	speech_verb_exclaim = "declares"
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MONOSPACE_DECORATOR, SPEECH_MODIFIER_BRAIN_DAMAGE)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
+	speech_bubble_icon_sing = "noterobot"
+	speech_bubble_icon_sing_bad = "noterobot"
+
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 
@@ -246,25 +260,11 @@
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_understands(var/other)
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-		if (isrobot(other))
-			return 1
-		if (isshell(other))
-			return 1
-		if (ismainframe(other))
-			return 1
-		return ..()
-
-	say(var/message)
-		if (src.mainframe)
+	say(message, flags, message_params, atom_listeners_override)
+		if (src.mainframe) //NEWSPEECH - this works
 			src.mainframe.say(message)
 		else
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
+			..(message)
 
 	say_radio()
 		src.mainframe.say_radio()

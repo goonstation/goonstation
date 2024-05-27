@@ -27,7 +27,7 @@
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("NYTH ERRIN", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("NYTH ERRIN", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		if(!holder.owner.wizard_spellpower(src))

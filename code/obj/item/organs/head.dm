@@ -75,8 +75,6 @@
 				src.donor.set_eye(null)
 		else
 			src.UpdateIcon(/*makeshitup*/ 1)
-		if (!src.chat_text)
-			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -106,7 +104,6 @@
 		wear_mask = null
 		glasses = null
 		linked_human = null
-		chat_text = null
 
 		..()
 

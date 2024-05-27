@@ -4,6 +4,10 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
+
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	var/max_font = 8
 	var/font_amp = 4
 	var/on = 0
@@ -30,40 +34,36 @@
 		else
 			return ..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		if (!src.on)
+	hear(datum/say_message/message)
+		if (!src.on || !CAN_RELAY_MESSAGE(message, SAY_RELAY_MICROPHONE))
 			return
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
 
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		if (!src.on)
-			return
-		var/speakers = 0
-		var/turf/T = get_turf(src)
-		for_by_tcl(S, /obj/loudspeaker)
-			if(!IN_RANGE(S, T, 7)) continue
-			speakers ++
-		if (!speakers)
-			return
-		speakers += font_amp // 2 ain't huge so let's give ourselves a little boost
-		var/stuff = M.say_quote(messages[1])
-		var/stuff_b = M.say_quote(messages[2])
-		var/list/mobs_messaged = list()
-		for_by_tcl(S, /obj/loudspeaker)
-			if(!IN_RANGE(S, T, 7)) continue
-			for (var/mob/H in hearers(S, null))
-				if (H in mobs_messaged)
-					continue
-				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
-				mobs_messaged += H
-		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
-			for_by_tcl(S, /obj/loudspeaker)
-				if(!IN_RANGE(S, T, 7)) continue
-				S.visible_message(SPAN_ALERT("[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
-				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
+		var/feedback = FALSE
+		var/list/obj/loudspeaker/loudspeakers = list()
+		for_by_tcl(loudspeaker, /obj/loudspeaker)
+			if (!IN_RANGE(src, loudspeaker, 7))
+				continue
+
+			if (IN_RANGE(src, loudspeaker, 2))
+				feedback = TRUE
+
+			loudspeakers += loudspeaker
+
+		feedback &&= prob(10)
+
+		message.message_size_override = clamp(length(loudspeakers) + src.font_amp, 0, src.max_font)
+		message.output_module_channel = SAY_CHANNEL_OUTLOUD
+		FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_MICROPHONE)
+
+		for (var/obj/loudspeaker/loudspeaker as anything in loudspeakers)
+			var/datum/say_message/loudspeaker_message = message.Copy()
+			loudspeaker_message.speaker = loudspeaker
+			loudspeaker.ensure_say_tree().process(loudspeaker_message)
+
+			if (feedback)
+				loudspeaker.visible_message(SPAN_ALERT("[loudspeaker] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
+				playsound(loudspeaker.loc, 'sound/items/mic_feedback.ogg', 30, 1)
+
 
 TYPEINFO(/obj/mic_stand)
 	mats = 10
@@ -73,6 +73,10 @@ TYPEINFO(/obj/mic_stand)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
 	layer = FLY_LAYER
+
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	var/obj/item/device/microphone/myMic = null
 
 	New()
@@ -102,12 +106,8 @@ TYPEINFO(/obj/mic_stand)
 		else
 			return ..()
 
-	hear_talk(mob/M as mob, msg, real_name)
-		if (!myMic || !myMic.on)
-			return
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			myMic.talk_into(M, msg)
+	hear(datum/say_message/message)
+		src.myMic?.hear(message)
 
 	update_icon()
 		if (myMic)

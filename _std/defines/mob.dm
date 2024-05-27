@@ -2,8 +2,7 @@
 /// For mobs who can hear everything (mainly observer ghossts)
 #define MOB_HEARS_ALL 1
 // God Ecaps
-#define SPEECH_REVERSE (1 << 1)
-#define SPEECH_BLOB (1 << 2)		//yes
+
 #define SEE_THRU_CAMERAS (1 << 3)	//for ai eye
 #define IS_BONEY (1 << 4)			//for skeletals
 #define UNUSED_32 (1 << 5)

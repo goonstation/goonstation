@@ -16,6 +16,13 @@
 	alpha = 180
 	plane = PLANE_NOSHADOW_ABOVE
 
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT)
+	default_speech_output_channel = SAY_CHANNEL_DEAD
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	var/deaths = 0
 	var/datum/hud/wraith/hud
 	var/hud_path = /datum/hud/wraith
@@ -439,60 +446,11 @@
 			if (length(string))
 				boutput(src, string)
 
-
-	say(var/message)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (!message)
+	emote(act)
+		if (!src.density)
 			return
 
-		if (src.density) //If corporeal speak to the living (garbled)
-			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			else
-				if (copytext(message, 1, 2) == "*")
-					src.emote(copytext(message, 2))
-					return
-				else
-					src.emote(pick("hiss", "murmur", "drone", "wheeze", "grustle", "rattle"))
-
-		else //Speak in ghostchat if not corporeal
-			if (copytext(message, 1, 2) == "*")
-				return
-
-			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
-
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			. = src.say_dead(message, 1)
-
-	emote(var/act)
-		if (!density)
-			return
-		..()
-		var/acts = null
-		switch (act)
-			if ("hiss")
-				acts = "hisses"
-			if ("murmur")
-				acts = "murmurs"
-			if ("drone")
-				acts = "drones"
-			if ("wheeze")
-				acts = "wheezes"
-			if ("grustle")
-				acts = "grustles"
-			if ("rattle")
-				acts = "rattles"
-
-		if (acts)
-			for (var/mob/M in hearers(src, null))
-				M.show_message(SPAN_ALERT("[src] [acts]!"))
+		. = ..()
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src

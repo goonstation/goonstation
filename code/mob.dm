@@ -24,8 +24,6 @@
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
 
-	var/robot_talk_understand = 0
-
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
@@ -107,7 +105,6 @@
 	var/network_device = null
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
-	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
 	var/list/movement_modifiers = list()
@@ -139,7 +136,6 @@
 	var/spellshield = 0
 
 	var/voice_name = "unidentifiable voice"
-	var/voice_message = null
 	var/oldname = null
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
@@ -147,15 +143,8 @@
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
-	var/speechverb_say = "says"
-	var/speechverb_ask = "asks"
-	var/speechverb_exclaim = "exclaims"
-	var/speechverb_stammer = "stammers"
-	var/speechverb_gasp = "gasps"
-	var/speech_void = 0
 	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
-	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
@@ -229,6 +218,19 @@
 	/// If TRUE then this mob won't be fully stunned by stamina stuns
 	var/no_stamina_stuns = FALSE
 
+	speech_verb_say = "says"
+	speech_verb_ask = "asks"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_stammer = "stammers"
+	speech_verb_gasp = "gasps"
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -263,7 +265,6 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -342,9 +343,6 @@
 		else
 			m.set_loc(src.loc)
 			m.ghostize()
-
-	qdel(chat_text)
-	chat_text = null
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()

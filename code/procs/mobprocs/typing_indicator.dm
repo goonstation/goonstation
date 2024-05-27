@@ -16,9 +16,6 @@ var/mutable_appearance/living_emote_typing_bubble = mutable_appearance('icons/mo
 /mob/proc/remove_emote_typing_indicator()
 	return
 
-/mob/proc/show_speech_bubble()
-	return
-
 /mob/Logout()
 	remove_typing_indicator()
 	remove_emote_typing_indicator()
@@ -139,9 +136,9 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 /mob/living/show_speech_bubble(speech_bubble)
 	if (!isalive(src) || src.hasStatus("paralysis"))
 		return
-	if(SEND_SIGNAL(src, COMSIG_SPEECH_BUBBLE, speech_bubble))
+	if(SEND_SIGNAL(src, COMSIG_SPEECH_BUBBLE, src.speech_bubble))
 		return
-	src.UpdateOverlays(speech_bubble, "speech_bubble")
+	src.UpdateOverlays(src.speech_bubble, "speech_bubble")
 	SPAWN(1.5 SECONDS)
 		// This check prevents the removal of a typing indicator. Without the check, if you begin to speak again before your speech bubble disappears, your typing indicator gets deleted instead.
 		if (src.has_typing_indicator == FALSE)

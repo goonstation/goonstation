@@ -6,9 +6,9 @@
 	custom_gib_handler = /proc/gibs
 	icon_state = "lion"
 	icon_state_dead = "lion-dead"
-	speechverb_say = "growls"
-	speechverb_exclaim = "roars"
-	speechverb_ask = "meows"
+	speech_verb_say = "growls"
+	speech_verb_exclaim = "roars"
+	speech_verb_ask = "meows"
 	death_text = "%src% gives up the ghost!"
 	hand_count = 2
 	can_throw = TRUE

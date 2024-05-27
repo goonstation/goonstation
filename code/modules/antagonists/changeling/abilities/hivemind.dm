@@ -236,16 +236,14 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
 		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
 		if (!message)
 			return
-		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
-		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
-		.= holder.owner.say_hive(message, holder)
 
-		return 0
+		src.holder.owner.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_HIVEMIND))
+		return FALSE
 
 /datum/targetable/changeling/boot
 	name = "Silence Hivemind Member"

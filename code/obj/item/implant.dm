@@ -741,16 +741,27 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-b"
 	var/active = 0
 
-	implanted(var/mob/M, mob/I)
-		..()
-		if (istype(M))
-			M.robot_talk_understand = 1
+	implanted(mob/M, mob/I)
+		. = ..()
 
-	on_remove(var/mob/M)
-		..()
-		if (istype(M))
-			M.robot_talk_understand = 0
-		return
+		if (!istype(M))
+			return
+
+		M.ensure_say_tree().AddOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().AddInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_BINARY)
+
+	on_remove(mob/M)
+		. = ..()
+
+		if (!istype(M))
+			return
+
+		M.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().RemoveInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_BINARY)
 
 /obj/item/implant/bloodmonitor
 	name = "blood monitor implant"

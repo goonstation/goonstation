@@ -37,14 +37,12 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
-	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
 	var/image/static_image = null
 	var/in_point_mode = 0
 	var/dna_to_absorb = 1
 
-	var/canspeak = 1
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
@@ -60,10 +58,6 @@
 	var/sound_snap = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
 	var/sound_gasp = 'sound/voice/gasps/gasp.ogg'
-	var/voice_type = "1"
-	var/last_voice_sound = 0
-	var/speechbubble_enabled = 1
-	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
 	var/last_words = null
 
@@ -118,7 +112,15 @@
 
 	can_lie = TRUE
 
-	var/const/singing_prefix = "%"
+	voice_type = "1"
+	use_speech_bubble = TRUE
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BRAIN_DAMAGE, SPEECH_MODIFIER_BREATH)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
@@ -629,40 +631,6 @@
 /mob/living/proc/get_equipped_ore_scoop()
 	. = null
 
-/mob/living/proc/talk_into_equipment(var/mode, var/messages, var/param, var/lang_id)
-	switch (mode)
-		if ("headset")
-			if (src.ears)
-				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
-			else if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(isskeleton(H) && !H.organHolder.head)
-					var/datum/mutantrace/skeleton/S = H.mutantrace
-					if(S.head_tracker != null)
-						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
-
-		if ("secure headset")
-			if (src.ears)
-				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
-			else if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(isskeleton(H) && !H.organHolder.head)
-					var/datum/mutantrace/skeleton/S = H.mutantrace
-					if(S.head_tracker != null)
-						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
-
-		if ("right hand")
-			if (src.r_hand && src.organHolder.head)
-				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
-			else
-				src.emote("handpuppet")
-
-		if ("left hand")
-			if (src.l_hand && src.organHolder.head)
-				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
-			else
-				src.emote("handpuppet")
-
 /// returns true if first letter of things that person says should be capitalized
 /mob/living/proc/capitalize_speech()
 	if (!client)
@@ -677,6 +645,10 @@
 		if (src?.eyecam?.client?.preferences)
 			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
+
+/*
+
+
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
 	// shittery that breaks text or worse
@@ -875,15 +847,15 @@
 
 		if (singing || (src.bioHolder?.HasEffect("elvis")))
 			if (src.get_brain_damage() >= 60 || src.bioHolder?.HasEffect("unintelligable") || src.hasStatus("drunk"))
-				singing |= BAD_SINGING
+				singing |= SAYFLAG_BAD_SINGING
 				speech_bubble.icon_state = "notebad"
 			else
 				speech_bubble.icon_state = "note"
 				if (ending == "!" || (src.bioHolder?.HasEffect("loud_voice")))
-					singing |= LOUD_SINGING
+					singing |= SAYFLAG_LOUD_SINGING
 					speech_bubble.icon_state = "notebad"
 				else if (src.bioHolder?.HasEffect("quiet_voice"))
-					singing |= SOFT_SINGING
+					singing |= SAYFLAG_SOFT_SINGING
 			playsound(src, sounds_speak["[VT]"],  55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
 		else if (ending == "?")
 			playsound(src, sounds_speak["[VT]?"], 55, 0.01, 8, src.get_age_pitch_for_talk(), ignore_flag = SOUND_SPEECH)
@@ -902,7 +874,7 @@
 	if ((isrobot(src) || isAI(src)) && singing)
 		speech_bubble.icon_state = "noterobot"
 		if (copytext(message, length(message)) == "!")
-			singing |= LOUD_SINGING
+			singing |= SAYFLAG_LOUD_SINGING
 
 	if (text2num(message)) //mbc : check mob.dmi for the icons
 		var/n = round(text2num(message),1)
@@ -1272,14 +1244,11 @@
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
 
-/mob/living/proc/say_decorate(message)
-	return message
+
+
+*/
 
 // helper proooocs
-
-/mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
-	for (var/atom/A as anything in all_view(message_range, src))
-		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name(just_name_itself=FALSE)
 	if(just_name_itself)
@@ -2201,13 +2170,7 @@
 				src.was_harmed(thr.user, AM)
 	..()
 
-/mob/living/proc/check_singing_prefix(var/message)
-	if (isalive(src))
-		if (dd_hasprefix(message, singing_prefix)) // check for "%"
-			src.singing = NORMAL_SINGING
-			return copytext(message, 2)
-	src.singing = 0
-	. =  message
+
 
 // can stumble or flip while drunk
 /mob/living/proc/can_drunk_act()
@@ -2291,7 +2254,7 @@
 			return
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
-			H.say(message, ignore_stamina_winded = 1) // say the thing they were typing and grunt
+			H.say(message, flags = SAYFLAG_IGNORE_STAMINA) // say the thing they were typing and grunt
 		else
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌

@@ -22,7 +22,7 @@
 			boutput(holder.owner, SPAN_ALERT("That person is still alive! Find a corpse."))
 			return TRUE // No cooldown when it fails.
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("EI NECRIS", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("EI NECRIS", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		var/mob/living/critter/skeleton/skeleton = new /mob/living/critter/skeleton/(get_turf(target))

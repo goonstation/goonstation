@@ -18,6 +18,16 @@
 	/// Amount this modifies your speech loudness by, ranging from -1 to 2
 	var/loudness_mod = 1
 
+	pickup(mob/M)
+		. = ..()
+
+		M.ensure_say_tree().AddModifier(SPEECH_MODIFIER_MEGAPHONE)
+
+	dropped(mob/M)
+		M.ensure_say_tree().RemoveModifier(SPEECH_MODIFIER_MEGAPHONE)
+
+		. = ..()
+
 	emag_act(var/mob/user)
 		if(src.loudness_mod > 0)
 			if (user)

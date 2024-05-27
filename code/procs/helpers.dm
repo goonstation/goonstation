@@ -1125,14 +1125,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		if(SOUTHWEST)
 			return "southwest"
 
-// Marquesas: added an extra parameter to fix issue with changeling.
-// Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
-// cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
-	if (src.open_to_sound)
-		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name, lang_id)
-
 /**
   * Returns true if given value is a hex value
   */
@@ -2543,6 +2535,18 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		. += point - prev
 		prev = point
 
+/**Replaces tokens in an input string with a desired replacement token from a text file. Primarily used for accents and similar speech modifiers.
+ * Tokens are separated by whitespace.
+*/
+/proc/find_replace_in_string(input, text_file_path = "language/pirate.txt")
+	var/list/tokens = splittext(input, regex("\\b", "i"))
+	var/list/modded_tokens = list()
+	for (var/token in tokens)
+		var/replacement = strings(text_file_path, lowertext(token), 1)
+		if (replacement)
+			token = replacetext(token, lowertext(token), replacement)
+		modded_tokens += token
+	. = jointext(modded_tokens, "")
 
 /// Returns the sum of densities of all atoms in the given turf including the turf itself
 proc/total_density(turf/T)

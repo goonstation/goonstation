@@ -17,11 +17,11 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 0.5
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	is_syndicate = TRUE
 
 	ai_retaliates = FALSE

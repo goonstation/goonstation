@@ -24,6 +24,12 @@
 		src.ability_holder.addAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.addAbility(/datum/targetable/vampire/hypnotize)
 
+		var/datum/speech_module/output/bundled/thrallchat/output = src.owner.current.ensure_say_tree().AddOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE)
+		output.subchannel = "\ref[src.ability_holder]"
+
+		var/datum/listen_module/input/bundled/thrall/input = src.owner.current.ensure_listen_tree().AddInput(LISTEN_INPUT_THRALLCHAT)
+		input.ChangeSubchannel("\ref[src.ability_holder]")
+
 		src.owner.current.assign_gimmick_skull()
 
 	remove_equipment()
@@ -35,6 +41,9 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampire/hypnotize)
 		src.ability_holder.remove_unlocks()
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/vampire)
+
+		src.owner.current.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_THRALLCHAT)
+		src.owner.current.ensure_listen_tree().RemoveInput(LISTEN_INPUT_THRALLCHAT)
 
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()

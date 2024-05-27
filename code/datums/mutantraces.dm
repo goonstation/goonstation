@@ -77,8 +77,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/uses_human_clothes = TRUE
 	/// if TRUE, only understood by others of this mutantrace
 	var/exclusive_language = FALSE
-	/// overrides normal voice message if defined (and others don't understand us, ofc)
-	var/voice_message = null
 	var/voice_name = "human"
 	/// Should robots arrest these by default?
 	var/jerk = FALSE
@@ -273,6 +271,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if (!needs_oxy)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
 
+		if (src.override_language)
+			M.say_language = src.override_language
+
+		M.ensure_listen_tree()
+		for (var/language_id in src.understood_languages)
+			M.listen_tree.AddKnownLanguage(language_id)
+
 		src.blood_color_original = M.bioHolder?.bloodColor // We prioritise bioHolder here since coloring blood later does
 		if (isnull(src.blood_color_original))
 			src.blood_color_original = M.blood_color // Should always be at least DEFAULT_BLOOD_COLOR "#990000"
@@ -337,6 +342,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)
 			if (needs_oxy)
 				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
+
+			if (src.override_language)
+				src.mob.say_language = initial(src.mob.say_language)
+
+			src.mob.ensure_listen_tree()
+			for (var/language_id in src.understood_languages)
+				src.mob.listen_tree.RemoveKnownLanguage(language_id)
 
 			if (src.blood_color_changed)
 				mob.blood_color = src.blood_color_original
@@ -775,7 +787,6 @@ TYPEINFO(/datum/mutantrace/virtual)
 	name = "grey"
 	icon_state = "grey"
 	voice_name = "grey"
-	voice_message = "hums"
 	exclusive_language = 1
 	jerk = TRUE
 	blood_color = "#000000"
@@ -1562,11 +1573,10 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	special_head = HEAD_MONKEY
 	special_head_state = "head"
 	exclusive_language = 1
-	voice_message = "chimpers"
 	voice_name = "monkey"
-	override_language = "monkey"
+	override_language = LANGUAGE_MONKEY
 	override_attack = FALSE
-	understood_languages = list("english")
+	understood_languages = list(LANGUAGE_MONKEY, LANGUAGE_ENGLISH)
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
@@ -1708,7 +1718,7 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	body_offset = -9
 	human_compatible = 0
 	uses_human_clothes = 0
-	override_language = "martian"
+	override_language = LANGUAGE_MARTIAN
 
 /datum/mutantrace/stupidbaby
 	name = "stupid alien baby"
@@ -1986,7 +1996,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	jerk = TRUE //Not really, but NT doesn't really like treehuggers
 	aquatic = 1
 	needs_oxy = 0 //get their nutrients from the kudzu
-	understood_languages = list("english", "kudzu")
+	understood_languages = list(LANGUAGE_ENGLISH)
 	movement_modifier = /datum/movement_modifier/kudzu
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
@@ -2045,6 +2055,9 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
 				H.abilityHolder.addAbility(/datum/targetable/kudzu/vine_appendage)
 
+				H.ensure_say_tree().AddOutput(SPEECH_OUTPUT_KUDZUCHAT)
+				H.ensure_listen_tree().AddInput(LISTEN_INPUT_KUDZUCHAT)
+
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2059,6 +2072,10 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
+
+			H.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_KUDZUCHAT)
+			H.ensure_listen_tree().RemoveInput(LISTEN_INPUT_KUDZUCHAT)
+
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)

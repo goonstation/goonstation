@@ -11,7 +11,6 @@
 	icon_state_dead = "martian-dead"
 	custom_gib_handler = /proc/martiangibs
 	custom_brain_type = /obj/item/organ/brain/martian
-	say_language = "martian"
 	voice_name = "martian"
 	blood_id = "iron" // alchemy - mars = iron
 	hand_count = 2
@@ -23,11 +22,16 @@
 	health_brute_vuln = 1
 	health_burn = 16
 	health_burn_vuln = 1.5
-	speechverb_say = "screeches"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "screeches"
-	speechverb_gasp = "screeches"
-	speechverb_stammer = "screeches"
+
+	speech_verb_say = "screeches"
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_MARTIAN, LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN)
+	default_speech_output_channel = SAY_CHANNEL_MARTIAN
+	start_listen_languages = list(LANGUAGE_MARTIAN)
+	say_language = LANGUAGE_MARTIAN
 
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliate_patience = 3
@@ -37,11 +41,6 @@
 
 	var/leader = FALSE
 	var/telerange = 5
-
-	understands_language(var/langname)
-		if (langname == say_language || langname == "martian")
-			return TRUE
-		return FALSE
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)
@@ -109,25 +108,6 @@
 						continue
 					randomturfs.Add(T)
 				teleport.handleCast(pick(randomturfs))
-
-	say(message, involuntary = 0)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-		..(message)
-
-		if (involuntary || message == "" || stat)
-			return
-		if (dd_hasprefix(message, "*"))
-			return
-
-		// Strip the radio prefix (if it exists) and just get the message
-		var/prefixAndMessage = separate_radio_prefix_and_message(message)
-		message = prefixAndMessage[2]
-
-		// martian telepathy to all martians
-		// cirr edit: i have moved this to a proc at the bottom of this file
-		// cirr TODO: move this to chatprocs.dm dammit
-		martian_speak(src, message)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -265,47 +245,12 @@
 	leader = TRUE
 	is_npc = FALSE
 
+	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN_LEADER, SPEECH_OUTPUT_EQUIPPED)
+
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/summon)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
-
-// this is being copied and pasted more than once, this ends now
-// merging in the admin verb stuff so we can display the appropriate stuff to admins when players speak, because knowing real names of martian babblers would be nice
-// getting kinda tired of needing to use player options to distinguish between them
-proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
-
-	var/client/C = speaker.client
-
-	var/rendered = ""
-	var/adminrendered = ""
-	if(C?.holder && speak_as_admin)
-		// admin mode go
-		var/show_other_key = 0
-		if (C.stealth || C.alt_key)
-			show_other_key = 1
-		rendered = SPAN_MARTIANSAY("[SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]")
-		adminrendered = SPAN_MARTIANSAY("<span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]")
-	else
-		var/class = "martiansay"
-		if(ismartian(speaker))
-			var/mob/living/critter/martian/M = speaker
-			if(M.leader)
-				class = "martianimperial"
-		rendered = "<span class='[class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
-		adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
-
-	for (var/client/CC)
-		if (!CC.mob) continue
-		if(istype(CC.mob, /mob/new_player))
-			continue
-		var/mob/M = CC.mob
-
-		if ((ismartian(M)) || M.client.holder && !M.client.player_mode)
-			var/thisR = rendered
-			if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
-			M.show_message(thisR, 2)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -352,6 +297,8 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	icon_state_dead = "martianST-dead"
 	leader = TRUE
 	is_npc = FALSE
+
+	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN_LEADER, SPEECH_OUTPUT_EQUIPPED)
 
 	New()
 		..()

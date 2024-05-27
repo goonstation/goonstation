@@ -3,6 +3,9 @@
 	real_name = "mentor mouse"
 	is_respawnable = FALSE
 	locked = TRUE
+
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	var/image/ping
 	var/ping_id
 	var/mob/the_guy
@@ -74,10 +77,11 @@
 		if(istype(A, /obj/machinery/computer3))
 			A.Attackhand(src)
 
-	say_understands(var/other)
-		return 1
-
 	say(var/message)
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..()
+#endif
 		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)

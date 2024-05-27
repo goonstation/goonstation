@@ -172,6 +172,6 @@
 			else
 				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role]."
 			broadcast_string += "</span>"
-			targetGang.broadcast_to_gang(broadcast_string)
+			targetGang.announcer_say_source.say(broadcast_string)
 
 

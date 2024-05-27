@@ -420,6 +420,22 @@
 	getChefHint()
 		. = "Gives the consumer an absolutely terrible breath smell."
 
+	onAdd()
+		. = ..()
+		RegisterSignal(owner, COMSIG_ATOM_SAY, PROC_REF(smell_breath))
+
+	onRemove()
+		UnregisterSignal(owner,COMSIG_ATOM_SAY)
+		. = ..()
+
+	proc/smell_breath()
+		for (var/mob/living/L in oview(2, owner))
+			if (prob(80))
+				continue
+
+			boutput(L, SPAN_ALERT("Good lord, [owner]'s breath smells bad!"))
+			L.vomit()
+
 /datum/statusEffect/slimy
 	id = "food_slimy"
 	name ="Food (Slimy)"

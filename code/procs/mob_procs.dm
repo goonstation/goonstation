@@ -825,7 +825,7 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/saylist(var/message, var/list/heard, var/list/olocs, var/thickness, var/italics, var/list/processed, var/use_voice_name = 0, var/image/chat_maptext/assoc_maptext = null)
+/mob/proc/saylist(var/message, var/list/heard, var/list/olocs, var/thickness, var/italics, var/list/processed, var/use_voice_name = 0)
 	var/message_a
 
 	message_a = src.say_quote(message)
@@ -880,8 +880,7 @@
 
 		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
-		M.heard_say(src, message)
-		M.show_message(thisR, 2, assoc_maptext = assoc_maptext)
+		M.show_message(thisR, 2)
 
 	return processed
 

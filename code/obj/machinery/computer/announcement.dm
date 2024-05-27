@@ -12,12 +12,10 @@
 	var/announce_status = "Insert Card"
 	var/max_length = 400
 	var/announces_arrivals = 0
-	var/say_language = "english"
+	var/atom/movable/abstract_say_source/radio/announcement_computer/computer_say_source
+	var/computer_say_source_name = "Announcement Computer"
 	var/arrivalalert = "$NAME has signed up as $JOB."
 	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
-	var/obj/item/device/radio/intercom/announcement_radio = null
-	var/voice_message = "broadcasts"
-	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -27,9 +25,9 @@
 	light_b = 0.1
 
 	New()
-		..()
-		if (src.announces_arrivals)
-			src.announcement_radio = new(src)
+		. = ..()
+		src.computer_say_source = new()
+		src.computer_say_source.name = src.computer_say_source_name
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/id))
@@ -153,51 +151,44 @@
 		playsound(src.loc, "keyboard", 50, 1, -15)
 		return
 
-	proc/say_quote(var/text)
-		return "[src.voice_message], \"[text]\""
+	proc/announce_arrival(mob/living/person)
+		if (!src.announces_arrivals || !src.arrivalalert)
+			return TRUE
 
-	proc/process_language(var/message)
-		var/datum/language/L = languages.language_cache[src.say_language]
-		if (!L)
-			L = languages.language_cache["english"]
-		return L.get_messages(message)
+		// People who have been on the ship the whole time, or who aren't on the ship, shouldn't be announced.
+		if (person.traitHolder.getTraitWithCategory("background"))
+			return TRUE
 
-	proc/announce_arrival(var/mob/living/person)
-		var/background_trait = person.traitHolder.getTraitWithCategory("background")
-		if (!src.announces_arrivals)
-			return 1
-		if (!src.arrivalalert)
-			return 1
-		if (background_trait)
-			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
-		if (!src.announcement_radio)
-			src.announcement_radio = new(src)
+		var/message = src.arrivalalert
+		message = replacetext(message, "$NAME", person.real_name)
+		message = replacetext(message, "$JOB", person.mind.assigned_role)
+		message = replacetext(message, "$STATION", "[station_name()]")
+		message = replacetext(message, "$THEY", "[he_or_she(person)]")
+		message = replacetext(message, "$THEM", "[him_or_her(person)]")
+		message = replacetext(message, "$THEIR", "[his_or_her(person)]")
 
-		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
-
-		var/list/messages = process_language(message)
-		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
+		src.computer_say_source.say(message)
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
-		return 1
+		return TRUE
 
-	proc/announce_departure(var/mob/living/person)
-		if (!src.announcement_radio)
-			src.announcement_radio = new(src)
-
+	proc/announce_departure(mob/living/person)
 		var/job = person.mind.assigned_role
-		if(!job || job == "MODE")
+		if(!job || (job == "MODE"))
 			job = "Staff Assistant"
 		if(issilicon(person))
 			job = "Cyborg"
-		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
+		var/message = src.departurealert
+		message = replacetext(message, "$NAME", person.real_name)
+		message = replacetext(message, "$JOB", job)
+		message = replacetext(message, "$STATION", "[station_name()]")
+		message = replacetext(message, "$THEY", "[he_or_she(person)]")
+		message = replacetext(message, "$THEM", "[him_or_her(person)]")
+		message = replacetext(message, "$THEIR", "[his_or_her(person)]")
 
-		var/list/messages = process_language(message)
-		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
+		src.computer_say_source.say(message)
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
-		return 1
+		return TRUE
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -207,9 +198,9 @@
 	icon_state = "announcement2"
 
 /obj/machinery/computer/announcement/syndie
-		icon_state = "syndiepc14"
-		icon = 'icons/obj/decoration.dmi'
-		req_access = null
-		name = "Syndicate Announcement computer"
-		voice_name = "Syndicate Announcement Computer"
-		theme = "syndicate"
+	name = "Syndicate Announcement computer"
+	computer_say_source_name = "Syndicate Announcement computer"
+	theme = "syndicate"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "syndiepc14"
+	req_access = null

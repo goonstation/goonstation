@@ -1189,6 +1189,21 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
+/client/proc/desuss_zap(source, datum/say_message/message)
+	if (!forced_desussification)
+		return
+
+	if (!phrase_log.is_sussy(message.orig_message))
+		return
+
+	arcFlash(message.speaker, message.speaker, forced_desussification)
+	if (issilicon(message.speaker))
+		var/mob/M = message.speaker
+		M.apply_flash(20, knockdown = 2, stamina_damage = 20, disorient_time = 3)
+
+	if (forced_desussification_worse)
+		forced_desussification *= 1.1
+
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return

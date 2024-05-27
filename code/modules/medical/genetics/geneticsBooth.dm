@@ -320,13 +320,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 							else
 								wagesystem.research_budget += selected_product.cost
 
-							for (var/mob/O in hearers(src, null))
-								//if (src.glitchy_slogans)
-								//	O.show_message("<span class='say'>[SPAN_NAME("[src]")] beeps,</span> \"[voidSpeak(message)]\"", 2)
-								//else
-
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"")), 2)
-
+							src.say("Thank you for your patronage, <b>[M.name]<b>")
 
 							.= 1
 							notify_sale(selected_product.cost)

@@ -216,28 +216,6 @@
 			return
 		return
 
-	say(var/message)
-		if (!message)
-			return
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted.")
-			return
-
-		if (isdead(src))
-			message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-			return src.say_dead(message)
-
-		// wtf?
-		if (src.stat)
-			return
-
-		if (copytext(message, 1, 2) == "*")
-			..()
-		else
-			src.visible_message("<b>[src]</b> beeps.")
-			playsound(src.loc, beeps_n_boops[1], 30, 1)
-
 	emote(var/act)
 		..()
 		//var/param = null

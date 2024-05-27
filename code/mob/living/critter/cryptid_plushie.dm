@@ -2,9 +2,12 @@
 	hand_count = 0
 	pull_w_class = W_CLASS_TINY
 	ghost_spawned = 1
-	canspeak = 0
 	health_brute = 40
 	health_burn = 40
+
+	start_speech_modifiers = list(SPEECH_MODIFIER_CRYPTID_PLUSHIE, SPEECH_MODIFIER_BRAIN_DAMAGE, SPEECH_MODIFIER_BREATH)
+	can_use_say = FALSE
+
 	var/being_seen = FALSE
 	var/mob/last_witness
 	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
@@ -144,14 +147,6 @@
 			<br>[SPAN_NOTICE("Set Glowing Eyes Color lets you set your eyes' glowing color.")]
 			<br>[SPAN_NOTICE("Access special emotes through *scream, *dance and *snap.")]"})
 
-	proc/plushie_speech(var/text_to_say)
-		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
-		if(prob(20))
-			src.speechpopupstyle += " color: red !important"
-		src.canspeak = 1
-		src.say(text_to_say)
-		src.canspeak = 0
-
 	proc/set_glowing_eyes(var/enabled)
 		if (eye_light)
 			if(enabled)
@@ -163,14 +158,6 @@
 				boutput(src, SPAN_NOTICE("Glowing eyes disabled."))
 			glowing_eyes_active = enabled
 			src.UpdateOverlays(eye_light, "eye_light")
-
-	say(message) // gross workaround to allow emotes despite canspeak = 0
-		if(dd_hasprefix(message, "*"))
-			canspeak = 1
-			. = ..()
-			canspeak = 0
-		else
-			. = ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -293,7 +280,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			return
 		playsound(holder.owner, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		selected = uppertext(selected)
-		our_plushie.plushie_speech(selected)
+		our_plushie.say(selected)
 		return 0
 
 /datum/targetable/critter/cryptid_plushie/movement_override
@@ -390,11 +377,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		if(say_gibberish && prob(75))
 			var/list/last_words = list("FAILED TO RESOLVE ERROR, REBOOTING", "INITIATING REBOOT", "AVAILABLE IN STORES NOW", "AVAILABLE IN SEVERAL MODELS", "HELP")
-			our_plushie.plushie_speech(pick(last_words))
+			our_plushie.say(pick(last_words))
 		our_plushie.transform = original_transform
 
 	proc/plushie_says_gibberish_word()
-		our_plushie.plushie_speech(pick(generate_gibberish_words()))
+		our_plushie.say(pick(generate_gibberish_words()))
 
 	proc/generate_gibberish_words()
 		var/list/words = list()

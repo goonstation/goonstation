@@ -275,8 +275,6 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-#define CLUWNE_NOISE_DELAY 5 SECONDS
-
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
 	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
@@ -293,7 +291,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		var/datum/bioEffect/speech/S = null
 		for(var/X in H.bioHolder.effects)
 			S = H.bioHolder.GetEffect(X)
-			if (istype(S,/datum/bioEffect/speech/) && !(H.speech_void && !istype(S,/datum/bioEffect/speech/void)))
+			if (istype(S,/datum/bioEffect/speech/) && !(!istype(S,/datum/bioEffect/speech/void)))
 				message = S.OnSpeak(message)
 				messageEffects += S
 
@@ -315,7 +313,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		messageEffects += "Horse"
 		do_laugh = TRUE
 
-	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
+	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_COOLDOWN))
 		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
@@ -378,8 +376,6 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
 		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
-
-#undef CLUWNE_NOISE_DELAY
 
 
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

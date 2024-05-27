@@ -1666,7 +1666,22 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick(SPAN_ALERT("<B>[src]</B> breaks out the most unreal dance move you've ever seen!"), SPAN_ALERT("<B>[src]'s</B> dance move borders on the goddamn diabolical!"))
-							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
+							var/message_params = list(
+								"maptext_css_values" = list(
+									"color" = "white !important",
+									"text-shadow" = "1px 1px 3px white",
+									"-dm-text-outline" = "1px black",
+								),
+								"maptext_animation_colours" = list(
+									"#FF0000",
+									"#FFFF00",
+									"#00FF00",
+									"#00FFFF",
+									"#0000FF",
+									"#FF00FF",
+								),
+							)
+							src.say("GHEIT DAUN!", message_params = message_params)
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
@@ -2261,52 +2276,39 @@
 
 	showmessage:
 
-	//copy paste lol
+	if (!message)
+		return
+
+	var/list/client/recipients = list()
+	if (m_type & 1)
+		for (var/mob/M as anything in viewers(src, null))
+			if (!M.client)
+				continue
+
+			recipients += M.client
+
+	else if (m_type & 2)
+		for (var/mob/M as anything in hearers(src, null))
+			if (!M.client)
+				continue
+
+			recipients += M.client
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			if (!M.client)
+				continue
+
+			recipients += M.client
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/client/client as anything in recipients)
+		client.mob.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					if(m_type & 1)
-						chat_text.plane = PLANE_NOSHADOW_ABOVE
-						chat_text.layer = 420
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-
-
-	else
-
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			act = lowertext(act)
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
-			else if (m_type & 2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
-			else if (!isturf(src.loc))
-				var/atom/A = src.loc
-				for (var/mob/O in A.contents)
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+		global.display_emote_maptext(src, recipients, maptext_out)
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

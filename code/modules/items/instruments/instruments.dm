@@ -673,7 +673,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (secbot.emagged)
 				continue
 			secbot.KillPathAndGiveUp(1)
-			secbot.speak("Awaiting command...")
+			secbot.say("Awaiting command...")
 			bots += secbot
 			break
 

@@ -50,6 +50,12 @@
 		src.ability_holder.addAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
 
+		var/datum/speech_module/output/bundled/thrallchat/output = src.owner.current.ensure_say_tree().AddOutput(SPEECH_OUTPUT_THRALLCHAT_THRALL)
+		output.subchannel = "\ref[src.master_ability_holder]"
+
+		var/datum/listen_module/input/bundled/thrall/input = src.owner.current.ensure_listen_tree().AddInput(LISTEN_INPUT_THRALLCHAT)
+		input.ChangeSubchannel("\ref[src.master_ability_holder]")
+
 	remove_equipment()
 		var/mob/living/carbon/human/H = src.owner.current
 		var/datum/component/C = H.GetComponent(/datum/component/tracker_hud/vampthrall)
@@ -62,6 +68,9 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vampire_bite/thrall)
 		H.remove_ability_holder(/datum/abilityHolder/vampiric_thrall)
+
+		src.owner.current.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_THRALLCHAT)
+		src.owner.current.ensure_listen_tree().RemoveInput(LISTEN_INPUT_THRALLCHAT)
 
 	add_to_image_groups()
 		. = ..()

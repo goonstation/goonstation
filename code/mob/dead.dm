@@ -4,6 +4,12 @@
 	pass_unstable = FALSE
 	///Our corpse, if one exists
 	var/mob/living/corpse
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL, LISTEN_INPUT_BLOBCHAT)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT)
+	default_speech_output_channel = SAY_CHANNEL_DEAD
+	start_listen_languages = list(LANGUAGE_ALL)
 
 // dead
 /mob/dead/New()
@@ -17,9 +23,6 @@
 
 // Make sure to keep this JPS-cache safe
 /mob/dead/Cross(atom/movable/mover)
-	return 1
-
-/mob/dead/say_understands()
 	return 1
 
 /mob/dead/can_strip()
@@ -62,43 +65,6 @@
 
 /mob/dead/projCanHit(datum/projectile/P)
 	return P.hits_ghosts
-
-/mob/dead/say(var/message)
-	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	if (!message)
-		return
-
-	..()
-	if (dd_hasprefix(message, "*"))
-		return src.emote(copytext(message, 2),1)
-
-	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
-		return
-
-	if(src?.client?.preferences.auto_capitalization)
-		message = capitalize(message)
-
-	phrase_log.log_phrase("deadsay", message)
-	. = src.say_dead(message)
-
-	for (var/mob/M in hearers(null, null))
-		if (!M.stat)
-			if (M.job == "Chaplain")
-				if (prob (80))
-					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
-				else
-					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
-			else
-				if (prob(90))
-					return
-				else if (prob (95))
-					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
-				else
-					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!deadchat_allowed)

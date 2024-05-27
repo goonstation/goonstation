@@ -1194,26 +1194,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			for (var/mob/O in A.contents)
 				O.show_message(SPAN_EMOTE("[message]"), m_type)
 
-
-/mob/living/critter/talk_into_equipment(var/mode, var/message, var/param)
-	switch (mode)
-		if ("left hand")
-			for (var/i = 1, i <= hands.len, i++)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		if ("right hand")
-			for (var/i = hands.len, i >= 1, i--)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		else
-			..()
-
 /mob/living/critter/update_burning()
 	if (can_burn)
 		..()
@@ -1508,21 +1488,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (mcolor)
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)
-
-/mob/living/critter/say(var/message)
-	message = copytext(message, 1, MAX_MESSAGE_LEN)
-
-	if (dd_hasprefix(message, "*") || isdead(src))
-		..(message)
-		return
-
-	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
-		if (length(message) >= 2)
-			if (copytext(lowertext(message), 1, 3) == ":s")
-				message = copytext(message, 3)
-				src.robot_talk(message)
-				return
-	..()
 
 /mob/living/critter/blob_act(var/power)
 	logTheThing(LOG_COMBAT, src, "is hit by a blob")

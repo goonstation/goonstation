@@ -89,6 +89,8 @@ proc/get_default_flock()
 
 	var/datum/flockstats/stats
 
+	var/atom/movable/abstract_say_source/flock_system/system_say_source
+
 /datum/flock/New()
 	..()
 	src.center_marker = new(locate(0,0,1))
@@ -108,7 +110,9 @@ proc/get_default_flock()
 	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
+
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+	src.system_say_source = new(null, src)
 
 
 /datum/flock/proc/load_structures()
@@ -160,7 +164,7 @@ proc/get_default_flock()
 			if(T)
 				var/mob/living/critter/flock/drone/host = T.loc
 				if(istype(host))
-					boutput(host, SPAN_FLOCKSAY("<b>\[SYSTEM: The flockmind has removed you from your previous corporeal shell.\]</b>"))
+					src.system_say_source.say("The flockmind has removed you from your previous corporeal shell.", atom_listeners_override = list(host))
 					host.release_control()
 		if("promote_trace")
 			var/message = "Are you sure?"
@@ -188,8 +192,8 @@ proc/get_default_flock()
 					var/mob/living/critter/flock/drone/host = T.loc
 					if(istype(host))
 						host.release_control()
-					flock_speak(null, "Partition [T.real_name] has been reintegrated into flock background processes.", src)
-					boutput(T, SPAN_FLOCKSAY("<b>\[SYSTEM: Your higher cognition has been forcibly reintegrated into the collective will of the flock.\]</b>"))
+					src.system_say_source.say("Partition [T.real_name] has been reintegrated into flock background processes.")
+					src.system_say_source.say("Your higher cognition has been forcibly reintegrated into the collective will of the flock.", atom_listeners_override = list(T))
 					T.death()
 		if ("cancel_tealprint")
 			var/obj/flock_structure/ghost/tealprint = locate(params["origin"])
@@ -326,29 +330,52 @@ proc/get_default_flock()
 		aH = T.abilityHolder
 		aH?.updateTiles(tiles_owned)
 
-/datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
+/datum/flock/proc/update_speech_channels_of_flockmob(mob/M, subchannel = "\ref[src]")
+	var/datum/speech_module/output/bundled/flock_say/output = M.ensure_say_tree().GetOutputByID(SPEECH_OUTPUT_FLOCK)
+	output.subchannel = subchannel
+	output.flock = src
+
+/datum/flock/proc/update_listen_channels_of_flockmob(mob/M, subchannel = "\ref[src]")
+	var/datum/listen_module/input/bundled/flock/input = M.ensure_listen_tree().GetInputByID(LISTEN_INPUT_FLOCK)
+	input.ChangeSubchannel(subchannel)
+
+/datum/flock/proc/update_speech_channels_of_flockstructure(atom/A, subchannel = "\ref[src]")
+	var/datum/speech_module/output/bundled/flock_say/output = A.ensure_say_tree().GetOutputByID(SPEECH_OUTPUT_FLOCK_SYSTEM)
+	output.subchannel = subchannel
+	output.flock = src
+
+/datum/flock/proc/registerFlockmind(mob/living/intangible/flock/flockmind/F)
 	if(!F)
 		return
+
 	src.flockmind = F
+	src.update_speech_channels_of_flockmob(src.flockmind)
+
+	var/datum/listen_module/input/bundled/flockmind/input = src.flockmind.ensure_listen_tree().GetInputByID(LISTEN_INPUT_FLOCKMIND)
+	input.ChangeSubchannel("\ref[src]")
 
 //since flocktraces need to be given their flock in New this is useful for debug
 /datum/flock/proc/spawnTrace()
 	var/mob/living/intangible/flock/trace/T = new(usr.loc, src)
 	return T
 
-/datum/flock/proc/addTrace(var/mob/living/intangible/flock/trace/T)
+/datum/flock/proc/addTrace(mob/living/intangible/flock/trace/T)
 	if(!T)
 		return
 	src.traces |= T
 	src.update_computes(TRUE)
+	src.update_speech_channels_of_flockmob(T)
+	src.update_listen_channels_of_flockmob(T)
 
-/datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
+/datum/flock/proc/removeTrace(mob/living/intangible/flock/trace/T)
 	if(!T)
 		return
 	src.traces -= T
 	src.active_names -= T.real_name
 	hideAnnotations(T)
 	src.update_computes(TRUE)
+	src.update_speech_channels_of_flockmob(T, null)
+	src.update_listen_channels_of_flockmob(T, null)
 
 /datum/flock/proc/ping(var/atom/target, var/mob/living/intangible/flock/pinger)
 	//awful typecheck because turfs and movables have vis_contents defined seperately because god hates us
@@ -517,41 +544,49 @@ proc/get_default_flock()
 
 // UNITS
 
-/datum/flock/proc/registerUnit(var/mob/living/critter/flock/D, check_name_uniqueness = FALSE)
-	if(isflockmob(D))
-		if(!src.units[D.type])
-			src.units[D.type] = list()
-		src.units[D.type] |= D
-		if (istype(D, /mob/living/critter/flock/drone))
-			src.updateEggCost()
-		if (check_name_uniqueness && src.active_names[D.real_name])
-			D.real_name = istype(D, /mob/living/critter/flock/drone) ? src.pick_name("flockdrone") : src.pick_name("flockbit")
-		D.AddComponent(/datum/component/flock_interest, src)
-		var/comp_provided = D.compute_provided()
-		if (comp_provided)
-			if (comp_provided < 0)
-				src.used_compute += abs(comp_provided)
-			else
-				src.total_compute += comp_provided
-			src.update_computes()
+/datum/flock/proc/registerUnit(mob/living/critter/flock/D, check_name_uniqueness = FALSE)
+	if(!isflockmob(D))
+		return
 
-/datum/flock/proc/removeDrone(var/mob/living/critter/flock/D)
-	if(isflockmob(D))
-		src.units[D.type] -= D
-		src.active_names -= D.real_name
-		if (istype(D, /mob/living/critter/flock/drone))
-			src.updateEggCost()
-		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
-		if(D.real_name && busy_tiles[D.real_name])
-			src.unreserveTurf(D.real_name)
-		var/comp_provided = D.compute_provided()
-		if (comp_provided)
-			if (comp_provided < 0)
-				src.used_compute -= abs(comp_provided)
-			if (comp_provided > 0)
-				src.total_compute -= comp_provided
-			src.update_computes()
-		D.flock = null
+	if(!src.units[D.type])
+		src.units[D.type] = list()
+	src.units[D.type] |= D
+	if (istype(D, /mob/living/critter/flock/drone))
+		src.updateEggCost()
+	if (check_name_uniqueness && src.active_names[D.real_name])
+		D.real_name = istype(D, /mob/living/critter/flock/drone) ? src.pick_name("flockdrone") : src.pick_name("flockbit")
+	D.AddComponent(/datum/component/flock_interest, src)
+	var/comp_provided = D.compute_provided()
+	if (comp_provided)
+		if (comp_provided < 0)
+			src.used_compute += abs(comp_provided)
+		else
+			src.total_compute += comp_provided
+		src.update_computes()
+
+	src.update_speech_channels_of_flockmob(D)
+
+/datum/flock/proc/removeDrone(mob/living/critter/flock/D)
+	if(!isflockmob(D))
+		return
+
+	src.units[D.type] -= D
+	src.active_names -= D.real_name
+	if (istype(D, /mob/living/critter/flock/drone))
+		src.updateEggCost()
+	D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
+	if(D.real_name && busy_tiles[D.real_name])
+		src.unreserveTurf(D.real_name)
+	var/comp_provided = D.compute_provided()
+	if (comp_provided)
+		if (comp_provided < 0)
+			src.used_compute -= abs(comp_provided)
+		if (comp_provided > 0)
+			src.total_compute -= comp_provided
+		src.update_computes()
+	D.flock = null
+
+	src.update_speech_channels_of_flockmob(D, null)
 
 // TRACES
 
@@ -569,37 +604,45 @@ proc/get_default_flock()
 // STRUCTURES
 
 ///This function only notifies the flock of the unlock, actual unlock logic is handled in the datum
-/datum/flock/proc/notifyUnlockStructure(var/datum/unlockable_flock_structure/SD)
-	flock_speak(null, "New structure devised: [SD.friendly_name]", src)
+/datum/flock/proc/notifyUnlockStructure(datum/unlockable_flock_structure/SD)
+	src.system_say_source.say("New structure devised: [SD.friendly_name]")
 
 ///This function only notifies the flock of the relock, actual unlock logic is handled in the datum
-/datum/flock/proc/notifyRelockStructure(var/datum/unlockable_flock_structure/SD)
-	flock_speak(null, "Alert, structure tealprint disabled: [SD.friendly_name]", src)
+/datum/flock/proc/notifyRelockStructure(datum/unlockable_flock_structure/SD)
+	src.system_say_source.say("Alert, structure tealprint disabled: [SD.friendly_name]")
 
 /datum/flock/proc/registerStructure(obj/flock_structure/S)
-	if(isflockstructure(S))
-		src.structures |= S
-		S.AddComponent(/datum/component/flock_interest, src)
-		var/comp_provided = S.compute_provided()
-		if (comp_provided)
-			if (comp_provided < 0)
-				src.used_compute += abs(comp_provided)
-			else
-				src.total_compute += comp_provided
-			src.update_computes()
+	if(!isflockstructure(S))
+		return
+
+	src.structures |= S
+	S.AddComponent(/datum/component/flock_interest, src)
+	var/comp_provided = S.compute_provided()
+	if (comp_provided)
+		if (comp_provided < 0)
+			src.used_compute += abs(comp_provided)
+		else
+			src.total_compute += comp_provided
+		src.update_computes()
+
+	src.update_speech_channels_of_flockstructure(S)
 
 /datum/flock/proc/removeStructure(obj/flock_structure/S)
-	if(isflockstructure(S))
-		src.structures -= S
-		S.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
-		S.flock = null
-		var/comp_provided = S.compute_provided()
-		if (comp_provided)
-			if (comp_provided < 0)
-				src.used_compute -= abs(comp_provided)
-			else
-				src.total_compute -= comp_provided
-			src.update_computes()
+	if(!isflockstructure(S))
+		return
+
+	src.structures -= S
+	S.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
+	S.flock = null
+	var/comp_provided = S.compute_provided()
+	if (comp_provided)
+		if (comp_provided < 0)
+			src.used_compute -= abs(comp_provided)
+		else
+			src.total_compute -= comp_provided
+		src.update_computes()
+
+	src.update_speech_channels_of_flockstructure(S, null)
 
 /datum/flock/proc/getComplexDroneCount()
 	if (!src.units)

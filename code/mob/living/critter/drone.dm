@@ -14,11 +14,11 @@
 	can_disarm = 0
 	blood_id = "oil"
 	var/dying = 0
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	metabolizes = 0
 	var/list/loot_table = list()
 	var/smashes_shit = 1

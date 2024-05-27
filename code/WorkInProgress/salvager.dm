@@ -475,10 +475,14 @@ var/datum/magpie_manager/magpie_man = new
 	barter = TRUE
 	currency = "Salvage Points"
 
+	speech_verb_say = "beeps"
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
+	use_speech_bubble = TRUE
+	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
+
 	New()
 		..()
-
-		src.chat_text = new(null, src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
@@ -509,38 +513,6 @@ var/datum/magpie_manager/magpie_man = new
 		pickupdialogue = "[src.name] states, \"Thank you for your business. Please come again\"."
 
 		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
-
-	var/list/speakverbs = list("beeps", "boops")
-	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
-	var/bot_speech_color
-
-	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
-		if (!message)
-			return
-		var/image/chat_maptext/chatbot_text = null
-		if (src.chat_text && !just_chat)
-			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-			SPAWN(1.5 SECONDS)
-				UpdateOverlays(null, "bot_speech_bubble")
-			if(!src.bot_speech_color)
-				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
-			var/maptext_color
-			if (sing)
-				maptext_color ="#D8BFD8"
-			else
-				maptext_color = src.bot_speech_color
-			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];")
-			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
-				chatbot_text.measure(src)
-				//hack until measure is unfucked
-				chatbot_text.measured_height = 20
-				for(var/image/chat_maptext/I in src.chat_text.lines)
-					if(I != chatbot_text)
-						I.bump_up(chatbot_text.measured_height)
-
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
 
 
 // Stubs for the public
