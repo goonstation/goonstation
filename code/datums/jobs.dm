@@ -1572,18 +1572,15 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/currency/spacecash/fivehundred)
 	slot_poc2 = list(\
 	/obj/item/scissors,
-	/obj/item/wirecutters/red,
+	/obj/item/wirecutters,
 	/obj/item/wirecutters/yellow,
-	/obj/item/wirecutters/blue,
-	/obj/item/wirecutters/gray,
+	/obj/item/wirecutters/grey,
 	/obj/item/wirecutters/orange,
 	/obj/item/scissors/surgical_scissors)
 	slot_lhan = list(\
 	/obj/item/screwdriver,
-	/obj/item/screwdriver/red,
 	/obj/item/screwdriver/yellow,
-	/obj/item/screwdriver/blue,
-	/obj/item/screwdriver/gray,
+	/obj/item/screwdriver/grey,
 	/obj/item/screwdriver/orange)
 
 	items_in_backpack = list(/obj/item/currency/spacecash/buttcoin = 2)
