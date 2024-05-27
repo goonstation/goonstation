@@ -1497,14 +1497,6 @@
 
 	return ..(text, special, sayverb)
 
-//Lallander was here
-/mob/living/carbon/human/whisper(message as text)
-	if (src.bioHolder.HasEffect("revenant")) //TODO this ought to go on a revenant modifier instead
-		return src.say(message)
-	else
-		..()
-
-
 /mob/living/carbon/human/u_equip(obj/item/W)
 	if (!W)
 		return
