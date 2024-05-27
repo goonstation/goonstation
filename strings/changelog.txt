@@ -1,4 +1,6 @@
-
+(t)mon may 27 24
+(u)LeahTheTech
+(+)Minimized windows will now unminimize when you go to open them again.
 (t)sun may 26 24
 (u)Glamurio (Ryou)
 (p)18790
