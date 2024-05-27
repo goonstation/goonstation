@@ -1093,7 +1093,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alias_names = "Mailman"
 	wages = PAY_TRADESMAN
 	limit = 1
-	slot_jump = list(/obj/item/clothing/under/misc/mail)
+	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
 	slot_head = list(/obj/item/clothing/head/mailcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/satchel)
