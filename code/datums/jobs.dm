@@ -760,32 +760,29 @@ ABSTRACT_TYPE(/datum/job/research)
 			return
 		M.traitHolder.addTrait("training_scientist")
 
-	assistant
-		name = "Research Assistant"
-		linkcolor = "#9900FF"
-		limit = 2
-		wages = PAY_UNTRAINED
-		low_priority_job = TRUE
-		slot_jump = list(/obj/item/clothing/under/color/purple)
-		slot_foot = list(/obj/item/clothing/shoes/white)
-		slot_belt = list(/obj/item/device/pda2/toxins)
-		slot_lhan = list()
-		slot_suit = list()
-		slot_eyes = list()
-		slot_mask = list()
-		slot_poc1 = list()
-		wiki_link = "https://wiki.ss13.co/Research_Assistant"
+/datum/job/research/research_assistant
+	name = "Research Assistant"
+	limit = 2
+	wages = PAY_UNTRAINED
+	low_priority_job = TRUE
+	slot_back = list(/obj/item/storage/backpack/research)
+	slot_ears = list(/obj/item/device/radio/headset/research)
+	slot_jump = list(/obj/item/clothing/under/color/purple)
+	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_belt = list(/obj/item/device/pda2/toxins)
+	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
+	wiki_link = "https://wiki.ss13.co/Research_Assistant"
 
-		New()
-			..()
-			src.access = get_access("Research Assistant")
+	New()
+		..()
+		src.access = get_access("Research Assistant")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
 			return
-
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M)
-				return
-			M.traitHolder.addTrait("training_scientist")
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/research/medical_doctor
 	name = "Medical Doctor"
@@ -833,24 +830,24 @@ ABSTRACT_TYPE(/datum/job/research)
 			if (!M) return
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
-	assistant
-		name = "Medical Assistant"
-		linkcolor = "#9900FF"
-		limit = 2
-		wages = PAY_UNTRAINED
-		low_priority_job = TRUE
-		slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
-		slot_belt = list(/obj/item/device/pda2/medical)
-		slot_suit = list()
-		slot_eyes = list()
-		slot_glov = list()
-		slot_poc1 = list()
-		wiki_link = "https://wiki.ss13.co/Medical_Assistant"
+/datum/job/research/medical_assistant
+	name = "Medical Assistant"
+	limit = 2
+	wages = PAY_UNTRAINED
+	low_priority_job = TRUE
+	slot_back = list(/obj/item/storage/backpack/medic)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
+	slot_foot = list(/obj/item/clothing/shoes/red)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
+	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
+	slot_belt = list(/obj/item/device/pda2/medical)
+	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
 
-		New()
-			..()
-			src.access = get_access("Medical Assistant")
-			return
+	New()
+		..()
+		src.access = get_access("Medical Assistant")
+		return
 
 // Engineering Jobs
 
@@ -971,23 +968,24 @@ ABSTRACT_TYPE(/datum/job/engineering)
 				return
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
-	assistant
-		name = "Technical Assistant"
-		linkcolor = "#FF9900"
-		limit = 2
-		wages = PAY_UNTRAINED
-		low_priority_job = TRUE
-		slot_jump = list(/obj/item/clothing/under/color/yellow)
-		slot_foot = list(/obj/item/clothing/shoes/brown)
-		slot_belt = list(/obj/item/device/pda2/technical_assistant)
-		slot_poc1 = list()
-		slot_glov = list()
-		wiki_link = "https://wiki.ss13.co/Technical_Assistant"
+/datum/job/engineering/technical_assistant
+	name = "Technical Assistant"
+	limit = 2
+	wages = PAY_UNTRAINED
+	low_priority_job = TRUE
+	slot_back = list(/obj/item/storage/backpack/engineering)
+	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
+	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_jump = list(/obj/item/clothing/under/color/yellow)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_belt = list(/obj/item/device/pda2/technical_assistant)
+	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
 
-		New()
-			..()
-			src.access = get_access("Technical Assistant")
-			return
+	New()
+		..()
+		src.access = get_access("Technical Assistant")
+		return
 
 // Civilian Jobs
 

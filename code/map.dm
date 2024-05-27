@@ -1095,8 +1095,8 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
 		/datum/job/special/hairdresser = 1,
-		/datum/job/research/scientist/assistant = 2,
-		/datum/job/research/medical_doctor/assistant = 2
+		/datum/job/research/research_assistant = 2,
+		/datum/job/research/medical_assistant = 2
 	)
 
 	windows = /obj/window/auto
