@@ -1,5 +1,7 @@
 
 (t)tue may 28 24
+(u)Zamujasa
+(*)The day/night cycle on Centcom is on a reasonable timezone again.
 (u)Glamurio (Ryou)
 (p)19184
 (e)🆕|C-Feature
