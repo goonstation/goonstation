@@ -53,7 +53,6 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
           <Image
             verticalAlign="top"
             height={height || "100%"}
-            pixelated
             src={imagePath}
             backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
           />

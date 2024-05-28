@@ -16,7 +16,7 @@
 			player_count++
 		return src._send(server, list(
 			"player_count" = player_count,
-			"map" = mapSwitcher.current,
-			"next_map" = mapSwitcher.next,
+			"map" = mapSwitcher?.current,
+			"next_map" = mapSwitcher?.next,
 			"round_time" = round(ticker?.round_elapsed_ticks / 600),
 		))

@@ -64,7 +64,7 @@ export const ExpiryInput = (props: ExpiryInputProps) => {
   let valueControl: InfernoNode = null;
   if (expiryType === 'timestamp') {
     valueControl = <Input width="100%" value={expiryValue} onChange={handleChangeValuePart} placeholder="yyyy-mm-dd" />;
-  } else if (['minutes', 'days', 'hours'].includes(expiryType)) {
+  } else if (expiryType && ['minutes', 'days', 'hours'].includes(expiryType)) {
     valueControl = (
       <NumberInput
         width="100%"
@@ -81,7 +81,7 @@ export const ExpiryInput = (props: ExpiryInputProps) => {
       <Stack.Item>
         <Dropdown
           options={expiryTypeOptions}
-          selected={expiryTypeLookup[expiryType]}
+          selected={expiryType && expiryTypeLookup[expiryType]}
           onSelected={handleChangeTypePart}
           key={expiryType}
         />

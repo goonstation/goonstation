@@ -834,11 +834,11 @@
 					if(!message_on || !signal.data["message"])
 						return
 
-					var/senderName = signal.data["sender_name"]
+					var/senderName = html_encode(signal.data["sender_name"])
 					if(!senderName)
 						senderName = "!Unknown!"
 
-					var/senderAssignment = signal.data["sender_assignment"]
+					var/senderAssignment = html_encode(signal.data["sender_assignment"])
 					var/messageFrom = senderName
 					if (senderAssignment)
 						messageFrom = "[messageFrom] - [senderAssignment]"
