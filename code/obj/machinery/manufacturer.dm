@@ -12,6 +12,10 @@
 #define MAX_SPEED 3 //! maximum speed default manufacturers can be set to
 #define MAX_SPEED_HACKED 5 //! maximum speed manufacturers which are hacked (WIRE_EXTEND has been pulsed) can be set to
 #define MAX_SPEED_DAMAGED 8 //! maximum speed that manufacturers which flip_out() can be set to, randomly.
+#define DISMANTLE_NONE 0 //! 0 - Undismantled state. Changed to 1 (DISMANTLE_PLATING_BOLTS) with a wrenching tool, or back to 0 with a wrenching tool too.
+#define DISMANTLE_PLATING_BOLTS 1 //! 1 - External plating pryable. Changed to 2 (DISMANTLE_PLATING_SHEETS) with a prying tool, or back to 1 with renforced metal sheets.
+#define DISMANTLE_PLATING_SHEETS 2 //! 2 - Internal wiring exposed. Changed to 3 (DISMANTLE_WIRES) with a snipping tool, changed to 2 by adding cabling back.
+#define DISMANTLE_WIRES 3 //! 3 - internal mechanism exposed. Using a wrenching tool at this point disassembles it into sheet metal.
 #define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
 #define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
 
@@ -49,8 +53,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// How much power is consumed while active. This is determined automatically when the unit starts a production cycle
 	var/active_power_consumption = 0
 	var/panel_open = FALSE
-	/// The stage of dismantlement this machine is currently at.
-	var/dismantle_stage = 0
+	/// The stage of dismantlement this machine is currently at. 0 is functional, 3 is pretty much entirely disassembled.
+	var/dismantle_stage = DISMANTLE_NONE
 	var/hacked = FALSE
 	var/malfunction = FALSE
 	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
@@ -214,11 +218,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			. += "<br>[SPAN_ALERT("It seems to be offline.")]"
 
 		switch(src.dismantle_stage)
-			if(1)
+			if(DISMANTLE_PLATING_BOLTS)
 				. += "<br>[SPAN_ALERT("It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.")]"
-			if(2)
+			if(DISMANTLE_PLATING_SHEETS)
 				. += "<br>[SPAN_ALERT("It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.")]"
-			if(3)
+			if(DISMANTLE_WIRES)
 				. += "<br>[SPAN_ALERT("It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.")]"
 
 	process(mult)
@@ -287,7 +291,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.is_broken())
 			src.build_icon()
 		else
-			if(src.powered() && src.dismantle_stage < 3)
+			if(src.powered() && src.dismantle_stage < DISMANTLE_WIRES)
 				status &= ~NOPOWER
 				src.build_icon()
 			else
@@ -924,48 +928,48 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.change_contents(mat_piece = W, user = user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if (src.dismantle_stage == 0)
+				if (src.dismantle_stage == DISMANTLE_NONE)
 					user.visible_message("<b>[user]</b> loosens [src]'s external plating bolts.")
-					src.dismantle_stage = 1
-				else if (src.dismantle_stage == 1)
+					src.dismantle_stage = DISMANTLE_PLATING_BOLTS
+				else if (src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 					user.visible_message("<b>[user]</b> fastens [src]'s external plating bolts.")
-					src.dismantle_stage = 0
-				else if (src.dismantle_stage == 3)
+					src.dismantle_stage = DISMANTLE_NONE
+				else if (src.dismantle_stage == DISMANTLE_WIRES)
 					user.visible_message("<b>[user]</b> dismantles [src]'s mechanisms.")
 					new /obj/item/sheet/steel/reinforced(src.loc)
 					qdel(src)
 					return
 				src.build_icon()
 
-		else if (ispryingtool(W) && src.dismantle_stage == 1)
+		else if (ispryingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			src.dismantle_stage = 2
+			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
 
-		else if (issnippingtool(W) && src.dismantle_stage == 2)
+		else if (issnippingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			if (!(status & NOPOWER))
 				if (src.shock(user,100))
 					return
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-			src.dismantle_stage = 3
+			src.dismantle_stage = DISMANTLE_WIRES
 			src.status |= NOPOWER
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
 			C.UpdateIcon()
 			src.build_icon()
 
-		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == 2)
+		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
-			src.dismantle_stage = 1
+			src.dismantle_stage = DISMANTLE_PLATING_BOLTS
 			qdel(W)
 			src.build_icon()
 
-		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == 3)
+		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
-			src.dismantle_stage = 2
+			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
 			var/obj/item/cable_coil/C = W
 			C.use(1)
 			src.status &= ~NOPOWER
@@ -1404,7 +1408,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return FALSE
 		if (src.is_disabled())
 			return FALSE
-		if (src.dismantle_stage > 0)
+		if (src.dismantle_stage > DISMANTLE_NONE)
 			return FALSE
 		if (!isliving(user))
 			return FALSE
@@ -1848,7 +1852,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.UpdateOverlays(null, "work")
 			src.UpdateOverlays(null, "activity")
 			icon_state = "[src.icon_base]-broken"
-		else if (src.dismantle_stage >= 2)
+		else if (src.dismantle_stage >= DISMANTLE_PLATING_SHEETS)
 			src.UpdateOverlays(null, "work")
 			src.UpdateOverlays(null, "activity")
 			icon_state = "fab-noplate"
@@ -2043,7 +2047,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return C
 		else if (istype(src.output_target,/obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = src.output_target
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
+			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > DISMANTLE_NONE)
 				src.output_target = null
 				return src.loc
 			if (A && istype(A,M.base_material_class))
@@ -2961,6 +2965,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 				getItemIcon(I.item_outputs[1])
 
 #undef MAX_QUEUE_LENGTH
+#undef DISMANTLE_NONE
+#undef DISMANTLE_PLATING_BOLTS
+#undef DISMANTLE_PLATING_SHEETS
+#undef DISMANTLE_WIRES
 #undef WIRE_EXTEND
 #undef WIRE_POWER
 #undef WIRE_MALF
