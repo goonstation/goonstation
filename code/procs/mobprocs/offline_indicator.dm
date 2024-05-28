@@ -17,8 +17,9 @@
 
 // Singletons for offline indicators
 // "this looks like the typing indicators" yes, and
-var/mutable_appearance/offline_indicator = mutable_appearance('icons/mob/overhead_icons32x48.dmi', "offline")
-var/mutable_appearance/offline_a_while_indicator = mutable_appearance('icons/mob/overhead_icons32x48.dmi', "offline_a_while")
+var/image/offline_indicator_0m = image('icons/mob/overhead_icons32x48.dmi', "offline0m")
+var/image/offline_indicator_1m = image('icons/mob/overhead_icons32x48.dmi', "offline1m")
+var/image/offline_indicator_5m = image('icons/mob/overhead_icons32x48.dmi', "offline5m")
 /mob/proc/create_offline_indicator()
 	return
 
