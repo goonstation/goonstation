@@ -70,8 +70,8 @@ var/datum/mechanic_controller/mechanic_controls
 			if(islist(mats_number))
 				mats_types = mats_number
 				mats_number = 0
-				for(var/mat in mats_types)
-					var/amt = mats_types[mat]
+				for(var/req_id as anything in mats_types)
+					var/amt = mats_types[req_id]
 					if(isnull(amt))
 						amt = 1
 					mats_number += amt
@@ -91,11 +91,12 @@ var/datum/mechanic_controller/mechanic_controls
 			if (!isnull(mats_types))
 				M.item_requirements.Cut()
 				M.item_names = null // auto-generate
-				for(var/mat in mats_types)
-					var/amt = mats_types[mat]
+				for(var/req_id as anything in mats_types)
+					var/amt = mats_types[req_id]
 					if(isnull(amt))
 						amt = 1
-					M.item_requirements[mat] = amt
+					var/datum/manufacturing_requirement/R = getRequirement(req_id)
+					M.item_requirements[R] = amt
 			else if (mats_number > 0)
 				for(var/tracker = 1, tracker <= mats_number, tracker ++)
 					M.item_requirements[rand(1,3)] += 1
