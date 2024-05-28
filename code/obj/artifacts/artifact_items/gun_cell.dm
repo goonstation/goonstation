@@ -31,7 +31,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr.traitHolder?.hasTrait("training_scientist")) || isrobot(usr)))
+		if (istext(A.examine_hint) && (usr.traitHolder?.hasTrait("training_scientist")) || isrobot(usr))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
