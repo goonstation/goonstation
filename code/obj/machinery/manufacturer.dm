@@ -57,8 +57,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/dismantle_stage = DISMANTLE_NONE
 	var/hacked = FALSE
 	var/malfunction = FALSE
+	// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
 	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
-	/// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
 	var/time_left_electrified = 0
 	/// A turf or object which the manufacturer will attempt to output items into.
 	var/output_target = null
