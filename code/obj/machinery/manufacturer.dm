@@ -91,7 +91,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
 	var/output_cap = MAX_OUTPUT
 	/// A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
-	var/list/queue = list()
+	var/list/datum/manufacture/queue = list()
 
 	/* Resources/materials */
 	/// Base class for material pieces that the manufacturer accepts.
