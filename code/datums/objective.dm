@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/objective)
 			return TRUE
 		if(isVRghost(M.current))
 			return TRUE
-		if(!iscarbon(M.current))
+		if(isghostcritter(M.current) || isghostdrone(M.current))
 			return TRUE
 		return FALSE
 
