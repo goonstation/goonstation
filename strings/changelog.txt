@@ -1,5 +1,9 @@
 
 (t)tue may 28 24
+(u)Klushy225
+(p)19008
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added a fade style for the curly bob
 (u)Dino
 (p)19001
 (e)🎨|C-Sprites
