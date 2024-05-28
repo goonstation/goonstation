@@ -1,5 +1,9 @@
 
 (t)tue may 28 24
+(u)Glamurio (Ryou)
+(p)19184
+(e)🆕|C-Feature
+(+)Mail Delivery Score is now tracked at the end of credits.
 (u)FlameArrow57 and Flaborized
 (p)18989
 (e)🎨📦|C-Sprites, A-Game-Objects
