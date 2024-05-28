@@ -982,6 +982,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_drinker")
+		M.traitHolder.addTrait("training_bar")
 
 /datum/job/civilian/botanist
 	name = "Botanist"
