@@ -1,4 +1,9 @@
 
+(t)tue may 28 24
+(u)Dino
+(p)19001
+(e)🎨|C-Sprites
+(+)Added two new dwarven inspired beard options.
 (t)mon may 27 24
 (u)TealSeer
 (p)19140
