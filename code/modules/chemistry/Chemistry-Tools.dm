@@ -555,7 +555,7 @@ proc/ui_describe_reagents(atom/A)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
-			if(user.mind.assigned_role == "Bartender")
+			if(usr.traitHolder?.hasTrait("training_bar"))
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))

@@ -34,6 +34,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	var/list/accounts = list()
 	var/output_target = null
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
+	var/accident_chance = null
+	var/accident_happen = null
 
 	var/list/recording_queue
 	var/list/recording_state = FALSE
@@ -323,6 +325,15 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				if(src.recording_state)
 					src.recording_queue += "[params["reagentId"]]=[isnum(amount) ? amount : 10]"
 				. = TRUE
+				if ((usr.traitHolder?.hasTrait("training_scientist")) || isrobot(usr) || (usr.traitHolder?.hasTrait("training_medical")) || (usr.traitHolder?.hasTrait("training_bar"))) //are we a qualified professional?
+					return
+				else
+					accident_chance = rand(1, 30)
+					accident_happen = rand(1, 30)
+					if (accident_chance == accident_happen)
+						beaker.reagents.trans_to(usr, accident_happen) //after matching the RNG values, pour the amount of reagent in the spill equal to it
+						boutput(ui.user, SPAN_COMBAT("You push too hard on the dispenser valve and spill some of the beaker's contents onto you!")) //not directly combat but still possibly still damaging so BEEG text
+
 			if ("eject")
 				if (beaker)
 					if(beaker.loc == src)

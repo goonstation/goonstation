@@ -28,6 +28,8 @@ TYPEINFO(/obj/machinery/chem_heater)
 	var/target_temp = T0C
 	var/output_target = null
 	var/mob/roboworking = null
+	var/accident_chance = 0
+	var/accident_happen = 0
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
@@ -202,8 +204,16 @@ TYPEINFO(/obj/machinery/chem_heater)
 			return
 
 		var/datum/reagents/R = beaker:reagents
+		if (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isrobot(usr) || usr && (usr.traitHolder?.hasTrait("training_medical"))|| usr && (usr.traitHolder?.hasTrait("training_bar"))) //are we a qualified professional?
+			return
+		else
+			accident_chance = rand(1, 50)
+			accident_happen = rand(1, 50)
+			if (accident_chance == accident_happen)
+				explosion(beaker, -1,-1,0,1)
+				beaker.shatter_chemically(projectiles = TRUE)
+				boutput(usr, SPAN_COMBAT("You've put the glass on the temperature plate wrong, its shattered everywhere!")) //Not player inflicted literal combat but still damaging.
 		R.temperature_reagents(target_temp, exposed_volume = (400 + R.total_volume * 5) * mult, change_cap = 100) //it uses juice in if the beaker is filled more. Or something.
-
 		src.power_usage = 2000 + R.total_volume * 25
 
 		if(abs(R.total_temperature - target_temp) <= 3)
