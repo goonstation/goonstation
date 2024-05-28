@@ -1,5 +1,9 @@
 
 (t)tue may 28 24
+(u)FlameArrow57 and Flaborized
+(p)18989
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Minor re-sprite of item fires, with sprites by Flaborized. Items also now emit light when ignited.
 (u)Klushy225
 (p)19008
 (e)🎨📦|C-Sprites, A-Game-Objects
