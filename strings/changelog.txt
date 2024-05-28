@@ -1,4 +1,9 @@
+
 (t)mon may 27 24
+(u)TealSeer
+(p)19140
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)People with the Unionized trait are no longer immune to arcfiend's polarize ability. Immunity to bio-magnetic random events remain unchanged.
 (u)LeahTheTech
 (+)Minimized windows will now unminimize when you go to open them again.
 (t)sun may 26 24
