@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Handspider"
 	desc = "Detach one of your arms and bring it to life using one of the members of your hivemind."
 	icon_state = "handspider"
-	pointCost = 4
+	pointCost = 1
 	antag_role = ROLE_HANDSPIDER
 
 	available_bodypart()
@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Eyespider"
 	desc = "Eject one of your eyes as a non-combatant utility form and bring it to life using one of the members of your hivemind."
 	icon_state = "eyespider"
-	pointCost = 0 // free for now, given you have to lose a fuckin' EYE
+	pointCost = 0
 	antag_role = ROLE_EYESPIDER
 
 	available_bodypart()
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	desc = "Detach one of your legs and bring it to life using one of the members of your hivemind."
 	icon_state = "legworm"
 	cooldown = 1200
-	pointCost = 6
+	pointCost = 2
 	antag_role = ROLE_LEGWORM
 
 	available_bodypart()

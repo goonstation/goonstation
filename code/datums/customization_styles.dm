@@ -894,7 +894,7 @@ proc/select_custom_style(mob/living/carbon/human/user, no_gimmick_hair = FALSE)
 
 proc/find_style_by_name(var/target_name, client/C, no_gimmick_hair = FALSE)
 	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
-		if(initial(styletype.name) == target_name)
+		if(cmptext(initial(styletype.name), target_name))
 			return new styletype
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none

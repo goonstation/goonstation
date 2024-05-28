@@ -457,6 +457,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		if (!M)
 			return
 
+		M.traitHolder.addTrait("training_scientist")
 		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
 			if (!heisenbee.beeMom)
 				heisenbee.beeMom = M
@@ -752,6 +753,12 @@ ABSTRACT_TYPE(/datum/job/research)
 		..()
 		src.access = get_access("Scientist")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/research/medical_doctor
 	name = "Medical Doctor"
@@ -1331,6 +1338,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Toxins Researcher")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
+
 /datum/job/special/chemist
 	name = "Chemist"
 	linkcolor = "#9900FF"
@@ -1346,6 +1359,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Chemist")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/special/research_assistant
 	name = "Research Assistant"
@@ -1363,6 +1382,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Research Assistant")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_scientist")
 
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
@@ -1439,6 +1464,28 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	New()
 		..()
 		src.access = get_access("Space Cowboy")
+		return
+
+/datum/job/special/mail_courier
+	name = "Mail Courier"
+	linkcolor = "#0099FF"
+	alias_names = "Mailman"
+	wages = PAY_TRADESMAN
+	limit = 1
+	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
+	slot_head = list(/obj/item/clothing/head/mailcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_ears = list(/obj/item/device/radio/headset/mail)
+	slot_poc1 = list(/obj/item/pinpointer/mail_recepient)
+	slot_belt = list(/obj/item/device/pda2/quartermaster)
+	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
+	alt_names = list("Head of Deliverying", "Mail Bringer")
+	wiki_link = "https://wiki.ss13.co/Mailman"
+
+	New()
+		..()
+		src.access = get_access("Mail Courier")
 		return
 
 // randomizd gimmick jobs
@@ -1602,9 +1649,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 		M.set_mutantrace(morph)
-		if (M.l_store)
-			M.stow_in_available(M.l_store)
-		M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
+		if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+		else
+			if (M.l_store)
+				M.stow_in_available(M.l_store)
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 
 /datum/job/special/random/testsubject
 	name = "Test Subject"
@@ -1775,23 +1825,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_chef")
-
-/datum/job/special/random/waiter
-	name = "Waiter"
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/rank/bartender)
-	slot_suit = list(/obj/item/clothing/suit/wcoat)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_lhan = list(/obj/item/plate/tray)
-	slot_poc1 = list(/obj/item/cloth/towel/white)
-	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
-	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
-	New()
-		..()
-		src.access = get_access("Waiter")
-		return
 
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
@@ -2830,24 +2863,22 @@ ABSTRACT_TYPE(/datum/job/daily)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/daily/mail_courier
+/datum/job/daily/waiter
 	day = "Wednesday"
-	name = "Mail Courier"
-	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
-	limit = 2
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
-	slot_head = list(/obj/item/clothing/head/mailcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_ears = list(/obj/item/device/radio/headset/mail)
-	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Mail Bringer")
-	wiki_link = "https://wiki.ss13.co/Mailman"
+	name = "Waiter"
+	wages = PAY_UNTRAINED
+	slot_jump = list(/obj/item/clothing/under/rank/bartender)
+	slot_suit = list(/obj/item/clothing/suit/wcoat)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_lhan = list(/obj/item/plate/tray)
+	slot_poc1 = list(/obj/item/cloth/towel/white)
+	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
+	wiki_link = "https://wiki.ss13.co/Jobs#Job_of_the_Day" // no wiki page yet
 
 	New()
 		..()
-		src.access = get_access("Mail Courier")
+		src.access = get_access("Waiter")
 		return
 
 /datum/job/daily/lawyer
@@ -2890,12 +2921,15 @@ ABSTRACT_TYPE(/datum/job/daily)
 		..()
 		if (!M)
 			return
-		if (M.l_store)
-			M.stow_in_available(M.l_store)
-		M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 		if(prob(33))
 			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 			M.set_mutantrace(morph)
+		if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+		else
+			if (M.l_store)
+				M.stow_in_available(M.l_store)
+			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
 		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
 		var/obj/item/card/id = locate() in M
