@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend } from "../../../backend";
 import { AnimatedNumber, Button, LabeledList, Section } from "../../../components";
 import { Description } from "../BioEffect";
@@ -31,7 +30,7 @@ export const ResearchTab = (props, context) => {
   } = props;
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Statistics"
         buttons={(
@@ -67,7 +66,7 @@ export const ResearchTab = (props, context) => {
         {availableResearch.map((ar, tier) => (
           <Section
             key={tier}
-            title={"Tier " + (tier + 1)}>
+            title={`Tier ${tier + 1}`}>
             {ar.length ? ar.map(r => (
               <Section
                 key={r.ref}
@@ -91,7 +90,7 @@ export const ResearchTab = (props, context) => {
         {finishedResearch.map((fr, tier) => (
           <Section
             key={tier}
-            title={"Tier " + (tier + 1)}>
+            title={`Tier ${tier + 1}`}>
             {fr.length ? fr.map(r => (
               <Section
                 key={research[r.ref].name}
@@ -102,6 +101,6 @@ export const ResearchTab = (props, context) => {
           </Section>
         ))}
       </Section>
-    </Fragment>
+    </>
   );
 };

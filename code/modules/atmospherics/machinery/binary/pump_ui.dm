@@ -49,7 +49,7 @@
 	src.show_ui(usr)
 /// Displays the UI
 /datum/pump_ui/proc/show_ui(mob/user)
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder) // Monke!
 		user.client.tooltipHolder.showClickTip(get_atom(), list("title" = src.pump_name, "content" = render()))
 
 /// Generates the HTML

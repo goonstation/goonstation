@@ -8,6 +8,7 @@
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
 	duration_remove = 5 SECONDS
+	compatible_species = list("human", "cow", "werewolf", "flubber") // No helmets for martians / blobs
 
 	setupProperties()
 		..()

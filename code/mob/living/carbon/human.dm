@@ -744,7 +744,7 @@
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
-	src.UpdateOverlays(null, "sleep_bubble")
+	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -758,6 +758,7 @@
 		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
+	add_lifeprocess(/datum/lifeprocess/decomposition)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
@@ -2296,6 +2297,8 @@
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
+	if (src.autoequip_slot(I, SLOT_IN_BELT))
+		return
 	if (src.autoequip_slot(I, SLOT_L_STORE))
 		return
 	if (src.autoequip_slot(I, SLOT_R_STORE))
@@ -2975,6 +2978,9 @@
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
+		if(istype(A, /obj/item/device/light)) //i hate this
+			var/obj/item/device/light/L = A
+			L.light.attach(L)
 		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)

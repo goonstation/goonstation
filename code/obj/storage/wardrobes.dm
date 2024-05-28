@@ -186,7 +186,6 @@ TYPEINFO(/obj/storage/closet/dresser)
 	/obj/item/clothing/head/serpico,
 	/obj/item/clothing/head/red,
 	/obj/item/clothing/head/flatcap,
-	/obj/item/clothing/head/policecap,
 	/obj/item/clothing/head/helmet/bobby,
 	/obj/item/clothing/head/helmet/siren = 2)
 

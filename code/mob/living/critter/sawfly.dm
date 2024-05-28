@@ -162,9 +162,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 
-		remove_lifeprocess(/datum/lifeprocess/canmove)
 		remove_lifeprocess(/datum/lifeprocess/disability)
-		remove_lifeprocess(/datum/lifeprocess/fire)
 		remove_lifeprocess(/datum/lifeprocess/hud)
 		remove_lifeprocess(/datum/lifeprocess/mutations)
 		remove_lifeprocess(/datum/lifeprocess/organs)
@@ -176,10 +174,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	proc/blowup() //chance to activate when they die and get EMP'd
 		if(prob(66))
 			src.visible_message(SPAN_COMBAT("[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!"))
-			fireflash(src,1, checkLos = FALSE)
+			fireflash(src,1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 		else
 			src.visible_message(SPAN_COMBAT("[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!"))
-			fireflash(src,0, checkLos = FALSE)
+			fireflash(src,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 

@@ -135,6 +135,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
+		/client/proc/toggle_tracy_profiling,
 
 		/client/proc/debug_deletions,
 
@@ -424,7 +425,8 @@ var/list/admin_verbs = list(
 #endif
 		/client/proc/distribute_tokens,
 		/client/proc/spawn_all_type,
-		/client/proc/region_allocator_panel
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
 		),
 
 	7 = list(
@@ -690,10 +692,12 @@ var/list/special_pa_observing_verbs = list(
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
+		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are now invisible."))
 	else
 		src.mob.mouse_opacity = 1
 		src.mob.alpha = 255
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are no longer invisible!"))
 
 /client/proc/admin_observe()
@@ -1039,7 +1043,7 @@ var/list/fun_images = list()
 		if("Heavenly")
 			src.respawn_as_self()
 			var/mob/M = src.mob
-			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()

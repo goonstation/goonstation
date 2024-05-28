@@ -46,7 +46,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -201,7 +201,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			}
 
 		#fakeTopBar {
-			// position: sticky but shitty
+			/* position: sticky but shitty */
 			visibility: hidden;
 			margin-bottom: 0.5em;
 			opacity: 0;
@@ -337,7 +337,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				for (var/foundCategory in global.QM_CategoryList)
 					//var/categorycolor = random_color() //I must say, I simply love the colors this generates.
 
-					. += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+					. += "[catnum ? " &middot; " : ""] <a href='#' onclick='scroll_to_id(\"category-[catnum]\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 					ordershit += {"
 			<a name='category-[catnum]' id='category-[catnum]'></a><h3>[foundCategory]</h3>

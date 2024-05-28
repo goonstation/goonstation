@@ -938,7 +938,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 				smoke.attach(src)
 				smoke.start()
 		if (prob(7) && !(src.item_function_flags & COLD_BURN))
-			fireflash(src, 0)
+			fireflash(src, 0, chemfire = CHEM_FIRE_RED)
 
 		if (prob(40))
 			if (src.health > 4)
@@ -1192,20 +1192,21 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		var/obj/container = src.loc
 		container.vis_contents -= src
 
-	if (src.loc == user)
+	if (ismob(mobloc)) //if the location is a mob, we properly remove the item
 		var/in_pocket = 0
-		if(issilicon(user)) //if it's a borg's shit, stop here
+		if(issilicon(user)) //if it's a borg's shit on yourself, stop here
 			return 0
-		// storage items in hands or worn
+		// storage items in your own hands or worn
 		if (src.storage && ((src in user.equipped_list()) || src.storage.opens_if_worn))
 			src.storage.storage_item_attack_hand(user)
 			return FALSE
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
+		// now we check if we can remove the item from the mob-location
+		if (ishuman(mobloc))
+			var/mob/living/carbon/human/H = mobloc
 			if(H.l_store == src || H.r_store == src)
 				in_pocket = 1
-		if (!cant_self_remove || (!cant_drop && (user.l_hand == src || user.r_hand == src)) || in_pocket == 1)
-			user.u_equip(src)
+		if (!cant_self_remove || (!cant_drop && (user.l_hand == mobloc || user.r_hand == mobloc)) || in_pocket == 1)
+			mobloc.u_equip(src)
 		else
 			boutput(user, SPAN_ALERT("You can't remove this item."))
 			return 0
@@ -1733,3 +1734,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/safe_delete()
 	src.force_drop()
 	..()
+
+/obj/item/can_arm_attach()
+	return ..() && !(src.cant_drop || src.two_handed)

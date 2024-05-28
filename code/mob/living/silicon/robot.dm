@@ -2352,10 +2352,10 @@
 					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Civilian module. It comes with a free Efficiency Upgrade."))
+				boutput(src, SPAN_NOTICE("You chose the Civilian module. It comes with a free recharge pack."))
 				src.set_module(new /obj/item/robot_module/civilian(src))
 				if(length(src.upgrades) < src.max_upgrades)
-					src.upgrades += new /obj/item/roboupgrade/efficiency(src)
+					src.upgrades += new /obj/item/roboupgrade/rechargepack(src)
 			if("Engineering")
 				src.freemodule = 0
 				boutput(src, SPAN_NOTICE("You chose the Engineering module. It comes with a free Meson Vision Upgrade."))
@@ -2598,7 +2598,7 @@
 		var/message = null
 		var/net_id = generate_net_id(src)
 		var/frequency = FREQ_PDA
-		var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
@@ -2697,7 +2697,7 @@
 
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
-					src.UpdateOverlays(eye_light, "eye_light")
+					src.AddOverlays(eye_light, "eye_light")
 			else if (!src.part_head && !isdead(src))
 				src.death()
 
@@ -2794,37 +2794,37 @@
 			if (src.part_chest.ropart_get_damage_percentage() > 70)
 				if (!src.i_critdmg)
 					src.i_critdmg = image('icons/mob/robots.dmi', "critdmg")
-				UpdateOverlays(src.i_critdmg, "critdmg")
+				AddOverlays(src.i_critdmg, "critdmg")
 			else
-				UpdateOverlays(null, "critdmg")
+				ClearSpecificOverlays("critdmg")
 		else
-			UpdateOverlays(null, "critdmg")
+			ClearSpecificOverlays("critdmg")
 
 		if (src.part_head && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_head, "head")
 		else
-			UpdateOverlays(null, "head")
+			ClearSpecificOverlays("head")
 
 		if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_leg_l, "leg_l")
 		else
-			UpdateOverlays(null, "leg_l")
+			ClearSpecificOverlays("leg_l")
 
 		if (src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_leg_r, "leg_r")
 		else
-			UpdateOverlays(null, "leg_r")
+			ClearSpecificOverlays("leg_r")
 
 		if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_arm_l, "arm_l")
 		else
-			UpdateOverlays(null, "arm_l")
+			ClearSpecificOverlays("arm_l")
 
 
 		if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_arm_r, "arm_r")
 		else
-			UpdateOverlays(null, "arm_r")
+			ClearSpecificOverlays("arm_r")
 
 		UpdateOverlays(src.i_chest, "chest")
 		UpdateOverlays(src.i_head_decor, "head_decor")
@@ -2851,18 +2851,18 @@
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
 				src.i_clothes.overlays += clothed_image
-			UpdateOverlays(src.i_clothes, "clothes", TRUE)
+			AddOverlays(src.i_clothes, "clothes", TRUE)
 		else
-			UpdateOverlays(null, "clothes")
+			ClearSpecificOverlays("clothes")
 
 		if (src.brainexposed && src.part_head)
 			if (src.part_head.brain)
 				src.i_details.icon_state = "openbrain"
 			else
 				src.i_details.icon_state = "openbrainless"
-			UpdateOverlays(src.i_details, "brain", TRUE)
+			AddOverlays(src.i_details, "brain", TRUE)
 		else
-			UpdateOverlays(null, "brain")
+			ClearSpecificOverlays("brain")
 
 		if (src.opened)
 			if (!src.i_panel)
@@ -2880,15 +2880,15 @@
 			if (src.wiresexposed)
 				src.i_details.icon_state = "openwires"
 				src.i_panel.overlays += src.i_details
-			UpdateOverlays(src.i_panel, "panel", TRUE)
+			AddOverlays(src.i_panel, "panel", TRUE)
 		else
-			UpdateOverlays(null, "panel")
+			ClearSpecificOverlays("panel")
 
 		if (src.emagged)
 			src.i_details.icon_state = "emagged"
-			UpdateOverlays(src.i_details, "emagged", TRUE)
+			AddOverlays(src.i_details, "emagged", TRUE)
 		else
-			UpdateOverlays(null, "emagged")
+			ClearSpecificOverlays("emagged")
 
 		if (length(src.upgrades))
 			if (!src.i_upgrades)
@@ -2897,9 +2897,9 @@
 			for (var/obj/item/roboupgrade/R in src.upgrades)
 				if (R.activated && R.borg_overlay)
 					src.i_upgrades.overlays += image('icons/mob/robots.dmi', R.borg_overlay)
-			UpdateOverlays(src.i_upgrades, "upgrades", TRUE)
+			AddOverlays(src.i_upgrades, "upgrades", TRUE)
 		else
-			UpdateOverlays(null, "upgrades")
+			ClearSpecificOverlays("upgrades")
 
 		src.update_mob_silhouette()
 
@@ -3148,7 +3148,7 @@
 		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
 
 	if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
-		UpdateOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
+		AddOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
 		src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
 		src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
 	else if(world.time >= src.next_batteryDistressBoop)

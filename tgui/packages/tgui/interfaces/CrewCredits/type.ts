@@ -29,7 +29,7 @@ export interface CrewMemberProps {
   dead: BooleanLike;
   player: string;
   role: string;
-  head?: BooleanLike;
+  head?: boolean;
 }
 
 

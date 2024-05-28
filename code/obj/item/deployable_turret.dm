@@ -18,9 +18,15 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	var/associated_turret = null //what kind of turret should this spawn?
 	var/turret_health = 100
 
-	New()
+	New(newLoc, forensics_id)
 		..()
 		icon_state = "[src.icon_tag]_deployer"
+		if (!src.forensic_ID)
+			if (forensics_id)
+				src.forensic_ID = forensics_id
+			else
+				src.forensic_ID = src.CreateID()
+				forensic_IDs.Add(src.forensic_ID)
 
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It looks [damage_words]")]"
@@ -101,6 +107,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 //       Turret Code       //
 /////////////////////////////
 ABSTRACT_TYPE(/obj/deployable_turret)
+ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_reaim)
 /obj/deployable_turret
 
 	name = "fucked up abstract turret that should never exist"
@@ -132,10 +139,17 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/deconstructable = TRUE
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
-	New(loc, direction)
+	New(loc, direction, forensics_id)
 		..()
 		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
+
+		if (!src.forensic_ID)
+			if (forensics_id)
+				src.forensic_ID = forensics_id
+			else
+				src.forensic_ID = src.CreateID()
+				forensic_IDs.Add(src.forensic_ID)
 
 		src.icon_state = "[src.icon_tag]_base"
 		src.appearance_flags |= RESET_TRANSFORM
@@ -188,6 +202,30 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		current_projectile.shot_number = burst_size
 		current_projectile.shot_delay = 10/fire_rate
 
+	proc/shoot(target)
+		SPAWN(0)
+			var/list/casing_turfs
+			var/turf/picked_turf
+			if (src.current_projectile.casing)
+				casing_turfs = list()
+				for (var/direction in alldirs)
+					var/turf/T = get_step(src, direction)
+					if (T && !T.density)
+						casing_turfs += T
+			for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
+				flick("[src.icon_tag]_fire",src)
+				muzzle_flash_any(src, 0, "muzzle_flash")
+				if (src.current_projectile.casing)
+					picked_turf = pick(casing_turfs)
+					var/obj/item/casing/turret_casing = new src.current_projectile.casing(picked_turf, src.forensic_ID)
+					// prevent infinite casing stacks
+					if (length(picked_turf.contents) > 10)
+						SPAWN(30 SECONDS)
+							if (!QDELETED(turret_casing) && get_turf(turret_casing) == picked_turf)
+								qdel(turret_casing)
+				sleep(src.current_projectile.shot_delay)
+		shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
+
 	proc/process()
 		if(src.active)
 			if(!src.target && !src.seek_target()) //attempt to set the target if no target
@@ -198,13 +236,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 			else //GUN THEM DOWN
 				if(src.target)
-					SPAWN(0)
-						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
-							flick("[src.icon_tag]_fire",src)
-							muzzle_flash_any(src, 0, "muzzle_flash")
-							sleep(src.current_projectile.shot_delay)
-					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
-
+					src.shoot(target)
 
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
@@ -350,7 +382,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		qdel(src)
 
 	proc/spawn_deployer()
-		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc)
+		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc, src.forensic_ID)
 		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
@@ -475,6 +507,17 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		1. Use a <b>screwdriver</b> to turn it off.
 		2. Use a <b>welding tool</b> to unsecure it.
 		3. Use a <b>wrench</b> to disassemble it."}
+
+/obj/deployable_turret/proc/admincmd_shoot()
+	set name = "Shoot"
+	var/atom/target = pick_ref(usr)
+	playsound(src.loc, 'sound/vox/woofsound.ogg', 40, 1)
+	src.shoot(target)
+
+/obj/deployable_turret/proc/admincmd_reaim()
+	set name = "Re-aim"
+	var/atom/target = pick_ref(usr)
+	src.set_angle(get_angle(src, get_turf(target)))
 
 /obj/deployable_turret/syndicate
 	name = "NAS-T"

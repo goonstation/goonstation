@@ -2,6 +2,8 @@
 /// Evaluates to an actual IEEE 754 infinity!
 #define INFINITY 1e69
 
+#define TICKS *world.tick_lag
+
 // SI UNIT DEFINES
 
 //ex:  var/time = 10 SECONDS

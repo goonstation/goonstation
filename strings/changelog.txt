@@ -1,4 +1,251 @@
 
+(t)tue may 28 24
+(u)Dino
+(p)19001
+(e)🎨|C-Sprites
+(+)Added two new dwarven inspired beard options.
+(t)mon may 27 24
+(u)TealSeer
+(p)19140
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)People with the Unionized trait are no longer immune to arcfiend's polarize ability. Immunity to bio-magnetic random events remain unchanged.
+(u)LeahTheTech
+(+)Minimized windows will now unminimize when you go to open them again.
+(t)sun may 26 24
+(u)Glamurio (Ryou)
+(p)18790
+(e)💅🐣|C-QoL, A-Respawning
+(*)Daily Jobs may now be selected as a Job Preference.
+(u)ZeWaka
+(e)⛔|C-Removal
+(*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
+(u)FlameArrow57
+(p)18987
+(e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
+(+)Deployable turrets like N.A.R.C.S. turrets now eject bullet casings and have their own forensics profile.
+(u)LeahTheTech
+(+)B.I.F.F now buys rather than sells THE MONSTER.
+(t)sat may 25 24
+(u)crunchwarp
+(p)18980
+(e)🆕📄|C-Feature, A-UI
+(+)Blobs and Wizards now have enhanced crew credits!
+(t)fri may 24 24
+(u)tarmunora
+(+)Fix savefile import exploit. This will break existing local savefiles.
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
+(t)thu may 23 24
+(u)Tarmunora, Mordent
+(p)19120
+(e)💅📄|C-QoL, A-UI
+(*)Added import/export to character setup window to enable storing of additional character profiles in local storage.
+(u)aloe
+(p)18797
+(e)⚖📄💪|C-Balance, A-UI, A-Traits
+(*)You can now select as many traits as you like.
+(u)Glamurio (Ryou)
+(p)19109
+(e)🎨🏅|C-Sprites, A-Medal
+(+)Particularly pet-savvy people may find a new reward waiting for them.
+(t)wed may 22 24
+(u)TealSeer
+(p)19081
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Security's departmental score is now influenced by the fate of Monsieur Stirstir.
+(u)FlameArrow57
+(p)18903
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(+)Added unique ghost sprites for each mutantrace when you die. If you want hair, be sure to select the Bald trait!
+(u)FlameArrow57
+(p)18965
+(e)⚖🔄🧛📦|C-Balance, C-Rework, A-Gamemodes, A-Game-Objects
+(+)Thermite breaching charges now create a dark red chemical fire and are a bit more dangerous
+(u)LeahTheTech
+(+)Pressing V will no longer hide your inventory. Why did it ever do that?
+(+)Reverted pressing V no longer hiding your inventory.
+(u)Glamurio (Ryou)
+(p)19089
+(e)💅|C-QoL
+(+)Trippy people now trip less often.
+(u)FlameArrow57
+(p)18855
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pod weapon tooltips (from mouse hover) now show their damage and pod disruption chance.
+(u)MeggalBozale
+(p)18981
+(e)🪲⚖🐁|C-Bug, C-Balance, A-Critters
+(+)Robotic critters can now throw items.
+(u)MeggalBozale
+(p)19004
+(e)🆕|C-Feature
+(+)The emag effect for the lawbringer has been modified slightly.
+(u)Glamurio (Ryou)
+(p)19051
+(e)🆕💅🐣|C-Feature, C-QoL, A-Respawning
+(+)Martian and Blob ambassadors are now legally allowed to wear hats per a NT decree.
+(u)Cheekybrdy
+(p)19035
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds Scientist Training, all this does currently is lock artifact hints to research staff.
+(t)tue may 21 24
+(u)Sord
+(+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.
+(u)TDHooligan
+(p)19065
+(e)⚖|C-Balance
+(*)Gangs have shrunk to 4 people. It should be easier keeping track of all your dudes as a leader, and less chaos overall.
+(u)Lord_Earthfire
+(p)18587
+(e)🔎🔄🌱|C-Code-Quality, C-Rework, A-Hydroponics
+(+)Chemicals in hydroponic trays now should show a lower varience.
+(+)Plants accept compost and holy water as alternatives to water. Man-Eating plants accept blood as an alternative to water.
+(+)Fast/slow metabolism gene strain now affect many processes around chems in trays or gene strains instead of just improving growth speed.
+(t)mon may 20 24
+(u)TDHooligan
+(p)18561
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(*)Gang leaders can now move their locker to somewhere in their territory.
+(u)TDHooligan
+(p)19034
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Gang members are no longer required to recover duffle bags from under the floortiles of a burning combustion chamber, etc.
+(+)Duffle bags can no longer enter superpositions both above & below the floor.
+(+)Switchblades and quickhacks can spawn in Surplus crates.
+(u)Zamujasa
+(e)🔄|C-Rework
+(*)Attempt to rework Mail Courier into a latejoin role. Their headset has command + cargo, and their ID has  access to the medical, research, and cargo lobbies. Reduced to 1 job slot as well.
+(*)Waiter was moved to Wednesday instead of being a speical (40%) job.
+(+)The clothing booth in the afterlife is completely free.
+(+)Roles that don't have jumpsuits in the afterlife bar are given a random color one.
+(t)sun may 19 24
+(u)FlameArrow57
+(p)18991
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Added attack sparks, sound effects, and hit twitches to bots, for projectile collisions
+(u)LeahTheTech
+(*)Mining subs on ocean maps will now start with ore scoops by default.
+(p)19009
+(e)🆕🎨⚖|C-Feature, C-Sprites, C-Balance
+(*)Added a "methane" canister, sometimes sold by Buford Tenin.
+(t)sat may 18 24
+(u)MeggalBozale
+(p)18995
+(e)🪲📡|C-Bug, A-AI
+(+)Rockworms properly eat rocks again.
+(t)fri may 17 24
+(u)crunchwarp
+(p)18939
+(e)📦|A-Game-Objects
+(+)Traitor HoPs can now purchase the Black Market Megaphone. Overthrow the Captain today!
+(u)LeahTheTech
+(p)18973
+(e)⛔|C-Removal
+(*)Reverted TG chat due to performance and stability issues.
+(t)thu may 16 24
+(u)MeggalBozale
+(p)18144
+(e)🔎💅🔄📄⚙|C-Code-Quality, C-QoL, C-Rework, A-UI, A-Internal
+(*)Fabricators have been converted to use a brand new TGUI interface, as well as becoming more performant.
+(u)Sord
+(*)Most restrooms, quarters, and heads quarters now have door bolters inside them. Use them for crime or to just shower in peace!
+(u)Sovexe
+(p)18879
+(e)🪲🔎🧫🔄⚙🐣|C-Bug, C-Code-Quality, C-Experimental, C-Rework, A-Internal, A-Respawning
+(*)Refactored job assignment code. Jobs variety should improve overall. Unless this change breaks everything.
+(t)wed may 15 24
+(u)Cheffie, ZeWaka and Mordent
+(p)16708
+(e)🔄⛔📄|C-Rework, C-Removal, A-UI
+(*)The chat panel is now a TGUI interface. Please report any chat related issues! Even if its just a styling problem!
+(*)Client darkmode preference is now controlled by the chat panel.
+(*)If chat fails to load, go to commands and try "fix chat". This hopefully shouldn't be an issue though.
+(*)Not all regex will work after import as there is a limitation of allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+(+)Chat filtering options have been expanded, check PR page for details. Report any unsorted messages you think fit
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)PDAs now sorta work like ATMs if you have your ID card inserted into them, allowing you to withdraw and deposit money on the go.
+(*)Player-made vending machines now accept things from satchels properly.
+(*)Player-made vending machines will use the last price you entered as the default for new products, instead of it being 15 every time.
+(*)Adjusted mail drop tables a bit. You should get less garbage!
+(t)tue may 14 24
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Phones now announce who's calling.
+(u)Glamurio (Ryou)
+(p)18898
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Added a new hand-held device that allows simple communication, available to Ambassadors and Tourists.
+(t)mon may 13 24
+(u)Ikea
+(p)17768
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Feeding viscerite to synthflesh pustules generates viscerite viscera. The pustule proceeds to digest this chemical into synthflesh and martian flesh, all while offgassing sulfuric acid. Small/medium pustules produce 7 units of synthflesh and 7 units of martian flesh per viscerite, large pustules produce 14 units of synthflesh and 2.5 units of martian flesh per viscerite.
+(+)A new chem has been added in the form of viscerite viscera. Currently only obtainable from synthflesh pustules, this chem heals 2.5 brute and burn, all while dealing 1.5 tox, purging other chems, and dealing weakened.
+(u)FlameArrow57
+(p)18854
+(e)💅🔄📦|C-QoL, C-Rework, A-Game-Objects
+(+)Gun tooltips (from mouse hovering) now show exact projectile damage, as well as stamina damage, armor pierce, and pod system disruption chance if they exist
+(u)FlameArrow57, Flaborized, and Azrun
+(p)16676
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added a new type of fire, chemical fire, with sprites by Flaborized! This is a type of fire that acts the same as atmospheric fire but comes from chemical/magical sources, colored depending on the source, and can be on the same tile as atmospheric fire. Replaces all non-atmospheric fires.
+(+)Fire created from the Wizard fireball spell will now be the color of the hat the Wizard is wearing.
+(t)sun may 12 24
+(u)Mordent
+(p)18878
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Civilian cyborgs get a free Recharge Pack instead of an Efficiency upgrade.
+(u)JORJ949
+(p)18845
+(e)🪲🗺⚖|C-Bug, A-Mapping, C-Balance
+(+)Nadir Armory is now properly equipped.
+(u)Ilysen
+(p)18672
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed zombies' Infect ability breaking when interrupted. Also added a new big message in chat when you get infected!
+(u)crunchwarp
+(p)18831
+(e)🆕📄|C-Feature, A-UI
+(+)Nukies purchases are now visible in the crew credits
+(t)sat may 11 24
+(u)Zamujasa
+(+)Visitors to the Afterlife Bar should have more accurate ID cards.
+(u)Cheekybrdy
+(p)18732
+(e)🎨|C-Sprites
+(+)HoP has their own dedicated PDA cartridge related to the civilian department instead of the old general command one.
+(u)LeahTheTech
+(p)18838
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Replaced static material processers with new sheet extruders that make sheets out of metal and glass bars.
+(t)fri may 10 24
+(u)Cheekybrdy
+(p)18607
+(e)🗺|A-Mapping
+(*)Added a mining magnet to atlas.
+(u)Lord_Earthfire
+(p)18820
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Action bars when using many small/tiny items on items in other players inventory are now only visible to the user.
+(u)Lord_Earthfire
+(p)18836
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Boxes cannot be used for pickpocketing anymore.
+(u)TDHooligan
+(p)18435
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Stuns now get shortened by taking melee damage.
+(*)Shorter stuns are affected less.
+(t)thu may 09 24
+(u)Colossusqw
+(p)18795
+(e)🔄⚗📡|C-Rework, A-Chemistry, A-AI
+(+)Viper venom is now called Hemotoxin and has a recipe, 1 heparin, 3 ether, 2 hydrochloric acid at 75C
+(+)Venom is now called cytotoxin, and has had it's gib chance swapped by progressively removing limbs from the affected mob.
+(+)Rattlesnakes now have a slightly lower bite cooldown, but do warning strikes before actually biting.
 (t)wed may 08 24
 (u)Glamurio (Ryou)
 (p)18717

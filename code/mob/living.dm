@@ -296,7 +296,7 @@
 
 /mob/living/Logout()
 	. = ..()
-	src.UpdateOverlays(null, "speech_bubble")
+	src.ClearSpecificOverlays("speech_bubble")
 	src.is_npc = initial(src.is_npc)
 
 
@@ -1495,6 +1495,10 @@
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
 	if (!isalive(src)) //can't resist when dead or unconscious
+		return
+
+	if (src.hasStatus("paralysis"))
+		src.show_text("You are completely paralysed and can't resist!", "red")
 		return
 
 	if (src.last_resist > world.time)

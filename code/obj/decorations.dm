@@ -410,8 +410,11 @@
 		icon_state = "shrub-dead"
 
 //It'll show up on multitools
+TYPEINFO(/obj/shrub/syndicateplant)
+	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
+	is_syndicate = TRUE
 	New()
 		. = ..()
 		var/turf/T = get_turf(src.loc)
