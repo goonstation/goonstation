@@ -131,6 +131,7 @@
 		cleanable.add_fingerprint(owner)
 		src.the_mail.open(owner, crime = TRUE)
 		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
+		game_stats.Increment("mail_fraud")
 
 		if (!ON_COOLDOWN(global, "mail_fraud_alert", 10 MINUTES)) // no spamming this
 			var/mob/living/ourselves = owner
@@ -155,6 +156,7 @@
 			if(sec_record && sec_record["criminal"] != "*Arrest*")
 				sec_record["criminal"] = "*Arrest*"
 				sec_record["mi_crim"] = "Mail fraud."
+
 
 /obj/decal/cleanable/mail_fraud
 	name = "torn package"
