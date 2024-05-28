@@ -1,4 +1,18 @@
+
+(t)tue may 28 24
+(u)Klushy225
+(p)19008
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added a fade style for the curly bob
+(u)Dino
+(p)19001
+(e)🎨|C-Sprites
+(+)Added two new dwarven inspired beard options.
 (t)mon may 27 24
+(u)TealSeer
+(p)19140
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)People with the Unionized trait are no longer immune to arcfiend's polarize ability. Immunity to bio-magnetic random events remain unchanged.
 (u)LeahTheTech
 (+)Minimized windows will now unminimize when you go to open them again.
 (t)sun may 26 24
