@@ -89,7 +89,6 @@
 	var/datum/special_sprint/special_sprint = null
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
-	var/sprint_boost_mod = 2 // Modifier that determines how much faster sprinting makes you
 	var/sustained_moves = 0
 
 	var/metabolizes = 1
@@ -1876,7 +1875,7 @@
 		return
 
 /mob/living/proc/do_sprint_boost()
-	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && src.next_sprint_boost && world.time >= src.next_sprint_boost)
+	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && world.time >= src.next_sprint_boost)
 		if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 
 			var/last = src.loc
@@ -1886,7 +1885,7 @@
 			src.next_move = world.time
 			attempt_move(src)
 
-			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * src.sprint_boost_mod
+			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
 			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 				sprint_particle(src, last)
