@@ -16,6 +16,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/from_emagged_oven = 0 					//! Was this food created by an emagged oven? To prevent re-rolling of food in emagged ovens.
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
 	var/tmp/made_ants = FALSE 					//! Has this food already spawned ants
+	var/ant_amnt = 5 							//! How many ants are added to food / how much reagents removed?
 	var/sliceable = FALSE 						//! Can this food be sliced with a knife
 	var/slice_product = null 					//! Type to spawn when we slice this food
 	var/slice_amount = 1						//! How many slices to spawn after slicing
@@ -188,13 +189,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	process()
 		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
-			if (!src.disposed && isturf(src.loc) && !ant_safe())
+			if (!src.disposed && isturf(src.loc) && !src.ant_safe())
 				if (prob(50))
-					made_ants = 1
+					src.made_ants = 1
 					processing_items -= src
 					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
 						new/obj/reagent_dispensers/cleanable/ants(src.loc)
-						src.reagents.add_reagent("ants", 5)
+						src.reagents.remove_any(src.ant_amnt)
+						src.reagents.add_reagent("ants", src.ant_amnt)
 						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
 
