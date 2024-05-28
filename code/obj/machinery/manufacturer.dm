@@ -52,10 +52,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/error = null
 	/// How much power is consumed while active. This is determined automatically when the unit starts a production cycle
 	var/active_power_consumption = 0
+	/// Whether or not the panel is open to expose the wires inside. Toggled when a screwdriver is used on the manufacturer.
 	var/panel_open = FALSE
 	/// The stage of dismantlement this machine is currently at. 0 is functional, 3 is pretty much entirely disassembled.
 	var/dismantle_stage = DISMANTLE_NONE
+	/// Whether or not the AI control wire was pulsed, unlocks speed settings up to MAX_SPEED_HACKED and unlocks blueprints in the hidden() category
 	var/hacked = FALSE
+	/// Whether or not he malf wire was pulsed/cut, causes manufacturing jobs among other things to occasionally call flip_out(). can change speed up to MAX_SPEED_DAMAGED
 	var/malfunction = FALSE
 	// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
 	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
@@ -83,7 +86,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/time_started = 0
 	/// Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
 	var/speed = DEFAULT_SPEED
+	/// Controls whether or not to repeat the first item in the queue while working.
 	var/repeat = FALSE
+	/// The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
 	var/output_cap = MAX_OUTPUT
 	/// A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
 	var/list/queue = list()
