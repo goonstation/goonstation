@@ -1231,6 +1231,12 @@
 			monitored_var = "mail_opened"
 			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
+		frauded_mail
+			name = "frauded mail counter"
+			desc = "The number of times someone has frauded someone's mail."
+			monitored_var = "mail_fraud"
+			maptext_prefix = "<span class='c pixel sh'>Mail frauded:\n<span class='vga'>"
+
 		last_death
 			name = "last death monitor"
 			desc = "RIP this idiot. Hope it wasn't you!"

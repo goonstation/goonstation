@@ -40,7 +40,6 @@ var/global/datum/datalogger/game_stats
 		stats["slips"] = 0
 		stats["hydro_harvests"] = 0
 		stats["hydro_produce"] = 0
-		stats["mail_sent"] = 0
 		stats["mail_opened"] = 0
 		stats["mail_fraud"] = 0
 	proc

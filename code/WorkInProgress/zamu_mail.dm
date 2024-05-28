@@ -26,7 +26,6 @@
 
 	New()
 		..()
-		game_stats.Increment("mail_sent")
 		if (src.random_icons)
 			src.icon_state = "mail-[rand(1,3)]"
 
