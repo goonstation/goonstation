@@ -303,6 +303,7 @@ A Flamethrower in various states of assembly
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 /obj/item/gun/flamethrower/backtank
 	name = "\improper Vega flamethrower"
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
@@ -318,16 +319,27 @@ A Flamethrower in various states of assembly
 	can_dual_wield = 0
 	shoot_delay = 5 DECI SECONDS
 
-
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
-		src.gastank = B
-		src.fueltank = B
-		B.linkedflamer = src
+		src.link_tank(B)
 		..()
 		src.current_projectile.fullauto_valid = 1
 		src.set_current_projectile(src.current_projectile)
+
+	proc/link_tank(obj/item/tank/jetpack/backtank/tank)
+		src.gastank = tank
+		src.fueltank = tank
+		tank.linkedflamer = src
+
+	process_ammo(mob/user)
+		var/list/equipped_list = user.get_equipped_items()
+		if (!(src.gastank in equipped_list))
+			var/obj/item/tank/jetpack/backtank/tank = locate() in equipped_list
+			if (tank)
+				src.link_tank(tank)
+		return ..()
+
 
 	disposing()
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))

@@ -117,9 +117,6 @@
 			return
 
 		if (can_operate_on(user))
-			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
-			SPAN_NOTICE("You apply [src] to yourself."))
-			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 

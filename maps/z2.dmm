@@ -52366,18 +52366,12 @@
 	},
 /area/centcom/garden)
 "dMs" = (
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
-/obj/pool/perspective{
-	dir = 1;
-	pixel_x = 10;
-	tag = "icon-pool (NORTH)"
-	},
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
 	icon_state = "line1"
+	},
+/obj/pool/perspective/innercorners{
+	dir = 4
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
@@ -52913,13 +52907,12 @@
 /area/centcom/garden)
 "dOa" = (
 /obj/pool/perspective,
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
 	icon_state = "line1"
+	},
+/obj/pool/perspective/innercorners{
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
