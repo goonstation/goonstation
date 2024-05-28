@@ -34,6 +34,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	return TRUE
 
+
 TYPEINFO(/obj/machinery/networked/telepad)
 	mats = 16
 
@@ -638,19 +639,13 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(target)] with a telepad")
 			// teleblock checks should already be done
 			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
-
+			if (!usr.traitHolder?.hasTrait("training_scientist") && (prob(2) && prob(2)))
+				badsend()
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
 		use_power(1500)
-		if(prob(2) && prob(2))
-			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
-			XSUBTRACT = rand(0,100)
-			YSUBTRACT = rand(0,100)
-			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN(1 SECOND)
-				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
-
+		badsend()
 		return 0
 
 	proc/receive(var/turf/receiveturf)
@@ -672,17 +667,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			else
 				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			do_teleport(which,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+			if (!usr.traitHolder?.hasTrait("training_scientist") && (prob(2) && prob(2)))
+				badreceive()
 		showswirl(src.loc)
 		leaveresidual(src.loc)
 		showswirl_out(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
-			XSUBTRACT = rand(0,100)
-			YSUBTRACT = rand(0,100)
-			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN(0.5 SECONDS)
-				processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
+			badreceive()
 
 		return 0
 
@@ -699,11 +691,25 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if(O.anchored) continue
 			receive.Add(O)
 		for(var/atom/movable/O in send)
+			if (!usr.traitHolder?.hasTrait("training_scientist") && (prob(2) && prob(2)))
+				src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
+				XSUBTRACT = rand(0,100)
+				YSUBTRACT = rand(0,100)
+				ZSUBTRACT = rand(0,world.maxz)
+				SPAWN(0.5 SECONDS)
+					processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 			do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 
 		for(var/atom/movable/O in receive)
+			if (!usr.traitHolder?.hasTrait("training_scientist") && (prob(2) && prob(2)))
+				src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
+				XSUBTRACT = rand(0,100)
+				YSUBTRACT = rand(0,100)
+				ZSUBTRACT = rand(0,world.maxz)
+				SPAWN(0.5 SECONDS)
+					processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
 			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
@@ -715,8 +721,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
-			SPAWN(1 SECOND)
-				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
+			SPAWN(0.5 SECONDS)
+				processbadeffect(pick("flash","buzz","minorsummon","tinyfire","chill"))
 		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src, NORTHEAST))
 			new/obj/dfissure_to(get_step(src, NORTHEAST))
 		else
