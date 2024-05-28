@@ -84652,9 +84652,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
 "vJl" = (
-/obj/machinery/manufacturer/general/grody{
-	free_resources = list()
-	},
+/obj/machinery/manufacturer/general/grody,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
