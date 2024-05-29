@@ -3634,22 +3634,17 @@
 	// Handle possible division by zero
 	var/health_prc = (src.health / (src.max_health != 0 ? src.max_health : 1)) * 100
 	switch (health_prc)
-		// There's 5 "regular" health states (ignoring 100% and < 0)
-		// but the health icons were set up as if there were 4
-		// (25, 50, 75, 100) / (20, 40, 60, 80, 100)
-		// The "75" state was only used for 75-80!
-		// Spread these out to make it more represenative
-		if (98 to INFINITY) //100
+		if (98 to INFINITY)
 			src.health_mon.icon_state = "100"
-		if (80 to 98) //80
+		if (80 to 98)
 			src.health_mon.icon_state = "80"
-		if (60 to 80) //75
+		if (60 to 80)
 			src.health_mon.icon_state = "75"
-		if (40 to 60) //50
+		if (40 to 60)
 			src.health_mon.icon_state = "50"
-		if (20 to 40) //25
+		if (20 to 40)
 			src.health_mon.icon_state = "25"
-		if ( 0 to 20) //10
+		if (0 to 20)
 			src.health_mon.icon_state = "10"
-		if (-INFINITY to 0) //0
+		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
