@@ -110,8 +110,9 @@
 		boutput(M, SPAN_ALERT("You try to look further at [src], but your hand passes right through [him_or_her(src)]!"))
 
 	on_pet(mob/user)
-		user.visible_message(
+		src.tri_message(user,
 			SPAN_NOTICE("[user] shakes [src], trying to grab [his_or_her(src)] attention!"),
+			SPAN_ALERT("[user] tries to touch you, but [his_or_her(user)] hand passes right through you!"),
 			SPAN_ALERT("Your hand passes right through [src]!")
 		)
 

@@ -19,23 +19,23 @@
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/intangible/wraith/wraith_trickster/W = src.holder.owner
 		if (!istype(W))
-			return
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/datum/abilityHolder/wraith/AH = src.holder
 		if (AH.possession_points < W.points_to_possess)
 			boutput(src.holder.owner, SPAN_ALERT("You cannot possess with only [AH.possession_points] possession power. You'll need at least [(W.points_to_possess - AH.possession_points)] more."))
-			return
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (!ishuman(target))
 			boutput(src.holder.owner, SPAN_ALERT("This ability can only affect humans."))
-			return
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/carbon/human/H = target
 		if (isdead(H))
 			boutput(src.holder.owner, SPAN_ALERT(pick(
 				"You couldn't possibly possess a dead body! What are you, a harbinger? Gosh.",
 				"What a mundane trick. Possessing a dead body is beneath you.")))
-			return
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			boutput(src.holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, it instantly kicks you back into the aether!"))
-			return
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		AH.possession_points = 0
 		actions.start(new/datum/action/bar/icon/trickster_possession(H), holder.owner)
 		return CAST_ATTEMPT_SUCCESS
