@@ -12,7 +12,7 @@
 	var/armed = FALSE
 	var/mob/living/intangible/wraith/wraith_trickster/master = null
 
-	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/W = null, mob/placing_mob)
+	New(turf/T, mob/living/intangible/wraith/wraith_trickster/W = null, mob/placing_mob)
 		..()
 		master = W
 		SPAWN(5 SECONDS)
@@ -22,8 +22,7 @@
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 					animate(src, alpha=120, time = 1 SECONDS)
 				src.armed = TRUE
-				if (!QDELETED(placing_mob))
-					boutput(placing_mob, SPAN_NOTICE("The rune trap you placed to the [dir2text(get_dir(placing_mob, src.loc))] has armed."))
+				boutput(placing_mob, SPAN_NOTICE("The rune trap you placed to the [dir2text(get_dir(placing_mob, src.loc))] has armed."))
 
 	process()
 		..()
@@ -33,11 +32,11 @@
 		if (local_turf.RL_GetBrightness() < 0.3 && src.visible)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			src.visible = FALSE
-			animate(src, alpha=120, time = 1 SECONDS)
+			animate(src, alpha = 120, time = 1 SECONDS)
 		else if (local_turf.RL_GetBrightness() >= 0.2 && !src.visible)
 			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 			src.visible = TRUE
-			animate(src, alpha=255, time = 1 SECONDS)
+			animate(src, alpha = 255, time = 1 SECONDS)
 			src.visible_message(SPAN_ALERT("[src] is revealed!"))
 
 	attackby(obj/item/P, mob/living/user)
@@ -65,11 +64,20 @@
 
 	/// attempts to detonate a runetrap, checks if the trap is armed and if the crosser is a valid target
 	proc/try_trigger(atom/movable/AM)
-		if(!armed) return
-		if(!isliving(AM)) return
-		if(istype(AM, /mob/living/critter/wraith/trickster_puppet)) return
-		if(isintangible(AM)) return
-		if(!checkRun(AM)) return
+		if(!armed)
+			return
+		if(!isliving(AM))
+			return
+		if(istype(AM, /mob/living/critter/wraith/trickster_puppet))
+			return
+		if(isintangible(AM))
+			return
+		if(!checkRun(AM))
+			return
+		if(isghostdrone(AM))
+			return
+		if(isghostcritter(AM))
+			return
 		return TRUE
 
 	proc/on_trigger(mob/living/M)

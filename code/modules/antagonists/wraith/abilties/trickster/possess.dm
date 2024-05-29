@@ -119,7 +119,7 @@
 		if (src.human_mind)
 			var/datum/player/target_player = src.human_mind.get_player()
 			if (target_player != null)
-				target_player.dnr--;
+				target_player.dnr--
 			src.human_mind.transfer_to(src.owner)
 			playsound(src.owner, 'sound/effects/ghost2.ogg', 50)
 		qdel(src.human_observer)

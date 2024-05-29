@@ -20,7 +20,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		if (max_traps)
-			desc += " You can only place up to [max_traps] trap[max_traps == 1 ? "" : "s"] at a time."
+			desc += " You can only place up to [max_traps] trap[s_es(max_traps)] at a time."
 
 	allowcast()
 		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
@@ -40,7 +40,7 @@
 			boutput(src.holder.owner, SPAN_ALERT("A strange force prevents you from doing that in this area!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/mob/living/intangible/wraith/wraith_trickster/W
-		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster/))
+		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			W = src.holder.owner
 			if (!W.haunting)
 				boutput(src.holder.owner, SPAN_ALERT("You cannot cast this under your current form."))
@@ -91,7 +91,7 @@
 			new trap_choice(T, W, src.holder.owner)
 			W.traps_laid++
 		else
-			boutput(src.holder.owner, "attempted to place a trap as a non-wraith and non-puppet, this should never happen!!! report this!!! OR ELSE!!!! >:(")
+			stack_trace("[identify_object(src.holder.owner)] attempted to place a trap as a non-wraith and non-puppet, this should never happen!!!")
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		boutput(src.holder.owner, SPAN_NOTICE("You place a trap on the floor, and it begins to charge up."))
 		return CAST_ATTEMPT_SUCCESS
