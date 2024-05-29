@@ -342,6 +342,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			curly_bob
 				name = "Curly Bob"
 				id = "curly_bob"
+			curly_bob_fade
+				name = "Curly Bob: Faded"
+				id = "curly_bob_fade"
+				random_allowed = FALSE
 			charming
 				name = "Charming"
 				id = "charming"
@@ -362,6 +366,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
+
 			jelly
 				name = "Jelly"
 				id = "jelly"
@@ -818,6 +823,12 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		chin
 			name = "Chinstrap"
 			id = "chin"
+		dwarfbeard
+			name = "Dwarven Beard"
+			id = "dwarfbeard"
+		dwarfbraided
+			name = "Dwarven Braided Beard"
+			id = "dwarfbraided"
 		fullbeard
 			name = "Full Beard"
 			id = "fullbeard"
@@ -888,7 +899,7 @@ proc/select_custom_style(mob/living/carbon/human/user, no_gimmick_hair = FALSE)
 
 proc/find_style_by_name(var/target_name, client/C, no_gimmick_hair = FALSE)
 	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
-		if(initial(styletype.name) == target_name)
+		if(cmptext(initial(styletype.name), target_name))
 			return new styletype
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none

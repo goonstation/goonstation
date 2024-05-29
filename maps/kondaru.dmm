@@ -11438,9 +11438,8 @@
 /area/station/hallway/primary/east)
 "aTj" = (
 /obj/pool/perspective,
-/obj/pool/perspective{
-	dir = 8;
-	tag = "icon-pool (WEST)"
+/obj/pool/perspective/innercorners{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "bluechecker"

@@ -24,7 +24,7 @@ import { ManufacturerSettings } from './components/ManufacturerSettings';
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   const [search, setSearchData] = useLocalState(context, "query", "");
-  const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
+  const [swappingMaterialRef, setSwappingMaterialRef] = useLocalState<string | null>(context, "swap", null);
   // Define some actions for the interface and its children
   const actionCardLogout = () => act("card", { "remove": true });
   const actionCardLogin = () => act("card", { "scan": true });
@@ -39,15 +39,15 @@ export const Manufacturer = (_, context) => {
   const actionRepeat = () => act("repeat");
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   let swapPriority = (materialRef: string) => {
-    if (swap === null) {
-      setSwappingMaterial(materialRef);
+    if (swappingMaterialRef === null) {
+      setSwappingMaterialRef(materialRef);
     }
-    else if (swap === materialRef) {
-      setSwappingMaterial(null);
+    else if (swappingMaterialRef === materialRef) {
+      setSwappingMaterialRef(null);
     }
     else {
-      act("material_swap", { "resource_1": swap, "resource_2": materialRef });
-      setSwappingMaterial(null);
+      act("material_swap", { "resource_1": swappingMaterialRef, "resource_2": materialRef });
+      setSwappingMaterialRef(null);
     }
   };
   const all_blueprints = {
@@ -138,7 +138,7 @@ export const Manufacturer = (_, context) => {
                             />
                             <Button
                               icon="arrows-up-down"
-                              color={(swap !== resourceData.byondRef) ? null : "green"}
+                              color={(swappingMaterialRef !== resourceData.byondRef) ? null : "green"}
                               onClick={() => swapPriority(resourceData.byondRef)}
                             />
                           </>

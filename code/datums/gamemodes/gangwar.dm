@@ -10,7 +10,7 @@
 	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
-	var/const/setup_max_teams = 6
+	var/const/setup_max_teams = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -944,7 +944,7 @@ proc/broadcast_to_all_gangs(var/message)
 						validLocation = TRUE
 				for_by_tcl(otherTag, /obj/decal/gangtag)
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
-					if (otherTag.owners && otherTag.owners == user.get_gang())
+					if (otherTag.owners && otherTag.owners == user.get_gang() && otherTag.active)
 						validLocation = TRUE
 			else
 				boutput(user, SPAN_ALERT("You can't spray over your own tags!"))
@@ -955,7 +955,7 @@ proc/broadcast_to_all_gangs(var/message)
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
-				else if (tag.owners)
+				else if (tag.owners && tag.active)
 					boutput(user, SPAN_ALERT("You can't spray in another gang's territory! Spray over their tag, instead!"))
 					if (user.GetComponent(/datum/component/tracker_hud))
 						return

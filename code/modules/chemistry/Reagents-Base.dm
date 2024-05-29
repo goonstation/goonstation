@@ -77,8 +77,8 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",3)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 3
 
 /datum/reagent/chromium
 	name = "chromium"
@@ -121,8 +121,8 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",3)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 3
 
 /datum/reagent/ethanol
 	name = "ethanol"
@@ -358,8 +358,8 @@
 				L.cure_disease(plague)
 		..()
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 1
 
 /datum/reagent/nickel
 	name = "nickel"
@@ -402,9 +402,8 @@
 	fluid_b = 110
 	transparency = 255
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(66))
-			P.growth++
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.growth_rate += 0.66
 
 /datum/reagent/plasma
 	name = "plasma"
@@ -451,10 +450,10 @@
 	reaction_turf(var/turf/T, var/volume)
 		return 1 //changed return value to 1 for fluids. remove if this was a bad idea
 
-	on_plant_life(var/obj/machinery/plantpot/P)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 		var/datum/plant/growing = P.current
 		if (growing.growthmode != "plasmavore")
-			P.HYPdamageplant("poison",2)
+			growth_tick.poison_damage += 2
 
 /datum/reagent/platinum
 	name = "platinum"
@@ -476,10 +475,9 @@
 	fluid_b = 190
 	transparency = 255
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(40))
-			P.growth++
-			P.health++
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.growth_rate += 0.4
+		growth_tick.health_change += 0.4
 
 /datum/reagent/silicon
 	name = "silicon"
@@ -683,9 +681,9 @@
 		if(spawncleanable && !istype(T, /turf/space) && !(locate(/obj/decal/cleanable/greenglow) in T))
 			make_cleanable(/obj/decal/cleanable/greenglow,T)
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(80)) P.HYPdamageplant("radiation",3)
-		if (prob(16)) P.HYPmutateplant(1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.radiation_damage += 2.4
+		growth_tick.mutation_severity += 0.16
 
 /datum/reagent/sodium
 	name = "sodium"
@@ -715,9 +713,9 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("radiation",2)
-		if (prob(24)) P.HYPmutateplant(1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.radiation_damage += 2
+		growth_tick.mutation_severity += 0.24
 
 /datum/reagent/water
 	name = "water"
