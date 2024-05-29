@@ -1,5 +1,9 @@
 
 (t)tue may 28 24
+(u)nova2053
+(p)18869
+(e)💅🍝|C-QoL, A-Catering
+(+)Food items now have a one minute immunity to ants after being moved.
 (u)Zamujasa
 (*)The day/night cycle on Centcom is on a reasonable timezone again.
 (u)Glamurio (Ryou)
