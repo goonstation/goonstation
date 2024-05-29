@@ -1,7 +1,7 @@
 name: merge_upstream
-on:
-  issue_comment:
-    types: [created]
+# on:
+#   issue_comment:
+#     types: [created]
 
 jobs:
   merge-upstream:
