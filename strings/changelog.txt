@@ -1,5 +1,9 @@
 
 (t)tue may 28 24
+(u)Glamurio (Ryou)
+(p)19126
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)People with the "cat eyes" trait will find themselves a bit better at seeing in the dark.
 (u)nova2053
 (p)18869
 (e)💅🍝|C-QoL, A-Catering
