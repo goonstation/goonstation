@@ -60,7 +60,7 @@
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 			//A.quality -= rand(25,50)
 		if (src.apply_material && length(materials) > 0)
-			var/obj/item/material_piece/applicable_material = locate(M.get_our_material(materials[materials[1]]))
+			var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
 			var/datum/material/mat = applicable_material?.material
 			A.setMaterial(mat)
 		return 1
