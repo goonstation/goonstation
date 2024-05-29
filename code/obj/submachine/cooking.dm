@@ -474,7 +474,7 @@ table#cooktime a#start {
 
 
 </style>
-			<b>Cookomatic Multi-Oven</b> - <a href='?src=\ref[src];open_recipies=1'>Open Recipe Book</a> (slow)<br>
+			<b>Cookomatic Multi-Oven</b> - <a href='byond://?src=\ref[src];open_recipies=1'>Open Recipe Book</a> (slow)<br>
 			<hr>
 			<b>Time:</b> [time]<br>
 			<b>Heat:</b> [heat]<br>
@@ -484,15 +484,15 @@ table#cooktime a#start {
 
 			var/timeopts = ""
 			for (var/i = 1; i <= 10; i++)
-				timeopts += "<td><a id='ct[i]' href='?src=\ref[src];time=[i]'>[i]</a></td>"
+				timeopts += "<td><a id='ct[i]' href='byond://?src=\ref[src];time=[i]'>[i]</a></td>"
 				if (i == 5)
-					timeopts += "<td><a id='hHigh' href='?src=\ref[src];heat=1'>HIGH</a></td><td rowspan='2' valign='middle'><a id='start' href='?src=\ref[src];cook=1'>START</a></td></tr><tr>"
+					timeopts += "<td><a id='hHigh' href='byond://?src=\ref[src];heat=1'>HIGH</a></td><td rowspan='2' valign='middle'><a id='start' href='byond://?src=\ref[src];cook=1'>START</a></td></tr><tr>"
 
-			timeopts += "<td><a id='hLow' href='?src=\ref[src];heat=2'>LOW</a></td>"
+			timeopts += "<td><a id='hLow' href='byond://?src=\ref[src];heat=2'>LOW</a></td>"
 
 			var/junk = ""
 			for (var/obj/item/I in src.contents)
-				junk += "[bicon(I)] <a href='?src=\ref[src];eject_item=\ref[I]'>[I]</a><br>"
+				junk += "[bicon(I)] <a href='byond://?src=\ref[src];eject_item=\ref[I]'>[I]</a><br>"
 
 			dat += {"
 			<table id='cooktime'>
@@ -501,7 +501,7 @@ table#cooktime a#start {
 				</tr>
 			</table>
 			<hr>
-			<strong>Contents</strong> (<a href='?src=\ref[src];eject=1'>Eject all</a>)<br>
+			<strong>Contents</strong> (<a href='byond://?src=\ref[src];eject=1'>Eject all</a>)<br>
 			[junk ? junk : "(Empty)"]
 			"}
 

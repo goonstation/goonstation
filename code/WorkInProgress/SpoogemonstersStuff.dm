@@ -394,28 +394,28 @@
 			}
 
 			function loadBeakerSpecs() {
-				window.location = '?src=\ref[src];action=getBeakerSpecs';
+				window.location = 'byond://?src=\ref[src];action=getBeakerSpecs';
 			}
 
 			function addReagentClick(event) {
 				var chem = $('#chemselect').val();
 				var amount = $('#chemamount').val();
 				var beaker = $(event.target).data("beaker");
-				window.location='?src=\ref[src];action=add;chem=' + chem + ';amount=' + amount + ';beaker=' + beaker;
+				window.location='byond://?src=\ref[src];action=add;chem=' + chem + ';amount=' + amount + ';beaker=' + beaker;
 				setTimeout(loadBeakerSpecs, 300);
 			}
 
 			function removeReagentClick(event) {
 				var beaker = $(event.target).data("beaker");
 				var chem = $('#addedRegs' + beaker).val();
-				window.location='?src=\ref[src];action=remove;chem=' + chem + ';beaker=' + beaker;
+				window.location='byond://?src=\ref[src];action=remove;chem=' + chem + ';beaker=' + beaker;
 				setTimeout(loadBeakerSpecs, 300);
 			}
 
 			function tempButtonClick(event) {
 				var beaker = $(event.target).data("beaker");
 				var temp = $('#temp' + beaker).val();
-				window.location='?src=\ref[src];action=temp;temp=' + temp + ';beaker=' + beaker;
+				window.location='byond://?src=\ref[src];action=temp;temp=' + temp + ';beaker=' + beaker;
 				setTimeout(loadBeakerSpecs, 300);
 			}
 
@@ -431,7 +431,7 @@
 				loadBeakerSpecs();
 
 				$('#newBeaker').click(function() {
-					window.location='?src=\ref[src];action=newBeaker';
+					window.location='byond://?src=\ref[src];action=newBeaker';
 					setTimeout(loadBeakerSpecs, 300);
 				});
 
@@ -442,31 +442,31 @@
 				function removeReg(beaker, chem, send) {
 					$('#addedRegs' + beaker).find('#reg' + beaker + '-' + chem).remove();
 					if(typeof send !== 'undefined' && send)
-						window.location='?src=\ref[src];action=remove;chem=' + chem + ';beaker=' + beaker;
+						window.location='byond://?src=\ref[src];action=remove;chem=' + chem + ';beaker=' + beaker;
 				}
 
 
 				$('#grenadeButton').click(function() {
 					var name = $('#grenadeName').val();
-					window.location='?src=\ref[src];action=grenade;name=' + name;
+					window.location='byond://?src=\ref[src];action=grenade;name=' + name;
 				});
 
 
 				$('#syringeButton').click(function() {
 					var name = $('#grenadeName').val();
-					window.location='?src=\ref[src];action=syringe;name=' + name;
+					window.location='byond://?src=\ref[src];action=syringe;name=' + name;
 				});
 
 
 				$('#lbeakerButton').click(function() {
 					var name = $('#grenadeName').val();
-					window.location='?src=\ref[src];action=lbeaker;name=' + name;
+					window.location='byond://?src=\ref[src];action=lbeaker;name=' + name;
 				});
 
 
 				$('#patchButton').click(function() {
 					var name = $('#grenadeName').val();
-					window.location='?src=\ref[src];action=patch;name=' + name;
+					window.location='byond://?src=\ref[src];action=patch;name=' + name;
 				});
 			});
 

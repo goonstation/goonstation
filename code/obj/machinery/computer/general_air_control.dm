@@ -107,26 +107,26 @@ obj/machinery/computer/general_air_control
 			if(input_info)
 				var/power = (input_info["power"] == "on")
 				var/volume_rate = input_info["volume_rate"]
-				output += {"<B>Input</B>: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];in_refresh_status=1'>Refresh</A><BR>
+				output += {"<B>Input</B>: [power?("Injecting"):("On Hold")] <A href='byond://?src=\ref[src];in_refresh_status=1'>Refresh</A><BR>
 Rate: [volume_rate] L/sec<BR>"}
-				output += "Command: <A href='?src=\ref[src];in_toggle_injector=1'>Toggle Power</A><BR>"
+				output += "Command: <A href='byond://?src=\ref[src];in_toggle_injector=1'>Toggle Power</A><BR>"
 
 			else
-				output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
+				output += "<FONT color='red'>ERROR: Can not find input port</FONT> <A href='byond://?src=\ref[src];in_refresh_status=1'>Search</A><BR>"
 
 			output += "<BR>"
 
 			if(output_info)
 				var/power = (output_info["power"] == "on")
 				var/output_pressure = output_info["internal"]
-				output += {"<B>Output</B>: [power?("Open"):("On Hold")] <A href='?src=\ref[src];out_refresh_status=1'>Refresh</A><BR>
+				output += {"<B>Output</B>: [power?("Open"):("On Hold")] <A href='byond://?src=\ref[src];out_refresh_status=1'>Refresh</A><BR>
 Max Output Pressure: [output_pressure] kPa<BR>"}
-				output += "Command: <A href='?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
+				output += "Command: <A href='byond://?src=\ref[src];out_toggle_power=1'>Toggle Power</A> <A href='byond://?src=\ref[src];out_set_pressure=1'>Set Pressure</A><BR>"
 
 			else
-				output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
+				output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='byond://?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
 
-			output += "Max Output Pressure Set: <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A><BR>"
+			output += "Max Output Pressure Set: <A href='byond://?src=\ref[src];adj_pressure=-100'>-</A> <A href='byond://?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='byond://?src=\ref[src];adj_pressure=1'>+</A> <A href='byond://?src=\ref[src];adj_pressure=100'>+</A><BR>"
 
 			return output
 
@@ -271,18 +271,18 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 			if(device_info)
 				var/power = device_info["power"]
 				var/volume_rate = device_info["volume_rate"]
-				output += {"Status: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];refresh_status=1'>Refresh</A><BR>
-Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];change_vol=-1'>-</A> [volume_rate] L/sec <A href='?src=\ref[src];change_vol=1'>+</A> <A href='?src=\ref[src];change_vol=10'>++</A><BR>"}
+				output += {"Status: [power?("Injecting"):("On Hold")] <A href='byond://?src=\ref[src];refresh_status=1'>Refresh</A><BR>
+Rate: <A href='byond://?src=\ref[src];change_vol=-10'>--</A> <A href='byond://?src=\ref[src];change_vol=-1'>-</A> [volume_rate] L/sec <A href='byond://?src=\ref[src];change_vol=1'>+</A> <A href='byond://?src=\ref[src];change_vol=10'>++</A><BR>"}
 
 				if(automation)
-					output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Engaged</A><BR>"
+					output += "Automated Fuel Injection: <A href='byond://?src=\ref[src];toggle_automation=1'>Engaged</A><BR>"
 					output += "Injector Controls Locked Out<BR>"
 				else
-					output += "Automated Fuel Injection: <A href='?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
-					output += "Injector: <A href='?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"
+					output += "Automated Fuel Injection: <A href='byond://?src=\ref[src];toggle_automation=1'>Disengaged</A><BR>"
+					output += "Injector: <A href='byond://?src=\ref[src];toggle_injector=1'>Toggle Power</A> <A href='byond://?src=\ref[src];injection=1'>Inject (1 Cycle)</A><BR>"
 
 			else
-				output += "<FONT color='red'>ERROR: Can not find device</FONT> <A href='?src=\ref[src];refresh_status=1'>Search</A><BR>"
+				output += "<FONT color='red'>ERROR: Can not find device</FONT> <A href='byond://?src=\ref[src];refresh_status=1'>Search</A><BR>"
 
 			return output
 
@@ -414,13 +414,13 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 		if(priority_alarms.len)
 			for(var/zone in priority_alarms)
-				priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
+				priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='byond://?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
 		else
 			priority_text = "No priority alerts detected.<BR>"
 
 		if(minor_alarms.len)
 			for(var/zone in minor_alarms)
-				minor_text += "<B>[zone]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
+				minor_text += "<B>[zone]</B>  <A href='byond://?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
 		else
 			minor_text = "No minor alerts detected.<BR>"
 
@@ -528,9 +528,9 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 				mixer_part += "<hr>"
 
-				mixer_part += "<b>Output Target Pressure</b>: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_set=1'>[data["target_pressure"]] kPa</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A><BR>"
-				mixer_part += "<b>Pump Status</b>: <A href='?src=\ref[src];toggle_pump=1'>[data["pump_status"]]</A><BR>"
-				mixer_part += "<B>Gas Input Ratio</b>: <A href='?src=\ref[src];ratio=5'><<</A> <A href='?src=\ref[src];ratio=1'><</A> [data["i1trans"]]% /  [data["i2trans"]]% <A href='?src=\ref[src];ratio=-1'>></A> <A href='?src=\ref[src];ratio=-5'>>></A>"
+				mixer_part += "<b>Output Target Pressure</b>: <A href='byond://?src=\ref[src];pressure_adj=-100'>-</A> <A href='byond://?src=\ref[src];pressure_adj=-10'>-</A> <A href='byond://?src=\ref[src];pressure_set=1'>[data["target_pressure"]] kPa</A> <A href='byond://?src=\ref[src];pressure_adj=10'>+</A> <A href='byond://?src=\ref[src];pressure_adj=100'>+</A><BR>"
+				mixer_part += "<b>Pump Status</b>: <A href='byond://?src=\ref[src];toggle_pump=1'>[data["pump_status"]]</A><BR>"
+				mixer_part += "<B>Gas Input Ratio</b>: <A href='byond://?src=\ref[src];ratio=5'><<</A> <A href='byond://?src=\ref[src];ratio=1'><</A> [data["i1trans"]]% /  [data["i2trans"]]% <A href='byond://?src=\ref[src];ratio=-1'>></A> <A href='byond://?src=\ref[src];ratio=-5'>>></A>"
 
 				mixer_part += "<HR><B>Resulting Composition</B>: <BR>"
 				GET_SIGNAL_MIXTURE("Out")
@@ -543,7 +543,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				mixer_data += mixer_part
 
 			else
-				mixer_part = "<FONT color='red'>[long_name] can not be found!<A href='?src=\ref[src];refresh_status'>Search</A></FONT><BR>"
+				mixer_part = "<FONT color='red'>[long_name] can not be found!<A href='byond://?src=\ref[src];refresh_status'>Search</A></FONT><BR>"
 
 				mixer_data += mixer_part
 

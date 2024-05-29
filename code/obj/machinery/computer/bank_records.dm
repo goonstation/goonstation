@@ -35,7 +35,7 @@
 			return
 		var/list/dat = list()
 		if (src.temp)
-			dat += text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
+			dat += text("<TT>[src.temp]</TT><BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear Screen</A>")
 		else
 			var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			dat += {"
@@ -53,8 +53,8 @@
 				.buttonlinks { white-space: nowrap; padding: 0; text-align: center; }
 				</style>
 
-				ID Card: [src.scan ? "<a href='?src=\ref[src];scan=1' class='buttonlink'>&#9167;</a> [src.scan.name]" : "<a href='?src=\ref[src];scan=1'>No card inserted.</a>"]
-				<br><a href='?src=\ref[src];[src.authenticated ? "logout=1'>Log Out" : "login=1'>Log In"]</a><hr>
+				ID Card: [src.scan ? "<a href='byond://?src=\ref[src];scan=1' class='buttonlink'>&#9167;</a> [src.scan.name]" : "<a href='byond://?src=\ref[src];scan=1'>No card inserted.</a>"]
+				<br><a href='byond://?src=\ref[src];[src.authenticated ? "logout=1'>Log Out" : "login=1'>Log In"]</a><hr>
 				"}
 
 			dat += {"
@@ -93,8 +93,8 @@
 				</tbody>
 			</table>
 			<div class='c'>
-				<a href='?src=\ref[src];payroll=1'>[wagesystem.pay_active ? "Suspend Payroll" : "Resume Payroll"]</a>
-				- <a href='?src=\ref[src];transfer=1'>Transfer Funds Between Budgets</a>
+				<a href='byond://?src=\ref[src];payroll=1'>[wagesystem.pay_active ? "Suspend Payroll" : "Resume Payroll"]</a>
+				- <a href='byond://?src=\ref[src];transfer=1'>Transfer Funds Between Budgets</a>
 			</div>
 			<hr>
 			Every payday cycle, Centcom distributes the <em>payroll stipend</em> into the station's budget, which is then paid out to crew accounts.
@@ -118,10 +118,10 @@
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					dat += {"
 					<tr>
-						<th class='l'><a href='?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["name"]]</th>
-						<td><a href='?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["job"]]</td>
-						<td class='r'>[R["wage"]][CREDIT_SIGN] <a href='?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
-						<td style="text-align: right; font-weight: bold;">[R["current_money"]][CREDIT_SIGN] <a href='?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<th class='l'><a href='byond://?src=\ref[src];Fname=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["name"]]</th>
+						<td><a href='byond://?src=\ref[src];Fjob=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a> [R["job"]]</td>
+						<td class='r'>[R["wage"]][CREDIT_SIGN] <a href='byond://?src=\ref[src];Fwage=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
+						<td style="text-align: right; font-weight: bold;">[R["current_money"]][CREDIT_SIGN] <a href='byond://?src=\ref[src];Fmoney=\ref[R]' class='buttonlink'>&#x270F;&#xFE0F;</a></td>
 					</tr>
 					"}
 

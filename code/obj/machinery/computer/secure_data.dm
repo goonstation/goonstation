@@ -322,7 +322,7 @@
 			// copy-pasted from the geneticsMachines version
 			// mostly to reduce the sheer number of src text injections everywhere
 			var surrogate = document.getElementById("surrogate");
-			surrogate.src = "?src=\ref[src];" + url;
+			surrogate.src = "byond://?src=\ref[src];" + url;
 		}
 
 		function doPopup(link, text) {

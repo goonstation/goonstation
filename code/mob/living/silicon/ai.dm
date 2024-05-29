@@ -906,12 +906,12 @@ or don't if it uses a custom topopen overlay
 	if (O)
 		if (printalerts)
 			if (C?.camera_status)
-				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
+				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"byond://?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
 			else if (length(CL))
 				var/foo = 0
 				var/dat2 = ""
 				for (var/obj/machinery/camera/I in CL)
-					dat2 += "[(!foo) ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[I]\">[I.c_tag]</A>"
+					dat2 += "[(!foo) ? " " : "| "]<A HREF=\"byond://?src=\ref[src];switchcamera=\ref[I]\">[I.c_tag]</A>"
 					foo = 1
 				src.show_text("--- [class] alarm detected in [A.name]! ([dat2])")
 			else

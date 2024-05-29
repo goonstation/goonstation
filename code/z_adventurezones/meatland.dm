@@ -884,7 +884,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		<tr><td><a href='javascript:keypadIn(1);'>1</a></td><td><a href='javascript:keypadIn(2);'>2</a></td><td><a href='javascript:keypadIn(3)'>3</a></td></td><td><a href='javascript:keypadIn("V");'>&#x0412;</a></td></tr>
 		<tr><td><a href='javascript:keypadIn(0);'>0</a></td><td><a href='javascript:keypadIn("E");'>&#x0415;</a></td><td><a href='javascript:keypadIn("D");'>&#x0414;</a></td></td><td><a href='javascript:keypadIn("G");'>&#x0413;</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>&#x041F;&#x0423;&#x0421;&#x041A;</a></td><td colspan = 2 width = 100px><a href='javascript:keypadIn("reset");'>&#x0421;&#x0411;&#x0420;&#x041E;&#x0421;</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='byond://?src=\ref[src];enter=0;'>&#x041F;&#x0423;&#x0421;&#x041A;</a></td><td colspan = 2 width = 100px><a href='javascript:keypadIn("reset");'>&#x0421;&#x0411;&#x0420;&#x041E;&#x0421;</a></td></tr>
 	</table>
 
 <script language="JavaScript">
@@ -934,7 +934,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			}
 		}
 
-		document.getElementById("enterkey").setAttribute("href","?src=\ref[src];enter=" + currentVal + ";");
+		document.getElementById("enterkey").setAttribute("href","byond://?src=\ref[src];enter=" + currentVal + ";");
 	}
 
 	function keypadIn(num)
@@ -1087,7 +1087,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		return "LOCKED"
 
 	return_badge()
-		return "Key: <a href='?src=\ref[src];key=1'>-----</a>"
+		return "Key: <a href='byond://?src=\ref[src];key=1'>-----</a>"
 
 	Topic(href, href_list)
 		if(..())
@@ -1117,9 +1117,9 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	return_badge()
 		if(src.inserted_key)
-			. = "Key: <A HREF='?src=\ref[src];eject_key=1'>[src.inserted_key.name]</A>"
+			. = "Key: <A HREF='byond://?src=\ref[src];eject_key=1'>[src.inserted_key.name]</A>"
 		else
-			. = "Key: <a href='?src=\ref[src];key=1'>-----</a>"
+			. = "Key: <a href='byond://?src=\ref[src];key=1'>-----</a>"
 
 	Topic(href, href_list)
 		if(..())

@@ -70,7 +70,7 @@
 /obj/machinery/bot/firebot/attack_ai(mob/user as mob, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 //	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 //	if(!src.locked)
@@ -86,7 +86,7 @@
 /obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 //	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 //	if(!src.locked)

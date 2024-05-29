@@ -57,8 +57,8 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						device_name += " (DEFAULT)"
 
 				if (!T || !isturf(T)) continue
-				var/ref_a = "<a href='?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
-				var/ref_b = "<a href='?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
+				var/ref_a = "<a href='byond://?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
+				var/ref_b = "<a href='byond://?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
 				temp += {"<tr>
 							<td>
 								[TV.name]
@@ -82,10 +82,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[TV.fingerprintslast ? TV.fingerprintslast : "N/A"]
 							</td>
 							<td>
-								<a href='?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+								<a href='byond://?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 							</td>
 							<td>
-								<a href='?src=\ref[src];trigger=\ref[TV]'><B>[TV.tank_one && TV.tank_two ? "Trigger" : ""]</B></a>
+								<a href='byond://?src=\ref[src];trigger=\ref[TV]'><B>[TV.tank_one && TV.tank_two ? "Trigger" : ""]</B></a>
 							</td>
 						</tr>"}
 
@@ -101,7 +101,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 		for (var/obj/item/assembly/proximity_bomb/PB in ST_prox)
 			var/turf/T = get_turf(PB)
 			if (!T || !isturf(T)) continue
-			var/ref_PB = "<a href='?src=\ref[src];airmon=\ref[PB.part3]'>[PB.part3]</a>"
+			var/ref_PB = "<a href='byond://?src=\ref[src];airmon=\ref[PB.part3]'>[PB.part3]</a>"
 			temp += {"<tr>
 						<td>
 							[PB.name]
@@ -122,17 +122,17 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							[PB.fingerprintslast ? PB.fingerprintslast : "N/A"]
 						</td>
 						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[PB]'>[PB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+							<a href='byond://?src=\ref[src];toggle_dud=\ref[PB]'>[PB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 						</td>
 						<td>
-							<a href='?src=\ref[src];trigger=\ref[PB]'><B>[PB.part3 ? "Trigger" : ""]</B></a>
+							<a href='byond://?src=\ref[src];trigger=\ref[PB]'><B>[PB.part3 ? "Trigger" : ""]</B></a>
 						</td>
 					</tr>"}
 
 		for (var/obj/item/assembly/time_bomb/TB in ST_time)
 			var/turf/T = get_turf(TB)
 			if (!T || !isturf(T)) continue
-			var/ref_TB = "<a href='?src=\ref[src];airmon=\ref[TB.part3]'>[TB.part3]</a>"
+			var/ref_TB = "<a href='byond://?src=\ref[src];airmon=\ref[TB.part3]'>[TB.part3]</a>"
 			temp += {"<tr>
 						<td>
 							[TB.name]
@@ -153,17 +153,17 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							[TB.fingerprintslast ? TB.fingerprintslast : "N/A"]
 						</td>
 						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[TB]'>[TB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+							<a href='byond://?src=\ref[src];toggle_dud=\ref[TB]'>[TB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 						</td>
 						<td>
-							<a href='?src=\ref[src];trigger=\ref[TB]'><B>[TB.part3 ? "Trigger" : ""]</B></a>
+							<a href='byond://?src=\ref[src];trigger=\ref[TB]'><B>[TB.part3 ? "Trigger" : ""]</B></a>
 						</td>
 					</tr>"}
 
 		for (var/obj/item/assembly/radio_bomb/RB in ST_radio)
 			var/turf/T = get_turf(RB)
 			if (!T || !isturf(T)) continue
-			var/ref_RB = "<a href='?src=\ref[src];airmon=\ref[RB.part3]'>[RB.part3]</a>"
+			var/ref_RB = "<a href='byond://?src=\ref[src];airmon=\ref[RB.part3]'>[RB.part3]</a>"
 			temp += {"<tr>
 						<td>
 							[RB.name]
@@ -184,10 +184,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							[RB.fingerprintslast ? RB.fingerprintslast : "N/A"]
 						</td>
 						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[RB]'>[RB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+							<a href='byond://?src=\ref[src];toggle_dud=\ref[RB]'>[RB.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 						</td>
 						<td>
-							<a href='?src=\ref[src];trigger=\ref[RB]'><B>[RB.part3 ? "Trigger" : ""]</B></a>
+							<a href='byond://?src=\ref[src];trigger=\ref[RB]'><B>[RB.part3 ? "Trigger" : ""]</B></a>
 						</td>
 					</tr>"}
 
@@ -204,7 +204,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			if(!filter_active_only || det.attachedTo)
 				var/turf/T = get_turf(det)
 				if (!T || !isturf(T)) continue
-				var/ref = "<a href='?src=\ref[src];airmon=\ref[det.attachedTo]'>[det.attachedTo]</a>"
+				var/ref = "<a href='byond://?src=\ref[src];airmon=\ref[det.attachedTo]'>[det.attachedTo]</a>"
 				temp += {"<tr>
 							<td>
 								[det.name]
@@ -225,10 +225,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[det.attachedTo && det.attachedTo.fingerprintslast ? det.attachedTo.fingerprintslast : "N/A"]
 							</td>
 							<td>
-								<a href='?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+								<a href='byond://?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 							</td>
 							<td>
-								<a href='?src=\ref[src];trigger=\ref[det]'><B>[det.attachedTo ? "Trigger" : ""]</B></a>
+								<a href='byond://?src=\ref[src];trigger=\ref[det]'><B>[det.attachedTo ? "Trigger" : ""]</B></a>
 							</td>
 						</tr>"}
 
@@ -274,7 +274,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							</style>
 						</head>
 						<body>
-							<a href='?src=\ref[src];refresh=rebuild'>Rebuild Lists</a> <a href='?src=\ref[src];refresh=interface'>Refresh</a> <a href='?src=\ref[src];filter=1'>Filtering: [filter_active_only ? "Only Complete" : "All"]</a><br>
+							<a href='byond://?src=\ref[src];refresh=rebuild'>Rebuild Lists</a> <a href='byond://?src=\ref[src];refresh=interface'>Refresh</a> <a href='byond://?src=\ref[src];filter=1'>Filtering: [filter_active_only ? "Only Complete" : "All"]</a><br>
 							[TTVtable]
 							<BR>
 							[STtable]

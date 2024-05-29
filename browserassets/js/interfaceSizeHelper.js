@@ -4,22 +4,22 @@ window.sizeHelper = {
 	interface: '',
 	dataProp: '',
 
-	loadMetas: function() { 
-		var metas = document.getElementsByTagName('meta'); 
+	loadMetas: function() {
+		var metas = document.getElementsByTagName('meta');
 
-		for (var i = 0; i < metas.length; i++) { 
-			if (metas[i].getAttribute('name') === 'holderRef') { 
+		for (var i = 0; i < metas.length; i++) {
+			if (metas[i].getAttribute('name') === 'holderRef') {
 				this.holderRef = metas[i].getAttribute('content');
 			}
 
-			if (metas[i].getAttribute('name') === 'interface') { 
+			if (metas[i].getAttribute('name') === 'interface') {
 				this.interface = metas[i].getAttribute('content');
 			}
 
-			if (metas[i].getAttribute('name') === 'dataProp') { 
+			if (metas[i].getAttribute('name') === 'dataProp') {
 				this.dataProp = metas[i].getAttribute('content');
 			}
-		} 
+		}
 	},
 
 	update: null,
@@ -32,7 +32,7 @@ window.sizeHelper = {
 		}
 
 		if (this.holderRef) {
-			window.location = '?src=' + this.holderRef + ';action=loaded';
+			window.location = 'byond://?src=' + this.holderRef + ';action=loaded';
 			this.loaded = true;
 		}
 	}

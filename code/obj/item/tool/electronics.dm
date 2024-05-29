@@ -236,7 +236,7 @@
 
 		if(0)
 			for(var/obj/item/electronics/P in src.contents)
-				dat += "[P.name]: <A href='?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
+				dat += "[P.name]: <A href='byond://?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
 
 				src.add_dialog(user)
 				user.Browse("<HEAD><TITLE>Frame</TITLE></HEAD><TT>[dat]</TT>", "window=fkit")
@@ -808,16 +808,16 @@
 	dat += "<b>Scanned Items:</b><br>"
 	for(var/datum/electronics/scanned_item/S in ruck_controls.scanned_items)
 		dat += "<u>[S.name]</u><small> "
-		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
+		//dat += "<A href='byond://?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		if (S.item_mats && src.olde)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
+			dat += " * <A href='byond://?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		else if (S.blueprint)
 			if(!S.locked || hide_allowed || src.olde)
-				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+				dat += " * <A href='byond://?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
 			else
 				dat += " * Blueprint Disabled"
 		if(hide_allowed)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
+			dat += " * <A href='byond://?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
 		dat += "</small><br>"
 	dat += "<br>"
 

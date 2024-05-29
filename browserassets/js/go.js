@@ -10,7 +10,7 @@ var globaly
 var globaltile
 
 function byond() {
-    url = "?src=" + srcRef;
+    url = "byond://?src=" + srcRef;
     currentIsKey = true;
     for(var i = 0; i < arguments.length; i++) {
         if(currentIsKey)

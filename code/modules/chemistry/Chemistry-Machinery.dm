@@ -1604,7 +1604,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				else dat += "<b>Storage Tank 2 Missing!</b><br>"
 				// Inserted Beaker or whatever
 				if (src.inserted)
-					dat += "<B>Receptacle:</B> [src.inserted] ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A><BR>"
+					dat += "<B>Receptacle:</B> [src.inserted] ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='byond://?src=\ref[src];ejectbeaker=1'>(Eject)</A><BR>"
 					dat += "<b>Contents:</b> "
 					if(src.inserted.reagents.reagent_list.len)
 						for(var/current_id in inserted.reagents.reagent_list)
@@ -1621,57 +1621,57 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			else if (src.mode == "extraction")
 				dat += "<b><u>Extraction Management</u></b><br><br>"
 				if (src.autoextract)
-					dat += "<b>Auto-Extraction:</b> <A href='?src=\ref[src];autoextract=1'>Enabled</A>"
+					dat += "<b>Auto-Extraction:</b> <A href='byond://?src=\ref[src];autoextract=1'>Enabled</A>"
 				else
-					dat += "<b>Auto-Extraction:</b> <A href='?src=\ref[src];autoextract=1'>Disabled</A>"
+					dat += "<b>Auto-Extraction:</b> <A href='byond://?src=\ref[src];autoextract=1'>Disabled</A>"
 				dat += "<br>"
 				if (src.extract_to)
-					dat += "<b>Extraction Target:</b> <A href='?src=\ref[src];extracttarget=1'>[src.extract_to]</A> ([src.extract_to.reagents.total_volume]/[src.extract_to.reagents.maximum_volume])"
-					if (src.extract_to == src.inserted) dat += "<A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A>"
-				else dat += "<A href='?src=\ref[src];extracttarget=1'><b>No current extraction target set.</b></A>"
+					dat += "<b>Extraction Target:</b> <A href='byond://?src=\ref[src];extracttarget=1'>[src.extract_to]</A> ([src.extract_to.reagents.total_volume]/[src.extract_to.reagents.maximum_volume])"
+					if (src.extract_to == src.inserted) dat += "<A href='byond://?src=\ref[src];ejectbeaker=1'>(Eject)</A>"
+				else dat += "<A href='byond://?src=\ref[src];extracttarget=1'><b>No current extraction target set.</b></A>"
 
 				if(src.ingredients.len)
 					dat += "<br><br><B>Extractable Items:</B><br><br>"
 					for (var/obj/item/I in src.ingredients)
 						dat += "* [I]<br>"
-						dat += "<A href='?src=\ref[src];extractingred=\ref[I]'>(Extract)</A> <A href='?src=\ref[src];ejectingred=\ref[I]'>(Eject)</A><br>"
+						dat += "<A href='byond://?src=\ref[src];extractingred=\ref[I]'>(Extract)</A> <A href='byond://?src=\ref[src];ejectingred=\ref[I]'>(Eject)</A><br>"
 				else dat += "<br><br><B>No Items inserted!</B>"
 
 			else if (src.mode == "transference")
 				dat += "<b><u>Transfer Management</u></b><br><br>"
 
 				if (src.inserted)
-					dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.inserted]'><b>[src.inserted]:</b></A> ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.inserted]'>(Flush All)</A> <A href='?src=\ref[src];ejectbeaker=1'>(Eject)</A><br>"
+					dat += "<A href='byond://?src=\ref[src];chemtransfer=\ref[src.inserted]'><b>[src.inserted]:</b></A> ([src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]) <A href='byond://?src=\ref[src];flush=\ref[src.inserted]'>(Flush All)</A> <A href='byond://?src=\ref[src];ejectbeaker=1'>(Eject)</A><br>"
 					if(src.inserted.reagents.reagent_list.len)
 						for(var/current_id in inserted.reagents.reagent_list)
 							var/datum/reagent/current_reagent = inserted.reagents.reagent_list[current_id]
-							dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.inserted];flush_reagent=[current_id]'>(X)</A><br>"
+							dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='byond://?src=\ref[src];flush=\ref[src.inserted];flush_reagent=[current_id]'>(X)</A><br>"
 					else dat += "Empty<BR>"
 				else dat += "<b>No receptacle inserted!</b><br>"
 
 				dat += "<br>"
 
-				dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_1]'><b>Storage Tank 1:</b></A> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_1]'>(Flush All)</A><br>"
+				dat += "<A href='byond://?src=\ref[src];chemtransfer=\ref[src.storage_tank_1]'><b>Storage Tank 1:</b></A> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume]) <A href='byond://?src=\ref[src];flush=\ref[src.storage_tank_1]'>(Flush All)</A><br>"
 				if(src.storage_tank_1.reagents.reagent_list.len)
 					for(var/current_id in storage_tank_1.reagents.reagent_list)
 						var/datum/reagent/current_reagent = storage_tank_1.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.storage_tank_1];flush_reagent=[current_id]'>(X)</A><br>"
+						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='byond://?src=\ref[src];flush=\ref[src.storage_tank_1];flush_reagent=[current_id]'>(X)</A><br>"
 				else dat += "Empty<BR>"
 
 				dat += "<br>"
-				dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_2]'><b>Storage Tank 2:</b></A> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_2]'>(Flush All)</A><br>"
+				dat += "<A href='byond://?src=\ref[src];chemtransfer=\ref[src.storage_tank_2]'><b>Storage Tank 2:</b></A> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume]) <A href='byond://?src=\ref[src];flush=\ref[src.storage_tank_2]'>(Flush All)</A><br>"
 				if(src.storage_tank_2.reagents.reagent_list.len)
 					for(var/current_id in storage_tank_2.reagents.reagent_list)
 						var/datum/reagent/current_reagent = storage_tank_2.reagents.reagent_list[current_id]
-						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='?src=\ref[src];flush=\ref[src.storage_tank_2];flush_reagent=[current_id]'>(X)</A><br>"
+						dat += "* <i>[current_reagent.volume] units of [current_reagent.name]</i> <A href='byond://?src=\ref[src];flush=\ref[src.storage_tank_2];flush_reagent=[current_id]'>(X)</A><br>"
 				else dat += "Empty<BR>"
 
 			else
 				dat += {"<b>Software Error.</b><br>
-				<A href='?src=\ref[src];page=1'>Please click here to return to the Overview.</A>"}
+				<A href='byond://?src=\ref[src];page=1'>Please click here to return to the Overview.</A>"}
 
 			dat += "<HR>"
-			dat += "<b><u>Mode:</u></b> <A href='?src=\ref[src];page=1'>(Overview)</A> <A href='?src=\ref[src];page=2'>(Extraction)</A> <A href='?src=\ref[src];page=3'>(Transference)</A>"
+			dat += "<b><u>Mode:</u></b> <A href='byond://?src=\ref[src];page=1'>(Overview)</A> <A href='byond://?src=\ref[src];page=2'>(Extraction)</A> <A href='byond://?src=\ref[src];page=3'>(Transference)</A>"
 
 			user.Browse(dat.Join(), "window=rextractor;size=370x500")
 			onclose(user, "rextractor")

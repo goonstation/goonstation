@@ -56,12 +56,12 @@
 /datum/pump_ui/proc/render()
 	return {"
 <span>[is_on() ? "Active" : "Inactive"]</span>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=toggle_power">Toggle Power</a>
+<a href="byond://?src=\ref[src]&ui_target=pump_ui&ui_action=toggle_power">Toggle Power</a>
 <br />
 <span>[value_name]:
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_lg]">-</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_sm]">-</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=set_value">[get_value()] [value_units]</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_sm]">+</a>
-<a href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_lg]">+</a>
+<a href="byond://?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_lg]">-</a>
+<a href="byond://?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_sm]">-</a>
+<a href="byond://?src=\ref[src]&ui_target=pump_ui&ui_action=set_value">[get_value()] [value_units]</a>
+<a href="byond://?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_sm]">+</a>
+<a href="byond://?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_lg]">+</a>
 "}

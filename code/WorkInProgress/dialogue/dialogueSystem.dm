@@ -260,7 +260,7 @@ Links are ignored on this node. It uses the target node's links.
 		return html
 
 	proc/getLinkHtml(var/client/C) //Returns getLinkText() by default. Can override for dynamic behaviour.
-		return {"<a class="button full" href='?src=\ref[master];link=\ref[src];client=\ref[C]'>[getLinkText(C)]</a>"}
+		return {"<a class="button full" href='byond://?src=\ref[master];link=\ref[src];client=\ref[C]'>[getLinkText(C)]</a>"}
 
 	proc/getNodeText(var/client/C) //Simply returns the node text by default - node text is what the npc says. Can override for dynamic behaviour.
 		return nodeText

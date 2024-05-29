@@ -216,7 +216,7 @@ $(document).ready(function () {
     }
 
     function onAction(ref, action) {
-      window.location = "?src=" + flockPanelRef + "&action=" + action + "&origin=" + ref;
+      window.location = "byond://?src=" + flockPanelRef + "&action=" + action + "&origin=" + ref;
     }
 
     function updateUi() {
@@ -341,7 +341,7 @@ $(document).ready(function () {
     }
 
     function getData() {
-      window.location = "?src=" + flockPanelRef + "&action=update";
+      window.location = "byond://?src=" + flockPanelRef + "&action=update";
     }
 
     function populateEntityList(entitiesKey, entitiesList) {

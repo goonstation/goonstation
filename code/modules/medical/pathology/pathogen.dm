@@ -368,7 +368,7 @@ datum/controller/pathogen
 			if (i != 1)
 				output += " - "
 			if (state != i)
-				output += "<a href='?src=\ref[src];action=setstate;state=[i];topic_holder=\ref[topic_holder]'>[states[i]]</a>"
+				output += "<a href='byond://?src=\ref[src];action=setstate;state=[i];topic_holder=\ref[topic_holder]'>[states[i]]</a>"
 			else
 				output += "<span style='color:#dd0000; font-weight:bold'>[states[i]]</span>"
 		output += "<br>"
@@ -392,13 +392,13 @@ datum/controller/pathogen
 					output += "<td>[symptoms]</td>"
 
 					output += "<td>"
-					output += "Advance speed: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><BR>"
-					output += "Suppression: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><BR>"
-					output += "Spread: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><BR>"
+					output += "Advance speed: <a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><BR>"
+					output += "Suppression: <a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><BR>"
+					output += "Spread: <a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><BR>"
 					output += "</td>"
 
-					output += "<td><a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a></td>"
-					output += "<td><a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a></td>"
+					output += "<td><a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a></td>"
+					output += "<td><a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a></td>"
 
 					var/infected = 0
 					for (var/mob/living/carbon/human/H in CDC.infections)
@@ -407,10 +407,10 @@ datum/controller/pathogen
 							infected++
 					output += "<td>[infected]</td>"
 					output += "<td>"
-					output += "<a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=spawn;topic_holder=\ref[topic_holder]'>(SPAWN)</a><br>"
-					output += "<a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=infect;topic_holder=\ref[topic_holder]'>(INFECT)</a><br>"
-					output += "<a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=cure;topic_holder=\ref[topic_holder]'>(CURE)</a><br>"
-					output += "<a href='?src=\ref[topic_holder];action=view_logs_pathology_strain;presearch=[P.name]'>(LOGS)</a>"
+					output += "<a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=spawn;topic_holder=\ref[topic_holder]'>(SPAWN)</a><br>"
+					output += "<a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=infect;topic_holder=\ref[topic_holder]'>(INFECT)</a><br>"
+					output += "<a href='byond://?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=cure;topic_holder=\ref[topic_holder]'>(CURE)</a><br>"
+					output += "<a href='byond://?src=\ref[topic_holder];action=view_logs_pathology_strain;presearch=[P.name]'>(LOGS)</a>"
 					output += "</td>"
 					output += "</tr>"
 			else
@@ -440,9 +440,9 @@ datum/controller/pathogen
 						output += "<td>[infections]</td>"
 						output += "<td>[immunities]</td>"
 						output += "<td>[CDC.microbody_type]</td>"
-						output += "<td><a href='?src=\ref[src];action=strain_cure;strain=[pathogen_name];topic_holder=\ref[topic_holder]'>(CURE)</a></td>"
-						output += "<td><a href='?src=\ref[src];action=strain_details;strain=[pathogen_name];topic_holder=\ref[topic_holder]'>(VIEW)</a></td>"
-						output += "<td><a href='?src=\ref[topic_holder];action=view_logs_pathology_strain;presearch=[pathogen_name]'>(LOGS)</a></td>"
+						output += "<td><a href='byond://?src=\ref[src];action=strain_cure;strain=[pathogen_name];topic_holder=\ref[topic_holder]'>(CURE)</a></td>"
+						output += "<td><a href='byond://?src=\ref[src];action=strain_details;strain=[pathogen_name];topic_holder=\ref[topic_holder]'>(VIEW)</a></td>"
+						output += "<td><a href='byond://?src=\ref[topic_holder];action=view_logs_pathology_strain;presearch=[pathogen_name]'>(LOGS)</a></td>"
 						output += "</tr>"
 					output += "</tbody></table>"
 				if ("microbodies")
@@ -462,13 +462,13 @@ datum/controller/pathogen
 								nutrition += "<BR>"
 							nutrition += "[nutrient]"
 						output += "<td>[nutrition]</td>"
-						output += "<td><a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=stages;topic_holder=\ref[topic_holder]'>[MB.stages]</a></td>"
-						output += "<td><a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=vaccinable;topic_holder=\ref[topic_holder]'>[MB.vaccination ? "Yes" : "No"]</a></td>"
+						output += "<td><a href='byond://?src=\ref[src];action=microbody_data;which=\ref[MB];data=stages;topic_holder=\ref[topic_holder]'>[MB.stages]</a></td>"
+						output += "<td><a href='byond://?src=\ref[src];action=microbody_data;which=\ref[MB];data=vaccinable;topic_holder=\ref[topic_holder]'>[MB.vaccination ? "Yes" : "No"]</a></td>"
 						output += "<td>"
 						for (var/stage = 1, stage <= 5, stage++)
 							if (stage != 1)
 								output += "<br>"
-							output += "<a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=activity;stage=[stage];topic_holder=\ref[topic_holder]'>[MB.activity[stage]]%</a>"
+							output += "<a href='byond://?src=\ref[src];action=microbody_data;which=\ref[MB];data=activity;stage=[stage];topic_holder=\ref[topic_holder]'>[MB.activity[stage]]%</a>"
 						output += "</td>"
 						output += "</tr>"
 					output += "</tbody></table>"
@@ -478,7 +478,7 @@ datum/controller/pathogen
 						var/datum/pathogeneffects/EF = src.path_to_symptom[sym_path]
 						output += "<tr>"
 						output += "<td>[EF]</td>"
-						output += "<td><a href='?src=\ref[src];action=symptom_data;which=\ref[EF];data=info;topic_holder=\ref[topic_holder]'>Show information</a></td>"
+						output += "<td><a href='byond://?src=\ref[src];action=symptom_data;which=\ref[EF];data=info;topic_holder=\ref[topic_holder]'>Show information</a></td>"
 						output += "<td>[EF.infect_type]</td>"
 						output += "<td>[EF.infection_coefficient]</td>"
 						switch (EF.rarity)
@@ -525,28 +525,28 @@ datum/controller/pathogen
 						output += "<b>Description: </b> [P.desc]<br>"
 
 					if (!P.body_type)
-						output += "<a href='?src=\ref[src];action=pathogen_creator;do=body_type;topic_holder=\ref[topic_holder]'>Assign microbody</a><br>"
+						output += "<a href='byond://?src=\ref[src];action=pathogen_creator;do=body_type;topic_holder=\ref[topic_holder]'>Assign microbody</a><br>"
 					else
 						output += "<b>Microbody:</b> [P.body_type]<br>"
-						output += "<b>Stages:</b> <a href='?src=\ref[src];action=pathogen_creator;do=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a><br>"
-						output += "<b>Advance speed:</b> <a href='?src=\ref[src];action=pathogen_creator;do=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><br>"
-						output += "<b>Symptomatic:</b> <a href='?src=\ref[src];action=pathogen_creator;do=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a><br>"
-						output += "<b>Suppression threshold:</b> <a href='?src=\ref[src];action=pathogen_creator;do=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><br>"
-						output += "<b>Spread:</b> <a href='?src=\ref[src];action=pathogen_creator;do=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><br>"
+						output += "<b>Stages:</b> <a href='byond://?src=\ref[src];action=pathogen_creator;do=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a><br>"
+						output += "<b>Advance speed:</b> <a href='byond://?src=\ref[src];action=pathogen_creator;do=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><br>"
+						output += "<b>Symptomatic:</b> <a href='byond://?src=\ref[src];action=pathogen_creator;do=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a><br>"
+						output += "<b>Suppression threshold:</b> <a href='byond://?src=\ref[src];action=pathogen_creator;do=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><br>"
+						output += "<b>Spread:</b> <a href='byond://?src=\ref[src];action=pathogen_creator;do=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><br>"
 						if (!P.suppressant)
-							output += "<a href='?src=\ref[src];action=pathogen_creator;do=suppressant;topic_holder=\ref[topic_holder]'>Assign suppressant</a><br>"
+							output += "<a href='byond://?src=\ref[src];action=pathogen_creator;do=suppressant;topic_holder=\ref[topic_holder]'>Assign suppressant</a><br>"
 						else
 							output += "<b>Suppressant: </b>[P.suppressant]<br><br>"
 							output += "<b>Effects: </b><br>"
 							if (P.effects.len)
 								for (var/datum/pathogeneffects/EF in P.effects)
-									output += "- [EF] <a href='?src=\ref[src];action=pathogen_creator;do=remove;which=\ref[EF];topic_holder=\ref[topic_holder]'>(remove)</a><br>"
+									output += "- [EF] <a href='byond://?src=\ref[src];action=pathogen_creator;do=remove;which=\ref[EF];topic_holder=\ref[topic_holder]'>(remove)</a><br>"
 							else
 								output += " -- None -- <br>"
-							output += "<a href='?src=\ref[src];action=pathogen_creator;do=add;topic_holder=\ref[topic_holder]'>Add effect</a><br><br>"
-					output += "<a href='?src=\ref[src];action=pathogen_creator;do=reset;topic_holder=\ref[topic_holder]'>Reset pathogen</a>"
+							output += "<a href='byond://?src=\ref[src];action=pathogen_creator;do=add;topic_holder=\ref[topic_holder]'>Add effect</a><br><br>"
+					output += "<a href='byond://?src=\ref[src];action=pathogen_creator;do=reset;topic_holder=\ref[topic_holder]'>Reset pathogen</a>"
 					if (P.body_type && P.suppressant && length(P.effects))
-						output += " -- <a href='?src=\ref[src];action=pathogen_creator;do=create;topic_holder=\ref[topic_holder]'>Create pathogen</a>"
+						output += " -- <a href='byond://?src=\ref[src];action=pathogen_creator;do=create;topic_holder=\ref[topic_holder]'>Create pathogen</a>"
 				else
 					output += "<h1>NOTHING TO SEE HERE YET</h1>"
 		output += "</body></html>"

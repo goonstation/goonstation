@@ -173,11 +173,11 @@
 				'<td class="actions">';
 
 			if (!viewRemoved) {
-				html += '<a href="?src='+ref_src+'&action=unbane'+urlEncodeParams({id: row.id, target: row.ckey, compID: row.compID, ip: row.ip, reason: row.reason, timestamp: row.timestamp})+'" title="Edit"><i class="icon-edit"></i></a>'+
-						'<a href="?src='+ref_src+'&action=unbanf'+urlEncodeParams({id: row.id, target: row.ckey, compID: row.compID, ip: row.ip})+'" title="Unban"><i class="icon-trash"></i></a>';
+				html += '<a href="byond://?src='+ref_src+'&action=unbane'+urlEncodeParams({id: row.id, target: row.ckey, compID: row.compID, ip: row.ip, reason: row.reason, timestamp: row.timestamp})+'" title="Edit"><i class="icon-edit"></i></a>'+
+						'<a href="byond://?src='+ref_src+'&action=unbanf'+urlEncodeParams({id: row.id, target: row.ckey, compID: row.compID, ip: row.ip})+'" title="Unban"><i class="icon-trash"></i></a>';
 			}
 
-			html +=	'<a href="?src='+ref_src+'&action=notes'+urlEncodeParams({target: row.ckey})+'" title="Notes"><i class="icon-comments-alt"></i></a>'+
+			html +=	'<a href="byond://?src='+ref_src+'&action=notes'+urlEncodeParams({target: row.ckey})+'" title="Notes"><i class="icon-comments-alt"></i></a>'+
 				'</td>'+
 				'<td class="ckey">'+
 					'<a href="'+row.ckey+'" class="searchFor">'+row.ckey+'</a>'+
@@ -405,7 +405,7 @@
 				getPreviousBans($(this).attr('data-previous'));
 			});
 
-			$('.header .addNew').attr('href', '?src='+ref_src+';action=addban');
+			$('.header .addNew').attr('href', 'byond://?src='+ref_src+';action=addban');
 
 			$('.switchRemoved').click(function(e) {
 				e.preventDefault();

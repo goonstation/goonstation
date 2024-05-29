@@ -1444,7 +1444,7 @@
 			params.push(encodeURI(k) + "=" + encodeURI(data[k]));
 		}
 
-		var target = "?src=" + src + ";" + params.join(";");
+		var target = "byond://?src=" + src + ";" + params.join(";");
 		window.location = target;
 	}
 

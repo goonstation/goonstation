@@ -32,7 +32,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	var/changerHtml = grabResource("html/stationNameChanger.html")
 	changerHtml = replacetext(changerHtml, "JSON Goes Here", json_encode(station_name_whitelist_sectioned))
-	changerHtml = replacetext(changerHtml, "action=\"\"", "action=\"?src=\ref[source];[submitRoute];\"")
+	changerHtml = replacetext(changerHtml, "action=\"\"", "action=\"byond://?src=\ref[source];[submitRoute];\"")
 	changerHtml = replacetext(changerHtml, "MAXLENGTH_HERE", MAX_STATION_NAME_LENGTH)
 	changerHtml = replacetext(changerHtml, "ADMIN_USER_HERE", "[isadmin(src)]")
 	src.Browse(changerHtml, "window=stationnamechanger;size=600x500;title=Station+Namer+Deluxe+3000;", 1)

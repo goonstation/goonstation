@@ -316,7 +316,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 // part of it is that there's no real good way to genericize this yet,
 // and part of it is that chui already sort of kind of eh maybe does it
 /obj/machinery/computer/supplycomp/proc/topicLink(action, subaction, var/list/extra)
-	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+	return "byond://?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
 
 
 /obj/machinery/computer/supplycomp/proc
@@ -358,7 +358,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						if (S.category == foundCategory)
 							ordershit += {"
 								<tr class='row[rownum % 2]'>
-									<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+									<th class='noborder itemtop'><a href='byond://?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
 									<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
 								</tr>
 								<tr class='row[rownum % 2]'>

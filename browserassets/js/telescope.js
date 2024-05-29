@@ -42,7 +42,7 @@ var setRef = function setRef(theRef)
 
 function callByond(action, data)
 {
-    var newLoc = '?src=' + ref + '&jscall=' + action + '&' + data.join('&');
+    var newLoc = 'byond://?src=' + ref + '&jscall=' + action + '&' + data.join('&');
     window.location = newLoc;
 }
 

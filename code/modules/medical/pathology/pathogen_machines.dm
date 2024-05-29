@@ -20,11 +20,11 @@
 	attack_hand(mob/user)
 		var/output_text = "<B>Centrifuge</B><BR><BR>"
 		if (src.on)
-			output_text = "The centrifuge is currently working.<br><a href='?src=\ref[src];shutdown=1'>Emergency shutdown</a>"
+			output_text = "The centrifuge is currently working.<br><a href='byond://?src=\ref[src];shutdown=1'>Emergency shutdown</a>"
 		else
 
 			if (src.source)
-				output_text += "The centrifuge currently contains a [src.source]. <a href='?src=\ref[src];ejectsrc=1'>Eject</a><br><br>"
+				output_text += "The centrifuge currently contains a [src.source]. <a href='byond://?src=\ref[src];ejectsrc=1'>Eject</a><br><br>"
 			else
 				output_text += "The centrifuge's source slot is empty.<br><br>"
 			if (src.source)
@@ -37,10 +37,10 @@
 							if (length(B.pathogens) > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
-								output_text += "<a href='?src=\ref[src];all=1'>All</a><BR>"
+								output_text += "<a href='byond://?src=\ref[src];all=1'>All</a><BR>"
 								for (var/uid in B.pathogens)
 									var/datum/pathogen/P = B.pathogens[uid]
-									output_text += "<a href='?src=\ref[src];isolate=\ref[P]'>[P.name]</a><br>"
+									output_text += "<a href='byond://?src=\ref[src];isolate=\ref[P]'>[P.name]</a><br>"
 								output_text += "<BR>"
 							else
 								var/uid = B.pathogens[1]
@@ -51,10 +51,10 @@
 			else
 				output_text += "There is no isolation source inserted into the centrifuge.<br><br>"
 			if (src.target)
-				output_text += "There is a petri dish inserted into the machine. <a href='?src=\ref[src];ejectdish=1'>Eject</a><br><br>"
+				output_text += "There is a petri dish inserted into the machine. <a href='byond://?src=\ref[src];ejectdish=1'>Eject</a><br><br>"
 			else
 				output_text += "There is no petri dish inserted into the machine.<br><br>"
-			output_text += "<a href='?src=\ref[src];begin=1'>Begin isolation process</a>"
+			output_text += "<a href='byond://?src=\ref[src];begin=1'>Begin isolation process</a>"
 
 		user.Browse("<HEAD><TITLE>Centrifuge</TITLE></HEAD><BODY>[output_text]</BODY>", "window=centrifuge")
 		onclose(user, "centrifuge")
@@ -1361,7 +1361,7 @@
 			output_text += "<b>Maintenance panel open - active modules</b><br>"
 			for (var/module in modules)
 				var/obj/item/synthmodule/mod = modules[module]
-				output_text += "[mod.name] <a href='?src=\ref[src];remove=[module]'>\[remove\]</a><br>"
+				output_text += "[mod.name] <a href='byond://?src=\ref[src];remove=[module]'>\[remove\]</a><br>"
 		else
 			var/sane = 0
 			var/vaccinable = 0
@@ -1402,10 +1402,10 @@
 			else
 				output_text += "None<br><br>"
 			output_text += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=virus'>Synthesize a new virus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=parasite'>Synthesize a new parasite pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=bacterium'>Synthesize a new bacterium pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
-			output_text += "<a href='?src=\ref[src];buymats=1;microbody=fungus'>Synthesize a new fungus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='byond://?src=\ref[src];buymats=1;microbody=virus'>Synthesize a new virus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='byond://?src=\ref[src];buymats=1;microbody=parasite'>Synthesize a new parasite pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='byond://?src=\ref[src];buymats=1;microbody=bacterium'>Synthesize a new bacterium pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='byond://?src=\ref[src];buymats=1;microbody=fungus'>Synthesize a new fungus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
 			output_text += "<br>"
 			output_text += "<b>Inserted vials:</b><br>"
 			for (var/i = 1, i <= 5, i++)
@@ -1414,29 +1414,29 @@
 					if ("pathogen" in V.reagents.reagent_list)
 						var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
 						if (length(R.pathogens) > 1)
-							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (multiple samples)<br>"
+							output_text += "#[i] <a href='byond://?src=\ref[src];vial=[i]'>[V.name]</a> <a href='byond://?src=\ref[src];eject=[i]'>\[eject\]</a> (multiple samples)<br>"
 						else if (!R.pathogens.len)
-							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
+							output_text += "#[i] <a href='byond://?src=\ref[src];vial=[i]'>[V.name]</a> <a href='byond://?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
 						else
 							var/uid = R.pathogens[1]
 							var/datum/pathogen/P = R.pathogens[uid]
-							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (singular sample of strain [P.name_base])<br>"
+							output_text += "#[i] <a href='byond://?src=\ref[src];vial=[i]'>[V.name]</a> <a href='byond://?src=\ref[src];eject=[i]'>\[eject\]</a> (singular sample of strain [P.name_base])<br>"
 					else
-						output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
+						output_text += "#[i] <a href='byond://?src=\ref[src];vial=[i]'>[V.name]</a> <a href='byond://?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
 				else
 					output_text += "#[i] Empty slot<br>"
 			output_text += "<br>"
 			output_text += "<b>Anti-agent beaker slot: </b>"
 
 			if (antiagent)
-				output_text += "[antiagent] <a href='?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
+				output_text += "[antiagent] <a href='byond://?src=\ref[src];ejectanti=1'>\[eject\]</a><br><br>"
 
 				if (has_module("synthesizer"))
 					if (antiagent.reagents.total_volume != antiagent.reagents.maximum_volume)
 						output_text += "<b>Anti-agent synthesizer module - select a reagent to add:</b><br>"
 						for (var/A in pathogen_controller.cure_bases)
 							var/datum/reagent/base_cure = src.reagents.reagent_list[A]
-							output_text += "10 units of <a href='?src=\ref[src];antiagent=[A]'>[base_cure.name]</a><br>"
+							output_text += "10 units of <a href='byond://?src=\ref[src];antiagent=[A]'>[base_cure.name]</a><br>"
 						output_text += "<br>"
 					else
 						output_text += "<b>Anti-agent synthesizer module - beaker is full.</b><br><br>"
@@ -1453,7 +1453,7 @@
 
 			output_text += "<b>Suppression beaker slot: </b>"
 			if (suppressant)
-				output_text += "[suppressant] <a href='?src=\ref[src];ejectsupp=1'>\[eject\]</a><br><br>"
+				output_text += "[suppressant] <a href='byond://?src=\ref[src];ejectsupp=1'>\[eject\]</a><br><br>"
 				output_text += "<b>Contents:</b><br>"
 				if (suppressant.reagents.reagent_list.len)
 					for (var/reagent in suppressant.reagents.reagent_list)
@@ -1478,17 +1478,17 @@
 					output_text += "<b>ERROR:</b> Additional modules are required to synthesize cure for [body_name].<br>"
 				else
 					if (has_module("radiation"))
-						output_text += "<a href='?src=\ref[src];serum=1'>Synthesize serum from suppressants</a><br>"
-						output_text += "<a href='?src=\ref[src];serumrad=1'>Synthesize serum by irradiation</a><br>"
+						output_text += "<a href='byond://?src=\ref[src];serum=1'>Synthesize serum from suppressants</a><br>"
+						output_text += "<a href='byond://?src=\ref[src];serumrad=1'>Synthesize serum by irradiation</a><br>"
 					else
-						output_text += "<a href='?src=\ref[src];serum=1'>Synthesize serum</a><br>"
+						output_text += "<a href='byond://?src=\ref[src];serum=1'>Synthesize serum</a><br>"
 					if (has_module("vaccine"))
 						if (vaccinable)
 							if (has_module("radiation"))
-								output_text += "<a href='?src=\ref[src];vaccine=1'>Synthesize vaccine from suppressants</a><br>"
-								output_text += "<a href='?src=\ref[src];vaccinerad=1'>Synthesize vaccine by irradiation</a><br>"
+								output_text += "<a href='byond://?src=\ref[src];vaccine=1'>Synthesize vaccine from suppressants</a><br>"
+								output_text += "<a href='byond://?src=\ref[src];vaccinerad=1'>Synthesize vaccine by irradiation</a><br>"
 							else
-								output_text += "<a href='?src=\ref[src];vaccine=1'>Synthesize vaccine</a><br>"
+								output_text += "<a href='byond://?src=\ref[src];vaccine=1'>Synthesize vaccine</a><br>"
 						else
 							output_text += "No vaccine synthesis method is known for [body_name].<br>"
 

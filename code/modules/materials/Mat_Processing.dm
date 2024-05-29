@@ -90,8 +90,8 @@
 
 	attack_hand(mob/user)
 		var/list/html = list("")
-		html += "<div style='margin: auto;text-align:center'>[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class='icon-plus'></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class='icon-double-angle-right'></i> [resultName]</div><br>"
-		html += "<div style='margin: auto;text-align:center'><a href='?src=\ref[src];activate=1'><i class='icon-check-sign icon-large'></i></a></div><br><br>"
+		html += "<div style='margin: auto;text-align:center'>[first_part ? "<a href='byond://?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class='icon-plus'></i> [second_part ? "<a href='byond://?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class='icon-double-angle-right'></i> [resultName]</div><br>"
+		html += "<div style='margin: auto;text-align:center'><a href='byond://?src=\ref[src];activate=1'><i class='icon-check-sign icon-large'></i></a></div><br><br>"
 
 		for(var/obj/item/I in src)
 			if(isnull(I.material))
@@ -100,7 +100,7 @@
 			if(!I.amount) continue
 			if(first_part == I) continue
 			if(second_part == I) continue
-			html += "<div style='margin: auto;text-align:center'><a href='?src=\ref[src];select_l=\ref[I]'><i class='icon-arrow-left'></i></a> <a href='?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='?src=\ref[src];select_r=\ref[I]'><i class='icon-arrow-right'></i></a></div><br>"
+			html += "<div style='margin: auto;text-align:center'><a href='byond://?src=\ref[src];select_l=\ref[I]'><i class='icon-arrow-left'></i></a> <a href='byond://?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='byond://?src=\ref[src];select_r=\ref[I]'><i class='icon-arrow-right'></i></a></div><br>"
 
 		user.Browse(html.Join(), "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
 		return

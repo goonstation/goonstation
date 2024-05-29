@@ -364,15 +364,15 @@ TYPEINFO(/obj/machinery/power/solar)
 	t += "Tracking: "
 	switch(track)
 		if(0)
-			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Timed</A> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
+			t += "<B>Off</B> <A href='byond://?src=\ref[src];track=1'>Timed</A> <A href='byond://?src=\ref[src];track=2'>Auto</A><BR>"
 		if(1)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <B>Timed</B> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
+			t += "<A href='byond://?src=\ref[src];track=0'>Off</A> <B>Timed</B> <A href='byond://?src=\ref[src];track=2'>Auto</A><BR>"
 		if(2)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <B>Auto</B><BR>"
+			t += "<A href='byond://?src=\ref[src];track=0'>Off</A> <A href='byond://?src=\ref[src];track=1'>Timed</A> <B>Auto</B><BR>"
 
 
 	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]<BR><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
+	t += "<A href='byond://?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(t, "window=solcon")
 	onclose(user, "solcon")
 	return

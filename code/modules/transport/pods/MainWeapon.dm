@@ -30,7 +30,7 @@
 			if(r_gunner)
 				dat += {"<B>Gunner:</B>"}
 				if(!gunner)
-					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
+					dat += {"<A href='byond://?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
 			if(uses_ammunition)
@@ -266,9 +266,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Heat Beam<BR>"
-				dat+="<A href='?src=\ref[src];death=1'>Death Ray</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];death=1'>Death Ray</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];heat=1'>Heat Beam</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];heat=1'>Heat Beam</A><BR>"
 				dat+="Death Ray<BR>"
 
 		else
@@ -351,9 +351,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Metalfoam Constructor Nozzles<BR>"
-				dat+="<A href='?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
 				dat+="Industrial Cutter Blades<BR>"
 
 		else

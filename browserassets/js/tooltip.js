@@ -111,11 +111,11 @@ var tooltip = {
 	hide: function() {
 		tooltip.removeDelays();
 		animatePopup.stop();
-		window.location = '?src=' + window.tooltipRef + ';action=hide;force=1';
+		window.location = 'byond://?src=' + window.tooltipRef + ';action=hide;force=1';
 	},
 
 	log: function(text) {
-		window.location = '?src=' + window.tooltipRef + ';action=log&msg='+escaper(text);
+		window.location = 'byond://?src=' + window.tooltipRef + ';action=log&msg='+escaper(text);
 	},
 
 	debugLog: function(text) {
@@ -419,7 +419,7 @@ $(window).on('load', function() {
 	if (tooltip.loaded === false) {
 		tooltip.loaded = true;
 		tooltip.debugLog('JS loaded, calling topic show');
-		window.location = '?src=' + window.tooltipRef + ';action=show';
+		window.location = 'byond://?src=' + window.tooltipRef + ';action=show';
 
 		tooltip.$docBody = $('body');
 		tooltip.$wrap = $('#wrap');

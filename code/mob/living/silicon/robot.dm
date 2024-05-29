@@ -2064,7 +2064,7 @@
 				return
 
 		var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY><br>"
-		dat += "<A HREF='?action=mach_close&window=robotmod'>Close</A> <A HREF='?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
+		dat += "<A HREF='?action=mach_close&window=robotmod'>Close</A> <A HREF='byond://?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
 
 		dat += "<B><U>Status Report</U></B><BR>"
 

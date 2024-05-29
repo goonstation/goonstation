@@ -235,8 +235,8 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 		<B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR><HR>
 		<B>Unusual Item:</B>[src.extra_item]<BR><HR>
 		<BR>
-		<A href='?src=\ref[src];cook=1'>Turn on!<BR>
-		<A href='?src=\ref[src];cook=2'>Empty contents!<BR>
+		<A href='byond://?src=\ref[src];cook=1'>Turn on!<BR>
+		<A href='byond://?src=\ref[src];cook=2'>Empty contents!<BR>
 		"}
 
 	user.Browse("<HEAD><TITLE>Microwave Controls</TITLE></HEAD><TT>[dat]</TT>", "window=microwave")

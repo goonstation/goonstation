@@ -41,7 +41,7 @@
                 params.push(encodeURIComponent(k) + '=' + encodeURIComponent(data[k]));
             }
         }
-        var newLoc = '?src=' + ref + ';action=' + action + ';' + params.join(';');
+        var newLoc = 'byond://?src=' + ref + ';action=' + action + ';' + params.join(';');
 
         window.location = newLoc;
     }

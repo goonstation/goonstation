@@ -13,14 +13,14 @@ client/proc/show_admin_lag_hacks()
 
 	var/HTML = {"
 	<html><head><title>Admin Lag Reductions</title></head><body>
-	<b><a href='?src=\ref[src];action=lightweight_doors'>Remove Light+Cam processing when doors open or close</a></b> (May jank up lights slightly)<br><br>
-	<b><a href='?src=\ref[src];action=lightweight_mobs'>Slow Life() Processing</a></b> (Extremely safe - Life() compensates for the change automatically)<br><br>
-	<b><a href='?src=\ref[src];action=slow_atmos'>Slow atmos processing</a></b> (May jank up the TEG/Hellburns)<br><br>
-	<b><a href='?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>
-	<b><a href='?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>
-	<b><a href='?src=\ref[src];action=slow_ticklag'>Adjust ticklag bounds</a></b> (Manually adjust ticklag dilation upper and lower bounds! Compensate for lag, or go super smooth at lowpop!)<br><br>
-	<b><a href='?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening.)<br><br>
-	<b><a href='?src=\ref[src];action=disable_ingame_logs'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)
+	<b><a href='byond://?src=\ref[src];action=lightweight_doors'>Remove Light+Cam processing when doors open or close</a></b> (May jank up lights slightly)<br><br>
+	<b><a href='byond://?src=\ref[src];action=lightweight_mobs'>Slow Life() Processing</a></b> (Extremely safe - Life() compensates for the change automatically)<br><br>
+	<b><a href='byond://?src=\ref[src];action=slow_atmos'>Slow atmos processing</a></b> (May jank up the TEG/Hellburns)<br><br>
+	<b><a href='byond://?src=\ref[src];action=slow_fluids'>Slow fluid processing</a></b> (Safe, just feels weird)<br><br>
+	<b><a href='byond://?src=\ref[src];action=special_sea_fullbright'>Stop Sea Light processing on Z1</a></b> (Safe, makes the Z1 ocean a little ugly)<br><br>
+	<b><a href='byond://?src=\ref[src];action=slow_ticklag'>Adjust ticklag bounds</a></b> (Manually adjust ticklag dilation upper and lower bounds! Compensate for lag, or go super smooth at lowpop!)<br><br>
+	<b><a href='byond://?src=\ref[src];action=disable_deletions'>Disable Deletion Queue</a></b> (Garbage Collection will still run, but this stops hard deletions from happening.)<br><br>
+	<b><a href='byond://?src=\ref[src];action=disable_ingame_logs'>Disable Ingame Logs</a></b> (Reduce the shitty logthething() lag! Make the admins angry! You can still access logs fine using the web version etc)
 	</body></html>
 	"}
 	user.Browse(HTML,"window=alaghacks;size=400x390")

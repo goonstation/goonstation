@@ -7,7 +7,7 @@
 	use_power(10)
 
 	if (src.loc == user.loc)
-		var/dat = text("<B>Security Pad:</B><BR><br>Keycard: []<BR><br><A href='?src=\ref[];door1=1'>Toggle Outer Door</A><BR><br><A href='?src=\ref[];door2=1'>Toggle Inner Door</A><BR><br><BR><br><A href='?src=\ref[];em_cl=1'>Emergency Close</A><BR><br><A href='?src=\ref[];em_op=1'>Emergency Open</A><BR>", (src.scan ? text("<A href='?src=\ref[];card=1'>[]</A>", src, src.scan.name) : text("<A href='?src=\ref[];card=1'>-----</A>", src)), src, src, src, src)
+		var/dat = text("<B>Security Pad:</B><BR><br>Keycard: []<BR><br><A href='byond://?src=\ref[];door1=1'>Toggle Outer Door</A><BR><br><A href='byond://?src=\ref[];door2=1'>Toggle Inner Door</A><BR><br><BR><br><A href='byond://?src=\ref[];em_cl=1'>Emergency Close</A><BR><br><A href='byond://?src=\ref[];em_op=1'>Emergency Open</A><BR>", (src.scan ? text("<A href='byond://?src=\ref[];card=1'>[]</A>", src, src.scan.name) : text("<A href='byond://?src=\ref[];card=1'>-----</A>", src)), src, src, src, src)
 		user.Browse(dat, "window=sec_lock")
 		onclose(user, "sec_lock")
 	return

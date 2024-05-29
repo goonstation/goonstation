@@ -247,13 +247,13 @@
 
 	dat += "<TT><B>[src.butt_fluff] Utility Techno-Tool v4.5.5</B></TT><BR>"
 	dat += "<U><h4>Autonomous Reactive Speech Emitter:</h4></U>"
-	dat += "<A href='?src=\ref[src];butt_speak_toggle=1'>[src.buttranslate ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<A href='byond://?src=\ref[src];butt_speak_toggle=1'>[src.buttranslate ? "Active" : "Inactive"]</A><BR><BR>"
 	dat += "<U><h4>\"Rolling Explorer\" Autonomous Rover:</h4></U>"
-	dat += "<A href='?src=\ref[src];butt_move_toggle=1'>[src.buttmobile ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<A href='byond://?src=\ref[src];butt_move_toggle=1'>[src.buttmobile ? "Active" : "Inactive"]</A><BR><BR>"
 	dat += "<U><h4>Patty-Heinrich Atmospheric Replenishment Technique:</h4></U>"
-	dat += "<A href='?src=\ref[src];butt_fart_toggle=1'>[src.buttfart ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<A href='byond://?src=\ref[src];butt_fart_toggle=1'>[src.buttfart ? "Active" : "Inactive"]</A><BR><BR>"
 	dat += "<U><h4>[butt_engine]:</h4></U>"
-	dat += "<A href='?src=\ref[src];on=1'>[src.on ? "Active" : "Inactive"]</A>"
+	dat += "<A href='byond://?src=\ref[src];on=1'>[src.on ? "Active" : "Inactive"]</A>"
 
 	user.Browse("<HEAD><TITLE>B.U.T.T. BOT</TITLE></HEAD>[dat]", "window=buttbot")
 	onclose(user, "buttbot")

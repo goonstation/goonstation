@@ -270,7 +270,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 		src.icon_state = "totem"
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
-		src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		src.temp = "[src.name] has calmed down.<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		src.angry = 0
 
 /obj/npc/trader/flock/death()

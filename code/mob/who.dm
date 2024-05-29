@@ -13,7 +13,7 @@
 		//Admins
 		if (C.holder)
 			if (usr.client.holder) //The viewer is an admin, we can show them stuff
-				var/thisW = "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='adminooc text-normal'>"
+				var/thisW = "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='adminooc text-normal'>"
 				if (C.stealth)
 					if (C.fakekey)
 						thisW += "<i>[C.key] (stealthed as [C.fakekey])</i>"
@@ -44,7 +44,7 @@
 		else if (C.can_see_mentor_pms())
 			var/thisW
 			if (usr.client.holder)
-				thisW += "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='mentorooc text-normal'>"
+				thisW += "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='mentorooc text-normal'>"
 			else
 				thisW += "<span class='mentorooc text-normal'>"
 
@@ -55,7 +55,7 @@
 		else
 			var/thisW
 			if (usr.client.holder)
-				thisW += "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='ooc text-normal'>"
+				thisW += "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='ooc text-normal'>"
 			else
 				thisW += "<span class='ooc text-normal'>"
 

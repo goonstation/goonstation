@@ -225,12 +225,12 @@
 		src.add_dialog(user)
 		var/d2
 		if (src.timing)
-			d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
+			d2 = text("<A href='byond://?src=\ref[];time=0'>Stop Timed</A><br>", src)
 		else
-			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time</A><br>", src)
+			d2 = text("<A href='byond://?src=\ref[];time=1'>Initiate Time</A><br>", src)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-5'>-</A> <A href='?src=\ref[src];tp=5'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
+		dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='byond://?src=\ref[src];tp=-30'>-</A> <A href='byond://?src=\ref[src];tp=-5'>-</A> <A href='byond://?src=\ref[src];tp=5'>+</A> <A href='byond://?src=\ref[src];tp=30'>+</A>")
 		dat += text("<BR><BR><A href='?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>")
 		user.Browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
@@ -322,12 +322,12 @@
 	src.add_dialog(user)
 	var/d2
 	if (src.timing)
-		d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
+		d2 = text("<A href='byond://?src=\ref[];time=0'>Stop Timed</A><br>", src)
 	else
-		d2 = text("<A href='?src=\ref[];time=1'>Initiate Time</A><br>", src)
+		d2 = text("<A href='byond://?src=\ref[];time=1'>Initiate Time</A><br>", src)
 	var/second = src.time % 60
 	var/minute = (src.time - second) / 60
-	dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-5'>-</A> <A href='?src=\ref[src];tp=5'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
+	dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='byond://?src=\ref[src];tp=-30'>-</A> <A href='byond://?src=\ref[src];tp=-5'>-</A> <A href='byond://?src=\ref[src];tp=5'>+</A> <A href='byond://?src=\ref[src];tp=30'>+</A>")
 	dat += text("<BR><BR><A href='?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>")
 	user.Browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")

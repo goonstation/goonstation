@@ -238,7 +238,7 @@
 
 //oh boy another place this gets duplicated
 /obj/machinery/computer/siphon_control/proc/topicLink(action, subaction, var/list/extra)
-	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+	return "byond://?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
 
 /obj/machinery/computer/siphon_control/proc/build_formatted_list()
 	if(src.list_is_updated) return
