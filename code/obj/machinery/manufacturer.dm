@@ -423,8 +423,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Fix not having generated material names for blueprints like multitools
 		if (isnull(M.item_names))
 			M.item_names = list()
-			for (var/i in M.item_requirements)
-				var/datum/manufacturing_requirement/R = M.item_requirements[i]
+			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
