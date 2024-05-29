@@ -2,11 +2,13 @@
 /datum/preMapLoad
 	New()
 		global.current_state = GAME_STATE_PRE_MAP_LOAD
-#ifdef TRACY_PROFILER_HOOK
-		prof_init()
-#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
+#endif
+#ifdef TRACY_PROFILER_HOOK
+		prof_init()
+#else
+		check_tracy_toggle()
 #endif
 		enable_auxtools_debugger()
 
@@ -201,6 +203,7 @@
 		fluid_turf_setup(first_time=TRUE)
 
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
+		station_name() // generate station name and set it
 		..()
 		global.current_state = GAME_STATE_MAP_LOAD
 
@@ -220,15 +223,3 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
-
-#ifdef TRACY_PROFILER_HOOK
-/proc/prof_init()
-	var/lib
-	switch(world.system_type)
-		if(MS_WINDOWS) lib = "prof.dll"
-		if(UNIX) lib = "libprof.so"
-		else CRASH("unsupported platform")
-
-	var/init = LIBCALL(lib, "init")("block")
-	if("0" != init) CRASH("[lib] init error: [init]")
-#endif

@@ -1,4 +1,99 @@
 
+(t)tue may 28 24
+(u)Klushy225
+(p)19008
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added a fade style for the curly bob
+(u)Dino
+(p)19001
+(e)🎨|C-Sprites
+(+)Added two new dwarven inspired beard options.
+(t)mon may 27 24
+(u)TealSeer
+(p)19140
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)People with the Unionized trait are no longer immune to arcfiend's polarize ability. Immunity to bio-magnetic random events remain unchanged.
+(u)LeahTheTech
+(+)Minimized windows will now unminimize when you go to open them again.
+(t)sun may 26 24
+(u)Glamurio (Ryou)
+(p)18790
+(e)💅🐣|C-QoL, A-Respawning
+(*)Daily Jobs may now be selected as a Job Preference.
+(u)ZeWaka
+(e)⛔|C-Removal
+(*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
+(u)FlameArrow57
+(p)18987
+(e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
+(+)Deployable turrets like N.A.R.C.S. turrets now eject bullet casings and have their own forensics profile.
+(u)LeahTheTech
+(+)B.I.F.F now buys rather than sells THE MONSTER.
+(t)sat may 25 24
+(u)crunchwarp
+(p)18980
+(e)🆕📄|C-Feature, A-UI
+(+)Blobs and Wizards now have enhanced crew credits!
+(t)fri may 24 24
+(u)tarmunora
+(+)Fix savefile import exploit. This will break existing local savefiles.
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
+(t)thu may 23 24
+(u)Tarmunora, Mordent
+(p)19120
+(e)💅📄|C-QoL, A-UI
+(*)Added import/export to character setup window to enable storing of additional character profiles in local storage.
+(u)aloe
+(p)18797
+(e)⚖📄💪|C-Balance, A-UI, A-Traits
+(*)You can now select as many traits as you like.
+(u)Glamurio (Ryou)
+(p)19109
+(e)🎨🏅|C-Sprites, A-Medal
+(+)Particularly pet-savvy people may find a new reward waiting for them.
+(t)wed may 22 24
+(u)TealSeer
+(p)19081
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Security's departmental score is now influenced by the fate of Monsieur Stirstir.
+(u)FlameArrow57
+(p)18903
+(e)🆕🎨👽|C-Feature, C-Sprites, A-Mutantraces
+(+)Added unique ghost sprites for each mutantrace when you die. If you want hair, be sure to select the Bald trait!
+(u)FlameArrow57
+(p)18965
+(e)⚖🔄🧛📦|C-Balance, C-Rework, A-Gamemodes, A-Game-Objects
+(+)Thermite breaching charges now create a dark red chemical fire and are a bit more dangerous
+(u)LeahTheTech
+(+)Pressing V will no longer hide your inventory. Why did it ever do that?
+(+)Reverted pressing V no longer hiding your inventory.
+(u)Glamurio (Ryou)
+(p)19089
+(e)💅|C-QoL
+(+)Trippy people now trip less often.
+(u)FlameArrow57
+(p)18855
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pod weapon tooltips (from mouse hover) now show their damage and pod disruption chance.
+(u)MeggalBozale
+(p)18981
+(e)🪲⚖🐁|C-Bug, C-Balance, A-Critters
+(+)Robotic critters can now throw items.
+(u)MeggalBozale
+(p)19004
+(e)🆕|C-Feature
+(+)The emag effect for the lawbringer has been modified slightly.
+(u)Glamurio (Ryou)
+(p)19051
+(e)🆕💅🐣|C-Feature, C-QoL, A-Respawning
+(+)Martian and Blob ambassadors are now legally allowed to wear hats per a NT decree.
+(u)Cheekybrdy
+(p)19035
+(e)🆕🔬|C-Feature, A-Science
+(*)Adds Scientist Training, all this does currently is lock artifact hints to research staff.
 (t)tue may 21 24
 (u)Sord
 (+)Changeling limb critter ability costs have been reduced. Hand now only costs 1 point and leg costs 2.

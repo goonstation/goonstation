@@ -542,7 +542,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
 		/obj/item/old_grenade/smoke = 2,
-		/obj/item/dagger/syndicate/specialist,
+		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)

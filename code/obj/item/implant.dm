@@ -845,7 +845,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = "not_shown"
 	var/bleed_time = 60
 	var/bleed_timer = 0
-	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 	var/leaves_wound = TRUE
 
 	New()

@@ -25575,6 +25575,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start/job/janitor,
 /turf/simulated/floor,
 /area/station/janitor/supply)
 "bOQ" = (
@@ -42694,6 +42695,7 @@
 /area/station/bridge)
 "rIG" = (
 /obj/landmark/gps_waypoint,
+/obj/landmark/start/job/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "rJk" = (

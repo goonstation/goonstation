@@ -8026,6 +8026,17 @@
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
+"aMV" = (
+/obj/window/reinforced/west{
+	dir = 1
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
+	desc = "A plain cheese and tomato pizza. I wonder if you could fit this in a keyhole.";
+	name = "cheese keyzza"
+	},
+/turf/unsimulated/floor/specialroom/medbay,
+/area/marsoutpost)
 "aMW" = (
 /obj/machinery/door/window/northleft,
 /turf/unsimulated/floor/specialroom/medbay,
@@ -29675,6 +29686,11 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
 "cmI" = (
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/arcade,
+/area/sim/racing_entry)
+"cmJ" = (
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni,
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
@@ -51911,27 +51927,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dLc" = (
-/obj/pool/perspective{
-	density = 0;
-	dir = 1;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon_state = "ladder";
-	name = "ladder"
-	},
-/obj/channel{
-	required_to_pass = 210
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/white,
-/area/centcom/garden)
 "dLd" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -52090,20 +52085,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dLE" = (
-/obj/machinery/light/small/floor/blueish{
-	desc = "Probably waterproof. You never really knew how these things worked.";
-	name = "cool pool lighting"
-	},
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
-/area/centcom/garden)
-"dLF" = (
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
-/area/centcom/garden)
 "dLG" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -52210,12 +52191,6 @@
 	},
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
-	},
-/area/centcom/garden)
-"dLU" = (
-/obj/item/inner_tube,
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
 	},
 /area/centcom/garden)
 "dLV" = (
@@ -52359,22 +52334,6 @@
 	icon_state = "sand";
 	name = "sand"
 	},
-/area/centcom/garden)
-"dMs" = (
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
-/obj/pool/perspective{
-	dir = 1;
-	pixel_x = 10;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/white,
 /area/centcom/garden)
 "dMt" = (
 /obj/shrub{
@@ -52660,20 +52619,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dNn" = (
-/obj/fluid_spawner{
-	amount = 10000
-	},
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
-/area/centcom/garden)
-"dNo" = (
-/obj/item/beach_ball,
-/turf/unsimulated/floor/pool{
-	name = "pool floor"
-	},
-/area/centcom/garden)
 "dNp" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -52909,18 +52854,6 @@
 	dir = 4
 	},
 /turf/unsimulated/nicegrass/random,
-/area/centcom/garden)
-"dOa" = (
-/obj/pool/perspective,
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 6;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/white,
 /area/centcom/garden)
 "dOb" = (
 /obj/pool/perspective,
@@ -60665,6 +60598,9 @@
 	icon_state = "shore-42"
 	},
 /area/titlescreen)
+"jwE" = (
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jwG" = (
 /obj/item/storage/toilet/goldentoilet/azrun,
 /turf/unsimulated/floor/caution/south,
@@ -60698,6 +60634,13 @@
 /obj/chaser/hospital_trigger,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"jxI" = (
+/obj/machinery/light/small/floor/blueish{
+	desc = "Probably waterproof. You never really knew how these things worked.";
+	name = "cool pool lighting"
+	},
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jxO" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -60722,6 +60665,12 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"jyB" = (
+/obj/fluid_spawner{
+	amount = 10000
+	},
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jyU" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -61078,6 +61027,10 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"jVS" = (
+/obj/item/beach_ball,
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jWb" = (
 /obj/machinery/door_control{
 	id = "thunderdome";
@@ -64139,17 +64092,6 @@
 	icon_state = "ancient-12"
 	},
 /area/crater/cave)
-"mOh" = (
-/obj/window/reinforced/west{
-	dir = 1
-	},
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
-	desc = "A plain cheese and tomato pizza. I wonder if you could fit this in a keyhole.";
-	name = "cheese keyzza"
-	},
-/turf/unsimulated/floor/specialroom/medbay,
-/area/marsoutpost)
 "mOs" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal,
 /turf/unsimulated/floor/shuttlebay,
@@ -64580,6 +64522,16 @@
 "njo" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/offices/enakai)
+"njR" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/pool/perspective/innercorners{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "njW" = (
 /obj/decal/cleanable/robot_debris{
 	dir = 4;
@@ -66690,6 +66642,22 @@
 	name = "reinforced plating"
 	},
 /area/owlery/staffhall)
+"pdw" = (
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/obj/channel{
+	required_to_pass = 210
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/pool/ladder,
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "pdL" = (
 /obj/storage/crate,
 /obj/item/peripheral/drive/tape_reader,
@@ -67028,6 +66996,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"poq" = (
+/obj/item/inner_tube,
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "por" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -68986,11 +68958,6 @@
 /obj/machinery/maptext_monitor/scrying_pool/afterlife_bar,
 /turf/unsimulated/floor/wood,
 /area/afterlife/bar)
-"qUA" = (
-/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni,
-/obj/table/wood/round/auto,
-/turf/unsimulated/floor/carpet/arcade,
-/area/sim/racing_entry)
 "qUB" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -76533,6 +76500,17 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"xDp" = (
+/obj/pool/perspective,
+/obj/decal/tile_edge/line/blue{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/pool/perspective/innercorners{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "xDP" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -115654,7 +115632,7 @@ cku
 ckr
 civ
 lar
-qUA
+cmJ
 cmI
 kqE
 civ
@@ -134796,7 +134774,7 @@ aTs
 aLi
 aLJ
 aLm
-mOh
+aMV
 aNA
 aNA
 aKW
@@ -161940,15 +161918,15 @@ sbw
 dKt
 dKG
 dLb
-dLE
-dLF
-dLF
-dLF
-dLE
-dLF
-dLF
-dLF
-dLE
+jxI
+jwE
+jwE
+jwE
+jxI
+jwE
+jwE
+jwE
+jxI
 dOb
 dOr
 dPm
@@ -162241,16 +162219,16 @@ aES
 sbw
 dKu
 dKG
-dLc
-dLF
-dLU
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
+pdw
+jwE
+poq
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
 dOb
 dOW
 dOY
@@ -162544,15 +162522,15 @@ sbw
 dKt
 dKG
 dLb
-dLF
-dLF
-dLE
-dLF
-dNn
-dLF
-dLE
-dLF
-dLF
+jwE
+jwE
+jxI
+jwE
+jyB
+jwE
+jxI
+jwE
+jwE
 dOb
 dOr
 dPm
@@ -162846,15 +162824,15 @@ sbw
 dKv
 dKG
 dLb
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLU
-dLF
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
+poq
+jwE
 dOb
 dOX
 dOY
@@ -163148,15 +163126,15 @@ sbw
 dKt
 dKG
 dLb
-dLE
-dLF
-dLF
-dLF
-dLE
-dLF
-dLF
-dLF
-dLE
+jxI
+jwE
+jwE
+jwE
+jxI
+jwE
+jwE
+jwE
+jxI
 dOb
 dOr
 dPm
@@ -163452,11 +163430,11 @@ dKG
 dLd
 dLG
 dLG
-dMs
-dLF
-dNo
-dLF
-dOa
+njR
+jwE
+jVS
+jwE
+xDp
 dLG
 dLG
 dOc
@@ -163755,9 +163733,9 @@ dKH
 dLH
 dLV
 dLb
-dLF
-dLE
-dLF
+jwE
+jxI
+jwE
 dOb
 dOr
 dKG
@@ -164056,10 +164034,10 @@ dKJ
 dKG
 dLI
 dKG
-dLc
-dLF
-dLF
-dLF
+pdw
+jwE
+jwE
+jwE
 dOb
 dOs
 dLI
