@@ -278,7 +278,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	//#endif
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
-/mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn, skip_manifest = FALSE)
+/mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
 		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
@@ -329,7 +329,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
