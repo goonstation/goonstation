@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 
 	process()
-		if ((TIME - create_time >= 3 MINUTES) && (TIME - time_since_moved >= 1 MINUTES))
+		if ((TIME - create_time >= 3 MINUTES) && (TIME - time_since_moved >= 1 MINUTE))
 			create_time = TIME
 			if (!src.disposed && isturf(src.loc) && !on_table())
 				if (prob(50))
