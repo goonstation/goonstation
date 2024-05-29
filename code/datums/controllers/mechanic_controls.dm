@@ -99,7 +99,8 @@ var/datum/mechanic_controller/mechanic_controls
 					M.item_requirements[R] = amt
 			else if (mats_number > 0)
 				for(var/tracker = 1, tracker <= mats_number, tracker ++)
-					M.item_requirements[rand(1,3)] += 1
+					var/chosen = M.item_requirements[rand(1,3)]
+					M.item_requirements[chosen] += 1
 
 			src.blueprint = M
 			return
