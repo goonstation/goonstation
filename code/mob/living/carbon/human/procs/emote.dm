@@ -976,8 +976,13 @@
 
 			if ("raisehand")
 				if (!src.restrained())
-					message = "<B>[src]</B> raises a hand."
-					maptext_out = "<I>raises a hand</I>"
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<B>[src]</B> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<B>[src]</B> raises a hand."
+						maptext_out = "<I>raises a hand</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
