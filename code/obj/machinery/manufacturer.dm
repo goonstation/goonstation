@@ -423,8 +423,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Fix not having generated material names for blueprints like multitools
 		if (isnull(M.item_names))
 			M.item_names = list()
-			for (var/i in M.item_requirements)
-				var/datum/manufacturing_requirement/R = M.item_requirements[i]
+			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
@@ -1951,14 +1950,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
 				// fuck floating point, lets pretend we only use tenths
-				P.amount = round(P.amount + amount, 0.1)
+				P.change_stack_amount(amount)
 				// Handle inserting pieces into the machine
-				if (!isloc(mat_piece, src))
-					if (user)
-						user.u_equip(mat_piece)
-						mat_piece.dropped(user)
-					if (!isnull(mat_piece))
-						qdel(mat_piece)
+				if (user)
+					user.u_equip(mat_piece)
+					mat_piece.dropped(user)
+					qdel(mat_piece)
 				if (P.amount <= 0)
 					qdel(P)
 				return
