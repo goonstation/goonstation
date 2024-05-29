@@ -1,3 +1,6 @@
+(t)wed may 29 24
+(u)Sovexe
+(*)Addede skip_manifest admin pref, which when enabled, stops new manifest entries from being made when using the respawn-as-X verbs.
 (t)wed may 07 24
 (u)Sovexe
 (*)Added the Region Allocator admin panel. Easily manage regions of space for prefabs and custom map loading on demand. Accessible by both its verb and the game panel.
