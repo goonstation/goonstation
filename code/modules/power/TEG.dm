@@ -226,7 +226,7 @@
 					if(istype(A, /area/station/))
 						var/obj/machinery/power/apc/P = A.area_apc
 						if(P?.cell)
-							apc_charge = P.terminal.powernet?.perapc
+							apc_charge = P.terminal?.powernet?.perapc
 							cell_wattage = P.cell.charge/CELLRATE
 							surplus = P.surplus()
 

@@ -1231,6 +1231,12 @@
 			monitored_var = "mail_opened"
 			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
+		frauded_mail
+			name = "frauded mail counter"
+			desc = "The number of times someone has frauded someone's mail."
+			monitored_var = "mail_fraud"
+			maptext_prefix = "<span class='c pixel sh'>Mail frauded:\n<span class='vga'>"
+
 		last_death
 			name = "last death monitor"
 			desc = "RIP this idiot. Hope it wasn't you!"
@@ -1510,22 +1516,32 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	encourage
 		maptext_area = "leftside"
+		var/update_delay = 1 MINUTE
 
 		New()
 			..()
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
+			src.maptext_x = 0
+			src.maptext_width = 600
+			src.maptext_height = 400
+			update_text() // kick start
+			SPAWN(10 SECONDS) // wait for server sync reply
+				do_loop()
 
+		proc/do_loop()
+			set waitfor = FALSE
+			while (update_delay)
+				update_text()
+				sleep(update_delay)
+
+		proc/update_text()
 			var/serverList = ""
 			for (var/serverId in global.game_servers.servers)
 				var/datum/game_server/server = global.game_servers.servers[serverId]
 				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
-
-			src.maptext_x = 0
-			src.maptext_width = 600
-			src.maptext_height = 400
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][server.player_count ? " ([server.player_count] players)" : ""]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!

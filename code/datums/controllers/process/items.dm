@@ -29,7 +29,7 @@
 					lasttime = world.timeofday
 					game_start_countdown.update_status("Initializing items\n([itemcount], [round(itemcount / totalcount * 100)]%)")
 
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK_IF_LIVE(LAG_INIT)
 
 		logTheThing(LOG_DEBUG, src, "Main /obj initialize loop completed")
 

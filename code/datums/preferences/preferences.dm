@@ -1051,24 +1051,25 @@ var/list/removed_jobs = list(
 			fdel(fname)
 		var/F = file(fname)
 		message["hash"] << null
-		var/hash = sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]")
+		var/hash = sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
 		message["hash"] << hash
 		message.ExportText("/", F)
 		usr << ftp(F, fname)
 		SPAWN(15 SECONDS)
 			var/tries = 0
-			while(fexists(fname) && tries++ < 10)
-				fdel(fname)
+			while((fdel(fname) == 0) && tries++ < 10)
 				sleep(30 SECONDS)
 
 	proc/profile_import()
-		var/F = input(usr) as file
+		var/F = input(usr) as file|null
+		if(!F)
+			return
 		var/savefile/message = new()
 		message.ImportText("/", file2text(F))
 		var/hash
 		message["hash"] >> hash
 		message["hash"] << null
-		if(hash == sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]"))
+		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
 			var/profilenum_old = profile_number
 			savefile_load(usr.client, 1, message)
 			src.profile_modified = TRUE
@@ -1165,8 +1166,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
@@ -1184,8 +1183,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
@@ -1203,8 +1200,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (J.cant_allocate_unwanted)
 				src.jobs_low_priority += J.name
 			else
@@ -1217,8 +1212,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
@@ -1265,8 +1258,6 @@ var/list/removed_jobs = list(
 							src.jobs_unwanted |= J.name
 #else
 			for (var/datum/job/J in job_controls.staple_jobs)
-				if (istype(J, /datum/job/daily))
-					continue
 				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
 #endif

@@ -423,8 +423,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Fix not having generated material names for blueprints like multitools
 		if (isnull(M.item_names))
 			M.item_names = list()
-			for (var/i in M.item_paths)
-				M.item_names += get_nice_mat_name_for_manufacturers(i)
+			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -446,14 +446,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			img = getItemIcon(M.item_outputs[1], C = user.client)
 
+		var/requirement_data = list()
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
+
 		return list(
 			"name" = M.name,
 			"category" = M.category,
-			"material_names" = M.item_names,
-			"item_paths" = M.item_paths,
+			"requirement_data" = requirement_data,
 			"item_names" = generated_names,
 			"item_descriptions" = generated_descriptions,
-			"item_amounts" = M.item_amounts,
 			"item_outputs" = M.item_outputs,
 			"create" = M.create,
 			"time" = M.time,
@@ -1574,61 +1576,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
-	proc/get_patterns_material_satisfies(datum/material/M)
+	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
-		var/material_flags = M.getMaterialFlags()
-		// get properties with getters once, ideally
-		var/density = M.getProperty("density")
-		var/hard = M.getProperty("hard")
-		var/reflective = M.getProperty("reflective")
-		var/electrical = M.getProperty("electrical")
-		var/radioactive = M.getProperty("radioactive")
-		if (!M)
-			return .
-		if (material_flags & MATERIAL_RUBBER)
-			. += "RUB"
-			. += "ORG|RUB"
-		if (material_flags & MATERIAL_ORGANIC)
-			. += "ORG"
-			if (!("ORG|RUB" in .))
-				. += "ORG|RUB"
-		if (material_flags & MATERIAL_WOOD)
-			. += "WOOD"
-		if (material_flags & MATERIAL_METAL)
-			var/hardness = (hard * 2) + density
-			if (hardness >= 15)
-				. += "MET-3"
-			if (hardness >= 10)
-				. += "MET-2"
-			. += "MET-1"
-		if (material_flags & MATERIAL_CRYSTAL)
-			if (density >= 7)
-				. += "CRY-2"
-			. += "CRY-1"
-		if (reflective >= 6)
-			. += "REF"
-		if (electrical >= 6)
-			if (electrical >= 8)
-				. += "CON-2"
-			. += "CON-1"
-		if (electrical <= 4 && material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-			if (electrical <= 2)
-				. += "INS-2"
-			. += "INS-1"
-		if (density >= 4)
-			if (density >= 6)
-				. += "DEN-2"
-			. += "DEN-1"
-		if (material_flags & MATERIAL_ENERGY)
-			if (radioactive >= 2)
-				if (radioactive >= 5)
-					. += "POW-3"
-				. += "POW-2"
-			. += "POW-1"
-		if (material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC))
-			. += "FAB-1"
-		if (istype(M, /datum/material/crystal/gemstone))
-			. += "GEM-1"
+		for (var/R_id as anything in requirement_cache)
+			var/datum/manufacturing_requirement/R = getRequirement(R_id)
+			if (R.is_match(M))
+				. += R.id
 
 	/// Returns material in storage which first satisfies a pattern, otherwise returns null
 	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
@@ -1651,26 +1604,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return P
 		return null
 
-	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
-	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
+	/// Returns associative list of manufacturing requirement to material piece reference, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
 	proc/get_materials_needed(datum/manufacture/M)
-		var/list/mats_used = list()
-		var/list/mats_available = list()
-
 		var/list/C = src.get_contents()
-		for (var/path_index in 1 to length(M.item_paths))
-			var/required_pattern = M.item_paths[path_index]
-			var/required_amount = M.item_amounts[path_index]
-			for (var/piece_index in 1 to length(C))
-				var/obj/item/material_piece/P = C[piece_index]
-				var/P_id = P.material.getID()
-				if (!(P_id in mats_available))
-					mats_available[P_id] = P.amount * 10
-				if (mats_available[P_id] < required_amount)
+
+		var/list/mats_used = list()
+		var/list/mats_projected = list()
+		for (var/obj/item/material_piece/P in C)
+			mats_projected["\ref[P]"] = P.amount * 10
+
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			for (var/obj/item/material_piece/P in C)
+				var/P_ref = "\ref[P]"
+				if (mats_projected[P_ref] < required_amount)
 					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_ref["\ref[P]"]) || P_id == required_pattern)
-					mats_used[required_pattern] = P_id
-					mats_available[P_id] -= required_amount
+				if (R.is_match(P.material))
+					mats_used[R] = P_ref
+					mats_projected[P_ref] -= required_amount
 					break
 
 		return mats_used
@@ -1678,7 +1630,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
+		if (length(mats_used) == length(M.item_requirements)) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
@@ -1686,10 +1638,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_used = check_enough_materials(M)
 		if (isnull(mats_used))
 			return // how
-		for (var/i = 1 to length(M.item_paths))
-			var/pattern = M.item_paths[i]
-			var/mat_id = mats_used[pattern]
-			src.change_contents(-M.item_amounts[i]/10, mat_id)
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			src.change_contents(-required_amount/10, mat_piece = locate(mats_used[R]))
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1968,7 +1919,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	Parameters for selection of material (requires at least one non-null):
 	mat_id = material id to set. creates a new material if none of that id exists
 	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
+	mat_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
 	material = material datum to add. acts as/overrides mat_id if provided
 	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
 	user = (optional) any mob that may be loading this
@@ -2000,21 +1951,23 @@ TYPEINFO(/obj/machinery/manufacturer)
 				mat_id && mat_id == P.material.getID())
 				// fuck floating point, lets pretend we only use tenths
 				P.amount = round(P.amount + amount, 0.1)
-				if (user)
-					user.u_equip(mat_piece)
-					mat_piece.dropped(user)
-				if (!isnull(mat_piece))
-					qdel(mat_piece)
+				// Handle inserting pieces into the machine
+				if (!isloc(mat_piece, src))
+					if (user)
+						user.u_equip(mat_piece)
+						mat_piece.dropped(user)
+					if (!isnull(mat_piece))
+						qdel(mat_piece)
 				if (P.amount <= 0)
 					qdel(P)
 				return
 
-		// No same material in storage, create/add the one we have and update the patterns index accordingly
+		// No same material in storage, create/add the one we have and update the requirements index accordingly
 		if (!isnull(mat_piece))
 			if (isnull(mat_piece.material))
 				return
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_ref["\ref[mat_piece]"] = src.get_patterns_material_satisfies(mat_piece.material)
+			material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(mat_piece.material)
 			return
 
 		if (isnull(mat_datum))
@@ -2026,7 +1979,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		P.amount = max(0, amount)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		material_patterns_by_ref["\ref[P]"] = src.get_patterns_material_satisfies(P.material)
+		material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(P.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
