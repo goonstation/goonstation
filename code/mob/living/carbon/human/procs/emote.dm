@@ -391,21 +391,9 @@
 								message = "<B>[src]</b> points finger guns at... [himself_or_herself(src)]?"
 								maptext_out = "<I> points finger guns at... [himself_or_herself(src)]?</I>"
 							else
-								if ("wave" && I)
-									if (I.reagents && I.reagents.total_volume > 0)
-										if (I.reagents) I.reagents.physical_shock(rand(2, 6))
-										if (I.is_open_container())
-											message = "<B>[src]</b> gently rocks [I] in the air."
-											maptext_out = "<I>gently rocks [I] in the air</I>"
-										else
-											message = "<B>[src]</b> waves [I] around."
-											maptext_out = "<I>waves [I] around</I>"
-									else if (istype(I, /obj/item/cloth/handkerchief))
-										message = "<B>[src]</b> waves [I]."
-										maptext_out = "<I>waves [I]</I>"
-									else
-										message = "<B>[src]</b> waves [I] around."
-										maptext_out = "<I>waves [I] around</I>"
+								if ("wave" && istype(I, /obj/item/cloth/handkerchief))
+									message = "<B>[src]</b> waves [I]."
+									maptext_out = "<I>waves [I]</I>"
 								else
 									message = "<B>[src]</b> [act]s."
 									maptext_out = "<I>[act]s</I>"
