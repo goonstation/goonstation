@@ -782,6 +782,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		/turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/walp,
+		/turf/simulated/wall/auto/reinforced/walp,
 		/turf/simulated/wall/auto/supernorn/wood,
 		/turf/unsimulated/wall/auto/supernorn/wood,
 

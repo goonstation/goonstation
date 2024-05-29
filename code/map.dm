@@ -27,6 +27,7 @@ var/global/list/mapNames = list(
 	"Cogmap 1 (Old)" =		list("id" = "COGMAP_OLD",	"settings" = "cogmap_old"),
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
+	"Decarabia" =			list("id" = "DECARABIA",	"settings" = "decarabia",		"playerPickable" = TRUE,	"MinPlayersAllowed" = 50),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
@@ -471,6 +472,55 @@ var/global/list/mapNames = list(
 
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
+	)
+
+/datum/map_settings/decarabia
+	name = "DECARABIA"
+	goonhub_map = "https://goonhub.com/maps/donut2"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/walp
+	rwalls = /turf/simulated/wall/auto/reinforced/walp
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon/donut2,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		)
+
+	escape_dir = NORTH
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the public market" = list(/area/station/crew_quarters/market),
+		"the recreation center" = list(/area/station/crewquarters/reccenter),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the bridge" = list(/area/station/bridge),
+		"the crew lounge" = list(/area/station/crew_quarters/quarters),
+		"the brig" = list(/area/station/security/brig),
+		"the main station pod bay" = list(/area/station/hangar/main))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+		/datum/job/civilian/chef = 2,
+		/datum/job/civilian/bartender = 2,
+		/datum/job/civilian/clown = 2,
+		/datum/job/civilian/janitor = 4,
 	)
 
 /datum/map_settings/donut2

@@ -421,7 +421,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/walp)
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
 		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/reinforced/jen, /obj/strip_door, /turf/simulated/wall/auto/reinforced/walp
+		/turf/simulated/wall/auto/reinforced/jen, /obj/strip_door
 	))
 /turf/simulated/wall/auto/reinforced/walp
 	icon = 'icons/turf/walls/walp/walp_base.dmi'
