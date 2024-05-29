@@ -135,6 +135,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
+		/client/proc/toggle_tracy_profiling,
 
 		/client/proc/debug_deletions,
 
@@ -424,7 +425,8 @@ var/list/admin_verbs = list(
 #endif
 		/client/proc/distribute_tokens,
 		/client/proc/spawn_all_type,
-		/client/proc/region_allocator_panel
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
 		),
 
 	7 = list(

@@ -93,7 +93,6 @@
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null
-	var/shakecamera = 0
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null
@@ -1481,6 +1480,10 @@
 	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
+	for (var/obj/ability_button/reset_view/console/ability in src.item_abilities)
+		src.item_abilities -= ability
+	src.need_update_item_abilities = 1
+	src.update_item_abilities()
 
 /mob/proc/show_credits()
 	set name = "Show Credits"

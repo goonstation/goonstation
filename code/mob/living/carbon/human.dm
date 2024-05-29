@@ -758,6 +758,7 @@
 		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
+	add_lifeprocess(/datum/lifeprocess/decomposition)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
@@ -2977,6 +2978,9 @@
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
+		if(istype(A, /obj/item/device/light)) //i hate this
+			var/obj/item/device/light/L = A
+			L.light.attach(L)
 		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)

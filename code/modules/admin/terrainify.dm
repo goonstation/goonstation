@@ -56,13 +56,22 @@ var/datum/station_zlevel_repair/station_repair = new
 				T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
-		mass_driver_fixup()
-		shipping_market_fixup()
+		var/list/turfs_to_fix = get_turfs_to_fix()
+		clear_out_turfs(turfs_to_fix)
+
+		clear_around_beacons()
+
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
-		clear_around_beacons()
+
 		if (remove_parallax)
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+
+	proc/get_turfs_to_fix()
+		. = list()
+		. += get_mass_driver_turfs()
+		. += shippingmarket.get_path_to_market()
+		. += get_ptl_beams()
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -78,31 +87,31 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
-	proc/mass_driver_fixup()
-		var/list/turfs_to_fix = get_mass_driver_turfs()
-		clear_out_turfs(turfs_to_fix)
-
 	proc/clear_around_beacons()
 		var/list/turfs_to_fix = list()
 		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
-			for(var/turf/T in range(3,W))
+			for(var/turf/T in range(4,W))
 				turfs_to_fix |= T
 		clear_out_turfs(turfs_to_fix, by_type[/obj/warp_beacon])
 
+	proc/get_ptl_beams()
+		. = list()
+		for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
+			if(P.z == Z_LEVEL_STATION)
+				var/atom/start = P.get_barrel_turf()
+				var/atom/end = get_edge_target_turf(start, P.dir)
+
+				for(var/turf/T in block(start, end))
+					if(istype(get_area(T), /area/space))
+						. |= T
+
 	proc/get_mass_driver_turfs()
-		var/list/turfs_to_fix = list()
+		. = list()
 		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 			if(M.z == Z_LEVEL_STATION)
 				var/atom/start = get_turf(M)
 				var/atom/end = get_ranged_target_turf(M, M.dir, M.drive_range)
-
-				turfs_to_fix |= block(start, end)
-
-		return turfs_to_fix
-
-	proc/shipping_market_fixup()
-		var/list/turfs_to_fix = shippingmarket.get_path_to_market()
-		clear_out_turfs(turfs_to_fix)
+				. |= block(start, end)
 
 	proc/clear_out_turfs(list/turf/to_clear, list/ignore_list, ignore_contents=FALSE)
 		for(var/turf/T as anything in to_clear)
@@ -480,9 +489,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.station_generator = new/datum/map_generator/icemoon_generator
 
-			var/list/turf/traveling_crate_turfs = station_repair.get_mass_driver_turfs()
-			var/list/turf/shipping_path = shippingmarket.get_path_to_market()
-			traveling_crate_turfs |= shipping_path
+			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
 				if(station_repair.allows_vehicles)
@@ -533,9 +540,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if("Less")
 					LG.lava_percent = 25
 
-			var/list/turf/traveling_crate_turfs = station_repair.get_mass_driver_turfs()
-			var/list/turf/shipping_path = shippingmarket.get_path_to_market()
-			traveling_crate_turfs |= shipping_path
+			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/auto/iomoon)
 				if(station_repair.allows_vehicles)
@@ -669,9 +674,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			var/list/turf/traveling_crate_turfs = station_repair.get_mass_driver_turfs()
-			var/list/turf/shipping_path = shippingmarket.get_path_to_market()
-			traveling_crate_turfs |= shipping_path
+			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
 			for(var/turf/unsimulated/wall/setpieces/martian/auto/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 				if(station_repair.allows_vehicles)
@@ -916,8 +919,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		else
 			generator.generate_map()
 
-		var/list/turfs_to_clear = shippingmarket.get_path_to_market()
-		turfs_to_clear += station_repair.get_mass_driver_turfs()
+		var/list/turf/turfs_to_clear = station_repair.get_turfs_to_fix()
 		generator.clear_walls(turfs_to_clear)
 
 		generator.generate_terrain(space, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)

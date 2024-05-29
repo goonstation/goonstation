@@ -38,6 +38,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/storage/secure/closet/proc/toggle_bolts, list(user), I.icon, I.icon_state,"", null)
 			return
+		else if (istype(I, /obj/item/cargotele))
+			return // don't change state on cargo teleport
 		else if (src.open || !src.locked)
 			..()
 		else if (!I)

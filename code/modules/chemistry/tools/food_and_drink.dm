@@ -163,6 +163,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/current_mask = 5
 	var/list/food_effects = list()
 	var/create_time = 0
+	var/time_since_moved = 0
 	var/bites_left = 3
 	var/uneaten_bites_left = null
 
@@ -171,13 +172,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	// Used in Special Order events
 	var/meal_time_flags = 0
 
+	set_loc(newloc)
+		. = ..()
+		time_since_moved = TIME
+
 	New()
 		if (!src.uneaten_bites_left)
 			src.uneaten_bites_left = initial(bites_left)
 		..()
 		if (doants)
 			processing_items.Add(src)
-		create_time = world.time
+		create_time = TIME
 		if (src.amount != 1)
 			stack_trace("[identify_object(src)] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
@@ -187,8 +192,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 
 	process()
-		if (world.time - create_time >= 3 MINUTES)
-			create_time = world.time
+		if ((TIME - src.create_time >= 3 MINUTES) && (TIME - src.time_since_moved >= 1 MINUTE))
+			src.create_time = TIME
 			if (!src.disposed && isturf(src.loc) && !src.ant_safe())
 				if (prob(50))
 					src.made_ants = 1

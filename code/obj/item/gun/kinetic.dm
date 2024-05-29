@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
 	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/ammo_cats = null
+	var/ammo_cats = list()
 	/// Does this gun have a special icon state for having no ammo lefT?
 	var/has_empty_state = FALSE
 	/// Does this gun have a special icon state it should flick to when fired?
@@ -378,7 +378,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
-	var/forensic_ID = null
 	burn_possible = FALSE
 
 	small
@@ -1280,6 +1279,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_9MM)
 	fire_animation = TRUE
 	max_ammo_capacity = 10
 	auto_eject = TRUE
@@ -1315,7 +1315,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
-	ammo_cats = list(AMMO_SMG_9MM)
+	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
 	auto_eject = 0
 

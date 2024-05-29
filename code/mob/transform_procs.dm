@@ -608,7 +608,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (current_state < GAME_STATE_PLAYING)
 		boutput(src, "It's too early to go to the bar!")
 		return
-	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
+	if(!isobserver(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't available during football mode.")
@@ -671,8 +671,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		// if you dont have an id, you get one anyway
 		newbody.spawnId(new /datum/job/command/captain)
 
-	newbody.wear_id:assignment = bar_role_name
-	newbody.wear_id:update_name()
+	var/obj/item/card/id/newID = newbody.wear_id
+	newID?.assignment = bar_role_name
+	newID?.update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)
