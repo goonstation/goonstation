@@ -110,7 +110,7 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
       if (data.game_admin === null) {
         return 'N/A';
       }
-      return `${data.game_admin.ckey} (${data.game_admin_id})`;
+      return `${data.game_admin?.ckey} (${data.game_admin_id})`;
     },
     basis: 6.5,
   },
@@ -124,13 +124,13 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
   {
     header: 'CID',
     id: 'cid',
-    getValue: (data) => data.original_ban_detail.comp_id ?? 'N/A',
+    getValue: (data) => data.original_ban_detail?.comp_id ?? 'N/A',
     basis: 7,
   },
   {
     header: 'IP',
     id: 'ip',
-    getValue: (data) => data.original_ban_detail.ip ?? 'N/A',
+    getValue: (data) => data.original_ban_detail?.ip ?? 'N/A',
     basis: 9,
   },
 ];

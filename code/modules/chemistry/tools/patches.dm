@@ -117,9 +117,6 @@
 			return
 
 		if (can_operate_on(user))
-			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
-			SPAN_NOTICE("You apply [src] to yourself."))
-			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 
@@ -442,8 +439,9 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
-	mats = list("MET-2"=5,"CRY-1"=4, "gold"=5)
-
+	mats = list("metal_dense" = 5,
+				"crystal" = 4,
+				"gold" = 5)
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."

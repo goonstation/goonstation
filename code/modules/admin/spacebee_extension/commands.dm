@@ -100,12 +100,19 @@
 		var/header
 		var/len = 0
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
+			var/list/legacyData
+			if (length(playerNote.legacy_data))
+				legacyData = json_decode(playerNote.legacy_data)
+
 			var/id = playerNote.server_id
-			if(!id && length(playerNote.legacy_data))
-				var/lData = json_decode(playerNote.legacy_data)
-				if(islist(lData) && lData["oldserver"])
-					id = lData["oldserver"]
-			header = "**\[[id]\] [playerNote.game_admin?.name || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			if (!id && ("oldserver" in legacyData))
+				id = legacyData["oldserver"]
+
+			var/gameAdminCkey = playerNote.game_admin?.name || playerNote.game_admin?.ckey
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
+				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			header = "**[id ? "\[[id]\] " : ""][gameAdminCkey || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 			len += length(header) + length(playerNote.note)
 			if(len >= 4000)
 				message = jointext(message, "\n")

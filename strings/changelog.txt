@@ -1,5 +1,46 @@
 
+(t)tue may 28 24
+(u)Glamurio (Ryou)
+(p)19126
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)People with the "cat eyes" trait will find themselves a bit better at seeing in the dark.
+(u)nova2053
+(p)18869
+(e)💅🍝|C-QoL, A-Catering
+(+)Food items now have a one minute immunity to ants after being moved.
+(u)Zamujasa
+(*)The day/night cycle on Centcom is on a reasonable timezone again.
+(u)Glamurio (Ryou)
+(p)19184
+(e)🆕|C-Feature
+(+)Mail Delivery Score is now tracked at the end of credits.
+(u)FlameArrow57 and Flaborized
+(p)18989
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Minor re-sprite of item fires, with sprites by Flaborized. Items also now emit light when ignited.
+(u)Klushy225
+(p)19008
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added a fade style for the curly bob
+(u)Dino
+(p)19001
+(e)🎨|C-Sprites
+(+)Added two new dwarven inspired beard options.
+(t)mon may 27 24
+(u)TealSeer
+(p)19140
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)People with the Unionized trait are no longer immune to arcfiend's polarize ability. Immunity to bio-magnetic random events remain unchanged.
+(u)LeahTheTech
+(+)Minimized windows will now unminimize when you go to open them again.
 (t)sun may 26 24
+(u)Glamurio (Ryou)
+(p)18790
+(e)💅🐣|C-QoL, A-Respawning
+(*)Daily Jobs may now be selected as a Job Preference.
+(u)ZeWaka
+(e)⛔|C-Removal
+(*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
 (u)FlameArrow57
 (p)18987
 (e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
