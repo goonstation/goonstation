@@ -112,6 +112,14 @@ var/global/datum/game_servers/game_servers = new
 	var/ghost_notif_target = TRUE
 	var/ip_port = null
 	var/waiting_for_ip_port_auth = null
+	/// last known player count
+	var/player_count
+	/// last known map
+	var/map
+	/// last known next map
+	var/next_map
+	/// last known round time
+	var/round_time
 
 	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
@@ -154,3 +162,10 @@ var/global/datum/game_servers/game_servers = new
 
 	proc/send_message(list/data)
 		return world.Export("[src.url]?[list2params(data)]")
+
+	proc/sync_server_data()
+		set waitfor = FALSE
+		if (src.is_me())
+			return
+		var/datum/cross_server_message/server_sync_request/server_sync_request = get_singleton(/datum/cross_server_message/server_sync_request)
+		server_sync_request.send(src)

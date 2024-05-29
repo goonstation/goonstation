@@ -1221,7 +1221,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
 			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
+			if (current_state == GAME_STATE_PLAYING && length(population))
 				if(!played_fx_2 && prob(15))
 					sound_fx_2 = pick(owlery_sounds)
 					for(var/mob/M in src)

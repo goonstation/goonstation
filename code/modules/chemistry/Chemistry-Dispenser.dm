@@ -8,8 +8,9 @@ var/list/basic_elements = list(
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 TYPEINFO(/obj/machinery/chem_dispenser)
-	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
-
+	mats = list("metal_dense" = 10,
+				"conductive_high" = 10,
+				"miracle" = 20)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipes."

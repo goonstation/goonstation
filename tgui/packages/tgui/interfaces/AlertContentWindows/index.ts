@@ -12,5 +12,7 @@ export const getAlertContentWindow = (alertContentWindowName: string): AlertCont
   switch (alertContentWindowName) {
     case "tgControls":
       return tgControls;
+    default:
+      throw new Error(`Unrecognized alert content window name: ${alertContentWindowName}`);
   }
 };

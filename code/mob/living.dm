@@ -1498,6 +1498,10 @@
 	if (!isalive(src)) //can't resist when dead or unconscious
 		return
 
+	if (src.hasStatus("paralysis"))
+		src.show_text("You are completely paralysed and can't resist!", "red")
+		return
+
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
