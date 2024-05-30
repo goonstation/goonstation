@@ -244,6 +244,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				src.show_topic_log = !show_topic_log
 				src.show_pref_window(usr)
+		if ("toggle_skip_manifest")
+			if (src.level >= LEVEL_MOD)
+				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
 				src.auto_stealth = !(src.auto_stealth)

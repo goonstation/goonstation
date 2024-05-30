@@ -1538,9 +1538,9 @@ var/list/removed_jobs = list(
 				//
 		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
 #if defined(MAP_OVERRIDE_POD_WARS)
-		if (!find_job_in_controller_by_string(job,0))
+		if (!find_job_in_controller_by_string(job,0,TRUE))
 #else
-		if (!find_job_in_controller_by_string(job,1))
+		if (!find_job_in_controller_by_string(job,1,TRUE))
 #endif
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch (occ)

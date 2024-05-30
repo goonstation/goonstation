@@ -94,6 +94,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		conductive
 			name = "Conductive"
 			id = "conductive"
+			material_property = "electrical"
 			material_threshold = 6
 
 			high
