@@ -1526,8 +1526,6 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_width = 600
 			src.maptext_height = 400
 			update_text() // kick start
-			SPAWN(10 SECONDS) // wait for server sync reply
-				do_loop()
 
 		proc/do_loop()
 			set waitfor = FALSE
