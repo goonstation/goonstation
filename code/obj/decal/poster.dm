@@ -367,6 +367,12 @@
 			icon = 'icons/misc/walp_decor.dmi'
 			icon_state = "neonsign_80s"
 
+		neoneye
+			name = "The Eye neon sign"
+			desc = "A bespoke neon sign featuring the logo for Decarabia's premier bar and restaurant; The Eye."
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_theeye"
+
 		coffee
 			name ="Coffee Shop"
 			desc = "A cute little coffee cup poster."

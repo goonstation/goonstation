@@ -2501,7 +2501,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/cafeteria/the_eye_bar
 		name = "The Eye"
 
-
 /area/station/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
