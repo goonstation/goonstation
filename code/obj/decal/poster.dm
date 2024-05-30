@@ -578,6 +578,48 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_eyetest"
 
+		poster_flowers
+			name = "lovely floral poster"
+			desc = "This lovely painting of florals has been mass-reproduced in order to improve employee morale, and it works!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_flowers"
+
+		poster_canyon
+			name = "pretty canyon poster"
+			desc = "A poster featuring a scenic landscape from a very, very, very, very far away planet Earth."
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_canyon"
+
+		poster_weirdwaves
+			name = "\improper Weird Waves band poster"
+			desc = "A concert poster detailing someone's favourite alt-dirt-colony-grunge-synth band, Weird Waves."
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_weirdwave"
+
+		poster_hanginthere
+			name = "\improper Hang In There poster"
+			desc = "This terrifying poster features a small kitten balanced on a rope, suspended above an endless blue expanse. How dreadful."
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_hanginthere"
+
+		poster_motpotential
+			name = "\improper Potential motivational poster"
+			desc = "Something about this poster makes you feel as though you could accomplish ANYTHING!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_potential"
+
+		poster_motleadership
+			name = "\improper Leadership motivational poster"
+			desc = "Something about this poster makes you feel as though everything is going to be ok."
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_leadership"
+
+		poster_motchallenge
+			name = "\improper Challenge motivational poster"
+			desc = "That guy is never going to finish pushing that boulder up that hill. Why is he even trying?"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "wall_poster_challenge"
+
 		poster_rand
 			name = "poster"
 			desc = "You aren't really sure what the message is. Is it trying to advertise something?"
