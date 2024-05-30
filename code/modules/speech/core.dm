@@ -137,7 +137,7 @@
 TODO:
 
 Contributing:
-- Authors: Mr. Moriarty, Amylizzle, & DisturbHerb
+- Authors: Mr. Moriarty, Amylizzle, DisturbHerb, & Romayne
 - If you make a PR to the say rework branch, feel free to add your name to the above list.
 - Please make an effort to adhere to the set out code style, primarily the following:
 	Absolute pathing,
@@ -158,7 +158,6 @@ Cleanup:
 Things To Implement:
 - AI
 - Virtual humans
-- Mentormice
 - Observers (not ghosts)
 - Skeleton heads
 - Ghostdrones (language)

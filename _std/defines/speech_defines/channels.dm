@@ -14,6 +14,7 @@
 #define SAY_CHANNEL_LOOC "looc"
 #define SAY_CHANNEL_GLOBAL_LOOC "global_looc"
 #define SAY_CHANNEL_MARTIAN "martian"
+#define SAY_CHANNEL_MENTOR_MOUSE "mentor_mouse"
 #define SAY_CHANNEL_OOC "ooc"
 #define SAY_CHANNEL_GLOBAL_RADIO "global_radio"
 #define SAY_CHANNEL_SILICON "silicon"
