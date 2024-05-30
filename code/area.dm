@@ -2498,6 +2498,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar
 		name = "The Rising Tide"
 
+/area/station/crew_quarters/cafeteria/the_eye_bar
+		name = "The Eye"
+
 
 /area/station/crew_quarters/kitchen
 	name = "Kitchen"

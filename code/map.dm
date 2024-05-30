@@ -488,7 +488,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
-	escape_dir = NORTH
+	escape_dir = WEST
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
