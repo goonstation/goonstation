@@ -1584,7 +1584,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/screwdriver/orange)
 
 	items_in_backpack = list(/obj/item/currency/spacecash/buttcoin = 2)
-	rounds_needed_to_play = 10 // It would really suck ass to play this as a new player
 	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
 
 	special_setup(var/mob/living/carbon/human/M)
