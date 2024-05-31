@@ -9,7 +9,8 @@ import { BooleanLike } from 'common/react';
 import type { ApcAccessPanelData, ApcData, ApcInterfaceData } from './types';
 import { InterfaceType } from './types';
 
-export const formatWatts = (watts: number | undefined) => `${isNaN(watts) ? 0 : Math.floor(watts)} W`;
+export const formatWatts = (watts: number | undefined) =>
+  `${watts === undefined || isNaN(watts) ? 0 : Math.floor(watts)} W`;
 
 export const getHasPermission = ({ is_ai, is_silicon, can_access_remotely, aidisabled, locked }: ApcData) => (
   (is_ai || is_silicon || can_access_remotely) ? !aidisabled : !locked

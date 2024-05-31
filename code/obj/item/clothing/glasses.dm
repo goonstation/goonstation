@@ -51,7 +51,7 @@
 		setProperty("disorient_resist_eye", 100)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user.zone_sel.selecting == "head" && ishuman(target)) //ishuman() works on monkeys too apparently.
+		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
 			var/mob/living/carbon/human/Htarget = target //can't equip to mobs unless they are human
 			if(user == Htarget) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, SPAN_ALERT("Put it on your eyes, dingus!"))

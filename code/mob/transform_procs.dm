@@ -671,8 +671,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		// if you dont have an id, you get one anyway
 		newbody.spawnId(new /datum/job/command/captain)
 
-	newbody.wear_id:assignment = bar_role_name
-	newbody.wear_id:update_name()
+	var/obj/item/card/id/newID = newbody.wear_id
+	newID?.assignment = bar_role_name
+	newID?.update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)

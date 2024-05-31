@@ -1051,7 +1051,7 @@ var/list/removed_jobs = list(
 			fdel(fname)
 		var/F = file(fname)
 		message["hash"] << null
-		var/hash = sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]")
+		var/hash = sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
 		message["hash"] << hash
 		message.ExportText("/", F)
 		usr << ftp(F, fname)
@@ -1069,7 +1069,7 @@ var/list/removed_jobs = list(
 		var/hash
 		message["hash"] >> hash
 		message["hash"] << null
-		if(hash == sha1("[sha1(message)][usr.ckey][CHAR_EXPORT_SECRET]"))
+		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
 			var/profilenum_old = profile_number
 			savefile_load(usr.client, 1, message)
 			src.profile_modified = TRUE
@@ -1166,16 +1166,12 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
-			if (J.rounds_needed_to_play && (user.client && user.client.player))
-				var/round_num = user.client.player.get_rounds_participated() //if this list is null, the api query failed, so we just let it happen
-				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
-					src.jobs_unwanted += J.name
-					continue
+			if (user.client && !J.has_rounds_needed(user.client.player))
+				src.jobs_unwanted += J.name
+				continue
 			src.jobs_med_priority += J.name
 		return
 
@@ -1185,16 +1181,12 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
-			if (J.rounds_needed_to_play && (user.client && user.client.player))
-				var/round_num = user.client.player.get_rounds_participated()
-				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
-					src.jobs_unwanted += J.name
-					continue
+			if (user.client && !J.has_rounds_needed(user.client.player))
+				src.jobs_unwanted += J.name
+				continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -1204,8 +1196,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (J.cant_allocate_unwanted)
 				src.jobs_low_priority += J.name
 			else
@@ -1218,16 +1208,12 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
-			if (J.rounds_needed_to_play && (user.client && user.client.player))
-				var/round_num = user.client.player.get_rounds_participated()
-				if (!isnull(round_num) && round_num < J.rounds_needed_to_play) //they havent played enough rounds!
-					src.jobs_unwanted += J.name
-					continue
+			if (user.client && !J.has_rounds_needed(user.client.player))
+				src.jobs_unwanted += J.name
+				continue
 			src.jobs_low_priority += J.name
 		return
 
@@ -1266,8 +1252,6 @@ var/list/removed_jobs = list(
 							src.jobs_unwanted |= J.name
 #else
 			for (var/datum/job/J in job_controls.staple_jobs)
-				if (istype(J, /datum/job/daily))
-					continue
 				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
 #endif
@@ -1393,9 +1377,8 @@ var/list/removed_jobs = list(
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
-				var/round_num = user.client.player.get_rounds_participated()
-				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
+				if (!J_Fav.has_rounds_needed(user.client.player))
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1470,7 +1453,7 @@ var/list/removed_jobs = list(
 
 		HTML += "<td valign='top' class='antagprefs'>"
 #ifdef LIVE_SERVER
-		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
+		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT || user?.client?.player.cloudSaves.getData("bypass_round_reqs"))
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
 			src.be_syndicate_commander = FALSE
@@ -1548,9 +1531,9 @@ var/list/removed_jobs = list(
 				//
 		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
 #if defined(MAP_OVERRIDE_POD_WARS)
-		if (!find_job_in_controller_by_string(job,0))
+		if (!find_job_in_controller_by_string(job,0,TRUE))
 #else
-		if (!find_job_in_controller_by_string(job,1))
+		if (!find_job_in_controller_by_string(job,1,TRUE))
 #endif
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch (occ)
@@ -1585,17 +1568,15 @@ var/list/removed_jobs = list(
 #else
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
-		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
-			var/round_num = user.client.player.get_rounds_participated()
-			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
-				boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
-				if (occ != 4)
-					switch (occ)
-						if (1) src.job_favorite = null
-						if (2) src.jobs_med_priority -= job
-						if (3) src.jobs_low_priority -= job
-					src.jobs_unwanted += job
-				return
+		if (user.client && !temp_job.has_rounds_needed(user.client.player))
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
+			if (occ != 4)
+				switch (occ)
+					if (1) src.job_favorite = null
+					if (2) src.jobs_med_priority -= job
+					if (3) src.jobs_low_priority -= job
+				src.jobs_unwanted += job
+			return
 
 		src.antispam = TRUE
 

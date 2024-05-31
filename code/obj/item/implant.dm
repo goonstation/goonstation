@@ -68,6 +68,9 @@ THROWING DARTS
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant?.Add(src)
+			if (src.scan_category == "other" || src.scan_category == "unknown")
+				var/image/img = H.prodoc_icons["other"]
+				img.icon_state = "implant-other"
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants?.Add(src)
@@ -83,6 +86,14 @@ THROWING DARTS
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant -= src
+			var/has_other_imp = FALSE
+			for (var/obj/item/implant/I as anything in H.implant)
+				if (I.scan_category == "other" || I.scan_category == "unknown")
+					has_other_imp = TRUE
+					break
+			if (!has_other_imp)
+				var/image/I = H.prodoc_icons["other"]
+				I.icon_state = null
 		if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants?.Remove(src)
@@ -236,6 +247,29 @@ THROWING DARTS
 		..()
 		src.scanned_here = get_area(src)
 
+	implanted(mob/M, mob/I)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		var/image/img = H.prodoc_icons["cloner"]
+		img.icon_state = "implant-cloner"
+
+	on_remove(mob/M)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		for (var/obj/item/implant/I as anything in H.implant)
+			if (istype(I, /obj/item/implant/cloner))
+				return
+		var/image/I = H.prodoc_icons["cloner"]
+		I.icon_state = null
+
 	proc/getHealthList()
 		var/healthlist = list()
 		if (!src.implanted)
@@ -267,6 +301,25 @@ THROWING DARTS
 		..()
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if (!H.prodoc_icons)
+				return
+			var/image/img = H.prodoc_icons["health"]
+			img.icon_state = "implant-health"
+
+	on_remove(mob/M)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		for (var/obj/item/implant/I as anything in H.implant)
+			if (istype(I, /obj/item/implant/health))
+				return
+		var/image/img = H.prodoc_icons["health"]
+		img.icon_state = null
 
 	proc/sensehealth()
 		if (!src.implanted)
@@ -845,7 +898,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = "not_shown"
 	var/bleed_time = 60
 	var/bleed_timer = 0
-	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 	var/leaves_wound = TRUE
 
 	New()
