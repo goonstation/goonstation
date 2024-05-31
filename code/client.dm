@@ -717,12 +717,13 @@
 	return 0
 
 /client/proc/make_admin()
-	src.holder = new /datum/admins(src)
-	src.holder.rank = admins[src.ckey]
-	update_admins(admins[src.ckey])
-	onlineAdmins |= (src)
-	if (!NT.Find(src.ckey))
-		NT.Add(src.ckey)
+	if (admins.Find(src.ckey) && !src.holder)
+		src.holder = new /datum/admins(src)
+		src.holder.rank = admins[src.ckey]
+		update_admins(admins[src.ckey])
+		onlineAdmins |= (src)
+		if (!NT.Find(src.ckey))
+			NT.Add(src.ckey)
 
 /client/proc/clear_admin()
 	if(src.holder)
