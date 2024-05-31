@@ -211,6 +211,12 @@ TYPEINFO(/obj/item/disk)
 	stamina_cost = 20
 	stamina_crit_chance = 5
 
+	throw_impact(obj/window/window)
+		if (istype(window) && window.health <= (/obj/window/auto::health * /obj/window/auto::health_multiplier))
+			window.smash()
+			return
+		..()
+
 /obj/item/emeter
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."

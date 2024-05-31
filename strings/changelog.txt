@@ -1,5 +1,7 @@
 
 (t)thu may 30 24
+(u)LeahTheTech
+(*)Bricks now do more thrown damage and instantly smash non-reinforced windows. I'm sure I won't regret this...
 (u)Mintyphresh
 (p)19139
 (e)🔄💪|C-Rework, A-Traits
