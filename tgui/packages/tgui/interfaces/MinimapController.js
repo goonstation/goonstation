@@ -116,7 +116,6 @@ export const MinimapController = (params, context) => {
                     <Flex>
                       <Flex.Item backgroundColor="black">
                         <Image
-                          pixelated
                           height="150px"
                           width="150px"
                           src={`data:image/png;base64,${image}`}

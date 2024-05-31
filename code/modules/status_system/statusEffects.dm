@@ -719,6 +719,24 @@
 					damage_burn = 5 * prot
 					howMuch = "extremely "
 
+			// doesn't need to happen super often, more like a life process in priority
+			if (!ON_COOLDOWN(owner, "burning_nearby_status_effect", LIFE_PROCESS_TICK_SPACING))
+				if (duration > 20 SECONDS)
+					for (var/atom/A as anything in owner.contents)
+						if (A.event_handler_flags & HANDLE_STICKER)
+							if (A:active)
+								owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
+								qdel(A)
+				if (isturf(owner.loc))
+					var/turf/location = owner.loc
+					location.hotspot_expose(T0C + 300, 400)
+				for (var/atom/A as anything in owner.contents)
+					A.material_trigger_on_temp(T0C + 900)
+				if (istype(owner, /mob))
+					var/mob/M = owner
+					for (var/atom/A as anything in M.equipped())
+						A.material_trigger_on_temp(T0C + 900)
+
 			return ..(timePassed)
 
 	simpledot/stimulant_withdrawl
@@ -1909,14 +1927,15 @@
 	maxDuration = 3 MINUTES
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/charge = null
+	var/ignore_unionized = FALSE
 
 	onAdd(optional)
 		. = ..()
 		if (!ismob(owner)) return
 		var/mob/M = owner
-		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || (!ignore_unionized && M.traitHolder.hasTrait("unionized")))
 			SPAWN(0)
-				M.delStatus("magnetized")
+				M.delStatus(src.id)
 			return
 		if (optional)
 			src.charge = optional
@@ -1929,6 +1948,10 @@
 		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+/datum/statusEffect/magnetized/arcfiend
+	id = "magnetized_arcfiend"
+	ignore_unionized = TRUE
 
 //I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
 /datum/statusEffect/changeling_regrow
@@ -2773,3 +2796,39 @@
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/patches_applied
+	id = "patches_applied"
+	desc = "Patch(es) have been applied"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "applied_patches_application", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mob/living/L = src.owner
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		//patches become wasteful with >2 patches applied
+		//gives patches a way to heal quickly if you slap on a whole bunch, but at the cost of flinging chems into nothingness
+
+		// amount applied via touch
+		var/use_volume = 0.5 * mult
+		//amount that gets removed from the patch. Half of this gets transferred into the body
+		var/waste_volume = use_volume * max(length(L.applied_patches) * 0.75, 1)
+
+		for (var/atom/movable/A as anything in L.applied_patches)
+			if (A.reagents?.total_volume)
+				A.reagents.reaction(L, TOUCH, react_volume = use_volume, paramslist = \
+					(A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
+				A.reagents.trans_to(L, waste_volume / 2)
+				A.reagents.remove_any(waste_volume / 2)
+			else
+				qdel(A)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE

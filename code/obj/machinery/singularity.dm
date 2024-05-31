@@ -244,7 +244,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/turf/sing_center = src.get_center()
 	for (var/turf/T in range(grav_pull, sing_center))
 		var/max_affected_atoms_per_turf = 30
-		for(var/atom/A in T)
+		for(var/atom/A in list(T) + T.contents)
 			if (max_affected_atoms_per_turf-- <= 0)
 				break
 
