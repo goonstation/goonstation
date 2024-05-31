@@ -1789,6 +1789,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\modules\outputs\spoken\subtle.dm"
 #include "code\modules\speech\prefixes\_say_prefix_parent.dm"
 #include "code\modules\speech\prefixes\ai_radio.dm"
+#include "code\modules\speech\prefixes\deadchat.dm"
 #include "code\modules\speech\prefixes\intercom.dm"
 #include "code\modules\speech\prefixes\left_hand.dm"
 #include "code\modules\speech\prefixes\radio.dm"
