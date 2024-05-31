@@ -6,9 +6,7 @@
 
 #ifdef LIVE_SERVER
 		src.doWork()
-		SPAWN(5 SECONDS)
-			var/obj/overlay/zamujasa/round_start_countdown/encourage/encourage_obj = locate()
-			encourage_obj.do_loop()
+
 	doWork()
 		for(var/server in game_servers.servers)
 			var/datum/game_server/game_server = game_servers.servers[server]
