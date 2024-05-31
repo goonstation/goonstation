@@ -205,8 +205,9 @@
 	proc/getTraitWithCategory(var/cat)
 		for(var/id in traits)
 			var/datum/trait/T = traits[id]
-			if (T.category == cat)
-				. = T
+			for (var/heldcat in T.category)
+				if (heldcat == cat)
+					. = T
 
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
