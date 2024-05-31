@@ -1950,14 +1950,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
 				// fuck floating point, lets pretend we only use tenths
-				P.amount = round(P.amount + amount, 0.1)
+				P.change_stack_amount(amount)
 				// Handle inserting pieces into the machine
 				if (user)
 					user.u_equip(mat_piece)
 					mat_piece.dropped(user)
-				if (!(mat_piece.loc == src.loc))
-					if (!isnull(mat_piece) && mat_piece.amount <= 0)
-						qdel(mat_piece)
+					qdel(mat_piece)
 				if (P.amount <= 0)
 					qdel(P)
 				return

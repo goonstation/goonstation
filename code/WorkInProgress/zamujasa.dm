@@ -1526,8 +1526,6 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_width = 600
 			src.maptext_height = 400
 			update_text() // kick start
-			SPAWN(10 SECONDS) // wait for server sync reply
-				do_loop()
 
 		proc/do_loop()
 			set waitfor = FALSE
@@ -1541,7 +1539,7 @@ Read the rules, don't grief, and have fun!</div>"}
 				var/datum/game_server/server = global.game_servers.servers[serverId]
 				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][server.player_count ? " ([server.player_count] players)" : ""]</a>"}
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
