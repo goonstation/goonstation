@@ -205,10 +205,11 @@
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	prodoc_icons = list()
-	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	// 0.01 layering increases to guarantee layering over the health monitor icon
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
 	for (var/implant in prodoc_icons)
 		var/image/image = prodoc_icons[implant]
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
@@ -758,6 +759,7 @@
 		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
+	add_lifeprocess(/datum/lifeprocess/decomposition)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
@@ -3622,3 +3624,27 @@
 	src.hud.update_resting()
 	src.set_loc(get_turf(table))
 	table.victim = src
+
+/mob/living/carbon/human/proc/update_health_monitor_icon()
+	if (!src.health_mon)
+		return
+	if (src.bioHolder.HasEffect("dead_scan") || isdead(src))
+		src.health_mon.icon_state = "-1"
+		return
+	// Handle possible division by zero
+	var/health_prc = (src.health / (src.max_health != 0 ? src.max_health : 1)) * 100
+	switch (health_prc)
+		if (98 to INFINITY)
+			src.health_mon.icon_state = "100"
+		if (80 to 98)
+			src.health_mon.icon_state = "80"
+		if (60 to 80)
+			src.health_mon.icon_state = "75"
+		if (40 to 60)
+			src.health_mon.icon_state = "50"
+		if (20 to 40)
+			src.health_mon.icon_state = "25"
+		if (0 to 20)
+			src.health_mon.icon_state = "10"
+		if (-INFINITY to 0)
+			src.health_mon.icon_state = "0"

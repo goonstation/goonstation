@@ -1166,8 +1166,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
@@ -1185,8 +1183,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
 				src.jobs_unwanted += J.name
 				continue
@@ -1204,8 +1200,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (J.cant_allocate_unwanted)
 				src.jobs_low_priority += J.name
 			else
@@ -1218,8 +1212,6 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (istype(J, /datum/job/daily))
-				continue
 			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
@@ -1266,8 +1258,6 @@ var/list/removed_jobs = list(
 							src.jobs_unwanted |= J.name
 #else
 			for (var/datum/job/J in job_controls.staple_jobs)
-				if (istype(J, /datum/job/daily))
-					continue
 				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
 #endif
@@ -1548,9 +1538,9 @@ var/list/removed_jobs = list(
 				//
 		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
 #if defined(MAP_OVERRIDE_POD_WARS)
-		if (!find_job_in_controller_by_string(job,0))
+		if (!find_job_in_controller_by_string(job,0,TRUE))
 #else
-		if (!find_job_in_controller_by_string(job,1))
+		if (!find_job_in_controller_by_string(job,1,TRUE))
 #endif
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch (occ)

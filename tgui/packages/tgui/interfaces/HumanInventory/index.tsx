@@ -33,7 +33,9 @@ export const HumanInventory = (_props, context) => {
               <LabeledList>
                 {Object.entries(SLOT_NAMES).map(([slotId, name]) => {
                   const slot = data.slots.find((s) => s.id === slotId);
-
+                  if (!slot) {
+                    return null;
+                  }
                   return <Slot key={slotId} name={name} slot={slot} />;
                 })}
               </LabeledList>

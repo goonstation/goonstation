@@ -1162,7 +1162,7 @@ var/list/fun_images = list()
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)
-		H.Equip_Rank(jobstring, 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.Equip_Rank(jobstring, 2, skip_manifest = src.holder.skip_manifest) //ZeWaka: joined_late is 2 so you don't get announced.
 		H.update_colorful_parts()
 	qdel(mymob)
 	if (flourish)

@@ -75,11 +75,11 @@
 				legacyData = json_decode(playerNote.legacy_data)
 
 			var/id = playerNote.server_id
-			if (!id && legacyData["oldserver"])
+			if (!id && ("oldserver" in legacyData))
 				id = legacyData["oldserver"]
 
 			var/gameAdminCkey = playerNote.game_admin?.ckey
-			if (!gameAdminCkey && legacyData["game_admin_ckey"])
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
 				gameAdminCkey = legacyData["game_admin_ckey"]
 
 			if (gameAdminCkey == "bot")
