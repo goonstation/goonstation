@@ -175,6 +175,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	name = "Metal"
 	id = "metal"
 	material_flags = MATERIAL_METAL
+	material_threshold = 0 // So we try to match properties
 
 	matches_property(var/datum/material/M)
 		// This specific check is based off the hardness of mauxite and bohrum.
