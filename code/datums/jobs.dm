@@ -194,6 +194,18 @@
 				if (cmptext(src.name, string))
 					return TRUE
 
+	proc/has_rounds_needed(datum/player/player)
+		if (!src.rounds_needed_to_play)
+			return TRUE
+		var/round_num = player.get_rounds_participated()
+		if (isnull(round_num)) //fetch failed, assume they're allowed because everything is probably broken right now
+			return TRUE
+		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
+			return TRUE
+		if (round_num > src.rounds_needed_to_play)
+			return TRUE
+		return FALSE
+
 
 // Command Jobs
 
