@@ -834,7 +834,7 @@ proc/random_accent()
 	switch(S)
 
 		if("w") //germans pronounce W like V
-			if(lowertext(R.next_char) == " " || lowertext(R.next_char) == null)
+			if(lowertext(R.next_char) != " " || lowertext(R.next_char) != null)
 				new_string = "v"
 				used = 1
 		if("t") //unlinke the stereotypical zat- it's more like dat, because both the t and the h are pronounced in german. Of course, the Z still does happen quite often.
