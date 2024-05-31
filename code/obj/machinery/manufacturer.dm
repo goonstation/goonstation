@@ -42,6 +42,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/dismantle_stage = 0
 	var/hacked = FALSE
 	var/malfunction = FALSE
+	var/power_wire_cut = FALSE
 	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
 	var/output_target = null
 	var/list/nearby_turfs = list()
@@ -271,11 +272,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 		else
 			if(src.powered() && src.dismantle_stage < 3)
-				status &= ~NOPOWER
+				src.check_power_status()
 				src.build_icon()
 			else
 				SPAWN(rand(0, 15))
-					status |= NOPOWER
+					src.check_power_status()
 					src.build_icon()
 
 	// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
@@ -937,7 +938,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
-			src.status |= NOPOWER
+			src.check_power_status()
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
 			C.UpdateIcon()
@@ -954,7 +955,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.dismantle_stage = 2
 			var/obj/item/cable_coil/C = W
 			C.use(1)
-			src.status &= ~NOPOWER
+			src.check_power_status()
 			src.shock(user,100)
 			src.build_icon()
 
@@ -1422,7 +1423,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_POWER)
 				if(!src.is_disabled())
 					src.shock(user, 100)
-					src.status |= NOPOWER
+				src.power_wire_cut = TRUE
+				src.check_power_status()
 
 	proc/mend(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
@@ -1434,9 +1436,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_MALF)
 				src.malfunction = FALSE
 			if(WIRE_POWER)
+				src.power_wire_cut = FALSE
+				src.check_power_status()
 				if (!(src.status & BROKEN) && (src.status & NOPOWER))
 					src.shock(user, 100)
-					src.status &= ~NOPOWER
 
 	proc/pulse(mob/user, wireColor)
 		var/wireIndex = APCWireColorToIndex[wireColor]
@@ -2069,6 +2072,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return src.loc
 
+	proc/check_power_status()
+		if (src.powered() && !src.power_wire_cut && src.dismantle_stage <= 2)
+			src.status &= ~NOPOWER
+		else
+			src.status |= NOPOWER
 
 // Fabricator Defines
 
