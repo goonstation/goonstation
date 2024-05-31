@@ -1,13 +1,3 @@
-
-
-
-/mob/living/proc/handle_skin(var/mult = 1)
-	if (src.skin_process && length(src.skin_process))
-		for(var/obj/item/reagent_containers/patch/P in skin_process)
-			//P.process_skin(src, XXX * mult)
-			continue
-
-
 /* ================================================= */
 /* -------------------- Patches -------------------- */
 /* ================================================= */
@@ -204,7 +194,8 @@
 				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
-					L.skin_process += src
+					L.applied_patches += src
+					L.setStatus("patches_applied", INFINITE_STATUS)
 					src.do_sticker_thing = TRUE
 			else
 				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
@@ -254,7 +245,9 @@
 
 			if (isliving(attached))
 				var/mob/living/L = attached
-				L.skin_process -= src
+				L.applied_patches -= src
+				if (!length(L.applied_patches))
+					L.delStatus("patches_applied")
 		..()
 
 /* =================================================== */
