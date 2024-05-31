@@ -103,6 +103,9 @@
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
 
+	/// completely immune to catching and spreading disease/medical-like ailments
+	var/ailment_immune = FALSE
+
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 
