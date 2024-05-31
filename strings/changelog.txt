@@ -1,4 +1,9 @@
 
+(t)thu may 30 24
+(u)Mintyphresh
+(p)19139
+(e)🔄💪|C-Rework, A-Traits
+(*)Stowaway can no longer be taken as a trait, and is instead a latejoin role.
 (t)wed may 29 24
 (u)Sord
 (+)Blindfolds now no longer require you to aim for the head to equip it on another person. Now simply be on anything except harm intent and click them.
