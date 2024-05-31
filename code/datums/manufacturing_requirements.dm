@@ -77,6 +77,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_property
 	is_match(var/datum/material/M)
+		var/should_match_property = !isnull(src.material_property) || !isnull(src.material_threshold)
 		if (should_match_property && !src.matches_property(M))
 			return FALSE
 		if (!isnull(src.material_flags) && !src.matches_flags(M.getMaterialFlags()))
