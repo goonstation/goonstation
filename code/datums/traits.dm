@@ -207,7 +207,7 @@
 			var/datum/trait/T = traits[id]
 			for (var/heldcat in T.category)
 				if (heldcat == cat)
-					. = T
+					return T
 
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
