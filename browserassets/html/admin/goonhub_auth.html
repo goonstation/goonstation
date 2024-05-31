@@ -113,15 +113,15 @@
   </div>
 
   <script>
-    var goonhubUrl = '{goonhub_url}';
+    var ref = '{ref}';
     var preLoginEl = document.getElementById('preLogin');
     var loggingInEl = document.getElementById('loggingIn');
     var loginCompleteEl = document.getElementById('loginComplete');
 
     function openLogin(event) {
       event.preventDefault();
-      window.location = 'byond://winset?command=.openlink '+encodeURIComponent(goonhubUrl+'/login?auth_from_game=local');
-      preLoginEl.style.display = 'none';
+      window.location = 'byond://?src='+ref+';openLogin=1'
+			preLoginEl.style.display = 'none';
       loggingInEl.style.display = 'block';
     }
 

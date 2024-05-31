@@ -7,6 +7,10 @@
 	src.owner = owner
 	src.owner.verbs += /client/proc/open_goonhub_auth
 
+/datum/goonhub_auth/Topic(href, href_list)
+	if (href_list["openLogin"])
+		src.owner << link("[config.goonhub_url]/login?auth_from_game=[config.server_id]")
+
 /datum/goonhub_auth/proc/on_auth()
 	src.authenticated = TRUE
 	src.send_client_data(TRUE, "onAuthSuccess")
@@ -20,8 +24,8 @@
 
 /datum/goonhub_auth/proc/show_ui()
 	var/html = grabResource("html/admin/goonhub_auth.html")
-	html = replacetext(html, "{goonhub_url}", config.goonhub_url)
-	src.owner << browse(html, "window=goonhubauth;title=Goonhub Login;size=300x250;can-close=0")
+	html = replacetext(html, "{ref}", "\ref[src]")
+	src.owner << browse(html, "window=goonhubauth;title=Goonhub Login;size=300x250")
 
 /datum/goonhub_auth/proc/send_client_data(data, function)
 	src.owner << output("[data]", "goonhubauth.browser:[function]")
