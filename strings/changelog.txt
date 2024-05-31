@@ -1,5 +1,9 @@
 
 (t)fri may 31 24
+(u)Glamurio (Ryou)
+(p)19049
+(e)🆕💅|C-Feature, C-QoL
+(*)Food left on the floor will now contain ants. Don't leave your food on the floor, people.
 (u)Klushy225
 (p)19241
 (e)🪲💪|C-Bug, A-Traits
