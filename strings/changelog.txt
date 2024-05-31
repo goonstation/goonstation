@@ -1,4 +1,9 @@
 
+(t)fri may 31 24
+(u)Klushy225
+(p)19241
+(e)🪲💪|C-Bug, A-Traits
+(+)Tweaked the German accent to make more sense.
 (t)thu may 30 24
 (u)LeahTheTech
 (*)Bricks now do more thrown damage and instantly smash non-reinforced windows. I'm sure I won't regret this...
