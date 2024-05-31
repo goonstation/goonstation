@@ -303,7 +303,7 @@
 
 	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		var/banUrl = "<a href='https://goonhub.com/admin/bans/[checkBan["ban"]["id"]]' target='_blank'>[checkBan["ban"]["id"]]</a>"
+		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
 		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
 		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
