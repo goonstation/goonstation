@@ -626,6 +626,12 @@
 							src.active_record_security["criminal"] = "Released"
 					src.temp = null
 
+					var/target_name = src.active_record_general["name"]
+
+					for (var/mob/living/carbon/human/H in mobs)
+						if (H.real_name == target_name || H.name == target_name)
+							H.update_arrest_icon()
+
 			if ("del_security_record")
 				if (href_list["answer"] == "yes" && src.active_record_security)
 					qdel(src.active_record_security)

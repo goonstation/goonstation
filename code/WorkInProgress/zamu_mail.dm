@@ -156,6 +156,8 @@
 			if(sec_record && sec_record["criminal"] != "*Arrest*")
 				sec_record["criminal"] = "*Arrest*"
 				sec_record["mi_crim"] = "Mail fraud."
+				var/mob/living/carbon/human/H = owner
+				H.update_arrest_icon()
 
 
 /obj/decal/cleanable/mail_fraud

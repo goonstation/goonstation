@@ -293,6 +293,7 @@ datum
 					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != "*Arrest*")
 						sec_record["criminal"] = "*Arrest*"
 						sec_record["mi_crim"] = "Underage drinking."
+						H.update_arrest_icon()
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"

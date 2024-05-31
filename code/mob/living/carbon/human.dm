@@ -1258,6 +1258,8 @@
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 
+	src.update_arrest_icon()
+
 
 /mob/living/carbon/human/admin_visible_name()
 	return src.real_name
@@ -3648,3 +3650,43 @@
 			src.health_mon.icon_state = "10"
 		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
+
+/mob/living/carbon/human/proc/update_arrest_icon()
+	if (!src.arrestIcon)
+		return
+
+	var/arrestState = ""
+	var/visibleName = src.face_visible() ? src.real_name : src.name
+	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+	if(record)
+		var/criminal = record["criminal"]
+		if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
+			arrestState = criminal
+	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
+		arrestState = "*Arrest*"
+	if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
+		if (locate(/obj/item/implant/counterrev) in src.implant)
+			if (src.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				arrestState = "RevHead"
+			else if (src.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+				arrestState = "Loyal_Progress"
+			else
+				arrestState = "Loyal"
+		else
+			var/obj/item/card/id/myID = 0
+			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
+			//this does mean that if an ID has no registered owner + carry permit enabled it will blink off as contraband. however i dont care!
+			if (src.l_hand?.registered_owner())
+				myID = src.l_hand
+			else if (src.r_hand?.registered_owner())
+				myID = src.r_hand
+			if (!myID)
+				myID = src.wear_id
+			var/has_contraband_permit = 0
+			var/has_carry_permit = 0
+			if (myID)
+				has_contraband_permit = (access_contrabandpermit in myID.access)
+				has_carry_permit = (access_carrypermit in myID.access)
+			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
+				arrestState = "Contraband"
+	src.arrestIcon.icon_state = arrestState

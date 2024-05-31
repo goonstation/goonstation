@@ -850,6 +850,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				if(PRISONER_MODE_INCARCERATED)
 					E["criminal"] = "Incarcerated"
 			E["sec_flag"] = src.sechud_flag
+			target.update_arrest_icon()
 			return
 
 		src.active2 = new /datum/db_record()
@@ -875,6 +876,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["ma_crim_d"] = "No major crime convictions."
 		src.active2["notes"] = "No notes."
 		data_core.security.add_record(src.active2)
+
+		target.update_arrest_icon()
 
 		return
 

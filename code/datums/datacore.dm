@@ -197,6 +197,7 @@
 								"Refusing to share their meth.",\
 								"Grand larceny.")
 		S["ma_crim_d"] = "No details provided."
+		H.update_arrest_icon()
 
 
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
@@ -216,6 +217,7 @@
 		if (H.mind?.assigned_role == "Clown")
 			S["criminal"] = "Clown"
 			S["mi_crim"] = "Clown"
+			H.update_arrest_icon()
 		else
 			S["criminal"] = "None"
 			S["mi_crim"] = "None"

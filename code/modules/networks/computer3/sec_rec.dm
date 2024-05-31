@@ -447,6 +447,12 @@
 
 						if (lowertext(command) == "clown")
 							src.active_secure["criminal"] = "Clown"
+
+							var/target_name = src.active_general["name"]
+
+							for (var/mob/living/carbon/human/H in mobs)
+								if (H.real_name == target_name || H.name == target_name)
+									H.update_arrest_icon()
 							return
 
 						switch (round( max( text2num_safe(command), 0) ))
@@ -468,6 +474,12 @@
 								return
 							else
 								return
+
+						var/target_name = src.active_general["name"]
+
+						for (var/mob/living/carbon/human/H in mobs)
+							if (H.real_name == target_name || H.name == target_name)
+								H.update_arrest_icon()
 
 					if (FIELDNUM_SECFLAG)
 						if (!src.active_secure)

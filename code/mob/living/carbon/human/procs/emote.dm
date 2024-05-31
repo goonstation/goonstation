@@ -2194,6 +2194,7 @@
 						if(sec_record && sec_record["criminal"] != "*Arrest*")
 							sec_record["criminal"] = "*Arrest*"
 							sec_record["mi_crim"] = "Public dabbing."
+							src.update_arrest_icon()
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 
