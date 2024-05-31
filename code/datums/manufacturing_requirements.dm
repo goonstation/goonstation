@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	matches_property(var/datum/material/M)
 		// This specific check is based off the hardness of mauxite and bohrum.
 		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
-		if (!(M.getProperty("hard") * 2 + M.getProperty("density") >= src.material_threshold))
+		if (!((M.getProperty("hard") * 2) + M.getProperty("density") >= src.material_threshold))
 			return FALSE
 		return TRUE
 
