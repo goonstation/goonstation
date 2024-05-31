@@ -106,7 +106,6 @@ meat@=fleish
 medic@=doktor
 medics@=doktors
 milk@=milch
-miss@=frau
 missus@=frau
 mister@=herr
 mother@=mutter
