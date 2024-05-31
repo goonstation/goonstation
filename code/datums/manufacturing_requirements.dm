@@ -77,7 +77,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_property
 	is_match(var/datum/material/M)
-		if (!isnull(src.material_property) && !isnull(src.material_threshold) && !src.matches_property(M))
+		if (should_match_property && !src.matches_property(M))
 			return FALSE
 		if (!isnull(src.material_flags) && !src.matches_flags(M.getMaterialFlags()))
 			return FALSE
@@ -89,10 +89,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 	/// Returns whether the material property matches the given criterion. Default behavior is to check if >=, override w/o calling parent for diff behavior.
 	proc/matches_property(var/datum/material/M)
-		var/property_value = M.getProperty(src.material_property)
-		var/is_true = property_value >= src.material_threshold
-		boutput(world, "Property check on [M.getName()] for [src.name] evaluates to ([property_value] >= [src.material_threshold] = [is_true])")
-		return is_true
+		return M.getProperty(src.material_property) >= src.material_threshold
 
 /datum/manufacturing_requirement/match_property/conductive
 	name = "Conductive"
@@ -181,9 +178,9 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	matches_property(var/datum/material/M)
 		// This specific check is based off the hardness of mauxite and bohrum.
 		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
-		if (!((M.getProperty("hard") * 2) + M.getProperty("density") >= src.material_threshold))
-			return FALSE
-		return TRUE
+		if (((M.getProperty("hard") * 2) + M.getProperty("density")) >= src.material_threshold)
+			return TRUE
+		return FALSE
 
 /datum/manufacturing_requirement/match_property/metal/dense
 	name = "Sturdy Metal"
