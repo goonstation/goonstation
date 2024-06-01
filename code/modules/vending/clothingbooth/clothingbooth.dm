@@ -7,7 +7,7 @@
  * Pulls the list of available stock from `global.clothingbooth_catalogue`, see `clothingbooth_datums.dm` to see how those are all generated.
  */
 /obj/machinery/clothingbooth
-	name = "Clothing Booth"
+	name = "clothing booth"
 	desc = "Contains a sophisticated autoloom system capable of manufacturing a variety of clothing items on demand."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
@@ -40,6 +40,8 @@
 	var/obj/item/card/id/scanned_id
 	/// Amount of inserted cash.
 	var/cash = 0
+	/// If `TRUE`, don't check for account balance or inserted money.
+	var/everything_is_free = FALSE
 
 	/// Optional dye color or matrix to apply to all sold objects.
 	var/dye
@@ -54,6 +56,13 @@
 	// Preview stuff.
 	src.preview = new()
 	src.preview.add_background()
+
+	if (istype(get_area(src), /area/afterlife))
+		src.everything_is_free = TRUE
+		src.maptext_y = 34
+		src.maptext = "<span class='pixel c vb'>FREE</span>"
+		src.name = "completely free [src.name]"
+		src.desc += " This one happens to not need any money."
 
 /obj/machinery/clothingbooth/disposing()
 	src.eject_contents()
@@ -74,13 +83,8 @@
 	if (istype(id_card))
 		src.process_card(user, id_card)
 	else if (istype(W, /obj/item/currency/spacecash))
-		src.cash += W.amount
-		W.amount = 0
-		user.visible_message(SPAN_NOTICE("[user.name] inserts credits into [src]"))
-		playsound(user, 'sound/machines/capsulebuy.ogg', 80, TRUE)
-		user.u_equip(W)
-		W.dropped(user)
-		qdel(W)
+		var/obj/item/currency/spacecash/cash_to_add = W
+		src.add_cash(user, cash_to_add)
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
 		if (ismob(G.affecting))
@@ -113,10 +117,8 @@
 		if (istype(id_card))
 			src.process_card(usr, id_card)
 		if (istype(equipped_item, /obj/item/currency/spacecash))
-			var/obj/item/dummy_credits = equipped_item
-			src.cash += dummy_credits.amount
-			dummy_credits.amount = 0
-			qdel(dummy_credits)
+			var/obj/item/currency/spacecash/cash_to_add = equipped_item
+			src.add_cash(usr, cash_to_add)
 		src.ui_interact(usr)
 	..()
 
@@ -205,6 +207,9 @@
 			. = TRUE
 		if ("purchase")
 			if (src.selected_item)
+				if (src.everything_is_free)
+					src.purchase_item(usr)
+					return TRUE
 				var/price_to_pay = text2num_safe(src.selected_item.cost)
 				if (src.accessed_record)
 					var/money_on_card = src.accessed_record["current_money"]
@@ -241,6 +246,9 @@
 			. = TRUE
 
 /obj/machinery/clothingbooth/proc/process_card(mob/user, obj/item/card/id/id_card)
+	if (src.everything_is_free)
+		boutput(user, SPAN_ALERT("You won't need that where you're going, everything is free!"))
+		return
 	if (src.scanned_id)
 		boutput(user, SPAN_ALERT("[src] already has an ID card loaded!"))
 		return
@@ -259,6 +267,19 @@
 	else
 		boutput(usr, SPAN_ALERT("Incorrect pin number."))
 	tgui_process?.update_uis(src)
+
+/obj/machinery/clothingbooth/proc/add_cash(mob/user, obj/item/currency/spacecash/cash_to_add)
+	if (src.everything_is_free)
+		boutput(user, SPAN_ALERT("You won't need that where you're going, everything is free!"))
+		return
+	if (!cash_to_add.amount)
+	src.cash += cash_to_add.amount
+	cash_to_add.amount = 0
+	user.visible_message(SPAN_NOTICE("[user.name] inserts credits into [src]"))
+	user.u_equip(cash_to_add)
+	cash_to_add.dropped(user)
+	playsound(user, 'sound/machines/capsulebuy.ogg', 80, TRUE)
+	qdel(cash_to_add)
 
 /obj/machinery/clothingbooth/proc/eject_cash(turf/location, mob/target)
 	if (src.cash <= 0)
