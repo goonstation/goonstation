@@ -16,7 +16,12 @@
 	if (!istype(M))
 		return
 	src.lastattacked = M
-	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
+	if (length(M.daggers))
+		var/dagger = pick(M.daggers)
+		M.daggers -= dagger
+		src.put_in_hand_or_drop(pick(dagger))
+		src.visible_message(SPAN_COMBAT("[src] yanks a dagger out of [src != M ? M : "themself"]!"))
+	else if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()

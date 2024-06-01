@@ -537,11 +537,26 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
+
+	/// dagger will stick into mob on thrown hit
+	var/can_stick_into_mob = TRUE
+	var/set_to_stick = FALSE
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
+
+	attack_self(mob/user)
+		..()
+		if (!src.can_stick_into_mob)
+			return
+		src.set_to_stick = !src.set_to_stick
+		boutput(user, SPAN_COMBAT("You change your intent with the dagger. It will [src.set_to_stick ? "now" : "no longer"] stick into others when thrown."))
+
+	get_help_message(dist, mob/user)
+		. = "Throw the dagger at someone to instantly incapacitate them for a short while."
+		if (src.can_stick_into_mob)
+			. += "Use in-hand to set whether it should stick into others on throw or not. It can be pulled out of them with help intent, or it will fall out shortly."
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
 	. = ..()
@@ -560,6 +575,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
+		if (src.set_to_stick && istype(M, /mob/living))
+			var/mob/living/L = M
+			L.daggers += src
+			src.set_loc(M)
+			SPAWN (2 SECONDS)
+				if (src in L.daggers)
+					L.daggers -= src
+					src.set_loc(get_turf(M))
 
 /obj/item/dagger/attack(target, mob/user)
 	if(ismob(target))
@@ -594,6 +617,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
+	can_stick_into_mob = FALSE
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -609,7 +633,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	can_stick_into_mob = FALSE
+
 	gang
 		name = "familiar fighting knife"
 		force = 17
@@ -635,9 +660,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
+	get_help_message(dist, mob/user)
+		. = "Throw the dagger at someone to take out a chunk of their stamina."
+
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
+	can_stick_into_mob = FALSE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
