@@ -38,9 +38,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		// This should always be a sequence of checks which return FALSE if the material does not match a requirement.
 		// See the check in match_material for a good example on this.
 		SHOULD_CALL_PARENT(TRUE)
-		if (isnull(M))
-			return FALSE
-		return TRUE
+		return isnull(M)
 
 /datum/manufacturing_requirement/not_null
 	name = "Any"
@@ -217,15 +215,26 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
                     PLEASE ALPHABETIZE THANKS
 ***************************************************************/
 
+#define MATCH_ANY 1 //! Pass as long as at least one flag is defined.
+#define MATCH_ALL 2 //! Pass if every material flag is defined.
 /datum/manufacturing_requirement/match_flag
 
+	/// The flag(s) of the material to match. This can be just one flag, or several with FLAG_A | FLAG_B | ...
+	var/material_flags
+	var/match_type = MATCH_ANY
+
 	is_match(datum/material/M)
+		. = ..()
+		if (!.)
+			return FALSE
 
 
 	/// Returns whether the material flags are matched. This will return true should any flag match.
 	proc/matches_flags(var/material_flags)
 		return material_flags & src.material_flags
 
+#undef MATCH_ANY
+#undef MATCH_ALL
 
 /// Manufacturing requirements which check several conditions at once.
 /datum/manufacturing_requirement/mixed
