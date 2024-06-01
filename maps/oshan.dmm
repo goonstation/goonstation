@@ -183,6 +183,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaO" = (
@@ -312,6 +313,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "abi" = (
@@ -2096,10 +2098,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
-"ahg" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/engineering)
 "ahh" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
@@ -11074,6 +11072,9 @@
 /obj/table/auto,
 /obj/item/tank/air,
 /obj/item/paper/book/from_file/ggcsftm,
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "aKL" = (
@@ -30225,9 +30226,7 @@
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 8
-	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ceL" = (
@@ -107932,7 +107931,7 @@ beP
 aAy
 aAy
 aAy
-ahg
+aAy
 aTm
 bkx
 bhr
