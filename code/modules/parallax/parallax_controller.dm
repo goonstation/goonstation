@@ -157,6 +157,10 @@
 	. = ..()
 	src.toggle_parallax()
 
+/client/Del()
+	src.parallax_controller?.unregister_signals(src.mob)
+	. = ..()
+
 /mob/Login()
 	. = ..()
 	src.client?.parallax_controller?.register_signals(src)
