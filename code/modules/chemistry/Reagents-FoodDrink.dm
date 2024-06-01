@@ -143,7 +143,7 @@ datum
 				if (!istype(M))
 					return
 				var/coke = pick("conk", "croke", "ckoe", "clock", "coge", "choke", "coque", "cob", "legend")
-				var/milk = pick("malk", "mylik", "millic", "vilk", "mick", "mill", "mrilck", "mok", "dairy")
+				var/milk = pick("malk", "milic", "vilk", "mick", "mill", "mink", "mok", "meek", "misk", "music", "dairy")
 				var/thinkpositive = pick("What a great drink.", "Wonder if there's more around?",\
 				"Yum!","You daydream about having more.","Maybe your coworkers want some!","You should get more.")
 				var/thinknegative = pick("The thought sickens you.", "You feel betrayed.",\
@@ -156,13 +156,14 @@ datum
 							"Your stomach rolls. Must be time for some [coke] [milk]!",\
 							"A delicious taste lingers in your throat!")))
 						else if (probmult(12))
-							if(!M.stat && !M.lying && can_act(M) && !M.equipped() && probmult(6)) //shameless klepto theft
+							if(!M.stat && !M.lying && can_act(M) && !M.equipped() && probmult(20)) //shameless klepto theft
 								for(var/obj/item/reagent_containers/food/drinks/drinkingglass/I in oview(1, M))
 									if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(M, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE) && I.reagents.has_reagent("legendairy"))
 										I.Attackhand(M)
+										break
 
 							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped()
-							if(helddrink && reagents.has_reagent("legendairy"))
+							if(helddrink && helddrink.reagents.has_reagent("legendairy"))
 								helddrink.take_a_drink(M, M) // forces you to drink from held glasses.
 								if (probmult(70)) M.say("Wow! Great drink!") // The iconic line!!
 
@@ -2608,7 +2609,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom // decays into things that decay for maximum slow metabolism punishment. ~8x the resultant chems if you have the trait
 				if(prob(15))
-					M.reagents.add_reagent("rum", 1 * mult)
+					M.reagents.add_reagent("bourbon", 1 * mult)
 				if(prob(20))
 					M.reagents.add_reagent("espresso", 1 * mult)
 				if(prob(25))

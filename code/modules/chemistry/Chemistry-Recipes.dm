@@ -2104,7 +2104,7 @@
 		name = "Wipeout"
 		id = "wipeout"
 		result = "wipeout"
-		required_reagents = list("powercola" = 1, "plasma" = 1, "espresso" = 1, "rum" = 1, "simplesyrup" = 1, "pfire" = 1)
+		required_reagents = list("powercola" = 1, "plasma" = 1, "espresso" = 1, "bourbon" = 1, "simplesyrup" = 1, "pfire" = 1)
 		result_amount = 4
 		mix_phrase = "Globs of the ingredients barely mix with one another."
 		drinkrecipe = TRUE
