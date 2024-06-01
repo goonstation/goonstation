@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	var/name = "Unknown"
 	/// Internal, unique ID of the requirement to use for the cache list.
 	var/id = null
-	/// Material ID of the material to checl. None if null, some string like "erebite" if used. Meant for exact material checks.
+	/// Material ID of the material to check. None if null, some string like "erebite" if used. Meant for exact material checks.
 	var/material_id = null
 	/// Material flags of the material to check. None of null, can be made like MATERIAL_A | MATERIAL_B if needed to check for either.
 	var/material_flags = null
@@ -37,8 +37,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	proc/get_id()
 		return src.id
 
-	/// Returns whether or not the material in question matches our criteria. Defaults to true
+	/// Checks whether or not the given material meets the requirements enforced by this proc.
 	proc/is_match(var/datum/material/M)
+		// This should always be a sequence of checks which return FALSE if the material does not match a requirement.
+		// See the check in match_material for a good example on this.
 		SHOULD_CALL_PARENT(TRUE)
 		if (isnull(M))
 			return FALSE
@@ -59,13 +61,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		. = ..()
 
 	is_match(var/datum/material/M)
-		if (!isnull(src.material_id) && !src.matches_id(M.getID()))
+		if (!..())
 			return FALSE
-		. = ..()
-
-	/// Returns whether the material id is an exact match for the required id.
-	proc/matches_id(var/material_id)
-		return src.material_id == material_id
+		if (src.material_id != M.getID())
+			return FALSE
 
 /***************************************************************
                       MATERIAL PROPERTIES
@@ -83,10 +82,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (!isnull(src.material_flags) && !src.matches_flags(M.getMaterialFlags()))
 			return FALSE
 		. = ..()
-
-	/// Returns whether the material flags are matched. This will return true should any flag match.
-	proc/matches_flags(var/material_flags)
-		return material_flags & src.material_flags
 
 	/// Returns whether the material property matches the given criterion. Default behavior is to check if >=, override w/o calling parent for diff behavior.
 	proc/matches_property(var/datum/material/M)
@@ -214,3 +209,33 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	name = "Wood"
 	id = "wood"
 	material_flags = MATERIAL_WOOD
+
+/***************************************************************
+                         MATERIAL FLAGS
+
+              Requirements which only need flag checks
+
+                    PLEASE ALPHABETIZE THANKS
+***************************************************************/
+
+/datum/manufacturing_requirement/match_flag
+
+	is_match(datum/material/M)
+
+
+	/// Returns whether the material flags are matched. This will return true should any flag match.
+	proc/matches_flags(var/material_flags)
+		return material_flags & src.material_flags
+
+
+/// Manufacturing requirements which check several conditions at once.
+/datum/manufacturing_requirement/mixed
+
+	var/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
+
+	is_match(datum/material/M)
+		for (var/datum/manufacturing_requirement/R as anything in src.requirements)
+			if (!R.is_match(M))
+				return FALSE
+		return TRUE
+
