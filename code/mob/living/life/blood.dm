@@ -1,6 +1,6 @@
 
 /datum/lifeprocess/blood
-	// if during the last tick of the process, the owner's blood was in the baseline range
+	/// if during the last tick of the process, the owner's blood was in the baseline range
 	var/last_tick_regular_blood_range = FALSE
 
 	process(var/datum/gas_mixture/environment)
