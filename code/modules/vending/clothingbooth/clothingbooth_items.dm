@@ -450,6 +450,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 		swatch_background_colour = "#13788f"
 		item_path = /obj/item/clothing/head/sunhat
 
+	yellow
+		name = "Yellow"
+		swatch_background_colour = "#d3cb21"
+		item_path = /obj/item/clothing/head/sunhat/sunhaty
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 /datum/clothingbooth_item/head/tophat
 

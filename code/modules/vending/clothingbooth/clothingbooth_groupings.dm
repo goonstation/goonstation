@@ -223,6 +223,7 @@
 		/datum/clothingbooth_item/head/sunhat/red,
 		/datum/clothingbooth_item/head/sunhat/blue,
 		/datum/clothingbooth_item/head/sunhat/green,
+		/datum/clothingbooth_item/head/sunhat/yellow,
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
