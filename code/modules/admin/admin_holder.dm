@@ -47,10 +47,12 @@
 	var/datum/ban_panel/ban_panel = null
 	var/datum/antagonist_panel/antagonist_panel = null
 	var/datum/job_manager/job_manager = null
+	var/datum/region_allocator_panel/region_allocator_panel = null
 
 	var/list/hidden_categories = null
 
 	var/mob/respawn_as_self_mob = null
+	var/skip_manifest = FALSE
 
 	New(client/C)
 		..()
@@ -162,6 +164,7 @@
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Don't create manifest entries when respawning?: <a href='?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
 			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
@@ -300,6 +303,11 @@
 			saved_show_topic_log = FALSE
 		show_topic_log = saved_show_topic_log
 
+		var/saved_skip_manifest = AP["skip_manifest"]
+		if (isnull(saved_skip_manifest))
+			saved_skip_manifest = FALSE
+		skip_manifest = saved_skip_manifest
+
 		src.hidden_categories = list()
 		for(var/cat in toggleable_admin_verb_categories)
 			var/cat_hidden = AP["hidden_[cat]"]
@@ -356,6 +364,7 @@
 		AP["buildmode_view"] = buildmode_view
 		AP["spawn_in_loc"] = spawn_in_loc
 		AP["show_topic_log"] = show_topic_log
+		AP["skip_manifest"] = skip_manifest
 
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
@@ -372,6 +381,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	src.holder.show_pref_window(src.mob)
 

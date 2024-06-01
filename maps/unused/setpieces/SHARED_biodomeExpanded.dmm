@@ -10893,7 +10893,7 @@
 /turf/unsimulated/floor/circuit/off,
 /area/crater/cave)
 "mVn" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

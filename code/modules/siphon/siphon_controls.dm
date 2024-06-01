@@ -101,6 +101,8 @@
 	icon_state = "engine1"
 	req_access = list(access_research)
 	object_flags = CAN_REPROGRAM_ACCESS
+	circuit_type = /obj/item/circuitboard/siphon_control
+
 	var/net_id
 	var/temp = null
 	///list of devices known to the siphon control device
@@ -117,7 +119,7 @@
 	New()
 		..()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_HARMONIC_SIPHON)
 
 	receive_signal(datum/signal/signal)
 		if(status & NOPOWER)

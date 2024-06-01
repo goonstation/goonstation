@@ -494,6 +494,10 @@
 			if(!check_list || !istype(check_list, /list)) //invalid or no access
 				return 0
 			for(var/req in src.req_access)
+				if (req == access_fuck_all)
+					// access_fuck_all means no special access but needs authentication anyway
+					// and everyone should implicitly have that
+					continue
 				if(!(req in check_list)) //doesn't have this access
 					return 0
 			return 1

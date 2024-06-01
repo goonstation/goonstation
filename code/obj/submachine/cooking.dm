@@ -312,7 +312,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 					return
 
 				var/flavor = params["flavor"]
-				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
+				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new(src)
 				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
 						boutput(usr, SPAN_ALERT("The beaker is empty!"))
@@ -396,6 +396,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
+	object_flags = NO_GHOSTCRITTER
 	var/emagged = 0
 	var/working = 0
 	var/time = 5
@@ -549,9 +550,6 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_shroom(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_pepper(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
@@ -770,8 +768,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
 			// Put all single-ingredient recipes after this point
-			src.recipes += new /datum/cookingrecipe/oven/pizza(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_fresh(src)
+			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/oven/pancake(src)
 			src.recipes += new /datum/cookingrecipe/oven/bread(src)
@@ -871,15 +868,6 @@ table#cooktime a#start {
 					// this is null if it uses normal outputs (see below),
 					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
-
-					//Complete pizza crew objectives if possible
-					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
-						var/obj/item/reagent_containers/food/snacks/pizza/P = output
-						if (usr.mind?.objectives)
-							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
-								var/list/matching_toppings = P.topping_types & objective.choices
-								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
-									objective.completed = TRUE
 
 					if (isnull(output))
 						output = R.output
@@ -1280,8 +1268,8 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (milk_amount < 10 && yoghurt_amount < 10)
 					continue
 
-				var/cream_output = roundfloor(milk_amount / 10)
-				var/yoghurt_output = roundfloor(yoghurt_amount / 10)
+				var/cream_output = floor(milk_amount / 10)
+				var/yoghurt_output = floor(yoghurt_amount / 10)
 				P.reagents.remove_reagent("milk", cream_output * 10)
 				P.reagents.remove_reagent("yoghurt", yoghurt_output * 10)
 				for (var/i in 1 to cream_output)

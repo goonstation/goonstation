@@ -22,6 +22,7 @@ TRAYS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 2
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -61,6 +62,7 @@ TRAYS
 
 	attack_self(mob/user as mob)
 		src.rotate()
+		..()
 
 	proc/rotate()
 		if(rotatable)
@@ -371,6 +373,7 @@ TRAYS
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	c_flags = ONBELT
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
@@ -710,8 +713,6 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (!(food in src.contents))
-			return
 		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
@@ -726,17 +727,21 @@ TRAYS
 
 		src.UpdateIcon()
 
-	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
-	proc/indirect_pickup(var/food, mob/user, atom/over_object)
-		if (user == over_object && in_interact_range(src, user) && can_act(user))
+	/// Handles food being dragged around
+	proc/indirect_pickup(var/obj/item/food, mob/user, atom/over_object)
+		if (!in_interact_range(src, user) || !can_act(user))
+			return
+		if (user == over_object)
 			src.Attackhand(user)
+		else if (over_object == src || isturf(over_object))
+			src.remove_contents(food)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere(depth = 1)
 		if (length(src.contents))
 			src.visible_message(SPAN_ALERT("Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!"))
 		for (var/atom/movable/food in src)
-			food.set_loc(get_turf(src))
+			src.remove_contents(food)
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
@@ -828,9 +833,9 @@ TRAYS
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(istype(H.head, /obj/item/clothing/head/helmet))
-					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else if(ismobcritter(target))
 				var/mob/living/critter/L = target
@@ -840,12 +845,12 @@ TRAYS
 						has_helmet = TRUE
 						break
 				if(has_helmet)
-					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else //borgs, ghosts, whatever
-				target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 		else
 			target.visible_message(SPAN_ALERT("[user] taps [target] over the head with [src]."))
 			playsound(src, src.hit_sound, 30, 1)

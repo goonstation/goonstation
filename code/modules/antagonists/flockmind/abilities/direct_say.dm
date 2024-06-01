@@ -19,7 +19,7 @@
 			if (!message)
 				return TRUE
 			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
 			var/mob/living/intangible/flock/F = holder.owner
 			var/datum/flock/flock = F.flock
@@ -36,7 +36,7 @@
 		if (!message)
 			return TRUE
 		logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		//set up message
 		var/datum/language/L = languages.language_cache["english"]

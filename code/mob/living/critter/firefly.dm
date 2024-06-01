@@ -23,7 +23,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	health_brute = 10
 	health_burn = 10
 
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.5
@@ -141,7 +141,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	proc/pop()
 		src.visible_message(SPAN_ALERT("<b>[src]</b> erupts into a huge column of flames! That was unexpected!"))
-		fireflash_melting(get_turf(src), 1, 3000, 1000)
+		fireflash_melting(get_turf(src), 1, 3000, 1000, chemfire = CHEM_FIRE_RED)
 		death()
 
 	update_icon()

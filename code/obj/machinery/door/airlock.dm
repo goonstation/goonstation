@@ -85,7 +85,8 @@ var/global/list/cycling_airlocks = list()
 	..()
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
 		var/area/station/A = get_area(src)
-		src.name = A.name
+		if (!isnull(A))
+			src.name = A.name
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 	START_TRACKING
 
@@ -578,6 +579,10 @@ var/global/list/cycling_airlocks = list()
 				return
 	..()
 /obj/machinery/door/airlock/bumpopen(atom/movable/AM)
+	if (!src.requiresID()) // if the ID wire has been tampered with.
+		src.play_deny() // intentional nerf: idwire-cut doors won't respond to bumps. incentivizes people to fix it and makes them aware it is access hacked.
+		src.add_fingerprint(AM)
+		return
 	if (issilicon(AM))
 		if (!src.cyborgBumpAccess)
 			return
@@ -1158,7 +1163,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 /obj/machinery/door/airlock/emp_act()
 	..()

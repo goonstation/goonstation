@@ -3,6 +3,7 @@
 	set name = "CA Viewer"
 	set desc = "Cellular Automata Viewer"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(holder)
 		var/datum/ca_viewer/E = new /datum/ca_viewer(src.mob)

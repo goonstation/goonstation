@@ -70,14 +70,14 @@ Fibre wire
 		SPAWN(0) animate_levitate(src, -1)
 		H.emote("scream")
 
-		H.changeStatus("weakened", 10 SECONDS)
+		H.changeStatus("knockdown", 10 SECONDS)
 
 		SPAWN(7 SECONDS)
 			if(!H)
 				being_mean = 0
 				return
 			H.emote("faint")
-			H.changeStatus("paralysis", 15 SECONDS)
+			H.changeStatus("unconscious", 15 SECONDS)
 			H.show_text("<I><font size=5>You feel your mind drifting away from your body!</font></I>", "red")
 
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1)

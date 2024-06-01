@@ -83,6 +83,7 @@ TYPEINFO(/datum/component/mimic_item)
 		. = ..()
 
 	cast(atom/T)
+		. = ..()
 		var/datum/component/C = usr.GetComponent(/datum/component/legs)
 		if(!C)
 			usr.AddComponent(/datum/component/legs)

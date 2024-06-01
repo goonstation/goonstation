@@ -21,6 +21,9 @@
 	var/_health = 100
 	var/_max_health = 100
 
+	/// if gun/bullet related, forensic profile of it
+	var/forensic_ID = null
+
 	New()
 		. = ..()
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
@@ -177,6 +180,9 @@
 
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return 0
+
+	proc/can_arm_attach()
+		return !(src.object_flags & NO_ARM_ATTACH )
 
 	assume_air(datum/air_group/giver)
 		if (loc)
@@ -388,11 +394,11 @@
 
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
 	. = FALSE
-	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
+	if (W && !isghostdrone(user)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 		if (user)
-			if (W.cant_drop)
+			if (W.cant_drop) // this should handle borgs dropping their tools, anyway? - mylie
 				return
 			user.drop_item()
 		if(W.dir != dirbuffer)
@@ -412,8 +418,8 @@
 
 /obj/proc/mob_flip_inside(var/mob/user)
 	user.show_text(SPAN_ALERT("You leap and slam against the inside of [src]! Ouch!"))
-	user.changeStatus("paralysis", 4 SECONDS)
-	user.changeStatus("weakened", 4 SECONDS)
+	user.changeStatus("unconscious", 4 SECONDS)
+	user.changeStatus("knockdown", 4 SECONDS)
 	src.visible_message(SPAN_ALERT("<b>[src]</b> emits a loud thump and rattles a bit."))
 
 	animate_storage_thump(src)
@@ -464,3 +470,20 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 
 	for(var/mob/O in targets)
 		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
+
+/obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
+	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
+		var/mob/dead/observer/O = viewer
+		O.insert_observer(occupant)
+		return TRUE
+
+/obj/proc/after_abcu_spawn()
+
+/// creates an id profile for any forenics purpose. override as needed
+/obj/proc/CreateID()
+	. = ""
+
+	do
+		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
+			. += "[pick(numbersAndLetters)]"
+	while(. in forensic_IDs)

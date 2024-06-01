@@ -1,7 +1,8 @@
 /client/proc/cmd_modify_ticker_variables()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Ticker Variables"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (ticker == null)
 		boutput(src, "Game hasn't started yet.")
 	else
@@ -10,7 +11,8 @@
 /client/proc/cmd_modify_controller_variables()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Main Loop Variables"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (processScheduler == null)
 		boutput(src, "Main loop hasn't started yet.")
 	else
@@ -19,7 +21,8 @@
 /client/proc/cmd_modify_respawn_variables()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Respawn Controller Variables"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!respawn_controller)
 		boutput(src, "Respawn controller not initialized yet.")
 	else
@@ -30,7 +33,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Spawn Debug List"
 	set desc = "Directly varedit the spawn debug list, edit its length to 0 to wipe it"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (global_spawn_dbg == null)
 		boutput(src, "Spawn sebug list is null!")
 	else

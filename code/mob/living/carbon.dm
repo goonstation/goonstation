@@ -27,7 +27,7 @@
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
 				var/wet_adjusted = T.wet
-				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+				if (traitHolder?.hasTrait("super_slips") && (T.wet > 0)) //slippery when wet
 					wet_adjusted = max(wet_adjusted, 2) //whee
 
 				switch (wet_adjusted)
@@ -64,7 +64,7 @@
 
 					if (3) // superlube
 						src.remove_pulling()
-						src.changeStatus("weakened", 3.5 SECONDS)
+						src.changeStatus("knockdown", 3.5 SECONDS)
 						playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 						boutput(src, SPAN_NOTICE("You slipped on the floor!"))
 						var/atom/target = get_edge_target_turf(src, src.dir)

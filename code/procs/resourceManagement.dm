@@ -73,6 +73,7 @@
 	set name = "Debug Resource Cache"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/msg = "Resource cache contents:"
 	for (var/r in cachedResources)
@@ -85,6 +86,7 @@
 	set name = "Toggle Resource Cache"
 	set desc = "Enable or disable the resource cache system"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	disableResourceCache = !disableResourceCache
 	boutput(usr, SPAN_NOTICE("Toggled the resource cache [disableResourceCache ? "off" : "on"]"))

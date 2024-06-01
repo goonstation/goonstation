@@ -202,6 +202,7 @@ var/global/datum/apiHandler/apiHandler
 	set name = "Debug API Handler"
 	set desc = "Toggle debug logging of API requests"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	apiHandler.debug = !apiHandler.debug
 	if (apiHandler.debug)
 		boutput(src, "Enabled debug logging of API requests")

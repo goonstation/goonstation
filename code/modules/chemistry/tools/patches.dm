@@ -1,13 +1,3 @@
-
-
-
-/mob/living/proc/handle_skin(var/mult = 1)
-	if (src.skin_process && length(src.skin_process))
-		for(var/obj/item/reagent_containers/patch/P in skin_process)
-			//P.process_skin(src, XXX * mult)
-			continue
-
-
 /* ================================================= */
 /* -------------------- Patches -------------------- */
 /* ================================================= */
@@ -117,21 +107,18 @@
 			return
 
 		if (can_operate_on(user))
-			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
-			SPAN_NOTICE("You apply [src] to yourself."))
-			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(hit_thing)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message(SPAN_ALERT("[src] lands on [M] sticky side down!"))
-				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
-				apply_to(M,usr)
-				attach_sticker(M)
+				hit_thing.visible_message(SPAN_ALERT("[src] lands on [hit_thing] sticky side down!"))
+				logTheThing(LOG_COMBAT, hit_thing, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(hit_thing)].")
+				apply_to(hit_thing, usr)
+				attach_sticker(hit_thing)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.in_use)
@@ -207,7 +194,8 @@
 				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
-					L.skin_process += src
+					L.applied_patches += src
+					L.setStatus("patches_applied", INFINITE_STATUS)
 					src.do_sticker_thing = TRUE
 			else
 				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
@@ -257,7 +245,9 @@
 
 			if (isliving(attached))
 				var/mob/living/L = attached
-				L.skin_process -= src
+				L.applied_patches -= src
+				if (!length(L.applied_patches))
+					L.delStatus("patches_applied")
 		..()
 
 /* =================================================== */
@@ -442,8 +432,9 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
-	mats = list("MET-2"=5,"CRY-1"=4, "gold"=5)
-
+	mats = list("metal_dense" = 5,
+				"crystal" = 4,
+				"gold" = 5)
 /obj/item/reagent_containers/mender
 	name = "auto-mender"
 	desc = "A small electronic device designed to topically apply healing chemicals."

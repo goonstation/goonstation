@@ -212,7 +212,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/south)
 "abI" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/under/shorts/luchador/red,
@@ -1192,7 +1192,7 @@
 	},
 /area/station/medical/robotics)
 "ayf" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
@@ -1600,7 +1600,7 @@
 /area/station/crew_quarters/bar)
 "aHO" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/fungus,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -19543,7 +19543,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -34525,7 +34525,7 @@
 	name = "Cargo Hallway"
 	})
 "pkv" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
@@ -36738,7 +36738,7 @@
 	name = "Corpse Tunnel"
 	})
 "qiq" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay,
 /area/station/quartermaster/refinery)
 "qiB" = (
@@ -43736,7 +43736,7 @@
 /obj/storage/closet,
 /obj/item/razor_blade,
 /obj/item/scissors,
-/obj/item/reagent_containers/food/snacks/pizza,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese,
 /obj/item/kitchen/utensil/knife/pizza_cutter,
 /obj/item/plate,
 /obj/machinery/light/small/cool{
@@ -46799,7 +46799,7 @@
 /area/station/maintenance/inner/central)
 "uGD" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pizza{
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
 	pixel_y = -10
 	},
 /obj/item/paper/book/from_file/cookbook,
@@ -51925,7 +51925,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/cable{
 	icon_state = "2-8"
 	},

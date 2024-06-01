@@ -245,6 +245,7 @@
 	set name = "Custom Ghost Spawn"
 	set desc = "Set up a custom player spawn event."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/datum/spawn_event_editor/E = new /datum/spawn_event_editor(src.mob)
 	E.ui_interact(mob)

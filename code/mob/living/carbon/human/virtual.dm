@@ -61,7 +61,7 @@
 		if(!isghost)
 			return ..()
 
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return
 
@@ -116,6 +116,7 @@
 	target_anything = 0
 	interrupt_action_bars = 0
 	lock_holder = FALSE
+	do_logs = FALSE
 
 	//castcheck()
 		//if (!holder)
@@ -123,6 +124,7 @@
 
 	cast()
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
+		. = ..()
 		var/mob/M = holder.owner
 		setdead(M)
 		M.death(FALSE)

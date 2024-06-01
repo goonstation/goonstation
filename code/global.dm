@@ -277,6 +277,8 @@ var/global
 	player_capa = 0
 	player_cap = 55
 	player_cap_grace = list()
+	/// specifies if pcap kick messages show display to admins in chat
+	pcap_kick_messages = TRUE
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
@@ -301,6 +303,7 @@ var/global
 	announce_banlogin = 1
 	announce_jobbans = 0
 	radio_audio_enabled = 1
+	remote_music_announcements = 0
 
 
 	outpost_destroyed = 0
@@ -523,6 +526,9 @@ var/global
 		/obj/item/reagent_containers/food/snacks/snack_cake/golden,
 		/obj/item/reagent_containers/food/snacks/ice_cream/random,
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
+
+	///radio frequencies unable to be picked up by (empowered) radio_brain
+	list/protected_frequencies = list(R_FREQ_SYNDICATE)
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

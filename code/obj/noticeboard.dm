@@ -43,7 +43,7 @@
 	onclose(user, "noticeboard")
 
 /obj/noticeboard/attack_ai(mob/user)
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/noticeboard/Topic(href, href_list)
 	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))

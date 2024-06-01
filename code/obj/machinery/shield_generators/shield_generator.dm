@@ -47,32 +47,25 @@ TYPEINFO(/area/station/shield_zone)
 
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "shieldgen0"
-			src.UpdateOverlays(null, "top_lights")
-			src.UpdateOverlays(null, "meteor_dir1")
-			src.UpdateOverlays(null, "meteor_dir2")
-			src.UpdateOverlays(null, "meteor_dir3")
-			src.UpdateOverlays(null, "meteor_dir4")
+			src.ClearSpecificOverlays("top_lights", "meteor_dir1", "meteor_dir2", "meteor_dir3", "meteor_dir4")
 			return
 
 		if (src.active)
 			src.icon_state = "shieldgen-anim"
 			if (!src.image_active)
 				src.image_active = image(src.icon, "shield-top_anim")
-			src.UpdateOverlays(src.image_active, "top_lights")
+			src.AddOverlays(src.image_active, "top_lights")
 		else
 			src.icon_state = "shieldgen1"
-			src.UpdateOverlays(null, "top_lights")
+			src.ClearSpecificOverlays("top_lights")
 
 		if (meteor_shower_active)
 			if (!src.image_shower_dir)
 				src.image_shower_dir = image(src.icon, "shield-D[meteor_shower_active]")
 			src.image_shower_dir.icon_state = "shield-D[meteor_shower_active]"
-			src.UpdateOverlays(src.image_shower_dir, "meteor_dir[meteor_shower_active]")
+			src.AddOverlays(src.image_shower_dir, "meteor_dir[meteor_shower_active]")
 		else
-			src.UpdateOverlays(null, "meteor_dir1")
-			src.UpdateOverlays(null, "meteor_dir2")
-			src.UpdateOverlays(null, "meteor_dir3")
-			src.UpdateOverlays(null, "meteor_dir4")
+			src.ClearSpecificOverlays("meteor_dir1", "meteor_dir2", "meteor_dir3", "meteor_dir4")
 
 	process()
 		if (status & BROKEN)

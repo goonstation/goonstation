@@ -22,8 +22,6 @@
 TYPEINFO(/datum/component/holdertargeting/fullauto)
 	initialization_args = list(
 		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),
-		ARG_INFO("delaymin", DATA_INPUT_NUM, "Minimum delay between shots (in deciseconds)", 1.5),
-		ARG_INFO("rampfactor", DATA_INPUT_NUM, "Multiplicitive decrease in delay after each shot, (0, 1]", 1),
 	)
 
 /datum/component/holdertargeting/fullauto
@@ -33,8 +31,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/stopping = 0
 	var/shooting
 	var/delaystart
-	var/delaymin
-	var/rampfactor
+	var/delay
 	/// If 0, don't fullauto. Otherwise, fullauto is true
 	var/toggle = 0
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
@@ -44,29 +41,21 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/target_pox = 0
 	var/target_poy = 0
 
-	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart, _delaymin, _rampfactor)
+	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart)
 		if(C)
 			src.delaystart = C.delaystart
-			src.delaymin = C.delaymin
-			src.rampfactor = C.rampfactor
 		else
 			if (isnum_safe(_delaystart))
 				src.delaystart = _delaystart
-			if (isnum_safe(_delaymin))
-				src.delaymin = _delaymin
-			if (isnum_safe(_rampfactor))
-				src.rampfactor = _rampfactor
 
 
-	Initialize(delaystart = 1.5 DECI SECONDS, delaymin = 1.5 DECI SECONDS, rampfactor = 1)
+	Initialize(delaystart = 1.5 DECI SECONDS)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
 			src.toggle = toggle
 			var/obj/item/gun/G = parent
 			src.delaystart = delaystart
-			src.delaymin = delaymin
-			src.rampfactor = rampfactor
 
 			var/atom/movable/screen/fullautoAimHUD/hudSquare
 
@@ -250,16 +239,17 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		return
 
 	var/obj/item/gun/G = parent
-	var/delay = delaystart
 	shooting = 1
 
+	delay = delaystart
 	while(!stopping)
 		if(G.canshoot(L))
 			G.Shoot(target ? target : get_step(L, NORTH), get_turf(L), L, src.target_pox, src.target_poy, called_target = target)
 			G.suppress_fire_msg = 1
 		else
 			end_shootloop(L)
-		sleep(max(delay*=rampfactor, delaymin))
+		sleep(delay)
+		src.iterate_delay()
 
 	stopping = 0
 	shooting = 0
@@ -277,3 +267,73 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		aimer.screen -= hudCenter
 	if(shooting)
 		stopping = 1
+
+/datum/component/holdertargeting/fullauto/proc/iterate_delay()
+	return
+
+
+
+TYPEINFO(/datum/component/holdertargeting/fullauto/ramping)
+	initialization_args = list(
+		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("delaymin", DATA_INPUT_NUM, "Minimum delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("rampfactor", DATA_INPUT_NUM, "Multiplicitive decrease in delay after each shot, (0, 1]", 1),
+	)
+/datum/component/holdertargeting/fullauto/ramping
+	var/delaymin
+	var/rampfactor
+
+/datum/component/holdertargeting/fullauto/ramping/Initialize(delaystart = 1.5 DECI SECONDS, delaymin = 1.5 DECI SECONDS, rampfactor = 1)
+	if(..() == COMPONENT_INCOMPATIBLE)
+		return COMPONENT_INCOMPATIBLE
+
+	src.delaymin = delaymin
+	src.rampfactor = rampfactor
+
+/datum/component/holdertargeting/fullauto/ramping/InheritComponent(datum/component/holdertargeting/fullauto/ramping/C, i_am_original, _delaystart, _delaymin, _rampfactor)
+	if(C)
+		src.delaystart = C.delaystart
+		src.delaymin = C.delaymin
+		src.rampfactor = C.rampfactor
+	else
+		if (isnum_safe(_delaystart))
+			src.delaystart = _delaystart
+		if (isnum_safe(_delaymin))
+			src.delaymin = _delaymin
+		if (isnum_safe(_rampfactor))
+			src.rampfactor = _rampfactor
+
+/datum/component/holdertargeting/fullauto/ramping/iterate_delay()
+	src.delay = max(src.delay *= rampfactor, delaymin)
+
+
+
+
+TYPEINFO(/datum/component/holdertargeting/fullauto/callback)
+	initialization_args = list(
+		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),
+		ARG_INFO("delay_callback", DATA_INPUT_REF, "ref to a callback datum that will determine next shot delay", null),
+	)
+/datum/component/holdertargeting/fullauto/callback
+	var/datum/callback/delay_callback
+
+/datum/component/holdertargeting/fullauto/callback/Initialize(delaystart = 1.5 DECI SECONDS, delay_callback)
+	if(..() == COMPONENT_INCOMPATIBLE)
+		return COMPONENT_INCOMPATIBLE
+
+	src.delay_callback = delay_callback
+
+/datum/component/holdertargeting/fullauto/callback/InheritComponent(datum/component/holdertargeting/fullauto/callback/C, i_am_original, _delaystart, _delay_callback)
+	if(C)
+		src.delaystart = C.delaystart
+		src.delay_callback = C.delay_callback
+	else
+		if (isnum_safe(_delaystart))
+			src.delaystart = _delaystart
+		if (istype(_delay_callback, /datum/callback))
+			src.delay_callback = _delay_callback
+
+
+/datum/component/holdertargeting/fullauto/callback/iterate_delay()
+	src.delay = delay_callback.Invoke(delay)
+
