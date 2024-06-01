@@ -1796,7 +1796,9 @@
 /area/station/crewquarters/cryotron)
 "agC" = (
 /obj/machinery/light_switch/auto,
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
 /obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/red/side{
 	dir = 10

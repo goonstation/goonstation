@@ -42485,7 +42485,7 @@
 /area/station/hangar/engine)
 "gdD" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
+	req_access = list(38)
 	},
 /obj/mapping_helper/access/sec_lockers,
 /obj/item/gun/flamethrower/assembled/loaded,

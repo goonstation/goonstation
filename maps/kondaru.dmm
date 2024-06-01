@@ -36596,7 +36596,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "gOK" = (

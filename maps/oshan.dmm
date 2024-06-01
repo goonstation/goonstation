@@ -30311,7 +30311,9 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "ceT" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,

@@ -30784,7 +30784,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

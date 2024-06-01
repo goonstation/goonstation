@@ -39524,7 +39524,9 @@
 	dir = 1;
 	pixel_y = -28
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
