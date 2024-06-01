@@ -272,7 +272,9 @@
 	if (src.everything_is_free)
 		boutput(user, SPAN_ALERT("You won't need that where you're going, everything is free!"))
 		return
-	if (!cash_to_add.amount)
+	if (!cash_to_add?.amount)
+		boutput(user, SPAN_ALERT("No cash to insert!"))
+		return
 	src.cash += cash_to_add.amount
 	cash_to_add.amount = 0
 	user.visible_message(SPAN_NOTICE("[user.name] inserts credits into [src]"))
