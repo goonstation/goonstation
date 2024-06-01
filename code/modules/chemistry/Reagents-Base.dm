@@ -420,15 +420,14 @@
 	var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
 	reaction_temperature(exposed_temperature, exposed_volume)
-		if(!holder.has_reagent("cola"))
-			if(!reacted_to_temp)
-				reacted_to_temp = 1
-				if(holder)
-					var/list/covered = holder.covered_turf()
-					for(var/turf/t in covered)
-						SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
+		if(!reacted_to_temp)
+			reacted_to_temp = 1
 			if(holder)
-				holder.del_reagent(id)
+				var/list/covered = holder.covered_turf()
+				for(var/turf/t in covered)
+					SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
+		if(holder)
+			holder.del_reagent(id)
 
 	on_mob_life(var/mob/M, var/mult = 1)
 		if(!M) M = holder.my_atom

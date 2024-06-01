@@ -2022,6 +2022,7 @@
 		result_amount = 1
 		mix_phrase = "The cola grows more powerful than you could possibly imagine."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+		inhibitors = list("plasma")
 		drinkrecipe = TRUE
 
 	colamara_chaos
