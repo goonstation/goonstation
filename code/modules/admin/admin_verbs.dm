@@ -248,6 +248,7 @@ var/list/admin_verbs = list(
 		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
+		/client/proc/toggle_hide_offline,
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
