@@ -7,7 +7,7 @@
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
 	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
@@ -553,12 +553,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
     icon_state = "cheftall"
     item_state = "cheftall"
 
-/obj/item/clothing/head/policecap
-	name = "Police hat"
-	desc = "An old surplus-issue police hat."
-	icon_state = "mailcap"
-	item_state = "mailcap"
-
 /obj/item/clothing/head/plunger
 	name = "plunger"
 	desc = "get dat fukken clog"
@@ -876,7 +870,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(src, src.hitsound, 60, 1)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN(0) // show these messages after the "hit by" ones
 				if (M)
@@ -1866,8 +1860,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
-	mats = list("FAB-1"=5, "honey"=5)
-
+	mats = list("fabric" = 5,
+				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."

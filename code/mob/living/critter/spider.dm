@@ -11,7 +11,7 @@
 						/datum/targetable/critter/spider_drain)
 	var/flailing = 0
 	var/feeding = 0
-	var/venom1 = "venom"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
+	var/venom1 = "cytotoxin"  // making these modular so i don't have to rewrite this gigantic goddamn section for all the subtypes
 	var/venom2 = "spiders"
 	var/babyspider = 0
 	var/adultpath = null
@@ -307,8 +307,8 @@
 	icon_state_dead = "spider-dead"
 	health_brute = 20
 	health_burn = 20
-	venom1 = "venom"
-	venom2 = "venom"
+	venom1 = "cytotoxin"
+	venom2 = "cytotoxin"
 	death_text = "%src% is squashed!"
 
 
@@ -333,7 +333,7 @@
 	babyspider = 1
 	flags = TABLEPASS
 	fits_under_table = 1
-	venom1 = "venom"
+	venom1 = "cytotoxin"
 	venom2 = "rainbow fluid"
 	death_text = "%src% is squashed!"
 	stepsound = "clownstep"
@@ -427,7 +427,7 @@
 	health_brute = 100
 	health_burn = 100
 	custom_gib_handler = /proc/funnygibs
-	venom1 = "venom"
+	venom1 = "cytotoxin"
 	venom2 = "rainbow fluid"
 	good_grip = 1
 	encase_in_web = 2

@@ -211,6 +211,9 @@
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
+			if(prob(10))
+				// he can have a little treat
+				src.equip_new_if_possible(/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop, SLOT_R_HAND)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
 				idk.set_loc(src)
@@ -443,7 +446,7 @@
 			return 0
 
 	proc/ai_pickpocket(priority_only=FALSE)
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket)
+		if (src.getStatusDuration("knockdown") || src.getStatusDuration("stunned") || src.getStatusDuration("unconscious") || src.stat || src.ai_picking_pocket)
 			return
 		var/list/possible_targets = list()
 		var/list/priority_targets = list()
@@ -513,7 +516,7 @@
 		. = ..()
 
 	proc/ai_knock_from_hand(priority_only=FALSE)
-		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket || src.r_hand)
+		if (src.getStatusDuration("knockdown") || src.getStatusDuration("stunned") || src.getStatusDuration("unconscious") || src.stat || src.ai_picking_pocket || src.r_hand)
 			return
 		var/list/possible_targets = list()
 		var/list/priority_targets = list()

@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
 	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/ammo_cats = null
+	var/ammo_cats = list()
 	/// Does this gun have a special icon state for having no ammo lefT?
 	var/has_empty_state = FALSE
 	/// Does this gun have a special icon state it should flick to when fired?
@@ -378,7 +378,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
-	var/forensic_ID = null
 	burn_possible = FALSE
 
 	small
@@ -1280,6 +1279,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_9MM)
 	fire_animation = TRUE
 	max_ammo_capacity = 10
 	auto_eject = TRUE
@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
 		var/mob/living/H = target
-		H.changeStatus("weakened", 3 SECONDS)
+		H.changeStatus("knockdown", 3 SECONDS)
 		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
@@ -1315,7 +1315,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
-	ammo_cats = list(AMMO_SMG_9MM)
+	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
 	auto_eject = 0
 
@@ -2031,7 +2031,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	mouse_drop(atom/over_object, src_location, over_location, params)
-		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
 			src.Attackhand(usr)
@@ -2817,6 +2817,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 6
 	can_dual_wield = 0
 
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
@@ -2874,6 +2875,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
+	contraband = 8
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -3015,6 +3017,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown_time = 5
 
 	can_dual_wield = 0
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 

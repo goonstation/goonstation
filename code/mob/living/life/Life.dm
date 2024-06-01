@@ -136,18 +136,14 @@
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/skin)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
@@ -157,28 +153,22 @@
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/critical)
-	add_lifeprocess(/datum/lifeprocess/decomposition)
+	remove_lifeprocess(/datum/lifeprocess/decomposition) // only happens when mob is dead
 	add_lifeprocess(/datum/lifeprocess/disability)
-	add_lifeprocess(/datum/lifeprocess/fire)
-	add_lifeprocess(/datum/lifeprocess/health_mon)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/mutations)
 	add_lifeprocess(/datum/lifeprocess/organs)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/skin)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -198,7 +188,6 @@
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
@@ -209,7 +198,6 @@
 
 /mob/living/silicon/robot/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
@@ -222,7 +210,6 @@
 
 /mob/living/silicon/drone/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/intangible/aieye/restore_life_processes()
@@ -355,10 +342,11 @@
 				D.foreign_limb_effect()
 
 	if (!isdead(src)) // Marq was here, breaking everything.
-		src.limbs.l_arm?.on_life(parent)
-		src.limbs.r_arm?.on_life(parent)
-		src.limbs.l_leg?.on_life(parent)
-		src.limbs.r_leg?.on_life(parent)
+		if(src.limbs)
+			src.limbs.l_arm?.on_life(parent)
+			src.limbs.r_arm?.on_life(parent)
+			src.limbs.l_leg?.on_life(parent)
+			src.limbs.r_leg?.on_life(parent)
 
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
@@ -503,40 +491,16 @@
 		stuttering = clamp(stuttering, 0, 50)
 		losebreath = clamp(losebreath, 0, 25) // stop going up into the thousands, goddamn
 
-	proc/handle_burning()
-		if (src.getStatusDuration("burning"))
-
-			if (src.getStatusDuration("burning") > 200)
-				for (var/atom/A as anything in src.contents)
-					if (A.event_handler_flags & HANDLE_STICKER)
-						if (A:active)
-							src.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
-							qdel(A)
-
-			if (isturf(src.loc))
-				var/turf/location = src.loc
-				location.hotspot_expose(T0C + 300, 400)
-
-			for (var/atom/A in src.contents)
-				A.material_trigger_on_temp(T0C + 900)
-
-			for (var/atom/equipped_stuff in src.equipped())
-				equipped_stuff.material_trigger_on_temp(T0C + 900)
-
-			if(src.traitHolder && src.traitHolder.hasTrait("burning"))
-				if(prob(50))
-					src.update_burning(1)
-
 	proc/stink()
 		if (prob(15))
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, SPAN_ALERT("[stinkString()]"))
+				boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, SPAN_ALERT("[stinkString()]"))
+					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
@@ -544,9 +508,38 @@
 			L.Process()
 
 	update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/canmove]
-		if (L)
-			L.Process()
+		// update buckled
+		if (src.buckled)
+			if (src.buckled.loc != src.loc)
+				if(istype(src.buckled, /obj/stool))
+					src.buckled.unbuckle()
+					src.buckled.buckled_guy = null
+				src.buckled = null
+				return
+			src.set_density(initial(src.density))
+		else
+			src.set_density(src.lying ? FALSE : initial(src.density))
+
+		// update canmove
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE))
+			src.canmove = 0
+			return
+
+		if (src.buckled?.anchored)
+			if (istype(src.buckled, /obj/stool/chair)) //this check so we can still rotate the chairs on their slower delay even if we are anchored
+				var/obj/stool/chair/chair = src.buckled
+				if (!chair.rotatable)
+					src.canmove = FALSE
+					return
+			else
+				src.canmove = FALSE
+				return
+
+		if (src.throwing & (THROW_CHAIRFLIP | THROW_GUNIMPACT | THROW_SLIP))
+			src.canmove = FALSE
+			return
+
+		src.canmove = TRUE
 
 	force_laydown_standup() //immediately force a laydown
 		if(!lifeprocesses)
@@ -554,9 +547,7 @@
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.Process()
-		L = lifeprocesses?[/datum/lifeprocess/canmove]
-		if (L)
-			L.Process()
+		src.update_canmove()
 		L = lifeprocesses?[/datum/lifeprocess/blindness]
 		if (L)
 			L.Process()
@@ -571,7 +562,7 @@
 
 	handle_stamina_updates()
 		if (stamina == STAMINA_NEG_CAP)
-			setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME)
+			setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME)
 
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)

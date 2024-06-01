@@ -4,7 +4,9 @@
 
 // moves items/mobs/movables in set direction every ptick
 TYPEINFO(/obj/machinery/conveyor) {
-	mats = list("MET-1" = 1, "CON-1" = 1, "CRY-1" = 1)
+	mats = list("metal" = 1,
+				"conductive" = 1,
+				"crystal" = 1)
 }
 
 /obj/machinery/conveyor
@@ -882,8 +884,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 TYPEINFO(/obj/machinery/conveyor_switch) {
-	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
-}
+	mats = list("metal" = 10,
+				"conductive" = 10,
+				"crystal" = 10)}
 
 
 #define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
@@ -980,6 +983,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	attack_hand(mob/user)
 		if(ON_COOLDOWN(src, "switch", CONVEYOR_SWITCH_COOLDOWN))
 			return
+		src.add_fingerprint(user)
 		if(position == CONVEYOR_STOPPED)
 			if (last_pos == CONVEYOR_REVERSE)
 				src.go_forward()
@@ -999,6 +1003,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		var/mob/M = usr
 		if (ispulsingtool(M.equipped()) && istype(over_object, /obj/machinery/conveyor)) return // linking handled in conveyor MouseDrop_T
 		if (ON_COOLDOWN(src, "switch", CONVEYOR_SWITCH_COOLDOWN)) return
+		src.add_fingerprint(usr)
 		switch (over_location:x - src_location:x)
 			if (0)
 				return

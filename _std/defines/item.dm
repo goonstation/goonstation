@@ -63,6 +63,8 @@
 #define COLD_BURN					(1<<4)
 /// Prevents an item from being placed inside of a storage container, regardless of the item's `w_class` or the storage's `can_hold` list.
 #define UNSTORABLE					(1<<5)
+/// Prevents the action bar when this item is put on someone/interacting with the item of someone to be hidden
+#define OBVIOUS_INTERACTION_BAR		(1<<6)
 
 //tool flags
 #define TOOL_CLAMPING 1

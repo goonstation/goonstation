@@ -322,7 +322,7 @@
 		act1 = pick_string("blob.txt", "act1_[adj1]")
 		adj1 = pick_string("blob.txt", "adj1_[adj1]")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
-		src.visible_message(SPAN_COMBAT("<b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!"))
+		src.visible_message(SPAN_COMBAT("<b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!"), group="blobnuzzled")
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -923,7 +923,7 @@
 		. = ..()
 		dead = 1
 		if(absorbed_temp > 1000)
-			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
+			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range, chemfire = CHEM_FIRE_RED)
 
 
 /obj/blob/plasmaphyll

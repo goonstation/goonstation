@@ -76,8 +76,8 @@
 
 
 			if (state == GRAB_PIN)
-				assailant.changeStatus("weakened",2 SECONDS)
-				affecting.changeStatus("weakened",1 SECOND)
+				assailant.changeStatus("knockdown",2 SECONDS)
+				affecting.changeStatus("knockdown",1 SECOND)
 				assailant.force_laydown_standup()
 				affecting.force_laydown_standup()
 
@@ -165,7 +165,7 @@
 			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
-				H.setStatusMin("paralysis", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
+				H.setStatusMin("unconscious", STAMINA_NEG_CAP_STUN_TIME * mult) //not ideal
 			else if(H.stamina <= -50)
 				H.losebreath += (1.5 * mult)
 			else if(H.stamina <= -33)
@@ -430,15 +430,17 @@
 		if (!src.affecting) return 0
 		if (BOUNDS_DIST(user, src.affecting) > 0)
 			return 0
-		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
+		if ((src.state < 1 && !(src.affecting.getStatusDuration("unconscious") || src.affecting.getStatusDuration("knockdown") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message(SPAN_ALERT("[src.affecting] stumbles a little!"))
 			user.u_equip(src)
+			qdel(src)
 			return 0
 
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
+		qdel(src)
 
 
 	proc/check_hostage(owner, obj/projectile/P)
@@ -770,43 +772,42 @@
 
 	src.hide_attack = initial(src.hide_attack)
 
-/obj/item/grab/gunpoint
-	var/shot = 0
-
-	New()
-		..()
+ABSTRACT_TYPE(/obj/item/grab/threat)
+/obj/item/grab/threat
+	var/activated = FALSE
 
 	post_item_setup()
 		..()
-		if (!(src.affecting.mob_flags & AT_GUNPOINT))
-			src.affecting.mob_flags |= AT_GUNPOINT
+		RegisterSignal(src.affecting, COMSIG_MOB_TRIGGER_THREAT, PROC_REF(activate))
 
 	disposing()
-		if (!shot && src.assailant && isitem(src.loc))
+		UnregisterSignal(src.affecting, COMSIG_MOB_TRIGGER_THREAT)
+		if (!src.activated && src.assailant && isitem(src.loc))
 			for (var/mob/O in AIviewers(src.assailant, null))
 				if (O.client)
 					O.show_message(SPAN_ALERT("[src.assailant] lowers [src.loc]."))
-
-		if (src.affecting)
-			var/found = 0
-			for (var/obj/item/grab/gunpoint/G in src.affecting.grabbed_by)
-				if (G != src)
-					found = 1
-					break
-			if (!found)
-				src.affecting.mob_flags &= ~AT_GUNPOINT
 		..()
 
-	proc/shoot()
-		if(src.shot)
+	do_resist()
+		src.activate()
+		if (!QDELETED(src))
+			..()
+
+	proc/activate()
+		if(src.activated)
 			return
-		src.shot = TRUE
+		src.activated = TRUE
 		if (src.affecting && src.assailant && isitem(src.loc))
-			var/obj/item/gun/G = src.loc
-			G.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
+			src.kill(src.loc)
 
 		qdel(src)
 
+	proc/kill(obj/item/weapon)
+		return
+
+/obj/item/grab/threat/gunpoint
+	kill(obj/item/gun/gun)
+		gun.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 /obj/item/grab/block
 	c_flags = EQUIPPED_WHILE_HELD
@@ -909,7 +910,7 @@
 			target_dir = user.dir
 		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
 
-			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
+			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)

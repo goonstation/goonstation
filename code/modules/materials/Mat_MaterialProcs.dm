@@ -150,7 +150,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
 			return
-		fireflash(get_turf(owner), 1)
+		fireflash(get_turf(owner), 1, chemfire = CHEM_FIRE_RED)
 		return
 
 /datum/materialProc/generic_itchy_onlife
@@ -173,7 +173,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(probmult(1))
 			boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 			random_brute_damage(M,5)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 			M.make_jittery(6)
 			M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor, scratching themselves violently!"))
 			M.emote("scream")

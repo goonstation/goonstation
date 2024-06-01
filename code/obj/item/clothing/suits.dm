@@ -284,6 +284,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
+		if(!src.fingerprints)
+			src.fingerprints = list()
 		src.fingerprints |= W.fingerprints
 		qdel(W)
 
@@ -1572,8 +1574,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		item_state = "syndie_specialist-heavy"
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
-	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"uqill" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."

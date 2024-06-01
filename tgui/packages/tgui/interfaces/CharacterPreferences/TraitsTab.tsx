@@ -91,7 +91,7 @@ export const TraitsTab = (_props, context) => {
             </Stack.Item>
             <Stack.Item grow basis={0}>
               <Section
-                title={`Selected (${selectedAmount}/${data.traitsMax})`}
+                title={`Selected (${selectedAmount}${data.traitsMax !== Infinity ? `/${data.traitsMax}` : ''})`}
                 fill
                 scrollable
                 buttons={<Button onClick={() => act('reset-traits')}>Reset traits</Button>}>
@@ -147,13 +147,7 @@ const Trait = (props: CharacterPreferencesTrait, context) => {
   return (
     <Stack>
       <Stack.Item>
-        <Image
-          pixelated
-          width="32px"
-          height="32px"
-          src={`data:image/png;base64,${img}`}
-          backgroundColor="transparent"
-        />
+        <Image width="32px" height="32px" src={`data:image/png;base64,${img}`} backgroundColor="transparent" />
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack align="center" mb={1}>
