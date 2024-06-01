@@ -167,7 +167,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		remove_lifeprocess(/datum/lifeprocess/mutations)
 		remove_lifeprocess(/datum/lifeprocess/organs)
 		remove_lifeprocess(/datum/lifeprocess/sight)
-		remove_lifeprocess(/datum/lifeprocess/skin)
 		remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 

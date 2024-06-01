@@ -1989,6 +1989,7 @@
 									break
 					if(length(combatflipped))
 						actions.interrupt(src, INTERRUPT_ACT)
+					src.drop_juggle()
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 						maptext_out = "<I>flops on the floor like a fish</I>"

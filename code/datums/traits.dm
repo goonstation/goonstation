@@ -205,8 +205,9 @@
 	proc/getTraitWithCategory(var/cat)
 		for(var/id in traits)
 			var/datum/trait/T = traits[id]
-			if (T.category == cat)
-				. = T
+			for (var/heldcat in T.category)
+				if (heldcat == cat)
+					return T
 
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
@@ -753,7 +754,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "stowaway"
 	icon_state = "stowaway"
 	category = list("background")
-	points = 1
+	points = 0
+	unselectable = TRUE
 
 /datum/trait/pilot
 	name = "Pilot"
