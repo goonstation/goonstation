@@ -7,7 +7,7 @@
 	/// Job starting wages
 	var/wages = 0
 	var/limit = -1
-	var/list/training = list() // specific job training string, i.e. "training_security"
+	var/list/trait_list = list() // specific job trait string, i.e. "training_security"
 	/// job category flag for use with loops rather than a needing a bunch of type checks
 	var/job_category = JOB_SPECIAL
 	var/upper_limit = null //! defaults to `limit`
@@ -62,7 +62,7 @@
 	var/list/slot_rhan = list()
 	var/list/items_in_backpack = list() // stop giving everyone a free airtank gosh
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
-	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer"
+	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer", completely overrides var/list/access if non-null !!!
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
@@ -317,7 +317,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	name = "Head of Security"
 	limit = 1
 	wages = PAY_IMPORTANT
-	training = list("training_drinker", "training_security")
+	trait_list = list("training_drinker", "training_security")
 	access_string = "Head of Security"
 	requires_whitelist = TRUE
 	receives_miranda = TRUE
@@ -383,7 +383,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	name = "Chief Engineer"
 	limit = 1
 	wages = PAY_IMPORTANT
-	training = list("training_engineer")
+	trait_list = list("training_engineer")
 	access_string = "Chief Engineer"
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
@@ -423,7 +423,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	name = "Research Director"
 	limit = 1
 	wages = PAY_IMPORTANT
-	training = list("training_scientist")
+	trait_list = list("training_scientist")
 	access_string = "Research Director"
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
@@ -451,7 +451,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	name = "Medical Director"
 	limit = 1
 	wages = PAY_IMPORTANT
-	training = list("training_medical")
+	trait_list = list("training_medical")
 	access_string = "Medical Director"
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
@@ -510,7 +510,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
 	order_priority = 2 //fill secoffs after captain and AI
 	wages = PAY_TRADESMAN
-	training = list("training_security")
+	trait_list = list("training_security")
 	access_string = "Security Officer"
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
@@ -578,7 +578,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	name = "Detective"
 	limit = 1
 	wages = PAY_TRADESMAN
-	training = list("training_drinker")
+	trait_list = list("training_drinker")
 	access_string = "Detective"
 	receives_badge = TRUE
 	cant_spawn_as_rev = TRUE
@@ -653,7 +653,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Roboticist"
 	limit = 3
 	wages = PAY_DOCTORATE
-	training = list("training_medical")
+	trait_list = list("training_medical")
 	access_string = "Roboticist"
 	slot_back = list(/obj/item/storage/backpack/robotics)
 	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
@@ -671,7 +671,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Scientist"
 	limit = 5
 	wages = PAY_DOCTORATE
-	training = list("training_scientist")
+	trait_list = list("training_scientist")
 	access_string = "Scientist"
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_belt = list(/obj/item/device/pda2/toxins)
@@ -689,7 +689,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Medical Doctor"
 	limit = 5
 	wages = PAY_DOCTORATE
-	training = list("training_medical")
+	trait_list = list("training_medical")
 	access_string = "Medical Doctor"
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
@@ -734,7 +734,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	name = "Quartermaster"
 	limit = 3
 	wages = PAY_TRADESMAN
-	training = list("training_quartermaster")
+	trait_list = list("training_quartermaster")
 	access_string = "Quartermaster"
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -753,7 +753,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	limit = 5
 	#endif
 	wages = PAY_TRADESMAN
-	training = list("training_miner")
+	trait_list = list("training_miner")
 	access_string = "Miner"
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_mask = list(/obj/item/clothing/mask/breath)
@@ -782,7 +782,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	name = "Engineer"
 	limit = 8
 	wages = PAY_TRADESMAN
-	training = list("training_engineer")
+	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
@@ -826,7 +826,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Chef"
 	limit = 1
 	wages = PAY_UNTRAINED
-	training = list("training_chef")
+	trait_list = list("training_chef")
 	access_string = "Chef"
 	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/rank/chef)
@@ -842,7 +842,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
-	training = list("training_drinker")
+	trait_list = list("training_drinker")
 	access_string = "Bartender"
 	slot_belt = list(/obj/item/device/pda2/bartender)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
@@ -908,7 +908,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Chaplain"
 	limit = 1
 	wages = PAY_UNTRAINED
-	training = list("training_chaplain")
+	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
 	slot_jump = list(/obj/item/clothing/under/rank/chaplain)
 	slot_belt = list(/obj/item/device/pda2/chaplain)
@@ -938,7 +938,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Clown"
 	limit = 1
 	wages = PAY_DUMBCLOWN
-	training = list("training_clown")
+	trait_list = list("training_clown")
 	access_string = "Clown"
 	linkcolor = "#FF99FF"
 	slot_back = list()
@@ -1017,7 +1017,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = TRUE
 	limit = 0
 	wages = PAY_TRADESMAN
-	training = list("training_engineer")
+	trait_list = list("training_engineer")
 	access_string = "Construction Worker"
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/engineer)
@@ -1052,7 +1052,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Mime"
 	limit = 1
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
-	training = list("training_mime")
+	trait_list = list("training_mime")
 	access_string = "Mime"
 	slot_belt = list(/obj/item/device/pda2)
 	slot_head = list(/obj/item/clothing/head/mime_bowler)
@@ -1126,7 +1126,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#9900FF"
 	limit = 0
 	wages = PAY_DOCTORATE
-	training = list("training_scientist")
+	trait_list = list("training_scientist")
 	access_string = "Toxins Researcher"
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_jump = list(/obj/item/clothing/under/rank/scientist)
@@ -1140,7 +1140,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#9900FF"
 	limit = 0
 	wages = PAY_DOCTORATE
-	training = "training_scientist"
+	trait_list = "training_scientist"
 	access_string = "Chemist"
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_jump = list(/obj/item/clothing/under/rank/scientist)
@@ -1153,7 +1153,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#9900FF"
 	limit = 2
 	wages = PAY_UNTRAINED
-	training = list("training_scientist")
+	trait_list = list("training_scientist")
 	access_string = "Research Assistant"
 	low_priority_job = TRUE
 	slot_jump = list(/obj/item/clothing/under/color/white)
@@ -1249,7 +1249,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Stowaway"
 	limit = 2
 	wages = 0
-	training = list("stowaway")
+	trait_list = list("stowaway")
 	low_priority_job = TRUE
 	slot_head = list(\
 	/obj/item/clothing/head/green = 1,
@@ -1373,7 +1373,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Medical Specialist"
 	linkcolor = "#9900FF"
 	wages = PAY_IMPORTANT
-	training = list("training_medical", "training_partysurgeon")
+	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
 	slot_card = /obj/item/card/id/research
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
@@ -1632,7 +1632,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
 	wages = PAY_UNTRAINED
-	training = list("training_chef")
+	trait_list = list("training_chef")
 	access_string = "Sous-Chef"
 	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/misc/souschef)
@@ -1645,7 +1645,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
-	training = list("training_medical")
+	trait_list = list("training_medical")
 	access_string = "Pharmacist"
 	slot_card = /obj/item/card/id/research
 	slot_belt = list(/obj/item/device/pda2/medical)
@@ -1726,7 +1726,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/blue_clown
 	name = "Blue Clown"
 	wages = PAY_DUMBCLOWN
-	training = list("training_clown")
+	trait_list = list("training_clown")
 	access_string = "Clown"
 	limit = 1
 	change_name_on_spawn = TRUE
@@ -1953,7 +1953,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/angel
 	name = "Angel"
 	wages = PAY_UNTRAINED
-	training = list("training_chaplain")
+	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
 	limit = 1
 	change_name_on_spawn = TRUE
@@ -2011,7 +2011,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/superhero
 	name = "Discount Vigilante Superhero"
 	wages = PAY_UNTRAINED
-	training = list("training_security")
+	trait_list = list("training_security")
 	access_string = "Staff Assistant"
 	limit = 1
 	change_name_on_spawn = TRUE
@@ -2297,7 +2297,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Nanotrasen Special Operative"
 	limit = 0
 	wages = PAY_IMPORTANT
-	training = list("training_security")
+	trait_list = list("training_security")
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
@@ -2334,7 +2334,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Nanotrasen Emergency Repair Technician"
 	limit = 0
 	wages = PAY_IMPORTANT
-	training = list("training_engineer")
+	trait_list = list("training_engineer")
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
@@ -2375,7 +2375,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Nanotrasen Emergency Medic"
 	limit = 0
 	wages = PAY_IMPORTANT
-	training = list("training_medical")
+	trait_list = list("training_medical")
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
@@ -2409,7 +2409,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	unique = TRUE
 	wages = PAY_TRADESMAN
-	training = list("training_security")
+	trait_list = list("training_security")
 	requires_whitelist = TRUE
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
@@ -2448,7 +2448,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Head of Mining"
 	limit = 0
 	wages = PAY_IMPORTANT
-	training = list("training_miner")
+	trait_list = list("training_miner")
 	access_string = "Head of Mining"
 	linkcolor = "#00CC00"
 	cant_spawn_as_rev = TRUE
