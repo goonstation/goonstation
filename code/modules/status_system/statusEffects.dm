@@ -2852,9 +2852,9 @@
 			for (var/datum/ailment_data/ailment as anything in L.ailments)
 				ailment.stage_act(mult)
 
-		for (var/mob/living/carbon/C in oviewers(4, L))
-			if (prob(40))
-				L.viral_transmission(C, "Airborne", 0)
+		for (var/mob/living/other_mob in hearers(4, L))
+			if (prob(40) && other_mob != L)
+				L.viral_transmission(other_mob, "Airborne", 0)
 
 	preCheck(atom/A)
 		. = ..()
