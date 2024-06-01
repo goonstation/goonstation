@@ -7,9 +7,9 @@
 		if (!blood_system) // I dunno if this'll do what I want but hopefully it will
 			return ..()
 
-		if (owner.nodamage || !owner.can_bleed || isvampire(owner)) // if we're dead or immortal or have otherwise been told not to bleed, don't bother
+		if (owner.nodamage || !owner.can_bleed || isvampire(owner))
 			if (owner.bleeding)
-				owner.bleeding = 0 // also stop bleeding if we happen to be doing that
+				owner.bleeding = 0
 			return ..()
 
 		var/mult = get_multiplier()
