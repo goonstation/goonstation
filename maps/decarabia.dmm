@@ -4307,6 +4307,10 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"bcG" = (
+/obj/gravestone,
+/turf/simulated/floor/grass/random,
+/area/station/chapel/sanctuary)
 "bcJ" = (
 /obj/decal/tile_edge/line/black,
 /obj/shrub{
@@ -93954,7 +93958,7 @@
 /turf/simulated/floor/white/side,
 /area/station/crew_quarters/market)
 "uNd" = (
-/obj/tombstone,
+/obj/gravestone/alt,
 /turf/simulated/floor/grass/random,
 /area/station/chapel/sanctuary)
 "uNf" = (
@@ -170903,7 +170907,7 @@ gyP
 gyP
 oOy
 snL
-uNd
+bcG
 fiv
 uNd
 fiv
@@ -171509,7 +171513,7 @@ aer
 fiv
 uNd
 fiv
-uNd
+bcG
 fiv
 fiv
 aer
