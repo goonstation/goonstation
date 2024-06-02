@@ -7,22 +7,20 @@
 var/global/list/requirement_cache
 
 /proc/getRequirement(var/R_id)
+	// Sanity checks that all requirement IDs resolved to instances in the cache
 	#ifdef CHECK_MORE_RUNTIMES
 	if (!istext(R_id))
 		CRASH("getRequirement() called with a non-text argument [R_id].")
 	if (!(R_id in requirement_cache))
 		CRASH("getRequirement() called with an invalid requirement id [R_id].")
 	#endif
-	// Sanity checks that all requirement IDs resolved to instances in the cache
 	return requirement_cache?[R_id]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
 /datum/manufacturing_requirement
-
 	VAR_PROTECTED/name = "Unknown" //! Player-facing name of the requirement.
 	VAR_PROTECTED/id //! Internal, unique ID of the requirement to use for the cache list.
 
-	// ID must be defined, or else we have a problem
 	#ifdef CHECK_MORE_RUNTIMES
 	New()
 		. = ..()
@@ -60,7 +58,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 		if (!.) return
 		if (src.material_id != M.getID()) return FALSE
 
-
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property
 	VAR_PROTECTED/property_id //! Material property to match by its string identifier
@@ -80,7 +77,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (!.) return
 		if (!src.match_property(M)) return FALSE
 
-	/// Whether or not we match our criteria for this. Override to change behavior on checks
+	/// Returns whether the material property meets the threshold. Overwrite to have behavior other than >=
 	proc/match_property(var/datum/material/M)
 		return M.getProperty(src.property_id) >= src.property_threshold
 
@@ -211,11 +208,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 	id = "organic_or_rubber_flag"
 	material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
 
-
 /datum/manufacturing_requirement/match_flags/fabric
 	name = "Fabric"
 	id = "fabric_flag"
-	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC
+	material_flags = MATERIAL_RUBBER | MATERIAL_ORGANIC | MATERIAL_CLOTH
 
 /datum/manufacturing_requirement/match_flags/crystal
 	name = "Crystal"
@@ -262,6 +258,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed
 	VAR_PROTECTED/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
 
+	/// Resolve the requirement paths to instances in the cache.
 	New()
 		. = ..()
 		var/list/datum/manufacturing_requirement/requirement_instances = list()
