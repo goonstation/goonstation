@@ -68,64 +68,78 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (M.getProperty(src.property_id) < property_threshold) return
+		if (!src.match_property(M)) return
+
+	/// Whether or not we match our criteria for this. Override to change behavior on checks
+	proc/match_property(var/datum/material/M)
+		return M.getProperty(src.property_id) >= property_threshold
 
 /datum/manufacturing_requirement/match_property/conductive
 	name = "Conductive"
-	id = "conductive"
+	id = "electrical_property_>=_6"
 	property_id = "electrical"
 	property_threshold = 6
 
 /datum/manufacturing_requirement/match_property/conductive/high
 	name = "High Energy Conductor"
-	id = "conductive_high"
+	id = "electrical_property_>=_8"
 	property_threshold = 8
-
-/datum/manufacturing_requirement/match_property/crystal/dense
-	name = "Extraordinarily Dense Crystalline Matter"
-	id = "crystal_dense"
-	property_id = "density"
-	property_threshold = 7
 
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
-	id = "dense"
+	id = "dense_property_4"
 	property_id = "density"
 	property_threshold = 4
 
-/datum/manufacturing_requirement/match_property/dense/super
+/datum/manufacturing_requirement/match_property/superdense
 	name = "Very High Density Matter"
-	id = "dense_super"
+	id = "dense_property_6"
+	property_id = "density"
 	property_threshold = 6
+
+/datum/manufacturing_requirement/match_property/ultradense
+	name = "Ultra-Dense Matter"
+	id = "dense_property_7"
+	property_id = "density"
+	property_threshold = 7
 
 /datum/manufacturing_requirement/match_property/energy/high
 	name = "Significant Power Source"
-	id = "energy_high"
+	id = "energy_property_3"
 	property_threshold = 3
 
 /datum/manufacturing_requirement/match_property/energy/extreme
 	name = "Extreme Power Source"
-	id = "energy_extreme"
+	id = "energy_property_5"
 	property_threshold = 5
 
+/datum/manufacturing_requirement/match_property/insulated
+	name = "Insulated Material"
+	id = "electrical_property_<=_4"
+	property_threshold = 4
+
+	match_property(datum/material/M)
+		return M.getProperty("electrical") <= src.property_threshold
+
 /datum/manufacturing_requirement/match_property/insulated/super
-	id = "insulative_high"
 	name = "Highly Insulative"
+	id = "electrical_property_<=_2"
 	property_threshold = 2
 
 /datum/manufacturing_requirement/match_property/metal/dense
 	name = "Sturdy Metal"
-	id = "metal_dense"
+	id = "metal_property_10"
 	property_threshold = 10
 
 /datum/manufacturing_requirement/match_property/metal/superdense
 	name = "Extremely Tough Metal"
-	id = "metal_superdense"
+	id = "metal_property_15"
+	property_id = "dense"
 	property_threshold = 15
 
 /datum/manufacturing_requirement/match_property/reflective
 	name = "Reflective"
-	id = "reflective"
+	id = "reflective_property_6"
 	property_id = "reflective"
 	property_threshold = 6
 
@@ -158,31 +172,46 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 			if (MATCH_EXACT)
 				CRASH("NYI")
 
+/datum/manufacturing_requirement/match_flags/metal
+	name = "Metallic"
+	id = "metal_flag"
+	material_flags = MATERIAL_METAL
+
 /datum/manufacturing_requirement/match_flags/wood
 	name = "Wood"
-	id = "wood"
+	id = "wood_flag"
 	material_flags = MATERIAL_WOOD
 
 /datum/manufacturing_requirement/match_flags/rubber
 	name = "Rubber"
-	id = "rubber"
+	id = "rubber_flag"
 	material_flags = MATERIAL_RUBBER
 
 /datum/manufacturing_requirement/match_flags/organic_or_rubber
 	name = "Organic or Rubber"
-	id = "organic_or_rubber"
+	id = "organic_or_rubber_flag"
 	material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
 
 
 /datum/manufacturing_requirement/match_flags/fabric
 	name = "Fabric"
-	id = "fabric"
+	id = "fabric_flags"
 	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC
 
 /datum/manufacturing_requirement/match_flags/crystal
 	name = "Crystal"
-	id = "crystal"
+	id = "crystal_flag"
 	material_flags = MATERIAL_CRYSTAL
+
+/datum/manufacturing_requirement/match_flags/energy
+	name = "Energy Source"
+	id = "energy_flag"
+	material_flags = MATERIAL_ENERGY
+
+/datum/manufacturing_requirement/match_flags/insulated
+	name = "Insulative Material"
+	id = "insulative_flags"
+	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
 
 #undef MATCH_ANY
 #undef MATCH_ALL
@@ -205,7 +234,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_subtypes/gemstone
 	name = "Gemstone"
-	id = "gemstone"
+	id = "gemstone_subtypes"
 	match_typepath = /datum/material/crystal/gemstone
 
 /// Manufacturing requirements which check several conditions at once.
@@ -218,11 +247,20 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		for (var/datum/manufacturing_requirement/R as anything in src.requirements)
 			if (!R.is_match(M)) return
 
-/datum/manufacturing_requirement/match_property/metal
+/datum/manufacturing_requirement/mixed/dense_crystal
+	name = "Extraordinarily Dense Crystalline Matter"
+	id = "crystal_dense"
+	requirements = list(
+		/datum/manufacturing_requirement/match_property/ultradense,
+		/datum/manufacturing_requirement/match_flags/crystal,
+	)
+
+/datum/manufacturing_requirement/mixed/metal
 	name = "Metal"
 	id = "metal"
-	material_flags = MATERIAL_METAL
-	property_threshold = 0 // So we try to match properties
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/metal,
+	)
 
 	is_match(datum/material/M)
 		// This specific check is based off the hardness of mauxite and bohrum.
@@ -231,19 +269,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (!.) return
 		if (((M.getProperty("hard") * 2) + M.getProperty("density")) < src.property_threshold) return
 
-/datum/manufacturing_requirement/match_property/insulated
+/datum/manufacturing_requirement/mixed/insulated
 	name = "Insulative"
 	id = "insulated"
-	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
-	property_threshold = 4
-
-	is_match(datum/material/M)
-		. = ..()
-		if (!.) return
-		if (!(M.getProperty("electrical") <= src.property_threshold)) return
-
-/datum/manufacturing_requirement/match_property/energy
-	name = "Power Source"
-	id = "energy"
-	property_id = "radioactive"
-	material_flags = MATERIAL_ENERGY
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/insulated,
+		/datum/manufacturing_requirement/match_property/insulated,
+	)
