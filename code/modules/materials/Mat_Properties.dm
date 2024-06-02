@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(4 to 6)
 				return "slightly conductive"
 			if(6 to 8)
-				return "electrical_property_>=_6"
+				return "conductive"
 			if(8 to INFINITY)
 				return "highly conductive"
 
@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(2 to 4)
 				return "somewhat dense"
 			if(4 to 6)
-				return "dense_property_4"
+				return "dense"
 			if(6 to 8)
 				return "very dense"
 			if(8 to INFINITY)
