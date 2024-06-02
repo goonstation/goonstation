@@ -2071,7 +2071,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
+		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
