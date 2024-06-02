@@ -328,6 +328,8 @@ datum
 			holder.addiction_tally[src.id] += rate
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
+			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
+				boutput(M, SPAN_ALERT("You think it might be time to hold back on the [src.name] for a bit..."))
 			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
 				AD = new
