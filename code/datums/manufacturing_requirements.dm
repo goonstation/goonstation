@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		var/list/datum/manufacturing_requirement/requirement_instances = list()
 		var/datum/manufacturing_requirement/requirement_id
 
-		for (var/datum/manufacturing_requirement/requirement_path in requirements)
+		for (var/datum/manufacturing_requirement/requirement_path as anything in src.requirements)
 			requirement_id = initial(requirement_path.id)
 			requirement_instances += getRequirement(requirement_id)
 		src.requirements = requirement_instances
