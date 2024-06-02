@@ -115,13 +115,13 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	property_threshold = 7
 
 /datum/manufacturing_requirement/match_property/energy
-	name = "Significant Power Source"
+	name = "Radioactive"
 	id = "energy_property_3"
 	property_id = "radioactive"
 	property_threshold = 3
 
 /datum/manufacturing_requirement/match_property/energy/high
-	name = "Extreme Power Source"
+	name = "Highly Radioactive"
 	id = "energy_property_5"
 	property_threshold = 5
 
