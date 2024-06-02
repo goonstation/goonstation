@@ -107,12 +107,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	id = "dense_super"
 	property_threshold = 6
 
-/datum/manufacturing_requirement/match_property/energy
-	name = "Power Source"
-	id = "energy"
-	property_id = "radioactive"
-	material_flags = MATERIAL_ENERGY
-
 /datum/manufacturing_requirement/match_property/energy/high
 	name = "Significant Power Source"
 	id = "energy_high"
@@ -123,34 +117,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	id = "energy_extreme"
 	property_threshold = 5
 
-/datum/manufacturing_requirement/match_property/insulated
-	name = "Insulative"
-	id = "insulated"
-	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
-	property_threshold = 4
-
-	is_match(datum/material/M)
-		. = ..()
-		if (!.) return
-		if (!(M.getProperty("electrical") <= src.property_threshold)) return
-
 /datum/manufacturing_requirement/match_property/insulated/super
 	id = "insulative_high"
 	name = "Highly Insulative"
 	property_threshold = 2
-
-/datum/manufacturing_requirement/match_property/metal
-	name = "Metal"
-	id = "metal"
-	material_flags = MATERIAL_METAL
-	property_threshold = 0 // So we try to match properties
-
-	is_match(datum/material/M)
-		// This specific check is based off the hardness of mauxite and bohrum.
-		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
-		. = ..()
-		if (!.) return
-		if (((M.getProperty("hard") * 2) + M.getProperty("density")) < src.property_threshold) return
 
 /datum/manufacturing_requirement/match_property/metal/dense
 	name = "Sturdy Metal"
@@ -227,6 +197,16 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 #undef MATCH_ALL
 #undef MATCH_EXACT
 
+/datum/manufacturing_requirement/match_subtypes
+	var/match_typepath //! The parent type to use for istype() checks
+
+	#ifdef CHECK_MORE_RUNTIMES
+	New()
+		. = ..()
+		if (isnull(src.match_typepath) || !ispath(src.match_typepath))
+			CRASH("[src] has invalid match_typepath [src.match_typepath], it must be non-null and a valid path (not an instance!)")
+	#endif
+
 /// Manufacturing requirements which check several conditions at once.
 /datum/manufacturing_requirement/mixed
 	var/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
@@ -236,3 +216,33 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (!.) return
 		for (var/datum/manufacturing_requirement/R as anything in src.requirements)
 			if (!R.is_match(M)) return
+
+/datum/manufacturing_requirement/match_property/metal
+	name = "Metal"
+	id = "metal"
+	material_flags = MATERIAL_METAL
+	property_threshold = 0 // So we try to match properties
+
+	is_match(datum/material/M)
+		// This specific check is based off the hardness of mauxite and bohrum.
+		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
+		. = ..()
+		if (!.) return
+		if (((M.getProperty("hard") * 2) + M.getProperty("density")) < src.property_threshold) return
+
+/datum/manufacturing_requirement/match_property/insulated
+	name = "Insulative"
+	id = "insulated"
+	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
+	property_threshold = 4
+
+	is_match(datum/material/M)
+		. = ..()
+		if (!.) return
+		if (!(M.getProperty("electrical") <= src.property_threshold)) return
+
+/datum/manufacturing_requirement/match_property/energy
+	name = "Power Source"
+	id = "energy"
+	property_id = "radioactive"
+	material_flags = MATERIAL_ENERGY
