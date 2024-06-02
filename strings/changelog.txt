@@ -1,5 +1,9 @@
 
 (t)sun jun 02 24
+(u)Mordent
+(p)19280
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Chemical request and request receiver consoles can now be (de)constructed.
 (u)pali
 (+)Hiding in a shrub now prevents camera tracking.
 (t)sat jun 01 24
