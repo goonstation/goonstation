@@ -270,8 +270,7 @@ datum
 			fluid_g = 100
 			fluid_b = 225
 			transparency = 200
-			addiction_prob = 1//20
-			addiction_prob2 = 10
+			addiction_prob = 0.1
 			addiction_min = 10
 			overdose = 50
 			value = 7 // 5c + 1c + 1c
@@ -404,8 +403,7 @@ datum
 			fluid_g = 0
 			fluid_b = 0
 			transparency = 255
-			addiction_prob = 1//20
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 5
 			value = 13
 
@@ -558,8 +556,7 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 40
-			addiction_prob = 1//5
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 5
 			depletion_rate = 0.2
 			overdose = 30
@@ -1181,8 +1178,7 @@ datum
 			fluid_b = 250
 			depletion_rate = 0.3
 			overdose = 35
-			addiction_prob = 1//25
-			addiction_prob2 = 10
+			addiction_prob = 0.1
 			addiction_min = 10
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
@@ -1509,8 +1505,7 @@ datum
 			fluid_g = 100
 			fluid_b = 100
 			transparency = 40
-			addiction_prob = 1//20
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 10
 			value = 6 // 3 1 1 heat
 			target_organs = list("left_lung", "right_lung", "spleen")
