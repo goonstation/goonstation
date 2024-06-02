@@ -301,14 +301,16 @@ export const Manufacturer = (_, context) => {
                     </Stack.Item>
                   )}
                   {queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
-                    <ProductionCard
-                      key={index}
-                      index={index}
-                      actionQueueRemove={actionQueueRemove}
-                      mode={data.mode}
-                      img={queued.img}
-                      name={queued.name}
-                    />
+                    queued && (
+                      <ProductionCard
+                        key={index}
+                        index={index}
+                        actionQueueRemove={actionQueueRemove}
+                        mode={data.mode}
+                        img={queued.img}
+                        name={queued.name}
+                      />
+                    )
                   ))}
                 </Stack>
               </Stack.Item>
