@@ -57,9 +57,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/small_tv
 	name = "circuit board (television)"
 	computertype = /obj/machinery/computer/security/wooden_tv/small
-/obj/item/circuitboard/scan_consolenew
-	name = "circuit board (DNA Machine)"
-	computertype = /obj/machinery/scan_consolenew
 /obj/item/circuitboard/communications
 	name = "circuit board (communications)"
 	computertype = /obj/machinery/computer/communications
@@ -69,9 +66,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/teleporter
 	name = "circuit board (teleporter)"
 	computertype = /obj/machinery/computer/teleporter
-/obj/item/circuitboard/science_teleport
-	name = "circuit board (science teleporter)"
-	computertype = /obj/machinery/computer/science_teleport
 /obj/item/circuitboard/secure_data
 	name = "circuit board (secure data)"
 	computertype = /obj/machinery/computer/secure_data
@@ -117,9 +111,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/arcade
 	name = "circuit board (arcade)"
 	computertype = /obj/machinery/computer/arcade
-/obj/item/circuitboard/turbine_control
-	name = "circuit board (turbine control)"
-	computertype = /obj/machinery/computer/turbine_computer
 /obj/item/circuitboard/solar_control
 	name = "circuit board (solar control)"
 	computertype = /obj/machinery/computer/solar_control
