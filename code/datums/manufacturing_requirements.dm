@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 
 /// All instances of match_material are generated at runtime for the cache
 /datum/manufacturing_requirement/match_material
-	var/material_id //! Material ID of the material to check. None if null, some string like "erebite" if used. Meant for exact material checks.
+	VAR_PROTECTED/material_id //! Material ID of the material to check. None if null, some string like "erebite" if used. Meant for exact material checks.
 	New(var/mat_id)
 		src.id = mat_id
 		src.material_id = mat_id
@@ -64,8 +64,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property
-	var/property_id //! Material property to match by its string identifier
-	var/property_threshold //! What threshold our property has to match or exceed in order to pass.
+	VAR_PROTECTED/property_id //! Material property to match by its string identifier
+	VAR_PROTECTED/property_threshold //! What threshold our property has to match or exceed in order to pass.
 
 	#ifdef CHECK_MORE_RUNTIMES
 	New()
@@ -168,8 +168,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 /datum/manufacturing_requirement/match_flags
-	var/material_flags //! The flag(s) of the material to match. This can be just one flag, or several with FLAG_A | FLAG_B | ...
-	var/match_type = MATCH_ANY //! How we want to define a successful match. By default, pass as long as at least one flag is set.
+	VAR_PROTECTED/material_flags //! The flag(s) of the material to match. This can be just one flag, or several with FLAG_A | FLAG_B | ...
+	VAR_PROTECTED/match_type = MATCH_ANY //! How we want to define a successful match. By default, pass as long as at least one flag is set.
 
 	#ifdef CHECK_MORE_RUNTIMES
 	#define VALID_MATCHES list(MATCH_ANY, MATCH_ALL, MATCH_EXACT) //! Values which match_type can be set to
@@ -239,7 +239,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 /datum/manufacturing_requirement/match_subtypes
-	var/match_typepath //! The parent type to use for istype() checks
+	VAR_PROTECTED/match_typepath //! The parent type to use for istype() checks
 
 	#ifdef CHECK_MORE_RUNTIMES
 	New()
@@ -261,8 +261,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 /// Manufacturing requirements which check several conditions at once.
 ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed
-
-	var/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
+	VAR_PROTECTED/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
 
 	New()
 		. = ..()
