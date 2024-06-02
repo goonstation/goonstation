@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 		if (!.) return
 		switch(src.match_type)
 			if (MATCH_ANY)
-				return material_flags & src.material_flags
+				return M.getMaterialFlags(M) & src.material_flags
 			if (MATCH_ALL)
 				CRASH("NYI")
 			if (MATCH_EXACT)
