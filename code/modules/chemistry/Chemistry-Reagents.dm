@@ -322,6 +322,9 @@ datum
 					addProb = round(addProb * 2)
 					rate *= 2
 					//DEBUG_MESSAGE("addictive_personality: addProb [addProb], rate [rate]")
+				if (src.id == "ethanol" || isalcoholresistant(H))
+					addProb = 0
+					rate = 0
 			if (!holder.addiction_tally)
 				holder.addiction_tally = list()
 			//DEBUG_MESSAGE("holder.addiction_tally\[src.id\] = [holder.addiction_tally[src.id]]")
