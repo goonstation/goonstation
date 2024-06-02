@@ -147,13 +147,7 @@ const Trait = (props: CharacterPreferencesTrait, context) => {
   return (
     <Stack>
       <Stack.Item>
-        <Image
-          pixelated
-          width="32px"
-          height="32px"
-          src={`data:image/png;base64,${img}`}
-          backgroundColor="transparent"
-        />
+        <Image width="32px" height="32px" src={`data:image/png;base64,${img}`} backgroundColor="transparent" />
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack align="center" mb={1}>

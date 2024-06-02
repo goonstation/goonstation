@@ -976,8 +976,13 @@
 
 			if ("raisehand")
 				if (!src.restrained())
-					message = "<B>[src]</B> raises a hand."
-					maptext_out = "<I>raises a hand</I>"
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<B>[src]</B> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<B>[src]</B> raises a hand."
+						maptext_out = "<I>raises a hand</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
@@ -1984,6 +1989,7 @@
 									break
 					if(length(combatflipped))
 						actions.interrupt(src, INTERRUPT_ACT)
+					src.drop_juggle()
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 						maptext_out = "<I>flops on the floor like a fish</I>"

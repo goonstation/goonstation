@@ -41,7 +41,7 @@ export const PINInputModal = (_, context) => {
     if (pin.length < 4) {
       return;
     }
-    if (pinToNumber(pin) < min_value || pinToNumber(pin) > max_value) {
+    if ((min_value !== null && pinToNumber(pin) < min_value) || (max_value !== null && pinToNumber(pin) > max_value)) {
       setGiveWarning(true);
       setPin([]);
       return;
@@ -134,7 +134,7 @@ export const PINInputModal = (_, context) => {
 
 };
 
-const setupPinState = (init_value: number): number[] => {
+const setupPinState = (init_value: number | null): number[] => {
   if (init_value === null) {
     return [];
   }

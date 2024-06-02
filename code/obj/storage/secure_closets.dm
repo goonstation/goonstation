@@ -938,7 +938,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,/obj/item/storage/box/cookie_tin,/obj/item/storage/box/stroopwafel_tin)
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 2,/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,/obj/item/storage/box/cookie_tin,/obj/item/storage/box/stroopwafel_tin)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			var/obj/item/storage/box/donkpocket_kit/dp = new(src)
