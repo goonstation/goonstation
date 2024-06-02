@@ -110,12 +110,13 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	property_id = "density"
 	property_threshold = 7
 
-/datum/manufacturing_requirement/match_property/energy/high
+/datum/manufacturing_requirement/match_property/energy
 	name = "Significant Power Source"
 	id = "energy_property_3"
+	property_id = "radioactive"
 	property_threshold = 3
 
-/datum/manufacturing_requirement/match_property/energy/extreme
+/datum/manufacturing_requirement/match_property/energy/high
 	name = "Extreme Power Source"
 	id = "energy_property_5"
 	property_threshold = 5
@@ -207,7 +208,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_flags/fabric
 	name = "Fabric"
-	id = "fabric_flags"
+	id = "fabric_flag"
 	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC
 
 /datum/manufacturing_requirement/match_flags/crystal
@@ -273,7 +274,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/metal,
 	)
-/datum/manufacturing_requirement/mixed/metal
+
+/datum/manufacturing_requirement/mixed/metal_tough
 	name = "Sturdy Metal"
 	id = "metal_tough"
 	requirements = list(
@@ -281,7 +283,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		/datum/manufacturing_requirement/match_property/tough,
 	)
 
-/datum/manufacturing_requirement/mixed/metal
+/datum/manufacturing_requirement/mixed/metal_tough_extreme
 	name = "Extremely Tough Metal"
 	id = "metal_tough_extreme"
 	requirements = list(
@@ -297,10 +299,25 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		/datum/manufacturing_requirement/match_property/insulated,
 	)
 
-/datum/manufacturing_requirement/mixed/insulated
+/datum/manufacturing_requirement/mixed/insulated_high
 	name = "Highly Insulative"
 	id = "insulated_high"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/insulated,
 		/datum/manufacturing_requirement/match_property/insulated,
+	)
+
+/datum/manufacturing_requirement/mixed/energy_high
+	name = "Significant Power Source"
+	id = "energy_high"
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/energy,
+		/datum/manufacturing_requirement/match_property/energy,
+	)
+/datum/manufacturing_requirement/mixed/energy_extreme
+	name = "Extreme Power Source"
+	id = "energy_high"
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/energy,
+		/datum/manufacturing_requirement/match_property/energy/high,
 	)
