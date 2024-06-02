@@ -1,5 +1,9 @@
 
 (t)sun jun 02 24
+(u)glowbold
+(p)19291
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Mix the classic, non-alcoholic drink 'shirley temple' by combining ginger ale, lemon juice, lime juice, and grenadine.
 (u)Sord
 (+)Increased the amount of air most of the gas/air tanks (pocket, pocket extended, mini oxygen/plasma) spawn with
 (u)Mordent
