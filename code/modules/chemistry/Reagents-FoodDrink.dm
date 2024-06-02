@@ -255,6 +255,19 @@ datum
 			thirst_value = 2
 			value = 3
 
+		fooddrink/shirley_temple
+			name = "Shirley Temple"
+			id = "shirley_temple"
+			fluid_r = 246
+			fluid_g = 219
+			fluid_b = 147
+			transparency = 140
+			taste = list("bright", "saccharine")
+			description = "A sickly-sweet mix on a base of ginger ale. She didn't actually like this drink, you know."
+			reagent_state = LIQUID
+			thirst_value = 0.85
+			value = 3
+
 		fooddrink/alcoholic
 			name = "alcoholic reagent parent"
 			id = "alcoholic_parent"
