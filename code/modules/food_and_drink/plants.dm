@@ -503,7 +503,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		src.reagents.add_reagent("juice_grapefruit",10)
+		src.reagents.add_reagent("juice_cherry",10)
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if (iscuttingtool(W) || issnippingtool(W))
+			new /obj/item/cocktail_stuff/maraschino_cherry(get_turf(src))
+			new /obj/item/cocktail_stuff/maraschino_cherry(get_turf(src))
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/melon
 	name = "melon"
