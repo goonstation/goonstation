@@ -414,7 +414,7 @@ var/datum/artifact_controller/artifact_controls
 	fx_alpha_min = 125
 	fx_alpha_max = 200
 	adjectives = list("ornate","regal","imposing","fancy","elaborate","elegant","ostentatious")
-	nouns_large = list("jewel","crystal_flag","sculpture","statue","brazier","ornament","edifice")
+	nouns_large = list("jewel","crystal","sculpture","statue","brazier","ornament","edifice")
 	nouns_small = list("wand","scepter","staff","rod","cane","crozier","trophy")
 	touch_descriptors = list("It feels warm.","It feels smooth.","It is suprisingly pleasant to touch.")
 	var/list/material = list("ebon","ivory","pearl","golden","malachite","diamond","ruby","emerald","sapphire","opal")
