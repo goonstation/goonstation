@@ -32,7 +32,7 @@
 		src.setup_manufacturing_requirements()
 		if (!length(src.item_names))
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
-				src.item_names += R.name
+				src.item_names += R.getName()
 
 	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
 	proc/setup_manufacturing_requirements()
