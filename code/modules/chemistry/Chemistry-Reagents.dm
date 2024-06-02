@@ -314,11 +314,11 @@ datum
 			if (isliving(M))
 				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
-					addProb = addProb / 2
+					addProb /= 2
 					rate /= 2
 					//DEBUG_MESSAGE("strongwilled: addProb [addProb], rate [rate]")
 				if (H.traitHolder.hasTrait("addictive_personality"))
-					addProb = addProb * 2
+					addProb *= 2
 					rate *= 2
 					//DEBUG_MESSAGE("addictive_personality: addProb [addProb], rate [rate]")
 			if (!holder.addiction_tally)
