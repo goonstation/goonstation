@@ -119,7 +119,7 @@
 /datum/manufacture/pod/weapon/mining_weak
 	name = "Mining Phaser System"
 	item_requirements = list("metal" = 10,
-							 "conductive" = 10)
+							 "electrical_property_>=_6" = 10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
 	create = 1
 	time = 5 SECONDS
@@ -127,8 +127,8 @@
 
 /datum/manufacture/pod/weapon/mining_podwars
 	name = "Plasma Cutter System"
-	item_requirements = list("metal_dense" = 50,
-							 "conductive_high" = 50,
+	item_requirements = list("metal_tough" = 50,
+							 "electrical_property_>=_8" = 50,
 							 "telecrystal" = 10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	create = 1
@@ -137,9 +137,9 @@
 
 /datum/manufacture/pod/weapon/taser
 	name = "Mk.1 Combat Taser"
-	item_requirements = list("metal_dense" = 20,
-							 "conductive" = 20,
-							 "crystal" = 30)
+	item_requirements = list("metal_tough" = 20,
+							 "electrical_property_>=_6" = 20,
+							 "crystal_flag" = 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/taser)
 	create = 1
 	time = 10 SECONDS
@@ -147,9 +147,9 @@
 
 /datum/manufacture/pod/weapon/laser
 	name = "Mk.2 Scout Laser"
-	item_requirements = list("metal_dense" = 25,
-							 "conductive" = 40,
-							 "crystal" = 30)
+	item_requirements = list("metal_tough" = 25,
+							 "electrical_property_>=_6" = 40,
+							 "crystal_flag" = 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser)
 	create = 1
 	time = 10 SECONDS
@@ -157,17 +157,17 @@
 
 /datum/manufacture/pod/weapon/laser/short
 	name = "Mk.2 CQ Laser"
-	item_requirements = list("metal_dense" = 20,
-							 "conductive" = 20,
-							 "crystal" = 20)
+	item_requirements = list("metal_tough" = 20,
+							 "electrical_property_>=_6" = 20,
+							 "crystal_flag" = 20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser/short)
 	time = 10 SECONDS
 
 /datum/manufacture/pod/weapon/disruptor
 	name = "Heavy Disruptor Array"
-	item_requirements = list("metal_superdense" = 20,
-							 "conductive_high" = 20,
-							 "crystal" = 50,
+	item_requirements = list("metal_tough_extreme" = 20,
+							 "electrical_property_>=_8" = 20,
+							 "crystal_flag" = 50,
 							 "telecrystal" = 20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor)
 	create = 1
@@ -176,9 +176,9 @@
 
 /datum/manufacture/pod/weapon/disruptor/light
 	name = "Mk.3 Disruptor"
-	item_requirements = list("metal_dense" = 20,
-							 "conductive" = 30,
-							 "crystal" = 30)
+	item_requirements = list("metal_tough" = 20,
+							 "electrical_property_>=_6" = 30,
+							 "crystal_flag" = 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
 	create = 1
 	time = 10 SECONDS
@@ -186,9 +186,9 @@
 
 /datum/manufacture/pod/weapon/ass_laser
 	name = "Mk.4 Assault Laser"
-	item_requirements = list("metal_superdense" = 35,
-							 "conductive_high" = 30,
-							 "crystal" = 30,
+	item_requirements = list("metal_tough_extreme" = 35,
+							 "electrical_property_>=_8" = 30,
+							 "crystal_flag" = 30,
 							 "telecrystal" = 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser_ass)
 	create = 1
@@ -197,9 +197,9 @@
 
 /datum/manufacture/pod/weapon/shotgun
 	name = "SPE-12 Ballistic System"
-	item_requirements = list("metal_superdense" = 50,
-							 "conductive_high" = 40,
-							 "crystal" = 10)
+	item_requirements = list("metal_tough_extreme" = 50,
+							 "electrical_property_>=_8" = 40,
+							 "crystal_flag" = 10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/gun)
 	create = 1
 	time = 10 SECONDS
@@ -213,8 +213,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/pod/armor_light
 	name = "Light NT Pod Armor"
-	item_requirements = list("metal_superdense" = 50,
-							 "conductive" = 50)
+	item_requirements = list("metal_tough_extreme" = 50,
+							 "electrical_property_>=_6" = 50)
 	item_outputs = list(/obj/item/podarmor/armor_light)
 	create = 1
 	time = 20 SECONDS
@@ -230,8 +230,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/pod/armor_robust
 	name = "Heavy Pod Armor"
-	item_requirements = list("metal_superdense" = 50,
-							 "conductive_high" = 30,
+	item_requirements = list("metal_tough_extreme" = 50,
+							 "electrical_property_>=_8" = 30,
 							 "crystal_dense" = 10)
 	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	create = 1
@@ -249,8 +249,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 //costs a good bit more than the standard jetpack. for balance reasons here. to make jetpacks a commodity.
 /datum/manufacture/pod_wars/jetpack
 	name = "Jetpack"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive" = 50)
+	item_requirements = list("metal_tough" = 30,
+							 "electrical_property_>=_6" = 50)
 	item_outputs = list(/obj/item/tank/jetpack)
 	create = 1
 	time = 60 SECONDS
@@ -258,8 +258,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/jetpack/syndicate
 	name = "Jetpack"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive" = 50)
+	item_requirements = list("metal_tough" = 30,
+							 "electrical_property_>=_6" = 50)
 	item_outputs = list(/obj/item/tank/jetpack/syndicate)
 	create = 1
 	time = 60 SECONDS
@@ -267,10 +267,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/industrialboots
 	name = "Mechanised Boots"
-	item_requirements = list("metal_superdense" = 50,
-							 "conductive_high" = 50,
+	item_requirements = list("metal_tough_extreme" = 50,
+							 "electrical_property_>=_8" = 50,
 							 "energy_high" = 70,
-							 "dense_super" = 50)
+							 "dense_property_6" = 50)
 	item_outputs = list(/obj/item/clothing/shoes/industrial)
 	create = 1
 	time = 120 SECONDS
@@ -278,9 +278,9 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/accumulator
 	name = "Mineral Accumulator"
-	item_requirements = list("metal_dense" = 25,
-							 "conductive_high" = 15,
-							 "dense" = 2)
+	item_requirements = list("metal_tough" = 25,
+							 "electrical_property_>=_8" = 15,
+							 "dense_property_4" = 2)
 	item_outputs = list(/obj/machinery/oreaccumulator)
 	create = 1
 	time = 120 SECONDS
@@ -297,8 +297,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 /datum/manufacture/pod_wars/medical_refill
 	name = "NanoMed Refill Cartridge"
 	item_requirements = list("metal" = 25,
-							 "fabric" = 25,
-							 "dense" = 20)
+							 "fabric_flag" = 25,
+							 "dense_property_4" = 20)
 	item_outputs = list(/obj/item/vending/restock_cartridge/medical)
 	time = 60 SECONDS
 	category = "Ammo"
@@ -353,9 +353,9 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/cell_high
 	name = "Standard Large Weapon Cell"
-	item_requirements = list("metal_dense" = 5,
-							 "conductive_high" = 20,
-							 "energy" = 30)
+	item_requirements = list("metal_tough" = 5,
+							 "electrical_property_>=_8" = 20,
+							 "energy_flag" = 30)
 	item_outputs = list(/obj/item/ammo/power_cell/high_power)
 	create = 1
 	time = 1 SECONDS
@@ -363,9 +363,9 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/cell_higher
 	name = "Standard Bubs Weapon Cell"
-	item_requirements = list("metal_superdense" = 5,
-							 "conductive_high" = 20,
-							 "energy" = 60,
+	item_requirements = list("metal_tough_extreme" = 5,
+							 "electrical_property_>=_8" = 20,
+							 "energy_flag" = 60,
 							 "telecrystal" = 20)
 	item_outputs = list(/obj/item/ammo/power_cell/higher_power)
 	create = 1
@@ -376,10 +376,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/cell_pod_wars_basic
 	name = "Basic Self-Charging Weapon Cell"
-	item_requirements = list("metal_dense" = 10,
-							 "dense" = 20,
-							 "conductive_high" = 30,
-							 "energy" = 30)
+	item_requirements = list("metal_tough" = 10,
+							 "dense_property_4" = 20,
+							 "electrical_property_>=_8" = 30,
+							 "energy_flag" = 30)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_basic)
 	create = 1
 	time = 1 SECONDS
@@ -387,9 +387,9 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/cell_pod_wars_standard
 	name = "Standard Self-Charging Weapon Cell"
-	item_requirements = list("dense_super" = 30,
-							 "conductive_high" = 60,
-							 "energy" = 50,
+	item_requirements = list("dense_property_6" = 30,
+							 "electrical_property_>=_8" = 60,
+							 "energy_flag" = 50,
 							 "telecrystal" = 10)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_standard)
 	create = 1
@@ -398,8 +398,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/cell_pod_wars_high
 	name = "Robust Self-Charging Weapon Cell"
-	item_requirements = list("dense_super" = 30,
-							 "conductive_high" = 70,
+	item_requirements = list("dense_property_6" = 30,
+							 "electrical_property_>=_8" = 70,
 							 "energy_high" = 30,
 							 "telecrystal" = 30)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_high)
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/barricade
 	name = "Deployable Barricade"
-	item_requirements = list("metal_dense" = 5)
+	item_requirements = list("metal_tough" = 5)
 	item_outputs = list(/obj/item/deployer/barricade)
 	create = 1
 	time = 1 SECONDS
@@ -429,7 +429,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 /datum/manufacture/pod_wars/energy_concussion_grenade
 	name = "Concussion Grenade"
 	item_requirements = list("metal" = 5,
-							 "conductive" = 5,
+							 "electrical_property_>=_6" = 5,
 							 "telecrystal" = 5)
 	item_outputs = list(/obj/item/old_grenade/energy_concussion)
 	create = 1
@@ -439,8 +439,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /datum/manufacture/pod_wars/energy_frag_grenade
 	name = "Blast Grenade"
-	item_requirements = list("metal_dense" = 5,
-							 "conductive_high" = 5,
+	item_requirements = list("metal_tough" = 5,
+							 "electrical_property_>=_8" = 5,
 							 "telecrystal" = 5)
 	item_outputs = list(/obj/item/old_grenade/energy_frag)
 	create = 1

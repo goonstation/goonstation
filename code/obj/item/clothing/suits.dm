@@ -1574,9 +1574,9 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		item_state = "syndie_specialist-heavy"
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
-	mats = list("metal_superdense" = 20,
+	mats = list("metal_tough_extreme" = 20,
 				"uqill" = 10,
-				"conductive_high" = 10,
+				"electrical_property_>=_8" = 10,
 				"energy_high" = 10)
 /obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"

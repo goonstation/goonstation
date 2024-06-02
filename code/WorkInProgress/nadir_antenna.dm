@@ -626,9 +626,9 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 #define INTERLINK_RANGE 100
 
 TYPEINFO(/obj/machinery/transception_pad)
-	mats = list("metal_dense" = 5,
-				"conductive_high" = 2,
-				"conductive" = 5)
+	mats = list("metal_tough" = 5,
+				"electrical_property_>=_8" = 2,
+				"electrical_property_>=_6" = 5)
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"

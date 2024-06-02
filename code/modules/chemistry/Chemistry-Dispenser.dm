@@ -8,8 +8,8 @@ var/list/basic_elements = list(
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 TYPEINFO(/obj/machinery/chem_dispenser)
-	mats = list("metal_dense" = 10,
-				"conductive_high" = 10,
+	mats = list("metal_tough" = 10,
+				"electrical_property_>=_8" = 10,
 				"miracle" = 20)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"

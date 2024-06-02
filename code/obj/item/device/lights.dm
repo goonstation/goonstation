@@ -515,8 +515,8 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 		src.light.enable()
 
 TYPEINFO(/obj/item/device/light/floodlight)
-	mats = list("crystal" = 10,
-				"conductive" = 1,
+	mats = list("crystal_flag" = 10,
+				"electrical_property_>=_6" = 1,
 				"metal" = 4)
 /obj/item/device/light/floodlight
 	name = "floodlight"

@@ -82,9 +82,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 TYPEINFO(/obj/item/turret_deployer/riot)
 	mats = list("insulated" = 10,
-				"conductive" = 10,
-				"crystal" = 3,
-				"metal_dense" = 2)
+				"electrical_property_>=_6" = 10,
+				"crystal_flag" = 3,
+				"metal_tough" = 2)
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."

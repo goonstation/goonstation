@@ -432,8 +432,8 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
-	mats = list("metal_dense" = 5,
-				"crystal" = 4,
+	mats = list("metal_tough" = 5,
+				"crystal_flag" = 4,
 				"gold" = 5)
 /obj/item/reagent_containers/mender
 	name = "auto-mender"

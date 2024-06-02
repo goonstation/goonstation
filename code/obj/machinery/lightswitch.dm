@@ -11,7 +11,7 @@
 
 TYPEINFO(/obj/machinery/light_switch)
 	mats = list("metal" = 10,
-				"conductive" = 15)
+				"electrical_property_>=_6" = 15)
 ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
 	desc = "A light switch"

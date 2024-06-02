@@ -195,8 +195,8 @@ TYPEINFO(/obj/gold_bee)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
 	mats = list("metal" = 5,
-				"energy" = 5,
-				"conductive_high" = 5,
+				"energy_flag" = 5,
+				"electrical_property_>=_8" = 5,
 				"telecrystal" = 30)
 /obj/item/pirate_hand_tele
 	name = "makeshift teleporter"

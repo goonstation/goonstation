@@ -8,8 +8,8 @@
 #define INLET_MIN 0
 
 TYPEINFO(/obj/machinery/power/combustion_generator)
-	mats = list("metal_dense" = 14,
-				"conductive" = 8)
+	mats = list("metal_tough" = 14,
+				"electrical_property_>=_6" = 8)
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."

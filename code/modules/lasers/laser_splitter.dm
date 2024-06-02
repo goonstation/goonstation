@@ -1,7 +1,7 @@
 TYPEINFO(/obj/laser_sink/splitter)
 	mats = list("metal" = 20,
 				"crystal_dense" = 20,
-				"reflective" = 30)
+				"reflective_property_6" = 30)
 /obj/laser_sink/splitter
 	name = "beam splitter"
 	icon = 'icons/obj/stationobjs.dmi'

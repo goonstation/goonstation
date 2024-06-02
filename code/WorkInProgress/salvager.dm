@@ -368,8 +368,8 @@
 
 /datum/manufacture/pod/armor_light/salvager
 	name = "Salvager Pod Armor"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive" = 20)
+	item_requirements = list("metal_tough" = 30,
+							 "electrical_property_>=_6" = 20)
 	item_outputs = list(/obj/item/podarmor/salvager)
 	create = 1
 	time = 20 SECONDS
