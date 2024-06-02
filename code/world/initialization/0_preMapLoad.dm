@@ -231,7 +231,15 @@
 	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material
 	for (var/datum/manufacturing_requirement/R_path as anything in requirementList)
 		var/datum/manufacturing_requirement/R = new R_path()
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.id in requirement_cache)
+			CRASH("ID conflict: [R.id] from [R]")
+		#endif
 		requirement_cache[R.id] = R
 	for (var/datum/material/mat as anything in material_cache)
 		var/datum/manufacturing_requirement/match_material/R = new /datum/manufacturing_requirement/match_material(mat)
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.id in requirement_cache)
+			CRASH("ID conflict: [R.id] from [R]")
+		#endif
 		requirement_cache[R.id] = R
