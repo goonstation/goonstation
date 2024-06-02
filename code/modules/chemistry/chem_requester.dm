@@ -18,7 +18,7 @@ var/list/datum/chem_request/chem_requests = list()
 		src.id = ++last_id
 
 /obj/machinery/computer/chem_requester
-	name = "Chemical request console"
+	name = "chemical request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -131,7 +131,7 @@ var/list/datum/chem_request/chem_requests = list()
 		area_name = "Medbay"
 
 /obj/machinery/computer/chem_request_receiver
-	name = "Chemical request display"
+	name = "chemical request display"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
 	req_access = list(access_chemistry)

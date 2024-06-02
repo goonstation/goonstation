@@ -5,7 +5,7 @@
 
 
 /obj/machinery/computer/secure_data
-	name = "Security Records"
+	name = "security records"
 	icon_state = "datasec"
 	req_access = list(access_security)
 	circuit_type = /obj/item/circuitboard/secure_data
