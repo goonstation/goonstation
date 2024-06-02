@@ -691,8 +691,8 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		return
 
 TYPEINFO(/obj/item/old_grenade/oxygen)
-	mats = list("metal_tough" = 2,
-				"electrical_property_>=_6" = 2,
+	mats = list("metal_dense" = 2,
+				"conductive" = 2,
 				"molitz" = 10,
 				"char" = 1)
 /obj/item/old_grenade/oxygen

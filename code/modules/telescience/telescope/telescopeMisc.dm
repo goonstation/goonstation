@@ -4,7 +4,7 @@ var/list/special_places = list("Luna", "Observatory") //list of location names, 
 TYPEINFO(/obj/machinery/lrteleporter)
 	mats = list("telecrystal" = 10,
 				"metal" = 10,
-				"electrical_property_>=_6" = 10)
+				"conductive" = 10)
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."

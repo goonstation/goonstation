@@ -1,7 +1,7 @@
 TYPEINFO(/obj/machinery/dialysis)
 	mats = list("metal" = 20,
-				"crystal_flag" = 5,
-				"electrical_property_>=_8" = 5)
+				"crystal" = 5,
+				"conductive_high" = 5)
 /obj/machinery/dialysis
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."

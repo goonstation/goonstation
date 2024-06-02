@@ -5,8 +5,8 @@
 // moves items/mobs/movables in set direction every ptick
 TYPEINFO(/obj/machinery/conveyor) {
 	mats = list("metal" = 1,
-				"electrical_property_>=_6" = 1,
-				"crystal_flag" = 1)
+				"conductive" = 1,
+				"crystal" = 1)
 }
 
 /obj/machinery/conveyor

@@ -5,8 +5,8 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
-	mats = list("metal_tough_extreme" = 10,
-				"electrical_property_>=_8" = 10)
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10)
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
@@ -352,9 +352,9 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list("metal_tough_extreme" = 10,
-				"electrical_property_>=_8" = 10,
-				"gemstone_subtypes" = 10,
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10,
+				"gemstone" = 10,
 				"gold" = 1)
 /obj/item/baton/cane
 	name = "stun cane"
@@ -403,9 +403,9 @@ TYPEINFO(/obj/item/baton/classic)
 
 
 TYPEINFO(/obj/item/baton/ntso)
-	mats = list("metal_tough_extreme" = 10,
-				"electrical_property_>=_8" = 10,
-				"energy_flag" = 5)
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10,
+				"energy" = 5)
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."

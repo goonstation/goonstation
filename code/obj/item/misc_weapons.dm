@@ -18,7 +18,7 @@
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
 	mats = list("metal" = 5,
-				"electrical_property_>=_8" = 5,
+				"conductive_high" = 5,
 				"energy_extreme" = 10)
 /obj/item/sword
 	name = "cyalume saber"
@@ -1070,7 +1070,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
 TYPEINFO(/obj/item/bat)
-	mats = list("wood_flag" = 8)
+	mats = list("wood" = 8)
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -1331,8 +1331,8 @@ TYPEINFO(/obj/item/bat)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
-	mats = list("metal_tough_extreme" = 20,
-				"fabric_flag" = 5)
+	mats = list("metal_superdense" = 20,
+				"fabric" = 5)
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
@@ -1421,7 +1421,7 @@ TYPEINFO(/obj/item/swords/katana)
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
 TYPEINFO(/obj/item/swords/captain)
-	mats = list("metal_tough" = 15)
+	mats = list("metal_dense" = 15)
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"

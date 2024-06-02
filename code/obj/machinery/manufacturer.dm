@@ -425,7 +425,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (isnull(M.item_names))
 			M.item_names = list()
 			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-				M.item_names += R.getName()
+				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -449,7 +449,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		var/requirement_data = list()
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			requirement_data += list(list("name" = R.getName(), "id" = R.getID(), "amount" = M.item_requirements[R]))
+			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
 
 		return list(
 			"name" = M.name,
@@ -1584,7 +1584,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/R_id as anything in requirement_cache)
 			var/datum/manufacturing_requirement/R = getRequirement(R_id)
 			if (R.is_match(M))
-				. += R.getID()
+				. += R.id
 
 	/// Returns material in storage which first satisfies a pattern, otherwise returns null
 	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials

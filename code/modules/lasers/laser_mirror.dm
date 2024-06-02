@@ -3,8 +3,8 @@
 
 TYPEINFO(/obj/laser_sink/mirror)
 	mats = list("metal" = 10,
-				"crystal_flag" = 10,
-				"reflective_property_6" = 30)
+				"crystal" = 10,
+				"reflective" = 30)
 /obj/laser_sink/mirror
 	name = "laser mirror"
 	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."

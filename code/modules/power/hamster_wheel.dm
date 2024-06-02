@@ -3,7 +3,7 @@
 
 ABSTRACT_TYPE(/obj/machinery/power/power_wheel)
 TYPEINFO(/obj/machinery/power/power_wheel)
-	mats = list("electrical_property_>=_6" = 5,
+	mats = list("conductive" = 5,
 				"metal" = 25,
 				"insulated" = 3,
 				"energy_high" = 10)

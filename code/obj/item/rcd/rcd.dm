@@ -1,9 +1,9 @@
 ///
 
 TYPEINFO(/obj/item/rcd)
-	mats = list("metal_tough_extreme" = 20,
+	mats = list("metal_superdense" = 20,
 				"crystal_dense" = 10,
-				"electrical_property_>=_8" = 10,
+				"conductive_high" = 10,
 				"energy_high" = 10)
 /// Base RCD this is the variant actually used in most scenarios
 /obj/item/rcd

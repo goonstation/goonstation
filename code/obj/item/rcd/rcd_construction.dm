@@ -3,9 +3,9 @@
 */
 
 TYPEINFO(/obj/item/rcd/construction)
-	mats = list("metal_tough_extreme" = 100,
+	mats = list("metal_superdense" = 100,
 				"crystal_dense" = 50,
-				"electrical_property_>=_8" = 50,
+				"conductive_high" = 50,
 				"energy_extreme" = 50,
 				"starstone" = 10)
 /// Construction mode RCD variant
@@ -156,9 +156,9 @@ TYPEINFO(/obj/item/rcd/construction)
 
 
 TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
-	mats = list("metal_tough_extreme" = 20,
+	mats = list("metal_superdense" = 20,
 				"crystal_dense" = 10,
-				"electrical_property_>=_8" = 10,
+				"conductive_high" = 10,
 				"energy_high" = 10)
 /// Chief Engineer RCD has fancy door functions and a mild discount, but no capacity increase
 /obj/item/rcd/construction/chiefEngineer

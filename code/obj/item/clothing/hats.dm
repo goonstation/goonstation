@@ -1860,7 +1860,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
-	mats = list("fabric_flag" = 5,
+	mats = list("fabric" = 5,
 				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"

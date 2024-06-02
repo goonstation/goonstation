@@ -24,9 +24,9 @@
   */
 TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 	mats = list("metal" = 15,
-				"metal_tough" = 3,
+				"metal_dense" = 3,
 				"insulated" = 3,
-				"electrical_property_>=_6" = 10)
+				"conductive" = 10)
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
 	desc = "Some kind of nightmare contraption to make a lot of noise or pressurize rooms."

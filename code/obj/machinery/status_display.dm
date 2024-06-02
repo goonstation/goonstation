@@ -370,8 +370,8 @@ TYPEINFO(/obj/machinery/status_display)
 
 TYPEINFO(/obj/machinery/ai_status_display)
 	mats = list("metal" = 2,
-				"electrical_property_>=_6" = 6,
-				"crystal_flag" = 6)
+				"conductive" = 6,
+				"crystal" = 6)
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "ai_frame"

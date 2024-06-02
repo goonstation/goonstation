@@ -1982,8 +1982,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
-	mats = list("metal_tough" = 15,
-				"electrical_property_>=_6" = 8,
+	mats = list("metal_dense" = 15,
+				"conductive" = 8,
 				"claretine" = 10,
 				"koshmarite" = 2)
 /obj/item/mining_tool/powered/hedron_beam

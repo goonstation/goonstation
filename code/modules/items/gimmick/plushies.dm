@@ -1,8 +1,8 @@
 TYPEINFO(/obj/submachine/claw_machine)
 	mats = list("metal" = 5,
-				"electrical_property_>=_6" = 5,
-				"crystal_flag" = 5,
-				"fabric_flag" = 5)
+				"conductive" = 5,
+				"crystal" = 5,
+				"fabric" = 5)
 /obj/submachine/claw_machine
 	name = "claw machine"
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
