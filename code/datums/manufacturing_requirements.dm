@@ -124,17 +124,22 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/insulated/super
 	name = "Highly Insulative"
 	id = "electrical_property_<=_2"
+	property_id = "density"
 	property_threshold = 2
 
-/datum/manufacturing_requirement/match_property/metal/dense
-	name = "Sturdy Metal"
-	id = "metal_property_10"
+/datum/manufacturing_requirement/match_property/tough
+	name = "Tough Material"
+	id = "tough_property_10"
 	property_threshold = 10
 
-/datum/manufacturing_requirement/match_property/metal/superdense
-	name = "Extremely Tough Metal"
-	id = "metal_property_15"
-	property_id = "dense"
+	match_property(datum/material/M)
+		// This specific check is based off the hardness of mauxite and bohrum.
+		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
+		return ((M.getProperty("hard") * 2) + M.getProperty("density")) > src.property_threshold
+
+/datum/manufacturing_requirement/match_property/tough/extreme
+	name = "Extremely Tough Material"
+	id = "tough_property_15"
 	property_threshold = 15
 
 /datum/manufacturing_requirement/match_property/reflective
@@ -261,13 +266,21 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/metal,
 	)
+/datum/manufacturing_requirement/mixed/metal
+	name = "Tough Metal"
+	id = "metal_tough"
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/metal,
+		/datum/manufacturing_requirement/match_property/tough,
+	)
 
-	is_match(datum/material/M)
-		// This specific check is based off the hardness of mauxite and bohrum.
-		// Mauxite ends up being 10 in here, while bohrum ends up being 16.
-		. = ..()
-		if (!.) return
-		if (((M.getProperty("hard") * 2) + M.getProperty("density")) < src.property_threshold) return
+/datum/manufacturing_requirement/mixed/metal
+	name = "Extremely Tough Metal"
+	id = "metal_tough_extreme"
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/metal,
+		/datum/manufacturing_requirement/match_property/tough/extreme,
+	)
 
 /datum/manufacturing_requirement/mixed/insulated
 	name = "Insulative"
