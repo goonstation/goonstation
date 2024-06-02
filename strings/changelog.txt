@@ -1,4 +1,7 @@
 
+(t)sun jun 02 24
+(u)pali
+(+)Hiding in a shrub now prevents camera tracking.
 (t)sat jun 01 24
 (u)tarmunora
 (+)Being made of plants, synthlungs now protect from CO2 and allow limited 'photosynthesis' of CO2 into O2 when breathing.
