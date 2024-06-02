@@ -3667,7 +3667,7 @@
 		arrestState = "*Arrest*"
 	if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
 		if (locate(/obj/item/implant/counterrev) in src.implant)
-			var/mob/M = ckey_to_mob_maybe_disconnected(H.last_ckey)
+			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				arrestState = "RevHead"
 			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
