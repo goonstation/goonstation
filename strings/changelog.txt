@@ -1,5 +1,7 @@
 
 (t)sun jun 02 24
+(u)Sord
+(+)Increased the amount of air most of the gas/air tanks (pocket, pocket extended, mini oxygen/plasma) spawn with
 (u)Mordent
 (p)19280
 (e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
