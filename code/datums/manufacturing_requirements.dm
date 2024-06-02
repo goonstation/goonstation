@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 	/// Checks whether or not the given material meets the requirements enforced by this proc.
 	proc/is_match(var/datum/material/M)
 		SHOULD_CALL_PARENT(TRUE)
-		return isnull(M)
+		return !isnull(M)
 
 /datum/manufacturing_requirement/not_null
 	name = "Any"
