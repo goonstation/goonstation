@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (src.material_id != M.getID()) return
+		if (src.material_id != M.getID()) return FALSE
 
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
@@ -79,11 +79,11 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (!src.match_property(M)) return
+		if (!src.match_property(M)) return FALSE
 
 	/// Whether or not we match our criteria for this. Override to change behavior on checks
 	proc/match_property(var/datum/material/M)
-		return M.getProperty(src.property_id) >= property_threshold
+		return M.getProperty(src.property_id) >= src.property_threshold
 
 /datum/manufacturing_requirement/match_property/conductive
 	name = "Conductive"
@@ -251,7 +251,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (!(istype(M, src.match_typepath))) return
+		if (!(istype(M, src.match_typepath))) return FALSE
 
 /datum/manufacturing_requirement/match_subtypes/gemstone
 	name = "gemstone_subtypes"
@@ -278,7 +278,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		. = ..()
 		if (!.) return
 		for (var/datum/manufacturing_requirement/R as anything in src.requirements)
-			if (!R.is_match(M)) return
+			if (!R.is_match(M)) return FALSE
 
 /datum/manufacturing_requirement/mixed/dense_crystal
 	name = "Extraordinarily Dense Crystalline Matter"
