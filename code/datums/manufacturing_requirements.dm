@@ -1,9 +1,8 @@
-/* These manufacture requirements are meant to simplify checking if a material satisfies a requirement for a blueprint.
-   If you want a glass flock piece and don't care about it's material, it'd look like:
-   /datum/manufacture_requirement/crystal/flock
-   If you want any piece of flock and it must be dense, it'd look like:
-   /datum/manufacture_requirement/dense/flock
-*/
+/**
+ * Manufacturing Requirements are datums which check if a material satisfies some given requirements, to determine if a manufacturer can produce
+ * a blueprint. Manufacturing datums define them by their string ID, which gets converted to the single instance of it in the cache on New().
+ * Not shown in this file are the exact material ID requirement datums, which are generated for the cache on init using the material cache.
+ */
 
 var/global/list/requirement_cache
 
