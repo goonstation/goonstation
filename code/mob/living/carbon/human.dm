@@ -3661,19 +3661,20 @@
 	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 	if(record)
 		var/criminal = record["criminal"]
-		if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
+		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
+				criminal == ARREST_STATE_CLOWN)
 			arrestState = criminal
 	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
-		arrestState = "*Arrest*"
-	if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
+		arrestState = ARREST_STATE_ARREST
+	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
 		if (locate(/obj/item/implant/counterrev) in src.implant)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
-				arrestState = "RevHead"
+				arrestState = ARREST_STATE_REVHEAD
 			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
-				arrestState = "Loyal_Progress"
+				arrestState = ARREST_STATE_LOYAL_IN_PROGRESS
 			else
-				arrestState = "Loyal"
+				arrestState = ARREST_STATE_LOYAL
 		else
 			var/obj/item/card/id/myID = 0
 			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
@@ -3690,5 +3691,5 @@
 				has_contraband_permit = (access_contrabandpermit in myID.access)
 				has_carry_permit = (access_carrypermit in myID.access)
 			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
-				arrestState = "Contraband"
+				arrestState = ARREST_STATE_CONTRABAND
 	src.arrestIcon.icon_state = arrestState

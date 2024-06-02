@@ -839,16 +839,16 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if(E)
 			switch (mode)
 				if(PRISONER_MODE_NONE)
-					E["criminal"] = "None"
+					E["criminal"] = ARREST_STATE_NONE
 
 				if(PRISONER_MODE_PAROLED)
-					E["criminal"] = "Parolled"
+					E["criminal"] = ARREST_STATE_PAROLE
 
 				if(PRISONER_MODE_RELEASED)
-					E["criminal"] = "Released"
+					E["criminal"] = ARREST_STATE_RELEASED
 
 				if(PRISONER_MODE_INCARCERATED)
-					E["criminal"] = "Incarcerated"
+					E["criminal"] = ARREST_STATE_INCARCERATED
 			E["sec_flag"] = src.sechud_flag
 			target.update_arrest_icon()
 			return
@@ -858,16 +858,16 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["id"] = src.active1["id"]
 		switch (mode)
 			if(PRISONER_MODE_NONE)
-				src.active2["criminal"] = "None"
+				src.active2["criminal"] = ARREST_STATE_ARREST
 
 			if(PRISONER_MODE_PAROLED)
-				src.active2["criminal"] = "Parolled"
+				src.active2["criminal"] = ARREST_STATE_PAROLE
 
 			if(PRISONER_MODE_RELEASED)
-				src.active2["criminal"] = "Released"
+				src.active2["criminal"] = ARREST_STATE_RELEASED
 
 			if(PRISONER_MODE_INCARCERATED)
-				src.active2["criminal"] = "Incarcerated"
+				src.active2["criminal"] = ARREST_STATE_INCARCERATED
 
 		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
