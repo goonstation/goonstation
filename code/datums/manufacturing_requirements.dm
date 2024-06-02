@@ -186,11 +186,11 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 		if (!.) return
 		switch(src.match_type)
 			if (MATCH_ANY)
-				return M.getMaterialFlags(M) & src.material_flags
+				return (M.getMaterialFlags(M) & src.material_flags) > 0
 			if (MATCH_ALL)
-				CRASH("NYI")
+				return (M.getMaterialFlags(M) & src.material_flags) == src.material_flags
 			if (MATCH_EXACT)
-				CRASH("NYI")
+				return (M.getMaterialFlags(M) == src.material_flags)
 
 /datum/manufacturing_requirement/match_flags/metal
 	name = "Metallic"
