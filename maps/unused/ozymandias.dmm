@@ -18076,7 +18076,7 @@
 	})
 "eNM" = (
 /obj/machinery/manufacturer/mining{
-	free_resource_amt = 0
+	free_resources = list()
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
@@ -18322,7 +18322,7 @@
 /area/station/engine/elect)
 "eQT" = (
 /obj/machinery/manufacturer/hangar{
-	free_resource_amt = 0
+	free_resources = list()
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -84652,9 +84652,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
 "vJl" = (
-/obj/machinery/manufacturer/general/grody{
-	free_resource_amt = 2
-	},
+/obj/machinery/manufacturer/general/grody,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
