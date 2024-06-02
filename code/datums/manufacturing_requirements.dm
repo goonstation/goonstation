@@ -8,6 +8,13 @@
 var/global/list/requirement_cache
 
 /proc/getRequirement(var/R_id)
+	#ifdef CHECK_MORE_RUNTIMES
+	if (!istext(R_id))
+		CRASH("getRequirement() called with a non-text argument [R_id].")
+	if (!(R_id in requirement_cache))
+		CRASH("getRequirement() called with an invalid requirement id [R_id].")
+	#endif
+	// Sanity checks that all requirement IDs resolved to instances in the cache
 	return requirement_cache?[R_id]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
@@ -238,7 +245,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (!(istype(M, src.match_typepath))) return
 
 /datum/manufacturing_requirement/match_subtypes/gemstone
-	name = "Gemstone"
+	name = "gemstone_subtypes"
 	id = "gemstone_subtypes"
 	match_typepath = /datum/material/crystal/gemstone
 
@@ -267,7 +274,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		/datum/manufacturing_requirement/match_flags/metal,
 	)
 /datum/manufacturing_requirement/mixed/metal
-	name = "Tough Metal"
+	name = "Sturdy Metal"
 	id = "metal_tough"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/metal,
@@ -285,6 +292,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/mixed/insulated
 	name = "Insulative"
 	id = "insulated"
+	requirements = list(
+		/datum/manufacturing_requirement/match_flags/insulated,
+		/datum/manufacturing_requirement/match_property/insulated,
+	)
+
+/datum/manufacturing_requirement/mixed/insulated
+	name = "Highly Insulative"
+	id = "insulated_high"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/insulated,
 		/datum/manufacturing_requirement/match_property/insulated,
