@@ -1638,9 +1638,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
 			var/P_ref = "\ref[P]"
 			var/amount_free = P.amount - mats_reserved[P_ref]
-			var/amount_to_use = min(amount_free, required_amount)
+			var/amount_to_use = min(amount_free, required_amount / 10)
 			INCREMENT_ASSOCIATED_LIST(mats_reserved, P_ref, amount_to_use, 0)
 			INCREMENT_ASSOCIATED_LIST(materials_used, P_ref, amount_to_use, 0)
+			required_amount -= (amount_to_use * 10)
 
 		return materials_used
 
@@ -1650,13 +1651,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R in mats_used)
-			var/amount_needed = M.item_requirements[R]
+			var/amount_needed = M.item_requirements[R] / 10
 			var/amount_used = 0
 			for (var/material_piece_ref in mats_used[R])
 				amount_used += mats_used[R][material_piece_ref]
 
 			if (amount_used < amount_needed)
-				return
+				return FALSE
 			else if (amount_used > amount_needed)
 				// This scenario needs to be reported because get_materials_needed should **NEVER** reserve more materials for a blueprint than it needs.
 				var/error_msg = "get_materials_for_requirement somehow reserved more materials than necessary for [M] using [src.get_contents()]"
@@ -1665,16 +1666,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 				CRASH(error_msg)
 				#endif
 
-		return mats_used
+		return TRUE
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
-		var/list/mats_used = check_enough_materials(M)
-		if (isnull(mats_used))
-			return // how
+		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			var/required_amount = M.item_requirements[R]
-			src.change_contents(-required_amount/10, mat_piece = locate(mats_used[R]))
+			for (var/piece_ref in mats_used[R])
+				var/amount_to_remove = mats_used[R][piece_ref]
+				src.change_contents(-amount_to_remove, mat_piece = locate(piece_ref))
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
