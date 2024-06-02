@@ -277,60 +277,60 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 	name = "Extraordinarily Dense Crystalline Matter"
 	id = "crystal_dense"
 	requirements = list(
-		/datum/manufacturing_requirement/match_property/ultradense,
-		/datum/manufacturing_requirement/match_flags/crystal,
+		"dense_property_ultra",
+		"crystal",
 	)
 
 /datum/manufacturing_requirement/mixed/metal
 	name = "Metal"
 	id = "metal"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/metal,
+		"metal_flag",
 	)
 
 /datum/manufacturing_requirement/mixed/metal_tough
 	name = "Sturdy Metal"
 	id = "metal_dense"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/metal,
-		/datum/manufacturing_requirement/match_property/tough,
+		"metal_flag",
+		"tough",
 	)
 
 /datum/manufacturing_requirement/mixed/metal_tough_extreme
 	name = "Extremely Tough Metal"
 	id = "metal_superdense"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/metal,
-		/datum/manufacturing_requirement/match_property/tough/extreme,
+		"metal_flag",
+		"tough_super",
 	)
 
 /datum/manufacturing_requirement/mixed/insulated
 	name = "Insulative"
 	id = "insulated"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/insulated,
-		/datum/manufacturing_requirement/match_property/insulated,
+		"insulative_flags",
+		"insulated_property",
 	)
 
 /datum/manufacturing_requirement/mixed/insulated_high
 	name = "Highly Insulative"
 	id = "insulative_high"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/insulated,
-		/datum/manufacturing_requirement/match_property/insulated,
+		"insulative_flags",
+		"insulated_property_high",
 	)
 
 /datum/manufacturing_requirement/mixed/energy_high
 	name = "Significant Power Source"
 	id = "energy_high"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/energy,
-		/datum/manufacturing_requirement/match_property/energy,
+		"energy",
+		"energy_property",
 	)
 /datum/manufacturing_requirement/mixed/energy_extreme
 	name = "Extreme Power Source"
 	id = "energy_extreme"
 	requirements = list(
-		/datum/manufacturing_requirement/match_flags/energy,
-		/datum/manufacturing_requirement/match_property/energy/high,
+		"energy",
+		"energy_property_high",
 	)
