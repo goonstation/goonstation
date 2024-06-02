@@ -83,47 +83,47 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_property/conductive
 	name = "Conductive"
-	id = "electrical_property_>=_6"
+	id = "conductive"
 	property_id = "electrical"
 	property_threshold = 6
 
 /datum/manufacturing_requirement/match_property/conductive/high
 	name = "High Energy Conductor"
-	id = "electrical_property_>=_8"
+	id = "conductive_high"
 	property_threshold = 8
 
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
-	id = "dense_property_4"
+	id = "dense"
 	property_id = "density"
 	property_threshold = 4
 
 /datum/manufacturing_requirement/match_property/superdense
 	name = "Very High Density Matter"
-	id = "dense_property_6"
+	id = "dense_super"
 	property_id = "density"
 	property_threshold = 6
 
 /datum/manufacturing_requirement/match_property/ultradense
 	name = "Ultra-Dense Matter"
-	id = "dense_property_7"
+	id = "dense_property_ultra"
 	property_id = "density"
 	property_threshold = 7
 
 /datum/manufacturing_requirement/match_property/energy
 	name = "Radioactive"
-	id = "energy_property_3"
+	id = "energy_property"
 	property_id = "radioactive"
 	property_threshold = 3
 
 /datum/manufacturing_requirement/match_property/energy/high
 	name = "Highly Radioactive"
-	id = "energy_property_5"
+	id = "energy_property_high"
 	property_threshold = 5
 
 /datum/manufacturing_requirement/match_property/insulated
 	name = "Insulated Material"
-	id = "electrical_property_<=_4"
+	id = "insulated_property"
 	property_id = "electrical"
 	property_threshold = 4
 
@@ -132,13 +132,13 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_property/insulated/super
 	name = "Highly Insulative"
-	id = "electrical_property_<=_2"
+	id = "insulated_property_high"
 	property_id = "density"
 	property_threshold = 2
 
 /datum/manufacturing_requirement/match_property/tough
 	name = "Tough Material"
-	id = "tough_property_10"
+	id = "tough"
 	property_id = "density"
 	property_threshold = 10
 
@@ -149,12 +149,12 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 /datum/manufacturing_requirement/match_property/tough/extreme
 	name = "Extremely Tough Material"
-	id = "tough_property_15"
+	id = "tough_super"
 	property_threshold = 15
 
 /datum/manufacturing_requirement/match_property/reflective
 	name = "Reflective"
-	id = "reflective_property_6"
+	id = "reflective"
 	property_id = "reflective"
 	property_threshold = 6
 
@@ -195,32 +195,32 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 
 /datum/manufacturing_requirement/match_flags/wood
 	name = "Wood"
-	id = "wood_flag"
+	id = "wood"
 	material_flags = MATERIAL_WOOD
 
 /datum/manufacturing_requirement/match_flags/rubber
 	name = "Rubber"
-	id = "rubber_flag"
+	id = "rubber"
 	material_flags = MATERIAL_RUBBER
 
 /datum/manufacturing_requirement/match_flags/organic_or_rubber
 	name = "Organic or Rubber"
-	id = "organic_or_rubber_flag"
+	id = "organic_or_rubber"
 	material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
 
 /datum/manufacturing_requirement/match_flags/fabric
 	name = "Fabric"
-	id = "fabric_flag"
+	id = "fabric"
 	material_flags = MATERIAL_RUBBER | MATERIAL_ORGANIC | MATERIAL_CLOTH
 
 /datum/manufacturing_requirement/match_flags/crystal
 	name = "Crystal"
-	id = "crystal_flag"
+	id = "crystal"
 	material_flags = MATERIAL_CRYSTAL
 
 /datum/manufacturing_requirement/match_flags/energy
 	name = "Energy Source"
-	id = "energy_flag"
+	id = "energy"
 	material_flags = MATERIAL_ENERGY
 
 /datum/manufacturing_requirement/match_flags/insulated
@@ -249,8 +249,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 		if (!(istype(M, src.match_typepath))) return FALSE
 
 /datum/manufacturing_requirement/match_subtypes/gemstone
-	name = "gemstone_subtypes"
-	id = "gemstone_subtypes"
+	name = "Gemstone"
+	id = "gemstone"
 	match_typepath = /datum/material/crystal/gemstone
 
 /// Manufacturing requirements which check several conditions at once.
@@ -290,7 +290,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 
 /datum/manufacturing_requirement/mixed/metal_tough
 	name = "Sturdy Metal"
-	id = "metal_tough"
+	id = "metal_dense"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/metal,
 		/datum/manufacturing_requirement/match_property/tough,
@@ -298,7 +298,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 
 /datum/manufacturing_requirement/mixed/metal_tough_extreme
 	name = "Extremely Tough Metal"
-	id = "metal_tough_extreme"
+	id = "metal_superdense"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/metal,
 		/datum/manufacturing_requirement/match_property/tough/extreme,
@@ -314,7 +314,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 
 /datum/manufacturing_requirement/mixed/insulated_high
 	name = "Highly Insulative"
-	id = "insulated_high"
+	id = "insulative_high"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/insulated,
 		/datum/manufacturing_requirement/match_property/insulated,
