@@ -87,15 +87,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	property_id = "density"
 	property_threshold = 7
 
-/datum/manufacturing_requirement/match_property/crystal/gemstone
-	name = "Gemstone"
-	id = "gemstone"
-
-	is_match(var/datum/material/M)
-		. = ..()
-		if (!.) return
-		if (!(istype(M, /datum/material/crystal/gemstone))) return
-
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
 	id = "dense"
@@ -206,6 +197,16 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (isnull(src.match_typepath) || !ispath(src.match_typepath))
 			CRASH("[src] has invalid match_typepath [src.match_typepath], it must be non-null and a valid path (not an instance!)")
 	#endif
+
+	is_match(var/datum/material/M)
+		. = ..()
+		if (!.) return
+		if (!(istype(M, src.match_typepath))) return
+
+/datum/manufacturing_requirement/match_subtypes/gemstone
+	name = "Gemstone"
+	id = "gemstone"
+	match_typepath = /datum/material/crystal/gemstone
 
 /// Manufacturing requirements which check several conditions at once.
 /datum/manufacturing_requirement/mixed
