@@ -277,10 +277,10 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 
 TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	mats = list("metal" = 15,
-				"metal_dense" = 10,
-				"conductive_high" = 10,
+				"metal_tough" = 10,
+				"electrical_property_>=_8" = 10,
 				"energy_high" = 15,
-				"crystal" = 10)
+				"crystal_flag" = 10)
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
@@ -306,7 +306,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 ///////////////////////////////////////Rad Crossbow
 TYPEINFO(/obj/item/gun/energy/crossbow)
 	mats = list("metal" = 5,
-				"conductive_high" = 5,
+				"electrical_property_>=_8" = 5,
 				"energy_high" = 10)
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
@@ -350,8 +350,8 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
 	mats = list("metal" = 15,
-				"conductive" = 5,
-				"energy" = 5)
+				"electrical_property_>=_6" = 5,
+				"energy_flag" = 5)
 /obj/item/gun/energy/egun
 	name = "energy gun"
 	icon_state = "energy"
@@ -490,7 +490,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 ////////////////////////////////////VUVUV
 TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	mats = list("metal" = 5,
-				"conductive_high" = 5,
+				"electrical_property_>=_8" = 5,
 				"energy_high" = 10)
 /obj/item/gun/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
@@ -543,7 +543,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
-	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1076,8 +1076,8 @@ TYPEINFO(/obj/item/gun_parts)
 
 ///////////////////////////////////////Hunter
 TYPEINFO(/obj/item/gun/energy/plasma_gun)
-	mats = list("metal_superdense" = 7,
-				"crystal" = 13,
+	mats = list("metal_tough_extreme" = 7,
+				"crystal_flag" = 13,
 				"energy_high" = 10)
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
 	name = "plasma rifle"
@@ -1135,7 +1135,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 TYPEINFO(/obj/item/gun/energy/pickpocket)
 	mats = list("metal" = 5,
-				"conductive_high" = 5,
+				"electrical_property_>=_8" = 5,
 				"energy_high" = 10)
 /obj/item/gun/energy/pickpocket
 	name = "pickpocket grapple gun" // absurdly shitty name
@@ -1245,8 +1245,8 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 TYPEINFO(/obj/item/gun/energy/alastor)
-	mats = list("metal_dense" = 15,
-				"conductive_high" = 10,
+	mats = list("metal_tough" = 15,
+				"electrical_property_>=_8" = 10,
 				"energy_high" = 10)
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
@@ -1279,7 +1279,7 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 ///////////////////////////////////////////////////
 TYPEINFO(/obj/item/gun/energy/lawbringer)
 	mats = list("metal" = 15,
-				"conductive_high" = 5,
+				"electrical_property_>=_8" = 5,
 				"energy_high" = 5)
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
@@ -1607,7 +1607,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)
 	mats = list("metal" = 5,
-				"conductive_high" = 5,
+				"electrical_property_>=_8" = 5,
 				"energy_high" = 10)
 /obj/item/gun/energy/wasp
 	name = "mini wasp-egg-crossbow"
@@ -1695,8 +1695,8 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 
 TYPEINFO(/obj/item/gun/energy/signifer2)
 	mats = list("energy_high" = 15,
-				"conductive_high" = 15,
-				"metal_superdense" = 20)
+				"electrical_property_>=_8" = 15,
+				"metal_tough_extreme" = 20)
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
@@ -1815,9 +1815,9 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	mats = list("iridiumalloy" = 50,
 				"starstone" = 10,
-				"metal_superdense" = 150,
+				"metal_tough_extreme" = 150,
 				"crystal_dense" = 100,
-				"conductive_high" = 100,
+				"electrical_property_>=_8" = 100,
 				"energy_extreme" = 50)
 /obj/item/gun/energy/vexillifer4
 	name = "Vexillifer IV"

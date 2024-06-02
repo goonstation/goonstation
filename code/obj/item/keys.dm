@@ -92,10 +92,10 @@ ABSTRACT_TYPE(/obj/item/device/key)
 
 		color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-		if (findtext(name, "crystal") || findtext(name, "prismatic") || findtext(name, "glowing") || findtext(name, "shining")) blend_mode = 2
+		if (findtext(name, "crystal_flag") || findtext(name, "prismatic") || findtext(name, "glowing") || findtext(name, "shining")) blend_mode = 2
 		else if (findtext(name, "void") || findtext(name, "evil") || findtext(name, "doom") || findtext(name, "ancient")) blend_mode = 3
 
-		if (findtext(name, "ghost") || findtext(name, "crystal") || findtext(name, "void") || findtext(name, "ethereal")) alpha = 150
+		if (findtext(name, "ghost") || findtext(name, "crystal_flag") || findtext(name, "void") || findtext(name, "ethereal")) alpha = 150
 
 		if (findtext(name, "float"))
 			animate_float(src, -1, rand(10, 40))

@@ -822,7 +822,7 @@
 						P = new/datum/matfab_part/metal()
 						P.part_name = "[isFinish?"(Main) ":""]Metal"
 						P.required_amount = numReq
-					if("crystal")
+					if("crystal_flag")
 						P = new/datum/matfab_part/crystal()
 						P.part_name = "[isFinish?"(Main) ":""]Crystal"
 						P.required_amount = numReq

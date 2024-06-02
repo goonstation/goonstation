@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		..()
 
 /datum/siphon_mineral/gemstone
-	name = "Gemstone"
+	name = "gemstone_subtypes"
 	tick_req = 35
 	x_torque = 0
 	y_torque = 0

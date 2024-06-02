@@ -1,61 +1,61 @@
 TYPEINFO(/obj/critter/gunbot/drone)
-	mats = list("energy" = 5,
-				"metal_dense" = 12,
-				"conductive_high" = 12,
-				"dense" = 6)
+	mats = list("energy_flag" = 5,
+				"metal_tough" = 12,
+				"electrical_property_>=_8" = 12,
+				"dense_property_4" = 6)
 TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
 	mats = null
 
 TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
 	mats = list("energy_high" = 10,
-				"metal_superdense" = 12,
-				"conductive_high" = 12,
-				"dense_super" = 9)
+				"metal_tough_extreme" = 12,
+				"electrical_property_>=_8" = 12,
+				"dense_property_6" = 9)
 TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
 	mats = list("energy_extreme" = 15,
-				"metal_superdense" = 17,
-				"conductive_high" = 13,
+				"metal_tough_extreme" = 17,
+				"electrical_property_>=_8" = 13,
 				"crystal_dense" = 17,
 				"erebite" = 16)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
 	mats = list("energy_extreme" = 13,
-				"metal_superdense" = 24,
-				"conductive_high" = 20,
+				"metal_tough_extreme" = 24,
+				"electrical_property_>=_8" = 20,
 				"crystal_dense" = 17)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
 	mats = list("energy_extreme" = 19,
-				"metal_superdense" = 20,
-				"conductive_high" = 24,
-				"dense_super" = 16)
+				"metal_tough_extreme" = 20,
+				"electrical_property_>=_8" = 24,
+				"dense_property_6" = 16)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone)
 	mats = list("energy_high" = 19,
-				"metal_dense" = 12,
-				"conductive_high" = 14,
-				"dense_super" = 26)
+				"metal_tough" = 12,
+				"electrical_property_>=_8" = 14,
+				"dense_property_6" = 26)
 TYPEINFO(/obj/critter/gunbot/drone/buzzdrone/fish)
 	mats = 	24
 
 TYPEINFO(/obj/critter/gunbot/drone/laser)
 	mats = list("energy_high" = 11,
-				"metal_dense" = 14,
-				"conductive_high" = 13,
-				"dense_super" = 12)
+				"metal_tough" = 14,
+				"electrical_property_>=_8" = 13,
+				"dense_property_6" = 12)
 TYPEINFO(/obj/critter/gunbot/drone/cutterdrone)
-	mats = list("energy" = 9,
-				"metal_superdense" = 15,
-				"conductive" = 7,
+	mats = list("energy_flag" = 9,
+				"metal_tough_extreme" = 15,
+				"electrical_property_>=_6" = 7,
 				"crystal_dense" = 20)
 TYPEINFO(/obj/critter/gunbot/drone/assdrone)
 	mats = list("energy_extreme" = 30,
-				"metal_superdense" = 14,
-				"conductive_high" = 23,
+				"metal_tough_extreme" = 14,
+				"electrical_property_>=_8" = 23,
 				"crystal_dense" = 22,
 				"butt" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
-	mats = list("energy" = 10,
+	mats = list("energy_flag" = 10,
 				"metal" = 15,
-				"conductive_high" = 15,
-				"dense" = 10)
+				"electrical_property_>=_8" = 15,
+				"dense_property_4" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	mats = null
 

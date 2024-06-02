@@ -12,8 +12,8 @@ Contains:
 //////////////////////////////////////////////// T-ray scanner //////////////////////////////////
 
 TYPEINFO(/obj/item/device/t_scanner)
-	mats = list("crystal" = 1,
-				"conductive" = 1)
+	mats = list("crystal_flag" = 1,
+				"electrical_property_>=_6" = 1)
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
 	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."

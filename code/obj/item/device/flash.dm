@@ -1,7 +1,7 @@
 TYPEINFO(/obj/item/device/flash)
 	mats = list("metal" = 3,
-				"conductive" = 5,
-				"crystal" = 5)
+				"electrical_property_>=_6" = 5,
+				"crystal_flag" = 5)
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."

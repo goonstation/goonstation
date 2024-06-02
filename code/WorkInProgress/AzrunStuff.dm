@@ -43,8 +43,8 @@
 
 /datum/manufacture/sub/treads
 	name = "Vehicle Treads"
-	item_requirements = list("metal_dense" = 5,
-							 "conductive" = 2)
+	item_requirements = list("metal_tough" = 5,
+							 "electrical_property_>=_6" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
 	create = 1
 	time = 5 SECONDS
@@ -52,8 +52,8 @@
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
-	item_requirements = list("metal_dense" = 5,
-							 "conductive" = 2)
+	item_requirements = list("metal_tough" = 5,
+							 "electrical_property_>=_6" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
 	create = 1
 	time = 5 SECONDS
