@@ -886,6 +886,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 #define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
 
 ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
+
+#define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
+
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 TYPEINFO(/obj/machinery/conveyor_switch) {
 	mats = list("metal" = 10,
 				"conductive" = 10,
