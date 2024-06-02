@@ -22,6 +22,7 @@ var/list/datum/chem_request/chem_requests = list()
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/chem_request
 	var/datum/chem_request/request = new
 	var/obj/item/card/id/card = null
 	var/max_volume = 400
@@ -120,7 +121,8 @@ var/list/datum/chem_request/chem_requests = list()
 			boutput(user, SPAN_NOTICE("You swipe the ID card."))
 			src.card = id_card
 			tgui_process.try_update_ui(user, src)
-		else src.Attackhand(user)
+		else
+			..()
 
 	science
 		area_name = "Science"
@@ -135,6 +137,7 @@ var/list/datum/chem_request/chem_requests = list()
 	req_access = list(access_chemistry)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/chem_request_receiver
 
 	get_help_message(dist, mob/user)
 		return null
