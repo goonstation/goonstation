@@ -18,7 +18,6 @@ var/global/list/requirement_cache
 	return requirement_cache?[R_id]
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
-ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement
 	var/name = "Unknown" //! Player-facing name of the requirement.
 	var/id //! Internal, unique ID of the requirement to use for the cache list.
@@ -44,6 +43,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	id = "any"
 
 /// All instances of match_material are generated at runtime for the cache
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_material)
 /datum/manufacturing_requirement/match_material
 	var/material_id //! Material ID of the material to check. None if null, some string like "erebite" if used. Meant for exact material checks.
 	New(var/mat_id)
@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 		if (src.material_id != M.getID()) return
 
 
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property
 	var/property_id //! Material property to match by its string identifier
 	var/property_threshold //! What threshold our property has to match or exceed in order to pass.
@@ -160,6 +161,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 #define MATCH_ALL 2 //! Pass if every material flag being checked is set.
 #define MATCH_EXACT 3 //! Pass if every material flag being checked is set, and every material flag not checked is not set.
 
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 /datum/manufacturing_requirement/match_flags
 	var/material_flags //! The flag(s) of the material to match. This can be just one flag, or several with FLAG_A | FLAG_B | ...
 	var/match_type = MATCH_ANY //! How we want to define a successful match. By default, pass as long as at least one flag is set.
@@ -230,6 +232,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 #undef MATCH_ALL
 #undef MATCH_EXACT
 
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 /datum/manufacturing_requirement/match_subtypes
 	var/match_typepath //! The parent type to use for istype() checks
 
@@ -251,6 +254,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	match_typepath = /datum/material/crystal/gemstone
 
 /// Manufacturing requirements which check several conditions at once.
+ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed
 	var/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
 
@@ -316,7 +320,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	)
 /datum/manufacturing_requirement/mixed/energy_extreme
 	name = "Extreme Power Source"
-	id = "energy_high"
+	id = "energy_extreme"
 	requirements = list(
 		/datum/manufacturing_requirement/match_flags/energy,
 		/datum/manufacturing_requirement/match_property/energy/high,
