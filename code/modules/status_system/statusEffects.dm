@@ -2796,3 +2796,67 @@
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/patches_applied
+	id = "patches_applied"
+	desc = "Patch(es) have been applied"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "applied_patches_application", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mob/living/L = src.owner
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		//patches become wasteful with >2 patches applied
+		//gives patches a way to heal quickly if you slap on a whole bunch, but at the cost of flinging chems into nothingness
+
+		// amount applied via touch
+		var/use_volume = 0.5 * mult
+		//amount that gets removed from the patch. Half of this gets transferred into the body
+		var/waste_volume = use_volume * max(length(L.applied_patches) * 0.75, 1)
+
+		for (var/atom/movable/A as anything in L.applied_patches)
+			if (A.reagents?.total_volume)
+				A.reagents.reaction(L, TOUCH, react_volume = use_volume, paramslist = \
+					(A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
+				A.reagents.trans_to(L, waste_volume / 2)
+				A.reagents.remove_any(waste_volume / 2)
+			else
+				qdel(A)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/active_ailments
+	id = "active_ailments"
+	desc = "Owner is currently afflicted with one or more ailments"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "active_ailments_tick", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		var/mob/living/L = src.owner
+
+		if (!isdead(L))
+			for (var/datum/ailment_data/ailment as anything in L.ailments)
+				ailment.stage_act(mult)
+
+		for (var/mob/living/other_mob in hearers(4, L))
+			if (prob(40) && other_mob != L)
+				L.viral_transmission(other_mob, "Airborne", 0)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
