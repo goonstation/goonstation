@@ -410,6 +410,9 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if (W.reagents.has_reagent("menthol") && length(W.reagents.reagent_list) == 1)
 				src.visible_message("<b>[src]</b> sniffles a bit.")
 				src.health = min(initial(src.health), src.health+5)
+		else if(user.a_intent == INTENT_HELP)
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> harmlessly baps [src] with [W]!"), SPAN_NOTICE("You harmlessly bap [src] with [W]."))
+			user.lastattacked = src
 		else
 			src.lastattacker = user
 			..()
