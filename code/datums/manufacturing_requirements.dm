@@ -19,8 +19,9 @@ var/global/list/requirement_cache
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement)
 /datum/manufacturing_requirement
-	var/name = "Unknown" //! Player-facing name of the requirement.
-	var/id //! Internal, unique ID of the requirement to use for the cache list.
+
+	VAR_PROTECTED/name = "Unknown" //! Player-facing name of the requirement.
+	VAR_PROTECTED/id //! Internal, unique ID of the requirement to use for the cache list.
 
 	// ID must be defined, or else we have a problem
 	#ifdef CHECK_MORE_RUNTIMES
@@ -30,7 +31,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 			CRASH("[src] created with null id")
 	#endif
 
-	proc/get_id()
+	proc/getName()
+		return src.name
+
+	proc/getID()
 		return src.id
 
 	/// Checks whether or not the given material meets the requirements enforced by this proc.
@@ -43,7 +47,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 	id = "any"
 
 /// All instances of match_material are generated at runtime for the cache
-ABSTRACT_TYPE(/datum/manufacturing_requirement/match_material)
 /datum/manufacturing_requirement/match_material
 	var/material_id //! Material ID of the material to check. None if null, some string like "erebite" if used. Meant for exact material checks.
 	New(var/mat_id)
@@ -125,10 +128,11 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/insulated
 	name = "Insulated Material"
 	id = "electrical_property_<=_4"
+	property_id = "electrical"
 	property_threshold = 4
 
 	match_property(datum/material/M)
-		return M.getProperty("electrical") <= src.property_threshold
+		return M.getProperty(src.property_id) <= src.property_threshold
 
 /datum/manufacturing_requirement/match_property/insulated/super
 	name = "Highly Insulative"
@@ -139,6 +143,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/tough
 	name = "Tough Material"
 	id = "tough_property_10"
+	property_id = "density"
 	property_threshold = 10
 
 	match_property(datum/material/M)
@@ -256,7 +261,18 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 /// Manufacturing requirements which check several conditions at once.
 ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed
+
 	var/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
+
+	New()
+		. = ..()
+		var/list/datum/manufacturing_requirement/requirement_instances = list()
+		var/datum/manufacturing_requirement/requirement_id
+
+		for (var/datum/manufacturing_requirement/requirement_path in requirements)
+			requirement_id = initial(requirement_path.id)
+			requirement_instances += getRequirement(requirement_id)
+		src.requirements = requirement_instances
 
 	is_match(datum/material/M)
 		. = ..()
