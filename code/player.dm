@@ -54,6 +54,8 @@
 	var/joined_names = list()
 	/// Antag tokens this person has, null until it's fetched
 	var/antag_tokens = null
+	/// local hub medal cache
+	var/list/medal_cache = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -70,6 +72,8 @@
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
 		src.last_death_time = world.timeofday
+		SPAWN(0)
+			cache_medals()
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -296,6 +300,10 @@
 				logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
 
 		return success
+
+	/// caches all of a players medals locally for future has_medal checks
+	proc/cache_medals()
+		medal_cache = get_all_medals()
 
 	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/has_medal(medal_name)
