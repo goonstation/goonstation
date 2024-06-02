@@ -26,8 +26,8 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	#ifdef CHECK_MORE_RUNTIMES
 	New()
 		. = ..()
-		if (isnull(id))
-			CRASH("[src] created with a null id")
+		if (isnull(src.id))
+			CRASH("[src] created with null id")
 	#endif
 
 	proc/get_id()
@@ -74,7 +74,16 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	/// Material property to match by its string identifier
 	var/property_id
 	/// What threshold our property has to match or exceed in order to pass.
-	var/property_threshold = 0
+	var/property_threshold
+
+	#ifdef CHECK_MORE_RUNTIMES
+	New()
+		. = ..()
+		if (isnull(src.property_id))
+			CRASH("[src] created with null property_id")
+		if (isnull(src.property_threshold))
+			CRASH("[src] created with null property_threshold")
+	#endif
 
 	is_match(var/datum/material/M)
 		. = ..()
