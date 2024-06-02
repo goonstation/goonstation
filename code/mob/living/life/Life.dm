@@ -144,7 +144,6 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
@@ -164,7 +163,6 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
-	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 	add_lifeprocess(/datum/lifeprocess/faith)
