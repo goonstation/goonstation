@@ -519,8 +519,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Helper to play the grump with or without a grump message/sound. Just as a note the sound is appropriate when the machine is reporting the error,
 	/// if its a grump that the player probably had to think about or find out then theres no "reason" for there to be sound
 	proc/grump_message(mob/target = null, var/message = null, var/sound = FALSE)
-		if (!isnull(message) && !isnull(target))
-			boutput(target, SPAN_ALERT(message))
+		if (!isnull(message))
+			if (!isnull(target))
+				boutput(target, SPAN_ALERT(message))
+			else
+				src.visible_message(SPAN_ALERT(message))
 		if (sound)
 			playsound(src.loc, src.sound_grump, 50, 1)
 
@@ -1607,34 +1610,62 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return P
 		return null
 
-	/// Returns associative list of manufacturing requirement to material piece reference, but does not guarantee all item_paths are satisfied or that
+	/// Returns associative list of manufacturing requirement to material piece references, but does not guarantee all item_paths are satisfied or that
 	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
 	proc/get_materials_needed(datum/manufacture/M)
 		var/list/C = src.get_contents()
-
-		var/list/mats_used = list()
-		var/list/mats_projected = list()
-		for (var/obj/item/material_piece/P in C)
-			mats_projected["\ref[P]"] = P.amount * 10
+		var/list/list/mats_used = list()
+		var/list/mats_reserved = list()
 
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			var/required_amount = M.item_requirements[R]
-			for (var/obj/item/material_piece/P in C)
-				var/P_ref = "\ref[P]"
-				if (mats_projected[P_ref] < required_amount)
-					continue
-				if (R.is_match(P.material))
-					mats_used[R] = P_ref
-					mats_projected[P_ref] -= required_amount
-					break
+			mats_used[R] = src.get_materials_for_requirement(R, M.item_requirements[R], mats_reserved)
 
 		return mats_used
+
+	/// Add value to list[key], but set list[key] to initial if it doesn't exist yet.
+	#define INCREMENT_ASSOCIATED_LIST(list_varname, key, value, initial) \
+		list_varname[key] ||= initial; \
+		list_varname[key] += value; \
+
+	/// Get the materials in the material storage which satisfy this requirement. Considers the amount of materials being reserved for
+	/// the blueprint already based off the list provided. This proc WILL modify mats_reserved.
+	proc/get_materials_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
+		var/list/C = src.get_contents()
+		var/list/materials_used = list() //! An associative list of references to material pieces to the amount of that material being used.
+		for (var/obj/item/material_piece/P as anything in C)
+			if (!R.is_match(P.material))
+				continue
+			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
+			var/P_ref = "\ref[P]"
+			var/amount_free = P.amount - mats_reserved[P_ref]
+			var/amount_to_use = min(amount_free, required_amount)
+			INCREMENT_ASSOCIATED_LIST(mats_reserved, P_ref, amount_to_use, 0)
+			INCREMENT_ASSOCIATED_LIST(materials_used, P_ref, amount_to_use, 0)
+
+		return materials_used
+
+	#undef INCREMENT_ASSOCIATED_LIST
 
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == length(M.item_requirements)) // we have enough materials, so return the materials list, else return null
-			return mats_used
+		for (var/datum/manufacturing_requirement/R in mats_used)
+			var/amount_needed = M.item_requirements[R]
+			var/amount_used = 0
+			for (var/material_piece_ref in mats_used[R])
+				amount_used += mats_used[R][material_piece_ref]
+
+			if (amount_used < amount_needed)
+				return
+			else if (amount_used > amount_needed)
+				// This scenario needs to be reported because get_materials_needed should **NEVER** reserve more materials for a blueprint than it needs.
+				var/error_msg = "get_materials_for_requirement somehow reserved more materials than necessary for [M] using [src.get_contents()]"
+				logTheThing(LOG_DEBUG, src, error_msg)
+				#ifdef CHECK_MORE_RUNTIMES
+				CRASH(error_msg)
+				#endif
+
+		return mats_used
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
