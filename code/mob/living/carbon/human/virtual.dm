@@ -4,10 +4,11 @@
 	var/isghost = 0 //Should contain a string of the original ghosts real_name
 	var/escape_vr = 0
 
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_EQUIPPED)
 	default_speech_output_channel = SAY_CHANNEL_DEAD
 
-	New()
+	New(newLoc, is_ghost)
 		..()
 		sound_burp = 'sound/voice/virtual_gassy.ogg'
 		//sound_malescream = 'sound/voice/virtual_scream.ogg'
@@ -15,6 +16,10 @@
 		sound_fart = 'sound/voice/virtual_gassy.ogg'
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
+		if (!is_ghost)
+			src.ensure_say_tree().AddOutput(SPEECH_OUTPUT_SPOKEN)
+			src.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_DEADCHAT)
+			src.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 
