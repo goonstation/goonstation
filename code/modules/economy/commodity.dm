@@ -150,7 +150,7 @@
 	value = 0.9
 
 /datum/commodity/ore/gemstone
-	comname = "gemstone_subtypes"
+	comname = "Gemstone"
 	comtype = /obj/item/raw_material/gemstone
 	onmarket = 1
 	value = 4
