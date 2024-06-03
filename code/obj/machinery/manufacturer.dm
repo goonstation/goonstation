@@ -42,6 +42,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/dismantle_stage = 0
 	var/hacked = FALSE
 	var/malfunction = FALSE
+	var/emagged = FALSE //! If we're emagged, do a whole bunch of wacky visual effects for the UI
 	var/power_wire_cut = FALSE
 	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
 	var/output_target = null
@@ -402,6 +403,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			))
 		return rockboxes
 
+	#define CHANCE_REPLACE_TEXT 15 //! How likely we are to jumble up a given character in a string
+	/// Make some text look all jumbled and fucked up. Scramble word order and some given words.
+	proc/emag_text(var/text)
+		var/new_text = ""
+		for (var/i in 1 to length(text))
+			if ((text[i] != " ") && prob(CHANCE_REPLACE_TEXT))
+				new_text += pick(numbersAndLetters)
+			else
+				new_text += text[i]
+		if (phrase_log.is_uncool(new_text))
+			return text // dont make the machine say bad shit
+		return new_text
+
+	#undef CHANCE_REPLACE_TEXT
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
 	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
@@ -450,7 +465,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
 
-		return list(
+		. = list(
 			"name" = M.name,
 			"category" = M.category,
 			"requirement_data" = requirement_data,
@@ -464,6 +479,19 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"byondRef" = "\ref[M]",
 			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
 		)
+
+		if (src.emagged)
+			.["name"] = src.emag_text(.["name"])
+
+			var/new_item_names = list()
+			for (var/item_name in .["item_names"])
+				new_item_names += src.emag_text(item_name)
+			.["item_names"] = new_item_names
+
+			var/new_item_descriptions = list()
+			for (var/item_desc in .["item_descriptions"])
+				new_item_descriptions += src.emag_text(item_desc)
+			.["item_descriptions"] = new_item_descriptions
 
 	attack_hand(mob/user)
 		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
@@ -780,6 +808,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(usr, "That card doesn't have an account anymore, you might wanna get that checked out.", sound = TRUE)
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			src.emagged = TRUE
+			src.malfunction = TRUE
+			src.flip_out()
 		if (!src.hacked)
 			src.hacked = TRUE
 			if(user)
