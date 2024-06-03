@@ -255,6 +255,19 @@ datum
 			thirst_value = 2
 			value = 3
 
+		fooddrink/shirley_temple
+			name = "Shirley Temple"
+			id = "shirley_temple"
+			fluid_r = 246
+			fluid_g = 219
+			fluid_b = 147
+			transparency = 140
+			taste = list("bright", "saccharine")
+			description = "A sickly-sweet mix on a base of ginger ale. She didn't actually like this drink, you know."
+			reagent_state = LIQUID
+			thirst_value = 0.85
+			value = 3
+
 		fooddrink/alcoholic
 			name = "alcoholic reagent parent"
 			id = "alcoholic_parent"
@@ -2244,8 +2257,7 @@ datum
 			fluid_b = 0
 			transparency = 77
 			taste = "hot"
-			addiction_prob = 1 // heh
-			addiction_prob2 = 10
+			addiction_prob = 0.1 // heh
 			addiction_min = 2
 			max_addiction_severity = "LOW"
 			//penetrates_skin = 1
@@ -2427,8 +2439,7 @@ datum
 			fluid_b = 0
 			fluid_g = 255
 			transparency = 255
-			addiction_prob = 1//5 // hey man some people really like weird cheese
-			addiction_prob2 = 10
+			addiction_prob = 0.1 // hey man some people really like weird cheese
 			addiction_min = 5
 			max_addiction_severity = "LOW"
 			taste = "weird"
@@ -2578,8 +2589,7 @@ datum
 			transparency = 170
 			overdose = 25
 			depletion_rate = 0.5
-			addiction_prob = 4
-			addiction_prob2 = 10
+			addiction_prob = 0.4
 			var/tickcounter = 0
 			thirst_value = -0.2
 			bladder_value = 0.04
@@ -2638,8 +2648,7 @@ datum
 			taste = "herbal"
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 1
-			addiction_prob2 = 1
+			addiction_prob = 0.01
 			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
 			caffeine_content = 0.2
@@ -2674,8 +2683,7 @@ datum
 			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 1
-			addiction_prob2 = 2
+			addiction_prob = 0.02
 			addiction_min = 10
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -4358,8 +4366,7 @@ datum
 			fluid_r = 255
 			fluid_b = 50
 			fluid_g = 255
-			addiction_prob = 2//10
-			addiction_prob2 = 10
+			addiction_prob = 0.2
 			addiction_min = 5
 			max_addiction_severity = "LOW"
 			overdose = 50
@@ -4790,8 +4797,7 @@ datum
 			thirst_value = 1
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 1
-			addiction_prob2 = 2
+			addiction_prob = 0.02
 			addiction_min = 10
 			var/list/flushed_reagents = list("cholesterol")
 

@@ -25571,13 +25571,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/storage/emergency2)
-"bOP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark/start/job/janitor,
-/turf/simulated/floor,
-/area/station/janitor/supply)
 "bOQ" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -36870,6 +36863,13 @@
 	name = "organic floor"
 	},
 /area/space)
+"jjB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/janitor,
+/turf/simulated/floor,
+/area/station/janitor/supply)
 "jkA" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -41012,6 +41012,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"pjN" = (
+/obj/landmark/gps_waypoint,
+/obj/landmark/start/job/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
 "pkc" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
@@ -42693,11 +42698,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west,
 /area/station/bridge)
-"rIG" = (
-/obj/landmark/gps_waypoint,
-/obj/landmark/start/job/janitor,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
 "rJk" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -44374,18 +44374,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"uJz" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/manufacturer/general{
-	free_resource_amt = 0;
-	free_resources = null
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
 "uMA" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -46584,6 +46572,17 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"ybR" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/manufacturer/general{
+	free_resources = list()
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "ycT" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -80734,7 +80733,7 @@ aCX
 aCX
 aHC
 aIe
-rIG
+pjN
 aIW
 aID
 aJS
@@ -85924,7 +85923,7 @@ bII
 cgr
 bKD
 qur
-uJz
+ybR
 aOL
 bPs
 bLY
@@ -101327,7 +101326,7 @@ aud
 bLr
 bMA
 bNM
-bOP
+jjB
 bPO
 bMA
 bLs
