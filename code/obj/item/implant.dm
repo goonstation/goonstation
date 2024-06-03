@@ -583,6 +583,7 @@ THROWING DARTS
 			H.changeStatus("knockdown", 1 SECOND)
 			H.force_laydown_standup()
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
+			H.update_arrest_icon()
 
 		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1, 1, 0)
@@ -591,6 +592,7 @@ THROWING DARTS
 			H.force_laydown_standup()
 			H.emote("scream")
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
+			H.update_arrest_icon()
 
 	do_process(var/mult = 1)
 		if (!ishuman(src.owner))
@@ -621,6 +623,9 @@ THROWING DARTS
 	on_remove(var/mob/M)
 		M.delStatus("derevving")
 		. = ..()
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			H.update_arrest_icon()
 
 
 // dumb joke

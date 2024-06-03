@@ -80,7 +80,8 @@
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 			getPlayerNotes.queryParams = list(
 				"filters" = list(
-					"ckey" = key_to_check
+					"ckey" = key_to_check,
+					"exact" = TRUE
 				),
 				"page" = page,
 				"per_page" = 10
