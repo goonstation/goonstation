@@ -26,9 +26,8 @@ datum
 		var/fluid_r = 0
 		var/fluid_b = 0
 		var/fluid_g = 255
-		var/addiction_prob = 0
-		var/addiction_prob2 = 100 // when addiction is being rolled, it's rolled as prob(addiction_prob) && prob(addiction_prob2), it won't roll at all if addiction_prob is 0 though
-		var/addiction_min = 0 // how high the tally for this addiction needs to be before addiction_prob starts rolling
+		var/addiction_prob = 0 // per-tick chance that addiction will surface
+		var/addiction_min = 10 // how high the tally for this addiction needs to be before addiction_prob starts rolling
 		var/max_addiction_severity = "HIGH" // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
 		var/dispersal = 4 // The range at which this disperses from a grenade. Should be lower for heavier particles (and powerful stuff).
 		var/volatility = 0 // Volatility determines effectiveness in pipebomb. This is 0 for a bad additive, otherwise a positive number which linerally affects explosive power.
@@ -160,11 +159,25 @@ datum
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*touch_modifier,self.data)
 							did_not_react = 0
-					if (ishuman(M) && hygiene_value && method == TOUCH)
+					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water))
+							animate_shake(H)
+							if (prob(50))
+								H.emote("scream")
+							else
+								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
+							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
+								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
-								H.sims.affectMotive("Hygiene", volume * hygiene_value)
+								var/hygiene_restore = hygiene_value
+								if (H.mutantrace.aquaphobic)
+									if (istype(src, /datum/reagent/oil))
+										hygiene_restore = 3
+									else if (istype(src, /datum/reagent/water))
+										hygiene_restore = -3
+								H.sims.affectMotive("Hygiene", volume * hygiene_restore)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
@@ -258,8 +271,8 @@ datum
 		proc/on_mob_life_complete(var/mob/M)
 			.=0
 
-		proc/on_plant_life(var/obj/machinery/plantpot/P)
-			if (!P) return
+		proc/on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+			if (!P || !growth_tick) return
 
 		proc/check_overdose(var/mob/M, var/mult = 1)
 			if (!M || !M.reagents)
@@ -301,11 +314,11 @@ datum
 			if (isliving(M))
 				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
-					addProb = round(addProb / 2)
+					addProb /= 2
 					rate /= 2
 					//DEBUG_MESSAGE("strongwilled: addProb [addProb], rate [rate]")
 				if (H.traitHolder.hasTrait("addictive_personality"))
-					addProb = round(addProb * 2)
+					addProb *= 2
 					rate *= 2
 					//DEBUG_MESSAGE("addictive_personality: addProb [addProb], rate [rate]")
 			if (!holder.addiction_tally)
@@ -314,7 +327,7 @@ datum
 			holder.addiction_tally[src.id] += rate
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
-			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
+			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
 				AD = new
 				AD.associated_reagent = src.name

@@ -18,6 +18,9 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
 	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
+	hat_offset_y = -15 // offsets for hattable component
+	hat_offset_x = 0
+	compatible_species = list("human", "cow", "werewolf", "flubber") // No wigs for martians / blobs
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)

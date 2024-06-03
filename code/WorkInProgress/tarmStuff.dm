@@ -45,7 +45,7 @@
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null
 	armor_ignored = 0.66
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	shot_volume = 66
 	window_pass = 1
 
@@ -137,7 +137,7 @@
 	casing = /obj/item/casing/cannon
 	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -175,7 +175,6 @@
 	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
-	var/last_shot_time = 0
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)
@@ -191,10 +190,8 @@
 		. = ..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
 		shotcount = 0
-		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
-		last_shot_time = TIME
+		. = ..()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
@@ -238,7 +235,7 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -351,7 +348,7 @@
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -377,7 +374,9 @@
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/deagle50cal
-
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new default_magazine
@@ -413,7 +412,7 @@
 	dissipation_delay = 5
 	dissipation_rate = 5
 	implanted = /obj/item/implant/projectile/bullet_50
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
@@ -455,7 +454,7 @@
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	implanted = null
 
 	on_hit(atom/hit)

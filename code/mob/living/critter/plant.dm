@@ -6,7 +6,7 @@
 	var/datum/plantgenes/plantgenes = null //! saves the plantgenes of the critter. Important for seed creation as well as scaling with plant attributes
 	var/generation = 0 //! For genetics tracking.
 	var/list/growers = null //! This contains people who contributed to the plant. For AI purposes
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 /mob/living/critter/plant/valid_target(var/mob/living/potential_target)
 	if (potential_target in src.growers) return FALSE
@@ -48,22 +48,10 @@
 	// We need to pass the plantgenes from the plant to our new lovely botany pet
 	var/datum/plantgenes/new_genes = src.plantgenes
 
+	// Copy the genes from the plant we're harvesting to the new piece of produce.
 	HYPpassplantgenes(passed_genes,new_genes)
 	src.generation = harvested_plantpot.generation
-	// Copy the genes from the plant we're harvesting to the new piece of produce.
-
-	if(origin_plant.hybrid)
-		// We need to do special shit with the genes if the plant is a spliced
-		// hybrid since they run off instanced datums rather than referencing
-		// a specific already-existing one.
-		var/plantType = origin_plant.type
-		var/datum/plant/hybrid = new plantType(src)
-		for(var/V in origin_plant.vars)
-			if(issaved(origin_plant.vars[V]) && V != "holder")
-				hybrid.vars[V] = origin_plant.vars[V]
-		src.planttype = hybrid
-	else
-		src.planttype = origin_plant
+	src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
 
 	// If the plant this critter was harvested from was damaged, we damage the critter as well
 

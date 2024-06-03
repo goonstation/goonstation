@@ -168,12 +168,6 @@
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
 
-	cdc
-		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
-		spawn_contents = list(/obj/item/reagent_containers/syringe,
-		/obj/item/paper/cdc_pamphlet)
-
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
 	/obj/item/gun/russianrevolver)
@@ -548,7 +542,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
 		/obj/item/old_grenade/smoke = 2,
-		/obj/item/dagger/syndicate/specialist,
+		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -717,14 +711,14 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/raw_material/miracle = 2,
 		/obj/item/raw_material/telecrystal = 5,
 		/obj/item/raw_material/cerenkite = 5,
-		/obj/item/mining_tool/powerhammer)
+		/obj/item/mining_tool/powered/hammer)
 
 	ore2
 		spawn_contents = list(/obj/item/raw_material/plasmastone = 5,
 		/obj/item/raw_material/uqill = 5,
 		/obj/item/clothing/head/helmet/space/industrial,
 		/obj/item/clothing/suit/space/industrial,
-		/obj/item/mining_tool/power_pick)
+		/obj/item/mining_tool/powered/pickaxe)
 
 	ore3
 		spawn_contents = list(/obj/item/raw_material/cobryl = 5,
@@ -740,7 +734,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/mining_tool)
 
 	rad
-		spawn_contents = list(/obj/item/clothing/suit/rad,
+		spawn_contents = list(/obj/item/clothing/suit/hazard/rad,
 		/obj/item/mine/radiation = 5,
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/pill_bottle/antirad,
@@ -818,3 +812,27 @@ TYPEINFO(/obj/storage/crate/chest)
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
 		/obj/item/pipebomb/bomb/engineering = 2)
+
+// evil nasty biohazard crate
+/obj/storage/crate/stxcrate
+	name = "saxitoxin grenade crate"
+	desc = "A menacing crate to store deadly saxitoxin grenades."
+	icon_state = "stxcrate"
+	icon_opened = "stxcrate_open"
+	icon_closed = "stxcrate"
+
+	filled_6
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,1)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
+
+	filled_12
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,2)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()

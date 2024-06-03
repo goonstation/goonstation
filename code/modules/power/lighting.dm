@@ -7,6 +7,13 @@
 // defines moved to _setup.dm by ZeWaka
 #define INSTALL_WALL 1
 #define INSTALL_FLOOR 2
+/// Amount of time it takes to attach a light fixture to a tile by hand
+#define LIGHT_FIXTURE_ATTACH_TIME 4 SECONDS
+/// Amount of time it takes to remove a light fixture from a tile by hand
+#define LIGHT_FIXTURE_DETACH_TIME 2 SECONDS
+/// Probabilty a worn/burned out light will break
+#define WORN_LIGHT_BREAKPROB 5
+
 TYPEINFO(/obj/item/light_parts)
 	mats = 4
 
@@ -31,11 +38,12 @@ TYPEINFO(/obj/item/light_parts)
 	update_icon()
 		..()
 		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
-		src.UpdateOverlays(light_image, "light")
+		src.AddOverlays(light_image, "light")
 
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
+	name = "bulb fixture parts"
 	icon_state = "bulb-fixture"
 	fixture_type = /obj/machinery/light/small
 	installed_icon_state = "bulb1"
@@ -44,6 +52,7 @@ TYPEINFO(/obj/item/light_parts)
 	light_type = /obj/item/light/bulb
 
 /obj/item/light_parts/floor
+	name = "floor fixture parts"
 	icon_state = "floor-fixture"
 	fixture_type = /obj/machinery/light/small/floor/netural
 	installed_icon_state = "floor1"
@@ -105,7 +114,7 @@ TYPEINFO(/obj/item/light_parts)
 	if(!instantly)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the [src] to [target]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/item/light_parts/proc/finish_attaching,\
+		SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_ATTACH_TIME, /obj/item/light_parts/proc/finish_attaching,\
 			list(target, user, dir), src.icon, src.icon_state, null, null)
 	else
 		finish_attaching(target, user, dir)
@@ -379,7 +388,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				..()
 				current_lamp.light_status = LIGHT_BROKEN
 
-
+/obj/machinery/light/small/uninstall_fixture()
+	var/obj/item/light_parts/bulb/parts = new /obj/item/light_parts/bulb(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 //floor lights
 /obj/machinery/light/small/floor
@@ -439,6 +451,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			..()
 			current_lamp.light_status = LIGHT_BROKEN
 
+/obj/machinery/light/small/floor/uninstall_fixture()
+	var/obj/item/light_parts/floor/parts = new /obj/item/light_parts/floor(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
+
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
 	base_state = "ebulb"
@@ -483,10 +500,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	desc = "A small light used to guide pods into hangars."
 	icon_state = "runway10"
 	base_state = "runway1"
-	fitting = "bulb"
+	fitting = "floor"
 	brightness = 0.5
-	light_type = /obj/item/light/bulb
-	allowed_type = /obj/item/light/bulb
+	light_type = /obj/item/light/bulb/runway
+	allowed_type = /obj/item/light/bulb/runway
 	plane = PLANE_NOSHADOW_BELOW
 	on = 1
 	wallmounted = 0
@@ -663,7 +680,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	brightness = 1
 	New()
 		..()
-		current_lamp.breakprob = 6.25
+		current_lamp.breakprob = WORN_LIGHT_BREAKPROB
 
 // the desk lamp
 /obj/machinery/light/lamp
@@ -712,7 +729,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	New()
 		..()
-		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
+		src.AddOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
 
 	bright
 		brightness = 1.8
@@ -814,19 +831,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	SPAWN(0)
 		// now check to see if the bulb is burned out
-		if(current_lamp.light_status == LIGHT_OK)
-			if(on && current_lamp.rigged)
-				if (current_lamp.rigger)
-					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
-				explode()
-			if(on && prob(current_lamp.breakprob))
-				current_lamp.light_status = LIGHT_BURNED
-				icon_state = "[base_state]-burned"
-				on = 0
-				light.disable()
-				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
+		switch(current_lamp.light_status)
+			if(LIGHT_OK)
+				if(!on)
+					return
+				if(current_lamp.rigged)
+					if (current_lamp.rigger)
+						message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+						logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
+					explode()
+				if(prob(current_lamp.breakprob))
+					src.do_break()
+				if(prob(current_lamp.burnprob))
+					src.do_burn_out()
+			if (LIGHT_BURNED)
+				if(prob(current_lamp.breakprob))
+					src.do_break()
 
 /obj/machinery/light/proc/update_icon_state()
 	if (!inserted_lamp)
@@ -843,11 +863,37 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				icon_state = "[base_state]-broken"
 				on = 0
 
+/obj/machinery/light/proc/do_break()
+	current_lamp.light_status = LIGHT_BROKEN
+	current_lamp.update()
+	icon_state = "[base_state]-broken"
+	on = 0
+	light.disable()
+	elecflash(src, radius = 1, power = 2, exclude_center = 0)
+	logTheThing(LOG_STATION, null, "Light '[name]' broke itself (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
+
+/obj/machinery/light/proc/do_burn_out()
+	var/original_brightness = src.light.brightness
+	playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)
+	src.light.set_brightness(original_brightness * 3)
+	logTheThing(LOG_STATION, null, "Light '[name]' burned out (burnprob: [current_lamp.burnprob]) at ([log_loc(src)])")
+	SPAWN(0.2 SECONDS)
+		src.light.set_brightness(original_brightness)
+		src.icon_state = "[base_state]-burned"
+		src.current_lamp.breakprob = WORN_LIGHT_BREAKPROB
+		src.current_lamp.light_status = LIGHT_BURNED
+		src.current_lamp.update()
+		playsound(src, 'sound/effects/sparks4.ogg', 40, TRUE)
+		src.on = FALSE
+		src.light.disable()
+
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/seton(var/s)
+	var/old_on = on
 	on = (s && current_lamp.light_status == LIGHT_OK)
-	update()
+	if(s != old_on) //don't update if trying to set to the same state
+		update()
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
@@ -967,14 +1013,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				boutput(user, "That's not safe with the power on!")
 				return
 			if (candismantle)
-				boutput(user, "You begin to unscrew the fixture from the wall...")
+				boutput(user, "You begin to loosen the fixture's screws...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				if (!do_after(user, 2 SECONDS))
-					return
-				boutput(user, "You unscrew the fixture from the wall.")
-				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
-				parts.copy_light(src)
-				qdel(src)
+				SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_DETACH_TIME, PROC_REF(uninstall_fixture),list(), src.icon, src.icon_state,\
+				 "[user] finishes uninstalling \the [src].", INTERRUPT_MOVE|INTERRUPT_ACT|INTERRUPT_ATTACKED|INTERRUPT_STUNNED|INTERRUPT_ACTION)
 				return
 			else
 				boutput(user, "You can't seem to dismantle it.")
@@ -1007,6 +1049,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		else
 			boutput(user, "You hit the light!")
 
+/obj/machinery/light/proc/uninstall_fixture()
+	var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
@@ -1165,7 +1211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // called when on fire
 
-/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(prob(max(0, exposed_temperature - 1650)))   //0% at <400C, 100% at >500C   // previous value for subtraction was -673. tons of lights exploded Azungar edit: Nudged this up a bit just in case.
 		broken()
@@ -1210,10 +1256,11 @@ TYPEINFO(/obj/item/light)
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
+	m_amt = 60
 	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/breakprob = 0	// number of times switched
-	m_amt = 60
+	var/breakprob = 0 //! Chance for the bulb to burst
+	var/burnprob = 1 //! Chance for the bulb to burn out
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
 	var/color_r = 1
@@ -1478,6 +1525,7 @@ TYPEINFO(/obj/item/light)
 		desc = "A frosted red bulb."
 		icon_state = "bulb-emergency"
 		base_state = "bulb-emergency"
+		burnprob = 0
 		color_r = 1
 		color_g = 0.2
 		color_b = 0.2
@@ -1562,6 +1610,9 @@ TYPEINFO(/obj/item/light)
 			color_g = 0.81
 			color_b = 0.99
 
+	runway
+		burnprob = 0
+
 /obj/item/light/big_bulb
 	name = "beacon bulb"
 	desc = "An immense replacement light bulb."
@@ -1641,6 +1692,9 @@ TYPEINFO(/obj/item/light)
 	else
 		return ..()
 
+#undef WORN_LIGHT_BREAKPROB
+#undef LIGHT_FIXTURE_ATTACH_TIME
+#undef LIGHT_FIXTURE_DETACH_TIME
 
 #undef INSTALL_WALL
 #undef INSTALL_FLOOR

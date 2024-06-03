@@ -1,5 +1,6 @@
-/mob/proc/say()
-	return
+/mob/proc/say(message)
+	if (message)
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 /mob/proc/whisper(message, forced=FALSE)
 	return
@@ -198,7 +199,7 @@
 		boutput(usr, "<b>Deadchat is currently disabled.</b>")
 		return
 
-	message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
@@ -298,7 +299,7 @@
 		message = L.check_singing_prefix(message)
 
 	//i guess this caused some real ugly text huh
-	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
+	//message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
@@ -575,7 +576,7 @@
 		if (dead_check && isdead(src))
 			src.emote_allowed = FALSE
 			return FALSE
-		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
+		if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
 			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
@@ -609,7 +610,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
+	msg = trimtext(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_ooc)
@@ -666,7 +667,7 @@
 			ooc_class = "newbeeooc"
 			ooc_icon = "Newbee"
 
-		if( src.client.cloud_available() && src.client.cloud_get("donor") )
+		if (src.client.player.cloudSaves.getData("donor") )
 			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
 
 		if (src.client.has_contestwinner_medal)
@@ -706,7 +707,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
+	msg = trimtext(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_looc)
@@ -807,7 +808,7 @@
 
 		boutput(C, rendered)
 		var/mob/M = C.mob
-		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
+		if(looc_text && speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
 			looc_text.show_to(C)
 
 	logTheThing(LOG_OOC, src, "LOOC: [msg]")
@@ -964,7 +965,7 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
+	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("unconscious")))
 		if (prob(20))
 			boutput(src, "<I>... You can almost hear something ...</I>")
 			if (isliving(src))

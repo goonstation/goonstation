@@ -1,10 +1,13 @@
 
 var/global/list/list/turf/landmarks = list()
 
-proc/pick_landmark(name, default = null)
+proc/pick_landmark(name, default = null, ignorespecific = list())
 	if(!(name in landmarks))
 		return default
-	return pick(landmarks[name])
+	if (ignorespecific == list())
+		return pick(landmarks[name])
+	else
+		return pick(landmarks[name] - ignorespecific)
 
 /obj/landmark
 	name = "landmark"
@@ -334,7 +337,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
-	icon_state = "xp"
+	icon_state = "escape_pod_succ"
 
 	New()
 		src.data = src.dir
@@ -490,6 +493,33 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/lrt/voiddiner
 	name = "Void Diner"
+
+/obj/landmark/lrt/icemoon
+	name = "Moon X15"
+
+/obj/landmark/lrt/solarium
+	name = "Sol"
+
+/obj/landmark/lrt/biodome
+	name = "Moon X05"
+
+/obj/landmark/lrt/mars_outpost
+	name = "Mars"
+
+/obj/landmark/lrt/io
+	name = "Io"
+
+/obj/landmark/lrt/luna_museum
+	name = "Luna"
+
+/obj/landmark/lrt/ainley
+	name = "Ainley Staff Retreat"
+
+/obj/landmark/lrt/meat_derelict
+	name = "Derelict Station"
+
+/obj/landmark/lrt/observatory
+	name = "Observatory"
 
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN

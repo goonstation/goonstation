@@ -63,7 +63,7 @@ TYPEINFO(/obj/item/storage/wall)
 		if (prob(50))
 			src.storage.add_contents(new /obj/item/clothing/head/helmet/firefighter(src))
 		if (prob(30))
-			src.storage.add_contents(new /obj/item/clothing/suit/fire(src))
+			src.storage.add_contents(new /obj/item/clothing/suit/hazard/fire(src))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		if (prob(10))
 			src.storage.add_contents(new /obj/item/storage/firstaid/fire(src))
@@ -179,7 +179,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
+	/obj/item/mining_tool/powered/pickaxe,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining)
 
@@ -193,6 +193,19 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
 	/obj/item/cargotele)
+
+/obj/item/storage/wall/bar
+	name = "bartending supplies"
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,
+	/obj/item/storage/box/cocktail_doodads,
+	/obj/item/storage/box/cocktail_umbrellas,
+	/obj/item/storage/box/glassbox,
+	/obj/item/hand_labeler,
+	/obj/item/storage/firstaid/toxin,
+	/obj/item/device/reagentscanner,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/dropper/mechanical,
+	/obj/item/storage/box/ic_cones = 2)
 
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
@@ -300,6 +313,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/sunhat/sunhatg = 1,
+		/obj/item/clothing/head/sunhat/sunhaty = 1,
 		/obj/item/clothing/head/serpico = 1,
 		/obj/item/clothing/head/cowboy = 1)
 

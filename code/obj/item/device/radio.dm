@@ -68,7 +68,7 @@ var/list/headset_channel_lookup
 		world.log << "[src] ([src.type]) has a frequency of [src.frequency], sanitizing."
 		src.frequency = sanitize_frequency(src.frequency)
 
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "main", frequency)
 
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -97,7 +97,7 @@ var/list/headset_channel_lookup
 			var/frequency_id = src.secure_frequencies["[sayToken]"]
 			if (frequency_id)
 				if (!src.secure_connections["[sayToken]"])
-					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
+					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
 
@@ -115,7 +115,7 @@ var/list/headset_channel_lookup
 	if (oldConnection)
 		qdel(oldConnection)
 
-	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFrequency]", newFrequency)
+	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "f[newFrequency]", newFrequency)
 	src.secure_frequencies["[frequencyToken]"] = newFrequency
 	return
 
@@ -191,7 +191,7 @@ var/list/headset_channel_lookup
 				usr.u_equip(R)
 				usr.put_in_hand_or_drop(T)
 				R.set_loc(T)
-				T.attack_self(usr)
+				T.AttackSelf(usr)
 				return
 
 			return TRUE
@@ -381,17 +381,16 @@ var/list/headset_channel_lookup
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-	var/datum/game_mode/conspiracy/N = ticker.mode
-	var/protected_frequency = null
-	if(istype(N))
-		protected_frequency = N.agent_radiofreq //groups conspirator frequency as a traitor one and protects it along with nukies
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
-		for (var/mob/living/L in radio_brains)
-			if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
-				continue
-			receive += L
+	var/protected = src.protected_radio || !isnull(src.traitorradio) || (display_freq in protected_frequencies)
+	for (var/mob/living/L in radio_brains)
+		if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
+			continue
+		else if(radio_brains[L] <= 3 && protected)
+			continue
+		receive += L
 
+	if(!protected)
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
@@ -649,9 +648,9 @@ var/list/headset_channel_lookup
 		bubbleOverride = global.living_speech_bubble
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		if (istype(src, /obj/item/device/radio/intercom))
-			UpdateOverlays(bubbleOverride, "speech_bubble")
+			AddOverlays(bubbleOverride, "speech_bubble")
 			SPAWN(1.5 SECONDS)
-				UpdateOverlays(null, "speech_bubble")
+				ClearSpecificOverlays("speech_bubble")
 
 /obj/item/device/radio/examine(mob/user)
 	. = ..()
@@ -676,7 +675,7 @@ var/list/headset_channel_lookup
 		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
-		src.attack_self(M)
+		src.AttackSelf(M)
 		//Foreach goto(83)
 	src.add_fingerprint(user)
 	return
@@ -736,16 +735,15 @@ TYPEINFO(/obj/item/radiojammer)
 	proc/add_portal(obj/portal)
 		LAZYLISTADD(portals_pointed_at_us, portal)
 		if(length(portals_pointed_at_us) == 1)
-			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
-			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
+			src.AddOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
+			src.AddOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
 				plane=PLANE_SELFILLUM, blend_mode=BLEND_ADD, alpha=100), "portal_indicator_light")
 
 	proc/remove_portal(obj/portal)
 		if(portal in portals_pointed_at_us)
 			LAZYLISTREMOVE(portals_pointed_at_us, portal)
 			if(!length(portals_pointed_at_us))
-				src.UpdateOverlays(null, "portal_indicator")
-				src.UpdateOverlays(null, "portal_indicator_light")
+				src.ClearSpecificOverlays("portal_indicator", "portal_indicator_light")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))
@@ -851,9 +849,9 @@ TYPEINFO(/obj/item/radiojammer)
 				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 #ifdef USE_STAMINA_DISORIENT
-			M.do_disorient(200, weakened = 100, disorient = 60, remove_stamina_below_zero = 0)
+			M.do_disorient(200, knockdown = 100, disorient = 60, remove_stamina_below_zero = 0)
 #else
-			M.changeStatus("weakened", 10 SECONDS)
+			M.changeStatus("knockdown", 10 SECONDS)
 #endif
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
@@ -878,7 +876,7 @@ TYPEINFO(/obj/item/radiojammer)
 
 
 /obj/item/device/radio/signaler
-	name = "\improper Remote Signaling Device"
+	name = "remote signaler" //US spelling :vomit: but we should be consistent
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30

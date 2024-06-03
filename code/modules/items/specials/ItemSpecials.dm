@@ -201,6 +201,10 @@
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return
 
+	proc/onHit(mob/target, damage, mob/user, datum/attackResults/msgs)
+		return
+
+
 	//move to define probably?
 	proc/isTarget(var/atom/A, var/mob/user = null)
 		if (istype(A, /obj/itemspecialeffect))
@@ -268,6 +272,10 @@
 			SEND_SIGNAL(master, COMSIG_ITEM_SPECIAL_POST, person)
 		if(restrainDuration)
 			person.restrain_time = TIME + restrainDuration
+
+	//For using the result of the attack to determine fancy behavior
+	proc/modify_attack_result(var/mob/user, var/mob/target, var/datum/attackResults/msgs)
+		return msgs
 
 /datum/item_special/rush
 	cooldown = 100
@@ -414,6 +422,8 @@
 	moveDelay = 0//5
 	moveDelayDuration = 0//4
 	damageMult = 1
+	var/directional = FALSE
+	var/obj/itemspecialeffect/specialEffect = /obj/itemspecialeffect/simple
 
 	image = "simple"
 	name = "Attack"
@@ -432,16 +442,18 @@
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
 
-			var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
+			var/obj/itemspecialeffect/simple/S = new specialEffect
 			if(src.animation_color)
 				S.color = src.animation_color
+			if(directional)
+				S.set_dir(direction)
 			S.setup(turf)
 
-			var/hit = 0
+			var/hit = FALSE
 			for(var/atom/A in turf)
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
-					hit = 1
+					hit = TRUE
 					break
 
 			afterUse(user)
@@ -463,6 +475,29 @@
 		moveDelay = 5
 		moveDelayDuration = 5
 		animation_color = "#a3774d"
+
+/datum/item_special/simple/bloodystab
+	cooldown = 0
+	staminaCost = 5
+	moveDelay = 5
+	moveDelayDuration = 5
+
+	image = "stab"
+	name = "Stab"
+	desc = "Aim for the throat for bloody crits."
+	directional = TRUE
+	specialEffect = /obj/itemspecialeffect/dagger
+
+	var/stab_color = "#FFFFFF"
+
+	modify_attack_result(mob/user, mob/target, datum/attackResults/msgs) //bleed on crit!
+		if (msgs.damage > 0 && msgs.stamina_crit)
+			msgs.bleed_always = TRUE
+			// bleed people wearing armor less
+			msgs.bleed_bonus = 10 + round(20 * clamp(msgs.damage / master.force, 0, 1))
+			msgs.played_sound= 'sound/impact_sounds/Flesh_Stab_1.ogg'
+			blood_slash(target,1,null, turn(user.dir,180), 3)
+		return msgs
 
 /datum/item_special/rangestab
 	cooldown = 0 //10
@@ -738,9 +773,9 @@
 
 	afterUse(var/mob/person)
 		..()
-		if (istype(master,/obj/item/mining_tool))
-			var/obj/item/mining_tool/M = master
-			if (M.status)
+		if (istype(master, /obj/item/mining_tool/powered))
+			var/obj/item/mining_tool/powered/M = master
+			if (M.is_on)
 				M.process_charges(30)
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1079,7 +1114,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	proc/on_hit(var/hit, var/mult = 1)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(src.stamina_damage * mult, weakened = 10)
+			H.do_disorient(src.stamina_damage * mult, knockdown = 10)
 
 		if (ismob(hit))
 			var/mob/M = hit
@@ -1175,6 +1210,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			afterUse(user)
 
 		return
+
+	gloves  // More agile attacks with bladed gloves
+		moveDelay = 2
+		moveDelayDuration = 2
 
 /datum/item_special/barrier
 	cooldown = 0
@@ -1440,7 +1479,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//maybe add this in, chance to weaken. I dunno a good amount offhand so leaving out for now - kyle
 		// if (ishuman(hit))
 		// 	var/mob/living/carbon/human/H = hit
-		// 	H.do_disorient(src.stamina_damage * mult, weakened = 10)
+		// 	H.do_disorient(src.stamina_damage * mult, knockdown = 10)
 		if(istype(master, /obj/item))
 			if (ismob(hit))
 				var/mob/M = hit
@@ -1573,6 +1612,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 /datum/item_special/katana_dash/reverse
 	staminaCost = 10
+	stamina_damage = 40
 	reversed = 1
 
 	on_hit(var/mob/hit)
@@ -1900,6 +1940,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_y = -32
 		can_clash = 1
 
+	dagger
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "dagger"
+		pixel_x = -32
+		pixel_y = -32
+
 	bluefade
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "bluefade2"
@@ -1995,7 +2041,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
-				src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
+				if(Q)
+					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

@@ -127,11 +127,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		if(isAI(M))
 			var/mob/living/silicon/ai/AI = M
-			if (ispath(path, /obj/item/clothing))
-				if(ispath(path,/obj/item/clothing/head))
-					AI.set_hat(new path(AI))
-					equip_success = 1
-
+			path = null
+			AI.bought_hat = TRUE
+			return
 
 
 		//The AI can't really wear items...
@@ -484,12 +482,12 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000
+		path = /obj/item/tank/emergency_oxygen  // oh boy they'll need this if they are unlucky
 		icon = 'icons/obj/large/32x64.dmi'
 		icon_state = "arrival_missile"
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			M.back?.storage?.add_contents(new /obj/item/tank/emergency_oxygen(M.back)) // oh boy they'll need this if they are unlucky
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
@@ -498,7 +496,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					launch_with_missile(M.loc)
 				else
 					launch_with_missile(M)
-			return 1
+			return ..()
 
 	critter_respawn
 		name = "Alt Ghost Critter"
@@ -788,7 +786,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
-				A.set_hat(new picked())
+				A.bought_hat = TRUE
 				return 1
 			return 0

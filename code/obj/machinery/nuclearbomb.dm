@@ -27,6 +27,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/boom_size = "nuke" // varedit to number to get an explosion instead
 
 	var/started_light_animation = 0
+	///Does this nuke give the "brown pants" medal when authed by a captain? Only true by default for the specific nuke spawned by the nukies gamemode
+	var/gives_medal = FALSE
+	///skips the prompt asking if you want to arm the bomb. For 'pranks'
+	var/no_warning = FALSE
 
 	flags = FPRINT
 	var/image/image_light = null
@@ -45,7 +49,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.maptext_width = 64
 
 		// For status display updating
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, FREQ_STATUS_DISPLAY)
 
 		get_self_and_decoys() // links them up
 
@@ -182,7 +186,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			boutput(user, SPAN_ALERT("Deployment area definition missing or invalid! Please report this to a coder."))
 		else if (!NUKE_AREA_CHECK)
 			boutput(user, SPAN_ALERT("You need to deploy the bomb in [target_name]."))
-		else if(tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes")
+		else if(no_warning ? FALSE : (tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes"))
 			return
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
 			boutput(user, SPAN_ALERT("Deploying aborted due to you or [src] not being in [target_name]."))
@@ -221,70 +225,68 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/gamemode = ticker.mode
-			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
-				if (src.disk && istype(src.disk))
-					boutput(user, SPAN_ALERT("There's already something in the [src.name]'s disk drive."))
-					return
-				if (!src.armed)
-					boutput(user, SPAN_ALERT("The [src.name] isn't armed yet."))
-					return
-
-				var/timer_modifier = 0
-				if (user.mind in gamemode.syndicates)
-					timer_modifier = -src.timer_modifier_disk
-					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
-				else
-					timer_modifier = src.timer_modifier_disk
-					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
-
-					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
-						user.unlock_medal("Brown Pants", 1)
-
-					if(istype(ticker.mode, /datum/game_mode/nuclear))
-						ticker.mode.shuttle_available = SHUTTLE_AVAILABLE_NORMAL
-
-				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
-				logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
-				user.u_equip(W)
-				W.set_loc(src)
-				src.disk = W
-				src.det_time += timer_modifier
-				attack_particle(user,src)
+		if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
+			if (src.disk && istype(src.disk))
+				boutput(user, SPAN_ALERT("There's already something in the [src.name]'s disk drive."))
+				return
+			if (!src.armed)
+				boutput(user, SPAN_ALERT("The [src.name] isn't armed yet."))
 				return
 
-			if (istype(W, /obj/item/remote/syndicate_teleporter))
-				for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
-					for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
-						if(R.id == S.id && S != R)
-							if(S.recharging == 1)
-								return
-							if(R.recharging == 1)
-								return
-							else
-								R.recharging = 1
-								S.recharging = 1
-								src.set_loc(R.loc)
-								showswirl(src.loc)
-								SPAWN(S.recharge)
-									S.recharging = 0
-								SPAWN(R.recharge)
-									R.recharging = 0
+			var/timer_modifier = 0
+			if (isnukeop(user))
+				timer_modifier = -src.timer_modifier_disk
+				user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
+			else
+				timer_modifier = src.timer_modifier_disk
+				user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
 
-			if ((user.mind in gamemode.syndicates) && !src.anyone_can_activate)
-				if (src.armed == 1)
-					boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
-					return
-				else
-					boutput(user, SPAN_ALERT("Why would you want to damage the nuclear bomb?"))
-					return
+				if (user.mind?.assigned_role == "Captain" && src.gives_medal) //the fat frog did it!
+					user.unlock_medal("Brown Pants", 1)
 
-			if (src.armed && src.anchored && !(user.mind in gamemode.syndicates))
-				if (isscrewingtool(W))
-					// Give the player a notice so they realize what has happened
-					boutput(user, SPAN_ALERT("The screws are all weird safety-bit types! You can't turn them!"))
-					return
+				if(istype(ticker.mode, /datum/game_mode/nuclear))
+					ticker.mode.shuttle_available = SHUTTLE_AVAILABLE_NORMAL
+
+			playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
+			logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
+			user.u_equip(W)
+			W.set_loc(src)
+			src.disk = W
+			src.det_time += timer_modifier
+			attack_particle(user,src)
+			return
+
+		if (istype(W, /obj/item/remote/syndicate_teleporter))
+			for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
+				for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
+					if(R.id == S.id && S != R)
+						if(S.recharging == 1)
+							return
+						if(R.recharging == 1)
+							return
+						else
+							R.recharging = 1
+							S.recharging = 1
+							src.set_loc(R.loc)
+							showswirl(src.loc)
+							SPAWN(S.recharge)
+								S.recharging = 0
+							SPAWN(R.recharge)
+								R.recharging = 0
+
+		if (isnukeop(user) && !src.anyone_can_activate)
+			if (src.armed == 1)
+				boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
+				return
+			else
+				boutput(user, SPAN_ALERT("Why would you want to damage the nuclear bomb?"))
+				return
+
+		if (src.armed && src.anchored && !isnukeop(user))
+			if (isscrewingtool(W))
+				// Give the player a notice so they realize what has happened
+				boutput(user, SPAN_ALERT("The screws are all weird safety-bit types! You can't turn them!"))
+				return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
@@ -553,7 +555,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		var/can_user_recognize = !extremely_convincing && \
 			( \
 				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
-				dist <= src.recognizable_range || user?.faction == FACTION_SYNDICATE \
+				dist <= src.recognizable_range || (FACTION_SYNDICATE in user?.faction) \
 			)
 		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
 			. = "<br>An extremely powerful balloon capable of deceiving the whole station."

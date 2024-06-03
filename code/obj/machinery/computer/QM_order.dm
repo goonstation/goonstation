@@ -1,5 +1,5 @@
 /obj/machinery/computer/ordercomp
-	name = "Supply Request Console"
+	name = "supply request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMreq"
 	var/temp = null
@@ -14,7 +14,7 @@
 	New()
 		..()
 		console_location = get_area(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -65,7 +65,7 @@
 				src.scan = id_card
 				src.Attackhand(user) // refresh console
 			else
-				boutput(user, SPAN_ALERT("Pin number incorrect."))
+				boutput(user, SPAN_ALERT("PIN incorrect."))
 				src.scan = null
 		else
 			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -122,7 +122,7 @@
 		var/buy_list = ""
 		var/catnum = 0
 		for (var/foundCategory in global.QM_CategoryList)
-			src.temp += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+			src.temp += "[catnum ? " &middot; " : ""] <a href='#' onclick='scroll_to_id(\"category-[catnum]\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 			buy_list += {"<div class='categoryGroup' id='[foundCategory]' style='border-color:#666'>
 							<a name='category-[catnum]' id='category-[catnum]'></a><b class='title' style='background:#ccc'>[foundCategory]</b>"}
@@ -135,7 +135,7 @@
 					buy_list += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
 				LAGCHECK(LAG_LOW)
 
-			buy_list += "</table></div><a href='javascript:scroll_to_id(\"top\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
+			buy_list += "</table></div><a href='#' onclick='scroll_to_id(\"top\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
 			catnum++
 
 		src.temp += "<BR><HR><BR>"
@@ -228,7 +228,7 @@
 						src.scan = id_card
 						src.Attackhand(usr) // refresh console
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))

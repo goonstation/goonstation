@@ -712,6 +712,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
+	var/icon_damaged = "barricade-damaged"
 
 	var/health = 100
 	var/health_max = 100
@@ -778,10 +779,77 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 		//This works correctly because at the time of writing, these barricades cannot be repaired.
 		if (health < health_max/2)
-			icon_state = "barricade-damaged"
+			if (icon_damaged)
+				icon_state = icon_damaged
 
 		if (health <= 0)
 			qdel(src)
+
+/obj/barricade/barbed
+	name = "barbed barricade"
+	desc = "A barbed barricade. It looks like you can shoot over it but making contact with it might be tricky."
+	var/cooldown_time = 3 SECOND
+	var/overlay_state = "barricade_sharp"
+
+	New()
+		. = ..()
+		if(overlay_state)
+			var/overlay = image(src.icon, overlay_state)
+			UpdateOverlays(overlay, "barb")
+
+	proc/pokey(mob/target, poke_chance=33)
+		if(prob(poke_chance))
+			if(ON_COOLDOWN(target, "BARB_\ref[src]", src.cooldown_time)) return
+			target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and notice it has drawn blood.")
+			take_bleeding_damage(target, null, rand(3,7), DAMAGE_STAB)
+			return TRUE
+
+	Bumped(atom/AM)
+		. = ..()
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.m_intent != "walk")
+				pokey(M, 98)
+			else
+				pokey(M, 30)
+
+	attackby(var/obj/item/W, var/mob/user)
+		..()
+		pokey(user, 15)
+
+	attack_hand(mob/user)
+		..()
+		if (user.a_intent != INTENT_HELP)
+			pokey(user, 88)
+		else
+			pokey(user, 33)
+
+/obj/barricade/barbed/wire
+	name = "barbed wire"
+	desc = "A coiled length of barbed wire has been setup as a barricade."
+	icon_state = "bwire"
+	health = 50
+	health_max = 50
+	overlay_state = null
+	density = 0
+	icon_damaged = null
+
+	pokey(mob/target, poke_chance=33)
+		. = ..()
+		target.changeStatus("slowed", 1 SECONDS)
+		if(.)
+			target.changeStatus("slowed", 4 SECONDS)
+			target.TakeDamageAccountArmor("All", rand(1,2), 0, 0, DAMAGE_CUT)
+
+	Cross(atom/movable/mover)
+		if(ismob(mover))
+			var/mob/M = mover
+			if(M.m_intent != "walk")
+				pokey(M, 98)
+			else
+				pokey(M, 30)
+
+		return (!density)
 
 //barricade deployer
 
@@ -827,8 +895,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (user)
 				newThing.add_fingerprint(user)
 				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
-				user.u_equip(src)
-		qdel(src)
+		change_stack_amount(-1)
 		return newThing
 
 /obj/item_dispenser/barricade

@@ -74,7 +74,7 @@
 				saveStat("Map Vote Link:",mapVoteLinkStat)
 
 				if (mapSwitcher.voteCurrentDuration)
-					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration + PREGAME_LOBBY_TICKS) - world.time) / 10)] seconds remaining, [map_vote_holder.voters] vote[map_vote_holder.voters != 1 ? "s" : ""])")
+					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration) - TIME) / (1 SECOND))] seconds remaining, [map_vote_holder.voters] vote[map_vote_holder.voters != 1 ? "s" : ""])")
 			else
 				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
@@ -154,9 +154,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				//BLUEGH ADMIN SHIT
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
-					#if DM_VERSION >= 514
 					stat("Map CPU %:", "[world.map_cpu]")
-					#endif
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif

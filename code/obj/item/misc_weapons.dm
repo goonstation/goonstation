@@ -17,8 +17,9 @@
 
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
-
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_extreme" = 10)
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -42,7 +43,6 @@ TYPEINFO(/obj/item/sword)
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	leaves_slash_wound = TRUE
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -106,7 +106,6 @@ TYPEINFO(/obj/item/sword)
 
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
-		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		AddComponent(/datum/component/itemblock/reflect/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -121,7 +120,7 @@ TYPEINFO(/obj/item/sword)
 		if (handle_parry(target, user))
 			return 1
 		if (do_stun)
-			target.do_disorient(150, weakened = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
+			target.do_disorient(150, knockdown = 50, stunned = 50, disorient = 40, remove_stamina_below_zero = 0)
 
 		var/age_modifier = 0
 		if(ishuman(user))
@@ -138,7 +137,7 @@ TYPEINFO(/obj/item/sword)
 				SPAWN(0.2 SECONDS)
 					target.visible_message("[SPAN_BOLD("[target.name]")] flops over in shame!")
 					target.changeStatus("stunned", 5 SECONDS)
-					target.changeStatus("weakened", 5 SECONDS)
+					target.changeStatus("knockdown", 5 SECONDS)
 		else
 			..()
 
@@ -170,7 +169,7 @@ TYPEINFO(/obj/item/sword)
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "weakened", "paralysis"))))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "knockdown", "unconscious"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
@@ -227,6 +226,8 @@ TYPEINFO(/obj/item/sword)
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
+		src.leaves_slash_wound = TRUE
+		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
@@ -241,6 +242,8 @@ TYPEINFO(/obj/item/sword)
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.w_class = off_w_class
+		src.leaves_slash_wound = FALSE
+		src.setItemSpecial(null)
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
@@ -486,6 +489,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
+	var/strong_disorient = TRUE
+	gang
+		active_force = 22 // a bit more lethal. as a treat.
+		inactive_force = 8
+		active_stamina_dmg = 25
+		inactive_stamina_dmg = 10
+		strong_disorient = FALSE
 
 	can_reflect()
 		return FALSE
@@ -495,18 +505,15 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		. += "It is set to [src.active ? "on" : "off"]."
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	if (active)
-		hit_type = DAMAGE_BURN
-	else
-		hit_type = DAMAGE_BLUNT
-
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
 
 	if (active)
-		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		if (strong_disorient)
+			target.do_disorient(0, knockdown = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		else
+			target.do_disorient(0, knockdown = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
 
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
@@ -530,6 +537,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 	New()
 		..()
@@ -549,7 +557,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ismob(usr))
 			M.lastattacker = usr
 			M.lastattackertime = world.time
-		M.changeStatus("weakened", 6 SECONDS)
+		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
@@ -573,9 +581,12 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
-/obj/item/dagger/syndicate/specialist //Infiltrator class knife
+	New()
+		..()
+		src.setProperty("piercing", 80)
+
+/obj/item/dagger/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
 	desc = "A light but robust combat knife that allows you to move faster in fights. Knocks down targets when thrown."
 	icon_state = "combat_knife"
@@ -583,7 +594,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
-
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -595,16 +605,28 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
 	force = 8
-	throwforce = 11
+	throwforce = 18
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	gang
+		name = "familiar fighting knife"
+		force = 17
+		throwforce = 25
+		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
+		icon_state = "combat_knife_gang"
+		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+		item_state = "knife"
+		setupProperties()
+			..()
+			setProperty("movespeed", -0.5)
 
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 40, remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -689,8 +711,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.implanted(M)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
-		random_brute_damage(M, 11)//embedding cares not for your armour
+			H.do_disorient(stamina_damage = 30, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+		random_brute_damage(M, 18)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
 /obj/item/nunchucks
@@ -798,6 +820,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	c_flags = ONBELT
 	var/makemeat = 1
 	HELP_MESSAGE_OVERRIDE({"Throw the knife at someone for a guaranteed short stun. Use the knife on a dead body to instantly turn it into meat."})
 
@@ -814,7 +837,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
-		C.changeStatus("weakened", 6 SECONDS)
+		C.changeStatus("knockdown", 6 SECONDS)
 		C.force_laydown_standup()
 		random_brute_damage(C, 20,1)
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
@@ -881,6 +904,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -1047,7 +1071,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 TYPEINFO(/obj/item/bat)
 	mats = list("wood" = 8)
-
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -1100,6 +1123,72 @@ TYPEINFO(/obj/item/bat)
 			hit_type = DAMAGE_CUT
 			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		return ..()
+
+/obj/item/switchblade
+	name = "switchblade"
+	desc = "Spring-loaded and therefore completely illegal in Space England."
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = ""
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "switchblade-idle"
+	hit_type = DAMAGE_BLUNT
+	force = 3
+	throwforce = 7
+	stamina_damage = 5
+	stamina_cost = 1
+	event_handler_flags = USE_GRAB_CHOKE
+	special_grab = /obj/item/grab
+	stamina_crit_chance = 5
+	var/active = FALSE
+	w_class = W_CLASS_SMALL
+	HELP_MESSAGE_OVERRIDE({"This knife can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it.\n
+	While unfolded, using this weapon's special attack grants increased critical chance & bleed effects."})
+
+	attack_self(mob/user)
+		toggle_active(user)
+		return ..()
+
+	proc/toggle_active(mob/user)
+		if (!active)
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+			user.visible_message("<span class='combat bold'>[user] flips \the [src] open!</span>")
+			w_class = W_CLASS_NORMAL
+			active = TRUE
+			tool_flags = TOOL_CUTTING
+			item_state = "knife"
+			src.setItemSpecial(/datum/item_special/simple/bloodystab)
+			icon_state = "switchblade-open"
+			hit_type = DAMAGE_CUT
+			force = 10
+			stamina_crit_chance = 33
+			playsound(user, 'sound/items/blade_pull.ogg', 60, TRUE)
+		else if (!chokehold)
+			hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+			user.visible_message("<span class='combat bold'>[user] folds \the [src].</span>")
+			w_class = W_CLASS_SMALL
+			active = FALSE
+			item_state = ""
+			tool_flags = 0
+			src.setItemSpecial(/datum/item_special/simple)
+			icon_state = "switchblade-close"
+			hit_type = DAMAGE_BLUNT
+			stamina_crit_chance = 5
+			force = 3
+			playsound(user, 'sound/machines/heater_off.ogg', 40, TRUE)
+		user.update_inhands()
+		tooltip_rebuild = TRUE
+
+	afterattack(obj/O as obj, mob/user as mob)
+		if (O.loc == user && istype(O, /obj/item/clothing))
+			if (active)
+				toggle_active(user)
+			icon_state = "switchblade-idle"
+			boutput(user, "<span class='hint'>You hide the [src] inside \the [O]. (Use the snap emote while wearing the clothing item to retrieve it.)</span>")
+			user.u_equip(src)
+			src.set_loc(O)
+			src.dropped(user)
+		else
+			..()
 /////////////////////////////////////////////////// Ban me ////////////////////////////////////////////
 
 /obj/item/banme
@@ -1242,8 +1331,8 @@ TYPEINFO(/obj/item/bat)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
-	mats = list("MET-3"=20, "FAB-1"=5)
-
+	mats = list("metal_superdense" = 20,
+				"fabric" = 5)
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
@@ -1322,7 +1411,7 @@ TYPEINFO(/obj/item/swords/katana)
 	name = "reverse blade katana"
 	desc = "A sword whose blade is on the wrong side. Crafted by a master who grew to hate the death his weapons caused; which was weird since Oppenheimer has him beat by several orders of magnitude. Considered worthless by many, only a true virtuoso can unleash it's potential."
 	hit_type = DAMAGE_BLUNT
-	force = 18
+	force = 20
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1
@@ -1332,8 +1421,7 @@ TYPEINFO(/obj/item/swords/katana)
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
 TYPEINFO(/obj/item/swords/captain)
-	mats = list("MET-2"=15)
-
+	mats = list("metal_dense" = 15)
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
@@ -1745,7 +1833,7 @@ obj/item/whetstone
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
-	contraband = 5
+	contraband = 8
 	w_class = W_CLASS_BULKY
 	force = 25
 	throwforce = 25
@@ -1763,8 +1851,8 @@ obj/item/whetstone
 	var/stab_color = "#FF0000"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
@@ -1924,7 +2012,7 @@ obj/item/whetstone
 			else
 				random_brute_damage(user, 2*src.force)
 				boutput(user,SPAN_ALERT("You feel immense pain!"))
-				user.changeStatus("weakened", 80)
+				user.changeStatus("knockdown", 80)
 				return
 		else ..()
 
@@ -1940,7 +2028,7 @@ obj/item/whetstone
 		else
 			random_brute_damage(user, 2*src.force)
 			boutput(user,SPAN_ALERT("You feel immense pain!"))
-			user.changeStatus("weakened", 80)
+			user.changeStatus("knockdown", 80)
 			return
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -1949,7 +2037,7 @@ obj/item/whetstone
 			if (ismob(usr))
 				C.lastattacker = usr
 				C.lastattackertime = world.time
-			C.changeStatus("weakened", 3 SECONDS)
+			C.changeStatus("knockdown", 3 SECONDS)
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
 			random_brute_damage(C, round(throwforce * 0.75),1)

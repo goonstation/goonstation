@@ -17,6 +17,7 @@
 	burn_possible = TRUE
 	health = 10
 	var/team_num
+	var/cutting_product
 
 	duration_remove = 7.5 SECONDS
 
@@ -27,6 +28,18 @@
 		setProperty("meleeprot", 1)
 		setProperty("chemprot", 10)
 
+	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W) && src.cutting_product)
+			if (istype(src.loc, /mob))
+				boutput(user, SPAN_ALERT("You can't cut that unless it's on a flat surface!"))
+				return
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/item/clothing/under/proc/cut_tha_crap, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/cut_tha_crap(mob/user)
+		qdel(src)
+		var/obj/item/cupr = new src.cutting_product()
+		user.put_in_hand_or_drop(cupr)
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> cuts \the [src] into \a [cupr]."),SPAN_NOTICE("You cut the [src] into \a [cupr]!"))
 
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
@@ -157,6 +170,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	cutting_product = /obj/item/flag/rainbow
 	burn_possible = FALSE
 
 	ace
@@ -164,30 +178,35 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the asexual pride flag."
 		icon_state ="ace"
 		item_state = "ace"
+		cutting_product = /obj/item/flag/ace
 
 	aro
 		name = "aro pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the aromantic pride flag."
 		icon_state ="aro"
 		item_state = "aro"
+		cutting_product = /obj/item/flag/aro
 
 	bi
 		name = "bi pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the bisexual pride flag."
 		icon_state ="bi"
 		item_state = "bi"
+		cutting_product = /obj/item/flag/bisexual
 
 	inter
 		name = "inter pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the intersex pride flag."
 		icon_state ="inter"
 		item_state = "inter"
+		cutting_product = /obj/item/flag/intersex
 
 	lesb
 		name = "lesb pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the lesbian pride flag."
 		icon_state ="lesb"
 		item_state = "lesb"
+		cutting_product = /obj/item/flag/lesb
 
 	gaymasc
 		name = "MLM pride jumpsuit"
@@ -196,6 +215,7 @@
 		item_state = "mlm"
 		var/isachily = FALSE
 		var/ach_descstate = "A corporate token of inclusivity, made in a sweatshop. It's based off of achillean pride flag, but can be flipped inside-out to change it to the vincian one."
+		cutting_product = /obj/item/flag/mlmvinc
 
 		attack_self(mob/user as mob)
 			user.show_text("You flip the [src] inside out.")
@@ -204,11 +224,13 @@
 				src.desc = ach_descstate
 				src.icon_state = "[src.icon_state]alt"
 				src.item_state = "mlmalt"
+				src.cutting_product = /obj/item/flag/mlmachi
 			else
 				src.isachily = FALSE
 				src.desc = initial(src.desc)
 				src.icon_state = initial(src.icon_state)
 				src.item_state = "mlm"
+				src.cutting_product = /obj/item/flag/mlmvinc
 			src.UpdateIcon()
 
 
@@ -218,24 +240,28 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the non-binary pride flag."
 		icon_state ="nb"
 		item_state = "nb"
+		cutting_product = /obj/item/flag/nb
 
 	pan
 		name = "pan pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the pansexual pride flag."
 		icon_state ="pan"
 		item_state = "pan"
+		cutting_product = /obj/item/flag/pan
 
 	poly
 		name = "poly pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
+		cutting_product = /obj/item/flag/polysexual
 
 	trans
 		name = "trans pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the transgender pride flag. Wearing this makes you <em>really</em> hate astroterf."
 		icon_state ="trans"
 		item_state = "trans"
+		cutting_product = /obj/item/flag/trans
 
 	special
 		name = "pride-o-matic jumpsuit"
@@ -1857,3 +1883,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 	desc = "Lets you stay nice and warm while keeping that festive atmosphere. Actually kinda breezy, not very comfortable for the cold at all, but it still looks festive."
 	icon_state = "clown_winter"
 	item_state = "clown_winter"
+
+// New chaplain stuff
+
+/obj/item/clothing/under/gimmick/weirdo
+	name = "outlander's jumpsuit"
+	desc = "The symbols on this teal jumpsuit are entirely alien to you. It almost speaks to you of an ancient belief lost to time"
+	icon_state = "weirdo"
+	item_state = "weirdo"

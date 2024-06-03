@@ -12,7 +12,10 @@
 	var/commander_job_title			//for commander selection
 	var/datum/game_mode/pod_wars/mode
 
-	var/list/datum/resources = list("mauxite" = 0, "pharosium" = 0, "molitz" = 0) // List of material resources
+	var/list/datum/resources = list(
+		/obj/item/material_piece/mauxite = 20,
+		/obj/item/material_piece/pharosium = 20,
+		/obj/item/material_piece/molitz = 20) // List of material resources
 
 	//These two are for playing sounds, they'll only play for the first death or system destruction.
 	var/first_system_destroyed = 0
@@ -60,6 +63,7 @@
 			comms_frequency = rand(1360,1420)
 
 		mode.frequencies_used += comms_frequency
+		protected_frequencies += comms_frequency
 
 
 	proc/accept_initial_players(var/list/players)

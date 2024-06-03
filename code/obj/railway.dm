@@ -388,3 +388,95 @@
 
 		on_end_path()
 			qdel(src)
+
+	lunar_cab
+		icon = 'icons/obj/large/64x48.dmi'
+		icon_state = "cab-engineer"
+
+		name = "lunar tram engine"
+		desc = "The La Caille Model 2006 LunaTram. A staple of lunar transit."
+		plane = -100
+
+	passenger
+		icon = 'icons/obj/large/64x48.dmi'
+		icon_state = "car-passenger-middle"
+		plane = -100
+
+		start
+			icon_state = "car-passenger-start"
+
+		end
+			icon_state = "car-passenger-end"
+
+	flatbed
+		icon = 'icons/obj/large/64x48.dmi'
+		icon_state = "car-platform"
+		plane = -100
+
+		container
+			icon_state = "car-container-green"
+
+			red
+				icon_state = "car-container-red"
+				name = "Hafgan container"
+
+			blue
+				icon_state = "car-container-blue"
+
+			tanker
+				icon_state = "car-tanker"
+
+			barrels
+				icon_state = "car-barrels"
+
+			mail
+				icon_state = "car-mailcrates"
+
+			woodcrates
+				icon_state = "car-woodcrates"
+
+			nt
+				icon_state = "car-nt"
+
+			cyborgs
+				icon_state = "car-cyborgs"
+
+			rtgs
+				icon_state = "car-rtgs"
+
+			thruster
+				icon_state = "car-thruster"
+
+			nuclear
+				icon_state = "car-nukes"
+
+			industrial
+				icon_state = "car-industrial"
+
+			crime
+				icon_state = "car-crime"
+
+			military
+				icon_state = "car-military"
+
+			warhead
+				icon_state = "car-warhead"
+
+			firebarrel
+				icon_state = "car-fire"
+
+
+
+/obj/decoration/railyard
+
+	schedule
+		icon = 'icons/obj/large/64x32.dmi'
+		icon_state = "schedule_board"
+
+	signal
+		icon = 'icons/obj/railway.dmi'
+		icon_state = "signal-stop"
+
+		pole
+			icon = 'icons/obj/large/32x64.dmi'
+			icon_state = "signal-pole-stop"

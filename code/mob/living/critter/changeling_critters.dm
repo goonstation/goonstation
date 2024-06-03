@@ -35,7 +35,7 @@
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return
@@ -702,7 +702,7 @@
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
 		playsound(src, 'sound/misc/headspiderability.ogg', 60)
 		src.set_loc(H)
-		H.setStatusMin("paralysis", 10 SECONDS)
+		H.setStatusMin("unconscious", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)

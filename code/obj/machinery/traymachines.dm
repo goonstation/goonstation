@@ -319,10 +319,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/id = 1 //crema switch uses this when finding crematoria
 	var/obj/machinery/crema_switch/igniter = null
 	tray_type = /obj/machine_tray/crematorium
+	var/active = FALSE
 
 	icon_trayopen = "crema0"
 	icon_unoccupied = "crema1"
 	icon_occupied = "crema2"
+
+	medical
+		id = "medicalcremator"
 
 	New()
 		. = ..()
@@ -341,12 +345,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	if (src.locked)
 		return //don't let you cremate something twice or w/e
+	if (src.active)
+		return
 	if (!src.contents || !length(src.contents))
 		src.visible_message(SPAN_ALERT("You hear a hollow crackle, but nothing else happens."))
 		return
 
+	src.active = TRUE
 	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
-	src.locked = TRUE
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
@@ -362,23 +368,31 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	for (var/mob/living/L in contents)
 		if (L in non_tray_contents)
 			continue
-		L.changeStatus("stunned", 10 SECONDS)
+		L.changeStatus("burning", 15 SECONDS)
+		if (L in non_tray_contents)
+			continue
+		if (!L.is_heat_resistant())
+			L.TakeDamage("chest", 0, 30)
+			if (!isdead(L))
+				L.emote("scream")
 
-	sleep(1 SECOND)
+	sleep(3 SECONDS)
+
 	for (var/i in 1 to 10)
 		if(isnull(src))
 			return
 		for (var/mob/living/L in contents)
 			if (L in non_tray_contents)
 				continue
-			if (!L.is_heat_resistant())
-				L.TakeDamage("chest", 0, 30)
-				if (!isdead(L) && prob(25))
-					L.emote("scream")
-		sleep(1 SECOND)
+			L.changeStatus("burning", 30 SECONDS)
+
+	sleep(6 SECONDS)
 
 	if(isnull(src))
 		return
+	src.locked = TRUE // only lock when it's too late to escape
+	src.visible_message(SPAN_ALERT("\The [src.name] clunks locked!"))
+	sleep(1 SECOND)
 	for (var/I in contents)
 		if (I in non_tray_contents)
 			continue
@@ -404,6 +418,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	src.visible_message(SPAN_ALERT("\The [src.name] finishes and shuts down."))
 	src.locked = FALSE
+	src.active = FALSE
 	power_usage = initial(power_usage)
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
@@ -430,6 +445,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/otherarea = null
 	var/id = 1
 	var/list/obj/machinery/traymachine/locking/crematorium/crematoriums = null
+
+	medical
+		id = "medicalcremator"
+		req_access = list(access_medical_lockers)
 
 	disposing()
 		for (var/obj/machinery/traymachine/locking/crematorium/O in src.crematoriums)
@@ -614,15 +633,15 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		tanningtube.name = "stock tanning light tube"
 		tanningtube.desc = "Fancy. But not really."
 		tanningtube.color_r = 0.7
-		tanningtube.color_g = 0.5
-		tanningtube.color_b = 0.3
+		tanningtube.color_g = 0.3
+		tanningtube.color_b = 0.5
 
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.5)
 		light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 
-		var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_b * 255, tanningtube.color_g * 255)
+		var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_g * 255, tanningtube.color_b * 255)
 
 		generate_overlay_icon(tanningtubecolor)
 
@@ -641,7 +660,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
-			var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_b * 255, tanningtube.color_g * 255)
+			var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_g * 255, tanningtube.color_b * 255)
 			generate_overlay_icon(tanningtubecolor)
 			send_new_tancolor(tanningtubecolor)
 			if (src.light)

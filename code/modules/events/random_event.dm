@@ -58,9 +58,11 @@
 
 	proc/get_affected_crew()
 		. = list()
-		for(var/mob/living/player in mobs)
-			if(is_crew_affected(player))
-				. += player
+		for(var/mob/living/M in mobs)
+			if (isnpc(M))
+				continue
+			if(is_crew_affected(M))
+				. += M
 
 /datum/random_event/start/until_playing
 	var/include_latejoin = FALSE

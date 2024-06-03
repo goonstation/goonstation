@@ -56,6 +56,7 @@
 				boutput(M, SPAN_ALERT("The skull appears to be missing."))
 				return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/hunter_taketrophy(target, src), M)
 		return 0
 

@@ -17,6 +17,7 @@ TRASH BAG
 	item_state = "cleaner"
 	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -37,6 +38,14 @@ TRASH BAG
 /obj/item/spraybottle/New()
 	..()
 	create_reagents(initial_volume)
+
+
+/obj/item/spraybottle/clown_flower
+	name = "suspicious flower"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
+	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent. Wait, do these all have nozzles?"
 
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
@@ -485,6 +494,7 @@ TRASH BAG
 	stamina_damage = 5
 	throwforce = 0
 	w_class = W_CLASS_SMALL // gross why would you put a sponge in your pocket
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 
 	var/hit_face_prob = 30 // MODULAR SPONGES
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary
@@ -511,13 +521,28 @@ TRASH BAG
 	return ..()
 
 /obj/item/sponge/attack_self(mob/user as mob)
+	if(spam_flag)
+		return
 	. = ..()
 	var/turf/location = get_turf(user)
+	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
+	//somepotato note: wtf is the thing below this
+	//mbc note : yeah that's dumb! I moved spam_flag up top to prevent reagent duplication
+	SPAWN(1 DECI SECOND) // to make sure the reagents actually react before they're cleared
+	src.reagents.clear_reagents()
+	SPAWN(1 SECOND)
+	spam_flag = 0
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		if (src.loc == user && isrobot(user))
+			boutput(user, "You can't quite angle your [W.name] into your [src.name].")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "You can't bring yourself to cut away your own personal [src.name]!")
+			return
 		user.visible_message(SPAN_NOTICE("[user] cuts [src] into the shape of... cheese?"))
 		if(src.loc == user)
 			user.u_equip(src)
@@ -696,6 +721,7 @@ TRASH BAG
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -813,6 +839,7 @@ TRASH BAG
 
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -868,8 +895,8 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list("bamboo"=3, "MET-1"=10)
-
+	mats = list("bamboo" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
@@ -943,6 +970,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
+			if (storage.secure && storage.locked)
+				return // storage provides user feedback
 			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
 			boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
@@ -1079,8 +1108,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list("neutronium"=3, "MET-1"=10)
-
+	mats = list("neutronium" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
 	color = list(0,0,1, 0,1,0, 1,0,0)
@@ -1153,7 +1182,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
-								M.changeStatus("weakened", 0.9 SECONDS)
+								M.changeStatus("knockdown", 0.9 SECONDS)
 								M.force_laydown_standup()
 								boutput(M, SPAN_ALERT("You are pulled by the force of [user]'s [master]."))
 						else

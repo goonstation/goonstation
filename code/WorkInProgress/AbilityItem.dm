@@ -464,7 +464,7 @@
 
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
-	icon_state = "jetoff"
+	icon_state = "jet2off"
 	requires_equip = TRUE
 
 	execute_ability()
@@ -534,7 +534,7 @@
 	requires_equip = TRUE
 
 	ability_allowed()
-		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
+		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("unconscious"))
 			boutput(the_mob, SPAN_ALERT("You need to be ready on your feet to use this ability."))
 			return 0
 
@@ -676,14 +676,17 @@
 
 //cancel-camera-view, but as a button
 /obj/ability_button/reset_view
-	name = "Reset view"
-	icon_state = "jeton"
+	name = "Exit camera view"
+	icon_state = "cancel_camera"
 
 	execute_ability()
-		//var/mob/M = holder.owner
-		usr.set_eye(null)
-		usr.client.view = world.view
+		usr.cancel_camera()
 		..()
+
+	ability_allowed()
+		return TRUE //yea
+
+/obj/ability_button/reset_view/console //just.. don't ask
 
 //////////////////////////////////////////////////////////////////////////////
 /mob/var/list/item_abilities = new/list()

@@ -39,7 +39,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
-				src.update_neighbors()
+				if(istype(src))
+					src.update_neighbors()
 		else
 			worldgenCandidates += src
 
@@ -70,9 +71,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 					src.connect_image = image(src.icon, "connect[overlaydir]")
 				else
 					src.connect_image.icon_state = "connect[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 			else
-				src.UpdateOverlays(null, "connect")
+				src.ClearSpecificOverlays("connect")
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
@@ -476,6 +477,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	icon_state = "mapwall$$wood"
 #endif
 	default_material = "wood"
+	uses_default_material_appearance = TRUE
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
@@ -710,7 +712,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
-				src.update_neighbors()
+				if(istype(src))
+					src.update_neighbors()
 
 		else
 			worldgenCandidates += src
@@ -739,9 +742,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 					src.connect_image = image(src.icon, "connect[overlaydir]")
 				else
 					src.connect_image.icon_state = "connect[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 			else
-				src.UpdateOverlays(null, "connect")
+				src.ClearSpecificOverlays("connect")
 
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))

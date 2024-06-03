@@ -1443,7 +1443,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aeb" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aec" = (
@@ -12599,7 +12599,7 @@
 /obj/rack{
 	dir = 1
 	},
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/sunglasses,
@@ -13257,7 +13257,7 @@
 "aUR" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aUS" = (
@@ -13281,7 +13281,7 @@
 "aUV" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -15974,7 +15974,7 @@
 "beT" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -17059,7 +17059,7 @@
 /area/station/hallway/secondary/exit)
 "biQ" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "biR" = (
@@ -22504,7 +22504,7 @@
 	icon_state = "0-8"
 	},
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxd" = (
@@ -27048,7 +27048,7 @@
 /area/station/hangar/engine)
 "iuk" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "iuv" = (
@@ -28594,7 +28594,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "mzR" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "mBg" = (
@@ -29930,7 +29930,7 @@
 "rel" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "rem" = (
@@ -30315,7 +30315,7 @@
 /obj/rack{
 	dir = 1
 	},
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/toggleable/meson,
@@ -32037,7 +32037,7 @@
 "xdz" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "xdW" = (
@@ -32128,7 +32128,7 @@
 "xED" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "xEU" = (

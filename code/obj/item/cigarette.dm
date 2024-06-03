@@ -332,16 +332,14 @@
 
 	dropped(mob/user as mob)
 		if (!isturf(src.loc))
-			return
+			return ..()
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, SPAN_ALERT("<b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly."))
-			return ..()
 		else if (user.client)
 			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
 				user.visible_message(SPAN_ALERT("<b>[user]</b> drops [src]. Guess [he_or_she(user)][ve_or_s(user)] had enough for the day."), group = "cig_drop")
-				return ..()
-		else
-			return ..()
+
+		return ..()
 
 
 	proc/trick_explode()
@@ -601,6 +599,7 @@
 	else
 		src.icon_state = "[src.package_style]o"
 		src.overlays += "cig[length(src.contents)]"
+		src.desc = initial(src.desc)
 	return
 
 /obj/item/cigpacket/attack_hand(mob/user)
@@ -1261,7 +1260,7 @@
 					src.deactivate(null)
 			//sleep(1 SECOND)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		if (exposed_temperature > enviromental_expose_temp)
 			return ..()
 		return

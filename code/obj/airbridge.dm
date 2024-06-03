@@ -198,6 +198,11 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			linked.remove_bridge()
 			return
 
+		if (global.map_currently_underwater)
+			src.original_turf = /turf/space/fluid
+		else if (src.original_turf == /turf/space/fluid)
+			src.original_turf = /turf/space
+
 		working = 1
 		maintaining_bridge = 0
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)

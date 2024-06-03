@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	health_burn = 10
 	health_burn_vuln = 2
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -496,13 +496,13 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 					sleep(0.2 SECONDS)
 				SPAWN(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
-					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","lsd"), 5)
+					M.reagents.add_reagent(pick("cyanide","neurotoxin","cytotoxin","histamine","lsd"), 5)
 				return SPAN_ALERT("<b>[src]</b> does a sinister dance.")
 		if ("snap")
 			if (src.emote_check(voluntary, 300))
-				src.changeStatus("paralysis", -30 SECONDS)
+				src.changeStatus("unconscious", -30 SECONDS)
 				src.changeStatus("stunned", -30 SECONDS)
-				src.changeStatus("weakened", -30 SECONDS)
+				src.changeStatus("knockdown", -30 SECONDS)
 				return SPAN_ALERT("<b>[src]</b> clacks menacingly.")
 		if ("flex")
 			if (src.emote_check(voluntary, 300))

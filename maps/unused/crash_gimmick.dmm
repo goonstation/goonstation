@@ -2533,7 +2533,7 @@
 	},
 /area/russian/radiation)
 "aVJ" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
 /turf/space,
 /area/russian/radiation)
@@ -17079,7 +17079,7 @@
 /area/built_zone)
 "ciS" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 999
+	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -17095,7 +17095,7 @@
 /area/built_zone)
 "ciV" = (
 /obj/machinery/manufacturer/mechanic{
-	free_resource_amt = 999
+	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17953,10 +17953,11 @@
 	},
 /area/russian/radiation)
 "clN" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/shuttle/arrival/station)
 "cmH" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
@@ -18136,7 +18137,6 @@
 	},
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
@@ -19605,7 +19605,7 @@
 "cth" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -20793,7 +20793,7 @@
 "cxM" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -35413,7 +35413,6 @@
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /turf/space,
@@ -35572,7 +35571,7 @@
 	icon_state = "bedsheet-hop"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/space,
 /area/space)
 "dEP" = (
@@ -35932,7 +35931,7 @@
 /area/shuttle/arrival/station)
 "dIW" = (
 /obj/table/reinforced/auto,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
@@ -36543,9 +36542,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "dZq" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/shuttle/arrival/station)
 "dZT" = (
 /turf/simulated/shuttle/wall/escape{
@@ -39631,11 +39631,11 @@
 	},
 /area/russian/radiation)
 "fUq" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/shuttle/arrival/station)
 "fUw" = (
 /obj/disposalpipe/junction/right/west,
@@ -41918,8 +41918,8 @@
 /area/russian/radiation)
 "gQS" = (
 /obj/storage/closet/radiation,
-/obj/item/clothing/suit/rad,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/plating/random{
@@ -44286,7 +44286,7 @@
 /area/russian/radiation)
 "idR" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -46224,7 +46224,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 9
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/gun/energy/taser_gun,
 /obj/item/gun/energy/taser_gun{
 	pixel_y = 7
@@ -47699,6 +47699,13 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"jBG" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 4;
+	icon_state = "wall_trans";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "jBN" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -55070,7 +55077,7 @@
 /area/russian/radiation)
 "ngI" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/morgue,
 /turf/space,
 /area/russian/radiation)
@@ -59794,7 +59801,7 @@
 	name = "dried vomit"
 	},
 /obj/table/wood/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
@@ -61931,10 +61938,11 @@
 	},
 /area/russian/radiation)
 "quU" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/station/hallway/secondary/exit)
 "qvt" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
@@ -65421,10 +65429,11 @@
 	},
 /area/russian/radiation)
 "rZa" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/station/ranch)
 "rZf" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -65485,11 +65494,11 @@
 	},
 /area/russian/radiation)
 "sca" = (
-/turf/simulated/shuttle/wall/cockpit/window{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space";
-	name = "window"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/station/ranch)
 "scq" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -67426,7 +67435,7 @@
 	},
 /area/russian/radiation)
 "tgD" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/space,
 /area/russian/radiation)
 "thr" = (
@@ -72466,10 +72475,11 @@
 /turf/space,
 /area/space)
 "wfx" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/russian/radiation)
 "wgb" = (
 /obj/grille/steel,
@@ -72483,10 +72493,11 @@
 	},
 /area/russian/radiation)
 "wgg" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/russian/radiation)
 "wgu" = (
 /obj/grille/steel,
@@ -73648,6 +73659,13 @@
 	},
 /turf/space,
 /area/space)
+"wIO" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall_trans"
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "wIQ" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -75498,10 +75516,11 @@
 	},
 /area/russian/radiation)
 "xIH" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/russian/radiation)
 "xIT" = (
 /obj/machinery/mass_driver{
@@ -119964,7 +119983,7 @@ dGb
 dGb
 dGb
 dGb
-cth
+wIO
 cwJ
 dKN
 cwJ
@@ -120569,7 +120588,7 @@ dGb
 dGb
 dGb
 dGb
-cth
+wIO
 dLC
 dVl
 dVl
@@ -120872,7 +120891,7 @@ dGb
 dGb
 dGb
 dGb
-cth
+wIO
 dVr
 dVr
 dVr
@@ -121177,7 +121196,7 @@ dGb
 dNK
 cth
 jdl
-fUq
+jBG
 dNK
 dGb
 dGb

@@ -51,6 +51,7 @@
 	var/heading = "don't touch!!!"
 	var/minStored = 1
 	var/maxStored = 6
+	var/list/utilReservoir = list(11, 12, 13)
 
 /datum/chemicompiler_core/New(datum/holder)
 	..()
@@ -393,7 +394,7 @@
 	if(source < minReservoir || source > maxReservoir)
 		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
 		return
-	if(target < minReservoir || target > maxReservoir + 3)
+	if((target < minReservoir || target > maxReservoir) && !(target in utilReservoir))
 		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
 		return
 	if(!reservoirCheck(source))
@@ -409,7 +410,7 @@
 	if(source < minReservoir || source > maxReservoir)
 		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
 		return
-	if(target < minReservoir || target > maxReservoir + 3)
+	if((target < minReservoir || target > maxReservoir) && !(target in utilReservoir))
 		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
 		return
 	if(!reservoirCheck(source))

@@ -8,8 +8,9 @@ var/list/basic_elements = list(
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 TYPEINFO(/obj/machinery/chem_dispenser)
-	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
-
+	mats = list("metal_dense" = 10,
+				"conductive_high" = 10,
+				"miracle" = 20)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipes."
@@ -177,6 +178,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		qdel(src)
 		return
 
+
 	proc/eject_card()
 		if (src.user_id)
 			if((BOUNDS_DIST(usr, src) == 0))
@@ -248,10 +250,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			qdel(src)
 			return
 
-	proc/remove_distant_beaker()
+	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+		if(beaker && (BOUNDS_DIST(beaker, src) > 0 || force))
 			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 			beaker = null
 			src.UpdateIcon()
@@ -437,6 +439,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				src.recording_queue = list()
 				. = TRUE
 
+	ui_close(mob/user)
+		. = ..()
+		if(src.beaker?.loc != src)
+			src.remove_distant_beaker(force = TRUE)
+
 /obj/machinery/chem_dispenser/chemical
 	New()
 		..()
@@ -517,11 +524,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/chef
-	name = "kitchen fountain"
-	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers OR the soda fountain. No sir."
-	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", "mint", "mustard", "pepper", \
-								"juice_cran", "juice_cherry", "juice_pineapple","coconut_milk", "ketchup", \
-								"sugar", "water", "vanilla", "tea", "chocolate", "chocolate_milk","strawberry_milk")
+	name = "HAPPY CHEF Dispense-o-tronic"
+	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
+	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks

@@ -215,8 +215,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else if(istype(C.mob, /mob/living/carbon))
 			if(!allow_carbon)
 				continue
-			if(!find_job_in_controller_by_string(C.mob.job)?.allow_traitors)
-				continue
+			var/datum/job/job = find_job_in_controller_by_string(C.mob.job)
+			if (job)
+				if(!job.allow_traitors)
+					continue
+				if (!job.can_join_gangs && (type == ROLE_GANG_LEADER || type == ROLE_GANG_MEMBER))
+					continue
 		else
 			continue
 		if(filter_proc && !call(filter_proc)(C.mob))
@@ -293,6 +297,21 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
+/datum/game_mode/proc/roundstart_player_count(loud = TRUE)
+	var/readied_count = 0
+	var/unreadied_count = 0
+	for (var/client/C in global.clients)
+		var/mob/new_player/mob = C.mob
+		if (istype(mob))
+			if (mob.ready)
+				readied_count++
+			else
+				unreadied_count++
+	var/total = readied_count + (unreadied_count/2)
+	if (loud)
+		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+	return total
+
 ////////////////////////////
 // Objective related code //
 ////////////////////////////
@@ -312,12 +331,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (!istype(traitor) || !isnum(allow_hijack))
 		return null
 
-	var/upperbound = 3
-	if (allow_hijack)
-		upperbound = 4
-
 	var/objective_path = null
-	var/picker = rand(1,upperbound)
+	var/picker = rand(1,3)
 	switch(picker)
 		if(1)
 			objective_path = /datum/objective/escape
@@ -325,8 +340,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 			objective_path = /datum/objective/escape/survive
 		if(3)
 			objective_path = /datum/objective/escape/kamikaze
-		if(4)
-			objective_path = /datum/objective/escape/hijack
+
 
 	var/datum/objective/O = new objective_path(null, traitor)
 

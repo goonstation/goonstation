@@ -56,4 +56,4 @@
 					for(var/mob/O in viewers(affected_mob, null))
 						O.show_message(SPAN_ALERT("[affected_mob] gags and retches!"), 1)
 					affected_mob.changeStatus("stunned", 2 SECONDS)
-					affected_mob.changeStatus("weakened", 2 SECONDS)
+					affected_mob.changeStatus("knockdown", 2 SECONDS)

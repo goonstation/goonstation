@@ -37,14 +37,19 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 		return
 	for (var/atom/A in view(4,src))
 		if (istype(A, /obj/machinery/plantpot))
-			var/obj/machinery/plantpot/P = A
-			if(!P.current || P.dead)
+			var/obj/machinery/plantpot/manipulated_plantpot = A
+			if(!manipulated_plantpot.current || manipulated_plantpot.dead)
 				continue
-			P.growth += 2
-			if(istype(P.plantgenes,/datum/plantgenes/))
-				var/datum/plantgenes/DNA = P.plantgenes
-				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
-					P.growth += 4
+			var/datum/plant/growing = manipulated_plantpot.current
+			if(growing.simplegrowth || !manipulated_plantpot.current_tick)
+				manipulated_plantpot.growth += 2
+			else
+				var/datum/plantgrowth_tick/manipulated_tick = manipulated_plantpot.current_tick
+				manipulated_tick.growth_rate += 2
+				if(istype(manipulated_plantpot.plantgenes,/datum/plantgenes/))
+					var/datum/plantgenes/DNA = manipulated_plantpot.plantgenes
+					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/photosynthesis))
+						manipulated_tick.growth_rate += 4
 		else if (ismob(A))
 			var/mob/M = A
 			if (M.bodytemperature < M.base_body_temp)
@@ -112,6 +117,21 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		reag_list += "[reag_list ? ", " : " "][current_reagent.name]"
 	complete_description += " It seems to contain [reag_list]."
 	return complete_description
+
+/obj/machinery/hydro_mister/mouse_drop(over_object, src_location, over_location)
+	..()
+	if(!isturf(over_object) || !isliving(usr) || isintangible(usr) || isghostcritter(usr))
+		return
+	if(BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(over_object, usr) > 0)
+		boutput(usr, SPAN_ALERT("You need to be closer to empty the mister out!"))
+		return
+	if (tgui_alert(usr, "Empty mister tank?", "Botanical mister", list("Yes", "No")) == "Yes")
+		if(BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(over_object, usr) > 0)
+			boutput(usr, SPAN_ALERT("You need to be closer to empty the mister out!"))
+			return
+		boutput(usr, SPAN_NOTICE("You empty [src] onto [over_object]"))
+		src.reagents.reaction(over_object, TOUCH, src.reagents.total_volume)
+		src.reagents.clear_reagents()
 
 /obj/machinery/hydro_mister/process()
 	..()

@@ -278,7 +278,7 @@ TYPEINFO(/turf/simulated/wall)
 	else
 		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
-		//return attack_hand(user)
+		//return src.Attackhand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
 	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
@@ -484,7 +484,7 @@ TYPEINFO(/turf/simulated/wall)
 	src.material_trigger_when_attacked(W, user, 1)
 
 	src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
-	//return attack_hand(user)
+	//return src.Attackhand(user)
 
 
 /turf/simulated/wall/meteorhit(obj/M as obj)

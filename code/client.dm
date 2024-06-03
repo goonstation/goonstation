@@ -15,7 +15,6 @@
 	var/stealth_hide_fakekey = 0
 	var/alt_key = 0
 	var/flourish = 0
-	var/pray_l = 0
 	var/fakekey = null
 	var/observing = 0
 	var/warned = 0
@@ -192,6 +191,7 @@
 
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
 	login_success = 0
@@ -299,12 +299,14 @@
 			return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
-	if (isbanned)
+	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
-		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])"))
+		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
+		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
+		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
+		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
 							<html>
@@ -319,7 +321,7 @@
 								</head>
 								<body>
 									<h1>You have been banned.</h1>
-									<span class='banreason'>"Reason: [isbanned].")]</span><br>
+									<span class='banreason'>Reason: [checkBan["message"]]</span><br>
 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
@@ -338,9 +340,16 @@
 		SPAWN(-1)
 			src.chatOutput.start()
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	//admins and mentors can enter a server through player caps.
-	if (init_admin())
+	var/admin_status = init_admin()
+	if (admin_status == 1)
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
+	else if (admin_status == 2)
+		boutput(src, "<span class='ooc adminooc'>You are possibly an admin! Please complete the Goonhub Auth process.</span>")
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
@@ -349,10 +358,45 @@
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
-	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
-		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-		tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
-		del(src)
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+		if (istype(src.mob, /mob/new_player))
+			var/mob/new_player/new_player = src.mob
+			new_player.blocked_from_joining = TRUE
+#if defined(LIVE_SERVER) && defined(NIGHTSHADE)
+		var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
+#elif defined(LIVE_SERVER)
+		var/list/servers_to_offer = list("main1", "main3", "main4")
+#else
+		var/list/servers_to_offer = list()
+#endif
+		var/list/valid_servers = list()
+		for (var/server in servers_to_offer)
+			if (config.server_id == server)
+				continue
+			var/datum/game_server/game_server = game_servers.find_server(server)
+			if (game_server)
+				valid_servers[game_server.name] = game_server
+		if (length(valid_servers))
+			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server.</span>")
+			var/idx = tgui_input_list(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected?", "SERVER FULL", valid_servers, timeout = 30 SECONDS)
+			var/datum/game_server/redirect_choice = valid_servers[idx]
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			if (redirect_choice)
+				changeServer(redirect_choice.id)
+			tgui_process.close_user_uis(src.mob)
+			del(src)
+		else
+			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit.")
+			tgui_process.close_user_uis(src.mob)
+			del(src)
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
@@ -373,7 +417,6 @@
 	for(var/key in globalImages)
 		var/image/I = globalImages[key]
 		src << I
-
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
@@ -432,23 +475,23 @@
 
 #ifdef LIVE_SERVER
 		// check client version validity
-		if (src.byond_version < 514 || src.byond_build < 1584)
+		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("http://www.byond.com/download/")
-	#if (BUILD_TIME_UNIX < 1682899200) //cut off may 1st, 2023
+			if (tgui_alert(src, "Consider updating BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/")
+	#if (BUILD_TIME_UNIX < 1719817200) //cut off sept 1st, 2024 (for forced 515)
 			else
-				tgui_alert(src, "Version enforcement will be enabled May 1st, 2023. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+				tgui_alert(src, "Version enforcement will be enabled September 1st, 2024. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
 	#else
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
-			del(src)
 			tgui_process.close_user_uis(src.mob)
+			del(src)
 			return
 	#endif
-		if (src.byond_version >= 515)
-			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
-				src << link("http://www.byond.com/download/")
+		if (src.byond_version >= 516)
+			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -459,32 +502,25 @@
 
 		ircbot.event("login", src.key)
 		//Cloud data
-#ifdef LIVE_SERVER
-		if (cdn)
-			if(!cloud_available())
-				src.player.cloud_fetch()
-#else
-		// dev server, uses local save file to simulate clouddata
-		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
-#endif
-			if(cloud_available())
-				src.antag_tokens = src.player?.get_antag_tokens()
-				src.load_persistent_bank()
-				var/decoded = cloud_get("audio_volume")
-				if(decoded)
-					var/list/old_volumes = volumes.Copy()
-					volumes = json_decode(decoded)
-					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
-						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
-							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
-						else
-							volumes += old_volumes[i]
+		if (!src.player.cloudSaves.loaded)
+			src.player.cloudSaves.fetch()
+		src.antag_tokens = src.player?.get_antag_tokens()
+		src.load_persistent_bank()
+		var/decoded = src.player.cloudSaves.getData("audio_volume")
+		if(decoded)
+			var/list/old_volumes = volumes.Copy()
+			volumes = json_decode(decoded)
+			for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+				if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+					volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+				else
+					volumes += old_volumes[i]
 
-				// Show login notice, if one exists
-				src.show_login_notice()
+			// Show login notice, if one exists
+			src.show_login_notice()
 
-				// Set screen saturation
-				src.set_saturation(text2num(cloud_get("saturation")))
+			// Set screen saturation
+			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
 
 		src.mob.reset_keymap()
 
@@ -529,6 +565,7 @@
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
 
+	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
 	if (config.log_access)
@@ -670,15 +707,23 @@
 	if(!address || (world.address == src.address))
 		admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
+		if (config.goonhub_auth_enabled)
+			src.goonhub_auth = new(src)
+			src.goonhub_auth.show_ui()
+			return 2
+		else
+			src.make_admin()
+			return 1
+	return 0
+
+/client/proc/make_admin()
+	if (admins.Find(src.ckey) && !src.holder)
 		src.holder = new /datum/admins(src)
 		src.holder.rank = admins[src.ckey]
 		update_admins(admins[src.ckey])
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		return 1
-
-	return 0
 
 /client/proc/clear_admin()
 	if(src.holder)
@@ -720,29 +765,16 @@
 
 
 /client/proc/load_persistent_bank()
-	persistent_bank_valid = cloud_available()
 
 #ifdef BONUS_POINTS
 	persistent_bank = 99999999
 #else
-	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
+	if (!src.player.cloudSaves.loaded) return
+	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
+	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
 #endif
-
-	if(!persistent_bank && cloud_available())
-		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
-		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
-		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
-
-	persistent_bank_item = cloud_get("persistent_bank_item")
-
-	if(!persistent_bank_item && cloud_available())
-		persistent_bank_item = cloud_get("persistent_bank_item")
-		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
-
+	persistent_bank_valid = TRUE //moved down to below api call so if it runtimes it won't be considered valid
+	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
 // defines are already set, just do the checks here ok
@@ -751,17 +783,14 @@
 /client/proc/set_last_purchase(datum/bank_purchaseable/purchase)
 	if (!purchase || purchase == 0 || !purchase.carries_over)
 		persistent_bank_item = "none"
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", "none" )
+		src.player.cloudSaves.putData( "persistent_bank_item", "none" )
 	else
 		persistent_bank_item = purchase.name
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", persistent_bank_item )
+		src.player.cloudSaves.putData( "persistent_bank_item", persistent_bank_item )
 
 /client/proc/set_persistent_bank(amt as num)
 	persistent_bank = amt
-	if( cloud_available() )
-		cloud_put( "persistent_bank", amt )
+	src.player.cloudSaves.putData( "persistent_bank", amt )
 	/*
 	var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
 	if (!PB) return
@@ -774,15 +803,14 @@
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
-	cloud_put_bulk(json_encode(earnings))
 	persistent_bank += amt
+	src.player.cloudSaves.putData("persistent_bank", persistent_bank)
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
-	player.cloud_fetch_data_only()
+	player.cloudSaves.fetch()
 	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
@@ -834,18 +862,19 @@ var/global/curr_day = null
 		var/cid = computer_id
 		SPAWN(0)
 			if (geoip_check(addr))
-				var/addData[] = new()
-				addData["ckey"] = ck
-				addData["compID"] = cid
-				addData["ip"] = addr
-				addData["reason"] = "Ban evader: computer ID collision." // haha get fucked
-				addData["akey"] = "Marquesas"
-				addData["mins"] = 0
 				var/slt = rand(600, 3000)
 				logTheThing(LOG_ADMIN, null, "Evasion geoip autoban triggered on [key], will execute in [slt / 10] seconds.")
 				message_admins("Autobanning evader [key] in [slt / 10] seconds.")
 				sleep(slt)
-				addBan(addData)
+				bansHandler.add(
+					"bot",
+					null,
+					ck,
+					cid,
+					addr,
+					"Ban evader: computer ID collision.",
+					FALSE
+				)
 
 /proc/geoip_check(var/addr)
 	set background = 1
@@ -917,8 +946,8 @@ var/global/curr_day = null
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
 	if (server)
-		boutput(usr, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
-		usr << link(game_server.url)
+		boutput(src, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
+		src << link(game_server.url)
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
 	set name = "Download Sprite"
@@ -965,7 +994,7 @@ var/global/curr_day = null
 			if( !A.mouse_opacity || A.invisibility > mob.see_invisible ) continue
 			stat( A )
 
-	if (!src.holder)//todo : maybe give admins a toggle
+	if (!src.holder || src.holder.slow_stat)
 		sleep(1.2 SECONDS) //and make this number larger
 	else
 		sleep(0.1 SECONDS)
@@ -1172,77 +1201,11 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-/// Sets a cloud key value pair and sends it to goonhub
-/client/proc/cloud_put(key, value)
-	return src.player.cloud_put(key, value)
-
-/// Returns some cloud data on the client
-/client/proc/cloud_get(key)
-	return src.player.cloud_get(key)
-
-/// Returns 1 if you can set or retrieve cloud data on the client
-/client/proc/cloud_available()
-	return src.player.cloud_available()
-
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return
 	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
-/proc/add_test_screen_thing()
-	var/client/C = input("For who", "For who", null) in clients
-	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
-	if (wavelength_shift < -370 || wavelength_shift > 370)
-		boutput(usr, SPAN_ADMIN("Invalid value."))
-		return
-	var/s_r = 0
-	var/s_g = 0
-	var/s_b = 0
-
-	// total range: 380 - 750 (range: 370nm)
-	// red: 570 - 750 (range: 180nm)
-	if (wavelength_shift < 0)
-		s_r = min(-wavelength_shift / 180 * 255, 255)
-	else if (wavelength_shift > 190)
-		s_r = min((wavelength_shift - 190) / 180 * 255, 255)
-	// green: 490 - 620 (range: 130nm)
-	if (wavelength_shift < -130)
-		s_g = min(-(wavelength_shift + 130) / 130 * 255, 255)
-	else if (wavelength_shift > 110)
-		s_g = min((wavelength_shift - 110) / 130 * 255, 255)
-	// blue: 380 - 500 (range: 120nm)
-	if (wavelength_shift < -250)
-		s_b = min(-(wavelength_shift + 250) / 120 * 255, 255)
-	else if (wavelength_shift > 0)
-		s_b = min(wavelength_shift / 120 * 255, 255)
-
-	var/subtr_color = rgb(s_r, s_g, s_b)
-
-	var/si_r = clamp(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-	var/si_g = clamp(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-	var/si_b = clamp(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-
-	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
-
-	var/atom/movable/screen/S = new
-	S.icon = 'icons/mob/whiteview.dmi'
-	S.blend_mode = BLEND_SUBTRACT
-	S.color = subtr_color
-	S.layer = HUD_LAYER - 0.2
-	S.screen_loc = "SOUTH,WEST"
-	S.mouse_opacity = 0
-
-	C.screen += S
-
-	var/atom/movable/screen/M = new
-	M.icon = 'icons/mob/whiteview.dmi'
-	M.blend_mode = BLEND_MULTIPLY
-	M.color = multip_color
-	M.layer = HUD_LAYER - 0.1
-	M.screen_loc = "SOUTH,WEST"
-	M.mouse_opacity = 0
-
-	C.screen += M
 
 /client/verb/apply_depth_shadow()
 	set hidden = 1
@@ -1278,8 +1241,22 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.cloud_put("saturation", s)
+	src.player.cloudSaves.putData("saturation", s)
 	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
+
+
+/client/verb/toggle_camera_recoil()
+	set hidden = 1
+	set name = "toggle-camera-recoil"
+
+	if (!src.recoil_controller)
+		src.recoil_controller = new/datum/recoil_controller(src)
+
+	if ((winget(src, "menu.toggle_camera_recoil", "is-checked") == "true"))
+		src.recoil_controller?.enable()
+
+	else
+		src.recoil_controller?.disable()
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
@@ -1638,3 +1615,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #undef _SKIN_TEXT
 #undef _SKIN_COMMAND_BG
 #undef SKIN_TEMPLATE
+
+/// Flashes the window in the Windows titlebar
+/client/proc/flash_window(times = -1)
+	winset(src, "mainwindow", "flash=[times]")

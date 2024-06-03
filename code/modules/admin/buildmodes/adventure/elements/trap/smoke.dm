@@ -21,8 +21,8 @@
 /obj/adventurepuzzle/triggerable/smoketrap
 	name = "smoke trap"
 	invisibility = INVIS_ADVENTURE
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beakerlarge"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "large_beaker"
 	density = 0
 	opacity = 0
 	anchored = ANCHORED

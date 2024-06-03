@@ -25,12 +25,6 @@
 	return test == uppertext(test)
 
 /**
-  * Shows the calling client admins.txt
-  */
-/proc/showadminlist()
-	usr.client.Export("##action=browse_file","config/admins.txt")
-
-/**
   * Returns the line matrix from a start atom to an end atom, used in creating line objects
   */
 /proc/getLineMatrix(var/atom/start, var/atom/end)
@@ -184,10 +178,8 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 			if(!(T in crossed)) crossed.Add(T)
 	return crossed
 
-/**
-	* Returns the angle between two given atoms
-	*/
-proc/get_angle(atom/a, atom/b)
+/// Returns the angle between two given atoms
+/proc/get_angle(atom/a, atom/b)
 	var/turf/a_turf = get_turf(a)
 	var/turf/b_turf = get_turf(b)
 	if (isnull(a_turf) || isnull(b_turf))
@@ -375,28 +367,24 @@ proc/get_angle(atom/a, atom/b)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
 /proc/add_zero(text, desired_length)
-	text = "[text]" // ensure it's a string
+	text = "[text]"
 	if ((desired_length - length(text)) <= 0)
 		return text
 	return (num2text(0, desired_length - length(text), 10) + text)
 
-/proc/add_lspace(t, u)
-	// why????? because if you pass this a number,
-	// then -- surprise -- length(t) is ZERO. because it's not text.
-	// so step one is to just. do that.
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	t = "[t]"
-	while(length(t) < u)
-		t = " [t]"
-	. = t
+/// Adds 'char' ahead of 'text' until there are 'length' characters total
+/proc/add_leading(text, length, char = " ")
+	. = "[text]"
+	var/count = length - length_char(text)
+	var/list/chars_to_add[max(count + 1, 0)]
+	return jointext(chars_to_add, char) + .
 
-/proc/add_tspace(t, u)
-	t = "[t]"
-	while(length(t) < u)
-		t = "[t] "
-	. = t
+/// Adds 'char' behind 'text' until there are 'length' characters total
+/proc/add_trailing(text, length, char = " ")
+	. = "[text]"
+	var/count = length - length_char(text)
+	var/list/chars_to_add[max(count + 1, 0)]
+	return . + jointext(chars_to_add, char)
 
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
@@ -405,7 +393,7 @@ proc/get_angle(atom/a, atom/b)
 		. = file_path
 	else
 		. = file(file_path)
-	. = trim(file2text(.))
+	. = trimtext(file2text(.))
 	if(can_escape)
 		. = replacetext(., "\\[separator]", "") // To be complete we should also replace \\ with \ etc. but who cares
 	. = splittext(., separator)
@@ -462,7 +450,7 @@ proc/get_angle(atom/a, atom/b)
 		else if(delta % 2)
 			. = " " + message
 		delta--
-		var/spaces = add_lspace("",delta/2-1)
+		var/spaces = add_leading("",delta/2-1)
 		. = spaces + . + spaces
 
 /proc/dd_limittext(message, length)
@@ -473,12 +461,12 @@ proc/get_angle(atom/a, atom/b)
 		.= copytext(message, 1, length + 1)
 
 /**
-	* Returns the given degree converted to a text string in the form of a direction
-	*/
-/proc/angle2text(var/degree)
+ * Returns the given degree converted to a text string in the form of a direction
+ */
+/proc/angle2text(degree)
 	. = dir2text(angle2dir(degree))
 
-/proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
+/proc/text_input(Message, Title, var/Default, var/length=MAX_MESSAGE_LEN)
 	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
@@ -622,15 +610,15 @@ proc/get_angle(atom/a, atom/b)
 			. += T
 
 /**
-	* Returns true if the given key is a guest key
-	*/
+ * Returns true if the given key is a guest key
+ */
 /proc/IsGuestKey(key)
 	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
 
 /**
-	* Returns f, ensured that it's a valid frequency
-	*/
+ * Returns f, ensured that it's a valid frequency
+ */
 /proc/sanitize_frequency(var/f)
 	. = round(f)
 	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
@@ -933,7 +921,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 
 
 // extends pick() to associated lists
-/proc/alist_pick(var/list/L)
+/proc/alist_pick(list/L)
 	if(!L || !length(L))
 		return null
 	return L[pick(L)]
@@ -997,24 +985,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // <3 Fire
 // I'm preserving the above comment block, let it be known this proc used to use the variables "n", "pr", "te", "t", "p." I have fixed them. You're welcome.
 // <3 FlamingLily
-/proc/stars(input_text, probability)
-	if(probability == null)
-		probability = 25
-	if(probability <= 0)
-		return null
-	else
-		if (probability >= 100)
-			return input_text
-	var/output_text = ""
-	var/input_length = length(input_text)
-	var/cycle = 1
-	while(cycle <= input_length)
-		if ((copytext(input_text, cycle, cycle + 1) == " " || prob(probability)))
-			output_text = text("[][]", output_text, copytext(input_text, cycle, cycle + 1))
-		else
-			output_text = text("[]*", output_text)
-		cycle++
-	return output_text
+/proc/stars(phrase, probability = 25)
+	if(length(phrase) == 0)
+		return
+	var/list/chars = splittext_char(html_decode(phrase), "")
+	for(var/i in 1 to length(chars))
+		if(chars[i] == " " || !prob(probability))
+			continue
+		chars[i] = "*"
+	return sanitize(jointext(chars, ""))
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -1039,31 +1018,29 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
-/proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
-	SPAWN(1 DECI SECOND)
-		if(!M || !M.client || M.shakecamera)
-			return
-		M.shakecamera = 1
-		var/client/client = M.client
+/proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
+	if(!M || !M.client)
+		return
+	var/client/client = M.client
+	var/initial_x = client.pixel_x
+	var/initial_y = client.pixel_y
+	for(var/i=0, i<duration, i++)
+		var/magnitude = randfloat(0, strength)
+		var/angle = randfloat(0, 360)
+		var/target_x = magnitude * cos(angle) + initial_x
+		var/target_y = magnitude * sin(angle) + initial_y
+		var/offset_x = target_x - client.pixel_x
+		var/offset_y = target_y - client.pixel_y
+		animate(client, pixel_x = offset_x, pixel_y = offset_y, easing = LINEAR_EASING, time = delay, flags = ANIMATION_RELATIVE | (i != 0 ? ANIMATION_CONTINUE : ANIMATION_PARALLEL))
+	var/offset_x = initial_x - client.pixel_x
+	var/offset_y = initial_y - client.pixel_y
+	animate(pixel_x = offset_x, pixel_y = offset_y, easing = LINEAR_EASING, time = delay, flags = ANIMATION_RELATIVE)
 
-		for(var/i=0, i<duration, i++)
-			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
-			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			if(client)
-				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			sleep(delay)
+/proc/recoil_camera(mob/M, dir, strength=1, spread=3)
+	if(!M || !M.client || !M.client.recoil_controller)
+		return
+	M.client.recoil_controller.recoil_camera(dir,strength,spread)
 
-		if (client)
-			client.pixel_x = 0
-			client.pixel_y = 0
-			M.shakecamera = 0
-
-/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[msg]"))
-			return 1
-	return 0
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -1153,8 +1130,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			O.hear_talk(M,text,real_name, lang_id)
 
 /**
-  * Returns true if given value is a hex value
-  */
+ * Returns true if given value is a hex value
+ */
 /proc/is_hex(hex)
 	if (!( istext(hex) ))
 		return FALSE
@@ -1296,7 +1273,7 @@ proc/outermost_movable(atom/movable/target)
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as anything in range(range,centre))
+	for (var/atom/A in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1310,20 +1287,22 @@ proc/outermost_movable(atom/movable/target)
 			. += M
 
 /proc/weightedprob(choices[], weights[])
-	if(!choices || !weights) return null
-
+	if(!choices || !weights)
+		return null
 	//Build a range of weights
 	var/max_num = 0
-	for(var/X in weights) if(isnum(X)) max_num += X
-
+	for(var/X in weights)
+		if(isnum(X))
+			max_num += X
 	//Now roll in the range.
-	var/weighted_num = rand(1,max_num)
+	var/weighted_num = rand(1, max_num)
 
-	var/running_total, i
+	var/running_total
 
 	//Loop through all possible choices
-	for(i = 1; i <= choices.len; i++)
-		if(i > weights.len) return null
+	for(var/i in 1 to length(choices))
+		if(i > length(weights))
+			return null
 
 		running_total += weights[i]
 
@@ -1332,12 +1311,13 @@ proc/outermost_movable(atom/movable/target)
 		if(weighted_num <= running_total)
 			return choices[i]
 
-/* Get the highest ancestor of this object in the tree that is an immediate child of
-   a given ancestor.
-   Usage:
-   var/datum/fart/sassy/F = new
-   get_top_parent(F, /datum) //returns a path to /datum/fart
-   */
+/**
+ * Get the highest ancestor of this object in the tree that is an immediate child of a given ancestor.
+ *
+ * Usage:
+ * var/datum/fart/sassy/F = new
+ * get_top_parent(F, /datum) //returns a path to /datum/fart
+ */
 /proc/get_top_ancestor(var/datum/object, var/ancestor_of_ancestor=/datum)
 	if(!object || !ancestor_of_ancestor)
 		CRASH("Null value parameters in get top ancestor.")
@@ -1354,34 +1334,34 @@ proc/outermost_movable(atom/movable/target)
 	. = text2path(stringtarget)
 
 /proc/GetRedPart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 2)
-    var/lo = text2ascii(hex, 3)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 2)
+	var/lo = text2ascii(hex, 3)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetGreenPart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 4)
-    var/lo = text2ascii(hex, 5)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 4)
+	var/lo = text2ascii(hex, 5)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetBluePart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 6)
-    var/lo = text2ascii(hex, 7)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 6)
+	var/lo = text2ascii(hex, 7)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetColors(hex)
-    hex = uppertext(hex)
-    var/hi1 = text2ascii(hex, 2)
-    var/lo1 = text2ascii(hex, 3)
-    var/hi2 = text2ascii(hex, 4)
-    var/lo2 = text2ascii(hex, 5)
-    var/hi3 = text2ascii(hex, 6)
-    var/lo3 = text2ascii(hex, 7)
-    return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
-        ((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
-        ((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
+	hex = uppertext(hex)
+	var/hi1 = text2ascii(hex, 2)
+	var/lo1 = text2ascii(hex, 3)
+	var/hi2 = text2ascii(hex, 4)
+	var/lo2 = text2ascii(hex, 5)
+	var/hi3 = text2ascii(hex, 6)
+	var/lo3 = text2ascii(hex, 7)
+	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
+		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
+		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
 /proc/showCoords(x, y, z, plaintext, holder, ghostjump)
@@ -1469,7 +1449,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	if (!A || !isnum(size) || size <= 0)
 		return list()
 
-	var/list/turfs = list()
+	. = list()
 	var/turf/center = get_turf(A)
 
 	var/corner_range = round(size * 1.5)
@@ -1484,9 +1464,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 				total_distance = abs(center.x - T.x) + abs(center.y - T.y) + (current_range / 2)
 				if (total_distance > corner_range)
 					continue
-				turfs += T
-
-	return turfs
+				. += T
 
 /proc/get_fraction_of_percentage_and_whole(var/perc,var/whole)
 	if (!isnum(perc) || !isnum(whole) || perc == 0 || whole == 0)
@@ -1935,7 +1913,7 @@ proc/countJob(rank)
 	return 1
 
 /proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
-	var/is_immune = FALSE
+	. = FALSE
 
 	var/area/a = get_area(target)
 	if(a?.sanctuary)
@@ -1943,27 +1921,23 @@ proc/countJob(rank)
 
 	if (isliving(target))
 		var/mob/living/L = target
-
 		if (!isdead(L))
 			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = TRUE
+					. = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = TRUE
-
-		if (source && istype(source,/obj/projectile) && ishuman(target))
+					. = TRUE
+		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = TRUE
-
-	return is_immune
+				. = TRUE
 
 /**
-  * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
-  */
+ * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
+ */
 /proc/whois(target, limit = null, admin)
-	target = trim(ckey(target))
+	target = trimtext(ckey(target))
 	if (!target)
 		return null
 	. = list()
@@ -2024,8 +1998,8 @@ proc/countJob(rank)
 				return M
 
 /**
-  * Finds whoever's dead.
-	*/
+ * Finds whoever's dead.
+ */
 /proc/whodead()
 	. = list()
 	for (var/mob/M in mobs)
@@ -2046,23 +2020,22 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg || !config.spacebee_api_key) return 0
+	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
-		// Fetch via HTTP from goonhub
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+		var/datum/apiModel/DectalkPlayResource/playDectalkResource
+		try
+			var/datum/apiRoute/dectalk/play/playDectalk = new
+			playDectalk.buildBody(msg, roundId)
+			playDectalkResource = apiHandler.queryAPI(playDectalk)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to play dectalk for msg: '[msg]' because: [error.message]")
 			return
 
-		return list("audio" = response.body, "message" = msg)
+		return list("audio" = playDectalkResource.audio, "message" = msg)
 	else
 		return list("cooldown" = 1)
 
@@ -2098,18 +2071,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
 
-	if (M && isblob(M))
+	if (isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
 		if (B.tutorial)
 			return TRUE
 
-	var/area/A
-	if (T && istype(T, /area))
-		A = T
-	else if (T && isturf(T))
-		A = get_area(T)
-
-	if (A && istype(A) && A.allowed_restricted_z)
+	var/area/A = get_area(T)
+	if (A?.allowed_restricted_z)
 		return TRUE
 
 /**
@@ -2263,39 +2231,37 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 	return FALSE
 
-/**
-  * Returns span with a color gradient between two given colors of given message
-  */
+/// Returns span with a color gradient between two given colors of given message
 proc/gradientText(var/color1, var/color2, message)
-  var/color1hex = hex2num(copytext(color1, 2))
-  var/color2hex = hex2num(copytext(color2, 2))
-  var/r1 = (color1hex >> 16) & 0xFF
-  var/g1 = (color1hex >> 8) & 0xFF
-  var/b1 = color1hex & 0xFF
-  var/dr = ((color2hex >> 16) & 0xFF)- r1
-  var/dg = ((color2hex >> 8) & 0xFF) - g1
-  var/db = (color2hex & 0xFF) - b1
-  var/list/result = new/list()
-  var/n = rand(0,10)/10.0 // what a shitty name for a variable
-  var/dir = prob(50) ? -1 : 1
-  for(var/i=1, i<=length(message), i += 3)
-    n += dir * 0.2
-    if(prob(20))
-      dir = dir/abs(dir) * -1
-    if(n < 0)
-      n = 0
-      dir = 1
-    if(n > 1)
-      n = 1
-      dir = -1
-    var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
-    var/chars = copytext(message, i, i+3)
-    result += "<span style='color:[col]'>[chars]</span>"
-  . = result.Join()
+	var/color1hex = hex2num(copytext(color1, 2))
+	var/color2hex = hex2num(copytext(color2, 2))
+	var/r1 = (color1hex >> 16) & 0xFF
+	var/g1 = (color1hex >> 8) & 0xFF
+	var/b1 = color1hex & 0xFF
+	var/dr = ((color2hex >> 16) & 0xFF)- r1
+	var/dg = ((color2hex >> 8) & 0xFF) - g1
+	var/db = (color2hex & 0xFF) - b1
+	var/list/result = new/list()
+	var/n = rand(0,10)/10.0 // what a shitty name for a variable
+	var/dir = prob(50) ? -1 : 1
+	for(var/i=1, i<=length(message), i += 3)
+		n += dir * 0.2
+		if(prob(20))
+			dir = dir/abs(dir) * -1
+		if(n < 0)
+			n = 0
+			dir = 1
+		if(n > 1)
+			n = 1
+			dir = -1
+		var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
+		var/chars = copytext(message, i, i+3)
+		result += "<span style='color:[col]'>[chars]</span>"
+	. = result.Join()
 
 /**
-  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
-  */
+ * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
+ */
 proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message), TRUE) //I'd love to just use include_delimiters=TRUE, but byond
 	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
@@ -2314,23 +2280,18 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	return jointext(.,"")
 
 
-/**
-  * Returns given text replaced entirely by nonsense chars
-  */
+/// Returns given text replaced entirely by nonsense chars
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
 
-/**
-  * Returns the time in seconds since a given timestamp
-  */
+
+/// Returns the time in seconds since a given timestamp
 proc/getTimeInSecondsSinceTime(var/timestamp)
 	var/time_of_day = world.timeofday + ((world.timeofday < timestamp) ? 864000 : 0) // Offset the time of day in case of midnight rollover
 	var/time_elapsed = (time_of_day - timestamp)/10
 	return time_elapsed
 
-/**
-  * Handles the two states icon_size can be in: basic number, or string in WxH format
-  */
+/// Handles the two states icon_size can be in: basic number, or string in WxH format
 proc/getIconSize()
 	if (istext(world.icon_size))
 		var/list/iconSizes = splittext(world.icon_size, "x")
@@ -2338,18 +2299,14 @@ proc/getIconSize()
 
 	return world.icon_size
 
-/**
-  * Finds a client by ckey, throws exception if not found
-  */
+/// Finds a client by ckey, throws exception if not found
 proc/getClientFromCkey(ckey)
 	var/datum/player/player = find_player(ckey)
 	if(!player?.client)
 		throw EXCEPTION("Client not found")
 	return player.client
 
-/**
-	* Returns true if the given atom is within src's contents (deeply/recursively)
-	*/
+/// Returns true if the given atom is within src's contents (deeply/recursively)
 /atom/proc/contains(var/atom/A)
 	. = FALSE
 	if(!A)
@@ -2424,9 +2381,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 
 	return (seer.dir == dir)
 
-/**
-	* Returns the passed decisecond-format time in the form of a text string
-	*/
+/// Returns the passed decisecond-format time in the form of a text string
 proc/time_to_text(var/time)
 	. = list()
 
@@ -2495,7 +2450,8 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 proc/is_incapacitated(mob/M)
 	return (M &&(\
 		M.hasStatus("stunned") || \
-		M.hasStatus("weakened") || \
+		M.hasStatus("knockdown") || \
+		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
@@ -2632,3 +2588,128 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 		// Otherwise, output to ghosts
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
 			boutput(M, rendered)
+
+/// Find a client based on ckey
+/proc/find_client(ckey)
+	for (var/client/C in clients)
+		if (C.ckey == ckey)
+			return C
+
+/// Return a list of station-level storage objects that are safe to spawn things into
+/// * closed: if TRUE, only include storage objects that are closed
+/// * breathable: if TRUE, only include storage on breathable turfs
+/// * no_others: if TRUE, do not include multiple storage objects on the same turf
+/proc/get_random_station_storage_list(closed=FALSE, breathable=FALSE, no_others=FALSE)
+	RETURN_TYPE(/list/obj/storage)
+	. = list()
+	for_by_tcl(container, /obj/storage)
+		if (container.z != Z_LEVEL_STATION)
+			continue
+		if (closed && container.open)
+			continue
+		if (container.locked || container.welded || container.crunches_contents || container.needs_prying)
+			continue
+		if (istype(container, /obj/storage/secure) || istype(container, /obj/storage/crate/loot))
+			continue
+		// listening posts everywhere or martian ship (in station Z-level on Oshan)
+		if (istype(get_area(container), /area/listeningpost) || istype(get_area(container), /area/evilreaver))
+			continue
+
+		if (breathable)
+			var/turf/simulated/T = container.loc
+			if(istype(T) && (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
+				continue
+
+		if (no_others)
+			var/turf/container_turf = get_turf(container)
+			var/duplicate_containers = FALSE
+			for (var/obj/storage/container_on_turf in container_turf)
+				if (container != container_on_turf)
+					duplicate_containers = TRUE
+					break
+			if (duplicate_containers)
+				continue
+
+		. += container
+
+/// returns the position of the last matching needle in haystack, case sensitive
+/proc/findLastMatch(haystack, needle)
+	var/last_index = length(haystack)  // Start at the end of the data
+	var/last_match_found = 0
+
+	// Search from the end towards the beginning
+	while(last_index > 0)
+	{
+		last_index = findtext(haystack, needle, -last_index)  // Search from near the end
+		if(last_index > last_match_found)
+		{
+			last_match_found = last_index  // Update the last valid match
+			last_index = length(haystack) - last_index  // Adjust search start closer to the beginning
+		}
+		else
+		{
+			break  // Exit the loop if no further matches are found
+		}
+	}
+
+	return last_match_found
+
+/// returns the position of the last matching needle in haystack, case insensitive
+/proc/findLastMatchEx(haystack, needle)
+	var/last_index = length(haystack)  // Start at the end of the data
+	var/last_match_found = 0
+
+	// Search from the end towards the beginning
+	while(last_index > 0)
+	{
+		last_index = findtextEx(haystack, needle, -last_index)  // Search from near the end
+		if(last_index > last_match_found)
+		{
+			last_match_found = last_index  // Update the last valid match
+			last_index = length(haystack) - last_index  // Adjust search start closer to the beginning
+		}
+		else
+		{
+			break  // Exit the loop if no further matches are found
+		}
+	}
+
+	return last_match_found
+
+/// returns the maxx value of a TGM formatted map. Accepts either a map file or preread map text data
+/proc/get_tgm_maxx(map_data)
+	if (isfile(map_data))
+		map_data = file2text(map_data)
+	var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+	var/x_max = 0
+
+	// Extract X from the last valid match
+	if(idx > 0)
+	{
+		var/end_of_tuple = findtextEx(map_data, ")", idx)  // Find the end of the tuple
+		x_max = text2num(copytext(map_data, idx + 1, end_of_tuple))  // Extract the X value
+	}
+	return x_max
+
+/// returns the maxy value of a TGM formatted map. Accepts either a map file or preread map text data
+/proc/get_tgm_maxy(map_data)
+	if (isfile(map_data))
+		map_data = file2text(map_data)
+	var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+	var/y_max = 0
+
+	// Start counting newlines from the first newline after the last match
+	if(idx > 0)
+	{
+		var/line_start = findtextEx(map_data, "\n", idx) + 1
+		while(line_start > 0 && line_start < length(map_data))
+		{
+			line_start = findtextEx(map_data, "\n", line_start + 1)  // Find the next newline
+			if(line_start)
+				y_max++
+		}
+		// Decrement Y count if there's an extra newline at the end of the data
+		if(map_data[length(map_data)] == "\n")
+			y_max--
+	}
+	return y_max

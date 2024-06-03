@@ -362,6 +362,14 @@
 
 	// meant for use inside station, or if connected to space, not a door
 	shutters
+		New()
+			..()
+			START_TRACKING
+
+		disposing()
+			STOP_TRACKING
+			..()
+
 
 /obj/machinery/door/poddoor/blast/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'

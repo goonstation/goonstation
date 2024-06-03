@@ -257,7 +257,6 @@
 	name = "wooden table"
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood/seven,
@@ -2152,7 +2151,6 @@
 "aEF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light/emergency{
@@ -3013,7 +3011,6 @@
 "aOY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/cable,
@@ -8552,7 +8549,6 @@
 "cpG" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/firealarm{
@@ -9795,7 +9791,7 @@
 /area/station/crew_quarters/quartersA)
 "cIL" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -13792,7 +13788,6 @@
 "dKS" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/item/device/radio/intercom/engineering{
@@ -14233,7 +14228,6 @@
 "dRz" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light{
@@ -14696,9 +14690,7 @@
 /area/station/crew_quarters/pool)
 "dXr" = (
 /obj/indestructible/shuttle_corner,
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "dXF" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -15394,9 +15386,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "ehc" = (
 /obj/rack,
@@ -16981,7 +16971,7 @@
 /area/station/engine/hotloop)
 "ezC" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -17317,9 +17307,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "eEN" = (
 /obj/cable{
@@ -17464,10 +17452,11 @@
 	name = "Chapel Reception"
 	})
 "eGp" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "eGE" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -18087,7 +18076,7 @@
 	})
 "eNM" = (
 /obj/machinery/manufacturer/mining{
-	free_resource_amt = 0
+	free_resources = list()
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
@@ -18333,7 +18322,7 @@
 /area/station/engine/elect)
 "eQT" = (
 /obj/machinery/manufacturer/hangar{
-	free_resource_amt = 0
+	free_resources = list()
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -21326,7 +21315,7 @@
 /area/shuttle/arrival/station)
 "fGK" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -23568,7 +23557,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/genpop)
 "gmf" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 4
 	},
@@ -26582,7 +26571,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "gXp" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/machinery/light/small/harsh{
 	dir = 4;
 	pixel_x = 12
@@ -26757,7 +26746,7 @@
 /area/station/hallway/secondary/north)
 "han" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "haw" = (
@@ -34038,8 +34027,8 @@
 /area/station/crewquarters/garbagegarbs)
 "iXy" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
@@ -36351,7 +36340,7 @@
 /area/station/medical/medbay)
 "jCz" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -43147,7 +43136,6 @@
 "lro" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -43661,10 +43649,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "lzz" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/damaged1,
 /area/space)
 "lzL" = (
 /obj/landmark/spawner/artifact,
@@ -46221,7 +46210,6 @@
 "mdw" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/grey,
@@ -46601,7 +46589,6 @@
 "miw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light{
@@ -49290,7 +49277,7 @@
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
 "mTT" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /obj/machinery/light/small/harsh{
 	dir = 8;
 	pixel_x = -12
@@ -49298,7 +49285,7 @@
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
 "mTY" = (
-/obj/machinery/processor,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "mUe" = (
@@ -50985,7 +50972,7 @@
 /area/station/hangar/main)
 "nvI" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/chem_grenade/firefighting,
@@ -51727,7 +51714,7 @@
 /area/station/medical/medbay/lobby)
 "nFB" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -52062,7 +52049,7 @@
 /area/station/crew_quarters/courtroom)
 "nIH" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -55362,7 +55349,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner,
+/turf/space,
 /area/shuttle/arrival/station)
 "ozs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -55429,9 +55416,11 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/arcade/dungeon)
 "oAA" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "oAC" = (
 /obj/cable{
@@ -58276,8 +58265,8 @@
 /area/station/engine/elect)
 "pnj" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light{
@@ -63100,7 +63089,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "qAx" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -66975,7 +66964,7 @@
 /area/station/crew_quarters/market)
 "rAe" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/power)
@@ -71491,8 +71480,8 @@
 /area/station/maintenance/solar/west)
 "sDX" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
@@ -71672,7 +71661,6 @@
 	name = "wooden table"
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light/small{
@@ -71850,7 +71838,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/satchel/mining,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/construction{
@@ -73795,10 +73783,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "teN" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/damaged1,
 /area/space)
 "teR" = (
 /obj/machinery/light/emergency{
@@ -75428,7 +75417,6 @@
 "tAD" = (
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -76185,7 +76173,7 @@
 /area/station/engine/power)
 "tKE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/mask/gas/emergency,
@@ -76193,7 +76181,7 @@
 /area/station/science/gen_storage)
 "tKG" = (
 /obj/storage/secure/closet/engineering/electrical,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/cable{
 	icon_state = "4-8"
@@ -78916,7 +78904,7 @@
 /area/station/communications/centre)
 "uuC" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -84664,10 +84652,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
 "vJl" = (
-/obj/machinery/manufacturer/general/grody{
-	free_resource_amt = 2;
-	
-	},
+/obj/machinery/manufacturer/general/grody,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -85354,7 +85339,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/satchel/mining,
 /obj/machinery/light/small{
 	dir = 8;
@@ -86383,7 +86368,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/north)
 "wgA" = (
-/obj/machinery/sauna_stove,
+/obj/machinery/space_heater/sauna_stove,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -87467,7 +87452,7 @@
 /area/station/crew_quarters/fitness)
 "wtw" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -89383,7 +89368,6 @@
 "wRe" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/blueblack/corner{
@@ -91014,7 +90998,7 @@
 /area/station/engine/engineering/ce)
 "xkx" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/quarters{
@@ -93031,7 +93015,6 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/west,
@@ -124437,11 +124420,11 @@ aJu
 aJu
 aJu
 aJu
-qpT
+sTu
 xFz
 xFz
 xFz
-vhb
+sTu
 aJu
 aJu
 aJu

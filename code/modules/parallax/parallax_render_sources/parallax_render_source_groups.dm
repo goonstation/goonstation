@@ -86,6 +86,13 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 	)
 
+/datum/parallax_render_source_group/area/observatory
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_far,
+	)
+
 /datum/parallax_render_source_group/area/grillnasium
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/space_1,
@@ -132,6 +139,11 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/foreground/dust,
 		/atom/movable/screen/parallax_render_source/foreground/dust/sparse,
+	)
+
+/datum/parallax_render_source_group/planet/lava_moon
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/foreground/embers,
 	)
 
 /datum/parallax_render_source_group/planet/desert/setup_render_sources()

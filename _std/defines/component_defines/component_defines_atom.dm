@@ -78,10 +78,10 @@
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 	/// when an AM is teleported by do_teleport
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
-	/// when an AM changes nested contraband
+	/// when an AM changes contraband level (self_applied)
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
-	/// get contraband level of movable (check_nonfirearms, check_firearms)
-	#define COMSIG_MOVABLE_GET_CONTRABAND "mov_get_contraband"
+	/// when an AM is revealed from under a floor tile (turf revealed from)
+	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
 
 	// ---- complex ----
 
@@ -229,6 +229,10 @@
 	#define COMSIG_MOB_POINT "mob_point"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
+	/// Sent when the mob says something (message)
+	#define COMSIG_MOB_SAY "mob_say"
+	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
+	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 
 	// ---- cloaking device signal ----
 
@@ -254,3 +258,7 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
+
+// ---- cross server message signals
+	/// Sent when a server sync response is received
+	#define COMSIG_SERVER_DATA_SYNCED "server_data_synced"

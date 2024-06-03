@@ -1,56 +1,8 @@
 //The Holy Variable That Is Zoldorf
 var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob was acting strangely, so this list should hypothetically only ever have one zoldorf mob reference in it (the current one)
 
-//Zoldorf Interface
-var/global/zoldorf_items_raw
-var/global/list/datum/zoldorfitem/zoldorf_items = list()
-
-/proc/zoldorfsetup() //this is called in world.dm to initialize the zoldorf vending list for the rest of the round
-	for(var/I in childrentypesof(/datum/zoldorfitem))
-		var/datum/zoldorfitem/I2 = new I
-		var/itemname = I2.name
-		var/pathname = "[I2.path]"
-		var/cost = I2.cost
-		var/stock = I2.stock
-
-		zoldorf_items[pathname] = new I //security list that is later called to check for tampering with the local ui
-		zoldorf_items[pathname].raw_list = list("name"=itemname,"path"=pathname,"cost"="[cost]","stock"=stock)
-		zoldorf_items_raw += list(zoldorf_items[pathname].raw_list)
-
-/obj/machinery/playerzoldorf/proc/uisetup() //general proc for sending resources to the client and loading the zoldorf ui
-	usr << browse(replacetext(replacetext(replacetext(grabResource("html/zoldorf.htm"), "!!ITEMS!!", json_encode(zoldorf_items_raw)), "!!CREDITS!!", src.credits), "!!SRC_REF!!", "\ref[src]"), "window=Zoldorf;size=700x600;can_resize=1;can_minimize=1;")
-
-/obj/machinery/playerzoldorf/proc/updateui(var/mob/exclude,var/item_path) //opening a zoldorf ui adds a player to a list (they are removed on close). this proc references
-	var/wasnull = 0														  //a list of all players currently viewing the interface and dynamically updates everyone for full syncing
-	// TODO: this should use updateUsrDialog instead
-	var/staticiterations = length(src.openwindows)
-	for(var/i=1,i<=staticiterations,i++)
-		if((src.openwindows[i] == exclude) || (src.openwindows[i] == null) || !(src.openwindows[i] in range(1,src)))
-			if(src.openwindows[i]==null) //checking for nulls
-				wasnull = 1
-			continue
-		if(src.openwindows[i].client && src.openwindows[i].mind)
-			if(winget(src.openwindows[i],"Zoldorf","is-visible") == "true")
-				if(item_path) //because of the data being tosses back and forth, a direct reference was needed in order to properly update certain things without desyncing
-					var/datum/zoldorfitem/item = zoldorf_items[item_path]
-					src.openwindows[i] << output(list2params(list("update",item.name,item.path,src.credits,item.stock)),"Zoldorf.browser:updatecredits")
-				else
-					src.openwindows[i] << output(list2params(list("update",null,null,src.credits)),"Zoldorf.browser:updatecredits")
-			else
-				src.openwindows.Remove(src.openwindows[i])
-				staticiterations--
-				i--
-	if(wasnull == 1) //if any nulls were found, declog the list
-		staticiterations = length(src.openwindows)
-		for(var/i=1,i<=staticiterations,i++)
-			if(src.openwindows[i] == null)
-				src.openwindows -= src.openwindows[i]
-				staticiterations--
-				i--
-
-
-//Zoldorf Objects
-/obj/machinery/playerzoldorf //the actual player zoldorf object
+/// Player-controlled Zoldorf Machine
+/obj/machinery/playerzoldorf
 	name = "Zoldorf"
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "background"
@@ -62,14 +14,17 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 	var/list/omencolors = list("none","custom","red","green")
 	var/list/notes = list()
 	var/omencolor
-	var/obj/o1 = new
-	var/obj/o2 = new
+	var/obj/effect/o1 = new
+	var/obj/effect/o2 = new
 	var/inuse = 0
 	var/colorinputbuffer
 	var/smokecolor
 	var/messagethrottle
 	var/omen
 	var/occupied
+
+	var/list/datum/zoldorfitem/soul/soul_items = null
+	var/list/datum/zoldorfitem/credit/credit_items = null
 
 	var/initialsoul = 0 //interface and ability holder interaction
 	var/storedsouls = 0
@@ -84,9 +39,119 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 
 	New()
 		. = ..()
-		o1.mouse_opacity = 0
-		o2.mouse_opacity = 0
 		START_TRACKING
+		src.soul_items = list()
+		for (var/product in concrete_typesof(/datum/zoldorfitem/soul))
+			src.soul_items += new product
+		src.credit_items = list()
+		for (var/product in concrete_typesof(/datum/zoldorfitem/credit))
+			src.credit_items += new product
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("returncash")
+				if(src.credits <= 0)
+					return
+				var/obj/item/moneyreturn = new /obj/item/currency/spacecash(get_turf(src),src.credits)
+				src.credits = 0
+				ui.user.put_in_hand_or_drop(moneyreturn)
+				return TRUE
+			if("soul_purchase")
+				var/item_name = params["item"]
+				if (!item_name)
+					return
+				var/datum/zoldorfitem/soul/purchasing = null
+				for(var/datum/zoldorfitem/soul/product in src.soul_items)
+					if(product.name == item_name)
+						purchasing = product
+				if (!istype(purchasing, /datum/zoldorfitem/soul))
+					return
+				if ((purchasing.stock <= 0) && !purchasing.infinite)
+					return
+				var/confirm = tgui_alert(ui.user, "Are you sure you want to sell [purchasing.soul_percentage]% of your soul?", "Confirm Transaction", list("Yes", "No"))
+				if(confirm != "Yes")
+					return
+				if (!soul_cost_check(ui.user, purchasing.soul_percentage))
+					return
+				var/mob/living/carbon/human/H = ui.user
+				if(H.sell_soul(purchasing.soul_percentage))
+					if(!purchasing.infinite)
+						purchasing.stock -= 1
+						src.update_static_data(ui.user)
+					purchasing.on_bought(H)
+					src.partialsouls += purchasing.soul_percentage
+					src.updatejar()
+				return TRUE
+			if("credit_purchase")
+				var/item_name = params["item"]
+				if (!item_name)
+					return
+				var/datum/zoldorfitem/credit/purchasing = null
+				for(var/datum/zoldorfitem/credit/product in src.credit_items)
+					if(product.name == item_name)
+						purchasing = product
+				if(!istype(purchasing, /datum/zoldorfitem/credit))
+					return
+				if ((purchasing.stock <= 0) && !purchasing.infinite)
+					return
+				if(purchasing.price > src.credits)
+					boutput(ui.user, SPAN_ALERT("[src.name] stares blankly into your soul...begging you for more credits..."))
+					return
+				src.credits -= purchasing.price
+				if(!purchasing.infinite)
+					purchasing.stock -= 1
+					src.update_static_data(ui.user)
+				purchasing.on_bought(ui.user)
+				return TRUE
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ZoldorfPlayerShop", src.name)
+		ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		.["credits"] = src.credits
+		.["user_soul"] = user.mind?.soul ? user.mind.soul : 0
+
+	ui_static_data(mob/user)
+		. = ..()
+		var/list/products = list()
+		for(var/datum/zoldorfitem/soul/product as anything in src.soul_items)
+			products += list(list(
+				"name" = product.name,
+				"stock" = product.stock,
+				"infinite" = product.infinite,
+				"img" = product.img,
+				"soul_percentage" = product.soul_percentage,
+			))
+		for(var/datum/zoldorfitem/credit/product as anything in src.credit_items)
+			products += list(list(
+				"name" = product.name,
+				"stock" = product.stock,
+				"infinite" = product.infinite,
+				"img" = product.img,
+				"price" = product.price,
+			))
+		.["products"] = products
+
+	/// Check to see if the dispensing user has enough soul to purchase an item
+	proc/soul_cost_check(mob/user, percentage)
+		if(!istype(user, /mob/living/carbon/human) || !user.mind?.soul)
+			boutput(usr,SPAN_ALERT("<b>You don't have a soul, silly.</b>"))
+			return FALSE
+		var/mob/living/carbon/human/H = user
+		if(H.mind.soul < percentage)
+			boutput(user, SPAN_ALERT("<b>You don't have enough of a soul to sell!</b>"))
+			return FALSE
+		if(H.unkillable)
+			boutput(user,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
+			return FALSE
+		return TRUE
 
 	proc/updatejar() //updates soul jar display based on partial souls and adds any spillover to the current zoldorf's soul pool
 		while(src.partialsouls >= 100)
@@ -389,49 +454,42 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			src.messagethrottle = 0
 			return 1
 
-	attackby(obj/item/weapon, mob/user)
-		if(istype(weapon, /obj/item/currency/spacecash)) //adding money to the vending machine
-			src.credits += weapon.amount
-			if(winget(user,"Zoldorf","is-visible") == "true")
-				user << output(list2params(list("add",null,null,weapon.amount)),"Zoldorf.browser:updatecredits")
-			updateui(user)
-			weapon.amount = 0
-			user.visible_message(SPAN_NOTICE("<b>[src.name] magically vacuums up [user.name]'s credits!</b>"),SPAN_NOTICE("<b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b>"))
-			user.u_equip(weapon)
-			weapon.dropped(user)
-			qdel(weapon)
+	attackby(obj/item/I, mob/user)
+		if(istype(I, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/creds = I
+			src.credits += creds.amount
+			src.ui_interact(user)
+			creds.amount = 0
+			user.visible_message(SPAN_NOTICE("<b>[src.name] magically vacuums up [user.name]'s credits!</b>"),SPAN_NOTICE("<b>Poof! The great [src.name] has made your credits disappear! Just kidding, they're in the booth.</b>"))
+			user.u_equip(creds)
+			creds.dropped(user)
+			qdel(creds)
+			tgui_process.update_uis(src)
 
-		else if(istype(weapon, /obj/item/zolscroll)) //handling handing of contracts to begin the usurping process
-			var/obj/item/zolscroll/scroll = weapon
-			var/mob/living/carbon/human/h = user
-			if(h.unkillable)
-				boutput(h,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
+		else if(istype(I, /obj/item/zolscroll)) //handling handing of contracts to begin the usurping process
+			var/obj/item/zolscroll/scroll = I
+			var/mob/living/carbon/human/H = user
+			if(H.unkillable)
+				boutput(H,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
 				return
 			if(scroll.icon_state != "signed")
-				boutput(h, SPAN_ALERT("It doesn't seem to be signed yet."))
+				boutput(H, SPAN_ALERT("It doesn't seem to be signed yet."))
 				return
-			if(scroll.signer == h.real_name)
+			if(scroll.signer == H.real_name)
 				var/zoldorfturf = get_turf(src)
 				if(the_zoldorf.len && the_zoldorf[1].homebooth)
 					if(the_zoldorf[1].homebooth == src)
 						src.booth(user,zoldorfturf,scroll,1)
 					else
-						boutput(h, SPAN_ALERT("<b>There can only be one!</b>"))
+						boutput(H, SPAN_ALERT("<b>There can only be one!</b>"))
 				else
 					src.booth(user,zoldorfturf,scroll)
 			else
-				user.visible_message(SPAN_ALERT("<b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b>"),SPAN_ALERT("<b>You can only sell your own soul!</b>"))
+				user.visible_message(SPAN_ALERT("<b>[H.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b>"),SPAN_ALERT("<b>You can only sell your own soul!</b>"))
 		else
 			..()
 
-
-	attack_hand(mob/user) //interface stuff
-		if(!(user in src.openwindows))
-			src.openwindows.Add(user)
-		uisetup()
-		..()
-
-	ex_act(var/severity) //exploding is illegal
+	ex_act(severity) //exploding is illegal
 		return
 
 	disposing() //cleanup stuffs: making sure the zoldorf is freed so its not frozen and helpless if the booth is deleted, cleaning up references and overlays, etc
@@ -445,76 +503,3 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		the_zoldorf = list()
 		STOP_TRACKING
 		..()
-
-	Topic(href, href_list)
-		var/datum/zoldorfitem/item = null
-		if(href_list["command"] == "close") //handles removing subscribed users from the list of open zoldorf windows
-			if(usr in src.openwindows)
-				src.openwindows.Remove(usr)
-				return
-		if(href_list["command"]!="return") //handling the decrementing of items that have stock values in the vendor while making sure the data coming in aligns with the data stored in the security list
-			item = zoldorf_items[href_list["path"]]
-			if(!item)
-				return
-			if(item.soul_cost())
-				if(istype(usr, /mob/living/carbon/human))
-					var/mob/living/carbon/human/user = usr
-					if(user.mind && user.mind.soul)
-						if(user.mind.soul < item.soul_cost())
-							boutput(user, SPAN_ALERT("<b>You don't have enough of a soul to sell!</b>"))
-							return
-					else
-						return
-				else
-					boutput(usr,SPAN_ALERT("<b>You don't have a soul, silly.</b>"))
-					return
-			if(item.stock != "i")
-				if(item.stock == 0)
-					boutput(usr,SPAN_ALERT("<b>Item out of stock!</b>"))
-					return
-				else
-					item.stock--
-					item.raw_list["stock"]--
-		else
-			if((text2num_safe(href_list["credits"]) <= src.credits) && (text2num_safe(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
-				usr << output("return","Zoldorf.browser:serverconfirm")
-				var/obj/item/moneyreturn = new /obj/item/currency/spacecash(get_turf(src),src.credits)
-				src.credits = 0
-				usr.put_in_hand_or_drop(moneyreturn)
-				updateui(usr)
-				return
-		if(item && (usr in range(1,src)) && (!(usr in src))) //if everything matches the server-side zoldorf list, continue with the spawning of the items
-			switch(href_list["command"])
-				if("spawn") //spawning items from credits
-					if(isnum(item.cost))
-						if(item.cost <= src.credits)
-							usr << output(list2params(list("spawn", item.cost)),"Zoldorf.browser:serverconfirm")
-							credits -= item.cost
-							usr.put_in_hand_or_drop(new item.path(src))
-						else
-							boutput(usr, SPAN_ALERT("[src.name] stares blankly into your soul...begging you for more credits..."))
-				if("soulspawn") //spawning items at the cost of a portion of the soul
-					var/cost = item.soul_cost()
-					if(istype(usr, /mob/living/carbon/human))
-						var/mob/living/carbon/human/user = usr
-						if(user.unkillable) //*giggles in scientist language*
-							boutput(user,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
-							return
-					var/confirm = tgui_alert(usr, "Are you sure you want to sell [item.cost] of your soul?", "Confirm Transaction", list("Yes", "No"))
-					if(confirm == "Yes")
-						if(usr in range(1,src))
-							usr << output(list2params(list("spawn", item.cost)),"Zoldorf.browser:serverconfirm")
-							//subtract from player soul
-							if(istype(usr,/mob/living/carbon/human))
-								var/mob/living/carbon/human/user = usr
-								if(user.sell_soul(cost) == 0)
-									return
-								if(!item.on_bought(usr))
-									usr.put_in_hand_or_drop(new item.path(src))
-							//add partial soul to zoldorf
-							src.partialsouls += cost
-							//update soul jar display
-							src.updatejar()
-			updateui(usr, href_list["path"])
-		else if((usr in range(1,src)) && (!(usr in src)))
-			updateui(usr)

@@ -3,8 +3,8 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "p" = (
-/mob/living/carbon/human/npc/syndicate_weak,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
+/mob/living/critter/human/syndicate/knife,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "v" = (

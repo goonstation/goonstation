@@ -153,6 +153,7 @@
 	var/hair_override = 0 // only really works if they have hair. Barbering might help
 	/// forces the mob to display their special hair, even if their flags tell them not to
 	var/special_hair_override = 0 // only really works if they have any special hair
+	var/trample_cooldown = 4 SECONDS
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
@@ -204,10 +205,11 @@
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	prodoc_icons = list()
-	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	// 0.01 layering increases to guarantee layering over the health monitor icon
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
 	for (var/implant in prodoc_icons)
 		var/image/image = prodoc_icons[implant]
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
@@ -743,7 +745,7 @@
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
-	src.UpdateOverlays(null, "sleep_bubble")
+	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -757,9 +759,11 @@
 		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
+	add_lifeprocess(/datum/lifeprocess/decomposition)
+	remove_lifeprocess(/datum/lifeprocess/blood)
 
 	if (src.mind) // I think this is kinda important (Convair880).
-		if (src.mind.ckey)
+		if (src.mind.ckey && !inafterlife(src))
 			var/turf/where = get_turf(src)
 			var/where_text = "Unknown (?, ?, ?)"
 			if (where)
@@ -872,7 +876,7 @@
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
 		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
-		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.setStatus("unconscious", 10 SECONDS)
 		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
@@ -1043,12 +1047,18 @@
 
 	var/obj/item/I = src.equipped()
 
-	if (!I || !isitem(I) || I.cant_drop) return
+	if (!I || !isitem(I) || I.cant_drop)
+		return
 
+	var/obj/item/grab/grab = null
 	if (istype(I, /obj/item/grab))
-		var/obj/item/grab/G = I
-		I = G.handle_throw(src, target)
-		if (!I) return
+		grab = I
+	else if (I.chokehold)
+		grab = I.chokehold
+	if (grab)
+		I = grab.handle_throw(src, target)
+		if (!I)
+			return
 
 	I.set_loc(src.loc)
 
@@ -1080,8 +1090,6 @@
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
-			if ( ishuman(C) && !C.getStatusDuration("weakened"))
-				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
@@ -1103,9 +1111,7 @@
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 		src.next_click = world.time + src.combat_click_delay
 
@@ -1144,7 +1150,6 @@
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src
-					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 					var/mob/living/living_target = target
 					living_target.give_item()
 					return
@@ -1253,6 +1258,8 @@
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
+
+	src.update_arrest_icon()
 
 
 /mob/living/carbon/human/admin_visible_name()
@@ -1536,7 +1543,7 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -1867,6 +1874,16 @@
 				return TRUE
 	return FALSE
 
+/mob/living/carbon/human/can_hold_two_handed()
+	. = ..()
+	if (src.r_hand || src.l_hand)
+		return FALSE
+	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+		return FALSE
+	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+		return FALSE
+	return TRUE
+
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
 		return 0
@@ -1877,12 +1894,8 @@
 			return 1
 		return 0
 	if (I.two_handed) //MARKER1
-		if (src.r_hand || src.l_hand)
-			return 0
-		if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-			return 0
-		if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
-			return 0
+		if (!src.can_hold_two_handed())
+			return FALSE
 		src.l_hand = I
 		src.r_hand = I
 		I.pickup(src)
@@ -2284,6 +2297,21 @@
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
 	return TRUE
+///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
+		return
+	if (src.autoequip_slot(I, SLOT_IN_BELT))
+		return
+	if (src.autoequip_slot(I, SLOT_L_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_R_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_L_HAND))
+		return
+	if (src.autoequip_slot(I, SLOT_R_HAND))
+		return
+	qdel(I)
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
@@ -2952,29 +2980,32 @@
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
-	for (var/obj/O in src.juggling)
-		src.remove_juggle(O)
-		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
-			var/obj/item/gun/gun = O
+	for (var/atom/movable/A in src.juggling)
+		src.remove_juggle(A)
+		if(istype(A, /obj/item/device/light)) //i hate this
+			var/obj/item/device/light/L = A
+			L.light.attach(L)
+		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
+			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
-				var/obj/item/explosive = O
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade) || istype(A, /obj/item/pipebomb/bomb))
+				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
-			else if (istype(O, /obj/item/device/transfer_valve))
-				var/obj/item/device/transfer_valve/ttv = O
+			else if (istype(A, /obj/item/device/transfer_valve))
+				var/obj/item/device/transfer_valve/ttv = A
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
+		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
-			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
+			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "drops the items they were juggling")
 
-/mob/living/carbon/human/proc/remove_juggle(obj/thing)
+/mob/living/carbon/human/proc/remove_juggle(atom/movable/thing)
 	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
 	thing.layer = initial(thing.layer)
 	src.juggle_dummy.vis_contents -= thing
@@ -2984,7 +3015,7 @@
 	thing.layer = initial(thing.layer)
 	src.juggling -= thing
 
-/mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
+/mob/living/carbon/human/proc/add_juggle(atom/movable/thing)
 	if (!thing || src.stat)
 		return
 	if (istype(thing, /obj/item/grab))
@@ -2995,12 +3026,12 @@
 	if (src.juggling())
 		var/items = ""
 		var/count = 0
-		for (var/obj/O in src.juggling)
+		for (var/atom/movable/juggled in src.juggling)
 			count ++
 			if (length(src.juggling) > 1 && count == src.juggling.len)
-				items += " and [O]"
+				items += " and [juggled]"
 				continue
-			items += ", [O]"
+			items += ", [juggled]"
 		items = copytext(items, 3)
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)]'s already juggling!")
 	else
@@ -3024,6 +3055,17 @@
 		i.on_spin_emote(src)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "starts juggling [thing].")
+
+/mob/living/carbon/human/relaymove(mob/user, direction, delay, running)
+	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))
+		boutput(user, SPAN_ALERT("You attempt to wriggle free from the unending juggling."))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		if (prob(15))
+			src.remove_juggle(user)
+			user.set_loc(src.loc)
+
+/mob/living/carbon/human/return_air()
+	return src.loc?.return_air()
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3314,7 +3356,7 @@
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")
-				src.changeStatus("weakened", 3 SECONDS)
+				src.changeStatus("knockdown", 3 SECONDS)
 			else if (src.shoes.laces == LACES_CUT) // Laces cut
 				var/obj/item/clothing/shoes/S = src.shoes
 				src.u_equip(S)
@@ -3571,3 +3613,83 @@
 	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
 	SPAN_ALERT("<B>BOOM!</B>"),\
 	SPAN_ALERT("You hear someone's head explode."))
+
+/mob/living/carbon/human/proc/on_bandage_removal(mob/user, bandaged_part)
+	user.tri_message(src, SPAN_NOTICE("<b>[user]</b> removes [src == user ? "[his_or_her(src)]" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("You remove [src == user ? "your" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
+	src.bandaged -= bandaged_part
+	src.update_body()
+
+/mob/living/carbon/human/proc/drag_onto_op_table(obj/machinery/optable/table)
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()
+	src.set_loc(get_turf(table))
+	table.victim = src
+
+/mob/living/carbon/human/proc/update_health_monitor_icon()
+	if (!src.health_mon)
+		return
+	if (src.bioHolder.HasEffect("dead_scan") || isdead(src))
+		src.health_mon.icon_state = "-1"
+		return
+	// Handle possible division by zero
+	var/health_prc = (src.health / (src.max_health != 0 ? src.max_health : 1)) * 100
+	switch (health_prc)
+		if (98 to INFINITY)
+			src.health_mon.icon_state = "100"
+		if (80 to 98)
+			src.health_mon.icon_state = "80"
+		if (60 to 80)
+			src.health_mon.icon_state = "75"
+		if (40 to 60)
+			src.health_mon.icon_state = "50"
+		if (20 to 40)
+			src.health_mon.icon_state = "25"
+		if (0 to 20)
+			src.health_mon.icon_state = "10"
+		if (-INFINITY to 0)
+			src.health_mon.icon_state = "0"
+
+/mob/living/carbon/human/proc/update_arrest_icon()
+	if (!src.arrestIcon)
+		return
+
+	var/arrestState = ""
+	var/visibleName = src.face_visible() ? src.real_name : src.name
+	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+	if(record)
+		var/criminal = record["criminal"]
+		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
+				criminal == ARREST_STATE_CLOWN)
+			arrestState = criminal
+	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
+		arrestState = ARREST_STATE_ARREST
+	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
+		if (locate(/obj/item/implant/counterrev) in src.implant)
+			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
+			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				arrestState = ARREST_STATE_REVHEAD
+			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+				arrestState = ARREST_STATE_LOYAL_IN_PROGRESS
+			else
+				arrestState = ARREST_STATE_LOYAL
+		else
+			var/obj/item/card/id/myID = 0
+			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
+			//this does mean that if an ID has no registered owner + carry permit enabled it will blink off as contraband. however i dont care!
+			if (src.l_hand?.registered_owner())
+				myID = src.l_hand
+			else if (src.r_hand?.registered_owner())
+				myID = src.r_hand
+			if (!myID)
+				myID = src.wear_id
+			var/has_contraband_permit = 0
+			var/has_carry_permit = 0
+			if (myID)
+				has_contraband_permit = (access_contrabandpermit in myID.access)
+				has_carry_permit = (access_carrypermit in myID.access)
+			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
+				arrestState = ARREST_STATE_CONTRABAND
+	src.arrestIcon.icon_state = arrestState

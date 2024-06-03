@@ -53,7 +53,7 @@
 		if (prob(25))
 			smash()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		..()
 		if (reagents)
 			for (var/i = 0, i < 9, i++) // ugly hack
@@ -203,6 +203,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
+	_health = 250
+	_max_health = 250
 
 	var/has_tank = 1
 
@@ -296,6 +298,12 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			if (src.cup_amount <= 0)
 				user.show_text("That was the last cup!", "red")
 				src.UpdateIcon()
+
+	bullet_act(obj/projectile/P)
+		src.changeHealth(-P.power * P.proj_data.ks_ratio)
+
+	onDestroy()
+		src.smash()
 
 	drugged
 		New()
@@ -682,7 +690,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/P = W
 			var/datum/plantgenes/DNA = P.plantgenes
-			brew_amount = max(DNA?.get_effective_value("potency"), 5) //always produce SOMETHING
+			brew_amount = max(HYPfull_potency_calculation(DNA), 5) //always produce SOMETHING
 
 		if (!brew_result)
 			return FALSE

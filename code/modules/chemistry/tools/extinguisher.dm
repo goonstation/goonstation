@@ -130,7 +130,7 @@
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
-			fireflash(src.loc, 0)
+			fireflash(src.loc, 0, chemfire = CHEM_FIRE_RED)
 			explosion(src, src.loc, -1,0,1,1)
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
@@ -148,7 +148,7 @@
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
-			fireflash(src.loc, 0)
+			fireflash(src.loc, 0, chemfire = CHEM_FIRE_RED)
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
 				return

@@ -398,7 +398,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					var/inp = input(user,"Please enter Signal:", "Signal setting", defaultSignal) as text
 					if(!in_interact_range(parent, user) || user.stat)
 						return
-					inp = trim(strip_html_tags(inp))
+					inp = trimtext(strip_html_tags(inp))
 					if(length(inp))
 						defaultSignal = inp
 						boutput(user, SPAN_SUCCESS("The signal is now set to [inp]."))

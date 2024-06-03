@@ -10,8 +10,10 @@
 	desc = "Has a valve and pump attached to it"
 
 	level = UNDERFLOOR
-	/// What we go by on radio communications
+	/// ID we respond to for multicast.
 	var/id = null
+	/// ID that refers specifically to us.
+	var/net_id = null
 	/// Frequency we communicate on, usually with air alarms.
 	var/frequency = FREQ_AIR_ALARM_CONTROL
 	/// Are we doing anything at all?
@@ -27,8 +29,9 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
-	if(frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if(src.frequency)
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/initialize()
 	..()
@@ -97,26 +100,54 @@
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
-		return FALSE
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
-			on = !on
+			src.on = !on
+			. = TRUE
 
 		if("set_siphon")
-			scrubbing = SIPHONING
+			src.scrubbing = SIPHONING
+			. = TRUE
 
 		if("set_scrubbing")
-			scrubbing = SCRUBBING
+			src.scrubbing = SCRUBBING
+			. = TRUE
 
-	UpdateIcon()
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
+
+			help.data["info"] = "Command help. \
+									power_on - Turns on scrubber. \
+									power_off - Turns off scrubber. \
+									power_toggle - Toggles scrubber. \
+									set_siphon - Begins siphoning all gas. \
+									set_scrubbing - Begins scrubbing select gases. \
+									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/inactive
 	icon_state = "off-map"

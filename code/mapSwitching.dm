@@ -63,7 +63,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.current = map
 
 
-	proc/setNextMap(trigger, mapName = "", mapID = "")
+	proc/setNextMap(trigger, mapName = "", mapID = "", votes = 0)
 		if (!mapName && !mapID)
 			throw EXCEPTION("No map identifier given")
 
@@ -81,18 +81,23 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		else
 			mapName = getMapNameFromID(mapID)
 
-		//compile with a new map
-		var/list/params = list(
-			"map" = mapID,
-			"votedFor" = trigger == "Player Vote"
-		)
-		var/data[] = apiHandler.queryAPI("map-switcher/switch", params, 1)
+		var/datum/apiModel/MapSwitch/mapSwitchRes
+		try
+			var/datum/apiRoute/mapswitch/mapSwitch = new
+			mapSwitch.buildBody(
+				trigger == "Player Vote" ? null : trigger, // trigger should be a ckey if not a vote
+				roundId,
+				null,
+				mapID,
+				votes
+			)
+			mapSwitchRes = apiHandler.queryAPI(mapSwitch)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
 
-		if (!data)
-			throw EXCEPTION("No response from goonhub API route")
-
-		if (data["error"])
-			throw EXCEPTION("Received error from goonhub API: [data["error"]]")
+		if (text2num(mapSwitchRes.status) != 200)
+			throw EXCEPTION("Build server failed to switch map. Expected HTTP status code 200, received code [isnull(mapSwitchRes.status) ? "null" : mapSwitchRes.status] instead")
 
 		//make a note if this is a player voted map
 		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0
@@ -116,7 +121,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		src.voteChosenMap = ""
 		src.playersVoting = 1
-		src.voteStartedAt = world.time
+		src.voteStartedAt = TIME
 		src.voteCurrentDuration = duration
 		src.voteIndex++
 
@@ -208,10 +213,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			src.nextMapIsVotedFor = 1
 		else
 			try
-				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
+				src.setNextMap("Player Vote", mapName = src.voteChosenMap, votes = highestVotes)
 			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
-				logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
+				logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e.name]")
+				logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e.name]", "debug")
 				return
 
 		//announce winner

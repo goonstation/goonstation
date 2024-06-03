@@ -150,6 +150,29 @@
 		message = finnishify(message)
 		return message
 
+/datum/bioEffect/speech/german
+	name = "Frontal Gyrus Alteration Type-DE"
+	desc = "Forces the language center of the subject's brain to construct sentences in a German manner."
+	id = "accent_german"
+	effectType =  EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "You can no longer pronounce th for ze life of you!"
+	msgLose = "You can now pronounce thoughtful, and thatch, and that!"
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = germify(message)
+		return message
+
+
+
 /datum/bioEffect/speech/tommy // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "Frontal Gyrus Alteration Type-T"
 	desc = "Forces the langua.... what!? What the fuck is this? What happened here!? Gods have mercy on our souls."
@@ -545,7 +568,15 @@
 		var/mob/living/L = owner
 		L.speech_void = FALSE
 
-
+	OnSpeak(var/message)
+		SPAWN(0)
+			var/image/chat_maptext/line = src.owner.chat_text.lines[length(src.owner.chat_text.lines)]
+			for (var/i in 1 to 22)
+				if (QDELETED(line))
+					break
+				line.transform = matrix(rand()/5 + 0.9, MATRIX_SCALE)
+				sleep(2)
+		return message
 
 /datum/bioEffect/speech/yee // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "yee"
@@ -1010,3 +1041,18 @@
 			return ""
 		message = accent_piglatin(message)
 		return message
+
+/datum/bioEffect/speech/bingus
+	name = "Frontal Gyrus Alteration Type-bingus"
+	desc = "Reconstructs the language center of the subject's brain to love bingus."
+	id = "accent_bingus"
+	effectType = EFFECT_TYPE_DISABILITY
+	msgGain = "Bingus my beloved :)"
+	msgLose = "Bingus my beloved :("
+	occur_in_genepools = FALSE
+	probability = 0 // Should not be player accessible
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		return bingus_parse(message)

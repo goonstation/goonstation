@@ -111,7 +111,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				src.visible_message(SPAN_ALERT("<b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!"))
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
-					H.changeStatus("weakened", 1 SECOND)
+					H.changeStatus("knockdown", 1 SECOND)
 				else
 					boutput(H, SPAN_NOTICE("Your helmet protected you from injury!"))
 				return 1
@@ -194,7 +194,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/toggleinput()
 	if(src.cant_emag || (src.req_access && !(src.operating == -1)))
-		play_animation("deny")
+		if (src.density) //only play if it's closed
+			play_animation("deny")
 		return
 	if(density)
 		open()
@@ -286,21 +287,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		last_used = world.time
 		src.operating = -1
 		flick(text("[]_spark", src.icon_base), src)
-		sleep(0.6 SECONDS)
-		open()
-		return 1
-	return 0
+		SPAWN(0.6 SECONDS)
+			open()
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/demag(var/mob/user)
 	if (src.operating != -1)
 		return 0
 	src.operating = 0
-	sleep(0.6 SECONDS)
-	close()
+	SPAWN(0.6 SECONDS)
+		close()
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat || user.restrained())
 		return
 	if(istype(I, /obj/item/grab))
 		return ..() // handled in grab.dm + Bumped
@@ -572,7 +573,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-					L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("knockdown", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)

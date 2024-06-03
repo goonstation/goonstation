@@ -111,8 +111,8 @@ TYPEINFO(/mob/living/critter/flock)
 		target.emp_act()
 
 //trying out a world where you can't stun flockdrones
-/mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)
-	src.changeStatus("slowed", max(weakened, stunned, paralysis, disorient))
+/mob/living/critter/flock/do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient, remove_stamina_below_zero, target_type, stack_stuns)
+	src.changeStatus("slowed", max(knockdown, stunned, unconscious, disorient))
 
 /mob/living/critter/flock/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
@@ -161,7 +161,7 @@ TYPEINFO(/mob/living/critter/flock)
 /mob/living/critter/flock/say(message, involuntary = FALSE)
 	if(isdead(src) && src.is_npc)
 		return
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	..(message) // caw at the non-drones
 

@@ -28,6 +28,9 @@
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 
+/obj/pool/perspective/innercorners
+	name = "pool"
+	icon_state = "pool_inner"
 /obj/pool_springboard
 	name = "springboard"
 	density = 0
@@ -41,7 +44,7 @@
 	var/deadly = 0
 
 	attackby(obj/item/W, mob/user)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	MouseDrop_T(atom/target, mob/user)
 		if (BOUNDS_DIST(user, src) == 0 && target == user)
@@ -94,7 +97,7 @@
 			user.buckled = null
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
 				user.throw_at(target, 5, 1)
-				user:changeStatus("weakened", 2 SECONDS)
+				user:changeStatus("knockdown", 2 SECONDS)
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
 				src.visible_message(SPAN_ALERT("<b>[user.name] dives headfirst at the [target.name]!</b>"))
@@ -116,7 +119,7 @@
 		if (in_use)
 			return 0
 		suiciding = 1 //reset in attack_hand() at the same time as in_use
-		attack_hand(user)
+		src.Attackhand(user)
 
 		SPAWN(50 SECONDS)
 			if (src)

@@ -178,6 +178,7 @@
 /obj/cable/orange{
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "pl" = (
@@ -330,6 +331,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "Gn" = (

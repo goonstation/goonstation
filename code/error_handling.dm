@@ -6,7 +6,7 @@
 * It does NOT catch reference bugs
 */
 
-var/global/list/runtimeDetails = new()
+var/global/list/runtimeDetails = list()
 var/global/runtime_count = 0
 var/global/blame_for_runtimes = FALSE
 
@@ -25,6 +25,9 @@ var/global/blame_for_runtimes = FALSE
 		"seen" = timestamp,
 		"invalid" = invalid
 	)
+
+	var/datum/eventRecord/Error/errorEvent = new()
+	errorEvent.buildAndSend(E, usr)
 
 	//Output formatted runtime to the usual error.log
 #ifndef CI_RUNTIME_CHECKING
@@ -54,6 +57,7 @@ var/global/blame_for_runtimes = FALSE
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!cdn)
 		var/list/viewerResources = list(
@@ -71,6 +75,7 @@ var/global/blame_for_runtimes = FALSE
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (global.blame_for_runtimes)
 		global.blame_for_runtimes = FALSE
 		boutput(src, SPAN_NOTICE("Aggressive debugging disabled"))

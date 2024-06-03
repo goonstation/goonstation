@@ -623,6 +623,7 @@
 			var/list/organ_name_parts = splittext(O.name, "'s")
 			if(length(organ_name_parts) == 2)
 				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
@@ -1654,7 +1655,7 @@
 			return 1
 		if (!linked_organ)
 			return 1
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
+		. = ..()
 		if (ismob(target))
 			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)

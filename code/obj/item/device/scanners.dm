@@ -12,8 +12,8 @@ Contains:
 //////////////////////////////////////////////// T-ray scanner //////////////////////////////////
 
 TYPEINFO(/obj/item/device/t_scanner)
-	mats = list("CRY-1", "CON-1")
-
+	mats = list("crystal" = 1,
+				"conductive" = 1)
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
 	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 				playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
-					P.set_loc(get_turf(src))
+					usr.put_in_hand_or_drop(P)
 
 					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 					P.info = scans[index]
@@ -357,7 +357,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	New()
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
-		UpdateOverlays(scanner_status, "status")
+		AddOverlays(scanner_status, "status")
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
@@ -368,39 +368,39 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				src.reagent_scan = 0
 				src.organ_scan = 0
 				scanner_status.icon_state = "health_over-basic"
-				UpdateOverlays(scanner_status, "status")
+				AddOverlays(scanner_status, "status")
 				boutput(user, SPAN_ALERT("All upgrades disabled."))
 
 			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
 				src.reagent_scan = 1
 				src.organ_scan = 0
 				scanner_status.icon_state = "health_over-reagent"
-				UpdateOverlays(scanner_status, "status")
+				AddOverlays(scanner_status, "status")
 				boutput(user, SPAN_ALERT("Reagent scanner enabled."))
 
 			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
 				src.reagent_scan = 0
 				src.organ_scan = 1
 				scanner_status.icon_state = "health_over-organ"
-				UpdateOverlays(scanner_status, "status")
+				AddOverlays(scanner_status, "status")
 				boutput(user, SPAN_ALERT("Reagent scanner disabled. Organ scanner enabled."))
 
 			else if (src.organ_scan)							//if organ active, turn BOTH on
 				src.reagent_scan = 1
 				src.organ_scan = 1
 				scanner_status.icon_state = "health_over-both"
-				UpdateOverlays(scanner_status, "status")
+				AddOverlays(scanner_status, "status")
 				boutput(user, SPAN_ALERT("All upgrades enabled."))
 
 		else if (src.reagent_upgrade)
 			src.reagent_scan = !(src.reagent_scan)
 			scanner_status.icon_state = !reagent_scan ? "health_over-basic" : "health_over-reagent"
-			UpdateOverlays(scanner_status, "status")
+			AddOverlays(scanner_status, "status")
 			boutput(user, SPAN_NOTICE("Reagent scanner [src.reagent_scan ? "enabled" : "disabled"]."))
 		else if (src.organ_upgrade)
 			src.organ_scan = !(src.organ_scan)
 			scanner_status.icon_state = !organ_scan ? "health_over-basic" : "health_over-organ"
-			UpdateOverlays(scanner_status, "status")
+			AddOverlays(scanner_status, "status")
 			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
 
 	attackby(obj/item/W, mob/user)
@@ -453,7 +453,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	New()
 		..()
 		scanner_status.icon_state = "health_over-both"
-		UpdateOverlays(scanner_status, "status")
+		AddOverlays(scanner_status, "status")
 
 /obj/item/device/analyzer/healthanalyzer/vr
 	icon = 'icons/effects/VR.dmi'
@@ -583,12 +583,12 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 			src.find_breach()
 			if (src.target)
 				user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
-				src.UpdateOverlays(image('icons/obj/items/device.dmi', "atmos-tracker"), "breach_tracker")
+				src.AddOverlays(image('icons/obj/items/device.dmi', "atmos-tracker"), "breach_tracker")
 		else
 			src.tracker_off(user)
 
 	proc/tracker_off(mob/user)
-		src.UpdateOverlays(null, "breach_tracker")
+		src.ClearSpecificOverlays("breach_tracker")
 		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
 		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
 		arrow?.RemoveComponent()
@@ -701,7 +701,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 				a.reagent_upgrade = 1
 				a.icon_state = a.organ_upgrade ? "health" : "health-r-up"
 				a.scanner_status.icon_state = a.organ_scan ? "health_over-both" : "health_over-reagent"
-				a.UpdateOverlays(a.scanner_status, "status")
+				a.AddOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 
 			else if (istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade))
@@ -712,7 +712,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 				a.organ_scan = 1
 				a.icon_state = a.reagent_upgrade ? "health" : "health-o-up"
 				a.scanner_status.icon_state = a.reagent_scan ? "health_over-both" : "health_over-organ"
-				a.UpdateOverlays(a.scanner_status, "status")
+				a.AddOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 		else if(istype(src, /obj/item/device/analyzer/atmospheric) && istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 			if (upgraded)
@@ -839,17 +839,18 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if(E)
 			switch (mode)
 				if(PRISONER_MODE_NONE)
-					E["criminal"] = "None"
+					E["criminal"] = ARREST_STATE_NONE
 
 				if(PRISONER_MODE_PAROLED)
-					E["criminal"] = "Parolled"
+					E["criminal"] = ARREST_STATE_PAROLE
 
 				if(PRISONER_MODE_RELEASED)
-					E["criminal"] = "Released"
+					E["criminal"] = ARREST_STATE_RELEASED
 
 				if(PRISONER_MODE_INCARCERATED)
-					E["criminal"] = "Incarcerated"
+					E["criminal"] = ARREST_STATE_INCARCERATED
 			E["sec_flag"] = src.sechud_flag
+			target.update_arrest_icon()
 			return
 
 		src.active2 = new /datum/db_record()
@@ -857,16 +858,16 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["id"] = src.active1["id"]
 		switch (mode)
 			if(PRISONER_MODE_NONE)
-				src.active2["criminal"] = "None"
+				src.active2["criminal"] = ARREST_STATE_ARREST
 
 			if(PRISONER_MODE_PAROLED)
-				src.active2["criminal"] = "Parolled"
+				src.active2["criminal"] = ARREST_STATE_PAROLE
 
 			if(PRISONER_MODE_RELEASED)
-				src.active2["criminal"] = "Released"
+				src.active2["criminal"] = ARREST_STATE_RELEASED
 
 			if(PRISONER_MODE_INCARCERATED)
-				src.active2["criminal"] = "Incarcerated"
+				src.active2["criminal"] = ARREST_STATE_INCARCERATED
 
 		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
@@ -875,6 +876,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["ma_crim_d"] = "No major crime convictions."
 		src.active2["notes"] = "No notes."
 		data_core.security.add_record(src.active2)
+
+		target.update_arrest_icon()
 
 		return
 
@@ -960,7 +963,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 #undef PRISONER_MODE_INCARCERATED
 
 /obj/item/device/ticket_writer
-	name = "Security TicketWriter 2000"
+	name = "security TicketWriter 2000"
 	desc = "A device used to issue tickets from the security department."
 	icon_state = "ticketwriter"
 	item_state = "electronic"
@@ -1017,7 +1020,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
-			p.set_loc(get_turf(src))
+			user.put_in_hand_or_drop(p)
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
 			p.icon_state = "paper_caution"

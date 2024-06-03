@@ -5,8 +5,11 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	//mapWorldNew(src)
-	//boop2
+	for (var/mob/M as anything in mobs)
+		if (M.mind)
+			var/playerId = M.mind.get_player().id
+			if (!playerId)
+				boutput(src, "[M.mind.ckey] has no player ID")
 
 
 /proc/mapWorldNew(client/C)
@@ -129,6 +132,7 @@ var/global/deathConfettiActive = 0
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	deathConfettiActive = !deathConfettiActive
 
@@ -219,6 +223,7 @@ var/global/deathConfettiActive = 0
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
@@ -242,3 +247,9 @@ var/global/deathConfettiActive = 0
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
 	ircbot.export_async("admin", ircmsg)
+
+/proc/goonhub_href(path, in_byond = FALSE)
+	var/url = "[config.goonhub_url][path]"
+	if (in_byond)
+		return "byond://winset?command=.openlink \"[url_encode(url)]\""
+	return url

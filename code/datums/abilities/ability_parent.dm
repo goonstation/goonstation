@@ -321,14 +321,15 @@
 			else
 				src.owner?.remove_ability_holder(src)
 
-	proc/pointCheck(cost)
+	proc/pointCheck(cost, quiet = FALSE)
 		if (!usesPoints)
 			return 1
 		if (src.points < 0) // Just-in-case fallback.
 			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			src.points = 0
 		if (cost > points)
-			boutput(owner, notEnoughPointsMessage)
+			if (!quiet)
+				boutput(owner, notEnoughPointsMessage)
 			return 0
 		return 1
 
@@ -451,14 +452,14 @@
 
 	update_icon()
 		if (owner.waiting_for_hotkey)
-			UpdateOverlays(src.binding, "binding")
+			AddOverlays(src.binding, "binding")
 		else
-			UpdateOverlays(null, "binding")
+			ClearSpecificOverlays("binding")
 
 		if(owner.action_key_number > -1)
-			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
+			AddOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
 		else
-			UpdateOverlays(null, "action_key_number")
+			ClearSpecificOverlays("action_key_number")
 		return
 
 	proc/set_number_overlay(var/num)
@@ -637,29 +638,29 @@
 
 		if (owner.holder)
 			if (src.owner == src.owner.holder.shiftPower)
-				UpdateOverlays(src.shift_highlight, "shift_highlight")
+				AddOverlays(src.shift_highlight, "shift_highlight")
 			else
-				UpdateOverlays(null, "shift_highlight")
+				ClearSpecificOverlays("shift_highlight")
 
 			if (src.owner == owner.holder.ctrlPower)
-				UpdateOverlays(src.ctrl_highlight, "ctrl_highlight")
+				AddOverlays(src.ctrl_highlight, "ctrl_highlight")
 			else
-				UpdateOverlays(null, "ctrl_highlight")
+				ClearSpecificOverlays("ctrl_highlight")
 
 			if (src.owner == owner.holder.altPower)
-				UpdateOverlays(src.alt_highlight, "alt_highlight")
+				AddOverlays(src.alt_highlight, "alt_highlight")
 			else
-				UpdateOverlays(null, "alt_highlight")
+				ClearSpecificOverlays("alt_highlight")
 
 			if (owner.waiting_for_hotkey)
-				UpdateOverlays(src.binding, "binding")
+				AddOverlays(src.binding, "binding")
 			else
-				UpdateOverlays(null, "binding")
+				ClearSpecificOverlays("binding")
 
 		if(owner.action_key_number > -1)
-			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
+			AddOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
 		else
-			UpdateOverlays(null, "action_key_number")
+			ClearSpecificOverlays("action_key_number")
 
 		update_cooldown_cost()
 		return
@@ -873,6 +874,9 @@
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/tooltip_flags = null
 
+	///do we log casting this action? set false for stuff that doesn't need to be logged, like dancing
+	var/do_logs = TRUE
+
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	// 38 types have overriden this.
 	New(datum/abilityHolder/holder)
@@ -914,6 +918,9 @@
 			afterCast()
 
 		cast(atom/target)
+			SHOULD_CALL_PARENT(TRUE)
+			if(do_logs)
+				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src] on [constructTarget(target, "combat")] at [log_loc(target)]")
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
@@ -1308,7 +1315,7 @@
 				return R
 		return null
 
-	pointCheck(cost)
+	pointCheck(cost, quiet = FALSE)
 		return 1
 
 	deepCopy()

@@ -24,7 +24,9 @@
 	can_bleed = FALSE
 	var/name_prefix = "living "
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
+
+	ailment_immune = TRUE
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc)
@@ -91,7 +93,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
 		remove_lifeprocess(/datum/lifeprocess/radiation)

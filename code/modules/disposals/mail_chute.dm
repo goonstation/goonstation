@@ -25,8 +25,8 @@
 
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "main", frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", pdafrequency)
 		SPAWN(10 SECONDS)
 			src.post_radio_status()
 
@@ -155,6 +155,11 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
+		mailgroup = MGD_KITCHEN
+		message = 1
+	bar
+		name = "Bar"
+		mail_tag = "bar"
 		mailgroup = MGD_KITCHEN
 		message = 1
 	hydroponics
@@ -358,6 +363,22 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
+		mailgroup = MGD_KITCHEN
+		message = 1
+
+		north
+			dir = NORTH
+			pixel_y = 32
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
+	bar
+		name = "Bar"
+		mail_tag = "bar"
 		mailgroup = MGD_KITCHEN
 		message = 1
 

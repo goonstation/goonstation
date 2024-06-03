@@ -121,6 +121,7 @@
 	add_abilities = list(/datum/targetable/critter/peck,
 						/datum/targetable/critter/tackle)
 	blood_id = "crime"
+	player_can_spawn_with_pet = FALSE
 
 	New(loc, nspecies)
 		..()

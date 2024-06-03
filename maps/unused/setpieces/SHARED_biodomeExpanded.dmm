@@ -2118,7 +2118,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
 "cBV" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/unsimulated/floor/green/side{
 	dir = 1
@@ -10893,7 +10893,7 @@
 /turf/unsimulated/floor/circuit/off,
 /area/crater/cave)
 "mVn" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

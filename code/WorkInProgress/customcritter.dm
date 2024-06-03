@@ -1333,7 +1333,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				C.play_optional_sound(frenzy_attack_sound)
 				C.dodamage(atmob, attacktype, max(rand(attack_power), rand(attack_power)))
 				if (stunlocks)
-					atmob.changeStatus("weakened", (attack_cooldown / 3 * 2) SECONDS)
+					atmob.changeStatus("knockdown", (attack_cooldown / 3 * 2) SECONDS)
 				sleep(attack_cooldown)
 		return 1
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -2108,6 +2108,8 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	set name = "Critter Creator (WIP)"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)
 	if (CR)

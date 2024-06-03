@@ -74,6 +74,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/host_id = null
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
+	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
 
 //	luminosity = 1
 	var/debug = 0
@@ -89,6 +90,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+		hardened	//azone/listening post apcs
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
 
 	autoname_east
 		name = "Autoname E APC"
@@ -102,6 +108,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			noalerts = 1
 			aidisabled = 1
 
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
+
 	autoname_south
 		name = "Autoname S APC"
 		dir = SOUTH
@@ -114,6 +126,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			noalerts = 1
 			aidisabled = 1
 
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
+
 	autoname_west
 		name = "Autoname W APC"
 		dir = WEST
@@ -125,6 +143,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
 
 /proc/RandomAPCWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -280,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (cell)
 			// if opened, update overlays for cell
 			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			UpdateOverlays(I_cell, "cell", 0, 1)
+			AddOverlays(I_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -308,14 +332,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/image/I_equp = SafeGetOverlayImage("equipment", 'icons/obj/power.dmi', "apco0-[equipment]")
 		var/image/I_envi = SafeGetOverlayImage("environment", 'icons/obj/power.dmi', "apco2-[environ]")
 
-		UpdateOverlays(I_lock, "lock", 0, 1)
-		UpdateOverlays(I_chrg, "charge", 0, 1)
-		UpdateOverlays(I_brke, "breaker", 0, 1)
+		AddOverlays(I_lock, "lock")
+		AddOverlays(I_chrg, "charge")
+		AddOverlays(I_brke, "breaker")
 
 		if(operating && !do_not_operate)
-			UpdateOverlays(I_lite, "lighting", 0, 1)
-			UpdateOverlays(I_equp, "equipment", 0, 1)
-			UpdateOverlays(I_envi, "environment", 0, 1)
+			AddOverlays(I_lite, "lighting",)
+			AddOverlays(I_equp, "equipment")
+			AddOverlays(I_envi, "environment")
 
 /obj/machinery/power/apc/emp_act()
 	..()
@@ -868,7 +892,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
 		return
 	if (!in_interact_range(src, user))
 		return
@@ -1008,12 +1032,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
-	var/weak = (user.getStatusDuration("weakened") < shock_damage * 20) ? shock_damage * 20 : 0
+	var/knockdown = (user.getStatusDuration("knockdown") < shock_damage * 20) ? shock_damage * 20 : 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
-	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
+	user.do_disorient(130, knockdown = knockdown, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 2 SECONDS)
+	if(user.getStatusDuration("knockdown") < shock_damage * 20)	user.changeStatus("knockdown", shock_damage * 2 SECONDS)
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
@@ -1367,6 +1391,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // damage and destruction acts
 
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
@@ -1376,6 +1403,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/ex_act(severity)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
@@ -1397,6 +1427,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
@@ -1404,6 +1437,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			qdel (src)
 
 /obj/machinery/power/apc/blob_act(var/power)
+	if (src.hardened)
+		return
+
 	if (prob(power * 2.5))
 		set_broken()
 

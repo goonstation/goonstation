@@ -16,7 +16,7 @@
 		else
 			M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
 			boutput(M, SPAN_ALERT("You feel a strong electric shock!"))
-			M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10)
+			M.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 10)
 			if (M.loc == center)
 				M.TakeDamage("chest", 0, 25, 0, DAMAGE_BURN)
 				M.emote("scream")
@@ -56,7 +56,7 @@
 			if (L != src.caster && iswizard(L))
 				return
 			L.changeStatus("slowed", 1 SECONDS)
-			L.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
+			L.do_disorient(stamina_damage = 0, knockdown = 0, stunned = 0, disorient = 20)
 		..()
 
 /obj/decal/lightning_bolt

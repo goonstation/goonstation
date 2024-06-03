@@ -15,7 +15,7 @@
 "aac" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aad" = (
@@ -28,7 +28,7 @@
 "aae" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aaf" = (
@@ -107,7 +107,7 @@
 /area/shuttle/arrival/station)
 "aas" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aat" = (
@@ -132,7 +132,7 @@
 "aaw" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aax" = (
@@ -7268,7 +7268,7 @@
 /obj/rack,
 /obj/item/clothing/under/color,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -10277,7 +10277,7 @@
 "avn" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/light/small,
@@ -26853,7 +26853,7 @@
 /area/station/crew_quarters/kitchen)
 "bbQ" = (
 /obj/table,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/cafeteria{
@@ -26863,7 +26863,7 @@
 "bbR" = (
 /obj/machinery/light,
 /obj/table,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 6
 	},
 /obj/machinery/camera{
@@ -29508,7 +29508,7 @@
 /turf/simulated/floor,
 /area/station/security/hos)
 "bgy" = (
-/obj/storage/secure/closet/security/armory{
+/obj/storage/secure/crate/gear/armory/equipment{
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,

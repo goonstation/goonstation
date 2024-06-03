@@ -2804,7 +2804,7 @@
 /area/station/maintenance/solar/west)
 "alX" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -4487,7 +4487,7 @@
 	icon_state = "2-8"
 	},
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -6040,9 +6040,7 @@
 /area/station/medical/medbay/pharmacy)
 "aBF" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 7
-	},
+/obj/machinery/glass_recycler,
 /obj/item/device/reagentscanner{
 	pixel_x = -12
 	},
@@ -10384,7 +10382,7 @@
 /area/space)
 "aXr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -12380,7 +12378,7 @@
 /area/station/crew_quarters/pool)
 "bng" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -14199,8 +14197,8 @@
 /obj/item/extinguisher,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/clothing/head/helmet/welding,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
@@ -15525,7 +15523,7 @@
 /area/station/crew_quarters/catering)
 "bTv" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -15953,7 +15951,7 @@
 	pixel_y = 32
 	},
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/tank/air,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/welding,
@@ -17133,7 +17131,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -17460,7 +17458,7 @@
 /area/station/crew_quarters/fitness)
 "cKx" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -21456,7 +21454,7 @@
 /area/station/ranch)
 "exV" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -22475,7 +22473,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/item/device/radio/intercom/security,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -28003,7 +28001,7 @@
 /area/station/science/lab)
 "hvs" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -34795,8 +34793,7 @@
 /obj/machinery/traymachine/morgue{
 	dir = 2
 	},
-/obj/item/reagent_containers/food/snacks/pizza{
-	icon_state = "pizza_m";
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball{
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/cool{
@@ -36804,7 +36801,7 @@
 /area/station/crew_quarters/pool)
 "mdr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -37612,7 +37609,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "mwc" = (
@@ -49276,7 +49273,7 @@
 /area/station/science/artifact)
 "sGr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -51023,7 +51020,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "tyD" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -54958,7 +54955,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "vqY" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -56487,7 +56484,7 @@
 	icon_state = "0-2"
 	},
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/extinguisher,
@@ -59739,8 +59736,8 @@
 /area/station/quartermaster/cargobay)
 "xKr" = (
 /obj/storage/secure/closet/engineering/electrical,
-/obj/item/clothing/suit/rad,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/glasses/toggleable/meson,

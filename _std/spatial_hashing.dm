@@ -215,6 +215,8 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type/alive_mob)
 	update_cooldown = 5
 	type_to_track = /obj/shrub
 
+/datum/spatial_hashmap/manual/near_station
+
 /datum/spatial_hashmap/manual/proc/add_target(atom/A)
 	var/turf/T = get_turf(A)
 	if (world.maxz > src.zlevels)

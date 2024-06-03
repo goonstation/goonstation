@@ -22,8 +22,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	var/obj/effects/music/effect
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
@@ -97,8 +97,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	var/overheated = FALSE
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
@@ -298,9 +298,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets())
 				if(is_rock_immune(HH))
-					HH.delStatus("stunned")
-					HH.delStatus("weakened")
-					HH.delStatus("paralysis")
+					HH.remove_stuns()
 					HH.delStatus("slowed")
 					HH.delStatus("disorient")
 					HH.change_misstep_chance(-INFINITY)

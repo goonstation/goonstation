@@ -27,7 +27,7 @@
 	damage = 50
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
@@ -83,6 +83,7 @@ TYPEINFO(/datum/component/mimic_item)
 		. = ..()
 
 	cast(atom/T)
+		. = ..()
 		var/datum/component/C = usr.GetComponent(/datum/component/legs)
 		if(!C)
 			usr.AddComponent(/datum/component/legs)

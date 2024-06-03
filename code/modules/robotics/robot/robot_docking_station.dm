@@ -88,7 +88,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 /obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing))
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
-			boutput(user, SPAN_ALERT("This type of is not compatible."))
+			boutput(user, SPAN_ALERT("This type of clothing is not compatible."))
 			return
 		if (user.contents.Find(W))
 			user.drop_item()
@@ -182,14 +182,19 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.build_icon()
 	return TRUE
 
+/obj/machinery/recharge_station/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
+
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
+	if (BOUNDS_DIST(AM, src) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
 	if (!isturf(AM.loc) && !(AM in user))
 		return
 	if (!isliving(user) || isAI(user))
 		return
-
+	if (isintangible(user))
+		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return
@@ -316,7 +321,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			else
 				H.bioHolder.AddEffect("eaten")
 				random_brute_damage(H, 10)
-				H.changeStatus("weakened", 5 SECONDS)
+				H.changeStatus("knockdown", 5 SECONDS)
 				if (prob(15))
 					boutput(H, SPAN_ALERT("[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]"))
 			src.updateUsrDialog()

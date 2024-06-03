@@ -379,35 +379,44 @@
 			data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
+/// Returns the datacore general record, or null if none found
+/proc/get_general_record(mob/living/carbon/human/H)
+	if (!istype(H))
+		return null
+	var/patientname = H.name
+	if (H:wear_id && H:wear_id:registered)
+		patientname = H.wear_id:registered
+	return data_core.general.find_record("name", patientname)
+
 /proc/update_medical_record(var/mob/living/carbon/human/M)
-	if (!M || !ishuman(M))
+	var/datum/db_record/E = get_general_record(M)
+	if(!istype(E))
 		return
 
-	var/patientname = M.name
-	if (M:wear_id && M:wear_id:registered)
-		patientname = M.wear_id:registered
-
-	var/datum/db_record/E = data_core.general.find_record("name", patientname)
-	if(E)
-		switch (M.stat)
-			if (0)
-				if (M.bioHolder && M.bioHolder.HasEffect("strong"))
-					E["p_stat"] = "Very Active"
-				else
-					E["p_stat"] = "Active"
-			if (1)
-				E["p_stat"] = "*Unconscious*"
-			if (2)
-				E["p_stat"] = "*Deceased*"
-		var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
-		if(R)
-			R["bioHolder.bloodType"] = M.bioHolder.bloodType
-			R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
-			if (M.ailments.len)
-				R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+	switch (M.stat)
+		if (STAT_ALIVE)
+			if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+				E["p_stat"] = "Very Active"
 			else
-				R["cdi_d"] = "No notes."
-	return
+				E["p_stat"] = "Active"
+		if (STAT_UNCONSCIOUS)
+			E["p_stat"] = "*Unconscious*"
+		if (STAT_DEAD)
+			E["p_stat"] = "*Deceased*"
+
+	var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+	if(!R)
+		return
+
+	R["bioHolder.bloodType"] = M.bioHolder.bloodType
+	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	if (M.ailments.len)
+		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+	else
+		R["cdi_d"] = "No notes."
+
+	record_cloner_defects(M)
+
 
 /proc/scan_health_generate_text(var/mob/M)
 	var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
@@ -543,7 +552,7 @@
 
 		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID)
+			if (WG.glove_ID && !(WG.no_prints))
 				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
 			if (!WG.hide_prints)
 				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
@@ -661,31 +670,19 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			var/list/contraband_returned = list()
-			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-				var/contra = max(contraband_returned)
-				if (contra)
-					contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
+			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
+			if (contra)
+				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
 			if (G.glove_ID)
 				glove_data += "[G.glove_ID] [G.material_prints ? "([G.material_prints])" : null]"
 
-		if (istype(A, /obj/item/casing/))
-			var/obj/item/casing/C = A
-			if(C.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [C]:")] [C.forensic_ID]"
-
-		if (istype(A, /obj/item/implant/projectile))
-			var/obj/item/implant/projectile/P = A
-			if(P.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [P]:")] [P.forensic_ID]"
-
-		if (istype(A, /obj/item/gun))
-			var/obj/item/gun/G = A
-			if(G.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [G]:")] [G.forensic_ID]"
+		if (istype(A, /obj))
+			var/obj/O = A
+			if(O.forensic_ID)
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [O]:")] [O.forensic_ID]"
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A

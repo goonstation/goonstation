@@ -919,7 +919,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "mH" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "mM" = (
@@ -3130,7 +3130,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "OM" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/devzone)
 "OO" = (
@@ -3816,6 +3816,7 @@
 /obj/railing/red{
 	dir = 8
 	},
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Xk" = (
@@ -3978,7 +3979,7 @@
 /area/station/devzone)
 "Yr" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Yt" = (
