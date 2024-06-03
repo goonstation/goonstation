@@ -1691,8 +1691,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.malfunction && prob(40))
 			src.flip_out()
 		if (new_production)
-			var/list/mats_used = check_enough_materials(M)
-			if (!mats_used)
+			var/list/mats_used = get_materials_needed(M)
+			if (!(length(mats_used) == length(M.item_requirements)))
 				src.mode = MODE_HALT
 				src.error = "Insufficient usable materials to continue queue production."
 				src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
