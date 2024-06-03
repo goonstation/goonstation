@@ -83,26 +83,30 @@ export const Manufacturer = (_, context) => {
   }
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
-  let queueBlueprintRefs = data.queue && data.queue.map((queued:QueueBlueprint) =>
+  let queueBlueprintRefs = data.queue && data.queue.length
+  && data.queue.map((queued:QueueBlueprint) =>
     blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
   );
 
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
-      {data.indicators && !data.indicators.hasPower && <PowerAlertModal width={100-SETTINGS_WINDOW_WIDTH} height={"100%"} />}
+      {data.indicators && !data.indicators.hasPower
+      && <PowerAlertModal width={100-SETTINGS_WINDOW_WIDTH} height={"100%"} />}
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
             <Section>
               {data.indicators && !data.indicators.hasPower && <Dimmer />}
-              {data.all_categories && data.all_categories.map((category:string) => (
+              {data.all_categories && data.all_categories.length
+              && data.all_categories.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (
                   <Collapsible
                     key={category}
                     open
                     title={`${category} (${blueprints_by_category[category].length})`}
                   >
-                    {blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
+                    {blueprints_by_category[category] && blueprints_by_category[category].length
+                    && blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
                       <BlueprintButton
                         actionRemoveBlueprint={actionRemoveBlueprint}
                         actionVendProduct={actionVendProduct}
@@ -127,7 +131,8 @@ export const Manufacturer = (_, context) => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {data.resource_data && data.resource_data.map((resourceData: ResourceData) => (
+                    {data.resource_data && data.resource_data.length
+                    && data.resource_data.map((resourceData: ResourceData) => (
                       <LabeledList.Item
                         key={resourceData.byondRef}
                         buttons={
@@ -218,7 +223,7 @@ export const Manufacturer = (_, context) => {
                   title="Rockbox™ Containers"
                   textAlign="center"
                 >
-                  {data.rockboxes && data.rockboxes.map((rockbox: RockboxData) => (
+                  {data.rockboxes && data.rockboxes.length && data.rockboxes.map((rockbox: RockboxData) => (
                     <Box
                       key={rockbox.byondRef}
                     >
@@ -232,7 +237,7 @@ export const Manufacturer = (_, context) => {
                       </Box>
 
                       <LabeledList>
-                        {rockbox.ores && (rockbox.ores.length !== 0) ? (rockbox.ores.map((ore: OreData) => (
+                        {rockbox.ores && rockbox.ores.length ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
                             key={ore.name}
                             label={ore.name}
@@ -300,7 +305,8 @@ export const Manufacturer = (_, context) => {
                       />
                     </Stack.Item>
                   )}
-                  {queueBlueprintRefs && queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
+                  {queueBlueprintRefs && queueBlueprintRefs.length
+                  && queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
                     <ProductionCard
                       key={index}
                       index={index}

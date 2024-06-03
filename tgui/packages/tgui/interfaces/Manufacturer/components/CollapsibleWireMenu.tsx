@@ -67,28 +67,30 @@ export const CollapsibleWireMenu = (props:MaintenanceProps) => {
         ))}
       </LabeledList>
       <Divider />
-      <LabeledList>
-        <LabeledList.Item
-          label="Electrification Risk"
-        >
-          {indicators.electrified ? "High" : "None"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="System Stability"
-        >
-          {indicators.malfunctioning ? "Unstable" : "Stable"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Inventory"
-        >
-          {indicators.hacked ? "Expanded" : "Standard"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Power"
-        >
-          {indicators.hasPower ? "Sufficient" : "Insufficient"}
-        </LabeledList.Item>
-      </LabeledList>
+      { indicators && (
+        <LabeledList>
+          <LabeledList.Item
+            label="Electrification Risk"
+          >
+            {indicators.electrified ? "High" : "None"}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="System Stability"
+          >
+            {indicators.malfunctioning ? "Unstable" : "Stable"}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Inventory"
+          >
+            {indicators.hacked ? "Expanded" : "Standard"}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Power"
+          >
+            {indicators.hasPower ? "Sufficient" : "Insufficient"}
+          </LabeledList.Item>
+        </LabeledList>
+      )}
     </Section>
   );
 };
