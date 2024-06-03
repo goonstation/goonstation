@@ -367,28 +367,24 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
 /proc/add_zero(text, desired_length)
-	text = "[text]" // ensure it's a string
+	text = "[text]"
 	if ((desired_length - length(text)) <= 0)
 		return text
 	return (num2text(0, desired_length - length(text), 10) + text)
 
-/proc/add_lspace(t, u)
-	// why????? because if you pass this a number,
-	// then -- surprise -- length(t) is ZERO. because it's not text.
-	// so step one is to just. do that.
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	t = "[t]"
-	while(length(t) < u)
-		t = " [t]"
-	. = t
+/// Adds 'char' ahead of 'text' until there are 'length' characters total
+/proc/add_leading(text, length, char = " ")
+	. = "[text]"
+	var/count = length - length_char(text)
+	var/list/chars_to_add[max(count + 1, 0)]
+	return jointext(chars_to_add, char) + .
 
-/proc/add_tspace(t, u)
-	t = "[t]"
-	while(length(t) < u)
-		t = "[t] "
-	. = t
+/// Adds 'char' behind 'text' until there are 'length' characters total
+/proc/add_trailing(text, length, char = " ")
+	. = "[text]"
+	var/count = length - length_char(text)
+	var/list/chars_to_add[max(count + 1, 0)]
+	return . + jointext(chars_to_add, char)
 
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
@@ -454,7 +450,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		else if(delta % 2)
 			. = " " + message
 		delta--
-		var/spaces = add_lspace("",delta/2-1)
+		var/spaces = add_leading("",delta/2-1)
 		. = spaces + . + spaces
 
 /proc/dd_limittext(message, length)
@@ -465,12 +461,12 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		.= copytext(message, 1, length + 1)
 
 /**
-	* Returns the given degree converted to a text string in the form of a direction
-	*/
-/proc/angle2text(var/degree)
+ * Returns the given degree converted to a text string in the form of a direction
+ */
+/proc/angle2text(degree)
 	. = dir2text(angle2dir(degree))
 
-/proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
+/proc/text_input(Message, Title, var/Default, var/length=MAX_MESSAGE_LEN)
 	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
@@ -614,15 +610,15 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 			. += T
 
 /**
-	* Returns true if the given key is a guest key
-	*/
+ * Returns true if the given key is a guest key
+ */
 /proc/IsGuestKey(key)
 	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
 
 /**
-	* Returns f, ensured that it's a valid frequency
-	*/
+ * Returns f, ensured that it's a valid frequency
+ */
 /proc/sanitize_frequency(var/f)
 	. = round(f)
 	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
@@ -925,7 +921,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 
 
 // extends pick() to associated lists
-/proc/alist_pick(var/list/L)
+/proc/alist_pick(list/L)
 	if(!L || !length(L))
 		return null
 	return L[pick(L)]
@@ -1134,8 +1130,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			O.hear_talk(M,text,real_name, lang_id)
 
 /**
-  * Returns true if given value is a hex value
-  */
+ * Returns true if given value is a hex value
+ */
 /proc/is_hex(hex)
 	if (!( istext(hex) ))
 		return FALSE
@@ -1291,20 +1287,22 @@ proc/outermost_movable(atom/movable/target)
 			. += M
 
 /proc/weightedprob(choices[], weights[])
-	if(!choices || !weights) return null
-
+	if(!choices || !weights)
+		return null
 	//Build a range of weights
 	var/max_num = 0
-	for(var/X in weights) if(isnum(X)) max_num += X
-
+	for(var/X in weights)
+		if(isnum(X))
+			max_num += X
 	//Now roll in the range.
-	var/weighted_num = rand(1,max_num)
+	var/weighted_num = rand(1, max_num)
 
-	var/running_total, i
+	var/running_total
 
 	//Loop through all possible choices
-	for(i = 1; i <= choices.len; i++)
-		if(i > weights.len) return null
+	for(var/i in 1 to length(choices))
+		if(i > length(weights.len))
+			return null
 
 		running_total += weights[i]
 
@@ -1313,12 +1311,13 @@ proc/outermost_movable(atom/movable/target)
 		if(weighted_num <= running_total)
 			return choices[i]
 
-/* Get the highest ancestor of this object in the tree that is an immediate child of
-   a given ancestor.
-   Usage:
-   var/datum/fart/sassy/F = new
-   get_top_parent(F, /datum) //returns a path to /datum/fart
-   */
+/**
+ * Get the highest ancestor of this object in the tree that is an immediate child of a given ancestor.
+ *
+ * Usage:
+ * var/datum/fart/sassy/F = new
+ * get_top_parent(F, /datum) //returns a path to /datum/fart
+ */
 /proc/get_top_ancestor(var/datum/object, var/ancestor_of_ancestor=/datum)
 	if(!object || !ancestor_of_ancestor)
 		CRASH("Null value parameters in get top ancestor.")
@@ -1450,7 +1449,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	if (!A || !isnum(size) || size <= 0)
 		return list()
 
-	var/list/turfs = list()
+	. = list()
 	var/turf/center = get_turf(A)
 
 	var/corner_range = round(size * 1.5)
@@ -1465,9 +1464,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 				total_distance = abs(center.x - T.x) + abs(center.y - T.y) + (current_range / 2)
 				if (total_distance > corner_range)
 					continue
-				turfs += T
-
-	return turfs
+				. += T
 
 /proc/get_fraction_of_percentage_and_whole(var/perc,var/whole)
 	if (!isnum(perc) || !isnum(whole) || perc == 0 || whole == 0)
@@ -1916,7 +1913,7 @@ proc/countJob(rank)
 	return 1
 
 /proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
-	var/is_immune = FALSE
+	. = FALSE
 
 	var/area/a = get_area(target)
 	if(a?.sanctuary)
@@ -1924,25 +1921,21 @@ proc/countJob(rank)
 
 	if (isliving(target))
 		var/mob/living/L = target
-
 		if (!isdead(L))
 			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = TRUE
+					. = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = TRUE
-
-		if (source && istype(source,/obj/projectile) && ishuman(target))
+					. = TRUE
+		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = TRUE
-
-	return is_immune
+				. = TRUE
 
 /**
-  * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
-  */
+ * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
+ */
 /proc/whois(target, limit = null, admin)
 	target = trimtext(ckey(target))
 	if (!target)
@@ -2005,8 +1998,8 @@ proc/countJob(rank)
 				return M
 
 /**
-  * Finds whoever's dead.
-	*/
+ * Finds whoever's dead.
+ */
 /proc/whodead()
 	. = list()
 	for (var/mob/M in mobs)

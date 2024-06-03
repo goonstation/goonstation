@@ -1361,6 +1361,13 @@ var/list/fun_images = list()
 		src.set_saturation(1)
 		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
 
+	var/confirm8 = tgui_alert(src.mob, "Disable Global Parallax?", "Disable Global Parallax?", list("Yes", "No"))
+	if (confirm8 == "Yes")
+		parallax_enabled = !parallax_enabled
+
+		for (var/client/client in clients)
+			client.toggle_parallax()
+
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
 		del(hudItem)
