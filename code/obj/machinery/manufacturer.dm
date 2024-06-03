@@ -378,7 +378,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return null
 
-
 	/// Gets rockbox data as list for ui_static_data
 	proc/rockboxes_as_list()
 		var/rockboxes = list()
@@ -1621,16 +1620,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return mats_used
 
-	/// Add value to list[key], but set list[key] to initial if it doesn't exist yet.
-	#define INCREMENT_ASSOCIATED_LIST(list_varname, key, value, initial) \
-		list_varname[key] ||= initial; \
-		list_varname[key] += value; \
-
-	/// Get the materials in the material storage which satisfy this requirement. Considers the amount of materials being reserved for
-	/// the blueprint already based off the list provided. This proc WILL modify mats_reserved.
-	proc/get_materials_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
+	/// Get the material in storage which satisfies some amount of a requirement.
+	proc/get_material_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
 		var/list/C = src.get_contents()
-		var/list/materials_used = list() //! An associative list of references to material pieces to the amount of that material being used.
+		var/list/materials_used = list()
 		for (var/obj/item/material_piece/P as anything in C)
 			if (!R.is_match(P.material))
 				continue
@@ -1638,13 +1631,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/P_ref = "\ref[P]"
 			var/amount_free = P.amount - mats_reserved[P_ref]
 			var/amount_to_use = min(amount_free, required_amount / 10)
-			INCREMENT_ASSOCIATED_LIST(mats_reserved, P_ref, amount_to_use, 0)
-			INCREMENT_ASSOCIATED_LIST(materials_used, P_ref, amount_to_use, 0)
-			required_amount -= (amount_to_use * 10)
-
-		return materials_used
-
-	#undef INCREMENT_ASSOCIATED_LIST
+			if (amount_to_use < required_amount)
+				continue
+			mats_reserved[P_ref] ||= 0
+			mats_reserved[P_ref] += amount_to_use
+			materials_used[R] = P_ref
+			return P_ref
 
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
