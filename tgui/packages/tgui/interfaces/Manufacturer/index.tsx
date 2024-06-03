@@ -52,7 +52,7 @@ export const Manufacturer = (_, context) => {
   };
   const hasPower = !!data.indicators?.hasPower;
   const manudriveName = data.manudrive?.name ?? "";
-  const manudriveLimit = data.manudrive?.limit ?? 0;
+  const manudriveLimit = data.manudrive?.limit;
   const all_blueprints = {
     available: data.available_blueprints,
     download: data.downloaded_blueprints,
@@ -87,7 +87,7 @@ export const Manufacturer = (_, context) => {
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
   const queueBlueprintRefs = (data.queue ?? []).map((queued:QueueBlueprint) =>
-    blueprints_by_category[queued.category].find((blueprint) => (blueprint.name === queued.name))
+    blueprints_by_category?.[queued.category]?.find((blueprint) => (blueprint.name === queued.name))
   );
 
   return (
@@ -310,8 +310,8 @@ export const Manufacturer = (_, context) => {
                         index={index}
                         actionQueueRemove={actionQueueRemove}
                         mode={data.mode}
-                        img={queued.img}
-                        name={queued.name}
+                        img={queued?.img}
+                        name={queued?.name}
                       />
                     ))) : null}
                 </Stack>
