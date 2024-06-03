@@ -58,7 +58,6 @@
 		// use this if you want the outputted item to be customised in any way by the manufacturer
 		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
-			//A.quality -= rand(25,50)
 		if (src.apply_material && length(materials) > 0)
 			var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
 			var/datum/material/mat = applicable_material?.material
