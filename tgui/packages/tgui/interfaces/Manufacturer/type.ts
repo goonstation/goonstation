@@ -53,10 +53,8 @@ export type Manudrive = {
 export type ManufacturableData = {
   name:string
 
-  material_names:string[];
-  item_paths:string[];
+  requirement_data:RequirementData[];
   item_names:string[];
-  item_amounts:number[];
   item_descriptions:string[];
 
   create:number;
@@ -69,6 +67,12 @@ export type ManufacturableData = {
   apply_material:BooleanLike;
   show_cost:BooleanLike;
   isMechBlueprint:BooleanLike;
+}
+
+export type RequirementData = {
+  name: string;
+  id: string;
+  amount: number;
 }
 
 export type RockboxData = {

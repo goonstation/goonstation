@@ -3,7 +3,6 @@
 // - Keelin
 //
 
-//proc/can_see(var/atom/source, var/atom/target, var/length=5)
 
 /*
 /verb/fuck_this_shit()

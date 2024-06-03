@@ -11,7 +11,7 @@ import { is_set } from '../common/bitflag';
 import { clamp } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { pluralize } from '../common/stringUtils';
-import { Box, Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Stack } from '../../components';
 import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
 import { AccessLevels, MANUDRIVE_UNLIMITED, RockboxStyle, SETTINGS_WINDOW_WIDTH } from './constant';
 import { BlueprintButton } from './components/BlueprintButton';
@@ -19,6 +19,7 @@ import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
 import { ProductionCard } from './components/ProductionCard';
 import { PowerAlertModal } from './components/PowerAlertModal';
+import { ManufacturerSettings } from './components/ManufacturerSettings';
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
@@ -34,6 +35,8 @@ export const Manufacturer = (_, context) => {
   const actionWireCutOrMend = (index:number) => act("wire", { action: ((is_set(data.wire_bitflags, data.wires[index]-1)) ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
   const actionRemoveBlueprint = (byondRef:string) => act("delete", { "blueprint_ref": byondRef });
+  const actionSetSpeed = (new_speed:number) => act("speed", { "value": new_speed });
+  const actionRepeat = () => act("repeat");
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   let swapPriority = (materialRef: string) => {
     if (swappingMaterialRef === null) {
@@ -149,35 +152,16 @@ export const Manufacturer = (_, context) => {
                   </LabeledList>
                 </Section>
               </Stack.Item>
-              <Stack.Item>
-                <Section
-                  textAlign="center"
-                  title="Fabricator Settings"
-                >
-                  <LabeledList>
-                    <LabeledList.Item
-                      label="Repeat"
-                      buttons={<Button icon="repeat" onClick={() => act("repeat")}>Toggle Repeat</Button>}
-                      textAlign="center"
-                    >
-                      {data.repeat ? "On" : "Off"}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Speed"
-                    >
-                      <Slider
-                        minValue={1}
-                        value={data.speed}
-                        maxValue={data.hacked ? data.max_speed_hacked : data.max_speed_normal}
-                        step={1}
-                        stepPixelSize={100}
-                        disabled={data.mode === "working"}
-                        onChange={(_e: any, value: number) => act("speed", { value })}
-                      />
-                    </LabeledList.Item>
-                  </LabeledList>
-                </Section>
-              </Stack.Item>
+              <ManufacturerSettings
+                repeat={data.repeat}
+                hacked={data.hacked}
+                speed={data.speed}
+                max_speed_normal={data.max_speed_normal}
+                max_speed_hacked={data.max_speed_hacked}
+                mode={data.mode}
+                actionSetSpeed={actionSetSpeed}
+                actionRepeat={actionRepeat}
+              />
               {data.manudrive.limit !== null && (
                 <Stack.Item>
                   <Section
@@ -317,14 +301,16 @@ export const Manufacturer = (_, context) => {
                     </Stack.Item>
                   )}
                   {queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
-                    <ProductionCard
-                      key={index}
-                      index={index}
-                      actionQueueRemove={actionQueueRemove}
-                      mode={data.mode}
-                      img={queued.img}
-                      name={queued.name}
-                    />
+                    queued && (
+                      <ProductionCard
+                        key={index}
+                        index={index}
+                        actionQueueRemove={actionQueueRemove}
+                        mode={data.mode}
+                        img={queued.img}
+                        name={queued.name}
+                      />
+                    )
                   ))}
                 </Stack>
               </Stack.Item>

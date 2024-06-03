@@ -12,14 +12,14 @@ Atmos alert computer
 	light_b = 1
 
 /obj/machinery/computer/atmosphere/alerts
-	name = "Alert Computer"
+	name = "alert computer"
 	icon_state = "atmos"
 	circuit_type = /obj/item/circuitboard/atmospherealerts
 	var/alarms = list("Fire"=list(), "Atmosphere"=list())
 	machine_registry_idx = MACHINES_ATMOSALERTS
 
 /obj/machinery/computer/atmosphere/siphonswitch
-	name = "Area Air Control"
+	name = "area air control"
 	icon_state = "atmos"
 	var/otherarea
 	var/area/area

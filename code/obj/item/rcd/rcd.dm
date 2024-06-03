@@ -1,8 +1,10 @@
 ///
 
 TYPEINFO(/obj/item/rcd)
-	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"crystal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /// Base RCD this is the variant actually used in most scenarios
 /obj/item/rcd
 	name = "rapid construction device"

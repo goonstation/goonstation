@@ -23,8 +23,10 @@
  * 	Once sufficient pressure has been reached it can be released spreading it across the current airgroup with a minor stun explosion.
   */
 TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
-	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
-
+	mats = list("metal" = 15,
+				"metal_dense" = 3,
+				"insulated" = 3,
+				"conductive" = 10)
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
 	desc = "Some kind of nightmare contraption to make a lot of noise or pressurize rooms."
