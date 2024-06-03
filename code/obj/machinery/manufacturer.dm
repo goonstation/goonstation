@@ -505,11 +505,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
-	/// Clear src.queue but not the current working print if it exists
-	/// Functionally does nothing special, but allows for future changes to be mirrored easier
-	proc/clear_queue()
-		src.queue = list()
-
 	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
 	proc/try_shock(mob/target, var/chance)
 		if (src.is_electrified())
@@ -649,7 +644,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (ON_COOLDOWN(src, "clear", 1 SECOND))
 					src.grump_message(usr, "Slow down!")
 					return
-				src.clear_queue()
+				src.queue = list()
 				src.mode = MODE_READY
 				src.build_icon()
 				if (src.action_bar)
@@ -1316,7 +1311,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/queue_length = length(src.queue)
 				if (queue_length < 1) // Nothing in list
 					return
-				src.clear_queue()
+				src.queue = list()
 
 				if (length(src.queue) < 1)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
@@ -1412,14 +1407,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (L.stat || L.transforming)
 			return FALSE
 		return TRUE
-
-	proc/isWireColorCut(wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/isWireCut(wireIndex)
-		var/wireFlag = APCIndexToFlag[wireIndex]
-		return ((src.wires & wireFlag) == 0)
 
 	proc/cut(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
@@ -1522,20 +1509,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/datum/manufacturing_requirement/R = getRequirement(R_id)
 			if (R.is_match(M))
 				. += R.id
-
-	/// Returns material in storage which first satisfies a pattern, otherwise returns null
-	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
-	proc/get_material_for_pattern(var/pattern)
-		var/list/C = src.get_contents()
-		if (!length(C))
-			return null
-		if (pattern == "ALL")
-			return C[1]
-		for (var/piece_index in 1 to length(C))
-			var/obj/item/material_piece/P = C[piece_index]
-			if (pattern in src.material_patterns_by_ref["\ref[P]"])
-				return P
-		return null
 
 	/// Returns material which matches ref from storage, else returns null
 	proc/get_material_by_ref(var/mat_ref)
@@ -1942,11 +1915,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				status &= ~BROKEN
 
 		src.build_icon()
-
-	proc/get_our_material(mat_id)
-		for (var/obj/item/material_piece/M as anything in src.get_contents())
-			if (M.material && M.material.getID() == mat_id)
-				return M.material
 
 	/// Adds the resources we define in free_resources to our storage, and clears the list when we're done
 	/// to represent we do not have more resources to claim
