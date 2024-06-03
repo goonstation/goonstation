@@ -367,10 +367,10 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
 /proc/add_zero(text, desired_length)
-	. = "[text]"
+	text = "[text]"
 	if ((desired_length - length(text)) <= 0)
-		return .
-	return (num2text(0, desired_length - length(.), 10) + .)
+		return text
+	return (num2text(0, desired_length - length(text), 10) + text)
 
 /// Adds 'char' ahead of 'text' until there are 'length' characters total
 /proc/add_leading(text, length, char = " ")
