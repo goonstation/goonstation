@@ -1,4 +1,24 @@
 
+(t)sun jun 02 24
+(u)Laboredih123
+(p)19265
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Less pipes to deal with in the cog1 freezer, wow.
+(u)glowbold
+(p)19291
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Mix the classic, non-alcoholic drink 'shirley temple' by combining ginger ale, lemon juice, lime juice, and grenadine.
+(u)Sord
+(+)Increased the amount of air most of the gas/air tanks (pocket, pocket extended, mini oxygen/plasma) spawn with
+(u)Mordent
+(p)19280
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Chemical request and request receiver consoles can now be (de)constructed.
+(u)pali
+(+)Hiding in a shrub now prevents camera tracking.
+(t)sat jun 01 24
+(u)tarmunora
+(+)Being made of plants, synthlungs now protect from CO2 and allow limited 'photosynthesis' of CO2 into O2 when breathing.
 (t)fri may 31 24
 (u)Glamurio (Ryou)
 (p)19049

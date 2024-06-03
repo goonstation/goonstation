@@ -303,17 +303,18 @@ export const Manufacturer = (_, context) => {
                       />
                     </Stack.Item>
                   )}
-                  {(queueBlueprintRefs && queueBlueprintRefs.length) ? (
-                    queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
+                  {queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
+                    queued && (
                       <ProductionCard
                         key={index}
                         index={index}
                         actionQueueRemove={actionQueueRemove}
                         mode={data.mode}
-                        img={queued?.img}
-                        name={queued?.name}
+                        img={queued.img}
+                        name={queued.name}
                       />
-                    ))) : null}
+                    )
+                  ))}
                 </Stack>
               </Stack.Item>
             </Stack>
