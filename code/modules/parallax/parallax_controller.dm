@@ -23,16 +23,23 @@
 	src.parallax_render_sources = list()
 	src.parallax_layers = list()
 	src.render_source_groups = list()
-	src.register_signals(src.owner.mob)
+
+	src.RegisterSignal(src.owner, COMSIG_CLIENT_LOGIN, PROC_REF(register_signals))
+	src.RegisterSignal(src.owner, COMSIG_CLIENT_LOGOUT, PROC_REF(unregister_signals))
+	src.register_signals(src.owner, src.owner.mob)
 
 /datum/parallax_controller/disposing()
-	src.owner.parallax_controller = null
+	src.unregister_signals(src.owner, src.owner.mob)
+	src.UnregisterSignal(src.owner, COMSIG_CLIENT_LOGIN)
+	src.UnregisterSignal(src.owner, COMSIG_CLIENT_LOGOUT)
+
 	src.remove_parallax_layer(src.parallax_render_sources)
 
 	for (var/datum/parallax_render_source_group/render_source_group as anything in src.render_source_groups)
 		render_source_group.members -= src.owner
 
-	src.unregister_signals(src.owner.mob)
+	src.owner.parallax_controller = null
+	src.owner = null
 
 	. = ..()
 
@@ -128,24 +135,24 @@
 /datum/parallax_controller/proc/update_outermost_movable(datum/component/component, atom/movable/old_outermost, atom/movable/new_outermost)
 	src.outermost_movable = new_outermost
 
-/datum/parallax_controller/proc/register_signals(mob/new_mob)
-	src.RegisterSignal(new_mob, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax_layers))
-	src.RegisterSignal(new_mob, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax_layers))
-	src.RegisterSignal(new_mob, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_z_level_parallax_layers))
-	src.RegisterSignal(new_mob, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
+/datum/parallax_controller/proc/register_signals(client/C, mob/M)
+	src.RegisterSignal(M, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax_layers))
+	src.RegisterSignal(M, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax_layers))
+	src.RegisterSignal(M, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_z_level_parallax_layers))
+	src.RegisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
 
-	src.outermost_movable = global.outermost_movable(new_mob)
+	src.outermost_movable = global.outermost_movable(M)
 	src.update_area_parallax_layers(null, null, get_area(src.outermost_movable))
 	src.update_z_level_parallax_layers(null, null, src.outermost_movable.z)
 
-/datum/parallax_controller/proc/unregister_signals(mob/old_mob)
-	if (!old_mob.GetComponent(/datum/component/complexsignal/outermost_movable))
+/datum/parallax_controller/proc/unregister_signals(client/C, mob/M)
+	if (!M.GetComponent(/datum/component/complexsignal/outermost_movable))
 		return
 
-	src.UnregisterSignal(old_mob, XSIG_MOVABLE_TURF_CHANGED)
-	src.UnregisterSignal(old_mob, XSIG_MOVABLE_AREA_CHANGED)
-	src.UnregisterSignal(old_mob, XSIG_MOVABLE_Z_CHANGED)
-	src.UnregisterSignal(old_mob, XSIG_OUTERMOST_MOVABLE_CHANGED)
+	src.UnregisterSignal(M, XSIG_MOVABLE_TURF_CHANGED)
+	src.UnregisterSignal(M, XSIG_MOVABLE_AREA_CHANGED)
+	src.UnregisterSignal(M, XSIG_MOVABLE_Z_CHANGED)
+	src.UnregisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED)
 
 
 
@@ -158,13 +165,5 @@
 	src.toggle_parallax()
 
 /client/Del()
-	src.parallax_controller?.unregister_signals(src.mob)
-	. = ..()
-
-/mob/Login()
-	. = ..()
-	src.client?.parallax_controller?.register_signals(src)
-
-/mob/Logout()
-	src.last_client?.parallax_controller?.unregister_signals(src)
+	qdel(src.parallax_controller)
 	. = ..()

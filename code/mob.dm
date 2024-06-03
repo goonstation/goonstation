@@ -518,11 +518,15 @@
 	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY, src.respect_view_tint_settings)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+	if (src.client)
+		SEND_SIGNAL(src.client, COMSIG_CLIENT_LOGIN, src)
 
 /mob/Logout()
 
 	//logTheThing(LOG_DIARY, src, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
+	if (src.last_client)
+		SEND_SIGNAL(src.last_client, COMSIG_CLIENT_LOGOUT, src)
 
 	tgui_process?.on_logout(src)
 
