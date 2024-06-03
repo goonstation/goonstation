@@ -41,6 +41,9 @@ const getProductionSatisfaction = (
   requirement_data:RequirementData[],
   materials_stored:ResourceData[]) =>
 {
+  if (!requirement_data || !materials_stored) {
+    return false;
+  }
   // Copy values of mats stored to edit in case we need to try the same material twice
   let material_amts_predicted:Record<string, number> = {};
   materials_stored.forEach((value:ResourceData) => (
@@ -49,17 +52,21 @@ const getProductionSatisfaction = (
   let patterns_satisfied:boolean[] = [];
   for (let i in requirement_data) {
     const target_pattern = requirement_data[i].id;
-    const target_amount = requirement_data[i].amount;
-    const matchingMaterial = materials_stored.find((material:ResourceData) => (
-      (material.amount >= target_amount/10) && (target_pattern === "ALL" || material.satisfies?.includes(target_pattern) || material.id === target_pattern)
+    const target_amount = requirement_data[i].amount / 10;
+    const matchingMaterials = materials_stored.filter((material:ResourceData) => (
+      material.satisfies?.includes(target_pattern)
     ));
-    if (matchingMaterial !== undefined) {
-      material_amts_predicted[i] -= target_amount/10;
-      patterns_satisfied.push(true);
+    let amt_removed = 0;
+    for (let matchingMaterialID in matchingMaterials) {
+      let matchingMaterial = matchingMaterials[matchingMaterialID];
+      let amt_to_remove = (target_amount > matchingMaterial.amount) ? matchingMaterial.amount : target_amount;
+      amt_removed += amt_to_remove;
+      if (amt_removed >= target_amount) {
+        break;
+      }
+      material_amts_predicted[i] -= amt_to_remove;
     }
-    else {
-      patterns_satisfied.push(false);
-    }
+    patterns_satisfied.push(amt_removed >= target_amount);
   }
   return patterns_satisfied;
 };
