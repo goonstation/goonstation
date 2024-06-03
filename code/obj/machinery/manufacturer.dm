@@ -1646,9 +1646,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/remove_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			for (var/piece_ref in mats_used[R])
-				var/amount_to_remove = mats_used[R][piece_ref]
-				src.change_contents(-amount_to_remove, mat_piece = locate(piece_ref))
+			var/piece_ref = mats_used[R]
+			var/amount_to_remove = M.item_requirements[R]
+			src.change_contents(-amount_to_remove, mat_piece = locate(piece_ref))
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
