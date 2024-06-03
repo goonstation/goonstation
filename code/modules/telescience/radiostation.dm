@@ -269,8 +269,8 @@
 			boutput(user, SPAN_ALERT("Music is already playing, it'd be rude to interrupt!"))
 		else
 			var/obj/item/record/inserted_record = W
-			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", inserted_record.record_name)), 1, MAX_MESSAGE_LEN)
-			if(!R)
+			var/record_name = copytext(tgui_input_text(user, "What is the name of this record?", "Record Name", inserted_record.record_name), 1, MAX_MESSAGE_LEN)
+			if(!record_name)
 				boutput(user, SPAN_NOTICE("You decide not to play this record."))
 				return
 			if(!in_interact_range(src, user))
@@ -278,7 +278,7 @@
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
-			phrase_log.log_phrase("record", R)
+			phrase_log.log_phrase("record", html_encode(record_name))
 			boutput(user, "You insert the record into the record player.")
 			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
 			user.drop_item()
@@ -295,10 +295,10 @@
 					boutput(user, SPAN_ALERT("You have no idea what happened but this record does not seem to work. Maybe call an admin."))
 					return	// guh????
 			else
-				user.client.play_music_radio(record_inside.song, R)
+				user.client.play_music_radio(record_inside.song, html_encode(record_name))
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [record_name].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)

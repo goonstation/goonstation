@@ -6,6 +6,7 @@
 		server.map = data["map"]
 		server.next_map = data["next_map"]
 		server.round_time = data["round_time"]
+		SEND_SIGNAL(src, COMSIG_SERVER_DATA_SYNCED, data)
 		return TRUE
 
 	send(datum/game_server/server)
@@ -16,7 +17,7 @@
 			player_count++
 		return src._send(server, list(
 			"player_count" = player_count,
-			"map" = mapSwitcher.current,
-			"next_map" = mapSwitcher.next,
-			"round_time" = round(ticker.round_elapsed_ticks / 600),
+			"map" = mapSwitcher?.current,
+			"next_map" = mapSwitcher?.next,
+			"round_time" = round(ticker?.round_elapsed_ticks / 600),
 		))

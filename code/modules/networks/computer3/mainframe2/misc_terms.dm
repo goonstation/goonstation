@@ -1027,8 +1027,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
-
+	mats = list("energy_extreme" = 27,
+				"metal_superdense" = 25,
+				"conductive_high" = 13,
+				"crystal_dense" = 15) //haha this is a bad idea
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
