@@ -104,8 +104,7 @@ export const Manufacturer = (_, context) => {
                     open
                     title={`${category} (${blueprints_by_category[category].length})`}
                   >
-                    {blueprints_by_category[category] && blueprints_by_category[category].length
-                    && blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
+                    {(blueprints_by_category[category] ?? []).map((blueprint, index) => (
                       <BlueprintButton
                         actionRemoveBlueprint={actionRemoveBlueprint}
                         actionVendProduct={actionVendProduct}
