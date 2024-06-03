@@ -78,19 +78,13 @@
 		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
-#define WIRE_MALF 3 //! wire which causes machine to malfunction
-#define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
-
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
 	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
 	free_resources = list()
 	malfunction = TRUE
-	wires = MALFUNCTION_WIRE_CUT
-
-#undef MALFUNCTION_WIRE_CUT
-#undef WIRE_MALF
+	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
