@@ -86,8 +86,8 @@ export const Manufacturer = (_, context) => {
   }
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
-  let queueBlueprintRefs = data.queue?.map((queued:QueueBlueprint) =>
-    blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
+  const queueBlueprintRefs = (data.queue ?? []).map((queued:QueueBlueprint) =>
+    blueprints_by_category[queued.category].find((blueprint) => (blueprint.name === queued.name))
   );
 
   return (
@@ -105,7 +105,7 @@ export const Manufacturer = (_, context) => {
                     open
                     title={`${category} (${blueprints_by_category[category].length})`}
                   >
-                    {blueprints_by_category[category]?.map((blueprint:ManufacturableData, index:number) => (
+                    {(blueprints_by_category[category] ?? []).map((blueprint, index) => (
                       <BlueprintButton
                         actionRemoveBlueprint={actionRemoveBlueprint}
                         actionVendProduct={actionVendProduct}
@@ -114,7 +114,7 @@ export const Manufacturer = (_, context) => {
                         manufacturerSpeed={data.speed}
                         materialData={data.resource_data}
                         deleteAllowed={data.delete_allowed !== AccessLevels.DENIED}
-                        hasPower={hasPower}
+                        hasPower={!!data.indicators?.hasPower}
                       />
                     ))}
                   </Collapsible>
