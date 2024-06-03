@@ -253,8 +253,7 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 			deplRate = deplRate * mult
 			if (addiction_prob)
-				var/addProb = addiction_prob
-				src.handle_addiction(M, deplRate, addProb)
+				src.handle_addiction(M, deplRate, addiction_prob)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
