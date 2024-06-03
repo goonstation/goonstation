@@ -50,6 +50,9 @@ export const Manufacturer = (_, context) => {
       setSwappingMaterialRef(null);
     }
   };
+  const hasPower = !!data.indicators?.hasPower;
+  const manudriveName = data.manudrive?.name ?? "";
+  const manudriveLimit = data.manudrive?.limit ?? 0;
   const all_blueprints = {
     available: data.available_blueprints,
     download: data.downloaded_blueprints,
@@ -62,7 +65,7 @@ export const Manufacturer = (_, context) => {
     This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
   */
   let blueprints_by_category:Record<string, ManufacturableData[]> = {};
-  for (let category_index = 0; category_index < data.all_categories.length; category_index++) {
+  for (let category_index = 0; category_index < (data.all_categories?.length ?? 0); category_index++) {
     let category = data.all_categories[category_index];
     blueprints_by_category[category] = [];
     for (let blueprint_index = 0; blueprint_index < blueprint_types.length; blueprint_index++) {
@@ -83,30 +86,26 @@ export const Manufacturer = (_, context) => {
   }
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
-  let queueBlueprintRefs = data.queue && data.queue.length
-  && data.queue.map((queued:QueueBlueprint) =>
+  let queueBlueprintRefs = data.queue?.map((queued:QueueBlueprint) =>
     blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
   );
 
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
-      {data.indicators && !data.indicators.hasPower
-      && <PowerAlertModal width={100-SETTINGS_WINDOW_WIDTH} height={"100%"} />}
+      {!hasPower && <PowerAlertModal width={100-SETTINGS_WINDOW_WIDTH} height={"100%"} />}
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
             <Section>
-              {data.indicators && !data.indicators.hasPower && <Dimmer />}
-              {data.all_categories && data.all_categories.length
-              && data.all_categories.map((category:string) => (
+              {!hasPower && <Dimmer />}
+              {data.all_categories?.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (
                   <Collapsible
                     key={category}
                     open
                     title={`${category} (${blueprints_by_category[category].length})`}
                   >
-                    {blueprints_by_category[category] && blueprints_by_category[category].length
-                    && blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
+                    {blueprints_by_category[category]?.map((blueprint:ManufacturableData, index:number) => (
                       <BlueprintButton
                         actionRemoveBlueprint={actionRemoveBlueprint}
                         actionVendProduct={actionVendProduct}
@@ -115,7 +114,7 @@ export const Manufacturer = (_, context) => {
                         manufacturerSpeed={data.speed}
                         materialData={data.resource_data}
                         deleteAllowed={data.delete_allowed !== AccessLevels.DENIED}
-                        hasPower={data.indicators && !!data.indicators.hasPower}
+                        hasPower={hasPower}
                       />
                     ))}
                   </Collapsible>
@@ -131,8 +130,7 @@ export const Manufacturer = (_, context) => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {data.resource_data && data.resource_data.length
-                    && data.resource_data.map((resourceData: ResourceData) => (
+                    {data.resource_data?.map((resourceData: ResourceData) => (
                       <LabeledList.Item
                         key={resourceData.byondRef}
                         buttons={
@@ -167,7 +165,7 @@ export const Manufacturer = (_, context) => {
                 actionSetSpeed={actionSetSpeed}
                 actionRepeat={actionRepeat}
               />
-              {data.manudrive.limit !== null && (
+              {(manudriveLimit !== null) && (
                 <Stack.Item>
                   <Section
                     title="Loaded Manudrive"
@@ -180,15 +178,15 @@ export const Manufacturer = (_, context) => {
                       />
                     }
                   >
-                    {data.manudrive.name}
+                    {manudriveName}
                     <Divider />
                     <LabeledList>
                       <LabeledList.Item
                         label="Fabrication Limit"
                       >
-                        {(data.manudrive.limit === MANUDRIVE_UNLIMITED) ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
+                        {(manudriveLimit === MANUDRIVE_UNLIMITED) ? "Unlimited" : `${manudriveLimit} ${pluralize("use", manudriveLimit)}`}
                       </LabeledList.Item>
-                      {(data.manudrive.limit !== MANUDRIVE_UNLIMITED) && (
+                      {(manudriveLimit !== MANUDRIVE_UNLIMITED) && (
                         <LabeledList.Item
                           label="Remaining Uses"
                         >

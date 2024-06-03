@@ -87,13 +87,13 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
   // Condense producability
   const notProduceable = blueprintSatisfaction.includes(false);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
-  const outputs = (blueprintData.item_names.length < 2
-    && blueprintData.create < 2
-    && !blueprintData.apply_material) ? null : (
+  const outputs = ((blueprintData?.item_names?.length ?? 0) < 2
+    && (blueprintData?.create ?? 0) < 2
+    && !blueprintData?.apply_material) ? null : (
       <>
         <br />
         Outputs: <br />
-        {blueprintData.item_names.map((value:string, index:number) => (
+        {blueprintData?.item_names?.map((value:string, index:number) => (
           <b key={index}>
             {blueprintData.create}x {value}<br />
           </b>
@@ -110,10 +110,10 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
           <LabeledList.Item
             key={index}
             labelColor={(blueprintSatisfaction[index]) ? undefined : "bad"}
-            label={blueprintData.requirement_data[value].name}
+            label={blueprintData?.requirement_data?.[value].name}
             textAlign="right"
           >
-            {blueprintData.requirement_data[value].amount/10}
+            {blueprintData?.requirement_data?.[value].amount/10}
           </LabeledList.Item>
         ))}
       </LabeledList>
@@ -128,7 +128,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     content_info = "Click this to remove the blueprint from the fabricator.";
   }
   else {
-    content_info = blueprintData.item_descriptions[0];
+    content_info = (blueprintData?.item_descriptions?.[0] ?? "");
   }
   return (
     <Stack inline>
@@ -146,7 +146,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
-            text={truncate(blueprintData.name, 40)}
+            text={truncate(blueprintData?.name ?? "", 40)}
           />
         </ButtonWithBadge>
       </Stack.Item>
