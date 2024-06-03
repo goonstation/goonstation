@@ -185,6 +185,53 @@
 		. = ..()
 		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
 
+/obj/item/paper/martian_spawn_note
+	name = "martian medical documents"
+	icon_state = "folder"
+	info = {"
+	<br><b>QUXMZX KWKF UITRVKUV TYFYIUU</b><br>
+	<br><br><b>XYVD I:::</b> WR ZVPRJ PWDD JWZM... UKQKXVZ DVYRYTUDQ KWKF UTUB RRTR JJZU QI RMYZTF MZQDBJZF UJD QWRYV JJRIRMVRW.
+	<br><br><b>XYVD II:::</b> RPXJJTY UKQKXVZ IXYFK ZRYI YBXR WR DDI UKQKXVZ QUXMZX ZFBTIIMY UVKJD JVMQMWKP...
+	<br><br><b>XYVD III:::</b> DXKIJ DVYRYTUDQ MU IXYFK RWRPB... KDWZ RRTR UZJQ, IYUQ TBDR RRTR YMBDDQM ZTQKPRU..."
+	<br><br>
+	<br><br><i>QJUIWUXBM ZVTDBZWZY:::</i>
+	<br><br>JJZU UKQKXVZ QMII XIJXQIYQ XMWKRW QMJ RBDTIWZZ FIPFZ, VIPXYK WKM PZQPKK YBXR TVZZPTI...
+	<br><br>ZYJWJR,,,
+	<br><br>BPW... VORL
+	<br><br>
+	<br><br>VYMJJ MQRB UKQKXVZ FBIQMUKV!!!
+	"}
+
+	New()
+		. = ..()
+		src.stamp(200, 20, rand(-5,5), "stamp_stain-[rand(1, 3)].png", "stamp-qm")
+
+	translated
+		info = {"
+		<br><b>Spawning Pool Maintenance Procedure</b><br>
+		<br><br><b>Step 1:</b> Ensure proper fluid ratios. The spawn pool must be in a controlled environment at optimal temperatures.
+		<br><br><b>Step 2:</b> Connect the cryogenic pods and ensure that the spawning pipes are functional.
+		<br><br><b>Step 3:</b> Extract spawn from cryogenic pod. Please be adviced, newborns may be extremely hostile.
+		<br><br>
+		<br><br><i>Additional notes:</i>
+		<br><br>In the unlikely event of an enemy assault, destroy all evidence and equipment.
+		<br><br>Signed,
+		<br><br>Dr. Vorl
+		<br><br>
+		<br><br>Glory to the Empire!
+		"}
+
+/obj/item/paper/martian_note
+	name = "poorly written note"
+	desc = "Someone wrote this in a hurry."
+	icon_state = "paper_caution_crumple"
+	info = {"
+	<br><br>gorp no good at humayn linguage
+	<br><br>but gorp try laern hard
+	<br><br>gorp thenk humayn not so bad
+	<br><br>maybe one day humayn and martiayn be freinds
+	"}
+
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
 	info = {"<B>Startup Procedure for Mark II Thermo-Electric Generators</B><BR>

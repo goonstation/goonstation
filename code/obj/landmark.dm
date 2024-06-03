@@ -473,7 +473,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "artifact"
 
 	spawn_the_thing()
-		Artifact_Spawn(get_turf(src), forceartitype = "martian")
+		Artifact_Spawn(get_turf(src), "martian")
 		qdel(src)
 
 /obj/landmark/spawner/artifact/one_in_ten

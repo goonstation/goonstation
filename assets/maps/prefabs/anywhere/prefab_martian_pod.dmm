@@ -1,25 +1,21 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/fluid_spawner,
+/turf/simulated/floor/sand,
+/area/noGenerate)
 "db" = (
 /obj/decal/aliencomputer/off{
 	pixel_y = 32
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /obj/decal/cleanable/greenpuke,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "dz" = (
 /obj/rack,
 /obj/item/storage/toolbox/electrical,
 /obj/item/tank/jetpack/micro,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "dQ" = (
 /obj/indestructible/shuttle_corner{
@@ -27,11 +23,7 @@
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "ej" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -48,11 +40,7 @@
 /obj/table/neon/auto{
 	name = "martian table"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "ku" = (
 /obj/indestructible/shuttle_corner{
@@ -71,27 +59,15 @@
 	name = "martian table parts"
 	},
 /obj/lattice,
-/turf/simulated/floor/plating/damaged3,
+/turf/simulated/floor/airless/plating/damaged1,
 /area/noGenerate)
 "nh" = (
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "nt" = (
-/obj/fluid_spawner/polluted_filth/green_goop,
 /obj/sea_plant/tubesponge,
+/obj/fluid_spawner,
 /turf/simulated/floor/sand,
-/area/noGenerate)
-"nM" = (
-/obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
 /area/noGenerate)
 "oF" = (
 /obj/decal/cleanable/oil,
@@ -107,11 +83,7 @@
 	icon_state = "diagonal"
 	},
 /obj/map/light/white,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "rv" = (
 /obj/indestructible/shuttle_corner{
@@ -122,11 +94,11 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "sE" = (
-/obj/fluid_spawner/polluted_filth/green_goop,
 /mob/living/critter/aquatic/fish/jellyfish{
 	name = "martian spawn";
 	real_name = "martian spawn"
 	},
+/obj/fluid_spawner,
 /turf/simulated/floor/sand,
 /area/noGenerate)
 "tl" = (
@@ -153,52 +125,63 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"xM" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 9;
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "xO" = (
 /obj/decal/aliencomputer/blink{
 	pixel_x = -32
 	},
-/obj/item/paper,
 /obj/table/neon/auto{
 	name = "martian table"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/obj/item/storage/box/record/spacecult,
+/obj/item/paper/martian_note,
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "xZ" = (
 /obj/item/organ/brain/martian,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "yb" = (
 /obj/table/neon/auto{
 	name = "martian table"
 	},
 /obj/item/tank/anesthetic,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"yI" = (
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "yY" = (
-/obj/fluid_spawner/polluted_filth/green_goop,
 /obj/sea_plant/bulbous,
+/obj/fluid_spawner/polluted_filth/green_goop,
 /turf/simulated/floor/sand,
+/area/noGenerate)
+"zB" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater"
+	},
+/turf/space,
+/area/noGenerate)
+"zJ" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
 /area/noGenerate)
 "Cm" = (
 /obj/grille/steel/broken,
 /obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Dc" = (
 /obj/lattice,
@@ -217,20 +200,16 @@
 "FO" = (
 /obj/storage/crate/medical,
 /obj/item/storage/firstaid/old,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Gj" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"GC" = (
+/obj/decorative_pot,
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Hb" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
@@ -253,23 +232,18 @@
 /obj/decal/alienflower{
 	pixel_y = -5
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "IM" = (
 /obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "IU" = (
 /turf/simulated/wall/auto/martian,
 /area/noGenerate)
+"IX" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
 "Jy" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /obj/crevice{
@@ -292,11 +266,7 @@
 /obj/decal/cleanable/martian_viscera/fluid{
 	icon_state = "goop4"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "KO" = (
 /obj/map/light/white,
@@ -304,11 +274,7 @@
 /area/noGenerate)
 "Lb" = (
 /obj/decal/cleanable/dirt/dirt3,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Ll" = (
 /obj/lattice,
@@ -317,6 +283,7 @@
 	},
 /obj/item/raw_material/shard/plasmacrystal,
 /obj/item/parts/artifact_parts/arm/martian/left,
+/obj/decal/cleanable/dirt/dirt5,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "Ne" = (
@@ -333,20 +300,14 @@
 	name = "martian table"
 	},
 /obj/decal/cleanable/desk_clutter,
-/obj/item/paper,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/obj/machinery/light/incandescent/purpleish,
+/obj/item/paper/martian_spawn_note,
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Oh" = (
 /obj/item/raw_material/shard/plasmacrystal,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "PE" = (
 /obj/indestructible/shuttle_corner{
@@ -354,11 +315,7 @@
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "QQ" = (
 /obj/indestructible/shuttle_corner{
@@ -366,30 +323,18 @@
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "RO" = (
 /obj/landmark/spawner/artifact/martian,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "RW" = (
 /obj/machinery/door/unpowered/martian,
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "SO" = (
 /obj/lattice,
@@ -409,11 +354,7 @@
 /obj/table/neon/auto{
 	name = "martian table"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Uv" = (
 /obj/lattice,
@@ -421,6 +362,13 @@
 	icon_state = "gib3"
 	},
 /turf/variableTurf/clear,
+/area/noGenerate)
+"Vd" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 18
+	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Ws" = (
 /obj/decal/cleanable/martian_viscera/fluid,
@@ -432,11 +380,7 @@
 	},
 /obj/submachine/tape_deck,
 /obj/item/reagent_containers/food/snacks/plant/purplegoop,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Xl" = (
 /obj/indestructible/shuttle_corner{
@@ -447,8 +391,8 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Yh" = (
-/obj/fluid_spawner/polluted_filth/green_goop,
 /obj/sea_plant/anemone,
+/obj/fluid_spawner,
 /turf/simulated/floor/sand,
 /area/noGenerate)
 "YM" = (
@@ -457,7 +401,18 @@
 	color = "b4b4b4";
 	dir = 4
 	},
+/obj/decal/cleanable/dirt/dirt2,
 /turf/variableTurf/floor,
+/area/noGenerate)
+"YW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
 /area/noGenerate)
 "YY" = (
 /obj/indestructible/shuttle_corner{
@@ -469,11 +424,7 @@
 /area/noGenerate)
 "YZ" = (
 /obj/machinery/door/unpowered/martian,
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "Zl" = (
 /obj/indestructible/shuttle_corner{
@@ -481,60 +432,57 @@
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 "ZT" = (
 /obj/decal/aliencomputer/graphic{
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "floor2";
-	name = "organic floor"
-	},
+/turf/simulated/floor/martian,
 /area/noGenerate)
 
 (1,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
 "}
 (2,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
 "}
 (3,1,1) = {"
+IX
+IX
+IX
+IX
+IX
 pJ
 pJ
 pJ
@@ -542,22 +490,17 @@ pJ
 pJ
 pJ
 pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 "}
 (4,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
 pJ
 Xl
 KO
@@ -565,85 +508,85 @@ RW
 IU
 rv
 pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 "}
 (5,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
 pJ
 IU
 dz
 nh
-nh
+RO
 IU
 pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 "}
 (6,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
 pJ
 IU
 nh
 nh
-nh
+yI
 IU
 pJ
 pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
 "}
 (7,1,1) = {"
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 pJ
 pJ
 IU
-nh
+GC
 nh
 nh
 PE
 rv
 pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
 "}
 (8,1,1) = {"
+IX
+IX
+IX
+IX
 pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-IU
+xM
+zB
 IU
 QQ
 nh
 nh
 Ne
 pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
 "}
 (9,1,1) = {"
-pJ
+IX
 pJ
 pJ
 pJ
@@ -658,10 +601,10 @@ Ne
 pJ
 pJ
 pJ
-pJ
+IX
 "}
 (10,1,1) = {"
-pJ
+IX
 pJ
 Xl
 IU
@@ -671,7 +614,7 @@ Hb
 nh
 gV
 IU
-nh
+Vd
 PE
 IU
 rv
@@ -698,8 +641,8 @@ pJ
 "}
 (12,1,1) = {"
 pJ
-pJ
-IU
+xM
+YW
 yY
 sE
 ej
@@ -716,9 +659,9 @@ pJ
 "}
 (13,1,1) = {"
 pJ
-pJ
-IU
-mg
+xM
+zJ
+ae
 mg
 ej
 TR
@@ -751,7 +694,7 @@ YY
 pJ
 "}
 (15,1,1) = {"
-pJ
+IX
 pJ
 uk
 IU
@@ -769,7 +712,7 @@ pJ
 tl
 "}
 (16,1,1) = {"
-pJ
+IX
 pJ
 pJ
 pJ
@@ -779,7 +722,7 @@ ku
 nh
 dQ
 Zl
-nM
+Lb
 YM
 DX
 JE
@@ -787,13 +730,13 @@ pJ
 pJ
 "}
 (17,1,1) = {"
+IX
+IX
+IX
+IX
 pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-IU
+xM
+zB
 IU
 Zl
 nh
@@ -805,10 +748,10 @@ pJ
 pJ
 "}
 (18,1,1) = {"
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 pJ
 pJ
 IU
@@ -823,16 +766,16 @@ SO
 pJ
 "}
 (19,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
 pJ
 IU
 nh
 nh
-nh
+yI
 IU
 pJ
 Dc
@@ -841,29 +784,29 @@ pJ
 pJ
 "}
 (20,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
 pJ
 IU
 Gj
 nh
-nh
+RO
 IU
 pJ
 pJ
 pJ
-pJ
-pJ
+IX
+IX
 "}
 (21,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
 pJ
 uk
 KO
@@ -871,12 +814,17 @@ RW
 IU
 YY
 pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 "}
 (22,1,1) = {"
+IX
+IX
+IX
+IX
+IX
 pJ
 pJ
 pJ
@@ -884,49 +832,44 @@ pJ
 pJ
 pJ
 pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
 "}
 (23,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
 "}
 (24,1,1) = {"
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
+IX
 "}
