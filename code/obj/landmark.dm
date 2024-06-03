@@ -468,6 +468,14 @@ var/global/list/job_start_locations = list()
 		Artifact_Spawn(get_turf(src))
 		qdel(src)
 
+/obj/landmark/spawner/artifact/martian
+	name = "Artifact Spawn Martian"
+	icon_state = "artifact"
+
+	spawn_the_thing()
+		Artifact_Spawn(get_turf(src), forceartitype = "martian")
+		qdel(src)
+
 /obj/landmark/spawner/artifact/one_in_ten
 	name = "Artifact Spawn (10%)"
 	icon_state = "artifact_10"

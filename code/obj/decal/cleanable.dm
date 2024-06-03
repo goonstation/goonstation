@@ -1733,7 +1733,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
 							b.blood_DNA = src.blood_DNA
 							b.blood_type = src.blood_type
-							b.color = "#0b1f8f"
+							b.color = "#9FD999"
 						else if (prob(10))
 							elecflash(src)
 					if("FLOCK")
