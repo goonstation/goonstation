@@ -719,7 +719,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		if(!src.account)
-			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
+			src.grump_message(usr, "ERROR: No bank record detected. Please scan your ID.", sound = TRUE)
 			return
 		else
 			src.output_message_user = null
@@ -773,8 +773,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.grump_message(usr, "ERROR: I don't have that many for sale, champ.", sound = TRUE)
 			else
 				src.grump_message(usr, "Enter some actual valid number, you doofus!", sound = TRUE)
-	else
-		src.grump_message(usr, "That card doesn't have an account anymore, you might wanna get that checked out.", sound = TRUE)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
