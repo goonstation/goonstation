@@ -876,7 +876,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				src.active2["criminal"] = ARREST_STATE_INCARCERATED
 
 			if(PRISONER_MODE_SUSPECT)
-				src.active2["criminal"] = "Suspect"
+				src.active2["criminal"] = ARREST_STATE_SUSPECT
 
 		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
