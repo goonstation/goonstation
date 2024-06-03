@@ -62,7 +62,6 @@ export const DisposalPipeRow = (props, context) => {
         <Stack.Item>
           <Box style={{ "overflow": "show", "height": "32px" }}>
             <Image
-              pixelated
               src={`data:image/png;base64,${disposalpipe.image}`}
             />
           </Box>

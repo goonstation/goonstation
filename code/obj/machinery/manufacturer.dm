@@ -58,6 +58,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/time_left_electrified = 0
 	var/output_target = null //! A turf or object which the manufacturer will attempt to output items into.
 	var/list/turf/nearby_turfs = list() //! A list populated in New() which stores turfs which are nearby this manufacturer.
+	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
+	var/panel_open = FALSE
+	var/dismantle_stage = 0
+	var/hacked = FALSE
+	var/malfunction = FALSE
+	var/power_wire_cut = FALSE
+	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
+	var/output_target = null
+	var/list/nearby_turfs = list()
 	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
 	var/frequency = FREQ_PDA
 	var/net_id = null
@@ -273,11 +282,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 		else
 			if(src.powered() && src.dismantle_stage < DISMANTLE_WIRES)
-				status &= ~NOPOWER
+				src.check_power_status()
 				src.build_icon()
 			else
 				SPAWN(rand(0, 15))
-					status |= NOPOWER
+					src.check_power_status()
 					src.build_icon()
 
 	/// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
@@ -425,8 +434,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Fix not having generated material names for blueprints like multitools
 		if (isnull(M.item_names))
 			M.item_names = list()
-			for (var/i in M.item_paths)
-				M.item_names += get_nice_mat_name_for_manufacturers(i)
+			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+				M.item_names += R.name
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -448,14 +457,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			img = getItemIcon(M.item_outputs[1], C = user.client)
 
+		var/requirement_data = list()
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
+
 		return list(
 			"name" = M.name,
 			"category" = M.category,
-			"material_names" = M.item_names,
-			"item_paths" = M.item_paths,
+			"requirement_data" = requirement_data,
 			"item_names" = generated_names,
 			"item_descriptions" = generated_descriptions,
-			"item_amounts" = M.item_amounts,
 			"item_outputs" = M.item_outputs,
 			"create" = M.create,
 			"time" = M.time,
@@ -466,7 +477,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		)
 
 	attack_hand(mob/user)
-		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
+		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
+		if (length(free_resources) > 0)
 			claim_free_resources()
 		if(src.is_electrified())
 			if (!(status & NOPOWER || status & BROKEN))
@@ -936,7 +948,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = DISMANTLE_WIRES
-			src.status |= NOPOWER
+			src.check_power_status()
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
 			C.UpdateIcon()
@@ -953,7 +965,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
 			var/obj/item/cable_coil/C = W
 			C.use(1)
-			src.status &= ~NOPOWER
+			src.check_power_status()
 			src.shock(user,100)
 			src.build_icon()
 
@@ -1282,8 +1294,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!item_bp)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOITEMBLUEPRINT"))
 					return
-
-				if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+				// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+				if (length(free_resources) > 0)
 					claim_free_resources()
 
 				if (!check_enough_materials(item_bp))
@@ -1422,7 +1434,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_POWER)
 				if(!src.is_disabled())
 					src.shock(user, 100)
-					src.status |= NOPOWER
+				src.power_wire_cut = TRUE
+				src.check_power_status()
 
 	proc/mend(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
@@ -1434,9 +1447,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_MALF)
 				src.malfunction = FALSE
 			if(WIRE_POWER)
+				src.power_wire_cut = FALSE
+				src.check_power_status()
 				if (!(src.status & BROKEN) && (src.status & NOPOWER))
 					src.shock(user, 100)
-					src.status &= ~NOPOWER
 
 	proc/pulse(mob/user, wireColor)
 		var/wireIndex = APCWireColorToIndex[wireColor]
@@ -1501,61 +1515,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
-	proc/get_patterns_material_satisfies(datum/material/M)
+	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
-		var/material_flags = M.getMaterialFlags()
-		// get properties with getters once, ideally
-		var/density = M.getProperty("density")
-		var/hard = M.getProperty("hard")
-		var/reflective = M.getProperty("reflective")
-		var/electrical = M.getProperty("electrical")
-		var/radioactive = M.getProperty("radioactive")
-		if (!M)
-			return .
-		if (material_flags & MATERIAL_RUBBER)
-			. += "RUB"
-			. += "ORG|RUB"
-		if (material_flags & MATERIAL_ORGANIC)
-			. += "ORG"
-			if (!("ORG|RUB" in .))
-				. += "ORG|RUB"
-		if (material_flags & MATERIAL_WOOD)
-			. += "WOOD"
-		if (material_flags & MATERIAL_METAL)
-			var/hardness = (hard * 2) + density
-			if (hardness >= 15)
-				. += "MET-3"
-			if (hardness >= 10)
-				. += "MET-2"
-			. += "MET-1"
-		if (material_flags & MATERIAL_CRYSTAL)
-			if (density >= 7)
-				. += "CRY-2"
-			. += "CRY-1"
-		if (reflective >= 6)
-			. += "REF"
-		if (electrical >= 6)
-			if (electrical >= 8)
-				. += "CON-2"
-			. += "CON-1"
-		if (electrical <= 4 && material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-			if (electrical <= 2)
-				. += "INS-2"
-			. += "INS-1"
-		if (density >= 4)
-			if (density >= 6)
-				. += "DEN-2"
-			. += "DEN-1"
-		if (material_flags & MATERIAL_ENERGY)
-			if (radioactive >= 2)
-				if (radioactive >= 5)
-					. += "POW-3"
-				. += "POW-2"
-			. += "POW-1"
-		if (material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC))
-			. += "FAB-1"
-		if (istype(M, /datum/material/crystal/gemstone))
-			. += "GEM-1"
+		for (var/R_id as anything in requirement_cache)
+			var/datum/manufacturing_requirement/R = getRequirement(R_id)
+			if (R.is_match(M))
+				. += R.id
 
 	/// Returns material in storage which first satisfies a pattern, otherwise returns null
 	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
@@ -1578,26 +1543,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return P
 		return null
 
-	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
-	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
+	/// Returns associative list of manufacturing requirement to material piece reference, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
 	proc/get_materials_needed(datum/manufacture/M)
-		var/list/mats_used = list()
-		var/list/mats_available = list()
-
 		var/list/C = src.get_contents()
-		for (var/path_index in 1 to length(M.item_paths))
-			var/required_pattern = M.item_paths[path_index]
-			var/required_amount = M.item_amounts[path_index]
-			for (var/piece_index in 1 to length(C))
-				var/obj/item/material_piece/P = C[piece_index]
-				var/P_id = P.material.getID()
-				if (!(P_id in mats_available))
-					mats_available[P_id] = P.amount * 10
-				if (mats_available[P_id] < required_amount)
+
+		var/list/mats_used = list()
+		var/list/mats_projected = list()
+		for (var/obj/item/material_piece/P in C)
+			mats_projected["\ref[P]"] = P.amount * 10
+
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			for (var/obj/item/material_piece/P in C)
+				var/P_ref = "\ref[P]"
+				if (mats_projected[P_ref] < required_amount)
 					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_ref["\ref[P]"]) || P_id == required_pattern)
-					mats_used[required_pattern] = P_id
-					mats_available[P_id] -= required_amount
+				if (R.is_match(P.material))
+					mats_used[R] = P_ref
+					mats_projected[P_ref] -= required_amount
 					break
 
 		return mats_used
@@ -1605,7 +1569,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
+		if (length(mats_used) == length(M.item_requirements)) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
 	/// Go through the material requirements of a blueprint, removing the respective used materials
@@ -1613,10 +1577,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_used = check_enough_materials(M)
 		if (isnull(mats_used))
 			return // how
-		for (var/i = 1 to length(M.item_paths))
-			var/pattern = M.item_paths[i]
-			var/mat_id = mats_used[pattern]
-			src.change_contents(-M.item_amounts[i]/10, mat_id)
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			src.change_contents(-required_amount/10, mat_piece = locate(mats_used[R]))
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1892,7 +1855,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	Parameters for selection of material (requires at least one non-null):
 	mat_id = material id to set. creates a new material if none of that id exists
 	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
+	mat_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
 	material = material datum to add. acts as/overrides mat_id if provided
 	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
 	user = (optional) any mob that may be loading this
@@ -1923,22 +1886,22 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
 				// fuck floating point, lets pretend we only use tenths
-				P.amount = round(P.amount + amount, 0.1)
+				P.change_stack_amount(amount)
+				// Handle inserting pieces into the machine
 				if (user)
 					user.u_equip(mat_piece)
 					mat_piece.dropped(user)
-				if (!isnull(mat_piece))
 					qdel(mat_piece)
 				if (P.amount <= 0)
 					qdel(P)
 				return
 
-		// No same material in storage, create/add the one we have and update the patterns index accordingly
+		// No same material in storage, create/add the one we have and update the requirements index accordingly
 		if (!isnull(mat_piece))
 			if (isnull(mat_piece.material))
 				return
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_ref["\ref[mat_piece]"] = src.get_patterns_material_satisfies(mat_piece.material)
+			material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(mat_piece.material)
 			return
 
 		if (isnull(mat_datum))
@@ -1950,7 +1913,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		P.amount = max(0, amount)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		material_patterns_by_ref["\ref[P]"] = src.get_patterns_material_satisfies(P.material)
+		material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(P.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -1984,19 +1947,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (M.material && M.material.getID() == mat_id)
 				return M.material
 
+	/// Adds the resources we define in free_resources to our storage, and clears the list when we're done
+	/// to represent we do not have more resources to claim
 	proc/claim_free_resources()
-
 		if (src.deconstruct_flags & DECON_BUILT)
-			free_resource_amt = 0
+			free_resources = list()
 			return
 
-		if (length(free_resources) && free_resource_amt > 0)
-			for (var/typepath in src.free_resources)
-				if (ispath(typepath))
-					src.change_contents(amount = free_resource_amt, mat_path = typepath )
-			free_resource_amt = 0
-		else
-			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+		for (var/mat_path in src.free_resources)
+			src.change_contents(amount = src.free_resources[mat_path], mat_path = mat_path)
+
+		free_resources = list()
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
@@ -2042,16 +2003,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return src.loc
 
+	proc/check_power_status()
+		if (src.powered() && !src.power_wire_cut && src.dismantle_stage <= 2)
+			src.status &= ~NOPOWER
+		else
+			src.status |= NOPOWER
 
 // Fabricator Defines
 
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
+	free_resources = list(/obj/item/material_piece/steel = 5,
+		/obj/item/material_piece/copper = 5,
+		/obj/item/material_piece/glass = 5)
 	available = list(/datum/manufacture/screwdriver,
 		/datum/manufacture/wirecutters,
 		/datum/manufacture/wrench,
@@ -2129,7 +2094,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
 	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
-	free_resource_amt = 0
 	free_resources = list()
 	malfunction = TRUE
 	wires = MALFUNCTION_WIRE_CUT
@@ -2141,11 +2105,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-
+	free_resources = list(/obj/item/material_piece/steel = 5,
+		/obj/item/material_piece/copper = 5,
+		/obj/item/material_piece/glass = 5)
 	available = list(/datum/manufacture/robo_frame,
 		/datum/manufacture/full_cyborg_standard,
 		/datum/manufacture/full_cyborg_light,
@@ -2248,12 +2210,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces medical equipment and sterile clothing."
 	icon_state = "fab-med"
 	icon_base = "med"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
-
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2,
+		/obj/item/material_piece/cloth/cottonfabric = 2)
 	available = list(
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
@@ -2316,12 +2276,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
 	icon_state = "fab-sci"
 	icon_base = "sci"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric,
-		/obj/item/material_piece/cobryl)
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2,
+		/obj/item/material_piece/cloth/cottonfabric = 2,
+		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
@@ -2367,10 +2326,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces mining equipment like concussive charges and powered tools."
 	icon_state = "fab-mining"
 	icon_base = "mining"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2)
 	available = list(/datum/manufacture/pick,
 		/datum/manufacture/powerpick,
 		/datum/manufacture/blastchargeslite,
@@ -2419,10 +2377,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces modules for space pods or minisubs."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2)
 	available = list(
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/sub/preassembeled_parts,
@@ -2455,10 +2412,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one can create a wide variety of one-size-fits-all jumpsuits, as well as backpacks and radio headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,
-		/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper)
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5,
+		/obj/item/material_piece/steel = 5,
+		/obj/item/material_piece/copper = 5)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 		/datum/manufacture/shoes_brown,
@@ -2540,20 +2496,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2)
 
 /obj/machinery/manufacturer/personnel
 	name = "personnel equipment manufacturer"
 	supplemental_desc = "This one can produce blank ID cards and access implants."
 	icon_state = "fab-access"
 	icon_base = "access"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2)
 	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
 	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
 
@@ -2564,11 +2518,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
+	free_resources = list(/obj/item/material_piece/steel = 5,
+		/obj/item/material_piece/copper = 5,
+		/obj/item/material_piece/glass = 5,
+		/obj/item/material_piece/cloth/cottonfabric = 5)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/id_card,
 		/datum/manufacture/implant_access,
@@ -2624,9 +2577,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resource_amt = 1
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/organic/wood)
+	free_resources = list(/obj/item/material_piece/steel = 1,
+		/obj/item/material_piece/organic/wood = 1)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
@@ -2642,11 +2594,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	desc = "This manufacturing unit seems to have been loaded with a bunch of nonstandard blueprints, apparently to be useful in surviving \"extreme scenarios\"."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resource_amt = 50
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
+	free_resources = list(/obj/item/material_piece/steel = 50,
+		/obj/item/material_piece/copper = 50,
+		/obj/item/material_piece/glass = 50,
+		/obj/item/material_piece/cloth/cottonfabric = 50)
 	accept_blueprints = FALSE
 	available = list(
 		/datum/manufacture/engspacesuit,
@@ -2688,10 +2639,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	desc = "This one produces specialist engineering devices."
 	icon_state = "fab-engineering"
 	icon_base = "engineering"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
+	free_resources = list(/obj/item/material_piece/steel = 2,
+		/obj/item/material_piece/copper = 2,
+		/obj/item/material_piece/glass = 2)
 	available = list(
 		/datum/manufacture/screwdriver/yellow,
 		/datum/manufacture/wirecutters/yellow,

@@ -39,7 +39,6 @@ export const ItemList = (props: ItemListProps) => {
           <Image
             height="32px"
             width="32px"
-            pixelated
             src={`data:image/png;base64,${item.iconBase64}`}
           />
         </Flex.Item>
