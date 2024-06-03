@@ -1616,7 +1616,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_reserved = list()
 
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			mats_used[R] = src.get_materials_for_requirement(R, M.item_requirements[R], mats_reserved)
+			mats_used[R] = src.get_material_for_requirement(R, M.item_requirements[R], mats_reserved)
 
 		return mats_used
 
