@@ -38,10 +38,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
-	/* General stuff */
 	var/health = 100
-	/// Appended in get_desc() to the base description, to make subtype definitions cleaner
-	var/supplemental_desc = null
+	var/supplemental_desc = null //! Appended in get_desc() to the base description, to make subtype definitions cleaner
 	/// The current status of the machine.
 	/// "ready" / MODE_READY - The machine is ready to produce more blueprints.
 	/// "working" / MODE_WORKING - The machine is currently producing a blueprint.
@@ -50,48 +48,31 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// A somewhat legacy variable to output silent yet visible errors to the user in the UI.
 	/// Current uses include when there is a lack of materials, an invalid blueprint, and when there is not enough manudrive uses.
 	var/error = null
-	/// How much power is consumed while active. This is determined automatically when the unit starts a production cycle
-	var/active_power_consumption = 0
-	/// Whether or not the panel is open to expose the wires inside. Toggled when a screwdriver is used on the manufacturer.
-	var/panel_open = FALSE
-	/// The stage of dismantlement this machine is currently at. 0 is functional, 3 is pretty much entirely disassembled.
-	var/dismantle_stage = DISMANTLE_NONE
-	/// Whether or not the AI control wire was pulsed, unlocks speed settings up to MAX_SPEED_HACKED and unlocks blueprints in the hidden() category
-	var/hacked = FALSE
-	/// Whether or not he malf wire was pulsed/cut, causes manufacturing jobs among other things to occasionally call flip_out(). can change speed up to MAX_SPEED_DAMAGED
-	var/malfunction = FALSE
+	var/active_power_consumption = 0 //! How much power is consumed while active. This is determined automatically when the unit starts a production cycle
+	var/panel_open = FALSE //! Whether or not the panel is open to expose the wires inside. Toggled when a screwdriver is used on the manufacturer.
+	var/dismantle_stage = DISMANTLE_NONE //! The stage of dismantlement this machine is currently at. 0 is functional, 3 is pretty much entirely disassembled.
+	var/hacked = FALSE //! Whether or not the AI control wire was pulsed, unlocks speed settings up to MAX_SPEED_HACKED and unlocks blueprints in the hidden() category
+	var/malfunction = FALSE //! Whether or not the malf wire was pulsed/cut, causes manufacturing jobs among other things to occasionally call flip_out(). can change speed up to MAX_SPEED_DAMAGED
 	// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
 	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
 	var/time_left_electrified = 0
-	/// A turf or object which the manufacturer will attempt to output items into.
-	var/output_target = null
-	/// A list populated in New() which stores turfs which are nearby this manufacturer.
-	var/list/nearby_turfs = list()
-	/// This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
-	var/wires = 15
+	var/output_target = null //! A turf or object which the manufacturer will attempt to output items into.
+	var/list/turf/nearby_turfs = list() //! A list populated in New() which stores turfs which are nearby this manufacturer.
+	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
 	var/frequency = FREQ_PDA
 	var/net_id = null
 	var/device_tag = "PNET_MANUFACTURER"
-	/// The data terminal attached underfloor to this manufacturer. Allows use of PNET packets
-	var/obj/machinery/power/data_terminal/link = null
-	/// Card currently scanned into the machine, used when deducting payment for ores from a Rockbox
-	var/obj/item/card/id/scan = null
+	var/obj/machinery/power/data_terminal/link = null //! The data terminal attached underfloor to this manufacturer. Allows use of PNET packets
+	var/obj/item/card/id/scan = null //! Card currently scanned into the machine, used when deducting payment for ores from a Rockbox
 
 	/* Printing and queues */
-	/// Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
-	var/original_duration = 0
-	/// Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
-	var/time_left = 0
-	/// Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
-	var/time_started = 0
-	/// Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
-	var/speed = DEFAULT_SPEED
-	/// Controls whether or not to repeat the first item in the queue while working.
-	var/repeat = FALSE
-	/// The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
-	var/output_cap = MAX_OUTPUT
-	/// A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
-	var/list/datum/manufacture/queue = list()
+	var/original_duration = 0 //! Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
+	var/time_left = 0 //! Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
+	var/time_started = 0 //! Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
+	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
+	var/repeat = FALSE //! Controls whether or not to repeat the first item in the queue while working.
+	var/output_cap = MAX_OUTPUT //! The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
+	var/list/datum/manufacture/queue = list() //! A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
 
 	/* Resources/materials */
 	/// Base class for material pieces that the manufacturer accepts.
@@ -106,25 +87,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/free_resources = list()
 	/// Supposedly used by podwards manufacturers, but not really
 	/// Kind of legacy is this is removed soon
-	var/list/resource_amounts = list()
-	/// Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
+	var/list/resource_amounts = list() //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
-	/// Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
-	var/list/material_patterns_by_ref = list()
+	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
 	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
-	var/accept_blueprints = TRUE
-	/// A list of every manufacture datum typepath available in this unit subtype by default
-	var/list/available = list()
-	/// Manufacture datum typepaths gained from scanned blueprints
-	var/list/download = list()
-	/// Manufacture datum typepaths provided by an inserted manudrive
-	var/list/drive_recipes = list()
-	/// These manufacture datum typepaths are available by default, but can't be printed or seen unless the machine is hacked
-	var/list/hidden = list()
+	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
+
+	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
+	var/list/download = list() //! Manufacture datum typepaths gained from scanned blueprints
+	var/list/drive_recipes = list() //! Manufacture datum typepaths provided by an inserted manudrive
+	var/list/hidden = list() //! These manufacture datum typepaths are available by default, but can't be printed or seen unless the machine is hacked
 
 	// Unsorted stuff. The names for these should (hopefully!) be self-explanatory
 	var/image/work_display = null
