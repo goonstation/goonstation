@@ -25503,12 +25503,14 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/television/mobile/science,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOx" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/television/mobile/science,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
