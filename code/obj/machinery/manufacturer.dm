@@ -712,9 +712,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/datum/ore_cloud_data/OCD = storage.ores[ore_name]
 		if (!OCD.amount || OCD.amount <= 0)
 			src.grump_message(usr, "ERROR: That just ran out, hold your horses!", sound = TRUE)
-		var/price = OCD.price
-		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-
+		var/taxes = ORE_TAX(OCD.price) //transaction taxes for the station budget
 		if(storage?.is_disabled())
 			return
 
