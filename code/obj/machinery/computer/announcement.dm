@@ -1,7 +1,7 @@
 /////////////////////////////////////// General Announcement Computer
 
 /obj/machinery/computer/announcement
-	name = "Announcement Computer"
+	name = "announcement computer"
 	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
@@ -42,6 +42,7 @@
 			src.unlocked = check_access(ID, 1)
 			boutput(user, SPAN_NOTICE("You insert [W]."))
 			update_status()
+			tgui_process.update_uis(src)
 			return
 		..()
 

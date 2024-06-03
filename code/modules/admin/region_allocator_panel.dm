@@ -11,7 +11,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "RegionAllocatorPanel")
-	ui.open()
+		ui.open()
 
 /datum/region_allocator_panel/ui_data(mob/user)
 	var/region_data = list()

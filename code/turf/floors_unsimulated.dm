@@ -574,6 +574,29 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/unsimulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/unsimulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/unsimulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/unsimulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/unsimulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/unsimulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+////////////////////////////////////////
+
 /turf/unsimulated/floor/sanitary
 	icon_state = "freezerfloor"
 

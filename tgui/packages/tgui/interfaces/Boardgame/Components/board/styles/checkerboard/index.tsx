@@ -20,7 +20,7 @@ export const CheckerBoard = (props, context) => {
     const { x, y } = mouseCoords;
 
     // Out of bounds cancels the placement
-    if (!boardRef) return [-1, -1];
+    if (!boardRef?.current) return [-1, -1];
 
     const rect = boardRef.current.getBoundingClientRect();
 

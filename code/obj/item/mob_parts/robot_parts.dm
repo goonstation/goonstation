@@ -564,6 +564,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		return
 
+	can_arm_attach()
+		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
+
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"

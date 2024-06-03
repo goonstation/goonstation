@@ -6520,7 +6520,9 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "azr" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	id = "toilet"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "azs" = (
@@ -6746,7 +6748,9 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/landmark/bill_spawn,
-/obj/machinery/door_control/bolter/new_walls/east,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "toilet"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "aAf" = (
@@ -6761,7 +6765,9 @@
 	},
 /obj/machinery/drainage,
 /obj/item/sponge,
-/obj/machinery/door_control/bolter/new_walls/west,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "shower"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "aAg" = (
@@ -13754,6 +13760,12 @@
 /obj/item/material_piece/foolsfoolsgold,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
+"boC" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "shower"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "bpS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14708,6 +14720,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "shower"
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
@@ -77455,7 +77470,7 @@ asL
 ayi
 ayq
 iZt
-azr
+boC
 aAf
 aAV
 jLt

@@ -68,28 +68,25 @@ const PumpSettings = (props:any, context:any) => {
   );
 };
 
+
 // Responsible for creating a section for the pumps in an area.
-const PumpArea = (props:any, context:any) => {
+const PumpArea = (props: any, context: any) => {
   const { data } = useBackend<AreaList>(context);
   const { area } = props;
 
   // Need the keys as a list >:(
-  let pump_controls = [];
-  for (let pump_key in data.area_list[area]) {
-    if (data.area_list[area][pump_key].alive === 0) continue;
-    pump_controls.push(<PumpSettings pump={data.area_list[area][pump_key]} />);
-  }
-  // All pumps were dead
-  if (pump_controls.length === 0) {
-    pump_controls.push(
-      <Stack.Item>No pumps found for {area}, please refresh and check connection.</Stack.Item>
-    );
-  }
+  const pump_controls = Object.entries(data.area_list[area])
+    .filter(([_, pump]) => pump.alive !== 0)
+    .map(([pump_key, pump]) => <PumpSettings key={pump_key} pump={pump} />);
 
   return (
     <Section title={area}>
       <Stack vertical>
-        {pump_controls}
+        {pump_controls.length > 0 ? (
+          pump_controls
+        ) : (
+          <Stack.Item>No pumps found for {area}, please refresh and check connection.</Stack.Item>
+        )}
       </Stack>
     </Section>
   );
@@ -101,7 +98,7 @@ export const PumpControl = (props, context) => {
   const refresh = () => act('refresh');
 
   // Need this as list >:(
-  let areas = [];
+  let areas: string[] = [];
   for (let area in data.area_list) areas.push(area);
 
   return (
