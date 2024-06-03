@@ -1,0 +1,932 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"db" = (
+/obj/decal/aliencomputer/off{
+	pixel_y = 32
+	},
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/obj/decal/cleanable/greenpuke,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"dz" = (
+/obj/rack,
+/obj/item/storage/toolbox/electrical,
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"dQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"ej" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"gV" = (
+/obj/item/storage/firstaid/docbag{
+	pixel_y = 5
+	},
+/obj/table/neon/auto{
+	name = "martian table"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"ku" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/carpet/darkcarpet/border,
+/area/noGenerate)
+"mg" = (
+/obj/fluid_spawner/polluted_filth/green_goop,
+/turf/simulated/floor/sand,
+/area/noGenerate)
+"ml" = (
+/obj/item/furniture_parts/table/neon{
+	name = "martian table parts"
+	},
+/obj/lattice,
+/turf/simulated/floor/plating/damaged3,
+/area/noGenerate)
+"nh" = (
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"nt" = (
+/obj/fluid_spawner/polluted_filth/green_goop,
+/obj/sea_plant/tubesponge,
+/turf/simulated/floor/sand,
+/area/noGenerate)
+"nM" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"oF" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/wall/auto/reinforced,
+/area/noGenerate)
+"pJ" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"pQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/obj/map/light/white,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"rv" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"sE" = (
+/obj/fluid_spawner/polluted_filth/green_goop,
+/mob/living/critter/aquatic/fish/jellyfish{
+	name = "martian spawn";
+	real_name = "martian spawn"
+	},
+/turf/simulated/floor/sand,
+/area/noGenerate)
+"tl" = (
+/obj/lattice,
+/obj/decal/cleanable/martian_viscera{
+	pixel_y = 5
+	},
+/obj/item/parts/artifact_parts/leg/martian/left,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"tQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/carpet/darkcarpet/border,
+/area/noGenerate)
+"uk" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"xO" = (
+/obj/decal/aliencomputer/blink{
+	pixel_x = -32
+	},
+/obj/item/paper,
+/obj/table/neon/auto{
+	name = "martian table"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"xZ" = (
+/obj/item/organ/brain/martian,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"yb" = (
+/obj/table/neon/auto{
+	name = "martian table"
+	},
+/obj/item/tank/anesthetic,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"yY" = (
+/obj/fluid_spawner/polluted_filth/green_goop,
+/obj/sea_plant/bulbous,
+/turf/simulated/floor/sand,
+/area/noGenerate)
+"Cm" = (
+/obj/grille/steel/broken,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Dc" = (
+/obj/lattice,
+/obj/decal/cleanable/martian_viscera{
+	icon_state = "gib2";
+	pixel_y = 5
+	},
+/obj/item/parts/artifact_parts/leg/martian/right,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"DX" = (
+/obj/lattice,
+/obj/item/raw_material/shard/plasmacrystal,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"FO" = (
+/obj/storage/crate/medical,
+/obj/item/storage/firstaid/old,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Gj" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Hb" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/crevice{
+	pixel_y = 32
+	},
+/obj/mapping_helper/mob_spawn/corpse/human,
+/turf/simulated/floor/carpet/darkcarpet/border,
+/area/noGenerate)
+"He" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Hj" = (
+/obj/decorative_pot,
+/obj/decal/alienflower{
+	pixel_y = -5
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"IM" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"IU" = (
+/turf/simulated/wall/auto/martian,
+/area/noGenerate)
+"Jy" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/crevice{
+	pixel_y = 32
+	},
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/carpet/darkcarpet/border,
+/area/noGenerate)
+"JE" = (
+/obj/lattice,
+/obj/decal/cleanable/martian_viscera{
+	icon_state = "gib3";
+	pixel_y = 5
+	},
+/obj/item/parts/artifact_parts/arm/martian/right,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Kq" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/obj/decal/cleanable/martian_viscera/fluid{
+	icon_state = "goop4"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"KO" = (
+/obj/map/light/white,
+/turf/simulated/wall/auto/martian,
+/area/noGenerate)
+"Lb" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Ll" = (
+/obj/lattice,
+/obj/decal/cleanable/martian_viscera/fluid{
+	icon_state = "goop2"
+	},
+/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/parts/artifact_parts/arm/martian/left,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Ne" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Nq" = (
+/obj/decal/cleanable/paper,
+/obj/table/neon/auto{
+	name = "martian table"
+	},
+/obj/decal/cleanable/desk_clutter,
+/obj/item/paper,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Oh" = (
+/obj/item/raw_material/shard/plasmacrystal,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"PE" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"QQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"RO" = (
+/obj/landmark/spawner/artifact/martian,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"RW" = (
+/obj/machinery/door/unpowered/martian,
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"SO" = (
+/obj/lattice,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/obj/decal/cleanable/martian_viscera{
+	icon_state = "gib4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"TR" = (
+/turf/simulated/floor/carpet/darkcarpet/border,
+/area/noGenerate)
+"Uk" = (
+/obj/decal/aliencomputer/broken{
+	pixel_x = 32
+	},
+/obj/table/neon/auto{
+	name = "martian table"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Uv" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ws" = (
+/obj/decal/cleanable/martian_viscera/fluid,
+/turf/simulated/wall/auto/martian,
+/area/noGenerate)
+"WX" = (
+/obj/decal/cleanable/martian_viscera{
+	icon_state = "gib4"
+	},
+/obj/submachine/tape_deck,
+/obj/item/reagent_containers/food/snacks/plant/purplegoop,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Xl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Yh" = (
+/obj/fluid_spawner/polluted_filth/green_goop,
+/obj/sea_plant/anemone,
+/turf/simulated/floor/sand,
+/area/noGenerate)
+"YM" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 4
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"YY" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"YZ" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"Zl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+"ZT" = (
+/obj/decal/aliencomputer/graphic{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
+/area/noGenerate)
+
+(1,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(2,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(3,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(4,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+Xl
+KO
+RW
+IU
+rv
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(5,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+dz
+nh
+nh
+IU
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(6,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+nh
+nh
+nh
+IU
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(7,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+nh
+nh
+nh
+PE
+rv
+pJ
+pJ
+pJ
+pJ
+"}
+(8,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+IU
+QQ
+nh
+nh
+Ne
+pJ
+pJ
+pJ
+pJ
+"}
+(9,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+Xl
+tQ
+FO
+PE
+QQ
+nh
+Ne
+pJ
+pJ
+pJ
+pJ
+"}
+(10,1,1) = {"
+pJ
+pJ
+Xl
+IU
+IU
+IU
+Hb
+nh
+gV
+IU
+nh
+PE
+IU
+rv
+pJ
+pJ
+"}
+(11,1,1) = {"
+pJ
+pJ
+IU
+sE
+nt
+ej
+TR
+nh
+Nq
+IU
+ZT
+RO
+WX
+pQ
+rv
+pJ
+"}
+(12,1,1) = {"
+pJ
+pJ
+IU
+yY
+sE
+ej
+TR
+nh
+nh
+YZ
+nh
+nh
+Kq
+xO
+Ne
+pJ
+"}
+(13,1,1) = {"
+pJ
+pJ
+IU
+mg
+mg
+ej
+TR
+nh
+nh
+YZ
+xZ
+Lb
+nh
+Uk
+Ne
+pJ
+"}
+(14,1,1) = {"
+pJ
+pJ
+IU
+sE
+Yh
+ej
+TR
+nh
+yb
+Ws
+db
+YM
+IM
+dQ
+YY
+pJ
+"}
+(15,1,1) = {"
+pJ
+pJ
+uk
+IU
+IU
+IU
+Jy
+nh
+ml
+oF
+He
+Ll
+Uv
+pJ
+pJ
+tl
+"}
+(16,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+uk
+ku
+nh
+dQ
+Zl
+nM
+YM
+DX
+JE
+pJ
+pJ
+"}
+(17,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+IU
+Zl
+nh
+Oh
+Cm
+pJ
+pJ
+pJ
+pJ
+"}
+(18,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+Hj
+nh
+nh
+dQ
+YY
+pJ
+pJ
+SO
+pJ
+"}
+(19,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+nh
+nh
+nh
+IU
+pJ
+Dc
+pJ
+pJ
+pJ
+"}
+(20,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+IU
+Gj
+nh
+nh
+IU
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(21,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+uk
+KO
+RW
+IU
+YY
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(22,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(23,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
+(24,1,1) = {"
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+pJ
+"}
