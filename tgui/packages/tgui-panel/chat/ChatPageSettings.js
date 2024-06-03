@@ -26,25 +26,23 @@ export const ChatPageSettings = (props, context) => {
             }))} />
         </Stack.Item>
         <Stack.Item>
-          <Button.Confirm
+          <Button
             icon="times"
-            confirmContent="Confirm?"
-            content="Remove"
             color="red"
             onClick={() => dispatch(removeChatPage({
               pageId: page.id,
-            }))} />
+            }))}>
+            Remove
+          </Button>
         </Stack.Item>
       </Stack>
       <Divider />
-      <Section title="Messages to display" level={2}>
+      <Section title="Messages to display">
         {MESSAGE_TYPES
           .filter(typeDef => !typeDef.important && !typeDef.admin)
           .map(typeDef => (
             <Button.Checkbox
               key={typeDef.type}
-              tooltip={typeDef.description}
-              tooltipPosition="bottom"
               checked={page.acceptedTypes[typeDef.type]}
               onClick={() => dispatch(toggleAcceptedType({
                 pageId: page.id,

@@ -270,8 +270,7 @@ datum
 			fluid_g = 100
 			fluid_b = 225
 			transparency = 200
-			addiction_prob = 1//20
-			addiction_prob2 = 10
+			addiction_prob = 0.1
 			addiction_min = 10
 			overdose = 50
 			value = 7 // 5c + 1c + 1c
@@ -404,8 +403,7 @@ datum
 			fluid_g = 0
 			fluid_b = 0
 			transparency = 255
-			addiction_prob = 1//20
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 5
 			value = 13
 
@@ -558,8 +556,7 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 40
-			addiction_prob = 1//5
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 5
 			depletion_rate = 0.2
 			overdose = 30
@@ -1124,22 +1121,22 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (!prob(20) && P.growth > 5)
-					P.growth -= 5
-				if (DNA.growtime < 0 && prob(50))
-					DNA.growtime++
-				if (DNA.harvtime < 0 && prob(50))
-					DNA.harvtime++
-				if (DNA.harvests < 0 && prob(50))
-					DNA.harvests++
-				if (DNA.cropsize < 0 && prob(50))
-					DNA.cropsize++
-				if (DNA.potency < 0 && prob(50))
-					DNA.potency++
-				if (DNA.endurance < 0 && prob(50))
-					DNA.endurance++
+				if (P.growth > 5)
+					growth_tick.growth_rate -= 4
+				if (DNA.growtime < 0)
+					growth_tick.growtime_bonus += 0.5
+				if (DNA.harvtime < 0)
+					growth_tick.harvtime_bonus += 0.5
+				if (DNA.harvests < 0)
+					growth_tick.harvests_bonus += 0.5
+				if (DNA.cropsize < 0)
+					growth_tick.cropsize_bonus += 0.5
+				if (DNA.potency < 0)
+					growth_tick.potency_bonus += 0.5
+				if (DNA.endurance < 0)
+					growth_tick.endurance_bonus += 0.5
 
 		medical/promethazine // This stops you from vomiting
 			name = "promethazine"
@@ -1181,8 +1178,7 @@ datum
 			fluid_b = 250
 			depletion_rate = 0.3
 			overdose = 35
-			addiction_prob = 1//25
-			addiction_prob2 = 10
+			addiction_prob = 0.1
 			addiction_min = 10
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
@@ -1509,8 +1505,7 @@ datum
 			fluid_g = 100
 			fluid_b = 100
 			transparency = 40
-			addiction_prob = 1//20
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 10
 			value = 6 // 3 1 1 heat
 			target_organs = list("left_lung", "right_lung", "spleen")
@@ -1573,7 +1568,7 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				if(P.reagents.has_reagent("toxin"))
 					P.reagents.remove_reagent("toxin", 2)
 				if(P.reagents.has_reagent("toxic_slurry"))

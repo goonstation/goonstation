@@ -505,7 +505,7 @@
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, SPAN_AHELP("<b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord) <i class='fas fa-arrow-right'></i> [key_name(M, additional_url_data="&msgid=[msgid]")]</b>: [game_msg]"))
+								boutput(C, SPAN_AHELP("<b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M, additional_url_data="&msgid=[msgid]")]</b>: [game_msg]"))
 
 				if (M)
 					var/ircmsg[] = new()
@@ -541,9 +541,9 @@
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='fas fa-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
+									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
 							else
-								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='fas fa-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
 
 				if (M)
 					var/ircmsg[] = new()
@@ -927,6 +927,9 @@
 				var/list/response = list()
 				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
 					response += canvas.id
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if (art_exhibit.data?.art)
+						response += art_exhibit.exhibit_id
 				return json_encode(response)
 
 			if("lazy_canvas_get")
@@ -936,6 +939,11 @@
 						if(!canvas.initialized)
 							canvas.load_from_id(canvas.id)
 						response[canvas.id] = icon2base64(canvas.art)
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if(art_exhibit.exhibit_id == plist["id"])
+						if (!art_exhibit.data?.art)
+							break
+						response[art_exhibit.exhibit_id] = icon2base64(art_exhibit.data.art)
 				return json_encode(response)
 
 			if("ban_added")
@@ -950,4 +958,11 @@
 					text2num(plist["requires_appeal"]),
 					TRUE
 				)
+				return 1
+
+			if("goonhub_auth")
+				var/ckey = plist["ckey"]
+				var/client/C = find_client(ckey)
+				if (C && C.goonhub_auth)
+					C.goonhub_auth.on_auth()
 				return 1

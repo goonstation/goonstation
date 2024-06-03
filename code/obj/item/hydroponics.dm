@@ -136,8 +136,9 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
-
+	mats = list("metal_dense" = 25,
+				"conductive" = 5,
+				"energy_high" = 5)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -404,8 +405,10 @@ TYPEINFO(/obj/item/plantanalyzer)
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
 			return
-		global.scan_plant(A, user, visible = 1) // Replaced with global proc (Convair880).
+
+		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).
 		src.add_fingerprint(user)
+		return
 
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 

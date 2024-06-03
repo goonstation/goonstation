@@ -135,6 +135,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
+		/client/proc/toggle_tracy_profiling,
 
 		/client/proc/debug_deletions,
 
@@ -424,7 +425,9 @@ var/list/admin_verbs = list(
 #endif
 		/client/proc/distribute_tokens,
 		/client/proc/spawn_all_type,
-		/client/proc/region_allocator_panel
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
+		/client/proc/set_round_req_bypass,
 		),
 
 	7 = list(
@@ -656,6 +659,8 @@ var/list/special_pa_observing_verbs = list(
 			if( src.holder.level > LEVEL_PA ) //SHIT GUY PLUS
 				src.verbs += special_pa_observing_verbs
 
+	if (src.chatOutput && src.chatOutput.loaded)
+		src.chatOutput.loadAdmin()
 
 /client/proc/clear_admin_verbs()
 	src.deadchat = 0
@@ -1158,7 +1163,7 @@ var/list/fun_images = list()
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)
-		H.Equip_Rank(jobstring, 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.Equip_Rank(jobstring, 2, skip_manifest = src.holder.skip_manifest) //ZeWaka: joined_late is 2 so you don't get announced.
 		H.update_colorful_parts()
 	qdel(mymob)
 	if (flourish)
@@ -1440,7 +1445,7 @@ var/list/fun_images = list()
 		if (M.client && (isblob(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 //say to all changelings hiveminds
@@ -1481,7 +1486,7 @@ var/list/fun_images = list()
 		if (is_in_hivemind || C.holder && !C.player_mode)
 			var/thisR = rendered
 			if (C.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /client/proc/silisay(msg as text)
@@ -1512,7 +1517,7 @@ var/list/fun_images = list()
 		if (M.client && (M.robot_talk_understand || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /client/proc/dronesay(msg as text)
@@ -1544,7 +1549,7 @@ var/list/fun_images = list()
 		if (M.client && (isghostdrone(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 
@@ -1611,12 +1616,15 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "has used the dectalk verb with message: [audio["message"]]")
 		logTheThing(LOG_DIARY, src, "has used the dectalk verb with message: [audio["message"]]", "admin")
 
-		for (var/client/C as anything in global.clients)
+		for (var/client/C in clients)
 			if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 				continue
-			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
+			var/trigger = src.key
+			if (src.holder && (src.stealth || src.alt_key))
+				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
+			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 			if (vol)
-				C.play_dectalk(audio["audio"], volume = vol * 0.75)
+				C.chatOutput.playDectalk(audio["audio"], trigger, vol * 0.75)
 		return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")
@@ -2636,3 +2644,21 @@ var/list/fun_images = list()
 		src.holder.region_allocator_panel = new
 
 	src.holder.region_allocator_panel.ui_interact(src.mob)
+
+/client/proc/set_round_req_bypass(ckey as text)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Set round req bypass"
+	set desc = "Set a flag for a specific ckey to allow them to bypass round requirements for jobs etc."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/datum/player/player = make_player(ckey)
+	if (!player)
+		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
+		return
+	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+		boutput(src, "Successfully set round requirement bypass flag")
+		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
+	else
+		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))

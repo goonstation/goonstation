@@ -679,20 +679,10 @@
 			if (G.glove_ID)
 				glove_data += "[G.glove_ID] [G.material_prints ? "([G.material_prints])" : null]"
 
-		if (istype(A, /obj/item/casing/))
-			var/obj/item/casing/C = A
-			if(C.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [C]:")] [C.forensic_ID]"
-
-		if (istype(A, /obj/item/implant/projectile))
-			var/obj/item/implant/projectile/P = A
-			if(P.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [P]:")] [P.forensic_ID]"
-
-		if (istype(A, /obj/item/gun))
-			var/obj/item/gun/G = A
-			if(G.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [G]:")] [G.forensic_ID]"
+		if (istype(A, /obj))
+			var/obj/O = A
+			if(O.forensic_ID)
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [O]:")] [O.forensic_ID]"
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
@@ -807,8 +797,7 @@
 	if (istype(A, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/PP = A
 		if (!PP.current || PP.dead)
-			boutput(user, SPAN_ALERT("Cannot scan."))
-			return
+			return SPAN_ALERT("Cannot scan.")
 
 		P = PP.current
 		DNA = PP.plantgenes
@@ -816,8 +805,7 @@
 	else if (istype(A, /obj/item/seed/))
 		var/obj/item/seed/S = A
 		if (S.isstrange || !S.planttype)
-			boutput(user, SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned."))
-			return
+			return SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned.")
 
 		P = S.planttype
 		DNA = S.plantgenes
@@ -848,10 +836,10 @@
 		animate_scanning(A, "#70e800")
 
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
-		boutput(user, SPAN_ALERT("Cannot scan."))
-		return
+		return SPAN_ALERT("Cannot scan.")
 
 	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
+	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)

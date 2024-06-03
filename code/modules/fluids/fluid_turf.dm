@@ -354,7 +354,7 @@
 			icon_state = "pit_wall"
 
 		var/turf/space/fluid/under = get_step(src, SOUTH)
-		if (istype(under.type, /turf/space/fluid/warp_z5/realwarp))
+		if (istype(under, /turf/space/fluid/warp_z5/realwarp))
 			under.icon_state = "pit"
 
 	initialise_component()
