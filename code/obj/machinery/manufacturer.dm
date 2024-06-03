@@ -1657,6 +1657,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				amount_used += mats_used[R][material_piece_ref]
 
 			if (amount_used < amount_needed)
+				var/obj/item/material_piece/P = locate(material_piece_ref)
+				src.grump(message = "ERROR: Could not get enough [R.name] for [M.name]. Manufacturer has insufficient [blame_material] for production.", sound = TRUE)
 				return FALSE
 			else if (amount_used > amount_needed)
 				// This scenario needs to be reported because get_materials_needed should **NEVER** reserve more materials for a blueprint than it needs.
