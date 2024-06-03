@@ -303,9 +303,10 @@ datum
 					var/datum/db_record/gen_record = data_core.general.find_record("name", perpname)
 					var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
 					// Yes. Its 21. This is Space America. That is canon now.
-					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != "*Arrest*")
-						sec_record["criminal"] = "*Arrest*"
+					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != ARREST_STATE_ARREST)
+						sec_record["criminal"] = ARREST_STATE_ARREST
 						sec_record["mi_crim"] = "Underage drinking."
+						H.update_arrest_icon()
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
