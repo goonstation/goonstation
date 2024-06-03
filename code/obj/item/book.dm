@@ -348,13 +348,14 @@ Custom Books
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = user
+			var/mob/living/carbon/human/jerk = user
 			if (!istype(jerk))
 				return
 
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = "*Arrest*"
+			S?["criminal"] = ARREST_STATE_ARREST
 			S?["mi_crim"] = "Reading highly-confidential private information."
+			jerk.update_arrest_icon()
 		else
 			return list("It appears to be heavily encrypted information.")
 

@@ -96,7 +96,7 @@
 */
 
 /obj/machinery/computer/general_alert
-	name = "General Alert Computer"
+	name = "general alert computer"
 	icon_state = "alert:0"
 	circuit_type = /obj/item/circuitboard/general_alert
 	var/list/priority_alarms = list()
