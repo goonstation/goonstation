@@ -37,9 +37,7 @@
 			var/donator_fig_ckey = null
 			var/list/online_donator_ckeys_nouser = online_donator_ckeys.Copy()
 
-			if (online_donator_ckeys.Find(potential_donator_ckey))//(potential_donator_ckey && length(online_donator_ckeys)) // check if the player has a figurine (therefore a donator)
-				//for (var/ckey in online_donator_ckeys)
-					//if (potential_donator_ckey == ckey)
+			if (online_donator_ckeys.Find(potential_donator_ckey))
 				donator_fig_ckey = potential_donator_ckey
 				online_donator_ckeys_nouser -= donator_fig_ckey
 				src.patreon_prob *= 2	// x2 chance of getting patreon figure
@@ -170,9 +168,8 @@ proc/add_to_donator_list(var/potential_donator_ckey)
 		for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
 			donator_ckeys += initial(fig.ckey)
 
-	for (var/ckey in donator_ckeys) //Adds to list of logged-in donator Ckeys
-		if (potential_donator_ckey == ckey)
-			online_donator_ckeys += potential_donator_ckey
+	if (donator_ckeys.Find(potential_donator_ckey))
+		online_donator_ckeys += potential_donator_ckey
 
 var/list/figure_low_rarity = list(\
 /datum/figure_info/assistant,
