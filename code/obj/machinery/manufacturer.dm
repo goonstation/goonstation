@@ -324,7 +324,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else
 				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
 
-		. = list(
+		return list(
 			"delete_allowed" = src.allowed(user),
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
@@ -348,7 +348,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		)
 
 	ui_static_data(mob/user)
-		. = list (
+		return list (
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
 			"available_blueprints" = blueprints_as_list(src.available, user),
@@ -451,7 +451,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
 
-		. = list(
+		return list(
 			"name" = M.name,
 			"category" = M.category,
 			"requirement_data" = requirement_data,
