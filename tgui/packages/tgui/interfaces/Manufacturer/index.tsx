@@ -237,7 +237,7 @@ export const Manufacturer = (_, context) => {
                       </Box>
 
                       <LabeledList>
-                        {rockbox.ores && rockbox.ores.length ? (rockbox.ores.map((ore: OreData) => (
+                        {(rockbox.ores && rockbox.ores.length) ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
                             key={ore.name}
                             label={ore.name}

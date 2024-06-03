@@ -50,12 +50,14 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     >
       <Stack>
         <Stack.Item>
-          <Image
-            verticalAlign="top"
-            height={height || "100%"}
-            src={imagePath}
-            backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
-          />
+          {imagePath && (
+            <Image
+              verticalAlign="top"
+              height={height || "100%"}
+              src={imagePath}
+              backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
+            />
+          )}
         </Stack.Item>
         <Stack.Item grow mx={1}>
           {children}
