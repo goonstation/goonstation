@@ -311,6 +311,7 @@
 		set waitfor = FALSE
 		var/list/medals = get_all_medals()
 		if (!length(medals)) return
+		LAZYLISTINIT(medal_cache)
 		for (var/idx in medals)
 			medal_cache[ckey(idx)] = idx
 
