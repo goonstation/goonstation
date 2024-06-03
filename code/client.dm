@@ -403,8 +403,7 @@
 
 	clients += src
 
-	SPAWN(0) // to not lock up spawning process
-		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
+	src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 
 	src.initSizeHelpers()
 

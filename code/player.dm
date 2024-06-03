@@ -258,6 +258,10 @@
 			return FALSE
 		. = TRUE
 
+		// empty string to match format of what we cached from the hub...
+		LAZYLISTINIT(medal_cache)
+		medal_cache[medal_name] = ""
+
 		// Record this medal to the Goonhub API for further tracking
 		// This will (eventually) replace the byond medals entirely
 		try
@@ -291,6 +295,7 @@
 		var/success = world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
 
 		if (success)
+			LAZYLISTREMOVE(medal_cache, medal_name)
 			try
 				var/datum/apiRoute/players/medals/delete/deleteMedal = new
 				deleteMedal.buildBody(src.id || null, src.ckey, medal_name)
@@ -306,8 +311,14 @@
 	proc/cache_medals()
 		medal_cache = get_all_medals()
 
-	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	/// Checks if this player has a medal in their medal cache
 	proc/has_medal(medal_name)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return
+		return !isnull(medal_cache?[medal_name])
+
+	/// Only use this in a SPAWN or other background proc to prevent server from locking up. Potentially blocking version of has_medal, polls hub to ensure latest data.
+	proc/has_medal_blocking(medal_name)
 		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
 			return
 		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)

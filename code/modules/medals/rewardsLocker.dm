@@ -1525,53 +1525,52 @@
 	set category = "Commands"
 	set popup_menu = 0
 
-	SPAWN(0)
-		src.verbs -= /client/verb/claimreward
-		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
-		var/list/eligible = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			var/result = usr.has_medal(D.required_medal)
-			if(result == 1)
-				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
-					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
-					eligible.Add(D.title)
-					eligible[D.title] = D
+	src.verbs -= /client/verb/claimreward
+	boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
+	var/list/eligible = list()
+	for(var/A in rewardDB)
+		var/datum/achievementReward/D = rewardDB[A]
+		var/result = usr.has_medal(D.required_medal)
+		if(result == 1)
+			if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
+				if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
+				eligible.Add(D.title)
+				eligible[D.title] = D
 
-		if(!length(eligible))
-			boutput(usr, SPAN_ALERT("Sorry, you don't have any rewards available."))
-			src.verbs += /client/verb/claimreward
-			return
-
-		var/selection = tgui_input_list(usr,"Please select your reward", "VIP Rewards", (eligible + "CANCEL"))
-
-		if(!selection || selection == "CANCEL")
-			src.verbs += /client/verb/claimreward
-			return
-
-		var/datum/achievementReward/S = null
-
-		for(var/X in rewardDB)
-			var/datum/achievementReward/C = rewardDB[X]
-			if(C.title == selection)
-				S = C
-				break
-
-		if(S == null)
-			boutput(usr, SPAN_ALERT("Invalid Rewardtype after selection. Please inform a coder."))
-			return
-
-		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
-			boutput(usr, SPAN_ALERT("You already claimed this!"))
-			return
-
-		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
+	if(!length(eligible))
+		boutput(usr, SPAN_ALERT("Sorry, you don't have any rewards available."))
 		src.verbs += /client/verb/claimreward
-		if(confirm == "Yes")
-			var/worked = S.rewardActivate(src.mob)
-			if (worked)
-				boutput(usr, SPAN_ALERT("Successfully claimed \"[S.title]\"."))
-				if(S.once_per_round)
-					src.player.claimed_rewards.Add(S.type)
-			else
-				boutput(usr, SPAN_ALERT("Redemption of \"[S.title]\" failed."))
+		return
+
+	var/selection = tgui_input_list(usr,"Please select your reward", "VIP Rewards", (eligible + "CANCEL"))
+
+	if(!selection || selection == "CANCEL")
+		src.verbs += /client/verb/claimreward
+		return
+
+	var/datum/achievementReward/S = null
+
+	for(var/X in rewardDB)
+		var/datum/achievementReward/C = rewardDB[X]
+		if(C.title == selection)
+			S = C
+			break
+
+	if(S == null)
+		boutput(usr, SPAN_ALERT("Invalid Rewardtype after selection. Please inform a coder."))
+		return
+
+	if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
+		boutput(usr, SPAN_ALERT("You already claimed this!"))
+		return
+
+	var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
+	src.verbs += /client/verb/claimreward
+	if(confirm == "Yes")
+		var/worked = S.rewardActivate(src.mob)
+		if (worked)
+			boutput(usr, SPAN_ALERT("Successfully claimed \"[S.title]\"."))
+			if(S.once_per_round)
+				src.player.claimed_rewards.Add(S.type)
+		else
+			boutput(usr, SPAN_ALERT("Redemption of \"[S.title]\" failed."))
