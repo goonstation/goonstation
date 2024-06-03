@@ -249,7 +249,7 @@
 /area/shuttle/arrival/station)
 "le" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 999
+	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -688,7 +688,7 @@
 	tag = ""
 	},
 /obj/machinery/manufacturer/mechanic{
-	free_resource_amt = 999
+	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
