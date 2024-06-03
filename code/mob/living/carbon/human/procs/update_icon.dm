@@ -701,7 +701,7 @@
 				var/l_item_arm = !(!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
 				if (!r_item_arm && !l_item_arm)
 					var/obj/item/I = src.l_hand
-					I.update_inhand("LR")
+					I.update_inhand("LR", hand_offset)
 					i_r_hand = null
 					i_l_hand = I.inhand_image
 
@@ -709,14 +709,14 @@
 			if (src.limbs.r_arm && src.r_hand)
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item) && isitem(src.r_hand))
 					var/obj/item/I = src.r_hand
-					I.update_inhand("R")
+					I.update_inhand("R", hand_offset)
 					i_r_hand = I.inhand_image
 
 
 			if (src.limbs.l_arm && src.l_hand)
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
 					var/obj/item/I = src.l_hand
-					I.update_inhand("L")
+					I.update_inhand("L", hand_offset)
 					i_l_hand = I.inhand_image
 
 

@@ -1738,7 +1738,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/can_arm_attach()
 	return ..() && !(src.cant_drop || src.two_handed)
 
-/obj/item/update_inhand(hand) // L, R or LR
+/obj/item/proc/update_inhand(hand, hand_offset) // L, R or LR
 	if (!src.inhand_image)
 		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
 
