@@ -15,7 +15,6 @@
 	var/patreon_prob = 9
 	var/rare_prob = 12
 	var/datum/figure_info/info = null
-	var/list/donator_ckeys
 
 	// grumble grumble
 	patreon
@@ -38,16 +37,15 @@
 			var/donator_fig_ckey = null
 			var/list/online_donator_ckeys_nouser = online_donator_ckeys.Copy()
 
-			if (potential_donator_ckey && length(online_donator_ckeys)) // check if the player has a figurine (therefore a donator)
-				for (var/ckey in online_donator_ckeys)
-					if (potential_donator_ckey == ckey)
-						donator_fig_ckey = ckey
-						online_donator_ckeys_nouser -= ckey
-						src.patreon_prob *= 2	// x2 chance of getting patreon figure
-						break
+			if (online_donator_ckeys.Find(potential_donator_ckey))//(potential_donator_ckey && length(online_donator_ckeys)) // check if the player has a figurine (therefore a donator)
+				//for (var/ckey in online_donator_ckeys)
+					//if (potential_donator_ckey == ckey)
+				donator_fig_ckey = potential_donator_ckey
+				online_donator_ckeys_nouser -= donator_fig_ckey
+				src.patreon_prob *= 2	// x2 chance of getting patreon figure
 
 			if (prob(src.patreon_prob))
-				var/fig_ckey
+				var/fig_ckey = null
 				switch (rand(1,100))
 					if (1 to 20)
 						fig_ckey = donator_fig_ckey
@@ -70,7 +68,7 @@
 				randomInfo = pick(figure_low_rarity)
 
 			src.info = new randomInfo(src)
-		src.name = "[src.info.name] figure"
+ 		src.name = "[src.info.name] figure"
 		src.icon_state = "fig-[src.info.icon_state]"
 		if (src.info.rare_varieties.len && prob(5))
 			src.icon_state = "fig-[pick(src.info.rare_varieties)]"
