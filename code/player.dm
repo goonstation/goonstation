@@ -324,7 +324,14 @@
 	proc/has_medal_blocking(medal_name)
 		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
 			return
-		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		. = world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		if (isnull(.))
+			return //could not contact hub
+		else if (.)
+			LAZYLISTINIT(medal_cache)
+			medal_cache[medal_name] = ""
+		else
+			LAZYLISTREMOVE(medal_cache, medal_name)
 
 	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/get_all_medals()
