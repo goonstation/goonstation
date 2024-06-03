@@ -253,7 +253,8 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 			deplRate = deplRate * mult
 			if (addiction_prob)
-				src.handle_addiction(M, deplRate)
+				var/addProb = addiction_prob
+				src.handle_addiction(M, deplRate, addProb)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
@@ -303,13 +304,12 @@ datum
 
 
 
-		proc/handle_addiction(var/mob/M, var/rate)
+		proc/handle_addiction(var/mob/M, var/rate, var/addProb)
 			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
 				//DEBUG_MESSAGE("already have [AD.name]")
 				return AD
-			var/addProb = addiction_prob
 			//DEBUG_MESSAGE("addProb [addProb]")
 			if (isliving(M))
 				var/mob/living/H = M
@@ -321,9 +321,6 @@ datum
 					addProb *= 2
 					rate *= 2
 					//DEBUG_MESSAGE("addictive_personality: addProb [addProb], rate [rate]")
-				if (src.id == "ethanol" && isalcoholresistant(H))
-					addProb /= 4
-					rate /= 4
 			if (!holder.addiction_tally)
 				holder.addiction_tally = list()
 			//DEBUG_MESSAGE("holder.addiction_tally\[src.id\] = [holder.addiction_tally[src.id]]")
