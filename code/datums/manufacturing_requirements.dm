@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 
 /datum/manufacturing_requirement/match_flags/wood
 	name = "Wood"
-	id = "wood"
+	id = "wood_flag"
 	material_flags = MATERIAL_WOOD
 
 /datum/manufacturing_requirement/match_flags/rubber
