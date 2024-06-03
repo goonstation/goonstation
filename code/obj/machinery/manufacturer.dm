@@ -1616,26 +1616,26 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_reserved = list()
 
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			mats_used[R] = src.get_material_for_requirement(R, M.item_requirements[R], mats_reserved)
+			var/piece_ref = src.get_material_for_requirement(R, M.item_requirements[R], mats_reserved)
+			if (!isnull(piece_ref))
+				mats_used[R] = piece_ref
 
 		return mats_used
 
 	/// Get the material in storage which satisfies some amount of a requirement.
 	proc/get_material_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
 		var/list/C = src.get_contents()
-		var/list/materials_used = list()
 		for (var/obj/item/material_piece/P as anything in C)
 			if (!R.is_match(P.material))
 				continue
 			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
 			var/P_ref = "\ref[P]"
-			var/amount_free = P.amount - mats_reserved[P_ref]
+			var/amount_free = round(P.amount, 5) - mats_reserved[P_ref]
 			var/amount_to_use = min(amount_free, required_amount / 10)
-			if (amount_to_use < required_amount)
+			if ((amount_to_use * 10) < required_amount)
 				continue
 			mats_reserved[P_ref] ||= 0
 			mats_reserved[P_ref] += amount_to_use
-			materials_used[R] = P_ref
 			return P_ref
 
 	/// Check if a blueprint can be manufactured with the current materials.
@@ -1648,7 +1648,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/piece_ref = mats_used[R]
 			var/amount_to_remove = M.item_requirements[R]
-			src.change_contents(-amount_to_remove, mat_piece = locate(piece_ref))
+			src.change_contents(-amount_to_remove/10, mat_piece = locate(piece_ref))
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1957,7 +1957,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// Match by material piece or id
 			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
-				// fuck floating point, lets pretend we only use tenths
 				P.change_stack_amount(amount)
 				// Handle inserting pieces into the machine
 				if (user)
