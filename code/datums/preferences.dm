@@ -640,7 +640,7 @@ var/list/removed_jobs = list(
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
 				var/mob/living/carbon/human/H = src.preview.preview_thing
-				if (isroach(H) || traitPreferences.traits_selected.Find("poshfence"))
+				if (traitPreferences.traits_selected.Find("poshfence"))
 					new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
 					if(new_tone)
 						AH.s_tone = new_tone
@@ -961,7 +961,7 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("unselect-trait")
-				if (params["id"] == ("roach") || params["id"] == ("poshfence")) //This prevents an exploit where people can get odd-colored skin for free
+				if (params["id"] == ("poshfence")) //This prevents an exploit where people can get odd-colored skin for free
 					var/stone = rand(34,-184)
 					if (stone < -30)
 						stone = rand(34,-184)
@@ -975,7 +975,7 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("reset-traits")
-				if (traitPreferences.traits_selected.Find("roach") || traitPreferences.traits_selected.Find("poshfence")) //Same exploit here
+				if (traitPreferences.traits_selected.Find("poshfence")) //Same exploit here
 					var/stone = rand(34,-184)
 					if (stone < -30)
 						stone = rand(34,-184)
