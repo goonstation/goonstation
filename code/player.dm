@@ -315,6 +315,9 @@
 	proc/has_medal(medal_name)
 		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
 			return
+		if (!length(medal_cache))
+			// temp debug logging to be safe
+			logTheThing(LOG_DEBUG, src.ckey, "has_medal check attempted on empty medal_cache. Potential race condition, or player just has no medals")
 		return !isnull(medal_cache?[medal_name])
 
 	/// Only use this in a SPAWN or other background proc to prevent server from locking up. Potentially blocking version of has_medal, polls hub to ensure latest data.
