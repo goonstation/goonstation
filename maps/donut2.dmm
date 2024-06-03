@@ -7705,15 +7705,6 @@
 	},
 /area/station/hallway/primary/east)
 "aOg" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "detective";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Detective'"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -7724,10 +7715,17 @@
 	pixel_y = 18;
 	tag = ""
 	},
+/obj/machinery/computer/secure_data/detective_computer,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aOh" = (
 /obj/machinery/computer/security/wooden_tv,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aOi" = (
@@ -7737,6 +7735,10 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -7884,11 +7886,11 @@
 /obj/table/wood/auto{
 	dir = 9
 	},
-/obj/item/hand_labeler,
-/obj/item/device/audio_log{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/cable{
+	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -7990,11 +7992,21 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aPD" = (
+/obj/item/cigpacket/propuffs{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray"
+	},
 /obj/table/wood/auto{
 	dir = 6
 	},
-/obj/item/clothing/glasses/thermal,
-/obj/item/cigpacket,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -8084,6 +8096,9 @@
 "aQa" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -8261,17 +8276,26 @@
 /obj/table/wood/auto{
 	dir = 9
 	},
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/item/device/audio_log{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aQR" = (
 /obj/table/wood/auto{
 	dir = 5
 	},
-/obj/item/storage/secure/sbriefcase,
-/obj/item/spraybottle/detective,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/device/camera_viewer,
+/obj/item/storage/secure/sbriefcase,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aQT" = (
@@ -24702,9 +24726,18 @@
 /obj/item/device/radio/intercom/detnet/security{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
+/obj/storage/cart/forensic,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/device/detective_scanner,
+/obj/item/hand_labeler,
+/obj/item/clothing/gloves/latex,
+/obj/item/body_bag,
+/obj/item/body_bag,
+/obj/item/clothing/mask/surgical,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hjn" = (
@@ -25351,11 +25384,11 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "hHK" = (
-/obj/landmark/start/job/detective,
 /obj/stool/chair/comfy/red{
 	dir = 8
 	},
 /obj/landmark/gps_waypoint,
+/obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -26280,6 +26313,15 @@
 /obj/item/device/radio/intercom/detnet/detective{
 	dir = 8
 	},
+/obj/disposalpipe/trunk/mail{
+	dir = 1
+	},
+/obj/machinery/disposal/mail/small{
+	dir = 8;
+	mail_tag = "detective";
+	mailgroup = "security";
+	name = "mail chute-'Detective'"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "inn" = (
@@ -26403,11 +26445,8 @@
 /area/station/maintenance/inner/central)
 "isv" = (
 /obj/table/wood/auto,
-/obj/item/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
+/obj/item/pen,
+/obj/item/paper_bin,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -30135,21 +30174,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"kPL" = (
-/obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	desc = "One of my best friends. He's seen me through a lot of trouble. I need him just as much as I need my hat and coat.";
-	name = "Ol' Scotch"
-	},
-/obj/shrub{
-	dir = 8;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "kPQ" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grime,
@@ -30589,6 +30613,7 @@
 /obj/item/device/radio/intercom/brig{
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lcp" = (
@@ -33938,8 +33963,11 @@
 /obj/table/wood/auto{
 	dir = 10
 	},
-/obj/decal/cleanable/desk_clutter,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/machinery/light/lamp/green,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -34270,9 +34298,17 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "nns" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/shrub{
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "One of my best friends. He's seen me through a lot of trouble. I need him just as much as I need my hat and coat.";
+	name = "Ol' Scotch"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -92671,7 +92707,7 @@ aGO
 dab
 vKc
 wkZ
-kPL
+cqb
 aOP
 aQi
 aPY
