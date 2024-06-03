@@ -1610,9 +1610,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return null
 
 	/// Returns associative list of manufacturing requirement to material piece references, but does not guarantee all item_paths are satisfied or that
-	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Reqs not satisfied are not added to mats_used
 	proc/get_materials_needed(datum/manufacture/M)
-		var/list/list/mats_used = list()
+		var/list/mats_used = list()
 		var/list/mats_reserved = list()
 
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
@@ -1640,27 +1640,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
-		var/list/mats_used = get_materials_needed(M)
-		for (var/datum/manufacturing_requirement/R in mats_used)
-			var/amount_needed = M.item_requirements[R] / 10
-			var/amount_used = 0
-			for (var/material_piece_ref in mats_used[R])
-				amount_used += mats_used[R][material_piece_ref]
-
-			if (amount_used < amount_needed)
-				var/obj/item/material_piece/blame_material_piece = locate(mats_used[R][1])
-				blame_material_piece.UpdateStackAppearance()
-				src.grump_message(message = "ERROR: Could not get enough [R.name] for [M.name]. Manufacturer has insufficient [blame_material_piece]\s for production.", sound = TRUE)
-				return FALSE
-			else if (amount_used > amount_needed)
-				// This scenario needs to be reported because get_materials_needed should **NEVER** reserve more materials for a blueprint than it needs.
-				var/error_msg = "get_materials_for_requirement somehow reserved more materials than necessary for [M] using [src.get_contents()]"
-				logTheThing(LOG_DEBUG, src, error_msg)
-				#ifdef CHECK_MORE_RUNTIMES
-				CRASH(error_msg)
-				#endif
-
-		return TRUE
+		return length(get_materials_needed(M)) == length(M.item_requirements)
 
 	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
