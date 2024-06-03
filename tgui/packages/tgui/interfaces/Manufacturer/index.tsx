@@ -295,7 +295,7 @@ export const Manufacturer = (_, context) => {
                       </Button>
                     </Stack.Item>
                   </Stack>
-                  {data.queue && data.queue.length > 0 && (
+                  {(data.queue && data.queue.length > 0) && (
                     <Stack.Item>
                       <ProgressBar
                         value={clamp(data.progress_pct, 0, 1)}
@@ -305,17 +305,17 @@ export const Manufacturer = (_, context) => {
                       />
                     </Stack.Item>
                   )}
-                  {queueBlueprintRefs && queueBlueprintRefs.length
-                  && queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
-                    <ProductionCard
-                      key={index}
-                      index={index}
-                      actionQueueRemove={actionQueueRemove}
-                      mode={data.mode}
-                      img={queued.img}
-                      name={queued.name}
-                    />
-                  ))}
+                  {(queueBlueprintRefs && queueBlueprintRefs.length) ? (
+                    queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
+                      <ProductionCard
+                        key={index}
+                        index={index}
+                        actionQueueRemove={actionQueueRemove}
+                        mode={data.mode}
+                        img={queued.img}
+                        name={queued.name}
+                      />
+                    ))) : null}
                 </Stack>
               </Stack.Item>
             </Stack>
