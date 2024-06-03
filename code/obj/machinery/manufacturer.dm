@@ -48,16 +48,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// A somewhat legacy variable to output silent yet visible errors to the user in the UI.
 	/// Current uses include when there is a lack of materials, an invalid blueprint, and when there is not enough manudrive uses.
 	var/error = null
-	var/active_power_consumption = 0 //! How much power is consumed while active. This is determined automatically when the unit starts a production cycle
-	var/panel_open = FALSE //! Whether or not the panel is open to expose the wires inside. Toggled when a screwdriver is used on the manufacturer.
-	var/dismantle_stage = DISMANTLE_NONE //! The stage of dismantlement this machine is currently at. 0 is functional, 3 is pretty much entirely disassembled.
-	var/hacked = FALSE //! Whether or not the AI control wire was pulsed, unlocks speed settings up to MAX_SPEED_HACKED and unlocks blueprints in the hidden() category
-	var/malfunction = FALSE //! Whether or not the malf wire was pulsed/cut, causes manufacturing jobs among other things to occasionally call flip_out(). can change speed up to MAX_SPEED_DAMAGED
 	// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
 	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
 	var/time_left_electrified = 0
-	var/output_target = null //! A turf or object which the manufacturer will attempt to output items into.
-	var/list/turf/nearby_turfs = list() //! A list populated in New() which stores turfs which are nearby this manufacturer.
 	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
 	var/panel_open = FALSE //! Whether or not the wiring panel is open for the UI.
 	var/dismantle_stage = DISMANTLE_NONE //! The dismantlement stage we are currently at. See manufacturer.dm line 15 for details on the defines
