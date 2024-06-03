@@ -221,7 +221,7 @@ export const Manufacturer = (_, context) => {
                   title="Rockbox™ Containers"
                   textAlign="center"
                 >
-                  {data.rockboxes && data.rockboxes.length && data.rockboxes.map((rockbox: RockboxData) => (
+                  {data.rockboxes?.map((rockbox: RockboxData) => (
                     <Box
                       key={rockbox.byondRef}
                     >
@@ -235,7 +235,7 @@ export const Manufacturer = (_, context) => {
                       </Box>
 
                       <LabeledList>
-                        {(rockbox.ores && rockbox.ores.length) ? (rockbox.ores.map((ore: OreData) => (
+                        {(rockbox?.ores?.length) ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
                             key={ore.name}
                             label={ore.name}
@@ -293,7 +293,7 @@ export const Manufacturer = (_, context) => {
                       </Button>
                     </Stack.Item>
                   </Stack>
-                  {(data.queue && data.queue.length > 0) && (
+                  {(data?.queue?.length > 0) && (
                     <Stack.Item>
                       <ProgressBar
                         value={clamp(data.progress_pct, 0, 1)}
