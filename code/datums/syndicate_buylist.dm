@@ -280,8 +280,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/bighat
 	name = "Syndicate Hat"
 	item = /obj/item/clothing/head/bighat/syndicate
-	cost = 12
-	desc = "Think you're tough shit buddy?"
+	cost = 11
+	desc = "Think you're tough shit buddy? Now priced to accommodate an equally evil mustache!"
 	not_in_crates = TRUE //see /datum/syndicate_buylist/surplus/bighat
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY
