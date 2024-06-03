@@ -1301,7 +1301,7 @@ proc/outermost_movable(atom/movable/target)
 
 	//Loop through all possible choices
 	for(var/i in 1 to length(choices))
-		if(i > length(weights.len))
+		if(i > length(weights))
 			return null
 
 		running_total += weights[i]

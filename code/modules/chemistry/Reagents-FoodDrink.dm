@@ -4319,6 +4319,7 @@ datum
 			fluid_b = 220
 			transparency = 160
 			addiction_prob = 100
+			addiction_min = 0
 			overdose = 35
 			taste = "bone-rattling"
 
