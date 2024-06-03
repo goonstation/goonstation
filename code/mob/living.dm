@@ -48,7 +48,8 @@
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/skin_process = list() //digesting patches
+	/// all applied patches (ex. medical patches)
+	var/list/applied_patches = list()
 
 	var/sound_burp = 'sound/voice/burp.ogg'
 	var/sound_scream = 'sound/voice/screams/robot_scream.ogg' // for silicon mobs
@@ -102,6 +103,9 @@
 	var/bleeding_internal = 0
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
+
+	/// completely immune to catching and spreading disease/medical-like ailments
+	var/ailment_immune = FALSE
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
@@ -172,9 +176,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in skin_process)
+	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)
-	skin_process = null
+	src.applied_patches = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
@@ -1862,31 +1866,35 @@
 	var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_SPRINT)
 	if (stop_here)
 		return
-	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
-		return
 	if (src.client && src.special_sprint?.can_sprint(src))
 		src.special_sprint.do_sprint(src)
+		src.do_sprint_boost()
+		return
 	if (src.special_sprint?.overrides_sprint)
 		return
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
+		return
 	else if (src.use_stamina)
-		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
-				//if (src.hasStatus("blocking"))
-				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
-				//		qdel(G)
+		src.do_sprint_boost()
+		return
 
-				var/last = src.loc
-				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+/mob/living/proc/do_sprint_boost()
+	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && world.time >= src.next_sprint_boost)
+		if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 
-				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-				src.next_move = world.time
-				attempt_move(src)
-				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+			var/last = src.loc
+			var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
 
-				if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
-					sprint_particle(src, last)
-					if (!isFlying)
-						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
+			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+			src.next_move = world.time
+			attempt_move(src)
+
+			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
+				sprint_particle(src, last)
+				if (!isFlying)
+					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()

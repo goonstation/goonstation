@@ -2,8 +2,9 @@ var/datum/telescope_manager/tele_man
 var/list/special_places = list("Luna", "Observatory") //list of location names, which are coincidentally also landmark ids
 
 TYPEINFO(/obj/machinery/lrteleporter)
-	mats = list("telecrystal"=10, "MET-1"=10, "CON-1"=10)
-
+	mats = list("telecrystal" = 10,
+				"metal" = 10,
+				"conductive" = 10)
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."

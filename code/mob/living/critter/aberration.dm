@@ -29,6 +29,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	use_stamina = FALSE
+	ailment_immune = TRUE
 
 	grabresistmessage = "but their hands pass right through!"
 	death_text = "%src% dissipates!"
@@ -40,9 +41,7 @@
 		remove_lifeprocess(/datum/lifeprocess/chems)
 		remove_lifeprocess(/datum/lifeprocess/mutations)
 		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/skin)
 		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 

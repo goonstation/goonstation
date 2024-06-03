@@ -1,5 +1,5 @@
 /obj/machinery/computer/ordercomp
-	name = "Supply Request Console"
+	name = "supply request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMreq"
 	var/temp = null

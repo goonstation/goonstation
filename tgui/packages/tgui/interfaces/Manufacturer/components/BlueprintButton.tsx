@@ -6,7 +6,7 @@
  */
 
 import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
-import { ManufacturableData, ResourceData } from '../type';
+import { ManufacturableData, RequirementData, ResourceData } from '../type';
 import { round } from 'common/math';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
@@ -38,8 +38,7 @@ Only the DM checks matter for actually making the item though, this just enables
 shows what materials are missing.
 */
 const getProductionSatisfaction = (
-  pattern_requirements:string[],
-  amount_requirements:number[],
+  requirement_data:RequirementData[],
   materials_stored:ResourceData[]) =>
 {
   // Copy values of mats stored to edit in case we need to try the same material twice
@@ -48,9 +47,9 @@ const getProductionSatisfaction = (
     material_amts_predicted[value.byondRef] = value.amount
   ));
   let patterns_satisfied:boolean[] = [];
-  for (let i in pattern_requirements) {
-    const target_pattern = pattern_requirements[i];
-    const target_amount = amount_requirements[i];
+  for (let i in requirement_data) {
+    const target_pattern = requirement_data[i].id;
+    const target_amount = requirement_data[i].amount;
     const matchingMaterial = materials_stored.find((material:ResourceData) => (
       (material.amount >= target_amount/10) && (target_pattern === "ALL" || material.satisfies?.includes(target_pattern) || material.id === target_pattern)
     ));
@@ -77,8 +76,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     hasPower,
   } = props;
   const blueprintSatisfaction = getProductionSatisfaction(
-    blueprintData.item_paths,
-    blueprintData.item_amounts,
+    blueprintData.requirement_data,
     materialData,
   );
   // Condense producability
@@ -103,14 +101,14 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
       buttons={<Button icon="hourglass" backgroundColor="rgba(0,0,0,0)">{getBlueprintTime(blueprintData.time, manufacturerSpeed)}s</Button>}
     >
       <LabeledList>
-        {blueprintData.material_names.map((value:string, index:number) => (
+        {Object.keys(blueprintData.requirement_data).map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
             labelColor={(blueprintSatisfaction[index]) ? undefined : "bad"}
-            label={value}
+            label={blueprintData.requirement_data[value].name}
             textAlign="right"
           >
-            {blueprintData.item_amounts[index]/10}
+            {blueprintData.requirement_data[value].amount/10}
           </LabeledList.Item>
         ))}
       </LabeledList>
