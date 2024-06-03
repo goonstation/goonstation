@@ -89,5 +89,4 @@
 	)
 
 /obj/machinery/manufacturer/blob/filled
-	free_resource_amt = 10
-	free_resources = list(/obj/item/material_piece/wad/blob)
+	free_resources = list(/obj/item/material_piece/wad/blob = 10)

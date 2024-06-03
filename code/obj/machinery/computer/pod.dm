@@ -1,5 +1,5 @@
 /obj/machinery/computer/pod
-	name = "Pod Launch Control"
+	name = "pod launch control"
 	icon_state = "computer_generic"
 	circuit_type = /obj/item/circuitboard/pod
 	id = 1
@@ -14,16 +14,16 @@
 
 /obj/machinery/computer/pod/old
 	icon_state = "old"
-	name = "DoorMex Control Computer"
+	name = "\improper DoorMex control computer"
 	circuit_type = /obj/item/circuitboard/olddoor
 
 /obj/machinery/computer/pod/old/syndicate
-	name = "ProComp Executive IIc"
+	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	circuit_type = /obj/item/circuitboard/syndicatedoor
 
 /obj/machinery/computer/pod/old/swf
-	name = "Magix System IV"
+	name = "\improper Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
 	icon_state = "wizard"
 	circuit_type = /obj/item/circuitboard/swfdoor
