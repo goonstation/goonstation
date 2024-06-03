@@ -72,8 +72,7 @@
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
 		src.last_death_time = world.timeofday
-		SPAWN(0)
-			cache_medals()
+		cache_medals()
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -309,6 +308,7 @@
 
 	/// caches all of a players medals locally for future has_medal checks
 	proc/cache_medals()
+		set waitfor = FALSE
 		medal_cache = get_all_medals()
 
 	/// Checks if this player has a medal in their medal cache
