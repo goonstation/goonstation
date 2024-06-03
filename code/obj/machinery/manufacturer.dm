@@ -713,64 +713,68 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (!OCD.amount || OCD.amount <= 0)
 			src.grump_message(usr, "ERROR: That just ran out, hold your horses!", sound = TRUE)
 		var/taxes = ORE_TAX(OCD.price) //transaction taxes for the station budget
+
 		if(storage?.is_disabled())
 			return
 
 		if(!src.account)
-			src.grump_message(usr, "ERROR: No bank record detected. Please scan your ID.", sound = TRUE)
+			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
 			return
 		else
 			src.output_message_user = null
 		if (src.get_bank_data()["name"] in FrozenAccounts)
 			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows.", sound = TRUE)
 			return
-		var/quantity = tgui_input_number(usr, "How many units do you want to purchase?", "Ore Purchase", default=1, max_value=OCD.amount, min_value=0)
-		if(!isnum_safe(quantity))
-			return
-		////////////
+		if (src.account)
+			var/quantity = tgui_input_number(usr, "How many units do you want to purchase?", "Ore Purchase", default=1, max_value=OCD.amount, min_value=0)
+			if(!isnum_safe(quantity))
+				return
+			////////////
 
-		if(OCD.amount >= quantity && quantity > 0)
-			var/subtotal = round(price * quantity)
-			var/sum_taxes = round(taxes * quantity)
-			var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
-			var/total = subtotal + sum_taxes + rockbox_fees
-			if(account["current_money"] >= total)
-				account["current_money"] -= total
-				storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
+			if(OCD.amount >= quantity && quantity > 0)
+				var/subtotal = round(price * quantity)
+				var/sum_taxes = round(taxes * quantity)
+				var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
+				var/total = subtotal + sum_taxes + rockbox_fees
+				if(account["current_money"] >= total)
+					account["current_money"] -= total
+					storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
 
-					// This next bit is stolen from PTL Code
-				var/list/accounts = \
-					data_core.bank.find_records("job", "Chief Engineer") + \
-					data_core.bank.find_records("job", "Miner")
+						// This next bit is stolen from PTL Code
+					var/list/accounts = \
+						data_core.bank.find_records("job", "Chief Engineer") + \
+						data_core.bank.find_records("job", "Miner")
 
 
-				var/datum/signal/minerSignal = get_free_signal()
-				minerSignal.source = src
-				//any non-divisible amounts go to the shipping budget
-				var/leftovers = 0
-				if(length(accounts))
-					leftovers = subtotal % length(accounts)
-					var/divisible_amount = subtotal - leftovers
-					if(divisible_amount)
-						var/amount_per_account = divisible_amount/length(accounts)
-						for(var/datum/db_record/t as anything in accounts)
-							t["current_money"] += amount_per_account
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+					var/datum/signal/minerSignal = get_free_signal()
+					minerSignal.source = src
+					//any non-divisible amounts go to the shipping budget
+					var/leftovers = 0
+					if(length(accounts))
+						leftovers = subtotal % length(accounts)
+						var/divisible_amount = subtotal - leftovers
+						if(divisible_amount)
+							var/amount_per_account = divisible_amount/length(accounts)
+							for(var/datum/db_record/t as anything in accounts)
+								t["current_money"] += amount_per_account
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+					else
+						leftovers = subtotal
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+					wagesystem.shipping_budget += (leftovers + sum_taxes)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
+					src.should_update_static = TRUE
+
+					//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
 				else
-					leftovers = subtotal
-					minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
-				wagesystem.shipping_budget += (leftovers + sum_taxes)
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
-				src.should_update_static = TRUE
-
-				//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
+					src.grump_message(usr, "ERROR: You don't have enough dosh, bucko.", sound = TRUE)
 			else
-				src.grump_message(usr, "ERROR: You don't have enough dosh, bucko.", sound = TRUE)
+				if(quantity > 0)
+					src.grump_message(usr, "ERROR: I don't have that many for sale, champ.", sound = TRUE)
+				else
+					src.grump_message(usr, "Enter some actual valid number, you doofus!", sound = TRUE)
 		else
-			if(quantity > 0)
-				src.grump_message(usr, "ERROR: I don't have that many for sale, champ.", sound = TRUE)
-			else
-				src.grump_message(usr, "Enter some actual valid number, you doofus!", sound = TRUE)
+			src.grump_message(usr, "That card doesn't have an account anymore, you might wanna get that checked out.", sound = TRUE)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
