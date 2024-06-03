@@ -247,3 +247,9 @@ var/global/deathConfettiActive = 0
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
 	ircbot.export_async("admin", ircmsg)
+
+/proc/goonhub_href(path, in_byond = FALSE)
+	var/url = "[config.goonhub_url][path]"
+	if (in_byond)
+		return "byond://winset?command=.openlink \"[url_encode(url)]\""
+	return url

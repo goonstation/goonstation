@@ -451,24 +451,24 @@
 
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								if (src.active_secure["criminal"] != "*Arrest*")
+								if (src.active_secure["criminal"] != ARREST_STATE_ARREST)
 									src.report_status(src.active_general["name"], "*Arrest*")
-								src.active_secure["criminal"] = "*Arrest*"
+								src.active_secure["criminal"] = ARREST_STATE_ARREST
 							if (2)
-								if (src.active_secure["criminal"] != "*Detain*")
+								if (src.active_secure["criminal"] != ARREST_STATE_DETAIN)
 									src.report_status(src.active_general["name"], "*Detain*")
-								src.active_secure["criminal"] = "*Detain*"
+								src.active_secure["criminal"] = ARREST_STATE_DETAIN
 							if (3)
-								src.active_secure["criminal"] = "None"
+								src.active_secure["criminal"] = ARREST_STATE_NONE
 								src.active_secure["sec_flag"] = "None"
 							if (4)
-								src.active_secure["criminal"] = "Suspect"
+								src.active_secure["criminal"] = ARREST_STATE_SUSPECT
 							if (5)
-								src.active_secure["criminal"] = "Incarcerated"
+								src.active_secure["criminal"] = ARREST_STATE_INCARCERATED
 							if (6)
-								src.active_secure["criminal"] = "Parolled"
+								src.active_secure["criminal"] = ARREST_STATE_PAROLE
 							if (7)
-								src.active_secure["criminal"] = "Released"
+								src.active_secure["criminal"] = ARREST_STATE_RELEASED
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return

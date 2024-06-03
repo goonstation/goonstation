@@ -259,7 +259,7 @@ const FilterFlagsEntry = (props, context) => {
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
   return (
-    map((bitField, flagName) => (
+    map(flags, (bitField, flagName) => (
       <Button.Checkbox
         checked={value & bitField}
         content={flagName}
@@ -269,7 +269,7 @@ const FilterFlagsEntry = (props, context) => {
             [name]: value ^ bitField,
           },
         })} />
-    ))(flags)
+    ))
   );
 };
 
@@ -280,7 +280,7 @@ const FilterSpaceEntry = (props, context) => {
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['space'];
   return (
-    map((spaceField, flagName) => (
+    map(flags, (spaceField, flagName) => (
       <Button.Checkbox
         checked={value === spaceField}
         content={flagName}
@@ -290,7 +290,7 @@ const FilterSpaceEntry = (props, context) => {
             [name]: spaceField,
           },
         })} />
-    ))(flags)
+    ))
   );
 };
 
@@ -301,7 +301,7 @@ const FilterBlendmodeEntry = (props, context) => {
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['blend_mode'];
   return (
-    map((flagField, flagName) => (
+    map(flags, (flagField, flagName) => (
       <Button.Checkbox
         checked={value === flagField}
         content={flagName}
@@ -311,7 +311,7 @@ const FilterBlendmodeEntry = (props, context) => {
             [name]: flagField,
           },
         })} />
-    ))(flags)
+    ))
   );
 };
 
@@ -475,9 +475,9 @@ export const Filteriffic = (props, context) => {
               No filters
             </Box>
           ) : (
-            map((entry, key) => (
+            map(filters, (entry, key) => (
               <FilterEntry filterDataEntry={entry} name={key} key={key} />
-            ))(filters)
+            ))
           )}
         </Section>
       </Window.Content>
