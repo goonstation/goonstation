@@ -732,7 +732,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			////////////
 
 			if(OCD.amount >= quantity && quantity > 0)
-				var/subtotal = round(price * quantity)
+				var/subtotal = round(OCD.price * quantity)
 				var/sum_taxes = round(taxes * quantity)
 				var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
 				var/total = subtotal + sum_taxes + rockbox_fees

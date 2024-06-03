@@ -21,7 +21,7 @@ export const CardInfo = (props:CardInfoProps) => {
     actionCardLogout,
     banking_info,
   } = props;
-  return (banking_info?.name === null || banking_info?.current_money === null) ? (
+  return (banking_info === null) ? (
     <Section
       textAlign="center"
     >
@@ -43,12 +43,12 @@ export const CardInfo = (props:CardInfoProps) => {
         <LabeledList.Item
           label="Owner"
         >
-          {banking_info.name}
+          {banking_info?.name}
         </LabeledList.Item>
         <LabeledList.Item
           label="Balance"
         >
-          {formatMoney(banking_info.current_money)}⪽
+          {formatMoney(banking_info?.current_money)}⪽
         </LabeledList.Item>
       </LabeledList>
     </Section>
