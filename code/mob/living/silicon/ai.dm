@@ -256,8 +256,10 @@ or don't if it uses a custom topopen overlay
 			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
 		if(3)
 			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
+			if(isdead(src))
+				. += " You can use an <b>empty hand</b> to reboot the AI."
 		if(4)
-			. = "You can insert a <b>brain</b>, followed by an <b>empty hand</b> to reboot the AI."
+			. = "You can insert a <b>brain</b> to activate the AI."
 	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
 
 /mob/living/silicon/ai/disposing()
