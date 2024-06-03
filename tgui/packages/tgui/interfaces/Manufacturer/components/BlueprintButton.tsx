@@ -53,20 +53,15 @@ const getProductionSatisfaction = (
   for (let i in requirement_data) {
     const target_pattern = requirement_data[i].id;
     const target_amount = requirement_data[i].amount / 10;
-    const matchingMaterials = materials_stored.filter((material:ResourceData) => (
-      material.satisfies?.includes(target_pattern)
+    const matchingMaterial = materials_stored.find((material:ResourceData) => (
+      material.amount >= target_amount && material.satisfies?.includes(target_pattern)
     ));
-    let amt_removed = 0;
-    for (let matchingMaterialID in matchingMaterials) {
-      let matchingMaterial = matchingMaterials[matchingMaterialID];
-      let amt_to_remove = (target_amount > matchingMaterial.amount) ? matchingMaterial.amount : target_amount;
-      amt_removed += amt_to_remove;
-      if (amt_removed >= target_amount) {
-        break;
-      }
-      material_amts_predicted[i] -= amt_to_remove;
+    if (matchingMaterial === undefined) {
+      patterns_satisfied.push(false);
+      continue;
     }
-    patterns_satisfied.push(amt_removed >= target_amount);
+    material_amts_predicted[i] -= target_amount;
+    patterns_satisfied.push(true);
   }
   return patterns_satisfied;
 };
