@@ -259,7 +259,7 @@
 
 		// empty string to match format of what we cached from the hub...
 		LAZYLISTINIT(medal_cache)
-		medal_cache[medal_name] = ""
+		medal_cache[ckey(medal_name)] = medal_name
 
 		// Record this medal to the Goonhub API for further tracking
 		// This will (eventually) replace the byond medals entirely
@@ -294,7 +294,7 @@
 		var/success = world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
 
 		if (success)
-			LAZYLISTREMOVE(medal_cache, medal_name)
+			LAZYLISTREMOVE(medal_cache, ckey(medal_name))
 			try
 				var/datum/apiRoute/players/medals/delete/deleteMedal = new
 				deleteMedal.buildBody(src.id || null, src.ckey, medal_name)
@@ -309,16 +309,21 @@
 	/// caches all of a players medals locally for future has_medal checks
 	proc/cache_medals()
 		set waitfor = FALSE
-		medal_cache = get_all_medals()
+		var/list/medals = get_all_medals()
+		if (!length(medals)) return
+		for (var/idx in medals)
+			medal_cache[ckey(idx)] = idx
 
 	/// Checks if this player has a medal in their medal cache
 	proc/has_medal(medal_name)
 		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
 			return
 		if (!length(medal_cache))
-			// temp debug logging to be safe
-			logTheThing(LOG_DEBUG, src.ckey, "has_medal check attempted on empty medal_cache. Potential race condition, or player just has no medals")
-		return !isnull(medal_cache?[medal_name])
+			// debug logging to be safe
+			logTheThing(LOG_DEBUG, src.ckey, "<b>Medal Cache</b>: has_medal check attempted on empty medal_cache. Potential race condition, or player just has no medals")
+			logTheThing(LOG_DIARY, src.ckey, "Medal Cache: has_medal check attempted on empty medal_cache. Potential race condition, or player just has no medals", "debug")
+		if (medal_cache?[ckey(medal_name)])
+			return TRUE
 
 	/// Only use this in a SPAWN or other background proc to prevent server from locking up. Potentially blocking version of has_medal, polls hub to ensure latest data.
 	proc/has_medal_blocking(medal_name)
@@ -329,9 +334,9 @@
 			return //could not contact hub
 		else if (.)
 			LAZYLISTINIT(medal_cache)
-			medal_cache[medal_name] = ""
+			medal_cache[ckey(medal_name)] = medal_name
 		else
-			LAZYLISTREMOVE(medal_cache, medal_name)
+			LAZYLISTREMOVE(medal_cache, ckey(medal_name))
 
 	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/get_all_medals()
