@@ -53,6 +53,7 @@
 
 	var/mob/respawn_as_self_mob = null
 	var/skip_manifest = FALSE
+	var/slow_stat = FALSE
 
 	New(client/C)
 		..()
@@ -165,6 +166,7 @@
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Don't create manifest entries when respawning?: <a href='?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
 			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
@@ -308,6 +310,11 @@
 			saved_skip_manifest = FALSE
 		skip_manifest = saved_skip_manifest
 
+		var/saved_slow_stat = AP["slow_stat"]
+		if (isnull(saved_slow_stat))
+			saved_slow_stat = FALSE
+		slow_stat = saved_slow_stat
+
 		src.hidden_categories = list()
 		for(var/cat in toggleable_admin_verb_categories)
 			var/cat_hidden = AP["hidden_[cat]"]
@@ -365,6 +372,7 @@
 		AP["spawn_in_loc"] = spawn_in_loc
 		AP["show_topic_log"] = show_topic_log
 		AP["skip_manifest"] = skip_manifest
+		AP["slow_stat"] = slow_stat
 
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
