@@ -52,7 +52,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/net_id = null
 	var/device_tag = "PNET_MANUFACTURER"
 	var/obj/machinery/power/data_terminal/link = null
-	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
+	var/datum/db_record/account = null //! Used when deducting payment for ores from a Rockbox
 
 	// Printing and queues
 	var/original_duration = 0 //! duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
@@ -609,7 +609,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					var/obj/item/I = usr.equipped()
 					src.scan_card(I)
 				if (params["remove"])
-					src.scan = null
+					src.account = null
 				return TRUE
 
 			if ("speed")
@@ -1074,25 +1074,21 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
-		if (istype(ID))
-			boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(ID.registered)
-			if(account)
-				var/enterpin = usr.enter_pin("Card Reader")
-				if (enterpin == ID.pin)
-					boutput(usr, SPAN_NOTICE("Card authorized."))
-					src.scan = ID
-					return TRUE
-				else
-					boutput(usr, SPAN_ALERT("PIN incorrect."))
-					src.scan = null
-			else
-				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
-				src.scan = null
-		else
+		if (!istype(ID))
 			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
-		return FALSE
+			return
+		boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
+		var/datum/db_record/bank_account = FindBankAccountByName(ID.registered)
+		if(!bank_account)
+			boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
+			return
+		var/enterpin = usr.enter_pin("Card Reader")
+		if (enterpin != ID.pin)
+			boutput(usr, SPAN_ALERT("PIN incorrect."))
+			return
+		boutput(usr, SPAN_NOTICE("Card authorized."))
+		src.account = bank_account
+		return TRUE
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
