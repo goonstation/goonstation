@@ -1,5 +1,5 @@
 /obj/machinery/computer/card
-	name = "Identification Computer"
+	name = "identification computer"
 	icon_state = "id"
 	circuit_type = /obj/item/circuitboard/card
 	var/obj/item/card/id/scan = null

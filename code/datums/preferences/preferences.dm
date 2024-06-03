@@ -1453,7 +1453,7 @@ var/list/removed_jobs = list(
 
 		HTML += "<td valign='top' class='antagprefs'>"
 #ifdef LIVE_SERVER
-		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT || user?.client?.player.cloudSaves.getData("bypass_round_reqs"))
+		if ((user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT) && !user?.client?.player.cloudSaves.getData("bypass_round_reqs"))
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
 			src.be_syndicate_commander = FALSE

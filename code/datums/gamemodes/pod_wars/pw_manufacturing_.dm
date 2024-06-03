@@ -4,11 +4,10 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	var/team_num = 0			//NT = 1, SY = 2
-	free_resource_amt = 20
 	free_resources = list(
-		/obj/item/material_piece/mauxite,
-		/obj/item/material_piece/pharosium,
-		/obj/item/material_piece/molitz
+		/obj/item/material_piece/mauxite = 20,
+		/obj/item/material_piece/pharosium = 20,
+		/obj/item/material_piece/molitz = 20
 	)
 	available = list(
 		/datum/manufacture/pod/preassembeled_parts,
@@ -44,9 +43,9 @@
 
 	claim_free_resources(datum/game_mode/pod_wars/PW)
 		if (team_num == TEAM_NANOTRASEN)
-			src.resource_amounts = PW.team_NT.resources
+			src.free_resources = PW.team_NT.resources
 		else if (team_num == TEAM_SYNDICATE)
-			src.resource_amounts = PW.team_SY.resources
+			src.free_resources = PW.team_SY.resources
 		..()
 
 	attack_hand(var/mob/user)
@@ -323,9 +322,9 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 	claim_free_resources(datum/game_mode/pod_wars/PW)
 		if (team_num == TEAM_NANOTRASEN)
-			src.resource_amounts = PW.team_NT.resources
+			src.free_resources = PW.team_NT.resources
 		else if (team_num == TEAM_SYNDICATE)
-			src.resource_amounts = PW.team_SY.resources
+			src.free_resources = PW.team_SY.resources
 		..()
 
 /obj/machinery/manufacturer/mining/pod_wars/syndicate

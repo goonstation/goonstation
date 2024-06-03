@@ -121,7 +121,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		src.voteChosenMap = ""
 		src.playersVoting = 1
-		src.voteStartedAt = world.time
+		src.voteStartedAt = TIME
 		src.voteCurrentDuration = duration
 		src.voteIndex++
 

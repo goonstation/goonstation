@@ -1,7 +1,7 @@
 /////////////////////////////////////// General Announcement Computer
 
 /obj/machinery/computer/announcement
-	name = "Announcement Computer"
+	name = "announcement computer"
 	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement

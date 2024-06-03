@@ -923,6 +923,15 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	shirley_temple
+		name = "shirley temple"
+		id = "shirley_temple"
+		result = "shirley_temple"
+		required_reagents = list("juice_lime" = 1, "juice_lemon" = 1, "ginger_ale" = 1, "grenadine" = 1)
+		result_amount = 4
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	vermont_breeze
 		name = "vermont breeze"
 		id = "vermont_breeze"

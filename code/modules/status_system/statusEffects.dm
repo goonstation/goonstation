@@ -2796,3 +2796,105 @@
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/patches_applied
+	id = "patches_applied"
+	desc = "Patch(es) have been applied"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "applied_patches_application", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mob/living/L = src.owner
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		//patches become wasteful with >2 patches applied
+		//gives patches a way to heal quickly if you slap on a whole bunch, but at the cost of flinging chems into nothingness
+
+		// amount applied via touch
+		var/use_volume = 0.5 * mult
+		//amount that gets removed from the patch. Half of this gets transferred into the body
+		var/waste_volume = use_volume * max(length(L.applied_patches) * 0.75, 1)
+
+		for (var/atom/movable/A as anything in L.applied_patches)
+			if (A.reagents?.total_volume)
+				A.reagents.reaction(L, TOUCH, react_volume = use_volume, paramslist = \
+					(A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
+				A.reagents.trans_to(L, waste_volume / 2)
+				A.reagents.remove_any(waste_volume / 2)
+			else
+				qdel(A)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/active_ailments
+	id = "active_ailments"
+	desc = "Owner is currently afflicted with one or more ailments"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "active_ailments_tick", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		var/mob/living/L = src.owner
+
+		if (!isdead(L))
+			for (var/datum/ailment_data/ailment as anything in L.ailments)
+				ailment.stage_act(mult)
+
+		for (var/mob/living/other_mob in hearers(4, L))
+			if (prob(40) && other_mob != L)
+				L.viral_transmission(other_mob, "Airborne", 0)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/transparium
+	id = "transparium"
+	name = "Faded"
+	icon_state = "cloaked0"
+	unique = TRUE
+	var/alpha = 0
+	/// This is an unintentional interaction turned into a feature
+	/// Patches apply reagents very slowly, meaning that a transparium patch would constantly cause its user to flicker, spamming messages all the while
+	/// This variable is set whenever the duration is less than one second, and prevents message spam as well as not invoking some of the logic
+	var/flickering = FALSE
+
+	onAdd(optional)
+		..()
+		if (isnum(optional))
+			src.alpha = clamp(optional, 0, 255)
+			animate(src.owner, alpha = src.alpha, time = 2 SECONDS, flags = ANIMATION_PARALLEL, easing = BOUNCE_EASING)
+			if (src.duration < 1 SECOND)
+				if (!GET_COOLDOWN(src.owner, "[src.id]_flicker_message"))
+					boutput(src.owner, SPAN_ALERT("You're flickering [pick("crazily", "randomly", "wildly", "wackily", "out of control")]![pick(" Woah!", "")]"))
+				visible = FALSE
+				flickering = TRUE
+				// This should let the message start fresh for new patches/etc, but only show once for any given source
+				OVERRIDE_COOLDOWN(src.owner, "[src.id]_flicker_message", 5 SECONDS)
+			else
+				boutput(src.owner, SPAN_ALERT("You feel yourself fading away."))
+				if (src.alpha == 0)
+					APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_HIDE_ICONS, src.id)
+
+	onRemove()
+		..()
+		animate(src.owner, alpha = 255, time = 2 SECONDS, flags = ANIMATION_PARALLEL, easing = SINE_EASING | EASE_OUT)
+		if (!flickering)
+			boutput(src.owner, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_HIDE_ICONS, src.id)
+
+	getTooltip()
+		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
