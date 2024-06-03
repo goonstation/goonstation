@@ -1630,7 +1630,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				continue
 			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
 			var/P_ref = "\ref[P]"
-			var/amount_free = round(P.amount, 5) - mats_reserved[P_ref]
+			var/amount_free = round(P.amount*10)/10 - mats_reserved[P_ref]
 			var/amount_to_use = min(amount_free, required_amount / 10)
 			if ((amount_to_use * 10) < required_amount)
 				continue
