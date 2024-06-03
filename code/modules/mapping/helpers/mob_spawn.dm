@@ -93,6 +93,8 @@
 	var/delete_id = TRUE
 	/// If TRUE we break the headset and make it unscannable after spawning
 	var/break_headset = TRUE
+	/// Can be used to override default mutant race
+	var/datum/mutantrace/muterace = null
 	/// Sent in if we are spawned by a human critter that drops a spawner
 	var/datum/bioHolder/appearance_override = null
 	/// Used to track the created corpse after setup
@@ -148,6 +150,9 @@
 				src.corpse.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				src.corpse.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 				src.corpse.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+
+		if (istype(src.muterace))
+			src.corpse.set_mutantrace(src.muterace)
 
 		if (src.husked)
 			src.corpse.disfigured = TRUE
