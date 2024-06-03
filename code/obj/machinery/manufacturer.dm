@@ -1613,7 +1613,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Returns associative list of manufacturing requirement to material piece references, but does not guarantee all item_paths are satisfied or that
 	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
 	proc/get_materials_needed(datum/manufacture/M)
-		var/list/C = src.get_contents()
 		var/list/list/mats_used = list()
 		var/list/mats_reserved = list()
 
@@ -1657,8 +1656,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				amount_used += mats_used[R][material_piece_ref]
 
 			if (amount_used < amount_needed)
-				var/obj/item/material_piece/P = locate(material_piece_ref)
-				src.grump(message = "ERROR: Could not get enough [R.name] for [M.name]. Manufacturer has insufficient [blame_material] for production.", sound = TRUE)
+				var/blame_material = locate(mats_used[R][1])
+				src.grump_message(message = "ERROR: Could not get enough [R.name] for [M.name]. Manufacturer has insufficient [blame_material] for production.", sound = TRUE)
 				return FALSE
 			else if (amount_used > amount_needed)
 				// This scenario needs to be reported because get_materials_needed should **NEVER** reserve more materials for a blueprint than it needs.
