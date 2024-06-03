@@ -28,6 +28,10 @@
 
 	New(loc, var/datum/figure_info/newInfo)
 		..()
+		if (!length(donator_ckeys)) //creates a list of existing donator Ckeys if one does not already exist
+			for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
+				donator_ckeys += initial(fig.ckey)
+
 		if (istype(newInfo))
 			src.info = newInfo
 		else if (!istype(src.info))
@@ -51,7 +55,8 @@
 						if (length(online_donator_ckeys_nouser))
 							fig_ckey = pick(online_donator_ckeys_nouser)
 					if (40 to 100)
-						fig_ckey = pick(donator_ckeys)
+						if (length(donator_ckeys))
+							fig_ckey = pick(donator_ckeys)
 				if (!fig_ckey) fig_ckey = pick(donator_ckeys)
 
 				//Now that we've picked the ckey to look for, find its randomInfo
@@ -164,10 +169,6 @@
 			return ..()
 
 proc/add_to_donator_list(var/potential_donator_ckey)
-	if (!length(donator_ckeys)) //creates a list of existing donator Ckeys if one does not already exist
-		for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
-			donator_ckeys += initial(fig.ckey)
-
 	if (donator_ckeys.Find(potential_donator_ckey))
 		online_donator_ckeys += potential_donator_ckey
 
