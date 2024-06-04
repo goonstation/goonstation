@@ -701,20 +701,7 @@
 				var/l_item_arm = !(!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
 				if (!r_item_arm && !l_item_arm)
 					var/obj/item/I = src.l_hand
-					if (!I.inhand_image)
-						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
-
-					var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-					if(!(state in icon_states(I.inhand_image_icon)))
-						state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-
-					I.inhand_image.icon_state = state
-					if (I.color)
-						I.inhand_image.color = I.color
-					else if (I.inhand_color)
-						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.update_inhand("LR", hand_offset)
 					i_r_hand = null
 					i_l_hand = I.inhand_image
 
@@ -722,30 +709,14 @@
 			if (src.limbs.r_arm && src.r_hand)
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item) && isitem(src.r_hand))
 					var/obj/item/I = src.r_hand
-					if (!I.inhand_image)
-						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
-					I.inhand_image.icon_state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
-					if (I.color)
-						I.inhand_image.color = I.color
-					else if (I.inhand_color)
-						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.update_inhand("R", hand_offset)
 					i_r_hand = I.inhand_image
 
 
 			if (src.limbs.l_arm && src.l_hand)
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) && isitem(src.l_hand))
 					var/obj/item/I = src.l_hand
-					if (!I.inhand_image)
-						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
-					I.inhand_image.icon_state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-					if (I.color)
-						I.inhand_image.color = I.color
-					else if (I.inhand_color)
-						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.update_inhand("L", hand_offset)
 					i_l_hand = I.inhand_image
 
 
