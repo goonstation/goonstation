@@ -42,6 +42,8 @@
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
 	var/surrounded = 0 //! bitfield of dirs we have other blob tiles around us on
 
+	var/list/datum/contextAction/contexts
+
 	New()
 		..()
 		START_TRACKING
@@ -118,8 +120,24 @@
 		var/list/pa = params2list(params)
 		if ("right" in pa)
 			right_click_action()
+		else if (src.type == /obj/blob && !(("alt" in pa) || ("shift" in pa) || ("ctrl" in pa)))
+			if (!src.contexts)
+				src.contexts = list()
+				var/datum/contextLayout/experimentalcircle/context_menu = new
+				context_menu.center = TRUE
+				src.contextLayout = context_menu
+				for(var/actionType in childrentypesof(/datum/contextAction/blob_tile_upgrade))
+					var/datum/contextAction/blob_tile_upgrade/upgrade = new actionType()
+					src.contexts += upgrade
+			var/mob/user = usr
+			user.closeContextActions()
+			user.showContextActions(src.contexts, src, src.contextLayout)
 		else
 			..()
+
+	proc/perform_context_upgrade(datum/blob_ability/abil_type)
+		var/datum/blob_ability/ability_to_use = src.overmind.get_ability(abil_type)
+		ability_to_use.onUse(get_turf(src))
 
 	Cross(atom/movable/mover)
 		. = ..()
@@ -1066,6 +1084,37 @@
 
 	update_icon(override_parent)
 		return
+
+/datum/contextAction/blob_tile_upgrade
+	icon = 'icons/ui/context16x16.dmi'
+	desc = ""
+	icon_state = "wrench"
+	var/associated_ability
+
+	execute(obj/blob/blob_tile, mob/user)
+		if (QDELETED(blob_tile) || QDELETED(user))
+			return
+		if(blob_tile.type != /obj/blob)
+			return
+		blob_tile.perform_context_upgrade(src.associated_ability)
+
+	checkRequirements()
+		return TRUE
+
+	thick_membrane
+		name = "Build Thick Membrane"
+		icon_state = "flag"
+		associated_ability = /datum/blob_ability/build/wall
+
+	fire_membrane
+		name = "Build Fire-Resistant Membrane"
+		icon_state = "incarcerated"
+		associated_ability = /datum/blob_ability/build/firewall
+
+	slime_launcher
+		name = "Build Slime Launcher"
+		icon_state = "paroled"
+		associated_ability = /datum/blob_ability/build/launcher
 
 /////////////////////////
 /// BLOB RELATED PROCS //

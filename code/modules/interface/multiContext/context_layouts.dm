@@ -47,6 +47,9 @@ var/list/datum/contextAction/globalContextActions = null
 		var/mob/living/intangible/flock/flock_entity = target
 		flock_entity.render_special.add_screen(C)
 
+	else if (istype(target, /mob/living/intangible/blob_overmind))
+		var/mob/living/intangible/blob_overmind/overmind = target
+		overmind.render_special.add_screen(C)
 
 /datum/contextLayout/flexdefault
 	var/width = 2
