@@ -570,7 +570,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
-		if (src.can_stick_into_mob && istype(M, /mob/living))
+		if (src.can_stick_into_mob && istype(M, /mob/living) && M.get_stun_resist_mod() < 50)
 			var/mob/living/L = M
 			L.daggers += src
 			src.set_loc(M)
