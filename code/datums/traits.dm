@@ -1132,7 +1132,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Your skin is an odd color."
 	id = "poshfence"
 	points = -1
-	category = list("poshfence")
 
 /datum/trait/lizard
 	name = "Reptilian"
