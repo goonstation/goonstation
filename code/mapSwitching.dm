@@ -282,11 +282,12 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.composeVoteReportSimple(vote)
 
 	proc/get_player_pickable_map_list()
-		var/list/mapList = new()
+		. = new/list()
 		for (var/map in src.playerPickable)
-			mapList.Add(list(list(id = src.playerPickable[map]["id"], name = map)))
-		return mapList
-
+			. += list(list(
+				name = map,
+				thumbnail = "[config.goonhub_url]/storage/maps/[src.playerPickable[map]["id"]]]/thumb.png"
+			))
 /proc/isMapSwitcherBusted()
 	if (!mapSwitcher || !mapSwitcher.active)
 		return "The map switcher is apparently broken right now. Yell at Wire I guess"

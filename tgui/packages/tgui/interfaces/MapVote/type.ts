@@ -6,8 +6,8 @@
  */
 
 export interface MapVoteMapData {
-  id: string,
-  name: string
+  name: string,
+  thumbnail: string,
 }
 
 export interface MapVoteData {

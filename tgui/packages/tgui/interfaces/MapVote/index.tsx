@@ -22,7 +22,7 @@ export const MapVote = (_props, context) => {
 
         <Stack>
           {mapList.map(map => (
-            <MapPanel key={map.id} mapID={map.id} mapName={map.name}>
+            <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail}>
               <Button.Checkbox
                 checked={clientVoteMap[map.name]}
                 color={clientVoteMap[map.name] ? "green" : "red"}
@@ -61,7 +61,7 @@ export const MapPanel = (props) => {
     <Stack.Item>
       <Section title={props.mapName} textAlign="center" width="100px">
         <Box>
-          <Image src={`https://goonhub.com/storage/maps/${props.mapID.toLowerCase()}/thumb.png`} backgroundColor="#0f0f0f" width="75px" />
+          <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
         </Box>
         { props.children }
       </Section>

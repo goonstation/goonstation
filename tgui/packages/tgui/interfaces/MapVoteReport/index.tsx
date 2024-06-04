@@ -21,7 +21,7 @@ export const MapVoteReport = (_props, context) => {
         <Stack>
           {mapList.map(map => {
             return (
-              <MapPanel key={map.name} mapID={map.id} mapName={map.name}>
+              <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail}>
                 {map.voters ? (
                   <Tooltip content={map.voters.join(', ')}>
                     <VoteCountLabel voteCount={map.count} tooltipped />
