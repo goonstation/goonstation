@@ -131,7 +131,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property/insulated/super
 	name = "Highly Insulative"
 	id = "insulated_property_high"
-	property_id = "density"
 	property_threshold = 2
 
 /datum/manufacturing_requirement/match_property/tough
