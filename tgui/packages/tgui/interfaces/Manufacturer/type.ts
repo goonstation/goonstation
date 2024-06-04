@@ -26,7 +26,7 @@ export type ManufacturerData = {
   panel_open:BooleanLike;
   repeat:BooleanLike;
 
-  card_balance:number;
+  banking_info:BankAccount
   progress_pct:number;
   speed:number;
   manudrive_uses_left:number;
@@ -42,6 +42,11 @@ export type ManufacturerData = {
   rockboxes:RockboxData[];
   queue:QueueBlueprint[];
   wires:number[];
+}
+
+export type BankAccount = {
+  name: string;
+  current_money: number;
 }
 
 export type Manudrive = {
