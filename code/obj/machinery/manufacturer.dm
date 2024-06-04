@@ -312,7 +312,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
 		for (var/datum/manufacture/M in src.queue)
-			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M)))
+			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M), "byondRef" = "\ref[M]"))
 
 		// This calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.

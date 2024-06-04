@@ -113,5 +113,6 @@ export type WireData = {
 export type QueueBlueprint = {
   name: string;
   category: string;
+  byondRef: string;
   type: 'available' | 'hidden' | 'download' | 'drive_blueprint';
 }

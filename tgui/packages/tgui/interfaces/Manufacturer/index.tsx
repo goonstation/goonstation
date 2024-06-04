@@ -84,7 +84,7 @@ export const Manufacturer = (_, context) => {
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
   let queueBlueprintRefs = data.queue.map((queued:QueueBlueprint) =>
-    blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
+    blueprints_by_category[queued.category].find((key) => (key.byondRef === queued.byondRef))
   );
 
   return (
