@@ -1,5 +1,7 @@
 
 (t)sun jun 02 24
+(u)Sord
+(+)The chef has posted a permanent job offer for a sous-chef! Any time there is a chef, a sous-chef slot will open up for late join instead of being a random job.
 (u)Laboredih123
 (p)19265
 (e)🪲🗺|C-Bug, A-Mapping

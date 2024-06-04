@@ -1611,6 +1611,30 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.traitHolder.addTrait("stowaway")
 
+/datum/job/special/souschef
+	name = "Sous-Chef"
+	limit = 1
+	wages = PAY_UNTRAINED
+	requires_supervisor_job = "Chef"
+	slot_belt = list(/obj/item/device/pda2/chef)
+	slot_jump = list(/obj/item/clothing/under/misc/souschef)
+	slot_foot = list(/obj/item/clothing/shoes/chef)
+	slot_head = list(/obj/item/clothing/head/souschefhat)
+	slot_suit = list(/obj/item/clothing/suit/apron)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	wiki_link = "https://wiki.ss13.co/Chef"
+
+	New()
+		..()
+		src.access = get_access("Sous-Chef")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_chef")
+
 // randomizd gimmick jobs
 
 /datum/job/special/random
@@ -1927,27 +1951,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Rancher")
 		return
 
-/datum/job/special/random/souschef
-	name = "Sous-Chef"
-	wages = PAY_UNTRAINED
-	slot_belt = list(/obj/item/device/pda2/chef)
-	slot_jump = list(/obj/item/clothing/under/misc/souschef)
-	slot_foot = list(/obj/item/clothing/shoes/chef)
-	slot_head = list(/obj/item/clothing/head/souschefhat)
-	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	// missing wiki link, should we link to chef instead?
-
-	New()
-		..()
-		src.access = get_access("Sous-Chef")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_chef")
 
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
