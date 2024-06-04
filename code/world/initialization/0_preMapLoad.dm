@@ -6,8 +6,9 @@
 		world.log = file("data/errors.log")
 #endif
 #ifdef TRACY_PROFILER_HOOK
-		world.log << "Enabling the Tracy Profiler Hook."
 		prof_init()
+#else
+		check_tracy_toggle()
 #endif
 		enable_auxtools_debugger()
 
@@ -83,6 +84,8 @@
 		buildMaterialPropertyCache()	//Order is important.
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
+		Z_LOG_DEBUG("Preload", "Building manufacturing requirement cache...")
+		buildManufacturingRequirementCache() // ^^
 
 		// no log because this is functionally instant
 		global_signal_holder = new
@@ -202,6 +205,7 @@
 		fluid_turf_setup(first_time=TRUE)
 
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
+		station_name() // generate station name and set it
 		..()
 		global.current_state = GAME_STATE_MAP_LOAD
 
@@ -222,14 +226,12 @@
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
 
-#ifdef TRACY_PROFILER_HOOK
-/proc/prof_init()
-	var/lib
-	switch(world.system_type)
-		if(MS_WINDOWS) lib = "prof.dll"
-		if(UNIX) lib = "libprof.so"
-		else CRASH("unsupported platform")
-
-	var/init = LIBCALL(lib, "init")("block")
-	if("0" != init) CRASH("[lib] init error: [init]")
-#endif
+/proc/buildManufacturingRequirementCache()
+	requirement_cache = list()
+	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material
+	for (var/datum/manufacturing_requirement/R_path as anything in requirementList)
+		var/datum/manufacturing_requirement/R = new R_path()
+		requirement_cache[R.id] = R
+	for (var/datum/material/mat as anything in material_cache)
+		var/datum/manufacturing_requirement/match_material/R = new /datum/manufacturing_requirement/match_material(mat)
+		requirement_cache[R.id] = R

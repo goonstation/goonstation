@@ -24,9 +24,9 @@ interface Observables {
 const ObserverButton = (props, context) => {
   const { act } = useBackend(context);
   const { obsObject } = props;
-  let icon=null;
+  let icon: string | null = null;
   let displayed_name=obsObject.name;
-  let extra=null;
+  let extra: string | null = null;
   if (obsObject.dead) { icon = "skull"; }
   if (obsObject.name !== obsObject.real_name) { displayed_name += " ("+obsObject.real_name+")"; }
   if (obsObject.job !== null) { extra = "Job: "+obsObject.job; }

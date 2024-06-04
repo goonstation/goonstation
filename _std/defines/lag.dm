@@ -16,6 +16,12 @@
 #define LAGCHECK(x) // this is wrong and bad, but it'd be way too much effort to remove lagchecks from everything :/
 #endif
 
+#ifdef LIVE_SERVER
+#define LAGCHECK_IF_LIVE(x) LAGCHECK(x)
+#else
+#define LAGCHECK_IF_LIVE(x) sleep(-1)
+#endif
+
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
 #define LIGHTING_MAX_TICKUSAGE 140
 
@@ -26,6 +32,7 @@
 #define LAG_MED 90
 #define LAG_HIGH 90
 #define LAG_REALTIME 90
+#define LAG_INIT 95
 
 /// Waits until a given condition is true, tg-style async
 #define UNTIL(X) while(!(X)) sleep(1)

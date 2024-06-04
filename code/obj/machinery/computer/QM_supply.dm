@@ -21,7 +21,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				//global.QM_CategoryList.Insert(1,S.category) //So Misc. is not #1, reverse ordering.
 
 /obj/machinery/computer/supplycomp
-	name = "Quartermaster's Console"
+	name = "quartermaster's console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
 	req_access = list(access_supply_console)
@@ -201,7 +201,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			}
 
 		#fakeTopBar {
-			// position: sticky but shitty
+			/* position: sticky but shitty */
 			visibility: hidden;
 			margin-bottom: 0.5em;
 			opacity: 0;
@@ -337,7 +337,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				for (var/foundCategory in global.QM_CategoryList)
 					//var/categorycolor = random_color() //I must say, I simply love the colors this generates.
 
-					. += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+					. += "[catnum ? " &middot; " : ""] <a href='#' onclick='scroll_to_id(\"category-[catnum]\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 					ordershit += {"
 			<a name='category-[catnum]' id='category-[catnum]'></a><h3>[foundCategory]</h3>

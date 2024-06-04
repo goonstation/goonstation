@@ -23,7 +23,7 @@ export const PollEditorForm = (props: PollEditorFormProps) => {
   const { alertPlayers, expiry, multipleChoice, servers, title } = currentSettings;
 
   const handleChangeServer = (value: string) => onSettingsUpdate({ servers: value });
-  const handleChangeTitle = (e: unknown, value: string) => onSettingsUpdate({ title: value });
+  const handleChangeTitle = (_e: unknown, value: string) => onSettingsUpdate({ title: value });
   const handleChangeExpiry = (newExpiry: ExpiryOptions) =>
     onSettingsUpdate({
       expiry: newExpiry,

@@ -258,3 +258,7 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
+
+// ---- cross server message signals
+	/// Sent when a server sync response is received
+	#define COMSIG_SERVER_DATA_SYNCED "server_data_synced"

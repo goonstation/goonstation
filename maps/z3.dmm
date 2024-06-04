@@ -12391,7 +12391,7 @@
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbD" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/tank/anesthetic,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbE" = (

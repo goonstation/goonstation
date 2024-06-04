@@ -1319,6 +1319,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	throw_range = 20
 	m_amt = 100
 	var/vr = FALSE
+	/// The name of the spellbook's wizard for display purposes
+	var/wizard_name = null
 #ifdef BONUS_POINTS
 	uses = 9999
 #endif
@@ -1340,14 +1342,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			ui.open()
 
 	ui_data(mob/user)
-		. = list()
-		.["spell_slots"] = src.uses
+		. = list(
+			"spell_slots" = src.uses
+		)
 
 	ui_static_data(mob/user)
-		. = list()
-		.["owner_name"] = user.real_name
-		.["vr"] = src.vr
-
 		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell as anything in src.spells)
 			var/cooldown_contents = null
@@ -1360,6 +1359,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				// convert deciseconds to seconds
 				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
 				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+			else if (spell.icon && spell.icon_state)
+				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
 			spellbook_contents[spell.eqtype] += list(list(
 				cooldown = cooldown_contents,
 				cost = spell.cost,
@@ -1368,12 +1369,18 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				spell_img = spell_icon,
 				vr_allowed = spell.vr_allowed,
 			))
-		.["spellbook_contents"] = spellbook_contents
+		. = list(
+			"owner_name" = src.wizard_name,
+			"spellbook_contents" = spellbook_contents,
+			"vr" = src.vr
+		)
 
 	attack_self(mob/user)
 		if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
 			boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
 			return
+		// update regardless, in case the wizard read their spellbook before setting their name
+		src.wizard_name = user.real_name
 		ui_interact(user)
 
 	ui_act(action, list/params)
@@ -1401,6 +1408,9 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	var/assoc_spell = null
 	var/vr_allowed = 1
 	var/obj/item/assoc_item = null
+	/// backup icon in case spell has no associated spell ability
+	var/icon = 'icons/mob/spell_buttons.dmi'
+	var/icon_state = "fixme"
 
 	proc/SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
@@ -1434,6 +1444,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	eqtype = "Enchantment"
 	vr_allowed = 0
 	desc = "Soulguard is basically a one-time do-over that teleports you back to the wizard shuttle and restores your life in the event that you die. However, the enchantment doesn't trigger if your body has been gibbed or otherwise destroyed. Also note that you will respawn completely naked."
+	icon_state = "soulguard"
 
 	SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		. = ..()
