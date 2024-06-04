@@ -27,9 +27,7 @@ export const PurchaseInfo = (_, context) => {
         <>
           <Stack.Item bold>
             <Stack align="center" justify="center">
-              <Stack.Item>
-                {selectedGroupingName}
-              </Stack.Item>
+              <Stack.Item>{selectedGroupingName}</Stack.Item>
             </Stack>
           </Stack.Item>
           {Object.values(selectedGroupingTags).length && (
@@ -59,8 +57,13 @@ export const PurchaseInfo = (_, context) => {
             </Stack.Item>
           )}
           <Stack.Item bold>
-            <Button color="good" disabled={selectedItem.cost > cash + accountBalance} onClick={handlePurchase}>
-              {`${selectedItem.cost > cash + accountBalance ? 'Insufficent Money' : 'Purchase'} (${selectedItem.cost}⪽)`}
+            <Button
+              color="good"
+              disabled={selectedItem.cost > cash + accountBalance && !data.everythingIsFree}
+              onClick={handlePurchase}>
+              {`${
+                selectedItem.cost > cash + accountBalance && !data.everythingIsFree ? 'Insufficent Money' : 'Purchase'
+              } (${selectedItem.cost}⪽)`}
             </Button>
           </Stack.Item>
         </>

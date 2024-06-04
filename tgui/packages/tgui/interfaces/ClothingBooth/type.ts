@@ -2,6 +2,7 @@ import { BooleanLike } from "common/react";
 
 export interface ClothingBoothData {
   catalogue: Record<string, ClothingBoothGroupingData>;
+  everythingIsFree: boolean;
   scannedID?: string;
   accountBalance?: number;
   cash?: number;

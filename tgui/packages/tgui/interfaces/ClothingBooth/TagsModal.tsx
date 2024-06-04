@@ -19,7 +19,7 @@ export const TagsModal = (_, context) => {
         buttons={
           <Stack>
             <Stack.Item>
-              <Button icon="trash" onClick={() => setTagFilters({})}>
+              <Button disabled={!Object.values(tagFilters).includes(true)} icon="trash" onClick={() => setTagFilters({})}>
                 Clear Tags
               </Button>
             </Stack.Item>
@@ -75,7 +75,11 @@ const TagStackContainer = (props: TagStackContainerProps, context) => {
 const TagCheckbox = (props: ClothingBoothGroupingTagsData, context) => {
   const { name } = props;
 
-  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
+  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(
+    context,
+    LocalStateKey.TagFilters,
+    {}
+  );
   const mergeTagFilter = (filter: string) =>
     setTagFilters({
       ...tagFilters,

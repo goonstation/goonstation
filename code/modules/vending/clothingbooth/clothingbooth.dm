@@ -1,3 +1,5 @@
+// TO DO
+// - how the fuck are we gonna validate dye colours
 /**
  * # Clothing Booth
  *
@@ -150,6 +152,7 @@
 	. = list(
 		"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
 		"cash" = src.cash,
+		"everythingIsFree" = src.everything_is_free,
 		"previewIcon" = icon2base64(preview_icon),
 		"previewHeight" = preview_icon.Height(),
 		"previewItem" = src.preview_item,

@@ -47,9 +47,11 @@ export const StockList = (_props: unknown, context) => {
   const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter)
     ? affordableItemGroupings.filter((itemGrouping) => slotFilters[itemGrouping.slot])
     : affordableItemGroupings;
-  const tagFilteredItemGroupings = Object.keys(tagFilters).some((filter) => filter)
+  const tagFiltersApplied = !!tagFilters && Object.values(tagFilters).includes(true);
+  const tagFilteredItemGroupings = tagFiltersApplied
     ? slotFilteredItemGroupings.filter((itemGrouping) =>
-      Object.keys(tagFilters).some(tagFilter => itemGrouping.grouping_tags.includes(tagFilter)))
+      itemGrouping.grouping_tags.some((groupingTag) => !!tagFilters[groupingTag])
+    )
     : slotFilteredItemGroupings;
   const searchTextLower = searchText.toLocaleLowerCase();
   const searchFilteredItemGroupings = searchText
