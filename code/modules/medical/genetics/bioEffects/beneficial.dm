@@ -605,7 +605,7 @@ var/list/radio_brains = list()
 		var/mob/living/carbon/human/H = owner
 
 		if (ishuman(owner) && src.visible)
-			//var/mob/living/carbon/human/H = owner
+			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
 				HAH.customization_first_color = "#4F7942" // a pleasant fern green
