@@ -810,8 +810,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.emagged)
 			src.emagged = TRUE
-			src.malfunction = TRUE
-			src.flip_out()
 		if (!src.hacked)
 			src.hacked = TRUE
 			if(user)
