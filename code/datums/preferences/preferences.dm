@@ -623,7 +623,14 @@ var/list/removed_jobs = list(
 				var/new_tone = "#FEFEFE"
 				var/mob/living/carbon/human/H = src.preview.preview_thing
 				if (traitPreferences.traits_selected.Find("poshfence"))
-					new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
+					switch(tgui_alert(usr, "Uhh... Why does your skin look like that?", "Weirdo Alert!", list("I'm just chill like that", "I'm not a weirdo", "Cancel")))
+						if("I'm just chill like that")
+							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
+						if("I'm not a weirdo")
+							new_tone = get_standard_skintone(usr)
+						else
+							return
+
 					if(new_tone)
 						AH.s_tone = new_tone
 						AH.s_tone_original = new_tone
