@@ -723,8 +723,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(!src.account)
 			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
 			return
-		else
-			src.output_message_user = null
 		if (src.get_bank_data()["name"] in FrozenAccounts)
 			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows.", sound = TRUE)
 			return
