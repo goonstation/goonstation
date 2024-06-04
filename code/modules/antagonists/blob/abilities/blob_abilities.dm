@@ -1178,3 +1178,5 @@
 		if (..())
 			return 1
 		owner.add_ability(/datum/blob_ability/build/reflective)
+
+
