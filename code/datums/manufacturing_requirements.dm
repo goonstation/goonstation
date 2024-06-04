@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (!(istype(M, src.match_typepath))) return FALSE
+		return istype(M, src.match_typepath)
 
 /datum/manufacturing_requirement/match_subtypes/gemstone
 	name = "Gemstone"
