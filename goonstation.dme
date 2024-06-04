@@ -27,7 +27,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#if !defined(FASTDMM) && !defined(DISABLE_SECRETS)
+#if fexists("+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
 #include "+secret\__secret.dme"
 #endif
 #include "code\__secret_public.dme"
@@ -573,7 +573,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\intangible\blob_overmind\ai.dm"
 #include "code\mob\living\intangible\flock\flockmind.dm"
 #include "code\mob\living\intangible\flock\flocktrace.dm"
-#include "code\mob\living\life\arrest_icon.dm"
 #include "code\mob\living\life\blindness.dm"
 #include "code\mob\living\life\blood.dm"
 #include "code\mob\living\life\bodytemp.dm"
@@ -590,10 +589,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\life\organs.dm"
 #include "code\mob\living\life\radiation.dm"
 #include "code\mob\living\life\sight.dm"
-#include "code\mob\living\life\skin.dm"
 #include "code\mob\living\life\statusupdate.dm"
 #include "code\mob\living\life\stuns_lying.dm"
-#include "code\mob\living\life\viruses.dm"
 #include "code\mob\living\silicon\ai.dm"
 #include "code\mob\living\silicon\drone.dm"
 #include "code\mob\living\silicon\ghostdrone.dm"
@@ -633,6 +630,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\diagnostics.dm"
 #include "code\modules\admin\drunkmode.dm"
 #include "code\modules\admin\gibverbs.dm"
+#include "code\modules\admin\goonhub_auth.dm"
 #include "code\modules\admin\job_manager.dm"
 #include "code\modules\admin\jobban.dm"
 #include "code\modules\admin\lag_hacks.dm"

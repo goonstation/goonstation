@@ -21,7 +21,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				//global.QM_CategoryList.Insert(1,S.category) //So Misc. is not #1, reverse ordering.
 
 /obj/machinery/computer/supplycomp
-	name = "Quartermaster's Console"
+	name = "quartermaster's console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
 	req_access = list(access_supply_console)

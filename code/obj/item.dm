@@ -1737,3 +1737,19 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/can_arm_attach()
 	return ..() && !(src.cant_drop || src.two_handed)
+
+/obj/item/proc/update_inhand(hand, hand_offset) // L, R or LR
+	if (!src.inhand_image)
+		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
+
+	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
+	if(!(state in icon_states(src.inhand_image_icon)))
+		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
+
+	src.inhand_image.icon_state = state
+	if (src.color)
+		src.inhand_image.color = src.color
+	else if (src.inhand_color)
+		src.inhand_image.color = src.inhand_color
+	src.inhand_image.pixel_x = 0
+	src.inhand_image.pixel_y = hand_offset
