@@ -765,7 +765,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	freakyscream
 		name = "Freaky Scream"
-		cost = 0
+		cost = 3000
 		icon = 'icons/mob/robots.dmi'
 		icon_state = "alohamaton"
 		icon_dir = SOUTH
