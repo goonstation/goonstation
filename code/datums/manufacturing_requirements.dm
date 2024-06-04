@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (src.material_id != M.getID()) return FALSE
+		return src.material_id == M.getID()
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 /datum/manufacturing_requirement/match_property
