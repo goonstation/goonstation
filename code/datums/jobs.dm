@@ -1611,6 +1611,30 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.traitHolder.addTrait("stowaway")
 
+/datum/job/special/souschef
+	name = "Sous-Chef"
+	limit = 1
+	wages = PAY_UNTRAINED
+	requires_supervisor_job = "Chef"
+	slot_belt = list(/obj/item/device/pda2/chef)
+	slot_jump = list(/obj/item/clothing/under/misc/souschef)
+	slot_foot = list(/obj/item/clothing/shoes/chef)
+	slot_head = list(/obj/item/clothing/head/souschefhat)
+	slot_suit = list(/obj/item/clothing/suit/apron)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	wiki_link = "https://wiki.ss13.co/Chef"
+
+	New()
+		..()
+		src.access = get_access("Sous-Chef")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_chef")
+
 // randomizd gimmick jobs
 
 /datum/job/special/random
@@ -1727,28 +1751,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			clipboard.set_owner(M)
 		M.mind?.set_miranda(PROC_REF(inspector_miranda))
 		return
-
-/datum/job/special/random/director
-	name = "Regional Director"
-	receives_miranda = TRUE
-	cant_spawn_as_rev = TRUE
-	wages = PAY_EXECUTIVE
-
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/heads)
-	slot_jump = list(/obj/item/clothing/under/misc/NT)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/command)
-	slot_head = list(/obj/item/clothing/head/NTberet)
-	slot_suit = list(/obj/item/clothing/suit/wcoat)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_lhan = list(/obj/item/clipboard/with_pen)
-	items_in_backpack = list(/obj/item/device/flash)
-	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
-	New()
-		..()
-		src.access = get_all_accesses()
 
 /datum/job/special/random/diplomat
 	name = "Diplomat"
@@ -1927,27 +1929,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Rancher")
 		return
 
-/datum/job/special/random/souschef
-	name = "Sous-Chef"
-	wages = PAY_UNTRAINED
-	slot_belt = list(/obj/item/device/pda2/chef)
-	slot_jump = list(/obj/item/clothing/under/misc/souschef)
-	slot_foot = list(/obj/item/clothing/shoes/chef)
-	slot_head = list(/obj/item/clothing/head/souschefhat)
-	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	// missing wiki link, should we link to chef instead?
-
-	New()
-		..()
-		src.access = get_access("Sous-Chef")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_chef")
 
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
