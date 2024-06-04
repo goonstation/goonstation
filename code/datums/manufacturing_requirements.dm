@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	property_threshold = 5
 
 /datum/manufacturing_requirement/match_property/insulated
-	name = "Insulated Material"
+	name = "Insulative Material"
 	id = "insulated_property"
 	property_id = "electrical"
 	property_threshold = 4
