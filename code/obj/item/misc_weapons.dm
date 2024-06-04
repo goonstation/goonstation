@@ -537,6 +537,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while.
+		The dagger will stick into them, and it can be pulled out with help intent, or it will fall out shortly."})
 
 	/// dagger will stick into mob on thrown hit
 	var/can_stick_into_mob = TRUE
@@ -545,13 +547,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
-
-	attack_self(mob/user)
-		..()
-		if (!src.can_stick_into_mob)
-			return
-		src.set_to_stick = !src.set_to_stick
-		boutput(user, SPAN_COMBAT("You change your intent with the dagger. It will [src.set_to_stick ? "now" : "no longer"] stick into others when thrown."))
 
 	get_help_message(dist, mob/user)
 		. = "Throw the dagger at someone to instantly incapacitate them for a short while."
@@ -575,7 +570,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
-		if (src.set_to_stick && istype(M, /mob/living))
+		if (src.can_stick_into_mob && istype(M, /mob/living))
 			var/mob/living/L = M
 			L.daggers += src
 			src.set_loc(M)
@@ -634,6 +629,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	can_stick_into_mob = FALSE
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
 
 	gang
 		name = "familiar fighting knife"
