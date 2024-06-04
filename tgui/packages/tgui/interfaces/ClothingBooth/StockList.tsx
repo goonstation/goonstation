@@ -1,9 +1,10 @@
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Divider, Dropdown, Input, Section, Stack } from '../../components';
+import { Box, Button, Divider, Dropdown, Input, Section, Stack } from '../../components';
 import { BoothGrouping } from './BoothGrouping';
 import { SlotFilters } from './SlotFilters';
 import { buildFieldComparator, numberComparator, stringComparator } from './utils/comparator';
+import { pluralize } from '../common/stringUtils';
 import type { ComparatorFn } from './utils/comparator';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
@@ -34,10 +35,12 @@ export const StockList = (_props: unknown, context) => {
     LocalStateKey.SlotFilters,
     {}
   );
-  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
   const [searchText, setSearchText] = useLocalState(context, LocalStateKey.SearchText, '');
   const [sortType, setSortType] = useLocalState(context, LocalStateKey.SortType, ClothingBoothSortType.Name);
   const [sortAscending, setSortAscending] = useLocalState(context, LocalStateKey.SortAscending, true);
+
+  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
+  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
 
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
 
@@ -94,6 +97,29 @@ export const StockList = (_props: unknown, context) => {
                     onClick={() => setSortAscending(!sortAscending)}
                     tooltip={`Sort Direction: ${sortAscending ? 'Ascending' : 'Descending'}`}
                   />
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              <Stack fluid align="center" justify="space-between">
+                <Stack.Item>
+                  <Box as="span" style={{ opacity: '0.5' }}>
+                    {sortedStockInformationList.length} {pluralize('grouping', sortedStockInformationList.length)}{' '}
+                    available
+                  </Box>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    fluid
+                    align="center"
+                    color={Object.values(tagFilters).some((tagFilter) => tagFilter === true) && 'good'}
+                    onClick={() => setTagModal(!tagModal)}>
+                    Filter by Tags{' '}
+                    {!!Object.values(tagFilters).some((tagFilter) => tagFilter === true)
+                      && `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length} selected)`}
+                  </Button>
                 </Stack.Item>
               </Stack>
             </Section>

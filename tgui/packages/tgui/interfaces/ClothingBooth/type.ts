@@ -1,27 +1,27 @@
 import { BooleanLike } from "common/react";
 
 export interface ClothingBoothData {
-  catalogue: Record<string, ClothingBoothGroupingData>;
-  everythingIsFree: boolean;
-  scannedID?: string;
   accountBalance?: number;
   cash?: number;
+  catalogue: Record<string, ClothingBoothGroupingData>;
+  everythingIsFree: boolean;
   name: string;
   previewHeight: number;
   previewIcon: string;
   previewShowClothing: BooleanLike;
+  scannedID?: string;
   selectedGroupingName: string | null;
   selectedItemName: string | null;
   tags: Record<string, ClothingBoothGroupingTagsData>;
 }
 
 export interface ClothingBoothGroupingData {
-  name: string;
-  list_icon: string;
-  cost_min: number;
-  cost_max: number;
   clothingbooth_items: Record<string, ClothingBoothItemData>;
+  cost_max: number;
+  cost_min: number;
   grouping_tags: string[];
+  list_icon: string;
+  name: string;
   slot: ClothingBoothSlotKey;
 }
 
