@@ -98,16 +98,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	property_id = "density"
 	property_threshold = 4
 
-/datum/manufacturing_requirement/match_property/superdense
+/datum/manufacturing_requirement/match_property/dense/super
 	name = "Very High Density Matter"
 	id = "dense_super"
-	property_id = "density"
 	property_threshold = 6
 
-/datum/manufacturing_requirement/match_property/ultradense
+/datum/manufacturing_requirement/match_property/dense/ultra
 	name = "Ultra-Dense Matter"
 	id = "dense_property_ultra"
-	property_id = "density"
 	property_threshold = 7
 
 /datum/manufacturing_requirement/match_property/energy
