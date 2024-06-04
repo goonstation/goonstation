@@ -45,7 +45,7 @@
 /area/prefab/huntingsupplies)
 "f" = (
 /obj/rack,
-/obj/item/gun/kinetic/sawnoff/birdshot,
+/obj/item/ammo/bullets/a12/bird,
 /turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "h" = (
