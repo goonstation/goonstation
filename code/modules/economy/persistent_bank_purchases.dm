@@ -53,6 +53,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/dancin_shoes,\
 	new /datum/bank_purchaseable/frog,\
 
+	new /datum/bank_purchaseable/freakyscream,\
 	new /datum/bank_purchaseable/alohamaton,\
 	new /datum/bank_purchaseable/ai_hat)
 
@@ -757,6 +758,21 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				R.update_appearance()
 				return 1
 			return 0
+
+	/////////////////
+	//FREAKY SCREAM//
+	/////////////////
+
+	freakyscream
+		name = "Freaky Scream"
+		cost = 0
+		icon = 'icons/mob/robots.dmi'
+		icon_state = "alohamaton"
+		icon_dir = SOUTH
+
+		Create(var/mob/living/M)
+			M.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			return 1
 
 	////////////////////
 	//AI PURCHASEABLES//
