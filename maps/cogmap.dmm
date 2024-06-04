@@ -43329,13 +43329,13 @@
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "gRz" = (
@@ -46018,13 +46018,13 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "jft" = (
