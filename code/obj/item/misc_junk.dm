@@ -205,11 +205,17 @@ TYPEINFO(/obj/item/disk)
 	item_state = "brick"
 	force = 8
 	w_class = W_CLASS_TINY
-	throwforce = 10
+	throwforce = 15
 	rand_pos = 1
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
+
+	throw_impact(obj/window/window)
+		if (istype(window) && window.health <= (/obj/window/auto::health * /obj/window/auto::health_multiplier))
+			window.smash()
+			return
+		..()
 
 /obj/item/emeter
 	name = "E-Meter"

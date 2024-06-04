@@ -357,7 +357,7 @@
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
-	if (prob(80))
+	if(!ON_COOLDOWN(src, "floorbeep", 30 SECONDS))
 		src.visible_message("[src] makes an excited booping beeping sound!")
 	if (istype(src.target, /obj/item/tile))
 		src.eattile(src.target)
@@ -474,10 +474,7 @@
 	if(src.color_overlay)
 		A.UpdateOverlays(image(A.icon, icon_state = src.color_overlay), "coloroverlay")
 		A.color_overlay = src.color_overlay
-	if (user.r_hand == src || user.l_hand == src)
-		A.set_loc(user.loc)
-	else
-		A.set_loc(src.loc)
+	A.set_loc(get_turf(src))
 	A.on = 1 // let's just pretend they flipped the switch
 	A.update_power_overlay()
 	boutput(user, "You add the robot arm to the odd looking toolbox assembly! Boop beep!")
