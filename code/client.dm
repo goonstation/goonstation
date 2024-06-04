@@ -994,7 +994,7 @@ var/global/curr_day = null
 			if( !A.mouse_opacity || A.invisibility > mob.see_invisible ) continue
 			stat( A )
 
-	if (!src.holder)//todo : maybe give admins a toggle
+	if (!src.holder || src.holder.slow_stat)
 		sleep(1.2 SECONDS) //and make this number larger
 	else
 		sleep(0.1 SECONDS)
