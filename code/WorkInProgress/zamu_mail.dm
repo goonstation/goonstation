@@ -153,9 +153,11 @@
 				perpname = owner:wear_id:registered
 
 			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-			if(sec_record && sec_record["criminal"] != "*Arrest*")
-				sec_record["criminal"] = "*Arrest*"
+			if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
+				sec_record["criminal"] = ARREST_STATE_ARREST
 				sec_record["mi_crim"] = "Mail fraud."
+				var/mob/living/carbon/human/H = owner
+				H.update_arrest_icon()
 
 
 /obj/decal/cleanable/mail_fraud

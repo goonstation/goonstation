@@ -252,6 +252,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				src.hide_offline_indicators = !hide_offline_indicators
 				src.show_pref_window(usr)
+		if ("toggle_slow_stat")
+			if (src.level >= LEVEL_MOD)
+				src.slow_stat = !slow_stat
+				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
 				src.auto_stealth = !(src.auto_stealth)

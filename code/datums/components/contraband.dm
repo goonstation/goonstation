@@ -37,6 +37,9 @@ TYPEINFO(/datum/component/contraband)
 		else if(ismovable(owner.loc))
 			var/atom/movable/AM = owner.loc
 			src.contraband_logic(owner, AM)
+		else if (istype(owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = owner
+			H.update_arrest_icon()
 
 /datum/component/contraband/proc/contraband_logic(atom/movable/owner, atom/movable/applied, multiplier = 1)
 	REMOVE_ATOM_PROPERTY(applied, PROP_MOVABLE_VISIBLE_GUNS, src)
