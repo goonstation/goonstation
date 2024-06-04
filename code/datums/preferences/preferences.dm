@@ -621,12 +621,26 @@ var/list/removed_jobs = list(
 
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
-				var/mob/living/carbon/human/H = src.preview.preview_thing
 				if (traitPreferences.traits_selected.Find("poshfence"))
-					switch(tgui_alert(usr, "Uhh... Why does your skin look like that?", "Weirdo Alert!", list("I'm just chill like that", "I'm not a weirdo", "Cancel")))
-						if("I'm just chill like that")
-							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
-						if("I'm not a weirdo")
+					switch (tgui_alert(usr, "You have access to the full range of skin colors.", "Weirdo Alert!", list("Chromatic freedom!", "Let me be normal", "Cancel")))
+						if ("Chromatic freedom!")
+							var/try_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
+							var/list/hsv = hex_to_hsv_list(try_tone)
+							var/hue = hsv[1]
+							var/saturation = hsv[2]
+							var/value = hsv[3]
+							var/maxsum = 140 //max sum of saturation and value
+							var/adjust = (saturation + value - maxsum) / 2 // prevents eye-searing colors
+							if (adjust > 0) // valid colors have negative adjust
+								saturation -= adjust
+								value -= adjust
+								tgui_alert(usr, "Sum of saturation (\"S\") and value (\"V\") must be less than 140. Your color has been adjusted automatically.", "Sorry...")
+							if (value < 20) //prevents void people (sad!)
+								value = 20
+								tgui_alert(usr, "Value (\"V\") must be greater than 20. Your color has been adjusted automatically.", "Sorry...")
+							var/list/new_tone_rgb = hsv2rgblist(hue, saturation, value)
+							new_tone = rgb(new_tone_rgb[1], new_tone_rgb[2], new_tone_rgb[3])
+						if ("Let me be normal")
 							new_tone = get_standard_skintone(usr)
 						else
 							return
