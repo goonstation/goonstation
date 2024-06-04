@@ -140,7 +140,6 @@
 						"name" = "[purchased_spell.name]",
 					)
 				)
-
 			else // If there's no assoc_spell (i.e. for Soulguard) the icon state is stored in a different spot
 				purchases += list(
 					list(
