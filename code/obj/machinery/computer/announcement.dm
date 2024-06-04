@@ -42,6 +42,7 @@
 			src.unlocked = check_access(ID, 1)
 			boutput(user, SPAN_NOTICE("You insert [W]."))
 			update_status()
+			tgui_process.update_uis(src)
 			return
 		..()
 
