@@ -238,9 +238,6 @@
 	chaplain
 		spawn_type = /mob/living/carbon/human/normal/chaplain
 
-	artist
-		spawn_type = /mob/living/carbon/human/normal/artist
-
 	botanist
 		spawn_type = /mob/living/carbon/human/normal/botanist
 

@@ -96,11 +96,6 @@
 		..()
 		JobEquipSpawned("Chaplain")
 
-/mob/living/carbon/human/normal/artist
-	New()
-		..()
-		JobEquipSpawned("Artist")
-
 /mob/living/carbon/human/normal/bartender
 	New()
 		..()
