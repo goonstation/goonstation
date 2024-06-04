@@ -537,12 +537,9 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while.
-		The dagger will stick into them, and it can be pulled out with help intent, or it will fall out shortly."})
 
 	/// dagger will stick into mob on thrown hit
-	var/can_stick_into_mob = TRUE
-	var/set_to_stick = FALSE
+	var/sticks_into_mob = TRUE
 
 	New()
 		..()
@@ -550,7 +547,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	get_help_message(dist, mob/user)
 		. = "Throw the dagger at someone to instantly incapacitate them for a short while."
-		if (src.can_stick_into_mob)
+		if (src.sticks_into_mob)
 			. += "Use in-hand to set whether it should stick into others on throw or not. It can be pulled out of them with help intent, or it will fall out shortly."
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
@@ -570,7 +567,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
-		if (src.can_stick_into_mob && istype(M, /mob/living) && M.get_stun_resist_mod() < 50)
+		if (src.sticks_into_mob && istype(M, /mob/living) && M.get_stun_resist_mod() < 50)
 			var/mob/living/L = M
 			L.daggers += src
 			src.set_loc(M)
@@ -612,7 +609,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
-	can_stick_into_mob = FALSE
+	sticks_into_mob = FALSE
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -628,8 +625,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
-	can_stick_into_mob = FALSE
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	sticks_into_mob = FALSE
 
 	gang
 		name = "familiar fighting knife"
@@ -662,7 +658,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
-	can_stick_into_mob = FALSE
+	sticks_into_mob = FALSE
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
