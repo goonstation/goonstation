@@ -1752,28 +1752,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.mind?.set_miranda(PROC_REF(inspector_miranda))
 		return
 
-/datum/job/special/random/director
-	name = "Regional Director"
-	receives_miranda = TRUE
-	cant_spawn_as_rev = TRUE
-	wages = PAY_EXECUTIVE
-
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/heads)
-	slot_jump = list(/obj/item/clothing/under/misc/NT)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/command)
-	slot_head = list(/obj/item/clothing/head/NTberet)
-	slot_suit = list(/obj/item/clothing/suit/wcoat)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_lhan = list(/obj/item/clipboard/with_pen)
-	items_in_backpack = list(/obj/item/device/flash)
-	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
-	New()
-		..()
-		src.access = get_all_accesses()
-
 /datum/job/special/random/diplomat
 	name = "Diplomat"
 	wages = PAY_DUMBCLOWN
