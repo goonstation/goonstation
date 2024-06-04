@@ -1507,8 +1507,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(prob(20))
-					M.reagents.add_reagent("capsaicin", rand(10,20) * mult)
+				if(prob(5))
+					M.reagents.add_reagent("capsaicin", rand(4,12) * mult)
 				if(prob(10))
 					M.reagents.add_reagent("histamine", rand(1,5) * mult)
 				..()
