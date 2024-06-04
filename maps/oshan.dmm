@@ -37271,6 +37271,9 @@
 /area/station/crew_quarters/quartersA)
 "jpJ" = (
 /obj/machinery/firealarm/west,
+/obj/machinery/computer/announcement/clown{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "jqr" = (

@@ -30454,6 +30454,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/announcement/clown{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "jhy" = (

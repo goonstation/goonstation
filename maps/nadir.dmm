@@ -21857,7 +21857,7 @@
 	},
 /area/station/crew_quarters/lounge)
 "jlF" = (
-/obj/reagent_dispensers/heliumtank,
+/obj/machinery/computer/announcement/clown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -26004,7 +26004,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/marker/supplymarker,
+/obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -33634,6 +33634,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"

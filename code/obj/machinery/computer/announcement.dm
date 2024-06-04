@@ -216,8 +216,9 @@
 
 /obj/machinery/computer/announcement/clown
 	req_access = null
-	name = "Clown Announcement Computer"
-	announcement_delay = 120 // DONT FORGET TO REMOVE THIS
+	name = "Illegal Announcement Computer"
+	icon_state = "announcementclown"
+	circuit_type = /obj/item/circuitboard/clown_announcement
 
 	send_message(mob/user, message)
 		. = ..()
@@ -226,8 +227,7 @@
 			new /obj/effects/explosion (src.loc)
 			playsound(src.loc, "explosion", 50, 1)
 			src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
-			user.shock(user, 50, stun_multiplier = 3,  ignore_gloves = 1)
-			//shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
+			user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
 
 			var/mob/living/carbon/clown = user
 			if(istype(clown))
@@ -235,6 +235,7 @@
 				S?["criminal"] = "*Arrest*"
 				S?["mi_crim"] = "Making a very irritating announcement."
 
+				clown.update_burning(15) // placed here since update_burning is only for mob/living
 			if(ID)
 				user.put_in_hand_or_eject(ID)
 			qdel(src)

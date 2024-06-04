@@ -3706,6 +3706,7 @@
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = 32
 	},
+/obj/machinery/computer/announcement/clown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "aAP" = (

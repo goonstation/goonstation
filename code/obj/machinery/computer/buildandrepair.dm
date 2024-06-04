@@ -175,6 +175,9 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/announcement
 	name = "Circuit board (Announcement Computer)"
 	computertype = "/obj/machinery/computer/announcement"
+/obj/item/circuitboard/clown_announcement
+	name = "Circuit board (Clown Announcement Computer)"
+	computertype = "/obj/machinery/computer/announcement/clown"
 
 /obj/item/circuitboard/siphon_control
 	name = "Circuit board (Siphon Control)"
