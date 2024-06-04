@@ -16,7 +16,7 @@ datum
 			fluid_g = 250
 			fluid_b = 250
 			transparency = 100
-			addiction_prob = 15//80
+			addiction_prob = 15
 			addiction_min = 5
 			overdose = 20
 			depletion_rate = 0.6
@@ -179,7 +179,7 @@ datum
 			fluid_b = 0
 			fluid_g = 200
 			transparency = 40
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 5
 			overdose = 20
 			value = 20 // 10 2 1 3 1 heat explosion :v
@@ -400,8 +400,8 @@ datum
 			fluid_r = 200
 			fluid_g = 185
 			fluid_b = 230
-			addiction_prob = 15//65
-			addiction_min = 10
+			addiction_prob = 15
+			addiction_min = 25
 			depletion_rate = 0.2
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.2
@@ -433,8 +433,8 @@ datum
 			fluid_r = 230
 			fluid_g = 220
 			fluid_b = 230
-			addiction_prob = 1 //It lasts a while, it's not as low as it seems
-			addiction_min = 100
+			addiction_prob = 2 //Less addictive than ethanol due to its higher depletion rate
+			addiction_min = 50
 			max_addiction_severity = "LOW"
 			stun_resist = 3
 			depletion_rate = 0.1
@@ -742,7 +742,7 @@ datum
 			fluid_b = 0
 			viscosity = 0.2
 			transparency = 190
-			addiction_prob = 15//70
+			addiction_prob = 15
 			addiction_min = 10
 			max_addiction_severity = "LOW"
 			overdose = 35 // raise if too low - trying to aim for one sleepypen load being problematic, two being deadlyish
@@ -965,7 +965,7 @@ datum
 			fluid_g = 100
 			fluid_b = 180
 			transparency = 250
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 10
 			overdose = 20
 			hunger_value = -0.1
@@ -1160,7 +1160,7 @@ datum
 			fluid_g = 250
 			fluid_b = 250
 			transparency = 220
-			addiction_prob = 10//60
+			addiction_prob = 10
 			addiction_min = 5
 			overdose = 20
 			depletion_rate = 0.6
