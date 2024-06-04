@@ -1459,6 +1459,62 @@
 
 // Reward management stuff
 
+/datum/achievementReward/contributor
+	title = "Contributor Rewards"
+	desc = "A whole host of things and buttons to reward you for contributing!"
+	required_medal = "Contributor"
+	once_per_round = 0
+	mobonly = 0
+
+	rewardActivate(mob/user)
+		ui_interact(user)
+		return 1
+
+	/// [name, desc, callback]
+	var/contrib_rewards = list(
+		list("Silly Screams", "Crazy silly screams for your character!", PROC_REF(sillyscream)),
+	)
+
+	ui_state(mob/user)
+		. = tgui_always_state
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ContributorRewards")
+			ui.open()
+
+	ui_static_data(mob/user)
+		var/titles = list()
+		var/descs = list()
+		for (var/reward in contrib_rewards)
+			titles += reward[1]
+			descs += reward[2]
+		. = list(
+			"rewardTitles" = titles,
+			"rewardDescs" = descs,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+
+		switch(action)
+			if("redeem")
+				var/reward_idx = text2num(params["reward_idx"])
+				INVOKE_ASYNC(src, contrib_rewards[reward_idx][3], ui.user)
+
+	proc/sillyscream(mob/M)
+		var/mob/living/living = M
+		if(istype( living ))
+			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.playsound_local_not_inworld(living.sound_scream, 100)
+			return 1
+		else
+			boutput( usr, SPAN_ALERT("Hmm.. I can't set the scream sound of that!") )
+			return 0
+
 /// Keeps track of once-per-round rewards
 /datum/player/var/list/claimed_rewards = list()
 
