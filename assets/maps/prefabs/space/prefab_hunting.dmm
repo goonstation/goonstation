@@ -45,7 +45,7 @@
 /area/prefab/huntingsupplies)
 "f" = (
 /obj/rack,
-/obj/item/ammo/bullets/a12/bird/two,
+/obj/item/gun/kinetic/sawnoff/birdshot,
 /turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "h" = (
@@ -104,8 +104,10 @@
 "t" = (
 /obj/decal/stripe_delivery,
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/kinetic/zipgun,
-/obj/item/ammo/bullets/bullet_22,
+/obj/item/pipebomb/frame{
+	pixel_y = 5
+	},
+/obj/item/cable_coil/yellow,
 /turf/simulated/floor/dojo,
 /area/prefab/huntingsupplies)
 "u" = (
@@ -285,7 +287,7 @@ t
 I
 c
 p
-f
+q
 s
 q
 p
