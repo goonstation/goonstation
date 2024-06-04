@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	is_match(var/datum/material/M)
 		. = ..()
 		if (!.) return
-		if (!src.match_property(M)) return FALSE
+		return src.match_property(M)
 
 	/// Returns whether the material property meets the threshold. Overwrite to have behavior other than >=
 	proc/match_property(var/datum/material/M)

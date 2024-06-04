@@ -2367,8 +2367,7 @@ datum
 			fluid_g = 31
 			fluid_b = 117
 			transparency = 175
-			addiction_prob = 1//10
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 10
 			overdose = 15
 			depletion_rate = 0.2
@@ -2595,8 +2594,7 @@ datum
 			fluid_g = 12
 			fluid_b = 74
 			transparency = 150
-			addiction_prob = 1//5
-			addiction_prob2 = 1
+			addiction_prob = 0.01
 			addiction_min = 15
 			overdose = 30
 			depletion_rate = 0.1
@@ -2653,8 +2651,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 30
-			addiction_prob = 15
-			addiction_prob2 = 25
+			addiction_prob = 3.75
 			addiction_min = 15
 			overdose = 30
 			var/effect_length = 0
@@ -2713,8 +2710,7 @@ datum
 			fluid_g = 122
 			fluid_b = 32
 			transparency = 200
-			addiction_prob = 1
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 15
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2778,8 +2774,7 @@ datum
 			fluid_g = 175
 			fluid_b = 255
 			transparency = 150
-			addiction_prob = 1//5
-			addiction_prob2 = 1
+			addiction_prob = 0.01
 			addiction_min = 15
 			depletion_rate = 0.1
 

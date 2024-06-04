@@ -573,7 +573,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\intangible\blob_overmind\ai.dm"
 #include "code\mob\living\intangible\flock\flockmind.dm"
 #include "code\mob\living\intangible\flock\flocktrace.dm"
-#include "code\mob\living\life\arrest_icon.dm"
 #include "code\mob\living\life\blindness.dm"
 #include "code\mob\living\life\blood.dm"
 #include "code\mob\living\life\bodytemp.dm"
