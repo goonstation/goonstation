@@ -6,13 +6,13 @@
 
 var/global/list/requirement_cache
 
-/proc/getRequirement(var/R_id)
+/proc/getManufacturingRequirement(var/R_id)
 	// Sanity checks that all requirement IDs resolved to instances in the cache
 	#ifdef CHECK_MORE_RUNTIMES
 	if (!istext(R_id))
-		CRASH("getRequirement() called with a non-text argument [R_id].")
+		CRASH("getManufacturingRequirement() called with a non-text argument [R_id].")
 	if (!(R_id in requirement_cache))
-		CRASH("getRequirement() called with an invalid requirement id [R_id].")
+		CRASH("getManufacturingRequirement() called with an invalid requirement id [R_id].")
 	#endif
 	return requirement_cache?[R_id]
 
@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		var/list/datum/manufacturing_requirement/requirement_instances = list()
 
 		for (var/requirement_id in src.requirements)
-			requirement_instances += getRequirement(requirement_id)
+			requirement_instances += getManufacturingRequirement(requirement_id)
 		src.requirements = requirement_instances
 
 	is_match(datum/material/M)

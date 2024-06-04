@@ -1582,7 +1582,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
 		for (var/R_id as anything in requirement_cache)
-			var/datum/manufacturing_requirement/R = getRequirement(R_id)
+			var/datum/manufacturing_requirement/R = getManufacturingRequirement(R_id)
 			if (R.is_match(M))
 				. += R.getID()
 
