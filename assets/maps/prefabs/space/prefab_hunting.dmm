@@ -1,0 +1,500 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"b" = (
+/obj/table/reinforced,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon{
+	pixel_y = 7;
+	pixel_x = 2
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"c" = (
+/obj/decal/stripe_delivery,
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_y = 4;
+	pixel_x = -4;
+	layer = 3.01
+	},
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"d" = (
+/obj/rack,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -4
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 4
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"e" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/east,
+/area/prefab/huntingsupplies)
+"f" = (
+/obj/rack,
+/obj/item/ammo/bullets/a12/bird/two,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"h" = (
+/obj/machinery/door/airlock/pyro{
+	requires_power = 0;
+	dir = 8
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"k" = (
+/obj/stool/chair/green,
+/mob/living/carbon/human/normal/assistant{
+	name = "Boxitt"
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"l" = (
+/obj/mapping_helper/airlock/welder,
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 4
+	},
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/plating,
+/area/prefab/huntingsupplies)
+"m" = (
+/turf/variableTurf/wall,
+/area/allowGenerate)
+"n" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"o" = (
+/mob/living/carbon/human/normal/assistant{
+	name = "Big Bill Hell"
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"p" = (
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/huntingsupplies)
+"q" = (
+/obj/rack,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"r" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/gang,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"s" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 8
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"t" = (
+/obj/decal/stripe_delivery,
+/obj/table/reinforced/industrial/auto,
+/obj/item/gun/kinetic/zipgun,
+/obj/item/ammo/bullets/bullet_22,
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"u" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"v" = (
+/obj/machinery/door/airlock/pyro/glass/mining{
+	requires_power = 0
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"w" = (
+/obj/rack,
+/obj/item/clothing/head/NTberet,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"x" = (
+/obj/decoration/vent/vent3{
+	pixel_y = 28
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"y" = (
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"z" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 4
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"A" = (
+/obj/random_pod_spawner/random_putt_spawner,
+/turf/simulated/floor/engine,
+/area/prefab/huntingsupplies)
+"C" = (
+/turf/simulated/floor/engine,
+/area/prefab/huntingsupplies)
+"D" = (
+/obj/machinery/light/small/blueish,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"E" = (
+/obj/decal/poster/flag/progressive{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"F" = (
+/obj/item/storage/secure/ssafe{
+	pixel_y = 32;
+	spawn_contents = list(/obj/item/gun/kinetic/sawnoff/birdshot);
+	name = "gun safe"
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"H" = (
+/obj/machinery/door_control{
+	id = "hunting_supplies";
+	pixel_y = 28
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine,
+/area/prefab/huntingsupplies)
+"I" = (
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_x = -32
+	},
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"J" = (
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"K" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine,
+/area/prefab/huntingsupplies)
+"L" = (
+/obj/rack,
+/obj/item/storage/pouch/highcap/midcap,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"M" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"P" = (
+/turf/simulated/floor/engine/caution/east,
+/area/prefab/huntingsupplies)
+"Q" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "hunting_supplies";
+	name = "Big Bill Hell's Hunting Supplies"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/huntingsupplies)
+"R" = (
+/obj/decal/stripe_delivery,
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/toolbox/mechanical/orange_tools,
+/turf/simulated/floor/dojo,
+/area/prefab/huntingsupplies)
+"S" = (
+/obj/reagent_dispensers/watertank/fountain{
+	pixel_y = 18;
+	layer = 3.01
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"T" = (
+/obj/table/reinforced,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"U" = (
+/obj/machinery/r_door_control{
+	id = "hunting_supplies"
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/prefab/huntingsupplies)
+"V" = (
+/obj/rack,
+/obj/item/fishing_rod/master,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"X" = (
+/obj/storage/secure/crate/weapon/armory,
+/obj/item/currency/spacecash/twothousandfivehundred,
+/obj/item/currency/spacecash/fivehundred,
+/turf/simulated/floor/wood/three,
+/area/prefab/huntingsupplies)
+"Y" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/simulated/floor/plating,
+/area/prefab/huntingsupplies)
+
+(1,1,1) = {"
+n
+n
+n
+n
+n
+n
+m
+m
+m
+m
+m
+m
+m
+n
+n
+"}
+(2,1,1) = {"
+n
+n
+p
+p
+p
+p
+p
+p
+p
+p
+p
+m
+m
+m
+n
+"}
+(3,1,1) = {"
+n
+n
+p
+t
+I
+c
+p
+f
+s
+q
+p
+m
+m
+m
+m
+"}
+(4,1,1) = {"
+n
+n
+p
+y
+u
+y
+p
+F
+o
+f
+p
+m
+m
+m
+m
+"}
+(5,1,1) = {"
+n
+n
+p
+y
+y
+R
+p
+r
+J
+J
+p
+m
+m
+m
+m
+"}
+(6,1,1) = {"
+n
+n
+p
+h
+p
+p
+p
+Y
+l
+Y
+p
+m
+m
+m
+m
+"}
+(7,1,1) = {"
+n
+n
+p
+J
+J
+T
+J
+M
+J
+s
+p
+m
+m
+m
+m
+"}
+(8,1,1) = {"
+n
+n
+p
+E
+k
+b
+J
+J
+J
+d
+p
+m
+m
+m
+m
+"}
+(9,1,1) = {"
+n
+n
+p
+x
+D
+p
+S
+L
+J
+w
+p
+m
+m
+m
+n
+"}
+(10,1,1) = {"
+n
+n
+p
+X
+J
+v
+z
+J
+J
+V
+p
+m
+m
+n
+n
+"}
+(11,1,1) = {"
+n
+n
+p
+p
+p
+p
+p
+a
+a
+p
+p
+n
+n
+n
+n
+"}
+(12,1,1) = {"
+n
+n
+n
+n
+n
+p
+H
+C
+C
+K
+p
+n
+n
+n
+n
+"}
+(13,1,1) = {"
+n
+n
+n
+n
+n
+p
+C
+C
+C
+A
+p
+n
+n
+n
+n
+"}
+(14,1,1) = {"
+n
+n
+n
+n
+n
+p
+e
+P
+P
+e
+p
+n
+n
+n
+n
+"}
+(15,1,1) = {"
+n
+n
+n
+n
+n
+U
+Q
+Q
+Q
+Q
+U
+n
+n
+n
+n
+"}
