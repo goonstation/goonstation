@@ -2021,6 +2021,69 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
 	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
 
+/datum/job/special/random/foodcritic
+	name = "Food Critic"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/shirt_pants_br)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc2 = list(/obj/item/paper)
+	slot_lhan = list(/obj/item/clipboard/with_pen)
+	items_in_backpack = list(/obj/item/item_box/postit)
+	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+
+/datum/job/special/random/pestcontrol
+	name = "Pest Control Specialist"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/gimmick/safari)
+	slot_head = list(/obj/item/clothing/head/safari)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_lhan = list(/obj/item/pet_carrier)
+	items_in_backpack = list(/obj/item/storage/box/mousetraps)
+	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+
+/datum/job/special/random/drugdealer
+	name = "Drug Dealer"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/mobster)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/cigpacket/propuffs)
+	slot_poc2 = list(/obj/item/cigpacket)
+	items_in_backpack = list(/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/methamphetamine, /obj/item/storage/pill_bottle/catdrugs)
+	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+
+/datum/job/special/random/vehiclemechanic
+	name = "Vehicle Mechanic" // fallback name, gets changed later
+	#ifdef UNDERWATER_MAP
+	name = "Submarine Mechanic"
+	#else
+	name = "Pod Mechanic"
+	#endif
+	wages = PAY_TRADESMAN
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
+	#ifdef UNDERWATER_MAP
+	items_in_backpack = list(/obj/item/preassembled_frame_box/sub, /obj/item/podarmor/armor_light, /obj/item/clothing/head/helmet/welding)
+	#else
+	items_in_backpack = list(/obj/item/preassembled_frame_box/putt, /obj/item/podarmor/armor_light, /obj/item/clothing/head/helmet/welding)
+	#endif
+	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+
+/datum/job/special/random/phonemerchant
+	name = "Phone Merchant"
+	wages = PAY_TRADESMAN
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/gimmick/merchant)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/electronics/soldering)
+	items_in_backpack = list(/obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone)
+	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+
 #ifdef HALLOWEEN
 /*
  * Halloween jobs

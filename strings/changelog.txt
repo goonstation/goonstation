@@ -1,8 +1,10 @@
 
-(t)sun jun 02 24
+(t)tue jun 04 24
 (u)Sord
+(*)Added a few new random gimmick jobs: Food Critic, Pest Control Specialist, Drug Dealer, Pod/Sub Mechanic, and Phone Merchant.
 (+)The Regional Director has been permanently fired.
 (+)The chef has posted a permanent job offer for a sous-chef! Any time there is a chef, a sous-chef slot will open up for late join instead of being a random job.
+(t)sun jun 02 24
 (u)Laboredih123
 (p)19265
 (e)🪲🗺|C-Bug, A-Mapping
