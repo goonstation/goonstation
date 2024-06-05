@@ -433,7 +433,7 @@ datum
 			fluid_r = 230
 			fluid_g = 220
 			fluid_b = 230
-			addiction_prob = 2 //Less addictive than ethanol due to its higher depletion rate
+			addiction_prob = 1 //Less addictive than ethanol due to its higher depletion rate
 			addiction_min = 50
 			max_addiction_severity = "LOW"
 			stun_resist = 3
