@@ -57,9 +57,6 @@ var/global/datum/game_servers/game_servers = new
 		var/list/data = params2list(textdata)
 		if(data["type"] != "game_servers")
 			return null
-		//vvvTEMPvvv
-		logTheThing(LOG_DEBUG, addr, "<b>XServerComm</b>: game_servers topic proc has been entered. Raw data: [html_encode(textdata)]")
-		//^^^TEMP^^^
 		if(data["subtype"] == "set_ip_port")
 			var/datum/game_server/reply_server = src.servers[data["sent_from"]]
 			if(isnull(reply_server))
