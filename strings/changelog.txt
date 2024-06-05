@@ -1,5 +1,10 @@
 
 (t)wed jun 05 24
+(u)Lord_Earthfire
+(p)19314
+(e)🆕⚖⚗🍝|C-Feature, C-Balance, A-Chemistry, A-Catering
+(+)The amount of fish oil in fish has been doubled.
+(+)Heating fish oil in closed containers can pyrolyse it to a usefull amount of oil, ash and potash.
 (u)Glamurio (Ryou)
 (p)19175
 (e)💅🐣|C-QoL, A-Respawning
