@@ -1142,6 +1142,7 @@
 		if (..())
 			return 1
 		owner.add_ability(/datum/blob_ability/build/launcher)
+		owner.tile_upgrade_contexts += new /datum/contextAction/blob_tile_upgrade/slime_launcher
 
 /datum/blob_upgrade/plasmaphyll
 	name = "Structural: Plasmaphyll"
@@ -1178,4 +1179,5 @@
 		if (..())
 			return 1
 		owner.add_ability(/datum/blob_ability/build/reflective)
+		owner.tile_upgrade_contexts += new /datum/contextAction/blob_tile_upgrade/reflective
 

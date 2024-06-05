@@ -121,17 +121,9 @@
 		if ("right" in pa)
 			right_click_action()
 		else if (src.type == /obj/blob && !(("alt" in pa) || ("shift" in pa) || ("ctrl" in pa)))
-			if (!src.contexts)
-				src.contexts = list()
-				var/datum/contextLayout/experimentalcircle/context_menu = new
-				context_menu.center = TRUE
-				src.contextLayout = context_menu
-				for(var/actionType in childrentypesof(/datum/contextAction/blob_tile_upgrade))
-					var/datum/contextAction/blob_tile_upgrade/upgrade = new actionType()
-					src.contexts += upgrade
-			var/mob/user = usr
+			var/mob/living/intangible/blob_overmind/user = usr
 			user.closeContextActions()
-			user.showContextActions(src.contexts, src, src.contextLayout)
+			user.showContextActions(user.tile_upgrade_contexts, src, user.contextLayout)
 		else
 			..()
 
@@ -1086,10 +1078,10 @@
 		return
 
 /datum/contextAction/blob_tile_upgrade
-	icon = 'icons/ui/context16x16.dmi'
+	icon = 'icons/mob/blob_ui.dmi'
 	desc = ""
-	icon_state = "wrench"
 	var/associated_ability
+	var/requires_unlock = FALSE
 
 	execute(obj/blob/blob_tile, mob/user)
 		if (QDELETED(blob_tile) || QDELETED(user))
@@ -1101,20 +1093,34 @@
 	checkRequirements()
 		return TRUE
 
+	cancel
+		name = "Cancel"
+		icon_state = "blob-exit"
+
+		execute()
+			return
+
 	thick_membrane
 		name = "Build Thick Membrane"
-		icon_state = "flag"
+		icon_state = "blob-wall"
 		associated_ability = /datum/blob_ability/build/wall
 
 	fire_membrane
 		name = "Build Fire-Resistant Membrane"
-		icon_state = "incarcerated"
+		icon_state = "blob-firewall"
 		associated_ability = /datum/blob_ability/build/firewall
 
 	slime_launcher
 		name = "Build Slime Launcher"
-		icon_state = "paroled"
+		icon_state = "blob-cannon"
 		associated_ability = /datum/blob_ability/build/launcher
+		requires_unlock = TRUE
+
+	reflective
+		name = "Build Reflective Membrane"
+		icon_state = "blob-reflective"
+		associated_ability = /datum/blob_ability/build/reflective
+		requires_unlock = TRUE
 
 /////////////////////////
 /// BLOB RELATED PROCS //

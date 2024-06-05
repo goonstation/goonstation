@@ -78,6 +78,9 @@
 
 	var/admin_override = FALSE //for sudo blobs
 
+	/// context upgrades available for left clicking tiles
+	var/list/datum/contextAction/tile_upgrade_contexts
+
 	proc/start_tutorial()
 		if (tutorial)
 			return
@@ -110,6 +113,15 @@
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
 		src.nucleus_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
+
+		// stored on blob overmind, otherwise contexts would need to be created for every tile clicked
+		src.tile_upgrade_contexts = list()
+		var/datum/contextLayout/experimentalcircle/context_menu = new
+		context_menu.center = TRUE
+		src.contextLayout = context_menu
+		for(var/datum/contextAction/blob_tile_upgrade/actionType as anything in childrentypesof(/datum/contextAction/blob_tile_upgrade))
+			if (!initial(actionType.requires_unlock))
+				src.tile_upgrade_contexts += new actionType()
 
 		SPAWN(0)
 			while (src)
@@ -222,6 +234,10 @@
 		else
 			src.remove_all_abilities()
 			src.remove_all_upgrades()
+
+			for (var/context in src.tile_upgrade_contexts)
+				qdel(context)
+				src.tile_upgrade_contexts = null
 
 			boutput(src, SPAN_ALERT("<b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b>"))
 			src.ghostize()
