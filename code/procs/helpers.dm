@@ -368,21 +368,21 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 
 /// Adds zeroes to the beginning of a string until it reaches the desired length
 /proc/add_zero(text, desired_length)
-	. = "[text]" // We stringify this because
+	. = "[text]" // We stringify this because the input might be a number
 	if ((desired_length - length(.)) <= 0)
 		return .
 	return (num2text(0, desired_length - length(.), 10) + .)
 
 /// Adds `char` ahead of `text` until it reaches `length` characters total
 /proc/pad_leading(text, length, char = " ")
-	. = "[text]"
+	. = "[text]" // We stringify this because the input might be a number
 	var/count = length - length_char(.)
 	var/list/chars_to_add[max(count + 1, 0)]
 	return jointext(chars_to_add, char) + .
 
 /// Adds `char` after `text` until it reaches `length` characters total
 /proc/pad_trailing(text, length, char = " ")
-	. = "[text]"
+	. = "[text]" // We stringify this because the input might be a number
 	var/count = length - length_char(.)
 	var/list/chars_to_add[max(count + 1, 0)]
 	return . + jointext(chars_to_add, char)
