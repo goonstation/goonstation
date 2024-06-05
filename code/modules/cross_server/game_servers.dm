@@ -62,6 +62,8 @@ var/global/datum/game_servers/game_servers = new
 			if(isnull(reply_server))
 				return FALSE
 			if(reply_server.waiting_for_ip_port_auth != data["auth"])
+				logTheThing(LOG_DEBUG, reply_server, "<b>XServerComm</b>:Unable to establish cross server trust, Received invalid or expired auth code.")
+				logTheThing(LOG_DIARY, reply_server, "XServerComm:Unable to establish cross server trust, Received invalid or expired auth code.", "debug")
 				return FALSE
 			reply_server.ip_port = addr
 			return TRUE
@@ -158,7 +160,7 @@ var/global/datum/game_servers/game_servers = new
 					src.waiting_for_ip_port_auth = FALSE
 					logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, World.Export returned falsey value")
 					logTheThing(LOG_DIARY, src.id, "XServerComm:Unable to establish cross server trust, World.Export returned falsey value.", "debug")
-					sleep(5 SECONDS)
+					sleep(10 SECONDS)
 		return src.ip_port
 
 	proc/is_me()
