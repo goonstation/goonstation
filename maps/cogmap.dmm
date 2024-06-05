@@ -5000,6 +5000,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "atP" = (
