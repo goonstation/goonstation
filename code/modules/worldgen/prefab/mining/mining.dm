@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 
 	huntingsupplies
 		maxNum = 1
-		probability = 25
+		probability = 15
 		prefabPath = "assets/maps/prefabs/space/prefab_hunting.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
