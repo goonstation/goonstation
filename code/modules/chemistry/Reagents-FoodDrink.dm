@@ -2649,8 +2649,6 @@ datum
 			taste = "herbal"
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 0.01
-			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
 			caffeine_content = 0.2
 			var/list/flushed_reagents = list("toxin","toxic_slurry")
@@ -2684,8 +2682,6 @@ datum
 			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 0.02
-			addiction_min = 10
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -4319,6 +4315,7 @@ datum
 			fluid_b = 220
 			transparency = 160
 			addiction_prob = 100
+			addiction_min = 0
 			overdose = 35
 			taste = "bone-rattling"
 
@@ -4798,8 +4795,6 @@ datum
 			thirst_value = 1
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 0.02
-			addiction_min = 10
 			var/list/flushed_reagents = list("cholesterol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
