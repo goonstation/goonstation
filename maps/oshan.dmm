@@ -14040,7 +14040,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aWm" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/tank/anesthetic,
 /turf/simulated/floor/grime,
 /area/iss)
 "aWp" = (
