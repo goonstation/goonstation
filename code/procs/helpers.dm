@@ -374,14 +374,14 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	return (num2text(0, desired_length - length(.), 10) + .)
 
 /// Adds `char` ahead of `text` until it reaches `length` characters total
-/proc/add_leading(text, length, char = " ")
+/proc/pad_leading(text, length, char = " ")
 	. = "[text]"
 	var/count = length - length_char(.)
 	var/list/chars_to_add[max(count + 1, 0)]
 	return jointext(chars_to_add, char) + .
 
 /// Adds `char` after `text` until it reaches `length` characters total
-/proc/add_trailing(text, length, char = " ")
+/proc/pad_trailing(text, length, char = " ")
 	. = "[text]"
 	var/count = length - length_char(.)
 	var/list/chars_to_add[max(count + 1, 0)]
@@ -451,7 +451,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		else if(delta % 2)
 			. = " " + message
 		delta--
-		var/spaces = add_leading("",delta/2-1)
+		var/spaces = pad_leading("",delta/2-1)
 		. = spaces + . + spaces
 
 /proc/dd_limittext(message, length)
