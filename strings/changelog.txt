@@ -1,5 +1,25 @@
 
+(t)wed jun 05 24
+(u)Zamujasa
+(p)19249
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Players who disconnect now have a little "Zz" over their head.
+(*)Players who are in VR, etc. have an icon over their head.
+(*)The AI core and AI shells similarly have icons.
+(u)Lord_Earthfire
+(p)19314
+(e)🆕⚖⚗🍝|C-Feature, C-Balance, A-Chemistry, A-Catering
+(+)The amount of fish oil in fish has been doubled.
+(+)Heating fish oil in closed containers can pyrolyse it to a usefull amount of oil, ash and potash.
+(u)Glamurio (Ryou)
+(p)19175
+(e)💅🐣|C-QoL, A-Respawning
+(*)The mail never sleeps, it merely rests. And now, Mail Couriers never sleep either, they join at roundstart.
 (t)tue jun 04 24
+(u)Mordent
+(p)19337
+(e)🆕📦🍝|C-Feature, A-Game-Objects, A-Catering
+(+)Added fishing locations: flower vases, ice dispensers, glass recyclers, fuel/foam tanks, ketchup/mustard bottles
 (u)Sord
 (*)Added a few new random gimmick jobs: Food Critic, Pest Control Specialist, Drug Dealer, Pod/Sub Mechanic, and Phone Merchant.
 (+)The Regional Director has been permanently fired.

@@ -1099,6 +1099,28 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Staff Assistant")
 		return
 
+/datum/job/civilian/mail_courier
+	name = "Mail Courier"
+	linkcolor = "#0099FF"
+	alias_names = "Mailman"
+	wages = PAY_TRADESMAN
+	limit = 1
+	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
+	slot_head = list(/obj/item/clothing/head/mailcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_ears = list(/obj/item/device/radio/headset/mail)
+	slot_poc1 = list(/obj/item/pinpointer/mail_recepient)
+	slot_belt = list(/obj/item/device/pda2/quartermaster)
+	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
+	alt_names = list("Head of Deliverying", "Mail Bringer")
+	wiki_link = "https://wiki.ss13.co/Mailman"
+
+	New()
+		..()
+		src.access = get_access("Mail Courier")
+		return
+
 /datum/job/civilian/clown
 	name = "Clown"
 	limit = 1
@@ -1476,28 +1498,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	New()
 		..()
 		src.access = get_access("Space Cowboy")
-		return
-
-/datum/job/special/mail_courier
-	name = "Mail Courier"
-	linkcolor = "#0099FF"
-	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
-	limit = 1
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
-	slot_head = list(/obj/item/clothing/head/mailcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_ears = list(/obj/item/device/radio/headset/mail)
-	slot_poc1 = list(/obj/item/pinpointer/mail_recepient)
-	slot_belt = list(/obj/item/device/pda2/quartermaster)
-	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Mail Bringer")
-	wiki_link = "https://wiki.ss13.co/Mailman"
-
-	New()
-		..()
-		src.access = get_access("Mail Courier")
 		return
 
 /datum/job/special/stowaway
