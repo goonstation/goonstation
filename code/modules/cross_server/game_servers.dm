@@ -57,26 +57,37 @@ var/global/datum/game_servers/game_servers = new
 		var/list/data = params2list(textdata)
 		if(data["type"] != "game_servers")
 			return null
+		//vvvTEMPvvv
+		logTheThing(LOG_DEBUG, addr, "<b>XServerComm</b>: game_servers topic proc has been entered. Raw data: [html_encode(textdata)]")
+		//^^^TEMP^^^
 		if(data["subtype"] == "set_ip_port")
 			var/datum/game_server/reply_server = src.servers[data["sent_from"]]
 			if(isnull(reply_server))
+				logTheThing(LOG_DEBUG, html_encode(data["sent_from"]), "<b>XServerComm</b>: Unable to establish cross server trust, 'set_ip_port' sender not found in servers list.")
+				logTheThing(LOG_DIARY, html_encode(data["sent_from"]), "XServerComm: Unable to establish cross server trust, 'set_ip_port' sender not found in servers list.", "debug")
 				return FALSE
 			if(reply_server.waiting_for_ip_port_auth != data["auth"])
-				logTheThing(LOG_DEBUG, reply_server, "<b>XServerComm</b>:Unable to establish cross server trust, Received invalid or expired auth code.")
-				logTheThing(LOG_DIARY, reply_server, "XServerComm:Unable to establish cross server trust, Received invalid or expired auth code.", "debug")
+				logTheThing(LOG_DEBUG, reply_server, "<b>XServerComm</b>: Unable to establish cross server trust, Received invalid or expired auth code.")
+				logTheThing(LOG_DIARY, reply_server, "XServerComm: Unable to establish cross server trust, Received invalid or expired auth code.", "debug")
 				return FALSE
 			reply_server.ip_port = addr
 			return TRUE
 		if(data["subtype"] == "get_ip_port")
 			var/datum/game_server/reply_server = src.servers[data["reply_to"]]
 			if(isnull(reply_server))
+				logTheThing(LOG_DEBUG, html_encode(data["reply_to"]), "<b>XServerComm</b>: Unable to establish cross server trust, 'get_ip_port' unknown reply server.")
+				logTheThing(LOG_DIARY, html_encode(data["reply_to"]), "XServerComm: Unable to establish cross server trust, 'get_ip_port' unknown reply server.", "debug")
 				return FALSE
 			reply_server.send_message(list("type"="game_servers", "subtype"="set_ip_port", "sent_from"=config.server_id, "auth"=data["auth"]))
 			return TRUE
 		var/datum/game_server/server = src.find_by_ip_port(addr)
 		if(isnull(server))
+			logTheThing(LOG_DEBUG, addr, "<b>XServerComm</b>: Received message from [addr], but server trust has not yet been established.")
+			logTheThing(LOG_DIARY, addr, "XServerComm: Received message from [addr], but server trust has not yet been established.", "debug")
 			return null
 		if(!(data["subtype"] in src.message_kinds))
+			logTheThing(LOG_DEBUG, server.id, "<b>XServerComm</b>: Received message from [server.id], but message type [html_encode(data["subtype"])] is unrecognized.")
+			logTheThing(LOG_DIARY, server.id, "XServerComm: Received message from [server.id], but message type [html_encode(data["subtype"])] is unrecognized.", "debug")
 			return null
 		var/datum/cross_server_message/csm = src.message_kinds[data["subtype"]]
 		return csm.receive(data, server)
@@ -133,6 +144,8 @@ var/global/datum/game_servers/game_servers = new
 		src.ghost_notif_target = ghost_notif_target
 #ifdef LIVE_SERVER
 		SPAWN(0)
+			if (src.id == config.server_id)
+				return
 			get_ip_port()
 #endif
 
