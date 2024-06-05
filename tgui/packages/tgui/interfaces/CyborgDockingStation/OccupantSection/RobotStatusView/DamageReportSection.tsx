@@ -67,35 +67,35 @@ const PartDisplay = (props: PartDisplayProps) => {
         <Box bold>MISSING!</Box>
       </LabeledList.Item>
     );
-  } else {
-    const partBluntPercent = Math.floor((partData.dmg_blunt / partData.max_health) * 100);
-    const partBurnsPercent = Math.floor((partData.dmg_burns / partData.max_health) * 100);
-    if (partBluntPercent || partBurnsPercent) {
-      return (
-        <LabeledList.Item label={label}>
-          <Flex>
-            <Flex.Item grow={1}>
-              <Flex>
-                <Flex.Item backgroundColor={COLORS.damageType.brute} width={partBluntPercent + '%'} />
-                <Flex.Item backgroundColor={COLORS.damageType.burn} width={partBurnsPercent + '%'} />
-                <Flex.Item grow={1} backgroundColor="#000000" stretch>
-                  &nbsp;
-                </Flex.Item>
-              </Flex>
-            </Flex.Item>
-            <Flex.Item shrink>
-              <Flex>
-                <Flex.Item shrink width="25px" backgroundColor="#330000" color={COLORS.damageType.brute} bold>
-                  <Box textAlign="center">{partBluntPercent > 0 ? partBluntPercent : '--'}</Box>
-                </Flex.Item>
-                <Flex.Item shrink width="25px" backgroundColor={'#331100'} color={COLORS.damageType.burn} bold>
-                  <Box textAlign="center">{partBurnsPercent > 0 ? partBurnsPercent : '--'}</Box>
-                </Flex.Item>
-              </Flex>
-            </Flex.Item>
-          </Flex>
-        </LabeledList.Item>
-      );
-    }
   }
+  const partBluntPercent = Math.floor((partData.dmg_blunt / partData.max_health) * 100);
+  const partBurnsPercent = Math.floor((partData.dmg_burns / partData.max_health) * 100);
+  if (partBluntPercent || partBurnsPercent) {
+    return (
+      <LabeledList.Item label={label}>
+        <Flex>
+          <Flex.Item grow={1}>
+            <Flex>
+              <Flex.Item backgroundColor={COLORS.damageType.brute} width={partBluntPercent + '%'} />
+              <Flex.Item backgroundColor={COLORS.damageType.burn} width={partBurnsPercent + '%'} />
+              <Flex.Item grow={1} backgroundColor="#000000" stretch>
+                &nbsp;
+              </Flex.Item>
+            </Flex>
+          </Flex.Item>
+          <Flex.Item shrink>
+            <Flex>
+              <Flex.Item shrink width="25px" backgroundColor="#330000" color={COLORS.damageType.brute} bold>
+                <Box textAlign="center">{partBluntPercent > 0 ? partBluntPercent : '--'}</Box>
+              </Flex.Item>
+              <Flex.Item shrink width="25px" backgroundColor={'#331100'} color={COLORS.damageType.burn} bold>
+                <Box textAlign="center">{partBurnsPercent > 0 ? partBurnsPercent : '--'}</Box>
+              </Flex.Item>
+            </Flex>
+          </Flex.Item>
+        </Flex>
+      </LabeledList.Item>
+    );
+  }
+  return null;
 };

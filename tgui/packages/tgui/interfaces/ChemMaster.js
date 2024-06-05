@@ -135,7 +135,6 @@ export const SelectIconModal = (props, context) => {
       onClick={() => { set_icon(index); }}>
       <Image
         height="32px" width="32px"
-        pixelated
         src={`data:image/png;base64,${icon_list !== ICON_LIST_PILLS ? item[1] : item}`}
         style={{
           'vertical-align': 'middle',
@@ -187,7 +186,6 @@ export const IconButtonControl = (props) => {
         onClick={() => modal_function(true)}>
         <Image
           height="32px" width="32px"
-          pixelated
           src={`data:image/png;base64,${imageb64}`}
           style={{
             'vertical-align': 'middle',
