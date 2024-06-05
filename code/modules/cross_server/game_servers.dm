@@ -153,11 +153,11 @@ var/global/datum/game_servers/game_servers = new
 					else
 						success = FALSE
 						logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, challenge response attempt timed out.")
-						logTheThing(LOG_DIARY, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, challenge response attempt timed out.", "debug")
+						logTheThing(LOG_DIARY, src.id, "XServerComm:Unable to establish cross server trust, challenge response attempt timed out.", "debug")
 				if(!success)
 					src.waiting_for_ip_port_auth = FALSE
 					logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, World.Export returned falsey value")
-					logTheThing(LOG_DIARY, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, World.Export returned falsey value.", "debug")
+					logTheThing(LOG_DIARY, src.id, "XServerComm:Unable to establish cross server trust, World.Export returned falsey value.", "debug")
 					sleep(5 SECONDS)
 		return src.ip_port
 
