@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	return src
 
 /obj/item/reagent_containers/food/fish/proc/make_reagents()
-	src.reagents.add_reagent("fishoil",10)
+	src.reagents.add_reagent("fishoil", 20)
 	return
 
 
