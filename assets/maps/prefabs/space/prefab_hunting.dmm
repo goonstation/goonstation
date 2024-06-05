@@ -17,17 +17,10 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "c" = (
-/obj/decal/stripe_delivery,
-/obj/table/reinforced/industrial/auto,
-/obj/item/reagent_containers/glass/oilcan{
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 4;
-	pixel_x = -4;
-	layer = 3.01
-	},
-/turf/simulated/floor/dojo,
+/obj/item/currency/spacecash/twothousandfivehundred,
+/obj/item/currency/spacecash/fivehundred,
+/obj/storage/secure/crate,
+/turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "d" = (
 /obj/rack,
@@ -64,12 +57,9 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "l" = (
-/obj/mapping_helper/airlock/welder,
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 4
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/plating,
+/obj/rack,
+/obj/item/instrument/whistle,
+/turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "m" = (
 /turf/variableTurf/wall,
@@ -103,11 +93,15 @@
 /area/prefab/huntingsupplies)
 "t" = (
 /obj/decal/stripe_delivery,
-/obj/table/reinforced/industrial/auto,
-/obj/item/pipebomb/frame{
-	pixel_y = 5
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_y = 12
 	},
-/obj/item/cable_coil/yellow,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_y = 4;
+	pixel_x = -4;
+	layer = 3.01
+	},
+/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/dojo,
 /area/prefab/huntingsupplies)
 "u" = (
@@ -187,9 +181,12 @@
 /turf/simulated/floor/engine,
 /area/prefab/huntingsupplies)
 "L" = (
-/obj/rack,
-/obj/item/storage/pouch/highcap/midcap,
-/turf/simulated/floor/wood/three,
+/obj/mapping_helper/airlock/welder,
+/obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/prefab/huntingsupplies)
 "M" = (
 /obj/machinery/space_heater,
@@ -208,17 +205,13 @@
 /area/prefab/huntingsupplies)
 "R" = (
 /obj/decal/stripe_delivery,
-/obj/table/reinforced/industrial/auto,
 /obj/item/storage/toolbox/mechanical/orange_tools,
+/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/dojo,
 /area/prefab/huntingsupplies)
 "S" = (
-/obj/reagent_dispensers/watertank/fountain{
-	pixel_y = 18;
-	layer = 3.01
-	},
-/turf/simulated/floor/wood/three,
-/area/prefab/huntingsupplies)
+/turf/space,
+/area/allowGenerate)
 "T" = (
 /obj/table/reinforced,
 /turf/simulated/floor/wood/three,
@@ -235,10 +228,13 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/huntingsupplies)
 "X" = (
-/obj/storage/secure/crate/weapon/armory,
-/obj/item/currency/spacecash/twothousandfivehundred,
-/obj/item/currency/spacecash/fivehundred,
-/turf/simulated/floor/wood/three,
+/obj/decal/stripe_delivery,
+/obj/item/pipebomb/frame{
+	pixel_y = 5
+	},
+/obj/item/cable_coil/yellow,
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/dojo,
 /area/prefab/huntingsupplies)
 "Y" = (
 /obj/mapping_helper/wingrille_spawn/bulletproof,
@@ -246,12 +242,6 @@
 /area/prefab/huntingsupplies)
 
 (1,1,1) = {"
-n
-n
-n
-n
-n
-n
 m
 m
 m
@@ -259,33 +249,56 @@ m
 m
 m
 m
-n
-n
+m
+m
+m
+m
+m
+m
+S
+S
 "}
 (2,1,1) = {"
-n
-n
-p
-p
-p
-p
-p
-p
-p
-p
-p
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
 m
 m
 m
 n
 "}
 (3,1,1) = {"
-n
-n
+m
+m
 p
-t
+p
+p
+p
+p
+p
+p
+p
+p
+m
+m
+m
+m
+"}
+(4,1,1) = {"
+m
+m
+p
+X
 I
-c
+t
 p
 q
 s
@@ -296,9 +309,9 @@ m
 m
 m
 "}
-(4,1,1) = {"
+(5,1,1) = {"
 n
-n
+m
 p
 y
 u
@@ -313,9 +326,9 @@ m
 m
 m
 "}
-(5,1,1) = {"
+(6,1,1) = {"
 n
-n
+m
 p
 y
 y
@@ -330,7 +343,7 @@ m
 m
 m
 "}
-(6,1,1) = {"
+(7,1,1) = {"
 n
 n
 p
@@ -339,7 +352,7 @@ p
 p
 p
 Y
-l
+L
 Y
 p
 m
@@ -347,7 +360,7 @@ m
 m
 m
 "}
-(7,1,1) = {"
+(8,1,1) = {"
 n
 n
 p
@@ -364,7 +377,7 @@ m
 m
 m
 "}
-(8,1,1) = {"
+(9,1,1) = {"
 n
 n
 p
@@ -381,15 +394,15 @@ m
 m
 m
 "}
-(9,1,1) = {"
+(10,1,1) = {"
 n
 n
 p
 x
 D
 p
-S
-L
+J
+l
 J
 w
 p
@@ -398,11 +411,11 @@ m
 m
 n
 "}
-(10,1,1) = {"
+(11,1,1) = {"
 n
 n
 p
-X
+c
 J
 v
 z
@@ -415,7 +428,7 @@ m
 n
 n
 "}
-(11,1,1) = {"
+(12,1,1) = {"
 n
 n
 p
@@ -432,7 +445,7 @@ n
 n
 n
 "}
-(12,1,1) = {"
+(13,1,1) = {"
 n
 n
 n
@@ -449,7 +462,7 @@ n
 n
 n
 "}
-(13,1,1) = {"
+(14,1,1) = {"
 n
 n
 n
@@ -466,7 +479,7 @@ n
 n
 n
 "}
-(14,1,1) = {"
+(15,1,1) = {"
 n
 n
 n
@@ -483,7 +496,7 @@ n
 n
 n
 "}
-(15,1,1) = {"
+(16,1,1) = {"
 n
 n
 n
