@@ -936,6 +936,13 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 				direction = pick(cardinal)
 		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
 		#else
+		var/turf/space/sample = locate()
+		if(!sample?.starlight)
+			SPAWN(world.tick_lag)
+				sample = locate()
+				src.underlays += sample?.starlight
+		else
+			src.underlays += sample?.starlight
 		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
 		#endif
 		I.plane = PLANE_SPACE
@@ -956,6 +963,24 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 /turf/simulated/floor/glassblock/transparent/purple
 	icon_state = "glasstr_purple"
+
+/turf/simulated/floor/glassblock/transparent/large
+	icon_state = "glasstr_large_cyan"
+
+/turf/simulated/floor/glassblock/transparent/large/cyan
+	icon_state = "glasstr_large_cyan"
+
+/turf/simulated/floor/glassblock/transparent/large/indigo
+	icon_state = "glasstr_large_indigo"
+
+/turf/simulated/floor/glassblock/transparent/large/red
+	icon_state = "glasstr_large_red"
+
+/turf/simulated/floor/glassblock/transparent/large/grey
+	icon_state = "glasstr_large_grey"
+
+/turf/simulated/floor/glassblock/transparent/large/purple
+	icon_state = "glasstr_large_purple"
 
 /////////////////////////////////////////
 
@@ -2676,6 +2701,59 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock)
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
+	connect_diagonal = 1
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock)
+	connects_to_exceptions = list()
+	connects_with_overlay = list()
+	connects_with_overlay_exceptions = list()
+/turf/simulated/floor/auto/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/glass_floor_auto.dmi'
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+	mat_changename = FALSE
+	can_burn = FALSE
+	can_break = FALSE
+	icon_state = "grey-0"
+	mod = "grey-"
+	default_material = "glass"
+
+	New()
+		..()
+		var/image/I
+		#ifdef UNDERWATER_MAP
+		var/sand_icon
+		var/direction
+		switch(rand(1, 3))
+			if(1)
+				sand_icon = "sand_other_texture"
+				direction = pick(alldirs)
+			if(2)
+				sand_icon = "sand_other_texture2"
+				direction = pick(alldirs)
+			if(3)
+				sand_icon = "sand_other_texture3"
+				direction = pick(cardinal)
+		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
+		#else
+		var/turf/space/sample = locate()
+		if(!sample?.starlight)
+			SPAWN(world.tick_lag)
+				sample = locate()
+				src.underlays += sample?.starlight
+		else
+			src.underlays += sample?.starlight
+		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		#endif
+		I.plane = PLANE_SPACE
+		src.underlays += I
+		..()
+
 
 /turf/unsimulated/floor/pool
 	mat_changename = FALSE
