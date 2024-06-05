@@ -65,7 +65,7 @@
 			if (src in human_idiot.organHolder?.stomach?.stomach_contents)
 				boutput(human_idiot, SPAN_ALERT("You feel your stomach suddenly bloat horribly!"))
 				human_idiot.organHolder.stomach.eject(src)
-				human_idiot.organHolder.stomach.take_damage(5)
+				human_idiot.organHolder.stomach.take_damage(10)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
