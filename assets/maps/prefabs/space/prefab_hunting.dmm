@@ -209,9 +209,6 @@
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/dojo,
 /area/prefab/huntingsupplies)
-"S" = (
-/turf/space,
-/area/allowGenerate)
 "T" = (
 /obj/table/reinforced,
 /turf/simulated/floor/wood/three,
@@ -255,8 +252,8 @@ m
 m
 m
 m
-S
-S
+n
+n
 "}
 (2,1,1) = {"
 m
