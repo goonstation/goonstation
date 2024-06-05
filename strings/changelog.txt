@@ -1,5 +1,11 @@
 
 (t)wed jun 05 24
+(u)Zamujasa
+(p)19249
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Players who disconnect now have a little "Zz" over their head.
+(*)Players who are in VR, etc. have an icon over their head.
+(*)The AI core and AI shells similarly have icons.
 (u)Lord_Earthfire
 (p)19314
 (e)🆕⚖⚗🍝|C-Feature, C-Balance, A-Chemistry, A-Catering
