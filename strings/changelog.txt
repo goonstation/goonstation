@@ -1,5 +1,9 @@
 
 (t)tue jun 04 24
+(u)Mordent
+(p)19337
+(e)🆕📦🍝|C-Feature, A-Game-Objects, A-Catering
+(+)Added fishing locations: flower vases, ice dispensers, glass recyclers, fuel/foam tanks, ketchup/mustard bottles
 (u)Sord
 (*)Added a few new random gimmick jobs: Food Critic, Pest Control Specialist, Drug Dealer, Pod/Sub Mechanic, and Phone Merchant.
 (+)The Regional Director has been permanently fired.
