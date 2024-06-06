@@ -8709,6 +8709,10 @@
 /area/station/science/teleporter)
 "aHt" = (
 /obj/machinery/vending/jobclothing/research,
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/light_purpleish;
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
