@@ -1111,8 +1111,6 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			set_head(M.organHolder.head)
 
 	disposing()
-		if (ishuman(src.mob))
-			src.mob.mob_flags &= ~IS_BONEY
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
@@ -1173,7 +1171,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			src.mob.mind.transfer_to(skele_controller)
 			H.contents += skele_controller // the pilot is in the suit
 
-			return MUTRACE_ONDEATH_DEFER_DELETE
+			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"
