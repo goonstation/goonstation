@@ -111,14 +111,8 @@ git branch -u upstream/master
 ```
 After doing this you can synchronize your master branch with the main Goonstation one simply by pressing the ![](https://i.imgur.com/WFbG8w3.png) button at the bottom left.
 
-You're just about done with that! Just one last thing you need to manually do.
-
-### Step 6: Fixing Up :wrench: 
-
-++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.** You can run the `initial_setup.bat` file at the root of the repository to do this automatically.
-
 :::info
-If you're a Goonstation dev, run `git submodule update --init` instead of the prior step.
+If you're a Goonstation Developer (Admin), run `git submodule update --init` at this point.
 :::
 
 That's it! Your local codebase is all set up to contribute now.

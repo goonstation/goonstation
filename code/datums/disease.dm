@@ -96,6 +96,8 @@
 		if (affected_mob)
 			if (affected_mob.ailments)
 				affected_mob.ailments -= src
+			if (!length(affected_mob.ailments))
+				affected_mob.delStatus("active_ailments")
 			affected_mob = null
 
 		master = null
@@ -171,6 +173,8 @@
 
 	proc/on_infection()
 		master.on_infection(affected_mob, src)
+		if (!affected_mob.ailment_immune && (src in affected_mob.ailments))
+			affected_mob.setStatus("active_ailments", INFINITE_STATUS)
 		return
 
 	proc/surgery(var/mob/living/surgeon, var/mob/living/affected_mob)
@@ -491,7 +495,7 @@
 		AD.master = A
 		AD.affected_mob = src
 		src.ailments += AD
-
+		AD.on_infection()
 		return AD
 
 	else
@@ -507,6 +511,7 @@
 		AD.master = A
 		AD.affected_mob = src
 		src.ailments += AD
+		AD.on_infection()
 
 		return AD
 

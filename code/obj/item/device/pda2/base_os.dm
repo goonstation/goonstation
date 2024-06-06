@@ -809,10 +809,10 @@
 				if (!(signal.data["group"] in src.master.mailgroups) && !(signal.data["group"] in src.master.alertgroups)) // not a member of the specified group; discard
 					return
 
-			var/filename = signal.data["file_name"]
+			var/filename = html_encode(signal.data["file_name"])
 			var/sender = signal.data["sender"]
-			var/sendername = signal.data["sender_name"]
-			var/senderassignment = signal.data["sender_assignment"]
+			var/sendername = html_encode(signal.data["sender_name"])
+			var/senderassignment = html_encode(signal.data["sender_assignment"])
 			var/file_ext = signal.data["file_ext"]
 			var/filesize = signal.data["file_size"]
 			var/signalTag = signal.data["tag"]
@@ -834,24 +834,22 @@
 					if(!message_on || !signal.data["message"])
 						return
 
-					var/senderName = html_encode(signal.data["sender_name"])
-					if(!senderName)
-						senderName = "!Unknown!"
+					if(!sendername)
+						sendername = "!Unknown!"
 
-					var/senderAssignment = html_encode(signal.data["sender_assignment"])
-					var/messageFrom = senderName
-					if (senderAssignment)
-						messageFrom = "[messageFrom] - [senderAssignment]"
+					var/messageFrom = sendername
+					if (senderassignment)
+						messageFrom = "[messageFrom] - [senderassignment]"
 
 					if((length(signal.data["sender"]) == 8) && (is_hex(signal.data["sender"])) )
 						if (!(signal.data["sender"] in src.detected_pdas))
 							src.detected_pdas += signal.data["sender"]
-						src.detected_pdas[signal.data["sender"]] = senderName
-						src.master.pdasay_autocomplete[senderName] = signal.data["sender"]
+						src.detected_pdas[signal.data["sender"]] = sendername
+						src.master.pdasay_autocomplete[sendername] = signal.data["sender"]
 
 					//Only add the reply link if the sender is another pda2.
 
-					src.AddCaller(signal.data["sender"], senderName)
+					src.AddCaller(signal.data["sender"], sendername)
 
 					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
@@ -860,7 +858,7 @@
 						else
 							senderstring += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.alertgroups) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 
-					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
+					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[html_encode(signal.data["message"])]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
 					if(!src.message_silent)
 						alert_beep = src.message_tone
@@ -872,7 +870,7 @@
 							if (src.master)
 								src.master.explode()
 
-					if(senderName in src.blocked_numbers)
+					if(sendername in src.blocked_numbers)
 						return
 
 					var/previewtext = ((islist(signalTag) && ("preview_message" in signalTag)) || signalTag == "preview_message")
@@ -880,7 +878,7 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(senderName))
+					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(sendername))
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
@@ -1047,14 +1045,14 @@
 			if(!(src.holder in src.master))
 				return 1
 
-			message = copytext(adminscrub(message), 1, 257)
+			message = copytext(message, 1, 257)
 
 			phrase_log.log_phrase("pda", message)
 
 			if (findtext(message, "bitcoin") != 0 || findtext(message, "drug") != 0 || findtext(message, "pharm") != 0 || findtext(message, "lottery") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
 				usr.unlock_medal("Spamhaus", 1)
 
-			src.master.display_message("<b>To [target_name]:</b> [message]")
+			src.master.display_message("<b>To [html_encode(target_name)]:</b> [html_encode(message)]")
 
 			var/datum/signal/signal = get_free_signal()
 			signal.data["command"] = "text_message"
@@ -1067,10 +1065,10 @@
 			else
 				signal.data["address_1"] = target_id
 			src.post_signal(signal)
-			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
+			src.message_note += "<i><b>&rarr; To [html_encode(target_name)]:</b></i><br>[html_encode(message)]<br>"
 			src.message_last = TIME
 
-			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
+			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [html_encode(target_name)]:</b></i> [html_encode(message)]")
 			return 0
 
 		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)

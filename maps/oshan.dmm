@@ -131,10 +131,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aaH" = (
-/obj/reagent_dispensers/fueltank,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/table/auto,
+/obj/item/shipcomponent/secondary_system/gps,
+/obj/item/crowbar,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaI" = (
@@ -152,17 +154,16 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "aaJ" = (
-/obj/table/auto,
-/obj/item/shipcomponent/secondary_system/gps,
-/obj/item/crowbar,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/machinery/light_switch/auto,
+/obj/table/auto,
+/obj/item/device/gps,
+/obj/item/weldingtool,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaK" = (
-/obj/machinery/manufacturer/hangar,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -183,13 +184,14 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaO" = (
-/obj/item/cigbutt,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/item/cigbutt,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaQ" = (
@@ -210,6 +212,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/item/match,
+/obj/item/cigbutt,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaT" = (
@@ -312,6 +319,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "abi" = (
@@ -529,9 +537,6 @@
 	},
 /area/station/engine/engineering)
 "abJ" = (
-/obj/item/cigbutt,
-/obj/stool/chair/yellow,
-/obj/item/match,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
@@ -542,6 +547,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "abK" = (
@@ -2096,10 +2102,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
-"ahg" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/engineering)
 "ahh" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
@@ -11074,6 +11076,9 @@
 /obj/table/auto,
 /obj/item/tank/air,
 /obj/item/paper/book/from_file/ggcsftm,
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "aKL" = (
@@ -14040,7 +14045,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aWm" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/tank/anesthetic,
 /turf/simulated/floor/grime,
 /area/iss)
 "aWp" = (
@@ -25571,13 +25576,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/storage/emergency2)
-"bOP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark/start/job/janitor,
-/turf/simulated/floor,
-/area/station/janitor/supply)
 "bOQ" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -30225,9 +30223,7 @@
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 8
-	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ceL" = (
@@ -33849,13 +33845,11 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "eSK" = (
-/obj/table/auto,
 /obj/machinery/firealarm/north,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/item/weldingtool,
-/obj/item/device/gps,
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "eSX" = (
@@ -36870,6 +36864,13 @@
 	name = "organic floor"
 	},
 /area/space)
+"jjB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/janitor,
+/turf/simulated/floor,
+/area/station/janitor/supply)
 "jkA" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -41012,6 +41013,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"pjN" = (
+/obj/landmark/gps_waypoint,
+/obj/landmark/start/job/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
 "pkc" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
@@ -42693,11 +42699,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west,
 /area/station/bridge)
-"rIG" = (
-/obj/landmark/gps_waypoint,
-/obj/landmark/start/job/janitor,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
 "rJk" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -44374,18 +44375,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"uJz" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/manufacturer/general{
-	free_resource_amt = 0;
-	free_resources = null
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
 "uMA" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -46584,6 +46573,17 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"ybR" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/manufacturer/general{
+	free_resources = list()
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "ycT" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -80734,7 +80734,7 @@ aCX
 aCX
 aHC
 aIe
-rIG
+pjN
 aIW
 aID
 aJS
@@ -85924,7 +85924,7 @@ bII
 cgr
 bKD
 qur
-uJz
+ybR
 aOL
 bPs
 bLY
@@ -101327,7 +101327,7 @@ aud
 bLr
 bMA
 bNM
-bOP
+jjB
 bPO
 bMA
 bLs
@@ -107932,7 +107932,7 @@ beP
 aAy
 aAy
 aAy
-ahg
+aAy
 aTm
 bkx
 bhr

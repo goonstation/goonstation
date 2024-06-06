@@ -5,7 +5,7 @@
 
 
 /obj/machinery/computer/secure_data
-	name = "Security Records"
+	name = "security records"
 	icon_state = "datasec"
 	req_access = list(access_security)
 	circuit_type = /obj/item/circuitboard/secure_data
@@ -613,18 +613,24 @@
 				if (src.active_record_security)
 					switch(href_list["criminal"])
 						if ("none")
-							src.active_record_security["criminal"] = "None"
+							src.active_record_security["criminal"] = ARREST_STATE_NONE
 						if ("arrest")
-							src.active_record_security["criminal"] = "*Arrest*"
+							src.active_record_security["criminal"] = ARREST_STATE_ARREST
 							if (usr && src.active_record_general["name"])
 								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("incarcerated")
-							src.active_record_security["criminal"] = "Incarcerated"
+							src.active_record_security["criminal"] = ARREST_STATE_INCARCERATED
 						if ("parolled")
-							src.active_record_security["criminal"] = "Parolled"
+							src.active_record_security["criminal"] = ARREST_STATE_PAROLE
 						if ("released")
-							src.active_record_security["criminal"] = "Released"
+							src.active_record_security["criminal"] = ARREST_STATE_RELEASED
 					src.temp = null
+
+					var/target_name = src.active_record_general["name"]
+
+					for (var/mob/living/carbon/human/H in mobs)
+						if (H.real_name == target_name || H.name == target_name)
+							H.update_arrest_icon()
 
 			if ("del_security_record")
 				if (href_list["answer"] == "yes" && src.active_record_security)
@@ -686,7 +692,7 @@
 					var/datum/db_record/R = new /datum/db_record(  )
 					R["name"] = src.active_record_general["name"]
 					R["id"] = src.active_record_general["id"]
-					R["criminal"] = "None"
+					R["criminal"] = ARREST_STATE_NONE
 					R["mi_crim"] = "None"
 					R["mi_crim_d"] = "No minor crime convictions."
 					R["ma_crim"] = "None"

@@ -68,6 +68,9 @@ THROWING DARTS
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant?.Add(src)
+			if (src.scan_category == "other" || src.scan_category == "unknown")
+				var/image/img = H.prodoc_icons["other"]
+				img.icon_state = "implant-other"
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants?.Add(src)
@@ -83,6 +86,14 @@ THROWING DARTS
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant -= src
+			var/has_other_imp = FALSE
+			for (var/obj/item/implant/I as anything in H.implant)
+				if (I.scan_category == "other" || I.scan_category == "unknown")
+					has_other_imp = TRUE
+					break
+			if (!has_other_imp)
+				var/image/I = H.prodoc_icons["other"]
+				I.icon_state = null
 		if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			C.implants?.Remove(src)
@@ -236,6 +247,29 @@ THROWING DARTS
 		..()
 		src.scanned_here = get_area(src)
 
+	implanted(mob/M, mob/I)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		var/image/img = H.prodoc_icons["cloner"]
+		img.icon_state = "implant-cloner"
+
+	on_remove(mob/M)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		for (var/obj/item/implant/I as anything in H.implant)
+			if (istype(I, /obj/item/implant/cloner))
+				return
+		var/image/I = H.prodoc_icons["cloner"]
+		I.icon_state = null
+
 	proc/getHealthList()
 		var/healthlist = list()
 		if (!src.implanted)
@@ -267,6 +301,25 @@ THROWING DARTS
 		..()
 		if (!isdead(M) && M.client)
 			JOB_XP(I, "Medical Doctor", 5)
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if (!H.prodoc_icons)
+				return
+			var/image/img = H.prodoc_icons["health"]
+			img.icon_state = "implant-health"
+
+	on_remove(mob/M)
+		..()
+		if (!istype(M, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = M
+		if (!H.prodoc_icons)
+			return
+		for (var/obj/item/implant/I as anything in H.implant)
+			if (istype(I, /obj/item/implant/health))
+				return
+		var/image/img = H.prodoc_icons["health"]
+		img.icon_state = null
 
 	proc/sensehealth()
 		if (!src.implanted)
@@ -530,6 +583,7 @@ THROWING DARTS
 			H.changeStatus("knockdown", 1 SECOND)
 			H.force_laydown_standup()
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
+			H.update_arrest_icon()
 
 		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
 			H.TakeDamage("chest", 1, 1, 0)
@@ -538,6 +592,7 @@ THROWING DARTS
 			H.force_laydown_standup()
 			H.emote("scream")
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
+			H.update_arrest_icon()
 
 	do_process(var/mult = 1)
 		if (!ishuman(src.owner))
@@ -568,6 +623,9 @@ THROWING DARTS
 	on_remove(var/mob/M)
 		M.delStatus("derevving")
 		. = ..()
+		if (istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			H.update_arrest_icon()
 
 
 // dumb joke

@@ -11436,15 +11436,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"aTj" = (
-/obj/pool/perspective,
-/obj/pool/perspective/innercorners{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "bluechecker"
-	},
-/area/station/crew_quarters/pool)
 "aTr" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -28117,16 +28108,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
-"cjV" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/machinery/manufacturer/general{
-	free_resource_amt = 1
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost/indigo_rye)
 "cjW" = (
 /obj/machinery/light{
 	dir = 8;
@@ -36093,6 +36074,15 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/armory_outside)
+"gvH" = (
+/obj/pool/perspective,
+/obj/pool/perspective/innercorners{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "bluechecker"
+	},
+/area/station/crew_quarters/pool)
 "gvX" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -56188,6 +56178,16 @@
 "vpD" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"vpW" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
 "vqr" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/camera{
@@ -67418,7 +67418,7 @@ ciL
 cjq
 cjx
 cjJ
-cjV
+vpW
 cjy
 cjy
 ciL
@@ -121978,7 +121978,7 @@ bvT
 bvT
 bvT
 bvT
-aTj
+gvH
 aTV
 uqd
 aVJ
