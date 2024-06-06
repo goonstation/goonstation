@@ -20,6 +20,7 @@
 	max_damage = INFINITY
 	throw_speed = 1
 
+
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
 	var/obj/item/organ/eye/left_eye = null
@@ -77,6 +78,8 @@
 			src.UpdateIcon(/*makeshitup*/ 1)
 		if (!src.chat_text)
 			src.chat_text = new(null, src)
+
+
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -392,6 +395,23 @@
 	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
+		if (src.head_type == HEAD_SKELETON)
+			if (W.force >= 10)
+				var/choice = tgui_alert(user, "Smash the skull?", "Skull", list("Yes", "No"))
+				if (!choice || choice == "No")
+					return
+				else
+					var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
+					P.setup(src.loc)
+					for(var/mob/living/critter/skeleton/skele_controller in src.contents) // where is it. rip that thing out
+						skele_controller.set_loc(get_turf(src))
+						SPAWN(10)
+							skele_controller.emote("scream")
+						SPAWN(40)
+							skele_controller.gib()
+							qdel(src)
+			boutput(user, SPAN_ALERT("You need something heavier to smash this."))
+
 		//Putting stuff on heads
 		if (istype(W, /obj/item/clothing/head))
 			if (!head)

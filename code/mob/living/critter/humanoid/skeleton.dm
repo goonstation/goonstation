@@ -142,6 +142,18 @@
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
 
+/mob/living/critter/skeleton/tiny
+	name = "tiny skeleton"
+	desc = "A symbiotic parasite with no brain that pilots a skeleton with no organs but a healthy brain."
+	icon = 'icons/mob/critter/humanoid/skeleton.dmi'
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		if (act == "scream")
+			if (src.emote_check(voluntary, 50))
+				playsound(src, 'sound/voice/screams/male_scream.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE, pitch=2)
+				return SPAN_ALERT("[src] screams in fear!")
+		return null
+
 /mob/living/critter/skeleton/multihat
 	hatcount = 10
 

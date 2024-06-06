@@ -267,7 +267,7 @@ proc/make_cleanable(var/type,var/loc)
 			src.reagents.add_reagent("bloodc", 10)
 			src.sample_reagent = "bloodc"
 		else
-			src.reagents.add_reagent("blood", 10)
+			src.reagents.add_reagent(sample_reagent, 10)
 
 		..()
 
@@ -280,7 +280,7 @@ proc/make_cleanable(var/type,var/loc)
 			src.reagents.add_reagent("bloodc", 10)
 			src.sample_reagent = "bloodc"
 		else
-			src.reagents.add_reagent("blood", 10)
+			src.reagents.add_reagent(sample_reagent, 10)
 
 		..()
 
@@ -395,6 +395,12 @@ proc/make_cleanable(var/type,var/loc)
 
 		if (reagent_list["bloodc"])
 			src.ling_blood = 1
+
+/obj/decal/cleanable/blood/calcium
+	name = "calcium"
+	color = "#ffffff"
+	sample_reagent = "calcium"
+	stain = "calcium-stained"
 
 // I don't think every blood decal needed these lists on them, I can't imagine that was nice for performance
 var/list/blood_decal_low_icon_states = list("drip1a", "drip1b", "drip1c", "drip1d", "drip1e", "drip1f")

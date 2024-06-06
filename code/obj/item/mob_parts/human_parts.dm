@@ -1770,6 +1770,8 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	streak_decal = /obj/decal/cleanable/blood/calcium
+	streak_descriptor = "milky"
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
@@ -1778,6 +1780,8 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	streak_decal = /obj/decal/cleanable/blood/calcium
+	streak_descriptor = "milky"
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/skeleton/left
