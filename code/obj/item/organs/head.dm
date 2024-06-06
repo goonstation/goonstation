@@ -405,11 +405,11 @@
 					P.setup(src.loc)
 					for(var/mob/living/critter/skeleton/skele_controller in src.contents) // where is it. rip that thing out
 						skele_controller.set_loc(get_turf(src))
+						qdel(src)
 						SPAWN(10)
 							skele_controller.emote("scream")
 						SPAWN(40)
 							skele_controller.gib()
-							qdel(src)
 			boutput(user, SPAN_ALERT("You need something heavier to smash this."))
 
 		//Putting stuff on heads
