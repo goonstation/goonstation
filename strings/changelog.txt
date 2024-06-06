@@ -1,4 +1,59 @@
 
+(t)tue may 28 24
+(u)Klushy225
+(p)19008
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added a fade style for the curly bob
+(u)Dino
+(p)19001
+(e)🎨|C-Sprites
+(+)Added two new dwarven inspired beard options.
+(t)mon may 27 24
+(u)TealSeer
+(p)19140
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)People with the Unionized trait are no longer immune to arcfiend's polarize ability. Immunity to bio-magnetic random events remain unchanged.
+(u)LeahTheTech
+(+)Minimized windows will now unminimize when you go to open them again.
+(t)sun may 26 24
+(u)Glamurio (Ryou)
+(p)18790
+(e)💅🐣|C-QoL, A-Respawning
+(*)Daily Jobs may now be selected as a Job Preference.
+(u)ZeWaka
+(e)⛔|C-Removal
+(*)The N2O canister at the Faint Signal station has been replaced with a smaller handheld tank.
+(u)FlameArrow57
+(p)18987
+(e)🆕🔄📦|C-Feature, C-Rework, A-Game-Objects
+(+)Deployable turrets like N.A.R.C.S. turrets now eject bullet casings and have their own forensics profile.
+(u)LeahTheTech
+(+)B.I.F.F now buys rather than sells THE MONSTER.
+(t)sat may 25 24
+(u)crunchwarp
+(p)18980
+(e)🆕📄|C-Feature, A-UI
+(+)Blobs and Wizards now have enhanced crew credits!
+(t)fri may 24 24
+(u)tarmunora
+(+)Fix savefile import exploit. This will break existing local savefiles.
+(u)FlameArrow57
+(p)19115
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Syndicate dagger now has 80% armor pierce.
+(t)thu may 23 24
+(u)Tarmunora, Mordent
+(p)19120
+(e)💅📄|C-QoL, A-UI
+(*)Added import/export to character setup window to enable storing of additional character profiles in local storage.
+(u)aloe
+(p)18797
+(e)⚖📄💪|C-Balance, A-UI, A-Traits
+(*)You can now select as many traits as you like.
+(u)Glamurio (Ryou)
+(p)19109
+(e)🎨🏅|C-Sprites, A-Medal
+(+)Particularly pet-savvy people may find a new reward waiting for them.
 (t)wed may 22 24
 (u)TealSeer
 (p)19081

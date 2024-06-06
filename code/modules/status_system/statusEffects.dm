@@ -719,6 +719,24 @@
 					damage_burn = 5 * prot
 					howMuch = "extremely "
 
+			// doesn't need to happen super often, more like a life process in priority
+			if (!ON_COOLDOWN(owner, "burning_nearby_status_effect", LIFE_PROCESS_TICK_SPACING))
+				if (duration > 20 SECONDS)
+					for (var/atom/A as anything in owner.contents)
+						if (A.event_handler_flags & HANDLE_STICKER)
+							if (A:active)
+								owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
+								qdel(A)
+				if (isturf(owner.loc))
+					var/turf/location = owner.loc
+					location.hotspot_expose(T0C + 300, 400)
+				for (var/atom/A as anything in owner.contents)
+					A.material_trigger_on_temp(T0C + 900)
+				if (istype(owner, /mob))
+					var/mob/M = owner
+					for (var/atom/A as anything in M.equipped())
+						A.material_trigger_on_temp(T0C + 900)
+
 			return ..(timePassed)
 
 	simpledot/stimulant_withdrawl
@@ -1909,14 +1927,15 @@
 	maxDuration = 3 MINUTES
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/charge = null
+	var/ignore_unionized = FALSE
 
 	onAdd(optional)
 		. = ..()
 		if (!ismob(owner)) return
 		var/mob/M = owner
-		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || (!ignore_unionized && M.traitHolder.hasTrait("unionized")))
 			SPAWN(0)
-				M.delStatus("magnetized")
+				M.delStatus(src.id)
 			return
 		if (optional)
 			src.charge = optional
@@ -1929,6 +1948,10 @@
 		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+/datum/statusEffect/magnetized/arcfiend
+	id = "magnetized_arcfiend"
+	ignore_unionized = TRUE
 
 //I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
 /datum/statusEffect/changeling_regrow

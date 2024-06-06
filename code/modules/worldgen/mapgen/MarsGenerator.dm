@@ -57,7 +57,7 @@
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
+	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/mars
 
 /datum/map_generator/mars_generator/duststorm
 	///2D list of all biomes based on heat and humidity combos.
@@ -160,8 +160,7 @@
 						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, TRUE)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
-
-/turf/simulated/floor/plating/airless/asteroid/mars
+/turf/unsimulated/floor/plating/asteroid/mars
 	stone_color = "#c96433"
 	color = "#c96433"
 	carbon_dioxide = 500
@@ -177,7 +176,7 @@
 	fullbright = 0
 	color = "#c96433"
 	stone_color = "#c96433"
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/mars
+	replace_type = /turf/unsimulated/floor/plating/asteroid/mars
 
 	destroy_asteroid(var/dropOre=1)
 		var/image/ambient_light = src.GetOverlayImage("ambient")

@@ -15652,9 +15652,8 @@
 /area/station/crew_quarters/pool)
 "aTK" = (
 /obj/pool/perspective,
-/obj/pool/perspective{
-	dir = 8;
-	tag = "icon-pool (WEST)"
+/obj/pool/perspective/innercorners{
+	dir = 1
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
