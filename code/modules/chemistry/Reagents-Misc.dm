@@ -2491,7 +2491,7 @@ datum
 			fluid_g = 16
 			fluid_b = 94
 			transparency = 200
-			addiction_prob = 1//20
+			addiction_prob = 1
 			addiction_min = 5
 			overdose = 11
 			depletion_rate = 0.1
