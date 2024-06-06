@@ -190,8 +190,8 @@ var/global/datum/game_servers/game_servers = new
 		var/datum/http_response/response = request.into_response()
 		var/list/data
 		if (!rustg_json_is_valid(response.body))
-			logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>: Failed to sync. Received malformed or non-JSON response.")
-			logTheThing(LOG_DIARY, src.id, "XServerComm: Failed to sync. Received malformed or non-JSON response.", "debug")
+			logTheThing(LOG_DEBUG, src.id, "<b>Server Sync</b>: Failed to sync. Received malformed or non-JSON response.")
+			logTheThing(LOG_DIARY, src.id, "Server Sync: Failed to sync. Received malformed or non-JSON response.", "debug")
 			return
 		data = json_decode(response.body)
 		if (data["response"])
@@ -199,8 +199,8 @@ var/global/datum/game_servers/game_servers = new
 			src.map = data["response"]["map_name"]
 
 		else if (data["message"])
-			logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>: Failed to sync. Server message: [html_encode(data["message"])]")
-			logTheThing(LOG_DIARY, src.id, "XServerComm: Failed to sync. Server message: [html_encode(data["message"])]", "debug")
+			logTheThing(LOG_DEBUG, src.id, "<b>Server Sync</b>: Failed to sync. Server message: [html_encode(data["message"])]")
+			logTheThing(LOG_DIARY, src.id, "Server Sync: Failed to sync. Server message: [html_encode(data["message"])]", "debug")
 		else
-			logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>: Failed to sync. Received unexpected JSON data.")
-			logTheThing(LOG_DIARY, src.id, "XServerComm: Failed to sync. Received unexpected JSON data.", "debug")
+			logTheThing(LOG_DEBUG, src.id, "<b>Server Sync</b>: Failed to sync. Received unexpected JSON data.")
+			logTheThing(LOG_DIARY, src.id, "Server Sync: Failed to sync. Received unexpected JSON data.", "debug")
