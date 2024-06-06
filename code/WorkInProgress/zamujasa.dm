@@ -1526,7 +1526,7 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_width = 600
 			src.maptext_height = 400
 			update_text() // kick start
-			RegisterSignal(get_singleton(/datum/cross_server_message/server_sync_response), COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
+			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
 			var/serverList = ""

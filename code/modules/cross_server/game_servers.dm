@@ -182,9 +182,28 @@ var/global/datum/game_servers/game_servers = new
 	proc/send_message(list/data)
 		return world.Export("[src.url]?[list2params(data)]")
 
+	/// Fetches server data from remote goonhub node
 	proc/sync_server_data()
-		set waitfor = FALSE
 		if (src.is_me())
 			return
-		var/datum/cross_server_message/server_sync_request/server_sync_request = get_singleton(/datum/cross_server_message/server_sync_request)
-		server_sync_request.send(src)
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://node.goonhub.com/status?server=[src.id]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+		var/list/data
+		if (!rustg_json_is_valid(response.body))
+			logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>: Failed to sync. Received malformed or non-JSON response.")
+			logTheThing(LOG_DIARY, src.id, "XServerComm: Failed to sync. Received malformed or non-JSON response.", "debug")
+			return
+		data = json_decode(response.body)
+		if (data["response"])
+			src.player_count = data["response"]["players"]
+			src.map = data["response"]["map_name"]
+
+		else if (data["message"])
+			logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>: Failed to sync. Server message: [html_encode(data["message"])]")
+			logTheThing(LOG_DIARY, src.id, "XServerComm: Failed to sync. Server message: [html_encode(data["message"])]", "debug")
+		else
+			logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>: Failed to sync. Received unexpected JSON data.")
+			logTheThing(LOG_DIARY, src.id, "XServerComm: Failed to sync. Received unexpected JSON data.", "debug")
