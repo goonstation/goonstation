@@ -11,6 +11,15 @@ var/global/datum/game_servers/game_servers = new
 		for(var/type in concrete_typesof(/datum/cross_server_message, FALSE))
 			var/datum/cross_server_message/csm = get_singleton(type)
 			src.message_kinds[csm.name] = csm
+#ifdef LIVE_SERVER
+		SPAWN(0)
+			for (var/idx in servers)
+				if (idx == config.server_id)
+					continue
+				var/datum/game_server/game_server = servers[idx]
+				game_server.get_ip_port()
+				sleep(2 SECONDS)
+#endif
 
 	proc/find_by_ip_port(ip_port)
 		RETURN_TYPE(/datum/game_server)
@@ -139,12 +148,6 @@ var/global/datum/game_servers/game_servers = new
 		src.numeric_id = numeric_id
 		src.publ = publ
 		src.ghost_notif_target = ghost_notif_target
-#ifdef LIVE_SERVER
-		SPAWN(0)
-			if (src.id == config.server_id)
-				return
-			get_ip_port()
-#endif
 
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
