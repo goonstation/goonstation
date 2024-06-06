@@ -220,6 +220,7 @@
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/clown_announcement
+	var/emagged = FALSE
 
 	send_message(mob/user, message)
 		. = ..()
@@ -239,6 +240,33 @@
 				clown.update_burning(15) // placed here since update_burning is only for mob/living
 			if(ID)
 				user.put_in_hand_or_eject(ID)
+
+			if (emagged)
+				var/turf/T = get_turf(src.loc)
+				if(T)
+					src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
+					explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
 			qdel(src)
 
+
+	attackby(obj/item/W, mob/user)
+		..()
+		if (istype(W, /obj/item/card/id))
+			if (!istype (W, /obj/item/card/id/clown))
+				src.unlocked = 0
+				update_status()
+
+	ui_act(action, parmas)
+		..()
+		switch(action)
+			if ("id")
+				if(  !istype (src.ID, /obj/item/card/id/clown))
+					src.unlocked = 0 // clowns ONLY
+					update_status()
+
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!emagged)
+			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
+		emagged = TRUE
 
