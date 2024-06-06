@@ -447,6 +447,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			else if(!connected_scuttlebot.loc)
 				boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot couldnt be found."))
 			else
+				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else

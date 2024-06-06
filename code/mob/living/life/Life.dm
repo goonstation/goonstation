@@ -149,7 +149,6 @@
 
 /mob/living/carbon/human/restore_life_processes()
 	..()
-	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
@@ -517,7 +516,7 @@
 				src.buckled = null
 				return
 			src.set_density(initial(src.density))
-		else
+		else if (src.can_lie)
 			src.set_density(src.lying ? FALSE : initial(src.density))
 
 		// update canmove

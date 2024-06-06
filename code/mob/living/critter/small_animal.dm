@@ -3762,8 +3762,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
 				src.setMaterial(getMaterial(pick(material_varieties)))
-		// true when making the mob to not make the respawn timer reset...false here to allow for crime
-		ghost_spawned = FALSE
 
 	death(var/gibbed)
 		. = ..()
@@ -4016,6 +4014,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		. = ..()
 		src.fur_color = "#be5a53"
+		// true when making the mob to not make the respawn timer reset...false here to allow for crime
+		ghost_spawned = FALSE
 
 	setup_hands()
 		..()
