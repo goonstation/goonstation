@@ -1152,7 +1152,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -1
-	category = list("species", "cloner_stuff")
+	category = list("species")
 	mutantRace = /datum/mutantrace/skeleton
 
 /datum/trait/roach
