@@ -338,6 +338,8 @@ datum
 				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
+			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
+				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
 			return
 
 		proc/flush(var/datum/reagents/holder, var/amount, var/list/flush_specific_reagents)
