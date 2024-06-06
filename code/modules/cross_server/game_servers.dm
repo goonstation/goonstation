@@ -157,7 +157,7 @@ var/global/datum/game_servers/game_servers = new
 				src.waiting_for_ip_port_auth = md5("[rand()][rand()][rand()][world.time]")
 				success = src.send_message(list("type"="game_servers", "subtype"="get_ip_port", "reply_to"=config.server_id, "auth"=src.waiting_for_ip_port_auth))
 				if(success)
-					var/wait_count = 50
+					var/wait_count = 30
 					while(isnull(src.ip_port) && wait_count-- > 0)
 						sleep(1)
 					if(!isnull(src.ip_port))
@@ -170,7 +170,7 @@ var/global/datum/game_servers/game_servers = new
 					src.waiting_for_ip_port_auth = FALSE
 					logTheThing(LOG_DEBUG, src.id, "<b>XServerComm</b>:Unable to establish cross server trust, World.Export returned falsey value")
 					logTheThing(LOG_DIARY, src.id, "XServerComm:Unable to establish cross server trust, World.Export returned falsey value.", "debug")
-					sleep(10 SECONDS)
+					sleep(5 SECONDS)
 		return src.ip_port
 
 	proc/is_me()
