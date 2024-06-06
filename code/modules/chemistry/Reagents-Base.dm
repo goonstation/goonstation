@@ -257,7 +257,7 @@
 			if (isalcoholresistant(H))
 				addProb /= 4
 				rate /= 4
-		..()
+		..(M, rate, addProb)
 
 /datum/reagent/hydrogen
 	name = "hydrogen"
