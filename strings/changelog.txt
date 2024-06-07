@@ -1,5 +1,9 @@
 
 (t)fri jun 07 24
+(u)FlameArrow57
+(p)19341
+(e)🆕💅🧛🔨|C-Feature, C-QoL, A-Gamemodes, A-Player-Actions
+(*)As a blob, left clicking a tile will now attempt to spread to that tile, meaning you don't need to click or hotkey the ability button at all!
 (u)glowbold
 (p)19364
 (e)⚖|C-Balance
