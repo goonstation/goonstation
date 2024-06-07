@@ -1,5 +1,7 @@
 
 (t)fri jun 07 24
+(u)LeahTheTech
+(+)The clown announcement computer is now a lot quieter and has been added to the maps it was missing from.
 (u)glowbold
 (p)19380
 (e)⚖💊|C-Balance, A-Medical
