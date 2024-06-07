@@ -2488,6 +2488,10 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
 /area/station/science/hall)
+"bfM" = (
+/mob/living/critter/small_animal/cat/jones,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
+/area/station/bridge/captain)
 "bfW" = (
 /obj/machinery/manufacturer/mining,
 /obj/machinery/power/apc/autoname_east,
@@ -55779,7 +55783,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/mob/living/critter/small_animal/cat/jones,
+/obj/machinery/computer/card/department/captain,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge/captain)
 "xUg" = (
@@ -98053,7 +98057,7 @@ jYP
 mnu
 mFG
 mRa
-nfo
+bfM
 nlW
 htt
 gow

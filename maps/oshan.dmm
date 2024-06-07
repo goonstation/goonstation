@@ -31180,7 +31180,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "cje" = (
-/turf/simulated/floor/carpet/purple/standard/narrow/T_north,
+/obj/machinery/computer/card/department/captain,
+/turf/simulated/floor/carpet/purple/standard/narrow/nw,
 /area/station/crew_quarters/captain)
 "cjf" = (
 /obj/machinery/light/incandescent,
@@ -42751,7 +42752,7 @@
 /obj/shrub/captainshrub,
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /obj/machinery/firealarm/north,
-/turf/simulated/floor/carpet/purple/standard/narrow/nw,
+/turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "sak" = (
 /obj/machinery/drainage/big,
@@ -89531,8 +89532,8 @@ aqn
 aqn
 aqn
 aqn
-aqn
-ckk
+cjX
+aUp
 cjV
 bvA
 bvA
@@ -89833,9 +89834,9 @@ aqn
 aqn
 aqn
 aqn
-cjX
-aUp
-fML
+ckk
+ckC
+ckA
 bvA
 bwL
 bxL
@@ -90136,8 +90137,8 @@ aqn
 cjX
 ckg
 aUp
-ckC
-ckA
+fML
+bvA
 bvA
 bwM
 kSM
@@ -90440,8 +90441,8 @@ ckC
 cjZ
 ckA
 bvA
-bvA
 cje
+bwN
 oyv
 bvA
 bxK

@@ -34908,9 +34908,6 @@
 /turf/simulated/floor,
 /area/station/teleporter)
 "bWn" = (
-/obj/table/wood/auto,
-/obj/random_item_spawner/desk_stuff,
-/obj/item/rubberduck,
 /obj/blind_switch/area{
 	pixel_x = -24
 	},
@@ -34920,7 +34917,9 @@
 	pixel_x = -24;
 	pixel_y = 8
 	},
-/obj/item/stamp/cap,
+/obj/machinery/computer/card/department/captain{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bWo" = (
@@ -35350,6 +35349,9 @@
 "bXF" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green,
+/obj/random_item_spawner/desk_stuff,
+/obj/item/rubberduck,
+/obj/item/stamp/cap,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bXG" = (
