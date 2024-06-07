@@ -37,6 +37,17 @@
 					/mob/living/critter/lion,
 					/mob/living/critter/fermid)
 
+	add_water()
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.setStatus("unconscious", 10 SECONDS)
+			M.TakeDamage("all", 60)
+			take_bleeding_damage(M, M, 50, DAMAGE_CUT)
+			SPAWN(1)
+				boutput(M, SPAN_ALERT("Something horrible forces its way out of your stomach! HOLY SHIT!!!"))
+		. = ..()
+
+
 /obj/item/toy/sponge_capsule/New()
 	..()
 	color = pick(colors)
@@ -65,7 +76,7 @@
 			if (src in human_idiot.organHolder?.stomach?.stomach_contents)
 				boutput(human_idiot, SPAN_ALERT("You feel your stomach suddenly bloat horribly!"))
 				human_idiot.organHolder.stomach.eject(src)
-				human_idiot.organHolder.stomach.take_damage(10)
+				human_idiot.organHolder.stomach.take_damage(30)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
