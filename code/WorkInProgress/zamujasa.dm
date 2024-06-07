@@ -1561,14 +1561,12 @@ Other Goonstation servers:[serverList]</span>"})
 			src.maptext_width = 600
 			src.maptext_height = 400
 			update_text() // kick start
-			SPAWN(10 SECONDS) // wait for server sync reply
-				do_loop()
+			setup_process_signal()
 
-		proc/do_loop()
+		proc/setup_process_signal()
 			set waitfor = FALSE
-			while (update_delay)
-				update_text()
-				sleep(update_delay)
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
 			var/serverList = ""
