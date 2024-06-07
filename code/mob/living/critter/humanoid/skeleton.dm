@@ -9,8 +9,6 @@
 	for (var/i = 1, i <= 4, i++)
 		var/PT = /obj/item/material_piece/bone
 		var/obj/item/material_piece/bone/P = new PT
-		if (istype(T, /mob/living/critter/skeleton/tiny)) // lord forgive me I had to do it
-			P.Scale(0.4, 0.4)
 		P.set_loc(T)
 		SPAWN(0)
 			for (var/k = 1, k <= 3, k++)
@@ -21,12 +19,26 @@
 	for (var/i = 1, i <= extra, i++)
 		var/PT = /obj/item/material_piece/bone
 		var/obj/item/material_piece/bone/P  = new PT
-		if (istype(T, /mob/living/critter/skeleton/tiny))
-			P.Scale(0.4, 0.4)
 		P.set_loc(T)
 		P.streak_object(alldirs)
 		produce += P
 
+	return produce
+
+/proc/minibonegibs(turf/T, list/ejectables, bdna, btype) // but one sad wee little bone
+	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST), \
+		                    list(SOUTH, SOUTHEAST, SOUTHWEST), \
+		                    list(WEST, NORTHWEST, SOUTHWEST),  \
+		                    list(EAST, NORTHEAST, SOUTHEAST))
+
+	var/list/produce = list()
+	var/PT = /obj/item/material_piece/bone
+	var/obj/item/material_piece/bone/P = new PT
+	P.Scale(0.4, 0.4)
+	P.set_loc(T)
+	SPAWN(0)
+		P.streak_object(dirlist)
+	produce += P
 	return produce
 
 /mob/living/critter/skeleton
@@ -151,18 +163,18 @@
 	desc = "A symbiotic parasite with no brain that pilots a skeleton with a healthy brain but no organs. A hermit crab..."
 	icon = 'icons/mob/critter/humanoid/skeleton.dmi'
 	add_abilities = list(/datum/targetable/critter/abandon_ship)
+	custom_gib_handler = /proc/minibonegibs
+	is_npc = FALSE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/screams/male_scream.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE, pitch=2)
-					return SPAN_ALERT("[src] screams in fear!")
+		if (act == "scream")
+			if (src.emote_check(voluntary, 50))
+				playsound(src, 'sound/voice/screams/male_scream.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE, pitch=2)
+				return SPAN_ALERT("[src] screams in fear!")
 		return null
 
 	death()
 		..()
-		ai.disable()
 
 /mob/living/critter/skeleton/multihat
 	hatcount = 10

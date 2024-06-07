@@ -11,7 +11,7 @@
 	targeted = 0
 	needs_turf = 0
 
-	cast(atom/target)
+	cast()
 		..()
 		var/mob/living/skele = holder.owner
 		var/obj/item/skull = skele.loc
