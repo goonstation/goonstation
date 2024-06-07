@@ -2951,6 +2951,9 @@
 
 	src.nutrition -= nutrition
 
+/mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
+	item.forcefeed(src, user, edibility_override)
+
 /mob/proc/get_hand_pixel_x()
 	.= 0
 /mob/proc/get_hand_pixel_y()

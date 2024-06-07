@@ -747,6 +747,11 @@
 			var/mob/living/carbon/human/H = L
 			if (H.organHolder)
 				H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
+				var/obj/item/toy/sponge_capsule/capsule = locate() in H.organHolder?.stomach?.stomach_contents
+				if (capsule)
+					capsule.add_water()
+					L.visible_message(SPAN_ALERT("[L] vomits up a rapidly expanding sponge capsule!"))
+					H.reagents?.remove_reagent("water", 10)
 		L.nutrition += 1  * mult
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
