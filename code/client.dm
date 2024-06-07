@@ -1219,12 +1219,10 @@ var/global/curr_day = null
 
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
 		qdel(src.parallax_controller)
-		src.parallax_controller = new(null, src)
-		src.mob?.register_parallax_signals()
+		src.parallax_controller = new(src)
 
 	else if (src.parallax_controller)
 		qdel(src.parallax_controller)
-		src.mob?.unregister_parallax_signals()
 
 /client/verb/apply_view_tint()
 	set hidden = 1

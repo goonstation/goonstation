@@ -495,7 +495,7 @@
 		AD.master = A
 		AD.affected_mob = src
 		src.ailments += AD
-
+		AD.on_infection()
 		return AD
 
 	else
@@ -511,6 +511,7 @@
 		AD.master = A
 		AD.affected_mob = src
 		src.ailments += AD
+		AD.on_infection()
 
 		return AD
 

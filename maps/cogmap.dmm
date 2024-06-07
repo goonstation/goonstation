@@ -5000,6 +5000,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "atP" = (
@@ -25503,12 +25504,14 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/television/mobile/science,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOx" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/television/mobile/science,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
@@ -43329,13 +43332,13 @@
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "gRz" = (
@@ -46018,13 +46021,13 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "jft" = (
