@@ -1,5 +1,9 @@
 
 (t)fri jun 07 24
+(u)glowbold
+(p)19380
+(e)⚖💊|C-Balance, A-Medical
+(+)Blood Bank supply backs come with two blood IV bags and two saline IV bags.
 (u)crunchwarp
 (p)19325
 (e)🆕🗺🎨🔊📦|C-Feature, A-Mapping, C-Sprites, C-Sound, A-Game-Objects
