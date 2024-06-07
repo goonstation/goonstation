@@ -1,5 +1,9 @@
 
 (t)fri jun 07 24
+(u)crunchwarp
+(p)19325
+(e)🆕🗺🎨🔊📦|C-Feature, A-Mapping, C-Sprites, C-Sound, A-Game-Objects
+(+)A special announcement computer has been added to most clownholes. But beware...
 (u)LeahTheTech
 (p)19339
 (e)🆕📦|C-Feature, A-Game-Objects
