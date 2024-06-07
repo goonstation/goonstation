@@ -19,10 +19,12 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 
 	src.parent_tree = parent
 	src.say_channel = global.SpeechManager.GetSayChannelInstance(src.channel)
+	src.say_channel.RegisterOutput(src)
 
 /datum/speech_module/output/disposing()
-	src.parent_tree = null
+	src.say_channel.UnregisterOutput(src)
 	src.say_channel = null
+	src.parent_tree = null
 
 	. = ..()
 

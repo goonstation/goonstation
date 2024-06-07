@@ -58,5 +58,9 @@
 
 
 /datum/shared_input_format_module/ooc/looc/admin
-	id = LISTEN_INPUT_LOOC_ADMIN
+	id = LISTEN_INPUT_LOOC_ADMIN_LOCAL
 	is_admin = TRUE
+
+
+/datum/shared_input_format_module/ooc/looc/admin_global
+	id = LISTEN_INPUT_LOOC_ADMIN_GLOBAL

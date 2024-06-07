@@ -82,7 +82,9 @@ obj/item/rocko
 			if(4)
 				emote("<B>[src]</B> rants about job site safety.", "<I>Goes on about job safety</I>")
 			if(5)
-				src.say("We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].", atom_listeners_override = (src.holder && list(src.holder)))
+				if (!src.holder)
+					return
+				src.say("We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].", atom_listeners_override = list(src.holder))
 
 	emote(message, maptext_out)
 		. = ..()

@@ -139,6 +139,13 @@ var/global/IP_alerts = 1
 	SHOW_VERB_DESC
 
 	src.only_local_looc = !src.only_local_looc
+	if (src.only_local_looc)
+		src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+		src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+	else
+		src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+		src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+
 	boutput(usr, SPAN_NOTICE("Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!"))
 
 /client/proc/toggle_hearing_all()
@@ -286,7 +293,10 @@ client/proc/toggle_ghost_respawns()
 			src.listen_tree.AddInput(LISTEN_INPUT_OOC_ADMIN)
 			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC)
 		if (src.preferences.listen_looc)
-			src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN)
+			if (src.only_local_looc)
+				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+			else
+				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC)
 
 		src.holder.admin_say_tree.update_target_speech_tree(src.say_tree)
@@ -353,7 +363,10 @@ client/proc/toggle_ghost_respawns()
 			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC_ADMIN)
 		if (src.preferences.listen_looc)
 			src.listen_tree.AddInput(LISTEN_INPUT_LOOC)
-			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN)
+			if (src.only_local_looc)
+				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+			else
+				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 
 		src.holder.admin_say_tree.update_target_speech_tree()
 		src.holder.admin_listen_tree.update_target_listen_tree()

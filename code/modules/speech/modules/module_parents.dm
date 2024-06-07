@@ -26,8 +26,6 @@ ABSTRACT_TYPE(/datum/listen_module)
 	var/priority = 0
 	/// The listen tree that this module belongs to.
 	var/datum/listen_module_tree/parent_tree
-	/// Whether this module can be removed by its parent listen tree - this is used to prevent ordinary listen trees from removing modules added by auxiliary listen trees.
-	var/can_be_removed_by_parent_tree = TRUE
 
 /datum/listen_module/New(datum/listen_module_tree/parent)
 	. = ..()

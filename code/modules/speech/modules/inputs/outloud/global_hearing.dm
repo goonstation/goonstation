@@ -2,11 +2,12 @@
 	id = LISTEN_INPUT_GLOBAL_HEARING
 	channel = SAY_CHANNEL_GLOBAL_OUTLOUD
 
-/datum/listen_module/input/outloud/global_hearing/can_hear(datum/say_message/message)
-	if (IN_RANGE(src.parent_tree.parent, message.speaker, message.heard_range))
-		return FALSE
+/datum/listen_module/input/outloud/global_hearing/process(datum/say_message/message)
+	var/turf/T = get_turf(message.speaker)
+	if (IN_RANGE(src.parent_tree.parent, T, message.heard_range) || (T.vistarget && IN_RANGE(src.parent_tree.parent, T.vistarget, message.heard_range)))
+		return
 
-	return TRUE
+	. = ..()
 
 
 /datum/listen_module/input/outloud/ears/global_counterpart

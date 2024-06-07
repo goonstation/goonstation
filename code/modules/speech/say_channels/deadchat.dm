@@ -25,6 +25,3 @@
 
 /datum/say_channel/delimited/local/ghostly_whisper
 	channel_id = SAY_CHANNEL_GHOSTLY_WHISPER
-
-/datum/say_channel/delimited/local/ghostly_whisper/GetAtomListeners(datum/say_message/message)
-	return atom_hearers(message.heard_range, message.speaker)

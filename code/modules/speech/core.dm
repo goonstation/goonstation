@@ -20,7 +20,6 @@
 	. = ..()
 
 /// Determines what happens to a message after this atom's listen tree has finished processing it. Typically the final destination of say message datums.
-/// Note that maptext is handled in `/mob/hear()`, as atoms are not in possession of clients.
 /atom/proc/hear(datum/say_message/message)
 	boutput(src, message.format_for_output())
 
@@ -188,12 +187,6 @@ Parity:
 Fixes:
 - Never add tags to `message.content` See message modifiers.
 
-Atom Hearers To Replace Hear Talk & All Hearers:
-- Old `hear_talk()` behaviour:
-	For atoms, `hear_talk()` was passed to all contents if `open_to_sound`
-	For humans, `hear_talk()` was passed to pockets, belt, and hands.
-- See `speech.dm`.
-
 Accents:
 - muffle?
 - furious
@@ -267,13 +260,19 @@ Say Implementations To Remove:
 
 	if (src.preferences.listen_looc)
 		if (src.holder && !src.player_mode)
-			src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN)
+			if (src.only_local_looc)
+				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+			else
+				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 		else
 			src.listen_tree.AddInput(LISTEN_INPUT_LOOC)
 
 	else
 		if (src.holder && !src.player_mode)
-			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN)
+			if (src.only_local_looc)
+				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+			else
+				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 		else
 			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC)
 

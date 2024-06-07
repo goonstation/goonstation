@@ -51,7 +51,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	/// The language that this message was sent in.
 	var/datum/language/language = null
 	/// The range of a heard message.
-	var/heard_range = 5
+	var/heard_range = DEFAULT_HEARING_RANGE
 	/// How loud a message is determines how large it is displayed in the text window.
 	var/loudness = 0
 	/// If set, overrides the `loudness` variable, and sets the font size of the message to the set value.

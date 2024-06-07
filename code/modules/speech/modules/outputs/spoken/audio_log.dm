@@ -2,7 +2,7 @@
 	id = SPEECH_OUTPUT_SPOKEN_AUDIO_LOG
 
 /datum/speech_module/output/spoken/audio_log/format(datum/say_message/message)
-	var/obj/item/device/audio_log/audio_log = src.parent_tree.parent
+	var/obj/item/device/audio_log/audio_log = message.speaker
 	if (!istype(audio_log))
 		return
 
