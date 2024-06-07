@@ -13,6 +13,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 	M.bioHolder.AddEffect(id)
 	return
 
+/proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
+
+	adjust_denominator = clamp(adjust_denominator, 1, 10)
+
+	. = "#"
+	for(var/i = 0, i < 3, i++)
+		//Isolate the RGB values
+		var/color = copytext(hex, 2 + (2 * i), 4 + (2 * i))
+		var/targetColor = copytext(targetHex, 2 + (2 * i), 4 + (2 * i))
+
+		//Turn them into numbers
+		color = hex2num(color)
+		targetColor = hex2num(targetColor)
+
+		//Do the math and add to the output
+		. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
+
 /// Holds all the appearance information.
 /datum/appearanceHolder
 	/** Mob Appearance Flags - used to modify how the mob is drawn
@@ -25,7 +42,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	*/
 	var/mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
 
-
 	/// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
 	var/body_icon = 'icons/mob/human.dmi'
 	/// for mutant races that are rendered using a static icon. Ignored if BUILT_FROM_PIECES is set in mob_appearance_flags
@@ -34,29 +50,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/head_icon = 'icons/mob/human_head.dmi'
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
-
-	/// The color that gets used for determining your colors
-	var/customization_first_color = "#101010"
-	/// The color that was set by the player's preferences
-	var/customization_first_color_original = "#101010"
-	/// The hair style / detail thing that gets displayed on your spaceperson
-	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
-	/// The hair style / detail thing that was set by the player in their settings
-	var/customization_first_original = "None"
-	/// The Y offset to display this image
-	var/customization_first_offset_y = 0
-
-	var/customization_second_color = "#101010"
-	var/customization_second_color_original = "#101010"
-	var/datum/customization_style/customization_second =  new /datum/customization_style/none
-	var/customization_second_original = "None"
-	var/customization_second_offset_y = 0
-
-	var/customization_third_color = "#101010"
-	var/customization_third_color_original = "#101010"
-	var/datum/customization_style/customization_third = new /datum/customization_style/none
-	var/customization_third_original = "None"
-	var/customization_third_offset_y = 0
 
 	/// Currently changes which sprite sheet is used
 	var/special_style
@@ -230,24 +223,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		head_icon = toCopy.head_icon
 		head_icon_state = toCopy.head_icon_state
 
-		customization_first_color_original = toCopy.customization_first_color_original
-		customization_first_color = toCopy.customization_first_color
-		customization_first = toCopy.customization_first
-		customization_first_offset_y = toCopy.customization_first_offset_y
-		customization_first_original = toCopy.customization_first_original
-
-		customization_second_color_original = toCopy.customization_second_color_original
-		customization_second_color = toCopy.customization_second_color
-		customization_second = toCopy.customization_second
-		customization_second_offset_y = toCopy.customization_second_offset_y
-		customization_second_original = toCopy.customization_second_original
-
-		customization_third_color_original = toCopy.customization_third_color_original
-		customization_third_color = toCopy.customization_third_color
-		customization_third = toCopy.customization_third
-		customization_third_offset_y = toCopy.customization_third_offset_y
-		customization_third_original = toCopy.customization_third_original
-
 		special_hair_1_icon = toCopy.special_hair_1_icon
 		special_hair_1_state = toCopy.special_hair_1_state
 		special_hair_1_color_ref = toCopy.special_hair_1_color_ref
@@ -276,17 +251,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
-		customization_first_color = StaggeredCopyHex(customization_first_color, toCopy.customization_first_color, adjust_denominator)
-
-		if (progress >= 9 || prob(progress * 10))
-			customization_first = toCopy.customization_first
-			customization_second = toCopy.customization_second
-			customization_third = toCopy.customization_third
-
-		customization_second_color = StaggeredCopyHex(customization_second_color, toCopy.customization_second_color, adjust_denominator)
-		customization_third_color = StaggeredCopyHex(customization_third_color, toCopy.customization_third_color, adjust_denominator)
 		e_color = StaggeredCopyHex(e_color, toCopy.e_color, adjust_denominator)
-
 		s_tone = StaggeredCopyHex(s_tone, toCopy.s_tone, adjust_denominator)
 
 		if (progress > 7 || prob(progress * 10))
@@ -302,23 +267,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/mob/living/carbon/human/H = owner
 			H.update_colorful_parts()
 		return
-
-	proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
-
-		adjust_denominator = clamp(adjust_denominator, 1, 10)
-
-		. = "#"
-		for(var/i = 0, i < 3, i++)
-			//Isolate the RGB values
-			var/color = copytext(hex, 2 + (2 * i), 4 + (2 * i))
-			var/targetColor = copytext(targetHex, 2 + (2 * i), 4 + (2 * i))
-
-			//Turn them into numbers
-			color = hex2num(color)
-			targetColor = hex2num(targetColor)
-
-			//Do the math and add to the output
-			. += num2hex(color + ((targetColor - color) / adjust_denominator), 0)
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
@@ -341,6 +289,73 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
+
+/// Holds all the customization information.
+/datum/customizationHolder
+	var/mob/owner = null
+
+	// It's probably smarter to have customizations in a list to iterate over for later - Glamurio
+	var/list/datum/customization/customizations = list(
+		new /datum/customization/first,
+		new /datum/customization/second,
+		new /datum/customization/third,
+	)
+
+	proc/CanCopyCustomization(var/datum/customizationHolder/toCopy)
+		if (!length(src.customizations) > 0 || !length(toCopy.customizations) > 0)
+			logTheThing(LOG_DEBUG, null, {"<b>Customizations:</b> Tried to copy customization [!length(src.customizations) > 0 ? "from" : "to"]
+			 [toCopy.owner ? "\ref[toCopy.owner] [toCopy.owner.name]" : "*NULL*"] to [src.owner ? "\ref[src.owner] [src.owner.name]" : "*NULL*"],
+			but the holder we are copying [!length(src.customizations) > 0 ? "to" : "from"] has no customizations!"})
+			return FALSE
+		return TRUE
+
+	proc/CopyOtherCustomizationAppearance(var/datum/customizationHolder/toCopy)
+		if (!src.CanCopyCustomization(toCopy))
+			return
+		var/maxCopies = length(toCopy.customizations)
+		for(var/i in 1 to length(src.customizations))
+			var/datum/customization/custom = src.customizations[i]
+			var/datum/customization/customCopy = toCopy.customizations[i]
+			custom.color_original = customCopy.color_original
+			custom.color = customCopy.color
+			custom.style_original = customCopy.style_original
+			custom.style = customCopy.style
+			custom.offset_y = customCopy.offset_y
+
+	// This is weird to migrate and I'm not sure if it's right
+	proc/StaggeredCopyOther(var/datum/customizationHolder/toCopy, var/progress = 1)
+		if (!src.CanCopyCustomization(toCopy))
+			return
+
+		for(var/i in 1 to length(src.customizations))
+			var/adjust_denominator = 11 - progress
+			var/datum/customization/custom = src.customizations[i]
+			var/datum/customization/customCopy = toCopy.customizations[i]
+
+			custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
+
+			if (progress >= 9 || prob(progress * 10))
+				custom.style = customCopy.style
+
+/// Datum that determines the customization.
+/datum/customization
+	/// The color that gets used for determining your colors
+	var/color = "#101010"
+	/// The color that was set by the player's preferences
+	var/color_original = "#101010"
+	/// The hair style / detail thing that gets displayed on your spaceperson
+	var/datum/customization_style/style = new /datum/customization_style/hair/short/short
+	/// The hair style / detail thing that was set by the player in their settings
+	var/style_original = "None"
+	/// The Y offset to display this image
+	var/offset_y = 0
+
+	first
+		style =  new /datum/customization_style/hair/short/short
+	second
+		style =  new /datum/customization_style/none
+	third
+		style =  new /datum/customization_style/none
 
 /datum/bioHolder
 	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.
