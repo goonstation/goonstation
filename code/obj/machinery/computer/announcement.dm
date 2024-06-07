@@ -19,6 +19,7 @@
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
+	var/override_font = null
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -132,7 +133,13 @@
 			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
-		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
+
+		var/header = "[A.name] Announcement by [ID.registered] ([ID.assignment])"
+		if (override_font )
+			message = "<font face = '[override_font]'> [message] </font>"
+			header = "<font face = '[override_font]'> [header] </font>"
+
+		command_announcement(message, header, msg_sound)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
 
@@ -221,6 +228,8 @@
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/clown_announcement
 	var/emagged = FALSE
+	sound_to_play = 'sound/misc/announcement_clown.ogg'
+	override_font = "Comic Sans MS"
 
 	send_message(mob/user, message)
 		. = ..()
