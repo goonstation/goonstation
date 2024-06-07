@@ -1,5 +1,10 @@
 
 (t)fri jun 07 24
+(u)LeahTheTech
+(p)19339
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Eating sponge capsules and then drinking water will now cause them to expand into animals, causing a small amount of stomach damage in the process.
+(+)Sponge capsules can now be force-fed to other people.
 (u)FlameArrow57
 (p)19341
 (e)🆕💅🧛🔨|C-Feature, C-QoL, A-Gamemodes, A-Player-Actions
