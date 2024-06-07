@@ -1,6 +1,6 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
-
+#define SHIPPING_MARKET_SHIFT_BASELINE_DURATION 7.5 MINUTES //Baseline time between market shifts; 7:30 +/- 2:30 = 5 ~ 10 minutes
 /// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
 #define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 100
 /// The number of peak points on the pressure crystal graph offering bonus credits
@@ -93,8 +93,7 @@
 
 		update_shipping_data()
 
-		// 7:30 +/- 2:30 = 5 ~ 10 minutes
-		time_between_shifts = 7.5 MINUTES
+		time_between_shifts = SHIPPING_MARKET_SHIFT_BASELINE_DURATION
 		time_until_shift = time_between_shifts + rand(-150, 150) SECONDS
 
 		var/turf/spawnpoint
@@ -320,6 +319,10 @@
 	proc/generate_mail(time_since_previous)
 		var/adjustment = max(time_since_previous, 2 MINUTES)
 		var/alive_players = 0
+		var/target_percentage = 0.25
+		for(var/datum/job/civilian/mail_courier/J in job_controls.staple_jobs)
+			if (J.assigned)
+				target_percentage = 0.375
 		for(var/client/C)
 			if (!isliving(C.mob) || isdead(C.mob) || !ishuman(C.mob) || inafterlife(C.mob))
 				continue
@@ -330,7 +333,7 @@
 		// one hour / 7.5 minutes = 8
 		// so, 3 / 8 = 37.5% of players should get mail
 		// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
-		var/mail_amount = ceil(alive_players * (0.25 * (adjustment / (7.5 MINUTES))))
+		var/mail_amount = ceil(alive_players * (target_percentage * (adjustment / SHIPPING_MARKET_SHIFT_BASELINE_DURATION)))
 		logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
 		if (alive_players >= 1)
 			var/obj/storage/crate/mail/mail_crate = new
