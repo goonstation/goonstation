@@ -1526,6 +1526,11 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_width = 600
 			src.maptext_height = 400
 			update_text() // kick start
+			setup_process_signal()
+
+		proc/setup_process_signal()
+			set waitfor = FALSE
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
 			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
