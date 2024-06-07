@@ -1909,6 +1909,7 @@
 	name = "Clowntainment"
 	})
 "ahh" = (
+/obj/storage/crate/clown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
@@ -2520,7 +2521,9 @@
 	})
 "ajj" = (
 /obj/machinery/light/small,
-/obj/storage/crate/clown,
+/obj/machinery/computer/announcement/clown{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
