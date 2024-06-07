@@ -1,6 +1,10 @@
 
 (t)fri jun 07 24
 (u)glowbold
+(p)19364
+(e)⚖|C-Balance
+(+)Artifacts sell for slightly more on the market.
+(u)glowbold
 (p)19293
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
 (+)Pineapple slices can be fit onto drinking glasses like fruit wedges.
