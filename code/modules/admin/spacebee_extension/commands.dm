@@ -80,7 +80,8 @@
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 			getPlayerNotes.queryParams = list(
 				"filters" = list(
-					"ckey" = key_to_check
+					"ckey" = key_to_check,
+					"exact" = TRUE
 				),
 				"page" = page,
 				"per_page" = 10
@@ -100,12 +101,19 @@
 		var/header
 		var/len = 0
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
+			var/list/legacyData
+			if (length(playerNote.legacy_data))
+				legacyData = json_decode(playerNote.legacy_data)
+
 			var/id = playerNote.server_id
-			if(!id && length(playerNote.legacy_data))
-				var/lData = json_decode(playerNote.legacy_data)
-				if(islist(lData) && lData["oldserver"])
-					id = lData["oldserver"]
-			header = "**\[[id]\] [playerNote.game_admin?.name || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			if (!id && ("oldserver" in legacyData))
+				id = legacyData["oldserver"]
+
+			var/gameAdminCkey = playerNote.game_admin?.name || playerNote.game_admin?.ckey
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
+				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			header = "**[id ? "\[[id]\] " : ""][gameAdminCkey || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 			len += length(header) + length(playerNote.note)
 			if(len >= 4000)
 				message = jointext(message, "\n")
@@ -225,6 +233,7 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, server, length, reason)
+		var/rpban = FALSE
 		if (!(ckey && server && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
@@ -257,6 +266,8 @@
 			server = "main3"
 		else if(server == "main4" || server == "4" || server == "goon4")
 			server = "main4"
+		else if(server == "rp")
+			rpban = TRUE
 		else
 			system.reply("Invalid server.", user)
 			return
@@ -288,15 +299,35 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		bansHandler.add(
-			ckey(user),
-			data["server"],
-			data["ckey"],
-			data["compID"],
-			data["ip"],
-			data["reason"],
-			data["mins"] * 60 * 10
-		)
+		if(rpban)
+			bansHandler.add(
+				ckey(user),
+				"main3",
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
+			bansHandler.add(
+				ckey(user),
+				"main4",
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
+		else
+			bansHandler.add(
+				ckey(user),
+				data["server"],
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
 
 /datum/spacebee_extension_command/boot
 	name = "boot"
@@ -683,7 +714,7 @@
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
 		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: https://goonhub.com/admin/logs/[roundId]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: [goonhub_href("/admin/logs/[roundId]")]"
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename
@@ -918,6 +949,7 @@
 		var/message = "**Profile name**: [prefs.profile_name]\n"
 		message += "**Character name:** [prefs.name_first] [prefs.name_last]\n"
 		message += "**Gender:** [prefs.gender]\n"
+		message += "**Age:** [prefs.age]\n"
 		message += "**Random name:** [prefs.be_random_name ? "true" : "false"]\n"
 		message += "**Random appearance:** [prefs.be_random_look ? "true" : "false"]\n"
 		message += "**Flavor text:** [prefs.flavor_text]\n"
@@ -926,3 +958,15 @@
 		message += "**Syndicate intelligence:** [prefs.synd_int_note]\n"
 		ircmsg["msg"] = html_decode(message)
 		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/toggle_tracy_profiling
+	name = "toggletracy"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Toggle Tracy profiling on the next round"
+	argument_types = list()
+	execute(user)
+		var/enabled = toggle_tracy_profiling_file()
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
+		message_admins("[user] (Discord) [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+		system.reply("[enabled ? "Enabled" : "Disabled"] Tracy profiling for the next round.", user)

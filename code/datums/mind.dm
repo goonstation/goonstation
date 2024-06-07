@@ -331,6 +331,9 @@ datum/mind
 			antagonist_role.owner.current.faction -= antagonist_role.faction
 		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
+		var/mob/living/carbon/human/H = src.current
+		if (istype(H))
+			H.update_arrest_icon() // for derevving
 		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
 			src.special_role = null
 			ticker.mode.traitors.Remove(src)

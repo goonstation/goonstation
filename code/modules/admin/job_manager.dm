@@ -11,7 +11,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "JobManager")
-	ui.open()
+		ui.open()
 
 /datum/job_manager/ui_data(mob/user)
 	var/list/staple_job_data = list()

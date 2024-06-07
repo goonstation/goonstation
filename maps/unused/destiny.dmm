@@ -34793,8 +34793,7 @@
 /obj/machinery/traymachine/morgue{
 	dir = 2
 	},
-/obj/item/reagent_containers/food/snacks/pizza{
-	icon_state = "pizza_m";
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball{
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/cool{

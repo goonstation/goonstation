@@ -552,18 +552,22 @@ ABSTRACT_TYPE(/obj/item)
 					msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
 				message_admins(msg)
 				logTheThing(LOG_BOMBING, W?.fingerprintslast, msg)
+
+	var/image/I = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = 5) // pixel shift for centering
+	I.alpha = 180
 	if (src.burn_output >= 1000)
-		UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
-	else
-		UpdateOverlays(image('icons/effects/fire.dmi', "1old"),"burn_overlay")
+		I.transform = matrix(I.transform, 1.2, 1.2, MATRIX_SCALE)
+	src.UpdateOverlays(I, "item_ignition")
+	src.add_simple_light("item_ignition", list(255, 110, 135, 110))
 
 /obj/item/proc/combust_ended()
 	if(!src.burning)
 		return
+	src.remove_simple_light("item_ignition")
 	STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning = null
 	firesource = FALSE
-	ClearSpecificOverlays("burn_overlay")
+	ClearSpecificOverlays("item_ignition")
 	name = "[pick("charred","burned","scorched")] [name]"
 
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -963,11 +967,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			return
 	else
 		if (burning_last_process != src.burning)
-			if (src.burn_output >= 1000)
-				src.overlays -= image('icons/effects/fire.dmi', "2old")
-			else
-				src.overlays -= image('icons/effects/fire.dmi', "1old")
-			return
+			ClearSpecificOverlays("item_ignition")
 		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	burning_last_process = src.burning
 
@@ -1734,3 +1734,22 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/safe_delete()
 	src.force_drop()
 	..()
+
+/obj/item/can_arm_attach()
+	return ..() && !(src.cant_drop || src.two_handed)
+
+/obj/item/proc/update_inhand(hand, hand_offset) // L, R or LR
+	if (!src.inhand_image)
+		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
+
+	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
+	if(!(state in icon_states(src.inhand_image_icon)))
+		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
+
+	src.inhand_image.icon_state = state
+	if (src.color)
+		src.inhand_image.color = src.color
+	else if (src.inhand_color)
+		src.inhand_image.color = src.inhand_color
+	src.inhand_image.pixel_x = 0
+	src.inhand_image.pixel_y = hand_offset

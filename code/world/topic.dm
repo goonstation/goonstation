@@ -927,6 +927,9 @@
 				var/list/response = list()
 				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
 					response += canvas.id
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if (art_exhibit.data?.art)
+						response += art_exhibit.exhibit_id
 				return json_encode(response)
 
 			if("lazy_canvas_get")
@@ -936,6 +939,11 @@
 						if(!canvas.initialized)
 							canvas.load_from_id(canvas.id)
 						response[canvas.id] = icon2base64(canvas.art)
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if(art_exhibit.exhibit_id == plist["id"])
+						if (!art_exhibit.data?.art)
+							break
+						response[art_exhibit.exhibit_id] = icon2base64(art_exhibit.data.art)
 				return json_encode(response)
 
 			if("ban_added")
@@ -950,4 +958,11 @@
 					text2num(plist["requires_appeal"]),
 					TRUE
 				)
+				return 1
+
+			if("goonhub_auth")
+				var/ckey = plist["ckey"]
+				var/client/C = find_client(ckey)
+				if (C && C.goonhub_auth)
+					C.goonhub_auth.on_auth()
 				return 1

@@ -636,10 +636,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/robot
 	name = "Robotics Crate"
-	desc = "x1 Securitron, x1 Floorbot, x1 Cleanbot, x1 Medibot, x1 Firebot"
+	desc = "x1 Floorbot, x1 Cleanbot, x1 Medibot, x1 Firebot"
 	category = "Medical Department"
-	contains = list(/obj/machinery/bot/secbot,
-					/obj/machinery/bot/floorbot,
+	contains = list(/obj/machinery/bot/floorbot,
 					/obj/machinery/bot/cleanbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/firebot)
