@@ -14110,6 +14110,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cxj" = (
+/obj/decal/cleanable/dirt{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
 "cxW" = (
 /obj/machinery/light{
 	dir = 4;
@@ -14167,6 +14173,12 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"cFA" = (
+/obj/machinery/computer/announcement/clown{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
 "cJH" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -62347,7 +62359,7 @@ agS
 agS
 agS
 agS
-aaa
+agS
 aaa
 asP
 acm
@@ -62648,8 +62660,8 @@ aaa
 ayn
 azF
 aQG
+cFA
 aSJ
-aaa
 aaa
 asP
 acp
@@ -62950,8 +62962,8 @@ aaa
 agS
 aaD
 aUQ
+cxj
 agS
-aaa
 aaa
 abN
 abH
