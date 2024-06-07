@@ -24,13 +24,7 @@ export const Precipitation = (props, context) => {
       width={300}
       height={425}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Precipitation
-            </Box>
-          }>
+        <Section title="Precipitation">
           <Tooltip content="Cooldown for how fast ATOMs can be rained on.">
             <Box m={1}>
               Cooldown

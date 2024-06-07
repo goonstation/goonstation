@@ -399,7 +399,7 @@
 
 
 	proc/calculate_artifact_price(var/modifier, var/correctness)
-		return ((modifier**2) * PAY_EMBEZZLED * correctness)
+		return ((modifier**1.5) * PAY_EMBEZZLED * correctness)
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0

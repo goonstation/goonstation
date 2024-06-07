@@ -921,11 +921,10 @@ datum
 			value = 2 // 1c + 1c
 			hygiene_value = 0.25
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.growth += 4
-				if (prob(66))
-					P.health++
-				P.reagents.remove_any(4)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 4
+				growth_tick.health_change += 0.66
+				growth_tick.water_consumption += 4
 
 		diethylamine
 			name = "diethylamine"
@@ -938,9 +937,8 @@ datum
 			transparency = 255
 			value = 4 // 2c + 1c + heat
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(66))
-					P.growth+=2
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 1.23
 
 		acetone
 			name = "acetone"
@@ -1093,10 +1091,8 @@ datum
 					else boutput(M, SPAN_ALERT("Yuck!"))
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(50))
-					DNA.endurance++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.endurance_bonus += 0.5
 
 		cryostylane
 			name = "cryostylane"
@@ -2371,8 +2367,7 @@ datum
 			fluid_g = 31
 			fluid_b = 117
 			transparency = 175
-			addiction_prob = 1//10
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 10
 			overdose = 15
 			depletion_rate = 0.2
@@ -2496,7 +2491,7 @@ datum
 			fluid_g = 16
 			fluid_b = 94
 			transparency = 200
-			addiction_prob = 1//20
+			addiction_prob = 1
 			addiction_min = 5
 			overdose = 11
 			depletion_rate = 0.1
@@ -2599,8 +2594,7 @@ datum
 			fluid_g = 12
 			fluid_b = 74
 			transparency = 150
-			addiction_prob = 1//5
-			addiction_prob2 = 1
+			addiction_prob = 0.01
 			addiction_min = 15
 			overdose = 30
 			depletion_rate = 0.1
@@ -2651,44 +2645,34 @@ datum
 		transparium
 			name = "transparium"
 			id = "transparium"
-			description = "Fading into obscurity..."
+			description = "An exotic compound that intimidates nearby photons upon exiting the body, rendering the user invisible for a period of time proportional to how long it was present in their bloodstream."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 30
-			addiction_prob = 15
-			addiction_prob2 = 25
+			addiction_prob = 3.75
 			addiction_min = 15
 			overdose = 30
 			var/effect_length = 0
 
-			on_mob_life(var/mob/living/M, var/mult = 1) // humans only! invisible critters would be awful...
-				if(!M)
-					holder.remove_reagent("transparium")
+			on_mob_life(mob/M, mult = 1) // humans only! invisible critters would be awful...
+				if (!ishuman(M))
+					src.holder.remove_reagent(src.id)
 					return
-
-				if (effect_length < 100) // because 30/0.4 = 75; give them a little more time spent invisible, but don't allow them to try and beat the system too much
-					effect_length+= 1 * mult
+				if (src.effect_length < 100) // because 30/0.4 = 75; give them a little more time spent invisible, but don't allow them to try and beat the system too much
+					src.effect_length += 1 * mult
 				..()
 
-			on_mob_life_complete(var/mob/living/M)
-				if(M)
-					boutput(M, SPAN_ALERT("You feel yourself fading away."))
-					M.alpha = 0
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
-					if(effect_length > 75)
-						M.take_brain_damage(10) // there!
-					SPAWN(effect_length * 10)
-						if(M.alpha != 255)
-							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
-							M.alpha = 255
-							REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
+			on_mob_life_complete(mob/M)
+				if (src.effect_length > 75)
+					M.take_brain_damage(10)
+				M.setStatusMin("transparium", src.effect_length * 1 SECOND, 0)
 
-			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
+			do_overdose(severity, mob/M, mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
-					if(effect <= 4)
+					if (effect <= 4)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 8)
 						M.change_misstep_chance(12 * mult)
@@ -2696,7 +2680,7 @@ datum
 					else if (effect <= 20)
 						M.emote("faint")
 				else if (severity == 2)
-					if(effect <= 6)
+					if (effect <= 6)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 12)
 						M.change_misstep_chance(12 * mult)
@@ -2704,31 +2688,18 @@ datum
 					else if (effect <= 24)
 						M.emote("faint")
 
-		diluted_transparium
+		transparium/dilute
 			name = "diluted transparium"
 			id = "diluted_transparium"
-			description = "This looks a lot like plain water. Are you sure you didn't mess up?"
+			description = "Transparium that has been diluted with water to weaken its effects."
 			fluid_r = 10
 			fluid_g = 254
 			fluid_b = 254
-			transparency = 30
-			var/effect_length = 0
+			addiction_prob = 0
+			overdose = 0
 
-			on_mob_life(var/mob/M, var/mult = 1) // now this is ok
-				if(!M) M = holder.my_atom
-
-				effect_length += 1 * mult
-
-				..()
-
-			on_mob_life_complete(var/mob/living/M)
-				if(M)
-					boutput(M, SPAN_ALERT("You feel yourself fading."))
-					M.alpha = rand(80,200)
-					SPAWN(effect_length * 10)
-						if(M.alpha != 255)
-							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
-							M.alpha = 255
+			on_mob_life_complete(mob/living/M)
+				M.setStatusMin("transparium", src.effect_length * 1 SECOND, rand(80, 200))
 
 		fartonium // :effort:
 			name = "fartonium"
@@ -2739,8 +2710,7 @@ datum
 			fluid_g = 122
 			fluid_b = 32
 			transparency = 200
-			addiction_prob = 1
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 15
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2804,8 +2774,7 @@ datum
 			fluid_g = 175
 			fluid_b = 255
 			transparency = 150
-			addiction_prob = 1//5
-			addiction_prob2 = 1
+			addiction_prob = 0.01
 			addiction_min = 15
 			depletion_rate = 0.1
 
@@ -3154,11 +3123,11 @@ datum
 						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
 						. = 0
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "weed")
-					P.HYPdamageplant("poison",2)
-					P.growth -= 3
+					growth_tick.poison_damage += 2
+					growth_tick.growth_rate -= 3
 
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O, /obj/spacevine))
@@ -3185,11 +3154,8 @@ datum
 			fluid_b = 0
 			fluid_flags = FLUID_STACKING_BANNED
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80))
-					P.growth++
-				if (prob(80))
-					P.health++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.health_change += 1.6
 
 		potash
 			name = "potash"
@@ -3200,7 +3166,7 @@ datum
 			fluid_g = 240
 			fluid_b = 240
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				/*if (prob(80))
 					P.growth+=2
 				if (prob(80))
@@ -3208,16 +3174,13 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(24))
-					DNA.cropsize++
-				if (DNA.harvests > 1 && prob(24))
-					DNA.harvests--
-				if (growing.isgrass && prob(66) && P.growth > 2)
-					P.growth -= 2
-				if (prob(50))
-					P.growth++
-					P.health++
-
+				growth_tick.cropsize_bonus += 0.24
+				if (DNA.harvests > 1)
+					growth_tick.harvests_bonus -= 0.24
+				if (growing.isgrass && P.growth > 2)
+					growth_tick.growth_rate -= 1.23
+				growth_tick.growth_rate += 0.5
+				growth_tick.health_change += 0.5
 
 		plant_nutrients
 			name = "saltpetre"
@@ -3229,14 +3192,13 @@ datum
 			fluid_b = 240
 			hunger_value = 0.048
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80))
-					P.growth+=3
-				if (prob(80))
-					P.health+=3
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 2.4
+				growth_tick.growth_rate += 2.4
+				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(50)) DNA.potency++
-				if (DNA.cropsize > 1 && prob(24)) DNA.cropsize--
+				if (DNA.cropsize > 1)
+					growth_tick.cropsize_bonus -= 0.24
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
@@ -3334,13 +3296,11 @@ datum
 					holder.del_reagent(src.id)
 				return
 */
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
-				var/datum/plantgenes/DNA = P.plantgenes
 				if (growing.growthmode == "carnivore")
-					P.growth += 3
-					if (prob(80))
-						DNA.endurance++
+					growth_tick.endurance_bonus += 0.8
+					growth_tick.growth_rate += 3
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
 				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
@@ -3469,9 +3429,8 @@ datum
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(66))
-					P.health++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.health_change += 0.66
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"
@@ -4029,8 +3988,8 @@ datum
 				if (ismob(holder.my_atom))
 					holder.my_atom.delStatus("miasma")
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 			syndicate
 				name = "syndicate miasma"

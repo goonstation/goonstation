@@ -143,6 +143,13 @@ ABSTRACT_TYPE(/obj/item/parts)
 				if (H.r_hand == remove_object)
 					H.r_hand = null
 				src.remove_object = null
+
+			if (src.slot == "l_arm")
+				H.drop_from_slot(H.l_hand)
+				H.hud.update_hands()
+			else if (src.slot == "r_arm")
+				H.drop_from_slot(H.r_hand)
+				H.hud.update_hands()
 			H.update_clothing()
 			H.update_body()
 			H.set_body_icon_dirty()

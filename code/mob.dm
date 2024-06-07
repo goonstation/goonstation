@@ -93,7 +93,6 @@
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null
-	var/shakecamera = 0
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null
@@ -179,6 +178,7 @@
 
 	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
+	var/logout_at = null
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0
@@ -442,8 +442,10 @@
 	..()
 
 /mob/Login()
-	if (!src.client)
-		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	if (isnull(src.client))
+		return
+		// Guests that get deleted, is how
+		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isnull(src.client.tg_layout))
 		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
 	src.client.set_layout(src.client.tg_layout)
@@ -517,11 +519,15 @@
 	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY, src.respect_view_tint_settings)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+	if (src.client)
+		SEND_SIGNAL(src.client, COMSIG_CLIENT_LOGIN, src)
 
 /mob/Logout()
 
 	//logTheThing(LOG_DIARY, src, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
+	if (src.last_client)
+		SEND_SIGNAL(src.last_client, COMSIG_CLIENT_LOGOUT, src)
 
 	tgui_process?.on_logout(src)
 
@@ -1479,6 +1485,10 @@
 	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
+	for (var/obj/ability_button/reset_view/console/ability in src.item_abilities)
+		src.item_abilities -= ability
+	src.need_update_item_abilities = 1
+	src.update_item_abilities()
 
 /mob/proc/show_credits()
 	set name = "Show Credits"
@@ -2940,6 +2950,9 @@
 			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
+
+/mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
+	item.forcefeed(src, user, edibility_override)
 
 /mob/proc/get_hand_pixel_x()
 	.= 0

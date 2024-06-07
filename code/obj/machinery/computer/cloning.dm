@@ -7,7 +7,7 @@
 var/global/cloning_with_records = TRUE
 ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
-	name = "Cloning Console"
+	name = "cloning console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"

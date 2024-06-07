@@ -77,8 +77,8 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",3)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 3
 
 /datum/reagent/chromium
 	name = "chromium"
@@ -121,8 +121,8 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",3)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 3
 
 /datum/reagent/ethanol
 	name = "ethanol"
@@ -134,7 +134,7 @@
 	fluid_g = 255
 	transparency = 5
 	addiction_prob = 1
-	addiction_min = 10
+	addiction_min = 50
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
@@ -358,8 +358,8 @@
 				L.cure_disease(plague)
 		..()
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 1
 
 /datum/reagent/nickel
 	name = "nickel"
@@ -402,9 +402,8 @@
 	fluid_b = 110
 	transparency = 255
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(66))
-			P.growth++
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.growth_rate += 0.66
 
 /datum/reagent/plasma
 	name = "plasma"
@@ -451,10 +450,10 @@
 	reaction_turf(var/turf/T, var/volume)
 		return 1 //changed return value to 1 for fluids. remove if this was a bad idea
 
-	on_plant_life(var/obj/machinery/plantpot/P)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 		var/datum/plant/growing = P.current
 		if (growing.growthmode != "plasmavore")
-			P.HYPdamageplant("poison",2)
+			growth_tick.poison_damage += 2
 
 /datum/reagent/platinum
 	name = "platinum"
@@ -476,10 +475,9 @@
 	fluid_b = 190
 	transparency = 255
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(40))
-			P.growth++
-			P.health++
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.growth_rate += 0.4
+		growth_tick.health_change += 0.4
 
 /datum/reagent/silicon
 	name = "silicon"
@@ -683,9 +681,9 @@
 		if(spawncleanable && !istype(T, /turf/space) && !(locate(/obj/decal/cleanable/greenglow) in T))
 			make_cleanable(/obj/decal/cleanable/greenglow,T)
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(80)) P.HYPdamageplant("radiation",3)
-		if (prob(16)) P.HYPmutateplant(1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.radiation_damage += 2.4
+		growth_tick.mutation_severity += 0.16
 
 /datum/reagent/sodium
 	name = "sodium"
@@ -715,9 +713,9 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("radiation",2)
-		if (prob(24)) P.HYPmutateplant(1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.radiation_damage += 2
+		growth_tick.mutation_severity += 0.24
 
 /datum/reagent/water
 	name = "water"
@@ -749,6 +747,11 @@
 			var/mob/living/carbon/human/H = L
 			if (H.organHolder)
 				H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
+				var/obj/item/toy/sponge_capsule/capsule = locate() in H.organHolder?.stomach?.stomach_contents
+				if (capsule)
+					capsule.add_water()
+					L.visible_message(SPAN_ALERT("[L] vomits up a rapidly expanding sponge capsule!"))
+					H.reagents?.remove_reagent("water", 10)
 		L.nutrition += 1  * mult
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.

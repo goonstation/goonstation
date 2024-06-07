@@ -456,7 +456,7 @@
 		name = "fancy hat"
 		icon_state = "rank-fancy"
 		item_state = "that"
-		desc = "What do you mean this is hat isn't fancy?"
+		desc = "What do you mean this hat isn't fancy?"
 		seal_hair = FALSE
 
 	detective
