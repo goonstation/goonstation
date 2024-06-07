@@ -455,23 +455,13 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
-			var/turf/T = user.loc
-			SPAWN(6 SECONDS)
-				if (user.loc != T || !can_act(user))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
-				src.dismantle_stage = 3
+			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (src.dismantle_stage == 3)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
-			var/turf/T = user.loc
-			SPAWN(6 SECONDS)
-				if (user.loc != T || !can_act(user))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
-				src.dismantle_stage = 2
+			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else ..()
 
 	else if (isweldingtool(W))
@@ -692,6 +682,15 @@ or don't if it uses a custom topopen overlay
 		return TRUE
 	return FALSE
 
+/// for dismantle action bar
+/mob/living/silicon/ai/proc/toggle_CPU_bolts(mob/user)
+	switch(src.dismantle_stage)
+		if(2)
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
+			src.dismantle_stage = 3
+		if(3)
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
+			src.dismantle_stage = 2
 
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
