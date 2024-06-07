@@ -2259,7 +2259,7 @@ datum
 			transparency = 77
 			taste = "hot"
 			addiction_prob = 0.1 // heh
-			addiction_min = 2
+			addiction_min = 7.5
 			max_addiction_severity = "LOW"
 			//penetrates_skin = 1
 			viscosity = 0.2

@@ -134,7 +134,7 @@
 	fluid_g = 255
 	transparency = 5
 	addiction_prob = 1
-	addiction_min = 10
+	addiction_min = 50
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02

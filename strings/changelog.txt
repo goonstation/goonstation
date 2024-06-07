@@ -1,8 +1,49 @@
 
-(t)sun jun 02 24
+(t)thu jun 06 24
+(u)LeahTheTech
+(+)Singularity buster rockets now send people flying.
+(u)JORJ949
+(p)18880
+(e)⚖⛔📦|C-Balance, C-Removal, A-Game-Objects
+(+)Removed securitrons from robotics crates.
+(u)mintyphresh
+(p)19282
+(e)💅💊⚗|C-QoL, A-Medical, A-Chemistry
+(+)Players about to be eligible for addiction are now warned of it.
+(u)BatElite
+(p)19152
+(e)🆕🎨📄|C-Feature, C-Sprites, A-UI
+(+)Health monitor implants now show a central pip for your overall health.
+(t)wed jun 05 24
+(u)mintyphresh
+(p)19328
+(e)⚖💊⚗🍝|C-Balance, A-Medical, A-Chemistry, A-Catering
+(+)Ethanol is five times harder to get addicted to.
+(u)Zamujasa
+(p)19249
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Players who disconnect now have a little "Zz" over their head.
+(*)Players who are in VR, etc. have an icon over their head.
+(*)The AI core and AI shells similarly have icons.
+(u)Lord_Earthfire
+(p)19314
+(e)🆕⚖⚗🍝|C-Feature, C-Balance, A-Chemistry, A-Catering
+(+)The amount of fish oil in fish has been doubled.
+(+)Heating fish oil in closed containers can pyrolyse it to a usefull amount of oil, ash and potash.
+(u)Glamurio (Ryou)
+(p)19175
+(e)💅🐣|C-QoL, A-Respawning
+(*)The mail never sleeps, it merely rests. And now, Mail Couriers never sleep either, they join at roundstart.
+(t)tue jun 04 24
+(u)Mordent
+(p)19337
+(e)🆕📦🍝|C-Feature, A-Game-Objects, A-Catering
+(+)Added fishing locations: flower vases, ice dispensers, glass recyclers, fuel/foam tanks, ketchup/mustard bottles
 (u)Sord
+(*)Added a few new random gimmick jobs: Food Critic, Pest Control Specialist, Drug Dealer, Pod/Sub Mechanic, and Phone Merchant.
 (+)The Regional Director has been permanently fired.
 (+)The chef has posted a permanent job offer for a sous-chef! Any time there is a chef, a sous-chef slot will open up for late join instead of being a random job.
+(t)sun jun 02 24
 (u)Laboredih123
 (p)19265
 (e)🪲🗺|C-Bug, A-Mapping

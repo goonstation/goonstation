@@ -1099,6 +1099,28 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Staff Assistant")
 		return
 
+/datum/job/civilian/mail_courier
+	name = "Mail Courier"
+	linkcolor = "#0099FF"
+	alias_names = "Mailman"
+	wages = PAY_TRADESMAN
+	limit = 1
+	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
+	slot_head = list(/obj/item/clothing/head/mailcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_ears = list(/obj/item/device/radio/headset/mail)
+	slot_poc1 = list(/obj/item/pinpointer/mail_recepient)
+	slot_belt = list(/obj/item/device/pda2/quartermaster)
+	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
+	alt_names = list("Head of Deliverying", "Mail Bringer")
+	wiki_link = "https://wiki.ss13.co/Mailman"
+
+	New()
+		..()
+		src.access = get_access("Mail Courier")
+		return
+
 /datum/job/civilian/clown
 	name = "Clown"
 	limit = 1
@@ -1476,28 +1498,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	New()
 		..()
 		src.access = get_access("Space Cowboy")
-		return
-
-/datum/job/special/mail_courier
-	name = "Mail Courier"
-	linkcolor = "#0099FF"
-	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
-	limit = 1
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
-	slot_head = list(/obj/item/clothing/head/mailcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_ears = list(/obj/item/device/radio/headset/mail)
-	slot_poc1 = list(/obj/item/pinpointer/mail_recepient)
-	slot_belt = list(/obj/item/device/pda2/quartermaster)
-	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Mail Bringer")
-	wiki_link = "https://wiki.ss13.co/Mailman"
-
-	New()
-		..()
-		src.access = get_access("Mail Courier")
 		return
 
 /datum/job/special/stowaway
@@ -2019,7 +2019,70 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
 	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+/datum/job/special/random/foodcritic
+	name = "Food Critic"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/shirt_pants_br)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc2 = list(/obj/item/paper)
+	slot_lhan = list(/obj/item/clipboard/with_pen)
+	items_in_backpack = list(/obj/item/item_box/postit)
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+/datum/job/special/random/pestcontrol
+	name = "Pest Control Specialist"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/gimmick/safari)
+	slot_head = list(/obj/item/clothing/head/safari)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_lhan = list(/obj/item/pet_carrier)
+	items_in_backpack = list(/obj/item/storage/box/mousetraps)
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+/datum/job/special/random/drugdealer
+	name = "Drug Dealer"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/mobster)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/cigpacket/propuffs)
+	slot_poc2 = list(/obj/item/cigpacket)
+	items_in_backpack = list(/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/methamphetamine, /obj/item/storage/pill_bottle/catdrugs)
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+/datum/job/special/random/vehiclemechanic
+	name = "Vehicle Mechanic" // fallback name, gets changed later
+	#ifdef UNDERWATER_MAP
+	name = "Submarine Mechanic"
+	#else
+	name = "Pod Mechanic"
+	#endif
+	wages = PAY_TRADESMAN
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
+	#ifdef UNDERWATER_MAP
+	items_in_backpack = list(/obj/item/preassembled_frame_box/sub, /obj/item/podarmor/armor_light, /obj/item/clothing/head/helmet/welding)
+	#else
+	items_in_backpack = list(/obj/item/preassembled_frame_box/putt, /obj/item/podarmor/armor_light, /obj/item/clothing/head/helmet/welding)
+	#endif
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+/datum/job/special/random/phonemerchant
+	name = "Phone Merchant"
+	wages = PAY_TRADESMAN
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/gimmick/merchant)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/electronics/soldering)
+	items_in_backpack = list(/obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone)
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 #ifdef HALLOWEEN
 /*
