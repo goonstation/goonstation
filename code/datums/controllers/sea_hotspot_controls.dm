@@ -873,7 +873,6 @@ TYPEINFO(/obj/machinery/power/stomper)
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
-	flags = FPRINT
 
 	var/mode_toggle = 0
 	var/set_anchor = 1

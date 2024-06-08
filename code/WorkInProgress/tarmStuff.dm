@@ -534,7 +534,6 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0

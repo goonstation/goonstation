@@ -4,7 +4,6 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
-	flags = FPRINT
 	pass_unstable = TRUE
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS

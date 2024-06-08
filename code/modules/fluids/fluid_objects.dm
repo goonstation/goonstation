@@ -517,7 +517,6 @@ TYPEINFO(/obj/naval_mine)
 	anchored = UNANCHORED
 
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
-	flags = FPRINT
 
 	var/active = 1
 
