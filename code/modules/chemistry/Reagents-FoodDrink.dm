@@ -1468,7 +1468,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(10))
-					M.reagents.add_reagent("THC", rand(2.5 , 25) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("THC", randfloat(2.5 , 25) * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -1510,7 +1510,7 @@ datum
 				if(prob(20))
 					M.reagents.add_reagent("capsaicin", rand(25 , 50) * src.calculate_depletion_rate(M, mult))
 				if(prob(10))
-					M.reagents.add_reagent("histamine", rand(2.5 , 12.5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("histamine", randfloat(2.5 , 12.5) * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -2428,7 +2428,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(prob(3))
-					M.reagents.add_reagent("cholesterol", rand(2.5 , 5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(2.5 , 5) * src.calculate_depletion_rate(M, mult))
 				..()
 
 		fooddrink/gcheese
@@ -2453,7 +2453,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(prob(5))
-					M.reagents.add_reagent("cholesterol", rand(2.5 , 7.5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(2.5 , 7.5) * src.calculate_depletion_rate(M, mult))
 				..()
 
 		fooddrink/meat_slurry
@@ -2482,7 +2482,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				..() // call your parents  :(
 				if(prob(4))
-					M.reagents.add_reagent("cholesterol", rand(2.5 , 7.5 ) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(2.5 , 7.5 ) * src.calculate_depletion_rate(M, mult))
 
 		fooddrink/caffeinated
 			name = "caffeinated reagent parent"
@@ -3140,7 +3140,7 @@ datum
 				if(prob(10))
 					M.nutrition+= 1 * mult
 				if(prob(10))
-					M.reagents.add_reagent("cholesterol", rand(3.3 , 10) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(3.3 , 10) * src.calculate_depletion_rate(M, mult))
 				if(prob(8))
 					M.reagents.add_reagent("porktonium", 16.7 * src.calculate_depletion_rate(M, mult))
 				..()
@@ -3308,7 +3308,7 @@ datum
 							H.blood_volume -= 1  * mult
 
 				if(prob(4))
-					M.reagents.add_reagent("cholesterol", rand(2.5 , 5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(2.5 , 5) * src.calculate_depletion_rate(M, mult))
 				..()
 
 
@@ -3332,7 +3332,7 @@ datum
 				M.nutrition += 1 * mult
 
 				if(prob(3))
-					M.reagents.add_reagent("cholesterol", rand(2.5 , 5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(2.5 , 5) * src.calculate_depletion_rate(M, mult))
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -3355,7 +3355,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(prob(5))
-					M.reagents.add_reagent("cholesterol", rand(2.5 , 7.5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("cholesterol", randfloat(2.5 , 7.5) * src.calculate_depletion_rate(M, mult))
 				if(prob(8))
 					M.reagents.add_reagent(pick("badgrease","toxic_slurry","synthflesh","bloodc","cornsyrup","porktonium"), 2 * src.calculate_depletion_rate(M, mult))
 				else if (prob(6))

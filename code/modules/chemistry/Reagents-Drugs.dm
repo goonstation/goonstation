@@ -64,7 +64,7 @@ datum
 
 
 				if(check < 8)
-					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), rand(1.7 , 8.4) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), randfloat(1.7 , 8.4) * src.calculate_depletion_rate(M, mult))
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!"))
 					random_brute_damage(M, 5 * mult)
 				else if (check < 16)
@@ -195,7 +195,7 @@ datum
 				if(probmult(15)) M.emote(pick("twitch", "twitch_s", "grumble", "laugh"))
 				if(prob(8))
 					boutput(M, SPAN_NOTICE("<b>You feel great!</b>"))
-					M.reagents.add_reagent("methamphetamine", rand(2.5 , 5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("methamphetamine", randfloat(2.5 , 5) * src.calculate_depletion_rate(M, mult))
 					M.emote(pick("laugh", "giggle"))
 				if(prob(6))
 					boutput(M, SPAN_NOTICE("<b>You feel warm.</b>"))

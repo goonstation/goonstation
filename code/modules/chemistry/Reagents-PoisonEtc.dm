@@ -427,7 +427,7 @@ datum
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
 				if (prob(10))
-					M.reagents.add_reagent("histamine", rand(12.5 , 37.5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("histamine", randfloat(12.5 , 37.5) * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -837,7 +837,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(6))
-					M.reagents.add_reagent("histamine", rand(3.3 , 10) * mult)
+					M.reagents.add_reagent("histamine", randfloat(3.3 , 10) * mult)
 				if (prob(2))
 					boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 					random_brute_damage(M,5 * mult)
