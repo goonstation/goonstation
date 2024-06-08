@@ -997,7 +997,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 ////////////////////////////
 
 /obj/item/material_piece/cloth
-	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER //here
+	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/rag_muffle
 
 	New()
