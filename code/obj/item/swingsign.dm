@@ -192,7 +192,7 @@ TYPEINFO(/obj/item/swingsignfolded)
 	item_state = "folded_held"
 	w_class = W_CLASS_BULKY
 	throwforce = 10
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	force = 5
 	stamina_damage = 45
 	stamina_cost = 21

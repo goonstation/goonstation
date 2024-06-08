@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/obj/item)
 	/*_____*/
 	/*Flags*/
 	/*‾‾‾‾‾*/
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
 	var/tooltip_flags = null

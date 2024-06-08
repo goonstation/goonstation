@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "youshouldntseeme basescrapweapon"
 	icon = 'icons/obj/items/scrapweapons.dmi' //codersprites. improve if you want or feel the need
 	inhand_image_icon = 'icons/mob/inhand/hand_scrapweapons.dmi'
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	object_flags = NO_GHOSTCRITTER // blanket ban on all scrapweapon items for ghost critters
 	throwforce = 5
 	throw_speed = 1

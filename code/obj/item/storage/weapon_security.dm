@@ -261,7 +261,7 @@
 	sneaky = 1
 	stealthy_storage = TRUE
 	var/cloaked = 0
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
 

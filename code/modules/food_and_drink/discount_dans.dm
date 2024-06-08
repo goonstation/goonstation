@@ -377,7 +377,7 @@
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
-	flags = TABLEPASS | FPRINT
+	flags = TABLEPASS
 	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0

@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
 	var/over_hair = FALSE
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0

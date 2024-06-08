@@ -31,7 +31,7 @@ TYPEINFO(/obj/item/saw)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
@@ -460,7 +460,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 

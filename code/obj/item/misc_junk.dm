@@ -169,7 +169,7 @@ TYPEINFO(/obj/item/disk)
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS|CONDUCT
+	flags = TABLEPASS|CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
 
 /obj/item/module/card_reader
@@ -261,7 +261,7 @@ TYPEINFO(/obj/item/disk)
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 0
 
@@ -298,7 +298,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH
 	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
@@ -442,7 +442,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	initial_reagents = "nicotine"
 	item_state = "ecigrefill"
 	icon_state = "ecigrefill"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 
 /obj/item/wrestlingbell
 	name = "Wrestling bell"

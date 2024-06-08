@@ -1,7 +1,7 @@
 
 /obj/item/decoration
 	icon = 'icons/obj/decoration.dmi'
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 
 /obj/item/decoration/flower_vase
@@ -78,7 +78,7 @@
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 20
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()

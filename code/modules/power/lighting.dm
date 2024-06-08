@@ -177,7 +177,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
 	material_amt = 0.2
 
 	var/on = 0 // 1 if on, 0 if off
@@ -1252,7 +1252,7 @@ TYPEINFO(/obj/item/light)
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL

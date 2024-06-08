@@ -12,7 +12,7 @@
 	icon_state = "emerg_inj-orange"
 	initial_volume = 10
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/empty = 0

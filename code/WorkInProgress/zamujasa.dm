@@ -501,7 +501,7 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY

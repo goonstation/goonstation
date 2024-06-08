@@ -1067,7 +1067,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	var/obj/beam_dummy/beam
 	var/turf/last = null
 
@@ -1122,7 +1122,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, var/reach)
 		return doAttack(user, target, reach ? target : null)
@@ -1235,7 +1235,7 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "dagger"
 	hitsound = null
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	force = 1
 	var/datum/action/bar/private/icon/daggerStab/stabAction
 
@@ -1996,7 +1996,7 @@ Returns:
 	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/firing = 0
 
@@ -2183,7 +2183,7 @@ Returns:
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2281,7 +2281,7 @@ Returns:
 	throw_speed = 2
 	throw_range = 10
 	force = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
 	var/xo = null
@@ -3262,7 +3262,7 @@ var/list/lag_list = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
 	var/z_level_lock = 0
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)

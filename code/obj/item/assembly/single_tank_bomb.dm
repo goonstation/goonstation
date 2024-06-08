@@ -49,7 +49,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
@@ -184,7 +184,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 
 /obj/item/assembly/time_bomb/c_state(n)
 
@@ -275,7 +275,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 
 /obj/item/assembly/radio_bomb/examine()
 	. = ..()

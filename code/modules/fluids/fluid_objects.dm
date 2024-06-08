@@ -24,7 +24,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/base_icon = "drain"
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FLUID_SUBMERGE | NOSPLASH
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -460,7 +460,7 @@ TYPEINFO(/obj/item/sea_ladder)
 	item_state = "sea_ladder"
 	w_class = W_CLASS_NORMAL
 	throwforce = 10
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 9
 	stamina_damage = 30
 	stamina_cost = 20

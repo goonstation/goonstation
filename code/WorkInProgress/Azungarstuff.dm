@@ -668,7 +668,7 @@
 	desc = "A compact holo emitter pre-loaded with a holographic image."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "emitter-on"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	anchored = ANCHORED_ALWAYS
 
 /obj/juggleplaque/manta

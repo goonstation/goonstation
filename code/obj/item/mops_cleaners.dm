@@ -15,7 +15,7 @@ TRASH BAG
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS|OPENCONTAINER|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -289,7 +289,7 @@ TRASH BAG
 	throw_speed = 5
 	throw_range = 10
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
@@ -709,7 +709,7 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 4
 	stamina_crit_chance = 10
@@ -780,7 +780,7 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	throw_pixel = 0
 	throw_spin = 0
 	var/currentSelection = "wet"
@@ -902,7 +902,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	icon_state = "handvac"
 	health = 7
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
 	var/obj/item/trash_bag/trashbag
@@ -1226,7 +1226,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet

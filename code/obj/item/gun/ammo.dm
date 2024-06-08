@@ -4,7 +4,7 @@
 	name = "ammo"
 	var/sname = "Generic Ammo"
 	icon = 'icons/obj/items/ammo.dmi'
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 	item_state = "syringe_kit"
 	m_amt = 40000
 	g_amt = 0
