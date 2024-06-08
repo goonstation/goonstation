@@ -228,7 +228,7 @@
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/clown_announcement
 	var/emagged = FALSE
-	sound_to_play = 'sound/misc/announcement_clown.ogg'
+	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"
 
 	send_message(mob/user, message)
