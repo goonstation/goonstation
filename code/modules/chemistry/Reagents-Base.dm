@@ -564,7 +564,7 @@
 		M.make_jittery(2 )
 		M.changeStatus("drowsy", -10 SECONDS)
 		if(prob(4))
-			M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
+			M.reagents.add_reagent("epinephrine", 3 * src.calculate_depletion_rate(M, mult)) // let's not metabolize into meth anymore
 		//if(prob(2))
 			//M.reagents.add_reagent("cholesterol", rand(1,3))
 		..()

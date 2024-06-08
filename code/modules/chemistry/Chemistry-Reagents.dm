@@ -231,17 +231,10 @@ datum
 				return
 			if (!holder)
 				holder = M.reagents
-			var/deplRate = depletion_rate
+			var/deplRate = src.calculate_depletion_rate(M, mult)
+
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.traitHolder.hasTrait("slowmetabolism"))
-					deplRate /= 2
-				if (H.organHolder && !ischangeling(H))
-					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
-						deplRate /= 2
-					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
-						deplRate /= 2
-
 				if (H.sims)
 					if (src.thirst_value)
 						H.sims.affectMotive("Thirst", thirst_value)
@@ -251,7 +244,7 @@ datum
 						H.sims.affectMotive("Bladder", bladder_value)
 					if (src.energy_value)
 						H.sims.affectMotive("Energy", energy_value)
-			deplRate = deplRate * mult
+
 			if (addiction_prob)
 				src.handle_addiction(M, deplRate)
 
@@ -266,6 +259,19 @@ datum
 
 			if(M && overdose > 0) check_overdose(M, mult)
 			return
+
+		///This calculates the depletion rate of a chem. In case you want to modify the result of the chems normal depletion rate
+		proc/calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
+			SHOULD_CALL_PARENT(TRUE)
+
+			var/resulting_depletion = src.depletion_rate * mult
+			if (isliving(affected_mob))
+				var/mob/living/living_mob = affected_mob
+				resulting_depletion *= living_mob.get_chem_depletion_multiplier()
+
+			return resulting_depletion
+
+
 
 		//when we entirely drained from sstem, do this
 		proc/on_mob_life_complete(var/mob/M)

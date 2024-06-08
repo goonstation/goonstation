@@ -3559,6 +3559,16 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
 
+/mob/living/carbon/human/get_chem_depletion_multiplier()
+	. = ..()
+	if (src.traitHolder.hasTrait("slowmetabolism"))
+		. /= 2
+	if (src.organHolder && !ischangeling(src))
+		if (!src.organHolder.liver || src.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+			. /= 2
+		if (src.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+			. /= 2
+
 /mob/living/carbon/human/get_blood_absorption_rate()
 	. = ..()
 	var/blood_metabolism_multiplier = 1
