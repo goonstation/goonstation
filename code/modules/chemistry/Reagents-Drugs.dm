@@ -467,6 +467,21 @@ datum
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
 				..()
 
+			calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
+				. = ..()
+				var/caffeine_amt = holder.get_reagent_amount(src.id)
+				switch(caffeine_amt) //use ~midpoints for depeletion rate thresholds - need stronger coffees or blends to overcaffeinate
+					if(0 to 3)
+						. *= 0.5
+					if(10 to 30)
+						. *= 2
+					if(30 to 50)
+						. *= 4
+					if(50 to INFINITY)
+						. *= 5
+				return .
+
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/caffeine_amt = holder.get_reagent_amount(src.id)
@@ -475,18 +490,6 @@ datum
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 					heart_failure_counter = 0
-
-				switch(caffeine_amt) //use ~midpoints for depeletion rate thresholds - need stronger coffees or blends to overcaffeinate
-					if(0 to 3)
-						depletion_rate = 0.05
-					if(3 to 10)
-						depletion_rate = 0.1
-					if(10 to 30)
-						depletion_rate = 0.2
-					if(30 to 50)
-						depletion_rate = 0.4
-					if(50 to INFINITY)
-						depletion_rate = 0.5
 
 				switch(caffeine_amt)
 					if(0 to 5)   //This is a trace amount of caffeine, doesn't do much
