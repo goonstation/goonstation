@@ -447,7 +447,7 @@ var/global/mail_types_by_job = list(
 	/datum/job/research/geneticist = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
-		/obj/item/clothing/glasses/sunglasses/tanning,
+		/obj/item/clothing/glasses/sunglasses/tanning = 10,
 		),
 
 
