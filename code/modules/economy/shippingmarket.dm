@@ -319,7 +319,7 @@
 	proc/generate_mail(time_since_previous)
 		var/adjustment = max(time_since_previous, 2 MINUTES)
 		var/alive_players = 0
-		var/target_percentage = 0.3.75
+		var/target_percentage = 0.375
 		for(var/datum/job/civilian/mail_courier/J in job_controls.staple_jobs)
 			if (J.assigned)
 				target_percentage = 0.5
