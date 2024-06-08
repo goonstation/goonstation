@@ -1,5 +1,9 @@
 
 (t)sat jun 08 24
+(u)Keiiro
+(p)19132
+(e)🎨💅💡|C-Sprites, C-QoL, A-Station-Systems
+(*)Two new criminal statuses have been added to the security records: Detain and Suspect.
 (u)glowbold
 (p)19387
 (e)🔄|C-Rework
