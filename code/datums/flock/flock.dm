@@ -1065,6 +1065,42 @@ proc/get_default_flock()
 			O.color = fancy_flock_matrix
 	return T
 
+/// only converts turf
+/proc/flock_convert_turf_turfonly(turf/T)
+	if(!T || !flockTurfAllowed(T))
+		return
+
+	if(istype(T, /turf/simulated/floor))
+		T.ReplaceWith(/turf/simulated/floor/feather, FALSE)
+		animate_flock_convert_complete(T)
+	else if(istype(T, /turf/simulated/wall))
+		T.ReplaceWith(/turf/simulated/wall/auto/feather, FALSE)
+		animate_flock_convert_complete(T)
+
+	// regular and flock lattices
+	var/obj/lattice/lat = locate(/obj/lattice) in T
+	if(lat)
+		if(istype(lat, /obj/lattice/flock))
+			qdel(lat)
+			T.ReplaceWith(/turf/simulated/floor/feather, FALSE)
+			animate_flock_convert_complete(T)
+		else
+			qdel(lat)
+			new /obj/lattice/flock(T)
+
+	var/obj/grille/catwalk/catw = locate(/obj/grille/catwalk) in T
+	if(catw)
+		qdel(catw)
+		T.ReplaceWith(/turf/simulated/floor/feather, FALSE)
+		animate_flock_convert_complete(T)
+
+	if(istype(T, /turf/space))
+		var/obj/lattice/flock/FL = locate(/obj/lattice/flock) in T
+		if(!FL)
+			FL = new /obj/lattice/flock(T)
+
+	return T
+
 /proc/mass_flock_convert_turf(var/turf/T, datum/flock/F, force=FALSE, radius=15, delay=0.2 SECONDS, fancy=FALSE)
 	if(!T)
 		T = get_turf(usr)

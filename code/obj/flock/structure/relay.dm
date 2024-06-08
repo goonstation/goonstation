@@ -31,7 +31,8 @@ TYPEINFO(/obj/flock_structure/relay)
 	plane = PLANE_NOSHADOW_ABOVE
 	passthrough = FALSE
 	var/conversion_radius = 1
-	var/max_conv_radius = 15 // increase back to 100 later if possible. 100 worked fine on local but not as much on live with a lot of people
+	var/next_conv_radius = 1
+	var/max_conv_radius = 50 // increase back to 100 later if possible. 100 worked fine on local but not as much on live with a lot of people
 	var/list/turfs_to_convert = null
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
@@ -109,9 +110,9 @@ TYPEINFO(/obj/flock_structure/relay)
 		return "<b><i>BROADCASTING IN PROGRESS</i></b>"
 
 /obj/flock_structure/relay/process()
-	if (src.conversion_radius <= length(src.turfs_to_convert))
+	if (src.conversion_radius <= length(src.turfs_to_convert) && src.conversion_radius == src.next_conv_radius)
 		src.convert_turfs()
-		src.conversion_radius++
+		src.next_conv_radius++
 
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if (!src.finished)
@@ -144,8 +145,9 @@ TYPEINFO(/obj/flock_structure/relay)
 	SPAWN(0)
 		for (var/turf/T as anything in src?.turfs_to_convert["[src.conversion_radius]"])
 			LAGCHECK(LAG_LOW)
-			if (istype(T, /turf/simulated) && !isfeathertile(T))
-				src?.flock?.claimTurf(flock_convert_turf(T))
+			if (!istype(T, /turf/unsimulated) && !isfeathertile(T))
+				src?.flock?.claimTurf(flock_convert_turf_turfonly(T))
+		src.conversion_radius++
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
 	if(src.finished)
