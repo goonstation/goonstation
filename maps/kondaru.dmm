@@ -32341,16 +32341,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
-"dRD" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "dSc" = (
 /obj/stool/chair{
 	dir = 4
@@ -40356,16 +40346,6 @@
 /obj/item/pen,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
-"jDw" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "jDN" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -44663,15 +44643,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"mOu" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "mOM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/psychiatrist)
@@ -45790,12 +45761,6 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -55786,16 +55751,6 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
-"vaG" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "vaW" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -125417,7 +125372,7 @@ boK
 bpS
 bpS
 czi
-vaG
+bUJ
 xcv
 nPe
 puJ
@@ -126329,7 +126284,7 @@ bDX
 bDX
 bDX
 bDX
-jDw
+bDX
 bDX
 bDX
 bDX
@@ -127240,7 +127195,7 @@ pSs
 bzL
 bzL
 bfO
-mOu
+bDX
 bHl
 bHl
 bHl
@@ -127553,7 +127508,7 @@ rAK
 rAK
 rAK
 bnq
-dRD
+bUJ
 bfO
 bnq
 bDX
