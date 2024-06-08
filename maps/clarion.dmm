@@ -370,9 +370,9 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "abj" = (
-/obj/machinery/light/emergency/exitsign{
+/obj/machinery/light{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 10
 	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
@@ -14190,19 +14190,6 @@
 	icon_state = "blue1"
 	},
 /area/station/hallway/primary/south)
-"cfZ" = (
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1"
-	},
-/turf/simulated/floor/engine/caution/corner{
-	dir = 4
-	},
-/area/station/hangar/escape)
 "cgl" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical{
@@ -14993,19 +14980,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"cOK" = (
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1"
-	},
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine_caution_north"
-	},
-/area/station/hangar/escape)
 "cPa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15343,12 +15317,6 @@
 	},
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -16895,6 +16863,12 @@
 /obj/machinery/vehicle/escape_pod{
 	dir = 1
 	},
+/obj/railing/guard{
+	dir = 4
+	},
+/obj/railing/guard{
+	dir = 8
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/hangar/escape)
 "epa" = (
@@ -17836,6 +17810,7 @@
 	dir = 4;
 	level = -1
 	},
+/obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "fha" = (
@@ -18167,9 +18142,9 @@
 	},
 /area/station/medical/medbay)
 "ftm" = (
-/obj/machinery/light/emergency{
+/obj/machinery/light{
 	dir = 8;
-	pixel_x = -12
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine/caution/corner,
 /area/station/hangar/escape)
@@ -20490,7 +20465,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/northeast)
 "hiC" = (
 /obj/cable{
@@ -24520,6 +24495,12 @@
 /obj/machinery/vehicle/escape_pod{
 	dir = 1
 	},
+/obj/railing/guard{
+	dir = 4
+	},
+/obj/railing/guard{
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "kkr" = (
@@ -27787,6 +27768,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/east{
+	dir = 4
+	},
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
@@ -28133,7 +28117,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/northeast)
 "mSB" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -34725,6 +34709,7 @@
 	},
 /area/space)
 "rVO" = (
+/obj/machinery/light/emergency,
 /turf/simulated/floor/engine/caution/south,
 /area/station/hangar/escape)
 "rWe" = (
@@ -37532,6 +37517,12 @@
 /obj/machinery/vehicle/escape_pod{
 	dir = 1
 	},
+/obj/railing/guard{
+	dir = 8
+	},
+/obj/railing/guard{
+	dir = 4
+	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/escape)
 "tWb" = (
@@ -39549,6 +39540,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "vtk" = (
+/obj/item/storage/wall/fire{
+	dir = 1;
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "vtm" = (
@@ -41116,11 +41111,10 @@
 	powerlevel = 1
 	},
 /obj/machinery/door/poddoor/blast/pyro{
-	icon_state = "bdoormid1"
+	icon_state = "bdoormid1";
+	autoclose = 1
 	},
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
-	},
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "wNp" = (
 /obj/cable{
@@ -75753,8 +75747,8 @@ aaa
 aaa
 aaa
 qVR
-ale
 hAr
+dUY
 ale
 ale
 igZ
@@ -76357,7 +76351,7 @@ aaa
 aaa
 aaa
 ozL
-cOK
+wNk
 kjz
 rVO
 bzv
@@ -76659,7 +76653,7 @@ aaa
 aaa
 aaa
 ozL
-cOK
+wNk
 kjz
 rVO
 bzv
@@ -76961,7 +76955,7 @@ aaa
 aHR
 bHI
 ozL
-cfZ
+wNk
 tVZ
 abj
 uPl
@@ -77869,7 +77863,7 @@ aax
 aap
 aap
 bTY
-aap
+abO
 ocx
 qpv
 fgr
