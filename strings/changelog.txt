@@ -1,5 +1,9 @@
 
 (t)fri jun 07 24
+(u)glowbold
+(p)19391
+(e)🆕|C-Feature
+(+)More mail will arrive if your station has a dedicated mail courier.
 (u)LeahTheTech
 (+)The clown announcement computer is now a lot quieter and has been added to the maps it was missing from.
 (*)The bank computer now uses its own access type, only available by default to the HoP and Captain. No more mail couriers stealing the budget.
