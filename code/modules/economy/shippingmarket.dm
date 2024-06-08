@@ -335,6 +335,7 @@
 		// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
 		var/mail_amount = ceil(alive_players * (target_percentage * (adjustment / SHIPPING_MARKET_SHIFT_BASELINE_DURATION)))
 		logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
+		mail_amount = min(mail_amount, 50) // @TODO: FIX!!!!!!!!!!
 		if (alive_players >= 1)
 			var/obj/storage/crate/mail/mail_crate = new
 			mail_crate.name = "mail box"
