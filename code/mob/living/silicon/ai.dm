@@ -129,6 +129,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
 	var/locking = 0
+	HELP_MESSAGE_OVERRIDE(null)
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
@@ -244,6 +245,22 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/full_heal()
 	..()
 	src.turn_it_back_on()
+
+/mob/living/silicon/ai/get_help_message(dist, mob/user)
+	switch(src.dismantle_stage)
+		if(0)
+			. = "You can swipe an <b>ID card</b> to unlock the cover."
+		if(1)
+			. = "You can use a <b>crowbar</b> to pry open the cover, or swipe an <b>ID card</b> to lock it."
+		if(2)
+			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
+		if(3)
+			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
+		if(4)
+			. = "You can insert a <b>brain</b> to activate the AI."
+	if(src.dismantle_stage < 4 && isdead(src))
+		. += " You can use an <b>empty hand</b> to reboot the AI."
+	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
