@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_rhan = list(/obj/item/mop)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc1 = list(/obj/item/device/pda2/janitor)
-	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket)
+	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket, /obj/item/lamp_manufacturer/organic)
 	wiki_link = "https://wiki.ss13.co/Janitor"
 
 	New()

@@ -3,6 +3,7 @@
 (u)Zamujasa
 (e)🆕📦|C-Feature, A-Game-Objects
 (*)Mopping floors makes them slippery for bit again. Maybe don't run over them.
+(+)Slipped a lamp manufacturer into the janitor's bag to make lamp replacing a little more convinient.
 (u)glowbold
 (p)19391
 (e)🆕|C-Feature
