@@ -16,6 +16,7 @@
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
 	var/item_grab_overlay_state = "grab_small"
+	var/transfering_chemicals = FALSE
 	var/can_pin = 1
 	var/dropped = 0
 	var/irresistible = 0
@@ -224,6 +225,13 @@
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
+					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
+						var/obj/item/cloth = src.loc
+						if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+							logTheThing(LOG_COMBAT, src.assailant, "tries to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
+							SETUP_GENERIC_PRIVATE_ACTIONBAR(src.assailant, src.affecting, 2 SECONDS, /obj/item/grab/proc/resolve_chem_transfer, src, cloth.icon, cloth.icon_state,\
+							"[src.assailant] presses [cloth] onto [src.affecting]'s face!", INTERRUPT_STUNNED)
+
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
 					set_affected_loc()
@@ -266,10 +274,6 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-		if (istype(src.loc, /obj/item/cloth))
-			var/obj/item/cloth/cloth = src.loc
-			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
-				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
@@ -350,6 +354,10 @@
 			return 1
 
 		return 0
+
+	proc/resolve_chem_transfer(var/obj/item/grab/chokehold)
+		if (chokehold.state >= GRAB_AGGRESSIVE)
+			chokehold.transfering_chemicals = TRUE
 
 	update_icon()
 
@@ -989,12 +997,12 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 ////////////////////////////
 
 /obj/item/material_piece/cloth
-	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
+	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER //here
 	special_grab = /obj/item/grab/rag_muffle
 
 	New()
 		..()
-		src.create_reagents(10)
+		src.create_reagents(20)
 
 	disposing()
 		..()
@@ -1003,9 +1011,14 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 
 	process_grab(var/mult = 1)
 		..()
-		if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state == GRAB_CHOKE && iscarbon(src.chokehold.affecting))
-			src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
-			src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
+		if (chokehold.transfering_chemicals)
+			if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state >= GRAB_AGGRESSIVE && iscarbon(src.chokehold.affecting))
+				//src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult) // No more ingesting means no stacking damage horribly and instantly
+				src.reagents.trans_to(chokehold.affecting, 1 * mult)
+			else
+				chokehold.transfering_chemicals = FALSE
+		else if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state > GRAB_AGGRESSIVE && iscarbon(src.chokehold.affecting))
+			src.reagents.trans_to(chokehold.affecting, 1 * mult) // Having more than an aggressive grab will transfer the chemicals anyway
 
 	is_open_container()
 		.= 1
