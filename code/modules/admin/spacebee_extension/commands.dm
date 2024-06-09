@@ -949,6 +949,7 @@
 		var/message = "**Profile name**: [prefs.profile_name]\n"
 		message += "**Character name:** [prefs.name_first] [prefs.name_last]\n"
 		message += "**Gender:** [prefs.gender]\n"
+		message += "**Age:** [prefs.age]\n"
 		message += "**Random name:** [prefs.be_random_name ? "true" : "false"]\n"
 		message += "**Random appearance:** [prefs.be_random_look ? "true" : "false"]\n"
 		message += "**Flavor text:** [prefs.flavor_text]\n"

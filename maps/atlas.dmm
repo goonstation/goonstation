@@ -14110,6 +14110,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cxj" = (
+/obj/decal/cleanable/dirt{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
 "cxW" = (
 /obj/machinery/light{
 	dir = 4;
@@ -14167,6 +14173,12 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"cFA" = (
+/obj/machinery/computer/announcement/clown{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
 "cJH" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -17000,7 +17012,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/wood/seven,
+/turf/simulated/floor/twotone/black{
+	dir = 8
+	},
 /area/station/crew_quarters/cafeteria)
 "lmG" = (
 /obj/machinery/door/airlock/pyro/glass/med{
@@ -18089,7 +18103,8 @@
 /area/station/hallway/primary/west)
 "oGE" = (
 /obj/machinery/firealarm/north,
-/obj/machinery/chem_heater,
+/obj/machinery/chem_dispenser/chemical,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "oIn" = (
@@ -19414,12 +19429,14 @@
 	},
 /obj/item_dispenser/icedispenser{
 	pixel_y = 20;
-	pixel_x = -9
+	pixel_x = -9;
+	layer = 4
 	},
 /obj/machinery/glass_recycler/bar{
 	pixel_y = 13;
 	pixel_x = 6;
-	g_amt = 10
+	g_amt = 10;
+	layer = 4
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -20691,8 +20708,6 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/partyalarm{
 	pixel_y = 28;
 	pixel_x = 12
@@ -20705,6 +20720,7 @@
 	pixel_y = 32;
 	pixel_x = -5
 	},
+/obj/machinery/chem_heater,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "vXW" = (
@@ -20905,7 +20921,7 @@
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/wood/seven,
+/turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
 "wFl" = (
 /obj/machinery/firealarm/north,
@@ -62343,7 +62359,7 @@ agS
 agS
 agS
 agS
-aaa
+agS
 aaa
 asP
 acm
@@ -62644,8 +62660,8 @@ aaa
 ayn
 azF
 aQG
+cFA
 aSJ
-aaa
 aaa
 asP
 acp
@@ -62946,8 +62962,8 @@ aaa
 agS
 aaD
 aUQ
+cxj
 agS
-aaa
 aaa
 abN
 abH
