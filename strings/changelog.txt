@@ -3,6 +3,7 @@
 (u)Emily
 (*)Big Chicken Evolution Refactor. Please report anything strange IMMEDIATELY.
 (*)New Enby-flag-colored chicken! Open the minor changes for a hint.
+(*)Ranch Nametags: Write a name on them in pen to name a ranch critter. Naming a ranch critter slows down their aging, hunger, and offspring production significantly.
 (+)When fluffy chickens collide with each other, static may result. Shocking!
 (u)Keiiro
 (p)19132
