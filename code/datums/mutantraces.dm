@@ -772,18 +772,15 @@ TYPEINFO(/datum/mutantrace/virtual)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
+	mutant_abilityholder = /datum/abilityHolder/virtual
+	mutant_abilities = list(/datum/targetable/virtual/logout)
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(src.mob))
 			var/color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
 			src.mob.blood_color = color
 			src.mob.bioHolder.bloodColor = color
-			var/datum/abilityHolder/virtual/A = H.get_ability_holder(/datum/abilityHolder/virtual)
-			if (A && istype(A))
-				return
-			var/datum/abilityHolder/virtual/W = H.add_ability_holder(/datum/abilityHolder/virtual)
-			W.addAbility(/datum/targetable/virtual/logout)
-//for sure didnt steal code from ww. no siree
 
 /datum/mutantrace/blank
 	name = "blank"
