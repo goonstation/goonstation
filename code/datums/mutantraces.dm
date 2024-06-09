@@ -232,6 +232,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/self_click_fluff //used when clicking self on help intent
 
+	/// Abilityholder associated with this mutantrace, will be automatically given to mobs on spawn
+	var/datum/abilityHolder/mutant_abilityholder = null
+	/// List of abilities associated with this mutantrace, requires mutant_abilityholder to be set
+	var/list/datum/targetable/mutant_abilities = list()
+
 	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
 	/// Each sub-proc passes its obj to this proc, which you can then operate on.
 	/// Should return a filter or list of filters, to be added to the obj's wear_image.filters
@@ -316,6 +321,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
 
+		if(src.mutant_abilityholder)
+			var/datum/abilityHolder/mutantHolder = M.get_ability_holder(src.mutant_abilityholder)
+			if(!mutantHolder)
+				mutantHolder = M.add_ability_holder(src.mutant_abilityholder)
+			for(var/ability in src.mutant_abilities)
+				mutantHolder.addAbility(ability)
+
+
 		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M?.organHolder?.skull)
 				M.assign_gimmick_skull() // For hunters (Convair880).
@@ -364,6 +377,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				var/mob/living/carbon/human/H = src.mob
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
+
+				if(src.mutant_abilityholder)
+					var/datum/abilityHolder/mutantHolder = src.mob.get_ability_holder(src.mutant_abilityholder)
+					if(mutantHolder)
+						for(var/ability in src.mutant_abilities)
+							mutantHolder.removeAbility(ability)
+						src.mob.remove_ability_holder(src.mutant_abilityholder)
 
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
