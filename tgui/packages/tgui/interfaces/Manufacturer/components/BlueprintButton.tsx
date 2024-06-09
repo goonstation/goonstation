@@ -41,8 +41,8 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
   } = props;
   // Condense producability
   const notProducible = !!Object.keys(blueprintProducibilityData).find((requirement_name: string) => (
-    blueprintProducibilityData[requirement_name] === false
-  ));
+    !!blueprintProducibilityData[requirement_name] === false
+  ) === true);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs = (blueprintData.item_names.length < 2
     && blueprintData.create < 2
@@ -66,7 +66,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
         {Object.keys(blueprintData.requirement_data).map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
-            labelColor={(blueprintProducibilityData[value]) ? undefined : "bad"}
+            labelColor={(blueprintProducibilityData[blueprintData.requirement_data[value].name]) ? undefined : "bad"}
             label={blueprintData.requirement_data[value].name}
             textAlign="right"
           >
