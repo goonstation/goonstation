@@ -319,6 +319,13 @@ var/bombini_saved
 		return
 
 	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
+		if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
+			return
+		for (var/datum/flock/flock in flocks)
+			if (flock.relay_in_progress)
+				boutput(user, SPAN_ALERT("[src] emits a pained burst of static, but nothing happens!"))
+				return
+
 		if (user)
 			var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
 			if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
