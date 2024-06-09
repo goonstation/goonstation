@@ -20,7 +20,7 @@ export type ManufacturerData = {
   recipe_blueprints:Record<string, ManufacturableData[]>;
   hidden_blueprints:Record<string, ManufacturableData[]>;
 
-  producability_data:BooleanLike[];
+  producibility_data:Record<string, Record<string, BooleanLike>>;
   delete_allowed:BooleanLike;
   hacked:BooleanLike;
   malfunction:BooleanLike;

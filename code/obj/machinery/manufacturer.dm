@@ -91,6 +91,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	var/list/blueprint_producibility_by_ref = list() //! An associated list of blueprint refs to associated lists of material requirement names to whether they are producible or not.
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".

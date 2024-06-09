@@ -22,7 +22,7 @@ export type BlueprintButtonProps = {
   actionRemoveBlueprint: (byondRef:string) => void;
   actionVendProduct: (byondRef:string) => void;
   blueprintData: ManufacturableData;
-  blueprintProducabilityData: BooleanLike[];
+  blueprintProducibilityData: Record<string, BooleanLike>;
   manufacturerSpeed: number;
   deleteAllowed: boolean;
   hasPower: boolean;
@@ -34,13 +34,15 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     actionRemoveBlueprint,
     actionVendProduct,
     blueprintData,
-    blueprintProducabilityData,
+    blueprintProducibilityData,
     manufacturerSpeed,
     deleteAllowed,
     hasPower,
   } = props;
   // Condense producability
-  const notProduceable = blueprintProducabilityData.includes(false);
+  const notProducible = !!Object.keys(blueprintProducibilityData).find((requirement_name: string) => (
+    blueprintProducibilityData[requirement_name] === false
+  ));
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs = (blueprintData.item_names.length < 2
     && blueprintData.create < 2
@@ -64,7 +66,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
         {Object.keys(blueprintData.requirement_data).map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
-            labelColor={(blueprintProducabilityData[index]) ? undefined : "bad"}
+            labelColor={(blueprintProducibilityData[value]) ? undefined : "bad"}
             label={blueprintData.requirement_data[value].name}
             textAlign="right"
           >
@@ -96,7 +98,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
           height={BlueprintButtonStyle.Height}
           key={blueprintData.name}
           imagePath={blueprintData.img}
-          disabled={(!hasPower || notProduceable)}
+          disabled={(!hasPower || notProducible)}
           onClick={() => actionVendProduct(blueprintData.byondRef)}
         >
           <CenteredText
@@ -121,7 +123,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
                 width={BlueprintMiniButtonStyle.Width}
                 height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
-                disabled={canDelete ? false : (!hasPower || notProduceable)}
+                disabled={canDelete ? false : (!hasPower || notProducible)}
                 onClick={() => (canDelete ? (
                   actionRemoveBlueprint(blueprintData.byondRef)
                 ) : actionVendProduct(blueprintData.byondRef)
@@ -145,7 +147,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
                 width={BlueprintMiniButtonStyle.Width}
                 height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
-                disabled={(!hasPower || notProduceable)}
+                disabled={(!hasPower || notProducible)}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
                 py={BlueprintMiniButtonStyle.IconSize/2}
               >
