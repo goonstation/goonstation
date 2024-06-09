@@ -88,9 +88,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// The types of material pieces of which the manufacturer will be spawned with.
 	/// The amount of each resource is defined on free_resource_amt
 	var/list/free_resources = list()
-	/// Supposedly used by podwards manufacturers, but not really
-	/// Kind of legacy is this is removed soon
-	var/list/resource_amounts = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
