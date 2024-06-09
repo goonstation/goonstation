@@ -27,8 +27,8 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-			if (isskeleton(src.donor))
-				desc = "Jesus christ, how many skulls do they have?!"
+		if (isskeleton(src.donor))
+			desc = "Jesus christ, how many skulls do they have?!"
 		SPAWN(0)
 			if (istype(nholder) && nholder.donor)
 				src.holder = nholder
