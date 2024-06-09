@@ -61,6 +61,7 @@
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2), 1)
 
+	src.ensure_say_tree()
 	var/datum/say_message/said = new(message, src, flags, message_params, atom_listeners_override)
 	if (QDELETED(said) || !length(said.content))
 		return
@@ -68,7 +69,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
 	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
 
-	src.ensure_say_tree()
 	src.say_tree.process(said)
 
 /// The world time that this atom last played a voice sound effect.

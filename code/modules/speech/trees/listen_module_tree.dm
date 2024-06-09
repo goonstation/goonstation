@@ -4,21 +4,35 @@
  *	the `/atom/proc/hear()` proc.
  */
 /datum/listen_module_tree
-	var/list/input_module_ids_with_subcount
-	var/list/datum/listen_module/input/input_modules_by_id
-	var/list/list/datum/listen_module/input/input_modules_by_channel
-	var/list/listen_modifier_ids_with_subcount
-	var/list/datum/listen_module/modifier/listen_modifiers_by_id
-	var/list/known_language_ids_with_subcount
-	var/list/datum/language/known_languages_by_id
-	var/atom/parent
+	/// The atom that should receive messages sent to this listen module tree.
+	var/atom/listener_parent
+	/// The atom that should act as the origin point for listening to messages.
+	var/atom/listener_origin
 
+	/// An associative list of input listen module subscription counts, indexed by the module ID.
+	var/list/input_module_ids_with_subcount
+	/// An associative list of input listen modules, indexed by the module ID.
+	var/list/datum/listen_module/input/input_modules_by_id
+	/// An associative list of input listen modules, indexed by the module channel.
+	var/list/list/datum/listen_module/input/input_modules_by_channel
+
+	/// An associative list of modifier listen module subscription counts, indexed by the module ID.
+	var/list/listen_modifier_ids_with_subcount
+	/// An associative list of modifier listen modules, indexed by the module ID.
+	var/list/datum/listen_module/modifier/listen_modifiers_by_id
+
+	/// An associative list of language datum subscription counts, indexed by the language ID.
+	var/list/known_language_ids_with_subcount
+	/// An associative list of language datums, indexed by the language ID.
+	var/list/datum/language/known_languages_by_id
+	/// Whether this listen module tree is capable of understanding all languages.
 	var/understands_all_languages = FALSE
 
 /datum/listen_module_tree/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/languages = list())
 	. = ..()
 
-	src.parent = parent
+	src.listener_parent = parent
+	src.listener_origin = parent
 
 	src.input_module_ids_with_subcount = list()
 	src.input_modules_by_id = list()
@@ -45,7 +59,8 @@
 
 	src.input_modules_by_id = null
 	src.listen_modifiers_by_id = null
-	src.parent = null
+	src.listener_origin = null
+	src.listener_parent = null
 
 	. = ..()
 
@@ -69,11 +84,19 @@
 			if (QDELETED(message))
 				return
 
-	src.parent.hear(message)
+	src.listener_parent.hear(message)
 
-	if (message.hear_sound && !message.received_module.say_channel.suppress_hear_sound && ismob(src.parent))
-		var/mob/mob_listener = src.parent
+	if (message.hear_sound && !message.received_module.say_channel.suppress_hear_sound && ismob(src.listener_parent))
+		var/mob/mob_listener = src.listener_parent
 		mob_listener.playsound_local_not_inworld(message.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE)
+
+
+/// Update this listen module tree's listener origin. This will cause parent to hear messages from the location of the new listener origin.
+/datum/listen_module_tree/proc/update_listener_origin(atom/new_origin)
+	var/atom/old_origin = src.listener_origin
+	src.listener_origin = new_origin
+
+	SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
 
 /// Adds a new input module to the tree. Returns a reference to the new input module on success.
 /datum/listen_module_tree/proc/AddInput(input_id, count = 1)

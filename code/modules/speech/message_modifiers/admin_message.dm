@@ -11,7 +11,7 @@
 	var/client/speaker_client = mob_speaker.client
 	var/show_other_key = speaker_client.stealth || speaker_client.alt_key
 
-	var/mob/mob_listener = message.received_module.parent_tree.parent
+	var/mob/mob_listener = message.received_module.parent_tree.listener_parent
 	if (istype(mob_listener) && mob_listener.client?.holder && !mob_listener.client.player_mode)
 		if (show_other_key)
 			message.speaker_to_display = "ADMIN([speaker_client.key] (as [speaker_client.fakekey]))"

@@ -4,10 +4,10 @@
 /datum/speech_module/modifier/megaphone/process(datum/say_message/message)
 	. = message
 
-	if (!ismob(message.speaker))
+	if (!ismob(message.message_origin))
 		return
 
-	var/mob/mob_speaker = message.speaker
+	var/mob/mob_speaker = message.message_origin
 	var/obj/item/megaphone/megaphone = mob_speaker.find_type_in_hand(/obj/item/megaphone)
 
 	if (!megaphone)

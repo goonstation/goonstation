@@ -1,9 +1,9 @@
 /// Accesses an input module datum's outermost listener.
-#define GET_INPUT_OUTERMOST_LISTENER(INPUT) INPUT.parent_tree.parent.outermost_listener_tracker.outermost_listener
+#define GET_INPUT_OUTERMOST_LISTENER(INPUT) INPUT.parent_tree.listener_origin.outermost_listener_tracker.outermost_listener
 /// Accesses an input module datum's outermost listener's loc.
-#define GET_INPUT_OUTERMOST_LISTENER_LOC(INPUT) INPUT.parent_tree.parent.outermost_listener_tracker.outermost_listener.loc
+#define GET_INPUT_OUTERMOST_LISTENER_LOC(INPUT) INPUT.parent_tree.listener_origin.outermost_listener_tracker.outermost_listener.loc
 /// Accesses a say message datum's outermost listener.
-#define GET_MESSAGE_OUTERMOST_LISTENER(MESSAGE) MESSAGE.speaker.outermost_listener_tracker.outermost_listener
+#define GET_MESSAGE_OUTERMOST_LISTENER(MESSAGE) MESSAGE.message_origin.outermost_listener_tracker.outermost_listener
 
 /// Set up an associative list of heard turfs within a range in the form `list[turf] = TRUE`.
 #define SET_UP_HEARD_TURFS(LIST, RANGE, CENTRE) \

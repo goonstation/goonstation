@@ -4,16 +4,26 @@
  *	manager to be disseminated to input listen modules.
  */
 /datum/speech_module_tree
+	/// The owner of this speech module tree.
+	var/atom/speaker_parent
+	/// The atom that should act as the origin point for sending messages from this speech module tree.
+	var/atom/speaker_origin
+
+	/// An associative list of output speech module subscription counts, indexed by the module ID.
 	var/list/output_module_ids_with_subcount
+	/// An associative list of output speech modules, indexed by the module ID.
 	var/list/datum/speech_module/output/output_modules_by_id
+
+	/// An associative list of modifier speech module subscription counts, indexed by the module ID.
 	var/list/speech_modifier_ids_with_subcount
+	/// An associative list of modifier speech modules, indexed by the module ID.
 	var/list/datum/speech_module/modifier/speech_modifiers_by_id
-	var/atom/parent
 
 /datum/speech_module_tree/New(atom/parent, list/modifiers = list(), list/outputs = list())
 	. = ..()
 
-	src.parent = parent
+	src.speaker_parent = parent
+	src.speaker_origin = parent
 
 	src.output_module_ids_with_subcount = list()
 	src.output_modules_by_id = list()
@@ -34,7 +44,8 @@
 
 	src.output_modules_by_id = null
 	src.speech_modifiers_by_id = null
-	src.parent = null
+	src.speaker_origin = null
+	src.speaker_parent = null
 
 	. = ..()
 
@@ -74,6 +85,13 @@
 		message.process_say_sound()
 	if (!suppress_speech_bubble)
 		message.process_speech_bubble()
+
+/// Update this speech module tree's speaker origin. This will cause spoken messages to appear to originate fom the new speaker origin.
+/datum/speech_module_tree/proc/update_speaker_origin(atom/new_origin)
+	var/atom/old_origin = src.speaker_origin
+	src.speaker_origin = new_origin
+
+	SEND_SIGNAL(src, COMSIG_SPEAKER_ORIGIN_UPDATED, old_origin, new_origin)
 
 /// Adds a new output module to the tree. Returns a reference to the new output module on success.
 /datum/speech_module_tree/proc/AddOutput(output_id, count = 1)

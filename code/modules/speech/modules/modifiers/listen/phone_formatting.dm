@@ -8,7 +8,7 @@
 
 	. = message
 
-	var/obj/item/phone_handset/handset = src.parent_tree.parent
+	var/obj/item/phone_handset/handset = src.parent_tree.listener_parent
 	if (!istype(handset))
 		return
 

@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/datum/say_prefix)
 /datum/say_prefix/proc/is_compatible_with(datum/say_message/message, datum/speech_module_tree/say_tree)
 	. = FALSE
 
-	if (ismob(message.speaker))
+	if (ismob(message.message_origin))
 		return TRUE
 
 /// Process the message, applying prefix specific effects. This typically involves copying the message and sending it to an equipped module.

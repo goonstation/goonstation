@@ -4,7 +4,7 @@
 /datum/say_prefix/right_hand/process(datum/say_message/message, datum/speech_module_tree/say_tree)
 	. = message
 
-	var/mob/mob_speaker = message.speaker
+	var/mob/mob_speaker = message.message_origin
 	var/atom/listener
 
 	if (ismobcritter(mob_speaker))

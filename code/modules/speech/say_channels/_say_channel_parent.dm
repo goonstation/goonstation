@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/datum/say_channel)
 				listen_modules_by_type[type] -= heard
 				continue
 
-			if (module_message.atom_listeners_to_be_excluded && module_message.atom_listeners_to_be_excluded[heard.parent_tree.parent])
+			if (module_message.atom_listeners_to_be_excluded && module_message.atom_listeners_to_be_excluded[heard.parent_tree.listener_origin])
 				continue
 
 			heard.process(module_message.Copy())
@@ -174,8 +174,8 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
 	var/list/list/datum/listen_module/input/listen_modules_by_type = list()
 
-	if (isturf(message.speaker.loc))
-		var/turf/centre = message.speaker.loc
+	if (isturf(message.message_origin.loc))
+		var/turf/centre = message.message_origin.loc
 		SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
 		for (var/type in src.listeners)
@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 					if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
 						continue
 				// If the outermost listener's loc is the speaker, they may hear the message.
-				else if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.speaker)
+				else if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
 					continue
 
 				listen_modules_by_type[type] += input
@@ -198,9 +198,9 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 				// If the outermost listener of the listener and the speaker match, the listener may hear the message.
 				if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
 					// If the outermost listener's loc is the speaker, the listener may hear the message.
-					if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.speaker)
+					if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
 						// If the speaker's loc is the listener, the listener may hear the message.
-						if (message.speaker.loc != input.parent_tree.parent)
+						if (message.message_origin.loc != input.parent_tree.listener_origin)
 							continue
 
 				listen_modules_by_type[type] += input
@@ -211,11 +211,13 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 	. = ..()
 
 	if (src.track_outermost_listener)
-		registree.parent_tree.parent.ensure_outermost_listener_tracker().request_track()
+		registree.parent_tree.speaker_origin.ensure_outermost_listener_tracker().request_track()
+		src.RegisterSignal(registree.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
 
 /datum/say_channel/delimited/local/UnregisterOutput(datum/speech_module/output/registered)
 	if (src.track_outermost_listener)
-		registered.parent_tree.parent.ensure_outermost_listener_tracker().unrequest_track()
+		registered.parent_tree.speaker_origin.ensure_outermost_listener_tracker().unrequest_track()
+		src.UnregisterSignal(registered.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
 
 	. = ..()
 
@@ -223,13 +225,19 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 	. = ..()
 
 	if (src.track_outermost_listener)
-		registree.parent_tree.parent.ensure_outermost_listener_tracker().request_track()
+		registree.parent_tree.listener_origin.ensure_outermost_listener_tracker().request_track()
+		src.RegisterSignal(registree.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
 
 /datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/registered)
 	if (src.track_outermost_listener)
-		registered.parent_tree.parent.ensure_outermost_listener_tracker().unrequest_track()
+		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
+		src.UnregisterSignal(registered.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
 
 	. = ..()
+
+/datum/say_channel/delimited/local/proc/rerequest_track(tree, atom/old_parent, atom/new_parent)
+	old_parent.ensure_outermost_listener_tracker().unrequest_track()
+	new_parent.ensure_outermost_listener_tracker().request_track()
 
 
 

@@ -10,9 +10,9 @@
 			// If the outermost listener of the listener and the speaker match, the listener may hear the message.
 			if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
 				// If the outermost listener's loc is the speaker, the listener may hear the message.
-				if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.speaker)
+				if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
 					// If the speaker's loc is the listener, the listener may hear the message.
-					if (message.speaker.loc != input.parent_tree.parent)
+					if (message.message_origin.loc != input.parent_tree.listener_origin)
 						continue
 
 			listen_modules_by_type[type] += input

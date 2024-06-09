@@ -6,8 +6,8 @@
 	var/hear_nothing_chance = 90
 	var/hear_message_chance = 5
 
-	if (ismob(src.parent_tree.parent))
-		var/mob/hearer = src.parent_tree.parent
+	if (ismob(src.parent_tree.listener_parent))
+		var/mob/hearer = src.parent_tree.listener_parent
 		if (hearer.job == "Chaplain")
 			hear_nothing_chance = 0
 			hear_message_chance = 20

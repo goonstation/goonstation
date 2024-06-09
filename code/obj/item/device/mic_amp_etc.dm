@@ -58,6 +58,7 @@
 		for (var/obj/loudspeaker/loudspeaker as anything in loudspeakers)
 			var/datum/say_message/loudspeaker_message = message.Copy()
 			loudspeaker_message.speaker = loudspeaker
+			loudspeaker_message.message_origin = loudspeaker
 			loudspeaker.ensure_say_tree().process(loudspeaker_message)
 
 			if (feedback)

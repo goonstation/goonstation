@@ -181,6 +181,7 @@ TYPEINFO(/obj/item/device/radio)
 	var/datum/say_message/message = signal.data["message"]
 	message = message.Copy()
 	message.speaker = src
+	message.message_origin = src
 	message.heard_range = src.speaker_range
 
 	src.ensure_say_tree().process(message)

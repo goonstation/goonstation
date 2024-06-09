@@ -8,7 +8,7 @@
 
 	. = message
 
-	var/obj/item/device/radio/radio_speaker = src.parent_tree.parent
+	var/obj/item/device/radio/radio_speaker = src.parent_tree.listener_parent
 	if (!istype(radio_speaker))
 		return
 

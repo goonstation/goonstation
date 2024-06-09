@@ -3,7 +3,7 @@
 
 /datum/listen_module/input/outloud/ears/process(datum/say_message/message)
 	// The speaker and/or listener is inside of something.
-	if ((!isturf(src.parent_tree.parent.loc) || !isturf(message.speaker.loc)) && (src.parent_tree.parent != message.speaker.loc) && !(message.flags & SAYFLAG_IGNORE_POSITION))
+	if ((!isturf(src.parent_tree.listener_origin.loc) || !isturf(message.message_origin.loc)) && (src.parent_tree.listener_origin != message.message_origin.loc) && !(message.flags & SAYFLAG_IGNORE_POSITION))
 		// Get the relative muffling between the speaker and listener.
 		var/relative_thickness = 0
 		var/atom/movable/speaker_loc = message.speaker.loc
@@ -15,7 +15,7 @@
 				return
 
 			outermost = speaker_loc
-			if (speaker_loc == src.parent_tree.parent.loc)
+			if (speaker_loc == src.parent_tree.listener_origin.loc)
 				matched_loc = TRUE
 				break
 
@@ -24,7 +24,7 @@
 				speaker_loc = speaker_loc.loc
 
 		if (!matched_loc)
-			var/atom/movable/hearer_loc = src.parent_tree.parent.loc
+			var/atom/movable/hearer_loc = src.parent_tree.listener_origin.loc
 			while(!isturf(hearer_loc))
 				relative_thickness += hearer_loc.soundproofing
 				hearer_loc = hearer_loc.loc

@@ -30,6 +30,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	var/atom/speaker = null
 	/// The atom that originally sent this message.
 	var/atom/original_speaker = null
+	/// The atom that should appear to have sent this message.
+	var/atom/message_origin = null
 	/// The voice identity of the speaker.
 	var/voice_ident = null
 	/// The facial identity of the speaker.
@@ -100,8 +102,9 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 	src.orig_message = message
 	src.content = message
-	src.speaker = speaker
-	src.original_speaker = speaker
+	src.speaker = speaker.say_tree.speaker_parent
+	src.original_speaker = speaker.say_tree.speaker_parent
+	src.message_origin = speaker.say_tree.speaker_origin
 	src.flags |= flags
 	src.atom_listeners_override = atom_listeners_override
 	src.maptext_css_values = list()
@@ -279,8 +282,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 				speech_bubble_icon = "[number]"
 
 	speech_bubble_icon ||= src.speaker.speech_bubble_icon_say
-	src.speaker.speech_bubble.icon_state = speech_bubble_icon
-	src.speaker.show_speech_bubble()
+	src.message_origin.speech_bubble.icon_state = speech_bubble_icon
+	src.message_origin.show_speech_bubble()
 
 /// Returns a formatted message for use with `boutput()`, using either the last input listen module or falling back to the default format of `"[speaker] [say_verb], [content]"`.
 /datum/say_message/proc/format_for_output()
@@ -306,14 +309,14 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		src.format_message_suffix += "</small>"
 
 	// Display maptext to the listener, if applicable.
-	var/mob/mob_listener = src.received_module.parent_tree.parent
+	var/mob/mob_listener = src.received_module.parent_tree.listener_parent
 	if (!(src.flags & SAYFLAG_NO_MAPTEXT) && istype(mob_listener) && mob_listener.client && !mob_listener.client.preferences.flying_chat_hidden)
 		if (!src.maptext_css_values["color"])
 			var/num = hex2num(copytext(md5(src.speaker.name), 1, 7))
 			src.maptext_css_values["color"] = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 
-		src.speaker.maptext_manager ||= new /atom/movable/maptext_manager(src.speaker)
-		src.speaker.maptext_manager.add_maptext(mob_listener.client, global.message_maptext(src))
+		src.message_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.message_origin)
+		src.message_origin.maptext_manager.add_maptext(mob_listener.client, global.message_maptext(src))
 
 	// If the speaker to display is null, use the real name of the speaker instead.
 	if (isnull(src.speaker_to_display))

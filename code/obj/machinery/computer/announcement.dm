@@ -24,7 +24,13 @@
 	light_g = 1
 	light_b = 0.1
 
+	/// This is solely used to reconcile refactoring announcement computers with `.dmm` files. Remove in a followup PR.
+	var/voice_name = null
+
 	New()
+		if (!isnull(src.voice_name))
+			src.computer_say_source_name = src.voice_name
+
 		. = ..()
 		src.computer_say_source = new()
 		src.computer_say_source.name = src.computer_say_source_name

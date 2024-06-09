@@ -110,6 +110,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/datum/say_message/message = signal.data["message"]
 	message = message.Copy()
 	message.speaker = src.handset
+	message.message_origin = src.handset
 
 	src.handset.ensure_say_tree().process(message)
 
