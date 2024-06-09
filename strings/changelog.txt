@@ -1,5 +1,9 @@
 
 (t)sat jun 08 24
+(u)Emily
+(*)Big Chicken Evolution Refactor. Please report anything strange IMMEDIATELY.
+(*)New Enby-flag-colored chicken! Open the minor changes for a hint.
+(+)When fluffy chickens collide with each other, static may result. Shocking!
 (u)Keiiro
 (p)19132
 (e)🎨💅💡|C-Sprites, C-QoL, A-Station-Systems
