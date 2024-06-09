@@ -1,8 +1,11 @@
 import { useLocalState } from '../../backend';
 import { Button, Section, Stack } from '../../components';
 import { ClothingBoothSlotKey } from './type';
+import { LocalStateKey } from './utils/enum';
 
 export const SlotFilters = (_, context) => {
+  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
+  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
   const [slotFilters, setSlotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
     context,
     'slotFilters',
@@ -20,6 +23,17 @@ export const SlotFilters = (_, context) => {
         <Stack.Item>
           <Button fluid align="center" onClick={() => setSlotFilters({})}>
             Clear Slots
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            fluid
+            align="center"
+            color={Object.values(tagFilters).some((tagFilter) => tagFilter === true) && 'good'}
+            onClick={() => setTagModal(!tagModal)}>
+            Tags{' '}
+            {!!Object.values(tagFilters).some((tagFilter) => tagFilter === true)
+              && `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length})`}
           </Button>
         </Stack.Item>
         <Stack.Item>

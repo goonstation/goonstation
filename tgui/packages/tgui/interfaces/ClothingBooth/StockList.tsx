@@ -29,7 +29,7 @@ export const StockList = (_props: unknown, context) => {
   const { catalogue, accountBalance, cash, selectedGroupingName } = data;
   const catalogueItems = Object.values(catalogue);
 
-  const [hideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
+  const [hideUnaffordable, setHideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
   const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
     context,
     LocalStateKey.SlotFilters,
@@ -40,7 +40,6 @@ export const StockList = (_props: unknown, context) => {
   const [sortAscending, setSortAscending] = useLocalState(context, LocalStateKey.SortAscending, true);
 
   const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
-  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
 
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
 
@@ -111,15 +110,11 @@ export const StockList = (_props: unknown, context) => {
                   </Box>
                 </Stack.Item>
                 <Stack.Item>
-                  <Button
-                    fluid
-                    align="center"
-                    color={Object.values(tagFilters).some((tagFilter) => tagFilter === true) && 'good'}
-                    onClick={() => setTagModal(!tagModal)}>
-                    Filter by Tags{' '}
-                    {!!Object.values(tagFilters).some((tagFilter) => tagFilter === true)
-                      && `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length} selected)`}
-                  </Button>
+                  <Button.Checkbox
+                    checked={hideUnaffordable}
+                    onClick={() => setHideUnaffordable(!hideUnaffordable)}>
+                    Hide Unaffordable
+                  </Button.Checkbox>
                 </Stack.Item>
               </Stack>
             </Section>
