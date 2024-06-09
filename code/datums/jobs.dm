@@ -2043,17 +2043,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/storage/box/mousetraps)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
-/datum/job/special/random/drugdealer
-	name = "Drug Dealer"
-	wages = PAY_UNTRAINED
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/misc/mobster)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_poc1 = list(/obj/item/cigpacket/propuffs)
-	slot_poc2 = list(/obj/item/cigpacket)
-	items_in_backpack = list(/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/methamphetamine, /obj/item/storage/pill_bottle/catdrugs)
-	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
-
 /datum/job/special/random/vehiclemechanic
 	name = "Vehicle Mechanic" // fallback name, gets changed later
 	#ifdef UNDERWATER_MAP
