@@ -1,4 +1,122 @@
 
+(t)sat jun 08 24
+(u)Emily
+(*)Big Chicken Evolution Refactor. Please report anything strange IMMEDIATELY.
+(*)New Enby-flag-colored chicken! Open the minor changes for a hint.
+(*)Ranch Nametags: Write a name on them in pen to name a ranch critter. Naming a ranch critter slows down their aging, hunger, and offspring production significantly.
+(+)When fluffy chickens collide with each other, static may result. Shocking!
+(u)Keiiro
+(p)19132
+(e)🎨💅💡|C-Sprites, C-QoL, A-Station-Systems
+(*)Two new criminal statuses have been added to the security records: Detain and Suspect.
+(u)glowbold
+(p)19387
+(e)🔄|C-Rework
+(+)Mail Couriers can roll the deliver mail crew objective.
+(t)fri jun 07 24
+(u)Zamujasa
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Mopping floors makes them slippery for bit again. Maybe don't run over them.
+(*)People automatically catch mail, exactly like basketballs.
+(*)Quartermaster's mail delivery objective has been reassigned to the Mail Courier.
+(+)Mail rates tweaked.
+(+)Slipped a lamp manufacturer into the janitor's bag to make lamp replacing a little more convinient.
+(u)glowbold
+(p)19391
+(e)🆕|C-Feature
+(+)More mail will arrive if your station has a dedicated mail courier.
+(u)LeahTheTech
+(+)The clown announcement computer is now a lot quieter and has been added to the maps it was missing from.
+(*)The bank computer now uses its own access type, only available by default to the HoP and Captain. No more mail couriers stealing the budget.
+(u)glowbold
+(p)19380
+(e)⚖💊|C-Balance, A-Medical
+(+)Blood Bank supply backs come with two blood IV bags and two saline IV bags.
+(u)crunchwarp
+(p)19325
+(e)🆕🗺🎨🔊📦|C-Feature, A-Mapping, C-Sprites, C-Sound, A-Game-Objects
+(+)A special announcement computer has been added to most clownholes. But beware...
+(u)LeahTheTech
+(p)19339
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Eating sponge capsules and then drinking water will now cause them to expand into animals, causing stomach damage in the process. Syndicate sponge capsules are significantly more dangerous.
+(+)Sponge capsules can now be force-fed to other people.
+(u)FlameArrow57
+(p)19341
+(e)🆕💅🧛🔨|C-Feature, C-QoL, A-Gamemodes, A-Player-Actions
+(*)As a blob, left clicking a tile will now attempt to spread to that tile, meaning you don't need to click or hotkey the ability button at all!
+(u)glowbold
+(p)19364
+(e)⚖|C-Balance
+(+)Artifacts sell for slightly more on the market.
+(u)glowbold
+(p)19293
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Pineapple slices can be fit onto drinking glasses like fruit wedges.
+(t)thu jun 06 24
+(u)LeahTheTech
+(+)Singularity buster rockets now send people flying.
+(u)JORJ949
+(p)18880
+(e)⚖⛔📦|C-Balance, C-Removal, A-Game-Objects
+(+)Removed securitrons from robotics crates.
+(u)mintyphresh
+(p)19282
+(e)💅💊⚗|C-QoL, A-Medical, A-Chemistry
+(+)Players about to be eligible for addiction are now warned of it.
+(u)BatElite
+(p)19152
+(e)🆕🎨📄|C-Feature, C-Sprites, A-UI
+(+)Health monitor implants now show a central pip for your overall health.
+(t)wed jun 05 24
+(u)mintyphresh
+(p)19328
+(e)⚖💊⚗🍝|C-Balance, A-Medical, A-Chemistry, A-Catering
+(+)Ethanol is five times harder to get addicted to.
+(u)Zamujasa
+(p)19249
+(e)🎨💅📄|C-Sprites, C-QoL, A-UI
+(*)Players who disconnect now have a little "Zz" over their head.
+(*)Players who are in VR, etc. have an icon over their head.
+(*)The AI core and AI shells similarly have icons.
+(u)Lord_Earthfire
+(p)19314
+(e)🆕⚖⚗🍝|C-Feature, C-Balance, A-Chemistry, A-Catering
+(+)The amount of fish oil in fish has been doubled.
+(+)Heating fish oil in closed containers can pyrolyse it to a usefull amount of oil, ash and potash.
+(u)Glamurio (Ryou)
+(p)19175
+(e)💅🐣|C-QoL, A-Respawning
+(*)The mail never sleeps, it merely rests. And now, Mail Couriers never sleep either, they join at roundstart.
+(t)tue jun 04 24
+(u)Mordent
+(p)19337
+(e)🆕📦🍝|C-Feature, A-Game-Objects, A-Catering
+(+)Added fishing locations: flower vases, ice dispensers, glass recyclers, fuel/foam tanks, ketchup/mustard bottles
+(u)Sord
+(*)Added a few new random gimmick jobs: Food Critic, Pest Control Specialist, Drug Dealer, Pod/Sub Mechanic, and Phone Merchant.
+(+)The Regional Director has been permanently fired.
+(+)The chef has posted a permanent job offer for a sous-chef! Any time there is a chef, a sous-chef slot will open up for late join instead of being a random job.
+(t)sun jun 02 24
+(u)Laboredih123
+(p)19265
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Less pipes to deal with in the cog1 freezer, wow.
+(u)glowbold
+(p)19291
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Mix the classic, non-alcoholic drink 'shirley temple' by combining ginger ale, lemon juice, lime juice, and grenadine.
+(u)Sord
+(+)Increased the amount of air most of the gas/air tanks (pocket, pocket extended, mini oxygen/plasma) spawn with
+(u)Mordent
+(p)19280
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Chemical request and request receiver consoles can now be (de)constructed.
+(u)pali
+(+)Hiding in a shrub now prevents camera tracking.
+(t)sat jun 01 24
+(u)tarmunora
+(+)Being made of plants, synthlungs now protect from CO2 and allow limited 'photosynthesis' of CO2 into O2 when breathing.
 (t)fri may 31 24
 (u)Glamurio (Ryou)
 (p)19049
