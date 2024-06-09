@@ -858,10 +858,16 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	ghost_icon_state = "ghost-lizard"
 
+	mutant_abilityholder = /datum/abilityHolder/lizard
+	mutant_abilities = list(
+		/datum/targetable/lizardAbility/colorshift,
+		/datum/targetable/lizardAbility/colorchange,
+		/datum/targetable/lizardAbility/regrow_tail
+	)
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
-			H.give_lizard_powers()
 			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
 			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 			H.mob_flags |= SHOULD_HAVE_A_TAIL
@@ -895,7 +901,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			C?.RemoveComponent(/datum/component/consume/organpoints)
 			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
-			L.remove_lizard_powers()
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			src.mob.thermoregulation_mult = initial(src.mob.thermoregulation_mult)
 			src.mob.base_body_temp = initial(src.mob.base_body_temp)
