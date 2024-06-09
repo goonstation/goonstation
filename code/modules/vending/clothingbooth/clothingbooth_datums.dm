@@ -33,7 +33,7 @@ var/list/serialized_clothingbooth_tags = list()
 				"name" = item.name,
 				"cost" = item.cost,
 				"swatch_background_colour" = item.swatch_background_colour,
-				"swatch_foreground_color" = item.swatch_foreground_colour,
+				"swatch_foreground_colour" = item.swatch_foreground_colour,
 				"swatch_foreground_shape" = item.swatch_foreground_shape,
 			)
 

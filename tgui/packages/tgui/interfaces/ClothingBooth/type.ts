@@ -33,6 +33,10 @@ export interface ClothingBoothItemData {
 	swatch_foreground_colour?: string;
 }
 
+export interface SwatchForegroundProps {
+  colour: string;
+}
+
 export interface ClothingBoothGroupingTagsData {
   name: string;
   colour?: string;
