@@ -16,12 +16,15 @@
 	if (!istype(M))
 		return
 	src.lastattacked = M
-	if (length(M.daggers))
-		var/dagger = pick(M.daggers)
-		M.daggers -= dagger
-		src.put_in_hand_or_drop(pick(dagger))
-		src.visible_message(SPAN_COMBAT("[src] yanks a dagger out of [src != M ? M : "themself"]!"))
-	else if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
+	// dagger code here so that you can still put it out when target is bleeding
+	if (istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/implant/projectile/body_visible/syndicate_dagger/stuck_dagger = locate(/obj/item/implant/projectile/body_visible/syndicate_dagger) in H.implant
+		if (stuck_dagger)
+			stuck_dagger.on_pull_out(src)
+			src.visible_message(SPAN_COMBAT("[src] yanks a dagger out of [src != H ? H : "themself"]!"))
+			return
+	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()

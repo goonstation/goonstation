@@ -84,8 +84,6 @@
 
 	var/list/implant = list()
 	var/list/implant_images = list()
-	/// daggers stuck into this mob
-	var/list/obj/item/dagger/daggers
 
 	var/stance = "normal"
 
@@ -136,8 +134,6 @@
 	if (can_bleed)
 		src.ensure_bp_list()
 
-	src.daggers = list()
-
 	if (src.use_stamina)
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
@@ -176,10 +172,6 @@
 		for (var/datum/hud/thishud in huds)
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
-
-	for (var/obj/item/dagger/dagger as anything in src.daggers)
-		dagger.set_loc(get_turf(src))
-	src.daggers = null
 
 	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)

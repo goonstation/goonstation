@@ -567,14 +567,12 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
-		if (src.sticks_into_mob && istype(M, /mob/living) && M.get_stun_resist_mod() < 50)
-			var/mob/living/L = M
-			L.daggers += src
-			src.set_loc(M)
-			SPAWN (2 SECONDS)
-				if (src in L.daggers)
-					L.daggers -= src
-					src.set_loc(get_turf(M))
+		if (src.sticks_into_mob && istype(M, /mob/living/carbon/human) && M.get_stun_resist_mod() < 50)
+			var/mob/living/carbon/human/H = M
+			var/obj/item/implant/dagger_imp = new /obj/item/implant/projectile/body_visible/syndicate_dagger(H, src)
+			dagger_imp.implanted(H)
+			SPAWN(2 SECONDS)
+				qdel(dagger_imp)
 
 /obj/item/dagger/attack(target, mob/user)
 	if(ismob(target))

@@ -1136,6 +1136,29 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			proc/set_owner(obj/item/tool/janktanktwo/injector)
 				src.syringe = injector
 
+		syndicate_dagger
+			name = "syndicate dagger"
+			var/obj/item/dagger/stored_dagger = null
+
+			New(newLoc, obj/item/dagger/dagger_to_store)
+				..()
+				src.implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dagger_stick_[pick(0, 1)]", layer = MOB_EFFECT_LAYER)
+				dagger_to_store.set_loc(src)
+				src.stored_dagger = dagger_to_store
+
+			on_pull_out(mob/puller)
+				if (ismob(src.loc))
+					puller.put_in_hand_or_drop(src.stored_dagger)
+					src.on_remove(src.loc)
+				src.stored_dagger = null
+				qdel(src)
+
+			disposing()
+				if (ismob(src.loc))
+					src.on_remove(src.loc)
+					src.stored_dagger?.set_loc(get_turf(src))
+				src.stored_dagger = null
+				..()
 
 
 
