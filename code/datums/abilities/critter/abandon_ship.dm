@@ -20,5 +20,5 @@
 		skull.contents -= skele
 		SPAWN(10)
 			skele.emote("scream")
-		SPAWN(40)
+		SPAWN(60)
 			skele.gib()
