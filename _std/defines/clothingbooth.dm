@@ -13,3 +13,5 @@
 #define SWATCH_CLUB "swatch-club"
 /// Spade card suit.
 #define SWATCH_SPADE "swatch-spade"
+/// Rainbow gradient.
+#define SWATCH_RAINBOW "swatch-rainbow"

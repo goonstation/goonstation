@@ -380,8 +380,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 
 	rainbow
 		name = "Rainbow"
-		swatch_background_colour = "#8d1422"
-		swatch_foreground_colour = "#5a1d8a"
+		swatch_foreground_shape = SWATCH_RAINBOW
 		item_path = /obj/item/clothing/head/hairbow/rainbow
 
 	yellowpolkadot
@@ -974,7 +973,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 
 	rainbow
 		name = "Rainbow"
-		swatch_background_colour = "#ebf0f2"
+		swatch_foreground_shape = SWATCH_RAINBOW
 		item_path = /obj/item/clothing/under/misc/flame_rainbow
 		cost = PAY_TRADESMAN/3
 
