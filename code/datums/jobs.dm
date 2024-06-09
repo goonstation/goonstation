@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_rhan = list(/obj/item/mop)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc1 = list(/obj/item/device/pda2/janitor)
-	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket)
+	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket, /obj/item/lamp_manufacturer/organic)
 	wiki_link = "https://wiki.ss13.co/Janitor"
 
 	New()
@@ -2019,7 +2019,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
 	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/foodcritic
 	name = "Food Critic"
@@ -2030,7 +2030,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc2 = list(/obj/item/paper)
 	slot_lhan = list(/obj/item/clipboard/with_pen)
 	items_in_backpack = list(/obj/item/item_box/postit)
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/pestcontrol
 	name = "Pest Control Specialist"
@@ -2041,7 +2041,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/pet_carrier)
 	items_in_backpack = list(/obj/item/storage/box/mousetraps)
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/drugdealer
 	name = "Drug Dealer"
@@ -2052,7 +2052,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/cigpacket/propuffs)
 	slot_poc2 = list(/obj/item/cigpacket)
 	items_in_backpack = list(/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/methamphetamine, /obj/item/storage/pill_bottle/catdrugs)
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/vehiclemechanic
 	name = "Vehicle Mechanic" // fallback name, gets changed later
@@ -2072,7 +2072,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	#else
 	items_in_backpack = list(/obj/item/preassembled_frame_box/putt, /obj/item/podarmor/armor_light, /obj/item/clothing/head/helmet/welding)
 	#endif
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/phonemerchant
 	name = "Phone Merchant"
@@ -2082,7 +2082,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc1 = list(/obj/item/electronics/soldering)
 	items_in_backpack = list(/obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone)
-	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 #ifdef HALLOWEEN
 /*
