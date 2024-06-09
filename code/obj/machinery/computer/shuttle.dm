@@ -327,16 +327,24 @@ var/bombini_saved
 				return
 
 		if (user)
-			var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
-			if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
-			if (choice == "Launch")
-				boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
-				emergency_shuttle.settimeleft( 10 )
-				logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
-		else
-			boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
-			emergency_shuttle.settimeleft( 10 )
-		return
+			var/choice = ""
+			if (user.mind?.is_antagonist())
+				choice = tgui_alert(user, "Would you like to launch the escape shuttle early?", "Shuttle control", list("Launch", "Cancel"))
+			else
+				choice = tgui_alert(user, "Would you like to delay the escape shuttle depature for one minute?", "Shuttle control", list("Delay", "Cancel"))
+
+			if (BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+
+			switch(choice)
+				if ("Launch")
+					boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
+					emergency_shuttle.settimeleft( 10 )
+					logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
+				if ("Delay")
+					boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time inceased by 1 minute!</B>"))
+					emergency_shuttle.settimeleft( emergency_shuttle.timeleft() + 60 )
+					logTheThing(LOG_ADMIN, user, "increases Emergency Shuttle launch time by 1 minute.")
+
 
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
