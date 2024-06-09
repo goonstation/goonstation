@@ -61762,7 +61762,7 @@
 	},
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
-	id = "Hot Loop Gas Supply 2";
+	id = "Hot Loop Gas Supply 1";
 	target_pressure = 1000
 	},
 /turf/simulated/floor/black,
