@@ -6,12 +6,13 @@
  */
 
 import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
-import { ManufacturableData, RequirementData, ResourceData } from '../type';
+import { ManufacturableData } from '../type';
 import { round } from 'common/math';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
 import { truncate } from '../../../format';
 import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
+import { BooleanLike } from "common/react";
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -21,48 +22,11 @@ export type BlueprintButtonProps = {
   actionRemoveBlueprint: (byondRef:string) => void;
   actionVendProduct: (byondRef:string) => void;
   blueprintData: ManufacturableData;
-  materialData: ResourceData[];
+  blueprintProducabilityData: BooleanLike[];
   manufacturerSpeed: number;
   deleteAllowed: boolean;
   hasPower: boolean;
 }
-
-
-/*
-Get whether or not there is a sufficient amount to make. does NOT affect sanity checks on the DM side,
-this just offloads some of the computation to the client.
-
-Consequently, if the checks on the .dm end change, this has to change as well.
-
-Only the DM checks matter for actually making the item though, this just enables and disables buttons /
-shows what materials are missing.
-*/
-const getProductionSatisfaction = (
-  requirement_data:RequirementData[],
-  materials_stored:ResourceData[]) =>
-{
-  // Copy values of mats stored to edit in case we need to try the same material twice
-  let material_amts_predicted:Record<string, number> = {};
-  materials_stored.forEach((value:ResourceData) => (
-    material_amts_predicted[value.byondRef] = value.amount
-  ));
-  let patterns_satisfied:boolean[] = [];
-  for (let i in requirement_data) {
-    const target_pattern = requirement_data[i].id;
-    const target_amount = requirement_data[i].amount;
-    const matchingMaterial = materials_stored.find((material:ResourceData) => (
-      (material.amount >= target_amount/10) && (target_pattern === "ALL" || material.satisfies?.includes(target_pattern) || material.id === target_pattern)
-    ));
-    if (matchingMaterial !== undefined) {
-      material_amts_predicted[i] -= target_amount/10;
-      patterns_satisfied.push(true);
-    }
-    else {
-      patterns_satisfied.push(false);
-    }
-  }
-  return patterns_satisfied;
-};
 
 export const BlueprintButton = (props:BlueprintButtonProps) => {
 
@@ -70,17 +34,13 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     actionRemoveBlueprint,
     actionVendProduct,
     blueprintData,
-    materialData,
+    blueprintProducabilityData,
     manufacturerSpeed,
     deleteAllowed,
     hasPower,
   } = props;
-  const blueprintSatisfaction = getProductionSatisfaction(
-    blueprintData.requirement_data,
-    materialData,
-  );
   // Condense producability
-  const notProduceable = blueprintSatisfaction.includes(false);
+  const notProduceable = blueprintProducabilityData.includes(false);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs = (blueprintData.item_names.length < 2
     && blueprintData.create < 2
@@ -104,7 +64,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
         {Object.keys(blueprintData.requirement_data).map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
-            labelColor={(blueprintSatisfaction[index]) ? undefined : "bad"}
+            labelColor={(blueprintProducabilityData[index]) ? undefined : "bad"}
             label={blueprintData.requirement_data[value].name}
             textAlign="right"
           >

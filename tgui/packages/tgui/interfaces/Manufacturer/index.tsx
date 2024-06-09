@@ -109,7 +109,7 @@ export const Manufacturer = (_, context) => {
                         key={index}
                         blueprintData={blueprint}
                         manufacturerSpeed={data.speed}
-                        materialData={data.resource_data}
+                        blueprintProducabilityData={data.producability_data[blueprint.byondRef]}
                         deleteAllowed={data.delete_allowed !== AccessLevels.DENIED}
                         hasPower={!!data.indicators.hasPower}
                       />
