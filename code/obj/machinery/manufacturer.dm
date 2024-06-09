@@ -91,7 +91,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
-	var/list/blueprint_producibility_by_ref = list() //! An associated list of blueprint refs to associated lists of material requirement names to whether they are producible or not.
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
@@ -311,6 +310,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				continue
 			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P]"]))
 
+		var/list/blueprint_producibility_by_ref = src.get_producibility_for_blueprints()
+
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
 		for (var/datum/manufacture/M in src.queue)
@@ -340,6 +341,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"repeat" = src.repeat,
 			"error" = src.error,
 			"resource_data" = resource_data,
+			"producibility_data" = blueprint_producibility_by_ref,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
 			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,
@@ -466,6 +468,22 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"byondRef" = "\ref[M]",
 			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
 		)
+
+	/// Get an associated list for the UI of blueprintRef to associated list of requirement name to whether that one's producible
+	proc/get_producibility_for_blueprints()
+		var/list/output = list()
+		for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
+			var/M_ref = "\ref[M]"
+			var/list/mats_needed = src.get_materials_needed(M)
+			output[M_ref] = list()
+			// 'convert' the result of R = P_ref to R.name = boolean
+			for (var/datum/manufacturing_requirement/needed_R as anything in M.item_requirements)
+				output[M_ref][needed_R.name] = FALSE
+				for (var/datum/manufacturing_requirement/satisfied_R as anything in mats_needed)
+					if (satisfied_R == needed_R)
+						output[M_ref][needed_R.name] = TRUE
+						break
+		return output
 
 	attack_hand(mob/user)
 		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
