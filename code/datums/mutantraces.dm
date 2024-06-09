@@ -2043,6 +2043,17 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
 
+	mutant_abilityholder = /datum/abilityHolder/kudzu
+	mutant_abilities = list(
+		/datum/targetable/kudzu/guide,
+		/datum/targetable/kudzu/growth,
+		/datum/targetable/kudzu/seed,
+		/datum/targetable/kudzu/heal_other,
+		/datum/targetable/kudzu/stealth,
+		/datum/targetable/kudzu/kudzusay,
+		/datum/targetable/kudzu/vine_appendage
+	)
+
 	custom_attack(atom/target)
 		if(ishuman(target))
 			src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> waves its limbs at [target] threateningly!"))
@@ -2060,28 +2071,11 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
-				H.abilityHolder.owner = H
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/growth)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/seed)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/vine_appendage)
 
 
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
-			if(H.abilityHolder)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 		return ..()
