@@ -1786,7 +1786,7 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	implanted = null
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, dirflag)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
 			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
@@ -1796,6 +1796,9 @@ datum/projectile/bullet/autocannon
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, 8, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
 				M.do_disorient(stunned = 40)
 

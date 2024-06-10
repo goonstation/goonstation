@@ -27,7 +27,7 @@ datum
 		var/fluid_b = 0
 		var/fluid_g = 255
 		var/addiction_prob = 0 // per-tick chance that addiction will surface
-		var/addiction_min = 0 // how high the tally for this addiction needs to be before addiction_prob starts rolling
+		var/addiction_min = 10 // how high the tally for this addiction needs to be before addiction_prob starts rolling
 		var/max_addiction_severity = "HIGH" // HIGH = barfing, stuns, etc, LOW = twitching, getting tired
 		var/dispersal = 4 // The range at which this disperses from a grenade. Should be lower for heavier particles (and powerful stuff).
 		var/volatility = 0 // Volatility determines effectiveness in pipebomb. This is 0 for a bad additive, otherwise a positive number which linerally affects explosive power.
@@ -253,7 +253,7 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 			deplRate = deplRate * mult
 			if (addiction_prob)
-				src.handle_addiction(M, deplRate)
+				src.handle_addiction(M, deplRate, addiction_prob)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
@@ -303,13 +303,12 @@ datum
 
 
 
-		proc/handle_addiction(var/mob/M, var/rate)
+		proc/handle_addiction(var/mob/M, var/rate, var/addProb)
 			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
 				//DEBUG_MESSAGE("already have [AD.name]")
 				return AD
-			var/addProb = addiction_prob
 			//DEBUG_MESSAGE("addProb [addProb]")
 			if (isliving(M))
 				var/mob/living/H = M
@@ -338,6 +337,8 @@ datum
 				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
+			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
+				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
 			return
 
 		proc/flush(var/datum/reagents/holder, var/amount, var/list/flush_specific_reagents)
