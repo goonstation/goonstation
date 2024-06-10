@@ -1894,6 +1894,7 @@ datum
 							M.stuttering = max(M.stuttering, 10)
 						if (probmult(13))
 							M.emote(pick("twitch","drool","tremble"))
+							M.change_eye_blurry(2, 2)
 					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)

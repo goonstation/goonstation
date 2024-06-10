@@ -289,6 +289,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	name = "pufferfish"
 	desc = "Adorable. Quite poisonous."
 	icon_state = "pufferfish"
+	initial_volume = 60 // 20 fish oil and 40 tetrodotoxin
 	inhand_color = "#8d754e"
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/pufferfish
 	category = FISH_CATEGORY_AQUARIUM
