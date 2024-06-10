@@ -18168,14 +18168,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "fyI" = (
-/obj/rack,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
+/obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "fyY" = (
@@ -28335,6 +28328,10 @@
 	dir = 8
 	},
 /area/station/chapel/funeral_parlor)
+"nfh" = (
+/obj/storage/secure/crate/eng/nuclearfuel,
+/turf/space,
+/area/space)
 "nfy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -44587,7 +44584,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+nfh
 aaa
 aaa
 aaa
