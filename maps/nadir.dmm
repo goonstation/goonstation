@@ -7311,10 +7311,6 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
-"dpV" = (
-/obj/storage/secure/crate/eng/nuclearfuel,
-/turf/unsimulated/wall/trench,
-/area/space)
 "dqn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se{
@@ -57036,7 +57032,7 @@ oeA
 oeA
 oeA
 oeA
-dpV
+oeA
 oeA
 oeA
 oeA
