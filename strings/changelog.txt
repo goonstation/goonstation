@@ -1,5 +1,9 @@
 
 (t)mon jun 10 24
+(u)TDHooligan, Blackrep
+(p)18446
+(e)🆕🗺🎨🔒🔊📦|C-Feature, A-Mapping, C-Sprites, A-Secret, C-Sound, A-Game-Objects
+(+)The KS-23 'Kuvalda Carbine' (read: big shotgun) can now be found in gang weapon crates.
 (u)Colossusqw
 (p)19413
 (e)⚖⚗|C-Balance, A-Chemistry
