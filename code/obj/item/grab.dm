@@ -229,9 +229,10 @@
 						var/obj/item/cloth = src.loc
 						if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
 							logTheThing(LOG_COMBAT, src.assailant, "tries to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
-							SETUP_GENERIC_PRIVATE_ACTIONBAR(src.assailant, src.affecting, 2 SECONDS, /obj/item/grab/proc/resolve_chem_transfer, src, cloth.icon, cloth.icon_state,\
-							"[src.assailant] presses [cloth] onto [src.affecting]'s face!", INTERRUPT_STUNNED)
-
+							boutput(src.affecting, SPAN_BOLD("[src.assailant] presses the [cloth] in your face to force you to breathe in chemicals!"))
+							SPAWN(2 SECONDS) // When it actually begins passing chemicals through
+								if (src.state >= GRAB_AGGRESSIVE)
+									transfering_chemicals = TRUE
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
 					set_affected_loc()
@@ -354,10 +355,6 @@
 			return 1
 
 		return 0
-
-	proc/resolve_chem_transfer(var/obj/item/grab/chokehold)
-		if (chokehold.state >= GRAB_AGGRESSIVE)
-			chokehold.transfering_chemicals = TRUE
 
 	update_icon()
 
