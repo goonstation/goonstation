@@ -1166,10 +1166,11 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
 
-			var/mob/living/critter/skeleton/skele_controller = new /mob/living/critter/skeleton/tiny/
-			skele_controller.name = (src.mob.name)
-			src.mob.mind.transfer_to(skele_controller)
-			H.contents += skele_controller // the pilot is in the suit
+			if (H) // don't do anything if there's no head
+				var/mob/living/critter/skeleton/skele_controller = new /mob/living/critter/skeleton/tiny/
+				skele_controller.name = (src.mob.name)
+				src.mob.mind.transfer_to(skele_controller)
+				H.contents += skele_controller // the pilot is in the suit. this is so the skeleton can speak after death
 
 			return MUTRACE_ONDEATH_NOTHING
 
