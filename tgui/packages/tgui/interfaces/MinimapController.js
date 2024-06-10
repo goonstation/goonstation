@@ -94,7 +94,7 @@ export const MinimapController = (params, context) => {
               title="Minimap Markers"
               fill
               buttons={(
-                <Box>
+                <>
                   <Button
                     icon="plus"
                     color="green"
@@ -107,7 +107,7 @@ export const MinimapController = (params, context) => {
                     content={markers_visible ? "Hide All" : "Show All"}
                     onClick={() => act('toggle_visibility_all')}
                   />
-                </Box>
+                </>
               )}>
               {(!!showNewMarkerMenu) && (
                 <Modal
@@ -116,7 +116,6 @@ export const MinimapController = (params, context) => {
                     <Flex>
                       <Flex.Item backgroundColor="black">
                         <Image
-                          pixelated
                           height="150px"
                           width="150px"
                           src={`data:image/png;base64,${image}`}

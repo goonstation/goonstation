@@ -13,11 +13,13 @@ var/list/server_toggles_tab_verbs = list(
 /client/proc/toggle_spooky_light_plane,\
 /client/proc/toggle_cloning_with_records,
 /client/proc/toggle_random_job_selection,
+/client/proc/toggle_tracy_profiling,
 /datum/admins/proc/toggleooc,
 /datum/admins/proc/togglelooc,
 /datum/admins/proc/toggleoocdead,
 /datum/admins/proc/toggletraitorscaling,
 /datum/admins/proc/pcap,
+/datum/admins/proc/toggle_pcap_kick_messages,
 /datum/admins/proc/toggleenter,
 /datum/admins/proc/toggleAI,
 /datum/admins/proc/toggle_soundpref_override,
@@ -240,6 +242,16 @@ client/proc/toggle_ghost_respawns()
 
 	src.holder.buildmode_view = !src.holder.buildmode_view
 	boutput(usr, SPAN_NOTICE("Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!"))
+
+/client/proc/toggle_hide_offline()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Offline Indicators"
+	set desc = "Toggles if your offline indicators are hidden when mob jumping"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	src.holder.hide_offline_indicators = !src.holder.hide_offline_indicators
+	boutput(usr, SPAN_NOTICE("Toggled hiding offline indicators [src.holder.hide_offline_indicators ? "on":"off"]!"))
 
 /client/proc/toggle_spawn_in_loc()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -589,9 +601,20 @@ client/proc/toggle_ghost_respawns()
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
 		boutput(world, "<B>The global player cap has been disabled.</B>")
-	logTheThing(LOG_ADMIN, usr, "toggled player cap to [player_cap].")
-	logTheThing(LOG_DIARY, usr, "toggled player cap to [player_cap].", "admin")
-	message_admins("[key_name(usr)] toggled the global player cap [player_cap ? "on" : "off"]")
+	logTheThing(LOG_ADMIN, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled player cap [player_capa ? "on" : "off"].")
+
+/datum/admins/proc/toggle_pcap_kick_messages()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc = "Toggle pcap kick and redicrection acceptance messages on or off"
+	set name = "Toggle PCap Kick Alerts"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
+	global.pcap_kick_messages = !(global.pcap_kick_messages)
+	logTheThing(LOG_ADMIN, usr, "toggled player cap kick and redirection acceptance messages [global.pcap_kick_messages ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled player cap kick and redirection acceptance messages [global.pcap_kick_messages ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled player cap kick and redirection acceptance messages [global.pcap_kick_messages ? "on" : "off"].")
 
 /datum/admins/proc/toggleenter()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -1260,3 +1283,15 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
 	logTheThing(LOG_DIARY, usr, "toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled random job selection [global.totally_random_jobs ? "on" : "off"]")
+
+/client/proc/toggle_tracy_profiling()
+	set name = "Toggle Tracy Profiling"
+	set desc = "Toggle Tracy profiling on the next round"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/enabled = toggle_tracy_profiling_file()
+	logTheThing(LOG_ADMIN, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+	logTheThing(LOG_DIARY, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
+	message_admins("[key_name(usr)] [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")

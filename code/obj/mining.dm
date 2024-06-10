@@ -628,10 +628,14 @@
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
 			sleep_time = 20
-		sleep_time /= 2
+		sleep_time /= 3
 
 		if (malfunctioning && prob(20))
 			do_malfunction()
+		sleep(sleep_time)
+
+		// Ensure area is erased, helps if atmos is being a jerk
+		target.erase_area()
 		sleep(sleep_time)
 
 		var/datum/mining_encounter/MC
@@ -662,7 +666,7 @@
 			var/turf/origin = get_turf(target)
 			for (var/turf/space/T in block(origin, locate(origin.x + target.width - 1, origin.y + target.height - 1, origin.z)))
 				repair_turfs += T
-			station_repair.repair_turfs(repair_turfs)
+			station_repair.repair_turfs(repair_turfs, force_floor=TRUE)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -1075,8 +1079,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
 		..()
-		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
+			worldgenCandidates += src
 			src.color = src.stone_color
 		else
 			SPAWN(1)
@@ -1431,6 +1435,115 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+
+/turf/unsimulated/floor/plating/asteroid
+	name = "asteroid"
+	icon = 'icons/turf/walls/asteroid.dmi'
+	icon_state = "astfloor1"
+	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+	default_material = null
+	var/sprite_variation = 1
+	var/stone_color = "#D1E6FF"
+	var/image/coloration_overlay = null
+	var/list/space_overlays = null
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
+
+#ifdef UNDERWATER_MAP
+	fullbright = 0
+	luminosity = 3
+#else
+	luminosity = 1
+#endif
+
+	New()
+		..()
+		src.space_overlays = list()
+		src.name = initial(src.name)
+		src.sprite_variation = rand(1,3)
+		icon_state = "astfloor" + "[sprite_variation]"
+		coloration_overlay = image(src.icon,"color_overlay")
+		coloration_overlay.blend_mode = 4
+		UpdateIcon()
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(1)
+				if(istype(src, /turf/unsimulated/floor/plating/asteroid))
+					space_overlays()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
+
+	ex_act(severity)
+		return
+
+	proc/destroy_asteroid()
+		return
+
+	proc/damage_asteroid(var/power)
+		return
+
+	proc/weaken_asteroid()
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tile/))
+			var/obj/item/tile/tile = W
+			tile.build(src)
+
+	update_icon()
+		. = ..()
+
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
+
+		src.ClearAllOverlays()
+		src.color = src.stone_color
+		#ifndef UNDERWATER_MAP
+		if (fullbright)
+			src.AddOverlays(new /image/fullbright, "fullbright")
+		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
+
+	proc/space_overlays() //For overlays ON THE SPACE TILE
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			edge_overlay.color = src.stone_color
+			A.AddOverlays(edge_overlay, "ast_edge_[dir_from]")
+			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
+
+
 TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid
@@ -1480,11 +1593,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
 		UpdateIcon()
-		worldgenCandidates += src
 		if(current_state > GAME_STATE_PREGAME)
 			SPAWN(1)
 				if(istype(src, /turf/simulated/floor/plating/airless/asteroid))
 					space_overlays()
+		else
+			worldgenCandidates += src
 
 	generate_worldgen()
 		. = ..()
@@ -1671,7 +1785,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 		if(src.default_cell)
 			AddComponent(/datum/component/cell_holder, new default_cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down_callback))
 		src.setItemSpecial(unpowered_item_special)
 		src.power_up()
 
@@ -1768,6 +1882,9 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		playsound(user, 'sound/items/miningtool_on.ogg', 30, 1)
 		src.setItemSpecial(src.powered_item_special)
 		return
+
+	proc/power_down_callback(obj/item/mining_tool/powered/tool, obj/item/ammo/power_cell/cell, mob/user)
+		src.power_down(user)
 
 	proc/power_down(var/mob/user = null)
 		ON_COOLDOWN(src, "depowered", 1 SECOND)
@@ -1869,8 +1986,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
-	mats = list("MET-2"=15, "CON-1"=8, "claretine"=10, "koshmarite"=2 )
-
+	mats = list("metal_dense" = 15,
+				"conductive" = 8,
+				"claretine" = 10,
+				"koshmarite" = 2)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"
@@ -2002,7 +2121,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 									qdel(target)
 							qdel(src)
 							return
-					else if (src.hacked) ..()
+					else if (src.hacked)
+						var/turf/T = get_turf(target)
+						if(!IS_ARRIVALS(T.loc))
+							..()
 					else boutput(user, SPAN_ALERT("These will only work on asteroids."))
 			return
 

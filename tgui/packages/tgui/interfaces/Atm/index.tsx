@@ -51,13 +51,13 @@ export const Atm = (_, context) => {
                 icon="money-bills"
                 selected={tabIndex === AtmTabKeys.Teller}
                 onClick={() => setTabIndex(AtmTabKeys.Teller)}>
-                {`ATM`}
+                ATM
               </Tabs.Tab>
               <Tabs.Tab
                 icon="coins"
                 selected={tabIndex === AtmTabKeys.Spacebux}
                 onClick={() => setTabIndex(AtmTabKeys.Spacebux)}>
-                {`Spacebux`}
+                Spacebux
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
@@ -82,10 +82,10 @@ const Teller = (_, context) => {
         <Section title="Automatic Teller Machine">
           <Stack vertical fill>
             <Stack.Item>
-              {!scannedCard && <NoticeBox info>{`Please swipe card and enter PIN to access your account.`}</NoticeBox>}
+              {!scannedCard && <NoticeBox info>Please swipe card and enter PIN to access your account.</NoticeBox>}
               <Button
                 icon="id-card"
-                content={scannedCard ? scannedCard : `Swipe ID`}
+                content={scannedCard ? scannedCard : 'Swipe ID'}
                 onClick={scannedCard ? () => act('logout') : () => act('insert_card')}
               />
               {message.text && message.position === 'splash' && (
@@ -105,7 +105,7 @@ const Teller = (_, context) => {
                     </Stack.Item>
                     <Stack.Item>
                       <Divider />
-                      <Button icon="money-bill" content={'Withdraw cash'} onClick={() => act('withdraw_cash')} />
+                      <Button icon="money-bill" content="Withdraw cash" onClick={() => act('withdraw_cash')} />
                       {message.text && message.position === 'atm' && (
                         <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
                       )}
@@ -129,9 +129,9 @@ const Teller = (_, context) => {
       <Stack.Item>
         {loggedIn === LoggedInStates.LoggedIn && (
           <Section title="Lottery">
-            <NoticeBox info>{`To claim your winnings, you must insert your lottery ticket.`}</NoticeBox>
+            <NoticeBox info>To claim your winnings, you must insert your lottery ticket.</NoticeBox>
             <Divider />
-            <Button icon="ticket-alt" content={'Purchase Lottery Ticket (100⪽)'} onClick={() => act('buy')} />
+            <Button icon="ticket-alt" content="Purchase Lottery Ticket (100⪽)" onClick={() => act('buy')} />
             {message.text && message.position === 'lottery' && (
               <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
             )}
@@ -146,11 +146,11 @@ const SpacebuxMenu = (_, context) => {
   const { act, data } = useBackend<AtmData>(context);
   const { clientKey, spacebuxBalance } = data;
   return (
-    <Section title={clientKey + "'s Spacebux Menu"}>
+    <Section title={`${clientKey}'s Spacebux Menu`}>
       <Stack vertical fill>
         <Stack.Item>
           <NoticeBox info>
-            {`This menu is only visible to you. Deposit Spacebux into your account by inserting a token.`}
+            This menu is only visible to you. Deposit Spacebux into your account by inserting a token.
           </NoticeBox>
           <Divider />
         </Stack.Item>
@@ -162,10 +162,10 @@ const SpacebuxMenu = (_, context) => {
         </Stack.Item>
         <Stack.Item>
           <Divider />
-          <Button icon="coins" content={'Withdraw Spacebux'} onClick={() => act('withdraw_spacebux')} />
+          <Button icon="coins" content="Withdraw Spacebux" onClick={() => act('withdraw_spacebux')} />
         </Stack.Item>
         <Stack.Item>
-          <Button icon="envelope" content={'Securely send Spacebux'} onClick={() => act('transfer_spacebux')} />
+          <Button icon="envelope" content="Securely send Spacebux" onClick={() => act('transfer_spacebux')} />
         </Stack.Item>
       </Stack>
     </Section>

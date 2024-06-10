@@ -5,11 +5,11 @@
  * @license ISC
  */
 
-import { useBackend } from "../backend";
-import { Box, Button, Dimmer, Image, Input, LabeledControls, Modal, NumberInput, SectionEx, Stack } from '../components';
+import { useBackend, useLocalState, useSharedState } from "../backend";
+import { Box, Button, Dimmer, Image, Input, LabeledControls, Modal, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { capitalize } from './common/stringUtils';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { useLocalState, useSharedState } from "../backend";
 
 const ICON_LIST_PILLS = 0;
 const ICON_LIST_BOTTLES = 1;
@@ -23,9 +23,8 @@ export const ReagentDisplay = (props, context) => {
   const [remove_amount, set_remove_amount] = useSharedState(context, "remove_amount", 10);
 
   return (
-    <SectionEx
-      capitalize
-      title={container.name}
+    <Section
+      title={capitalize(container.name)}
       buttons={
         <>
           <Button
@@ -108,7 +107,7 @@ export const ReagentDisplay = (props, context) => {
         }}
         renderButtonsDeps={remove_amount}
       />
-    </SectionEx>
+    </Section>
   );
 };
 
@@ -136,7 +135,6 @@ export const SelectIconModal = (props, context) => {
       onClick={() => { set_icon(index); }}>
       <Image
         height="32px" width="32px"
-        pixelated
         src={`data:image/png;base64,${icon_list !== ICON_LIST_PILLS ? item[1] : item}`}
         style={{
           'vertical-align': 'middle',
@@ -158,30 +156,21 @@ export const SelectIconModal = (props, context) => {
     >
       {
         icon_list === ICON_LIST_PILLS && (
-          <SectionEx capitalize
-            title="Select pill" buttons={cancel_button} minWidth={10}>
-            {
-              pill_icons.map(button_image)
-            }
-          </SectionEx>)
+          <Section title="Select Pill" buttons={cancel_button} minWidth={10}>
+            {pill_icons.map(button_image)}
+          </Section>)
       }
       {
         icon_list === ICON_LIST_BOTTLES && (
-          <SectionEx capitalize
-            title="Select bottle" buttons={cancel_button} minWidth={12}>
-            {
-              bottle_icons.map(button_image)
-            }
-          </SectionEx>)
+          <Section title="Select Bottle" buttons={cancel_button} minWidth={12}>
+            {bottle_icons.map(button_image)}
+          </Section>)
       }
       {
         icon_list === ICON_LIST_PATCHES && (
-          <SectionEx capitalize
-            title="Select patch" buttons={cancel_button} minWidth={12}>
-            {
-              patch_icons.map(button_image)
-            }
-          </SectionEx>)
+          <Section title="Select Patch" buttons={cancel_button} minWidth={12}>
+            {patch_icons.map(button_image)}
+          </Section>)
       }
     </Modal>
   );
@@ -197,7 +186,6 @@ export const IconButtonControl = (props) => {
         onClick={() => modal_function(true)}>
         <Image
           height="32px" width="32px"
-          pixelated
           src={`data:image/png;base64,${imageb64}`}
           style={{
             'vertical-align': 'middle',
@@ -426,8 +414,7 @@ export const OperationsSection = (props, context) => {
   const margin_bottom = -0.5;
 
   return (
-    <SectionEx
-      capitalize
+    <Section
       title="Operations"
       buttons={
         <Box align="left" as="span">
@@ -438,7 +425,7 @@ export const OperationsSection = (props, context) => {
             onChange={(e, value) => { set_item_name(value); }}
           />
         </Box>
-      } >
+      }>
       <Stack vertical>
         <Stack.Item mb={margin_bottom} height={operation_height}>
           <MakePill max_volume={max_volume} item_name={item_name} />
@@ -456,7 +443,7 @@ export const OperationsSection = (props, context) => {
           <MakePatches item_name={item_name} />
         </Stack.Item>
       </Stack>
-    </SectionEx>
+    </Section>
   );
 };
 

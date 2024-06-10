@@ -2300,6 +2300,15 @@
 	dir = 4
 	},
 /area/listeningpost)
+"aEB" = (
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 1
+	},
+/obj/machinery/space_heater/sauna_stove,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/sauna)
 "aEC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -30449,13 +30458,6 @@
 "jhw" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/hos)
-"jhx" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "jhy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42097,15 +42099,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"mHU" = (
-/obj/machinery/light/small/sticky/warm/very{
-	dir = 1
-	},
-/obj/machinery/sauna_stove,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/sauna)
 "mHZ" = (
 /obj/stool/chair/comfy/red{
 	desc = "The perfect view.";
@@ -65004,6 +64997,16 @@
 	dir = 4
 	},
 /area/station/ranch)
+"tGm" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/announcement/clown{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "tGr" = (
 /obj/machinery/manufacturer/personnel,
 /obj/machinery/light/incandescent/cool{
@@ -119797,7 +119800,7 @@ dXQ
 jYw
 hWo
 vBq
-mHU
+aEB
 vBq
 vBq
 vBq
@@ -155038,7 +155041,7 @@ dlr
 xCR
 xCR
 xCR
-jhx
+tGm
 oAp
 fdq
 ntX

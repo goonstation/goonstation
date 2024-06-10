@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	return src
 
 /obj/item/reagent_containers/food/fish/proc/make_reagents()
-	src.reagents.add_reagent("fishoil",10)
+	src.reagents.add_reagent("fishoil", 20)
 	return
 
 
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 /obj/item/reagent_containers/food/fish/pike
 	name = "pike"
-	desc = "Named after the long and pointy weapon of war, the Pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele."
+	desc = "Named after the long and pointy weapon of war, the pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "pike"
 	inhand_color = "#24d10d"
@@ -663,8 +663,9 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
+
 /obj/item/reagent_containers/food/fish/borgfish
-	name = "Cyborg Fish"
+	name = "cyborg fish"
 	desc = "This must be an experiment from a bored roboticist."
 	icon_state = "borgfish"
 	inhand_color = "#b6b5b5"

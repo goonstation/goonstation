@@ -10,6 +10,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
+	/// indicates if a player is currently barred from joining the game
+	var/blocked_from_joining = FALSE
 
 	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
 
@@ -408,6 +410,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 			var/player_count = 0
 			for (var/client/client in clients)
+				if (!client?.mob) //?????? Byond??? Lummox??? Help??????
+					continue
 				if (!istype(client.mob.loc, /obj/cryotron) && !istype(client.mob, /mob/new_player)) //don't count cryoed or lobby players
 					player_count++
 			for(var/datum/job/staple_job in job_controls.staple_jobs) //we'll just assume only staple jobs have variable limits for now
@@ -465,20 +469,20 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 		return
 
+	/// create a set of latejoin cards for a job
 	proc/LateJoinLink(var/datum/job/J)
-		// This is pretty ugly but: whatever! I don't care.
-		// It likely needs some tweaking but everything does.
 		if (J.no_late_join)
 			return
-		var/limit = J.limit
-		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
-			// Show unavailable jobs, but no joining them
-			limit = 0
 
+		var/limit = J.limit
 		var/c = J.assigned
 		if (limit == 0 && c == 0)
 			// 0 slots, nobody in it, don't show it
 			return
+
+		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
+			// Show unavailable jobs, but no joining them
+			limit = 0
 
 		//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 		if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
@@ -669,12 +673,12 @@ a.latejoin-card:hover {
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
 				for(var/datum/job/special/J in job_controls.special_jobs)
-					if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
-						dat += LateJoinLink(J)
+					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
+					dat += LateJoinLink(J)
 
 				for(var/datum/job/created/J in job_controls.special_jobs)
-					if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
-						dat += LateJoinLink(J)
+					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
+					dat += LateJoinLink(J)
 
 			dat += "</table></div>"
 
@@ -857,6 +861,8 @@ a.latejoin-card:hover {
 
 		if (src.client.has_login_notice_pending(TRUE))
 			return
+		if (src.blocked_from_joining)
+			return
 
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
@@ -877,6 +883,8 @@ a.latejoin-card:hover {
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
+			return
+		if (src.blocked_from_joining)
 			return
 
 		if (ticker)
@@ -939,6 +947,8 @@ a.latejoin-card:hover {
 		set name = ".observe_round"
 
 		if (src.client.has_login_notice_pending(TRUE))
+			return
+		if (src.blocked_from_joining)
 			return
 
 		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
