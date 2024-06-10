@@ -72,7 +72,7 @@ const setup = async () => {
   }
 
   if (process.platform === 'win32') {
-    exec(`start "" "iexplore" "http://127.0.0.1:3002"`);
+    exec(`launch_test.vbs`);
   }
 
   console.log('Waiting for Internet Explorer to respond.');

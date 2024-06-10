@@ -34554,6 +34554,107 @@ exports.EventEmitter = EventEmitter;
 
 /***/ }),
 
+/***/ "./packages/common/fp.js":
+/*!*******************************!*\
+  !*** ./packages/common/fp.js ***!
+  \*******************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.compose = exports.flow = void 0;
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+/**
+ * Creates a function that returns the result of invoking the given
+ * functions, where each successive invocation is supplied the return
+ * value of the previous.
+ */
+var flow = function flow() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  return function (input) {
+    var output = input;
+
+    for (var _len2 = arguments.length, rest = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      rest[_key2 - 1] = arguments[_key2];
+    }
+
+    for (var _iterator = _createForOfIteratorHelperLoose(funcs), _step; !(_step = _iterator()).done;) {
+      var func = _step.value;
+
+      // Recurse into the array of functions
+      if (Array.isArray(func)) {
+        output = flow.apply(void 0, func).apply(void 0, [output].concat(rest));
+      } else if (func) {
+        output = func.apply(void 0, [output].concat(rest));
+      }
+    }
+
+    return output;
+  };
+};
+/**
+ * Composes single-argument functions from right to left.
+ *
+ * All functions might accept a context in form of additional arguments.
+ * If the resulting function is called with more than 1 argument, rest of
+ * the arguments are passed to all functions unchanged.
+ *
+ * @param {...Function} funcs The functions to compose
+ * @returns {Function} A function obtained by composing the argument functions
+ * from right to left. For example, compose(f, g, h) is identical to doing
+ * (input, ...rest) => f(g(h(input, ...rest), ...rest), ...rest)
+ */
+
+
+exports.flow = flow;
+
+var compose = function compose() {
+  for (var _len3 = arguments.length, funcs = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+    funcs[_key3] = arguments[_key3];
+  }
+
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+
+  return funcs.reduce(function (a, b) {
+    return function (value) {
+      for (var _len4 = arguments.length, rest = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+        rest[_key4 - 1] = arguments[_key4];
+      }
+
+      return a.apply(void 0, [b.apply(void 0, [value].concat(rest))].concat(rest));
+    };
+  });
+};
+
+exports.compose = compose;
+
+/***/ }),
+
 /***/ "./packages/common/keycodes.js":
 /*!*************************************!*\
   !*** ./packages/common/keycodes.js ***!
@@ -35101,6 +35202,1028 @@ exports.canRender = canRender;
 
 /***/ }),
 
+/***/ "./packages/common/redux.js":
+/*!**********************************!*\
+  !*** ./packages/common/redux.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.useSelector = exports.useDispatch = exports.createAction = exports.combineReducers = exports.applyMiddleware = exports.createStore = void 0;
+
+var _fp = __webpack_require__(/*! ./fp */ "./packages/common/fp.js");
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/**
+ * Creates a Redux store.
+ */
+var createStore = function createStore(reducer, enhancer) {
+  // Apply a store enhancer (applyMiddleware is one of them).
+  if (enhancer) {
+    return enhancer(createStore)(reducer);
+  }
+
+  var currentState;
+  var listeners = [];
+
+  var getState = function getState() {
+    return currentState;
+  };
+
+  var subscribe = function subscribe(listener) {
+    listeners.push(listener);
+  };
+
+  var dispatch = function dispatch(action) {
+    currentState = reducer(currentState, action);
+
+    for (var i = 0; i < listeners.length; i++) {
+      listeners[i]();
+    }
+  }; // This creates the initial store by causing each reducer to be called
+  // with an undefined state
+
+
+  dispatch({
+    type: '@@INIT'
+  });
+  return {
+    dispatch: dispatch,
+    subscribe: subscribe,
+    getState: getState
+  };
+};
+/**
+ * Creates a store enhancer which applies middleware to all dispatched
+ * actions.
+ */
+
+
+exports.createStore = createStore;
+
+var applyMiddleware = function applyMiddleware() {
+  for (var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++) {
+    middlewares[_key] = arguments[_key];
+  }
+
+  return function (createStore) {
+    return function (reducer) {
+      for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      var store = createStore.apply(void 0, [reducer].concat(args));
+
+      var _dispatch = function dispatch() {
+        throw new Error('Dispatching while constructing your middleware is not allowed.');
+      };
+
+      var storeApi = {
+        getState: store.getState,
+        dispatch: function () {
+          function dispatch(action) {
+            for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+              args[_key3 - 1] = arguments[_key3];
+            }
+
+            return _dispatch.apply(void 0, [action].concat(args));
+          }
+
+          return dispatch;
+        }()
+      };
+      var chain = middlewares.map(function (middleware) {
+        return middleware(storeApi);
+      });
+      _dispatch = _fp.compose.apply(void 0, chain)(store.dispatch);
+      return Object.assign({}, store, {
+        dispatch: _dispatch
+      });
+    };
+  };
+};
+/**
+ * Combines reducers by running them in their own object namespaces as
+ * defined in reducersObj paramter.
+ *
+ * Main difference from redux/combineReducers is that it preserves keys
+ * in the state that are not present in the reducers object. This function
+ * is also more flexible than the redux counterpart.
+ */
+
+
+exports.applyMiddleware = applyMiddleware;
+
+var combineReducers = function combineReducers(reducersObj) {
+  var keys = Object.keys(reducersObj);
+  var hasChanged = false;
+  return function (prevState, action) {
+    if (prevState === void 0) {
+      prevState = {};
+    }
+
+    var nextState = Object.assign({}, prevState);
+
+    for (var _iterator = _createForOfIteratorHelperLoose(keys), _step; !(_step = _iterator()).done;) {
+      var key = _step.value;
+      var reducer = reducersObj[key];
+      var prevDomainState = prevState[key];
+      var nextDomainState = reducer(prevDomainState, action);
+
+      if (prevDomainState !== nextDomainState) {
+        hasChanged = true;
+        nextState[key] = nextDomainState;
+      }
+    }
+
+    return hasChanged ? nextState : prevState;
+  };
+};
+/**
+ * A utility function to create an action creator for the given action
+ * type string. The action creator accepts a single argument, which will
+ * be included in the action object as a field called payload. The action
+ * creator function will also have its toString() overriden so that it
+ * returns the action type, allowing it to be used in reducer logic that
+ * is looking for that action type.
+ *
+ * @param {string} type The action type to use for created actions.
+ * @param {any} prepare (optional) a method that takes any number of arguments
+ * and returns { payload } or { payload, meta }. If this is given, the
+ * resulting action creator will pass it's arguments to this method to
+ * calculate payload & meta.
+ *
+ * @public
+ */
+
+
+exports.combineReducers = combineReducers;
+
+var createAction = function createAction(type, prepare) {
+  if (prepare === void 0) {
+    prepare = null;
+  }
+
+  var actionCreator = function actionCreator() {
+    if (!prepare) {
+      return {
+        type: type,
+        payload: arguments.length <= 0 ? undefined : arguments[0]
+      };
+    }
+
+    var prepared = prepare.apply(void 0, arguments);
+
+    if (!prepared) {
+      throw new Error('prepare function did not return an object');
+    }
+
+    var action = {
+      type: type
+    };
+
+    if ('payload' in prepared) {
+      action.payload = prepared.payload;
+    }
+
+    if ('meta' in prepared) {
+      action.meta = prepared.meta;
+    }
+
+    return action;
+  };
+
+  actionCreator.toString = function () {
+    return '' + type;
+  };
+
+  actionCreator.type = type;
+
+  actionCreator.match = function (action) {
+    return action.type === type;
+  };
+
+  return actionCreator;
+}; // Implementation specific
+// --------------------------------------------------------
+
+
+exports.createAction = createAction;
+
+var useDispatch = function useDispatch(context) {
+  return context.store.dispatch;
+};
+
+exports.useDispatch = useDispatch;
+
+var useSelector = function useSelector(context, selector) {
+  return selector(context.store.getState());
+};
+
+exports.useSelector = useSelector;
+
+/***/ }),
+
+/***/ "./packages/common/storage.js":
+/*!************************************!*\
+  !*** ./packages/common/storage.js ***!
+  \************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.storage = exports.IMPL_INDEXED_DB = exports.IMPL_LOCAL_STORAGE = exports.IMPL_MEMORY = void 0;
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/**
+ * Browser-agnostic abstraction of key-value web storage.
+ *
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var IMPL_MEMORY = 0;
+exports.IMPL_MEMORY = IMPL_MEMORY;
+var IMPL_LOCAL_STORAGE = 1;
+exports.IMPL_LOCAL_STORAGE = IMPL_LOCAL_STORAGE;
+var IMPL_INDEXED_DB = 2;
+exports.IMPL_INDEXED_DB = IMPL_INDEXED_DB;
+var INDEXED_DB_VERSION = 1;
+var INDEXED_DB_NAME = 'tgui';
+var INDEXED_DB_STORE_NAME = 'storage-v1';
+var READ_ONLY = 'readonly';
+var READ_WRITE = 'readwrite';
+
+var testGeneric = function testGeneric(testFn) {
+  return function () {
+    try {
+      return Boolean(testFn());
+    } catch (_unused) {
+      return false;
+    }
+  };
+}; // Localstorage can sometimes throw an error, even if DOM storage is not
+// disabled in IE11 settings.
+// See: https://superuser.com/questions/1080011
+
+
+var testLocalStorage = testGeneric(function () {
+  return window.localStorage && window.localStorage.getItem;
+});
+var testIndexedDb = testGeneric(function () {
+  return (window.indexedDB || window.msIndexedDB) && (window.IDBTransaction || window.msIDBTransaction);
+});
+
+var MemoryBackend = /*#__PURE__*/function () {
+  function MemoryBackend() {
+    this.impl = IMPL_MEMORY;
+    this.store = {};
+  }
+
+  var _proto = MemoryBackend.prototype;
+
+  _proto.get = function () {
+    function get(key) {
+      return this.store[key];
+    }
+
+    return get;
+  }();
+
+  _proto.set = function () {
+    function set(key, value) {
+      this.store[key] = value;
+    }
+
+    return set;
+  }();
+
+  _proto.remove = function () {
+    function remove(key) {
+      this.store[key] = undefined;
+    }
+
+    return remove;
+  }();
+
+  _proto.clear = function () {
+    function clear() {
+      this.store = {};
+    }
+
+    return clear;
+  }();
+
+  return MemoryBackend;
+}();
+
+var LocalStorageBackend = /*#__PURE__*/function () {
+  function LocalStorageBackend() {
+    this.impl = IMPL_LOCAL_STORAGE;
+    this.store = {};
+  }
+
+  var _proto2 = LocalStorageBackend.prototype;
+
+  _proto2.get = function () {
+    function get(key) {
+      var value = localStorage.getItem(key);
+
+      if (typeof value === 'string') {
+        return JSON.parse(value);
+      }
+    }
+
+    return get;
+  }();
+
+  _proto2.set = function () {
+    function set(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    return set;
+  }();
+
+  _proto2.remove = function () {
+    function remove(key) {
+      localStorage.removeItem(key);
+    }
+
+    return remove;
+  }();
+
+  _proto2.clear = function () {
+    function clear() {
+      localStorage.clear();
+    }
+
+    return clear;
+  }();
+
+  return LocalStorageBackend;
+}();
+
+var IndexedDbBackend = /*#__PURE__*/function () {
+  function IndexedDbBackend() {
+    this.impl = IMPL_INDEXED_DB;
+    /** @type {Promise<IDBDatabase>} */
+
+    this.dbPromise = new Promise(function (resolve, reject) {
+      var indexedDB = window.indexedDB || window.msIndexedDB;
+      var req = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
+
+      req.onupgradeneeded = function () {
+        try {
+          req.result.createObjectStore(INDEXED_DB_STORE_NAME);
+        } catch (err) {
+          reject(new Error('Failed to upgrade IDB: ' + req.error));
+        }
+      };
+
+      req.onsuccess = function () {
+        return resolve(req.result);
+      };
+
+      req.onerror = function () {
+        reject(new Error('Failed to open IDB: ' + req.error));
+      };
+    });
+  }
+
+  var _proto3 = IndexedDbBackend.prototype;
+
+  _proto3.getStore = function () {
+    function getStore(mode) {
+      return this.dbPromise.then(function (db) {
+        return db.transaction(INDEXED_DB_STORE_NAME, mode).objectStore(INDEXED_DB_STORE_NAME);
+      });
+    }
+
+    return getStore;
+  }();
+
+  _proto3.get = /*#__PURE__*/function () {
+    var _get = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee(key) {
+        var store;
+        return regeneratorRuntime.wrap(function () {
+          function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return this.getStore(READ_ONLY);
+
+                case 2:
+                  store = _context.sent;
+                  return _context.abrupt("return", new Promise(function (resolve, reject) {
+                    var req = store.get(key);
+
+                    req.onsuccess = function () {
+                      return resolve(req.result);
+                    };
+
+                    req.onerror = function () {
+                      return reject(req.error);
+                    };
+                  }));
+
+                case 4:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }
+
+          return _callee$;
+        }(), _callee, this);
+      }
+
+      return _callee;
+    }()));
+
+    function get(_x) {
+      return _get.apply(this, arguments);
+    }
+
+    return get;
+  }();
+
+  _proto3.set = /*#__PURE__*/function () {
+    var _set = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee2(key, value) {
+        var store;
+        return regeneratorRuntime.wrap(function () {
+          function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  // The reason we don't _save_ null is because IE 10 does
+                  // not support saving the `null` type in IndexedDB. How
+                  // ironic, given the bug below!
+                  // See: https://github.com/mozilla/localForage/issues/161
+                  if (value === null) {
+                    value = undefined;
+                  } // NOTE: We deliberately make this operation transactionless
+
+
+                  _context2.next = 3;
+                  return this.getStore(READ_WRITE);
+
+                case 3:
+                  store = _context2.sent;
+                  store.put(value, key);
+
+                case 5:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }
+
+          return _callee2$;
+        }(), _callee2, this);
+      }
+
+      return _callee2;
+    }()));
+
+    function set(_x2, _x3) {
+      return _set.apply(this, arguments);
+    }
+
+    return set;
+  }();
+
+  _proto3.remove = /*#__PURE__*/function () {
+    var _remove = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee3(key) {
+        var store;
+        return regeneratorRuntime.wrap(function () {
+          function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  _context3.next = 2;
+                  return this.getStore(READ_WRITE);
+
+                case 2:
+                  store = _context3.sent;
+                  store["delete"](key);
+
+                case 4:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }
+
+          return _callee3$;
+        }(), _callee3, this);
+      }
+
+      return _callee3;
+    }()));
+
+    function remove(_x4) {
+      return _remove.apply(this, arguments);
+    }
+
+    return remove;
+  }();
+
+  _proto3.clear = /*#__PURE__*/function () {
+    var _clear = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee4() {
+        var store;
+        return regeneratorRuntime.wrap(function () {
+          function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.next = 2;
+                  return this.getStore(READ_WRITE);
+
+                case 2:
+                  store = _context4.sent;
+                  store.clear();
+
+                case 4:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }
+
+          return _callee4$;
+        }(), _callee4, this);
+      }
+
+      return _callee4;
+    }()));
+
+    function clear() {
+      return _clear.apply(this, arguments);
+    }
+
+    return clear;
+  }();
+
+  return IndexedDbBackend;
+}();
+/**
+ * Web Storage Proxy object, which selects the best backend available
+ * depending on the environment.
+ */
+
+
+var StorageProxy = /*#__PURE__*/function () {
+  function StorageProxy() {
+    this.backendPromise = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee5() {
+        var backend;
+        return regeneratorRuntime.wrap(function () {
+          function _callee5$(_context5) {
+            while (1) {
+              switch (_context5.prev = _context5.next) {
+                case 0:
+                  if (!testIndexedDb()) {
+                    _context5.next = 10;
+                    break;
+                  }
+
+                  _context5.prev = 1;
+                  backend = new IndexedDbBackend();
+                  _context5.next = 5;
+                  return backend.dbPromise;
+
+                case 5:
+                  return _context5.abrupt("return", backend);
+
+                case 8:
+                  _context5.prev = 8;
+                  _context5.t0 = _context5["catch"](1);
+
+                case 10:
+                  if (!testLocalStorage()) {
+                    _context5.next = 12;
+                    break;
+                  }
+
+                  return _context5.abrupt("return", new LocalStorageBackend());
+
+                case 12:
+                  return _context5.abrupt("return", new MemoryBackend());
+
+                case 13:
+                case "end":
+                  return _context5.stop();
+              }
+            }
+          }
+
+          return _callee5$;
+        }(), _callee5, null, [[1, 8]]);
+      }
+
+      return _callee5;
+    }()))();
+  }
+
+  var _proto4 = StorageProxy.prototype;
+
+  _proto4.get = /*#__PURE__*/function () {
+    var _get2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee6(key) {
+        var backend;
+        return regeneratorRuntime.wrap(function () {
+          function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.next = 2;
+                  return this.backendPromise;
+
+                case 2:
+                  backend = _context6.sent;
+                  return _context6.abrupt("return", backend.get(key));
+
+                case 4:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }
+
+          return _callee6$;
+        }(), _callee6, this);
+      }
+
+      return _callee6;
+    }()));
+
+    function get(_x5) {
+      return _get2.apply(this, arguments);
+    }
+
+    return get;
+  }();
+
+  _proto4.set = /*#__PURE__*/function () {
+    var _set2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee7(key, value) {
+        var backend;
+        return regeneratorRuntime.wrap(function () {
+          function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                  _context7.next = 2;
+                  return this.backendPromise;
+
+                case 2:
+                  backend = _context7.sent;
+                  return _context7.abrupt("return", backend.set(key, value));
+
+                case 4:
+                case "end":
+                  return _context7.stop();
+              }
+            }
+          }
+
+          return _callee7$;
+        }(), _callee7, this);
+      }
+
+      return _callee7;
+    }()));
+
+    function set(_x6, _x7) {
+      return _set2.apply(this, arguments);
+    }
+
+    return set;
+  }();
+
+  _proto4.remove = /*#__PURE__*/function () {
+    var _remove2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee8(key) {
+        var backend;
+        return regeneratorRuntime.wrap(function () {
+          function _callee8$(_context8) {
+            while (1) {
+              switch (_context8.prev = _context8.next) {
+                case 0:
+                  _context8.next = 2;
+                  return this.backendPromise;
+
+                case 2:
+                  backend = _context8.sent;
+                  return _context8.abrupt("return", backend.remove(key));
+
+                case 4:
+                case "end":
+                  return _context8.stop();
+              }
+            }
+          }
+
+          return _callee8$;
+        }(), _callee8, this);
+      }
+
+      return _callee8;
+    }()));
+
+    function remove(_x8) {
+      return _remove2.apply(this, arguments);
+    }
+
+    return remove;
+  }();
+
+  _proto4.clear = /*#__PURE__*/function () {
+    var _clear2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+      function _callee9() {
+        var backend;
+        return regeneratorRuntime.wrap(function () {
+          function _callee9$(_context9) {
+            while (1) {
+              switch (_context9.prev = _context9.next) {
+                case 0:
+                  _context9.next = 2;
+                  return this.backendPromise;
+
+                case 2:
+                  backend = _context9.sent;
+                  return _context9.abrupt("return", backend.clear());
+
+                case 4:
+                case "end":
+                  return _context9.stop();
+              }
+            }
+          }
+
+          return _callee9$;
+        }(), _callee9, this);
+      }
+
+      return _callee9;
+    }()));
+
+    function clear() {
+      return _clear2.apply(this, arguments);
+    }
+
+    return clear;
+  }();
+
+  return StorageProxy;
+}();
+
+var storage = new StorageProxy();
+exports.storage = storage;
+
+/***/ }),
+
+/***/ "./packages/common/string.js":
+/*!***********************************!*\
+  !*** ./packages/common/string.js ***!
+  \***********************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.buildQueryString = exports.decodeHtmlEntities = exports.toTitleCase = exports.capitalize = exports.createSearch = exports.createGlobPattern = exports.multiline = void 0;
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+/**
+ * Removes excess whitespace and indentation from the string.
+ */
+var multiline = function multiline(str) {
+  if (Array.isArray(str)) {
+    // Small stub to allow usage as a template tag
+    return multiline(str.join(''));
+  }
+
+  var lines = str.split('\n'); // Determine base indentation
+
+  var minIndent;
+
+  for (var _iterator = _createForOfIteratorHelperLoose(lines), _step; !(_step = _iterator()).done;) {
+    var line = _step.value;
+
+    for (var indent = 0; indent < line.length; indent++) {
+      var _char = line[indent];
+
+      if (_char !== ' ') {
+        if (minIndent === undefined || indent < minIndent) {
+          minIndent = indent;
+        }
+
+        break;
+      }
+    }
+  }
+
+  if (!minIndent) {
+    minIndent = 0;
+  } // Remove this base indentation and trim the resulting string
+  // from both ends.
+
+
+  return lines.map(function (line) {
+    return line.substr(minIndent).trimRight();
+  }).join('\n').trim();
+};
+/**
+ * Creates a glob pattern matcher.
+ *
+ * Matches strings with wildcards.
+ *
+ * Example: createGlobPattern('*@domain')('user@domain') === true
+ */
+
+
+exports.multiline = multiline;
+
+var createGlobPattern = function createGlobPattern(pattern) {
+  var escapeString = function escapeString(str) {
+    return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+  };
+
+  var regex = new RegExp('^' + pattern.split(/\*+/).map(escapeString).join('.*') + '$');
+  return function (str) {
+    return regex.test(str);
+  };
+};
+/**
+ * Creates a search terms matcher.
+ *
+ * Returns true if given string matches the search text.
+ *
+ * @template T
+ * @param {string} searchText
+ * @param {(obj: T) => string} stringifier
+ * @returns {(obj: T) => boolean}
+ */
+
+
+exports.createGlobPattern = createGlobPattern;
+
+var createSearch = function createSearch(searchText, stringifier) {
+  var preparedSearchText = searchText.toLowerCase().trim();
+  return function (obj) {
+    if (!preparedSearchText) {
+      return true;
+    }
+
+    var str = stringifier ? stringifier(obj) : obj;
+
+    if (!str) {
+      return false;
+    }
+
+    return str.toLowerCase().includes(preparedSearchText);
+  };
+};
+
+exports.createSearch = createSearch;
+
+var capitalize = function capitalize(str) {
+  // Handle array
+  if (Array.isArray(str)) {
+    return str.map(capitalize);
+  } // Handle string
+
+
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+exports.capitalize = capitalize;
+
+var toTitleCase = function toTitleCase(str) {
+  // Handle array
+  if (Array.isArray(str)) {
+    return str.map(toTitleCase);
+  } // Pass non-string
+
+
+  if (typeof str !== 'string') {
+    return str;
+  } // Handle string
+
+
+  var WORDS_UPPER = ['Id', 'Tv'];
+  var WORDS_LOWER = ['A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In', 'Into', 'Near', 'Nor', 'Of', 'On', 'Onto', 'Or', 'The', 'To', 'With'];
+  var currentStr = str.replace(/([^\W_]+[^\s-]*) */g, function (str) {
+    return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
+  });
+
+  for (var _i = 0, _WORDS_LOWER = WORDS_LOWER; _i < _WORDS_LOWER.length; _i++) {
+    var word = _WORDS_LOWER[_i];
+    var regex = new RegExp('\\s' + word + '\\s', 'g');
+    currentStr = currentStr.replace(regex, function (str) {
+      return str.toLowerCase();
+    });
+  }
+
+  for (var _i2 = 0, _WORDS_UPPER = WORDS_UPPER; _i2 < _WORDS_UPPER.length; _i2++) {
+    var _word = _WORDS_UPPER[_i2];
+
+    var _regex = new RegExp('\\b' + _word + '\\b', 'g');
+
+    currentStr = currentStr.replace(_regex, function (str) {
+      return str.toLowerCase();
+    });
+  }
+
+  return currentStr;
+};
+/**
+ * Decodes HTML entities, and removes unnecessary HTML tags.
+ *
+ * @param  {String} str Encoded HTML string
+ * @return {String} Decoded HTML string
+ */
+
+
+exports.toTitleCase = toTitleCase;
+
+var decodeHtmlEntities = function decodeHtmlEntities(str) {
+  if (!str) {
+    return str;
+  }
+
+  var translate_re = /&(nbsp|amp|quot|lt|gt|apos);/g;
+  var translate = {
+    nbsp: ' ',
+    amp: '&',
+    quot: '"',
+    lt: '<',
+    gt: '>',
+    apos: '\''
+  };
+  return str // Newline tags
+  .replace(/<br>/gi, '\n').replace(/<\/?[a-z0-9-_]+[^>]*>/gi, '') // Basic entities
+  .replace(translate_re, function (match, entity) {
+    return translate[entity];
+  }) // Decimal entities
+  .replace(/&#?([0-9]+);/gi, function (match, numStr) {
+    var num = parseInt(numStr, 10);
+    return String.fromCharCode(num);
+  }) // Hex entities
+  .replace(/&#x?([0-9a-f]+);/gi, function (match, numStr) {
+    var num = parseInt(numStr, 16);
+    return String.fromCharCode(num);
+  });
+};
+/**
+ * Converts an object into a query string,
+ */
+
+
+exports.decodeHtmlEntities = decodeHtmlEntities;
+
+var buildQueryString = function buildQueryString(obj) {
+  return Object.keys(obj).map(function (key) {
+    return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
+  }).join('&');
+};
+
+exports.buildQueryString = buildQueryString;
+
+/***/ }),
+
 /***/ "./packages/common/timer.js":
 /*!**********************************!*\
   !*** ./packages/common/timer.js ***!
@@ -35169,6 +36292,110 @@ var sleep = function sleep(time) {
 };
 
 exports.sleep = sleep;
+
+/***/ }),
+
+/***/ "./packages/common/vector.ts":
+/*!***********************************!*\
+  !*** ./packages/common/vector.ts ***!
+  \***********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.vecNormalize = exports.vecLength = exports.vecInverse = exports.vecScale = exports.vecDivide = exports.vecMultiply = exports.vecSubtract = exports.vecAdd = void 0;
+
+var _collections = __webpack_require__(/*! ./collections */ "./packages/common/collections.ts");
+
+/**
+ * N-dimensional vector manipulation functions.
+ *
+ * Vectors are plain number arrays, i.e. [x, y, z].
+ *
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var ADD = function ADD(a, b) {
+  return a + b;
+};
+
+var SUB = function SUB(a, b) {
+  return a - b;
+};
+
+var MUL = function MUL(a, b) {
+  return a * b;
+};
+
+var DIV = function DIV(a, b) {
+  return a / b;
+};
+
+var vecAdd = function vecAdd() {
+  return (0, _collections.map)(_collections.zip.apply(void 0, arguments), function (x) {
+    return (0, _collections.reduce)(x, ADD);
+  });
+};
+
+exports.vecAdd = vecAdd;
+
+var vecSubtract = function vecSubtract() {
+  return (0, _collections.map)(_collections.zip.apply(void 0, arguments), function (x) {
+    return (0, _collections.reduce)(x, SUB);
+  });
+};
+
+exports.vecSubtract = vecSubtract;
+
+var vecMultiply = function vecMultiply() {
+  return (0, _collections.map)(_collections.zip.apply(void 0, arguments), function (x) {
+    return (0, _collections.reduce)(x, MUL);
+  });
+};
+
+exports.vecMultiply = vecMultiply;
+
+var vecDivide = function vecDivide() {
+  return (0, _collections.map)(_collections.zip.apply(void 0, arguments), function (x) {
+    return (0, _collections.reduce)(x, DIV);
+  });
+};
+
+exports.vecDivide = vecDivide;
+
+var vecScale = function vecScale(vec, n) {
+  return (0, _collections.map)(vec, function (x) {
+    return x * n;
+  });
+};
+
+exports.vecScale = vecScale;
+
+var vecInverse = function vecInverse(vec) {
+  return (0, _collections.map)(vec, function (x) {
+    return -x;
+  });
+};
+
+exports.vecInverse = vecInverse;
+
+var vecLength = function vecLength(vec) {
+  return Math.sqrt((0, _collections.reduce)(vecMultiply(vec, vec), ADD));
+};
+
+exports.vecLength = vecLength;
+
+var vecNormalize = function vecNormalize(vec) {
+  var length = vecLength(vec);
+  return (0, _collections.map)(vec, function (c) {
+    return c / length;
+  });
+};
+
+exports.vecNormalize = vecNormalize;
 
 /***/ }),
 
@@ -38068,194 +39295,9 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ "./packages/tgui-bench/tests/Button.test.tsx":
-/*!***************************************************!*\
-  !*** ./packages/tgui-bench/tests/Button.test.tsx ***!
-  \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.ListOfButtonsWithTooltips = exports.ListOfButtonsWithIcons = exports.ListOfButtonsWithLinkEvent = exports.ListOfButtonsWithCallback = exports.ListOfButtons = exports.SingleButtonWithLinkEvent = exports.SingleButtonWithCallback = exports.SingleButton = void 0;
-
-var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
-
-var _components = __webpack_require__(/*! tgui/components */ "./packages/tgui/components/index.js");
-
-var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
-
-var render = (0, _renderer.createRenderer)();
-
-var handleClick = function handleClick() {
-  return undefined;
-};
-
-var SingleButton = function SingleButton() {
-  var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-    children: "Hello world!"
-  });
-  render(node);
-};
-
-exports.SingleButton = SingleButton;
-
-var SingleButtonWithCallback = function SingleButtonWithCallback() {
-  var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-    "onClick": function () {
-      function onClick() {
-        return undefined;
-      }
-
-      return onClick;
-    }(),
-    children: "Hello world!"
-  });
-  render(node);
-};
-
-exports.SingleButtonWithCallback = SingleButtonWithCallback;
-
-var SingleButtonWithLinkEvent = function SingleButtonWithLinkEvent() {
-  var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-    "onClick": (0, _inferno.linkEvent)(null, handleClick),
-    children: "Hello world!"
-  });
-  render(node);
-};
-
-exports.SingleButtonWithLinkEvent = SingleButtonWithLinkEvent;
-
-var ListOfButtons = function ListOfButtons() {
-  var nodes = [];
-
-  for (var i = 0; i < 100; i++) {
-    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-      children: ["Hello world! ", i]
-    }, i);
-    nodes.push(node);
-  }
-
-  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
-};
-
-exports.ListOfButtons = ListOfButtons;
-
-var ListOfButtonsWithCallback = function ListOfButtonsWithCallback() {
-  var nodes = [];
-
-  for (var i = 0; i < 100; i++) {
-    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-      "onClick": function () {
-        function onClick() {
-          return undefined;
-        }
-
-        return onClick;
-      }(),
-      children: ["Hello world! ", i]
-    }, i);
-    nodes.push(node);
-  }
-
-  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
-};
-
-exports.ListOfButtonsWithCallback = ListOfButtonsWithCallback;
-
-var ListOfButtonsWithLinkEvent = function ListOfButtonsWithLinkEvent() {
-  var nodes = [];
-
-  for (var i = 0; i < 100; i++) {
-    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-      "onClick": (0, _inferno.linkEvent)(null, handleClick),
-      children: ["Hello world! ", i]
-    }, i);
-    nodes.push(node);
-  }
-
-  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
-};
-
-exports.ListOfButtonsWithLinkEvent = ListOfButtonsWithLinkEvent;
-
-var ListOfButtonsWithIcons = function ListOfButtonsWithIcons() {
-  var nodes = [];
-
-  for (var i = 0; i < 100; i++) {
-    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-      "icon": 'arrow-left',
-      children: ["Hello world! ", i]
-    }, i);
-    nodes.push(node);
-  }
-
-  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
-};
-
-exports.ListOfButtonsWithIcons = ListOfButtonsWithIcons;
-
-var ListOfButtonsWithTooltips = function ListOfButtonsWithTooltips() {
-  var nodes = [];
-
-  for (var i = 0; i < 100; i++) {
-    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
-      "tooltip": 'Hello world!',
-      children: ["Hello world! ", i]
-    }, i);
-    nodes.push(node);
-  }
-
-  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
-};
-
-exports.ListOfButtonsWithTooltips = ListOfButtonsWithTooltips;
-
-/***/ }),
-
-/***/ "./packages/tgui-bench/tests/Flex.test.tsx":
-/*!*************************************************!*\
-  !*** ./packages/tgui-bench/tests/Flex.test.tsx ***!
-  \*************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.Default = void 0;
-
-var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
-
-var _components = __webpack_require__(/*! tgui/components */ "./packages/tgui/components/index.js");
-
-var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
-
-var render = (0, _renderer.createRenderer)();
-
-var Default = function Default() {
-  var node = (0, _inferno.createComponentVNode)(2, _components.Flex, {
-    "align": "baseline",
-    children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-      "mr": 1,
-      children: ["Text ", Math.random()]
-    }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-      "grow": 1,
-      "basis": 0,
-      children: ["Text ", Math.random()]
-    })]
-  });
-  render(node);
-};
-
-exports.Default = Default;
-
-/***/ }),
-
-/***/ "./packages/tgui-bench/tests/Stack.test.tsx":
+/***/ "./packages/tgui-bench/tests/Image.test.tsx":
 /*!**************************************************!*\
-  !*** ./packages/tgui-bench/tests/Stack.test.tsx ***!
+  !*** ./packages/tgui-bench/tests/Image.test.tsx ***!
   \**************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -38263,7 +39305,7 @@ exports.Default = Default;
 
 
 exports.__esModule = true;
-exports.Default = void 0;
+exports.WithPath = exports.withPath = exports.WithBase64 = exports.withBase64 = exports.Default = exports.empty = void 0;
 
 var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
 
@@ -38271,23 +39313,87 @@ var _components = __webpack_require__(/*! tgui/components */ "./packages/tgui/co
 
 var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
 
-var render = (0, _renderer.createRenderer)();
+var _backend = __webpack_require__(/*! tgui/backend */ "./packages/tgui/backend.ts");
+
+var _store = __webpack_require__(/*! tgui/store */ "./packages/tgui/store.js");
+
+var store = (0, _store.configureStore)({
+  sideEffets: false
+});
+var renderUi = (0, _renderer.createRenderer)(function (dataJson) {
+  store.dispatch((0, _backend.backendUpdate)({
+    data: Byond.parseJson(dataJson)
+  }));
+  return (0, _inferno.createComponentVNode)(2, _store.StoreProvider, {
+    "store": store,
+    children: (0, _inferno.createComponentVNode)(2, _components.Image, {
+      "src": dataJson["img"],
+      "width": "100%",
+      "height": "100%"
+    })
+  });
+}); // im not sorry
+
+var base_64_image_as_a_var_fuck = "iVBORw0KGgoAAAANSUhEUgAAAB8AAAAgCAYAAADqgqNBAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwA\
+ADsMAAA7DAcdvqGQAAAsgSURBVFhHxZd5e5Tl2YfnA1TrgpA9k2Qy2SaThSSTyTpZICH7vm8mQxJCAmYTAgTRUJYiILig1QIWQdqq1YPFaqu21S5YFaW2Hvi+tbYVtVhQlEVMMmd\
+/9/Rtv8L7x3k888w8931d1+9a7mcso51VeFurWdXTwMbBRtYNtjDVV8X6zizS7Gl+MqJuYLA4gFrXrbTlZ5EdF01Nup36zBBSIkMoS7qF0uRI8uKt5MTcSnRwFCm2FNzxbgYrvPS\
+WdlOVnsqe7mJ2teRzaKScAyvLsHx3/Hamh9qZ7q/n3jtamRlpo6fag7cwmNW1q/3UpNzAvs4gqt3LyHXksrFjI9Pt05RllNFZ3ElkYCSTjZP+Zx1WB0OVQ/9lomGC8YZxSlKTeah\
+3GbvbC3jEW8TTo24sO6dWsH2sm13jHaxsLqFrmYvaTCsTJQH/NT5ceCMfPBRKV1EtcWFxbGzf6DfWV9pHbXat3yHjzPJly/0O/cewuW8rbKNrSReFibFsb/ZwYKiUF6dc/GQ0Dcv\
+2jkrubixhpCyH/CSbpAtgVIaf9AbQtzSRiuwEjm1bCL8J49DGm+kqrOCujrvwlsWzqq2VwS4nI20NDLdVMdiTqu/aKM1LozTHyWB9DN6lTqXtRooSktlc5eKpkSQO9ztZVRyDZVN\
+5AeuWZFOV5qTYFUN7YYxyE87F5+zwbiR8aIUrUfBpOHwcy0/vjqK/PJurfyyC+RngIfED8Ak2i7vE3XC9Ay7l8M3rCRwcCKY/L4z7WkPZ2RAte06iAm/DslaGV+ZnUJKdwURnAS/\
+vruLvT5Yz/0Y+fJ2jDeK1mUObJ8L5TLhYAn8ohC+9+v4D8bn4SvxVPCEOiG1iAmYb5biHT046ObU1nB2tIYwX26hKjMIaIOMTngyWe9x0NFazabSDH363lyt/GIBry7VBtfAIRWn\
+4vAAul8qRSd3fJy4In7gu3hYHxQ/FvWKdlKnTtRjfuQLe3eNkd0cIM9URFMQFEB0SiGW0wEV3cR49bfXMTPSwZVUl7x+t134mMnlOnqiVCtroBRk/o6i/vkffnRFXhDF+VTwq1gp\
+FfW0S30ed+M7r2fkifH/08JeDLu7vC+cHA2F4C4LIVW1ZanMyqSkrpbmukrH+RnaOVfHWgSb4RMZ9XUIy0yoJm/C9U87cC0rHdWPkCzEnjOzGiZfEnaJfgnQx++sKfGfk7KVcPj7\
+i5v1HcvnkgJN/PGrlR6MhTFaHYKnIy6HQ46G1Zgn3T3fxzpEBLp+W5BcHZVgb+aU3KvQpinb4rEVXk9MPxTVxXlwWJu8vas2QrvcL84w+X83nq5M5XH+5EN97ufCRnS9PhnFsIgh\
+Lcbab8pKl9HW2sHnNSvbdM8LvDg5zzeT9m05t0P3vTRgTa2RLTl3eos/Pi1fFj8Uz4i0ZltE5s+YxsV/3qvrZZVqzRGsqdV8moVK5eDiUQysWYSlanExVSRF7NtzOqwdHOXVkkjf\
+293L1pQ7mzxVrE0mOKTATyT5xTEF+X1dj1EhtCm+9kDIoXf52uyj+IcxzxvFpsUqodv7q4cIjEbw5I9kb0xzUZaUz3FrGj3cM8Ny9PfxiaxFXn5JEnyu/qF/9i01PG4M/UgSmqt8\
+UXws549/YOGnS87gwbXdJbBU7hFTwzwPVxLyU/LSKM0+kYBnJSaYvy0l3vp3d/WmcebCULx934Xs9Sb3slowNWrRamOFxWJwSppWMtCY6Y8w4aNrKtKcxot9835MhFSx7xFFh1po\
+AlArtd+n1NizbahJZtTSSqZpwjk9Gcm6fk4v74+B3MfC3VFWukd7kcVS8IkxUppdNxZv2WilqRLkMinnz3ANio+6N8Z3iWbFbbBBPKqDNnD3ai2Uy30lLWjSV6aHs6gzntY02Ljw\
+WDT+JwPeiTdXp0oIqYaIy8p38P4wSvcIYMJhppra8ZOQ3Bk1qjDFTE0qVvwOMCq/g+2Inrzy4HEtfeiz1yVadZIHs81r90X91OArf02FceSSQa8dS1NcVWmQMfEccFyb3JnJVPuo\
+Kf7FJ+lkpMGcMmmdeE0ahQ+KIMGnS/dxjXHt1iFN767AMZtjxZkZI+lC2tmnwty/k9EwgVx4N4INtC3hvewTzZ430ZtqZwtokTAGa3JlK7hFmHtwujDpm+pkiNBiDJ8RPhTl4FP2\
+nY3x2tJIP91diGcuMY6ogiumyCDbUh/NgfyxvbUvgn/eHcGbTAs7tDdJsNsZNhCZS9TpTQrPbHB5+RUzkpghN3xtMLZhC/JX4vXhOquzn+kcbOH+8lXe/V8PbjzbpVHM7mPZEs7b\
+Yyp2NCexbncsz6zP57ZZUXpwM5PxjOk4vqD/nVmgTE6kKyV9848IoYRwyxXRa/F38WpgoTYWb4vxIaw/y1elB3ny4iJn2eHYuT2PHQAaW8cwk1mbHs85j07xNZMdgNt8fz+PAaAZ\
+7e8M4cyiFa79Qwf3TTDoz2UyhGScMRmqThl+Ks+JloWr2O2PqQve+E8x/Os3PtxT45/lD7SGsL7EyWh6J5Y6sFMYy49mglwhvXjQjdU4eGM7m6LpcNnfY6FkWz59PtHD5LU2v2WF\
+taPjP0DGfjTNm4Jjj9R1h5DYVbvpaCnwxwTdvdLF/pZ0+zwK2VkTwQIONfc12LEPuZFZmORjLtbM8K4rOomim6uJZW2WjKTeU9W1J/Gx3GR9r3M6+r7P8ax0s/klmjJv2MSPX9P8\
+bwuT7KfX6w5Jak21Wjp3r5JPHC3i4L4Te7EWMu7V/sZ3RfEU+kJHEQFYyI5J+dbaN1TkRTOVHMJwVSm+RlTUt5h2tmO8MlvLcJg//e0IpmNXp5j9wTP5N75soVWTzD3D57TEu/Gy\
+IudNdXH6+lM+e1ovEfens6bEyWLCIkTQ7PcnRdOhV29KVHIfXpRGbGk+PfvAutrFKQ2fabWebXvIa9Xu9J50ty7NpXprG63s17/9HI/e6itA44BvEd2mU2bPq+/NTzP2qievPlnD\
+hsJtT29N56Z7FvHuvg616herLD2RFZhR9i2PpTY/HUhkRTEdqAj2i3RlDlxhIUftlx3CHDI+KDR5dyxLpr05j/7ibL05K/rPLuPZaJr6/ZPHxU8W894Tefv6ktnuplLnjufz54Sy\
+eXZ/G02uS1b527mkKoicrkO60MJocEbQl6+11SegiKqLCJEO8n86kOHqE1xnLiqRYVqfGsavMSBXHcI2T6vxkpjtSeWFTMsfutHHuSCLH16fw/Ew2HzxTxvt7U/jTrkSOTTmY6XS\
+wWrXTkBlAb85tTC4JozMjktpEG3XOaCxZC28id9HNlMuB1hQHzc442hR9R2IM3Q67usDuT4M31UaHO4r8uCiyEuVsbpAOo0BOrAljuNzKUKmVu9ti2FQfzH3tAWxvDGS8IlxSh+B\
+1BzGYE85UmZU2l50a7V8rdS3pC27EteDb5Nx2E0sjQ2lITqA5VU4kxdOdamfcY6dT/zYmc210JdiosVlZGh1EozNQFRvMwb5gVnnC6XeF0pESRJdLRVW4kIml+sejv1y9GeF406P\
+pkdG2xRF6f7dRuziBGr1HWFJuuYGUW28kTbgW3kyRNZgaGW5OT2IwL54WUwvJsQypUFr0B7EuJpJyu5x0hDKWb/4EhDHoCmeFK4zbF4fohAyhKT2AhpRgWlO1RulqVUB1irbCEU2\
+rS/fuePJsepNx3PQtHHIg6WY5oWv6gpvIjwihUg60uFOoS02kW/O/XimoS5Bccf++1kn+3vQIORBBc0IkLU4VUaqVJhmscIRTIZWqHLHUJMYrx/FUJyVQpbQuUz2VxAWyOOgWLM3\
+Nzfz/0My/AONoC6uFfBRHAAAAAElFTkSuQmCC";
+var empty = JSON.stringify({
+  img: ""
+});
+exports.empty = empty;
 
 var Default = function Default() {
-  var node = (0, _inferno.createComponentVNode)(2, _components.Stack, {
-    "align": "baseline",
-    children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-      children: ["Text ", Math.random()]
-    }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-      "grow": 1,
-      "basis": 0,
-      children: ["Text ", Math.random()]
-    })]
-  });
-  render(node);
+  return renderUi(empty);
 };
 
 exports.Default = Default;
+var withBase64 = JSON.stringify({
+  img: base_64_image_as_a_var_fuck
+});
+exports.withBase64 = withBase64;
+
+var WithBase64 = function WithBase64() {
+  return renderUi(withBase64);
+};
+
+exports.WithBase64 = WithBase64;
+var withPath = JSON.stringify({
+  img: '~obj~item~wirecutters~green-wirecutters-green-2.png'
+});
+exports.withPath = withPath;
+
+var WithPath = function WithPath() {
+  return renderUi(withPath);
+};
+
+exports.WithPath = WithPath;
 
 /***/ }),
 
@@ -40662,6 +41768,469 @@ exports.Default = Default;
 if (!window.Int32Array) {
   window.Int32Array = Array;
 }
+
+/***/ }),
+
+/***/ "./packages/tgui/assets.ts":
+/*!*********************************!*\
+  !*** ./packages/tgui/assets.ts ***!
+  \*********************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.assetMiddleware = exports.resolveAsset = void 0;
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var EXCLUDED_PATTERNS = [/v4shim/i];
+var loadedMappings = {};
+
+var resolveAsset = function resolveAsset(name) {
+  return loadedMappings[name] || name;
+};
+
+exports.resolveAsset = resolveAsset;
+
+var assetMiddleware = function assetMiddleware(store) {
+  return function (next) {
+    return function (action) {
+      var type = action.type,
+          payload = action.payload;
+
+      if (type === 'asset/stylesheet') {
+        Byond.loadCss(payload);
+        return;
+      }
+
+      if (type === 'asset/mappings') {
+        var _loop = function _loop() {
+          var name = _Object$keys[_i];
+
+          // Skip anything that matches excluded patterns
+          if (EXCLUDED_PATTERNS.some(function (regex) {
+            return regex.test(name);
+          })) {
+            return "continue";
+          }
+
+          var url = payload[name];
+          var ext = name.split('.').pop();
+          loadedMappings[name] = url;
+
+          if (ext === 'css') {
+            Byond.loadCss(url);
+          }
+
+          if (ext === 'js') {
+            Byond.loadJs(url);
+          }
+        };
+
+        for (var _i = 0, _Object$keys = Object.keys(payload); _i < _Object$keys.length; _i++) {
+          var _ret = _loop();
+
+          if (_ret === "continue") continue;
+        }
+
+        return;
+      }
+
+      next(action);
+    };
+  };
+};
+
+exports.assetMiddleware = assetMiddleware;
+
+/***/ }),
+
+/***/ "./packages/tgui/backend.ts":
+/*!**********************************!*\
+  !*** ./packages/tgui/backend.ts ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.useSharedState = exports.useLocalState = exports.useBackend = exports.selectBackend = exports.sendAct = exports.sendMessage = exports.backendMiddleware = exports.backendReducer = exports.backendSuspendSuccess = exports.backendSuspendStart = exports.backendSetSharedState = exports.backendUpdate = void 0;
+
+var _perf = __webpack_require__(/*! common/perf */ "./packages/common/perf.js");
+
+var _redux = __webpack_require__(/*! common/redux */ "./packages/common/redux.js");
+
+var _ByondUi = __webpack_require__(/*! ./components/ByondUi */ "./packages/tgui/components/ByondUi.js");
+
+var _drag = __webpack_require__(/*! ./drag */ "./packages/tgui/drag.js");
+
+var _focus = __webpack_require__(/*! ./focus */ "./packages/tgui/focus.js");
+
+var _logging = __webpack_require__(/*! ./logging */ "./packages/tgui/logging.js");
+
+var _renderer = __webpack_require__(/*! ./renderer */ "./packages/tgui/renderer.ts");
+
+var _excluded = ["payload"];
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var logger = (0, _logging.createLogger)('backend');
+var backendUpdate = (0, _redux.createAction)('backend/update');
+exports.backendUpdate = backendUpdate;
+var backendSetSharedState = (0, _redux.createAction)('backend/setSharedState');
+exports.backendSetSharedState = backendSetSharedState;
+var backendSuspendStart = (0, _redux.createAction)('backend/suspendStart');
+exports.backendSuspendStart = backendSuspendStart;
+
+var backendSuspendSuccess = function backendSuspendSuccess() {
+  return {
+    type: 'backend/suspendSuccess',
+    payload: {
+      timestamp: Date.now()
+    }
+  };
+};
+
+exports.backendSuspendSuccess = backendSuspendSuccess;
+var initialState = {
+  config: {},
+  data: {},
+  shared: {},
+  // Start as suspended
+  suspended: Date.now(),
+  suspending: false
+};
+
+var backendReducer = function backendReducer(state, action) {
+  if (state === void 0) {
+    state = initialState;
+  }
+
+  var type = action.type,
+      payload = action.payload;
+
+  if (type === 'backend/update') {
+    // Merge config
+    var config = Object.assign({}, state.config, payload.config); // Merge data
+
+    var data = Object.assign({}, state.data, payload.static_data, payload.data); // Merge shared states
+
+    var shared = Object.assign({}, state.shared);
+
+    if (payload.shared) {
+      for (var _i = 0, _Object$keys = Object.keys(payload.shared); _i < _Object$keys.length; _i++) {
+        var key = _Object$keys[_i];
+        var value = payload.shared[key];
+
+        if (value === '') {
+          shared[key] = undefined;
+        } else {
+          shared[key] = JSON.parse(value);
+        }
+      }
+    } // Return new state
+
+
+    return Object.assign({}, state, {
+      config: config,
+      data: data,
+      shared: shared,
+      suspended: false
+    });
+  }
+
+  if (type === 'backend/setSharedState') {
+    var _Object$assign;
+
+    var _key = payload.key,
+        _nextState = payload.nextState;
+    return Object.assign({}, state, {
+      shared: Object.assign({}, state.shared, (_Object$assign = {}, _Object$assign[_key] = _nextState, _Object$assign))
+    });
+  }
+
+  if (type === 'backend/suspendStart') {
+    return Object.assign({}, state, {
+      suspending: true
+    });
+  }
+
+  if (type === 'backend/suspendSuccess') {
+    var timestamp = payload.timestamp;
+    return Object.assign({}, state, {
+      data: {},
+      shared: {},
+      config: Object.assign({}, state.config, {
+        title: '',
+        status: 1
+      }),
+      suspending: false,
+      suspended: timestamp
+    });
+  }
+
+  return state;
+};
+
+exports.backendReducer = backendReducer;
+
+var backendMiddleware = function backendMiddleware(store) {
+  var fancyState;
+  var suspendInterval;
+  return function (next) {
+    return function (action) {
+      var _selectBackend = selectBackend(store.getState()),
+          suspended = _selectBackend.suspended;
+
+      var type = action.type,
+          payload = action.payload;
+
+      if (type === 'update') {
+        store.dispatch(backendUpdate(payload));
+        return;
+      }
+
+      if (type === 'suspend') {
+        store.dispatch(backendSuspendSuccess());
+        return;
+      }
+
+      if (type === 'ping') {
+        sendMessage({
+          type: 'pingReply'
+        });
+        return;
+      }
+
+      if (type === 'backend/suspendStart' && !suspendInterval) {
+        logger.log("suspending (" + window.__windowId__ + ")"); // Keep sending suspend messages until it succeeds.
+        // It may fail multiple times due to topic rate limiting.
+
+        var suspendFn = function suspendFn() {
+          return sendMessage({
+            type: 'suspend'
+          });
+        };
+
+        suspendFn();
+        suspendInterval = setInterval(suspendFn, 2000);
+      }
+
+      if (type === 'backend/suspendSuccess') {
+        (0, _renderer.suspendRenderer)();
+        clearInterval(suspendInterval);
+        suspendInterval = undefined;
+        Byond.winset(window.__windowId__, {
+          'is-visible': false
+        });
+        (0, _ByondUi.cleanupByondUIs)();
+        setImmediate(function () {
+          if ((0, _focus.hasWindowFocus)()) (0, _focus.focusMap)();
+        });
+      }
+
+      if (type === 'backend/update') {
+        var _payload$config, _payload$config$windo;
+
+        var fancy = (_payload$config = payload.config) == null ? void 0 : (_payload$config$windo = _payload$config.window) == null ? void 0 : _payload$config$windo.fancy; // Initialize fancy state
+
+        if (fancyState === undefined) {
+          fancyState = fancy;
+        } // React to changes in fancy
+        else if (fancyState !== fancy) {
+          logger.log('changing fancy mode to', fancy);
+          fancyState = fancy;
+          Byond.winset(window.__windowId__, {
+            titlebar: !fancy,
+            'can-resize': !fancy
+          });
+        }
+      } // Resume on incoming update
+
+
+      if (type === 'backend/update' && suspended) {
+        // Show the payload
+        logger.log('backend/update', payload); // Signal renderer that we have resumed
+
+        (0, _renderer.resumeRenderer)(); // Setup drag
+
+        (0, _drag.setupDrag)(); // We schedule this for the next tick here because resizing and unhiding
+        // during the same tick will flash with a white background.
+
+        setImmediate(function () {
+          _perf.perf.mark('resume/start'); // Doublecheck if we are not re-suspended.
+
+
+          var _selectBackend2 = selectBackend(store.getState()),
+              suspended = _selectBackend2.suspended;
+
+          if (suspended) {
+            return;
+          }
+
+          Byond.winset(window.__windowId__, {
+            'is-visible': true
+          });
+
+          _perf.perf.mark('resume/finish');
+
+          if (true) {
+            logger.log('visible in', _perf.perf.measure('render/finish', 'resume/finish'));
+          }
+        });
+      }
+
+      return next(action);
+    };
+  };
+};
+/**
+ * Sends a message to /datum/tgui_window.
+ */
+
+
+exports.backendMiddleware = backendMiddleware;
+
+var sendMessage = function sendMessage(message) {
+  if (message === void 0) {
+    message = {};
+  }
+
+  var _message = message,
+      payload = _message.payload,
+      rest = _objectWithoutPropertiesLoose(_message, _excluded);
+
+  var data = Object.assign({
+    // Message identifying header
+    tgui: 1,
+    window_id: window.__windowId__
+  }, rest); // JSON-encode the payload
+
+  if (payload !== null && payload !== undefined) {
+    data.payload = JSON.stringify(payload);
+  }
+
+  Byond.topic(data);
+};
+/**
+ * Sends an action to `ui_act` on `src_object` that this tgui window
+ * is associated with.
+ */
+
+
+exports.sendMessage = sendMessage;
+
+var sendAct = function sendAct(action, payload) {
+  if (payload === void 0) {
+    payload = {};
+  }
+
+  // Validate that payload is an object
+  var isObject = typeof payload === 'object' && payload !== null && !Array.isArray(payload);
+
+  if (!isObject) {
+    logger.error("Payload for act() must be an object, got this:", payload);
+    return;
+  }
+
+  sendMessage({
+    type: 'act/' + action,
+    payload: payload
+  });
+};
+
+exports.sendAct = sendAct;
+
+/**
+ * Selects a backend-related slice of Redux state
+ */
+var selectBackend = function selectBackend(state) {
+  return state.backend || {};
+};
+/**
+ * A React hook (sort of) for getting tgui state and related functions.
+ *
+ * This is supposed to be replaced with a real React Hook, which can only
+ * be used in functional components.
+ */
+
+
+exports.selectBackend = selectBackend;
+
+var useBackend = function useBackend(context) {
+  var store = context.store;
+  var state = selectBackend(store.getState());
+  return Object.assign({}, state, {
+    act: sendAct
+  });
+};
+/**
+ * A tuple that contains the state and a setter function for it.
+ */
+
+
+exports.useBackend = useBackend;
+
+/**
+ * Allocates state on Redux store without sharing it with other clients.
+ *
+ * Use it when you want to have a stateful variable in your component
+ * that persists between renders, but will be forgotten after you close
+ * the UI.
+ *
+ * It is a lot more performant than `setSharedState`.
+ */
+var useLocalState = function useLocalState(context, key, initialState) {
+  var _state$shared;
+
+  var store = context.store;
+  var state = selectBackend(store.getState());
+  var sharedStates = (_state$shared = state.shared) != null ? _state$shared : {};
+  var sharedState = key in sharedStates ? sharedStates[key] : initialState;
+  return [sharedState, function (nextState) {
+    store.dispatch(backendSetSharedState({
+      key: key,
+      nextState: typeof nextState === 'function' ? nextState(sharedState) : nextState
+    }));
+  }];
+};
+/**
+ * Allocates state on Redux store, and **shares** it with other clients
+ * in the game.
+ *
+ * Use it when you want to have a stateful variable in your component
+ * that persists not only between renders, but also gets pushed to other
+ * clients that observe this UI.
+ *
+ * This makes creation of observable s
+ */
+
+
+exports.useLocalState = useLocalState;
+
+var useSharedState = function useSharedState(context, key, initialState) {
+  var _state$shared2;
+
+  var store = context.store;
+  var state = selectBackend(store.getState());
+  var sharedStates = (_state$shared2 = state.shared) != null ? _state$shared2 : {};
+  var sharedState = key in sharedStates ? sharedStates[key] : initialState;
+  return [sharedState, function (nextState) {
+    sendMessage({
+      type: 'setSharedState',
+      key: key,
+      value: JSON.stringify(typeof nextState === 'function' ? nextState(sharedState) : nextState) || ''
+    });
+  }];
+};
+
+exports.useSharedState = useSharedState;
 
 /***/ }),
 
@@ -46623,6 +48192,799 @@ exports.getGasColor = getGasColor;
 
 /***/ }),
 
+/***/ "./packages/tgui/debug/KitchenSink.js":
+/*!********************************************!*\
+  !*** ./packages/tgui/debug/KitchenSink.js ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.KitchenSink = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var r = __webpack_require__("./packages/tgui/stories sync \\.stories\\.js$");
+/**
+ * @returns {{
+ *   meta: {
+ *     title: string,
+ *     render: () => any,
+ *   },
+ * }[]}
+ */
+
+
+var getStories = function getStories() {
+  return r.keys().map(function (path) {
+    return r(path);
+  });
+};
+
+var KitchenSink = function KitchenSink(props, context) {
+  var panel = props.panel;
+
+  var _useLocalState = (0, _backend.useLocalState)(context, 'kitchenSinkTheme'),
+      theme = _useLocalState[0];
+
+  var _useLocalState2 = (0, _backend.useLocalState)(context, 'pageIndex', 0),
+      pageIndex = _useLocalState2[0],
+      setPageIndex = _useLocalState2[1];
+
+  var stories = getStories();
+  var story = stories[pageIndex];
+  var Layout = panel ? _layouts.Pane : _layouts.Window;
+  return (0, _inferno.createComponentVNode)(2, Layout, {
+    "title": "Kitchen Sink",
+    "width": 600,
+    "height": 500,
+    "theme": theme,
+    children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
+      "height": "100%",
+      children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+        "m": 1,
+        "mr": 0,
+        children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+          "fill": true,
+          "fitted": true,
+          children: (0, _inferno.createComponentVNode)(2, _components.Tabs, {
+            "vertical": true,
+            children: stories.map(function (story, i) {
+              return (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+                "color": "transparent",
+                "selected": i === pageIndex,
+                "onClick": function () {
+                  function onClick() {
+                    return setPageIndex(i);
+                  }
+
+                  return onClick;
+                }(),
+                children: story.meta.title
+              }, i);
+            })
+          })
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+        "position": "relative",
+        "grow": 1,
+        children: (0, _inferno.createComponentVNode)(2, Layout.Content, {
+          "scrollable": true,
+          children: story.meta.render()
+        })
+      })]
+    })
+  });
+};
+
+exports.KitchenSink = KitchenSink;
+
+/***/ }),
+
+/***/ "./packages/tgui/debug/actions.js":
+/*!****************************************!*\
+  !*** ./packages/tgui/debug/actions.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.openExternalBrowser = exports.toggleDebugLayout = exports.toggleKitchenSink = void 0;
+
+var _redux = __webpack_require__(/*! common/redux */ "./packages/common/redux.js");
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var toggleKitchenSink = (0, _redux.createAction)('debug/toggleKitchenSink');
+exports.toggleKitchenSink = toggleKitchenSink;
+var toggleDebugLayout = (0, _redux.createAction)('debug/toggleDebugLayout');
+exports.toggleDebugLayout = toggleDebugLayout;
+var openExternalBrowser = (0, _redux.createAction)('debug/openExternalBrowser');
+exports.openExternalBrowser = openExternalBrowser;
+
+/***/ }),
+
+/***/ "./packages/tgui/debug/hooks.js":
+/*!**************************************!*\
+  !*** ./packages/tgui/debug/hooks.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.useDebug = void 0;
+
+var _redux = __webpack_require__(/*! common/redux */ "./packages/common/redux.js");
+
+var _selectors = __webpack_require__(/*! ./selectors */ "./packages/tgui/debug/selectors.js");
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var useDebug = function useDebug(context) {
+  return (0, _redux.useSelector)(context, _selectors.selectDebug);
+};
+
+exports.useDebug = useDebug;
+
+/***/ }),
+
+/***/ "./packages/tgui/debug/index.js":
+/*!**************************************!*\
+  !*** ./packages/tgui/debug/index.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.debugReducer = exports.relayMiddleware = exports.debugMiddleware = exports.KitchenSink = exports.useDebug = void 0;
+
+var _hooks = __webpack_require__(/*! ./hooks */ "./packages/tgui/debug/hooks.js");
+
+exports.useDebug = _hooks.useDebug;
+
+var _KitchenSink = __webpack_require__(/*! ./KitchenSink */ "./packages/tgui/debug/KitchenSink.js");
+
+exports.KitchenSink = _KitchenSink.KitchenSink;
+
+var _middleware = __webpack_require__(/*! ./middleware */ "./packages/tgui/debug/middleware.js");
+
+exports.debugMiddleware = _middleware.debugMiddleware;
+exports.relayMiddleware = _middleware.relayMiddleware;
+
+var _reducer = __webpack_require__(/*! ./reducer */ "./packages/tgui/debug/reducer.js");
+
+exports.debugReducer = _reducer.debugReducer;
+
+/***/ }),
+
+/***/ "./packages/tgui/debug/middleware.js":
+/*!*******************************************!*\
+  !*** ./packages/tgui/debug/middleware.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.relayMiddleware = exports.debugMiddleware = void 0;
+
+var _keycodes = __webpack_require__(/*! common/keycodes */ "./packages/common/keycodes.js");
+
+var _events = __webpack_require__(/*! ../events */ "./packages/tgui/events.js");
+
+var _hotkeys = __webpack_require__(/*! ../hotkeys */ "./packages/tgui/hotkeys.ts");
+
+var _actions = __webpack_require__(/*! ./actions */ "./packages/tgui/debug/actions.js");
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var relayedTypes = ['backend/update', 'chat/message'];
+
+var debugMiddleware = function debugMiddleware(store) {
+  (0, _hotkeys.acquireHotKey)(_keycodes.KEY_F11);
+  (0, _hotkeys.acquireHotKey)(_keycodes.KEY_F12);
+
+  _events.globalEvents.on('keydown', function (key) {
+    if (key.code === _keycodes.KEY_F11) {
+      store.dispatch((0, _actions.toggleDebugLayout)());
+    }
+
+    if (key.code === _keycodes.KEY_F12) {
+      store.dispatch((0, _actions.toggleKitchenSink)());
+    }
+
+    if (key.ctrl && key.alt && key.code === _keycodes.KEY_BACKSPACE) {
+      // NOTE: We need to call this in a timeout, because we need a clean
+      // stack in order for this to be a fatal error.
+      setTimeout(function () {
+        throw new Error('OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle' + ' fucko boingo! The code monkeys at our headquarters are' + ' working VEWY HAWD to fix this!');
+      });
+    }
+  });
+
+  return function (next) {
+    return function (action) {
+      return next(action);
+    };
+  };
+};
+
+exports.debugMiddleware = debugMiddleware;
+
+var relayMiddleware = function relayMiddleware(store) {
+  var devServer = __webpack_require__(/*! tgui-dev-server/link/client.cjs */ "./packages/tgui-dev-server/link/client.cjs");
+
+  var externalBrowser = location.search === '?external';
+
+  if (externalBrowser) {
+    devServer.subscribe(function (msg) {
+      var type = msg.type,
+          payload = msg.payload;
+
+      if (type === 'relay' && payload.windowId === window.__windowId__) {
+        store.dispatch(Object.assign({}, payload.action, {
+          relayed: true
+        }));
+      }
+    });
+  } else {
+    (0, _hotkeys.acquireHotKey)(_keycodes.KEY_F10);
+
+    _events.globalEvents.on('keydown', function (key) {
+      if (key === _keycodes.KEY_F10) {
+        store.dispatch((0, _actions.openExternalBrowser)());
+      }
+    });
+  }
+
+  return function (next) {
+    return function (action) {
+      var type = action.type,
+          payload = action.payload,
+          relayed = action.relayed;
+
+      if (type === _actions.openExternalBrowser.type) {
+        window.open(location.href + '?external', '_blank');
+        return;
+      }
+
+      if (relayedTypes.includes(type) && !relayed && !externalBrowser) {
+        devServer.sendMessage({
+          type: 'relay',
+          payload: {
+            windowId: window.__windowId__,
+            action: action
+          }
+        });
+      }
+
+      return next(action);
+    };
+  };
+};
+
+exports.relayMiddleware = relayMiddleware;
+
+/***/ }),
+
+/***/ "./packages/tgui/debug/reducer.js":
+/*!****************************************!*\
+  !*** ./packages/tgui/debug/reducer.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.debugReducer = void 0;
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var debugReducer = function debugReducer(state, action) {
+  if (state === void 0) {
+    state = {};
+  }
+
+  var type = action.type,
+      payload = action.payload;
+
+  if (type === 'debug/toggleKitchenSink') {
+    return Object.assign({}, state, {
+      kitchenSink: !state.kitchenSink
+    });
+  }
+
+  if (type === 'debug/toggleDebugLayout') {
+    return Object.assign({}, state, {
+      debugLayout: !state.debugLayout
+    });
+  }
+
+  return state;
+};
+
+exports.debugReducer = debugReducer;
+
+/***/ }),
+
+/***/ "./packages/tgui/debug/selectors.js":
+/*!******************************************!*\
+  !*** ./packages/tgui/debug/selectors.js ***!
+  \******************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.selectDebug = void 0;
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var selectDebug = function selectDebug(state) {
+  return state.debug;
+};
+
+exports.selectDebug = selectDebug;
+
+/***/ }),
+
+/***/ "./packages/tgui/drag.js":
+/*!*******************************!*\
+  !*** ./packages/tgui/drag.js ***!
+  \*******************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.resizeStartHandler = exports.dragStartHandler = exports.setupDrag = exports.recallWindowGeometry = exports.storeWindowGeometry = exports.getScreenSize = exports.getScreenPosition = exports.setWindowSize = exports.setWindowPosition = exports.getWindowSize = exports.getWindowPosition = exports.setWindowKey = void 0;
+
+var _storage = __webpack_require__(/*! common/storage */ "./packages/common/storage.js");
+
+var _vector = __webpack_require__(/*! common/vector */ "./packages/common/vector.ts");
+
+var _logging = __webpack_require__(/*! ./logging */ "./packages/tgui/logging.js");
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var logger = (0, _logging.createLogger)('drag');
+var windowKey = window.__windowId__;
+var dragging = false;
+var resizing = false;
+var screenOffset = [0, 0];
+var screenOffsetPromise;
+var dragPointOffset;
+var resizeMatrix;
+var initialSize;
+var size;
+
+var setWindowKey = function setWindowKey(key) {
+  windowKey = key;
+};
+
+exports.setWindowKey = setWindowKey;
+
+var getWindowPosition = function getWindowPosition() {
+  return [window.screenLeft, window.screenTop];
+};
+
+exports.getWindowPosition = getWindowPosition;
+
+var getWindowSize = function getWindowSize() {
+  return [window.innerWidth, window.innerHeight];
+};
+
+exports.getWindowSize = getWindowSize;
+
+var setWindowPosition = function setWindowPosition(vec) {
+  var byondPos = (0, _vector.vecAdd)(vec, screenOffset);
+  return Byond.winset(window.__windowId__, {
+    pos: byondPos[0] + ',' + byondPos[1]
+  });
+};
+
+exports.setWindowPosition = setWindowPosition;
+
+var setWindowSize = function setWindowSize(vec) {
+  return Byond.winset(window.__windowId__, {
+    size: vec[0] + 'x' + vec[1]
+  });
+};
+
+exports.setWindowSize = setWindowSize;
+
+var getScreenPosition = function getScreenPosition() {
+  return [0 - screenOffset[0], 0 - screenOffset[1]];
+};
+
+exports.getScreenPosition = getScreenPosition;
+
+var getScreenSize = function getScreenSize() {
+  return [window.screen.availWidth, window.screen.availHeight];
+};
+/**
+ * Moves an item to the top of the recents array, and keeps its length
+ * limited to the number in `limit` argument.
+ *
+ * Uses a strict equality check for comparisons.
+ *
+ * Returns new recents and an item which was trimmed.
+ */
+
+
+exports.getScreenSize = getScreenSize;
+
+var touchRecents = function touchRecents(recents, touchedItem, limit) {
+  if (limit === void 0) {
+    limit = 50;
+  }
+
+  var nextRecents = [touchedItem];
+  var trimmedItem;
+
+  for (var i = 0; i < recents.length; i++) {
+    var item = recents[i];
+
+    if (item === touchedItem) {
+      continue;
+    }
+
+    if (nextRecents.length < limit) {
+      nextRecents.push(item);
+    } else {
+      trimmedItem = item;
+    }
+  }
+
+  return [nextRecents, trimmedItem];
+};
+
+var storeWindowGeometry = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+    function _callee() {
+      var geometry, _touchRecents, geometries, trimmedKey;
+
+      return regeneratorRuntime.wrap(function () {
+        function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                logger.log('storing geometry');
+                geometry = {
+                  pos: getWindowPosition(),
+                  size: getWindowSize()
+                };
+
+                _storage.storage.set(windowKey, geometry); // Update the list of stored geometries
+
+
+                _context.t0 = touchRecents;
+                _context.next = 6;
+                return _storage.storage.get('geometries');
+
+              case 6:
+                _context.t1 = _context.sent;
+
+                if (_context.t1) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _context.t1 = [];
+
+              case 9:
+                _context.t2 = _context.t1;
+                _context.t3 = windowKey;
+                _touchRecents = (0, _context.t0)(_context.t2, _context.t3);
+                geometries = _touchRecents[0];
+                trimmedKey = _touchRecents[1];
+
+                if (trimmedKey) {
+                  _storage.storage.remove(trimmedKey);
+                }
+
+                _storage.storage.set('geometries', geometries);
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }
+
+        return _callee$;
+      }(), _callee);
+    }
+
+    return _callee;
+  }()));
+
+  return function () {
+    function storeWindowGeometry() {
+      return _ref.apply(this, arguments);
+    }
+
+    return storeWindowGeometry;
+  }();
+}();
+
+exports.storeWindowGeometry = storeWindowGeometry;
+
+var recallWindowGeometry = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+    function _callee2(options) {
+      var geometry, pos, size, areaAvailable;
+      return regeneratorRuntime.wrap(function () {
+        function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (options === void 0) {
+                  options = {};
+                }
+
+                _context2.t0 = options.fancy;
+
+                if (!_context2.t0) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                _context2.next = 5;
+                return _storage.storage.get(windowKey);
+
+              case 5:
+                _context2.t0 = _context2.sent;
+
+              case 6:
+                geometry = _context2.t0;
+
+                if (geometry) {
+                  logger.log('recalled geometry:', geometry);
+                }
+
+                pos = (geometry == null ? void 0 : geometry.pos) || options.pos;
+                size = options.size; // Wait until screen offset gets resolved
+
+                _context2.next = 12;
+                return screenOffsetPromise;
+
+              case 12:
+                areaAvailable = [window.screen.availWidth, window.screen.availHeight]; // Set window size
+
+                if (size) {
+                  // Constraint size to not exceed available screen area.
+                  size = [Math.min(areaAvailable[0], size[0]), Math.min(areaAvailable[1], size[1])];
+                  setWindowSize(size);
+                } // Set window position
+
+
+                if (pos) {
+                  // Constraint window position if monitor lock was set in preferences.
+                  if (size && options.locked) {
+                    pos = constraintPosition(pos, size)[1];
+                  }
+
+                  setWindowPosition(pos);
+                } // Set window position at the center of the screen.
+                else if (size) {
+                  pos = (0, _vector.vecAdd)((0, _vector.vecScale)(areaAvailable, 0.5), (0, _vector.vecScale)(size, -0.5), (0, _vector.vecScale)(screenOffset, -1.0));
+                  setWindowPosition(pos);
+                }
+
+              case 15:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }
+
+        return _callee2$;
+      }(), _callee2);
+    }
+
+    return _callee2;
+  }()));
+
+  return function () {
+    function recallWindowGeometry(_x) {
+      return _ref2.apply(this, arguments);
+    }
+
+    return recallWindowGeometry;
+  }();
+}();
+
+exports.recallWindowGeometry = recallWindowGeometry;
+
+var setupDrag = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function () {
+    function _callee3() {
+      return regeneratorRuntime.wrap(function () {
+        function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                // Calculate screen offset caused by the windows taskbar
+                screenOffsetPromise = Byond.winget(window.__windowId__, 'pos').then(function (pos) {
+                  return [pos.x - window.screenLeft, pos.y - window.screenTop];
+                });
+                _context3.next = 3;
+                return screenOffsetPromise;
+
+              case 3:
+                screenOffset = _context3.sent;
+                logger.debug('screen offset', screenOffset);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }
+
+        return _callee3$;
+      }(), _callee3);
+    }
+
+    return _callee3;
+  }()));
+
+  return function () {
+    function setupDrag() {
+      return _ref3.apply(this, arguments);
+    }
+
+    return setupDrag;
+  }();
+}();
+/**
+ * Constraints window position to safe screen area, accounting for safe
+ * margins which could be a system taskbar.
+ */
+
+
+exports.setupDrag = setupDrag;
+
+var constraintPosition = function constraintPosition(pos, size) {
+  var screenPos = getScreenPosition();
+  var screenSize = getScreenSize();
+  var nextPos = [pos[0], pos[1]];
+  var relocated = false;
+
+  for (var i = 0; i < 2; i++) {
+    var leftBoundary = screenPos[i];
+    var rightBoundary = screenPos[i] + screenSize[i];
+
+    if (pos[i] < leftBoundary) {
+      nextPos[i] = leftBoundary;
+      relocated = true;
+    } else if (pos[i] + size[i] > rightBoundary) {
+      nextPos[i] = rightBoundary - size[i];
+      relocated = true;
+    }
+  }
+
+  return [relocated, nextPos];
+};
+
+var dragStartHandler = function dragStartHandler(event) {
+  logger.log('drag start');
+  dragging = true;
+  dragPointOffset = [window.screenLeft - event.screenX, window.screenTop - event.screenY];
+  document.addEventListener('mousemove', dragMoveHandler);
+  document.addEventListener('mouseup', dragEndHandler);
+  dragMoveHandler(event);
+};
+
+exports.dragStartHandler = dragStartHandler;
+
+var dragEndHandler = function dragEndHandler(event) {
+  logger.log('drag end');
+  dragging = false;
+  dragMoveHandler(event);
+  document.removeEventListener('mousemove', dragMoveHandler);
+  document.removeEventListener('mouseup', dragEndHandler);
+  storeWindowGeometry();
+};
+
+var dragMoveHandler = function dragMoveHandler(event) {
+  if (!dragging) {
+    return;
+  }
+
+  if (event.buttons === 0) {
+    logger.log('emergency drag end');
+    document.removeEventListener('mousemove', dragMoveHandler);
+    document.removeEventListener('mouseup', dragEndHandler);
+    dragging = false;
+    storeWindowGeometry();
+    return;
+  }
+
+  event.preventDefault();
+  setWindowPosition((0, _vector.vecAdd)([event.screenX, event.screenY], dragPointOffset));
+};
+
+var resizeStartHandler = function resizeStartHandler(x, y) {
+  return function (event) {
+    resizeMatrix = [x, y];
+    logger.log('resize start', resizeMatrix);
+    resizing = true;
+    dragPointOffset = [window.screenLeft - event.screenX, window.screenTop - event.screenY];
+    initialSize = [window.innerWidth, window.innerHeight];
+    document.addEventListener('mousemove', resizeMoveHandler);
+    document.addEventListener('mouseup', resizeEndHandler);
+    resizeMoveHandler(event);
+  };
+};
+
+exports.resizeStartHandler = resizeStartHandler;
+
+var resizeEndHandler = function resizeEndHandler(event) {
+  logger.log('resize end', size);
+  resizeMoveHandler(event);
+  document.removeEventListener('mousemove', resizeMoveHandler);
+  document.removeEventListener('mouseup', resizeEndHandler);
+  resizing = false;
+  storeWindowGeometry();
+};
+
+var resizeMoveHandler = function resizeMoveHandler(event) {
+  if (!resizing) {
+    return;
+  }
+
+  event.preventDefault();
+  size = (0, _vector.vecAdd)(initialSize, (0, _vector.vecMultiply)(resizeMatrix, (0, _vector.vecAdd)([event.screenX, event.screenY], (0, _vector.vecInverse)([window.screenLeft, window.screenTop]), dragPointOffset, [1, 1]))); // Sane window size values
+
+  size[0] = Math.max(size[0], 150);
+  size[1] = Math.max(size[1], 50);
+  setWindowSize(size);
+};
+
+/***/ }),
+
 /***/ "./packages/tgui/events.js":
 /*!*********************************!*\
   !*** ./packages/tgui/events.js ***!
@@ -46903,6 +49265,1109 @@ document.addEventListener('keyup', function (e) {
 
 /***/ }),
 
+/***/ "./packages/tgui/focus.js":
+/*!********************************!*\
+  !*** ./packages/tgui/focus.js ***!
+  \********************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.hasWindowFocus = exports.focusWindow = exports.focusMap = void 0;
+
+/**
+ * Various focus helpers.
+ *
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+/**
+ * Moves focus to the BYOND map window.
+ */
+var focusMap = function focusMap() {
+  Byond.winset('mapwindow.map', {
+    focus: true
+  });
+};
+/**
+ * Moves focus to the browser window.
+ */
+
+
+exports.focusMap = focusMap;
+
+var focusWindow = function focusWindow() {
+  Byond.winset(window.__windowId__, {
+    focus: true
+  });
+};
+/**
+ * Checks if the browser window has focus.
+ */
+
+
+exports.focusWindow = focusWindow;
+
+var hasWindowFocus = function hasWindowFocus() {
+  return document.hasFocus();
+};
+
+exports.hasWindowFocus = hasWindowFocus;
+
+/***/ }),
+
+/***/ "./packages/tgui/format.js":
+/*!*********************************!*\
+  !*** ./packages/tgui/format.js ***!
+  \*********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.formatFrequency = exports.truncate = exports.formatPressure = exports.formatTime = exports.formatDb = exports.formatMoney = exports.formatPower = exports.formatSiUnit = void 0;
+
+var _math = __webpack_require__(/*! common/math */ "./packages/common/math.ts");
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var SI_SYMBOLS = ['f', // femto
+'p', // pico
+'n', // nano
+'μ', // micro
+'m', // milli
+// NOTE: This is a space for a reason. When we right align si numbers,
+// in monospace mode, we want to units and numbers stay in their respective
+// columns. If rendering in HTML mode, this space will collapse into
+// a single space anyway.
+' ', 'k', // kilo
+'M', // mega
+'G', // giga
+'T', // tera
+'P', // peta
+'E', // exa
+'Z', // zetta
+'Y' // yotta
+];
+var SI_BASE_INDEX = SI_SYMBOLS.indexOf(' ');
+/**
+ * Formats a number to a human readable form, by reducing it to SI units.
+ * TODO: This is quite a shit code and shit math, needs optimization.
+ */
+
+var formatSiUnit = function formatSiUnit(value, minBase1000, unit) {
+  if (minBase1000 === void 0) {
+    minBase1000 = -SI_BASE_INDEX;
+  }
+
+  if (unit === void 0) {
+    unit = '';
+  }
+
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return value;
+  }
+
+  var realBase10 = Math.floor(Math.log10(value));
+  var base10 = Math.floor(Math.max(minBase1000 * 3, realBase10));
+  var realBase1000 = Math.floor(realBase10 / 3);
+  var base1000 = Math.floor(base10 / 3);
+  var symbolIndex = (0, _math.clamp)(SI_BASE_INDEX + base1000, 0, SI_SYMBOLS.length);
+  var symbol = SI_SYMBOLS[symbolIndex];
+  var scaledNumber = value / Math.pow(1000, base1000);
+  var scaledPrecision = realBase1000 > minBase1000 ? 2 + base1000 * 3 - base10 : 0; // TODO: Make numbers bigger than precision value show
+  // up to 2 decimal numbers.
+
+  var finalString = (0, _math.toFixed)(scaledNumber, scaledPrecision) + ' ' + symbol + unit;
+  return finalString.trim();
+};
+
+exports.formatSiUnit = formatSiUnit;
+
+var formatPower = function formatPower(value, minBase1000) {
+  if (minBase1000 === void 0) {
+    minBase1000 = 0;
+  }
+
+  return formatSiUnit(value, minBase1000, 'W');
+};
+
+exports.formatPower = formatPower;
+
+var formatMoney = function formatMoney(value, precision) {
+  if (precision === void 0) {
+    precision = 0;
+  }
+
+  if (!Number.isFinite(value)) {
+    return value;
+  } // Round the number and make it fixed precision
+
+
+  var fixed = (0, _math.round)(value, precision);
+
+  if (precision > 0) {
+    fixed = (0, _math.toFixed)(value, precision);
+  }
+
+  fixed = String(fixed); // Place thousand separators
+
+  var length = fixed.length;
+  var indexOfPoint = fixed.indexOf('.');
+
+  if (indexOfPoint === -1) {
+    indexOfPoint = length;
+  }
+
+  var result = '';
+
+  for (var i = 0; i < length; i++) {
+    if (i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
+      result += ',';
+    }
+
+    result += fixed.charAt(i);
+  }
+
+  return result;
+};
+/**
+ * Formats a floating point number as a number on the decibel scale.
+ */
+
+
+exports.formatMoney = formatMoney;
+
+var formatDb = function formatDb(value) {
+  var db = 20 * Math.log(value) / Math.log(10);
+  var sign = db >= 0 ? '+' : '–';
+  var formatted = Math.abs(db);
+
+  if (formatted === Infinity) {
+    formatted = 'Inf';
+  } else {
+    formatted = (0, _math.toFixed)(formatted, 2);
+  }
+
+  return sign + formatted + ' dB';
+};
+/**
+ * Formats time as a string in the minutes:seconds format.
+ * @param time the time to format, in tenths of a second
+ * @param msg an optional message to display if time <= 0
+ * @example formatTime(690)
+ * //returns `01:09`
+ * @example formatTime(0, 'BO:OM')
+ * //returns `BO:OM`
+ */
+
+
+exports.formatDb = formatDb;
+
+var formatTime = function formatTime(time, msg) {
+  if (msg === void 0) {
+    msg = "";
+  }
+
+  var seconds = Math.floor(time / 10 % 60);
+  var minutes = Math.floor((time / 10 - seconds) / 60);
+
+  if (time <= 0 && msg !== "") {
+    return msg;
+  }
+
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  return minutes + ":" + seconds;
+};
+/**
+ * Formats pressure in terms of kPa, or scientific Pa if very large.
+ */
+
+
+exports.formatTime = formatTime;
+
+var formatPressure = function formatPressure(value) {
+  if (value < 10000) {
+    return (0, _math.toFixed)(value) + ' kPa';
+  }
+
+  return formatSiUnit(value * 1000, 1, 'Pa');
+};
+/**
+ * Truncates a string with an ellipsis after n characters. Default is 25.
+ */
+
+
+exports.formatPressure = formatPressure;
+
+var truncate = function truncate(str, n) {
+  if (n === void 0) {
+    n = 25;
+  }
+
+  return str.length > n ? str.substr(0, n - 1) + '…' : str;
+};
+/**
+ * Formats radio frequencies.
+ *
+ * @param {number} f
+ * @returns {string}
+ */
+
+
+exports.truncate = truncate;
+
+var formatFrequency = function formatFrequency(f) {
+  f = Math.round(f);
+  return Math.floor(f / 10) + "." + f % 10;
+};
+
+exports.formatFrequency = formatFrequency;
+
+/***/ }),
+
+/***/ "./packages/tgui/hotkeys.ts":
+/*!**********************************!*\
+  !*** ./packages/tgui/hotkeys.ts ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.listenForKeyEvents = exports.setupHotKeys = exports.releaseHeldKeys = exports.releaseHotKey = exports.acquireHotKey = void 0;
+
+var keycodes = _interopRequireWildcard(__webpack_require__(/*! common/keycodes */ "./packages/common/keycodes.js"));
+
+var _events = __webpack_require__(/*! ./events */ "./packages/tgui/events.js");
+
+var _logging = __webpack_require__(/*! ./logging */ "./packages/tgui/logging.js");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var logger = (0, _logging.createLogger)('hotkeys'); // BYOND macros, in `key: command` format.
+
+var byondMacros = {}; // Default set of acquired keys, which will not be sent to BYOND.
+
+var hotKeysAcquired = [keycodes.KEY_ESCAPE, keycodes.KEY_ENTER, keycodes.KEY_SPACE, keycodes.KEY_TAB, keycodes.KEY_CTRL, keycodes.KEY_SHIFT, keycodes.KEY_UP, keycodes.KEY_DOWN, keycodes.KEY_LEFT, keycodes.KEY_RIGHT, keycodes.KEY_F5]; // State of passed-through keys.
+
+var keyState = {}; // Custom listeners for key events
+
+var keyListeners = [];
+/**
+ * Converts a browser keycode to BYOND keycode.
+ */
+
+var keyCodeToByond = function keyCodeToByond(keyCode) {
+  if (keyCode === 16) return 'Shift';
+  if (keyCode === 17) return 'Ctrl';
+  if (keyCode === 18) return 'Alt';
+  if (keyCode === 33) return 'Northeast';
+  if (keyCode === 34) return 'Southeast';
+  if (keyCode === 35) return 'Southwest';
+  if (keyCode === 36) return 'Northwest';
+  if (keyCode === 37) return 'West';
+  if (keyCode === 38) return 'North';
+  if (keyCode === 39) return 'East';
+  if (keyCode === 40) return 'South';
+  if (keyCode === 45) return 'Insert';
+  if (keyCode === 46) return 'Delete';
+
+  if (keyCode >= 48 && keyCode <= 57 || keyCode >= 65 && keyCode <= 90) {
+    return String.fromCharCode(keyCode);
+  }
+
+  if (keyCode >= 96 && keyCode <= 105) {
+    return 'Numpad' + (keyCode - 96);
+  }
+
+  if (keyCode >= 112 && keyCode <= 123) {
+    return 'F' + (keyCode - 111);
+  }
+
+  if (keyCode === 188) return ',';
+  if (keyCode === 189) return '-';
+  if (keyCode === 190) return '.';
+};
+/**
+ * Keyboard passthrough logic. This allows you to keep doing things
+ * in game while the browser window is focused.
+ */
+
+
+var handlePassthrough = function handlePassthrough(key) {
+  var keyString = String(key); // In addition to F5, support reloading with Ctrl+R and Ctrl+F5
+
+  if (keyString === 'Ctrl+F5' || keyString === 'Ctrl+R') {
+    location.reload();
+    return;
+  } // Prevent passthrough on Ctrl+F
+
+
+  if (keyString === 'Ctrl+F') {
+    return;
+  } // NOTE: Alt modifier is pretty bad and sticky in IE11.
+
+
+  if (key.event.defaultPrevented || key.isModifierKey() || hotKeysAcquired.includes(key.code)) {
+    return;
+  }
+
+  var byondKeyCode = keyCodeToByond(key.code);
+
+  if (!byondKeyCode) {
+    return;
+  } // Macro
+
+
+  var macro = byondMacros[byondKeyCode];
+
+  if (macro) {
+    logger.debug('macro', macro);
+    return Byond.command(macro);
+  } // KeyDown
+
+
+  if (key.isDown() && !keyState[byondKeyCode]) {
+    keyState[byondKeyCode] = true;
+    var command = ".keydown \"" + byondKeyCode + "\"";
+    logger.debug(command);
+    return Byond.command(command);
+  } // KeyUp
+
+
+  if (key.isUp() && keyState[byondKeyCode]) {
+    keyState[byondKeyCode] = false;
+
+    var _command = ".force_keyup \"" + byondKeyCode + "\"";
+
+    logger.debug(_command);
+    return Byond.command(_command);
+  }
+};
+/**
+ * Acquires a lock on the hotkey, which prevents it from being
+ * passed through to BYOND.
+ */
+
+
+var acquireHotKey = function acquireHotKey(keyCode) {
+  hotKeysAcquired.push(keyCode);
+};
+/**
+ * Makes the hotkey available to BYOND again.
+ */
+
+
+exports.acquireHotKey = acquireHotKey;
+
+var releaseHotKey = function releaseHotKey(keyCode) {
+  var index = hotKeysAcquired.indexOf(keyCode);
+
+  if (index >= 0) {
+    hotKeysAcquired.splice(index, 1);
+  }
+};
+
+exports.releaseHotKey = releaseHotKey;
+
+var releaseHeldKeys = function releaseHeldKeys() {
+  for (var _i = 0, _Object$keys = Object.keys(keyState); _i < _Object$keys.length; _i++) {
+    var byondKeyCode = _Object$keys[_i];
+
+    if (keyState[byondKeyCode]) {
+      keyState[byondKeyCode] = false;
+      logger.log("releasing key \"" + byondKeyCode + "\"");
+      Byond.command(".force_keyup \"" + byondKeyCode + "\"");
+    }
+  }
+};
+
+exports.releaseHeldKeys = releaseHeldKeys;
+
+var setupHotKeys = function setupHotKeys() {
+  // Read macros
+  Byond.winget('default.*').then(function (data) {
+    // Group each macro by ref
+    var groupedByRef = {};
+
+    for (var _i2 = 0, _Object$keys2 = Object.keys(data); _i2 < _Object$keys2.length; _i2++) {
+      var _key = _Object$keys2[_i2];
+
+      var keyPath = _key.split('.');
+
+      var ref = keyPath[1];
+      var prop = keyPath[2];
+
+      if (ref && prop) {
+        // This piece of code imperatively adds each property to a
+        // ByondSkinMacro object in the order we meet it, which is hard
+        // to express safely in typescript.
+        if (!groupedByRef[ref]) {
+          groupedByRef[ref] = {};
+        }
+
+        groupedByRef[ref][prop] = data[_key];
+      }
+    } // Insert macros
+
+
+    var escapedQuotRegex = /\\"/g;
+
+    var unescape = function unescape(str) {
+      return str.substring(1, str.length - 1).replace(escapedQuotRegex, '"');
+    };
+
+    for (var _i3 = 0, _Object$keys3 = Object.keys(groupedByRef); _i3 < _Object$keys3.length; _i3++) {
+      var _ref = _Object$keys3[_i3];
+      var macro = groupedByRef[_ref];
+      var byondKeyName = unescape(macro.name);
+      byondMacros[byondKeyName] = unescape(macro.command);
+    }
+
+    logger.debug('loaded macros', byondMacros);
+  }); // Setup event handlers
+
+  _events.globalEvents.on('window-blur', function () {
+    releaseHeldKeys();
+  });
+
+  _events.globalEvents.on('key', function (key) {
+    for (var _iterator = _createForOfIteratorHelperLoose(keyListeners), _step; !(_step = _iterator()).done;) {
+      var keyListener = _step.value;
+      keyListener(key);
+    }
+
+    handlePassthrough(key);
+  });
+};
+/**
+ * Registers for any key events, such as key down or key up.
+ * This should be preferred over directly connecting to keydown/keyup
+ * as it lets tgui prevent the key from reaching BYOND.
+ *
+ * If using in a component, prefer KeyListener, which automatically handles
+ * stopping listening when unmounting.
+ *
+ * @param callback The function to call whenever a key event occurs
+ * @returns A callback to stop listening
+ */
+
+
+exports.setupHotKeys = setupHotKeys;
+
+var listenForKeyEvents = function listenForKeyEvents(callback) {
+  keyListeners.push(callback);
+  var removed = false;
+  return function () {
+    if (removed) {
+      return;
+    }
+
+    removed = true;
+    keyListeners.splice(keyListeners.indexOf(callback), 1);
+  };
+};
+
+exports.listenForKeyEvents = listenForKeyEvents;
+
+/***/ }),
+
+/***/ "./packages/tgui/layouts/Layout.js":
+/*!*****************************************!*\
+  !*** ./packages/tgui/layouts/Layout.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Layout = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts");
+
+var _Box = __webpack_require__(/*! ../components/Box */ "./packages/tgui/components/Box.tsx");
+
+var _events = __webpack_require__(/*! ../events */ "./packages/tgui/events.js");
+
+var _excluded = ["className", "theme", "mode", "children"],
+    _excluded2 = ["className", "scrollable", "children"];
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var Layout = function Layout(props) {
+  var className = props.className,
+      _props$theme = props.theme,
+      theme = _props$theme === void 0 ? 'nanotrasen' : _props$theme,
+      _props$mode = props.mode,
+      mode = _props$mode === void 0 ? 'dark' : _props$mode,
+      children = props.children,
+      rest = _objectWithoutPropertiesLoose(props, _excluded);
+
+  return (0, _inferno.createVNode)(1, "div", (0, _react.classes)(['theme-' + theme, 'mode-' + mode]), (0, _inferno.normalizeProps)((0, _inferno.createVNode)(1, "div", (0, _react.classes)(['Layout', className, (0, _Box.computeBoxClassName)(rest)]), children, 0, Object.assign({}, (0, _Box.computeBoxProps)(rest)))), 2);
+};
+
+exports.Layout = Layout;
+
+var LayoutContent = function LayoutContent(props) {
+  var className = props.className,
+      scrollable = props.scrollable,
+      children = props.children,
+      rest = _objectWithoutPropertiesLoose(props, _excluded2);
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createVNode)(1, "div", (0, _react.classes)(['Layout__content', scrollable && 'Layout__content--scrollable', className, (0, _Box.computeBoxClassName)(rest)]), children, 0, Object.assign({}, (0, _Box.computeBoxProps)(rest))));
+};
+
+LayoutContent.defaultHooks = {
+  onComponentDidMount: function () {
+    function onComponentDidMount(node) {
+      return (0, _events.addScrollableNode)(node);
+    }
+
+    return onComponentDidMount;
+  }(),
+  onComponentWillUnmount: function () {
+    function onComponentWillUnmount(node) {
+      return (0, _events.removeScrollableNode)(node);
+    }
+
+    return onComponentWillUnmount;
+  }()
+};
+Layout.Content = LayoutContent;
+
+/***/ }),
+
+/***/ "./packages/tgui/layouts/NtosWindow.js":
+/*!*********************************************!*\
+  !*** ./packages/tgui/layouts/NtosWindow.js ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.NtosWindow = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _assets = __webpack_require__(/*! ../assets */ "./packages/tgui/assets.ts");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _Window = __webpack_require__(/*! ./Window */ "./packages/tgui/layouts/Window.js");
+
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+var NtosWindow = function NtosWindow(props, context) {
+  var title = props.title,
+      _props$width = props.width,
+      width = _props$width === void 0 ? 575 : _props$width,
+      _props$height = props.height,
+      height = _props$height === void 0 ? 700 : _props$height,
+      _props$theme = props.theme,
+      theme = _props$theme === void 0 ? 'ntos' : _props$theme,
+      children = props.children;
+
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var PC_device_theme = data.PC_device_theme,
+      PC_batteryicon = data.PC_batteryicon,
+      PC_showbatteryicon = data.PC_showbatteryicon,
+      PC_batterypercent = data.PC_batterypercent,
+      PC_ntneticon = data.PC_ntneticon,
+      PC_apclinkicon = data.PC_apclinkicon,
+      PC_stationtime = data.PC_stationtime,
+      _data$PC_programheade = data.PC_programheaders,
+      PC_programheaders = _data$PC_programheade === void 0 ? [] : _data$PC_programheade,
+      PC_showexitprogram = data.PC_showexitprogram;
+  return (0, _inferno.createComponentVNode)(2, _Window.Window, {
+    "title": title,
+    "width": width,
+    "height": height,
+    "theme": theme,
+    children: (0, _inferno.createVNode)(1, "div", "NtosWindow", [(0, _inferno.createVNode)(1, "div", "NtosWindow__header NtosHeader", [(0, _inferno.createVNode)(1, "div", "NtosHeader__left", [(0, _inferno.createComponentVNode)(2, _components.Box, {
+      "inline": true,
+      "bold": true,
+      "mr": 2,
+      children: PC_stationtime
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "inline": true,
+      "italic": true,
+      "mr": 2,
+      "opacity": 0.33,
+      children: [PC_device_theme === 'ntos' && 'NtOS', PC_device_theme === 'syndicate' && 'Syndix']
+    })], 4), (0, _inferno.createVNode)(1, "div", "NtosHeader__right", [PC_programheaders.map(function (header) {
+      return (0, _inferno.createComponentVNode)(2, _components.Box, {
+        "inline": true,
+        "mr": 1,
+        children: (0, _inferno.createVNode)(1, "img", "NtosHeader__icon", null, 1, {
+          "src": (0, _assets.resolveAsset)(header.icon)
+        })
+      }, header.icon);
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "inline": true,
+      children: PC_ntneticon && (0, _inferno.createVNode)(1, "img", "NtosHeader__icon", null, 1, {
+        "src": (0, _assets.resolveAsset)(PC_ntneticon)
+      })
+    }), !!(PC_showbatteryicon && PC_batteryicon) && (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "inline": true,
+      "mr": 1,
+      children: [(0, _inferno.createVNode)(1, "img", "NtosHeader__icon", null, 1, {
+        "src": (0, _assets.resolveAsset)(PC_batteryicon)
+      }), PC_batterypercent && PC_batterypercent]
+    }), PC_apclinkicon && (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "inline": true,
+      "mr": 1,
+      children: (0, _inferno.createVNode)(1, "img", "NtosHeader__icon", null, 1, {
+        "src": (0, _assets.resolveAsset)(PC_apclinkicon)
+      })
+    }), !!PC_showexitprogram && (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "width": "26px",
+      "lineHeight": "22px",
+      "textAlign": "center",
+      "color": "transparent",
+      "icon": "window-minimize-o",
+      "tooltip": "Minimize",
+      "tooltipPosition": "bottom",
+      "onClick": function () {
+        function onClick() {
+          return act('PC_minimize');
+        }
+
+        return onClick;
+      }()
+    }), !!PC_showexitprogram && (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "mr": "-3px",
+      "width": "26px",
+      "lineHeight": "22px",
+      "textAlign": "center",
+      "color": "transparent",
+      "icon": "window-close-o",
+      "tooltip": "Close",
+      "tooltipPosition": "bottom-start",
+      "onClick": function () {
+        function onClick() {
+          return act('PC_exit');
+        }
+
+        return onClick;
+      }()
+    }), !PC_showexitprogram && (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "mr": "-3px",
+      "width": "26px",
+      "lineHeight": "22px",
+      "textAlign": "center",
+      "color": "transparent",
+      "icon": "power-off",
+      "tooltip": "Power off",
+      "tooltipPosition": "bottom-start",
+      "onClick": function () {
+        function onClick() {
+          return act('PC_shutdown');
+        }
+
+        return onClick;
+      }()
+    })], 0)], 4), children], 0)
+  });
+};
+
+exports.NtosWindow = NtosWindow;
+
+var NtosWindowContent = function NtosWindowContent(props) {
+  return (0, _inferno.createVNode)(1, "div", "NtosWindow__content", (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _Window.Window.Content, Object.assign({}, props))), 2);
+};
+
+NtosWindow.Content = NtosWindowContent;
+
+/***/ }),
+
+/***/ "./packages/tgui/layouts/Pane.js":
+/*!***************************************!*\
+  !*** ./packages/tgui/layouts/Pane.js ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Pane = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _debug = __webpack_require__(/*! ../debug */ "./packages/tgui/debug/index.js");
+
+var _Layout = __webpack_require__(/*! ./Layout */ "./packages/tgui/layouts/Layout.js");
+
+var _excluded = ["theme", "children", "className"],
+    _excluded2 = ["className", "fitted", "children"];
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var Pane = function Pane(props, context) {
+  var theme = props.theme,
+      children = props.children,
+      className = props.className,
+      rest = _objectWithoutPropertiesLoose(props, _excluded);
+
+  var _useBackend = (0, _backend.useBackend)(context),
+      suspended = _useBackend.suspended;
+
+  var _useDebug = (0, _debug.useDebug)(context),
+      debugLayout = _useDebug.debugLayout;
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _Layout.Layout, Object.assign({
+    "className": (0, _react.classes)(['Window', className]),
+    "theme": theme
+  }, rest, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "fillPositionedParent": true,
+      "className": debugLayout && 'debug-layout',
+      children: !suspended && children
+    })
+  })));
+};
+
+exports.Pane = Pane;
+
+var PaneContent = function PaneContent(props) {
+  var className = props.className,
+      fitted = props.fitted,
+      children = props.children,
+      rest = _objectWithoutPropertiesLoose(props, _excluded2);
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _Layout.Layout.Content, Object.assign({
+    "className": (0, _react.classes)(['Window__content', className])
+  }, rest, {
+    children: fitted && children || (0, _inferno.createVNode)(1, "div", "Window__contentPadding", children, 0)
+  })));
+};
+
+Pane.Content = PaneContent;
+
+/***/ }),
+
+/***/ "./packages/tgui/layouts/Window.js":
+/*!*****************************************!*\
+  !*** ./packages/tgui/layouts/Window.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Window = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts");
+
+var _redux = __webpack_require__(/*! common/redux */ "./packages/common/redux.js");
+
+var _string = __webpack_require__(/*! common/string */ "./packages/common/string.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _constants = __webpack_require__(/*! ../constants */ "./packages/tgui/constants.js");
+
+var _debug = __webpack_require__(/*! ../debug */ "./packages/tgui/debug/index.js");
+
+var _actions = __webpack_require__(/*! ../debug/actions */ "./packages/tgui/debug/actions.js");
+
+var _drag = __webpack_require__(/*! ../drag */ "./packages/tgui/drag.js");
+
+var _logging = __webpack_require__(/*! ../logging */ "./packages/tgui/logging.js");
+
+var _Layout = __webpack_require__(/*! ./Layout */ "./packages/tgui/layouts/Layout.js");
+
+var _excluded = ["className", "fitted", "children"];
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function () { function _setPrototypeOf(o, p) { o.__proto__ = p; return o; } return _setPrototypeOf; }(); return _setPrototypeOf(o, p); }
+
+var logger = (0, _logging.createLogger)('Window');
+var DEFAULT_SIZE = [400, 600];
+
+var Window = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(Window, _Component);
+
+  function Window() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = Window.prototype;
+
+  _proto.componentDidMount = function () {
+    function componentDidMount() {
+      var _useBackend = (0, _backend.useBackend)(this.context),
+          suspended = _useBackend.suspended;
+
+      var _this$props$canClose = this.props.canClose,
+          canClose = _this$props$canClose === void 0 ? true : _this$props$canClose;
+
+      if (suspended) {
+        return;
+      }
+
+      Byond.winset(window.__windowId__, {
+        'can-close': Boolean(canClose)
+      });
+      logger.log('mounting');
+      this.updateGeometry();
+    }
+
+    return componentDidMount;
+  }();
+
+  _proto.componentDidUpdate = function () {
+    function componentDidUpdate(prevProps) {
+      var shouldUpdateGeometry = this.props.width !== prevProps.width || this.props.height !== prevProps.height;
+
+      if (shouldUpdateGeometry) {
+        this.updateGeometry();
+      }
+    }
+
+    return componentDidUpdate;
+  }();
+
+  _proto.updateGeometry = function () {
+    function updateGeometry() {
+      var _config$window;
+
+      var _useBackend2 = (0, _backend.useBackend)(this.context),
+          config = _useBackend2.config;
+
+      var options = Object.assign({
+        size: DEFAULT_SIZE
+      }, config.window);
+
+      if (this.props.width && this.props.height) {
+        options.size = [this.props.width, this.props.height];
+      }
+
+      if ((_config$window = config.window) != null && _config$window.key) {
+        (0, _drag.setWindowKey)(config.window.key);
+      }
+
+      (0, _drag.recallWindowGeometry)(options);
+    }
+
+    return updateGeometry;
+  }();
+
+  _proto.render = function () {
+    function render() {
+      var _config$window2, _config$window3;
+
+      var _this$props = this.props,
+          _this$props$canClose2 = _this$props.canClose,
+          canClose = _this$props$canClose2 === void 0 ? true : _this$props$canClose2,
+          theme = _this$props.theme,
+          title = _this$props.title,
+          children = _this$props.children;
+
+      var _useBackend3 = (0, _backend.useBackend)(this.context),
+          config = _useBackend3.config,
+          suspended = _useBackend3.suspended;
+
+      var _useDebug = (0, _debug.useDebug)(this.context),
+          debugLayout = _useDebug.debugLayout;
+
+      var dispatch = (0, _redux.useDispatch)(this.context);
+      var fancy = (_config$window2 = config.window) == null ? void 0 : _config$window2.fancy;
+      var mode = (_config$window3 = config.window) == null ? void 0 : _config$window3.mode;
+      /* |GOONSTATION-ADD| */
+      // Determine when to show dimmer
+
+      var showDimmer = config.user && (config.user.observer ? config.status < _constants.UI_DISABLED : config.status < _constants.UI_INTERACTIVE);
+      return (0, _inferno.createComponentVNode)(2, _Layout.Layout, {
+        "className": "Window",
+        "theme": theme,
+        "mode": mode,
+        children: [(0, _inferno.createComponentVNode)(2, TitleBar, {
+          "className": "Window__titleBar",
+          "title": !suspended && (title || (0, _string.decodeHtmlEntities)(config.title)),
+          "status": config.status,
+          "fancy": fancy,
+          "onDragStart": _drag.dragStartHandler,
+          "onClose": function () {
+            function onClose() {
+              logger.log('pressed close');
+              dispatch((0, _backend.backendSuspendStart)());
+            }
+
+            return onClose;
+          }(),
+          "canClose": canClose
+        }), (0, _inferno.createVNode)(1, "div", (0, _react.classes)(['Window__rest', debugLayout && 'debug-layout']), [!suspended && children, showDimmer && (0, _inferno.createVNode)(1, "div", "Window__dimmer")], 0), fancy && (0, _inferno.createFragment)([(0, _inferno.createVNode)(1, "div", "Window__resizeHandle__e", null, 1, {
+          "onMousedown": (0, _drag.resizeStartHandler)(1, 0)
+        }), (0, _inferno.createVNode)(1, "div", "Window__resizeHandle__s", null, 1, {
+          "onMousedown": (0, _drag.resizeStartHandler)(0, 1)
+        }), (0, _inferno.createVNode)(1, "div", "Window__resizeHandle__se", null, 1, {
+          "onMousedown": (0, _drag.resizeStartHandler)(1, 1)
+        })], 4)]
+      });
+    }
+
+    return render;
+  }();
+
+  return Window;
+}(_inferno.Component);
+
+exports.Window = Window;
+
+var WindowContent = function WindowContent(props) {
+  var className = props.className,
+      fitted = props.fitted,
+      children = props.children,
+      rest = _objectWithoutPropertiesLoose(props, _excluded);
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _Layout.Layout.Content, Object.assign({
+    "className": (0, _react.classes)(['Window__content', className])
+  }, rest, {
+    children: fitted && children || (0, _inferno.createVNode)(1, "div", "Window__contentPadding", children, 0)
+  })));
+};
+
+Window.Content = WindowContent;
+
+var statusToColor = function statusToColor(status) {
+  switch (status) {
+    case _constants.UI_INTERACTIVE:
+      return 'good';
+
+    case _constants.UI_UPDATE:
+      return 'average';
+
+    case _constants.UI_DISABLED:
+    default:
+      return 'bad';
+  }
+};
+
+var TitleBar = function TitleBar(props, context) {
+  var className = props.className,
+      title = props.title,
+      status = props.status,
+      canClose = props.canClose,
+      fancy = props.fancy,
+      onDragStart = props.onDragStart,
+      onClose = props.onClose;
+  var dispatch = (0, _redux.useDispatch)(context);
+  return (0, _inferno.createVNode)(1, "div", (0, _react.classes)(['TitleBar', className]), [status === undefined && (0, _inferno.createComponentVNode)(2, _components.Icon, {
+    "className": "TitleBar__statusIcon",
+    "name": "tools",
+    "opacity": 0.5
+  }) || (0, _inferno.createComponentVNode)(2, _components.Icon, {
+    "className": "TitleBar__statusIcon",
+    "color": statusToColor(status),
+    "name": "eye"
+  }), (0, _inferno.createVNode)(1, "div", "TitleBar__title", typeof title === 'string' && title === title.toLowerCase() && (0, _string.toTitleCase)(title) || title, 0), (0, _inferno.createVNode)(1, "div", "TitleBar__dragZone", null, 1, {
+    "onMousedown": function () {
+      function onMousedown(e) {
+        return fancy && onDragStart(e);
+      }
+
+      return onMousedown;
+    }()
+  }),  true && (0, _inferno.createVNode)(1, "div", "TitleBar__devBuildIndicator", (0, _inferno.createComponentVNode)(2, _components.Icon, {
+    "name": "bug"
+  }), 2, {
+    "onClick": function () {
+      function onClick() {
+        return dispatch((0, _actions.toggleKitchenSink)());
+      }
+
+      return onClick;
+    }()
+  }), Boolean(fancy && canClose) && (0, _inferno.createVNode)(1, "div", "TitleBar__close TitleBar__clickable", Byond.IS_LTE_IE8 ? 'x' : '×', 0, {
+    "onclick": onClose
+  })], 0);
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/layouts/index.js":
+/*!****************************************!*\
+  !*** ./packages/tgui/layouts/index.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Window = exports.Pane = exports.NtosWindow = exports.Layout = void 0;
+
+var _Layout = __webpack_require__(/*! ./Layout */ "./packages/tgui/layouts/Layout.js");
+
+exports.Layout = _Layout.Layout;
+
+var _NtosWindow = __webpack_require__(/*! ./NtosWindow */ "./packages/tgui/layouts/NtosWindow.js");
+
+exports.NtosWindow = _NtosWindow.NtosWindow;
+
+var _Pane = __webpack_require__(/*! ./Pane */ "./packages/tgui/layouts/Pane.js");
+
+exports.Pane = _Pane.Pane;
+
+var _Window = __webpack_require__(/*! ./Window */ "./packages/tgui/layouts/Window.js");
+
+exports.Window = _Window.Window;
+
+/***/ }),
+
 /***/ "./packages/tgui/logging.js":
 /*!**********************************!*\
   !*** ./packages/tgui/logging.js ***!
@@ -47122,6 +50587,1549 @@ exports.createRenderer = createRenderer;
 
 /***/ }),
 
+/***/ "./packages/tgui/store.js":
+/*!********************************!*\
+  !*** ./packages/tgui/store.js ***!
+  \********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.StoreProvider = exports.configureStore = void 0;
+
+var _fp = __webpack_require__(/*! common/fp */ "./packages/common/fp.js");
+
+var _redux = __webpack_require__(/*! common/redux */ "./packages/common/redux.js");
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _assets = __webpack_require__(/*! ./assets */ "./packages/tgui/assets.ts");
+
+var _backend = __webpack_require__(/*! ./backend */ "./packages/tgui/backend.ts");
+
+var _debug = __webpack_require__(/*! ./debug */ "./packages/tgui/debug/index.js");
+
+var _logging = __webpack_require__(/*! ./logging */ "./packages/tgui/logging.js");
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function () { function _setPrototypeOf(o, p) { o.__proto__ = p; return o; } return _setPrototypeOf; }(); return _setPrototypeOf(o, p); }
+
+var logger = (0, _logging.createLogger)('store');
+
+var configureStore = function configureStore(options) {
+  var _options$middleware, _options$middleware2;
+
+  if (options === void 0) {
+    options = {};
+  }
+
+  var _options = options,
+      _options$sideEffects = _options.sideEffects,
+      sideEffects = _options$sideEffects === void 0 ? true : _options$sideEffects;
+  var reducer = (0, _fp.flow)([(0, _redux.combineReducers)({
+    debug: _debug.debugReducer,
+    backend: _backend.backendReducer
+  }), options.reducer]);
+  var middleware = !sideEffects ? [] : [].concat(((_options$middleware = options.middleware) == null ? void 0 : _options$middleware.pre) || [], [_assets.assetMiddleware, _backend.backendMiddleware], ((_options$middleware2 = options.middleware) == null ? void 0 : _options$middleware2.post) || []);
+
+  if (true) {
+    // We are using two if statements because Webpack is capable of
+    // removing this specific block as dead code.
+    if (sideEffects) {
+      middleware.unshift(loggingMiddleware, _debug.debugMiddleware, _debug.relayMiddleware);
+    }
+  }
+
+  var enhancer = _redux.applyMiddleware.apply(void 0, middleware);
+
+  var store = (0, _redux.createStore)(reducer, enhancer); // Globals
+
+  window.__store__ = store;
+  window.__augmentStack__ = createStackAugmentor(store);
+  return store;
+};
+
+exports.configureStore = configureStore;
+
+var loggingMiddleware = function loggingMiddleware(store) {
+  return function (next) {
+    return function (action) {
+      var type = action.type,
+          payload = action.payload;
+
+      if (type === 'update' || type === 'backend/update') {
+        logger.debug('action', {
+          type: type
+        });
+      } else {
+        logger.debug('action', action);
+      }
+
+      return next(action);
+    };
+  };
+};
+/**
+ * Creates a function, which can be assigned to window.__augmentStack__
+ * to augment reported stack traces with useful data for debugging.
+ */
+
+
+var createStackAugmentor = function createStackAugmentor(store) {
+  return function (stack, error) {
+    var _state$backend, _config$client;
+
+    if (!error) {
+      error = new Error(stack.split('\n')[0]);
+      error.stack = stack;
+    } else if (typeof error === 'object' && !error.stack) {
+      error.stack = stack;
+    }
+
+    logger.log('FatalError:', error);
+    var state = store.getState();
+    var config = state == null ? void 0 : (_state$backend = state.backend) == null ? void 0 : _state$backend.config;
+    var augmentedStack = stack;
+    augmentedStack += '\nUser Agent: ' + navigator.userAgent;
+    augmentedStack += '\nState: ' + JSON.stringify({
+      ckey: config == null ? void 0 : (_config$client = config.client) == null ? void 0 : _config$client.ckey,
+      "interface": config == null ? void 0 : config["interface"],
+      window: config == null ? void 0 : config.window
+    });
+    return augmentedStack;
+  };
+};
+/**
+ * Store provider for Inferno apps.
+ */
+
+
+var StoreProvider = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(StoreProvider, _Component);
+
+  function StoreProvider() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = StoreProvider.prototype;
+
+  _proto.getChildContext = function () {
+    function getChildContext() {
+      var store = this.props.store;
+      return {
+        store: store
+      };
+    }
+
+    return getChildContext;
+  }();
+
+  _proto.render = function () {
+    function render() {
+      return this.props.children;
+    }
+
+    return render;
+  }();
+
+  return StoreProvider;
+}(_inferno.Component);
+
+exports.StoreProvider = StoreProvider;
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Blink.stories.js":
+/*!************************************************!*\
+  !*** ./packages/tgui/stories/Blink.stories.js ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Blink',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Blink, {
+      children: "Blink"
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/BlockQuote.stories.js":
+/*!*****************************************************!*\
+  !*** ./packages/tgui/stories/BlockQuote.stories.js ***!
+  \*****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _common = __webpack_require__(/*! ./common */ "./packages/tgui/stories/common.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'BlockQuote',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: (0, _inferno.createComponentVNode)(2, _components.BlockQuote, {
+      children: (0, _inferno.createComponentVNode)(2, _common.BoxWithSampleText)
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Box.stories.js":
+/*!**********************************************!*\
+  !*** ./packages/tgui/stories/Box.stories.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Box',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+      "bold": true,
+      children: "bold"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "italic": true,
+      children: "italic"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "opacity": 0.5,
+      children: "opacity 0.5"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "opacity": 0.25,
+      children: "opacity 0.25"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "m": 2,
+      children: "m: 2"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "textAlign": "left",
+      children: "left"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "textAlign": "center",
+      children: "center"
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "textAlign": "right",
+      children: "right"
+    })]
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Button.stories.js":
+/*!*************************************************!*\
+  !*** ./packages/tgui/stories/Button.stories.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Button',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+var COLORS_SPECTRUM = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey'];
+var COLORS_STATES = ['good', 'average', 'bad', 'black', 'white'];
+
+var Story = function Story(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+      "mb": 1,
+      children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+        "content": "Simple"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "selected": true,
+        "content": "Selected"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "altSelected": true,
+        "content": "Alt Selected"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "disabled": true,
+        "content": "Disabled"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "color": "transparent",
+        "content": "Transparent"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "icon": "cog",
+        "content": "Icon"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "icon": "power-off"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "fluid": true,
+        "content": "Fluid"
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "my": 1,
+        "lineHeight": 2,
+        "minWidth": 15,
+        "textAlign": "center",
+        "content": "With Box props"
+      })]
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "mb": 1,
+      children: [COLORS_STATES.map(function (color) {
+        return (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "color": color,
+          "content": color
+        }, color);
+      }), (0, _inferno.createVNode)(1, "br"), COLORS_SPECTRUM.map(function (color) {
+        return (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "color": color,
+          "content": color
+        }, color);
+      }), (0, _inferno.createVNode)(1, "br"), COLORS_SPECTRUM.map(function (color) {
+        return (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "inline": true,
+          "mx": "7px",
+          "color": color,
+          children: color
+        }, color);
+      })]
+    })]
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/ByondUi.stories.js":
+/*!**************************************************!*\
+  !*** ./packages/tgui/stories/ByondUi.stories.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _logging = __webpack_require__(/*! ../logging */ "./packages/tgui/logging.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'ByondUi',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  var _useLocalState = (0, _backend.useLocalState)(context, 'byondUiEvalCode', "Byond.winset('" + window.__windowId__ + "', {\n  'is-visible': true,\n})"),
+      code = _useLocalState[0],
+      setCode = _useLocalState[1];
+
+  return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Button",
+    children: (0, _inferno.createComponentVNode)(2, _components.ByondUi, {
+      "params": {
+        type: 'button',
+        text: 'Button'
+      }
+    })
+  }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Make BYOND calls",
+    "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": "chevron-right",
+      "onClick": function () {
+        function onClick() {
+          return setImmediate(function () {
+            try {
+              var result = new Function('return (' + code + ')')();
+
+              if (result && result.then) {
+                _logging.logger.log('Promise');
+
+                result.then(_logging.logger.log);
+              } else {
+                _logging.logger.log(result);
+              }
+            } catch (err) {
+              _logging.logger.log(err);
+            }
+          });
+        }
+
+        return onClick;
+      }(),
+      children: "Evaluate"
+    }),
+    children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "as": "textarea",
+      "width": "100%",
+      "height": "10em",
+      "onChange": function () {
+        function onChange(e) {
+          return setCode(e.target.value);
+        }
+
+        return onChange;
+      }(),
+      children: code
+    })
+  })], 4);
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Collapsible.stories.js":
+/*!******************************************************!*\
+  !*** ./packages/tgui/stories/Collapsible.stories.js ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _common = __webpack_require__(/*! ./common */ "./packages/tgui/stories/common.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Collapsible',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Collapsible, {
+      "title": "Collapsible Demo",
+      "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "icon": "cog"
+      }),
+      children: (0, _inferno.createComponentVNode)(2, _common.BoxWithSampleText)
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Flex.stories.js":
+/*!***********************************************!*\
+  !*** ./packages/tgui/stories/Flex.stories.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Flex & Sections',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  var _useLocalState = (0, _backend.useLocalState)(context, 'fs_grow', 1),
+      grow = _useLocalState[0],
+      setGrow = _useLocalState[1];
+
+  var _useLocalState2 = (0, _backend.useLocalState)(context, 'fs_direction', 'column'),
+      direction = _useLocalState2[0],
+      setDirection = _useLocalState2[1];
+
+  var _useLocalState3 = (0, _backend.useLocalState)(context, 'fs_fill', true),
+      fill = _useLocalState3[0],
+      setFill = _useLocalState3[1];
+
+  var _useLocalState4 = (0, _backend.useLocalState)(context, 'fs_title', true),
+      hasTitle = _useLocalState4[0],
+      setHasTitle = _useLocalState4[1];
+
+  return (0, _inferno.createComponentVNode)(2, _components.Flex, {
+    "height": "100%",
+    "direction": "column",
+    children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      "mb": 1,
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+          "fluid": true,
+          "onClick": function () {
+            function onClick() {
+              return setDirection(direction === 'column' ? 'row' : 'column');
+            }
+
+            return onClick;
+          }(),
+          children: "Flex direction=\"" + direction + "\""
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "fluid": true,
+          "onClick": function () {
+            function onClick() {
+              return setGrow(Number(!grow));
+            }
+
+            return onClick;
+          }(),
+          children: "Flex.Item grow={" + grow + "}"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "fluid": true,
+          "onClick": function () {
+            function onClick() {
+              return setFill(!fill);
+            }
+
+            return onClick;
+          }(),
+          children: "Section fill={" + String(fill) + "}"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "fluid": true,
+          "selected": hasTitle,
+          "onClick": function () {
+            function onClick() {
+              return setHasTitle(!hasTitle);
+            }
+
+            return onClick;
+          }(),
+          children: "Section title"
+        })]
+      })
+    }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      "grow": 1,
+      children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
+        "height": "100%",
+        "direction": direction,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+          "mr": direction === 'row' && 1,
+          "mb": direction === 'column' && 1,
+          "grow": grow,
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            "title": hasTitle && 'Section 1',
+            "fill": fill,
+            children: "Content"
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+          "grow": grow,
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            "title": hasTitle && 'Section 2',
+            "fill": fill,
+            children: "Content"
+          })
+        })]
+      })
+    })]
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Input.stories.js":
+/*!************************************************!*\
+  !*** ./packages/tgui/stories/Input.stories.js ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Input',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  var _useLocalState = (0, _backend.useLocalState)(context, 'number', 0),
+      number = _useLocalState[0],
+      setNumber = _useLocalState[1];
+
+  var _useLocalState2 = (0, _backend.useLocalState)(context, 'text', "Sample text"),
+      text = _useLocalState2[0],
+      setText = _useLocalState2[1];
+
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Input (onChange)",
+        children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+          "value": text,
+          "onChange": function () {
+            function onChange(e, value) {
+              return setText(value);
+            }
+
+            return onChange;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Input (onInput)",
+        children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+          "value": text,
+          "onInput": function () {
+            function onInput(e, value) {
+              return setText(value);
+            }
+
+            return onInput;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "NumberInput (onChange)",
+        children: (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+          "animated": true,
+          "width": "40px",
+          "step": 1,
+          "stepPixelSize": 5,
+          "value": number,
+          "minValue": -100,
+          "maxValue": 100,
+          "onChange": function () {
+            function onChange(e, value) {
+              return setNumber(value);
+            }
+
+            return onChange;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "NumberInput (onDrag)",
+        children: (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+          "animated": true,
+          "width": "40px",
+          "step": 1,
+          "stepPixelSize": 5,
+          "value": number,
+          "minValue": -100,
+          "maxValue": 100,
+          "onDrag": function () {
+            function onDrag(e, value) {
+              return setNumber(value);
+            }
+
+            return onDrag;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Slider (onDrag)",
+        children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
+          "step": 1,
+          "stepPixelSize": 5,
+          "value": number,
+          "minValue": -100,
+          "maxValue": 100,
+          "onDrag": function () {
+            function onDrag(e, value) {
+              return setNumber(value);
+            }
+
+            return onDrag;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Knob (onDrag)",
+        children: [(0, _inferno.createComponentVNode)(2, _components.Knob, {
+          "inline": true,
+          "size": 1,
+          "step": 1,
+          "stepPixelSize": 2,
+          "value": number,
+          "minValue": -100,
+          "maxValue": 100,
+          "onDrag": function () {
+            function onDrag(e, value) {
+              return setNumber(value);
+            }
+
+            return onDrag;
+          }()
+        }), (0, _inferno.createComponentVNode)(2, _components.Knob, {
+          "ml": 1,
+          "inline": true,
+          "bipolar": true,
+          "size": 1,
+          "step": 1,
+          "stepPixelSize": 2,
+          "value": number,
+          "minValue": -100,
+          "maxValue": 100,
+          "onDrag": function () {
+            function onDrag(e, value) {
+              return setNumber(value);
+            }
+
+            return onDrag;
+          }()
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Rotating Icon",
+        children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "inline": true,
+          "position": "relative",
+          children: (0, _inferno.createComponentVNode)(2, _components.DraggableControl, {
+            "value": number,
+            "minValue": -100,
+            "maxValue": 100,
+            "dragMatrix": [0, -1],
+            "step": 1,
+            "stepPixelSize": 5,
+            "onDrag": function () {
+              function onDrag(e, value) {
+                return setNumber(value);
+              }
+
+              return onDrag;
+            }(),
+            children: function () {
+              function children(control) {
+                return (0, _inferno.createComponentVNode)(2, _components.Box, {
+                  "onMouseDown": control.handleDragStart,
+                  children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
+                    "size": 4,
+                    "color": "yellow",
+                    "name": "times",
+                    "rotation": control.displayValue * 4
+                  }), control.inputElement]
+                });
+              }
+
+              return children;
+            }()
+          })
+        })
+      })]
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Popper.stories.js":
+/*!*************************************************!*\
+  !*** ./packages/tgui/stories/Popper.stories.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var meta = {
+  title: "Popper",
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story() {
+  return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Popper, {
+    "popperContent": (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "style": {
+        background: "white",
+        border: "2px solid blue"
+      },
+      children: "Loogatme!"
+    }),
+    "options": {
+      placement: "bottom"
+    },
+    children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "style": {
+        border: "5px solid white",
+        height: "300px",
+        width: "200px"
+      }
+    })
+  }), (0, _inferno.createComponentVNode)(2, _components.Popper, {
+    "popperContent": (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "style": {
+        background: "white",
+        border: "2px solid blue"
+      },
+      children: "I am on the right!"
+    }),
+    "options": {
+      placement: "right"
+    },
+    children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "style": {
+        border: "5px solid white",
+        height: "500px",
+        width: "100px"
+      }
+    })
+  })], 4);
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/ProgressBar.stories.js":
+/*!******************************************************!*\
+  !*** ./packages/tgui/stories/ProgressBar.stories.js ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'ProgressBar',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  var _useLocalState = (0, _backend.useLocalState)(context, 'progress', 0.5),
+      progress = _useLocalState[0],
+      setProgress = _useLocalState[1];
+
+  var _useLocalState2 = (0, _backend.useLocalState)(context, 'color', ''),
+      color = _useLocalState2[0],
+      setColor = _useLocalState2[1];
+
+  var color_data = color ? {
+    color: color
+  } : {
+    ranges: {
+      good: [0.5, Infinity],
+      bad: [-Infinity, 0.1],
+      average: [0, 0.5]
+    }
+  };
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: [(0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _components.ProgressBar, Object.assign({}, color_data, {
+      "minValue": -1,
+      "maxValue": 1,
+      "value": progress,
+      children: ["Value: ", Number(progress).toFixed(1)]
+    }))), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "mt": 1,
+      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+        "mt": "2em",
+        children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Adjust value",
+          children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+            "content": "-0.1",
+            "onClick": function () {
+              function onClick() {
+                return setProgress(progress - 0.1);
+              }
+
+              return onClick;
+            }()
+          }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "content": "+0.1",
+            "onClick": function () {
+              function onClick() {
+                return setProgress(progress + 0.1);
+              }
+
+              return onClick;
+            }()
+          })]
+        }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Override color",
+          children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+            "value": color,
+            "onChange": function () {
+              function onChange(e, value) {
+                return setColor(value);
+              }
+
+              return onChange;
+            }()
+          })
+        })]
+      })
+    })]
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Stack.stories.js":
+/*!************************************************!*\
+  !*** ./packages/tgui/stories/Stack.stories.js ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Stack',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Filler = function Filler() {
+  return (0, _inferno.createComponentVNode)(2, _components.Box, {
+    "inline": true,
+    "width": 1,
+    "height": 1,
+    children: "A"
+  });
+};
+
+var SmallStackItems = function SmallStackItems() {
+  return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+    children: (0, _inferno.createComponentVNode)(2, Filler)
+  }), (0, _inferno.createComponentVNode)(2, _components.Stack.Divider), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+    children: (0, _inferno.createComponentVNode)(2, Filler)
+  })], 4);
+};
+
+var Story = function Story(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "fill": true,
+    children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+      "fill": true,
+      "className": "debug-layout",
+      children: [(0, _inferno.createComponentVNode)(2, SmallStackItems), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        "grow": 1,
+        children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+          "fill": true,
+          "zebra": true,
+          "vertical": true,
+          children: [(0, _inferno.createComponentVNode)(2, SmallStackItems), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+            children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+              "fill": true,
+              children: [(0, _inferno.createComponentVNode)(2, SmallStackItems), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                "grow": 1
+              }), (0, _inferno.createComponentVNode)(2, SmallStackItems), (0, _inferno.createComponentVNode)(2, SmallStackItems)]
+            })
+          }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+            "grow": 1
+          }), (0, _inferno.createComponentVNode)(2, SmallStackItems)]
+        })
+      })]
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Storage.stories.js":
+/*!**************************************************!*\
+  !*** ./packages/tgui/stories/Storage.stories.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _storage = __webpack_require__(/*! common/storage */ "./packages/common/storage.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _format = __webpack_require__(/*! ../format */ "./packages/tgui/format.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Storage',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  if (!window.localStorage) {
+    return (0, _inferno.createComponentVNode)(2, _components.NoticeBox, {
+      children: "Local storage is not available."
+    });
+  }
+
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Local Storage",
+    "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": "recycle",
+      "onClick": function () {
+        function onClick() {
+          localStorage.clear();
+
+          _storage.storage.clear();
+        }
+
+        return onClick;
+      }(),
+      children: "Clear"
+    }),
+    children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Keys in use",
+        children: localStorage.length
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Remaining space",
+        children: (0, _format.formatSiUnit)(localStorage.remainingSpace, 0, 'B')
+      })]
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Tabs.stories.js":
+/*!***********************************************!*\
+  !*** ./packages/tgui/stories/Tabs.stories.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Tabs',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+var TAB_RANGE = ['Tab #1', 'Tab #2', 'Tab #3', 'Tab #4'];
+
+var Story = function Story(props, context) {
+  var _useLocalState = (0, _backend.useLocalState)(context, 'tabProps', {}),
+      tabProps = _useLocalState[0],
+      setTabProps = _useLocalState[1];
+
+  return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "inline": true,
+      "content": "vertical",
+      "checked": tabProps.vertical,
+      "onClick": function () {
+        function onClick() {
+          return setTabProps(Object.assign({}, tabProps, {
+            vertical: !tabProps.vertical
+          }));
+        }
+
+        return onClick;
+      }()
+    }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "inline": true,
+      "content": "leftSlot",
+      "checked": tabProps.leftSlot,
+      "onClick": function () {
+        function onClick() {
+          return setTabProps(Object.assign({}, tabProps, {
+            leftSlot: !tabProps.leftSlot
+          }));
+        }
+
+        return onClick;
+      }()
+    }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "inline": true,
+      "content": "rightSlot",
+      "checked": tabProps.rightSlot,
+      "onClick": function () {
+        function onClick() {
+          return setTabProps(Object.assign({}, tabProps, {
+            rightSlot: !tabProps.rightSlot
+          }));
+        }
+
+        return onClick;
+      }()
+    }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "inline": true,
+      "content": "icon",
+      "checked": tabProps.icon,
+      "onClick": function () {
+        function onClick() {
+          return setTabProps(Object.assign({}, tabProps, {
+            icon: !tabProps.icon
+          }));
+        }
+
+        return onClick;
+      }()
+    }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "inline": true,
+      "content": "fluid",
+      "checked": tabProps.fluid,
+      "onClick": function () {
+        function onClick() {
+          return setTabProps(Object.assign({}, tabProps, {
+            fluid: !tabProps.fluid
+          }));
+        }
+
+        return onClick;
+      }()
+    }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "inline": true,
+      "content": "centered",
+      "checked": tabProps.centered,
+      "onClick": function () {
+        function onClick() {
+          return setTabProps(Object.assign({}, tabProps, {
+            centered: !tabProps.centered
+          }));
+        }
+
+        return onClick;
+      }()
+    })]
+  }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "fitted": true,
+    children: (0, _inferno.createComponentVNode)(2, TabsPrefab)
+  }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Normal section",
+    children: [(0, _inferno.createComponentVNode)(2, TabsPrefab), "Some text"]
+  }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: "Section-less tabs appear the same as tabs in a fitted section:"
+  }), (0, _inferno.createComponentVNode)(2, TabsPrefab)], 4);
+};
+
+var TabsPrefab = function TabsPrefab(props, context) {
+  var _useLocalState2 = (0, _backend.useLocalState)(context, 'tabIndex', 0),
+      tabIndex = _useLocalState2[0],
+      setTabIndex = _useLocalState2[1];
+
+  var _useLocalState3 = (0, _backend.useLocalState)(context, 'tabProps', {}),
+      tabProps = _useLocalState3[0];
+
+  return (0, _inferno.createComponentVNode)(2, _components.Tabs, {
+    "vertical": tabProps.vertical,
+    "fluid": tabProps.fluid,
+    "textAlign": tabProps.centered && 'center',
+    children: TAB_RANGE.map(function (text, i) {
+      return (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+        "selected": i === tabIndex,
+        "icon": tabProps.icon && 'info-circle',
+        "leftSlot": tabProps.leftSlot && (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "circular": true,
+          "compact": true,
+          "color": "transparent",
+          "icon": "times"
+        }),
+        "rightSlot": tabProps.rightSlot && (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "circular": true,
+          "compact": true,
+          "color": "transparent",
+          "icon": "times"
+        }),
+        "onClick": function () {
+          function onClick() {
+            return setTabIndex(i);
+          }
+
+          return onClick;
+        }(),
+        children: text
+      }, i);
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Themes.stories.js":
+/*!*************************************************!*\
+  !*** ./packages/tgui/stories/Themes.stories.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Themes',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story(props, context) {
+  var _useLocalState = (0, _backend.useLocalState)(context, 'kitchenSinkTheme'),
+      theme = _useLocalState[0],
+      setTheme = _useLocalState[1];
+
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Use theme",
+        children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+          "placeholder": "theme_name",
+          "value": theme,
+          "onInput": function () {
+            function onInput(e, value) {
+              return setTheme(value);
+            }
+
+            return onInput;
+          }()
+        })
+      })
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/Tooltip.stories.js":
+/*!**************************************************!*\
+  !*** ./packages/tgui/stories/Tooltip.stories.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.meta = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var meta = {
+  title: 'Tooltip',
+  render: function () {
+    function render() {
+      return (0, _inferno.createComponentVNode)(2, Story);
+    }
+
+    return render;
+  }()
+};
+exports.meta = meta;
+
+var Story = function Story() {
+  var positions = ['top', 'left', 'right', 'bottom', 'bottom-start', 'bottom-end'];
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+        "content": "Tooltip text.",
+        children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "inline": true,
+          "position": "relative",
+          "mr": 1,
+          children: "Box (hover me)."
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "tooltip": "Tooltip text.",
+        "content": "Button"
+      })]
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "mt": 1,
+      children: positions.map(function (position) {
+        return (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "color": "transparent",
+          "tooltip": "Tooltip text.",
+          "tooltipPosition": position,
+          "content": position
+        }, position);
+      })
+    })]
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/stories/common.js":
+/*!*****************************************!*\
+  !*** ./packages/tgui/stories/common.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.BoxWithSampleText = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2021 Aleksej Komarov
+ * @license MIT
+ */
+var BoxWithSampleText = function BoxWithSampleText(props) {
+  return (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _components.Box, Object.assign({}, props, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+      "italic": true,
+      children: "Jackdaws love my big sphinx of quartz."
+    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "mt": 1,
+      "bold": true,
+      children: "The wide electrification of the southern provinces will give a powerful impetus to the growth of agriculture."
+    })]
+  })));
+};
+
+exports.BoxWithSampleText = BoxWithSampleText;
+
+/***/ }),
+
 /***/ "./packages/tgui/styles/main.scss":
 /*!****************************************!*\
   !*** ./packages/tgui/styles/main.scss ***!
@@ -47139,9 +52147,7 @@ exports.createRenderer = createRenderer;
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 var map = {
-	"./Button.test.tsx": "./packages/tgui-bench/tests/Button.test.tsx",
-	"./Flex.test.tsx": "./packages/tgui-bench/tests/Flex.test.tsx",
-	"./Stack.test.tsx": "./packages/tgui-bench/tests/Stack.test.tsx"
+	"./Image.test.tsx": "./packages/tgui-bench/tests/Image.test.tsx"
 };
 
 
@@ -47163,6 +52169,52 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = "./packages/tgui-bench/tests sync \\.test\\.";
+
+/***/ }),
+
+/***/ "./packages/tgui/stories sync \\.stories\\.js$":
+/*!*****************************************************************!*\
+  !*** ./packages/tgui/stories/ sync nonrecursive \.stories\.js$ ***!
+  \*****************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var map = {
+	"./Blink.stories.js": "./packages/tgui/stories/Blink.stories.js",
+	"./BlockQuote.stories.js": "./packages/tgui/stories/BlockQuote.stories.js",
+	"./Box.stories.js": "./packages/tgui/stories/Box.stories.js",
+	"./Button.stories.js": "./packages/tgui/stories/Button.stories.js",
+	"./ByondUi.stories.js": "./packages/tgui/stories/ByondUi.stories.js",
+	"./Collapsible.stories.js": "./packages/tgui/stories/Collapsible.stories.js",
+	"./Flex.stories.js": "./packages/tgui/stories/Flex.stories.js",
+	"./Input.stories.js": "./packages/tgui/stories/Input.stories.js",
+	"./Popper.stories.js": "./packages/tgui/stories/Popper.stories.js",
+	"./ProgressBar.stories.js": "./packages/tgui/stories/ProgressBar.stories.js",
+	"./Stack.stories.js": "./packages/tgui/stories/Stack.stories.js",
+	"./Storage.stories.js": "./packages/tgui/stories/Storage.stories.js",
+	"./Tabs.stories.js": "./packages/tgui/stories/Tabs.stories.js",
+	"./Themes.stories.js": "./packages/tgui/stories/Themes.stories.js",
+	"./Tooltip.stories.js": "./packages/tgui/stories/Tooltip.stories.js"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./packages/tgui/stories sync \\.stories\\.js$";
 
 /***/ }),
 
