@@ -166,6 +166,10 @@
 	custom_gib_handler = /proc/minibonegibs
 	is_npc = FALSE
 
+	New()
+		..()
+		src.Scale(0.4, 0.4)
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if (act == "scream")
 			if (src.emote_check(voluntary, 50))

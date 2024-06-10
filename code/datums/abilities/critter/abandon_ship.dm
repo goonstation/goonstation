@@ -15,10 +15,14 @@
 		..()
 		var/mob/living/skele = holder.owner
 		var/obj/item/skull = skele.loc
-		ThrowRandom(skull, 1)
-		skele.set_loc(get_turf(skele))
-		skull.contents -= skele
-		SPAWN(10)
-			skele.emote("scream")
-		SPAWN(60)
-			skele.gib()
+		if (istype(skull, /obj/item/organ/head))
+			skele.abilityHolder.removeAbility(/datum/targetable/critter/abandon_ship)
+			ThrowRandom(skull, 1)
+			skull.contents -= skele
+			skele.set_loc(get_turf(skull))
+			SPAWN(10)
+				skele.emote("scream")
+			SPAWN(60)
+				skele.gib()
+		else
+			boutput(skele, "You're not inside your head!")
