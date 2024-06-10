@@ -233,9 +233,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/self_click_fluff //used when clicking self on help intent
 
 	/// Abilityholder associated with this mutantrace, will be automatically given to mobs on spawn
-	var/datum/abilityHolder/mutant_abilityholder = null
+	var/mutant_abilityholder = null
 	/// List of abilities associated with this mutantrace, requires mutant_abilityholder to be set
-	var/list/datum/targetable/mutant_abilities = list()
+	var/list/mutant_abilities = list()
 
 	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
 	/// Each sub-proc passes its obj to this proc, which you can then operate on.
