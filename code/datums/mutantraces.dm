@@ -1108,11 +1108,11 @@ TYPEINFO(/datum/mutantrace/skeleton)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
+			set_head(M.organHolder.head)
 
 	disposing()
 		if (ishuman(src.mob))
 			src.mob.mob_flags &= ~IS_BONEY
-			set_head(M.organHolder.head)
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
