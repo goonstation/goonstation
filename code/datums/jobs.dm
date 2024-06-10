@@ -1249,25 +1249,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
-<<<<<<< HEAD
-	New()
-		..()
-		src.access = get_access("Atmospheric Technician")
-		return
-=======
-/datum/job/special/tech_assistant
-	name = "Technical Assistant"
-	linkcolor = "#FF9900"
-	limit = 2
-	wages = PAY_UNTRAINED
-	access_string = "Technical Assistant"
-	low_priority_job = TRUE
-	slot_jump = list(/obj/item/clothing/under/color/yellow)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	slot_belt = list(/obj/item/device/pda2/technical_assistant)
-	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
->>>>>>> c4991037095c23b531d0fec8f5e169ef970fa4e1
 
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
