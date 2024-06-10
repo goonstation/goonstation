@@ -6029,13 +6029,6 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hangar/science)
-"auo" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "aup" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
@@ -11214,11 +11207,6 @@
 /area/station/security/checkpoint/west)
 "aLn" = (
 /obj/item/weldingtool,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
-"aLp" = (
-/obj/decal/cleanable/dirt,
-/obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aLq" = (
@@ -19042,20 +19030,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
-"brM" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
-	pixel_y = 8
-	},
-/obj/ladder{
-	id = "observatory";
-	layer = 2
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/observatory)
 "brO" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
@@ -24704,12 +24678,6 @@
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"bLt" = (
-/obj/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "bLu" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/vending/cola/blue,
@@ -25780,10 +25748,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"bPv" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "bPw" = (
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/drone_recharger,
@@ -27041,18 +27005,6 @@
 	move_lag = 30;
 	operating = 1
 	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/maintenance/disposal)
-"bTE" = (
-/obj/machinery/conveyor/NS{
-	id = "garbage";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/disposaloutlet,
-/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -30148,10 +30100,6 @@
 "ceD" = (
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
-"ceE" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "ceF" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "engineering";
@@ -31057,10 +31005,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"chW" = (
-/obj/machinery/computer/ordercomp,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest)
 "chY" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -31476,10 +31420,6 @@
 "ckG" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/grime,
-/area/station/maintenance/inner/central)
-"ckH" = (
-/obj/reagent_dispensers/beerkeg,
-/turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckI" = (
 /obj/item/reagent_containers/food/drinks/fueltank,
@@ -32181,11 +32121,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
-"cId" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chips,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "cIu" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Nerd Dungeon"
@@ -32382,6 +32317,10 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
+"cYb" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "cZs" = (
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
@@ -35375,6 +35314,13 @@
 /obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"gPV" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "gQd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35835,6 +35781,11 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
+"hGD" = (
+/obj/decal/cleanable/dirt,
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "hGR" = (
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
@@ -36957,10 +36908,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
-"jpJ" = (
-/obj/machinery/firealarm/west,
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "jqr" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -37153,6 +37100,14 @@
 	name = "organic floor"
 	},
 /area/evilreaver/atmospherics)
+"jIc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/item/furniture_parts/dining_chair/wood,
+/obj/item/furniture_parts/dining_chair/wood,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "jIt" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
@@ -38548,6 +38503,12 @@
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"lRv" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "lRR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -38837,14 +38798,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/bar,
 /area/evilreaver/bar)
-"mlL" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/item/furniture_parts/dining_chair/wood,
-/obj/item/furniture_parts/dining_chair/wood,
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/central)
 "mlT" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -39024,6 +38977,11 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/observatory)
+"mAB" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/fifty,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -39784,6 +39742,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
+"nrW" = (
+/obj/machinery/firealarm/west,
+/obj/machinery/computer/announcement/clown{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
 "ntg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -40838,11 +40803,6 @@
 /obj/grille/steel,
 /turf/space/fluid,
 /area/station/com_dish/research_outpost)
-"oUO" = (
-/obj/table/reinforced/auto,
-/obj/item/currency/spacecash/fifty,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "oVm" = (
 /obj/table/round/auto,
 /obj/item/device/audio_log,
@@ -42036,6 +41996,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/black,
 /area/research_outpost/chamber)
+"qDI" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "qDU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -42160,6 +42124,20 @@
 /obj/landmark/start/job/bartender,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"qNP" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/security/wooden_tv{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television";
+	network = "Zeta";
+	pixel_y = 8
+	},
+/obj/ladder{
+	id = "observatory";
+	layer = 2
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/observatory)
 "qNY" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/access/brig,
@@ -43134,6 +43112,10 @@
 /obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"sCI" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "sCW" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -43711,6 +43693,10 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"tuu" = (
+/obj/machinery/computer/ordercomp,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "tux" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Bar"
@@ -44500,6 +44486,11 @@
 /obj/decal/fakeobjects/oven,
 /turf/simulated/floor/grime,
 /area/derelict_diner)
+"uXY" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/chips,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "uYc" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -45121,6 +45112,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"wdi" = (
+/obj/machinery/conveyor/NS{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/disposaloutlet,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/maintenance/disposal)
 "wdA" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
@@ -75330,7 +75333,7 @@ ceX
 dcZ
 bqm
 boV
-brM
+qNP
 sxQ
 ydb
 brI
@@ -75945,13 +75948,13 @@ chZ
 bxx
 cib
 cia
-oUO
+mAB
 chZ
 fQm
 fQm
 fQm
 chZ
-cId
+uXY
 cin
 btZ
 cij
@@ -76553,7 +76556,7 @@ btZ
 btZ
 btZ
 btZ
-bPv
+cYb
 wPM
 btZ
 btZ
@@ -77078,7 +77081,7 @@ aqn
 aqn
 aqn
 ahb
-chW
+tuu
 chY
 agY
 agY
@@ -81941,7 +81944,7 @@ oCz
 oCz
 oCz
 aBz
-aLp
+hGD
 brX
 cfK
 cfK
@@ -85326,7 +85329,7 @@ bPq
 bLY
 bRr
 bSz
-bTE
+wdi
 bNA
 bVI
 bUO
@@ -85593,7 +85596,7 @@ xdO
 rae
 vSA
 eHj
-mlL
+jIc
 aCD
 aCD
 aCD
@@ -86832,7 +86835,7 @@ bJJ
 bJJ
 bNm
 bJJ
-ceE
+sCI
 bQs
 bRw
 mHe
@@ -99476,7 +99479,7 @@ aCD
 aCD
 cky
 ckz
-ckH
+qDI
 aCD
 aCD
 aCD
@@ -100347,7 +100350,7 @@ aoj
 atW
 aoj
 arz
-jpJ
+nrW
 bdq
 cio
 arz
@@ -102532,7 +102535,7 @@ bHI
 bIm
 bJo
 aud
-bLt
+lRv
 bMC
 bNQ
 bOS
@@ -109708,7 +109711,7 @@ aqz
 ezJ
 aRB
 anB
-auo
+gPV
 avG
 aoj
 aoj

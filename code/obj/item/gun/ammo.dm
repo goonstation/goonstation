@@ -37,6 +37,7 @@
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
+	// 1.05  - 4 gauge
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
@@ -962,6 +963,40 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_COILGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+
+//1.05
+/obj/item/ammo/bullets/kuvalda
+	sname = "Shrapnel-10"
+	name = "Shrapnel-10"
+	desc = "A handful of oversized buckshot shells, for a VERY big gun. If you <b>MUST</b> have your opponents splattered into a 10 metre cone of viscera..."
+	ammo_type = new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	icon_state = "shrapnel"
+	icon_short = "shrapnel"
+	icon_empty = ""
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = TRUE
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/kuvaldaload.ogg'
+	empty
+		amount_left = 0
+
+
+/obj/item/ammo/bullets/kuvalda/slug
+	sname = "Barrikada Slug"
+	name = "Barrikada Slug"
+	desc = "A handful of oversized slug shotshells, for a VERY big gun. These are supposed to be used against vehicle engine blocks..."
+	ammo_type = new/datum/projectile/bullet/kuvalda_slug
+	icon_state = "barrikada"
+	icon_short = "barrikada"
+	icon_empty = ""
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = TRUE
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/kuvaldaload.ogg'
 /obj/item/ammo/bullets/four_bore
 	sname = "Four-Bore Termination Round"
 	name = "four-bore termination rounds"

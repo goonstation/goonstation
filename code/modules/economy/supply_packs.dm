@@ -1010,7 +1010,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Blood Bank"
 	desc = "An emergency supply of blood."
 	category = "Medical Department"
-	contains = list (/obj/item/reagent_containers/iv_drip/blood = 4)
+	contains = list (/obj/item/reagent_containers/iv_drip/blood = 2,
+					/obj/item/reagent_containers/iv_drip/saline = 2)
 	cost = PAY_DOCTORATE*2
 	containertype = /obj/storage/crate/medical
 	containername = "Blood Bank"

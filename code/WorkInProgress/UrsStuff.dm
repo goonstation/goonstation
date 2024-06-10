@@ -129,3 +129,11 @@
 
 		random_start
 			randomize_start = 1
+
+/obj/item/storage/box/nametags
+	name = "box of nametags"
+	desc = "A box of little nametags for your favorite ranch animals!"
+	icon_state = "box"
+	#ifdef SECRETS_ENABLED
+	spawn_contents = list(/obj/item/ranch_nametag= 7)
+	#endif

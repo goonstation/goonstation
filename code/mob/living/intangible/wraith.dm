@@ -334,7 +334,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	ex_act(severity)
 		if (!src.density) return
