@@ -169,10 +169,12 @@
 
 /datum/manufacture/mechanics/ai_status_display
 	name = "AI display"
+	item_requirements = list("metal" = 2,
+							"conductive" = 6,
+							"crystal" = 6,)
 	create = 1
 	time = 5 SECONDS
 	frame_path = /obj/machinery/ai_status_display
-	generate_costs = TRUE
 
 /******************** Laser beam things *******************/
 
