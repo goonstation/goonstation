@@ -76,6 +76,14 @@ td, th {
   background-color: rgba(0, 0, 0, 0.25);
 }
 
+.centered-image {
+  position: absolute;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) scale(0.8);
+}
+
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -138,6 +146,10 @@ td, th {
 
 .color-grey {
   color: #848484 !important;
+}
+
+.color-light-grey {
+  color: #b3b3b3 !important;
 }
 
 .color-good {
@@ -212,6 +224,10 @@ td, th {
   background-color: #646464 !important;
 }
 
+.color-bg-light-grey {
+  background-color: #919191 !important;
+}
+
 .color-bg-good {
   background-color: #4d9121 !important;
 }
@@ -244,6 +260,117 @@ td, th {
 .debug-layout:hover,
 .debug-layout *:not(g):not(path):hover {
   outline-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+@media all and (min-width: 100px) {
+  .fit-text {
+    font-size: 0.1em;
+  }
+}
+@media all and (min-width: 200px) {
+  .fit-text {
+    font-size: 0.2em;
+  }
+}
+@media all and (min-width: 300px) {
+  .fit-text {
+    font-size: 0.3em;
+  }
+}
+@media all and (min-width: 400px) {
+  .fit-text {
+    font-size: 0.4em;
+  }
+}
+@media all and (min-width: 500px) {
+  .fit-text {
+    font-size: 0.5em;
+  }
+}
+@media all and (min-width: 600px) {
+  .fit-text {
+    font-size: 0.6em;
+  }
+}
+@media all and (min-width: 700px) {
+  .fit-text {
+    font-size: 0.7em;
+  }
+}
+@media all and (min-width: 800px) {
+  .fit-text {
+    font-size: 0.8em;
+  }
+}
+@media all and (min-width: 900px) {
+  .fit-text {
+    font-size: 0.9em;
+  }
+}
+@media all and (min-width: 1000px) {
+  .fit-text {
+    font-size: 1em;
+  }
+}
+@media all and (min-width: 1100px) {
+  .fit-text {
+    font-size: 1.1em;
+  }
+}
+@media all and (min-width: 1200px) {
+  .fit-text {
+    font-size: 1.2em;
+  }
+}
+@media all and (min-width: 1300px) {
+  .fit-text {
+    font-size: 1.3em;
+  }
+}
+@media all and (min-width: 1400px) {
+  .fit-text {
+    font-size: 1.4em;
+  }
+}
+@media all and (min-width: 1500px) {
+  .fit-text {
+    font-size: 1.5em;
+  }
+}
+@media all and (min-width: 1600px) {
+  .fit-text {
+    font-size: 1.6em;
+  }
+}
+@media all and (min-width: 1700px) {
+  .fit-text {
+    font-size: 1.7em;
+  }
+}
+@media all and (min-width: 1800px) {
+  .fit-text {
+    font-size: 1.8em;
+  }
+}
+@media all and (min-width: 1900px) {
+  .fit-text {
+    font-size: 1.9em;
+  }
+}
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2021 Celotajs (https://github.com/celotajstg)
+ * SPDX-License-Identifier: MIT
+ */
+a:link, a:visited {
+  color: #2185d0;
+}
+
+a:hover, a:active {
+  color: #4972a1;
 }
 
 /**
@@ -340,6 +467,10 @@ td, th {
 
 .outline-color-grey {
   outline: 0.167rem solid #848484 !important;
+}
+
+.outline-color-light-grey {
+  outline: 0.167rem solid #b3b3b3 !important;
 }
 
 .outline-color-good {
@@ -440,6 +571,8 @@ td, th {
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
+ * Changes: Mordent (FA6)
  */
 .Button {
   position: relative;
@@ -460,18 +593,28 @@ td, th {
   margin-bottom: 0;
 }
 
-.Button .fa, .Button .fas, .Button .far {
-  margin-left: -0.25em;
-  margin-right: -0.25em;
+.Button .fa, .Button .fa-solid, .Button .fa-regular {
+  margin-left: 0;
+  margin-right: 0;
   min-width: 1.333em;
   text-align: center;
 }
 
-.Button--hasContent .fa, .Button--hasContent .fas, .Button--hasContent .far {
+.Button--hasContent .fa, .Button--hasContent .fa-solid, .Button--hasContent .fa-regular {
   margin-right: 0.25em;
 }
 
+.Button--hasContent.Button--iconPosition--right .fa, .Button--hasContent.Button--iconPosition--right .fas, .Button--hasContent.Button--iconPosition--right .far {
+  margin-right: 0px;
+  margin-left: 3px;
+}
+
 .Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -813,6 +956,29 @@ td, th {
   background-color: #a8a8a8;
 }
 
+.Button--color--light-grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #919191;
+  color: white;
+}
+
+.Button--color--light-grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--light-grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--light-grey:hover, .Button--color--light-grey:focus {
+  background-color: #bababa;
+  color: white;
+}
+
+.Button--color--light-grey:active {
+  background-color: #e2e2e2;
+}
+
 .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: #4d9121;
@@ -1026,6 +1192,32 @@ td, th {
   background-color: #59da78;
 }
 
+.Button--flex {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
+}
+
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -1162,7 +1354,6 @@ td, th {
 .Dropdown__selected-text {
   display: inline-block;
   text-overflow: ellipsis;
-  overflow: hidden;
   white-space: nowrap;
   height: 1.4166666667em;
   width: calc(100% - 1.2em);
@@ -1182,42 +1373,19 @@ td, th {
 }
 
 .Flex--iefix {
-  display: table !important;
-  width: 105%;
-  border-collapse: collapse;
-  border-spacing: 0;
+  display: block;
 }
 
-.Flex--iefix:after {
-  content: "";
-  display: table-cell;
-  width: 5%;
-}
-
-.Flex--iefix--column {
-  display: table !important;
-  width: 100% !important;
-  height: 100% !important;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.Flex--iefix--column > .Flex__item--iefix {
-  display: table-row !important;
-}
-
-.Flex--iefix--column > .Flex__item--iefix--grow {
-  height: 100% !important;
+.Flex--iefix.Flex--inline {
+  display: inline-block;
 }
 
 .Flex__item--iefix {
-  display: table-cell !important;
-  width: 1% !important;
-  min-width: 99%;
+  display: inline-block;
 }
 
-.Flex__item--iefix--grow {
-  width: auto !important;
+.Flex--iefix--column > .Flex__item--iefix {
+  display: block;
 }
 
 /**
@@ -1556,10 +1724,6 @@ td, th {
   content: ".";
 }
 
-.Image--pixelated {
-  -ms-interpolation-mode: nearest-neighbor;
-}
-
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -1797,6 +1961,10 @@ td, th {
   stroke: #848484;
 }
 
+.Knob--color--light-grey .Knob__ringFill {
+  stroke: #b3b3b3;
+}
+
 .Knob--color--good .Knob__ringFill {
   stroke: #68c22d;
 }
@@ -1846,10 +2014,9 @@ td, th {
   padding: 0.25em 0.5em;
   border: 0;
   text-align: left;
-  vertical-align: baseline;
 }
 
-.LabeledList__label {
+.LabeledList__label--nowrap {
   width: 1%;
   white-space: nowrap;
   min-width: 5em;
@@ -1972,6 +2139,11 @@ td, th {
 .NoticeBox--color--grey {
   color: white;
   background-color: #3e3e3e;
+}
+
+.NoticeBox--color--light-grey {
+  color: white;
+  background-color: #6a6a6a;
 }
 
 .NoticeBox--color--good {
@@ -2165,7 +2337,7 @@ td, th {
  * SPDX-License-Identifier: MIT
  */
 .ProgressBar {
-  display: inline-block;
+  display: flex;
   position: relative;
   width: 100%;
   padding: 0 0.5em;
@@ -2174,6 +2346,7 @@ td, th {
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0);
   transition: border-color 900ms ease-out;
+  align-items: center;
 }
 
 .ProgressBar__fill {
@@ -2312,6 +2485,14 @@ td, th {
 
 .ProgressBar--color--grey .ProgressBar__fill {
   background-color: #646464;
+}
+
+.ProgressBar--color--light-grey {
+  border-color: #919191 !important;
+}
+
+.ProgressBar--color--light-grey .ProgressBar__fill {
+  background-color: #919191;
 }
 
 .ProgressBar--color--good {
@@ -2461,6 +2642,10 @@ td, th {
   stroke: #848484;
 }
 
+.RoundGauge--color--light-grey.RoundGauge__ringFill {
+  stroke: #b3b3b3;
+}
+
 .RoundGauge--color--good.RoundGauge__ringFill {
   stroke: #68c22d;
 }
@@ -2557,6 +2742,12 @@ td, th {
 
 .RoundGauge__alert--grey {
   fill: #848484;
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: RoundGauge__alertAnim 1s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+}
+
+.RoundGauge__alert--light-grey {
+  fill: #b3b3b3;
   transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   animation: RoundGauge__alertAnim 1s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
 }
@@ -2700,6 +2891,26 @@ td, th {
   overflow-x: hidden;
 }
 
+.Section--scrollableHorizontal {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.Section--scrollableHorizontal > .Section__rest > .Section__content {
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.Section--scrollable.Section--scrollableHorizontal {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.Section--scrollable.Section--scrollableHorizontal > .Section__rest > .Section__content {
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
 .Section .Section {
   background-color: transparent;
   margin-left: -0.5em;
@@ -2716,33 +2927,6 @@ td, th {
 
 .Section .Section .Section .Section__titleText {
   font-size: 1em;
-}
-
-/**
- * @file
- * @copyright 2022
- * @author CodeJester (https://github.com/codeJester27)
- * @license ISC
- */
-.SectionEx .Section__title {
-  display: flex;
-}
-
-.SectionEx .Section__titleText {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: auto;
-}
-
-.SectionEx .Section__buttons {
-  position: inherit;
-  right: inherit;
-  flex: none;
-}
-
-.SectionEx__capitalize .Section__titleText {
-  text-transform: capitalize;
 }
 
 /**
@@ -2844,6 +3028,10 @@ td, th {
 
 .Stack--vertical > .Stack__item:first-child {
   margin-top: 0;
+}
+
+.Stack--zebra > .Stack__item:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.33);
 }
 
 .Stack--horizontal > .Stack__divider:not(.Stack__divider--hidden) {
@@ -3182,6 +3370,18 @@ td, th {
   border-right-color: #848484;
 }
 
+.Tab--selected.Tab--color--light-grey {
+  color: #c6c6c6;
+}
+
+.Tabs--horizontal .Tab--selected.Tab--color--light-grey {
+  border-bottom-color: #b3b3b3;
+}
+
+.Tabs--vertical .Tab--selected.Tab--color--light-grey {
+  border-right-color: #b3b3b3;
+}
+
 .Tab--selected.Tab--color--good {
   color: #8cd95a;
 }
@@ -3368,7 +3568,7 @@ td, th {
   padding: 0.5em 0.75em;
   pointer-events: none;
   text-align: left;
-  transition: all 150ms ease-out;
+  transition: opacity 150ms ease-out;
   background-color: #000000;
   color: #ffffff;
   box-shadow: 0.1em 0.1em 1.25em -0.1em rgba(0, 0, 0, 0.5);
@@ -3406,6 +3606,8 @@ td, th {
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
+ * Changes: Mordent (FA6)
  */
 .Button {
   position: relative;
@@ -3426,18 +3628,28 @@ td, th {
   margin-bottom: 0;
 }
 
-.Button .fa, .Button .fas, .Button .far {
-  margin-left: -0.25em;
-  margin-right: -0.25em;
+.Button .fa, .Button .fa-solid, .Button .fa-regular {
+  margin-left: 0;
+  margin-right: 0;
   min-width: 1.333em;
   text-align: center;
 }
 
-.Button--hasContent .fa, .Button--hasContent .fas, .Button--hasContent .far {
+.Button--hasContent .fa, .Button--hasContent .fa-solid, .Button--hasContent .fa-regular {
   margin-right: 0.25em;
 }
 
+.Button--hasContent.Button--iconPosition--right .fa, .Button--hasContent.Button--iconPosition--right .fas, .Button--hasContent.Button--iconPosition--right .far {
+  margin-right: 0px;
+  margin-left: 3px;
+}
+
 .Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -3779,6 +3991,29 @@ td, th {
   background-color: #a8a8a8;
 }
 
+.Button--color--light-grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #919191;
+  color: white;
+}
+
+.Button--color--light-grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--light-grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--light-grey:hover, .Button--color--light-grey:focus {
+  background-color: #bababa;
+  color: white;
+}
+
+.Button--color--light-grey:active {
+  background-color: #e2e2e2;
+}
+
 .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: #4d9121;
@@ -3990,6 +4225,32 @@ td, th {
 
 .Button--selected:active {
   background-color: #59da78;
+}
+
+.Button--flex {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
 }
 
 .AccessPanel-wires-btn.Button--selected {
@@ -4047,6 +4308,219 @@ td, th {
  * SPDX-License-Identifier: MIT
  */
 /**
+ * @file
+ * @copyright 2023
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license ISC
+ */
+.Layout__content {
+  background-image: none !important;
+}
+
+.CurrentBan {
+  background-color: rgba(0, 255, 0, 0.2);
+  font-weight: bold;
+}
+
+.ExpiredBan {
+  background-color: rgba(255, 0, 0, 0.2);
+  font-style: italic;
+}
+
+.BanText {
+  padding: 0.25rem;
+}
+
+a.NoColor {
+  color: inherit;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * @file
+ * @copyright 2022
+ * @author DisturbHerb (https://github.com/DisturbHerb/)
+ * @license MIT
+ */
+.cashreg__ownerbutton, .cashreg__pay, .cashreg__tip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cashreg__ownerbutton > *, .cashreg__pay > *, .cashreg__tip > * {
+  padding: 0.5em 0.1em;
+}
+
+.cashreg__centerpart {
+  font-size: 1.5rem;
+}
+
+.cashreg__amount:hover {
+  background-color: #439de1;
+}
+
+.cashreg__table {
+  width: 80%;
+}
+
+.cashreg__table_cellright {
+  text-align: right;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * MIT License
+ * https://github.com/omgovich/react-colorful/
+ *
+ * Copyright (c) 2020 Vlad Shilov <omgovich@ya.ru>
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+.react-colorful {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 200px;
+  user-select: none;
+  cursor: default;
+}
+
+.react-colorful__saturation_value {
+  position: relative;
+  flex-grow: 1;
+  border-color: transparent;
+  /* Fixes https://github.com/omgovich/react-colorful/issues/139 */
+  border-bottom: 12px solid #000;
+  border-radius: 8px 8px 0 0;
+  background-image: linear-gradient(to top, black, rgba(0, 0, 0, 0)), linear-gradient(to right, white, rgba(255, 255, 255, 0));
+}
+
+.react-colorful__pointer-fill,
+.react-colorful__alpha-gradient {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Improve elements rendering on light backgrounds */
+.react-colorful__alpha-gradient,
+.react-colorful__saturation_value {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.react-colorful__hue,
+.react-colorful__r,
+.react-colorful__g,
+.react-colorful__b,
+.react-colorful__alpha,
+.react-colorful__saturation,
+.react-colorful__value {
+  position: relative;
+  height: 24px;
+}
+
+.react-colorful__hue {
+  background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+}
+
+.react-colorful__r {
+  background: linear-gradient(to right, #000, #f00);
+}
+
+.react-colorful__g {
+  background: linear-gradient(to right, #000, #0f0);
+}
+
+.react-colorful__b {
+  background: linear-gradient(to right, #000, #00f);
+}
+
+/* Round bottom corners of the last element: `Hue` for `ColorPicker` or `Alpha` for `AlphaColorPicker` */
+.react-colorful__last-control {
+  border-radius: 0 0 8px 8px;
+}
+
+.react-colorful__interactive {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  outline: none;
+  /* Don't trigger the default scrolling behavior when the event is originating from this element */
+  touch-action: none;
+}
+
+.react-colorful__pointer {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  background-color: #cfcfcf;
+  border: 2px solid #cfcfcf;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.react-colorful__interactive:focus .react-colorful__pointer {
+  transform: translate(-50%, -50%) scale(1.1);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+/* Chessboard-like pattern for alpha related elements */
+.react-colorful__alpha,
+.react-colorful__alpha-pointer {
+  background-color: #fff;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><rect x="8" width="8" height="8"/><rect y="8" width="8" height="8"/></svg>');
+}
+
+.react-colorful__saturation-pointer,
+.react-colorful__value-pointer,
+.react-colorful__hue-pointer,
+.react-colorful__r-pointer,
+.react-colorful__g-pointer,
+.react-colorful__b-pointer {
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+}
+
+/* Display the saturation value pointer over the hue one */
+.react-colorful__saturation_value-pointer {
+  z-index: 3;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
@@ -4057,6 +4531,8 @@ td, th {
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
+ * Changes: Mordent (FA6)
  */
 .Button {
   position: relative;
@@ -4077,18 +4553,28 @@ td, th {
   margin-bottom: 0;
 }
 
-.Button .fa, .Button .fas, .Button .far {
-  margin-left: -0.25em;
-  margin-right: -0.25em;
+.Button .fa, .Button .fa-solid, .Button .fa-regular {
+  margin-left: 0;
+  margin-right: 0;
   min-width: 1.333em;
   text-align: center;
 }
 
-.Button--hasContent .fa, .Button--hasContent .fas, .Button--hasContent .far {
+.Button--hasContent .fa, .Button--hasContent .fa-solid, .Button--hasContent .fa-regular {
   margin-right: 0.25em;
 }
 
+.Button--hasContent.Button--iconPosition--right .fa, .Button--hasContent.Button--iconPosition--right .fas, .Button--hasContent.Button--iconPosition--right .far {
+  margin-right: 0px;
+  margin-left: 3px;
+}
+
 .Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -4430,6 +4916,29 @@ td, th {
   background-color: #a8a8a8;
 }
 
+.Button--color--light-grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #919191;
+  color: white;
+}
+
+.Button--color--light-grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--light-grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--light-grey:hover, .Button--color--light-grey:focus {
+  background-color: #bababa;
+  color: white;
+}
+
+.Button--color--light-grey:active {
+  background-color: #e2e2e2;
+}
+
 .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: #4d9121;
@@ -4641,6 +5150,32 @@ td, th {
 
 .Button--selected:active {
   background-color: #59da78;
+}
+
+.Button--flex {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
 }
 
 /**
@@ -4684,6 +5219,196 @@ td, th {
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
+.boardgame__titlebar {
+  position: fixed;
+  top: 4px;
+  right: 80px;
+  padding: 2px;
+  z-index: 2;
+}
+
+.boardgame__titlebar > * {
+  margin: 0 4px;
+}
+
+.boardgame__window {
+  height: calc(100% - 0.25px);
+  display: flex;
+  flex-direction: row;
+  background-color: #211913;
+}
+
+.boardgame__window* {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+             supported by Chrome, Edge, Opera and Firefox */
+}
+
+.boardgame__helpmodal {
+  z-index: 20;
+}
+
+.boardgame__helpmodal > .Dimmer__inner {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  width: 60%;
+}
+
+.boardgame__wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.boardgame__heldpiece {
+  position: fixed;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+.boardgame__palettes {
+  width: 100px;
+  background-color: #cecece;
+}
+
+.boardgame__palettes-header {
+  font-size: 10px;
+  background-color: #242424;
+}
+
+.boardgame__palettes-set {
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #e6e6e6;
+}
+
+.boardgame__palettes-set-piece {
+  transition: 0.3s all;
+  padding: 2px;
+  width: 50%;
+  cursor: pointer;
+}
+
+.boardgame__palettes-set-piece > img {
+  width: 100%;
+  height: auto;
+}
+
+.boardgame__palettes-set-toggle {
+  width: 100%;
+}
+
+.boardgame__palettes-set-minimized .boardgame__palettes-set-piece {
+  width: 25%;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+.boardgame__notations {
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
+.boardgame__notations-horizontal {
+  height: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.boardgame__notations-vertical {
+  width: 20px;
+  flex-direction: column;
+}
+
+.boardgame__notations-number, .boardgame__notations-letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+.boardgame__board {
+  z-index: 0;
+  flex-grow: 1;
+}
+
+.boardgame__board-pieces {
+  z-index: 1;
+}
+
+.boardgame__board-overlay {
+  z-index: 2;
+}
+
+.boardgame__board-inner {
+  transition: 1s all;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 0.25px);
+}
+
+.boardgame__board-checkerboard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.boardgame__board-ggrenderer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.boardgame__board-gprenderer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.boardgame__board-gprenderer-piece {
+  position: absolute;
+}
+
+.boardgame__board-gprenderer-piece > span {
+  padding: 2px 6px;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: bolder;
+  text-shadow: 0 0 2px black;
+  z-index: 1;
+  font-family: Arial;
+}
+
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -4695,6 +5420,12 @@ td, th {
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
+ * Changes: Mordent (FA6)
  */
 .Button {
   position: relative;
@@ -4715,18 +5446,28 @@ td, th {
   margin-bottom: 0;
 }
 
-.Button .fa, .Button .fas, .Button .far {
-  margin-left: -0.25em;
-  margin-right: -0.25em;
+.Button .fa, .Button .fa-solid, .Button .fa-regular {
+  margin-left: 0;
+  margin-right: 0;
   min-width: 1.333em;
   text-align: center;
 }
 
-.Button--hasContent .fa, .Button--hasContent .fas, .Button--hasContent .far {
+.Button--hasContent .fa, .Button--hasContent .fa-solid, .Button--hasContent .fa-regular {
   margin-right: 0.25em;
 }
 
+.Button--hasContent.Button--iconPosition--right .fa, .Button--hasContent.Button--iconPosition--right .fas, .Button--hasContent.Button--iconPosition--right .far {
+  margin-right: 0px;
+  margin-left: 3px;
+}
+
 .Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -5068,6 +5809,29 @@ td, th {
   background-color: #a8a8a8;
 }
 
+.Button--color--light-grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #919191;
+  color: white;
+}
+
+.Button--color--light-grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--light-grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--light-grey:hover, .Button--color--light-grey:focus {
+  background-color: #bababa;
+  color: white;
+}
+
+.Button--color--light-grey:active {
+  background-color: #e2e2e2;
+}
+
 .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: #4d9121;
@@ -5281,6 +6045,32 @@ td, th {
   background-color: #59da78;
 }
 
+.Button--flex {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
+}
+
 .chem-dispenser__buttons {
   text-transform: capitalize;
 }
@@ -5293,10 +6083,6 @@ td, th {
   text-overflow: ellipsis;
   text-transform: capitalize;
   white-space: nowrap;
-}
-
-.chem-dispenser-dispense:hover {
-  overflow: visible;
 }
 
 /**
@@ -5442,102 +6228,6 @@ td, th {
  * SPDX-License-Identifier: MIT
  */
 /**
- * @file
- * @copyright 2020
- * @author Mordent (https://github.com/mordent-goonstation)
- * @license ISC
- */
-.cyborg-module-rewriter-interface-empty-placeholder {
-  color: #8b9bb0;
-}
-
-.cyborg-module-rewriter-interface-module-view__tool-label {
-  margin-left: 0.5em;
-  color: #8b9bb0;
-}
-
-.gas-canister-detonator-utility__list-item {
-  line-height: 1.7em;
-}
-
-.gas-canister-detonator-utility__attachment-item {
-  text-transform: capitalize;
-}
-
-/**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
-/**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
-/**
- * Copyright (c) 2020 bobbahbrown (https://github.com/bobbahbrown)
- * Changes: watermelon914 (https://github.com/watermelon914)
- * SPDX-License-Identifier: MIT
- */
-.ListInput__Section {
-  font-family: Segoe UI Emoji;
-}
-
-.ListInput__Section .Section__title {
-  flex-shrink: 0;
-}
-
-.ListInput__Section .Section__titleText {
-  font-size: 1em;
-}
-
-.ListInput__Loader {
-  width: 100%;
-  position: relative;
-  height: 4px;
-}
-
-.ListInput__LoaderProgress {
-  position: absolute;
-  transition: background-color 500ms ease-out, width 500ms ease-out;
-  background-color: #3e6189;
-  height: 100%;
-}
-
-/**
-  * @file
-  * @copyright 2020
-  * @author ThePotato97 (https://github.com/ThePotato97)
-  * @license ISC
-  */
-.paper__stamp, .paper__stamp-text {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-}
-
-.paper__stamp-text {
-  overflow: hidden;
-  height: 40px;
-  padding: 0.55rem 0.5rem;
-  box-shadow: inset 0px 0px 0px 3px #525252;
-  color: #5c5c5c;
-  font-family: "Anton";
-  font-size: 1.5rem;
-  font-weight: 500;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.paper__page {
-  word-break: break-word;
-  word-wrap: break-word;
-}
-
-.port-atmos-pressure-bar__text {
-  text-shadow: 1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black;
-}
-
-/**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
@@ -5548,10 +6238,8 @@ td, th {
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
- */
-/**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
+ * Changes: Mordent (FA6)
  */
 .Button {
   position: relative;
@@ -5572,18 +6260,28 @@ td, th {
   margin-bottom: 0;
 }
 
-.Button .fa, .Button .fas, .Button .far {
-  margin-left: -0.25em;
-  margin-right: -0.25em;
+.Button .fa, .Button .fa-solid, .Button .fa-regular {
+  margin-left: 0;
+  margin-right: 0;
   min-width: 1.333em;
   text-align: center;
 }
 
-.Button--hasContent .fa, .Button--hasContent .fas, .Button--hasContent .far {
+.Button--hasContent .fa, .Button--hasContent .fa-solid, .Button--hasContent .fa-regular {
   margin-right: 0.25em;
 }
 
+.Button--hasContent.Button--iconPosition--right .fa, .Button--hasContent.Button--iconPosition--right .fas, .Button--hasContent.Button--iconPosition--right .far {
+  margin-right: 0px;
+  margin-left: 3px;
+}
+
 .Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -5925,6 +6623,29 @@ td, th {
   background-color: #a8a8a8;
 }
 
+.Button--color--light-grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #919191;
+  color: white;
+}
+
+.Button--color--light-grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--light-grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--light-grey:hover, .Button--color--light-grey:focus {
+  background-color: #bababa;
+  color: white;
+}
+
+.Button--color--light-grey:active {
+  background-color: #e2e2e2;
+}
+
 .Button--color--good {
   transition: color 50ms, background-color 50ms;
   background-color: #4d9121;
@@ -6138,6 +6859,1219 @@ td, th {
   background-color: #59da78;
 }
 
+.Button--flex {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
+}
+
+.clothingbooth__dropdown {
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+}
+
+.clothingbooth__boothitem {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.clothingbooth__boothitem > div {
+  pointer-events: none;
+}
+
+.clothingbooth__boothitem:hover, .clothingbooth__boothitem-selected {
+  background-color: #1b9638;
+}
+
+.clothingbooth__boothitem:active {
+  background-color: #67e484;
+}
+
+.clothingbooth__preview {
+  width: 64px;
+  height: 128px;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * @file
+ * @copyright 2020
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+.cyborg-module-rewriter-interface-empty-placeholder {
+  color: #8b9bb0;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+.gameclock__window {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.gameclock__help {
+  position: fixed;
+  top: 4px;
+  right: 50px;
+  padding: 2px;
+  z-index: 20;
+}
+
+.gameclock__helpbutton {
+  height: 20px;
+  width: 20px;
+}
+
+.gameclock__helpbutton > i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.gameclock__configmodal {
+  z-index: 20;
+}
+
+.gameclock__configmodal > .Dimmer__inner {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  width: 180px;
+  height: 130px;
+}
+
+.gameclock__configmodalbuttoncontainer {
+  padding-top: 12px;
+}
+
+.gameclock__teamicon {
+  text-align: center;
+  font-size: 24px;
+  margin: 5px;
+}
+
+.gameclock__sidepart {
+  flex-grow: 1;
+  padding: 5px;
+}
+
+.gameclock__timebutton {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.gameclock__timebutton > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.gameclock__timeflex {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 2em;
+}
+
+.gameclock__mid {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.gameclock__utilbutton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+}
+
+.gameclock__utilbutton > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-right: 2px;
+}
+
+.gas-canister-detonator-utility__list-item {
+  line-height: 1.7em;
+}
+
+.gas-canister-detonator-utility__attachment-item {
+  text-transform: capitalize;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * @file
+ * @copyright 2023
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+.IDComputer__DeptBox .Section__title {
+  text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black, -1px 1px 1px black;
+  background-color: #767676;
+}
+
+.mode-light .IDComputer__DeptBox .Section__title {
+  text-shadow: 1px 1px 1px white, 1px -1px 1px white, -1px -1px 1px white, -1px 1px 1px white;
+}
+
+.IDComputer__DeptBox_color_blue .Section__title {
+  background-color: #2185d0;
+}
+
+.IDComputer__DeptBox_color_yellow .Section__title {
+  background-color: #fbd608;
+}
+
+.IDComputer__DeptBox_color_purple .Section__title {
+  background-color: #a333c8;
+}
+
+.IDComputer__DeptBox_color_red .Section__title {
+  background-color: #db2828;
+}
+
+.IDComputer__DeptBox_color_green .Section__title {
+  background-color: #20b142;
+}
+
+.instrument__keyboardwrapper {
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: 10px;
+  padding-top: 20px;
+  background: #49504a;
+  background: linear-gradient(180deg, #49504a 0%, #49504a 22%, #575e57 100%);
+  border-left: 5px solid #3d3d3d;
+  border-bottom: 5px solid #333333;
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.instruments__piano {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0 10px 10px 10px;
+  overflow-x: auto;
+}
+
+.instrument__outerpanel {
+  display: flex;
+  width: 100%;
+  padding: 0 40px;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.instrument__speaker {
+  border-top-left-radius: 30%;
+  width: 360px;
+  height: 100px;
+  margin: 0px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #4d4d4d inset;
+  background: #646464;
+  background-image: linear-gradient(#3d3d3d 0.1em, transparent 0.1em), linear-gradient(90deg, #3d3d3d 0.1em, transparent 0.1em);
+  background-size: 2px 2px;
+}
+
+.instruments__piano-key {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 12px;
+  background: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 2px 2px 10px 2px;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.instruments__piano-key-white {
+  height: 16em;
+  width: 4em;
+  min-width: 4em;
+  z-index: 1;
+  color: #383838;
+  border: 1px solid #d6d6d6;
+  border-radius: 0 0 5px 5px;
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 0 5px #ccc inset, 0 0 3px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+  transition: 0.05s all;
+}
+
+.instruments__piano-key-black {
+  height: 9em;
+  width: 3em;
+  min-width: 3em;
+  z-index: 10;
+  color: #cecece;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid #3b3b3b;
+  margin: 0 0 0 -1.5em;
+  box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset, 0 2px 12px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(0deg, #222 0%, #555 100%);
+  transition: 0.05s all;
+}
+
+.instruments__piano-key-white:active,
+.instruments__piano-key-white-active {
+  border: 1px solid #b4b4b4;
+  box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, -5px 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+}
+
+.instruments__piano-key-black:active,
+.instruments__piano-key-black-active {
+  border: 1px solid #222222;
+  box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -2px 2px 3px rgba(0, 0, 0, 0.6) inset, 0 1px 2px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to bottom, #444 0%, #222 100%);
+}
+
+.instruments__piano-key-white-offset {
+  margin-left: -1.5em;
+}
+
+.instruments__piano-key:first-child {
+  margin-left: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.instruments__piano-key:last-child {
+  margin-right: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.instruments__notedetails {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  pointer-events: none;
+}
+
+.instruments__notename {
+  font-size: 10px;
+}
+
+.instruments__notekey {
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+.instruments__piano-key-white > .instruments__notename {
+  font-size: 14px;
+  text-shadow: 0px 0px 1px 5px white;
+}
+
+.instrument__keybind-indicator {
+  border-radius: 20px;
+  width: 20px;
+  height: 10px;
+}
+
+.instrument__panel {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  padding: 6px;
+  background: #333333;
+}
+
+.instrument__keyboardsupport {
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.instrument__panel-input {
+  text-align: center;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 0px 5px;
+}
+
+.instrument__toggle-keyboard-button {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.instrument_panel-info {
+  flex-grow: 1;
+  text-align: center;
+  color: black;
+  padding: 0 10px;
+  margin: 0 10px;
+  background: white;
+  border-radius: 5px;
+}
+
+.instrument__instructions {
+  width: 100%;
+  text-align: center;
+}
+
+.instrument__input_keyorder {
+  width: 100%;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 bobbahbrown (https://github.com/bobbahbrown)
+ * Changes: watermelon914 (https://github.com/watermelon914)
+ * SPDX-License-Identifier: MIT
+ */
+.ListInput__Section {
+  font-family: Segoe UI Emoji;
+}
+
+.ListInput__Section .Section__title {
+  flex-shrink: 0;
+}
+
+.ListInput__Section .Section__titleText {
+  font-size: 1em;
+}
+
+.ListInput__Loader {
+  width: 100%;
+  position: relative;
+  height: 4px;
+}
+
+.ListInput__LoaderProgress {
+  position: absolute;
+  transition: background-color 500ms ease-out, width 500ms ease-out;
+  background-color: #3e6189;
+  height: 100%;
+}
+
+.minimap-controller__number-inputs {
+  width: 70px;
+}
+
+.minimap-controller__buttons {
+  font-size: 1.7rem;
+}
+
+.minimap-controller__marker-list {
+  background-color: rgba(0, 0, 0, 0.2);
+  justify-content: space-between;
+  padding: 5px;
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+}
+
+/**
+  * @file
+  * @copyright 2020
+  * @author ThePotato97 (https://github.com/ThePotato97)
+  * @license ISC
+  */
+.paper__stamp, .paper__stamp-text {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.paper__stamp-text {
+  overflow: hidden;
+  height: 40px;
+  padding: 0.55rem 0.5rem;
+  box-shadow: inset 0px 0px 0px 3px #525252;
+  color: #5c5c5c;
+  font-family: "Anton";
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.paper__page {
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+.phone__button > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/**
+ * @file
+ * @copyright 2024
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+.PINInput {
+  display: flex;
+  justify-content: center;
+}
+
+.PINInput .Button {
+  display: flex;
+  justify-content: center;
+  font-size: 1.7rem;
+}
+
+.PINInput .Button .Icon {
+  margin-left: -0.1em;
+}
+
+.PINInput__digit {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  border: 1px solid #7e90a7;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.4rem;
+  margin: 0.3rem;
+}
+
+.PINInput__digit:first-child {
+  margin-left: 0;
+}
+
+.PINInput__digit:last-child {
+  margin-right: 0;
+}
+
+.port-atmos-pressure-bar__text {
+  text-shadow: 1px 1px 1px black, -1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ * Changes: ZeWaka (FA6)
+ * Changes: Mordent (FA6)
+ */
+.Button {
+  position: relative;
+  display: inline-block;
+  line-height: 1.667em;
+  padding: 0 0.5em;
+  margin-right: 0.1666666667em;
+  white-space: nowrap;
+  outline: 0;
+  border-radius: 0.16em;
+  margin-bottom: 0.1666666667em;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.Button:last-child {
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.Button .fa, .Button .fa-solid, .Button .fa-regular {
+  margin-left: 0;
+  margin-right: 0;
+  min-width: 1.333em;
+  text-align: center;
+}
+
+.Button--hasContent .fa, .Button--hasContent .fa-solid, .Button--hasContent .fa-regular {
+  margin-right: 0.25em;
+}
+
+.Button--hasContent.Button--iconPosition--right .fa, .Button--hasContent.Button--iconPosition--right .fas, .Button--hasContent.Button--iconPosition--right .far {
+  margin-right: 0px;
+  margin-left: 3px;
+}
+
+.Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--ellipsis .Button__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--fluid {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.Button--circular {
+  border-radius: 50%;
+}
+
+.Button--compact {
+  padding: 0 0.25em;
+  line-height: 1.333em;
+}
+
+.Button--color--black {
+  transition: color 50ms, background-color 50ms;
+  background-color: black;
+  color: white;
+}
+
+.Button--color--black:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--black:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--black:hover, .Button--color--black:focus {
+  background-color: #131313;
+  color: white;
+}
+
+.Button--color--black:active {
+  background-color: #262626;
+}
+
+.Button--color--white {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d9d9d9;
+  color: black;
+}
+
+.Button--color--white:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--white:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--white:hover, .Button--color--white:focus {
+  background-color: #f8f8f8;
+  color: black;
+}
+
+.Button--color--white:active {
+  background-color: #fbfbfb;
+}
+
+.Button--color--red {
+  transition: color 50ms, background-color 50ms;
+  background-color: #bd2020;
+  color: white;
+}
+
+.Button--color--red:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--red:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--red:hover, .Button--color--red:focus {
+  background-color: #dc4848;
+  color: white;
+}
+
+.Button--color--red:active {
+  background-color: #e78484;
+}
+
+.Button--color--orange {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d95e0c;
+  color: white;
+}
+
+.Button--color--orange:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--orange:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--orange:hover, .Button--color--orange:focus {
+  background-color: #f0853f;
+  color: white;
+}
+
+.Button--color--orange:active {
+  background-color: #f5b082;
+}
+
+.Button--color--yellow {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d9b804;
+  color: black;
+}
+
+.Button--color--yellow:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--yellow:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--yellow:hover, .Button--color--yellow:focus {
+  background-color: #f5d72e;
+  color: black;
+}
+
+.Button--color--yellow:active {
+  background-color: #f9e572;
+}
+
+.Button--color--olive {
+  transition: color 50ms, background-color 50ms;
+  background-color: #9aad14;
+  color: white;
+}
+
+.Button--color--olive:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--olive:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--olive:hover, .Button--color--olive:focus {
+  background-color: #c4da2b;
+  color: white;
+}
+
+.Button--color--olive:active {
+  background-color: #d6e761;
+}
+
+.Button--color--green {
+  transition: color 50ms, background-color 50ms;
+  background-color: #1b9638;
+  color: white;
+}
+
+.Button--color--green:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--green:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--green:hover, .Button--color--green:focus {
+  background-color: #32c154;
+  color: white;
+}
+
+.Button--color--green:active {
+  background-color: #59da78;
+}
+
+.Button--color--teal {
+  transition: color 50ms, background-color 50ms;
+  background-color: #009a93;
+  color: white;
+}
+
+.Button--color--teal:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--teal:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--teal:hover, .Button--color--teal:focus {
+  background-color: #13c4bc;
+  color: white;
+}
+
+.Button--color--teal:active {
+  background-color: #26eee5;
+}
+
+.Button--color--blue {
+  transition: color 50ms, background-color 50ms;
+  background-color: #1c71b1;
+  color: white;
+}
+
+.Button--color--blue:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--blue:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--blue:hover, .Button--color--blue:focus {
+  background-color: #3a95d9;
+  color: white;
+}
+
+.Button--color--blue:active {
+  background-color: #73b3e5;
+}
+
+.Button--color--violet {
+  transition: color 50ms, background-color 50ms;
+  background-color: #552dab;
+  color: white;
+}
+
+.Button--color--violet:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--violet:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--violet:hover, .Button--color--violet:focus {
+  background-color: #7953cc;
+  color: white;
+}
+
+.Button--color--violet:active {
+  background-color: #a389dd;
+}
+
+.Button--color--purple {
+  transition: color 50ms, background-color 50ms;
+  background-color: #8b2baa;
+  color: white;
+}
+
+.Button--color--purple:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--purple:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--purple:hover, .Button--color--purple:focus {
+  background-color: #ad4fcd;
+  color: white;
+}
+
+.Button--color--purple:active {
+  background-color: #c785dd;
+}
+
+.Button--color--pink {
+  transition: color 50ms, background-color 50ms;
+  background-color: #cf2082;
+  color: white;
+}
+
+.Button--color--pink:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--pink:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--pink:hover, .Button--color--pink:focus {
+  background-color: #e257a5;
+  color: white;
+}
+
+.Button--color--pink:active {
+  background-color: #ee96c7;
+}
+
+.Button--color--brown {
+  transition: color 50ms, background-color 50ms;
+  background-color: #8c5836;
+  color: white;
+}
+
+.Button--color--brown:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--brown:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--brown:hover, .Button--color--brown:focus {
+  background-color: #b47851;
+  color: white;
+}
+
+.Button--color--brown:active {
+  background-color: #ca9c7e;
+}
+
+.Button--color--grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #646464;
+  color: white;
+}
+
+.Button--color--grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--grey:hover, .Button--color--grey:focus {
+  background-color: #868686;
+  color: white;
+}
+
+.Button--color--grey:active {
+  background-color: #a8a8a8;
+}
+
+.Button--color--light-grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #919191;
+  color: white;
+}
+
+.Button--color--light-grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--light-grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--light-grey:hover, .Button--color--light-grey:focus {
+  background-color: #bababa;
+  color: white;
+}
+
+.Button--color--light-grey:active {
+  background-color: #e2e2e2;
+}
+
+.Button--color--good {
+  transition: color 50ms, background-color 50ms;
+  background-color: #4d9121;
+  color: white;
+}
+
+.Button--color--good:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--good:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--good:hover, .Button--color--good:focus {
+  background-color: #6cba39;
+  color: white;
+}
+
+.Button--color--good:active {
+  background-color: #8ed55f;
+}
+
+.Button--color--average {
+  transition: color 50ms, background-color 50ms;
+  background-color: #cd7a0d;
+  color: white;
+}
+
+.Button--color--average:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--average:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--average:hover, .Button--color--average:focus {
+  background-color: #ed9d35;
+  color: white;
+}
+
+.Button--color--average:active {
+  background-color: #f3bd76;
+}
+
+.Button--color--bad {
+  transition: color 50ms, background-color 50ms;
+  background-color: #bd2020;
+  color: white;
+}
+
+.Button--color--bad:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--bad:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--bad:hover, .Button--color--bad:focus {
+  background-color: #dc4848;
+  color: white;
+}
+
+.Button--color--bad:active {
+  background-color: #e78484;
+}
+
+.Button--color--label {
+  transition: color 50ms, background-color 50ms;
+  background-color: #657a94;
+  color: white;
+}
+
+.Button--color--label:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--label:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--label:hover, .Button--color--label:focus {
+  background-color: #91a1b3;
+  color: white;
+}
+
+.Button--color--label:active {
+  background-color: #bec7d3;
+}
+
+.Button--color--default {
+  transition: color 50ms, background-color 50ms;
+  background-color: #3e6189;
+  color: white;
+}
+
+.Button--color--default:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--default:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--default:hover, .Button--color--default:focus {
+  background-color: #5c83b0;
+  color: white;
+}
+
+.Button--color--default:active {
+  background-color: #89a6c6;
+}
+
+.Button--color--caution {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d9b804;
+  color: black;
+}
+
+.Button--color--caution:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--caution:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--caution:hover, .Button--color--caution:focus {
+  background-color: #f5d72e;
+  color: black;
+}
+
+.Button--color--caution:active {
+  background-color: #f9e572;
+}
+
+.Button--color--danger {
+  transition: color 50ms, background-color 50ms;
+  background-color: #bd2020;
+  color: white;
+}
+
+.Button--color--danger:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--danger:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--danger:hover, .Button--color--danger:focus {
+  background-color: #dc4848;
+  color: white;
+}
+
+.Button--color--danger:active {
+  background-color: #e78484;
+}
+
+.Button--color--transparent {
+  transition: color 50ms, background-color 50ms;
+  background-color: #252525;
+  color: white;
+  background-color: rgba(37, 37, 37, 0);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.Button--color--transparent:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--transparent:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--transparent:hover, .Button--color--transparent:focus {
+  background-color: #3e3e3e;
+  color: white;
+}
+
+.Button--color--transparent:active {
+  background-color: #565656;
+}
+
+.Button--disabled {
+  background-color: #999999 !important;
+}
+
+.Button--selected {
+  transition: color 50ms, background-color 50ms;
+  background-color: #1b9638;
+  color: white;
+}
+
+.Button--selected:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--selected:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--selected:hover, .Button--selected:focus {
+  background-color: #32c154;
+  color: white;
+}
+
+.Button--selected:active {
+  background-color: #59da78;
+}
+
+.Button--flex {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
+}
+
 .WeaponVendor .Button--color--sidearm {
   transition: color 50ms, background-color 50ms;
   background-color: #00b5ad;
@@ -6253,6 +8187,29 @@ td, th {
   background-color: silver;
 }
 
+.WeaponVendor .Button--color--fishing {
+  transition: color 50ms, background-color 50ms;
+  background-color: #2185d0;
+  color: white;
+}
+
+.WeaponVendor .Button--color--fishing:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.WeaponVendor .Button--color--fishing:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.WeaponVendor .Button--color--fishing:hover, .WeaponVendor .Button--color--fishing:focus {
+  background-color: #59a8e3;
+  color: white;
+}
+
+.WeaponVendor .Button--color--fishing:active {
+  background-color: #99c9ee;
+}
+
 .WeaponVendor__Credits--sidearm {
   color: #00b5ad;
 }
@@ -6271,6 +8228,10 @@ td, th {
 
 .WeaponVendor__Credits--assistant {
   color: #767676;
+}
+
+.WeaponVendor__Credits--fishing {
+  color: #2185d0;
 }
 
 .WeaponVendor__Row:not(:last-child) {
@@ -6551,7 +8512,7 @@ td, th {
 }
 
 .Layout__content {
-  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjAiIHZpZXdCb3g9IjAgMCA0MjUgMjAwIiBvcGFjaXR5PSIuMSI+CiAgPHBhdGggZD0ibSAxNzguMDAzOTksMC4wMzg2OSAtNzEuMjAzOTMsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgLTYuNzYxMzQsNi4wMjU1NSBsIDAsMTg3Ljg3MTQ3IGEgNi43NjEzNDIyLDYuMDI1NTQ5NSAwIDAgMCA2Ljc2MTM0LDYuMDI1NTQgbCA1My4xMDcyLDAgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDYuNzYxMzUsLTYuMDI1NTQgbCAwLC0xMDEuNTQ0MDE4IDcyLjIxNjI4LDEwNC42OTkzOTggYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDUuNzYwMTUsMi44NzAxNiBsIDczLjU1NDg3LDAgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDYuNzYxMzUsLTYuMDI1NTQgbCAwLC0xODcuODcxNDcgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIC02Ljc2MTM1LC02LjAyNTU1IGwgLTU0LjcxNjQ0LDAgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIC02Ljc2MTMzLDYuMDI1NTUgbCAwLDEwMi42MTkzNSBMIDE4My43NjQxMywyLjkwODg2IGEgNi43NjEzNDIyLDYuMDI1NTQ5NSAwIDAgMCAtNS43NjAxNCwtMi44NzAxNyB6IiAvPgogIDxwYXRoIGQ9Ik0gNC44NDQ2MzMzLDIyLjEwODc1IEEgMTMuNDEyMDM5LDEyLjUwMTg0MiAwIDAgMSAxMy40Nzc1ODgsMC4wMzkyNCBsIDY2LjExODMxNSwwIGEgNS4zNjQ4MTU4LDUuMDAwNzM3IDAgMCAxIDUuMzY0ODIzLDUuMDAwNzMgbCAwLDc5Ljg3OTMxIHoiIC8+CiAgPHBhdGggZD0ibSA0MjAuMTU1MzUsMTc3Ljg5MTE5IGEgMTMuNDEyMDM4LDEyLjUwMTg0MiAwIDAgMSAtOC42MzI5NSwyMi4wNjk1MSBsIC02Ni4xMTgzMiwwIGEgNS4zNjQ4MTUyLDUuMDAwNzM3IDAgMCAxIC01LjM2NDgyLC01LjAwMDc0IGwgMCwtNzkuODc5MzEgeiIgLz4KPC9zdmc+CjwhLS0gVGhpcyB3b3JrIGlzIGxpY2Vuc2VkIHVuZGVyIGEgQ3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbi1TaGFyZUFsaWtlIDQuMCBJbnRlcm5hdGlvbmFsIExpY2Vuc2UuIC0tPgo8IS0tIGh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LXNhLzQuMC8gLS0+Cg==);
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4wIiB2aWV3Qm94PSIwIDAgNDI1IDIwMCIgb3BhY2l0eT0iLjEiPg0KICA8cGF0aCBkPSJtIDE3OC4wMDM5OSwwLjAzODY5IC03MS4yMDM5MywwIGEgNi43NjEzNDIyLDYuMDI1NTQ5NSAwIDAgMCAtNi43NjEzNCw2LjAyNTU1IGwgMCwxODcuODcxNDcgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDYuNzYxMzQsNi4wMjU1NCBsIDUzLjEwNzIsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgNi43NjEzNSwtNi4wMjU1NCBsIDAsLTEwMS41NDQwMTggNzIuMjE2MjgsMTA0LjY5OTM5OCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgNS43NjAxNSwyLjg3MDE2IGwgNzMuNTU0ODcsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgNi43NjEzNSwtNi4wMjU1NCBsIDAsLTE4Ny44NzE0NyBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgLTYuNzYxMzUsLTYuMDI1NTUgbCAtNTQuNzE2NDQsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgLTYuNzYxMzMsNi4wMjU1NSBsIDAsMTAyLjYxOTM1IEwgMTgzLjc2NDEzLDIuOTA4ODYgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIC01Ljc2MDE0LC0yLjg3MDE3IHoiIC8+DQogIDxwYXRoIGQ9Ik0gNC44NDQ2MzMzLDIyLjEwODc1IEEgMTMuNDEyMDM5LDEyLjUwMTg0MiAwIDAgMSAxMy40Nzc1ODgsMC4wMzkyNCBsIDY2LjExODMxNSwwIGEgNS4zNjQ4MTU4LDUuMDAwNzM3IDAgMCAxIDUuMzY0ODIzLDUuMDAwNzMgbCAwLDc5Ljg3OTMxIHoiIC8+DQogIDxwYXRoIGQ9Im0gNDIwLjE1NTM1LDE3Ny44OTExOSBhIDEzLjQxMjAzOCwxMi41MDE4NDIgMCAwIDEgLTguNjMyOTUsMjIuMDY5NTEgbCAtNjYuMTE4MzIsMCBhIDUuMzY0ODE1Miw1LjAwMDczNyAwIDAgMSAtNS4zNjQ4MiwtNS4wMDA3NCBsIDAsLTc5Ljg3OTMxIHoiIC8+DQo8L3N2Zz4NCjwhLS0gVGhpcyB3b3JrIGlzIGxpY2Vuc2VkIHVuZGVyIGEgQ3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbi1TaGFyZUFsaWtlIDQuMCBJbnRlcm5hdGlvbmFsIExpY2Vuc2UuIC0tPg0KPCEtLSBodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9saWNlbnNlcy9ieS1zYS80LjAvIC0tPg0K);
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;
