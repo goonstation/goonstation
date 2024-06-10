@@ -299,6 +299,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = /obj/item/casing/shotgun/red
 	shot_sound = 'sound/weapons/birdshot.ogg'
 
+/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	name = "buckshot"
+	sname = "buckshot"
+	spread_angle = 13
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/kuvalda_shrapnel
+	casing = /obj/item/casing/shotgun/gray
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
 	name = "foam dart"
