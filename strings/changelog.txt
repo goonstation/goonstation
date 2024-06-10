@@ -1,5 +1,9 @@
 
 (t)sun jun 09 24
+(u)LeahTheTech
+(p)19274
+(e)🚄💅⛔|C-Performance, C-QoL, C-Removal
+(+)Bullet hit by messages now only show to the person being hit.
 (u)mintyphresh
 (p)19284
 (e)🆕💊⚗🍝💪|C-Feature, A-Medical, A-Chemistry, A-Catering, A-Traits
