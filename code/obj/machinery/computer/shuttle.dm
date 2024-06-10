@@ -196,7 +196,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		if (currentlocation.z == Z_LEVEL_STATION && station_repair.station_generator)
 			var/list/turf/turfs_to_fix = get_area_turfs(currentlocation)
 			if(length(turfs_to_fix))
-				station_repair.repair_turfs(turfs_to_fix)
+				station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
 
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue

@@ -10,7 +10,7 @@ import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, Input, Modal, NumberInput, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { MatterStateIconMap, Reagent, ReagentContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
+import { MatterState, MatterStateIconMap, Reagent, ReagentContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
@@ -45,7 +45,7 @@ const sortMap = [
   {
     id: 2,
     contents: 'Density',
-    compareFunction: (a: Reagent, b: Reagent) => a.state - b.state,
+    compareFunction: (a: Reagent, b: Reagent) => (a.state ?? MatterState.Solid) - (b.state ?? MatterState.Solid),
   },
   {
     id: 3,
@@ -154,7 +154,7 @@ export const ReagentDispenser = (_props: unknown, context: unknown) => {
               disabled={container?.maxVolume === container?.totalVolume}>
               <Icon
                 color={`rgba(${reagent.colorR},${reagent.colorG},${reagent.colorB}, 1)`}
-                name={iconToggle ? MatterStateIconMap[reagent.state].icon : 'circle'}
+                name={iconToggle ? MatterStateIconMap[reagent.state ?? MatterState.Solid].icon : 'circle'}
                 style={{
                   'text-shadow': '0 0 3px #000',
                 }}
@@ -280,7 +280,7 @@ export const BeakerContentsGraph = (_props: unknown, context: unknown) => {
           <Stack.Item>
             <Box textAlign="center" fontSize={2} color={getTemperatureColor(container.temperature)}>
               <Icon name={getTemperatureIcon(container.temperature)} mr={0.5} />
-              <AnimatedNumber value={container.temperature} /> K
+              <AnimatedNumber value={container.temperature ?? 0} /> K
             </Box>
           </Stack.Item>
         )}

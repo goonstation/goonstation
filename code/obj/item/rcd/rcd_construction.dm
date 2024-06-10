@@ -3,8 +3,11 @@
 */
 
 TYPEINFO(/obj/item/rcd/construction)
-	mats = list("MET-3"=100, "CRY-2" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
-
+	mats = list("metal_superdense" = 100,
+				"crystal_dense" = 50,
+				"conductive_high" = 50,
+				"energy_extreme" = 50,
+				"starstone" = 10)
 /// Construction mode RCD variant
 /obj/item/rcd/construction
 	name = "rapid construction device deluxe"
@@ -153,8 +156,10 @@ TYPEINFO(/obj/item/rcd/construction)
 
 
 TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
-	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"crystal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /// Chief Engineer RCD has fancy door functions and a mild discount, but no capacity increase
 /obj/item/rcd/construction/chiefEngineer
 	name = "rapid construction device custom"

@@ -223,6 +223,7 @@
 /// Technical Storage circuit board rack for engineering/supply
 /obj/rack/organized/techstorage_eng
 	items_to_spawn = list(
+		/obj/item/circuitboard/arcade,
 		/obj/item/circuitboard/qmorder,
 		/obj/item/circuitboard/qmsupply,
 		/obj/item/circuitboard/barcode,
@@ -241,11 +242,12 @@
 /// Technical Storage circuit board rack for medical/science/misc
 /obj/rack/organized/techstorage_med
 	items_to_spawn = list(
-		/obj/item/circuitboard/arcade,
 		/obj/item/circuitboard/card,
 		/obj/item/circuitboard/teleporter,
 		/obj/item/circuitboard/operating,
 		/obj/item/circuitboard/cloning,
 		/obj/item/circuitboard/genetics,
 		/obj/item/circuitboard/robot_module_rewriter,
+		/obj/item/circuitboard/chem_request,
+		/obj/item/circuitboard/chem_request_receiver,
 	)

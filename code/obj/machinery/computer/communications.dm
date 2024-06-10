@@ -9,7 +9,7 @@
 // The communications computer
 
 /obj/machinery/computer/communications
-	name = "Communications Console"
+	name = "communications console"
 	icon_state = "comm"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER

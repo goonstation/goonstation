@@ -8538,16 +8538,6 @@
 "aSt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/ce)
-"aSA" = (
-/obj/stool/chair/blue{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark/start/job/medical_assistant,
-/turf/simulated/floor/carpet/blue,
-/area/station/medical/staff)
 "aSB" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14150,22 +14140,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"byt" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/landmark/start/job/technical_assistant,
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/engine/engineering)
 "byu" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -23310,6 +23284,16 @@
 	dir = 4
 	},
 /area/station/science/lobby)
+"gnn" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/carpet/blue,
+/area/station/medical/staff)
 "goU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/green/side{
@@ -25359,6 +25343,24 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
+"hHu" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/computer/announcement/clown{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "hHK" = (
 /obj/landmark/start/job/detective,
 /obj/stool/chair/comfy/red{
@@ -31017,11 +31019,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"lrt" = (
-/obj/stool,
-/obj/landmark/start/job/research_assistant,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/observatory)
 "lrM" = (
 /obj/strip_door{
 	layer = 3
@@ -36653,21 +36650,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/research)
-"oFj" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "oFu" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -37268,6 +37250,22 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"oVk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/engineering)
 "oVL" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /obj/disposalpipe/segment{
@@ -38671,6 +38669,19 @@
 /obj/item/clothing/suit/bee,
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/quarters)
+"pOt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/office/yellow{
+	dir = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/elect)
 "pQx" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -44039,19 +44050,6 @@
 "tia" = (
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
-"tiD" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair/office/yellow{
-	dir = 1
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/landmark/start/job/technical_assistant,
-/turf/simulated/floor/orangeblack,
-/area/station/engine/elect)
 "tiL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45154,6 +45152,11 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"tUx" = (
+/obj/stool,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/observatory)
 "tUA" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -66721,7 +66724,7 @@ bhP
 aUG
 aRa
 xjR
-aSA
+gnn
 aTn
 aUb
 naV
@@ -77640,7 +77643,7 @@ pox
 bxG
 kby
 mlc
-tiD
+pOt
 bAM
 bBu
 iAR
@@ -79993,7 +79996,7 @@ azU
 aES
 aYB
 eAg
-oFj
+hHu
 enT
 wgf
 eAg
@@ -81262,7 +81265,7 @@ bmY
 bvP
 dRq
 qWz
-byt
+oVk
 bzi
 kBH
 buN
@@ -120722,7 +120725,7 @@ ajD
 ajD
 ajD
 ajD
-lrt
+tUx
 ajA
 jaF
 eOr

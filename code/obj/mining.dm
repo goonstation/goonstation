@@ -628,10 +628,14 @@
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
 			sleep_time = 20
-		sleep_time /= 2
+		sleep_time /= 3
 
 		if (malfunctioning && prob(20))
 			do_malfunction()
+		sleep(sleep_time)
+
+		// Ensure area is erased, helps if atmos is being a jerk
+		target.erase_area()
 		sleep(sleep_time)
 
 		var/datum/mining_encounter/MC
@@ -662,7 +666,7 @@
 			var/turf/origin = get_turf(target)
 			for (var/turf/space/T in block(origin, locate(origin.x + target.width - 1, origin.y + target.height - 1, origin.z)))
 				repair_turfs += T
-			station_repair.repair_turfs(repair_turfs)
+			station_repair.repair_turfs(repair_turfs, force_floor=TRUE)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -1982,8 +1986,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
-	mats = list("MET-2"=15, "CON-1"=8, "claretine"=10, "koshmarite"=2 )
-
+	mats = list("metal_dense" = 15,
+				"conductive" = 8,
+				"claretine" = 10,
+				"koshmarite" = 2)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"

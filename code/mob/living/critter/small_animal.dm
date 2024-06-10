@@ -309,6 +309,10 @@ proc/filter_carrier_pets(var/type)
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 
+	New()
+		. = ..()
+		new /obj/item/implant/access/infinite/chef(src)
+
 	setup_overlays()
 		return
 
@@ -605,8 +609,7 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
-	mats = list("viscerite"=25)
-
+	mats = list("viscerite" = 25)
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
 	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."
@@ -3763,8 +3766,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
 				src.setMaterial(getMaterial(pick(material_varieties)))
-		// true when making the mob to not make the respawn timer reset...false here to allow for crime
-		ghost_spawned = FALSE
 
 	death(var/gibbed)
 		. = ..()
@@ -4017,6 +4018,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		. = ..()
 		src.fur_color = "#be5a53"
+		// true when making the mob to not make the respawn timer reset...false here to allow for crime
+		ghost_spawned = FALSE
 
 	setup_hands()
 		..()

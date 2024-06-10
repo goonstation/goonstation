@@ -32,10 +32,11 @@ var/datum/station_zlevel_repair/station_repair = new
 		default_air.nitrogen = MOLES_N2STANDARD
 		default_air.temperature = T20C
 
-	proc/repair_turfs(turf/turfs, clear=FALSE)
+	proc/repair_turfs(turf/turfs, clear=FALSE, force_floor=FALSE)
 		if(src.station_generator)
-			var/gen_flags = MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA
+			var/gen_flags = MAPGEN_IGNORE_FLORA | MAPGEN_IGNORE_FAUNA
 			gen_flags |= MAPGEN_ALLOW_VEHICLES * src.allows_vehicles
+			gen_flags |= MAPGEN_FLOOR_ONLY * force_floor
 			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=gen_flags)
 
 			if(clear)
@@ -287,7 +288,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 						for(var/turf/T in space_turfs)
 							if(!istype(T, /turf/space))
 								space_turfs -= T
-						station_repair.repair_turfs(space_turfs)
+						station_repair.repair_turfs(space_turfs, force_floor=TRUE)
 
 						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 						n++
@@ -680,12 +681,18 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if(station_repair.allows_vehicles)
 					T.allows_vehicles = station_repair.allows_vehicles
 				T.UpdateOverlays(station_repair.weather_img, "weather")
-				ambient_value = lerp(20,80,T.x/300)
-				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-				T.AddOverlays(station_repair.ambient_light, "ambient")
 
-			ambient_value = lerp(20,80,0.5)
-			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
+				if(params["Ambient Light Obj"])
+					T.vis_contents |= station_repair.ambient_obj
+				else
+					ambient_value = lerp(20,80,T.x/300)
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					T.AddOverlays(station_repair.ambient_light, "ambient")
+
+			if(station_repair.ambient_light)
+				ambient_value = lerp(20,80,0.5)
+				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
+
 			handle_mining(params, space)
 
 			log_terrainify(user, "turned space into Mars.")

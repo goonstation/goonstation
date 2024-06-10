@@ -96,7 +96,7 @@
 
 ///control for siphon and associated resonators: receives siphon and resonator data, and controls resonator operation
 /obj/machinery/computer/siphon_control
-	name = "Siphon Systems Control"
+	name = "siphon systems control"
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine1"
 	req_access = list(access_research)

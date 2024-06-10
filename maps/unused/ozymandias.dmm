@@ -12808,6 +12808,14 @@
 /area/station/medical/maintenance{
 	name = "Medical Booth Morgue"
 	})
+"dxv" = (
+/obj/machinery/manufacturer/hangar{
+	free_resources = list()
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "dxI" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -15849,6 +15857,12 @@
 	dir = 4
 	},
 /area/station/medical/staff)
+"emH" = (
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/greenblack{
+	dir = 5
+	},
+/area/station/hallway/secondary/west)
 "emJ" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
@@ -18074,12 +18088,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"eNM" = (
-/obj/machinery/manufacturer/mining{
-	free_resource_amt = 0
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
 "eNN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/secwing{
@@ -18320,14 +18328,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"eQT" = (
-/obj/machinery/manufacturer/hangar{
-	free_resource_amt = 0
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "eQZ" = (
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -25255,6 +25255,12 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
+"gGI" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "gGJ" = (
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -26920,15 +26926,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/solar/west)
-"hcA" = (
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 16
-	},
-/obj/landmark/start/job/medical_assistant,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "hcF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/camera{
@@ -29178,12 +29175,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"hEe" = (
-/obj/landmark/start/job/medical_assistant,
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "hEg" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -39620,12 +39611,6 @@
 /obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
-"ktJ" = (
-/obj/landmark/start/job/research_assistant,
-/turf/simulated/floor/greenblack{
-	dir = 5
-	},
-/area/station/hallway/secondary/west)
 "ktM" = (
 /obj/machinery/sleep_console{
 	dir = 8
@@ -62411,6 +62396,12 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"qpF" = (
+/obj/machinery/manufacturer/mining{
+	free_resources = list()
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "qpI" = (
 /obj/table/wood/auto,
 /obj/blind_switch/area/east{
@@ -81602,6 +81593,12 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"uZj" = (
+/obj/machinery/manufacturer/general/grody,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "uZl" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -84679,14 +84676,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
-"vJl" = (
-/obj/machinery/manufacturer/general/grody{
-	free_resource_amt = 2
-	},
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "vJq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -91176,6 +91165,15 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"xms" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 16
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "xmy" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -122976,7 +122974,7 @@ gpk
 vEb
 vEb
 vEb
-eQT
+dxv
 yiY
 yiY
 yiY
@@ -124188,7 +124186,7 @@ haE
 iMd
 msZ
 kXn
-vJl
+uZj
 fXG
 fXG
 xZC
@@ -126620,7 +126618,7 @@ wfZ
 bJd
 bTA
 xeV
-eNM
+qpF
 iYg
 dSM
 wfZ
@@ -127717,7 +127715,7 @@ xhT
 wII
 bhW
 tFZ
-ktJ
+emH
 lbO
 wrG
 rUj
@@ -145490,7 +145488,7 @@ sNW
 yea
 lKF
 hci
-hEe
+gGI
 qoC
 qoC
 qoC
@@ -146395,7 +146393,7 @@ tpP
 tSf
 hvM
 bcU
-hcA
+xms
 vlk
 ykP
 tXM

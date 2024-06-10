@@ -149,7 +149,7 @@
 	while(length(src.crew_tab_data[CREW_TAB_SECTION_OTHER]) < 8)
 		src.crew_tab_data[CREW_TAB_SECTION_OTHER] += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),
-			role = pick("Tourist", "Musician", "Union Rep", "Board Member", "Regional Director", "Inspector", "Governor", "Diplomat")
+			role = pick("Tourist", "Musician", "Union Rep", "Board Member", "Inspector", "Governor", "Diplomat")
 		)
 
 /// DEBUG: Generates a fake succinct antagonist data entry.

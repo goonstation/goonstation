@@ -1334,20 +1334,6 @@
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
 	})
-"aet" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "aev" = (
 /obj/machinery/light{
 	dir = 8;
@@ -24525,13 +24511,6 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/engine/engineering)
-"bvg" = (
-/obj/stool/chair/comfy,
-/obj/landmark/start/job/technical_assistant,
-/turf/simulated/floor/yellow/side{
-	dir = 6
-	},
 /area/station/engine/engineering)
 "bvh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -56395,25 +56374,6 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
-"dtv" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/firealarm/east,
-/obj/storage/crate/clown,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "dtC" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -64859,6 +64819,25 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"mbm" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/firealarm/east,
+/obj/machinery/computer/announcement/clown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "mbH" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -69819,6 +69798,21 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"rhT" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/clown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "riK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -70138,6 +70132,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
+"rAl" = (
+/obj/stool/chair/comfy,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/engine/engineering)
 "rAw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -111483,8 +111484,8 @@ kju
 aaI
 aaa
 adh
-dtv
-aet
+mbm
+rhT
 afc
 afV
 afU
@@ -113052,7 +113053,7 @@ boi
 bpK
 brC
 bpK
-bvg
+rAl
 bxi
 byV
 tFI
