@@ -28328,10 +28328,6 @@
 	dir = 8
 	},
 /area/station/chapel/funeral_parlor)
-"nfh" = (
-/obj/storage/secure/crate/eng/nuclearfuel,
-/turf/space,
-/area/space)
 "nfy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -44584,7 +44580,7 @@ aaa
 aaa
 aaa
 aaa
-nfh
+aaa
 aaa
 aaa
 aaa
