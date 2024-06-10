@@ -226,6 +226,9 @@
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
 					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
+						SPAWN(0.3 SECONDS) //wait for them to move in
+							if (!QDELETED(src))
+								attack_particle(src.assailant, src.affecting)
 						var/obj/item/cloth = src.loc
 						if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
 							logTheThing(LOG_COMBAT, src.assailant, "tries to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
