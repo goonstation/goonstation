@@ -25,22 +25,6 @@
 
 	return produce
 
-/proc/minibonegibs(turf/T, list/ejectables, bdna, btype) // but one sad wee little bone
-	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST), \
-		                    list(SOUTH, SOUTHEAST, SOUTHWEST), \
-		                    list(WEST, NORTHWEST, SOUTHWEST),  \
-		                    list(EAST, NORTHEAST, SOUTHEAST))
-
-	var/list/produce = list()
-	var/PT = /obj/item/material_piece/bone
-	var/obj/item/material_piece/bone/P = new PT
-	P.Scale(0.4, 0.4)
-	P.set_loc(T)
-	SPAWN(0)
-		P.streak_object(dirlist)
-	produce += P
-	return produce
-
 /mob/living/critter/skeleton
 	name = "skeleton"
 	real_name = "skeleton"
@@ -157,28 +141,6 @@
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
-
-/mob/living/critter/skeleton/tiny
-	name = "tiny skeleton"
-	desc = "A symbiotic parasite with no brain that pilots a skeleton with a healthy brain but no organs. A hermit crab..."
-	icon = 'icons/mob/critter/humanoid/skeleton.dmi'
-	add_abilities = list(/datum/targetable/critter/abandon_ship)
-	custom_gib_handler = /proc/minibonegibs
-	is_npc = FALSE
-
-	New()
-		..()
-		src.Scale(0.4, 0.4)
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		if (act == "scream")
-			if (src.emote_check(voluntary, 50))
-				playsound(src, 'sound/voice/screams/male_scream.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE, pitch=2)
-				return SPAN_ALERT("[src] screams in fear!")
-		return null
-
-	death()
-		..()
 
 /mob/living/critter/skeleton/multihat
 	hatcount = 10

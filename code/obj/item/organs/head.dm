@@ -395,27 +395,6 @@
 	attackby(obj/item/W, mob/user) // this is real ugly
 		if (!user)
 			return
-		if (src.head_type == HEAD_SKELETON)
-			if (W.force >= 10)
-				var/choice = tgui_alert(user, "Smash the skull?", "[src.donor_name]'s skull", list("Yes", "No"))
-				if (!choice || choice == "No")
-					return
-				else
-					var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
-					P.setup(src.loc)
-
-					for(var/obj/item/item in src.contents) // make sure we rip the brain and anything else out
-						src.contents -= item
-						item.loc = src.loc
-
-					for(var/mob/living/critter/skeleton/skele_controller in src.contents) // now the little guy
-						skele_controller.set_loc(get_turf(src))
-						SPAWN(10)
-							skele_controller.emote("scream")
-						SPAWN(60)
-							skele_controller.gib()
-					qdel(src)
-			boutput(user, SPAN_ALERT("You need something heavier to smash this."))
 
 		//Putting stuff on heads
 		if (istype(W, /obj/item/clothing/head))

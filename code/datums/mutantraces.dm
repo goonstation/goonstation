@@ -1108,9 +1108,10 @@ TYPEINFO(/datum/mutantrace/skeleton)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONEY
-			set_head(M.organHolder.head)
 
 	disposing()
+		if (ishuman(src.mob))
+			src.mob.mob_flags &= ~IS_BONEY
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
@@ -1140,6 +1141,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			var/obj/item/I
 			src.mob.sever_limb("all", src.mob)
 			I = src.mob.organHolder.drop_organ("head", src.mob)
+			ThrowRandom(src, rand(1, 6))
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
@@ -1165,12 +1167,6 @@ TYPEINFO(/datum/mutantrace/skeleton)
 
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
-
-			if (H) // don't do anything if there's no head
-				var/mob/living/critter/skeleton/skele_controller = new /mob/living/critter/skeleton/tiny/
-				skele_controller.name = (src.mob.name)
-				src.mob.mind.transfer_to(skele_controller)
-				H.contents += skele_controller // the pilot is in the suit. this is so the skeleton can speak after death
 
 			return MUTRACE_ONDEATH_NOTHING
 
