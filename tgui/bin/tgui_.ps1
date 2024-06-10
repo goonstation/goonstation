@@ -57,6 +57,8 @@ function task-dev-server {
 function task-bench {
   yarn run webpack-cli --env TGUI_BENCH=1
   yarn node "packages/tgui-bench/index.js"
+  Stop-Process -processname "iexplore"
+  Stop-Process -processname "ielowutil"
 }
 
 ## Run a linter through all packages
