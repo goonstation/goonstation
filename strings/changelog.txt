@@ -1,5 +1,9 @@
 
 (t)sun jun 09 24
+(u)Mintyphresh
+(p)19110
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Increased chance to get figurines of donators that joined the round.
 (u)LeahTheTech
 (p)19274
 (e)🚄💅⛔|C-Performance, C-QoL, C-Removal
