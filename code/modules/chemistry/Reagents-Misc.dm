@@ -1305,11 +1305,7 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
-					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
-					wet.blend_mode = BLEND_ADD
-					wet.alpha = 60
-					T.UpdateOverlays(wet, "wet_overlay")
-					T.wet = 2
+					T.wetify(2, 20 SECONDS)
 					if (!locate(/obj/decal/cleanable/oil) in T)
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						switch(volume)
@@ -1320,9 +1316,6 @@ datum
 								make_cleanable(/obj/decal/cleanable/oil/streak,T)
 							if (20 to INFINITY)
 								make_cleanable(/obj/decal/cleanable/oil,T)
-					SPAWN(20 SECONDS)
-						T.wet = 0
-						T.UpdateOverlays(null, "wet_overlay")
 
 		capulettium
 			name = "capulettium"
@@ -2491,7 +2484,7 @@ datum
 			fluid_g = 16
 			fluid_b = 94
 			transparency = 200
-			addiction_prob = 1//20
+			addiction_prob = 1
 			addiction_min = 5
 			overdose = 11
 			depletion_rate = 0.1
@@ -3592,15 +3585,7 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
-					wet.blend_mode = BLEND_ADD
-					wet.alpha = 60
-					T.UpdateOverlays(wet, "wet_overlay")
-					T.wet = 2
-					SPAWN(80 SECONDS)
-						if (istype(T))
-							T.wet = 0
-							T.UpdateOverlays(null, "wet_overlay")
+					T.wetify(2, 80 SECONDS)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)

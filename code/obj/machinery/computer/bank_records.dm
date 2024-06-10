@@ -1,7 +1,7 @@
 /obj/machinery/computer/bank_data
 	name = "bank records"
 	icon_state = "databank"
-	req_access = list(access_heads)
+	req_access = list(access_money)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	circuit_type = /obj/item/circuitboard/bank_data
 	var/obj/item/card/id/scan = null
