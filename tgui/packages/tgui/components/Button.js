@@ -8,7 +8,7 @@ import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
-import { Box, computeBoxClassName, computeBoxProps } from './Box';
+import { Box, computeBoxClassName } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
@@ -57,7 +57,7 @@ export const Button = props => {
     rest.unselectable = true;
   }
   let buttonContent = (
-    <div
+    <Box
       className={classes([
         'Button',
         fluid && 'Button--fluid',
