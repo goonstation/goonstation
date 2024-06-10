@@ -696,6 +696,21 @@ ABSTRACT_TYPE(/datum/job/research)
 			return
 		M.traitHolder.addTrait("training_scientist")
 
+/datum/job/research/research_assistant
+	name = "Research Assistant"
+	limit = 2
+	wages = PAY_UNTRAINED
+	trait_list = list("training_scientist")
+	access_string = "Research Assistant"
+	low_priority_job = TRUE
+	slot_back = list(/obj/item/storage/backpack/research)
+	slot_ears = list(/obj/item/device/radio/headset/research)
+	slot_jump = list(/obj/item/clothing/under/color/purple)
+	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_belt = list(/obj/item/device/pda2/toxins)
+	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
+	wiki_link = "https://wiki.ss13.co/Research_Assistant"
+
 /datum/job/research/medical_doctor
 	name = "Medical Doctor"
 	limit = 5
@@ -737,6 +752,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Medical Assistant"
 	limit = 2
 	wages = PAY_UNTRAINED
+	access_string = "Medical Assistant"
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
@@ -746,11 +762,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
 	slot_belt = list(/obj/item/device/pda2/medical)
 	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
-
-	New()
-		..()
-		src.access = get_access("Medical Assistant")
-		return
 
 // Engineering Jobs
 
@@ -848,6 +859,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	name = "Technical Assistant"
 	limit = 2
 	wages = PAY_UNTRAINED
+	access_string = "Technical Assistant"
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
@@ -857,11 +869,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_belt = list(/obj/item/device/pda2/technical_assistant)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
 	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
-
-	New()
-		..()
-		src.access = get_access("Technical Assistant")
-		return
 
 // Civilian Jobs
 
@@ -1226,33 +1233,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.traitHolder.addTrait("training_scientist")
 
-/datum/job/special/research_assistant
-	name = "Research Assistant"
-	linkcolor = "#9900FF"
-	limit = 2
-	wages = PAY_UNTRAINED
-	trait_list = list("training_scientist")
-	access_string = "Research Assistant"
-	low_priority_job = TRUE
-	slot_jump = list(/obj/item/clothing/under/color/white)
-	slot_foot = list(/obj/item/clothing/shoes/white)
-	slot_belt = list(/obj/item/device/pda2/toxins)
-	slot_ears = list(/obj/item/device/radio/headset/research)
-	wiki_link = "https://wiki.ss13.co/Research_Assistant"
-
-/datum/job/special/medical_assistant
-	name = "Medical Assistant"
-	linkcolor = "#9900FF"
-	limit = 2
-	wages = PAY_UNTRAINED
-	access_string = "Medical Assistant"
-	low_priority_job = TRUE
-	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
-	slot_foot = list(/obj/item/clothing/shoes/red)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_belt = list(/obj/item/device/pda2/medical)
-	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
-
 /datum/job/special/atmospheric_technician
 	name = "Atmospherish Technician"
 	linkcolor = "#FF9900"
@@ -1269,11 +1249,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
+<<<<<<< HEAD
 	New()
 		..()
 		src.access = get_access("Atmospheric Technician")
 		return
-
+=======
 /datum/job/special/tech_assistant
 	name = "Technical Assistant"
 	linkcolor = "#FF9900"
@@ -1286,6 +1267,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	slot_belt = list(/obj/item/device/pda2/technical_assistant)
 	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
+>>>>>>> c4991037095c23b531d0fec8f5e169ef970fa4e1
 
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
