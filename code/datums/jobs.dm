@@ -1249,7 +1249,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
-
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
 	linkcolor = "#FF99FF"
