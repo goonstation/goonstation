@@ -26,6 +26,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
 	var/locked = 0
+	var/reading_synd_int = FALSE
+	var/reading_specific_synd_int = null
+	var/has_synd_int = TRUE
+#ifdef BONUS_POINTS
+	uses = 9999
+#endif
 
 	var/use_default_GUI = 0 // Use the parent's HTML interface (less repeated code).
 	var/temp = null
@@ -40,9 +46,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
+		if (istype(get_area(src), /area/sim/gunsim))
+			src.is_VR_uplink = TRUE
 		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
 				src.setup()
+
+	disposing()
+		reading_specific_synd_int = null
+		reading_about = null
+		..()
 
 	proc/generate_code()
 		if (!src || !istype(src))
@@ -93,7 +106,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
-					if (ownermind.special_role != ROLE_NUKEOP && istype(S, /datum/syndicate_buylist/traitor))
+					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
 						if (!S.objective && !S.job && !src.items_general.Find(S))
 							src.items_general.Add(S)
 
@@ -129,7 +142,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S1
 
-			src.items_general = sortList(sort1)
+			src.items_general = sortList(sort1, /proc/cmp_text_asc)
 
 		if (length(src.items_job))
 			var/list/sort2 = list()
@@ -145,7 +158,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort2[name] = S2
 
-			src.items_job = sortList(sort2)
+			src.items_job = sortList(sort2, /proc/cmp_text_asc)
 
 		if (length(src.items_objective))
 			var/list/sort3 = list()
@@ -161,7 +174,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort3[name] = S3
 
-			src.items_objective = sortList(sort3)
+			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
 
 		if (length(src.items_telecrystal))
 			var/list/sort4 = list()
@@ -177,7 +190,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort4[name] = S4
 
-			src.items_telecrystal = sortList(sort4)
+			src.items_telecrystal = sortList(sort4, /proc/cmp_text_asc)
 
 		return
 
@@ -223,7 +236,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				qdel(W)
 		if (istype(W, /obj/item/explosive_uplink_telecrystal))
 			if (!src.locked)
-				boutput(user, "<span class='alert'>The [W] explodes!</span>")
+				boutput(user, SPAN_ALERT("The [W] explodes!"))
 				var/turf/T = get_turf(W.loc)
 				if(T)
 					T.hotspot_expose(700,125)
@@ -248,6 +261,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
 			if(reading_about.desc) item_about = "[reading_about.desc]"
 			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
+
+		else if(reading_synd_int)
+			dat += "<h4>Syndicate Intelligence</h4>"
+			dat += get_manifest(FALSE, src)
+			dat += "<br>"
+			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
+			dat += "<br>"
+
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
+			dat += "<h4>Syndicate intelligence on [staff_record["name"]]</h4>"
+			dat += staff_record["syndint"]
+			dat += "<br>"
+			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
+			dat += "<br>"
 
 		else
 			if (src.temp)
@@ -286,6 +314,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A></td>"
 				dat += "</table>"
 				var/do_divider = 1
+
+				if(has_synd_int && !is_VR_uplink)
+					dat += "<HR><A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 
 				if (istype(src, /obj/item/uplink/integrated/radio))
 					var/obj/item/uplink/integrated/radio/RU = src
@@ -367,7 +398,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					usr.put_in_hand_or_drop(T)
 					RU.set_loc(T)
 					T.set_frequency(initial(T.frequency))
-					T.attack_self(usr)
+					T.AttackSelf(usr)
 					return
 
 			else if (src.locked == 0 && src.is_VR_uplink == 0)
@@ -387,19 +418,33 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (src.is_VR_uplink == 0)
 				if (src.uses < I.cost)
-					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
+					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 					return
 				src.uses = max(0, src.uses - I.cost)
-				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
-				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
-					T.purchased_items.Add(I)
-				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
+
+				if (src.purchase_flags & UPLINK_TRAITOR)
+					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_HEAD_REV)
+					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_NUKE_OP)
+					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.uplink_items.Add(I)
+
+				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
 				I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
-					statlog_traitor_item(usr, I.name, I.cost)
+					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
+					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 			if (I.item2)
 				new I.item2(get_turf(src))
 			if (I.item3)
@@ -409,7 +454,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			reading_about = locate(href_list["about"])
 
 		else if (href_list["back"])
-			reading_about = null
+			if(reading_about)
+				reading_about = null
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
@@ -417,10 +468,18 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src)
 					src.explode()
 
+		else if (href_list["synd_int"] && !src.is_VR_uplink)
+			reading_synd_int = TRUE
+
+		else if (href_list["select_exp"])
+			var/datum/db_record/staff_record = locate(href_list["select_exp"])
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
+
 		else if (href_list["temp"])
 			src.temp = null
 
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		return
 #undef CHECK1
 #undef CHECK2
@@ -430,8 +489,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /obj/item/uplink/syndicate
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "radio"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	icon_state = "walkietalkie"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "radio"
 	throw_speed = 4
@@ -507,6 +567,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/active = 0 //Are we currently active??
 	var/menu_message = ""
 
+	disposing()
+		hostpda = null
+		. = ..()
+
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
 		if (master && istype(master))
@@ -567,6 +631,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<B>Request item:</B><BR>"
 		src.menu_message += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 
+		if(reading_synd_int)
+			src.menu_message += "<h4>Syndicate Intelligence</h4>"
+			src.menu_message += get_manifest(FALSE, src)
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
+
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
+			src.menu_message += "<h4>Syndicate intelligence on [staff_record["name"]]</h4>"
+			src.menu_message += replacetext(staff_record["syndint"], "\n", "<br>")
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
+
 		if (src.items_general && islist(src.items_general) && length(src.items_general))
 			for (var/G in src.items_general)
 				var/datum/syndicate_buylist/I1 = src.items_general[G]
@@ -588,6 +667,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
 
 		src.menu_message += "</table><HR>"
+		if(has_synd_int && !src.is_VR_uplink)
+			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
+			src.menu_message += "<HR>"
 		return
 
 	Topic(href, href_list)
@@ -616,19 +698,33 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (src.is_VR_uplink == 0)
 				if (src.uses < I.cost)
-					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
+					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 					return
 				src.uses = max(0, src.uses - I.cost)
-				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
-				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
-					T.purchased_items.Add(I)
-				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
+
+				if (src.purchase_flags & UPLINK_TRAITOR)
+					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_HEAD_REV)
+					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_NUKE_OP)
+					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.uplink_items.Add(I)
+
+				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
 				I.run_on_spawn(item, usr)
 				if (src.is_VR_uplink == 0)
-					statlog_traitor_item(usr, I.name, I.cost)
+					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
+					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 			if (I.item2)
 				new I.item2(get_turf(src.hostpda))
 			if (I.item3)
@@ -642,10 +738,20 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.print_to_host("<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>")
 			return
 
-		/*else if (href_list["back"])
-			src.generate_menu()
-			src.print_to_host(src.menu_message)
-			return*/
+		else if (href_list["synd_int"] && !src.is_VR_uplink)
+			reading_synd_int = TRUE
+
+		else if (href_list["select_exp"])
+			var/datum/db_record/staff_record = locate(href_list["select_exp"])
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
+
+		else if (href_list["back_menu"])
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
 
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
@@ -662,6 +768,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	spy
 		purchase_flags = UPLINK_SPY
+
+	omni
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
 
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
@@ -710,6 +819,24 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	spy
 		purchase_flags = UPLINK_SPY
 
+	omni
+		purchase_flags = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_NUKE_OP | UPLINK_HEAD_REV | UPLINK_NUKE_COMMANDER | UPLINK_SPY_THIEF
+
+///Datum used to combine the bounty being claimed with the item being delivered
+/datum/bounty_claim
+	var/datum/bounty_item/bounty = null
+	var/atom/delivery = null
+
+	New(datum/bounty_item/bounty, atom/delivery)
+		..()
+		src.bounty = bounty
+		src.delivery = delivery
+
+	disposing()
+		src.bounty = null
+		src.delivery = null
+		..()
+
 /obj/item/uplink/integrated/pda/spy
 	uses = 5 //amount of times that we can deliver items
 			//When uses hits 0, the spawn will be an ID tracker
@@ -735,6 +862,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
+		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(master_pre_attackby))
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
@@ -751,26 +879,33 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		return
 
+	///We have hit something with our uplink master device
+	proc/master_pre_attackby(obj/item/device/master, atom/target, mob/user)
+		var/datum/bounty_item/bounty = src.bounty_is_claimable(target, user)
+		if (bounty)
+			actions.start(new/datum/action/bar/private/spy_steal(target, src), user)
+			return TRUE
+
 	proc/req_bounties()
 		if (loops <= 0 || !loops_allowed)
 			.= 1
 		else
 			.= loops+1 - bounty_tally
 
-	proc/bounty_is_claimable(var/A)
+	///Returns a /datum/bounty_claim containing the bounty that can be claimed and the item that will be delivered
+	proc/bounty_is_claimable(atom/A, mob/user)
 		.= 0
 		if (ismob(A))
 			var/mob/M = A
 			for (var/obj/possible in M.contents)
-				.= bounty_object_is_claimable(possible)
+				.= bounty_object_is_claimable(possible, user)
 				if(.)
 					break
 		else if (isobj(A))
-			.= bounty_object_is_claimable(A)
+			.= bounty_object_is_claimable(A, user)
 
-
-	proc/bounty_object_is_claimable(var/obj/delivery)
-		.= 0
+	proc/bounty_object_is_claimable(obj/delivery, mob/user)
+		. = FALSE
 		for(var/datum/bounty_item/B in game.active_bounties)
 			if (B.claimed)
 				continue
@@ -779,71 +914,71 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			var/everythingelse_succ = ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
 			if (((B.bounty_type == BOUNTY_TYPE_ORGAN) && organ_succ) || ((B.bounty_type != BOUNTY_TYPE_ORGAN) && everythingelse_succ))
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
-					return 0
-				return delivery
-
-	proc/try_deliver(var/obj/delivery, var/mob/user)
-		if (uses < 0)
-			src.ui_update()
-			return
-
-		if (user.mind && user.mind.special_role != ROLE_SPY_THIEF)
-			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
-			return 0
-
-		for(var/datum/bounty_item/B in game.active_bounties)
-			if (B.claimed)
-				continue
-			if ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
-				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
 					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
 					if (istype(B.delivery_area, /area/diner))
 						user.show_text("It can be found at the nearby space diner!", "red")
 					var/turf/end = B.delivery_area.spyturf
 					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
-					return 0
+					return FALSE
 				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
 					if (P.uplink == src)
-						return 0
-				user.removeGpsPath(doText = 0)
-				B.claimed = 1
-				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
-					M.set_loc(get_turf(delivery))
-				if (istype(delivery.loc, /mob))
-					var/mob/M = delivery.loc
-					if (istype(delivery,/obj/item/parts) && ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/obj/item/parts/HP = delivery
-					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
-						if(HP == B.item && HP.holder == M) //Is this the right limb and is it attached?
-							HP.remove()
-							take_bleeding_damage(H, null, 10)
-							H.changeStatus("weakened", 3 SECONDS)
-							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-							H.emote("scream")
-							logTheThing(LOG_COMBAT, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
-						else if(HP != B.item)
-							user.show_text("That isn't the right limb!", "red")
-							return 0
-					else
-						M.drop_from_slot(delivery,get_turf(M))
-				if (!istype(delivery,/obj/item/parts))
-					logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
-				qdel(delivery)
-				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
-					user.mind.spy_stolen_items += B.name
+						return FALSE
+				return new /datum/bounty_claim(B, delivery)
 
-				if (req_bounties() > 1)
-					bounty_tally += 1
-					user.show_text("Your PDA accepts the bounty. Deliver [req_bounties()] more bounties to earn a reward.", "red")
-				else
-					src.spawn_reward(B, user)
-				src.ui_update()
-				return 1
+	proc/try_deliver(obj/delivery, mob/user)
+		if (uses < 0)
+			src.ui_update()
+			return
 
-		user.show_text("You cannot claim [delivery] for bounty!", "red")
+		if (!user.mind?.get_antagonist(ROLE_SPY_THIEF))
+			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
+			return FALSE
+
+		var/datum/bounty_claim/claim = src.bounty_is_claimable(delivery)
+		if (!claim)
+			user.show_text("You cannot claim [delivery] for bounty!", "red")
+			src.ui_update()
+			return FALSE
+		var/datum/bounty_item/bounty = claim.bounty
+		delivery = claim.delivery
+		user.removeGpsPath(doText = FALSE)
+		bounty.claimed = TRUE
+
+		if (istype(delivery.loc, /mob))
+			var/mob/M = delivery.loc
+			if (istype(delivery,/obj/item/parts) && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/parts/HP = delivery
+				if(HP == bounty.item && HP.holder == M) //Is this the right limb and is it attached?
+					HP.remove()
+					take_bleeding_damage(H, null, 10)
+					H.changeStatus("knockdown", 3 SECONDS)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+					H.emote("scream")
+					logTheThing(LOG_STATION, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+				else if(HP != bounty.item)
+					user.show_text("That isn't the right limb!", "red")
+					return FALSE
+			else
+				M.drop_from_slot(delivery,get_turf(M))
+		for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
+			M.set_loc(get_turf(delivery))
+		if (!istype(delivery,/obj/item/parts))
+			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
+
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
+		if (istype(antag_role))
+			antag_role.stolen_items[delivery.name] = new /mutable_appearance(delivery)
+
+
+		if (req_bounties() > 1)
+			bounty_tally += 1
+			user.show_text("Your PDA accepts the bounty. Deliver [req_bounties()] more bounties to earn a reward.", "red")
+		else
+			src.spawn_reward(bounty, user)
 		src.ui_update()
-		return 0
+		qdel(delivery)
+		return TRUE
 
 	proc/loop()
 		if (loops_allowed && loops < max_loops)
@@ -883,7 +1018,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!B) return
 		if (!user) return
 		if (TIME <= src.last_photo_print + 5 SECONDS)
-			boutput(user, "<span class='alert'>The photo printer is recharging!</span>")
+			boutput(user, SPAN_ALERT("The photo printer is recharging!"))
 			return
 
 		var/title = null
@@ -904,7 +1039,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			var/mob/M = A
 			var/list/trackable_mobs = get_mobs_trackable_by_AI()
 			if (!(((M.name in trackable_mobs) && (trackable_mobs[M.name] == M)) || (M == user)))
-				boutput(user, "<span class='alert'>Unable to locate target within the station camera network!</span>")
+				boutput(user, SPAN_ALERT("Unable to locate target within the station camera network!"))
 				return
 			photo_image = image(A.icon, null, A.icon_state, null, SOUTH)
 			photo_image.overlays = A.overlays
@@ -938,11 +1073,26 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
 		user.put_in_hand_or_drop(P)
-		playsound(src, "sound/machines/scan.ogg", 10, 1)
+		playsound(src, 'sound/machines/scan.ogg', 10, TRUE)
 		last_photo_print = TIME
 
 	generate_menu()
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
+
+		if(reading_synd_int)
+			src.menu_message += "<br><h4>Syndicate Intelligence</h4>"
+			src.menu_message += get_manifest(FALSE, src)
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
+
+		else if(reading_specific_synd_int)
+			var/datum/db_record/staff_record = reading_specific_synd_int
+			src.menu_message += "<br><h4>Syndicate intelligence on [staff_record["name"]]</h4>"
+			src.menu_message += replacetext(staff_record["syndint"], "\n", "<br>")
+			src.menu_message += "<br>"
+			src.menu_message += "<A href='byond://?src=\ref[src];back_menu=1'>Back</A>"
+			return
 
 		if (game)
 			//var/datum/game_mode/spy_theft/game = ticker.mode
@@ -981,7 +1131,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<br><I>Each bounty is open to all spies. Be sure to satisfy the requirements before your enemies.</I><BR><BR>"
 		src.menu_message += "<br><I>A **HOT** bounty indicates that the payout will be higher in value.</I><BR><BR>"
 		src.menu_message += "<I>Stand in the Deliver Area and touch a bountied item (or use click + drag) to this PDA. Our fancy wormhole tech can take care of the rest. Your efforts will be rewarded.</I><BR><table cellspacing=5>"
-
+		if(has_synd_int && !src.is_VR_uplink)
+			src.menu_message += "<HR>"
+			src.menu_message += "<A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
 		return
 
 	Topic(href, href_list)
@@ -996,6 +1148,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				//print photo of item or mob owner
 				src.print_photo(locate(href_list["bounty"]) , usr)
 
+		else if (href_list["synd_int"] && !src.is_VR_uplink)
+			reading_synd_int = TRUE
+
+		else if (href_list["select_exp"])
+			var/datum/db_record/staff_record = locate(href_list["select_exp"])
+			reading_specific_synd_int = staff_record
+			reading_synd_int = FALSE
+
+		else if (href_list["back_menu"])
+			if(reading_synd_int)
+				reading_synd_int = FALSE
+			if(reading_specific_synd_int)
+				reading_specific_synd_int = null
+				reading_synd_int = TRUE
+
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
 		return
@@ -1007,7 +1174,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "A nifty device used by the commander to order powerful equipment for their team."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "uplink_commander"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "uplink_commander"
 	throw_speed = 4
@@ -1017,6 +1185,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/datum/syndicate_buylist/reading_about = null
 	/// Bitflags for what items this uplink can buy (see `_std/defines/uplink.dm` for flags)
 	var/purchase_flags = UPLINK_NUKE_COMMANDER
+#ifdef BONUS_POINTS
+	points = 9999
+#endif
 
 	New()
 		..()
@@ -1027,6 +1198,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				continue
 			num_players++
 		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
+#ifdef BONUS_POINTS
+		points = 9999
+#endif
 		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.commander_buylist)))
 				src.setup()
@@ -1037,7 +1211,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if(R.uses >= 1 && !R.anchored)
 				R.force_drop(user)
 				sleep(1 DECI SECOND)
-				boutput(user, "<span class='alert'>The [src] accepts the [R], warping it away.</span>")
+				boutput(user, SPAN_ALERT("The [src] accepts the [R], warping it away."))
 				src.points += 2
 				qdel(R)
 		else
@@ -1064,7 +1238,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S
 
-			src.commander_buylist = sortList(sort1)
+			src.commander_buylist = sortList(sort1, /proc/cmp_text_asc)
 
 	attack_self(mob/user)
 		return ui_interact(user)
@@ -1111,11 +1285,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item3(get_turf(src))
 
 							B.run_on_spawn(A, usr, FALSE, src)
-							logTheThing(LOG_COMBAT, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
-							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
+
+							// Remember purchased item for the crew credits
+							var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+							antagonist_role?.uplink_items.Add(B)
+
+							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
-							world.save_intra_round_value("NuclearCommander-[initial(B)]-Purchased", loadnum + 1)
+							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
 							. = TRUE
 							break
 
@@ -1127,32 +1306,99 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "spellbook"
 	item_state = "spellbook"
+	var/datum/antagonist/wizard/antag_datum = null
 	var/wizard_key = ""
-	var/temp = null
 	var/uses = 6
-	var/selfdestruct = 0
-	var/traitor_frequency = 0
-	var/obj/item/device/radio/origradio = null
 	var/list/spells = list()
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
+	c_flags = ONBELT
 	throwforce = 5
 	health = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
-	var/vr = 0
+	var/vr = FALSE
+	/// The name of the spellbook's wizard for display purposes
+	var/wizard_name = null
+#ifdef BONUS_POINTS
+	uses = 9999
+#endif
 
-	New(var/in_vr = 0)
+	New(datum/antagonist/wizard/antag, in_vr = FALSE)
 		..()
+		src.antag_datum = antag
 		if (in_vr)
-			vr = 1
-			uses *= 2
+			src.vr = TRUE
+			src.uses *= 2
 
-		//Kubius spellbook upgrade: autonomous compendium of SWF uplink datums
-		for(var/D in (childrentypesof(/datum/SWFuplinkspell)))
+		for(var/D as anything in concrete_typesof(/datum/SWFuplinkspell))
 			src.spells += new D(src)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "WizardSpellbook")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"spell_slots" = src.uses
+		)
+
+	ui_static_data(mob/user)
+		var/list/spellbook_contents = list()
+		for(var/datum/SWFuplinkspell/spell as anything in src.spells)
+			var/cooldown_contents = null
+			var/icon/spell_icon = null
+			if (!spellbook_contents[spell.eqtype])
+				// create category if it doesnt exist
+				spellbook_contents[spell.eqtype] = list()
+			if (spell.assoc_spell && ispath(spell.assoc_spell, /datum/targetable/spell))
+				var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
+				// convert deciseconds to seconds
+				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
+				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+			else if (spell.icon && spell.icon_state)
+				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
+			spellbook_contents[spell.eqtype] += list(list(
+				cooldown = cooldown_contents,
+				cost = spell.cost,
+				desc = spell.desc,
+				name = spell.name,
+				spell_img = spell_icon,
+				vr_allowed = spell.vr_allowed,
+			))
+		. = list(
+			"owner_name" = src.wizard_name,
+			"spellbook_contents" = spellbook_contents,
+			"vr" = src.vr
+		)
+
+	attack_self(mob/user)
+		if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
+			boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
+			return
+		// update regardless, in case the wizard read their spellbook before setting their name
+		src.wizard_name = user.real_name
+		ui_interact(user)
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("buyspell")
+				var/datum/SWFuplinkspell/chosen_spell = params["spell"]
+				for (var/datum/SWFuplinkspell/spell in src.spells)
+					if (spell.name == chosen_spell)
+						chosen_spell = spell
+						break
+				if (chosen_spell.SWFspell_CheckRequirements(usr,src))
+					chosen_spell.SWFspell_Purchased(usr,src)
+
+///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
+ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell
 	var/name = "Spell"
 	var/eqtype = "Spell"
@@ -1162,37 +1408,43 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/assoc_spell = null
 	var/vr_allowed = 1
 	var/obj/item/assoc_item = null
+	/// backup icon in case spell has no associated spell ability
+	var/icon = 'icons/mob/spell_buttons.dmi'
+	var/icon_state = "fixme"
 
 	proc/SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
-			return 999 // unknown error
+			return FALSE // unknown error
 		if (book.vr && !src.vr_allowed)
-			return 3
+			return FALSE // Unavailable in VR
 		if (src.assoc_spell)
-			if (user.abilityHolder.getAbility(assoc_spell))
-				return 2
+			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
+				return FALSE // Already have this spell
 		if (book.uses < src.cost)
-			return 1 // ran out of points
+			return FALSE // ran out of points
+		return TRUE
 
 	proc/SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
 			return
 		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
-			user.abilityHolder.addAbility(src.assoc_spell)
-			user.abilityHolder.updateButtons()
+			book.antag_datum.ability_holder.addAbility(src.assoc_spell)
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
+		book.antag_datum.purchased_spells.Add(src) // Remember spell for crew credits
 
+//------------ ENCHANTMENT SPELLS ------------//
 /datum/SWFuplinkspell/soulguard
 	name = "Soulguard"
 	eqtype = "Enchantment"
 	vr_allowed = 0
 	desc = "Soulguard is basically a one-time do-over that teleports you back to the wizard shuttle and restores your life in the event that you die. However, the enchantment doesn't trigger if your body has been gibbed or otherwise destroyed. Also note that you will respawn completely naked."
+	icon_state = "soulguard"
 
 	SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		. = ..()
@@ -1200,8 +1452,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		..()
-		user.spell_soulguard = 1
+		user.spell_soulguard = SOULGUARD_SPELL
 
+//------------ EQUIPMENT SPELLS ------------//
 /datum/SWFuplinkspell/staffofcthulhu
 	name = "Staff of Cthulhu"
 	eqtype = "Equipment"
@@ -1218,6 +1471,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
+//------------ OFFENSIVE SPELLS ------------//
 /datum/SWFuplinkspell/bull
 	name = "Bull's Charge"
 	eqtype = "Offensive"
@@ -1242,7 +1496,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	eqtype = "Offensive"
 	desc = "This spell allows you to launch a spray of colorful and wildly innaccurate projectiles outwards in a cone aimed roughly at a nearby target."
 	assoc_spell = /datum/targetable/spell/prismatic_spray
-	cost = 2
+	cost = 1
 
 /*
 /datum/SWFuplinkspell/shockinggrasp
@@ -1297,6 +1551,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "Fires a bolt of electricity in a cardinal direction. Causes decent damage, and can go through thin walls and solid objects. You need special HAZARDOUS robes to cast this!"
 	assoc_verb = */
 
+//------------ DEFENSIVE SPELLS ------------//
 /datum/SWFuplinkspell/forcewall
 	name = "Forcewall"
 	eqtype = "Defensive"
@@ -1338,6 +1593,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	assoc_spell = /datum/targetable/spell/doppelganger
 	cost = 2
 
+//------------ UTILITY SPELLS ------------//
 /datum/SWFuplinkspell/knock
 	name = "Knock"
 	eqtype = "Utility"
@@ -1369,187 +1625,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "This spell infuses an adjacent human corpse with necromantic energy, creating a durable skeleton minion that seeks to pummel your enemies into oblivion."
 	assoc_spell = /datum/targetable/spell/animatedead
 
+//------------ MISC SPELLS ------------//
 /datum/SWFuplinkspell/pandemonium
 	name = "Pandemonium"
 	eqtype = "Miscellaneous"
 	desc = "This spell causes random effects to happen. Best used only by skilled wizards."
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/pandemonium
-
-
-
-/obj/item/SWF_uplink/proc/explode()
-	var/turf/location = get_turf(src.loc)
-	location.hotspot_expose(700, 125)
-
-	explosion(src, location, 0, 0, 2, 4)
-
-	qdel(src.master)
-	qdel(src)
-	return
-
-/obj/item/SWF_uplink/attack_self(mob/user as mob)
-	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
-		boutput(user, "<span class='alert'><b>The spellbook is magically attuned to someone else!</b></span>")
-		return
-	src.add_dialog(user)
-	var/html = {"
-[(user.client && !user.client.use_chui) ? "<!doctype html>\n<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style><title>Wizard Spellbook</title></head><body>" : ""]
-
-<style type="text/css">
-	.spell {
-		position: relative;
-	}
-
-	.spell:hover {
-		background: #ddd;
-	}
-	.spell div {
-		display: none;
-		position: absolute;
-		right: 0;
-		top: -1em;
-		background: #ddd;
-		color: black;
-		padding: 0.1em 0.3em;
-		width: 50%;
-		font-size: 80%;
-		z-index: 9999;
-	}
-	.spell:hover div {
-		display: block;
-	}
-	.cantbuy {
-		opacity: 0.7;
-	}
-
-	.buyme, .owned {
-		font-weight: bold;
-	}
-
-	.owned {
-		background: rgba(0, 255, 0, 0.3);
-	}
-	.spell em {
-		color: #888;
-		margin-left: 1em;
-		font-size: 90%;
-		}
-	.spelllink { font-weight: bold; }
-</style>
-	<h3>[user.real_name]'s Spellbook</h3>
-	Spell slots remaining: [src.uses]
-	"}
-	var/list/spell_group = list()
-	var/rowclass = ""
-	var/rowtext = ""
-	var/link = ""
-	var/unusable = 0
-	for (var/datum/SWFuplinkspell/SP in src.spells)
-		var/cooldown = null
-
-		if (SP.assoc_spell && ispath(SP.assoc_spell, /datum/targetable/spell))
-			var/datum/targetable/spell/SPdatum = SP.assoc_spell
-			cooldown = initial(SPdatum.cooldown)
-
-		unusable = SP.SWFspell_CheckRequirements(user, src)
-		switch (unusable)
-			if (1)
-				rowclass = "cantbuy"
-				rowtext = ""
-			if (2)
-				rowclass = "owned"
-				rowtext = "Acquired!"
-			if (3)
-				rowclass = "vr"
-				rowtext = "Unavailable in VR"
-			if (999)
-				rowclass = "cantbuy"
-				rowtext = "Error???"
-			else
-				rowclass = "buyme"
-				rowtext = ""
-
-		if (!spell_group[SP.eqtype])
-			spell_group[SP.eqtype] = list("<center><b>[SP.eqtype]</b></center>")
-
-		if (!unusable)
-			link = "<a href='byond://?src=\ref[src];buyspell=\ref[SP]'><span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span></a>"
-		else
-			link = "<span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span>"
-
-		spell_group[SP.eqtype] += "<div class='spell'>[link]<em>[rowtext]</em><div>[SP.desc][cooldown ? "<br><b>Cooldown: [cooldown / 10] sec.</b>" : ""]</div></div>"
-
-
-	for (var/L in spell_group)
-		html += jointext(spell_group[L], "")
-
-	user.Browse(jointext(html, ""), "window=radio")
-	onclose(user, "radio")
-	return
-
-/obj/item/SWF_uplink/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	var/mob/living/carbon/human/H = usr
-	if (!( ishuman(H)))
-		return 1
-	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
-		src.add_dialog(usr)
-
-		if (href_list["buyspell"])
-			var/datum/SWFuplinkspell/SP = locate(href_list["buyspell"])
-			switch(SP.SWFspell_CheckRequirements(usr,src))
-				if(1) boutput(usr, "<span class='alert'>You have no more magic points to spend.</span>")
-				if(2) boutput(usr, "<span class='alert'>You already have this spell.</span>")
-				if(3) boutput(usr, "<span class='alert'>This spell isn't availble in VR.</span>")
-				if(999) boutput(usr, "<span class='alert'>Unknown Error.</span>")
-				else
-					SP.SWFspell_Purchased(usr,src)
-
-		else if (href_list["aboutspell"])
-			var/datum/SWFuplinkspell/SP = locate(href_list["aboutspell"])
-			src.temp = "[SP.desc]"
-			if (SP.cooldown)
-				src.temp += "<BR>It takes [SP.cooldown] seconds to recharge after use."
-
-		else if (href_list["lock"] && src.origradio)
-			// presto chango, a regular radio again! (reset the freq too...)
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=radio")
-			var/obj/item/device/radio/T = src.origradio
-			var/obj/item/SWF_uplink/R = src
-			R.set_loc(T)
-			T.set_loc(usr)
-			// R.layer = initial(R.layer)
-			R.layer = 0
-			usr.u_equip(R)
-			usr.put_in_hand_or_drop(T)
-			R.set_loc(T)
-			T.set_frequency(initial(T.frequency))
-			T.attack_self(usr)
-			return
-
-		else if (href_list["selfdestruct"])
-			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
-
-		else if (href_list["selfdestruct2"])
-			src.selfdestruct = 1
-			SPAWN(10 SECONDS)
-				explode()
-				return
-		else
-			if (href_list["temp"])
-				src.temp = null
-
-		if (ismob(src.loc))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
-
-	//if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
-	//	H.wear_suit.check_abilities()
-	return

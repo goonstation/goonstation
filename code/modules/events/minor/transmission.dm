@@ -28,7 +28,7 @@
 				tele.updateUsrDialog()
 			command_report += "\n\nTransmission source stored in the Teleportation Console."
 
-		var/sound_to_play = "sound/misc/announcement_1.ogg"
+		var/sound_to_play = 'sound/misc/announcement_1.ogg'
 		command_announcement(replacetext(command_report, "\n", "<br>"), "Emergency Broadcast Received", sound_to_play, do_sanitize=0);
 		return
 

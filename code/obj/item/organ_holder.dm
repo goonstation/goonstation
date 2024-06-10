@@ -19,7 +19,7 @@
 	var/obj/item/organ/liver = null
 	var/obj/item/organ/spleen = null
 	var/obj/item/organ/pancreas = null
-	var/obj/item/organ/stomach = null
+	var/obj/item/organ/stomach/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
@@ -27,7 +27,7 @@
 
 	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 
-	var/list/organ_type_list = list(
+	var/static/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
 		"skull"="/obj/item/skull",
 		"brain"="/obj/item/organ/brain",
@@ -47,6 +47,33 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
+	///List of buttons used in chest organ surgery
+	var/list/datum/contextAction/contexts = list()
+	var/datum/contextLayout/contextLayout = new /datum/contextLayout/experimentalcircle
+	///List of buttons used in back surgery (tail/butt)
+	var/list/datum/contextAction/back_contexts = list()
+
+	//List of buttons used to open specific regions of the person
+	var/list/datum/contextAction/rib_contexts = null
+	var/list/datum/contextAction/abdomen_contexts = null
+	var/list/datum/contextAction/flanks_contexts = null
+	var/list/datum/contextAction/subcostal_contexts = null
+
+	//List of buttons showing all the organs inside a region
+	var/list/datum/contextAction/inside_ribs_contexts = null
+	var/list/datum/contextAction/inside_abdomen_contexts = null
+	var/list/datum/contextAction/inside_flanks_contexts = null
+	var/list/datum/contextAction/inside_subcostal_contexts = null
+	///How cut up is our back for surgery purposes
+	var/back_op_stage = BACK_SURGERY_CLOSED
+	///How cut up are our ribs?
+	var/ribs_stage = REGION_CLOSED
+	///How cut up is our subcostal region?
+	var/subcostal_stage = REGION_CLOSED
+	///How cut up is our abdominal region?
+	var/abdominal_stage = REGION_CLOSED
+	///How cut up are our flanks?
+	var/flanks_stage = REGION_CLOSED
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -56,6 +83,231 @@
 			src.donor = L
 		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
+
+	proc/build_region_buttons()
+
+		if (!src.chest)	//Can't do surgery without a chest to operate on
+			return null
+		src.contexts = list()
+
+		//begin by adding regions
+		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
+		src.contexts += ribs_action
+		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
+		src.contexts += subcostal_action
+		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
+		src.contexts += abdomen_action
+		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
+		src.contexts += flanks_action
+
+		//possible parasite removal surgery
+		if (length(donor.ailments) > 0)
+			for (var/datum/ailment_data/an_ailment in donor.ailments)
+				if (an_ailment.cure_flags & CURE_SURGERY)
+					var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
+					src.contexts += parasite_action
+					break
+
+		//possible chest item removal surgery
+		if (ishuman(src.donor))
+			var/mob/living/carbon/human/H = src.donor
+			if (H.chest_item)
+				var/datum/contextAction/surgery_region/chest_item/item_action = new /datum/contextAction/surgery_region/chest_item()
+				src.contexts += item_action
+
+		for (var/obj/item/implant/I in donor.implant)
+			if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
+				var/datum/contextAction/surgery_region/implant/implant_action = new /datum/contextAction/surgery_region/implant()
+				src.contexts += implant_action
+				break
+
+		return length(src.contexts)
+
+	proc/close_surgery_regions()
+		src.rib_contexts = null
+		src.abdomen_contexts = null
+		src.flanks_contexts = null
+		src.subcostal_contexts = null
+		src.ribs_stage = REGION_CLOSED
+		src.abdominal_stage = REGION_CLOSED
+		src.flanks_stage = REGION_CLOSED
+		src.subcostal_stage = REGION_CLOSED
+		for(var/thing in src.organ_list)
+			if(thing == "all")
+				continue
+			var/obj/item/organ/O = organ_list[thing]
+			if(istype(O) && O.donor)
+				O.surgery_contexts = null
+				O.removal_stage = 0
+
+	proc/build_back_surgery_buttons()
+		src.back_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/back_surgery))
+			var/datum/contextAction/back_surgery/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				src.back_contexts += action
+		return length(src.back_contexts)
+
+	proc/build_rib_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.rib_contexts != null)
+			return TRUE
+
+		src.rib_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "ribs"
+			src.rib_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "ribs"
+			src.rib_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "ribs"
+			src.rib_contexts += action
+		.+= length(src.rib_contexts)
+
+	proc/build_subcostal_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.subcostal_contexts != null)
+			return TRUE
+
+		src.subcostal_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "subcostal"
+			src.subcostal_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "subcostal"
+			src.subcostal_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "subcostal"
+			src.subcostal_contexts += action
+		.+= length(src.subcostal_contexts)
+
+	proc/build_abdomen_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.abdomen_contexts != null)
+			return TRUE
+
+		src.abdomen_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "abdomen"
+			src.abdomen_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "abdomen"
+			src.abdomen_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "abdomen"
+			src.abdomen_contexts += action
+		.+= length(src.abdomen_contexts)
+
+	proc/build_flanks_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.flanks_contexts != null)
+			return TRUE
+
+		src.flanks_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "flanks"
+			src.flanks_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "flanks"
+			src.flanks_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "flanks"
+			src.flanks_contexts += action
+		.+= length(src.flanks_contexts)
+
+	proc/build_inside_ribs_buttons()
+		.= null
+
+		src.inside_ribs_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/ribs))
+			var/datum/contextAction/organs/ribs/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_ribs_contexts += action
+
+		.+= length(inside_ribs_contexts)
+
+	proc/build_inside_abdomen_buttons()
+		.= null
+
+		src.inside_abdomen_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/abdominal))
+			var/datum/contextAction/organs/abdominal/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_abdomen_contexts += action
+
+		.+= length(inside_abdomen_contexts)
+
+	proc/build_inside_subcostal_buttons()
+		.= null
+
+		src.inside_subcostal_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/subcostal))
+			var/datum/contextAction/organs/subcostal/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_subcostal_contexts += action
+
+		.+= length(inside_subcostal_contexts)
+
+	proc/build_inside_flanks_buttons()
+		.= null
+
+		src.inside_flanks_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/flanks))
+			var/datum/contextAction/organs/flanks/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_flanks_contexts += action
+
+		.+= length(inside_flanks_contexts)
 
 	disposing()
 		src.organ_list.len = 0
@@ -142,6 +394,14 @@
 		tail = null
 
 		donor = null
+
+		if (src.contexts)
+			for(var/datum/contextAction/C in src.contexts)
+				C.dispose()
+		if (src.back_contexts)
+			for(var/datum/contextAction/C in src.contexts)
+				C.dispose()
+
 		..()
 
 	proc/handle_organs(var/mult = 1)
@@ -161,6 +421,8 @@
 
 	//What should happen on every tick when an organ is missing. Should be called above in /datum/organHolder/proc/handle_organs().
 	proc/handle_missing(var/organ_name as text, var/mult = 1)
+		if (ischangeling(src.donor))
+			return
 		switch (organ_name)
 			if ("liver")
 				donor.take_toxin_damage(2*mult, 1)
@@ -175,7 +437,7 @@
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
 			if ("tail")
-				if(ischangeling(donor) || src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
+				if(src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
 					return
 				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
 					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
@@ -216,9 +478,9 @@
 			return 0
 
 		if(donor.traitHolder?.hasTrait("weakorgans"))
-			brute *=2
-			burn *=2
-			tox *=2
+			brute *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+			burn *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+			tox *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
 
 		if (islist(src.organ_list))
 			var/obj/item/organ/O = src.organ_list[organ]
@@ -240,17 +502,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.fail_damage))
 			count++
-		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.fail_damage))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.fail_damage))
 			count++
-		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.fail_damage))
 			count++
 		return count
 
@@ -320,7 +582,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.donor.butt_op_stage = 0
+			src.back_op_stage = BACK_SURGERY_CLOSED
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -350,6 +612,18 @@
 		if (!src.tail)
 			src.tail = null	// Humans dont have tailbones, fun fact
 			organ_list["tail"] = tail
+
+	proc/rename_organs(user_name)
+		for(var/thing in src.organ_list)
+			if(thing == "all")
+				continue
+			var/obj/item/organ/O = organ_list[thing]
+			if(isnull(O))
+				continue
+			var/list/organ_name_parts = splittext(O.name, "'s")
+			if(length(organ_name_parts) == 2)
+				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
@@ -409,7 +683,7 @@
 			else if(organ == tail)
 				organ = "tail"
 			else
-				return 0 // what the fuck are you trying to remove
+				return null // what the fuck are you trying to remove
 
 		switch (lowertext(organ))
 
@@ -434,7 +708,7 @@
 
 			if ("head")
 				if (!src.head)
-					return 0
+					return null
 				var/obj/item/organ/head/myHead = src.head
 				if (src.brain && !isskeleton(src.donor)) // skeletons move their brain elsewhere so they can detach their head without dying
 					myHead.brain = src.drop_organ("brain", myHead)
@@ -484,7 +758,7 @@
 
 			if ("skull")
 				if (!src.skull)
-					return 0
+					return null
 				var/obj/item/skull/mySkull = src.skull
 				mySkull.set_loc(location)
 				mySkull.holder = null
@@ -495,7 +769,7 @@
 
 			if ("brain")
 				if (!src.brain)
-					return 0
+					return null
 				var/obj/item/organ/brain/myBrain = src.brain
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
@@ -529,7 +803,7 @@
 
 			if ("left_eye")
 				if (!src.left_eye)
-					return 0
+					return null
 				var/obj/item/organ/eye/myLeftEye = src.left_eye
 				myLeftEye.set_loc(location)
 				myLeftEye.on_removal()
@@ -541,7 +815,7 @@
 
 			if ("right_eye")
 				if (!src.right_eye)
-					return 0
+					return null
 				var/obj/item/organ/eye/myRightEye = src.right_eye
 				myRightEye.set_loc(location)
 				myRightEye.on_removal()
@@ -553,7 +827,7 @@
 
 			if ("chest")
 				if (!src.chest)
-					return 0
+					return null
 				var/obj/item/organ/chest/myChest = src.chest
 				myChest.set_loc(location)
 				myChest.on_removal()
@@ -564,7 +838,7 @@
 
 			if ("heart")
 				if (!src.heart)
-					return 0
+					return null
 				var/obj/item/organ/heart/myHeart = src.heart
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
@@ -580,7 +854,7 @@
 
 			if ("left_lung")
 				if (!src.left_lung)
-					return 0
+					return null
 				var/obj/item/organ/lung/left/myLeftLung = src.left_lung
 				myLeftLung.set_loc(location)
 				myLeftLung.on_removal()
@@ -593,7 +867,7 @@
 
 			if ("right_lung")
 				if (!src.right_lung)
-					return 0
+					return null
 				var/obj/item/organ/lung/right/myRightLung = src.right_lung
 				myRightLung.set_loc(location)
 				myRightLung.on_removal()
@@ -606,19 +880,18 @@
 
 			if ("butt")
 				if (!src.butt)
-					return 0
+					return null
 				var/obj/item/clothing/head/butt/myButt = src.butt
 				myButt.set_loc(location)
 				myButt.holder = null
 				src.butt = null
-				src.donor.butt_op_stage = 4
 				src.donor.update_body()
 				src.organ_list["butt"] = null
 				return myButt
 
 			if ("left_kidney")
 				if (!src.left_kidney)
-					return 0
+					return null
 				var/obj/item/organ/kidney/left/myleft_kidney = src.left_kidney
 				myleft_kidney.set_loc(location)
 				myleft_kidney.on_removal()
@@ -630,7 +903,7 @@
 
 			if ("right_kidney")
 				if (!src.right_kidney)
-					return 0
+					return null
 				var/obj/item/organ/kidney/right/myright_kidney = src.right_kidney
 				myright_kidney.set_loc(location)
 				myright_kidney.on_removal()
@@ -642,7 +915,7 @@
 
 			if ("liver")
 				if (!src.liver)
-					return 0
+					return null
 				var/obj/item/organ/liver/myliver = src.liver
 				myliver.set_loc(location)
 				myliver.on_removal()
@@ -654,7 +927,7 @@
 
 			if ("stomach")
 				if (!src.stomach)
-					return 0
+					return null
 				var/obj/item/organ/stomach/mystomach = src.stomach
 				mystomach.set_loc(location)
 				mystomach.on_removal()
@@ -666,7 +939,7 @@
 
 			if ("intestines")
 				if (!src.intestines)
-					return 0
+					return null
 				var/obj/item/organ/intestines/myintestines = src.intestines
 				myintestines.set_loc(location)
 				myintestines.on_removal()
@@ -678,7 +951,7 @@
 
 			if ("spleen")
 				if (!src.spleen)
-					return 0
+					return null
 				var/obj/item/organ/spleen/myspleen = src.spleen
 				myspleen.set_loc(location)
 				myspleen.on_removal()
@@ -690,7 +963,7 @@
 
 			if ("pancreas")
 				if (!src.pancreas)
-					return 0
+					return null
 				var/obj/item/organ/pancreas/mypancreas = src.pancreas
 				mypancreas.set_loc(location)
 				mypancreas.on_removal()
@@ -702,7 +975,7 @@
 
 			if ("appendix")
 				if (!src.appendix)
-					return 0
+					return null
 				var/obj/item/organ/appendix/myappendix = src.appendix
 				myappendix.set_loc(location)
 				myappendix.on_removal()
@@ -714,7 +987,7 @@
 
 			if ("tail")
 				if (!src.tail)
-					return 0
+					return null
 				var/obj/item/organ/tail/mytail = src.tail
 				mytail.set_loc(location)
 				mytail.on_removal()
@@ -754,7 +1027,7 @@
 						grody_arc = "greasy"
 					else
 						grody_arc = "floppy"
-				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!</span>")
+				src.donor.visible_message(SPAN_ALERT("[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!"))
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
@@ -774,7 +1047,7 @@
 						return FALSE
 				var/obj/item/organ/head/newHead = I
 				if (src.brain && newHead.brain)
-					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it.</span>")
+					boutput(usr, SPAN_ALERT("[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it."))
 					return FALSE
 				newHead.op_stage = op_stage
 				src.head = newHead
@@ -826,10 +1099,15 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
+
+					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.set_head(newHead)
-					H.set_eye(null)
+						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
+							S.set_head(newHead)
+							H.set_eye(null)
+					else
+						H.set_eye(null)
+
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -862,13 +1140,33 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
+				boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
 				src.donor.ghostize()
 				if (newBrain.owner)
-					newBrain.owner.transfer_to(src.donor)
+					var/mob/G
+					G = find_ghost_by_key(newBrain?.owner?.key)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+							G.ghostize()?.mind?.transfer_to(src.donor)
+						else
+							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+							G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
+
+				// if the head has an skeleton, and we're not taking it, eject the skeleton out of the head
+				if (src.head.head_type == HEAD_SKELETON)
+					var/mob/living/carbon/human/H = src.head.linked_human
+					if (H && (!isskeleton(src.donor) && H != src.donor))
+						var/datum/mutantrace/skeleton/S = H?.mutantrace
+						S.head_tracker = null
+						H.set_eye(null)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
 				organ_list["brain"] = newBrain
@@ -995,7 +1293,7 @@
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
-				src.donor.butt_op_stage = op_stage
+				src.back_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")
@@ -1129,7 +1427,7 @@
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
-			if (is_full_robotic())
+			if (is_full_robotic() && !istype(src.donor:mutantrace, /datum/mutantrace/cyberman))
 				donor.unlock_medal("Spaceship of Theseus", 1)
 			return 1
 
@@ -1159,7 +1457,10 @@
 	//change stamina modifies based on amount of working lungs. lungs w/ health > 0
 	//lungs_changed works like this: if lungs_changed is != the num of working lungs, then apply the stamina modifier
 	proc/handle_lungs_stamina(var/mult = 1)
+		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
+		if (ischangeling(src.donor)) //we cheat
+			working_lungs = 2
 		switch (working_lungs)
 			if (0)
 				if (working_lungs != lungs_changed)
@@ -1322,70 +1623,16 @@
 	regenRate = 0
 	tabName = "Body"
 
-/atom/movable/screen/ability/topBar/organ
-	clicked(params)
-		var/datum/targetable/organAbility/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(usr.loc))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr:targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-
 /datum/targetable/organAbility
 	icon = 'icons/mob/organ_abilities.dmi'
 	icon_state = "template"
 	cooldown = 0
 	last_cast = 0
 	preferred_holder_type = /datum/abilityHolder/organ
-	var/disabled = 0
+	disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null
-
-	New()
-		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
-		B.name = src.name
-		B.desc = src.desc
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/organ()
-			object.icon = src.icon
-			object.owner = src
-		if (disabled)
-			object.name = "[src.name] (unavailable)"
-			object.icon_state = src.icon_state + "_cd"
-		else if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else if (toggled)
-			if (is_on)
-				object.name = "[src.name] (on)"
-				object.icon_state = src.icon_state
-			else
-				object.name = "[src.name] (off)"
-				object.icon_state = src.icon_state + "_cd"
-		else
-			object.name = src.name
-			object.icon_state = src.icon_state
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
@@ -1393,13 +1640,13 @@
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use that ability right now."))
 			return 0
 		else if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use that ability while you're incapacitated."))
 			return 0
 		else if (disabled)
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use that ability right now."))
 			return 0
 		return 1
 
@@ -1408,7 +1655,7 @@
 			return 1
 		if (!linked_organ)
 			return 1
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
+		. = ..()
 		if (ismob(target))
 			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
@@ -1443,8 +1690,8 @@
 				I = H.wear_suit
 			if (istype(I)) // or it might go
 				I.combust() // POOF
-				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
-				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
+				holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]'s [I.name] catches on fire!</b>"),\
+				SPAN_COMBAT("<b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!"))
 				return
 
 		if (!ispath(eye_proj))
@@ -1453,18 +1700,18 @@
 		var/turf/T = get_turf(target)
 
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
+		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!"))
 		var/datum/projectile/PJ = new eye_proj
-		shoot_projectile_ST(holder.owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(holder.owner, PJ, T)
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/projectile/laser/eyebeams/right
 	icon_state = "eyebeamR"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/targetable/organAbility/meson
@@ -1507,9 +1754,8 @@
 				O.take_damage(15, 15) //safe-ish
 		else
 			linked_organ.take_damage(30, 30) //not safe
-		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+		boutput(holder.owner, SPAN_NOTICE("You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body."))
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
-		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
 			if(holder?.owner)
 				REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src)
@@ -1539,7 +1785,7 @@
 		if (istype(L))
 			L.overloading = !L.overloading
 			src.is_on = L.overloading
-			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver."))
 		if(is_on)
 			src.icon_state = initial(src.icon_state)
 		else
@@ -1559,13 +1805,8 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
-				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
-				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
-					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
-			else
-				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
-				linked_organ.take_damage(30) //owwww
+			boutput(L, SPAN_NOTICE("You force your cyberintestines to rapidly process the contents of your stomach."))
+			L.organHolder?.stomach?.handle_digestion()
 
 
 /datum/targetable/organAbility/projectilevomit
@@ -1582,18 +1823,18 @@
 
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
-				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
+			if (length(L.organHolder.stomach.contents))
+				L.visible_message(SPAN_ALERT("[L] convulses and vomits right at [target]!"), SPAN_ALERT("You upchuck some of your cyberstomach contents at [target]!"))
 				SPAWN(0)
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !length(L.stomach_process))
+						if(linked_organ.broken || !length(L.organHolder.stomach.contents))
 							break
 			else
-				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
+				boutput(L, SPAN_ALERT("You try to vomit, but your cyberstomach has nothing left inside!"))
 				linked_organ.take_damage(30) //owwww
 				L.vomit()
 
@@ -1614,11 +1855,11 @@
 		if (..())
 			return 1
 		if(!islist(linked_organ) && !is_on)
-			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
+			boutput(holder.owner, SPAN_NOTICE("This ability is only usable with two unregulated cyberlungs!"))
 			return 1
 
 		src.is_on = !src.is_on
-		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
+		boutput(holder.owner, SPAN_NOTICE("You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs."))
 		for(var/obj/item/organ/lung/cyber/L in linked_organ)
 			L.overloading = is_on
 		if(is_on)

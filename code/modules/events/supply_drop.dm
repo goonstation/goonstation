@@ -21,17 +21,17 @@
 			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in ticker.minds)
-			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
+			boutput(M.current, SPAN_NOTICE("A supply drop will happen soon in the [A.name]"))
 		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
-				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
+				boutput(M.current, "[SPAN_NOTICE("A supply drop occurred in [A.name]!")]")
 
 /obj/effect/supplymarker
 	name = ""
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -16
 	pixel_y = -16
 	var/gib_mobs = TRUE
@@ -54,7 +54,7 @@
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "lootdrop"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOCKVISION
 	var/dropTime = 30
 	var/gib_mobs = TRUE
@@ -90,7 +90,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explo_smoky"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOCKVISION
 	pixel_x = -32
 	pixel_y = -32
@@ -106,7 +106,7 @@
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "attachecase"
 	var/used = 0
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 	var/obj_path
@@ -127,7 +127,7 @@
 
 /proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(null, obj_path))
 	return
 
 /proc/makeRandomLootTrash()
@@ -202,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = 1)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1)
 
 	I.name_prefix(prefix)
 
@@ -239,7 +239,6 @@
 	return I
 
 /atom/movable/screen/lootcratepreview
-	icon = null
 	screen_loc = "1,1"
 	name = ""
 	mouse_opacity = 0

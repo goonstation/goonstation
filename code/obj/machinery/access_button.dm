@@ -6,7 +6,7 @@ obj/machinery/access_button
 
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 
-	anchored = 1
+	anchored = ANCHORED
 
 	var/master_tag
 	var/frequency = FREQ_AIRLOCK_CONTROL
@@ -33,4 +33,4 @@ obj/machinery/access_button
 	New()
 		..()
 		UnsubscribeProcess()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)

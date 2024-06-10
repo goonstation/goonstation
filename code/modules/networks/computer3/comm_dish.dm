@@ -1,8 +1,11 @@
+TYPEINFO(/obj/machinery/communications_dish)
+	mats = 25
+
 /obj/machinery/communications_dish
 	name = "Communications dish"
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
@@ -13,7 +16,6 @@
 	var/frequency = FREQ_COMM_DISH
 	var/list/cargo_logs = list()
 
-	mats = 25
 	deconstruct_flags = DECON_NONE
 
 	New()
@@ -28,7 +30,7 @@
 					src.link.master = src
 
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	disposing()
 		STOP_TRACKING
@@ -74,7 +76,7 @@
 				src.link.post_signal(src, signal)
 
 		transmit_to_centcom(var/title, var/message, var/user)
-			var/sound_to_play = "sound/misc/announcement_1.ogg"
+			var/sound_to_play = 'sound/misc/announcement_1.ogg'
 			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Central Command")
 			message_admins("[user ? user : "Someone"] sent a message to Central Command:<br>[title]<br><br>[message]")
 			var/ircmsg[] = new()
@@ -82,12 +84,14 @@
 			ircbot.export_async("admin", ircmsg)
 
 		transmit_to_partner_station(var/title, var/message, var/user)
-			var/sound_to_play = "sound/misc/announcement_1.ogg"
+			var/sound_to_play = 'sound/misc/announcement_1.ogg'
 			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Partner Station")
 			var/ircmsg[] = new()
-			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to __[game_servers.get_buddy().name]__:\n**[title]**\n[message]"
+			var/sent = game_servers.get_buddy() ? "sent" : "failed to send"
+			ircmsg["msg"] = "[user ? user : "Unknown"] [sent] a message to __[game_servers.get_buddy()?.name]__:\n**[title]**\n[message]"
 			ircbot.export_async("admin", ircmsg)
-			return game_servers.send_to_buddy("announce", title, message)
+			if(game_servers.get_buddy())
+				return game_servers.send_to_buddy("announce", title, message)
 
 		add_cargo_logs(var/atom/A)
 			if (!A)
@@ -96,7 +100,7 @@
 			if (src.status & (BROKEN|NOPOWER))
 				return
 
-			if (cargo_logs.len > 20)
+			if (length(cargo_logs) > 20)
 				cargo_logs.len = 10
 
 			var/shiftTime = round(ticker.round_elapsed_ticks / 600)
@@ -186,7 +190,7 @@
 								return
 							src.post_reply("SHUTL_E_RET", target)
 					else
-						//to-do: error reply
+						; //to-do: error reply
 			if("transmit")
 				if(signal.data["acc_code"] != netpass_heads)
 					return

@@ -6,12 +6,264 @@
 	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
-	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
+	var/positive = TRUE //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
+	var/charge_amount = 250
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		return
 
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
-		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+		boutput(user, SPAN_ALERT("The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"]."))
+
+	afterattack(var/atom/target, mob/user, flag)
+		if(istype(target,/obj/machinery/power/apc))
+			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
+		else if (istype(target, /mob/living/silicon/) && target != user)
+			actions.start(new/datum/action/bar/private/icon/robojumper_to_silicon(user, target), user)
+		else
+			..()
+
+/datum/action/bar/private/icon/robojumper
+	duration = 1 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
+	icon = 'icons/mob/hud_robot.dmi'
+	icon_state = "robocable_charge"
+
+	var/mob/user
+	var/atom/movable/target
+	var/particles/P
+
+	New(mob/user, target)
+		var/obj/item/robojumper/jumper = user.equipped()
+		if(istype(jumper) && jumper.positive)
+			icon_state = "robocable_discharge"
+		. = ..()
+		src.user = user
+		src.target = target
+		P = src.user.GetParticles("robojumper")
+		if (!P) // only needs to be made on the mob once
+			src.user.UpdateParticles(new/particles/arcfiend/robojumper, "robojumper")
+			P = src.user.GetParticles("robojumper")
+
+	onUpdate()
+		..()
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+
+		P.spawning = initial(P.spawning)
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+	onInterrupt(flag)
+		if(INTERRUPT_MOVE==flag && (BOUNDS_DIST(src.user, src.target) == 0))
+			state = ACTIONSTATE_RUNNING
+			interrupt_start = -1
+			return
+		P.spawning = 0
+		. = ..()
+
+	onEnd()
+		var/restart = FALSE
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
+		var/obj/item/robojumper/jumper = user.equipped()
+		var/mob/living/silicon/S = user
+		var/obj/machinery/power/apc/apc = target
+		if (istype(jumper) && istype(S) && istype(apc) )
+			var/obj/item/cell/donor_cell = null
+			var/obj/item/cell/recipient_cell = null
+			if (jumper.positive)
+				donor_cell = S.cell
+				recipient_cell = apc.cell
+			else
+				donor_cell = apc.cell
+				recipient_cell = S.cell
+
+			if (isnull(donor_cell))
+				boutput(user, SPAN_ALERT("You have no cell installed!"))
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			else if (isnull(recipient_cell))
+				boutput(user, SPAN_ALERT("[jumper.positive? "[apc] has" : "you have"] no cell installed!"))
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			var/overspill = jumper.charge_amount - recipient_cell.charge
+			if (recipient_cell.charge >= recipient_cell.maxcharge)
+				boutput(user, SPAN_NOTICE("[jumper.positive ? "[apc]" : "Your cell"] is already fully charged."))
+			else if (donor_cell.charge <= jumper.charge_amount)
+				boutput(user, SPAN_ALERT("[jumper.positive ? "You don't" : "[apc] doesn't"] have enough power to transfer!"))
+			else if (overspill >= jumper.charge_amount)
+				donor_cell.use(overspill)
+				recipient_cell.charge += overspill
+				if (jumper.positive)
+					user.visible_message(SPAN_NOTICE("[user] transfers some of [his_or_her(user)] power to [apc]!"), SPAN_NOTICE("You transfer [overspill] charge. The APC is now fully charged."))
+				else
+					user.visible_message(SPAN_NOTICE("[user] transfers some of the power from [apc] to [himself_or_herself(user)]!"), SPAN_NOTICE("You transfer [overspill] charge. You are now fully charged."))
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
+			else
+				donor_cell.use(jumper.charge_amount)
+				recipient_cell.charge += jumper.charge_amount
+				if (jumper.positive)
+					user.visible_message(SPAN_NOTICE("[user] transfers some of [his_or_her(user)] power to [apc]!"), SPAN_NOTICE("You transfer [jumper.charge_amount] charge."))
+				else
+					user.visible_message(SPAN_NOTICE("[user] transfers some of the power from [apc] to [himself_or_herself(user)]!"), SPAN_NOTICE("You transfer [jumper.charge_amount] charge."))
+					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
+				restart = TRUE
+			apc.charging = apc.chargemode
+
+			if (prob(35))
+				playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 20, TRUE, -2, pitch = 0.7)
+			user.set_dir(get_dir(user, src.target))
+			src.target.add_fingerprint(user)
+			if(restart)
+				src.onRestart()
+			else
+				P.spawning = 0
+				..()
+		else
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
+/datum/action/bar/private/icon/robojumper_to_silicon
+	duration = 1 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT
+	icon = 'icons/mob/hud_robot.dmi'
+	icon_state = "robocable_charge"
+
+	var/mob/user
+	var/mob/target
+	var/particles/P
+
+	New(mob/user, target)
+		var/obj/item/robojumper/jumper = user.equipped()
+		if(istype(jumper) && jumper.positive)
+			icon_state = "robocable_discharge"
+		. = ..()
+		src.user = user
+		src.target = target
+		P = src.user.GetParticles("robojumper")
+		if (!P) // only needs to be made on the mob once
+			src.user.UpdateParticles(new/particles/arcfiend/robojumper, "robojumper")
+			P = src.user.GetParticles("robojumper")
+
+	onUpdate()
+		..()
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+
+		P.spawning = initial(P.spawning)
+		if (!(BOUNDS_DIST(src.user, src.target) == 0) || target == user)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+	onInterrupt(flag)
+		if(INTERRUPT_MOVE==flag && (BOUNDS_DIST(src.user, src.target) == 0))
+			state = ACTIONSTATE_RUNNING
+			interrupt_start = -1
+			return
+		P.spawning = 0
+		. = ..()
+
+	onEnd()
+		var/restart = FALSE
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
+		var/obj/item/robojumper/jumper = user.equipped()
+		var/mob/living/silicon/silicon_user = user
+		var/mob/living/silicon/silicon_target = target
+		if (istype(jumper) && istype(silicon_user) && istype(silicon_target) )
+			var/obj/item/cell/donor_cell = null
+			var/obj/item/cell/recipient_cell = null
+			if (jumper.positive)
+				donor_cell = silicon_user.cell
+				recipient_cell = silicon_target.cell
+			else
+				boutput(user, SPAN_ALERT("You can't drain power from other cyborgs."))
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			if (isnull(donor_cell))
+				boutput(user, SPAN_ALERT("You have no cell installed!"))
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			else if (isnull(recipient_cell))
+				boutput(user, SPAN_ALERT("[jumper.positive? "[target] has" : "you have"] no cell installed!"))
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			var/overspill = jumper.charge_amount - recipient_cell.charge
+			if (recipient_cell.charge >= recipient_cell.maxcharge)
+				boutput(user, SPAN_NOTICE("[jumper.positive ? "[target]" : "Your cell"] is already fully charged."))
+			else if (donor_cell.charge <= jumper.charge_amount)
+				boutput(user, SPAN_ALERT("[jumper.positive ? "You don't" : "[target] doesn't"] have enough power to transfer!"))
+			else if (overspill >= jumper.charge_amount)
+				donor_cell.use(overspill)
+				recipient_cell.charge += overspill
+				if (jumper.positive)
+					user.tri_message(target,
+						"[user] transfers some of [his_or_her(user)] power to [target].",
+						SPAN_NOTICE("You transfer [overspill] charge. [target] is now fully charged."),
+						SPAN_NOTICE("[user] transfers [overspill] power to you!")
+					)
+				else
+					user.tri_message(target,
+						SPAN_ALERT("[user] siphons some of the power from [target] to [himself_or_herself(user)]!"),
+						SPAN_NOTICE("You siphon [overspill] charge. You are now fully charged."),
+						SPAN_ALERT("[user] siphons [overspill] power from you!")
+					)
+					logTheThing(LOG_STATION, user, "drains [overspill] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(target)]")
+			else
+				donor_cell.use(jumper.charge_amount)
+				recipient_cell.charge += jumper.charge_amount
+				if (jumper.positive)
+					user.tri_message(target,
+						"[user] transfers some of [his_or_her(user)] power to [target].",
+						SPAN_NOTICE("You transfer [jumper.charge_amount] charge."),
+						SPAN_NOTICE("[user] transfers [jumper.charge_amount] power to you!")
+					)
+				else
+					user.tri_message(target,
+						SPAN_ALERT("[user] siphons some of the power from [target] to [himself_or_herself(user)]!"),
+						SPAN_NOTICE("You siphon [jumper.charge_amount] charge."),
+						SPAN_ALERT("[user] siphons [jumper.charge_amount] power from you!")
+					)
+					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(silicon_target)]")
+				restart = TRUE
+
+			if (prob(35))
+				playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 20, TRUE, -2, pitch = 0.7)
+			user.set_dir(get_dir(user, src.target))
+			src.target.add_fingerprint(user)
+			if(restart)
+				src.onRestart()
+			else
+				P.spawning = 0
+				..()
+		else
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
 
 /obj/item/atmosporter
 	name = "atmospherics transporter"
@@ -21,12 +273,12 @@
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
+		if (length(src.contents) == 0) boutput(user, SPAN_ALERT("You have nothing stored!"))
 		else
 			if (user.loc != get_turf(user.loc))
-				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
+				boutput(user, SPAN_ALERT("You're in too small a space to drop anything!"))
 				return
-			var/selection = input("What do you want to drop?", "Atmospherics Transporter", null, null) as null|anything in src.contents
+			var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents)
 			if(!selection) return
 			if (istype(selection, /obj/machinery/fluid_canister))
 				var/obj/machinery/fluid_canister/S = selection
@@ -90,9 +342,9 @@
 			if (lamp.removable_bulb == 0)
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
-			boutput(user, "<span class='notice'>Removing fitting...</span>")
-			playsound(user, "sound/machines/click.ogg", 50, 1)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
+			boutput(user, SPAN_NOTICE("Removing fitting..."))
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), lamp.icon, lamp.icon_state, null, null)
 
 
 		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
@@ -100,9 +352,13 @@
 			return
 
 		if (istype(A, /turf/simulated/floor))
-			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
-			playsound(user, "sound/machines/click.ogg", 50, 1)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
+			for (var/obj/O in A)
+				if (istype(O, /obj/machinery/light/small/floor))
+					boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
+					return
+			boutput(user, SPAN_NOTICE("Installing a floor bulb..."))
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), 'icons/obj/lighting.dmi', "floor1", null, null)
 
 
 		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
@@ -113,9 +369,14 @@
 				return
 			if (locate(/obj/window) in B)
 				return
-			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
-			playsound(user, "sound/machines/click.ogg", 50, 1)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
+			for (var/obj/O in B)
+				if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+					boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
+					return
+			boutput(user, SPAN_NOTICE("Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]..."))
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+			var/obj/machinery/light/dispensed_dummy = dispensing_fitting
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), initial(dispensed_dummy.icon), initial(dispensed_dummy.icon_state), null, null)
 
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
@@ -124,7 +385,7 @@
 	else
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material.material_flags & MATERIAL_METAL)
+			if (S.material.getMaterialFlags() & MATERIAL_METAL)
 				if (src.metal_ammo == src.max_ammo)
 					boutput(user, "The lamp manufacturer is full.")
 				else
@@ -137,7 +398,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(src, "sound/machines/click.ogg", 25, 1)
+					playsound(src, 'sound/machines/click.ogg', 25, TRUE)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else
@@ -146,17 +407,24 @@
 			..()
 
 /// Procs for the action bars
-/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/B, mob/user)
-	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+			boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
+	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
 	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
-	newfitting.autoposition(get_dir(B,A))
+	newfitting.autoposition(get_dir(T,A))
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
 	take_ammo(user, cost_fitting)
 
-/obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
-	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light/small/floor))
+			boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
+			return
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(T)
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
 	if (!isghostdrone(user))
 		elecflash(user)
@@ -192,7 +460,7 @@
 	if (issilicon(user))
 		var/mob/living/silicon/S = user
 		if (S.cell)
-			S.cell.charge -= cost
+			S.cell.use(cost)
 	else
 		if (metal_ammo > 0) //shouldn't be possible to fail
 			metal_ammo--
@@ -213,10 +481,10 @@
 		var/obj/item/reagent_containers/glass/B = W
 
 		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
+			boutput(user, SPAN_ALERT("That beaker is empty! There are no reagents for the [src.name] to process!"))
 			return
 		if (working)
-			boutput(user, "<span class='alert'>CheMaster is working, be patient</span>")
+			boutput(user, SPAN_ALERT("CheMaster is working, be patient"))
 			return
 
 		working = 1
@@ -293,7 +561,7 @@
 					R.trans_to(P, P.initial_volume)
 				P.medical = all_safe
 				P.on_reagent_change()
-				logTheThing(LOG_COMBAT, user, "created a [patchname] patch containing [log_reagents(P)].")
+				logTheThing(LOG_CHEMISTRY, user, "created a [patchname] patch containing [log_reagents(P)].")
 			if("Create Ampoule")
 				var/datum/reagents/R = B.reagents
 				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -307,7 +575,7 @@
 				A = new /obj/item/reagent_containers/ampoule(user.loc)
 				A.name = "ampoule ([ampoulename])"
 				R.trans_to(A, 5)
-				logTheThing(LOG_COMBAT, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
+				logTheThing(LOG_CHEMISTRY, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
 
 		working = 0
 
@@ -322,8 +590,8 @@
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
 			var/holder = src.loc
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
-			if (src.loc != holder)
+			var/pickme = tgui_input_list(user, "Please make your selection!", "Item selection", list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water"))
+			if (!pickme || src.loc != holder)
 				return
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
@@ -371,13 +639,13 @@
 
 			if (isrobot(user)) // Carbon mobs might end up using the synthesizer somehow, I guess?
 				var/mob/living/silicon/robot/R = user
-				if (R.cell) R.cell.charge -= 100
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
+				if (R.cell) R.cell.use(100)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			user.visible_message(SPAN_NOTICE("[user] dispenses a [src.vend_this]!"), SPAN_NOTICE("You dispense a [src.vend_this]!"))
 			src.last_use = world.time
 			return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.vend_this = null
 		user.show_text("Selection cleared.", "red")
 		return
@@ -421,7 +689,7 @@ ported and crapped up by: haine
 		if (istype(target, /obj/machinery) || ismob(target) || isturf(target)) // Do nothing if the user is trying to put it in a machine or feeding a mob.
 			return
 
-		if (target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+		if (target.is_open_container(TRUE)) //Something like a glass. Player probably wants to transfer TO it.
 			if (!src.reagents.total_volume)
 				user.show_text("[src] is empty!", "red")
 				return
@@ -433,7 +701,7 @@ ported and crapped up by: haine
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user.show_text("You transfer [trans] unit\s of the solution to [target].")
 
-		if (reagents.total_volume == reagents.maximum_volume) // See if the juicer is full.
+		if (src.reagents.total_volume >= src.reagents.maximum_volume) // See if the juicer is full.
 			user.show_text("[src] is full!", "red")
 			return
 
@@ -442,14 +710,14 @@ ported and crapped up by: haine
 				var/transamnt = src.reagents.maximum_volume - src.reagents.total_volume
 				target.reagents.trans_to(src, transamnt)
 				user.show_text("[src] makes a slicing sound as it destroys [target].<br>[src] juiced [transamnt] units, the rest is wasted.")
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1) // Play a sound effect.
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1) // Play a sound effect.
 				qdel(target) // delete the fruit, it got juiced!
 				return
 
 			else
 				user.show_text("[src] makes a slicing sound as it destroys [target].<br>[src] juiced [target.reagents.total_volume] units.")
 				target.reagents.trans_to(src, target.reagents.total_volume) // Transfer it all!
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 				qdel(target)
 				return
 		else
@@ -508,7 +776,7 @@ ported and crapped up by: haine
 		src.tanks += new_tank
 		src.hydro_reagent_names += new_tank.label_name // the name list is so we don't have to call reagent_id_to_name() each time we wanna know the names of our reagents
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return // Don't attack people with the hoses, god you people!
 
 	proc/regenerate_reagents()
@@ -543,7 +811,7 @@ ported and crapped up by: haine
 			if (tank.label_name == switch_tank)
 				src.active_tank = tank
 				user.show_text("[src] is now dispensing [switch_tank].")
-				playsound(loc, "sound/effects/pop.ogg", 50, 0) // Play a sound effect.
+				playsound(loc, 'sound/effects/pop.ogg', 50, FALSE) // Play a sound effect.
 				return
 
 	afterattack(obj/target, mob/user)
@@ -562,7 +830,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0) // Play a sound effect.
+			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, FALSE) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

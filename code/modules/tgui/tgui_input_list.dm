@@ -18,8 +18,12 @@
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  * * autofocus - The bool that controls if this alert should grab window focus.
  * * allowIllegal - Whether to allow illegal characters in items.
+ * * start_with_search - Whether to start with the search bar open ("auto" for automatic, TRUE for yes, FALSE for no).
+ * * capitalize - Whether to capitalize the first letter of each item.
+ * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, autofocus = TRUE, allowIllegal = FALSE)
+/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, autofocus = TRUE, allowIllegal = FALSE,
+		start_with_search = "auto", capitalize = TRUE, theme = null)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -30,7 +34,7 @@
 			user = client.mob
 	if (!user?.client) // No NPCs or they hang Mob AI process
 		return
-	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme)
 	input.ui_interact(user)
 	UNTIL(!user.client || input.choice || input.closed)
 	if (input)
@@ -51,8 +55,12 @@
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  * * autofocus - The bool that controls if this alert should grab window focus.
  * * allowIllegal - Whether to allow illegal characters in items.
+ * * start_with_search - Whether to start with the search bar open ("auto" for automatic, TRUE for yes, FALSE for no).
+ * * capitalize - Whether to capitalize the first letter of each item.
+ * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, autofocus = TRUE, allowIllegal = FALSE)
+/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, autofocus = TRUE,
+		allowIllegal = FALSE, start_with_search = "auto", capitalize = TRUE, theme = null)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -63,7 +71,8 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, autofocus, allowIllegal)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, autofocus, allowIllegal,
+		start_with_search, capitalize, theme)
 	input.ui_interact(user)
 
 /**
@@ -77,12 +86,19 @@
 	var/list/items_map
 	/// The default button to be selected
 	var/default
+	/// Whether we start with the search bar open
+	var/start_with_search
+	/// Whether to capitalize the first letter of each item
+	var/capitalize
 
-/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, autofocus = TRUE, allowIllegal = FALSE)
-	. = ..()
+/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, autofocus = TRUE, allowIllegal = FALSE,
+		start_with_search = "auto", capitalize = TRUE, theme)
+	. = ..(user, message, title, items, timeout, autofocus, null, theme)
 	src.items = list()
 	src.items_map = list()
 	src.default = default
+	src.start_with_search = start_with_search == "auto" ? length(items) > 10 : start_with_search
+	src.capitalize = capitalize
 
 	// Gets rid of illegal characters
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
@@ -103,6 +119,8 @@
 /datum/tgui_modal/list_input/ui_static_data(mob/user)
 	. = ..()
 	.["init_value"] = default || items[1]
+	.["start_with_search"] = start_with_search
+	.["capitalize"] = capitalize
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	// We need to omit the parent call for this specifically, as the action parsing conflicts with parent.
@@ -130,8 +148,9 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout, autofocus = TRUE, allowIllegal = FALSE)
-	..(user, message, title, items, default, timeout, autofocus, allowIllegal)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout, autofocus = TRUE, allowIllegal = FALSE,
+		start_with_search = "auto", capitalize = TRUE, theme = null)
+	..(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)

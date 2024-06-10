@@ -7,16 +7,14 @@
 	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/assembly/shock_kit/New()
+/obj/item/assembly/shock_kit/New(atom/newLoc, obj/item/clothing/head/helmet/helmet, obj/item/device/radio/electropack/electropack)
 	..()
-	SPAWN(2 SECONDS)
-		if (src)
-			if (!(src.part1 && istype(src.part1)))
-				src.part1 = new /obj/item/clothing/head/helmet(src)
-				src.part1.master = src
-			if (!(src.part2 && istype(src.part2)))
-				src.part2 = new /obj/item/device/radio/electropack(src)
-				src.part2.master = src
+	helmet ||= new /obj/item/clothing/head/helmet(src)
+	src.part1 = helmet
+	helmet.master = src
+	electropack ||= new /obj/item/device/radio/electropack(src)
+	src.part2 = electropack
+	electropack.master = src
 
 /obj/item/assembly/shock_kit/disposing()
 	if (src.part1)
@@ -46,8 +44,8 @@
 	else return ..()
 
 /obj/item/assembly/shock_kit/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
-	src.part2.attack_self(user, src.status)
+	src.part1.AttackSelf(user)
+	src.part2.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 

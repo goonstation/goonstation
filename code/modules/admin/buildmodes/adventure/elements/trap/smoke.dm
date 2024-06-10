@@ -5,7 +5,7 @@
 	initialize()
 		..()
 		reagent = input("What reagent to smoke? (reagent id)", "Reagent", "lube")
-		boutput(usr, "<span class='notice'>Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, SPAN_NOTICE("Left click to place trap. Ctrl+click anywhere to finish."))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)
@@ -21,11 +21,11 @@
 /obj/adventurepuzzle/triggerable/smoketrap
 	name = "smoke trap"
 	invisibility = INVIS_ADVENTURE
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beakerlarge"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "large_beaker"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/reagent
 	var/trap_delay = 100
 	var/next_trap = 0

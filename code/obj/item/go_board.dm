@@ -121,7 +121,7 @@
 
 	attack_hand(mob/user)
 		if(!stones)
-			boutput(user, "<span style=\"color:red\">The [src] is empty!</span>")
+			boutput(user, SPAN_ALERT("The [src] is empty!"))
 			return
 		else
 			stones--
@@ -144,7 +144,7 @@
 			qdel(weapon)
 			stones++
 		else
-			boutput(user, "<span style=\"color:red\">This piece doesn't go in that bowl, silly!</span>")
+			boutput(user, SPAN_ALERT("This piece doesn't go in that bowl, silly!"))
 			return
 
 	mouse_drop(mob/user as mob)
@@ -176,7 +176,7 @@
 						total++
 						sleep(2)
 		else
-			boutput(user, "<span style=\"color:red\">This piece doesn't go in that bowl, silly!</span>")
+			boutput(user, SPAN_ALERT("This piece doesn't go in that bowl, silly!"))
 			return
 
 		src.visible_message("<span><b>[user]</b> adds [total] [color] stones to the bowl!</span>")

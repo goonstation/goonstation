@@ -1,19 +1,18 @@
-/datum/component/holdertargeting/no_gravity
+/datum/component/loctargeting/no_gravity
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	keep_while_on_mob = TRUE
+	loctype = /mob/living
 
-/datum/component/holdertargeting/no_gravity/on_pickup(datum/source, mob/user)
+/datum/component/loctargeting/no_gravity/on_added(atom/movable/source, atom/old_loc)
 	. = ..()
 	var/obj/item/I = parent
-	if (I.no_gravity)
+	var/mob/living/user = source.loc
+	if (istype(user) && I.no_gravity)
 		user.no_gravity = 1
 
-
-
-/datum/component/holdertargeting/no_gravity/on_dropped(datum/source, mob/user)
+/datum/component/loctargeting/no_gravity/on_removed(atom/movable/source, atom/old_loc)
 	. = ..()
-	var/obj/item/I = parent
-	if (I.loc != user)
+	var/mob/living/user = old_loc
+	if(istype(user))
 		user.no_gravity = 0
 		for (var/atom/movable/A as anything in user)
 			if (A.no_gravity)

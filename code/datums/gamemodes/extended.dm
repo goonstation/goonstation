@@ -1,18 +1,22 @@
 /datum/game_mode/extended
-	name = "extended"
+	name = "Extended"
 	config_tag = "extended"
+	regular = FALSE
 	do_antag_random_spawns = 0
 	latejoin_antag_compatible = 0
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()
-	for(var/datum/mind/mind in antag_token_list())
-		mind.current?.client?.using_antag_token = FALSE
-
 	for(var/datum/random_event/event in random_events.events)
-		if(istype(event, /datum/random_event/major/ion_storm))
+		if(istype(event, /datum/random_event/major/law_rack_corruption))
 			event.disabled = TRUE
 
 /datum/game_mode/extended/announce()
 	boutput(world, "<B>The current game mode is - Extended!</B>")
 	boutput(world, "<B>Just have fun!</B>")
+
+/datum/game_mode/extended/post_setup()
+	SPAWN(rand(waittime_l, waittime_h))
+		send_intercept()

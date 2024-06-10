@@ -5,7 +5,7 @@
 	machine_registry_idx = MACHINES_SPARKERS
 	var/id = null
 	var/on = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "A device can be paired with other electronics, or used to heat chemicals directly."
 
 /obj/machinery/igniter/attack_ai(mob/user as mob)
@@ -51,7 +51,7 @@
 	var/disable = 0
 	var/base_state = "migniter"
 	var/datum/light/light
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/sparker/New()
 	..()
@@ -74,10 +74,10 @@
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span class='alert'>[user] has disabled the [src]!</span>", "<span class='alert'>You disable the connection to the [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] has disabled the [src]!"), SPAN_ALERT("You disable the connection to the [src]."))
 			icon_state = "[base_state]-d"
 		if (!src.disable)
-			user.visible_message("<span class='alert'>[user] has reconnected the [src]!</span>", "<span class='alert'>You fix the connection to the [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] has reconnected the [src]!"), SPAN_ALERT("You fix the connection to the [src]."))
 			if(src.powered())
 				icon_state = "[base_state]"
 			else

@@ -24,6 +24,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 	var/datum/statusEffect/ownerStatus = null
 	var/image/overImg = null
+	var/mob/living/owner_mob = null
 
 	New()
 		overImg = image('icons/ui/statussystem.dmi')
@@ -40,6 +41,22 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		ownerStatus = S
 		src.name = S.name
 		overImg.icon_state = S.icon_state
+#ifdef SHOW_ME_STATUSES
+		src.owner_mob = C
+		src.owner_mob.vis_contents |= src
+		src.pixel_x = (length(src.owner_mob.statusEffects) - 1) * 16
+		src.appearance_flags |= RESET_TRANSFORM
+#endif
+
+	disposing()
+#ifdef SHOW_ME_STATUSES
+		src.owner_mob.vis_contents -= src
+		for (var/atom/movable/screen/statusEffect/effect_obj in src.owner_mob?.vis_contents)
+			if (effect_obj.pixel_x > src.pixel_x)
+				effect_obj.pixel_x -= 16
+		src.owner_mob = null
+#endif
+		. = ..()
 
 	clicked(list/params)
 		if (ownerStatus)
@@ -131,7 +148,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else
-		if(duration > 0)
+		if(isnull(duration) || duration > 0)
 			return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
 
 /**
@@ -209,7 +226,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 				if (duration)
 					duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
-					if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
+					if (duration <= 0) //if we ended up reducing it to 0, just clear it without ever applying
 						localInstance.owner = null
 						return null
 
@@ -270,14 +287,15 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /**
 	* Returns a list of all the datum/statusEffect on source atom.
 	*
+	* {statusId} optional status ID to match, otherwise matches any status type
 	* {optionalArgs} can be passed in for additional checks that are handled in the effects .onCheck proc.
 	* Useful if you want to check some custom conditions on status effects.
 	*/
-/atom/proc/getStatusList(optionalArgs = null)
+/atom/proc/getStatusList(statusId = null, optionalArgs = null)
 	. = list()
 	if (statusEffects)
 		for(var/datum/statusEffect/status as anything in statusEffects)
-			if((!optionalArgs) || (optionalArgs && status.onCheck(optionalArgs)))
+			if( (!optionalArgs || status.onCheck(optionalArgs)) && (!statusId || (statusId == status.id)) )
 				.[status.id] = status
 
 /**

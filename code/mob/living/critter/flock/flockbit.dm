@@ -7,6 +7,7 @@
 	pays_to_construct = FALSE
 	health_brute = 5
 	health_burn = 5
+	repair_per_resource = 1
 	fits_under_table = TRUE
 	flags = TABLEPASS
 
@@ -22,6 +23,12 @@
 	src.name = "[pick_string("flockmind.txt", "flockbit_name_adj")] [pick_string("flockmind.txt", "flockbit_name_noun")]"
 	src.real_name = src.flock ? src.flock.pick_name("flockbit") : name
 	src.update_name_tag()
+	src.flock_name_tag = new
+	src.flock_name_tag.set_name(src.real_name)
+	src.vis_contents += src.flock_name_tag
+
+	if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
+		src.flock.stats.bits_made++
 
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -29,17 +36,17 @@
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.real_name]
-		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
-		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
-		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.real_name]<br>\
+		[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none"]<br>\
+		[SPAN_BOLD("System Integrity:")] [max(0, round(src.get_health_percentage() * 100))]%<br>\
+		[SPAN_BOLD("Cognition:")] [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]]<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
+	if (!src.dormant && src.flock && !src.flock.z_level_check(src) && src.z != Z_LEVEL_NULL)
 		src.dormantize()
 
 /mob/living/critter/flock/bit/MouseDrop_T(mob/living/target, mob/user)
@@ -47,7 +54,7 @@
 		return
 	if(target == user)
 		if(istype(user, /mob/living/intangible/flock))
-			boutput(user, "<span class='flocksay'>Insufficient processing power for partition override.</span>")
+			boutput(user, SPAN_FLOCKSAY("Insufficient processing power for partition override."))
 		else
 			..() // ghost observe
 	else
@@ -128,7 +135,7 @@
 		target = get_turf(target)
 
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
-		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
+		boutput(user, SPAN_ALERT("Something about this structure prevents it from being assimilated."))
 	else
 		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, extrarange = -10)
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)

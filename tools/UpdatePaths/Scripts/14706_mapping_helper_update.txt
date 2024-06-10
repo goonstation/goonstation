@@ -1,0 +1,4 @@
+/obj/access_spawn/@SUBTYPES : /obj/mapping_helper/access/@SUBTYPES
+/obj/mob_spawn/@SUBTYPES : /obj/mapping_helper/mob_spawn/@SUBTYPES
+/obj/wingrille_spawn/@SUBTYPES : /obj/mapping_helper/wingrille_spawn/@SUBTYPES
+/obj/firedoor_spawn : /obj/mapping_helper/firedoor_spawn

@@ -8,9 +8,12 @@
 	item_state = "pda"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
+	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
+	var/datum/db_record/accessed_record = null // the bank account on the id card
 	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
@@ -31,6 +34,7 @@
 	var/frequency = FREQ_PDA
 	var/beacon_freq = FREQ_NAVBEACON //Beacon frequency for locating beacons (I love beacons)
 	var/net_id = null //Hello dude intercepting our radio transmissions, here is a number that is not just \ref
+	var/scannable = TRUE // Whether this PDA is picked up when scanning for PDAs on the messenger
 
 	var/tmp/list/pdasay_autocomplete = list()
 
@@ -55,7 +59,7 @@
 		// Departments
 		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 		// Alerts
 		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
@@ -109,6 +113,13 @@
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
+	hop
+		icon_state = "pda-hop"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hop
+		setup_drive_size = 32
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
 	hos
 		icon_state = "pda-hos"
 		setup_default_pen = /obj/item/pen/fancy
@@ -116,7 +127,7 @@
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	ntso
 		icon_state = "pda-nt"
@@ -125,7 +136,7 @@
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	ai
 		icon_state = "pda-h"
@@ -138,7 +149,7 @@
 			// Departments
 			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 			// start in party line by default
 			MGD_PARTY,
 		)
@@ -172,35 +183,40 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
+		name = "Medical PDA"
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
+			name = "Robotics PDA"
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
 
 	genetics
+		name = "Genetics PDA"
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	security
+		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		setup_default_module = /obj/item/device/pda_module/alert
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
+		name = "Forensic PDA"
 		icon_state = "pda-s"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	toxins
 		icon_state = "pda-tox"
@@ -208,6 +224,7 @@
 		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
 
 	quartermaster
+		name = "Quartermaster PDA"
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
 		mailgroups = list(MGD_CARGO,MGD_PARTY)
@@ -233,11 +250,11 @@
 				var/mob/M = AM
 				LAZYLISTADDUNIQUE(M.attached_objs, src)
 				src.glide_size = M.glide_size
-				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
-				if (M.slip(ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
-					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
+				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
+				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
+					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
 					if (M.bioHolder.HasEffect("clumsy"))
-						M.changeStatus("weakened", 5 SECONDS)
+						M.changeStatus("knockdown", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
 				else
 					src.on_mob_throw_end(M)
@@ -253,43 +270,45 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
+		name = "Atmos PDA"
 		icon_state = "pda-a"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
 
 	engine
+		name = "Engineer PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
+		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
 	technical_assistant
+		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
 		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/tray
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
-		icon_state = "pda-e"
+		name = "Mining PDA"
+		icon_state = "pda-q"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/tray
+		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
-
-	mechanic
-		icon_state = "pda-a"
-		setup_default_module = /obj/item/device/pda_module/tray
-		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -323,6 +342,7 @@
 
 /obj/item/device/pda2/New()
 	..()
+	START_TRACKING
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
@@ -359,6 +379,7 @@
 		if(ismob(src.loc))
 			var/mob/mob = src.loc
 			get_all_character_setup_ringtones()
+
 			if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
 				src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
 				var/rtone_program = src.ringtone2program(src.r_tone)
@@ -389,6 +410,7 @@
 			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
+	STOP_TRACKING
 	if (src.cartridge)
 		src.cartridge.dispose()
 		src.cartridge = null
@@ -409,6 +431,10 @@
 		if(src.alert_ringtones[T])
 			qdel(src.alert_ringtones[T])
 			src.alert_ringtones[T] = null
+
+	if (src.pen)
+		qdel(src.pen)
+		src.pen = null
 
 	if (src.hd)
 		src.hd.dispose()
@@ -434,7 +460,7 @@
 	if(!user.client)
 		return
 	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
+		boutput(user, SPAN_ALERT("You don't know how to read, the screen is meaningless to you."))
 		return
 
 	src.add_dialog(user)
@@ -551,6 +577,9 @@
 		else if (href_list["eject_id_card"])
 			src.eject_id_card(usr ? usr : null)
 
+		else if (href_list["eject_cash"])
+			src.eject_cash(usr ? usr : null)
+
 		else if (href_list["refresh"])
 			var/obj/item/uplink/integrated/pda/uplink = src.uplink
 			if(istype(uplink))
@@ -565,29 +594,24 @@
 		return
 
 /obj/item/device/pda2/attackby(obj/item/C, mob/user)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		if (U.try_deliver(C, user))
-			return
-
 	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
 		if (isnull(src.cartridge))
-			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You insert [C] into [src]."))
 		else
-			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You remove the old cartridge and insert [C] into [src]."))
 			user.put_in_hand_or_eject(src.cartridge)
 		src.cartridge = C
 		src.updateSelfDialog()
 
 	else if (istype(C, /obj/item/device/pda_module))
 		if(src.closed)
-			boutput(user, "<span class='alert'>The casing is closed!</span>")
+			boutput(user, SPAN_ALERT("The casing is closed!"))
 			return
 
 		if(src.module)
-			boutput(user, "<span class='alert'>There is already a module installed!</span>")
+			boutput(user, SPAN_ALERT("There is already a module installed!"))
 			return
 
 		user.drop_item()
@@ -598,7 +622,7 @@
 		return
 
 	else if (isscrewingtool(C))
-		playsound(user.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(user.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.closed = !src.closed
 		boutput(user, "You [src.closed ? "secure" : "unscrew"] the cover.")
 
@@ -607,7 +631,7 @@
 			return
 
 		if(src.closed)
-			boutput(user, "<span class='alert'>The casing is closed!</span>")
+			boutput(user, SPAN_ALERT("The casing is closed!"))
 			return
 
 		src.module.set_loc(get_turf(src))
@@ -619,23 +643,26 @@
 	else if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!ID.registered)
-			boutput(user, "<span class='alert'>This ID isn't registered to anyone!</span>")
+			boutput(user, SPAN_ALERT("This ID isn't registered to anyone!"))
 			return
 		if (!src.owner)
 			src.owner = ID.registered
 			src.ownerAssignment = ID.assignment
 			src.name = "PDA-[src.owner]"
-			boutput(user, "<span class='notice'>Card scanned.</span>")
+			boutput(user, SPAN_NOTICE("Card scanned."))
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
-				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
+				if (IS_WORN_BY_SOMEONE_OTHER_THAN(src, user))
+					boutput(user, SPAN_ALERT("There's already an ID card in [src]."))
+					return
+				boutput(user, SPAN_NOTICE("You swap [ID] and [src.ID_card]."))
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
 				return
 			else if (!src.ID_card)
 				src.insert_id_card(ID, user)
-				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
+				boutput(user, SPAN_NOTICE("You insert [ID] into [src]."))
 
 	else if (istype(C, /obj/item/uplink_telecrystal))
 		if (src.uplink && src.uplink.active)
@@ -646,7 +673,7 @@
 
 	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
 		if (src.uplink && src.uplink.active)
-			boutput(user, "<span class='alert'>The [C] explodes!</span>")
+			boutput(user, SPAN_ALERT("The [C] explodes!"))
 			var/turf/T = get_turf(C.loc)
 			if(T)
 				T.hotspot_expose(700,125)
@@ -654,11 +681,14 @@
 			C.set_loc(user.loc)
 			qdel(C)
 
-	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))
 		if (!src.pen)
 			src.insert_pen(C, user)
 		else
-			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+			boutput(user, SPAN_ALERT("There is already something in [src]'s pen slot!"))
+
+	else if (istype(C, /obj/item/currency/spacecash))
+		src.insert_cash(C, user)
 
 /obj/item/device/pda2/examine()
 	. = ..()
@@ -668,20 +698,13 @@
 	if (src.pen)
 		. += "[pen] is sticking out of the pen slot."
 
-/obj/item/device/pda2/attack(mob/M, mob/user)
+/obj/item/device/pda2/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(src.scan_program)
 		return
 	else
 		..()
 
 /obj/item/device/pda2/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(A)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
-			return
-
 	var/scan_dat = null
 	if (src.scan_program && istype(src.scan_program))
 		scan_dat = src.scan_program.scan_atom(A)
@@ -689,7 +712,7 @@
 		scan_dat = scan_atmospheric(A, visible = 1) // Replaced with global proc (Convair880).
 
 	if(scan_dat)
-		A.visible_message("<span class='alert'>[user] has scanned [A]!</span>")
+		A.visible_message(SPAN_ALERT("[user] has scanned [A]!"))
 		user.show_message(scan_dat, 1)
 
 	return
@@ -697,9 +720,9 @@
 /obj/item/device/pda2/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(O)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
+		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
+		if (claim)
+			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
 
@@ -718,7 +741,7 @@
 /obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 
 /obj/item/device/pda2/verb/pdasay(var/target in pdasay_autocomplete, var/message as text)
 	set name = "PDAsay"
@@ -737,7 +760,7 @@
 
 
 /obj/item/device/pda2/verb/eject()
-	set name = "Eject ID"
+	set name = "Eject PDA ID"
 	set desc = "Eject the currently loaded ID card from this PDA."
 	set category = "Local"
 	set src in usr
@@ -831,11 +854,47 @@
 
 		return
 
+	proc/eject_cash(var/mob/user as mob)
+		if (src.loc == user && src.ID_card && src.accessed_record)
+			var/amount = tgui_input_number(usr, "How much would you like to withdraw?", "Withdrawal", 0, src.accessed_record["current_money"], 0)
+			if (src.loc != user || !src.ID_card || !src.accessed_record)
+				// no withdrawing after you're gone
+				return
+			if (amount < 1)
+				boutput(usr, SPAN_ALERT("Invalid amount!"))
+				return
+			if(amount > src.accessed_record["current_money"])
+				boutput(usr, SPAN_ALERT("Insufficient funds in account."))
+			else
+				src.accessed_record["current_money"] -= amount
+				var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
+				S.setup(src.loc, amount)
+				usr.put_in_hand_or_drop(S)
+				boutput(user, SPAN_NOTICE("Withdrawal successful. Your account now has [src.accessed_record["current_money"]] credits."))
+				playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
+		return
+
+	proc/insert_cash(var/obj/item/currency/spacecash/cash as obj, var/mob/user as mob)
+		if (src.ID_card && src.accessed_record)
+			src.accessed_record["current_money"] += cash.amount
+			boutput(user, SPAN_NOTICE("You insert [cash] into \the [src]. Your account now has [src.accessed_record["current_money"]] credits."))
+			cash.amount = 0
+			qdel(cash)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 50, 1)
+			src.updateSelfDialog()
+		else
+			if (src.ID_card && !src.accessed_record)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. The inserted ID card doesn't have a bank account associated with it."))
+			else if (!src.ID_card)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. There is no ID card inserted."))
+		return
+
 	proc/eject_id_card(var/mob/user as mob)
 		if (src.ID_card)
 			src.registered = null
 			src.assignment = null
 			src.access = null
+			src.accessed_record = null
 			src.underlays -= src.ID_image
 			if (istype(user))
 				user.put_in_hand_or_drop(src.ID_card)
@@ -857,6 +916,7 @@
 		src.registered = ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
+		src.accessed_record = data_core.bank.find_record("name", ID.registered)
 		if (!src.ID_image)
 			src.ID_image = image(src.icon, "blank")
 		src.ID_image = src.ID_card.icon_state
@@ -897,7 +957,7 @@
 			animate(time=2, icon_state=original_icon_state)
 			animate(time=2, transform=matrix(null, 0, -1, MATRIX_TRANSLATE))
 			animate(time=3, transform=null)
-			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You insert [insertedPen] into [src]."))
 
 /*
 	//Toggle the built-in flashlight
@@ -953,8 +1013,8 @@
 			src.r_tone_temp = new/datum/ringtone(src)
 			if (ismob(src.loc))
 				var/mob/B = src.loc
-				B.show_message("<span class='alert'>FATAL RINGTONE ERROR! Please call 1-800-IM-CODER.</span>", 1)
-				B.show_message("<span class='alert'>Restoring backup ringtone...</span>", 1)
+				B.show_message(SPAN_ALERT("FATAL RINGTONE ERROR! Please call 1-800-IM-CODER."), 1)
+				B.show_message(SPAN_ALERT("Restoring backup ringtone..."), 1)
 			return
 		else
 			if(temp)
@@ -993,8 +1053,8 @@
 					M.show_message("[bicon(src)] [RT?.succText]")
 
 	proc/bust_speaker()
-		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		src.visible_message(SPAN_ALERT("[src]'s tiny speaker explodes!"))
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, TRUE)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1101,16 +1161,15 @@
 	proc/explode()
 		if (src.bombproof)
 			if (ismob(src.loc))
-				boutput(src.loc, "<span class='alert'><b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked.</span>")
+				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return
 
 		if(src in bible_contents)
-			for_by_tcl(B, /obj/item/storage/bible)
+			for_by_tcl(B, /obj/item/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)
 					explosion(src, T, -1, -1, 2, 3)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 
@@ -1118,7 +1177,7 @@
 
 		if (ismob(src.loc))
 			var/mob/M = src.loc
-			M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
+			M.show_message(SPAN_ALERT("Your [src] explodes!"), 1)
 
 		if(T)
 			T.hotspot_expose(700,125)
@@ -1140,7 +1199,7 @@
 		return ..()
 	var/mob/living/silicon/ai/ai = loc
 	if (ai.deployed_to_eyecam)
-		ai.eyecam << sound('sound/machines/twobeep.ogg', volume=35)
+		ai.eyecam.playsound_local_not_inworld('sound/machines/twobeep.ogg', 35)
 		ai.eyecam.show_message(message)
 	if (ismob(ai.deployed_shell))
 		var/mob/M = ai.deployed_shell
@@ -1173,7 +1232,7 @@ ThinkOS 7 comes with several useful applications built in, these include:<br>
 <li>Messenger: Send messages between all enabled PDAs.  Can also send the current file in the clipboard.</li>
 <li>File Browser: Manage and execute programs in the internal drive or loaded cartridge.</li>
 <li>Atmos Scanner: Using patented AirScan technology.</li>
-<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-Scanner! The choice is yours!</li>
+<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-ray Scanner! The choice is yours!</li>
 </ul></i>
 <b>To send a file with the messenger:</b><br>
 Enter the file browser and copy the file you want to send.  Now enter the messenger and select *send file*.<br>

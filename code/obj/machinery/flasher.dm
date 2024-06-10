@@ -1,5 +1,5 @@
 // It is a gizmo that flashes a small area
-
+ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 /obj/machinery/flasher
 	name = "\improper Mounted Flash"
 	desc = "A wall-mounted flashbulb device."
@@ -12,7 +12,7 @@
 	var/base_state = "mflash"
 	var/datum/light/light
 	var/cooldown_flash = 15 SECONDS
-	anchored = 1
+	anchored = ANCHORED
 	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -191,9 +191,9 @@
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span class='alert'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='alert'>You disconnect the [src]'s flashbulb!</span>")
+			user.visible_message(SPAN_ALERT("[user] has disconnected the [src]'s flashbulb!"), SPAN_ALERT("You disconnect the [src]'s flashbulb!"))
 		if (!src.disable)
-			user.visible_message("<span class='alert'>[user] has connected the [src]'s flashbulb!</span>", "<span class='alert'>You connect the [src]'s flashbulb!</span>")
+			user.visible_message(SPAN_ALERT("[user] has connected the [src]'s flashbulb!"), SPAN_ALERT("You connect the [src]'s flashbulb!"))
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -209,7 +209,7 @@
 	if (src.disable)
 		return
 
-	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
@@ -228,7 +228,7 @@
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-c"
 	strength = 8
-	anchored = 0
+	anchored = UNANCHORED
 	base_state = "pflash"
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER
@@ -287,7 +287,7 @@
 		if (!src.anchored)
 			light.disable()
 			UpdateIcon()
-			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
+			user.show_message(SPAN_ALERT("[src] can now be moved."))
 			src.UpdateOverlays(null, "anchor")
 			remove_use_proximity()
 
@@ -295,6 +295,6 @@
 			if (powered())
 				light.enable()
 			UpdateIcon()
-			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
+			user.show_message(SPAN_ALERT("[src] is now secured."))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
 			setup_use_proximity()

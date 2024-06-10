@@ -26,31 +26,19 @@ var/global/logLength = 0
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
 
+	if(istype(source, /mob/living/carbon/human/preview) && type == LOG_COMBAT)
+		return //we don't give a flying fuck about the preview mobs maving mutations - but maybe we care about debug etc.?
+
 	if (source)
 		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != LOG_DIARY) source = "<span class='blank'>(blank)</span>"
 
+
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == LOG_DIARY)
-			switch (diaryType)
-				//These are things we log in the out of game logs (the diary)
-				if (LOG_ADMIN) if (config.log_admin) diaryLogging = 1
-				if (LOG_AHELP) if (config.log_say) diaryLogging = 1
-				if (LOG_MHELP) if (config.log_say) diaryLogging = 1
-				if (LOG_GAME) if (config.log_game) diaryLogging = 1
-				if (LOG_ACCESS) if (config.log_access) diaryLogging = 1
-
-				if (LOG_SAY) if (config.log_say) diaryLogging = 1
-				if (LOG_OOC) if (config.log_ooc) diaryLogging = 1
-				if (LOG_WHISPER) if (config.log_whisper) diaryLogging = 1
-				if (LOG_STATION) if (config.log_station) diaryLogging = 1
-				if (LOG_COMBAT) if (config.log_combat) diaryLogging = 1
-				if (LOG_TELEPATHY) if (config.log_telepathy) diaryLogging = 1
-				if (LOG_DEBUG) if (config.log_debug) diaryLogging = 1
-				if (LOG_VEHICLE) if (config.log_vehicles) diaryLogging = 1
-
+			diaryLogging = should_diary_log(diaryType)
 
 		if (diaryLogging)
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
@@ -88,25 +76,11 @@ var/global/logLength = 0
 			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
 			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
+			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
+			if (LOG_CHEMISTRY) logs[LOG_CHEMISTRY] += ingameLog
 			if (LOG_DIARY)
-				switch (diaryType)
-					//These are things we log in the out of game logs (the diary)
-					if (LOG_ADMIN) if (config.log_admin) diaryLogging = 1
-					if (LOG_AHELP) if (config.log_say) diaryLogging = 1
-					if (LOG_MHELP) if (config.log_say) diaryLogging = 1
-					if (LOG_GAME) if (config.log_game) diaryLogging = 1
-					if (LOG_ACCESS) if (config.log_access) diaryLogging = 1
-
-					if (LOG_SAY) if (config.log_say) diaryLogging = 1
-					if (LOG_OOC) if (config.log_ooc) diaryLogging = 1
-					if (LOG_WHISPER) if (config.log_whisper) diaryLogging = 1
-					if (LOG_STATION) if (config.log_station) diaryLogging = 1
-					if (LOG_COMBAT) if (config.log_combat) diaryLogging = 1
-					if (LOG_TELEPATHY) if (config.log_telepathy) diaryLogging = 1
-					if (LOG_DEBUG) if (config.log_debug) diaryLogging = 1
-					if (LOG_VEHICLE) if (config.log_vehicles) diaryLogging = 1
-
+				diaryLogging = should_diary_log(diaryType)
 
 		if (diaryLogging)
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
@@ -115,7 +89,32 @@ var/global/logLength = 0
 		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
+
+		if (!diaryLogging)
+			var/datum/eventRecord/Log/logEvent = new()
+			logEvent.send(type, source && source != "<span class='blank'>(blank)</span>" ? source : null, text)
 	return
+
+///Check config for whether a message should be logged to the diary
+/proc/should_diary_log(diaryType)
+	switch (diaryType)
+		//These are things we log in the out of game logs (the diary)
+		if (LOG_ADMIN) if (config.log_admin) return TRUE
+		if (LOG_AHELP) if (config.log_say) return TRUE
+		if (LOG_MHELP) if (config.log_say) return TRUE
+		if (LOG_GAME) if (config.log_game) return TRUE
+		if (LOG_ACCESS) if (config.log_access) return TRUE
+
+		if (LOG_SAY) if (config.log_say) return TRUE
+		if (LOG_OOC) if (config.log_ooc) return TRUE
+		if (LOG_WHISPER) if (config.log_whisper) return TRUE
+		if (LOG_STATION) if (config.log_station) return TRUE
+		if (LOG_COMBAT) if (config.log_combat) return TRUE
+		if (LOG_TELEPATHY) if (config.log_telepathy) return TRUE
+		if (LOG_DEBUG) if (config.log_debug) return TRUE
+		if (LOG_VEHICLE) if (config.log_vehicles) return TRUE
+		if (LOG_GAMEMODE) if (config.log_gamemode) return TRUE
+	return FALSE
 
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
@@ -126,16 +125,17 @@ var/global/logLength = 0
 /proc/log_tgui(user, message, context,
 		datum/tgui_window/window,
 		datum/src_object)
-	var/entry = "\[tgui\] " // |GOONSTATION-CHANGE| (tgui:->\[tgui\])
+	var/entry = "" // |GOONSTATION-CHANGE| (tgui:->)
 	// Insert user info
+	var/source = null // |GOONSTATION-CHANGE| -> split source out of entry to send to logTheThing
 	if(!user)
-		entry += "(nobody)" // |GOONSTATION-CHANGE| (<nobody>->(nobody))
+		source = "(nobody)" // |GOONSTATION-CHANGE| (entry +->source ) (<nobody>->(nobody))
 	else if(istype(user, /mob))
 		var/mob/mob = user
-		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+		source = "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])" // |GOONSTATION-CHANGE| (entry +->source )
 	else if(istype(user, /client))
 		var/client/client = user
-		entry += "[client.ckey]"
+		source = "[client.ckey]" // |GOONSTATION-CHANGE| (entry +->source )
 	// Insert context
 	if(context)
 		entry += " in [context]"
@@ -151,7 +151,7 @@ var/global/logLength = 0
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
-	WRITE_LOG(roundLog_name, entry)
+	logTheThing(LOG_TGUI, source, entry) // |GOONSTATION-CHANGE| (WRITE_LOG(roundLog_name, entry)->logTheThing(LOG_TGUI, source, entry))
 	logLength++
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
@@ -175,7 +175,7 @@ var/global/logLength = 0
 	var/mob/mobRef
 	if (ismob(ref))
 		mobRef = ref
-		traitor = checktraitor(mobRef)
+		traitor = mobRef.mind?.is_antagonist()
 		if (mobRef.name)
 			if (ishuman(mobRef))
 				var/mob/living/carbon/human/humanRef = mobRef
@@ -214,7 +214,7 @@ var/global/logLength = 0
 		online = 1
 		if (clientRef.mob)
 			mobRef = clientRef.mob
-			traitor = checktraitor(mobRef)
+			traitor = mobRef.mind?.is_antagonist()
 			if (mobRef.name)
 				if (ishuman(clientRef.mob))
 					var/mob/living/carbon/human/humanRef = clientRef.mob
@@ -239,6 +239,16 @@ var/global/logLength = 0
 		nice_rack += "(UID: [rack_ref.unique_id]) at "
 		nice_rack += log_loc(rack_ref)
 		return nice_rack.Join()
+	else if(istype(ref,/datum/mind))
+		var/datum/mind/mindRef = ref
+		if(mindRef.current && ismob(mindRef.current))
+			return(constructName(mindRef.current, type))
+		else
+			name = "[mindRef.displayed_key] (character destroyed)"
+			if (mindRef.key)
+				key = mindRef.key
+			if (mindRef.ckey)
+				ckey = mindRef.ckey
 	else
 		return ref
 
@@ -282,7 +292,7 @@ var/global/logLength = 0
 		if (type == "diary")
 			data += name
 		else
-			data += "<span class='name'>[name]</span>"
+			data += SPAN_NAME("[name]")
 	if (mobType)
 		data += " ([mobType])"
 	if (ckey && key)
@@ -343,7 +353,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			friendly_fire = 1
 
 	if (friendly_fire)
-		logTheThing(LOG_COMBAT, shooter_data, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing(LOG_COMBAT, shooter_data, "[SPAN_ALERT("Friendly Fire!")][vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.stats_manager?.inc_friendly_fire(shooter_data)
@@ -390,13 +400,14 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		log_health += "No clue! Report this to a coder!"
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
-/proc/log_loc(var/atom/A)
+// "plain" used for player-visible versions. lazy
+/proc/log_loc(var/atom/A, var/plain = FALSE, var/ghostjump=FALSE)
 	if (!A)
 		return
 	var/turf/our_turf = get_turf(A)
 	if (!our_turf)
-		return
-	return "([showCoords(our_turf.x, our_turf.y, our_turf.z)] in [our_turf.loc])"
+		return "(null)"
+	return "([showCoords(our_turf.x, our_turf.y, our_turf.z, plain, ghostjump=ghostjump)] in [our_turf.loc])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).
 /proc/log_atmos(var/atom/A as turf|obj|mob)
@@ -427,6 +438,11 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (logType == "alls")
 		for (var/log in logs)
 			if(log == "audit") continue
+			if(log == "topic")
+				if (requesting_admin.tempmin)
+					continue
+				if (!requesting_admin.show_topic_log)
+					continue
 			var/list/logList = logs[log]
 			prettyLogName = replacetext(log, "_", " ")
 			var/list/searchData = list()

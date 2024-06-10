@@ -12,7 +12,7 @@
 	icon_state = "medibot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	luminosity = 2
 	req_access = list(access_medical)
 	access_lookup = "Medical Doctor"
@@ -39,7 +39,7 @@
 	var/treatment_brute = "saline"
 	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "charcoal"
+	var/treatment_tox = "anti_rad"
 	var/treatment_virus = "spaceacillin"
 	/// the stuff the bot injects when emagged
 	var/list/dangerous_stuff = list()
@@ -55,7 +55,7 @@
 																				"haloperidol" = 15,
 																				"morphine" = 20,
 																				"cold_medicine" = 40,
-																				"simethicone" = 10,
+																				"anti_fart" = 10,
 																				"sulfonal" = 5, /* its an oldetimey sedative */
 																				"atropine" = 10,
 																				"methamphetamine" = 30,
@@ -80,7 +80,7 @@
 	density = 1
 	emagged = 1
 	terrifying = 1
-	anchored = 1 // don't drag it into space goddamn jerks
+	anchored = ANCHORED // don't drag it into space goddamn jerks
 	no_camera = 1
 	last_patient_cooldown = 5 SECONDS // There's usually only one target anyway, and we want to mess them up right good
 
@@ -90,7 +90,7 @@
 	skin = "hs"
 	treatment_oxy = "perfluorodecalin"
 	access_lookup = "Head Surgeon"
-	text2speech = 1
+	text2speech = TRUE
 
 	New()
 		. = ..()
@@ -282,7 +282,7 @@
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
+			boutput(user, SPAN_ALERT("You short out [src]'s reagent synthesis circuits."))
 		src.KillPathAndGiveUp(1)
 		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(user?.name)]", src.last_patient_cooldown * 10) // basically ignore the emagger for a long while. Till someone hits it!
 		src.emagged = 1
@@ -318,20 +318,18 @@
 		Also the override is here so you don't thwap the bot with the emag
 		*/
 		//return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] repairs [src]!"), SPAN_NOTICE("You repair [src]."))
 
 	else if (istype(W, /obj/item/reagent_containers/glass))
 		if (src.locked)
@@ -593,7 +591,7 @@
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
-	else if(!actions.hasAction(src, "medbot_inject"))
+	else if(!actions.hasAction(src, /datum/action/bar/icon/medbot_inject))
 		src.KillPathAndGiveUp(0)
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
 		return TRUE
@@ -616,7 +614,6 @@
 /datum/action/bar/icon/medbot_inject
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "syringe_15"
 	var/obj/machinery/bot/medbot/master
@@ -679,7 +676,7 @@
 		attack_twitch(master)
 		master.currently_healing = 1
 		master.UpdateIcon(/*stun*/ 0, /*heal*/ 1)
-		master.visible_message("<span class='alert'><B>[master] is trying to inject [master.patient]!</B></span>")
+		master.visible_message(SPAN_ALERT("<B>[master] is trying to inject [master.patient]!</B>"))
 
 	onInterrupt()
 		. = ..()
@@ -696,7 +693,7 @@
 				for(var/reagent in reagent_id)
 					master.patient.reagents.add_reagent(reagent, reagent_id[reagent])
 
-			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
+			master.visible_message(SPAN_ALERT("<B>[master] injects [master.patient] with the syringe!</B>"))
 
 		else if(master.terrifying)
 			var/list/sput_words = list()
@@ -706,8 +703,8 @@
 				sput.add_reagent(reagent, round(reagent_id[reagent] / length(reagent_id)))
 				sput_words += reagent_id_to_name(reagent)
 			smoke_reaction(sput, 1, get_turf(master))
-			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
-		playsound(master, 'sound/items/hypo.ogg', 80, 0)
+			master.visible_message(SPAN_ALERT("A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!"))
+		playsound(master, 'sound/items/hypo.ogg', 80, FALSE)
 
 		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
 		master.UpdateIcon()
@@ -802,8 +799,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	src.audible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)
@@ -829,17 +826,17 @@
 
 /obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
-		if (src.contents.len >= 7)
+		if (src.storage.is_full())
 			return
-		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
+		if (S.w_class >= W_CLASS_SMALL || S.storage)
 			if (!istype(S,/obj/item/storage/pill_bottle))
-				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
+				boutput(user, SPAN_ALERT("[S] won't fit into [src]!"))
 				return
 		..()
 		return
 
-	if (src.contents.len >= 1)
-		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
+	if (length(src.storage.get_contents()))
+		boutput(user, SPAN_ALERT("You need to empty [src] out first!"))
 		return
 	else
 		var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly

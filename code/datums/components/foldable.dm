@@ -14,6 +14,7 @@ TYPEINFO(/datum/component/foldable)
 	)
 
 /datum/component/foldable/Initialize(var/briefcase_path = /obj/item/objBriefcase)
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	if(!ispath(briefcase_path, /obj/item/objBriefcase))
@@ -30,6 +31,7 @@ TYPEINFO(/datum/component/foldable)
 		object.name = "foldable [object.name]"
 		object.desc += " Whoa, this one can be folded into a briefcase!"
 	object.verbs += /obj/proc/foldUpIntoBriefcase
+	RegisterHelpMessageHandler(object, PROC_REF(get_help_msg))
 
 /datum/component/foldable/UnregisterFromParent()
 	. = ..()
@@ -38,7 +40,11 @@ TYPEINFO(/datum/component/foldable)
 	if(src.change_name)
 		object.name = src.original_name
 		object.desc = src.original_desc
+	UnregisterHelpMessageHandler(parent)
 	qdel(src.the_briefcase)
+
+/datum/component/foldable/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] can be <b>folded</b> up into a briefcase using the right click menu."
 
 /obj/proc/foldUpIntoBriefcase()
 	set category = "Local"
@@ -66,7 +72,7 @@ TYPEINFO(/datum/component/foldable)
 
 	briefcase.set_loc(get_turf(object))
 	object.set_loc(briefcase)
-	usr.visible_message("<span class='alert'>[usr] folds [object] back up!</span>")
+	usr.visible_message(SPAN_ALERT("[usr] folds [object] back up!"))
 
 /obj/item/objBriefcase
 	name = "briefcase"
@@ -75,6 +81,7 @@ TYPEINFO(/datum/component/foldable)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "briefcase"
 	desc = "A briefcase."
+	HELP_MESSAGE_OVERRIDE("Can be <b>unfolded</b> in the right click menu to reveal its contents.")
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
@@ -86,7 +93,7 @@ TYPEINFO(/datum/component/foldable)
 
 	burn_point = 2500
 	burn_output = 2500
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 
 	var/atom/movable/thingInside
@@ -116,7 +123,7 @@ TYPEINFO(/datum/component/foldable)
 		if(src.loc == user)
 			user.drop_from_slot(src)
 		src.set_loc(null)
-		user.visible_message("<span class='alert'>[user] unfolds [thingInside] from a briefcase!</span>")
+		user.visible_message(SPAN_ALERT("[user] unfolds [thingInside] from a briefcase!"))
 
 	disposing()
 		if(src.thingInside)

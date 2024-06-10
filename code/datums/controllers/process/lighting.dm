@@ -78,20 +78,9 @@ datum/controller/process/lighting
 
 		chunk_count = max(min_chunk_size, chunk_count - chunk_count_increase_rate)
 
-	/*
-	proc/lag_machine() //for testing the game in a laggy state
-		var/x = ""
-		while(1)
-			x = "[rand(0,1111)]"
-			LAGCHECK(99)
-
-	proc/linfo()
-		boutput(world,"[light_update_queue.cur_size]")
-	*/
-
 /datum/circular_queue
 
-	var/list/list = 0
+	var/list/list = null
 
 	var/read_index = 1
 	var/write_index = 1
@@ -101,9 +90,7 @@ datum/controller/process/lighting
 
 	New(ListSize = 500)
 		..()
-		list = list()
-		list.len = ListSize
-
+		src.list = new/list(ListSize)
 
 	proc/dequeue()
 		.= 0
@@ -131,7 +118,6 @@ datum/controller/process/lighting
 		if (cur_size + 1 >= list.len)
 			grow()
 
-		//boutput(world,"[write_index]")
 		list[write_index] = Q
 		write_index ++
 

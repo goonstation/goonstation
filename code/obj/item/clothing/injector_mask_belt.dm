@@ -7,14 +7,17 @@ There's much less duplicate code here than there used to be, it could probably b
 	but I'm not doing that without help on my first pull request in addition to learning TGUI!
 */
 
+TYPEINFO(/obj/item/injector_belt)
+	mats = 10
+
 /obj/item/injector_belt
 	name = "injector belt"
 	desc = "Automated injection system attached to a belt."
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
-	mats = 10
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 
 	var/can_trigger = 1
 	var/mob/owner = null
@@ -51,6 +54,8 @@ There's much less duplicate code here than there used to be, it could probably b
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -71,7 +76,10 @@ There's much less duplicate code here than there used to be, it could probably b
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
+				boutput(user, SPAN_ALERT("There is already a container attached to the belt."))
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, SPAN_ALERT("[W] is too large to fit in the belt."))
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -98,8 +106,8 @@ There's much less duplicate code here than there used to be, it could probably b
 				src.can_trigger = 0
 				SPAWN(src.min_time) src.can_trigger = 1
 
-				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
-				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
+				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
+				boutput(src.owner, SPAN_NOTICE("Your Injector belt activates."))
 
 				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
@@ -120,14 +128,17 @@ There's much less duplicate code here than there used to be, it could probably b
 
 //////////////////////////////////////
 
-/obj/item/clothing/mask/gas/injector_mask
+TYPEINFO(/obj/item/clothing/mask/injector_mask)
+	mats = 10
+
+/obj/item/clothing/mask/injector_mask
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS  | NOSPLASH
-	c_flags =  COVERSMOUTH | MASKINTERNALS
-	mats = 10
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
+	c_flags =  COVERSMOUTH | MASKINTERNALS | BLOCKSMOKE
+	w_class = W_CLASS_NORMAL
 
 	var/can_trigger = 1
 	var/mob/owner = null
@@ -164,6 +175,8 @@ There's much less duplicate code here than there used to be, it could probably b
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -184,7 +197,10 @@ There's much less duplicate code here than there used to be, it could probably b
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				boutput(user, SPAN_ALERT("There is already a container attached to the mask."))
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, SPAN_ALERT("[W] is too large to fit in the belt."))
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -214,13 +230,13 @@ There's much less duplicate code here than there used to be, it could probably b
 				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
-					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
 					SPAWN(0.5 SECONDS)
-						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
+						playsound(T, 'sound/machines/hiss.ogg', 40, TRUE, -5)
 
-				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
+				boutput(src.owner, SPAN_NOTICE("Your [src] activates."))
 
-				src.container.reagents.reaction(src.owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST, paramslist = list("inhaled"))
 				SPAWN(1.5 SECONDS)
 					src.container.reagents.trans_to(src.owner, src.inj_amount)
 
@@ -393,7 +409,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		return 1
 
 	check_trigger(mob/M)
-		if(M.getStatusDuration("stunned") || M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || isunconscious(M)) return 1
+		if(M.getStatusDuration("stunned") || M.getStatusDuration("unconscious") || M.getStatusDuration("knockdown") || isunconscious(M)) return 1
 		else return 0
 
 /datum/injector_belt_condition/life
@@ -479,19 +495,19 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 /proc/autoinjector_ui_act(obj/source, action, params, mob/user, var/maximum_volume)
 	var/obj/item/injector_belt/current_belt = null
-	var/obj/item/clothing/mask/gas/injector_mask/current_mask = null
+	var/obj/item/clothing/mask/injector_mask/current_mask = null
 	if (istype(source, /obj/item/injector_belt))
 		current_belt = source
-	else if (istype(source, /obj/item/clothing/mask/gas/injector_mask))
+	else if (istype(source, /obj/item/clothing/mask/injector_mask))
 		current_mask = source
 
 	switch(action)
 		if ("remove_cont")
 			if (current_belt)
-				usr.put_in_hand_or_drop(current_belt.container)
+				user.put_in_hand_or_drop(current_belt.container)
 				current_belt.container = null
 			else if (current_mask)
-				usr.put_in_hand_or_drop(current_mask.container)
+				user.put_in_hand_or_drop(current_mask.container)
 				current_mask.container = null
 			. = TRUE
 

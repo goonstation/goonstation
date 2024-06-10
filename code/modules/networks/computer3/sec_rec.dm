@@ -13,17 +13,18 @@
 #define FIELDNUM_NAME 1
 #define FIELDNUM_FULLNAME 2
 #define FIELDNUM_SEX 3
-#define FIELDNUM_AGE 4
-#define FIELDNUM_RANK 5
-#define FIELDNUM_PRINT 6
-#define FIELDNUM_PHOTO 7
-#define FIELDNUM_CRIMSTAT 8
-#define FIELDNUM_SECFLAG 9
-#define FIELDNUM_MINCRIM 10
-#define FIELDNUM_MINDET 11
-#define FIELDNUM_MAJCRIM 12
-#define FIELDNUM_MAJDET 13
-#define FIELDNUM_NOTES 14
+#define FIELDNUM_PRONOUNS 4
+#define FIELDNUM_AGE 5
+#define FIELDNUM_RANK 6
+#define FIELDNUM_PRINT 7
+#define FIELDNUM_PHOTO 8
+#define FIELDNUM_CRIMSTAT 9
+#define FIELDNUM_SECFLAG 10
+#define FIELDNUM_MINCRIM 11
+#define FIELDNUM_MINDET 12
+#define FIELDNUM_MAJCRIM 13
+#define FIELDNUM_MAJDET 14
+#define FIELDNUM_NOTES 15
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC "new"
@@ -34,8 +35,6 @@
 	req_access = list(access_security)
 	var/tmp/menu = MENU_MAIN
 	var/tmp/field_input = 0
-	var/tmp/authenticated = null //Are we currently logged in?
-	var/tmp/datum/computer/file/user_data/account = null
 	var/datum/record_database/record_database = list()  //List of records, for jumping direclty to a specific ID
 	var/datum/db_record/active_general = null //General record
 	var/datum/db_record/active_secure = null //Security record
@@ -51,12 +50,13 @@
 	var/tmp/list/known_printers = list()
 	var/tmp/printer_status = "???"
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
 	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
 	var/setup_mail_freq = FREQ_PDA //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
+		if (..())
+			return TRUE
 	/*
 		var/title_art = {"<pre> ____________________    _ __________________
 \\  ___\\  ___\\  ___\\ -./  \\  __ \\ _  _\\  ___\\
@@ -64,28 +64,17 @@
  \\/\\_____\\_____\\_____\\ \\_\\ \\ \\ \\_\\ \\ \\ \\ \\_____\\
   \\/_____/_____/_____/_/  \\/_/_/\\/_/\\/_/\\/_____/ </pre>"}
 */
-		src.authenticated = null
 		src.record_database = data_core.general
 		src.master.temp = null
 		src.menu = MENU_MAIN
 		src.field_input = 0
 		//src.print_text(" [title_art]")
-		if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
 
 		src.radiocard = locate() in src.master.peripherals
 		if(!radiocard || !istype(src.radiocard))
 			src.radiocard = null
 			src.print_text("<b>Warning:</b> No radio module detected.")
 
-		if(!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
-
-		src.authenticated = src.account.registered
 		src.log_string += "<br><b>LOGIN:</b> [src.authenticated]"
 
 		src.print_text(mainmenu_text())
@@ -115,7 +104,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, fingerprint, or criminal status.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -220,9 +209,10 @@
 					var/datum/db_record/G = new /datum/db_record(  )
 					G["name"] = "New Record"
 					G["full_name"] = "New Record"
-					G["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
+					G["id"] = "[num2hex(rand(1, 0xffffff), 6)]"
 					G["rank"] = "Unassigned"
 					G["sex"] = "Other"
+					G["pronouns"] = "Unknown"
 					G["age"] = "Unknown"
 					G["fingerprint"] = "Unknown"
 					G["p_stat"] = "Active"
@@ -296,7 +286,7 @@
 						R["name"] = src.active_general["name"]
 						R["full_name"] = src.active_general["full_name"]
 						R["id"] = src.active_general["id"]
-						R["criminal"] = "None"
+						R["criminal"] = ARREST_STATE_NONE
 						R["sec_flag"] = "None"
 						R["mi_crim"] = "None"
 						R["mi_crim_d"] = "No minor crime convictions."
@@ -333,13 +323,25 @@
 						src.menu = MENU_FIELD_INPUT
 						return
 
+					if (FIELDNUM_PRONOUNS)
+						var/list/pronoun_types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+						var/list/text_parts = list("Please select: ")
+						for (var/pronoun_type in pronoun_types)
+							var/datum/pronouns/pronouns = get_singleton(pronoun_type)
+							text_parts += pronouns.name
+							text_parts += ", "
+						text_parts += " (0) Back"
+						src.print_text(jointext(text_parts, ""))
+						src.menu = MENU_FIELD_INPUT
+						return
+
 					if (FIELDNUM_CRIMSTAT)
 						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
 						src.menu = MENU_FIELD_INPUT
 						return
 
 					if (FIELDNUM_SECFLAG)
-						src.print_text("Please enter new value (10 characters max), or \"None.\"")
+						src.print_text("Please enter new value ([SECHUD_FLAG_MAX_CHARS] characters max), or \"None\".")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -376,6 +378,19 @@
 								return
 							else
 								return
+
+					if (FIELDNUM_PRONOUNS)
+						if (inputText == "0")
+							src.menu = MENU_IN_RECORD
+							return
+						var/list/pronoun_types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+						for (var/pronoun_type in pronoun_types)
+							var/datum/pronouns/pronouns = get_singleton(pronoun_type)
+							if (pronouns.name == inputText)
+								src.active_general["pronouns"] = pronouns.name
+								return
+						src.print_text("Invalid pronouns.")
+						return
 
 					if (FIELDNUM_AGE)
 						var/newAge = round( min( text2num_safe(command), 99) )
@@ -430,25 +445,41 @@
 							src.menu = MENU_IN_RECORD
 							return
 
+						if (lowertext(command) == "clown")
+							src.active_secure["criminal"] = ARREST_STATE_CLOWN
+
+							var/target_name = src.active_general["name"]
+
+							for (var/mob/living/carbon/human/H in mobs)
+								if (H.real_name == target_name || H.name == target_name)
+									H.update_arrest_icon()
+							return
+
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								if (src.active_secure["criminal"] != "*Arrest*")
+								if (src.active_secure["criminal"] != ARREST_STATE_ARREST)
 									src.report_arrest(src.active_general["name"])
-								src.active_secure["criminal"] = "*Arrest*"
+								src.active_secure["criminal"] = ARREST_STATE_ARREST
 							if (2)
-								src.active_secure["criminal"] = "None"
+								src.active_secure["criminal"] = ARREST_STATE_NONE
 								src.active_secure["sec_flag"] = "None"
 							if (3)
-								src.active_secure["criminal"] = "Incarcerated"
+								src.active_secure["criminal"] = ARREST_STATE_INCARCERATED
 							if (4)
-								src.active_secure["criminal"] = "Parolled"
+								src.active_secure["criminal"] = ARREST_STATE_PAROLE
 							if (5)
-								src.active_secure["criminal"] = "Released"
+								src.active_secure["criminal"] = ARREST_STATE_RELEASED
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
 							else
 								return
+
+						var/target_name = src.active_general["name"]
+
+						for (var/mob/living/carbon/human/H in mobs)
+							if (H.real_name == target_name || H.name == target_name)
+								H.update_arrest_icon()
 
 					if (FIELDNUM_SECFLAG)
 						if (!src.active_secure)
@@ -457,7 +488,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_secure["sec_flag"] = copytext(inputText, 1, 11) // 10 characters at most
+							src.active_secure["sec_flag"] = copytext(inputText, 1, SECHUD_FLAG_MAX_CHARS + 1)
 						else
 							return
 
@@ -567,7 +598,10 @@
 
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/datum/db_record/haystack_secure_addition = data_core.security.find_record("id", R["id"])
+					if(istype(haystack_secure_addition, /datum/db_record))
+						haystack = jointext(list(haystack, ckey(haystack_secure_addition["criminal"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
@@ -647,13 +681,13 @@
 
 					switch (commandList[1])
 						if ("print_index")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								known_printers = commandList.Copy(2)
 							else
 								known_printers = list()
 
 						if ("print_status")
-							if (commandList.len > 1)
+							if (length(commandList) > 1)
 								printer_status = commandList[2]
 							else
 								printer_status = "???"
@@ -698,24 +732,25 @@
 			\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]
 			<br>\[02]Full Name: [src.active_general["full_name"]]
 			<br>\[03]<b>Sex:</b> [src.active_general["sex"]]
-			<br>\[04]<b>Age:</b> [src.active_general["age"]]
-			<br>\[05]<b>Rank:</b> [src.active_general["rank"]]
-			<br>\[06]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
+			<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]
+			<br>\[05]<b>Age:</b> [src.active_general["age"]]
+			<br>\[06]<b>Rank:</b> [src.active_general["rank"]]
+			<br>\[07]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
 			<br>\[__]<b>DNA:</b> [src.active_general["dna"]]
-			<br>\[07]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
+			<br>\[08]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
 			<br>\[__]Physical Status: [src.active_general["p_stat"]]
 			<br>\[__]Mental Status: [src.active_general["m_stat"]]"}
 
 			if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 				view_string +={"
 				<br><center><b>Security Data</b></center>
-				<br>\[08]<b>Criminal Status:</b> [src.active_secure["criminal"]]
-				<br>\[09]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
-				<br>\[10]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
-				<br>\[11]<b>Details:</b> [src.active_secure["mi_crim_d"]]
-				<br>\[12]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
-				<br>\[13]<b>Details:</b> [src.active_secure["ma_crim_d"]]
-				<br>\[14]<b>Important Notes:</b> [src.active_secure["notes"]]"}
+				<br>\[09]<b>Criminal Status:</b> [src.active_secure["criminal"]]
+				<br>\[10]<b>SecHUD Flag:</b> [src.active_secure["sec_flag"]]
+				<br>\[11]<b>Minor Crimes:</b> [src.active_secure["mi_crim"]]
+				<br>\[12]<b>Details:</b> [src.active_secure["mi_crim_d"]]
+				<br>\[13]<b><br>Major Crimes:</b> [src.active_secure["ma_crim"]]
+				<br>\[14]<b>Details:</b> [src.active_secure["ma_crim_d"]]
+				<br>\[15]<b>Important Notes:</b> [src.active_secure["notes"]]"}
 			else
 				view_string += "<br><br><b>Security Record Lost!</b>"
 				view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Security Record.<br>"
@@ -796,18 +831,6 @@
 			peripheral_command("transmit", signal, "\ref[src.radiocard]")
 			return
 
-		find_access_file() //Look for the whimsical account_data file
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				src.account = target
-				return 1
-
-			return 0
-
 		local_print()
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
 			if(!printcard)
@@ -819,6 +842,7 @@
 				info += {"
 				Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]
 				<br><br>Sex: [src.active_general["sex"]]
+				<br><br>Pronouns: [src.active_general["pronouns"]]
 				<br><br>Age: [src.active_general["age"]]
 				<br><br>Rank: [src.active_general["rank"]]
 				<br><br>Fingerprint: [src.active_general["fingerprint"]]
@@ -868,6 +892,7 @@
 
 					printRecord.fields += "Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]"
 					printRecord.fields += "Sex: [src.active_general["sex"]]"
+					printRecord.fields += "Pronouns: [src.active_general["pronouns"]]"
 					printRecord.fields += "Age: [src.active_general["age"]]"
 					printRecord.fields += "Rank: [src.active_general["rank"]]"
 					printRecord.fields += "Fingerprint: [src.active_general["fingerprint"]]"
@@ -1000,6 +1025,7 @@
 #undef FIELDNUM_NAME
 #undef FIELDNUM_FULLNAME
 #undef FIELDNUM_SEX
+#undef FIELDNUM_PRONOUNS
 #undef FIELDNUM_AGE
 #undef FIELDNUM_RANK
 #undef FIELDNUM_PRINT

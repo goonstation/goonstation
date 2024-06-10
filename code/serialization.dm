@@ -18,7 +18,7 @@
 	var/icon/icon
 	var/icon_state
 
-/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState)
+/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState, var/grab_file_reference_from_rsc_cache = 0)
 	var/iname
 	var/datum/iconDeserializerData/IDS = new()
 	IDS.icon = defaultIcon
@@ -39,11 +39,14 @@
 
 			F["ICONS.[iname]"] >> IDS.icon
 			if (!IDS.icon && usr)
-				boutput(usr, "<span class='alert'>Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon.</span>")
+				boutput(usr, SPAN_ALERT("Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon."))
 			else if (IDS.icon)
 				F["[path].icon_state"] >> IDS.icon_state
 	else
-		IDS.icon = icon(file(iname))
+		if (grab_file_reference_from_rsc_cache)
+			IDS.icon = fcopy_rsc(iname)
+		else
+			IDS.icon = icon(file(iname))
 		F["[path].icon_state"] >> IDS.icon_state
 	return IDS
 

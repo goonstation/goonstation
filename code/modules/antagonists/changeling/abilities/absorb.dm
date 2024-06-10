@@ -1,7 +1,6 @@
 /datum/action/bar/icon/abominationDevour
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "abom_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar-changeling"
@@ -31,6 +30,21 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!ON_COOLDOWN(target, "changeling_remove_limb", 1.5 SECONDS))
+			var/list/valid_limbs = list("l_leg", "r_arm", "r_leg", "l_arm")
+			var/mob/living/carbon/human/H = target
+			H.TakeDamage("All", 15, 0, 0)
+			take_bleeding_damage(H, null, 8, DAMAGE_STAB, TRUE)
+			for (var/L in valid_limbs)
+				var/obj/item/parts/possible_limb = H.limbs?[L]
+				if (possible_limb)
+					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously devours [H]'s [possible_limb]!</span>")
+					possible_limb.remove(FALSE)
+					qdel(possible_limb)
+					playsound(H, 'sound/voice/burp_alien.ogg', 35)
+					H.emote("scream", FALSE)
+					break
+
 	onStart()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
@@ -38,7 +52,8 @@
 			return
 
 		var/mob/ownerMob = owner
-		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
+		ownerMob.show_message(SPAN_NOTICE("We must hold still for a moment..."), 1)
+		ON_COOLDOWN(target, "changeling_remove_limb", 1 SECOND) //don't eat a limb right away
 
 	onEnd()
 		..()
@@ -48,8 +63,8 @@
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
-			boutput(ownerMob, "<span class='notice'>We devour [target]!</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
+			boutput(ownerMob, SPAN_NOTICE("We devour [target]!"))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] hungrily devours [target]!</B>"))
 			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
 
@@ -58,17 +73,18 @@
 
 	onInterrupt()
 		..()
-		boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
+		boutput(owner, SPAN_ALERT("Our feasting on [target] has been interrupted!"))
+		devour.doCooldown()
 
 /datum/targetable/changeling/devour
 	name = "Devour"
 	desc = "Almost instantly devour a human for DNA."
 	icon_state = "devour"
 	abomination_only = 1
-	cooldown = 0
+	cooldown = 5 SECONDS
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())
@@ -81,14 +97,18 @@
 		var/mob/living/carbon/human/T = G.affecting
 
 		if (!istype(T))
-			boutput(C, "<span class='alert'>This creature is not compatible with our biology.</span>")
+			boutput(C, SPAN_ALERT("This creature is not compatible with our biology."))
 			return 1
 		if (isnpcmonkey(T))
-			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
+			boutput(C, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
-			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
+			boutput(usr, SPAN_ALERT("This creature has already been drained..."))
 			return 1
+		if (isnpc(T))
+			boutput(C, SPAN_ALERT("The DNA of this target seems inferior somehow, you have no desire to feed on it."))
+			return 1
+
 
 		actions.start(new/datum/action/bar/icon/abominationDevour(T, src), C)
 		return 0
@@ -96,7 +116,6 @@
 /datum/action/bar/private/icon/changelingAbsorb
 	duration = 250
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "change_absorb"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar-changeling"
@@ -127,16 +146,16 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = TIME - started
+		var/done = src.time_spent()
 		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
-			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] extends a proboscis!</B></span>"))
+			boutput(ownerMob, SPAN_NOTICE("We extend a proboscis."))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] extends a proboscis!</B>"))
 
 		if (complete > 0.6 && last_complete <= 0.6)
-			boutput(ownerMob, "<span class='notice'>We stab [target] with the proboscis.</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] stabs [target] with the proboscis!</B></span>"))
-			boutput(target, "<span class='alert'><B>You feel a sharp stabbing pain!</B></span>")
+			boutput(ownerMob, SPAN_NOTICE("We stab [target] with the proboscis."))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] stabs [target] with the proboscis!</B>"))
+			boutput(target, SPAN_ALERT("<B>You feel a sharp stabbing pain!</B>"))
 			random_brute_damage(target, 40)
 
 		last_complete = complete
@@ -160,8 +179,8 @@
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
-			boutput(ownerMob, "<span class='notice'>We have absorbed [target]!</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
+			boutput(ownerMob, SPAN_NOTICE("We have absorbed [target]!"))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] sucks the fluids out of [target]!</B>"))
 			logTheThing(LOG_COMBAT, ownerMob, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0
@@ -171,9 +190,15 @@
 			target.bioHolder.AddEffect("husk")
 			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
 
+			if (ishuman(ownerMob))
+				var/mob/living/carbon/human/H = ownerMob
+				if (H.sims)
+					H.sims.affectMotive("Thirst", 10)
+					H.sims.affectMotive("Hunger", 10)
+
 	onInterrupt()
 		..()
-		boutput(owner, "<span class='alert'>Our absorption of [target] has been interrupted!</span>")
+		boutput(owner, SPAN_ALERT("Our absorption of [target] has been interrupted!"))
 
 /datum/targetable/changeling/absorb
 	name = "Absorb DNA"
@@ -183,7 +208,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())
@@ -196,17 +221,17 @@
 		var/mob/living/carbon/human/T = G.affecting
 
 		if (!istype(T))
-			boutput(C, "<span class='alert'>This creature is not compatible with our biology.</span>")
+			boutput(C, SPAN_ALERT("This creature is not compatible with our biology."))
 			return 1
 		if (isnpcmonkey(T))
-			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
+			boutput(C, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
 			return 1
 		if (isnpc(T))
-			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			boutput(C, SPAN_ALERT("The DNA of this target seems inferior somehow, you have no desire to feed on it."))
 			addBHData(T)
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
-			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
+			boutput(usr, SPAN_ALERT("This creature has already been drained..."))
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(T, src), C)
@@ -219,4 +244,4 @@
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(T)
 			originalBHolder.CopyOther(T.bioHolder)
 			C.absorbed_dna[T.real_name] = originalBHolder
-			ownerMob.show_message("<span class='notice'>We can now transform into [T.real_name].</span>", 1)
+			ownerMob.show_message(SPAN_NOTICE("We can now transform into [T.real_name]."), 1)

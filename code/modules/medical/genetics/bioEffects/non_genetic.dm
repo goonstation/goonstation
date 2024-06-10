@@ -1,7 +1,8 @@
+ABSTRACT_TYPE(/datum/bioEffect/hidden)
 /datum/bioEffect/hidden
-	name = "Miner Training"
-	desc = "Subject is trained in geological and metallurgical matters."
-	id = "training_miner"
+	name = "Hidden bioeffect parent"
+	desc = "You should not see this."
+	id = "hidden"
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0
@@ -37,6 +38,14 @@
 	msgLose = "The tingling in your skin fades."
 	can_copy = 0
 
+/datum/bioEffect/hidden/robed
+	name = "Robed"
+	desc = "Subject can cast arcane spells without the use of magical robes or a staff."
+	id = "robed"
+	msgGain = "You feel the constraints of traditional sorcery falling from your mind."
+	msgGain = "You feel once more bound by the laws of magic."
+	can_copy = FALSE
+
 /datum/bioEffect/hidden/husk
 	name = "Husk"
 	desc = "Subject appears to have been drained of all fluids."
@@ -67,7 +76,10 @@
 
 	OnMobDraw()
 		if (ishuman(owner) && !owner:decomp_stage)
-			owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp1")
+			if (isskeleton(owner))
+				owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp4")
+			else
+				owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp1")
 		return
 
 	OnAdd()
@@ -130,7 +142,7 @@
 		..()
 		owner.set_mutantrace(/datum/mutantrace/premature_clone)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			boutput(owner, "<span class='alert'>Your genes feel...disorderly.</span>")
+			boutput(owner, SPAN_ALERT("Your genes feel...disorderly."))
 		return
 
 	OnRemove()
@@ -146,12 +158,12 @@
 
 		if (outOfPod)
 			if (probmult(6))
-				owner.visible_message("<span class='alert'>[owner.name] suddenly and violently vomits!</span>")
-				owner.vomit()
+				var/vomit_message = SPAN_ALERT("[owner.name] suddenly and violently vomits!")
+				owner.vomit(0, null, vomit_message)
 
-			else if (probmult(2))
-				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
-				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			else if (probmult(2) && !owner.reagents?.has_reagent("promethazine"))
+				owner.visible_message(SPAN_ALERT("[owner.name] vomits blood!"))
+				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
 
@@ -163,7 +175,7 @@
 					timeInCryo++
 
 					if (timeInCryo == 1)
-						boutput(owner, "<span class='notice'>You feel a little better.</span>")
+						boutput(owner, SPAN_NOTICE("You feel a little better."))
 					else if (timeInCryo == 5)
 						// Being in cryo long enough will help fix your messed-up genes.
 						timeLeft = 1
@@ -197,22 +209,22 @@
 
 	OnLife(var/mult)
 		if(..()) return
-		if (probmult(10))
-			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
+		if (probmult(5))
+			for(var/mob/living/carbon/C in view(3,get_turf(owner)))
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"), "stink_message")
 				else if (src.personalized_stink)
-					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
+					boutput(C, SPAN_ALERT("[src.personalized_stink]"), "stink_message")
 				else
-					boutput(C, "<span class='alert'>[stinkString()]</span>")
+					boutput(C, SPAN_ALERT("[stinkString()]"), "stink_message")
 	OnRemove()
 		holder.owner?.ClearSpecificParticles("stink_lines")
 		. = ..()
 
 // Magnetic Random Event
-
+ABSTRACT_TYPE(/datum/bioEffect/hidden/magnetic)
 /datum/bioEffect/hidden/magnetic
 	name = "magnetic charge parent"
 	desc = "This shouldn't be used."

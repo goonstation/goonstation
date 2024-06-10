@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	color = "#0000ff"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	invisibility = INVIS_ALWAYS
 
@@ -12,12 +12,12 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	color = "#0000ff"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	invisibility = INVIS_ALWAYS
 
 /area/swap
-	name = ""
+	name = "swap zone"
 	icon_state = "purple"
 	requires_power = 0
 	force_fullbright = 0

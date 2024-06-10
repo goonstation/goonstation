@@ -1,15 +1,29 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
+	/// Match to a door to have it be controlled.
 	var/id = null
 	var/timer = 0
 	var/cooldown = 0 SECONDS
 	var/inuse = FALSE
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
+	// following 3 variables should be adjusted in a subtype with different icons
+	var/unpressed_icon = "doorctrl0"
+	var/pressed_icon = "doorctrl1"
+	var/unpowered_icon = "doorctrl-p"
+	/// for the speak proc, relays the message to speak.
+	var/image/chat_maptext/welcome_text
+	///alpha value for speak proc
+	var/welcome_text_alpha = 140
+	///colour value for speak proc
+	var/welcome_text_color = "#FF0100"
+	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
+
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
@@ -401,20 +415,23 @@
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if((status & (NOPOWER|BROKEN)) || inuse)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
+		return
+	src.toggle(user)
+	src.add_fingerprint(user)
+
+/obj/machinery/door_control/proc/toggle(mob/user)
+	if((src.status & (NOPOWER|BROKEN)) || inuse)
 		return
 
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
-		return
-
-	use_power(5)
-	icon_state = "doorctrl1"
+	src.use_power(5)
+	icon_state = pressed_icon
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 
 	if (!src.id)
 		return
 
-	logTheThing(LOG_STATION, user, "toggled the [src.name] at [log_loc(src)].")
+	logTheThing(LOG_STATION, user || usr, "toggled the [src.name] at [log_loc(src)].")
 
 	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
@@ -429,12 +446,26 @@
 					SPAWN(src.timer)
 						M.open()
 
-	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			if (M.density)
-				M.open()
-			else
-				M.close()
+	if(src.controlmode == 1)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				if (M.density)
+					M.open()
+				else
+					M.close()
+
+	if(src.controlmode == 2)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				if (M.locked)
+					M.set_unlocked()
+				else
+					if (M.density)
+						M.set_locked()
+					else
+						M.close()
+						SPAWN(5 DECI SECONDS)
+							M.set_locked()
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
@@ -456,25 +487,67 @@
 		inuse = FALSE
 
 	SPAWN(1.5 SECONDS)
-		if(!(status & NOPOWER))
-			icon_state = "doorctrl0"
-	src.add_fingerprint(user)
+		if(!(src.status & NOPOWER))
+			icon_state = unpressed_icon
 
 /obj/machinery/door_control/power_change()
 	..()
-	if(status & NOPOWER)
-		icon_state = "doorctrl-p"
+	if(src.status & NOPOWER)
+		icon_state = unpowered_icon
 	else
-		icon_state = "doorctrl0"
+		icon_state = unpressed_icon
 
 /obj/machinery/door_control/oneshot/attack_hand(mob/user)
 	..()
-	if (!(status & BROKEN))
+	if (!(src.status & BROKEN))
 		src.status |= BROKEN
-		src.visible_message("<span class='alert'>[src] emits a sad thunk.  That can't be good.</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 50, 1)
+		src.visible_message(SPAN_ALERT("[src] emits a sad thunk.  That can't be good."))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
-		boutput(user, "<span class='alert'>It's broken.</span>")
+		boutput(user, SPAN_ALERT("It's broken."))
+// Stolen from the vending module
+/// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
+/obj/machinery/door_control/proc/speak(var/message)
+	var/image/chat_maptext/speak_text = welcome_text
+	if ((src.status & NOPOWER) || !message)
+		return
+	else
+		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
+		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), assoc_maptext = speak_text)
+		if (speak_text && src.chat_text && length(src.chat_text.lines))
+			speak_text.measure(src)
+			for (var/image/chat_maptext/I in src.chat_text.lines)
+				if (I != speak_text)
+					I.bump_up(speak_text.measured_height)
+
+/// for sleepers entering listening post
+/obj/machinery/door_control/antagscanner
+	/// For the front door having a flying chat message or not.
+	var/entrance_scanner = 0
+	name = "Dubious Hand Scanner"
+	id = "Sleeper_Access"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "antagscanner"
+	unpressed_icon = "antagscanner"
+	pressed_icon = "antagscanner-u"
+	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
+	requires_power = 0
+	welcome_text = "Welcome, Agent."
+
+/obj/machinery/door_control/ex_act(severity)
+	return
+
+/obj/machinery/door_control/antagscanner/attack_hand(mob/user)
+	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
+		return
+	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
+	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
+		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
+		src.toggle()
+		if (src.entrance_scanner)
+			src.speak(src.welcome_text)
+	else
+		boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
@@ -488,7 +561,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	/// compatible machines with a matching id will be activated
 	var/id = null
 	var/active = FALSE
-	anchored = 1
+	anchored = ANCHORED
 
 	proc/activate()
 		return
@@ -502,12 +575,12 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	return src.Attackhand(user)
 
 /obj/machinery/activation_button/attack_hand(mob/user)
-	if(status & (NOPOWER|BROKEN))
+	if(src.status & (NOPOWER|BROKEN))
 		return
 	if(active)
 		return
 
-	use_power(5)
+	src.use_power(5)
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 	src.active = TRUE
 	icon_state = "launcheract"
@@ -522,8 +595,19 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 /obj/machinery/activation_button/driver_button
 	name = "Mass Driver Button"
 	desc = "A remote control switch for a Mass Driver."
+	var/emagged = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if (user && !emagged)
+			boutput(user, SPAN_NOTICE("You fry the control circuits beyond repair!"))
+		emagged = TRUE
+
 
 	activate()
+		if(emagged)
+			return
+
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				M.open()
@@ -558,7 +642,6 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 
 		sleep(2 SECONDS)
 
-
 ///////////Uses a radio signal to control the door
 //////////////////////////////////////////////////////////////////////////
 ///////Remote Door Control //////////////////////////////////////////////
@@ -574,7 +657,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
 	var/access_type = POD_ACCESS_STANDARD
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/light/light
 
 	syndicate
@@ -968,7 +1051,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	New()
 		..()
 		UnsubscribeProcess()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		if(id)
 			pass = "[id]-[rand(1,50)]"
@@ -985,10 +1068,10 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			if(istype(usr.loc, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/V = usr.loc
 				if (!V.com_system)
-					boutput(usr, "<span class='alert'>Your pod has no comms system installed!</span>")
+					boutput(usr, SPAN_ALERT("Your pod has no comms system installed!"))
 					return ..()
 				if (!V.com_system.active)
-					boutput(usr, "<span class='alert'>Your communications array isn't on!</span>")
+					boutput(usr, SPAN_ALERT("Your communications array isn't on!"))
 					return ..()
 				if (!access_type)
 					open_door()
@@ -996,7 +1079,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 					if(V.com_system.access_type.Find(src.access_type))
 						open_door()
 					else
-						boutput(usr, "<span class='alert'>Access denied. Comms system not recognized.</span>")
+						boutput(usr, SPAN_ALERT("Access denied. Comms system not recognized."))
 						return ..()
 			return ..()
 
@@ -1009,13 +1092,13 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		return src.Attackhand(user)
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")
+		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
 	proc/open_door()
-		if(status & (NOPOWER|BROKEN))
+		if(src.status & (NOPOWER|BROKEN))
 			return
-		use_power(5)
+		src.use_power(5)
 
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
@@ -1042,9 +1125,9 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				if(status & (NOPOWER|BROKEN))
+				if(src.status & (NOPOWER|BROKEN))
 					return
-				use_power(5)
+				src.use_power(5)
 
 				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
@@ -1078,3 +1161,18 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		signal.source = src
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+/obj/machinery/door_control/bolter
+	name = "Remote Door Bolt Control"
+	desc = "A remote control switch for a door's locking bolts."
+	controlmode = 2
+
+	new_walls
+		north
+			pixel_y = 24
+		east
+			pixel_x = 22
+		south
+			pixel_y = -19
+		west
+			pixel_x = -22

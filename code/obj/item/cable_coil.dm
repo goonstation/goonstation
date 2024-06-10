@@ -22,7 +22,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
@@ -54,16 +55,16 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] begins coiling cable!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins coiling cable!"))
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish coiling cable.</span>")
+		boutput(user, SPAN_NOTICE("You finish coiling cable."))
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b>"))
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -86,26 +87,30 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		if (!conductor)
 			return
 		if (insulator)
-			name = "[insulator.name]-insulated [conductor.name]-[base_name]"
+			name = "[insulator.getName()]-insulated [conductor.getName()]-[base_name]"
 		else
-			name = "uninsulated [conductor.name]-[base_name]"
+			name = "uninsulated [conductor.getName()]-[base_name]"
 
 	proc/use(var/used)
 		if (src.amount < used)
 			return 0
 		amount -= used
 		if (src.amount <= 0)
+			if (currently_laying && usr)
+				UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
 			qdel(src)
 			return 1
 		else
 			UpdateIcon()
 			return 1
 
-	update_stack_appearance()
-		update_icon()
+	_update_stack_appearance()
+		UpdateIcon()
 
 	update_icon()
 		if (amount <= 0)
+			if (currently_laying && ismob(src.loc))
+				UnregisterSignal(src.loc, COMSIG_MOVABLE_MOVED)
 			qdel(src)
 		else if (amount >= 1 && amount <= 4)
 			set_icon_state("coil[amount][iconmod]")
@@ -170,10 +175,10 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/attack_self(var/mob/living/M)
 	if (currently_laying)
 		UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-		boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
+		boutput(M, SPAN_NOTICE("No longer laying the cable while moving."))
 	else
-		RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/move_callback)
-		boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
+		RegisterSignal(M, COMSIG_MOVABLE_MOVED, PROC_REF(move_callback))
+		boutput(M, SPAN_NOTICE("Now laying cable while moving."))
 	currently_laying = !currently_laying
 
 obj/item/cable_coil/dropped(mob/user)
@@ -186,12 +191,14 @@ obj/item/cable_coil/dropped(mob/user)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
-/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target)
+/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
 	if (!isturf(M.loc))
 		return
-	var/turf/source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
+
+	if(!source)
+		source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
 
 	var/obj/cable/C = find_half_cable(source, get_dir(source, target))
 	if (C)
@@ -200,7 +207,7 @@ obj/item/cable_coil/dropped(mob/user)
 		turf_place(source, target, M)
 
 	if (src.disposed) //AKA 0 coil left
-		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
+		boutput(M, SPAN_ALERT("Your cable coil runs out!"))
 		return
 
 	C = find_half_cable(target, get_dir(target, source))
@@ -211,7 +218,7 @@ obj/item/cable_coil/dropped(mob/user)
 		turf_place(target, source, M)
 
 	if (src.disposed)
-		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
+		boutput(M, SPAN_ALERT("Your cable coil runs out!"))
 		return
 
 /obj/item/cable_coil/examine()
@@ -227,9 +234,13 @@ obj/item/cable_coil/dropped(mob/user)
 
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
-		var/obj/item/cable_coil/A = split_stack(round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num))
-		if (istype(A))
-			A.set_loc(user.loc) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
+		var/cut_amount = round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num)
+		if (!in_interact_range(src, user))
+			boutput(user, "You're too far away from the cable that you're trying to cut from!")
+			return
+		var/obj/item/cable_coil/cable = src.split_stack(cut_amount)
+		if (istype(cable))
+			user.put_in_hand_or_drop(cable) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
 			boutput(user, "You cut a piece off the [base_name].")
 		return
 
@@ -255,6 +266,8 @@ obj/item/cable_coil/dropped(mob/user)
 	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
+	if (src.amount == 1) // We are the last wire, and since we are gonna get used, we un-register the signal..
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 	var/dirn
 	if (target == source)
@@ -279,6 +292,9 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 	if (source == target)		// do nothing if we clicked a cable we're standing on
 		return		// may change later if can think of something logical to do
+
+	if (src.amount == 1) // We are the last wire in the coil, and since we are gonna get used, we un-register the signal.
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 	var/dirn = get_dir(C, source)
 
@@ -326,7 +342,7 @@ obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
 	NC.d1 = dir1
 	NC.d2 = dir2
 	NC.add_fingerprint()
-	NC.update_icon()
-	NC.update_network()
+	NC.UpdateIcon()
+	NC.update_network(user)
 	NC.log_wirelaying(user)
 	src.use(1)

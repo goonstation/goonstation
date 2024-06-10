@@ -61,6 +61,8 @@
 /mob/proc/shared_ui_interaction(src_object)
 	if(!client) // Close UIs if mindless.
 		return UI_CLOSE
+	else if(istype(src, /mob/dead/target_observer))
+		return UI_UPDATE
 	else if(stat) // Disable UIs if unconcious.
 		return UI_DISABLED
 	else if(!can_act(src, include_cuffs = 1)) // Update UIs if incapicitated but concious.
@@ -112,8 +114,10 @@
  * return UI_state The state of the UI.
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
-	if (istype(src_object.loc, /obj/item/storage)) // If the object is in a storage item, like a backpack.
-		return UI_CLOSE
+	if (istype(src_object, /obj/item))
+		var/obj/item/I = src_object
+		if (I.stored)  // If the object is in a storage item, like a backpack.
+			return UI_CLOSE
 
 	var/dist = min(GET_DIST(src_object, src), bounds_dist(src_object, src) / world.icon_size)
 

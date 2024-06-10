@@ -1,6 +1,7 @@
 /mob/dead
-	stat = 2
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	stat = STAT_DEAD
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	pass_unstable = FALSE
 	///Our corpse, if one exists
 	var/mob/living/corpse
 
@@ -14,6 +15,7 @@
 /mob/dead/ex_act(severity)
 	return
 
+// Make sure to keep this JPS-cache safe
 /mob/dead/Cross(atom/movable/mover)
 	return 1
 
@@ -23,9 +25,29 @@
 /mob/dead/can_strip()
 	return 0
 
+/mob/dead/Login()
+	. = ..()
+	if(client?.holder?.ghost_interaction)
+		setalive(src)
 
-/mob/dead/click(atom/target, params)
-	if (targeting_ability)
+	if (isadminghost(src))
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src.client)
+
+/mob/dead/Logout()
+	. = ..()
+	setdead(src)
+
+	if (src.last_client?.holder && (rank_to_level(src.last_client.holder.rank) >= LEVEL_MOD) && (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer)))
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src.last_client)
+
+/mob/dead/click(atom/target, params, location, control)
+	if(src.client?.holder?.ghost_interaction)
+		if(isitem(target))
+			var/obj/item/itemtarget = target
+			itemtarget.AttackSelf(src)
+		else
+			target.Attackhand(src, params, location, control, params)
+	else if (targeting_ability)
 		..()
 	else
 		if (GET_DIST(src, target) > 0)
@@ -33,7 +55,7 @@
 		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
-	if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
+	if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
 		O.set_loc(get_turf(src))
 	. = ..()
@@ -42,18 +64,19 @@
 	return P.hits_ghosts
 
 /mob/dead/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return
 
+	..()
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
 	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
 	if(src?.client?.preferences.auto_capitalization)
@@ -66,22 +89,22 @@
 		if (!M.stat)
 			if (M.job == "Chaplain")
 				if (prob (80))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
+					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
 				else
-					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
+					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
 			else
 				if (prob(90))
 					return
 				else if (prob (95))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
+					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
 				else
-					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
+					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!deadchat_allowed)
 		src.show_text("<b>Deadchat is currently disabled.</b>")
 		return
-
+	..()
 	var/message = null
 	switch (lowertext(act))
 
@@ -89,8 +112,8 @@
 			if (farting_allowed && src.emote_check(voluntary, 25, 1, 0))
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
 				var/fart_on_other = 0
-				for (var/obj/item/storage/bible/B in src.loc)
-					playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
+				for (var/obj/item/bible/B in src.loc)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 7, FALSE, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
 					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"
@@ -175,7 +198,7 @@
 
 #endif
 		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
-		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
+		src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]"),group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
 
@@ -210,10 +233,18 @@
 		if (success)
 			sleep(rand(1,4))
 #endif
+
 // nothing in the game currently forces dead mobs to vomit. this will probably change or end up exposed via someone fucking up (likely me) in future. - cirr
 /mob/dead/vomit(var/nutrition=0, var/specialType=null)
 	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
-	playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1)
-	src.visible_message("<span class='alert'>Ectoplasm splats onto the ground from nowhere!</span>",
-		"<span class='alert'>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
-		"<span class='alert'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")
+	playsound(src.loc, 'sound/effects/ghost2.ogg', 50, 1)
+	src.visible_message(SPAN_ALERT("Ectoplasm splats onto the ground from nowhere!"),
+		SPAN_ALERT("Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]"),
+		SPAN_ALERT("You hear something strangely insubstantial land on the floor with a wet splat!"))
+
+proc/can_ghost_be_here(mob/dead/ghost, var/turf/T)
+	if(isnull(T))
+		return FALSE
+	if(isghostrestrictedz(T.z) && !restricted_z_allowed(ghost, T) && !(ghost.client && ghost.client.holder && !ghost.client.holder.tempmin))
+		return FALSE
+	return TRUE

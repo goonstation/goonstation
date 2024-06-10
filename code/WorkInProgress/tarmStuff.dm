@@ -1,45 +1,4 @@
-//bot go brr?
 //GUNS GUNS GUNS
-/obj/item/gun/energy/cannon
-	name = "Vexillifer IV"
-	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "lasercannon"
-	item_state = "cannon"
-	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	force = MELEE_DMG_LARGE
-
-
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
-
-	can_dual_wield = 0
-
-	//color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
-
-	two_handed = 1
-	w_class = W_CLASS_BULKY
-	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
-	shoot_delay = 0.8 SECONDS
-
-
-	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		..()
-
-	setupProperties()
-		..()
-		setProperty("movespeed", 0.3)
-
-	flashy
-		icon_state = "lasercannon-anim"
-
-		shoot(target, start, mob/user, POX, POY, is_dual_wield)
-			if(src.canshoot())
-				flick("lasercannon-fire", src)
-			. = ..()
-
 /datum/projectile/energy_bolt/taser_beam
 	cost = 0
 	max_range = PROJ_INFINITE_RANGE
@@ -78,15 +37,15 @@
 	name = "hardlight bolt"
 	sname = "needle bolt"
 	cost = 20
-	power = 35
+	damage = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
-	hit_type = DAMAGE_BURN
+	hit_type = DAMAGE_STAB
 	icon_state = "laser_white"
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null
 	armor_ignored = 0.66
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	shot_volume = 66
 	window_pass = 1
 
@@ -134,7 +93,7 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 1
+	damage = 1
 	max_range = 500
 	damage_type = D_SPECIAL
 	shot_sound = null
@@ -176,9 +135,9 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 125
+	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -208,13 +167,14 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
-	var/last_shot_time = 0
-	uses_multiple_icon_states = 1
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)
@@ -229,11 +189,9 @@
 		ammo = new default_magazine
 		. = ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
-		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		shotcount = 0
-		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
-		last_shot_time = TIME
+		. = ..()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
@@ -267,8 +225,7 @@
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
 	cost = 3
-	power = 60
-	ks_ratio = 1
+	damage = 60
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -278,20 +235,20 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
-		power = 15
+		damage = 15
 		hit_ground_chance = 33
 
 	void
-		power = 30
+		damage = 30
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
-			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			playsound(T, 'sound/effects/suck.ogg', 100, TRUE)
 			var/spamcheck = 0
 			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
@@ -300,7 +257,7 @@
 			..()
 
 	blast
-		power = 15
+		damage = 15
 		damage_type = D_KINETIC
 		hit_type = DAMAGE_BLUNT
 		on_hit(atom/hit, angle, obj/projectile/O)
@@ -310,7 +267,7 @@
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
-	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
 			..(get_turf(M), start, user, POX, POY)
@@ -387,12 +344,11 @@
 	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
-	power = 10
+	damage = 10
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	ks_ratio = 1
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -418,7 +374,9 @@
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/deagle50cal
-
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new default_magazine
@@ -450,12 +408,11 @@
 
 /datum/projectile/bullet/deagle50cal
 	name = "bullet"
-	power = 120
+	damage = 120
 	dissipation_delay = 5
 	dissipation_rate = 5
-	ks_ratio = 1
 	implanted = /obj/item/implant/projectile/bullet_50
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
@@ -468,7 +425,50 @@
 				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
-					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+					H.visible_message(SPAN_ALERT("[H]'s head get's blown right off! Holy shit!"), SPAN_ALERT("Your head gets blown clean off! Holy shit!"))
+				H.death()
+
+/obj/item/ammo/bullets/pipeshot/chems/saltshot
+	sname = "salt load"
+	desc = "This appears to be a bunch of salt shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/salt
+
+	get_desc(dist, mob/user)
+		if (dist <= 1)
+			. = "The shells smell like [prob(1) ? "deadchat. What?" : "the ocean."]"
+
+/datum/pipeshotrecipe/chem/salt
+	thingsneeded = 4
+	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
+	craftname = "salt"
+	reagents_req = list("salt"=5)
+
+/datum/projectile/bullet/antiunion
+	name = "Union buster rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "regrocket"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 10
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bullethole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		new /obj/effects/rendersparks(hit.loc)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(!M.traitHolder.hasTrait("unionized"))
+				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
+				M.do_disorient(stunned = 40)
+			else
+				boutput(M, SPAN_ALERT("You are struck by a union-busting rocket! There goes your union benefits!"))
+				M.traitHolder.removeTrait("unionized")
+				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
+
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -490,11 +490,11 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 			if(currentench-incr <= 2 || !rand(0, currentench))
-				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
+				user.visible_message(SPAN_NOTICE("[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]"))
 			else
-				user.visible_message("<span class='alert'>[msg] shudders violently and turns to dust!</span>")
+				user.visible_message(SPAN_ALERT("[msg] shudders violently and turns to dust!"))
 				qdel(I)
 			qdel(src)
 		else
@@ -535,7 +535,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
 	var/list/turf/floors = null
@@ -560,7 +560,7 @@
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)
-			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			var/turf/T = pick(floors)
 			if(T)
 				new /obj/decal/cleanable/paper(T)
@@ -598,31 +598,25 @@
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
 
 //lily's office
-/obj/item/storage/desk_drawer/lily/
-	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-)
-
 /obj/table/wood/auto/desk/lily
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/lily/L = new(src)
-		src.desk_drawer = L
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+						/obj/item/reagent_containers/food/snacks/cake)
 
 /obj/machinery/door/unpowered/wood/lily
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/fescream3.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -636,26 +630,29 @@
 		if(!istype(M) || (M in loved))
 			return
 		M.reagents?.add_reagent("love", 20)
-		boutput(M, "<span class='notice'>You feel loved</span>")
+		boutput(M, SPAN_NOTICE("You feel loved"))
 		loved += M
 
 //misc stuffs
+TYPEINFO(/obj/item/device/geiger)
+	mats = 5
+
 /obj/item/device/geiger
 	name = "geiger counter"
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	mats = 5
 
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
-		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(change_icon_state))
 
 	proc/change_icon_state(source, stage)
 		switch(stage)
@@ -687,3 +684,20 @@
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)
+
+/obj/item/firebot_deployer
+	name = "compressed firebrand firebot"
+	desc = "Deploys a firebot dedicated to putting out friendly fire(s)"
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "firebot0"
+
+	New()
+		. = ..()
+		src.SafeScale(0.5, 0.5)
+
+	attack_self(mob/user)
+		if(src == user.equipped())
+			new/obj/machinery/bot/firebot/firebrand(get_turf(src))
+			user.u_equip(src)
+			qdel(src)
+		. = ..()

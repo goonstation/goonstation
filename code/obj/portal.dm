@@ -5,7 +5,7 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = 1
+	anchored = ANCHORED
 	var/portal_lums = 2
 	var/datum/light/light
 	event_handler_flags = USE_FLUID_ENTER
@@ -32,12 +32,28 @@
 	SPAWN(0)
 		src.teleport(AM)
 
+/obj/portal/proc/set_target(atom/new_target)
+	if(src.target)
+		if(istype(src.target, /obj/item/device/radio/beacon))
+			var/obj/item/device/radio/beacon/B = src.target
+			B.remove_portal(src)
+	src.target = new_target
+	if(istype(src.target, /obj/item/device/radio/beacon))
+		var/obj/item/device/radio/beacon/B = target
+		B.add_portal(src)
+
 /obj/portal/attack_hand(mob/M)
 	SPAWN(0)
 		src.teleport(M)
 
 /obj/portal/disposing()
-	target = null
+	set_target(null)
+	..()
+
+/obj/portal/Click(location, control, params)
+	if (isobserver(usr))
+		usr.set_loc(src.target)
+		return
 	..()
 
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
@@ -63,17 +79,23 @@
 					var/part_splinched = splinch(M, 75)
 					if (part_splinched)
 						do_teleport(part_splinched, destination, 8)
-						M.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))
 					M.throw_at(destination, 8, 2)
 
 					return
 				if(ismob(M))
-					logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
+					logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [src.target] at [log_loc(destination)]")
+				if (istype(M, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+					var/obj/critter/gunbot/drone/drone = M
+					logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 				do_teleport(M, destination, 1)
 			else return
 		else
 			if(ismob(M))
-				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
+				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
+			if (istype(M, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+				var/obj/critter/gunbot/drone/drone = M
+				logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
 /obj/portal/wormhole
@@ -86,14 +108,12 @@
 
 	Bumped(mob/M as mob|obj)
 		//spatial interdictor: when something would enter a wormhole, it doesn't
-		//consumes 400 units of charge per wormhole interdicted
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
-				icon = 'icons/effects/effects.dmi'
-				icon_state = "sparks_attack"
-				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-				density = 0
-				return
+		if (M.hasStatus("spatial_protection"))
+			icon = 'icons/effects/effects.dmi'
+			icon_state = "sparks_attack"
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+			density = 0
+			return
 		..()
 
 /obj/portal/afterlife

@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/device/radio/intercom/ship/send_hear()
 	if (src.listening)
@@ -14,7 +14,6 @@
 	active = 0
 	name = "Robustco Communication Array"
 	desc = "Enables long-distance communications and interfacing with pod bay door controls."
-	power_used = 10
 	system = "Communications"
 	icon_state = "com"
 	color = "#16CC77"
@@ -59,7 +58,7 @@
 				linked_magnet = MM
 				ui_interact(usr)
 				return null
-			boutput(usr, "<span class='alert'>No magnet found in range of seven meters.</span>")
+			boutput(usr, SPAN_ALERT("No magnet found in range of seven meters."))
 			return null
 
 	syndicate
@@ -81,7 +80,7 @@
 		access_type = list(POD_ACCESS_SECURITY, POD_ACCESS_STANDARD)
 
 	opencomputer(mob/user as mob)
-		ship.intercom?.attack_self(user)
+		ship.intercom?.AttackSelf(user)
 		return
 
 	deactivate()
@@ -98,7 +97,7 @@
 
 	proc/External()
 		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
-		if(!broadcast)
+		if(!broadcast || usr.loc != src.ship) // need to check if something wasn't entered or if user isn't in a vehicle
 			return
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
@@ -120,6 +119,12 @@
 
 		return null
 
+	proc/go_home()
+		return FALSE
+
+	proc/get_home_turf()
+		return
+
 /obj/item/device/ship_radio_control
 	name = "Ship Radio Control"
 	var/frequency = FREQ_DOOR_CONTROL
@@ -129,7 +134,7 @@
 	New()
 		..()
 		src.net_id = format_net_id("\ref[src]")
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)

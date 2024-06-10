@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbag"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()

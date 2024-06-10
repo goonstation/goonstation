@@ -13,12 +13,12 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "book0"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1100
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	//
 
@@ -37,7 +37,7 @@ Custom Books
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b>"))
 		user.suiciding = 0
 		return 1
 
@@ -92,7 +92,11 @@ Custom Books
 	quartermaster
 		name = "Cargo Pocket Guide"
 		icon_state = "cargoguide"
+#ifdef MAP_OVERRIDE_NADIR
+		file_path = "strings/books/cargo_pocket_guide_nadir.txt"
+#else
 		file_path = "strings/books/cargo_pocket_guide.txt"
+#endif
 
 /****MatSci and Mining****/
 
@@ -103,7 +107,7 @@ Custom Books
 	file_path = "strings/books/matsci_guide_old.txt"
 
 /obj/item/paper/book/from_file/matsci_guide
-	name = "Dummies' Guide to Material Science, 7th Ed."
+	name = "Dummies' Guide to Material Science, 8th Ed."
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
 	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_new.txt"
@@ -139,6 +143,12 @@ Custom Books
 	icon_state = "interdictorguide"
 	desc = "A handy guide on proper construction and maintenance of Spatial Interdictors"
 	file_path = "strings/books/interdictor_guide.txt"
+
+/obj/item/paper/book/from_file/transception_guide
+	name = "NT-PROTO: Transception Array"
+	icon_state = "orangebook"
+	desc = "A book detailing behaviors and operations of Nadir's transception array"
+	file_path = "strings/books/transception_guide.txt"
 
 /****Civilian Guides****/
 
@@ -239,7 +249,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -262,11 +272,11 @@ Custom Books
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 2 SECONDS)
-				user.changeStatus("weakened", 2 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
+				user.changeStatus("knockdown", 2 SECONDS)
+				user.changeStatus("unconscious", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(usr)
@@ -275,7 +285,7 @@ Custom Books
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
 				var/mob/living/carbon/human/H = hit_atom
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
+				var/hos = istype(user) && (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
 					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
@@ -310,11 +320,17 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
-/obj/item/paper/book/from_file/MONOrules
-	name = "MONO card game rules"
-	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+/obj/item/paper/book/from_file/DWrulebook
+	name = "Stationfinder"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stationfinder. It was made based on the Stations and Syndicates 5th edition SRD after a dispute over licensing."
+	icon_state = "bookcc"
+	file_path = "strings/books/stationfinder.txt"
+
+/obj/item/paper/book/from_file/solo_rules
+	name = "SOLO card game rules"
+	desc = "A pamphlet describing the rules of SOLO, the family-friendly and legally distinct card game for all ages!"
 	icon_state = "paper"
-	file_path = "strings/books/MONOrules.txt"
+	file_path = "strings/books/solo_rules.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
@@ -322,7 +338,7 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "pinkbook"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 
 	New()
@@ -332,13 +348,14 @@ Custom Books
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = user
+			var/mob/living/carbon/human/jerk = user
 			if (!istype(jerk))
 				return
 
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = "*Arrest*"
+			S?["criminal"] = ARREST_STATE_ARREST
 			S?["mi_crim"] = "Reading highly-confidential private information."
+			jerk.update_arrest_icon()
 		else
 			return list("It appears to be heavily encrypted information.")
 
@@ -392,7 +409,7 @@ Custom Books
 	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
+			boutput(user, SPAN_NOTICE("You pore over the book with the magnifying glass."))
 			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
@@ -435,8 +452,8 @@ Custom Books
 	file_path = "strings/books/syndies_guide.txt"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -447,6 +464,13 @@ Custom Books
 		New()
 			..()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
+
+/obj/item/paper/book/from_file/fleurscookbook
+	name = "Fleur's Cookbook"
+	desc = "A life's work in progress."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "cookbook-fleur"
+	file_path = "strings/books/fleurs_cookbook.txt"
 
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
@@ -474,6 +498,12 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/from_file/vendbook //Guide for build-a-vends in maint bazaar random room
+	name = "A Treatise on Build-A-Vends"
+	desc = "A hefty looking guide on how to start your own business."
+	icon_state = "vendbook"
+	file_path = "strings/books/buildavend_treatise.txt"
 
 /******************** CUSTOM BOOKS ********************/
 
@@ -525,3 +555,22 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 give me your answer do.<BR/>
 I'm half crazy,<BR/>
 all for the love of you.</tt>"}
+
+/obj/item/paper/book/from_file/nuclear_engineering
+	name = "Nuclear Engineering for Idiots"
+	desc = "A guide to designing and operating nuclear reactors. Should idiots be doing that?"
+	icon_state = "nuclearguide"
+	file_path = "strings/books/nuclear_engineering.txt"
+
+/obj/item/paper/emergencycooler
+	name = "Emergency Cooler Instructions"
+	info = {"<h3>These coolers are for emergency use only</h3></br>
+			In the event of a meltdown scenario, activate the coolers and ensure the gas loop is pressurised.<br>
+			Use of these coolers outside of an emergency scenario will result in a loss of reactor efficiency and stalling of the turbine."}
+
+/obj/item/paper/locked_table_random_room
+	name = "dusty note"
+	info = {"Alright, so get this... I get these nice tables, with these nice locks... I set them up in this place where I can do my work in peace.
+			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
+			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
+			now?"}

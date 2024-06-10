@@ -13,6 +13,7 @@
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/icon_empty = "dropper0"
 	var/icon_filled = "dropper1"
 	var/image/fluid_image
@@ -47,21 +48,26 @@
 	afterattack(obj/target, mob/user, flag)
 		if (!src.reagents || !target.reagents)
 			return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, SPAN_ALERT("You cannot transfer liquids with the [target.name] while it has a lid on it!"))
+				return
 
 		if ((src.customizable_settings_available && src.transfer_mode == TO_SELF) || (!src.customizable_settings_available && !src.reagents.total_volume))
 			var/t = min(src.transfer_amount, target.reagents.total_volume) // Can't draw more than THEY have.
 			t = min(src.transfer_amount, src.reagents.maximum_volume - src.reagents.total_volume)
 			if (t <= 0) return
 
-			if (target.is_open_container() != 1 && !istype(target, /obj/reagent_dispensers))
-				boutput(user, "<span class='alert'>You cannot directly remove reagents from [target].</span>")
+			if (target.is_open_container() != 1 && !is_reagent_dispenser(target))
+				boutput(user, SPAN_ALERT("You cannot directly remove reagents from [target]."))
 				return
 			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is empty.</span>")
+				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
 
 			target.reagents.trans_to(src, t)
-			boutput(user, "<span class='notice'>You fill the dropper with [t] units of the solution.</span>")
+			boutput(user, SPAN_NOTICE("You fill the dropper with [t] units of the solution."))
 			src.UpdateIcon()
 
 		else if ((src.customizable_settings_available && src.transfer_mode == TO_TARGET) || (!src.customizable_settings_available && src.reagents.total_volume))
@@ -69,16 +75,16 @@
 				var/t = min(src.transfer_amount, src.reagents.total_volume) // Can't drop more than you have.
 
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
-					boutput(user, "<span class='alert'>[target] is full.</span>")
+					boutput(user, SPAN_ALERT("[target] is full."))
 					return
-				if (target.is_open_container() != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
-					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
+				if (target.is_open_container(TRUE) != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
+					boutput(user, SPAN_ALERT("You cannot directly fill this object."))
 					return
 
 				if (ismob(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
-							O.show_message(text("<span class='alert'><B>[] is trying to drip something onto []!</B></span>", user, target), 1)
+							O.show_message(SPAN_ALERT("<B>[user] is trying to drip something onto [target]!</B>"), 1)
 						src.log_me(user, target, 1)
 
 						if (!do_mob(user, target, 15))
@@ -90,7 +96,7 @@
 							return
 
 					for (var/mob/O in AIviewers(world.view, user))
-						O.show_message(text("<span class='alert'><B>[] drips something onto []!</B></span>", user, target), 1)
+						O.show_message(SPAN_ALERT("<B>[user] drips something onto [target]!</B>"), 1)
 					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)
@@ -163,8 +169,7 @@
 		. = list(
 			"curTransferAmt" = src.transfer_amount,
 			"transferMode" = transfer_mode,
-			"curReagentVol" = src.reagents.total_volume,
-			"reagentColor" = src.reagents.get_average_color().to_rgb(),
+			"reagents" = ui_describe_reagents(src),
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

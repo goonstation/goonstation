@@ -12,7 +12,7 @@
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "lamp_walp_unlit"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	deconstructable = 0
 	icon_off = "lamp_walp_unlit"
 	icon_on = "lamp_walp_lit"
@@ -29,7 +29,20 @@
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "eyelikefeathers"
 	density = 0
-	anchored = TRUE
+	anchored = ANCHORED
+
+// MISC DECOR
+
+/obj/item/decoration/photoframe
+	name = "little photo frame"
+	desc = "Someone has left the sample photo of a dog in this frame, how delightful."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "picframe_brown"
+
+	black
+		icon_state = "picframe_black"
+
+// CRITTERS
 
 /obj/critter/domestic_bee/walp_bee
 	name = "pastel bee"

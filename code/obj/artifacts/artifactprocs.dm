@@ -14,7 +14,7 @@
 	if(forceartitype)
 		picked = forceartitype
 	else
-		if (artifactweights.len == 0)
+		if (length(artifactweights) == 0)
 			return
 		picked = weighted_pick(artifactweights)
 
@@ -25,9 +25,9 @@
 		return
 
 	if (istext(forceartiorigin))
-		new type(T,forceartiorigin)
+		. = new type(T,forceartiorigin)
 	else
-		new type(T)
+		. = new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
@@ -94,8 +94,22 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
-	A.fx_image = image(src.icon, src.icon_state + "fx")
+	A.fx_image = new
+	A.fx_image.icon = src.icon
+	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
+	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
+	A.fx_image.layer = 5
+	A.fx_image.blend_mode = BLEND_ADD
+	A.fx_image.plane = PLANE_LIGHTING
+
+	A.fx_fallback = new
+	A.fx_fallback.icon = src.icon
+	A.fx_fallback.icon_state = src.icon_state + "fx"
+	A.fx_fallback.color = A.fx_image.color
+	A.fx_fallback.alpha = A.fx_image.alpha
+	A.fx_fallback.vis_flags |= VIS_INHERIT_LAYER
+	A.fx_fallback.vis_flags |= VIS_INHERIT_PLANE
 
 	A.react_mpct[1] = AO.impact_reaction_one
 	A.react_mpct[2] = AO.impact_reaction_two
@@ -127,13 +141,13 @@
 
 /obj/proc/ArtifactActivated()
 	if (!src)
-		return
+		return 1
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
 	if (A.activated)
 		return 1
-	if (A.triggers.len < 1 && !A.automatic_activation)
+	if (length(A.triggers) < 1 && !A.automatic_activation)
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
@@ -146,7 +160,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.UpdateOverlays(A.fx_image, "activated")
+		A.show_fx(src)
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -164,7 +178,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.UpdateOverlays(null, "activated")
+		A.hide_fx(src)
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()
@@ -232,9 +246,6 @@
 	return
 
 /obj/proc/Artifact_attackby(obj/item/W, mob/user)
-	if (isrobot(user))
-		src.ArtifactStimulus("silitouch", 1)
-
 	if (istype(W,/obj/item/artifact/activator_key))
 		var/obj/item/artifact/activator_key/ACT = W
 		if (!src.ArtifactSanityCheck())
@@ -248,36 +259,42 @@
 			if (K.universal || A.artitype == K.artitype)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
-					if(K.corrupting && A.faults.len < 10) // there's only so much corrupting you can do ok
+					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok
 						for(var/i=1,i<rand(1,3),i++)
 							src.ArtifactDevelopFault(100)
+					// prevent instantly adding to contents, since a bad effect happens
+					if (istype(src, /obj/item/artifact/bag_of_holding))
+						return
 				else if (A.activated)
+					if (istype(src, /obj/item/artifact/bag_of_holding) && src.storage.check_can_hold(W) == STORAGE_CAN_HOLD)
+						src.storage.add_contents(W, user)
+						return
 					src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
 		if (W:try_weld(user,0,-1,0,1))
 			src.ArtifactStimulus("heat", 800)
-			src.visible_message("<span class='alert'>[user.name] burns the artifact with [W]!</span>")
+			src.visible_message(SPAN_ALERT("[user.name] burns the artifact with [W]!"))
 			return 0
 
 	if (istype(W,/obj/item/device/light/zippo))
 		var/obj/item/device/light/zippo/ZIP = W
 		if (ZIP.on)
 			src.ArtifactStimulus("heat", 400)
-			src.visible_message("<span class='alert'>[user.name] burns the artifact with [ZIP]!</span>")
+			src.visible_message(SPAN_ALERT("[user.name] burns the artifact with [ZIP]!"))
 			return 0
 
 	if(istype(W,/obj/item/device/igniter))
 		var/obj/item/device/igniter/igniter = W
 		src.ArtifactStimulus("elec", 700)
 		src.ArtifactStimulus("heat", 385)
-		src.visible_message("<span class='alert'>[user.name] sparks against \the [src] with \the [igniter]!</span>")
+		src.visible_message(SPAN_ALERT("[user.name] sparks against \the [src] with \the [igniter]!"))
 
 	if (istype(W, /obj/item/robodefibrillator))
 		var/obj/item/robodefibrillator/R = W
 		if (R.do_the_shocky_thing(user))
 			src.ArtifactStimulus("elec", 2500)
-			src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [R]!</span>")
+			src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [R]!"))
 		return 0
 
 	if(istype(W,/obj/item/baton))
@@ -285,20 +302,20 @@
 		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
-			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
-			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_3.ogg', 100, 1)
+			src.visible_message(SPAN_ALERT("[user.name] beats the artifact with [BAT]!"))
 			BAT.process_charges(-1, user)
 			return 0
 
 	if(istype(W,/obj/item/device/flyswatter))
 		var/obj/item/device/flyswatter/swatter = W
 		src.ArtifactStimulus("elec", 1500)
-		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [swatter]!</span>")
+		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [swatter]!"))
 		return 0
 
 	if(ispulsingtool(W))
 		src.ArtifactStimulus("elec", 1000)
-		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [W]!</span>")
+		src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [W]!"))
 		return 0
 
 	if (istype(W,/obj/item/parts/robot_parts))
@@ -375,6 +392,7 @@
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
+			logTheThing(LOG_COMBAT, src, "experienced an artifact fault [F.type_name] affecting [constructTarget(user,"combat")] at [log_loc(src)]")
 			F.deploy(src,user,cosmeticSource)
 		if (halt)
 			return FAULT_RESULT_STOP
@@ -402,14 +420,14 @@
 		if("martian") // biotech, so anything that'd probably kill a living thing works on them too
 			if(stimtype == "force")
 				if (strength >= 30)
-					T.visible_message("<span class='alert'>[src] bruises from the impact!</span>")
-					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 1)
+					T.visible_message(SPAN_ALERT("[src] bruises from the impact!"))
+					playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 1)
 					ArtifactDevelopFault(33)
 					src.ArtifactTakeDamage(strength / 1.5)
 			if(stimtype == "elec")
 				if (strength >= 3000) // max you can get from the electrobox is 5000
 					if (prob(10))
-						T.visible_message("<span class='alert'>[src] seems to quiver in pain!</span>")
+						T.visible_message(SPAN_ALERT("[src] seems to quiver in pain!"))
 					src.ArtifactTakeDamage(strength / 1000)
 			if(stimtype == "radiate")
 				if (strength >= 6)
@@ -420,8 +438,8 @@
 		if("wizard") // these are big crystals, thus you probably shouldn't smack them around too hard!
 			if(stimtype == "force")
 				if (strength >= 20)
-					T.visible_message("<span class='alert'>[src] cracks and splinters!</span>")
-					playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 1)
+					T.visible_message(SPAN_ALERT("[src] cracks and splinters!"))
+					playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 
@@ -472,7 +490,7 @@
 		src.ArtifactStimulus("force", 1)
 		user.visible_message("<b>[user.name]</b> touches [src].")
 		if (istype(src.artifact,/datum/artifact))
-			if (A.touch_descriptors.len > 0)
+			if (length(A.touch_descriptors) > 0)
 				boutput(user, "[pick(A.touch_descriptors)]")
 			else
 				boutput(user, "You can't really tell how it feels.")
@@ -521,15 +539,15 @@
 	if (istype(T,/turf/))
 		switch(A.artitype.name)
 			if("ancient")
-				T.visible_message("<span class='alert'><B>[src] sparks and sputters violently before falling apart!</B></span>")
+				T.visible_message(SPAN_ALERT("<B>[src] sparks and sputters violently before falling apart!</B>"))
 			if("martian")
-				T.visible_message("<span class='alert'><B>[src] bursts open, and rapidly liquefies!</B></span>")
+				T.visible_message(SPAN_ALERT("<B>[src] bursts open, and rapidly liquefies!</B>"))
 			if("wizard")
-				T.visible_message("<span class='alert'><B>[src] shatters and disintegrates!</B></span>")
+				T.visible_message(SPAN_ALERT("<B>[src] shatters and disintegrates!</B>"))
 			if("eldritch")
-				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
+				T.visible_message(SPAN_ALERT("<B>[src] warps in on itself and vanishes!</B>"))
 			if("precursor")
-				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+				T.visible_message(SPAN_ALERT("<B>[src] implodes, crushing itself into dust!</B>"))
 
 	src.remove_artifact_forms()
 
@@ -576,9 +594,9 @@
 	if ((target && ismob(target)) && type_of_action == "weapon")
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

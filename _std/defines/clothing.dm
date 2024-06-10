@@ -1,22 +1,25 @@
 // human equipment slots
-#define SLOT_BACK 1
-#define SLOT_WEAR_MASK 2
-#define SLOT_L_HAND 4
-#define SLOT_R_HAND 5
-#define SLOT_BELT 6
-#define SLOT_WEAR_ID 7
-#define SLOT_EARS 8
-#define SLOT_GLASSES 9
-#define SLOT_GLOVES 10
-#define SLOT_HEAD 11
-#define SLOT_SHOES 12
-#define SLOT_WEAR_SUIT 13
-#define SLOT_W_UNIFORM 14
-#define SLOT_L_STORE 15
-#define SLOT_R_STORE 16
+// if the variable names of slots on human are ever changed make sure these match the new names
+#define SLOT_BACK "back"
+#define SLOT_WEAR_MASK "wear_mask"
+#define SLOT_L_HAND "l_hand"
+#define SLOT_R_HAND "r_hand"
+#define SLOT_BELT "belt"
+#define SLOT_WEAR_ID "wear_id"
+#define SLOT_EARS "ears"
+#define SLOT_GLASSES "glasses"
+#define SLOT_GLOVES "gloves"
+#define SLOT_HEAD "head"
+#define SLOT_SHOES "shoes"
+#define SLOT_WEAR_SUIT "wear_suit"
+#define SLOT_W_UNIFORM "w_uniform"
+#define SLOT_L_STORE "l_store"
+#define SLOT_R_STORE "r_store"
 //#define SLOT_W_RADIO 17
 #define SLOT_IN_BACKPACK 18
 #define SLOT_IN_BELT 19
+
+var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 
 // bitflags for clothing parts
 #define HEAD			1
@@ -27,39 +30,43 @@
 // other clothing-specific bitflags, applied via the c_flags var
 
 /// protects you from the dangers of space
-#define SPACEWEAR					1
+#define SPACEWEAR					(1<<0)
 /// mask allows internals to be used
-#define MASKINTERNALS				2
+#define MASKINTERNALS				(1<<1)
 /// covers the person's eyes
-#define COVERSEYES					4
+#define COVERSEYES					(1<<2)
 // covers the person's mouth
-#define COVERSMOUTH					8
+#define COVERSMOUTH					(1<<3)
 /// for galoshes/magic sandals/etc that prevent slipping on things
-#define NOSLIP						16
+#define NOSLIP						(1<<4)
 /// ain't got no sleeeeeves
-#define SLEEVELESS					32
+#define SLEEVELESS					(1<<5)
 /// block smoke inhalations (gas mask)
-#define BLOCKSMOKE					64
+#define BLOCKSMOKE					(1<<6)
 /// blocks choking, also a very silly flag name
-#define BLOCKCHOKE					128
+#define BLOCKCHOKE					(1<<7)
 /// is this clothing a jetpack
-#define IS_JETPACK					256
+#define IS_JETPACK					(1<<8)
 /// doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define EQUIPPED_WHILE_HELD			512
-/// return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
-#define NOT_EQUIPPED_WHEN_WORN		1024
+#define EQUIPPED_WHILE_HELD			(1<<9)
+/// unused flag
+//#define C_FLAG_UNUSED		(1<<10)
 /// if we currently have a grab (or by extention, a block) attached to us
-#define HAS_GRAB_EQUIP				2048
+#define HAS_GRAB_EQUIP				(1<<11)
 /// whether or not we should show extra tooltip info about blocking with this item
-#define BLOCK_TOOLTIP				4096
+#define BLOCK_TOOLTIP				(1<<12)
 /// block an extra point of cut damage when used to block
-#define BLOCK_CUT					8192
+#define BLOCK_CUT					(1<<13)
 /// block an extra point of stab damage when used to block
-#define BLOCK_STAB					16384
+#define BLOCK_STAB					(1<<14)
 /// block an extra point of burn damage when used to block
-#define BLOCK_BURN					32768
+#define BLOCK_BURN					(1<<15)
 /// block an extra point of blunt damage when used to block
-#define BLOCK_BLUNT					65536
+#define BLOCK_BLUNT					(1<<16)
+/// can be worn on the back
+#define ONBACK						(1<<17)
+/// can be work on the belt
+#define ONBELT						(1<<18)
 
 
 //Suit blood flags
@@ -92,3 +99,7 @@
 #define LACES_TIED 1
 #define LACES_CUT 2
 #define LACES_NONE -1
+
+//glove side for iconstate stuff
+#define GLOVE_HAS_LEFT 1
+#define GLOVE_HAS_RIGHT 2

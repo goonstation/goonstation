@@ -1,6 +1,6 @@
 /datum/random_event/major/black_hole
 	name = "Black Hole"
-	required_elapsed_round_time = 40 MINUTES
+	required_elapsed_round_time = 26.6 MINUTES
 #ifdef RP_MODE
 	disabled = 1
 #endif
@@ -29,15 +29,23 @@
 
 	New(var/loc,var/lifespan = 2.5 MINUTES)
 		..()
+
+		var/image/lighting_overlay = image(src.icon, src.icon_state)
+		lighting_overlay.plane = PLANE_SELFILLUM
+		lighting_overlay.blend_mode = BLEND_ADD
+		lighting_overlay.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+		lighting_overlay.color = list(0.2,0.1,0.1,  0.1,0.2,0.1,  0.1,0.1,0.2,  -0.03, -0.03, -0.03)
+		src.AddOverlays(lighting_overlay, "lighting_overlay")
+
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
-		//interdiction consumes several thousand units - requiring a large cell - and the interdictor makes a hell of a ruckus
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(9001))
-				playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
+		//interdiction consumes a colossal amount of power - requiring a large cell - and the interdictor makes a hell of a ruckus
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(9001,src))
+				playsound(IX,'sound/machines/alarm_a.ogg',50,FALSE,5,1.5)
 				SPAWN(3 SECONDS)
-					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
-				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
+					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,FALSE,5,1.5)
+				IX.visible_message(SPAN_ALERT("<b>[IX] emits a gravitational anomaly warning!</b>"))
 				feedings_required = rand(12,24)
 				lifespan = lifespan * 1.2
 				break
@@ -45,26 +53,27 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
-		for (var/mob/M in range(14,src))
-			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
-			shake_camera(M, 5, 16)
-		playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
+		var/turf/T = get_turf(src)
+		for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
+			boutput(C, SPAN_ALERT("The air grows heavy and thick. Something feels terribly wrong."))
+			shake_camera(C.mob, 5, 16)
+		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)
 
 		sleep(lifespan / 2)
 		if (!stable)
-			src.visible_message("<span class='alert'><b>[src] begins to collapse in on itself!</b></span>")
-			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
+			src.visible_message(SPAN_ALERT("<b>[src] begins to collapse in on itself!</b>"))
+			playsound(src,'sound/machines/engine_alert3.ogg',100,FALSE,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
 			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
 
 		sleep(lifespan)
 		if (!stable)
-			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
-			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5)
+			src.visible_message(SPAN_ALERT("<b>[src] collapses into a black hole!</b>"))
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
-			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> dissipates quietly into nothing."))
 
 		SPAWN(0)
 			qdel(src)
@@ -93,7 +102,7 @@
 		src.feedings += feed_amount
 		if (src.feedings >= src.feedings_required)
 			src.stable = 1
-			src.visible_message("<span class='notice'><b>[src] stabilizes and begins to harmlessly dissipate!</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>[src] stabilizes and begins to harmlessly dissipate!</b>"))
 			src.name = "stabilized dark anomaly"
 			src.desc = "This anomaly seems much calmer than it used to be. That's probably a good thing."
 			// letting it dispose of itself in its new proc in case we can do research on it later or something
@@ -105,7 +114,7 @@
 	icon_state = "bhole"
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -64
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -173,7 +182,7 @@
 
 				if (O.anchored)
 					if (prob(pull_prob))
-						O.anchored = 0
+						O.anchored = UNANCHORED
 				if (prob(pull_prob))
 					step_towards(O,src)
 					if (hit_strength)

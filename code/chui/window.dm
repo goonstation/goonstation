@@ -285,7 +285,7 @@ chui/window
 				var/method = href_list[ "_path" ]
 				var/id = href_list[ "_id" ]
 				if( isnull( method ) || isnull( id ) )
-					world << "FATAL: Null ID/Method for BYREQ."
+					message_coders("FATAL: Null ID/Method for BYREQ.")
 					return
 				//TODO: When JSON is included. callJSFunction( "chui.reqReturn",
 			else if( action == "click" && href_list["id"] )
@@ -315,7 +315,7 @@ chui/window
 	else
 		var/onCloseRef = winget(src, window, "on-close") //This exists to allow chui windows to work with the normal onclose.
 		var/list/split = splittext(onCloseRef, " ")		 //Unfortunately this ends up calling it twice if a window is closed by chui.
-		if(split.len >= 2) 								 //If anyone has a better solution go for it but don't just remove it because it will break things.
+		if(length(split) >= 2) 								 //If anyone has a better solution go for it but don't just remove it because it will break things.
 			var/datum/targetDatum = locate(split[2])
 			if (targetDatum)
 				targetDatum.Topic("close=1", params2list("close=1"), targetDatum)
@@ -330,9 +330,11 @@ chui/window
 
 //A chui substitute for usr << browse()
 //Mostly the same syntax.
-client/proc/Browse( var/html, var/opts, var/forceChui )
+/client/proc/Browse( var/html, var/opts, var/forceChui )
 	chui.staticinst.bbrowse( src, html, opts, forceChui )
+	var/list/params_list = params2list(opts)
+	if (params_list["window"])
+		winset(src, params_list["window"], "is-minimized=false")
 
-mob/proc/Browse( var/html, var/opts, var/forceChui )
-	if( src.client )
-		chui.staticinst.bbrowse( src.client, html, opts, forceChui )
+/mob/proc/Browse( var/html, var/opts, var/forceChui )
+	src.client?.Browse( html, opts, forceChui )

@@ -3,40 +3,53 @@
 	desc = "A leather satchel for holding things."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
-	flags = ONBELT
+	c_flags = ONBELT
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	var/maxitems = 50
-	var/list/allowed = list(/obj/item/)
+	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
+	var/list/allowed = null
+	var/list/exceptions = null //! this list are for items that are in the allowed-list for other reasons, but should not be able to be put in satchels
+	var/maximal_w_class = W_CLASS_BULKY //! the maximum weight class the satchels should be able to carry.
 	var/itemstring = "items"
 	inventory_counter_enabled = 1
+
+	HELP_MESSAGE_OVERRIDE("Click on it to pull out a random item, or click on it with <b>Grab Intent</b> to search for a specific item.")
 
 
 	New()
 		..()
+		allowed = list(/obj/item/)
+		exceptions = list()
 		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
-		var/proceed = 0
-		for(var/check_path in src.allowed)
-			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
-				proceed = 1
-				break
-		if (!proceed)
-			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
+
+		if (!src.check_valid_content(W))
+			boutput(user, SPAN_ALERT("[src] cannot hold that kind of item!"))
 			return
 
-		if (src.contents.len < src.maxitems)
-			user.u_equip(W)
-			W.set_loc(src)
-			W.dropped(user)
-			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+		if (length(src.contents) < src.maxitems)
+			var/max_stack_reached = FALSE
+			if (W.amount > 1)
+				boutput(user, SPAN_NOTICE("You begin to fill [src] with [W]."))
+				var/amount_of_stack_splits = src.split_stack_into_satchel(W, user)
+				if (amount_of_stack_splits == src.max_stack_scoop)
+					max_stack_reached = TRUE
+			else
+				boutput(user, SPAN_NOTICE("You put [W] in [src]."))
 			W.add_fingerprint(user)
-			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
+			if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+				user.u_equip(W)
+				W.set_loc(src)
+				W.dropped(user)
+			if (length(src.contents) == src.maxitems)
+				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
 			tooltip_rebuild = 1
-		else boutput(user, "<span class='alert'>[src] is full!</span>")
+		else
+			boutput(user, SPAN_ALERT("[src] is full!"))
 
 	attack_self(var/mob/user as mob)
 		if (length(src.contents))
@@ -45,7 +58,7 @@
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)
-			boutput(user, "<span class='notice'>You empty out [src].</span>")
+			boutput(user, SPAN_NOTICE("You empty out [src]."))
 			src.UpdateIcon()
 			tooltip_rebuild = 1
 		else ..()
@@ -61,22 +74,22 @@
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
-				if (src.contents.len > 1)
+				if (length(src.contents) > 1)
 					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
 
 					else
-						user.visible_message("<span class='notice'><b>[user]</b> rummages through \the [src].</span>",\
-						"<span class='notice'>You rummage through \the [src].</span>")
+						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
+						SPAN_NOTICE("You rummage through \the [src]."))
 
 						getItem = pick(src.contents)
 
-				else if (src.contents.len == 1)
+				else if (length(src.contents) == 1)
 					getItem = src.contents[1]
 
 				if (getItem)
-					user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
-					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
+					user.visible_message(SPAN_NOTICE("<b>[user]</b> takes \a [getItem.name] out of \the [src]."),\
+					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
 					user.put_in_hand_or_drop(getItem)
 					src.UpdateIcon()
 			tooltip_rebuild = 1
@@ -88,8 +101,8 @@
 			return
 
 		// attack_hand does all the checks for if you can do this
-		user.visible_message("<span class='notice'><b>[user]</b> looks through through \the [src]...</span>",\
-		"<span class='notice'>You look through \the [src].</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through \the [src]..."),\
+		SPAN_NOTICE("You look through \the [src]."))
 		var/list/satchel_contents = list()
 		var/list/has_dupes = list()
 		var/temp = ""
@@ -107,47 +120,93 @@
 				temp = "[I.name]"
 				satchel_contents += temp
 				satchel_contents[temp] = I
-		satchel_contents = sortList(satchel_contents)
+		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
-		if (!chosenItem)
+		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
 			return
 		return satchel_contents[chosenItem]
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			var/obj/item/W = O
-			if(istype(O, check_path) && W.w_class < W_CLASS_BULKY)
+			if(istype(O, check_path) && W.w_class < src.maximal_w_class)
 				proceed = 1
 				break
+		if (proceed && length(src.exceptions) > 0)
+			for(var/check_path in src.exceptions)
+				var/obj/item/checked_item = O
+				if(istype(checked_item, check_path))
+					proceed = 0
+					break
 		if (!proceed)
-			boutput(user, "<span class='alert'>\The [src] can't hold that kind of item.</span>")
+			boutput(user, SPAN_ALERT("\The [src] can't hold that kind of item."))
 			return
 
-		if (src.contents.len < src.maxitems)
-			user.visible_message("<span class='notice'>[user] begins quickly filling \the [src].</span>")
+		if (length(src.contents) < src.maxitems)
+			user.visible_message(SPAN_NOTICE("[user] begins quickly filling \the [src]."))
 			var/staystill = user.loc
 			var/interval = 0
 			for(var/obj/item/I in view(1,user))
-				if (!matches(I, O)) continue
+				if (!matches(I, O) || QDELETED(I)) continue
 				if (I in user)
 					continue
-				I.set_loc(src)
+				var/max_stack_reached = FALSE
+				if (I.amount > 1)
+					var/amount_of_stack_splits = src.split_stack_into_satchel(I, user)
+					if (amount_of_stack_splits == src.max_stack_scoop)
+						max_stack_reached = TRUE
 				I.add_fingerprint(user)
+				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+					I.set_loc(src)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
-				if (src.contents.len >= src.maxitems)
-					boutput(user, "<span class='notice'>\The [src] is now full!</span>")
+				if (length(src.contents) >= src.maxitems)
+					boutput(user, SPAN_NOTICE("\The [src] is now full!"))
 					break
-			boutput(user, "<span class='notice'>You finish filling \the [src].</span>")
-		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
+			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
+		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 		src.UpdateIcon()
 		tooltip_rebuild = 1
+
+	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
+		// This proc splits an object with multiple stacks and stuff it into the satchel until either
+		// The satchel is full
+		// all but the origin item of the stack is in the satchel
+		// the safety-amount of items were stuffed to prevent laggs.
+		// The proc returns the amount of times splits were created and stuffed
+		if (!(item_to_split) || (item_to_split.amount <= 1))
+			return 0
+		var/increment = 0
+		//since we need to add additional manipulation to the item in hand, we won't touch the last item here
+		var/amount_of_stack_splits = min(src.maxitems - length(src.contents), item_to_split.amount - 1, src.max_stack_scoop)
+		for (increment = 0, increment < amount_of_stack_splits, increment++)
+			var/obj/item/splitted_stack = item_to_split.split_stack(1)
+			splitted_stack.set_loc(src)
+			if (user)
+				splitted_stack.add_fingerprint(user)
+		return amount_of_stack_splits
+
+	proc/check_valid_content(var/obj/item/item_to_check)
+		// this proc checks if an item is able to be added to the satchel
+		// returns TRUE when it is able to be stuffed, returns FALSE when it is unable to
+		var/proceed = FALSE
+		for(var/check_path in src.allowed)
+			if(istype(item_to_check, check_path) && item_to_check.w_class < src.maximal_w_class)
+				proceed = TRUE
+				break
+		if (proceed && length(src.exceptions) > 0)
+			for(var/check_path in src.exceptions)
+				if(istype(item_to_check, check_path))
+					proceed = FALSE
+					break
+		return proceed
+
 
 	proc/matches(atom/movable/inserted, atom/movable/template)
 		. = istype(inserted, template.type)
@@ -155,7 +214,7 @@
 	update_icon()
 
 		var/perc
-		if (src.contents.len > 0 && src.maxitems > 0)
+		if (length(src.contents) > 0 && src.maxitems > 0)
 			perc = (src.contents.len / src.maxitems) * 100
 		else
 			perc = 0
@@ -186,23 +245,30 @@
 		name = "produce satchel"
 		desc = "A leather satchel for carrying around crops and seeds."
 		icon_state = "hydrosatchel"
-		allowed = list(/obj/item/seed,
-		/obj/item/plant,
-		/obj/item/reagent_containers/food/snacks,
-		/obj/item/organ,
-		/obj/item/clothing/head/butt,
-		/obj/item/parts/human_parts/arm,
-		/obj/item/parts/human_parts/leg,
-		/obj/item/raw_material/cotton,
-		/obj/item/feather)
+
 		itemstring = "items of produce"
+
+		New()
+			..()
+			allowed = list(/obj/item/seed,
+			/obj/item/plant,
+			/obj/item/clothing/head/flower,
+			/obj/item/reagent_containers/food/snacks,
+			/obj/item/organ,
+			/obj/item/clothing/head/butt,
+			/obj/item/parts/human_parts/arm,
+			/obj/item/parts/human_parts/leg,
+			/obj/item/raw_material/cotton,
+			/obj/item/feather,
+			/obj/item/bananapeel)
+			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()
 			if(. && istype(template, /obj/item/seed))
 				var/obj/item/seed/inserted_seed = inserted
 				var/obj/item/seed/template_seed = template
-				. = (inserted_seed.planttype.type == template_seed.planttype.type) && \
+				. = (inserted_seed.planttype?.type == template_seed.planttype?.type) && \
 					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
 		large
@@ -214,8 +280,11 @@
 		name = "mining satchel"
 		desc = "A leather satchel for holding various ores."
 		icon_state = "miningsatchel"
-		allowed = list(/obj/item/raw_material/)
 		itemstring = "ores"
+
+		New()
+			..()
+			allowed = list(/obj/item/raw_material/)
 
 		large
 			name = "large mining satchel"
@@ -227,15 +296,27 @@
 			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding ores."
 			maxitems = 500
 
+	mail
+		name = "mail bag"
+		desc = "A leather bag for holding mail. It's totally not just a produce/mining satchel!"
+		icon_state = "mailsatchel"
+		itemstring = "mail"
+
+		New()
+			..()
+			allowed = list(/obj/item/random_mail)
 
 	figurines
 		name = "figurine case"
 		desc = "A cool plastic case for storing little figurines!"
 		icon_state = "figurinecase"
 		maxitems = 30
-		allowed = list(/obj/item/toy/figure)
 		flags = null
 		w_class = W_CLASS_NORMAL
+
+		New()
+			..()
+			allowed = list(/obj/item/toy/figure)
 
 		update_icon()
 
@@ -266,13 +347,13 @@
 		// clicky open close
 		proc/open_it_up(var/open)
 			if (open && icon_state == "figurinecase")
-				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
+				playsound(src, 'sound/misc/lightswitch.ogg', 50, pitch = 1.2)
 				icon_state = "figurinecase-open"
 				sleep(0.4 SECONDS)
 
 			else if (!open && icon_state == "figurinecase-open")
 				sleep(0.5 SECONDS)
-				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
+				playsound(src, 'sound/misc/lightswitch.ogg', 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
 /obj/item/satchel/figurines/full

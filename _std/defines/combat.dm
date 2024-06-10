@@ -37,8 +37,8 @@
 // Locker health values
 
 #define LOCKER_HEALTH_WEAK		100
-#define LOCKER_HEALTH_AVERAGE	200
-#define LOCKER_HEALTH_STRONG	300
+#define LOCKER_HEALTH_AVERAGE	150
+#define LOCKER_HEALTH_STRONG	200
 
 // Extendable baton states
 #define EXTENDO_BATON_CLOSED_AND_OFF 1

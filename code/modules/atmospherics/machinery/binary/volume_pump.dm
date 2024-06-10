@@ -1,140 +1,159 @@
-/*
-Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+/// Shoves transfer_rate volume of gas from air1 to air2
+/// Max volume flow rate.
+#define MAX_VOLUME 1000
 
-node1, air1, network1 correspond to input
-node2, a//ir2, network2 correspond to output
-
-Thus, the two variables affect pump operation are set in New():
-	air1.volume
-		This is the volume of gas available to the pump that may be transfered to the output
-	air2.volume
-		Higher quantities of this cause more air to be perfected later
-			but overall network volume is also increased as this increases...
-*/
-
-obj/machinery/atmospherics/binary/volume_pump
-	icon = 'icons/obj/atmospherics/volume_pump.dmi'
-	icon_state = "intact_off"
-
+/obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
 	desc = "A pump"
+	icon = 'icons/obj/atmospherics/volume_pump.dmi'
+	icon_state = "off-map"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
-	var/on = 0
+	var/on = FALSE
 	var/transfer_rate = 200
 
-	var/frequency = 0
+	/// Radio frequency to operate on.
+	var/frequency = null
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 	var/datum/pump_ui/volume_pump_ui/ui
 
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+/obj/machinery/atmospherics/binary/volume_pump/New()
+	..()
+	if(src.frequency)
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
-	update_icon()
-		if(node1&&node2)
-			icon_state = "intact_[on?("on"):("off")]"
-		else
-			if(node1)
-				icon_state = "exposed_1_off"
-			else if(node2)
-				icon_state = "exposed_2_off"
-			else
-				icon_state = "exposed_3_off"
-			on = 0
+/obj/machinery/atmospherics/binary/volume_pump/update_icon()
+	if(!(node1&&node2))
+		src.on = FALSE
 
-		return
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
-	process()
-		..()
-		if(!on)
-			return 0
+/obj/machinery/atmospherics/binary/volume_pump/process()
+	..()
+	if(!on)
+		return FALSE
 
-		var/transfer_ratio = max(1, transfer_rate/air1.volume)
+	var/transfer_ratio = max(1, transfer_rate/air1.volume)
 
-		var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-		air2.merge(removed)
+	air2.merge(removed)
 
-		network1?.update = 1
+	network1?.update = TRUE
+	network2?.update = TRUE
 
-		network2?.update = 1
+	return TRUE
 
-		return 1
+/obj/machinery/atmospherics/binary/volume_pump/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
 
-	proc/broadcast_status()
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
+	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
+	signal.data["device"] = "APV"
+	signal.data["power"] = src.on
+	signal.data["transfer_rate"] = src.transfer_rate
 
-		signal.data["tag"] = id
-		signal.data["device"] = "APV"
-		signal.data["power"] = on
-		signal.data["transfer_rate"] = transfer_rate
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	return TRUE
 
-		return 1
+/obj/machinery/atmospherics/binary/volume_pump/initialize()
+	..()
+	src.ui = new/datum/pump_ui/volume_pump_ui(src)
 
-	initialize()
-		..()
-		ui = new/datum/pump_ui/volume_pump_ui(src)
+/obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
-	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
-			return 0
+	switch(signal.data["command"])
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS)
+				broadcast_status()
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
+		if("power_on")
+			src.on = TRUE
+			. = TRUE
 
-			if("power_off")
-				on = 0
+		if("power_off")
+			src.on = FALSE
+			. = TRUE
 
-			if("power_toggle")
-				on = !on
+		if("power_toggle")
+			src.on = !on
+			. = TRUE
 
-			if("set_transfer_rate")
-				var/number = text2num_safe(signal.data["parameter"])
-				number = clamp(number, 0, air1.volume)
+		if("set_transfer_rate")
+			var/number = text2num_safe(signal.data["parameter"])
 
-				transfer_rate = number
+			src.transfer_rate = clamp(number, 0, MAX_VOLUME)
+			. = TRUE
 
-		if(signal.data["tag"])
-			SPAWN(0.5 SECONDS) broadcast_status()
-		UpdateIcon()
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
+			help.data["info"] = "Command help. \
+									power_on - Turns on pump. \
+									power_off - Turns off pump. \
+									power_toggle - Toggles pump. \
+									set_transfer_rate (parameter: Number) - Sets transfer rate in liters to parameter. Max at [MAX_VOLUME] L."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+	if(.)
+		src.UpdateIcon()
+		flick("alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
+
+/obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		ui.show_ui(user)
 
-datum/pump_ui/volume_pump_ui
+/obj/machinery/atmospherics/binary/volume_pump/active
+	icon_state = "on-map"
+	on = TRUE
+
+/datum/pump_ui/volume_pump_ui
 	value_name = "Flow Rate"
 	value_units = "L/s"
 	min_value = 0
-	max_value = 1000
+	max_value = MAX_VOLUME
 	incr_sm = 10
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/volume_pump/our_pump
 
-datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/our_pump)
+/datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/our_pump)
 	..()
 	src.our_pump = our_pump
 	src.pump_name = our_pump.name
 
-datum/pump_ui/volume_pump_ui/set_value(val)
+/datum/pump_ui/volume_pump_ui/set_value(val)
 	our_pump.transfer_rate = val
 	our_pump.UpdateIcon()
 
-datum/pump_ui/volume_pump_ui/toggle_power()
+/datum/pump_ui/volume_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
 	our_pump.UpdateIcon()
 
-datum/pump_ui/volume_pump_ui/is_on()
+/datum/pump_ui/volume_pump_ui/is_on()
 	return our_pump.on
 
-datum/pump_ui/volume_pump_ui/get_value()
+/datum/pump_ui/volume_pump_ui/get_value()
 	return our_pump.transfer_rate
 
-datum/pump_ui/volume_pump_ui/get_atom()
+/datum/pump_ui/volume_pump_ui/get_atom()
 	return our_pump
+
+#undef MAX_VOLUME

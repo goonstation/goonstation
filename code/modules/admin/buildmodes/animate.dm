@@ -11,10 +11,15 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_buff_out,
 		/proc/animate_fade_grayscale,
 		/proc/animate_fade_from_grayscale,
+		/proc/animate_fade_from_drug_1,
+		/proc/animate_fade_from_drug_2,
+		/proc/animate_fade_drug_inbetween_1,
+		/proc/animate_fade_drug_inbetween_2,
 		/proc/animate_melt_pixel,
 		/proc/animate_explode_pixel,
 		/proc/animate_weird,
 		/proc/animate_door_squeeze,
+		/proc/animate_smush,
 		/proc/animate_flockdrone_item_absorb,
 		/proc/animate_flock_convert_complete,
 		/proc/animate_flock_drone_split,
@@ -51,9 +56,11 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_teleport_wiz,
 		/proc/animate_rainbow_glow_old,
 		/proc/animate_rainbow_glow,
+		/proc/oscillate_colors,
 		/proc/animate_fade_to_color_fill,
 		/proc/animate_flash_color_fill,
 		/proc/animate_flash_color_fill_inherit,
+		/proc/animate_flubber,
 		/proc/animate_clownspell,
 		/proc/animate_wiggle_then_reset,
 		/proc/animate_blink,
@@ -74,7 +81,10 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_glitchy_fuckup2,
 		/proc/animate_glitchy_fuckup3,
 		/proc/showswirl,
+		/proc/showswirl_out,
+		/proc/showswirl_error,
 		/proc/leaveresidual,
+		/proc/showlightning_bolt,
 		/proc/leavepurge,
 		/proc/leavescan,
 		/proc/sponge_size,
@@ -96,7 +106,10 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_bouncy,
 		/proc/animate_wave,
 		/proc/animate_ripple,
-		/proc/animate_stomp
+		/proc/animate_stomp,
+		/proc/spawn_beam,
+		/proc/animate_orbit,
+		/proc/animate_juggle
 	)
 
 	New()
@@ -105,7 +118,7 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		update_button_text("Animate")
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		var/animationpick = input("Select animation.", "anim8", null) in animations
+		var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", animations)
 		if (animationpick)
 			animation = animationpick
 			update_button_text("Animate: [animationpick]")

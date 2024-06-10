@@ -50,7 +50,8 @@
 	var/power = 5 //Damage to asteroid tiles.
 	var/hit_sound = 'sound/items/mining_drill.ogg'
 
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -268,7 +269,7 @@
 /obj/item/mining_tools/drill
 	name = "Mining Drill"
 	desc = "A mining drill. Has a long range."
-	icon_state = "lasdrill"
+	icon_state = "lasdrill-old"
 	item_state = "drill"
 	hit_sound = 'sound/items/mining_drill.ogg'
 

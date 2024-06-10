@@ -49,8 +49,6 @@
 	icon_state = "2-5"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-9"
 	},
 /turf/simulated/floor/plating,
@@ -63,8 +61,6 @@
 	icon_state = "6-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "8-10"
 	},
 /turf/simulated/floor/plating,
@@ -74,8 +70,6 @@
 	icon_state = "4-10"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-6"
 	},
 /turf/simulated/floor/plating,
@@ -97,8 +91,6 @@
 	icon_state = "2-9"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-5"
 	},
 /turf/simulated/floor/plating,
@@ -123,13 +115,9 @@
 /area/dmm_suite/clear_area)
 "Z" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-9"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-5"
 	},
 /obj/cable{

@@ -4,7 +4,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, NumberInput, LabeledList, Input, Section, Tooltip } from '../components';
+import { Box, Button, Flex, Input, LabeledList, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export const GimmickObject = (props, context) => {
@@ -23,13 +23,7 @@ export const GimmickObject = (props, context) => {
       width={675}
       height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Edit Interactive Steps
-            </Box>
-          }>
+        <Section title="Edit Interactive Steps">
           <Flex direction="column">
             {Object.keys(eventList).map((event, eventIndex) => (
               <Flex.Item key={eventIndex}>

@@ -52,7 +52,7 @@
 /obj/stagebutton
 	name = "Gauntlet Staging Button"
 	desc = "By pressing this button, you begin the staging process. No more new attendees will be accepted."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/effects/VR.dmi'
@@ -62,7 +62,7 @@
 		if (gauntlet_controller.state != 0)
 			return
 		if (ticker.round_elapsed_ticks < 3000)
-			boutput(usr, "<span class='alert'>You may not initiate the Gauntlet before 5 minutes into the round.</span>")
+			boutput(usr, SPAN_ALERT("You may not initiate the Gauntlet before 5 minutes into the round."))
 			return
 		if (alert("Start the Gauntlet? No more players will be given admittance to the staging area!",, "Yes", "No") == "Yes")
 			if (gauntlet_controller.state != 0)
@@ -254,6 +254,12 @@
 							qdel(C)
 						else
 							live++
+					for (var/mob/living/critter/C in gauntlet)
+						if (isdead(C))
+							showswirl(get_turf(C))
+							qdel(C)
+						else
+							live++
 					if (!live)
 						finishWave()
 					for (var/mob/living/M in gauntlet)
@@ -285,7 +291,8 @@
 				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
-		statlog_gauntlet(moblist_names, score, current_level)
+		var/datum/eventRecord/GauntletHighScore/gauntletHighScoreEvent = new()
+		gauntletHighScoreEvent.send(moblist_names, score, current_level)
 
 		SPAWN(0)
 			for (var/obj/item/I in staging)
@@ -295,6 +302,8 @@
 			for (var/obj/artifact/A in gauntlet)
 				qdel(A)
 			for (var/obj/critter/C in gauntlet)
+				qdel(C)
+			for (var/mob/living/critter/C in gauntlet)
 				qdel(C)
 			for (var/obj/machinery/bot/B in gauntlet)
 				qdel(B)
@@ -471,6 +480,8 @@
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)
 			qdel(E)
+		for(var/obj/item/material_piece/M in gauntlet)
+			qdel(M)
 
 		current_level++
 		current_waves.len = 0
@@ -540,7 +551,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	invisibility = INVIS_ALWAYS
 	name = "Observable"
 	desc = "observable"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/misc/buildmode.dmi'
@@ -555,16 +566,16 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
 			src.cam.network = cam_network
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	gauntlet
-		name = "The Gauntlet Arena"
-		has_camera = 1
-		cam_network = "Zeta"
+/obj/observable/gauntlet
+	name = "The Gauntlet Arena"
+	has_camera = 1
+	cam_network = "public"
 
 /datum/gauntletDrop
 	var/name = "Drop"
@@ -680,13 +691,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		supplies = list(/obj/item/gun/kinetic/hunting_rifle)
 
 	ak47
-		name = "An AK47"
+		name = "An AKM"
 		point_cost = -2
 		minimum_level = 45
 		min_percent = 0.25
 		max_percent = 0.5
 		max_amount = 1
-		supplies = list(/obj/item/gun/kinetic/ak47)
+		supplies = list(/obj/item/gun/kinetic/akm)
 
 	bfg
 		name = "The BFG"
@@ -780,7 +791,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 	proc/setUp()
 	proc/process()
-	proc/onSpawn(var/obj/critter/C)
+	proc/onSpawn(var/atom/movable/C)
 	proc/tearDown()
 
 	barricade
@@ -819,7 +830,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.HealDamage("All", 5, 5)
-					//boutput(M, "<span class='notice'>A soothing wave of energy washes over you!</span>")
+					//boutput(M, SPAN_NOTICE("A soothing wave of energy washes over you!"))
 				counter = 10
 
 		tearDown()
@@ -866,7 +877,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				M.bodytemperature = T0C + 120
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
-						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
+						boutput(M, SPAN_ALERT("You spontaneously combust!"))
 					M.changeStatus("burning", 7 SECONDS)
 
 		tearDown()
@@ -893,7 +904,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			if (prob(20))
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.TakeDamage("chest", 1, 0, 0, DAMAGE_CUT)
-					//boutput(M, "<span class='alert'>The void tears at you!</span>")
+					//boutput(M, SPAN_ALERT("The void tears at you!"))
 					// making the zone name a bit more obvious and making its spam chatbox less - ISN
 
 		tearDown()
@@ -910,7 +921,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			for (var/obj/adventurepuzzle/triggerable/light/gauntlet/G in gauntlet_controller.gauntlet)
 				G.off()
 
-		onSpawn(var/obj/critter/C)
+		onSpawn(var/atom/movable/C)
 			var/datum/light/light = new /datum/light/point
 			light.set_brightness(0.4)
 			light.set_height(0.5)
@@ -998,7 +1009,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /obj/zapdummy
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /datum/gauntletWave
@@ -1013,13 +1024,24 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/turf/T = pick(gauntlet_controller.spawnturfs)
 			var/crit_type = pick(types)
 			showswirl(T)
-			var/obj/critter/C = new crit_type(T)
-			C.health *= health_multiplier
-			C.aggressive = 1
-			C.defensive = 1
-			C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+			var/atom/mob_or_critter = new crit_type(T)
+			if(iscritter(mob_or_critter))
+				var/obj/critter/C = mob_or_critter
+				C.health *= health_multiplier
+				C.aggressive = 1
+				C.defensive = 1
+				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+			else if (isliving(mob_or_critter))
+				var/mob/living/critter/C = mob_or_critter
+				C.health *= health_multiplier //for critters that don't user health holders
+				for(var/damage_key in C.healthlist) //for critters that do
+					var/datum/healthHolder/HH = C.healthlist[damage_key]
+					HH.maximum_value *= health_multiplier
+					HH.value *= health_multiplier
+			else
+				CRASH("Gauntlet tried to spawn [identify_object(mob_or_critter)], but only /mob/living or /obj/critter are allowed.")
 			if (ev)
-				ev.onSpawn(C)
+				ev.onSpawn(mob_or_critter)
 			count--
 		if (count < 1)
 			count = initial(count)
@@ -1030,49 +1052,49 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/mimic)
+		types = list(/mob/living/critter/mimic/virtual)
 
 	meaty
 		name = "Meat Thing"
 		point_cost = 1
 		count = 2
-		types = list(/obj/critter/blobman/meaty_martha)
+		types = list(/mob/living/critter/blobman/meat)
 
 	martian
 		name = "Martian"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/martian)
+		types = list(/mob/living/critter/martian)
 
 	soldier
 		name = "Martian Soldier"
 		point_cost = 3
 		count = 4
-		types = list(/obj/critter/martian/soldier)
+		types = list(/mob/living/critter/martian/soldier)
 
 	warrior
 		name = "Martian Warrior"
 		point_cost = 3
 		count = 2
-		types = list(/obj/critter/martian/warrior)
+		types = list(/mob/living/critter/martian/warrior)
 
 	mutant
 		name = "Martian Mutant"
 		point_cost = 5
 		count = 0.05
-		types = list(/obj/critter/martian/psychic)
+		types = list(/mob/living/critter/martian/mutant)
 
 	martian_assorted
 		name = "Martian Assortment"
 		point_cost = 6
 		count = 12
-		types = list(/obj/critter/martian/soldier, /obj/critter/martian/soldier, /obj/critter/martian/soldier, /obj/critter/martian/warrior)
+		types = list(/mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/warrior)
 
 	bear
 		name = "Bear"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/bear)
+		types = list(/mob/living/critter/bear)
 
 	tomato
 		name = "Killer Tomato"
@@ -1114,13 +1136,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Skeleton"
 		point_cost = 3
 		count = 5
-		types = list(/obj/critter/magiczombie)
+		types = list(/mob/living/critter/skeleton)
 
 	zombie
 		name = "Zombie"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/zombie)
+		types = list(/mob/living/critter/zombie)
 
 	micromen
 		name = "Micro Man"
@@ -1132,101 +1154,98 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Spider Baby"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/baby)
+		types = list(/mob/living/critter/spider/baby)
 
 	spidericebaby
 		name = "Ice Spider Baby"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/ice/baby)
+		types = list(/mob/living/critter/spider/ice/baby)
 
 	spider
 		name = "Spider"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider)
+		types = list(/mob/living/critter/spider)
 
 	spiderice
 		name = "Ice Spider"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/ice)
+		types = list(/mob/living/critter/spider/ice)
 
 	spiderqueen
 		name = "Ice Spider Queen"
 		point_cost = 8
 		count = 0.05
-		types = list(/obj/critter/spider/ice/queen)
+		types = list(/mob/living/critter/spider/ice/queen)
 
 	spacerachnid
 		name = "Space Arachnid"
 		point_cost = 3
 		count = 2
-		types = list(/obj/critter/spider/spacerachnid)
+		types = list(/mob/living/critter/spider/spacerachnid)
 
 	ohfuckspiders
 		name = "OH FUCK SPIDERS"
 		point_cost = 8
 		count = 7
-		types = list(/obj/critter/spider,/obj/critter/spider/baby,/obj/critter/spider/ice,/obj/critter/spider/ice/baby)
+		types = list(/mob/living/critter/spider,/mob/living/critter/spider/baby,/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby)
 
 	brullbar
 		name = "Brullbar"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/brullbar)
+		types = list(/mob/living/critter/brullbar)
 
 	brullbarking
 		name = "Brullbar King"
 		point_cost = 6
 		count = 0.05
-		types = list(/obj/critter/brullbar/king)
+		types = list(/mob/living/critter/brullbar/king)
 
 	badbot
 		name = "Security Zapbot"
 		point_cost = 2
 		count = 2
-		types = list(/obj/critter/ancient_repairbot/grumpy)
+		types = list(/mob/living/critter/robotic/repairbot)
 
 	fermid
 		name = "Fermid"
 		point_cost = 3
 		count = 3
-		types = list(/obj/critter/fermid)
+		types = list(/mob/living/critter/fermid)
 
 	lion
 		name = "Lion"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/lion)
+		types = list(/mob/living/critter/lion)
 
 	maneater
 		name = "Man Eater"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/maneater)
+		types = list(/mob/living/critter/plant/maneater)
 
 	fallback
 		name = "Floating Eyes"
 		point_cost = 0.01
 		count = 10
-		types = list(/obj/critter/floateye)
+		types = list(/mob/living/critter/small_animal/floateye)
 
-/proc/queryGauntletMatches(data)
-	if (islist(data) && data["data_hub_callback"])
-		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
-		for (var/userkey in data["keys"])
-			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
-			var/matches = data[userkey]
-			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
-			var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[userkey]") in world
-			if (G && istype(G))
-				G.SetMatchCount(text2num(matches))
-			else
-				logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
-				return 1
+/proc/queryGauntletMatches(key)
+	var/datum/apiModel/PreviousGauntlets/previousGauntlets
+	try
+		var/datum/apiRoute/gauntlet/getprevious/getPreviousGauntlets = new
+		getPreviousGauntlets.queryParams = list("key" = key)
+		previousGauntlets = apiHandler.queryAPI(getPreviousGauntlets)
+	catch
+		return FALSE
 
+	var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[key]") in world
+	if (G && istype(G))
+		G.SetMatchCount(previousGauntlets.gauntlets_completed)
 	else
-		var/list/query = list()
-		query["key"] = data
-		apiHandler.queryAPI("gauntlet/getPrevious", query)
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[key]'.")
+		return FALSE

@@ -7,57 +7,51 @@
 	organ_name = "lung"
 	desc = "Inflating meat airsacks that pass breathed oxygen into a person's blood and expels carbon dioxide back out. Hopefully whoever used to have these doesn't need them anymore."
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 2
+	icon = 'icons/obj/items/organs/lung.dmi'
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
-	var/temp_tolerance = T0C+66
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING | SURGERY_SAWING
+	region = RIBS
+	var/temp_tolerance = DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_max = 0.4
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
+	var/n2o_para_min = 1
+	var/n2o_sleep_min = 5
 	var/fart_smell_min = 0.69 // don't ask ~warc
 	var/fart_vomit_min = 6.9
 	var/fart_choke_min = 16.9
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
 
+	attach_organ(mob/living/carbon/M, mob/user)
+		. = ..()
+		if (M.traitHolder?.hasTrait("plasmalungs") && src.breaths_oxygen)
+			src.broken = TRUE
+
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
 		if (body_side == L_ORGAN)
-			if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		else
-			if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
-	on_transplant(var/mob/M as mob)
-		..()
-		if (src.robotic)
-			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
-			src.donor.add_stam_mod_max(icon_state, 10)
-		return
-
-	on_removal()
-		if (donor)
-			if (src.robotic)
-				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
-				src.donor.remove_stam_mod_max(icon_state)
-		..()
-		return
-
 	// on_broken()
 	// 	if (body_side == L_ORGAN)
-	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 	// 	else
-	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
-	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	///Return value indicates whether we have enough oxygen to breathe
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
+		. = FALSE
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
@@ -69,6 +63,7 @@
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/breath_moles)*breath_pressure
 		var/FARD_pp = (breath.farts/breath_moles)*breath_pressure
+		var/Radgas_pp = (breath.radgas/breath_moles)*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
@@ -86,6 +81,7 @@
 					donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
 				update.show_oxy_indicator = TRUE
 			else 									// We're in safe limits
+				. = TRUE
 				donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
 				oxygen_used = breath.oxygen/6
 
@@ -95,10 +91,10 @@
 		if (CO2_pp > safe_co2_max)
 			if (!donor.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				donor.co2overloadtime = world.time
-			else if (world.time - donor.co2overloadtime > 120)
-				donor.changeStatus("paralysis", 4 SECONDS * mult/LUNG_COUNT)
+			else if (world.time - donor.co2overloadtime > 12 SECONDS)
+				donor.changeStatus("unconscious", 4 SECONDS * mult/LUNG_COUNT)
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
-				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
+				if (world.time - donor.co2overloadtime > 30 SECONDS) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
 			if (probmult(20)) // Lets give them some chance to know somethings not right though I guess.
 				update.emotes |= "cough"
@@ -110,41 +106,44 @@
 			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
 			update.show_tox_indicator = TRUE
 
-		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
-			if(SA)
-				var/SA_pp = (SA.moles/max(TOTAL_MOLES(breath),1))*breath_pressure
-				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
-					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						donor.sleeping = max(donor.sleeping, 2)
-				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (probmult(20))
-						update.emotes |= pick("giggle", "laugh")
+		if (Radgas_pp > 0) //any fallout is too much fallout
+			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT, internal=TRUE) //not a lethal dose in one second tho
+			breath.radgas *= 0.5 //lets say you keep half of it in your lungs.
+
+		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
+		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
+			donor.changeStatus("unconscious", 5 SECONDS/LUNG_COUNT)
+			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
+				donor.sleeping = max(donor.sleeping, 2)
+		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			if (probmult(20))
+				update.emotes |= pick("giggle", "laugh")
+		breath.nitrogen += breath.nitrous_oxide //it gets converted to nitrogen via magic. I'm no biochemist.
+		breath.nitrous_oxide = 0
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
-			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+			boutput(donor, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
 			if ((FARD_pp > fart_vomit_min) && prob(50))
-				donor.visible_message("<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-				donor.vomit()
+				var/vomit_message = SPAN_NOTICE("[donor] vomits from the [pick("stink","stench","awful odor")]!!")
+				donor.vomit(0, null, vomit_message)
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))
 				update.emotes |= "cough"
 				if (prob(30))
-					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
+					boutput(donor, SPAN_ALERT("Oh god it's so bad you could choke to death in here!"))
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
 			if(prob(20))
-				boutput(donor, "<span class='alert'>This air is searing hot!</span>")
+				boutput(donor, SPAN_ALERT("This air is searing hot!"))
 				if (prob(80))
 					holder.damage_organ(0, lung_burn + 6, 0, organ_holder_name)
 
 			update.show_fire_indicator = TRUE
 			if (prob(4))
-				boutput(donor, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
+				boutput(donor, SPAN_ALERT("Your lungs hurt like hell! This can't be good!"))
 
 
 	disposing()
@@ -154,51 +153,6 @@
 			if (holder.right_lung == src)
 				holder.right_lung = null
 		..()
-
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		/* Overrides parent function to handle special case for attaching lungs. */
-		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
-
-		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2)
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-			var/target_organ_location = null
-
-			if (user.find_in_hand(src, "right"))
-				target_organ_location = "right"
-			else if (user.find_in_hand(src, "left"))
-				target_organ_location = "left"
-			else if (!user.find_in_hand(src))
-				// Organ is not in the attackers hand. This was likely a drag and drop. If you're just tossing an organ at a body, where it lands will be imprecise
-				target_organ_location = pick("right", "left")
-
-			if (target_organ_location == "right" && !H.organHolder.right_lung)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_lung", 2)
-				H.update_body()
-			else if (target_organ_location == "left" && !H.organHolder.left_lung)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_lung", 2)
-				H.update_body()
-			else
-				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
-				return 0
-
-			return 1
-		return 0
 
 /obj/item/organ/lung/left
 	name = "left lung"
@@ -218,15 +172,17 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
+TYPEINFO(/obj/item/organ/lung/cyber)
+	mats = 6
+
 /obj/item/organ/lung/cyber
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
 	icon_state = "cyber-lungs_L"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
 	var/grace_period = 30
@@ -292,18 +248,28 @@
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
+	safe_co2_max = INFINITY
 
 	New()
 		..()
 		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
+
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
+		breath.carbon_dioxide /= 2
+		breath.oxygen += breath.carbon_dioxide
+		. = ..()
+		breath.oxygen += breath.carbon_dioxide
+		breath.carbon_dioxide = 0
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"
 	organ_name = "synthlung_L"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
 	New()
 		..()
 		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
@@ -313,8 +279,10 @@
 	organ_name = "synthlung_R"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
 	New()
 		..()
 		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")
@@ -342,7 +310,7 @@
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
-	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = ..()
 		var/safe_oxygen_max = 0.4
 
@@ -398,7 +366,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 
-/datum/organ/lung/status
+/datum/organ_status/lung
 	var/show_oxy_indicator = FALSE
 	var/show_tox_indicator = FALSE
 	var/show_fire_indicator = FALSE

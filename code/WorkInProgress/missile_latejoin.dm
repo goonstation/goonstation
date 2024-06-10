@@ -4,14 +4,14 @@
 /obj/arrival_missile
 	name = "human capsule missile"
 	desc = "A great way to deliver humans to a research station. Trust me."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "arrival_missile"
 	bound_width = 32
 	bound_height = 64
 	layer = 30
-	flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	dir = NORTH
 	var/move_dir = NORTH
 	var/moved_on_flooring = 0
@@ -52,11 +52,9 @@
 		sent.set_loc(src)
 		if(d)
 			src.update_dir(d)
-		if(passenger)
-			passenger << 'sound/effects/bamf.ogg'
+		passenger?.playsound_local_not_inworld('sound/effects/bamf.ogg', 100)
 		sleep(0.1 SECONDS)
-		if(passenger)
-			passenger << 'sound/effects/flameswoosh.ogg'
+		passenger?.playsound_local_not_inworld('sound/effects/flameswoosh.ogg', 100)
 		ion_trail.start()
 		move_self()
 
@@ -82,7 +80,7 @@
 		var/again = ""
 		if(src.num_loops > 1)
 			again = " again"
-		boutput(src.passenger, "<span class='alert'>Whew, it seems like the missile missed[again]. Recalibrating!</span>")
+		boutput(src.passenger, SPAN_ALERT("Whew, it seems like the missile missed[again]. Recalibrating!"))
 
 	proc/move_self()
 		var/glide = 0
@@ -94,7 +92,7 @@
 			passenger?.glide_size = glide
 			passenger?.animate_movement = SYNC_STEPS
 			var/old_loc = src.loc
-			src.loc = get_step(src, src.move_dir) // I think this is supposed to be loc= and not set_loc, not sure
+			src.set_loc(get_step(src, src.move_dir))
 			SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, src.move_dir)
 			if(!src.loc)
 				src.num_loops += 1
@@ -120,8 +118,12 @@
 
 			var/area/AR = get_area(src)
 			var/turf/T = get_turf(src)
-			if (!src.target && istype(T, /turf/simulated/floor) && !AR.teleport_blocked && istype(AR, /area/station) && \
-					!istype(AR, /area/station/solar) && !T.density && T.z == 1)
+			var/area_check = istype(AR, /area/station) && !istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/singcore)
+			var/turf_check = istype(T, /turf/simulated/floor) && !T.density
+			if (istype(AR, /area/pod_wars))
+				AR = TRUE
+				turf_check = !T.density
+			if (!src.target && turf_check && area_check && !AR.teleport_blocked && T.z == missile_z)
 				var/ok = TRUE
 				for(var/atom/A in T)
 					if(A.density)
@@ -144,9 +146,9 @@
 			new_dir = pick(cardinal)
 		src.update_dir(new_dir)
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
-		src.loc = start
+		src.set_loc(start)
 
-proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite, async=FALSE)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
 	if(missile_sprite)
 		missile.icon_state = "[missile_sprite]"
@@ -155,7 +157,12 @@ proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_spri
 	else
 		missile.reset_to_aim_at(target, dir)
 		missile.target = target
-	missile.lunch(thing)
+
+	if(async)
+		SPAWN(0)
+			missile.lunch(thing)
+	else
+		missile.lunch(thing)
 	return missile
 
 proc/latejoin_missile_spawn(var/mob/character)

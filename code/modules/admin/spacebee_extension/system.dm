@@ -45,7 +45,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	for(var/line in lines)
 		if(length(line) + 1 + current_length >= msg_length)
 			. = ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
-			if(!.)
+			if(!. || .["status"] == "error")
 				return
 			current_message.Cut()
 			current_length = 0

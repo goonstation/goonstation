@@ -30,6 +30,12 @@ export const COLORS = {
     burn: '#e67e22',
     brute: '#e74c3c',
   },
+  damageTypeFill: {
+    oxy: 'rgba(52, 152, 219, 0.5)',
+    toxin: 'rgba(46, 204, 113, 0.5)',
+    burn: 'rgba(230, 126, 34, 0.5)',
+    brute: 'rgba(231, 76, 60, 0.5)',
+  },
 };
 
 // Colors defined in CSS

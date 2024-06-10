@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Section, Slider, Dropdown, Box } from "../components";
+import { Box, Button, Dropdown, Section, Slider } from "../components";
 import { Window } from '../layouts';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 

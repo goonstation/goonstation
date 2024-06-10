@@ -60,11 +60,16 @@ labelMappings:
     "[CHEM]": a-chemistry
     "[CHEMISTRY]": a-chemistry
     "[CLOTHING]": a-clothing
+    "[CRITTER]": a-critters
+    "[CRITTERS]": a-critters
+    "[MOBS]": a-critters
     "[GAME OBJECTS]": a-game-objects
     "[OBJECTS]": a-game-objects
-    "[GAMEMODES]": a-gamemodes 
-    "[GAME MODES]": a-gamemodes 
+    "[GAMEMODES]": a-gamemodes
+    "[GAME MODES]": a-gamemodes
     "[MODES]": a-gamemodes
+    "[HYDRO]": a-hydroponics
+    "[HYDROPONICS]": a-hydroponics
     "[INTERNAL]": a-internal
     "[MAPPING]": a-mapping
     "[MATERIALS]": a-materials
@@ -79,3 +84,14 @@ labelMappings:
     "[BORGS]": a-silicons
     "[STATION SYSTEMS]": a-station-systems
     "[STATUS EFFECTS]": a-status-effects
+    "[EVENTS]": a-events
+    "[RP]": a-rp
+    "[SPAWN]": a-respawning
+    "[SPAWNING]": a-respawning
+    "[RESPAWN]": a-respawning
+    "[RESPAWNING]": a-respawning
+    "[ROLEPLAY]": a-rp
+    "[VEHICLE]": a-vehicles
+    "[VEHICLES]": a-vehicles
+    "[TRAITS]": a-traits
+    "[TRAIT]": a-traits

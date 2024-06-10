@@ -2,10 +2,10 @@
 // for the moment, just report the status of all APCs in the same powernet
 
 /obj/machinery/computer/power_monitor
-	name = "Power Monitoring Computer"
+	name = "power monitoring computer"
 	desc = "Shows the power usage of the station."
 	icon_state = "power2"
-	power_usage = 0
+	power_usage = 250
 	circuit_type = /obj/item/circuitboard/powermonitor
 	var/window_tag = "powcomp"
 	var/list/history
@@ -76,10 +76,9 @@
 /obj/machinery/computer/power_monitor/process()
 	if (status & (NOPOWER|BROKEN))
 		return
-
-	use_power(250)
+	..()
 	add_history()
-	if (src.history.len > src.history_max)
+	if (length(src.history) > src.history_max)
 		src.history.Cut(1, 2) //drop the oldest entry
 
 /obj/machinery/computer/power_monitor/proc/add_history()
@@ -101,11 +100,11 @@
 
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
 /obj/machinery/computer/power_monitor/smes
-	name = "SMES Monitoring Computer"
+	name = "\improper SMES monitoring computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
 	circuit_type = /obj/item/circuitboard/powermonitor_smes

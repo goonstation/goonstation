@@ -16,10 +16,10 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	hand_count = 1
 	can_burn = FALSE
 	dna_to_absorb = 0
-	butcherable = FALSE
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
+	ailment_immune = TRUE
 	/// defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "1"
 	var/icon_state_base = null
 	var/brute_hp = 25
@@ -29,12 +29,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	New()
 		. = ..()
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
-
-		var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(src)
-		O.owner = src
-		O.implanted = 1
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		new /obj/item/implant/access/infinite/assistant(src)
 
 	setup_hands()
 		..()
@@ -66,14 +63,14 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		if (!gibbed)
 			gib(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 10, 0, pitch = -1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(get_turf(src), 'sound/voice/screams/robot_scream.ogg' , 10, 0, pitch = -1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -113,12 +110,15 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		emag_act(mob/user, obj/item/card/emag/E)
 			. = ..()
 			if(!src.emagged)
-				playsound(src, "sound/effects/sparks4.ogg", 50)
-				src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+				playsound(src, 'sound/effects/sparks4.ogg', 50)
+				src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/lube)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 				src.emagged = TRUE
 				return TRUE
+
+		is_open_container()
+			return TRUE
 
 		emagged
 			brute_hp = 50
@@ -136,12 +136,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot)
 	icon_state = "clean_mop"
 	targeted = TRUE
 	target_anything = TRUE
-	cooldown = 3 SECONDS
+	cooldown = 1.5 SECONDS
 	max_range = 1
 
 	cast(atom/target)
 		if(!holder?.owner)
 			return TRUE
+		. = ..()
 		actions.start(new/datum/action/bar/icon/mob_cleanbot_clean(holder.owner, target), holder.owner)
 
 ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
@@ -154,8 +155,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cast(atom/target)
 		if(!holder?.owner?.reagents)
 			return TRUE
+		. = ..()
 		holder.owner.reagents.add_reagent(reagent_id, 30)
-		playsound(holder.owner.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+		playsound(holder.owner.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 	lube
 		name = "Synthesize Space Lube"
 		desc = "Fill yourself will space lube. Creates a slipping hazard, but it makes those floors shine so well that you can see yourself in them!"
@@ -175,10 +177,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cooldown = 5 SECONDS
 	icon_state = "clean_scan"
 	var/reagent_id = null
+	do_logs = FALSE
 
 	cast(atom/target)
 		if(!holder?.owner?.reagents)
 			return TRUE
+		. = ..()
 		boutput(holder.owner, "[scan_reagents(holder.owner, visible = 1)]")
 
 /datum/targetable/critter/bot/dump_reagents
@@ -191,6 +195,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	cast()
 		if (!holder?.owner?.reagents)
 			return TRUE
+		. = ..()
 		holder.owner.setStatus("resting", INFINITE_STATUS) // flop over to spill the reagents
 		holder.owner.force_laydown_standup()
 		holder.owner.reagents.reaction(get_turf(holder.owner), TOUCH)
@@ -199,7 +204,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 /datum/action/bar/icon/mob_cleanbot_clean
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "mob_cleanbot_clean"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/mob/master
@@ -217,12 +221,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(get_turf(master), "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
-		master.anchored = 1
+		playsound(get_turf(master), 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
+		master.anchored = ANCHORED
 		if(istype(master, /mob/living/critter/robotic/bot))
 			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]-c"
-		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
+		master.visible_message(SPAN_ALERT("[master] begins to clean the [T.name]."))
 
 	onUpdate()
 		..()
@@ -265,10 +269,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		. = ..()
 		color = pick(list(
 			null,\
-			list(0,1,0,0,0,1,1,0,0),\
-			list(0,0,1,1,0,0,0,1,0),\
-			list(0.5,0.5,0,0,0.5,0.5,0.5,0,0.5),\
-			list(0.5,0,0.5,0.5,0.5,0,0,0.5,0.5),
+			list(0.780465,0.129599,0.76233,0,0.0941811,0.94407,0.867769,0,0.858187,0.639099,0.46042,0,0,0,0,1,0,0,0,0),\
+			list(0.309832,0.486208,0.704786,0,0.57733,0.407169,0.343657,0,0.440741,0.307279,0.0361456,0,0,0,0,1,0,0,0,0),\
+			list(0.923407,0.489071,0.0133575,0,0.416634,0.00596684,0.0659536,0,0.151125,0.954365,0.946033,0,0,0,0,1,0,0,0,0),\
+			list(0.34802,0.586676,0.382593,0,0.265555,0.208964,0.409951,0,0.395675,0.227339,0.498367,0,0,0,0,1,0,0,0,0),
 		))
 
 		src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam)
@@ -277,9 +281,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()
 		if(!src.emagged)
-			playsound(src, "sound/effects/sparks4.ogg", 50)
-			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+			playsound(src, 'sound/effects/sparks4.ogg', 50)
+			src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_fire)
+			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/fuel)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/throw_humans)
 			src.emagged = TRUE
 			return TRUE
@@ -291,6 +296,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		New()
 			. = ..()
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_fire)
+			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/fuel)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/throw_humans)
 
 
@@ -303,12 +309,19 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "firebot_foam"
 	var/const/num_water_effects = 5
+	/// list of reagents to spray and their quantities
+	var/list/spray_reagents = list("water"=2, "ff-foam"=8)
+	/// reagent container size, passed to the spray proc
+	var/max_spray = 15
+	/// temp of the sprayed reagents
+	var/spray_temperature=T20C
 
 	cast(atom/target)
 		if(!holder?.owner)
 			return TRUE
+		. = ..()
 		flick("firebot-c", holder.owner)
-		playsound(get_turf(holder.owner), "sound/effects/spray.ogg", 50, 1, -3)
+		playsound(get_turf(holder.owner), 'sound/effects/spray.ogg', 50, 1, -3)
 
 		var/direction = get_dir(holder.owner,target)
 
@@ -323,10 +336,18 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			if(!W) return
 			W.set_loc(get_turf(holder.owner))
 			var/turf/my_target = pick(the_targets)
-			var/datum/reagents/R = new/datum/reagents(15)
-			R.add_reagent("water", 2)
-			R.add_reagent("ff-foam", 8)
+			var/datum/reagents/R = new/datum/reagents(max_spray)
+			for(var/reagent_key in spray_reagents)
+				R.add_reagent(reagent_key, spray_reagents[reagent_key], temp_new = spray_temperature)
 			W.spray_at(my_target, R, 1)
+
+	fuel
+		name = "Spray Burning Fuel"
+		desc = "Spray burning fuel all over the place. Highly flammable but near useless in flooded areas."
+		icon_state = "firebot_fire"
+		spray_reagents = list("fuel"=5)
+		spray_temperature = T0C + 200
+		cooldown = 15 SECONDS
 
 	throw_humans
 		name = "High Pressure Foam"
@@ -338,14 +359,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				return TRUE
 			for(var/mob/living/carbon/human/H in view(1, target))
 				var/atom/targetTurf = get_edge_target_turf(H, get_dir(holder.owner, get_step_away(H, holder.owner)))
-				boutput(H, "<span class='alert'><b>[holder.owner] knocks you back!</b></span>")
-				H.changeStatus("weakened", 2 SECONDS)
+				boutput(H, SPAN_ALERT("<b>[holder.owner] knocks you back!</b>"))
+				H.changeStatus("knockdown", 2 SECONDS)
 				H.throw_at(targetTurf, 200, 4)
 
 
 /datum/targetable/critter/bot/spray_fire
 	name = "Spray Flames"
-	desc = "Sometimes you gotta make your own fun."
+	desc = "Sometimes you gotta make your own fun. Spray a short range flammable aerosol. Works in flooded areas."
 	targeted = TRUE
 	target_anything = TRUE
 	cooldown = 10 SECONDS
@@ -353,7 +374,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	icon_state = "firebot_fire"
 	var/max_fire_range = 3
 	cooldown = 10 SECONDS
-	var/temp = 1200
+	var/temp = 7000
 
 	cast(atom/target)
 		if (..())
@@ -362,7 +383,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		var/turf/T = get_turf(target)
 		var/list/affected_turfs = getline(holder.owner, T)
 		flick("firebot-c", holder.owner)
-		playsound(holder.owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+		playsound(holder.owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		var/turf/currentturf
 		var/turf/previousturf
 		for(var/turf/F in affected_turfs)
@@ -376,5 +397,5 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				continue
 			if (GET_DIST(holder.owner,F) > max_fire_range)
 				continue
-			tfireflash(F,0.5,temp)
+			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 

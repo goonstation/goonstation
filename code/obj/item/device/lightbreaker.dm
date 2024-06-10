@@ -1,8 +1,11 @@
+TYPEINFO(/obj/item/lightbreaker)
+	mats = 15
+
 /obj/item/lightbreaker
 	name = "compact tape"
 	desc = "A casette player loaded with a casette of a vampire's screech."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "recorder"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newSmall"
 	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
@@ -11,11 +14,11 @@
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	stamina_cost = 10
 	stamina_crit_chance = 15
 	var/ammo = 4
 	var/ammo_max = 4
+	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter most windows and lights around you, and deafen/stagger people around you without ear protection. To recharge the lightbreaker, hit it with a <b>screwdriver</b>."})
 
 	examine()
 		. = ..()
@@ -30,12 +33,12 @@
 			src.activate(user)
 			ammo--
 		else
-			playsound(src.loc, "sound/machines/click.ogg", 100, 1)
-			boutput(user, "<span class='alert'>The tape is worn out!</span>")
+			playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
+			boutput(user, SPAN_ALERT("The tape is worn out!"))
 		return
 
 	proc/activate(mob/user as mob)
-		playsound(src.loc, "sound/effects/light_breaker.ogg", 75, 1, 5)
+		playsound(src.loc, 'sound/effects/light_breaker.ogg', 75, 1, 5)
 		for (var/obj/machinery/light/L in view(7, user))
 			if (L.status == 2 || L.status == 1)
 				continue
@@ -56,16 +59,15 @@
 			if(ammo < ammo_max)
 				actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind",round(300*(1-ammo/ammo_max))), user)
 			else
-				boutput(user, "<span class='alert'>It's already fully rewound!</span>")
+				boutput(user, SPAN_ALERT("It's already fully rewound!"))
 			return
 		return ..()
 
 	proc/rewind()
 		ammo = ammo_max
-		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
 
 /datum/action/bar/icon/rewind_tape
-	id = "rewind_tape"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 300
 	icon = 'icons/ui/actions.dmi'
@@ -97,7 +99,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, "sound/misc/winding.ogg", 50, 1,3)
+		playsound(the_breaker, 'sound/misc/winding.ogg', 50, TRUE,3)
 
 	onStart()
 		..()
@@ -105,7 +107,7 @@
 		switch (interaction)
 			if ("rewind")
 				verbing = "rewinding"
-		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_breaker].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [the_breaker]."))
 
 	onEnd()
 		..()
@@ -114,4 +116,4 @@
 			if ("rewind")
 				verbens = "rewinds"
 				the_breaker.rewind()
-		owner.visible_message("<span class='notice'>[owner] [verbens] [the_breaker].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_breaker]."))

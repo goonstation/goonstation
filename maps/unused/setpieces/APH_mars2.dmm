@@ -151,8 +151,7 @@
 	},
 /area/marsoutpost)
 "av" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -163,8 +162,7 @@
 	},
 /area/marsoutpost)
 "aw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -176,8 +174,7 @@
 	},
 /area/marsoutpost)
 "ax" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	layer = 2.5;
 	name = "factory conveyor belt";
@@ -328,8 +325,7 @@
 	},
 /area/mars)
 "aR" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	layer = 2.5;
 	name = "factory conveyor belt";
@@ -646,15 +642,15 @@
 "bH" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "depleted plasma tank";
 	tag = ""
 	},
@@ -891,8 +887,7 @@
 	},
 /area/marsoutpost)
 "ch" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -907,8 +902,7 @@
 	},
 /area/marsoutpost)
 "cj" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -919,8 +913,7 @@
 	},
 /area/marsoutpost)
 "ck" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	pixel_y = 2
 	},
 /turf/unsimulated/floor{
@@ -1088,20 +1081,18 @@
 	},
 /area/marsoutpost)
 "dd" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor{
 	icon_state = "engine_caution_we"
 	},
 /area/marsoutpost)
 "de" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -1241,7 +1232,7 @@
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "depleted plasma tank";
 	tag = ""
 	},

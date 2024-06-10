@@ -31,3 +31,23 @@
 #define AST_MAPBORDER 3
 /// Zlevel for generation.
 #define AST_ZLEVEL 5
+
+/// Prefabs that spawn anywhere
+#define PREFAB_ANYWHERE					(1<<0)
+/// Prefabs that spawn in space
+#define PREFAB_SPACE					(1<<1)
+/// Prefabs that spawn on planets
+#define PREFAB_PLANET					(1<<2)
+
+// Water maps
+
+/// Prefabs that spawn on nadir and other water maps
+#define PREFAB_NADIR_SAFE				(1<<3)
+/// Prefabs that spawn on water maps barring nadir
+#define PREFAB_NADIR_UNSAFE				(1<<4)
+/// Prefabs that only spawn on Nadir
+#define PREFAB_NADIR 					(1<<5)
+/// Prefabs that only spawn on Oshan
+#define PREFAB_OSHAN					(1<<6)
+/// Prefabs that only spawn on Manta
+#define PREFAB_MANTA					(1<<7)

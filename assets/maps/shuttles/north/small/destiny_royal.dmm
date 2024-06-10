@@ -44,7 +44,7 @@
 	},
 /area/shuttle/escape/centcom)
 "dP" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border,
@@ -71,7 +71,7 @@
 	},
 /area/shuttle/escape/centcom)
 "fv" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -115,7 +115,7 @@
 	},
 /area/shuttle/escape/centcom)
 "iF" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},
@@ -183,7 +183,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mx" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 8
 	},
@@ -192,7 +192,7 @@
 	},
 /area/shuttle/escape/centcom)
 "nf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -299,7 +299,7 @@
 	},
 /area/shuttle/escape/centcom)
 "xH" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -349,14 +349,14 @@
 /turf/unsimulated/floor/marble/border_bw,
 /area/shuttle/escape/centcom)
 "DK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "DU" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "Eh" = (
@@ -375,7 +375,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/shuttle/escape/centcom)
 "FR" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -625,7 +625,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "RD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},

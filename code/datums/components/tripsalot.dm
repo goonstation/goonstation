@@ -5,7 +5,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	signals = list(COMSIG_MOVABLE_MOVED)
 	mobtype = /mob/living/carbon/human
-	proctype = .proc/tripalot
+	proctype = PROC_REF(tripalot)
 	// valid_slots is provided by the AddComponent argument
 
 
@@ -16,9 +16,9 @@
 				ON_COOLDOWN(H, "clown_trip", 6 SECONDS)
 				if(istype(H.head, /obj/item/clothing/head))
 					if(istype(H.head, /obj/item/clothing/head/helmet))
-						boutput(H, "<span class='alert'>You stumble and fall to the ground. Thankfully, that helmet protected you.</span>")
+						boutput(H, SPAN_ALERT("You stumble and fall to the ground. Thankfully, that helmet protected you."))
 					else
-						boutput(H, "<span class='alert'>You stumble and fall to the ground. Thankfully, that hat protected you.</span>")
+						boutput(H, SPAN_ALERT("You stumble and fall to the ground. Thankfully, that hat protected you."))
 				else
-					boutput(H, "<span class='alert'>You stumble and hit your head.</span>")
+					boutput(H, SPAN_ALERT("You stumble and hit your head."))
 					H.stuttering = max(H.stuttering, 4)

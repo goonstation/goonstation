@@ -3,7 +3,7 @@
 	topBarRendered = 1
 	pointName = "Souls"
 	regenRate = 0
-	notEnoughPointsMessage = "<span class='alert'>You do not have enough souls to use that ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You do not have enough souls to use that ability.")
 	cast_while_dead = 1
 
 /atom/movable/screen/ability/topBar/zoldorf
@@ -31,9 +31,9 @@
 		src.object = B
 
 	cast(atom/target)
+		. = ..()
 		if (!holder || !holder.owner)
 			return 1
-		return 0
 
 /datum/targetable/zoldorfAbility/fortune //yay mad libs. its basically a bunch of input checks and dynamic popups and some animations while its active :)
 	name = "Tell Fortune"
@@ -71,10 +71,11 @@
 		var/maxlines
 
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
-		var/list/zoldorflist = list("<span class='notice'>[pz] makes a mystical gesture!</b></span>","<span class='notice'>[pz] rocks back and forth!</span>")
+		var/list/zoldorflist = list(SPAN_NOTICE("[pz] makes a mystical gesture!</b>"),SPAN_NOTICE("[pz] rocks back and forth!"))
 		if((user.abilityHolder.points <= 3)&&(user.abilityHolder.points > 0))
 			maxlines = user.abilityHolder.points
 		else if(user.abilityHolder.points > 3)
@@ -83,14 +84,14 @@
 			maxlines = 1
 
 		pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-		fortune_mystical = sortList(fortune_mystical)
-		fortune_nouns = sortList(fortune_nouns)
+		sortList(fortune_mystical, /proc/cmp_text_asc)
+		sortList(fortune_nouns, /proc/cmp_text_asc)
 		fortune_nouns.Add("[holder.owner]")
-		fortune_verbs = sortList(fortune_verbs)
-		fortune_adjectives = sortList(fortune_adjectives)
-		sentencesShort = sortList(sentencesShort)
+		sortList(fortune_verbs, /proc/cmp_text_asc)
+		sortList(fortune_adjectives, /proc/cmp_text_asc)
+		sortList(sentencesShort, /proc/cmp_text_asc)
 
-		pz.visible_message("<span class='notice'>[pz] wakes up!</span>")
+		pz.visible_message(SPAN_NOTICE("[pz] wakes up!"))
 		playsound(pz.loc, 'sound/machines/fortune_riff.ogg', 60, 1)
 
 		if(user.firstfortune == 1)
@@ -172,7 +173,7 @@
 					speechinput = input("[sentence](noun) and (verb) yourself.", "Noun", null) as null|anything in fortune_nouns
 					if(!speechinput) break
 					sentence += "[speechinput] and "
-					speechinput = input("[sentence]and (verb) yourself.", "Verb", null) as null|anything in fortune_verbs
+					speechinput = input("[sentence](verb) yourself.", "Verb", null) as null|anything in fortune_verbs
 					if(!speechinput) break
 					sentence += "[speechinput] yourself."
 				if("Remember to...")
@@ -219,7 +220,7 @@
 					if(!speechinput) break
 					sentence += "[speechinput]."
 			if(sentence)
-				boutput(holder.owner,"<span class=\"success\">[sentence]</span>")
+				boutput(holder.owner, SPAN_SUCCESS("[sentence]"))
 				sentences.Add(sentence)
 				sentence = ""
 
@@ -242,7 +243,7 @@
 		pf.layer = 7
 
 		playsound(pz.loc, 'sound/machines/fortune_laugh.ogg', 65, 1)
-		pz.visible_message("<span class='game say'><span class='name'>[pz]</span> beeps, \"Ha ha ha ha ha!\"</span>")
+		pz.visible_message(SPAN_SAY("[SPAN_NAME("[pz]")] beeps, \"Ha ha ha ha ha!\""))
 
 
 /datum/targetable/zoldorfAbility/addsoul //debug tool
@@ -255,8 +256,9 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 
 		user.abilityHolder.points++
@@ -272,8 +274,9 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 
 		user.abilityHolder.points--
@@ -289,8 +292,9 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.omen = 1
 		return !pz.omen(user)
@@ -305,13 +309,14 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		if(istype(target,/obj/item/paper/thermal/playerfortune))
 			var/obj/item/paper/thermal/playerfortune/f = target
 			if(f.branded)
-				boutput(holder.owner,"<span class='alert'><b>This fortune is already branded!</b></span>")
+				boutput(holder.owner,SPAN_ALERT("<b>This fortune is already branded!</b>"))
 				return 1
 			else
 				f.icon = 'icons/obj/zoldorf.dmi'
@@ -320,9 +325,10 @@
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz
-				boutput(holder.owner,"<span class=\"success\"><b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b></span>")
+				boutput(holder.owner, SPAN_SUCCESS("<b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b>"))
+
 		else
-			boutput(holder.owner,"<span class='alert'><b>You must target a fortune!</b></span>")
+			boutput(holder.owner, SPAN_ALERT("<b>You must target a fortune!</b>"))
 			return 1
 
 /datum/targetable/zoldorfAbility/astral
@@ -333,6 +339,7 @@
 	cooldown = 0
 
 	cast(atom/target)
+		. = ..()
 		var/mob/zoldorf/user = holder.owner
 		var/destination
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
@@ -373,12 +380,13 @@
 		var/mob/zoldorf/user = holder.owner
 		var/obj/machinery/playerzoldorf/pz = user.homebooth
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		if(!pz.omen)
 			pz.omen(user)
 		else
-			boutput(user,"<span class='alert'><b>You must disable your current omen in order to activate the ghost light!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must disable your current omen in order to activate the ghost light!</b>"))
 			return 1
 
 /datum/targetable/zoldorfAbility/manifest //spooky time
@@ -393,8 +401,9 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.storedsouls--
 		var/boothloc = get_turf(pz)
@@ -426,8 +435,9 @@
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
-			boutput(user,"<span class='alert'><b>You must be in your booth to use this ability!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
+		. = ..()
 		var/obj/machinery/playerzoldorf/pz = user.loc
 		pz.storedsouls--
 		pz.lightrfade(5)
@@ -442,7 +452,7 @@
 				deadpeople += M.real_name
 				if(the_mob == user || (the_mob.client && (get_turf(the_mob) in range(the_mob.client.view, get_turf(user)))))
 					var/mobloc = get_turf(the_mob) // TODO add consent
-					var/mob/living/seanceghost/sg
+					var/mob/living/intangible/seanceghost/sg
 					if(istype(the_mob,/mob/zoldorf))
 						sg = the_mob.make_seance(null,the_mob,deadpeople)
 					else
@@ -469,6 +479,7 @@
 	cooldown = 100
 
 	cast(atom/target)
+		. = ..()
 		var/mob/zoldorf/user = holder.owner
 		var/color
 		color = input(user,"Which soul color would you like?") as color
@@ -485,6 +496,7 @@
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
+		. = ..()
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
 			var/list/selections = list("Read Notes","Add Note","Remove Note")
@@ -497,7 +509,7 @@
 			switch(selection)
 				if("Read Notes")
 					if(!pz.notes.len)
-						boutput(user,"<span class='alert'><b>You have no saved notes!</b></span>")
+						boutput(user,SPAN_ALERT("<b>You have no saved notes!</b>"))
 						return
 					var/aaa //modified list data
 					for(var/i=1,i<=pz.notes.len,i++)
@@ -518,10 +530,10 @@
 					logTheThing(LOG_SAY, user, "[user] has created a Zoldorf note: [note]")
 					if(pz)
 						pz.notes.Add(note)
-						boutput(user,"<span class='success'><b>Note added!</b></span>")
+						boutput(user,SPAN_SUCCESS("<b>Note added!</b>"))
 				if("Remove Note")
 					if(!pz.notes.len)
-						boutput(user,"<span class='alert'><b>You have no saved notes!</b></span>")
+						boutput(user,SPAN_ALERT("<b>You have no saved notes!</b>"))
 						return
 					var/select
 					select = input("Which note would you like to remove?", "Notes", null) as null|anything in pz.notes
@@ -529,7 +541,7 @@
 						return
 					if(pz)
 						pz.notes -= select
-						boutput(user,"<span class='success'><b>Note removed!</b></span>")
+						boutput(user,SPAN_SUCCESS("<b>Note removed!</b>"))
 
 /datum/targetable/zoldorfAbility/jar //where else would you store fragments of peoples' souls?
 	name = "Soul Jar"
@@ -541,9 +553,10 @@
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
+		. = ..()
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
-			boutput(user,"<span class='success'><b>You have accumulated [pz.partialsouls]% of a soul!</b></span>")
+			boutput(user,SPAN_SUCCESS("<b>You have accumulated [pz.partialsouls]% of a soul!</b>"))
 
 /datum/targetable/zoldorfAbility/help //pretty much a copy paste of wraith help just in case the tooltips dont take over on merge
 	name = "Toggle Help Mode"
@@ -560,12 +573,12 @@
 		if (holder.help_mode)
 			holder.help_mode = 0
 			src.object.icon_state = "helpoff"
-			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
+			boutput(holder.owner, SPAN_NOTICE("<strong>Help Mode has been deactivated.</strong>"))
 		else
 			holder.help_mode = 1
 			src.object.icon_state = "helpon"
-			boutput(holder.owner, "<span class='success'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
-			boutput(holder.owner, "<span class='success'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-			boutput(holder.owner, "<span class='success'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-			boutput(holder.owner, "<span class='success'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
+			boutput(holder.owner, SPAN_SUCCESS("<strong>Help Mode has been activated. To disable it, click on this button again.</strong>"))
+			boutput(holder.owner, SPAN_SUCCESS("Hold down Shift, Ctrl or Alt while clicking the button to set it to that key."))
+			boutput(holder.owner, SPAN_SUCCESS("You will then be able to use it freely by holding that button and left-clicking a tile."))
+			boutput(holder.owner, SPAN_SUCCESS("Alternatively, you can click with your middle mouse button to use the ability on your current tile."))
 		holder.updateButtons()

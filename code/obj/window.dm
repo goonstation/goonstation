@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
+
 /obj/window
 	name = "window"
 	icon = 'icons/obj/window.dmi'
@@ -5,7 +8,7 @@
 	desc = "A window."
 	density = 1
 	stops_space_move = 1
-	dir = 5 //full tile
+	dir = NORTHEAST //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
@@ -23,24 +26,29 @@
 	var/stab_resist = 0
 	var/corrode_resist = 0
 	var/temp_resist = 0
-	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
+	var/image/damage_image = null
+	default_material = "glass"
+	mat_changename = TRUE
+	uses_default_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
-	anchored = 1
+	anchored = ANCHORED
+	material_amt = 0.1
+	HELP_MESSAGE_OVERRIDE(null)
+
 	the_tuff_stuff
 		explosion_resistance = 3
-	New()
-		..()
+
+	New(loc, dir_override=null)
+		..(loc)
+		if(!isnull(dir_override))
+			src.dir = dir_override
 		src.ini_dir = src.dir
-		update_nearby_tiles(need_rebuild=1)
-		var/datum/material/M
-		if (default_material)
-			M = getMaterial(default_material)
-			src.setMaterial(M)
+		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
@@ -88,16 +96,17 @@
 			src.layer = map_settings.window_layer_north
 		else if (src.dir == SOUTH && map_settings.window_layer_south)
 			src.layer = map_settings.window_layer_south
-		else if (src.dir in ordinal && map_settings.window_layer_full)
+		else if ((src.dir in ordinal) && map_settings.window_layer_full)
 			src.layer = map_settings.window_layer_full
 		else
 			src.layer = initial(src.layer)
 		return
 
 	disposing()
+		connect_image = null
 		density = 0
-		update_nearby_tiles(need_rebuild=1)
-		..()
+		update_nearby_tiles(need_rebuild=1, selfnotify=1)
+		. = ..()
 
 	Move()
 		set_density(0) //mbc : icky but useful for fluids
@@ -110,6 +119,13 @@
 		update_nearby_tiles(need_rebuild=1)
 
 		return
+
+	set_dir(new_dir)
+		. = ..()
+		if(new_dir in cardinal)
+			src.material_amt = 0.1
+		else
+			src.material_amt = 0.2
 
 	onMaterialChanged()
 		..()
@@ -126,10 +142,13 @@
 			stab_resist 	= material.getProperty("hard") * 10
 			corrode_resist 	= material.getProperty("chemical") * 10
 
-			if (material.alpha > 220)
-				opacity = 1 // useless opaque window
+			if (material.getAlpha() > 220)
+				set_opacity(1) // useless opaque window)
 			else
-				opacity = 0
+				set_opacity(0)
+
+			if(src.material.usesSpecialNaming())
+				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
 
@@ -141,7 +160,7 @@
 			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
 			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
-			name = "[reinforcement.name]-reinforced " + name
+			name = "[reinforcement.getName()]-reinforced " + name
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!M)
@@ -161,6 +180,7 @@
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
+		UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount))
@@ -174,6 +194,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_piercing(var/amount)
 		if (!isnum(amount))
@@ -187,6 +208,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -198,6 +220,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_heat(var/amount, var/nosmash)
 		if (!isnum(amount) || amount <= 0)
@@ -216,6 +239,7 @@
 				qdel(src)
 			else
 				smash()
+		UpdateIcon()
 
 	ex_act(severity)
 		// Current windows have 30 HP
@@ -279,6 +303,19 @@
 
 	get_desc()
 		var/the_text = ""
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99)//dont want to clog up the description unless it's actually damaged
+				the_text += "It seems to be in mostly good condition"
+			if(75 to 89)
+				the_text += "[src] is barely [pick("chipped", "cracked", "scratched")]"
+			if(50 to 74)
+				the_text += "[src] looks [pick("cracked", "damaged", "messed up", "chipped")]."
+			if(25 to 49)
+				the_text += "[src] looks [pick("quite", "pretty", "rather", "notably")] [pick("spiderwebbed", "fractured", "cracked", "busted")]."
+			if(0 to 24)
+				the_text += "[src] is barely intact!"
+
 		switch(src.state)
 			if(0)
 				if (!src.anchored)
@@ -291,12 +328,24 @@
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if(0)
+				if(!src.anchored)
+					. = "You can use a <b>wrench</b> to disassemble the window, or a <b>screwdriver</b> to fasten the frame to the floor."
+				else
+					. = "You can use a <b>screwdriver</b> to unfasten the frame from the floor, or a <b>crowbar</b> to pry the window into the frame."
+			if(1)
+				. = "You can use a <b>crowbar</b> to pry the window out of the frame, or a <b>screwdriver</b> to fasten the window to the frame."
+			if(2)
+				. = "You can use a <b>screwdriver</b> to unfasten the window from the frame."
+
 	Cross(atom/movable/mover)
 		if(!src.density)
 			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.proj_data.window_pass)
+			if(P.proj_data?.window_pass && !src.opacity)
 				return TRUE
 		if (!is_cardinal(dir))
 			return FALSE //full tile window, you can't move into it!
@@ -327,7 +376,7 @@
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
-		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] was hit by [AM].</B>"))
 		playsound(src.loc, src.hitsound , 100, 1)
 		if (ismob(AM))
 			damage_blunt(15)
@@ -337,7 +386,7 @@
 				damage_blunt(O.throwforce)
 
 		if (src && src.health <= 2 && !reinforcement)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.stops_space_move = 0
 			step(src, get_dir(AM, src))
 		..()
@@ -348,17 +397,17 @@
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
-				user.visible_message("<span class='alert'><b>[user]</b> punches the window.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the window."))
 				playsound(src.loc, src.hitsound, 100, 1)
 				src.damage_blunt(10)
 				return
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> beats [src] uselessly!</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> beats [src] uselessly!"))
 				playsound(src.loc, src.hitsound, 100, 1)
 				return
 		else
 			if (ishuman(user))
-				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> knocks on [src]."))
 				playsound(src.loc, src.hitsound, 100, 1)
 				SPAWN(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
@@ -374,7 +423,7 @@
 			if (state == 10) // ???
 				return
 			else if (state >= 1)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -386,7 +435,7 @@
 				else
 					assembly_handler(user, W)
 			else
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -416,16 +465,11 @@
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
-
-		else if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
-				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
-				logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
-				playsound(src.loc, src.hitsound , 100, 1)
-				G.affecting.TakeDamage("head", 5, 0)
-				src.damage_blunt(G.affecting.throwforce)
-				qdel(W)
+		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
+			var/time = 4 SECONDS
+			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+				time = 2 SECONDS
+			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, SPAN_NOTICE(" [user] repairs \the [src] with \the [W] "), null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
@@ -444,10 +488,10 @@
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
-		else if(ispryingtool(W))
+		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 
 	proc/align_window()
 		update_nearby_tiles(need_rebuild=1)
@@ -490,23 +534,25 @@
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = loc
-		var/turf/simulated/target = get_step(source,dir)
+		var/list/turf/simulated/affected_simturfs = list()
+		if (issimulatedturf(src.loc))
+			affected_simturfs += src.loc
+		if (is_cardinal(src.dir) && issimulatedturf(get_step(src, src.dir)))
+			affected_simturfs += get_step(src, src.dir)
+		else if (!is_cardinal(src.dir))
+			for (var/neigh_dir in cardinal)
+				if (issimulatedturf(get_step(src, neigh_dir)))
+					affected_simturfs += get_step(src, neigh_dir)
 
 		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild |= source.parent
+			for(var/turf/simulated/T in affected_simturfs)
+				if(T.parent) //Rebuild/update nearby group geometry
+					air_master.groups_to_rebuild |= T.parent
 				else
-					air_master.tiles_to_update |= source
-			if(istype(target))
-				if(target.parent)
-					air_master.groups_to_rebuild |= target.parent
-				else
-					air_master.tiles_to_update |= target
+					air_master.tiles_to_update |= T
 		else
-			if(istype(source)) air_master.tiles_to_update |= source
-			if(istype(target)) air_master.tiles_to_update |= target
+			for(var/turf/simulated/T in affected_simturfs)
+				air_master.tiles_to_update |= T
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -522,16 +568,22 @@
 			if(istype(w))
 				w.tilenotify(src.loc)
 
-		if (selfnotify && istype(source))
-			source.selftilenotify() //for fluids
+		if (selfnotify && isturf(src.loc))
+			var/turf/T = src.loc
+			T.selftilenotify() //for fluids
 
 		return 1
+
+	proc/fix_window(var/obj/item/sheet/S)
+		health = health_max
+		UpdateIcon(src)
+		if (S)
+			S.change_stack_amount(-1)
 
 
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/window/the_window
@@ -561,8 +613,8 @@
 		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
-		playsound(the_window.loc, "sound/items/Ratchet.ogg", 100, 1)
+		boutput(owner, SPAN_NOTICE("Now disassembling \the [the_window]"))
+		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
 		..()
@@ -574,7 +626,7 @@
 			if (!(the_tool in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		boutput(owner, "<span class='notice'>You dissasembled [the_window]!</span>")
+		boutput(owner, SPAN_NOTICE("You disassemble \the [the_window]!"))
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))
 		if(the_window.material)
 			A.setMaterial(the_window.material)
@@ -589,7 +641,7 @@
 
 	onInterrupt()
 		if (owner)
-			boutput(owner, "<span class='alert'>Deconstruction of [the_window] interrupted!</span>")
+			boutput(owner, SPAN_ALERT("Deconstruction of \the [the_window] interrupted!"))
 		..()
 
 /obj/window/pyro
@@ -640,19 +692,7 @@
 
 /obj/window/bulletproof/pyro
 	icon_state = "rpyro"
-/*
-/obj/window/supernorn
-	icon = 'icons/Testing/newicons/obj/NEWstructures.dmi'
-	dir = 5
 
-	attackby() // TODO: need to be able to smash them, this is a hack
-	rotate()
-		set hidden = 1
-
-	New()
-		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.UpdateIcon()
-*/
 /obj/window/north
 	dir = NORTH
 
@@ -716,24 +756,57 @@
 /obj/window/auto
 	icon = 'icons/obj/window_pyro.dmi'
 	icon_state = "mapwin"
-	dir = 5
+	dir = NORTHEAST
 	health_multiplier = 2
+	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
-	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
-		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
-		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall)
+	var/connectdir
+	var/static/list/connects_to = typecacheof(list(
+		/obj/machinery/door,
+		/obj/window,
+		/turf/simulated/wall/auto/supernorn,
+		/turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/unsimulated/wall/auto/reinforced/supernorn,
 
-	var/list/connects_to_exceptions = list(/obj/window/cubicle, /obj/window/reinforced, /turf/unsimulated/wall/auto/lead/blue)
-	var/list/connects_with_overlay_exceptions = list(/obj/window, /obj/machinery/door/poddoor )
-	alpha = 160
-	the_tuff_stuff
-		explosion_resistance = 3
+		/turf/simulated/shuttle/wall,
+		/turf/unsimulated/wall,
+		/turf/simulated/wall/auto/shuttle,
+		/obj/indestructible/shuttle_corner,
+
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/reinforced/supernorn/orange,
+		/turf/simulated/wall/auto/reinforced/paper,
+		/turf/simulated/wall/auto/jen,
+		/turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/supernorn/wood,
+		/turf/unsimulated/wall/auto/supernorn/wood,
+
+		/turf/unsimulated/wall/auto/lead/blue,
+		/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+		/turf/simulated/wall/auto/reinforced/old,
+		/turf/unsimulated/wall/auto/adventure/old,
+		/turf/unsimulated/wall/auto/adventure/mars/interior,
+		/turf/unsimulated/wall/auto/adventure/shuttle,
+		/turf/simulated/wall/auto/marsoutpost,
+		/turf/simulated/wall/false_wall,
+		/turf/simulated/wall/auto/feather,
+	))
+
+	/// Gotta be a typecache list
+	var/static/list/connects_to_exceptions = typecacheof(list(
+		/obj/window/reinforced,
+		/obj/window/cubicle,
+		/turf/unsimulated/wall/auto/lead/blue,
+	))
+	var/static/list/connects_with_overlay_exceptions = typecacheof(list(
+		/obj/window,
+		/obj/machinery/door/poddoor
+	))
+
 	New()
 		..()
 
@@ -752,11 +825,12 @@
 	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
+			update_damage_overlay()
 			return
 
-		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
+		connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
 		if (overlaydir)
@@ -764,15 +838,11 @@
 				src.connect_image = image(src.icon, "overlay-[overlaydir]")
 			else
 				src.connect_image.icon_state = "overlay-[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 		else
-			src.UpdateOverlays(null, "connect")
-	/*
-	attackby(obj/item/W, mob/user)
-		if (..(W, user))
-			src.UpdateIcon()
-			src.update_neighbors()
-	*/
+			src.ClearSpecificOverlays("connect")
+		src.update_damage_overlay()
+
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
@@ -780,6 +850,29 @@
 			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+	proc/update_damage_overlay()
+		var/health_percentage = health/health_max
+		if (!src.damage_image)
+			src.damage_image = image('icons/obj/window_damage.dmi')
+			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			if(src.material?.getID() == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+				src.damage_image.alpha = 85
+			else
+				src.damage_image.alpha = 180
+
+		if(health_percentage < 0.15) //only look very broken when it's about to break
+			src.damage_image.icon_state = "heavy-[connectdir]"
+		else if(health_percentage < 0.6)
+			src.damage_image.icon_state = "medium-[connectdir]"
+		else if(health_percentage < 0.9)
+			src.damage_image.icon_state = "light-[connectdir]"
+		else
+			src.damage_image.icon_state = null
+		src.AddOverlays(src.damage_image, "damage")
+
+/obj/window/auto/the_tuff_stuff
+	explosion_resistance = 3
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
@@ -796,8 +889,8 @@
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
-			ini_dir = 5//gurgle
-			set_dir(5)//grumble
+			ini_dir = NORTHEAST//gurgle
+			set_dir(NORTHEAST)//grumble
 
 	smash(var/actuallysmash)
 		if(actuallysmash)
@@ -805,7 +898,7 @@
 
 	attack_hand(mob/user)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+			src.visible_message(SPAN_ALERT("<b>[user]</b> knocks on [src]."))
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -831,7 +924,7 @@
 	name = "extremely indestructible window"
 	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
 	var/initialPos
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	New()
 		..()
 		initialPos = loc
@@ -883,134 +976,9 @@
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	default_reinforcement = "bohrum"
+
 	the_tuff_stuff
 		explosion_resistance = 5
-
-/obj/wingrille_spawn
-	name = "window grille spawner"
-	icon = 'icons/obj/window.dmi'
-	icon_state = "wingrille"
-	density = 1
-	anchored = 1
-	invisibility = INVIS_ALWAYS
-	//layer = 99
-	pressure_resistance = 4*ONE_ATMOSPHERE
-	var/win_path = "/obj/window"
-	var/grille_path = "/obj/grille/steel"
-	var/full_win = 0 // adds a full window as well
-	var/no_dirs = 0 //ignore directional
-
-	New()
-		..()
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(0)
-				initialize()
-
-	initialize()
-		. = ..()
-		src.set_up()
-		qdel(src)
-
-	proc/set_up()
-		if (!locate(text2path(src.grille_path)) in get_turf(src))
-			var/obj/grille/new_grille = text2path(src.grille_path)
-			new new_grille(src.loc)
-
-		if (!no_dirs)
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
-					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					if(new_win)
-						new new_win(src.loc)
-					else
-						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
-		if (src.full_win)
-			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
-				// if we have directional windows, there's already a window (or windows) from directional windows
-				// only check if there's no window if we're expecting there to be no window so spawn a full window
-				var/obj/window/new_win = text2path(src.win_path)
-				new new_win(src.loc)
-
-	full
-		icon_state = "wingrille_f"
-		full_win = 1
-
-	reinforced
-		name = "reinforced window grille spawner"
-		icon_state = "r-wingrille"
-		win_path = "/obj/window/reinforced"
-
-		full
-			icon_state = "r-wingrille_f"
-			full_win = 1
-
-	crystal
-		name = "crystal window grille spawner"
-		icon_state = "p-wingrille"
-		win_path = "/obj/window/crystal"
-
-		full
-			icon_state = "p-wingrille_f"
-			full_win = 1
-
-	reinforced_crystal
-		name = "reinforced crystal window grille spawner"
-		icon_state = "pr-wingrille"
-		win_path = "/obj/window/crystal/reinforced"
-
-		full
-			icon_state = "pr-wingrille_f"
-			full_win = 1
-
-	bulletproof
-		name = "bulletproof window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/bulletproof"
-
-		full
-			name = "bulletproof window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-	hardened
-		name = "hardened window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/hardened"
-
-		full
-			name = "hardened window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-
-	auto
-		name = "autowindow grille spawner"
-		win_path = "/obj/window/auto"
-		full_win = 1
-		no_dirs = 1
-		icon_state = "wingrille_f"
-
-		reinforced
-			name = "reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced"
-			icon_state = "r-wingrille_f"
-
-		crystal
-			name = "crystal autowindow grille spawner"
-			win_path = "/obj/window/auto/crystal"
-			icon_state = "p-wingrille_f"
-
-			reinforced
-				name = "reinforced crystal autowindow grille spawner"
-				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "pr-wingrille_f"
-
-		tuff
-			name = "tuff stuff reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced/the_tuff_stuff"
 
 //Cubicle walls! Also for the crunch. - from halloween.dm
 /obj/window/cubicle
@@ -1037,7 +1005,7 @@
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return
 
@@ -1050,15 +1018,17 @@
 		opacity = 0
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
-		dir = 1
-		default_material = "metal"
+		dir = NORTH
+		default_material = "steel"
 
 // flock windows
 
 /obj/window/auto/feather
+	default_material = "gnesisglass"
+	var/flock_id = "Fibrewoven window"
+	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
-	connects_to += /turf/simulated/wall/auto/feather
 	..()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
@@ -1066,13 +1036,15 @@
 /obj/window/auto/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Fibrewoven Window
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
-/obj/window/auto/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/auto/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/auto/feather/Crossed(atom/movable/mover)
 	. = ..()
@@ -1088,17 +1060,20 @@
 		var/mob/living/critter/flock/drone/F = mover
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
+TYPEINFO(/obj/window/feather)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/window/feather
+	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
+	var/repair_per_resource = 1
 	density = TRUE
 
 /obj/window/feather/New()
@@ -1109,13 +1084,15 @@
 /obj/window/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Fibrewoven Window
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
-/obj/window/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/feather/north
 	dir = NORTH

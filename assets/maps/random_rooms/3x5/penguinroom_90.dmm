@@ -1,0 +1,66 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/machinery/light/incandescent/blueish,
+/obj/shrub/snow/random,
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/shrub/snow,
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor/snowrough,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/tree/snow_random,
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
+"G" = (
+/turf/simulated/floor/snowrough,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/stone/snow,
+/turf/simulated/floor/snowrough,
+/area/dmm_suite/clear_area)
+"U" = (
+/mob/living/critter/small_animal/bird/penguin{
+	name = "Earl"
+	},
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/shrub/snow,
+/turf/simulated/floor/snowrough,
+/area/dmm_suite/clear_area)
+"Y" = (
+/mob/living/critter/small_animal/bird/penguin{
+	name = "Steven"
+	},
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+M
+e
+a
+a
+W
+"}
+(2,1,1) = {"
+a
+U
+G
+C
+a
+"}
+(3,1,1) = {"
+u
+a
+a
+x
+Y
+"}

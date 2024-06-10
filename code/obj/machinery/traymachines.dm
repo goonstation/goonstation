@@ -19,21 +19,22 @@
 
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
 #define TRAYMACHINE_DEFAULT_DRAW 250 //IDK I just put a number
-#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer. The bed adds the SECONDS so don't worry about that.
+#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer.
 
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
 //-----------------------------------------------------
 
 ABSTRACT_TYPE(/obj/machinery/traymachine)
+ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_tray)
 /obj/machinery/traymachine
 	name = "tray machine"
 	desc = "This thing sure has a big tray that goes vwwwwwwsh when you slide it in and out."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = TRUE
-	anchored = TRUE
-	power_usage = TRAYMACHINE_DEFAULT_DRAW
+	anchored = ANCHORED
+	power_usage = 50
 
 	//tray related variables
 	var/obj/machine_tray/my_tray = null
@@ -70,11 +71,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 			if (!(AM in non_tray_contents))
 				AM.set_loc(T)
 	. = ..()
-
-/obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
-	..()
-	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
-		use_power(power_usage, EQUIP)
 
 /obj/machinery/traymachine/attack_hand(mob/user)
 	src.add_fingerprint(user)
@@ -131,12 +127,27 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 ///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	set name = "open"
+
+	if (!is_cardinal(src.dir))
+		src.set_dir(src.dir & (NORTH | SOUTH))
 
 	var/turf/T_src = get_turf(src)
 	var/turf/T = T_src
 	for(var/i in 1 to src.bound_width / world.icon_size)
 		T = get_step(T, src.dir)
+
+	// stop the tray from extending into solid things
+	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
+		return
+	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
+		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
+			return
+
+	my_tray.set_dir(src.dir)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
@@ -154,9 +165,25 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		animate(layer = orig_layer, easing = JUMP_EASING)
 	update()
 
+/obj/machinery/traymachine/set_dir(new_dir)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/set_loc(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
+/obj/machinery/traymachine/Move(atom/target)
+	if(src.my_tray && src.my_tray.loc != src)
+		return
+	. = ..()
+
 ///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	set name = "close"
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
 		if (!(A.anchored) && (istype(A, /obj/item) || (istype(A, /mob)))) //note the tray is anchored
 			A.set_loc(src)
@@ -188,12 +215,13 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 /obj/machinery/traymachine/locking
 	var/locked = FALSE
+	power_usage = TRAYMACHINE_DEFAULT_DRAW
 	var/powerdraw_use = TRAYMACHINE_DEFAULT_DRAW  //same as power_usage by default
 	//crematoria/tanning beds also had a variable called cremating but from what I saw that and locked were always set together so
 
 /obj/machinery/traymachine/locking/attack_hand(mob/user)
 	if (locked)
-		boutput(user, "<span class='alert'>It's locked.</span>")
+		boutput(user, SPAN_ALERT("It's locked."))
 		src.add_fingerprint(user) //because we're not reaching the parent call
 		return
 	..()
@@ -216,7 +244,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	density = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/machinery/traymachine/my_machine = null
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 	//simple subtypes
@@ -255,7 +283,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	O.set_loc(src.loc)
 	if (user != O)
-		src.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>")
+		src.visible_message(SPAN_ALERT("[user] stuffs [O] into [src]!"))
 	return
 
 
@@ -291,10 +319,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/id = 1 //crema switch uses this when finding crematoria
 	var/obj/machinery/crema_switch/igniter = null
 	tray_type = /obj/machine_tray/crematorium
+	var/active = FALSE
 
 	icon_trayopen = "crema0"
 	icon_unoccupied = "crema1"
 	icon_occupied = "crema2"
+
+	medical
+		id = "medicalcremator"
 
 	New()
 		. = ..()
@@ -313,55 +345,87 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	if (src.locked)
 		return //don't let you cremate something twice or w/e
+	if (src.active)
+		return
 	if (!src.contents || !length(src.contents))
-		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
+		src.visible_message(SPAN_ALERT("You hear a hollow crackle, but nothing else happens."))
 		return
 
-	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
-	src.locked = TRUE
+	src.active = TRUE
+	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
+	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
-	for (var/M in contents)
-		if (M in non_tray_contents) continue
-		if (M == my_tray) continue //no cremating the tray tyvm
-		if (isliving(M))
-			var/mob/living/L = M
-			SPAWN(0)
-				L.changeStatus("stunned", 10 SECONDS)
+	for (var/obj/item/body_bag/bag in contents)
+		for (var/obj/O in bag)
+			O.set_loc(src)
+		for (var/mob/M in bag)
+			M.set_loc(src)
+		qdel(bag)
 
-				var/i
-				for (i = 0, i < 10, i++)
-					sleep(1 SECOND)
-					L.TakeDamage("chest", 0, 30)
-					if (!isdead(L) && prob(25))
-						L.emote("scream")
+	for (var/mob/living/L in contents)
+		if (L in non_tray_contents)
+			continue
+		L.changeStatus("burning", 15 SECONDS)
+		if (L in non_tray_contents)
+			continue
+		if (!L.is_heat_resistant())
+			L.TakeDamage("chest", 0, 30)
+			if (!isdead(L))
+				L.emote("scream")
 
+	sleep(3 SECONDS)
+
+	for (var/i in 1 to 10)
+		if(isnull(src))
+			return
+		for (var/mob/living/L in contents)
+			if (L in non_tray_contents)
+				continue
+			L.changeStatus("burning", 30 SECONDS)
+
+	sleep(6 SECONDS)
+
+	if(isnull(src))
+		return
+	src.locked = TRUE // only lock when it's too late to escape
+	src.visible_message(SPAN_ALERT("\The [src.name] clunks locked!"))
+	sleep(1 SECOND)
+	for (var/I in contents)
+		if (I in non_tray_contents)
+			continue
+		if (I == my_tray)	//no cremating the tray tyvm
+			continue
+		if (isliving(I))
+			var/mob/living/L = I
+			if (!L.is_heat_resistant())
+				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
 				for (var/obj/item/W in L)
 					if (prob(10))
 						W.set_loc(L.loc)
-
-				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-				L.remove()
 				ashes += 1
-
-		else if (!ismob(M))
+			else
+				logTheThing(LOG_COMBAT, user, "fails to cremate [constructTarget(L,"combat")] in a crematorium at [log_loc(src)] due to their heat resistance.")
+				continue // don't qdel us thanks
+		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))
 				ashes += 1
-			qdel(M)
+		qdel(I)
 
-	SPAWN(10 SECONDS)
-		if (src)
-			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-			src.locked = FALSE
-			power_usage = initial(power_usage)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+	if(isnull(src))
+		return
+	src.visible_message(SPAN_ALERT("\The [src.name] finishes and shuts down."))
+	src.locked = FALSE
+	src.active = FALSE
+	power_usage = initial(power_usage)
+	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
-			while (ashes > 0)
-				make_cleanable( /obj/decal/cleanable/ash,src)
-				ashes -= 1
-			update() //get rid of the active sprite
+	while (ashes > 0)
+		make_cleanable( /obj/decal/cleanable/ash,src)
+		ashes -= 1
+	update() //get rid of the active sprite
 
 
 //-----------------------------------------------------
@@ -373,13 +437,18 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	desc = "Burn baby burn!"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
-	anchored = TRUE
+	anchored = ANCHORED
 	req_access = list(access_crematorium)
+	plane = PLANE_NOSHADOW_ABOVE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
 	var/list/obj/machinery/traymachine/locking/crematorium/crematoriums = null
+
+	medical
+		id = "medicalcremator"
+		req_access = list(access_medical_lockers)
 
 	disposing()
 		for (var/obj/machinery/traymachine/locking/crematorium/O in src.crematoriums)
@@ -403,7 +472,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			if (!C.locked && C.my_tray.loc == C) //don't activate if the tray's not in ffs
 				C.cremate(user)
 	else
-		boutput(user, "<span class='alert'>Access denied.</span>")
+		boutput(user, SPAN_ALERT("Access denied."))
 
 
 //-----------------------------------------------------
@@ -417,7 +486,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "tanbed"
 	var/id = 2 //this gets used when the tanning computer links to the bed
 	powerdraw_use = 1000 //power cost while tanning
-	mats = 30
+	//mats = 30
 
 	icon_trayopen = "tanbed"
 	icon_unoccupied = "tanbed"
@@ -457,11 +526,11 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (src.locked)
 			return //don't let you cremate something twice or w/e
 		if (!src.contents || !length(src.contents))
-			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
+			src.visible_message(SPAN_ALERT("You hear the lights turn on for a second, then turn off."))
 			return
 
-		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
-		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
+		src.visible_message(SPAN_ALERT("You hear a faint buzz as \the [src] activates."))
+		playsound(src.loc, 'sound/machines/shieldup.ogg', 30, 1)
 		src.locked = TRUE
 		power_usage = powerdraw_use
 		icon_state = "tanbed_active"
@@ -476,17 +545,17 @@ ABSTRACT_TYPE(/obj/machine_tray)
 						if (src.emagged)
 							H.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 							if (i % (2 SECONDS)) //message limiter
-								boutput(H, "<span class='alert'>Your skin feels like it's on fire!</span>")
+								boutput(H, SPAN_ALERT("Your skin feels like it's on fire!"))
 						else if (!H.wear_suit)
 							H.TakeDamage("All", 0, 2, 0, DAMAGE_BURN)
 							if (i % (2 SECONDS)) //limiter
-								boutput(H, "<span class='alert'>Your skin feels hot!</span>")
+								boutput(H, SPAN_ALERT("Your skin feels hot!"))
 						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
 							H.take_eye_damage(1, 2)
 							H.change_eye_blurry(2)
 							H.changeStatus("stunned", 1 SECOND)
 							H.change_misstep_chance(5)
-							boutput(H, "<span class='alert'>Your eyes sting!</span>")
+							boutput(H, SPAN_ALERT("Your eyes sting!"))
 						if (H.bioHolder.mobAppearance.s_tone)
 							var/currenttone = H.bioHolder.mobAppearance.s_tone
 							var/newtone = BlendRGB(currenttone, src.tanningcolor, src.tanningmodifier) //Make them tan slowly
@@ -496,18 +565,40 @@ ABSTRACT_TYPE(/obj/machine_tray)
 							if (H.limbs)
 								H.limbs.reset_stone()
 							H.update_colorful_parts()
+						if (isvampire(H))
+							H.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
+							if (prob(15) && isalive(H))
+								H.emote("scream")
+							if (i % (2 SECONDS))
+								boutput(H, SPAN_ALERT("[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]"))
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
+							if (isdead(H))
+								make_cleanable(/obj/decal/cleanable/ash, src)
+								H.unequip_all()
+								H.remove()
+								src.visible_message(SPAN_ALERT("A puff of smoke erupts from the machine as it grinds to a halt! It smells like a graveyard caught fire!"))
+								var/turf/T = get_turf(src)
+								if (istype(T))
+									var/datum/effects/system/bad_smoke_spread/smoke_effect = new /datum/effects/system/bad_smoke_spread/(T)
+									smoke_effect.set_up(15, 0, T, null, "#000000")
+									smoke_effect.start()
+								end_tanning()
+
+								return
 				if (emagged && isdead(M))
 					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
 		SPAWN(src.settime)
 			if (src)
-				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.locked = FALSE
-				power_usage = initial(power_usage)
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				update() //clear the active sprite
+				end_tanning()
 
+	proc/end_tanning()
+		src.visible_message(SPAN_ALERT("The [src.name] finishes and shuts down."))
+		src.locked = FALSE
+		power_usage = initial(power_usage)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		update()
 
 //-----------------------------------------------------
 /*~ Tanning Bed Tray ~*/
@@ -542,15 +633,15 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		tanningtube.name = "stock tanning light tube"
 		tanningtube.desc = "Fancy. But not really."
 		tanningtube.color_r = 0.7
-		tanningtube.color_g = 0.5
-		tanningtube.color_b = 0.3
+		tanningtube.color_g = 0.3
+		tanningtube.color_b = 0.5
 
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.5)
 		light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 
-		var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_b * 255, tanningtube.color_g * 255)
+		var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_g * 255, tanningtube.color_b * 255)
 
 		generate_overlay_icon(tanningtubecolor)
 
@@ -565,18 +656,18 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
-			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You put \the [G.name] into \the [src.name]."))
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
-			var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_b * 255, tanningtube.color_g * 255)
+			var/tanningtubecolor = rgb(tanningtube.color_r * 255, tanningtube.color_g * 255, tanningtube.color_b * 255)
 			generate_overlay_icon(tanningtubecolor)
 			send_new_tancolor(tanningtubecolor)
 			if (src.light)
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
 		else if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
-			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You pry out \the [src.tanningtube.name] from \the [src.name]."))
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
 			generate_overlay_icon() //nulling overlay
@@ -594,7 +685,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	name = "tanning computer"
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
-	mats = 20
+	//mats = 20
 	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
@@ -663,14 +754,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
-				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
+				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
-				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
+				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 

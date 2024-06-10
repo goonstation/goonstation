@@ -4,5 +4,5 @@
 	icon_state = "extinguish"
 	flags = TABLEPASS
 	mouse_opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/original_dir = NORTH

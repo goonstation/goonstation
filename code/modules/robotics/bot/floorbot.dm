@@ -12,6 +12,7 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
+	var/color_overlay = null // default blue floorbot
 
 /obj/item/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
@@ -24,6 +25,7 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
+	var/color_overlay = null // default blue floorbot
 
 //Floorbot
 /obj/machinery/bot/floorbot
@@ -33,7 +35,7 @@
 	icon_state = "floorbot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	bot_move_delay = FLOORBOT_MOVE_SPEED
 	//weight = 1.0E7
 	var/amount = 50
@@ -59,6 +61,7 @@
 	/// and they lag to shit at higher processing levels (i actually fixed that lag, but theyre kinda good at this rate sooo)
 	dynamic_processing = 0
 	PT_idle = PROCESSING_QUARTER
+	var/color_overlay = null // default blue floorbot
 
 	var/static/list/floorbottargets = list()
 
@@ -69,10 +72,18 @@
 
 	var/list/chase_lines = list("Gimme!", "Hey!", "Oi!", "Mine!", "Want!", "Need!")
 
+	proc/update_power_overlay()
+		if(src.on)
+			src.UpdateOverlays(image(src.icon, icon_state = "floorbot_overlay_power_on"), "poweroverlay")
+		else
+			src.UpdateOverlays(image(src.icon, icon_state = "floorbot_overlay_power_off"), "poweroverlay")
+
+
 /obj/machinery/bot/floorbot/New()
 	..()
 	SPAWN(0.5 SECONDS)
 		if (src)
+			src.update_power_overlay()
 			src.UpdateIcon()
 	return
 
@@ -100,11 +111,12 @@
 /obj/machinery/bot/floorbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if (user)
-			boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+			boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
+		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
+		src.update_power_overlay()
 		src.icon_state = "floorbot[src.on]"
 		return 1
 	return 0
@@ -121,10 +133,11 @@
 /obj/machinery/bot/floorbot/emp_act()
 	..()
 	if (!src.emagged && prob(75))
-		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
+		src.update_power_overlay()
 		src.icon_state = "floorbot[src.on]"
 	else
 		src.explode()
@@ -145,13 +158,11 @@
 			src.amount += T.amount
 			loaded = T.amount
 			qdel(T)
-		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
+		boutput(user, SPAN_ALERT("You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"))
 		src.UpdateIcon()
 	//Regular ID
 	else
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		if (istype(get_id_card(W), /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
@@ -172,6 +183,7 @@
 	switch(href_list["operation"])
 		if ("start")
 			src.on = !src.on
+			src.update_power_overlay()
 			src.KillPathAndGiveUp(1)
 			src.updateUsrDialog()
 		if ("improve")
@@ -186,6 +198,7 @@
 
 /obj/machinery/bot/floorbot/attack_ai()
 	src.on = !src.on
+	src.update_power_overlay()
 	src.KillPathAndGiveUp(1)
 
 /obj/machinery/bot/floorbot/proc/find_target(var/force = 0)
@@ -271,7 +284,7 @@
 		if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
 			var/coord = turf2coordinates(get_turf(A))
 			targets_invalid |= coord
-			return true
+			return TRUE
 
 
 
@@ -334,7 +347,7 @@
 	if(give_up)
 		src.floorbottargets -= turf2coordinates(src.target)
 		src.target = null
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.UpdateIcon()
 		src.repairing = 0
 		src.oldtarget = null
@@ -344,7 +357,7 @@
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
-	if (prob(80))
+	if(!ON_COOLDOWN(src, "floorbeep", 30 SECONDS))
 		src.visible_message("[src] makes an excited booping beeping sound!")
 	if (istype(src.target, /obj/item/tile))
 		src.eattile(src.target)
@@ -371,7 +384,7 @@
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
 	if (!istype(T, /obj/item/tile))
 		return
-	src.visible_message("<span class='alert'>[src] gathers up [T] into its hopper.</span>")
+	src.visible_message(SPAN_ALERT("[src] gathers up [T] into its hopper."))
 	src.repairing = 1
 	if (isnull(T))
 		src.target = null
@@ -392,7 +405,7 @@
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/sheet/M)
 	if (!istype(M, /obj/item/sheet))
 		return
-	src.visible_message("<span class='alert'>[src] converts [M] into usable floor tiles.</span>")
+	src.visible_message(SPAN_ALERT("[src] converts [M] into usable floor tiles."))
 	src.repairing = 1
 	M.set_loc(src)
 	if (isnull(M))
@@ -423,32 +436,34 @@
 	else
 		src.icon_state = "floorbot[src.on]e"
 
+/// This one starts turned on
+/obj/machinery/bot/floorbot/active
+	on = TRUE
 
-/////////////////////////////////////////
-//////Floorbot Construction/////////////
-/////////////////////////////////////////
-/obj/item/storage/toolbox/mechanical/attackby(var/obj/item/tile/T, mob/user as mob)
-	if (!istype(T, /obj/item/tile))
-		..()
-		return
-	if (src.contents.len >= 1)
-		boutput(user, "They wont fit in as there is already stuff inside!")
-		return
-	var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
-	user.u_equip(T)
-	user.put_in_hand_or_drop(B)
-	boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
-	qdel(T)
-	qdel(src)
+/////////////////////////////////
+//////Floorbot Construction//////
+/////////////////////////////////
+// Construction begins in /obj/item/storage/toolbox/attackby
+
+/obj/item/toolbox_tiles/attack_self(mob/user)
+	for(var/obj/item/I in src.contents) // toolbox
+		user.put_in_hand_or_drop(I)
+		qdel(src)
+	boutput(user, "You discard the tile and recover the toolbox!")
 
 /obj/item/toolbox_tiles/attackby(var/obj/item/device/prox_sensor/D, mob/user as mob)
 	if (!istype(D, /obj/item/device/prox_sensor))
 		return
 	var/obj/item/toolbox_tiles_sensor/B = new /obj/item/toolbox_tiles_sensor
+	if(src.color_overlay)
+		B.UpdateOverlays(image(B.icon, icon_state = src.color_overlay), "coloroverlay")
+		B.color_overlay = src.color_overlay
+	B.UpdateOverlays(image(B.icon, icon_state = "floorbot_overlay_power_off"), "poweroverlay")
 	B.set_loc(user)
 	user.u_equip(D)
 	user.put_in_hand_or_drop(B)
 	boutput(user, "You add the sensor to the toolbox and tiles!")
+	// No going back now!
 	qdel(D)
 	qdel(src)
 
@@ -456,11 +471,12 @@
 	if (!istype(P, /obj/item/parts/robot_parts/arm/))
 		return
 	var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
-	if (user.r_hand == src || user.l_hand == src)
-		A.set_loc(user.loc)
-	else
-		A.set_loc(src.loc)
+	if(src.color_overlay)
+		A.UpdateOverlays(image(A.icon, icon_state = src.color_overlay), "coloroverlay")
+		A.color_overlay = src.color_overlay
+	A.set_loc(get_turf(src))
 	A.on = 1 // let's just pretend they flipped the switch
+	A.update_power_overlay()
 	boutput(user, "You add the robot arm to the odd looking toolbox assembly! Boop beep!")
 	qdel(P)
 	qdel(src)
@@ -469,8 +485,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/tile/steel(src.loc)
 	new /obj/item/device/prox_sensor(src.loc)
@@ -481,7 +497,6 @@
 /datum/action/bar/icon/floorbot_repair
 	duration = 10
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "floorbot_build"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
@@ -493,17 +508,17 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		master.anchored = 1
+		master.anchored = ANCHORED
 		master.icon_state = "floorbot-c"
 		master.repairing = 1
 		src.new_tile = 0
 
 		if (istype(master.target, /turf/space/) || istype(master.target, /turf/simulated/floor/metalfoam))
-			master.visible_message("<span class='notice'>[master] begins building flooring.</span>")
+			master.visible_message(SPAN_NOTICE("[master] begins building flooring."))
 			src.new_tile = 1
 
 		else if (istype(master.target, /turf/simulated/floor))
-			master.visible_message("<span class='notice'>[master] begins to fix the floor.</span>")
+			master.visible_message(SPAN_NOTICE("[master] begins to fix the floor."))
 
 		else
 			// how the fucking jesus did you get here
@@ -524,7 +539,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 
 	onInterrupt()
 		. = ..()
@@ -532,7 +547,9 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		if (!master.target)
+			return
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -547,14 +564,13 @@
 		master.repairing = 0
 		master.amount -= 1
 		master.UpdateIcon()
-		master.anchored = 0
+		master.anchored = UNANCHORED
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)
 
 /datum/action/bar/icon/floorbot_disrepair
 	duration = 10
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "floorbot_ripup"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
@@ -562,7 +578,7 @@
 	New(var/the_bot, var/_target)
 		src.master = the_bot
 
-		master.anchored = 1
+		master.anchored = ANCHORED
 		master.icon_state = "floorbot-c"
 		master.repairing = 1
 
@@ -584,7 +600,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, 'sound/items/Welder.ogg', 50, 1)
+		playsound(master, 'sound/items/Welder.ogg', 50, TRUE)
 
 	onInterrupt()
 		. = ..()
@@ -592,7 +608,7 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
 			interrupt(INTERRUPT_ALWAYS)
@@ -607,6 +623,6 @@
 		T.ReplaceWithSpace()
 		master.repairing = 0
 		master.UpdateIcon()
-		master.anchored = 0
+		master.anchored = UNANCHORED
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)

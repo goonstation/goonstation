@@ -22,7 +22,7 @@ reason
 keep the staff complacent@,embezzle money from the company@,hoard all the paperclips for themselves@,
 discover dark secrets@,summon an elder god@,corner the [thing] market@,
 create vending machines that can stand back up@,flush out their political rivals@,hide from space OSHA standards@,enforce space OSHA standards@,
-have some fun@,elect Tanhony for HoP@,get a promotion@,seem more experienced and sophistocated@,impress [who]@,
+have some fun@,elect Tanhony for HoP@,get a promotion@,seem more experienced and sophisticated@,impress [who]@,
 promote their latest mixtape@,steal all the alcohol
 hide the fact that the space station is flat
 give the chaplain something useful to do
@@ -35,7 +35,7 @@ cover up the fact that the syndicate aren't such bad guys after all
 create the most lethal baked potato known to humankind
 
 thing
-jumpsuit@,toilet@,hat@,shoe@,plasma@,air freshner
+jumpsuit@,toilet@,hat@,shoe@,plasma@,air freshener
 
 objective
 Reveal the truth!@,Uncover their plot!@,Panic!@,Right these wrongs!@,Spread the word!@,Alert the crew!@,

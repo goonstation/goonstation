@@ -1,9 +1,8 @@
 /datum/ailment/disease/vamplague
 	name = "Grave Fever"
-	max_stages = 3
+	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Antibiotics"
-	recureprob = 20
+	cure_flags = CURE_ANTIBIOTICS
 	associated_reagent = "grave dust"
 	affected_species = list("Human")
 
@@ -12,8 +11,8 @@
 	if (..())
 		return
 
-	var/toxdamage = D.stage * 3
-	var/stuntime = D.stage * 3
+	var/toxdamage = (D.stage-1) * 3
+	var/stuntime = (D.stage-1) * 3
 
 	if (probmult(10))
 		affected_mob.emote(pick("cough","groan", "gasp"))
@@ -21,13 +20,13 @@
 
 	if (probmult(15))
 		if (prob(33))
-			boutput(affected_mob, "<span class='alert'>You feel sickly and weak.</span>")
-			affected_mob.changeStatus("slowed", 3 SECONDS)
+			boutput(affected_mob, SPAN_ALERT("You feel sickly and weak."))
+			affected_mob.changeStatus("slowed", 3 SECONDS, (D.stage-1) * 3)
 		affected_mob.take_toxin_damage(toxdamage)
 
 	if (probmult(10))
-		boutput(affected_mob, "<span class='alert'>Your joints ache horribly!</span>")
-		affected_mob.changeStatus("weakened", stuntime SECONDS)
+		boutput(affected_mob, SPAN_ALERT("Your joints ache horribly!"))
+		affected_mob.changeStatus("knockdown", stuntime SECONDS)
 		affected_mob.changeStatus("stunned", stuntime SECONDS)
 		affected_mob.take_toxin_damage(toxdamage * 2)
 
@@ -37,7 +36,7 @@
 	max_stages = 3
 	stage_prob = 9
 	spread = "Non-Contagious"
-	cure = "None"
+	cure_flags = CURE_UNKNOWN
 	associated_reagent = "vampire_serum"
 	affected_species = list("Human")
 
@@ -53,15 +52,15 @@
 			if (probmult(5))
 				affected_mob.emote(pick("shiver", "pale"))
 			if (probmult(8))
-				boutput(affected_mob, "<span class='alert'>You taste blood.  Gross.</span>")
+				boutput(affected_mob, SPAN_ALERT("You taste blood.  Gross."))
 			if (probmult(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 
 		else
 			if (probmult(40))
-				boutput(affected_mob, "<span class='alert'>Your heart stops...</span>")
-				affected_mob.playsound_local(affected_mob.loc, "sound/effects/heartbeat.ogg", 50, 1)
+				boutput(affected_mob, SPAN_ALERT("Your heart stops..."))
+				affected_mob.playsound_local(affected_mob.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 				affected_mob.emote("collapse")
 
-				affected_mob.make_vampire(FALSE, TRUE)
+				affected_mob.mind?.add_antagonist(ROLE_VAMPIRE, do_pseudo = TRUE)
 				affected_mob.cure_disease(D)

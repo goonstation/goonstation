@@ -6,7 +6,7 @@ This file serves as an example for various things that could be done with dialog
 	name = "Admiral Wardson"
 	desc = "That *thing* is not a real person."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon='icons/mob/human.dmi'
 	icon_state = "body_m"
 

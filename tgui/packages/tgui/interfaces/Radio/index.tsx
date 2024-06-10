@@ -34,6 +34,13 @@ export const Radio = (_props, context) => {
           <Stack.Item>
             <Section>
               <LabeledList>
+                {!!data.hasToggleButton && (
+                  <LabeledList.Item label="Power">
+                    <Button.Checkbox checked={data.power} onClick={() => act('toggle-power')}>
+                      {data.power ? 'Powered on' : 'Powered off'}
+                    </Button.Checkbox>
+                  </LabeledList.Item>
+                )}
                 {!!data.hasMicrophone && (
                   <LabeledList.Item label="Microphone">
                     <Button.Checkbox checked={data.broadcasting} onClick={() => act('toggle-broadcasting')}>
@@ -89,7 +96,7 @@ export const Radio = (_props, context) => {
                 )}
                 {!!data.sendButton && (
                   <LabeledList.Item>
-                    <Button align="center" onClick={() => { act("send"); }}>Send signal</Button>
+                    <Button align="center" onClick={() => { act("send"); }} icon="wifi">Send signal</Button>
                   </LabeledList.Item>
                 )}
               </LabeledList>

@@ -16,7 +16,7 @@
 	desc = "looks densely packed"
 	icon_state = "gehenna_rock2"
 
-/turf/unsimulated/wall/gehenna/
+/turf/unsimulated/wall/gehenna
 	name = "monolithic sulferous rock"
 	desc = "looks conveniently impenetrable"
 	icon = 'icons/turf/floors.dmi'

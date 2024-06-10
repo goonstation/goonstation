@@ -45,7 +45,7 @@
 				var/flag = copytext(flagString, n, n+1)
 				switch (flag)
 					if ("b") //Batch operation
-						//todo
+						; //todo
 
 					if ("s") //Silent operation
 						silent = 1
@@ -122,7 +122,7 @@
 					if (driverID in testDrivers)
 						var/targetID = testDrivers.Find(driverID)
 
-						if (initlist.len >= 2)
+						if (length(initlist) >= 2)
 							var/fieldName = ckey(initlist[2])
 							if (fieldName)
 								if(signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="peek", "field"="[fieldName]")) == ESIG_SUCCESS)
@@ -142,7 +142,7 @@
 								findSuccess = 1
 								var/targetID = testDrivers.Find(x)
 
-								if (initlist.len >= 2)
+								if (length(initlist) >= 2)
 									var/fieldName = ckey(initlist[2])
 									if (fieldName)
 										if(signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=targetID, "dcommand"="peek", "field"="[fieldName]")) == ESIG_SUCCESS)
@@ -170,7 +170,7 @@
 					if (driverID in testDrivers)
 						var/targetID = testDrivers.Find(driverID)
 
-						if (initlist.len >= 3)
+						if (length(initlist) >= 3)
 							var/fieldName = ckey(initlist[2])
 							var/newValue = ckey(initlist[3])
 							if (fieldName && newValue)
@@ -191,7 +191,7 @@
 								findSuccess = 1
 								var/targetID = testDrivers.Find(x)
 
-								if (initlist.len >= 3)
+								if (length(initlist) >= 3)
 									var/fieldName = ckey(initlist[2])
 									var/newValue = ckey(initlist[3])
 									if (fieldName && newValue)
@@ -222,7 +222,7 @@
 
 						//Pulses have a duration from 1 to 255.
 						var/duration = 1
-						if (initlist.len >= 2)
+						if (length(initlist) >= 2)
 							duration = text2num_safe(initlist[2])
 							if (isnum(duration))
 								duration = round(duration)
@@ -250,7 +250,7 @@
 								var/targetID = testDrivers.Find(x)
 
 								var/duration = 1
-								if (initlist.len >= 2)
+								if (length(initlist) >= 2)
 									duration = text2num_safe(initlist[2])
 									if (isnum(duration))
 										duration = round(duration)
@@ -405,7 +405,7 @@
 						formatted += "| Active: [(rawDataList[1] == "1") ? "YES" : "NO"]|n| ID: [rawDataList[2]]|n| Enactor: [(rawDataList[3] == "1") ? "YES" : "NO"]|n| Sensor: [(rawDataList[4] == "1") ? "YES" : "NO"]|n+--------|Configuration Values|--------+|n"
 
 						. = ""
-						if (rawDataList.len > 4)
+						if (length(rawDataList) > 4)
 							for (var/i = rawDataList.len, i > 4, i--)
 								. = "| \[[add_zero("[i-4]",4)]] | [uppertext(rawDataList[i])]|n[.]"
 
@@ -764,8 +764,8 @@
 								current_device_known_fields = list()
 
 							. = ""
-							if (rawDataList.len > 4)
-								if (rawDataList.len > 7)
+							if (length(rawDataList) > 4)
+								if (length(rawDataList) > 7)
 									formatted += "|------|Configuration Values (1/[(rawDataList.len-7)%3])|--------||n"
 									moreDisplayBuffer.len = 0
 									for (var/i = rawDataList.len, i > 7, i--)
@@ -802,7 +802,7 @@
 								driverID = 0
 
 
-						if (rawDataList.len > 4)
+						if (length(rawDataList) > 4)
 							for (var/i = rawDataList.len, i > 4, i--)
 								if (cmptext(rawDataList[i], "none"))
 									break
@@ -923,8 +923,9 @@
 //very WIP ok
 /obj/machinery/networked/artifact_console
 	name = "artifact research console"
+	desc = "It just sorta showed up in a giant box of test equipment."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
 	icon = 'icons/obj/networked.dmi'
@@ -938,6 +939,8 @@
 
 	New()
 		..()
+		if (prob(10))
+			src.desc = "Giant mystery science doodad."
 
 		entries = list("","","","","|cLoading...","","","")
 		SPAWN(0.5 SECONDS)
@@ -1142,7 +1145,7 @@
 		background-color:#1B1E1B;
 		color:#19A319;
 		font-family: "Consolas", monospace;
-		font-size: 19px;
+		font-size: 18px;
 	}
 
 	.consolelog_entry
@@ -1338,7 +1341,7 @@
 	attackby(obj/item/W, mob/user)
 		/*
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			src.updateUsrDialog()

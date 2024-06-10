@@ -107,37 +107,36 @@ file_save - Save file to local disk."}
 				src.peripheral_command("ping[src.net_number]", null, "\ref[src.netcard]")
 
 			if("term_login")
-				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
-				if(!scanner)
-					src.print_text("Error: No ID scanner detected.")
-					return
 				if(!src.netcard)
 					src.print_text("Alert: No network card detected.")
 					return
 				if(!src.serv_id)
 					src.print_text("Alert: Connection required.")
 					return
-				src.ping_wait = 2
+
 				if (issilicon(usr) || isAI(usr))
+					src.ping_wait = 2
 					var/datum/signal/newsig = new
 					newsig.data["registered"] = isAI(usr) ? "AI" : "CYBORG"
 					newsig.data["assignment"] = "AI"
 					newsig.data["access"] = "34"
 
-					SPAWN(0.4 SECONDS)
-						switch( src.receive_command(src.master, "card_authed", newsig) )
-							if ("nocard")
-								src.print_text("Please insert a card first.")
-
-							if ("noreg")
-								src.print_text("Notice: No name on card.")
-
-							if ("noassign")
-								src.print_text("Notice: No assignment on card.")
-
+					src.receive_command(src.master, "card_authed", newsig)
 					return
-				else
-					src.peripheral_command("scan_card",null,"\ref[scanner]")
+
+				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
+				if(!scanner)
+					src.print_text("Error: No ID scanner detected.")
+					return
+				src.ping_wait = 2
+				switch(src.peripheral_command("scan_card",null,"\ref[scanner]"))
+					if("nocard")
+						src.print_text("Please insert a card first.")
+					if("noreg")
+						src.print_text("Notice: No name on card.")
+					if("noassign")
+						src.print_text("Notice: No assignment on card.")
+
 /*
 			if("term_service")
 				if (src.serv_id)
@@ -355,6 +354,8 @@ file_save - Save file to local disk."}
 		return
 
 	initialize()
+		if (..())
+			return TRUE
 		//src.service_mode = 0
 		src.print_text("Loading TermOS, Revision C<br>Copyright 2046-2053 Thinktronic Systems, LTD.")
 
@@ -496,14 +497,14 @@ file_save - Save file to local disk."}
 				var/reply_id = signal.data["netid"]
 
 				if(src.ping_filter == null || findtext(lowertext(reply_device), src.ping_filter))
-					src.print_text("<b>P:</b> \[[reply_id]]-TYPE: [reply_device]")
+					src.print_text("<b>P:</b> \[[strip_html(reply_id)]]-TYPE: [strip_html(reply_device)]")
 
 			//oh, somebody trying to connect!
 			else if(signal.data["command"] == "term_connect" && !src.serv_id)
 				if(!attempt_id && signal.data["sender"] && src.auto_accept)
 					src.serv_id = signal.data["sender"]
 					src.disconnect_wait = -1
-					src.print_text("Connection established to [serv_id]!")
+					src.print_text("Connection established to [strip_html(serv_id)]!")
 					//well okay but now they need to know we've accepted!
 					if(signal.data["data"] != "noreply")
 						var/datum/signal/termsignal = get_free_signal()
@@ -525,7 +526,7 @@ file_save - Save file to local disk."}
 		if(signal.data["sender"] == src.serv_id)
 			switch(lowertext(signal.data["command"]))
 				if("term_message")
-					var/new_message = signal.data["data"]
+					var/new_message = strip_html(signal.data["data"])
 					if(!new_message)
 						return
 

@@ -1,4 +1,4 @@
-#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[#ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[#ID + #GAS]]% [NAME]</FONT>  " }
+#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[ID + #GAS]]% [NAME]</FONT>  " }
 #define GET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_GET_SIGNAL_GAS, ID)
 
 obj/machinery/computer/general_air_control
@@ -18,7 +18,7 @@ obj/machinery/computer/general_air_control
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 	special_deconstruct(obj/computerframe/frame as obj)
 		frame.circuit.frequency = src.frequency
@@ -147,7 +147,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				return
 
 			if(!allowed(usr))
-				boutput(usr, "<span class='alert'>Access Denied!</span>")
+				boutput(usr, SPAN_ALERT("Access Denied!"))
 				return
 
 			if(href_list["in_refresh_status"])
@@ -353,9 +353,9 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 /obj/machinery/computer/general_alert
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", frequency)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("respond", respond_frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("receive", receive_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "respond", respond_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "receive", receive_frequency)
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
@@ -454,7 +454,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 #define MAX_PRESSURE 20 * ONE_ATMOSPHERE
 /obj/machinery/computer/atmosphere/mixercontrol
-	var/obj/machinery/atmospherics/mixer/mixerid
+	var/obj/machinery/atmospherics/trinary/mixer/mixerid
 	var/mixer_information
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -494,13 +494,13 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		src.updateDialog()
 
 	receive_signal(datum/signal/signal)
-		//boutput(world, "[id] actually can recieve a signal!")
+		//boutput(world, "[id] actually can receive a signal!")
 		if(!signal || signal.encryption) return
 
 		var/id_tag = signal.data["tag"]
 		if(!id_tag || mixerid != id_tag) return
 
-		//boutput(world, "[id] recieved a signal from [id_tag]!")
+		//boutput(world, "[id] received a signal from [id_tag]!")
 		mixer_information = signal.data
 
 	proc/return_text()
@@ -512,7 +512,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			if(data)
 				mixer_part += "<B>Input 1 Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE(in1)
+				GET_SIGNAL_MIXTURE("In1")
 				if(data["in1tg"])
 					mixer_part += "<FONT color='black'>[data["in1tg"]]% OTHER</FONT>   "
 				if (data["in1kpa"] && data["in1temp"])
@@ -520,7 +520,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				mixer_part += "<BR>"
 
 				mixer_part += "<B>Input 2 Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE(in2)
+				GET_SIGNAL_MIXTURE("In2")
 				if(data["in2tg"])
 					mixer_part += "<FONT color='black'>[data["in2tg"]]% OTHER</FONT>   "
 				if (data["in2kpa"] && data["in2temp"])
@@ -533,7 +533,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				mixer_part += "<B>Gas Input Ratio</b>: <A href='?src=\ref[src];ratio=5'><<</A> <A href='?src=\ref[src];ratio=1'><</A> [data["i1trans"]]% /  [data["i2trans"]]% <A href='?src=\ref[src];ratio=-1'>></A> <A href='?src=\ref[src];ratio=-5'>>></A>"
 
 				mixer_part += "<HR><B>Resulting Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE(out)
+				GET_SIGNAL_MIXTURE("Out")
 				if(data["outtg"])
 					mixer_part += "<FONT color='black'>[data["outtg"]]% OTHER</FONT>   "
 				if (data["outkpa"] && data["outtemp"])
@@ -560,7 +560,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if (..())
 			return 0
 		if (!src.allowed(usr))
-			boutput(usr, "<span class='alert'>Access denied!</span>")
+			boutput(usr, SPAN_ALERT("Access denied!"))
 			return 0
 
 		var/datum/signal/signal = get_free_signal()
@@ -600,7 +600,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (is_incapacitated(usr) || usr.restrained())
 					return 0
 				if (!src.allowed(usr))
-					boutput(usr, "<span class='alert'>Access denied!</span>")
+					boutput(usr, SPAN_ALERT("Access denied!"))
 					return 0
 				if (!isnum_safe(change))
 					return 0

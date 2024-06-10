@@ -45,16 +45,12 @@
 	dir = 4
 	},
 /area/shuttle/escape/centcom)
-"aQ" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/circuit/red,
-/area/shuttle/escape/centcom)
 "aZ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 6;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "pipe"
 	},
 /turf/unsimulated/floor{
@@ -75,8 +71,9 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "cd" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
@@ -115,9 +112,7 @@
 	dir = 8;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "dC" = (
 /obj/shrub{
@@ -165,9 +160,7 @@
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "gL" = (
 /obj/decal/poster/wallsign/danger_highvolt{
@@ -195,7 +188,7 @@
 	desc = "It's a pipe manifold.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "pipe"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -251,14 +244,16 @@
 "jY" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "kt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -282,7 +277,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -325,7 +322,9 @@
 	},
 /area/shuttle/escape/centcom)
 "mY" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -339,15 +338,6 @@
 "oC" = (
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
-"pj" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8;
-	icon_state = "alt_heater-L"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
-	},
-/area/shuttle/escape/centcom)
 "pm" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -357,15 +347,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/circuit/red,
-/area/shuttle/escape/centcom)
-"qb" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
 /area/shuttle/escape/centcom)
 "qx" = (
 /obj/decal/tile_edge/line/black{
@@ -546,10 +527,6 @@
 	dir = 1
 	},
 /area/centcom/outside)
-"wT" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom)
 "xj" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/red,
@@ -572,7 +549,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -591,7 +569,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zj" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -650,7 +628,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/turf/unsimulated/outdoors/grass,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/centcom)
 "BD" = (
 /turf/unsimulated/floor/arrival,
@@ -669,8 +649,10 @@
 /area/centcom/outside)
 "CK" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "Da" = (
@@ -679,13 +661,15 @@
 "DC" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Secure Transport"
+	name = "Secure Transport";
+	hardened = 1
 	},
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "DH" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/shuttle,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "DI" = (
 /obj/machinery/light{
@@ -696,7 +680,7 @@
 "DN" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/valve.dmi';
-	icon_state = "valve0";
+	icon_state = "valve0-map";
 	name = "valve"
 	},
 /turf/unsimulated/floor{
@@ -717,7 +701,8 @@
 "EH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -764,9 +749,7 @@
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "Gc" = (
 /obj/machinery/light/small/floor,
@@ -807,7 +790,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -843,7 +827,8 @@
 /area/centcom)
 "Jd" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/redblack,
 /area/shuttle/escape/centcom)
@@ -879,9 +864,7 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "LN" = (
 /obj/decal/fakeobjects{
@@ -928,10 +911,12 @@
 /area/shuttle/escape/centcom)
 "NK" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "NR" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -978,7 +963,8 @@
 /area/centcom/outside)
 "OD" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
@@ -1021,10 +1007,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Sp" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3";
-	opacity = 0
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/escape/centcom)
 "Te" = (
 /obj/decal/tile_edge/line/orange{
@@ -1064,7 +1047,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "pipe"
 	},
 /turf/unsimulated/floor{
@@ -1124,7 +1107,7 @@
 	},
 /area/centcom)
 "XO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -1138,7 +1121,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -1158,9 +1142,6 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "YN" = (
-/obj/decoration/syndiepc/syndiepc3,
-/obj/decoration/syndiepc/syndiepc13,
-/obj/decoration/syndiepc/syndiepc7,
 /obj/decoration/syndiepc/syndiepc11{
 	icon_state = "syndiepc3"
 	},
@@ -1174,7 +1155,8 @@
 "ZY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -1300,9 +1282,9 @@ rR
 CC
 Ti
 Sp
-pj
+Ls
 Gb
-qb
+gG
 Sp
 zy
 cl
@@ -1494,7 +1476,7 @@ IK
 ZJ
 JY
 IV
-wT
+DH
 vx
 ro
 aB
@@ -1550,7 +1532,7 @@ XE
 XE
 BD
 IV
-wT
+DH
 Il
 DY
 oC
@@ -1578,7 +1560,7 @@ iD
 iD
 BD
 IV
-wT
+DH
 Il
 DY
 xj
@@ -1634,7 +1616,7 @@ aa
 rP
 sE
 IV
-wT
+DH
 To
 KD
 mc
@@ -1721,14 +1703,14 @@ rR
 zA
 vd
 RC
-aQ
+DH
 EQ
 xw
 xw
 xw
 xw
 GN
-aQ
+DH
 TZ
 vd
 rK
@@ -1749,14 +1731,14 @@ rR
 rR
 rR
 CC
-aQ
+DH
 wm
 xw
 px
 px
 xw
 If
-aQ
+DH
 eQ
 rR
 rR
@@ -1807,10 +1789,10 @@ rR
 zA
 RC
 Sp
-aQ
-aQ
-aQ
-aQ
+DH
+DH
+DH
+DH
 Sp
 TZ
 rK

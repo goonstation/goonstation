@@ -36,7 +36,7 @@ export const Icon = props => {
       className={classes([
         'Icon',
         className,
-        faRegular ? 'far' : 'fas',
+        faRegular ? 'fa-regular' : 'fa-solid',
         'fa-' + faName,
         spin && 'fa-spin',
       ])}

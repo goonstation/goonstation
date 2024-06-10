@@ -11,7 +11,7 @@
 #define UNUSED_128 (1 << 7)
 #define UNUSED_256 (1 << 8)
 #define UNUSED_512 (1 << 9)
-#define AT_GUNPOINT (1 << 10) 	//quick check for guns holding me at gunpoint
+
 #define IGNORE_SHIFT_CLICK_MODIFIER (1 << 11) //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 #define LIGHTWEIGHT_AI_MOB (1 << 12)		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 #define USR_DIALOG_UPDATES_RANGE (1 << 13)	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
@@ -31,6 +31,10 @@
 #define LIMB_LEFT_LEG 4
 #define LIMB_RIGHT_LEG 8
 
+//hand values
+#define LEFT_HAND 1
+#define RIGHT_HAND 0
+
 // ---- mob damage ----
 
 /**
@@ -47,9 +51,9 @@
 /// Burning Lv1 starts at this duration.
 #define BURNING_LV1 0
 /// Burning Lv2 starts at this duration.
-#define BURNING_LV2 200
+#define BURNING_LV2 30 SECONDS
 /// Burning Lv3 starts at this duration.
-#define BURNING_LV3 400
+#define BURNING_LV3 60 SECONDS
 
 //hearing
 #define HEARING_NORMAL 0
@@ -64,3 +68,25 @@
 //skipped_mobs_list flags
 #define SKIPPED_MOBS_LIST (1 << 0)
 #define SKIPPED_AI_MOBS_LIST (1 << 1)
+#define SKIPPED_STAMINA_MOBS (1 << 2)
+
+// decomp_stage defines
+#define DECOMP_STAGE_NO_ROT 0
+#define DECOMP_STAGE_BLOATED 1
+#define DECOMP_STAGE_DECAYED 2
+#define DECOMP_STAGE_HIGHLY_DECAYED 3
+#define DECOMP_STAGE_SKELETONIZED 4
+
+// Stat defines
+#define STAT_ALIVE 0
+#define STAT_UNCONSCIOUS 1
+#define STAT_DEAD 2
+
+// Butchering defines
+#define BUTCHER_NOT_ALLOWED 0
+#define BUTCHER_ALLOWED 1
+/// Extra "WHAT A MONSTER" message on butchering
+#define BUTCHER_YOU_MONSTER 2
+
+//idk where else to put this
+#define DEFAULT_MIRANDA "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."

@@ -11,153 +11,186 @@ Thus, the two variables affect pump operation are set in New():
 		Higher quantities of this cause more air to be perfected later
 			but overall network volume is also increased as this increases...
 */
+/// Min pump pressure.
+#define MIN_PRESSURE 0
+/// Max pump pressure.
+#define MAX_PRESSURE 149 * ONE_ATMOSPHERE
 
-obj/machinery/atmospherics/binary/pump
+/obj/machinery/atmospherics/binary/pump
 	icon = 'icons/obj/atmospherics/pump.dmi'
-	icon_state = "intact_off"
-
+	icon_state = "off-map"
 	name = "Gas pump"
 	desc = "A pump"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
-	var/on = 0
+	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
+	/// Radio frequency to operate on.
+	var/frequency = FREQ_PUMP_CONTROL
+	/// Radio ID we respond to for multicast.
+	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 	var/datum/pump_ui/ui
 
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+/obj/machinery/atmospherics/binary/pump/New()
+	..()
+	if(src.frequency)
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
-	attack_hand(mob/user)
-		//on = !on
-		UpdateIcon()
+/obj/machinery/atmospherics/binary/pump/initialize()
+	..()
+	src.ui = new /datum/pump_ui/basic_pump_ui(src)
 
-	update_icon()
-		if(node1&&node2)
-			icon_state = "intact_[on?("on"):("off")]"
-		else
-			if(node1)
-				icon_state = "exposed_1_off"
-			else if(node2)
-				icon_state = "exposed_2_off"
-			else
-				icon_state = "exposed_3_off"
-			on = 0
+/obj/machinery/atmospherics/binary/pump/attack_hand(mob/user)
+	UpdateIcon()
 
-		return
+/obj/machinery/atmospherics/binary/pump/update_icon()
+	if(!(node1&&node2))
+		src.on = FALSE
 
-	process()
-		..()
-		if(!on)
-			return 0
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
-		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+/obj/machinery/atmospherics/binary/pump/process()
+	..()
+	if(!on)
+		return FALSE
 
-		if(output_starting_pressure >= target_pressure)
-			//No need to pump gas if target is already reached!
-			return 1
+	var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 
-		//Calculate necessary moles to transfer using PV=nRT
-		if((TOTAL_MOLES(air1) > 0) && (air1.temperature>0))
-			var/pressure_delta = target_pressure - output_starting_pressure
-			var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+	if(output_starting_pressure >= target_pressure)
+		//No need to pump gas if target is already reached!
+		return FALSE
 
-			//Actually transfer the gas
-			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-			air2.merge(removed)
+	//Calculate necessary moles to transfer using PV=nRT
+	if(TOTAL_MOLES(air1) && (air1.temperature>0))
+		var/pressure_delta = target_pressure - output_starting_pressure
+		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-			network1?.update = 1
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		air2.merge(removed)
 
-			network2?.update = 1
+		network1?.update = TRUE
+		network2?.update = TRUE
 
-			use_power((target_pressure) * (0.1)) // cogwerks: adjust the multiplier if needed
+		src.use_power((target_pressure) * (0.1)) // cogwerks: adjust the multiplier if needed
 
-		return 1
+	return TRUE
 
-	proc/broadcast_status()
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
+/obj/machinery/atmospherics/binary/pump/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
 
-		signal.data["tag"] = id
-		signal.data["device"] = "AGP"
-		signal.data["power"] = on ? "on" : "off"
-		signal.data["target_output"] = target_pressure
-		signal.data["address_tag"] = "pumpcontrol"
+	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
+	signal.data["device"] = "AGP"
+	signal.data["power"] = src.on ? "on" : "off"
+	signal.data["min_output"] = MIN_PRESSURE
+	signal.data["max_output"] = MAX_PRESSURE
+	signal.data["target_output"] = src.target_pressure
+	signal.data["address_tag"] = "pumpcontrol"
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-		return 1
-
-	var/frequency = 0
-	var/id = null
-
-	initialize()
-		..()
-		ui = new/datum/pump_ui/basic_pump_ui(src)
+	return TRUE
 
 
-	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
-			return 0
+/obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
-		switch(signal.data["command"])
-			if("broadcast_status")
-				SPAWN(0.5 SECONDS) broadcast_status()
+	switch(signal.data["command"])
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS)
+				broadcast_status()
 
-			if("power_on")
-				on = 1
+		if("power_on")
+			src.on = TRUE
+			. = TRUE
 
-			if("power_off")
-				on = 0
+		if("power_off")
+			src.on = FALSE
+			. = TRUE
 
-			if("power_toggle")
-				on = !on
+		if("power_toggle")
+			src.on = !src.on
+			. = TRUE
 
-			if("set_output_pressure")
-				var/number = text2num_safe(signal.data["parameter"])
-				number = clamp(number, 0, ONE_ATMOSPHERE*50)
+		if("set_output_pressure")
+			var/number = text2num_safe(signal.data["parameter"])
 
-				target_pressure = number
+			src.target_pressure = clamp(number, MIN_PRESSURE, MAX_PRESSURE)
+			. = TRUE
 
-		if(signal.data["tag"])
-			SPAWN(0.5 SECONDS) broadcast_status()
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-		UpdateIcon()
+			help.data["info"] = "Command help. \
+									broadcast_status - Broadcasts info about self. \
+									power_on - Turns on pump. \
+									power_off - Turns off pump. \
+									power_toggle - Toggles pump. \
+									set_output_pressure (parameter: Number) - Sets pressure in kilopascals to parameter. Max at [MAX_PRESSURE] kPA."
 
-obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
+
+/obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 
-datum/pump_ui/basic_pump_ui
+/obj/machinery/atmospherics/binary/pump/active
+	icon_state = "on-map"
+	on = TRUE
+
+/datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"
 	value_units = "kPa"
-	min_value = 0
-	max_value = 15000
+	min_value = MIN_PRESSURE
+	max_value = MAX_PRESSURE
 	incr_sm = 50
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/pump/our_pump
 
-datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
+/datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
 	..()
 	src.our_pump = our_pump
-	pump_name = our_pump.name
+	src.pump_name = our_pump.name
 
-datum/pump_ui/basic_pump_ui/set_value(val_to_set)
+/datum/pump_ui/basic_pump_ui/set_value(val_to_set)
 	our_pump.target_pressure = val_to_set
 	our_pump.UpdateIcon()
 
-datum/pump_ui/basic_pump_ui/toggle_power()
+/datum/pump_ui/basic_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
 	our_pump.UpdateIcon()
 
-datum/pump_ui/basic_pump_ui/is_on()
+/datum/pump_ui/basic_pump_ui/is_on()
 	return our_pump.on
 
-datum/pump_ui/basic_pump_ui/get_value()
+/datum/pump_ui/basic_pump_ui/get_value()
 	return our_pump.target_pressure
 
-datum/pump_ui/basic_pump_ui/get_atom()
+/datum/pump_ui/basic_pump_ui/get_atom()
 	return our_pump
+
+#undef MIN_PRESSURE
+#undef MAX_PRESSURE

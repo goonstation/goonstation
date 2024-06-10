@@ -11,3 +11,14 @@
 			return
 		if (holder.bodytemperature < T0C - 45 && holder.reagents.has_reagent("cryoxadone"))
 			HealDamage(3)
+
+	TakeDamage(amt, bypass_multiplier = 0)
+		var/resist_toxic = holder.bioHolder?.HasEffect("resist_toxic")
+		if(resist_toxic && amt > 0)
+			if(resist_toxic > 1)
+				src.value = maximum_value
+				health_update_queue |= holder
+				return
+			else
+				amt *= 0.33
+		. = ..(amt, bypass_multiplier)

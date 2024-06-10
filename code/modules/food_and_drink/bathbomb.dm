@@ -11,7 +11,7 @@
 
 	EnteredFluid(obj/fluid/F as obj, atom/oldloc)
 
-		src.visible_message("<span class='alert'>[src] dissolves into [F]!</span>")
+		src.visible_message(SPAN_ALERT("[src] dissolves into [F]!"))
 
 		if(src.batbomb)
 			src.batbomb()
@@ -22,12 +22,12 @@
 		T?.fluid_react(reagents,reagents.total_volume)
 		qdel(src)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || ismobcritter(M))
+		if (iscarbon(target) || ismobcritter(target))
 			..()
 		else
 			return 0
@@ -45,16 +45,16 @@
 				return
 
 			if (!src.reagents || !src.reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] doesn't contain any reagents.</span>")
+				boutput(user, SPAN_ALERT("[src] doesn't contain any reagents."))
 				return
 			if (target.reagents.is_full())
-				boutput(user, "<span class='alert'>[target] is full!</span>")
+				boutput(user, SPAN_ALERT("[target] is full!"))
 				return
 			else
-				user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
-				"<span class='success'>You dissolve [src] in [target].</span>")
+				user.visible_message(SPAN_ALERT("[user] puts [src] in [target]."),\
+				SPAN_SUCCESS("You dissolve [src] in [target]."))
 
-			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			user.drop_item(src)
@@ -70,10 +70,10 @@
 				qdel(src)
 				return
 
-			user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
-            "<span class='success'>You dissolve [src] in [target].</span>")
+			user.visible_message(SPAN_ALERT("[user] puts [src] in [target]."),\
+            SPAN_SUCCESS("You dissolve [src] in [target]."))
 
-			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			var/turf/T = get_turf(target)
 			T.fluid_react(src.reagents,src.reagents.total_volume)
 			user.u_equip(src)
@@ -107,7 +107,7 @@
 					else
 						continue
 
-		src.visible_message("<span class='alert'>[src] bursts into a furry mass!</span>")
+		src.visible_message(SPAN_ALERT("[src] bursts into a furry mass!"))
 		return
 
 	New()
@@ -130,7 +130,7 @@
 			name += " - Sail The Seven Cs Flavor"
 			desc = "Time for a little Arr and Arr!"
 			R.add_reagent("cocktail_citrus", 5)
-			var/list/seas = list("carbon","charcoal","calomel","cyanide","cholesterol","cider","infernite","chocolate milk","cheese","cola","carpet","cornsyrup","capulettium")
+			var/list/seas = list("carbon","charcoal","calomel","cyanide","cholesterol","cider","infernite","chocolate_milk","cheese","cola","carpet","cornsyrup","capulettium")
 			var/temp = null
 			for(var/i=0,i<4,i++)
 				temp = pick(seas)
@@ -187,12 +187,12 @@
 			R.add_reagent("coffee",5)
 			R.add_reagent("ipecac",5) // NOT IN 2016
 			R.add_reagent("toxic_slurry",5)
-			R.add_reagent("thc",5)
+			R.add_reagent("THC",5)
 
 		else if(flavor_value < 57)
 			name += " - Public Pool Flavor"
 			desc = pick("No Running!","Don't forget to wear sunscreen!","Smells like summer. Hot, sweaty, and miserable.")
-			R.add_reagent("urine", 3)
+			R.add_reagent("ammonia", 3)
 			if(prob(10))
 				R.add_reagent("gvomit",7)
 			else

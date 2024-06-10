@@ -44,12 +44,13 @@ function task-install {
 
 ## Runs webpack
 function task-webpack {
+  $env:BROWSERSLIST_IGNORE_OLD_DATA = $true
   yarn run webpack-cli @Args
 }
 
 ## Runs a development server
 function task-dev-server {
-  yarn node "packages/tgui-dev-server/index.esm.js" @Args
+  yarn node --experimental-modules "packages/tgui-dev-server/index.js" @Args
 }
 
 ## Runs benchmarking tests
@@ -66,12 +67,29 @@ function task-lint {
   Write-Output "tgui: eslint check passed"
 }
 
+## Installs merge drivers and git hooks
+function task-install-git-hooks() {
+  Set-Location $basedir
+  $git_root = "$(git rev-parse --show-toplevel)"
+  Set-Location $git_root
+  $git_base_dir = Resolve-Path -Path "$basedir" -Relative
+  $git_base_dir = "${git_base_dir}".replace("\", "/")
+  Set-Location $basedir
+  git config --replace-all merge.tgui-merge-bundle.driver "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
+  Write-Output "tgui: Merge drivers have been successfully installed!"
+}
+
 function task-test {
   yarn run jest
 }
 
 ## Mr. Proper
 function task-clean {
+  Remove-Quiet -Recurse -Force ../browserassets/tgui/.tmp
+  Remove-Quiet -Force ../browserassets/tgui/*.map
+  Remove-Quiet -Force ../browserassets/tgui/*.chunk.*
+  Remove-Quiet -Force ../browserassets/tgui/*.bundle.*
+  Remove-Quiet -Force ../browserassets/tgui/*.hot-update.*
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
@@ -79,7 +97,7 @@ function task-clean {
   Remove-Quiet -Force ".yarn\build-state.yml"
   Remove-Quiet -Force ".yarn\install-state.gz"
   Remove-Quiet -Force ".yarn\install-target"
-  Remove-Quiet -Force ".pnp.js"
+  Remove-Quiet -Force ".pnp.*"
   ## NPM artifacts
   Get-ChildItem -Path "." -Include "node_modules" -Recurse -File:$false | Remove-Item -Recurse -Force
   Remove-Quiet -Force "package-lock.json"
@@ -89,8 +107,26 @@ function task-clean {
   Remove-Quiet -Force "*.map"
   Remove-Quiet -Force "*.hot-update.*"
   Set-Location $basedir
+  Write-Output "tgui: All artifacts cleaned"
 }
 
+## Validates current build against the build stored in git
+function task-validate-build {
+  $diff = git diff --text ../browserassets/tgui/*
+  if ($diff) {
+    Write-Output "Error: our build differs from the build committed into git."
+    Write-Output "Please rebuild tgui."
+    exit 1
+  }
+  Write-Output "tgui: build is ok"
+}
+
+## Installs merge drivers and git hooks
+function task-install-git-hooks () {
+    Set-Location $global:basedir
+    git config --replace-all merge.tgui-merge-bundle.driver "tgui/bin/tgui --merge=bundle %P %O %A %B %L"
+    Write-Output "tgui: Merge drivers have been successfully installed!"
+}
 
 ## Main
 ## --------------------------------------------------------
@@ -98,6 +134,11 @@ function task-clean {
 if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--clean") {
     task-clean
+    exit 0
+  }
+
+  if ($Args[0] -eq "--install-git-hooks") {
+    task-install-git-hooks
     exit 0
   }
 
@@ -147,6 +188,12 @@ if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--analyze") {
     task-install
     task-webpack --mode=production --analyze
+    exit 0
+  }
+
+  ## Hook install
+  if ($Args[0] -eq "--install-git-hooks") {
+    task-install-git-hooks
     exit 0
   }
 }

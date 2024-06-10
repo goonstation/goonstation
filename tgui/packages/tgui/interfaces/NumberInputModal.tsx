@@ -9,7 +9,7 @@ import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, NumberInput, Section, Stack } from '../components';
+import { Box, Button, RestrictedInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
  type NumberInputData = {
@@ -18,25 +18,29 @@ import { Window } from '../layouts';
    min_value: number | null;
    init_value: number;
    timeout: number;
+   round_input: boolean;
    title: string;
+   theme: string;
  };
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, init_value, timeout, title } = data;
+  const { message, init_value, timeout, title, theme } = data;
   const [input, setInput] = useLocalState(context, 'input', init_value);
-  const onChange = (value: number) => {
+
+  const setValue = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
-  const onClick = (value: number) => {
-    setInput(value);
-  };
+
   // Dynamically changes the window height based on the message.
   const windowHeight
      = 125 + Math.ceil(message?.length / 3);
 
   return (
-    <Window title={title} width={270} height={windowHeight}>
+    <Window title={title} width={270} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
@@ -54,7 +58,12 @@ export const NumberInputModal = (_, context) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item>
-              <InputArea input={input} onClick={onClick} onChange={onChange} />
+              <InputArea
+                input={input}
+                onClick={setValue}
+                onChange={setValue}
+                onBlur={setValue}
+              />
             </Stack.Item>
             <Stack.Item pl={4} pr={4}>
               <InputButtons input={input} />
@@ -68,9 +77,9 @@ export const NumberInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, init_value } = data;
-  const { input, onClick, onChange } = props;
+  const { act, data } = useBackend<NumberInputData>(context);
+  const { min_value, max_value, init_value, round_input } = data;
+  const { input, onClick, onChange, onBlur } = props;
 
   return (
     <Stack fill>
@@ -82,21 +91,23 @@ const InputArea = (props, context) => {
         />
       </Stack.Item>
       <Stack.Item grow>
-        <NumberInput
+        <RestrictedInput
           autoFocus
           autoSelect
           fluid
+          allowFloats={!round_input}
           minValue={min_value}
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
-          onDrag={(_, value) => onChange(value)}
-          value={input || init_value || 0}
+          onBlur={(_, value) => onBlur(value)}
+          onEnter={(_, value) => act('submit', { entry: value })}
+          value={input}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
           icon="angle-double-right"
-          onClick={() => onClick(max_value || 10000)}
+          onClick={() => onClick(max_value !== null ? max_value : 10000)}
           tooltip="Max"
         />
       </Stack.Item>

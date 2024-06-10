@@ -27,24 +27,28 @@
 	} \
 } while (FALSE)
 
-/// *Only* run the test provided within the parentheses
-/// This is useful for debugging when you want to reduce noise, but should never be pushed
-/// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
-#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
-
 /// Constants indicating unit test completion status
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
 
+#include "metadata_type_typos.dm"
 #include "rand.dm"
-//#include "duplicate_area_names.dm"
 #include "deletions.dm"
+#include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"
+#include "passability_cache.dm"
+#include "bsp.dm"
 #include "unit_test.dm"
+#include "building_materials_mat_amount.dm"
+#include "bioeffect_id_uniqueness.dm"
+#include "reagent_id_uniqueness.dm"
+#include "trait_id_uniqueness.dm"
+#include "material_id_uniqueness.dm"
+#include "action_id_uniqueness.dm"
+#include "job_name_uniqueness.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL
-#undef TEST_FOCUS
 #endif

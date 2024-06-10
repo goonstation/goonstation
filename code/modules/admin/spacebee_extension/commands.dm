@@ -29,7 +29,7 @@
 		if (M.key) result += M.key
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
-		if (checktraitor(M)) result += "\[T\]"
+		if (M.mind?.is_antagonist()) result += "\[T\]"
 		system.reply(result.Join(" | "), user)
 
 /datum/spacebee_extension_command/addnote
@@ -38,16 +38,102 @@
 	help_message = "Adds a note to a given ckey."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="note")
 	execute(user, ckey, note)
-		addPlayerNote(ckey, user + " (Discord)", note)
+		addPlayerNote(ckey, user, note)
 
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a note for [ckey]: [note]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
-		message_admins("<span class='internal'>[user] (Discord) added a note for [ckey]: [note]</span>")
+		message_admins(SPAN_INTERNAL("[user] (Discord) added a note for [ckey]: [note]"))
 
 		var/ircmsg[] = new()
 		ircmsg["name"] = user
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
+
+/datum/spacebee_extension_command/state_based/notes
+	name = "notes"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "retrieves player notes."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	var/page = 1
+	var/key_to_check = null
+
+	execute(user, ckey)
+		. = ..()
+		key_to_check = ckey
+		var/last_page = send_notes()
+		if(last_page > 1)
+			system.reply("viewing notes page [page] out of [last_page], enter ;;next to send next page")
+			page++
+			src.go_to_state("page_through")
+
+	proc/page_through(user, msg)
+		if(msg == "next")
+			var/last_page = send_notes()
+			if(last_page > page)
+				system.reply("viewing notes page [page] out of [last_page], enter ;;next to send next page")
+				src.go_to_state("page_through")
+			page++
+
+	proc/send_notes()
+		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
+		try
+			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
+			getPlayerNotes.queryParams = list(
+				"filters" = list(
+					"ckey" = key_to_check,
+					"exact" = TRUE
+				),
+				"page" = page,
+				"per_page" = 10
+			)
+			playerNotes = apiHandler.queryAPI(getPlayerNotes)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [key_to_check] because: [error.message]")
+			system.reply("error fetching notes for [key_to_check]")
+			return 0
+
+		if (!length(playerNotes.data))
+			system.reply("No notes found for [key_to_check].")
+			return 0
+
+		var/message = list()
+		var/header
+		var/len = 0
+		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
+			var/list/legacyData
+			if (length(playerNote.legacy_data))
+				legacyData = json_decode(playerNote.legacy_data)
+
+			var/id = playerNote.server_id
+			if (!id && ("oldserver" in legacyData))
+				id = legacyData["oldserver"]
+
+			var/gameAdminCkey = playerNote.game_admin?.name || playerNote.game_admin?.ckey
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
+				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			header = "**[id ? "\[[id]\] " : ""][gameAdminCkey || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			len += length(header) + length(playerNote.note)
+			if(len >= 4000)
+				message = jointext(message, "\n")
+				export_message(message, playerNotes.meta["last_page"])
+				message = list()
+				len = 0
+				message += "...cont\n"
+			message += header
+			message += "[playerNote.note]\n"
+
+		message = jointext(message, "\n")
+		export_message(message, playerNotes.meta["last_page"])
+		return playerNotes.meta["last_page"]
+
+	proc/export_message(message, last_page)
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Notes"
+		ircmsg["name"] = "[key_to_check][last_page > 1 ? ", page [page] out of [last_page]" : ""]"
+		ircmsg["msg"] = message
+		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/addnotice
 	name = "addnotice"
@@ -57,19 +143,19 @@
 
 	execute(user, ckey, notice)
 		var/datum/player/player = make_player(ckey)
-		player.cloud_fetch()
-		if (player.cloud_get("login_notice"))
+		player.cloudSaves.fetch()
+		if (player.cloudSaves.getData("login_notice"))
 			system.reply("Error, [ckey] already has a login notice set.", user)
 			return
 		var/message = "Message from Admin [user] at [roundLog_date]:\n\n[notice]"
-		if (!player.cloud_put("login_notice", message))
+		if (!player.cloudSaves.putData("login_notice", message))
 			system.reply("Error, issue saving login notice, try again later.", user)
 			return
 		// else it succeeded
-		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
+		addPlayerNote(ckey, user, "New login notice set:\n\n[notice]")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
-		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
+		message_admins(SPAN_INTERNAL("[user] (Discord) added a login notice for [ckey]: [notice]"))
 
 		ircbot.export("admin", list(
 		"name" = user,
@@ -92,17 +178,17 @@
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
 		else
-			var/list/response
+			var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 			try
-				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-			catch ()
-				var/ircmsg[] = new()
-				ircmsg["name"] = user
-				ircmsg["msg"] = "Failed to query API, try again later."
-				ircbot.export("admin", ircmsg)
-				return
-			data["ip"] = response["last_ip"]
-			data["compID"] = response["last_compID"]
+				var/datum/apiRoute/players/stats/get/getPlayerStats = new
+				getPlayerStats.queryParams = list("ckey" = data["ckey"])
+				playerStats = apiHandler.queryAPI(getPlayerStats)
+				data["ip"] = playerStats.latest_connection.ip
+				data["compID"] = playerStats.latest_connection.comp_id
+			catch
+				data["ip"] = null
+				data["compID"] = null
+
 		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
@@ -130,12 +216,15 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		addBan(data) // logging, messaging, and noting are all taken care of by this proc
-
-		var/ircmsg[] = new()
-		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
-		ircbot.export("admin", ircmsg)
+		bansHandler.add(
+			ckey(user),
+			null,
+			data["ckey"],
+			data["compID"],
+			data["ip"],
+			data["reason"],
+			data["mins"] * 60 * 10
+		)
 
 /datum/spacebee_extension_command/serverban
 	name = "serverban"
@@ -144,6 +233,7 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, server, length, reason)
+		var/rpban = FALSE
 		if (!(ckey && server && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
@@ -154,17 +244,20 @@
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
 		else
-			var/list/response
+			var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 			try
-				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-			catch ()
+				var/datum/apiRoute/players/stats/get/getPlayerStats = new
+				getPlayerStats.queryParams = list("ckey" = data["ckey"])
+				playerStats = apiHandler.queryAPI(getPlayerStats)
+			catch
 				var/ircmsg[] = new()
 				ircmsg["name"] = user
 				ircmsg["msg"] = "Failed to query API, try again later."
 				ircbot.export("admin", ircmsg)
 				return
-			data["ip"] = response["last_ip"]
-			data["compID"] = response["last_compID"]
+
+			data["ip"] = playerStats.latest_connection.ip
+			data["compID"] = playerStats.latest_connection.comp_id
 		if(server == "main1" || server == "1" || server == "goon1")
 			server = "main1"
 		else if(server == "main2" || server == "2" || server == "goon2")
@@ -173,6 +266,8 @@
 			server = "main3"
 		else if(server == "main4" || server == "4" || server == "goon4")
 			server = "main4"
+		else if(server == "rp")
+			rpban = TRUE
 		else
 			system.reply("Invalid server.", user)
 			return
@@ -204,12 +299,35 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		addBan(data) // logging, messaging, and noting are all taken care of by this proc
-
-		var/ircmsg[] = new()
-		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from [server] for [length] minutes, reason: [reason]"
-		ircbot.export("admin", ircmsg)
+		if(rpban)
+			bansHandler.add(
+				ckey(user),
+				"main3",
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
+			bansHandler.add(
+				ckey(user),
+				"main4",
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
+		else
+			bansHandler.add(
+				ckey(user),
+				data["server"],
+				data["ckey"],
+				data["compID"],
+				data["ip"],
+				data["reason"],
+				data["mins"] * 60 * 10
+			)
 
 /datum/spacebee_extension_command/boot
 	name = "boot"
@@ -224,6 +342,22 @@
 				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "booted [constructTarget(C,"admin")].")
 				logTheThing(LOG_DIARY, "[user] (Discord)", null, "booted [constructTarget(C,"diary")].", "admin")
 				system.reply("Booted [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/kick
+	name = "kick"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Kick a given ckey off the specified server."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				del(C)
+				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "kicked [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", null, "kicked [constructTarget(C,"diary")].", "admin")
+				system.reply("Kicked [ckey].", user)
 				return
 		system.reply("Could not locate [ckey].", user)
 
@@ -242,7 +376,7 @@
 				logTheThing(LOG_DIARY, "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
 					SPAWN(0)
-						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						C.mob.playsound_local(C.mob, 'sound/voice/animal/goose.ogg', 100, flags = SOUND_IGNORE_SPACE)
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
 							system.reply("[ckey] acknowledged the alert.", user)
@@ -272,12 +406,24 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				var/mob/M = C.mob
-				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+				var/area/A = get_area(M)
+				if (ismob(M) && istype(A, /area/prison/cell_block/wards))
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
+					if (ASLoc)
+						M.set_loc(ASLoc)
+
+					M.show_text("<h2>[SPAN_ALERT("<b>You have been unprisoned and sent back to the station.</b>")]</h2>", "red")
+					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+					system.reply("Unprisoned [ckey].", user)
+					return
+
+				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
-						M.changeStatus("paralysis", 8 SECONDS)
+						M.changeStatus("unconscious", 8 SECONDS)
 						M.set_loc(prison)
-						M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+						M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
 						logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)
@@ -312,7 +458,7 @@
 			C.add_centcom_report(ALERT_GENERAL, body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
-		command_alert(body, headline, "sound/misc/announcement_1.ogg")
+		command_alert(body, headline, 'sound/misc/announcement_1.ogg')
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "has created a command report: [body]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "has created a command report: [body]", "admin")
 		message_admins("[user] (Discord) has created a command report")
@@ -329,8 +475,14 @@
 		if(new_mode in global.valid_modes)
 			var/which = "next round's "
 			if (current_state <= GAME_STATE_PREGAME)
+#ifndef MAP_OVERRIDE_POD_WARS
+				if (new_mode == "pod_wars")
+					system.reply("You can only set the mode to Pod Wars if the current map is a Pod Wars map! If you want to play Pod Wars, you have to set the next map for compile to be pod_wars.dmm!", user)
+					return
+#endif
 				master_mode = new_mode
 				which = ""
+
 			world.save_mode(new_mode)
 			logTheThing(LOG_ADMIN, "[user] (Discord)", null, "set the [which]mode as [new_mode]")
 			logTheThing(LOG_DIARY, "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
@@ -374,7 +526,7 @@
 		else
 			var/list/message = list()
 			message += "You can put text arguments in quotes if you want spaces in them!"
-			message += "# means you need to add a server id.\n"
+			message += "\\# means you need to add a server id.\n"
 			for(var/command_name in system.commands)
 				var/datum/spacebee_extension_command/command = system.commands[command_name]
 				message += src.help_for_command(command)
@@ -415,6 +567,7 @@
 	name = "cryo"
 	help_message = "Cryos a given ckey."
 	action_name = "cryo"
+	allow_disconnected = TRUE
 
 	perform_action(user, mob/target)
 		if (!length(by_type[/obj/cryotron]))
@@ -458,7 +611,7 @@
 		if (target.mind)
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
-		newM.Login()
+		target.mind = null
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 
@@ -482,8 +635,8 @@
 		if(!target)
 			system.reply("Valid mob not found.", "user")
 			return FALSE
-		target.revive()
-		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
+		target.full_heal()
+		message_admins(SPAN_ALERT("Admin [user] (Discord) healed / revived [key_name(target)]!"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
 		return TRUE
@@ -532,7 +685,7 @@
 		if(!length(result))
 			system.reply("No results.", user)
 		else
-			system.reply(reverse_list(result).Join("\n"), user)
+			system.reply(reverse_list_range(result).Join("\n"), user)
 
 /datum/spacebee_extension_command/crate
 	name = "crate"
@@ -561,7 +714,7 @@
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
 		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: [goonhub_href("/admin/logs/[roundId]")]"
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename
@@ -578,7 +731,7 @@
 	perform_action(user, mob/target)
 		if(isnull(src.new_name))
 			return FALSE
-		message_admins("<span class='alert'>Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "renamed [constructTarget(target,"admin")] to [src.new_name]!")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
 		target.real_name = src.new_name
@@ -595,16 +748,40 @@
 
 	execute(user, ckey)
 		try
-			apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = ckey, "akey" = user + " (Discord)"))
-		catch(var/exception/e)
-			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [e.name]")
+			var/datum/apiRoute/vpnwhitelist/add/addWhitelist = new
+			addWhitelist.buildBody(user, ckey)
+			apiHandler.queryAPI(addWhitelist)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [error.message]")
 			return FALSE
+
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
-		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
+		addPlayerNote(ckey, user, "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
+
+/datum/spacebee_extension_command/check_vpn_whitelist
+	name = "checkvpnwhitelist"
+	help_message = "Checks if a given ckey is VPN whitelisted"
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, ckey)
+		try
+			var/datum/apiRoute/vpnwhitelist/search/searchWhitelist = new
+			searchWhitelist.queryParams = list("ckey" = ckey)
+			var/datum/apiModel/VpnWhitelistSearch/searchResults = apiHandler.queryAPI(searchWhitelist)
+			if (searchResults.whitelisted)
+				system.reply("ckey [ckey] is VPN whitelisted.")
+			else
+				system.reply("ckey [ckey] is not VPN whitelisted.")
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			system.reply("Failed to query vpn whitelist, error: [error.message]")
+			return FALSE
 
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"
@@ -642,7 +819,7 @@
 		if(isnull(src.new_name))
 			return
 		set_station_name(user, new_name, admin_override=TRUE)
-		message_admins("<span class='alert'>Admin [user] (Discord) renamed station to [src.new_name]!</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) renamed station to [src.new_name]!"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "renamed station to [src.new_name]!")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
 		var/success_msg = "Station renamed to [src.new_name]."
@@ -664,11 +841,13 @@
 				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
 			return
 
+		var/datum/player/player_datum = make_player(player)
+
 		var/result
 		if (giverevoke == "give")
-			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.unlock_medal_sync(medalname)
 		else if (giverevoke == "revoke")
-			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.clear_medal(medalname)
 		else
 			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
 			return
@@ -677,7 +856,116 @@
 			return
 
 		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
-		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) [to_log]"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "[to_log]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
 		system.reply("[user] [to_log]")
+
+/datum/spacebee_extension_command/antagtokens
+	name = "antagtokens"
+	help_message = "Get antag tokens for a player"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				system.reply("Current tokens for [ckey]: [C.antag_tokens]", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/state_based/confirmation/setantagtokens
+	name = "setantagtokens"
+	help_message = "Set antag tokens for a player(<1 to clear). E.g., `;;setantagtokens zewaka 3`"
+	argument_types = list(/datum/command_argument/string/ckey = "player", /datum/command_argument/the_rest = "tokens")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/client/target_client = null
+	var/token_amt = null
+
+	prepare(user, player, tokens)
+		var/mob/playermob = ckey_to_mob(player)
+		src.target_client = playermob.client
+		src.token_amt = tokens
+		return "You are about to set [target_client]'s antag tokens to: [token_amt]. Current: [target_client.antag_tokens]"
+
+	do_it(user)
+		if(isnull(src.target_client) || isnull(src.token_amt))
+			return
+		target_client.set_antag_tokens(token_amt)
+		var/success_msg = null
+		if (token_amt <= 0)
+			logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(target_client,"admin")]")
+			logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(target_client,"diary")]", "admin")
+			success_msg = SPAN_INTERNAL("[key_name(user)] removed all antag tokens from [key_name(target_client)]")
+		else
+			logTheThing(LOG_ADMIN, usr, "Set [constructTarget(target_client,"admin")]'s Antag tokens to [token_amt].")
+			logTheThing(LOG_DIARY, usr, "Set [constructTarget(target_client,"diary")]'s Antag tokens to [token_amt].")
+			success_msg = SPAN_INTERNAL("[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].")
+		message_admins(success_msg)
+		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")
+
+/datum/spacebee_extension_command/flavor_text
+	name = "flavortext"
+	help_message = "Show current flavor text of a user in round, E.g: `;;flavortext3 leahthetech` See `showprofile` for offline character profile access."
+	argument_types = list(/datum/command_argument/string/ckey = "ckey")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey)
+		var/datum/player/player = find_player(ckey)
+		if (!player)
+			system.reply("Ckey \"[ckey]\" not found", user)
+			return
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Flavor text"
+		ircmsg["name"] = "[ckey], loaded profile: [player.client.preferences.profile_number])"
+		var/message = "**Flavor text:** [player.client.preferences.flavor_text]\n"
+		message += "**Security note:** [player.client.preferences.security_note]\n"
+		message += "**Medical note:** [player.client.preferences.medical_note]\n"
+		message += "**Syndicate intelligence:** [player.client.preferences.synd_int_note]\n"
+		ircmsg["msg"] = html_decode(message)
+		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/show_profile
+	name = "showprofile"
+	argument_types = list(/datum/command_argument/string/ckey = "ckey", /datum/command_argument/number = "profile_num")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey, profile_num)
+		if (profile_num < 1 || profile_num > SAVEFILE_PROFILES_MAX)
+			system.reply("Invalid profile number \"[profile_num]\", please enter 1-[SAVEFILE_PROFILES_MAX]")
+			return
+		var/datum/preferences/prefs = new()
+		var/path = prefs.savefile_path(ckey)
+		if (!fexists(path))
+			system.reply("No savefile found for ckey \"[ckey]\"", user)
+			return
+		var/savefile/F = new /savefile(path, -1)
+		if (!prefs.savefile_load(null, profile_num, F))
+			system.reply("Unable to load savefile for ckey \"[ckey]\"", user)
+			return
+		var/ircmsg[] = new()
+		ircmsg["key"] = "Profile"
+		ircmsg["name"] = "[ckey] ([profile_num])"
+		var/message = "**Profile name**: [prefs.profile_name]\n"
+		message += "**Character name:** [prefs.name_first] [prefs.name_last]\n"
+		message += "**Gender:** [prefs.gender]\n"
+		message += "**Random name:** [prefs.be_random_name ? "true" : "false"]\n"
+		message += "**Random appearance:** [prefs.be_random_look ? "true" : "false"]\n"
+		message += "**Flavor text:** [prefs.flavor_text]\n"
+		message += "**Security note:** [prefs.security_note]\n"
+		message += "**Medical note:** [prefs.medical_note]\n"
+		message += "**Syndicate intelligence:** [prefs.synd_int_note]\n"
+		ircmsg["msg"] = html_decode(message)
+		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/toggle_tracy_profiling
+	name = "toggletracy"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Toggle Tracy profiling on the next round"
+	argument_types = list()
+	execute(user)
+		var/enabled = toggle_tracy_profiling_file()
+		logTheThing(LOG_ADMIN, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+		logTheThing(LOG_DIARY, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
+		message_admins("[user] (Discord) [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+		system.reply("[enabled ? "Enabled" : "Disabled"] Tracy profiling for the next round.", user)

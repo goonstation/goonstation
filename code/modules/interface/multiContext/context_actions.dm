@@ -5,9 +5,13 @@
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
-	var/use_tooltip = 1
-	var/close_clicked = 1
+	var/use_tooltip = TRUE
+	var/close_clicked = TRUE
+	///Does the action close when the mob moves
+	var/close_moved = TRUE
 	var/flick_on_click = null
+	var/text = ""
+	var/background_color = null
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
@@ -344,6 +348,49 @@
 		user.closeContextActions()
 		return 0
 
+/datum/contextAction/wraith_evolve_button
+	name = "Specialize"
+	desc = "Ascend into a stronger form"
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "minus"
+	icon_background = ""
+	var/ability_code = 0
+
+	New(code as num)
+		..()
+		src.ability_code = code
+		switch(code)
+			if (1)
+				name = "Plaguebringer"
+				desc = "Become a disease spreading spirit."
+				icon_state = "choose_plague"
+			if (2)
+				name = "Harbinger"
+				desc = "Lead an army of otherworldly foes."
+				icon_state = "choose_harbinger"
+			if (3)
+				name = "Trickster"
+				desc = "Fool the crew with illusions and let them tear themselves apart."
+				icon_state = "choose_trickster"
+
+	checkRequirements(atom/target, mob/user)
+		. = TRUE
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				if (!A.cooldowncheck())
+					return FALSE
+
+	execute(atom/target, mob/user)
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				A.evolve(ability_code)
+				A.doCooldown()
+		user.closeContextActions()
+		return 0
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'
@@ -362,13 +409,15 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
 			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
-		background.appearance_flags = RESET_COLOR
+		background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		. = background
 
 	getIcon()
@@ -395,19 +444,38 @@
 		else
 			. = ..()
 
+#define OMNI_TOOL_WAIT_TIME 0.5 SECONDS
 
 /datum/contextAction/deconstruction
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Deconstruct with Tool"
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
+	var/omni_mode
+	var/omni_path
+	var/success_text
+	var/success_sound
+
+	proc/success_feedback(atom/target, mob/user)
+		user.show_text(replacetext(success_text, "%target%", target), "blue")
+		if (success_sound)
+			playsound(target, success_sound, 50, TRUE)
+
+	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
+		if (!(omni_mode in omni.modes))
+			return FALSE
+		omni.change_mode(omni_mode, user, omni_path)
+		user.show_text("You flip [omni] to [name] mode.", "blue")
+		sleep(OMNI_TOOL_WAIT_TIME)
+		return TRUE
 
 	execute(atom/target, mob/user)
 		if (isobj(target))
 			var/obj/O = target
 			if (O.decon_contexts)
+				success_feedback(target, user)
 				O.decon_contexts -= src
-				if (O.decon_contexts.len <= 0)
+				if (length(O.decon_contexts) <= 0)
 					user.show_text("Looks like [target] is ready to be deconstructed with the device.", "blue")
 				else
 					user.showContextActions(O.decon_contexts, O)
@@ -415,6 +483,8 @@
 			target.removeContextAction(src.type)
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		. = FALSE
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
@@ -426,72 +496,106 @@
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
+		omni_mode = OMNI_MODE_WRENCHING
+		omni_path = /obj/item/wrench
+		success_text = "You wrench %target%'s bolts."
+		success_sound = 'sound/items/Ratchet.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (iswrenchingtool(I))
-					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
 					return ..()
 
 	cut
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
+		omni_mode = OMNI_MODE_SNIPPING
+		omni_path = /obj/item/wirecutters
+		success_text = "You cut some vestigial wires from %target%."
+		success_sound = 'sound/items/Wirecutter.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user,I))
+						return ..()
 				if (iscuttingtool(I) || issnippingtool(I))
-					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
 					return ..()
 	weld
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
+		omni_mode = OMNI_MODE_WELDING
+		omni_path = /obj/item/weldingtool
+		success_text = "You weld %target% carefully."
+		success_sound = null // sound handled in try_weld
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
 				if (isweldingtool(I))
 					if (I:try_weld(user, 2))
-						user.show_text("You weld [target] carefully.", "blue")
 						return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if(omnitool_swap(target, user,I))
+						if (omni:try_weld(user, 2))
+							return ..()
 
 	pry
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
+		omni_mode = OMNI_MODE_PRYING
+		omni_path = /obj/item/crowbar
+		success_text = "You pry on %target% without remorse."
+		success_sound = 'sound/items/Crowbar.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (ispryingtool(I))
-					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
 					return ..()
-
 	screw
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
+		omni_mode = OMNI_MODE_SCREWING
+		omni_path = /obj/item/screwdriver
+		success_text = "You unscrew some of the screws on %target%."
+		success_sound = 'sound/items/Screwdriver.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (isscrewingtool(I))
-					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
 					return ..()
 
 	pulse
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
+		omni_mode = OMNI_MODE_PULSING
+		omni_path = /obj/item/device/multitool
+		success_text = "You pulse %target%. In a general sense."
+		success_sound = 'sound/items/penclick.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (ispulsingtool(I))
-					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, "sound/items/penclick.ogg", 50, 1)
 					return ..()
+
+#undef OMNI_TOOL_WAIT_TIME
 
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
@@ -503,7 +607,7 @@
 		return
 
 	checkRequirements(atom/target, mob/user)
-		. = (user.loc == target)
+		. = (user.loc == target) && can_act(user)
 
 	board
 		name = "Board"
@@ -720,6 +824,8 @@
 		actions.start(new/datum/action/bar/icon/kudzu_shaping(target,user, creation_path, extra_time), user)
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		. = FALSE
 		if (istype(target, /obj/spacevine))
 			var/obj/spacevine/K = target
@@ -755,7 +861,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		return TRUE
+		. = can_act(user) && in_interact_range(target, user)
 
 	unstack
 		name = "Remove Layer"
@@ -790,8 +896,9 @@
 	name = "Lamp Manufacturer Setting"
 	desc = "This button seems kinda meta."
 	icon_state = "dismiss"
+
 	checkRequirements(var/atom/target, var/mob/user)
-		. = 1
+		. = can_act(user) && in_interact_range(target, user)
 
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
@@ -801,28 +908,16 @@
 			M.set_icon_state("[M.prefix]-[M.setting]")
 		M.tooltip_rebuild = 1
 
-	white
-		name = "Set White"
-		desc = "Sets the manufacturer to produce white lamps."
-		icon_state = "white"
+	green
+		name = "Set Green"
+		desc = "Sets the manufacturer to produce green lamps."
+		icon_state = "green"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "white"
-			M.dispensing_tube = /obj/item/light/tube
-			M.dispensing_bulb = /obj/item/light/bulb
-			..()
-
-	red
-		name = "Set Red"
-		desc = "Sets the manufacturer to produce red lamps."
-		icon_state = "red"
-
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "red"
-			M.dispensing_tube = /obj/item/light/tube/red
-			M.dispensing_bulb = /obj/item/light/bulb/red
+			M.setting = "green"
+			M.dispensing_tube = /obj/item/light/tube/green
+			M.dispensing_bulb = /obj/item/light/bulb/green
 			..()
 
 	yellow
@@ -837,52 +932,57 @@
 			M.dispensing_bulb = /obj/item/light/bulb/yellow
 			..()
 
-	green
-		name = "Set Green"
-		desc = "Sets the manufacturer to produce green lamps."
-		icon_state = "green"
+	red
+		name = "Set Red"
+		desc = "Sets the manufacturer to produce red lamps."
+		icon_state = "red"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "green"
-			M.dispensing_tube = /obj/item/light/tube/green
-			M.dispensing_bulb = /obj/item/light/bulb/green
+			M.setting = "red"
+			M.dispensing_tube = /obj/item/light/tube/red
+			M.dispensing_bulb = /obj/item/light/bulb/red
 			..()
 
-	cyan
-		name = "Set Cyan"
-		desc = "Sets the manufacturer to produce cyan lamps."
-		icon_state = "cyan"
+	white
+		name = "Set White"
+		desc = "Sets the manufacturer to produce white lamps."
+		icon_state = "white"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "cyan"
-			M.dispensing_tube = /obj/item/light/tube/cyan
-			M.dispensing_bulb = /obj/item/light/bulb/cyan
+			M.setting = "white"
+			M.dispensing_tube = /obj/item/light/tube
+			M.dispensing_bulb = /obj/item/light/bulb
 			..()
 
-	blue
-		name = "Set Blue"
-		desc = "Sets the manufacturer to produce blue lamps."
-		icon_state = "blue"
-
+	removal
+		name = "Toggle Fitting Removal"
+		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
+		icon_state = "close"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "blue"
-			M.dispensing_tube = /obj/item/light/tube/blue
-			M.dispensing_bulb = /obj/item/light/bulb/blue
+			M.removing_toggled = !M.removing_toggled
+			boutput(user, SPAN_NOTICE("Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"]."))
 			..()
 
-	purple
-		name = "Set Purple"
-		desc = "Sets the manufacturer to produce purple lamps."
-		icon_state = "purple"
+	bulbs
+		name = "Fitting Production: Bulbs"
+		desc = "Sets the manufacturer to produce bulb wall fittings."
+		icon_state = "bulb"
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.dispensing_fitting = /obj/machinery/light/small
+			..()
+
+	tubes
+		name = "Fitting Production: Tubes"
+		desc = "Sets the manufacturer to produce tube wall fittings."
+		icon_state = "tube"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "purple"
-			M.dispensing_tube = /obj/item/light/tube/purple
-			M.dispensing_bulb = /obj/item/light/bulb/purple
+			M.dispensing_fitting = /obj/machinery/light
 			..()
 
 	blacklight
@@ -897,33 +997,39 @@
 			M.dispensing_bulb = /obj/item/light/bulb/blacklight
 			..()
 
-	tubes
-		name = "Fitting Production: Tubes"
-		desc = "Sets the manufacturer to produce tube wall fittings."
-		icon_state = "tube"
+	purple
+		name = "Set Purple"
+		desc = "Sets the manufacturer to produce purple lamps."
+		icon_state = "purple"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light
+			M.setting = "purple"
+			M.dispensing_tube = /obj/item/light/tube/purple
+			M.dispensing_bulb = /obj/item/light/bulb/purple
 			..()
 
-	bulbs
-		name = "Fitting Production: Bulbs"
-		desc = "Sets the manufacturer to produce bulb wall fittings."
-		icon_state = "bulb"
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light/small
-			..()
+	blue
+		name = "Set Blue"
+		desc = "Sets the manufacturer to produce blue lamps."
+		icon_state = "blue"
 
-	removal
-		name = "Toggle Fitting Removal"
-		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
-		icon_state = "remove"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.removing_toggled = !M.removing_toggled
-			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
+			M.setting = "blue"
+			M.dispensing_tube = /obj/item/light/tube/blue
+			M.dispensing_bulb = /obj/item/light/bulb/blue
+			..()
+	cyan
+		name = "Set Cyan"
+		desc = "Sets the manufacturer to produce cyan lamps."
+		icon_state = "cyan"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "cyan"
+			M.dispensing_tube = /obj/item/light/tube/cyan
+			M.dispensing_bulb = /obj/item/light/bulb/cyan
 			..()
 
 /datum/contextAction/card
@@ -933,7 +1039,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		return TRUE
+		. = can_act(user) && in_interact_range(target, user)
 
 	solitaire
 		name = "Solitaire Stack"
@@ -1077,7 +1183,7 @@
 
 			buildBackgroundIcon-(atom/target, mob/user)
 				var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
-				background.appearance_flags = RESET_COLOR
+				background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				.= background
 
 
@@ -1129,89 +1235,6 @@
 			return 0
 */
 
-/datum/contextAction/flockdrone
-	icon = 'icons/ui/context16x16.dmi'
-	icon_background = "flockbg"
-	name = "Control flockdrone"
-	desc = "You shouldn't be reading this, bug."
-	icon_state = "wrench"
-	close_clicked = TRUE
-	/// The flockdrone aiTask subtype we should switch to upon cast
-	var/task_type = null
-
-	//funny copy paste ability targeting code, someone should really generalize this UPSTREAM
-	execute(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		//typecasting soup time
-		if (!istype(target) || !istype(user))
-			return
-		var/datum/abilityHolder/flockmind/holder = user.abilityHolder
-		if (!istype(holder))
-			return
-		var/datum/targetable/flockmindAbility/droneControl/ability = holder.drone_controller
-		if (ability.targeted && user.targeting_ability == ability)
-			user.targeting_ability = null
-			user.update_cursor()
-			return
-		if (ability.targeted)
-			if (world.time < ability.last_cast)
-				return
-			ability.drone = target
-			ability.task_type = task_type
-			ability.holder.owner.targeting_ability = ability
-			ability.holder.owner.update_cursor()
-		user.closeContextActions()
-
-	checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		return istype(target) && istype(user) && !user.targeting_ability
-
-	move
-		name = "Move"
-		desc = "Go somwhere."
-		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/flock/rally
-
-	convert
-		name = "Convert"
-		desc = "Convert this thing"
-		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_CONVERT_COST
-
-	capture
-		name = "Capture"
-		desc = "Capture this enemy"
-		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..()
-
-	barricade
-		name = "Barricade"
-		desc = "Build a barricade"
-		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
-
-		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_BARRICADE_COST
-
-	shoot
-		name = "Shoot"
-		desc = "Shoot this enemy"
-		icon_state = "flock_shoot"
-		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
-
-	control
-		name = "Control"
-		desc = "Assume direct control of this endpoint"
-		icon_state = "flock_control"
-
-		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			if(user.flock && target.flock == user.flock)
-				target.take_control(user)
-
 /datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
@@ -1225,33 +1248,1089 @@
 		rcd.switch_mode(src.mode, user)
 
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
+		if(!can_act(user) || !in_interact_range(rcd, user))
+			return FALSE
 		return rcd in user
-
-	floorswalls
-		name = "Floors/walls"
-		icon_state = "wall"
-		mode = RCD_MODE_FLOORSWALLS
-	airlock
-		name = "Airlocks"
-		icon_state = "door"
-		mode = RCD_MODE_AIRLOCK
 
 	deconstruct
 		name = "Deconstruct"
 		icon_state = "close"
 		mode = RCD_MODE_DECONSTRUCT
-
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
+	lighttubes
+		name = "Light tubes"
+		icon_state = "tube"
+		mode = RCD_MODE_LIGHTTUBES
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
 	windows
 		name = "Windows"
 		icon_state = "window"
 		mode = RCD_MODE_WINDOWS
 
-	lightbulbs
-		name = "Lightbulbs"
-		icon_state = "bulb"
-		mode = RCD_MODE_LIGHTBULBS
+/datum/contextAction/reagent
+	icon_background = "whitebg"
+	icon_state = "note"
+	var/reagent_id = ""
 
-	lighttubes
-		name = "Light tubes"
-		icon_state = "tube"
-		mode = RCD_MODE_LIGHTTUBES
+	New(var/reagent_id)
+		..()
+		src.reagent_id = reagent_id || src.reagent_id
+		var/datum/reagent/reagent = reagents_cache[reagent_id]
+		if (!istype(reagent))
+			return
+		src.background_color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		src.text = reagent_shorthands[reagent_id] || copytext(capitalize(reagent.name), 1, 3)
+		src.name = capitalize(reagent.name)
+
+/datum/contextAction/reagent/robospray
+	close_moved = FALSE
+	checkRequirements(var/obj/item/robospray/robospray, var/mob/user)
+		return robospray in user
+	execute(var/obj/item/robospray/robospray, var/mob/user)
+		robospray.change_reagent(src.reagent_id, user)
+
+/// Organ context action to pick a region to operate on
+/datum/contextAction/surgery_region
+	name = "Open up surgery region"
+	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "heart"
+	var/organ = null
+	var/organ_path
+	var/surgery_flags = SURGERY_NONE
+
+	execute(atom/target, mob/user)
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if (!surgeryCheck(H, user))
+				return
+
+	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
+		if (user.equipped())
+			var/obj/item/I = user.equipped()
+			if (iscuttingtool(I) || issnippingtool(I) || issawingtool(I))
+				return TRUE
+		boutput(user, SPAN_NOTICE("You need some sort of surgery tool!"))
+		return FALSE
+
+	New(var/region_state = null)
+		..()
+		switch (region_state)
+			if (REGION_CLOSED)
+				src.icon_background = "bg"
+			if (REGION_HALFWAY)
+				src.icon_background = "yellowbg"
+			if (REGION_OPENED)
+				src.icon_background = "greenbg"
+
+	implant
+		name = "implant"
+		desc = "Cut out an implant"
+		icon_state = "implant"
+
+		execute(atom/target, mob/user)
+			if (!istype(target, /mob/living))
+				return
+			var/mob/living/patient = target
+			if (!surgeryCheck(patient, user))
+				return
+			for (var/obj/item/implant/I in patient.implant)
+
+				// This is kinda important (Convair880).
+				if (istype(I, /obj/item/implant/mindhack) && user == patient)
+					var/obj/item/implant/mindhack/implant = I
+					if (patient != implant.implant_hacker)
+						continue
+
+				if (!istype(I, /obj/item/implant/artifact))
+					user.tri_message(patient, SPAN_ALERT("<b>[user]</b> cuts out an implant from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+						SPAN_ALERT("You cut out an implant from [user == patient ? "yourself" : "[patient]"] with [src]!"),\
+						SPAN_ALERT("[patient == user ? "You cut" : "<b>[user]</b> cuts"] out an implant from you with [src]!"))
+
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
+					newcase.pixel_x = rand(-2, 5)
+					newcase.pixel_y = rand(-6, 1)
+					I.on_remove(patient)
+					patient.implant.Remove(I)
+					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+					wadblood.color = patient.blood_color
+					newcase.AddOverlays(wadblood, "blood")
+					newcase.blood_DNA = patient.bioHolder.Uid
+					newcase.blood_type = patient.bioHolder.bloodType
+				else
+					var/obj/item/implant/artifact/imp = I
+					if (imp.cant_take_out)
+						user.tri_message(patient, SPAN_ALERT("<b>[user]</b> tries to cut out something from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+							SPAN_ALERT("Whatever you try to cut out from [user == patient ? "yourself" : "[patient]"] won't come out!"),\
+							SPAN_ALERT("[patient == user ? "You try to cut" : "<b>[user]</b> tries to cut"] out something from you with [src]!"))
+					else
+						user.tri_message(patient, SPAN_ALERT("<b>[user]</b> cuts out something alien from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+							SPAN_ALERT("You cut out something alien from [user == patient ? "yourself" : "[patient]"] with [src]!"),\
+							SPAN_ALERT("[patient == user ? "You cut" : "<b>[user]</b> cuts"] out something alien from you with [src]!"))
+						imp.pixel_x = rand(-2, 5)
+						imp.pixel_y = rand(-6, 1)
+						imp.set_loc(get_turf(patient))
+						imp.on_remove(patient)
+						patient.implant.Remove(imp)
+				return TRUE
+
+	parasite
+		name = "parasite"
+		desc = "Cut out one or multiple parasites"
+		icon_state = "parasite"
+		organ_path = "appendix"
+
+		execute(atom/target, mob/user)
+			if (!ishuman(target))
+				return
+			var/mob/living/carbon/human/H = target
+			if (!surgeryCheck(H, user))
+				return
+			var/attempted_parasite_removal = 0
+			for (var/datum/ailment_data/an_ailment in H.ailments)
+				if (an_ailment.cure_flags & CURE_SURGERY)
+					attempted_parasite_removal = 1
+					var/success = an_ailment.surgery(user, H)
+					if (success)
+						H.cure_disease(an_ailment) // surgeon.cure_disease(an_ailment) no, doctor, DO NOT HEAL THYSELF, HEAL THY PATIENT
+					else
+						break
+
+					if (attempted_parasite_removal == 1)
+						user.tri_message(H, SPAN_ALERT("<b>[user]</b> cuts out a parasite from [H == user ? "[him_or_her(H)]self" : "[H]"] with [src]!"),\
+							SPAN_ALERT("You cut out a parasite from [user == H ? "yourself" : "[H]"] with [src]!"),\
+							SPAN_ALERT("[H == user ? "You cut" : "<b>[user]</b> cuts"] out a parasite from you with [src]!"))
+
+	chest_item
+		name = "implant item"
+		desc = "Cut out an item from someone's guts"
+		icon_state = "chest_item"
+
+		execute(atom/target, mob/user)
+			if (!ishuman(target))
+				return
+			var/mob/living/carbon/human/H = target
+			if (!surgeryCheck(H, user))
+				return
+			if (H.chest_item != null)
+				var/location = get_turf(H)
+				var/obj/item/outChestItem = H.chest_item
+				outChestItem.set_loc(location)
+				user.tri_message(H, SPAN_NOTICE("<b>[user]</b> cuts [H.chest_item] out of [H == user ? "[his_or_her(H)]" : "[H]'s"] chest."),\
+					SPAN_NOTICE("You cut [H.chest_item] out of [user == H ? "your" : "[user]'s"] chest."),\
+					SPAN_NOTICE("[H == user ? "You cut" : "<b>[user]</b> cuts"] [H.chest_item] out of your chest."))
+				H.visible_message(SPAN_ALERT("\The [outChestItem] flops out of [H]."))
+				H.chest_item = null
+				H.chest_item_sewn = 0
+				return
+
+	ribs
+		name = "Ribs"
+		desc = "Open the patient's ribcage"
+		icon_state = "ribs"
+		surgery_flags = SURGERY_CUTTING | SURGERY_SAWING | SURGERY_SNIPPING
+		var/open = FALSE
+
+		execute(atom/target, mob/user)
+			..()
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder)
+				var/region_complexity = H.organHolder.build_rib_region_buttons(src)
+				if (!region_complexity)
+					boutput(user, SPAN_ALERT("The patient's ribs region cannot be opened. Something went wrong. Dial 1-800-coder."))
+					return
+			if (src.open)
+				if (!H.organHolder.build_inside_ribs_buttons())
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their ribs region!"))
+					return
+				user.showContextActions(H.organHolder.inside_ribs_contexts, H, H.organHolder.contextLayout)
+			else
+				user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s ribs region."))
+				return
+
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.rib_contexts && length(H.organHolder.rib_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
+	subcostal
+		name = "Subcostal"
+		desc = "Open the subcostal region"
+		icon_state = "subcostal"
+		surgery_flags = SURGERY_CUTTING | SURGERY_SNIPPING
+		var/open = FALSE
+
+		execute(atom/target, mob/user)
+			..()
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder)
+				var/region_complexity = H.organHolder.build_subcostal_region_buttons(src)
+				if (!region_complexity)
+					boutput(user, SPAN_ALERT("The patient's subcostal region cannot be opened. Something went wrong. Dial 1-800-coder."))
+					return
+			if (src.open)
+				if (!H.organHolder.build_inside_subcostal_buttons())
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their subcostal region!"))
+					return
+				user.showContextActions(H.organHolder.inside_subcostal_contexts, H, H.organHolder.contextLayout)
+			else
+				user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s subcostal region."))
+				return
+
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.subcostal_contexts && length(H.organHolder.subcostal_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
+	abdomen
+		name = "Abdomen"
+		desc = "Open the abdominal region"
+		icon_state = "abdominal"
+		surgery_flags = SURGERY_CUTTING | SURGERY_SNIPPING
+		var/open = FALSE
+
+		execute(atom/target, mob/user)
+			..()
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder)
+				var/region_complexity = H.organHolder.build_abdomen_region_buttons(src)
+				if (!region_complexity)
+					boutput(user, SPAN_ALERT("The patient's abdominal region cannot be opened. Something went wrong. Dial 1-800-coder."))
+					return
+			if (src.open)
+				if (!H.organHolder.build_inside_abdomen_buttons())
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their abdominal region!"))
+					return
+				user.showContextActions(H.organHolder.inside_abdomen_contexts, H, H.organHolder.contextLayout)
+			else
+				user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s abdominal region."))
+				return
+
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.abdomen_contexts && length(H.organHolder.abdomen_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
+	flanks
+		name = "Flanks"
+		desc = "Open the patient's flanks"
+		icon_state = "flanks"
+		surgery_flags = SURGERY_CUTTING | SURGERY_SNIPPING
+		var/open = FALSE
+
+		execute(atom/target, mob/user)
+			..()
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder)
+				var/region_complexity = H.organHolder.build_flanks_region_buttons(src)
+				if (!region_complexity)
+					boutput(user, SPAN_ALERT("The patient's flanks cannot be opened. Something went wrong. Dial 1-800-coder."))
+					return
+			if (src.open)
+				if (!H.organHolder.build_inside_flanks_buttons())
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their flanks!"))
+					return
+				user.showContextActions(H.organHolder.inside_flanks_contexts, H, H.organHolder.contextLayout)
+			else
+				user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s flanks."))
+				return
+
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.flanks_contexts && length(H.organHolder.flanks_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
+/// Organ context action to pick an organ to operate on
+/datum/contextAction/organs
+	name = "Cut out organ"
+	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "heart"
+	var/organ = null
+	var/organ_path
+
+	execute(atom/target, mob/user)
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if (!surgeryCheck(H, user))
+				return
+			if (H.organHolder?.chest?.op_stage >= 2)
+				//Check if the organ didn't get removed in the meantime
+				var/datum/organHolder/organs = H.organHolder
+				if (!organs.organ_list[src.organ_path])
+					boutput(user, SPAN_NOTICE("[H] doesn't have a [src.name]."))
+					return
+				var/obj/item/organ/organ_target = organs.get_organ(src.organ_path)
+				if (!user.equipped())
+					actions.start(new/datum/action/bar/icon/remove_organ(user, H, organ_path, src.name, TRUE, organ_target.icon, organ_target.icon_state), user)
+					return
+				var/organ_complexity = organ_target.build_organ_buttons()
+				if (!organ_complexity)
+					boutput(user, SPAN_ALERT("[organ_target] cannot be surgeried out. Something went wrong. Dial 1-800-coder."))
+					return
+				if (organ_target.surgery_contexts && length(organ_target.surgery_contexts) <= 0)
+					user.tri_message(H, SPAN_NOTICE("<b>[user]</b> takes out [user == H ? "[his_or_her(H)]" : "[H]'s"] [src.name]."),\
+						SPAN_NOTICE("You take out [user == H ? "your" : "[H]'s"] [src.name]."),\
+						SPAN_ALERT("[H == user ? "You take" : "<b>[user]</b> takes"] out your [src.name]!"))
+					logTheThing(LOG_COMBAT, user, "removed [constructTarget(H,"combat")]'s [src.name].")
+					organs.drop_organ(src.organ_path)
+					playsound(H, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					switch(organ_target.region)
+						if (RIBS)
+							if (!organs.build_inside_ribs_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_ribs_contexts, organs.donor, organs.contextLayout)
+						if (SUBCOSTAL)
+							if (!organs.build_inside_subcostal_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_subcostal_contexts, organs.donor, organs.contextLayout)
+						if (ABDOMINAL)
+							if (!organs.build_inside_abdomen_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_abdomen_contexts, organs.donor, organs.contextLayout)
+						if (FLANKS)
+							if (!organs.build_inside_flanks_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_flanks_contexts, organs.donor, organs.contextLayout)
+				else
+					user.showContextActions(organ_target.surgery_contexts, organ_target, organ_target.contextLayout)
+					boutput(user, SPAN_NOTICE("You begin surgery on [H]'s [src.name]."))
+					return
+		else
+			target.removeContextAction(src.type)
+
+	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
+		if (user.equipped())
+			var/obj/item/I = user.equipped()
+			if (iscuttingtool(I) || issnippingtool(I) || issawingtool(I))
+				return TRUE
+		if (!user.equipped())
+			return TRUE
+		boutput(user, SPAN_NOTICE("You need some sort of surgery tool or an empty hand!"))
+		return FALSE
+
+/datum/contextAction/organs/ribs
+
+	heart
+		name = "heart"
+		desc = "Cut out the heart."
+		icon_state = "heart"
+		organ_path = "heart"
+
+	right_lung
+		name = "right lung"
+		desc = "Cut out the right lung."
+		icon_state = "right_lung"
+		organ_path = "right_lung"
+
+	left_lung
+		name = "left lung"
+		desc = "Cut out the left lung."
+		icon_state = "left_lung"
+		organ_path = "left_lung"
+
+/datum/contextAction/organs/subcostal
+
+	liver
+		name = "liver"
+		desc = "Cut out the liver."
+		icon_state = "liver"
+		organ_path = "liver"
+
+	spleen
+		name = "spleen"
+		desc = "Cut out the spleen."
+		icon_state = "spleen"
+		organ_path = "spleen"
+
+	pancreas
+		name = "pancreas"
+		desc = "Cut out the pancreas."
+		icon_state = "pancreas"
+		organ_path = "pancreas"
+
+/datum/contextAction/organs/flanks
+
+	right_kidney
+		name = "right kidney"
+		desc = "Cut out the right kidney."
+		icon_state = "right_kidney"
+		organ_path = "right_kidney"
+
+	left_kidney
+		name = "left kidney"
+		desc = "Cut out the left kidney."
+		icon_state = "left_kidney"
+		organ_path = "left_kidney"
+
+
+/datum/contextAction/organs/abdominal
+
+	stomach
+		name = "stomach"
+		desc = "Cut out the stomach."
+		icon_state = "stomach"
+		organ_path = "stomach"
+
+	intestines
+		name = "intestines"
+		desc = "Cut out the intestines."
+		icon_state = "intestines"
+		organ_path = "intestines"
+
+	appendix
+		name = "appendix"
+		desc = "Cut out the appendix."
+		icon_state = "appendix"
+		organ_path = "appendix"
+
+/// Organ context action (tails/butts)
+/datum/contextAction/back_surgery
+	name = "Back surgery"
+	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "heart"
+	var/organ = null
+	var/organ_path
+
+	proc/success_feedback(atom/target, mob/user)
+		boutput(user, SPAN_NOTICE("You remove [target]'s [src.name]."))
+		playsound(target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+
+	execute(atom/target, mob/user)
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if (!surgeryCheck(H, user))
+				return
+			if (H.organHolder)
+				var/datum/organHolder/organs = H.organHolder
+				success_feedback(target, user)
+				organs.contexts -= src
+				actions.start(new/datum/action/bar/icon/remove_organ(user, H, organ_path, src.name), user)
+		else
+			target.removeContextAction(src.type)
+
+	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
+		if (user.equipped())
+			var/obj/item/I = user.equipped()
+			if (iscuttingtool(I) || issawingtool(I))
+				return TRUE
+		boutput(user, SPAN_NOTICE("You need some sort of knife or saw!"))
+		return FALSE
+
+	butt
+		name = "butt"
+		desc = "Cut out the butt."
+		icon_state = "butt"
+		organ_path = "butt"
+
+	tail
+		name = "tail"
+		desc = "Cut out the tail."
+		icon_state = "tail"
+		organ_path = "tail"
+
+///Context action for the steps to remove a specific organ
+/datum/contextAction/organ_surgery
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Prepare an organ to be taken out"
+	icon_state = "scalpel"
+	var/success_text = null
+	var/success_sound
+	var/slipup_text = null
+
+	execute(atom/target, mob/user)
+		if (istype(target, /obj/item/organ))
+			var/obj/item/organ/O = target
+			if (!O)
+				boutput(user, SPAN_ALERT("The organ you are operating on is no longer in the patient."))
+				return
+			if (!O.holder || !O.holder.donor)
+				return
+			if (!ishuman(O.holder.donor))
+				return
+			var/mob/living/carbon/human/H = O.holder.donor
+			if (!surgeryCheck(H, user))
+				return
+			var/screw_up_prob = calc_screw_up_prob(H, user)
+			if (prob(screw_up_prob))
+				var/damage = calc_surgery_damage(user, screw_up_prob, rand(5,10))
+				do_slipup(user, H, "chest", damage, slipup_text)
+				user.showContextActions(O.surgery_contexts, O, O.contextLayout)
+				return
+			if (O.surgery_contexts)
+				if (src.success_text)
+					user.visible_message(SPAN_NOTICE("[user] [success_text]."))
+				if (src.success_sound)
+					if (O.holder?.donor)
+						playsound(O.holder.donor, src.success_sound, 50, 1)
+				attack_particle(user, H)
+				attack_twitch(user)
+				random_brute_damage(H, rand(2, 4))
+				O.surgery_contexts -= src
+				O.removal_stage = 1
+				switch (O.region)
+					if (RIBS)
+						if (!H.organHolder.build_inside_ribs_buttons())
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+							return
+					if (SUBCOSTAL)
+						if (!H.organHolder.build_inside_subcostal_buttons())
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+							return
+					if (ABDOMINAL)
+						if (!H.organHolder.build_inside_abdomen_buttons())
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+							return
+					if (FLANKS)
+						if (!H.organHolder.build_inside_flanks_buttons())
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+							return
+				if (length(O.surgery_contexts) <= 0)
+					boutput(user, SPAN_NOTICE("It seems the organ is ready to be removed."))
+					if (O.holder)
+						O.removal_stage = 2
+						switch (O.region)
+							if (RIBS)
+								if (!H.organHolder.build_inside_ribs_buttons())
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+									return
+							if (SUBCOSTAL)
+								if (!H.organHolder.build_inside_subcostal_buttons())
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+									return
+							if (ABDOMINAL)
+								if (!H.organHolder.build_inside_abdomen_buttons())
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+									return
+							if (FLANKS)
+								if (!H.organHolder.build_inside_flanks_buttons())
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
+									return
+						switch (O.region)
+							if (RIBS)
+								user.showContextActions(O.holder.inside_ribs_contexts, O.holder.donor, O.holder.contextLayout)
+							if (SUBCOSTAL)
+								user.showContextActions(O.holder.inside_subcostal_contexts, O.holder.donor, O.holder.contextLayout)
+							if (ABDOMINAL)
+								user.showContextActions(O.holder.inside_abdomen_contexts, O.holder.donor, O.holder.contextLayout)
+							if (FLANKS)
+								user.showContextActions(O.holder.inside_flanks_contexts, O.holder.donor, O.holder.contextLayout)
+					return
+				else
+					user.showContextActions(O.surgery_contexts, O, O.contextLayout)
+					return
+		else
+			target.removeContextAction(src.type)
+			return
+
+	cut
+		name = "Cut"
+		desc = "Cut surrounding tissues."
+		icon_state = "scalpel"
+		success_text = "cuts some tissues"
+		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+		slipup_text = " slips up and slices something important looking"
+
+		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
+			if (!user.equipped())
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
+				return FALSE
+			var/obj/item/I = user.equipped()
+			if (!iscuttingtool(I))
+				boutput(user, SPAN_NOTICE("You need a cutting tool."))
+				return FALSE
+			return TRUE
+
+	saw
+		name = "Saw"
+		desc = "Saw out the organ."
+		icon_state = "saw"
+		success_text = "saws various connections to the organ"
+		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+		slipup_text = " doesn't hold the saw properly and messes up"
+
+		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
+			if (!user.equipped())
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
+				return FALSE
+			var/obj/item/I = user.equipped()
+			if (!issawingtool(I))
+				boutput(user, SPAN_NOTICE("You need a sawing tool."))
+				return FALSE
+			return TRUE
+
+	snip
+		name = "Snip"
+		desc = "Snip out veins and tendons."
+		icon_state = "scissor"
+		success_text = "snips out various veins and tendons"
+		success_sound = 'sound/items/Scissor.ogg'
+		slipup_text = " snips directly into the organ"
+
+		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
+			if (!user.equipped())
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
+				return FALSE
+			var/obj/item/I = user.equipped()
+			if (!issnippingtool(I))
+				boutput(user, SPAN_NOTICE("You need a snipping tool."))
+				return FALSE
+			return TRUE
+
+///Context action for the steps to remove a specific organ
+/datum/contextAction/region_surgery
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Open up a region of the patient's body"
+	icon_state = "scalpel"
+	var/success_text = null
+	var/success_sound
+	var/slipup_text = null
+	var/region = null
+
+	execute(atom/target, mob/user)
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if (!surgeryCheck(H, user))
+				return
+			var/screw_up_prob = calc_screw_up_prob(H, user)
+
+			switch (src.region)
+				if ("ribs")
+					if (prob(screw_up_prob))
+						var/damage = calc_surgery_damage(user, screw_up_prob, rand(5,10))
+						do_slipup(user, H, "chest", damage, slipup_text)
+						user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
+						return
+					attack_particle(user, H)
+					attack_twitch(user)
+					random_brute_damage(H, rand(2, 4))
+					if (H.organHolder.rib_contexts)
+						if (src.success_text)
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
+						if (src.success_sound)
+							playsound(H, src.success_sound, 50, 1)
+						H.organHolder.rib_contexts -= src
+						H.organHolder.ribs_stage = REGION_HALFWAY
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+					if (length(H.organHolder.rib_contexts) <= 0)
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
+						H.organHolder.ribs_stage = REGION_OPENED
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
+						return
+					else
+						user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
+						return
+				if ("subcostal")
+					if (prob(screw_up_prob))
+						var/damage = calc_surgery_damage(user, screw_up_prob, rand(5,10))
+						do_slipup(user, H, "chest", damage, slipup_text)
+						user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
+						return
+					attack_particle(user, H)
+					attack_twitch(user)
+					random_brute_damage(H, rand(2, 4))
+					if (H.organHolder.subcostal_contexts)
+						if (src.success_text)
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
+						if (src.success_sound)
+							playsound(H, src.success_sound, 50, 1)
+						H.organHolder.subcostal_contexts -= src
+						H.organHolder.subcostal_stage = REGION_HALFWAY
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+					if (length(H.organHolder.subcostal_contexts) <= 0)
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
+						H.organHolder.subcostal_stage = REGION_OPENED
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
+						return
+					else
+						user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
+						return
+				if ("abdomen")
+					if (prob(screw_up_prob))
+						var/damage = calc_surgery_damage(user, screw_up_prob, rand(5,10))
+						do_slipup(user, H, "chest", damage, slipup_text)
+						user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
+						return
+					attack_particle(user, H)
+					attack_twitch(user)
+					random_brute_damage(H, rand(2, 4))
+					if (H.organHolder.abdomen_contexts)
+						if (src.success_text)
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
+						if (src.success_sound)
+							playsound(H, src.success_sound, 50, 1)
+						H.organHolder.abdomen_contexts -= src
+						H.organHolder.abdominal_stage = REGION_HALFWAY
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+					if (length(H.organHolder.abdomen_contexts) <= 0)
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
+						H.organHolder.abdominal_stage = REGION_OPENED
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
+						return
+					else
+						user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
+						return
+				if ("flanks")
+					if (prob(screw_up_prob))
+						var/damage = calc_surgery_damage(user, screw_up_prob, rand(5,10))
+						do_slipup(user, H, "chest", damage, slipup_text)
+						user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
+						return
+					attack_particle(user, H)
+					attack_twitch(user)
+					random_brute_damage(H, rand(2, 4))
+					if (H.organHolder.flanks_contexts)
+						if (src.success_text)
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
+						if (src.success_sound)
+							playsound(H, src.success_sound, 50, 1)
+						H.organHolder.flanks_contexts -= src
+						H.organHolder.flanks_stage = REGION_HALFWAY
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+					if (length(H.organHolder.flanks_contexts) <= 0)
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
+						H.organHolder.flanks_stage = REGION_OPENED
+						if (!H.organHolder.build_region_buttons())
+							boutput(user, "[H] has no more organs!")
+							return
+						user.showContextActions(H.organHolder.contexts, H, H.organHolder.contextLayout)
+						return
+					else
+						user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
+						return
+		else
+			target.removeContextAction(src.type)
+			return
+
+	cut
+		name = "Cut"
+		desc = "Slice open the flesh."
+		icon_state = "scalpel"
+		success_text = "slices open the flesh protecting the organs"
+		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+		slipup_text = " slips up and stabs into the patient"
+
+		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
+			if (!user.equipped())
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
+				return FALSE
+			var/obj/item/I = user.equipped()
+			if (!iscuttingtool(I))
+				boutput(user, SPAN_NOTICE("You need a cutting tool."))
+				return FALSE
+			return TRUE
+
+	saw
+		name = "Saw"
+		desc = "Saw open the ribcage."
+		icon_state = "saw"
+		success_text = "saws open the ribcage"
+		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+		slipup_text = " doesn't hold the saw properly and cracks a rib"
+
+		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
+			if (!user.equipped())
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
+				return FALSE
+			var/obj/item/I = user.equipped()
+			if (!issawingtool(I))
+				boutput(user, SPAN_NOTICE("You need a sawing tool."))
+				return FALSE
+			return TRUE
+
+	snip
+		name = "Snip"
+		desc = "Snip out some tissue."
+		icon_state = "scissor"
+		success_text = "snips out various tissues and tendons"
+		success_sound = 'sound/items/Scissor.ogg'
+		slipup_text = " loses control of the scissors and drags it across the patient's entire chest"
+
+		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
+			if (!user.equipped())
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
+				return FALSE
+			var/obj/item/I = user.equipped()
+			if (!issnippingtool(I))
+				boutput(user, SPAN_NOTICE("You need a snipping tool."))
+				return FALSE
+			return TRUE
+#define BUNSEN_OFF "off"
+#define BUNSEN_LOW "low"
+#define BUNSEN_MEDIUM "medium"
+#define BUNSEN_HIGH "high"
+
+/datum/contextAction/bunsen
+	icon = 'icons/ui/context16x16.dmi'
+	name = "you shouldnt see me"
+	icon_state = "wrench"
+	icon_background = "bunsen_bg"
+	use_tooltip = FALSE
+	close_moved = TRUE
+
+	var/temperature = null
+
+	checkRequirements(var/obj/item/bunsen_burner/bunsen_burner, var/mob/user)
+		if(!can_act(user) || !in_interact_range(bunsen_burner, user))
+			return FALSE
+		if(GET_DIST(bunsen_burner, user) > 1)
+			return FALSE
+		else
+			return TRUE
+
+	execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+		bunsen_burner.change_status(temperature)
+		bunsen_burner.UpdateIcon()
+		boutput(user, SPAN_NOTICE("You set the [bunsen_burner] to [temperature]."))
+
+	heat_off
+		name = "Off"
+		icon_state = "bunsen_off"
+
+		execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+			bunsen_burner.change_status(BUNSEN_OFF)
+			boutput(user, SPAN_NOTICE("You turn the [bunsen_burner] off."))
+			bunsen_burner.UpdateIcon()
+
+	heat_low
+		name = "Low"
+		icon_state = "bunsen_1"
+		temperature = BUNSEN_LOW
+
+	heat_medium
+		name = "Medium"
+		icon_state = "bunsen_2"
+		temperature = BUNSEN_MEDIUM
+
+	heat_high
+		name = "High"
+		icon_state = "bunsen_3"
+		temperature = BUNSEN_HIGH
+
+#undef BUNSEN_OFF
+#undef BUNSEN_LOW
+#undef BUNSEN_MEDIUM
+#undef BUNSEN_HIGH
+/datum/contextAction/t_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "dismiss"
+	close_clicked = TRUE
+	close_moved = FALSE
+	var/base_icon_state = ""
+
+	checkRequirements(var/obj/item/device/t_scanner/t_scanner, mob/user)
+		if(!can_act(user) || !in_interact_range(t_scanner, user))
+			return FALSE
+		return t_scanner in user
+
+	active
+		name = "Active"
+		desc = "Toggle T-ray scanner"
+		icon_state = "tray_scanner_off"
+		base_icon_state = "tray_scanner_"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_on(!t_scanner.on)
+			var/obj/ability_button/tscanner_toggle/tscanner_button = locate(/obj/ability_button/tscanner_toggle) in t_scanner.ability_buttons
+			tscanner_button.icon_state = t_scanner.on ? "tray_on" : "tray_off"
+
+	underfloor_cables
+		name = "Cables"
+		desc = "Current underfloor cables"
+		icon_state = "tray_cable_on"
+		base_icon_state = "tray_cable_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_cables(!t_scanner.show_underfloor_cables, user)
+
+	underfloor_disposal_pipes
+		name = "Disposal Pipes"
+		desc = "Current underfloor disposal pipes"
+		icon_state = "tray_pipes_on"
+		base_icon_state = "tray_pipes_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_disposal_pipes(!t_scanner.show_underfloor_disposal_pipes, user)
+
+	blueprint_disposal_pipes
+		name = "Pipe Blueprints"
+		desc = "Original pipe blueprints"
+		icon_state = "tray_blueprint_on"
+		base_icon_state = "tray_blueprint_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)
+
+/datum/contextAction/speech_pro
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "hey"
+	var/speech_text = "Hello!"
+	var/speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+	var/phrase = SPEECH_PRO_SAY_HELLO
+
+	execute(var/obj/item/device/speech_pro/sp, var/mob/user)
+		if (!istype(sp, /obj/item/device/speech_pro))
+			return
+		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
+			sp.speak(src.speech_text, user)
+			playsound(sp, src.speech_sound, 50, 1)
+		else
+			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
+
+	checkRequirements(var/obj/item/device/speech_pro/sp, var/mob/user)
+		if(!can_act(user))
+			return FALSE
+		return sp in user
+
+	greeting
+		name = "Greeting"
+		icon_state = "hey"
+		phrase = SPEECH_PRO_SAY_HELLO
+		speech_text = "Hello!"
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+	farewell
+		name = "Farewell"
+		icon_state = "bye"
+		phrase = SPEECH_PRO_SAY_BYE
+		speech_text = "Goodbye!"
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+	assistance
+		name = "Assistance"
+		icon_state = "caution"
+		phrase = SPEECH_PRO_SAY_HELP
+		speech_text = "I require assistance."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	confusion
+		name = "Confusion"
+		icon_state = "what"
+		phrase = SPEECH_PRO_SAY_WHAT
+		speech_text = "I don't understand."
+		speech_sound = 'sound/misc/talk/cyborg_ask.ogg'
+
+	gratitude
+		name = "Gratitude"
+		icon_state = "thx"
+		phrase = SPEECH_PRO_SAY_THX
+		speech_text = "Thank you."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	apology
+		name = "Apology"
+		icon_state = "sry"
+		phrase = SPEECH_PRO_SAY_SRY
+		speech_text = "I'm sorry."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	congratulations
+		name = "Congratulations"
+		icon_state = "happy_face"
+		phrase = SPEECH_PRO_SAY_GJ
+		speech_text = "Good job!"
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+	wait
+		name = "Wait"
+		icon_state = "wait"
+		phrase = SPEECH_PRO_SAY_WAIT
+		speech_text = "Please wait."
+		speech_sound = 'sound/misc/talk/cyborg_ask.ogg'
+
+	affirmation
+		name = "Affirmation"
+		icon_state = "yes"
+		phrase = SPEECH_PRO_SAY_YES
+		speech_text = "Yes."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	rejection
+		name = "Rejection"
+		icon_state = "no"
+		phrase = SPEECH_PRO_SAY_NO
+		speech_text = "No."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	follow
+		name = "Follow"
+		icon_state = "board"
+		phrase = SPEECH_PRO_SAY_FOLLOW
+		speech_text = "Follow me."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	explanation
+		name = "Explanation"
+		icon_state = "computer"
+		phrase = SPEECH_PRO_SAY_SP
+		speech_text = "I am using a Speech Pro."
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'

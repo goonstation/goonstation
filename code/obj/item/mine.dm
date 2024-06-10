@@ -1,4 +1,7 @@
 // Cleaned up the ancient code that used to be here (Convair880).
+TYPEINFO(/obj/item/mine)
+	mats = 6
+
 /obj/item/mine
 	name = "land mine (parent)"
 	desc = "You shouldn't be able to see this!"
@@ -8,7 +11,6 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
 	is_syndicate = TRUE
-	mats = 6
 	event_handler_flags = USE_FLUID_ENTER
 	var/suppress_flavourtext = FALSE
 	var/armed = FALSE
@@ -76,14 +78,14 @@
 			logTheThing(LOG_BOMBING, user, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
-			src.our_timer.attack_self(user)
+			src.our_timer.AttackSelf(user)
 
 
 	receive_signal()
 		if (src.used_up)
 			return
 
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 		src.armed = TRUE
 		src.UpdateIcon()
 
@@ -201,7 +203,7 @@
 		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 60 SECONDS)
+					L.take_radiation_dose(2.5 SIEVERTS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -222,7 +224,7 @@
 		if (!src || !istype(src))
 			return
 
-		fireflash_sm(get_turf(src), 3, 3000, 500)
+		fireflash_melting(get_turf(src), 3, 3000, 500, chemfire = CHEM_FIRE_RED)
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
 /obj/item/mine/stun
@@ -268,6 +270,9 @@
 
 		explosion(src, src.loc, 0, 1, 2, 3)
 
+TYPEINFO(/obj/item/mine/gibs)
+	mats = 0
+
 /obj/item/mine/gibs
 	name = "pustule"
 	desc = "Some kind of weird little meat balloon."
@@ -275,7 +280,6 @@
 	icon_state = "meatmine"
 	suppress_flavourtext = TRUE
 	is_syndicate = FALSE
-	mats = 0
 
 	armed
 		armed = TRUE
@@ -288,8 +292,8 @@
 		if (!src || !istype(src))
 			return
 
-		src.visible_message("<span class='alert'>[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
+		src.visible_message(SPAN_ALERT("[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]"))
 		gibs(src.loc)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 
 		return

@@ -16,6 +16,9 @@
 
 
 
+TYPEINFO(/obj/item/peripheral)
+	mats = 8
+
 /obj/item/peripheral
 	name = "Peripheral card"
 	desc = "A computer circuit board."
@@ -28,7 +31,6 @@
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
-	mats = 8
 
 	New(location)
 		..()
@@ -153,9 +155,9 @@
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		if(send_only)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT("wireless", frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 		else
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if(..())
@@ -422,25 +424,25 @@
 		. += " | NETID: [src.net_id ? src.net_id : "NONE"]"
 
 
-	proc
-		check_connection()
-			//if there is a link, it has a master, and the master is valid..
-			if(src.link && istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
-				if(src.link.master == src)
-					return 1 //If it's already us, the connection is fine!
-				else//Otherwise welp no this thing is taken.
-					src.link = null
-					return 0
+// why is the connection checked like this - do we really need to disconnect then reconnect?
+/obj/item/peripheral/network/powernet_card/proc/check_connection()
+	//if there is a link, it has a master, and the master is valid..
+	if(istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
+		if(src.link.master == src)
+			return 1 //If it's already us, the connection is fine!
+		else//Otherwise welp no this thing is taken.
 			src.link = null
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src
-				return 1
-			else
-				//boutput(world, "couldn't link")
-				return 0
+			return 0
+	src.link = null
+	var/turf/T = get_turf(src)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+		src.link = test_link
+		src.link.master = src
+		return 1
+	else
+		//boutput(world, "couldn't link")
+		return 0
 
 /obj/item/peripheral/network/powernet_card/terminal
 	name = "Terminal card"
@@ -504,7 +506,7 @@
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
-					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+					playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 					P.info = "<tt>[print_data]</tt>"
 					if(print_title)
 						P.name = "paper- '[print_title]'"
@@ -568,7 +570,7 @@
 				src.check_wired_connection()
 			//Let's blindy attempt to generate a unique network ID!
 		src.net_id = format_net_id("\ref[src]")
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 
 
 	receive_command(obj/source, command, datum/signal/signal)
@@ -643,7 +645,7 @@
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
-					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+					playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 					P.info = "<tt>[print_data]</tt>"
 					if(print_title)
 						P.name = "paper- '[print_title]'"
@@ -751,7 +753,7 @@
 			return 1
 
 		if(!get_radio_connection_by_id(src, "wireless"))
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 			get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 
 		src.check_wired_connection()
@@ -828,7 +830,7 @@
 				var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 				P.set_loc(src.host.loc)
 
-				playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 				P.info = "<tt>[print_data]</tt>"
 				if(print_title)
 					P.name = "paper- '[print_title]'"
@@ -877,7 +879,7 @@
 			src.vend_prize()
 			src.last_vend = world.time
 		else
-			boutput(user, "<span class='alert'>[src] isn't ready to dispense a prize yet.</span>")
+			boutput(user, SPAN_ALERT("[src] isn't ready to dispense a prize yet."))
 
 		return
 
@@ -893,7 +895,7 @@
 
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 				P.setup(prize_location)
 				prize = P
 				prize.name = "space ticket"
@@ -902,7 +904,7 @@
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
-				prize.anchored = FALSE
+				prize.anchored = UNANCHORED
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
 				prize.name = "Burno Lighter"
@@ -940,11 +942,19 @@
 		desc = "A peripheral board for editing ID cards."
 		can_manage_access = 1
 
+		return_badge()
+			// label text, icon, contents
+			. = list("label" = "Card","icon" = "edit","contents" = src.authid)
+
 	register //A card scanner...that manages money??
 		name = "ATM card module"
 		desc = "A peripheral board for managing an ID card's credit balance."
 		func_tag = "ATM_SCANNER"
 		can_manage_money = 1
+
+		return_badge()
+			// label text, icon, contents
+			. = list("label" = "Card","icon" = "credit-card","contents" = src.authid)
 
 		return_status_text()
 			var/status_text = "No card loaded"
@@ -960,8 +970,8 @@
 		clownifies_card = 1
 
 		return_badge()
-			var/dat = "<font face='Comic Sans MS'>Card: <a href='?src=\ref[src];card=1'>[src.authid ? "Eject" : "-----"]</a></font>"
-			return dat
+			// label text, icon, contents
+			. = list("label" = "Card","icon" = "id-card","contents" = src.authid,"Clown" = TRUE)
 
 	return_status_text()
 		var/status_text = "No card loaded"
@@ -969,13 +979,13 @@
 			if (src.clownifies_card)
 				src.authid.assignment = "Clown"
 				src.authid.update_name()
-				playsound(src.host.loc, "sound/items/bikehorn.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 			status_text = "Card: [authid.registered]"
 		return status_text
 
 	return_badge()
-		var/dat = "Card: <a href='?src=\ref[src];card=1'>[src.authid ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Card","icon" = "id-card","contents" = src.authid)
 
 	proc/eject_card()
 		if(src.authid)
@@ -1109,7 +1119,7 @@
 			return
 
 		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+			boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 			return
 
 		src.host?.add_dialog(usr)
@@ -1146,7 +1156,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -1162,7 +1172,7 @@
 					speak_name = src.host.name
 
 				for(var/mob/O in hearers(src.host, null))
-					O.show_message("<span class='game say'><span class='name'>[speak_name]</span> [bicon(src.host)] beeps, \"[speak_data]\"",2)
+					O.show_message(SPAN_SAY("[SPAN_NAME("[speak_name]")] [bicon(src.host)] beeps, \"[speak_data]\""), 2)
 
 			else
 				return "Valid commands: beep, speak with signal containing name=X, data=Y"
@@ -1194,8 +1204,8 @@
 		return 0
 
 	return_badge()
-		var/dat = "Disk: <a href='?src=\ref[src];disk=1'>[src.disk ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Disk","icon" = "rom","contents" = src.disk)
 
 	uninstalled()
 		src.disk?.set_loc(src)
@@ -1227,7 +1237,7 @@
 			return
 
 		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+			boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 			return
 
 		src.host?.add_dialog(usr)
@@ -1273,8 +1283,8 @@
 	func_tag = "SHU_ROM"
 
 	return_badge()
-		var/dat = "Cart: <a href='?src=\ref[src];disk=1'>[src.disk ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Cart","icon" = "microchip","contents" = src.disk)
 
 	return_status_text()
 		var/status_text = "No cart loaded"
@@ -1296,8 +1306,8 @@
 	func_tag = "SHU_TAPE"
 
 	return_badge()
-		var/dat = "Tape: <a href='?src=\ref[src];disk=1'>[src.disk ? "Eject" : "-----"]</a>"
-		return dat
+		// label text, icon, contents
+		. = list("label" = "Tape","icon" = "database","contents" = src.disk)
 
 	return_status_text()
 		var/status_text = "No tape loaded"
@@ -1330,31 +1340,17 @@
 		return status_text
 
 	return_badge()
+		// label text, icon, contents
+		var/status_text = "Cell: No cell!"
 		var/obj/machinery/computer3/luggable/checkhost = src.host
-		if(!istype(checkhost))
-			return null
 
-		var/obj/item/cell/cell = checkhost.cell
-		var/readout_color = "#000000"
-		var/readout = "NONE"
-		if(cell)
+		if(checkhost?.cell)
+			var/obj/item/cell/cell = checkhost.cell
 			var/charge_percentage = round((cell.charge/cell.maxcharge)*100)
-			switch(charge_percentage)
-				if(0 to 10)
-					readout_color = "#F80000"
-				if(11 to 25)
-					readout_color = "#FFCC00"
-				if(26 to 50)
-					readout_color = "#CCFF00"
-				if(51 to 75)
-					readout_color = "#33CC00"
-				if(76 to 100)
-					readout_color = "#33FF00"
+			status_text = "Cell: [charge_percentage]%"
 
-			readout = charge_percentage
+			. = list("label" = status_text,"icon" = "id-card","contents" = cell)
 
-		var/dat = {"Cell: <font color=[readout_color]>[readout]%</font>"}
-		return dat
 
 
 /obj/item/peripheral/videocard
@@ -1373,14 +1369,14 @@
 			if(host)
 				for(var/mob/M in hearers(host, null))
 					if(M.client)
-						M.show_message(text("<span class='alert'>You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
+						M.show_message(SPAN_ALERT("You hear a loud whirring noise coming from the [src.host.name]."), 2)
 				// add a sound effect maybe
 				sleep(rand(50,100))
 				if(host)
 					if(prob(50))
 						for(var/mob/M in AIviewers(host, null))
 							if(M.client)
-								M.show_message("<span class='alert'><B>The [src.host.name] explodes!</B></span>", 1)
+								M.show_message(SPAN_ALERT("<B>The [src.host.name] explodes!</B>"), 1)
 						var/turf/T = get_turf(src.host.loc)
 						if(T)
 							T.hotspot_expose(700,125)
@@ -1390,9 +1386,9 @@
 						return
 					for(var/mob/M in AIviewers(host, null))
 						if(M.client)
-							M.show_message("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>", 1)
-						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+							M.show_message(SPAN_ALERT("<B>The [src.host.name] catches on fire!</B>"), 1)
+						fireflash(src.host.loc, 0, chemfire = CHEM_FIRE_RED)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						//dispose()
 						src.dispose()

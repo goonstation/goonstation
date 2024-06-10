@@ -1,6 +1,6 @@
 
 // Contains asset-sending code that I can't rip from TG but I can write my own shitty implementation
-//                         (dear god please make this better (delivery caching/noop, css spritesheets anyone??))
+//             (dear god please make this better (delivery caching/noop, css spritesheets anyone??))
 //
 // Should not be used when cdn is enabled.
 
@@ -26,8 +26,10 @@ ABSTRACT_TYPE(/datum/asset)
 /// Basic assets
 ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
-	var/local_assets = list() // List of entries with form "filename" (gets shit into cache)
-	var/url_map = list() // List of entries with form "browserasset-path" = "url"
+	/// List of entries with form "filename" (gets shit into cache)
+	var/local_assets = list()
+	/// List of entries with form "browserasset-path" = "url"
+	var/url_map = list()
 
 	deliver(client)
 		. = send_assets(client, local_assets)

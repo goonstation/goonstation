@@ -10,8 +10,7 @@ export const PortableBasicInfo = props => {
   } = props;
 
   return (
-    <Section
-      title="Status">
+    <Section title="Status">
       <LabeledList>
         <LabeledList.Item
           label="Pressure">
@@ -45,11 +44,12 @@ export const PortableHoldingTank = props => {
   const {
     holding,
     onEjectTank,
+    title,
   } = props;
 
   return (
     <Section
-      title="Holding Tank"
+      title={title || 'Holding Tank'}
       minHeight="115px"
       buttons={(
         <Button
@@ -60,8 +60,7 @@ export const PortableHoldingTank = props => {
       )}>
       {holding ? (
         <LabeledList>
-          <LabeledList.Item
-            label="Pressure">
+          <LabeledList.Item label="Pressure">
             <RoundGauge
               size={1.75}
               value={holding.pressure}
@@ -76,15 +75,13 @@ export const PortableHoldingTank = props => {
               format={formatPressure}
             />
           </LabeledList.Item>
-          <LabeledList.Item
-            label="Label">
+          <LabeledList.Item label="Label">
             {holding.name}
           </LabeledList.Item>
         </LabeledList>
       ) : (
-        <Box
-          color="average">
-          No holding tank
+        <Box color="average">
+          No {title ? title.toLowerCase() : "holding tank"}
         </Box>
       )}
     </Section>

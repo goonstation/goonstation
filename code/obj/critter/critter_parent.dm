@@ -3,9 +3,9 @@
 
 //don't attack mobs in santuary zones. attacking non-mobs there is fine
 //we can only attack people in pods etc if we're also in the pod etc
-#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
+#define ATTACK_CHECK(target) ((!ismob(target) || !((get_area(target))?:sanctuary)) && (isturf(target:loc) || target:loc == src.loc))
 
-/obj/critter/
+/obj/critter
 	name = "critter"
 	desc = "you shouldnt be able to see this"
 	icon = 'icons/misc/critter.dmi'
@@ -13,7 +13,7 @@
 	var/dead_state = null
 	layer = 5
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
@@ -81,7 +81,7 @@
 	var/sleeping_icon_state = null
 	var/mob/living/wrangler = null
 
-	var/butcherable = 0
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 1
 
@@ -116,7 +116,7 @@
 		var/msg = replacetext(message, "%src%", "<b>[src]</b>")
 		msg = replacetext(msg, "%target%", "[target]")
 		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
-		src.visible_message("<span class='alert'>[msg]</span>")
+		src.visible_message(SPAN_ALERT("[msg]"))
 
 	proc/report_spawn()
 		if (!report_state)
@@ -190,7 +190,7 @@
 		if(registered_area)
 			task = "hibernating"
 			registered_area.registered_critters |= src
-			anchored = 1
+			anchored = ANCHORED
 			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
@@ -228,10 +228,10 @@
 
 					src.skinresult = null
 
-					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
+					user.visible_message(SPAN_NOTICE("[user] skins [src]."), SPAN_NOTICE("You skin [src]."))
 
 			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
-				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] butchers [src].[src.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]"), SPAN_NOTICE("You butcher [src]."))
 
 				var/i = rand(2,4)
 				var/transfer = src.reagents.total_volume / i
@@ -255,7 +255,7 @@
 					user.show_text("You were interrupted!", "red")
 				return
 			if (src.feed_text)
-				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
+				src.visible_message(SPAN_NOTICE("[src] [src.feed_text]"))
 			eat_twitch(src)
 			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			user.drop_item()
@@ -321,7 +321,7 @@
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
 		if (hitsound)
-			playsound(src, hitsound, 50, 1)
+			playsound(src, hitsound, 50, TRUE)
 		if (W?.hitsound)
 			playsound(src,W.hitsound,50,1)
 
@@ -337,10 +337,10 @@
 				if (prob(50 - attack_force))
 					return
 				else
-					src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
+					src.visible_message(SPAN_ALERT("<b>[src]</b> flinches!"))
 			src.target = user
 			src.oldtarget_name = user.name
-			src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> [src.angertext] [user.name]!"))
 			src.task = "chasing"
 			on_grump()
 
@@ -373,12 +373,12 @@
 
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
-			src.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]!"))
 			playsound(src.loc, pick(sounds_punch), 100, 1)
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
-				playsound(src, hitsound, 50, 1)
+				playsound(src, hitsound, 50, TRUE)
 			if (src.alive && src.health <= 0) src.CritterDeath()
 			if (src.alive)
 				on_damaged(user)
@@ -387,16 +387,16 @@
 					if (prob(50))
 						return
 					else
-						src.visible_message("<span class='alert'><b>[src]</b> flinches!</span>")
+						src.visible_message(SPAN_ALERT("<b>[src]</b> flinches!"))
 				src.target = user
 				src.oldtarget_name = user.name
-				src.visible_message("<span class='alert'><b>[src]</b> [src.angertext] [user.name]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> [src.angertext] [user.name]!"))
 				src.task = "chasing"
 				on_grump()
 		else
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
-			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
+			src.visible_message(SPAN_NOTICE("<b>[user]</b> [pet_verb] [src]![post_pet_verb]"))
 			on_pet(user)
 
 	proc/patrol_step()
@@ -428,7 +428,7 @@
 			sleeping = 0
 			on_wake()
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
@@ -490,6 +490,7 @@
 		return
 
 	proc/follow_path()
+		set waitfor = 0
 		if (!mobile)
 			task = "thinking"
 			return
@@ -582,6 +583,7 @@
 			sleep_check = 10
 
 	proc/process()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (is_template || task == "hibernating")
 			return 0
 		if (!src.alive)
@@ -604,6 +606,7 @@
 		return ai_think()
 
 	proc/ai_think()
+		set waitfor = 0
 		switch(task)
 			if ("thinking")
 				src.attack = 0
@@ -644,7 +647,7 @@
 							if(ATTACK_CHECK(current_target))
 								ChaseAttack(current_target)
 							src.task = "attacking"
-							src.anchored = 1
+							src.anchored = ANCHORED
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
@@ -685,7 +688,7 @@
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
-					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+					playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 					if (food_target)
 						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
@@ -715,21 +718,21 @@
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
-				playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				sleep(rand(20,30))
 				if (prob(20))
 					C.decomp_stage += 1
 					C.update_body()
 					C.update_face()
 					switch (C.decomp_stage)
-						if (4)
-							src.visible_message("<span class='combat'><b>[src]</b> tears the last piece of meat off [src.corpse_target]!</span>")
+						if (DECOMP_STAGE_SKELETONIZED)
+							src.visible_message(SPAN_COMBAT("<b>[src]</b> tears the last piece of meat off [src.corpse_target]!"))
 							src.task = "thinking"
 							src.corpse_target = null
-						if (3)
-							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
-						if (2)
-							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
+						if (DECOMP_STAGE_HIGHLY_DECAYED)
+							src.visible_message(SPAN_ALERT("<b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!"))
+						if (DECOMP_STAGE_DECAYED)
+							src.visible_message(SPAN_ALERT("<b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!"))
 
 			if ("attacking")
 
@@ -811,7 +814,7 @@
 				return
 			var/list/visible = new()
 			for (var/mob/living/carbon/human/H in view (src.seekrange,src))
-				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				if (isdead(H) && H.decomp_stage <= DECOMP_STAGE_HIGHLY_DECAYED && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
 			if (src.corpse_target && (src.corpse_target in visible))
@@ -821,7 +824,7 @@
 				src.task = "thinking"
 			if (visible.len)
 				src.corpse_target = visible[1]
-				src.visible_message("<span class='alert'><b>[src]</b> eyes [src.corpse_target.name] hungrily!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> eyes [src.corpse_target.name] hungrily!"))
 				src.task = "chasing"// corpse"
 
 		if (src.chases_food)
@@ -858,7 +861,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [C.name]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> [src.angertext] [C.name]!"))
 				src.task = "chasing"
 				on_grump()
 				break
@@ -881,14 +884,14 @@
 		else
 			src.icon_state = dead_state
 		src.alive = 0
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.set_density(0)
 		walk_to(src,0) //halt walking
 		report_death()
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> [src.chase_text] [src.target]!</span>")
+		src.visible_message(SPAN_COMBAT("<B>[src]</B> [src.chase_text] [src.target]!"))
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -898,7 +901,7 @@
 		if (prob(src.crit_chance))
 			CritAttack(M)
 		else
-			src.visible_message("<span class='combat'><B>[src]</B> [src.atk_text] [src.target]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> [src.atk_text] [src.target]!"))
 			random_brute_damage(src.target, src.atk_brute_amt,1)
 			random_burn_damage(src.target, src.atk_burn_amt)
 		if (isliving(M))
@@ -914,7 +917,7 @@
 				C.contract_disease(src.atk_diseases, null, null, 1) // path, name, strain, bypass resist
 
 	proc/CritAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> [src.crit_text] [src.target]!</span>")
+		src.visible_message(SPAN_COMBAT("<B>[src]</B> [src.crit_text] [src.target]!"))
 		random_brute_damage(src.target, src.crit_brute_amt,1)
 		random_burn_damage(src.target, src.crit_burn_amt)
 
@@ -957,20 +960,11 @@
 		if(target == start)
 			return
 
-	//	playsound(user, "mp5gunshot.ogg", 100, 1)
-	/*	if(bullet == 0)
-			A = new /obj/bullet/mpbullet( user:loc )
-		else if(bullet == 1)
-			playsound(user, "sound/weapons/shotgunshot.ogg", 100, 1)
-			A = new /obj/bullet/slug( user:loc )
-		else if(bullet == 2)
-			playsound(user, "fivegunshot.ogg", 100, 1)
-			A = new /obj/bullet/medbullet( user:loc )*/
 		if (!isturf(target))
 			return
 		// FUCK YOU WHOEVER IS USING THIS
 		// FUCK YOU
-		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target)
+		shoot_projectile_ST_pixel_spread(src,  new/datum/projectile/bullet/revolver_38(), target)
 		return
 
 
@@ -1017,8 +1011,8 @@
 			src.critter_name = t
 
 		else if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on) || W.burning || W.hit_type == DAMAGE_BURN) // jesus motherfucking christ
-			user.visible_message("<span class='alert'><b>[user]</b> warms [src] with [W].</span>",\
-			"<span class='alert'>You warm [src] with [W].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> warms [src] with [W]."),\
+			SPAN_ALERT("You warm [src] with [W]."))
 			src.warm_count -= 2
 			src.warm_count = max(src.warm_count, 0)
 			src.hatch_check(0, user)
@@ -1048,15 +1042,15 @@
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
 			else
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.layer = initial(src.layer)
 				if (user)
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
 			if (shouldThrow && T)
-				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-				playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				src.visible_message(SPAN_ALERT("[src] splats onto the floor messily!"))
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 			else
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)
@@ -1087,7 +1081,7 @@
 			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
 				var/mob/living/critter/spider/clownqueen/queen = src.parent
 				if (islist(queen.babies))
-					queen.babies += newCritter
+					queen.babies += get_weakref(newCritter)
 
 			sleep(0.1 SECONDS)
 			qdel(src)
@@ -1108,7 +1102,7 @@
 		C.icon_state = copytext(C.icon_state, 1, -5) // if people aren't being weird about the icons it should just remove the "-dead"
 		C.set_density(initial(C.density))
 		C.on_revive()
-		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
+		C.visible_message(SPAN_ALERT("[C] seems to rise from the dead!"))
 		logTheThing(LOG_ADMIN, src, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else

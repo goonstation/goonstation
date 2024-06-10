@@ -6,15 +6,13 @@
 	icon_state = "seeds-kudzu"
 	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
-	attack(mob/M, mob/user)
-		if(ishuman( M ))
-			if( user == M )
-				boutput(user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>")
-				logTheThing(LOG_COMBAT, user, "fed themself a [src].")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman( target ))
+			if( user == target )
+				boutput(user, "You feed yourself the [src]. [SPAN_ALERT("Oh god!")]")
 			else
-				boutput(user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>")
-				logTheThing(LOG_COMBAT, user, "fed [constructTarget(M,"combat")] a [src].")
-			animate(M, color = "#0F0", time = 300)//TODO: See below.
+				boutput(user, "You feed [target] the [src]. [SPAN_ALERT("Oh god!")]")
+			animate(target, color = "#0F0", time = 300)//TODO: See below.
 			qdel(src)
 			return
 
@@ -26,8 +24,9 @@
 				new /obj/spacevine/alien/living(A, src.to_spread)
 			else
 				new /obj/spacevine/living(A, src.to_spread)
+
 			boutput(user, "You plant the [src] on the [A].")
-			logTheThing(LOG_COMBAT, user, "plants [src] (kudzu) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			user.u_equip(src)
 			qdel(src)
@@ -53,10 +52,12 @@
 		var/kudzloc = isturf(startturf) ? startturf : pick_landmark(LANDMARK_KUDZUSTART)
 		if (prob(1) || aggressive)
 			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
-			L.set_loc(kudzloc)
+			if(!QDELETED(L))
+				L.set_loc(kudzloc)
 		else
 			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
-			L.set_loc(kudzloc)
+			if(!QDELETED(L))
+				L.set_loc(kudzloc)
 
 	admin_call(var/source)
 		if (..())
@@ -82,7 +83,7 @@
 				if (isnull(ecoords))
 					return
 				var/list/coords = splittext(ecoords, ",")
-				if (coords.len < 3)
+				if (length(coords) < 3)
 					return
 				startturf = locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 
@@ -94,7 +95,7 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "vine-light1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	event_handler_flags = USE_FLUID_ENTER
 	var/static/ideal_temp = 310		//same as blob, why not? I have no other reference point.
@@ -196,7 +197,7 @@
 			src.current_stage = 1
 			src.name = initial(src.name)
 			src.icon_state = "[src.base_state]-light[rand(1,3)]"
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			src.set_density(0)
 		if (10 to 19)
 			if (src.current_stage == 2)
@@ -204,7 +205,7 @@
 			src.current_stage = 2
 			src.name = "thick [initial(src.name)]"
 			src.icon_state = "[src.base_state]-med[rand(1,3)]"
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 			src.set_density(0)
 		if (20 to INFINITY)
 			if (src.current_stage == 3)
@@ -212,7 +213,7 @@
 			src.current_stage = 3
 			src.name = "dense [initial(src.name)]"
 			src.icon_state = "[src.base_state]-hvy[rand(1,3)]"
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 			src.set_density(1)
 
 /obj/spacevine/proc/Life()
@@ -228,37 +229,7 @@
 		Vspread = locate(src.x + rand(-1,1),src.y,src.z)
 	else
 		Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
-		dogrowth = 0
-	for (var/obj/O in Vspread)
 
-		if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
-			dogrowth = 0
-			return
-
-		if (istype(O, /obj/machinery/door))
-			var/obj/machinery/door/door = O
-			if(!door.density)
-				dogrowth = 1
-				continue
-			if (door_open_prob())
-				//force open doors too and keep it open
-				door.interrupt_autoclose = 1
-				// var/temp_op = door.operating
-				// door.operating = 1
-				// door.locked = 0
-				door.open()
-				// door.operating = temp_op
-				// door.locked = 1
-
-				dogrowth = 1 //for clarity
-			else
-				dogrowth = 0
-
-	if (dogrowth == 1)
-		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
-		V.set_loc(Vspread)
 	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
@@ -266,6 +237,36 @@
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		if (K)
 			K.kudzu -= src
+
+	var/spread_vines = TRUE
+
+	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
+		spread_vines = FALSE
+		return
+
+	for (var/obj/O in Vspread)
+		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
+			spread_vines = FALSE
+			return
+		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
+			spread_vines = FALSE
+			return
+		if (istype(O, /obj/machinery/door))
+			var/obj/machinery/door/door = O
+			if(!door.density)
+				spread_vines = TRUE
+				continue
+			if (door_open_prob())
+				door.interrupt_autoclose = TRUE //force open doors
+				door.open()
+				spread_vines = TRUE //for clarity
+			else
+				spread_vines = FALSE
+
+	if (spread_vines)
+		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
+		if(!QDELETED(V))
+			V.set_loc(Vspread)
 		return
 
 /obj/spacevine/proc/door_open_prob()
@@ -306,8 +307,6 @@
 			if (prob(33))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/spacevine/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
 	if (!isnum(amount) || amount <= 0)
@@ -340,7 +339,7 @@
 								 0.00,  0.00,  0.00,  0.70,\
 								 0.00,  0.00,  0.00,  0.00)
 			//Add damage texture to create dark banding
-			setTexture()
+			setTexture("damaged")
 			animate(src,time=2 SECONDS,color=new_color)
 			src.growth -= 10
 			src.to_spread = round(log(max(src.to_spread,1))*2)
@@ -364,7 +363,8 @@
 		SPAWN(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
-				F.set_loc(src.loc)
+				if(!QDELETED(F))
+					F.set_loc(src.loc)
 
 	herbicide()
 		return
@@ -419,8 +419,8 @@
 
 				sleep(bulb_complete)
 
-				if(!isalive(M) && M.ghost?.mind?.dnr)
-					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
+				if(!isalive(M) && M.ghost?.mind?.get_player()?.dnr)
+					src.visible_message(SPAN_ALERT("The [src] opens, having drained all the nutrients from [M]!"))
 					M.gib()
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
@@ -431,20 +431,20 @@
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
-
-					H.full_heal()
-					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
-						if ((!istype(H.last_client.mob,/mob/living) && !istype(H.last_client.mob,/mob/wraith)) || inafterlifebar(H.last_client.mob))
-							H.ckey = H.last_client.ckey
-					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
-						var/datum/abilityHolder/composite/Comp = H.abilityHolder
-						Comp.removeHolder(/datum/abilityHolder/kudzu)
-					else if (H.abilityHolder)
-						H.abilityHolder.dispose()
-						H.abilityHolder = null
-					H.set_mutantrace(/datum/mutantrace/kudzu)
+					if(H in src)
+						H.full_heal()
+						if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
+							if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
+								H.ckey = H.last_client.ckey
+						if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+							var/datum/abilityHolder/composite/Comp = H.abilityHolder
+							Comp.removeHolder(/datum/abilityHolder/kudzu)
+						else if (H.abilityHolder)
+							H.abilityHolder.dispose()
+							H.abilityHolder = null
+						H.set_mutantrace(/datum/mutantrace/kudzu)
+						H.show_antag_popup("kudzu")
 					natural_opening = 1
-					H.show_antag_popup("kudzu")
 					qdel(src)
 		else
 			qdel(src)
@@ -452,7 +452,7 @@
 	disposing()
 		destroyed = 1
 		if (natural_opening)
-			src.visible_message("<span class='alert'>[src] puffs and it opens wide revealing what's inside!</span>")
+			src.visible_message(SPAN_ALERT("[src] puffs and it opens wide revealing what's inside!"))
 		else
 			for (var/mob/M in contents)
 				M.take_toxin_damage(60)
@@ -469,10 +469,11 @@
 	opacity = 0
 	pixel_x = -16
 	layer = MOB_LAYER - 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
-			src.visible_message("<span class='alert'>[user] cuts [src] to bits!</span>")
+			src.visible_message(SPAN_ALERT("[user] cuts [src] to bits!"))
 			qdel(src)
 		..()
 	//destroy if attacked by wirecutters or something

@@ -22,19 +22,19 @@
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				boutput(the_mob, "<span class='alert'>The nozzle is clogged!</span>")
+				boutput(the_mob, SPAN_ALERT("The nozzle is clogged!"))
 				return
 
 		for (var/reagent in E.melting_reagents)
 			if (!E.reagents)
 				return
 			if (E.reagents.has_reagent(reagent))
-				the_mob.visible_message("<span class='alert'>[E] melts!</span>")
+				the_mob.visible_message(SPAN_ALERT("[E] melts!"))
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(the_mob))
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
+		the_mob.visible_message(SPAN_ALERT("[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!"))
 
 		E.special = 1
 		the_mob.transforming = 1
@@ -73,7 +73,8 @@
 					S.reagents.reaction(A, TOUCH, 0, 0)
 			*/
 
-		if (the_mob) playsound(the_mob, 'sound/effects/spray.ogg', 75, 1, 0)
+		if (the_mob)
+			playsound(the_mob, 'sound/effects/spray.ogg', 75, TRUE, 0)
 		//E.reagents.clear_reagents()
 
 		sleep(0.5 SECONDS)
@@ -142,15 +143,20 @@
 	name = "(De)Activate Magboots"
 	icon_state = "magbootson"
 	desc = "Toggle your magboots.<br>When on, they firmly anchor you to the floor, preventing the majority of outside forces from moving you."
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, SPAN_ALERT("Try wearing [src] first."))
+			return
+
 		if(W.magnetic)
 			W.deactivate()
-			boutput(the_mob, "<span class='hint'>You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor.</span>", group = "magbootsoff")
+			boutput(the_mob, "[SPAN_HINT("You power off your magnetic boots.")]<br>[SPAN_HINT("You are no longer anchored to the floor.")]", group = "magbootsoff")
 		else
 			W.activate()
-			boutput(the_mob, "<span class='hint'>You power on your magnetic boots.</span><br><span class='success'>You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.</span>", \
+			boutput(the_mob, "[SPAN_HINT("You power on your magnetic boots.")]<br>[SPAN_SUCCESS("You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.")]", \
 				group = "magbootson")
 		the_mob.update_equipped_modifiers()
 		the_mob.update_clothing()
@@ -179,29 +185,30 @@
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
 	var/explosion_chance = 3
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
 		var/obj/item/clothing/shoes/rocket/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, SPAN_ALERT("You must be wearing the shoes to use them."))
 			return
 
 		R.uses--
 
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
-			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
+			boutput(the_mob, SPAN_ALERT("Your rocket shoes are empty."))
 			the_item.hide_buttons()
 			R.abilities.Cut()
 			qdel(src)
 			return
 
-		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, TRUE)
 
 		if(prob(explosion_chance) || R.emagged)
-			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
+			boutput(the_mob, SPAN_ALERT("The rocket shoes blow up!"))
 			explosion(src, get_turf(the_mob), -1, -1, 1, 1)
 			qdel(the_item)
 			qdel(src)
@@ -260,16 +267,17 @@
 /obj/ability_button/sonic
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
 		var/obj/item/clothing/shoes/sonic/R = the_item
 
 		if(the_mob:shoes != the_item)
-			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
+			boutput(the_mob, SPAN_ALERT("You must be wearing the shoes to use them."))
 			return
 
-		playsound(the_mob, "sound/effects/bamf.ogg", 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, TRUE)
 
 		SPAWN(0)
 			for(var/i=0, i<R.soniclength, i++)
@@ -287,23 +295,11 @@
 /obj/effect/smoketemp
 	name = "smoke"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 
-////////////////////////////////////////////////////////////
-
-/obj/ability_button/cebelt_toggle
-	name = "Toggle overshield"
-	icon_state = "shieldceon"
-
-	execute_ability()
-		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
-		C.toggle()
-		..()
-		//if(C.active) icon_state = "shieldceoff"
-		//else icon_state = "shieldceon"
 
 ////////////////////////////////////////////////////////////
 
@@ -336,11 +332,11 @@
 
 	execute_ability()
 		if (!ishuman(usr))
-			boutput(usr, "<span class='alert'>Only a human can do that.</span>")
+			boutput(usr, SPAN_ALERT("Only a human can do that."))
 			return
 		var/mob/living/carbon/human/H = usr
 		if (the_item.temp_flags & IS_LIMB_ITEM)
-			boutput(usr, "<span class='alert'>The saw is already attached as an arm.</span>")
+			boutput(usr, SPAN_ALERT("The saw is already attached as an arm."))
 			return
 		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
 			if ("Cancel")
@@ -350,14 +346,14 @@
 					var/obj/item/saw/syndie/S = the_item
 					S.end_replace_arm("r_arm", H)
 					return
-				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				boutput(H, SPAN_ALERT("You need to hold still..."))
 				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("r_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			if ("Left")
 				if (!H.limbs.l_arm)
 					var/obj/item/saw/syndie/S = the_item
 					S.end_replace_arm("l_arm", H)
 					return
-				boutput(H, "<span class='alert'>You need to hold still...</span>")
+				boutput(H, SPAN_ALERT("You need to hold still..."))
 				SETUP_GENERIC_ACTIONBAR(H, the_item, 3 SECONDS, /obj/item/saw/syndie/proc/end_replace_arm, list("l_arm", H), the_item.icon, the_item.icon_state,"", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		..()
 
@@ -402,14 +398,13 @@
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tscanner_toggle
-	name = "Toggle T-Scanner"
-	icon_state = "lightoff" //TODO: make bespoke sprites for this I guess
+	name = "Toggle T-ray Scanner"
+	icon_state = "tray_off"
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
-		J.AttackSelf(the_mob)
-		if(J.on) icon_state = "lighton"
-		else  icon_state = "lightoff"
+		J.set_on(!J.on, the_mob) // only turns on/off
+		src.icon_state = J.on ? "tray_on" : "tray_off"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -419,7 +414,7 @@
 	icon_state = "meson1"
 
 	execute_ability()
-		var/obj/item/clothing/glasses/meson/J = the_item
+		var/obj/item/clothing/glasses/toggleable/meson/J = the_item
 		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
@@ -440,26 +435,55 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/atmos_goggle_toggle //goggle toggle
+	name = "Toggle Atmos Goggles"
+	icon_state = "meson1"
+
+	execute_ability()
+		var/obj/item/clothing/glasses/toggleable/atmos/J = the_item
+		J.AttackSelf(the_mob)
+		if(J.on) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/helmet_thermal_toggle
+	name = "Toggle Helmet Visor"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/industrial/J = the_item
+		if(J.has_visor)
+			J.AttackSelf(the_mob)
+			if(J.visor_enabled) icon_state = "meson1"
+			else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
-	icon_state = "jet2on"
+	icon_state = "jet2off"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/jetpackmk2/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jet2off"
-		else  icon_state = "jet2on"
+		if(J.on) icon_state = "jet2on"
+		else  icon_state = "jet2off"
 		..()
 
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
-	icon_state = "jeton"
+	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jetoff"
-		else  icon_state = "jeton"
+		if(J.on) icon_state = "jeton"
+		else  icon_state = "jetoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -467,6 +491,7 @@
 /obj/ability_button/jetboot_toggle
 	name = "Toggle jet boots"
 	icon_state = "jeton"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/jetpack/J = the_item
@@ -506,14 +531,15 @@
 	name = "Rush"
 	icon_state = "rushon"
 	cooldown = 100
+	requires_equip = TRUE
 
 	ability_allowed()
-		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
-			boutput(the_mob, "<span class='alert'>You need to be ready on your feet to use this ability.</span>")
+		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("unconscious"))
+			boutput(the_mob, SPAN_ALERT("You need to be ready on your feet to use this ability."))
 			return 0
 
 		if(ishuman(the_mob) && the_mob:wear_suit != the_item)
-			boutput(the_mob, "<span class='alert'>You must be wearing [the_item] to use this ability.</span>")
+			boutput(the_mob, SPAN_ALERT("You must be wearing [the_item] to use this ability."))
 			return 0
 
 		if(!..())
@@ -650,14 +676,17 @@
 
 //cancel-camera-view, but as a button
 /obj/ability_button/reset_view
-	name = "Reset view"
-	icon_state = "jeton"
+	name = "Exit camera view"
+	icon_state = "cancel_camera"
 
 	execute_ability()
-		//var/mob/M = holder.owner
-		usr.set_eye(null)
-		usr.client.view = world.view
+		usr.cancel_camera()
 		..()
+
+	ability_allowed()
+		return TRUE //yea
+
+/obj/ability_button/reset_view/console //just.. don't ask
 
 //////////////////////////////////////////////////////////////////////////////
 /mob/var/list/item_abilities = new/list()
@@ -703,7 +732,7 @@
 // please just use ..() instead of copy/pasting this stuff unless you have a REALLY GOOD REASON to override New()!!
 // tia, with love, haine
 
-/obj/item/
+/obj/item
 
 	var/list/abilities = null//list("")
 	var/list/ability_buttons = null//new/list()
@@ -724,7 +753,7 @@
 			for(var/obj/ability_button/B in ability_buttons)
 				B.the_item = src
 				B.name = B.name + " ([src.name])"
-//		if(ability_buttons.len > 0)
+//		if(length(ability_buttons) > 0)
 //			SPAWN(0) check_abilities()
 		..()
 
@@ -751,16 +780,51 @@
 
 	proc/show_buttons()
 		if(!the_mob || !islist(src.ability_buttons) || !length(ability_buttons)) return
-		if(!the_mob.item_abilities.Find(ability_buttons[1]))
-			the_mob.item_abilities.Add(ability_buttons)
-			the_mob.need_update_item_abilities = 1
-			the_mob.update_item_abilities()
+		var/list/abilities_toadd = list()
+		for (var/obj/ability_button/AB in ability_buttons)
+			if (AB.requires_equip && !(AB.the_item in the_mob.get_equipped_items())) continue
+			abilities_toadd += AB
+		if (!length(abilities_toadd)) return
+		the_mob.item_abilities |= abilities_toadd
+		the_mob.need_update_item_abilities = 1
+		the_mob.update_item_abilities()
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
 		the_mob.item_abilities?.Remove(ability_buttons)
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()
+
+	proc/add_item_ability(mob/user, obj/ability_button/ability)
+		if(!ispath(ability))
+			return
+		LAZYLISTADD(src.abilities, ability)
+		var/obj/ability_button/AB = new ability
+		LAZYLISTADD(src.ability_buttons, AB)
+		AB.the_item = src
+		AB.name = AB.name + " ([src.name])"
+		if(user)
+			AB.the_mob = user
+			src.the_mob = user
+			the_mob.item_abilities |= AB
+			the_mob.need_update_item_abilities = 1
+			the_mob.update_item_abilities()
+
+
+
+	proc/remove_item_ability(mob/user, obj/ability_button/ability)
+		if(!ispath(ability))
+			return
+		LAZYLISTREMOVE(src.abilities, ability)
+		var/obj/ability_button/AB = (locate(ability) in src.ability_buttons)
+		LAZYLISTREMOVE(src.ability_buttons, AB)
+		if(user)
+			user.need_update_item_abilities = 1
+			user.item_abilities?.Remove(AB)
+			user.update_item_abilities()
+		qdel(AB)
+
+
 /*
 	proc/check_abilities()
 		if (!(src in heh))
@@ -792,15 +856,20 @@
 	icon_state = "test"
 	layer = HUD_LAYER
 	plane = PLANE_HUD
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0
 	var/last_use_time = 0
 
-	var/targeted = 0 //does activating this ability let you click on something to target it?
-	var/target_anything = 0 //can you target any atom, not just people?
+	///does activating this ability let you click on something to target it?
+	var/targeted = 0
+	///can you target any atom, not just people?
+	var/target_anything = 0
+
+	/// can you see this button without equipping the item
+	var/requires_equip = FALSE
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
@@ -857,7 +926,7 @@
 			if (H.restrained())
 				return 0
 		if (src.last_use_time && src.cooldown && ( src.last_use_time + cooldown ) > TIME)
-			boutput(src.the_mob, "<span class='alert'>This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)</span>")
+			boutput(src.the_mob, SPAN_ALERT("This ability is recharging. ([round((src.cooldown/10)-((TIME - src.last_use_time)/10))] seconds left)"))
 			return 0
 		return 1
 
@@ -878,3 +947,28 @@
 			src.last_use_time = TIME
 			sleep(src.cooldown)
 			src.on_cooldown()
+
+/obj/ability_button/toggle_bandana
+	name = "Toggle bandana"
+	icon_state = "bandana_down"
+	requires_equip = TRUE
+
+	execute_ability()
+		if(!the_item || !the_mob || !ishuman(the_mob)) return
+		var/obj/item/clothing/mask/bandana/bandana = the_item
+		var/mob/living/carbon/human/H = the_mob
+		bandana.is_pulled_down = !bandana.is_pulled_down
+		if (bandana.is_pulled_down)
+			boutput(H, SPAN_NOTICE("You pull down [bandana]."))
+			bandana.see_face = TRUE
+			bandana.c_flags ^= COVERSMOUTH
+			src.icon_state = "bandana_up"
+		else
+			boutput(H, SPAN_NOTICE("You pull up [bandana]."))
+			bandana.see_face = FALSE
+			bandana.c_flags |= COVERSMOUTH
+			src.icon_state = "bandana_down"
+		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
+		if (H.wear_mask == bandana)
+			H.update_clothing()
+		..()

@@ -1,0 +1,172 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"b" = (
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"e" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"f" = (
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"l" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"n" = (
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"p" = (
+/obj/landmark/spawner/artifact/one_in_ten,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"t" = (
+/obj/decal/cleanable/slime,
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"C" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"D" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/mob/living/critter/martian/initiate,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"M" = (
+/turf/simulated/wall/auto/martian,
+/area/noGenerate)
+"P" = (
+/obj/crevice{
+	pixel_x = -30
+	},
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"W" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/turf/simulated/floor/martian,
+/area/noGenerate)
+"X" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/martian,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+e
+a
+"}
+(2,1,1) = {"
+e
+e
+M
+M
+M
+M
+M
+e
+e
+"}
+(3,1,1) = {"
+e
+M
+M
+P
+n
+n
+t
+C
+C
+"}
+(4,1,1) = {"
+e
+M
+n
+n
+l
+M
+M
+e
+e
+"}
+(5,1,1) = {"
+e
+M
+n
+p
+X
+M
+b
+M
+e
+"}
+(6,1,1) = {"
+e
+M
+W
+M
+M
+M
+D
+M
+e
+"}
+(7,1,1) = {"
+e
+M
+n
+M
+p
+f
+n
+M
+e
+"}
+(8,1,1) = {"
+e
+M
+n
+t
+n
+n
+f
+M
+e
+"}
+(9,1,1) = {"
+e
+M
+M
+M
+M
+M
+M
+e
+e
+"}
+(10,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+a
+"}

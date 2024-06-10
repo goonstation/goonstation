@@ -2,7 +2,7 @@
 #define CDBG2(msg)
 #define CDBG3(msg)
 #ifdef DEBUG
-#define CHUI_VERBOSITY 3
+#define CHUI_VERBOSITY 0
 
 #define CDBG(verbosity, msg) world << "<b>chui <u>[verbosity]</u></b>: [msg]"
 
@@ -63,7 +63,3 @@ chui/engine
 
 
 var/global/chui/engine/chui
-world/New()
-
-	if(!chui) chui = new()
-	. = ..()

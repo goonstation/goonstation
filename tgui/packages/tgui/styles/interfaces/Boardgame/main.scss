@@ -1,0 +1,64 @@
+@use 'sass:meta';
+@use '../../base.scss';
+
+// The window, everything that isn't components
+
+.boardgame__ {
+  &titlebar {
+    position: fixed;
+    top: 4px;
+    right: 80px;
+    padding: 2px;
+    z-index: 2;
+
+    & > * {
+      margin: 0 4px;
+    }
+  }
+
+  &window {
+    height: calc(100% - 0.25px);
+
+    display: flex;
+    flex-direction: row;
+    background-color: darken(rgb(131, 100, 74), 30%);
+
+    &* {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+    }
+  }
+
+  &helpmodal {
+    z-index: 20;
+
+    & > .Dimmer__inner {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      width: 60%;
+    }
+  }
+
+  &wrapper {
+    width: 100%;
+
+    overflow: hidden;
+  }
+
+  &heldpiece {
+    position: fixed;
+    z-index: 4;
+    pointer-events: none;
+  }
+}
+
+// HERE we have the components, the pieces, the board, the notations, etc.
+
+@include meta.load-css('./palettes.scss');
+@include meta.load-css('./notations.scss');
+@include meta.load-css('./board.scss');

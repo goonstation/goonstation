@@ -1,7 +1,12 @@
 
 #define FLUID_SPAWNER_TURF_BLOCKED(t) (!t || (t.active_liquid && t.active_liquid.group && t.active_liquid.group.amt_per_tile >= 300) || !t.ocean_canpass())
 
+#ifdef MAP_OVERRIDE_NADIR
+var/global/ocean_reagent_id = "tene"
+#else
 var/global/ocean_reagent_id = "water"
+#endif
+
 var/global/ocean_name = "ocean"
 var/global/datum/color/ocean_color = 0
 var/global/obj/fluid/ocean_fluid_obj = null
@@ -61,7 +66,7 @@ var/global/obj/fluid/ocean_fluid_obj = null
 		handle_light_generating_turfs()
 
 		for (var/turf/space/fluid/T in processing_fluid_turfs)
-			if (!T) continue
+			if (!T || !T.ocean_canpass()) continue
 			adjacent_space = 0
 			adjacent_block = 0
 			for (var/dir in cardinal)

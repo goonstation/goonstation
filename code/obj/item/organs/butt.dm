@@ -2,13 +2,14 @@
 /*----------Butt----------*/
 /*========================*/
 
+TYPEINFO(/obj/item/clothing/head/butt)
+	mat_appearances_to_ignore = list("butt")
 /obj/item/clothing/head/butt
 	name = "butt"
 	desc = "It's a butt. It goes on your head."
 	var/organ_holder_name = "butt"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 4
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/butt.dmi'
 	icon_state = "butt-nc"
 	force = 1
 	w_class = W_CLASS_TINY
@@ -27,11 +28,10 @@
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/sound/sound_fart = null // this is the life I live, making it so you can change the fart sound of your butt (that you can wear on your head) so that you can make artifact butts with weird farts
-	var/made_from = "butt"
+	default_material = "butt"
+	mat_changename = "butt"
 
 	disposing()
-		if (donor?.organs)
-			donor.organs -= src
 		if (holder)
 			holder.butt = null
 
@@ -41,7 +41,6 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 		if (istype(nholder) && nholder.donor)
 			src.holder = nholder
 			src.donor = nholder.donor
@@ -95,24 +94,15 @@
 		var/fluff = pick("shove", "place", "drop")
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
-		if (H.butt_op_stage == 4.0)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
+		if (H.organHolder?.back_op_stage >= BACK_SURGERY_OPENED)
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!"),\
+				SPAN_ALERT("You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "butt", 3.0)
-			H.butt_op_stage = 3
 			return 1
-		else if (H.butt_op_stage == 5.0)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
-			if (user.find_in_hand(src))
-				user.u_equip(src)
-				set_loc(get_turf(H))
-			return null
 		else
 			return 0
 
@@ -138,15 +128,15 @@
 		if (!source || !target) return
 		if( src.unstaple()) //Try a staple if it worked, yay
 			if (!src.stapled) //That's the last staple!
-				source.visible_message("<span class='alert'><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+				source.visible_message(SPAN_ALERT("<B>[source.name] rips out the staples from \the [src]!</B>"), SPAN_ALERT("<B>You rip out the staples from \the [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 				. = 1
 			else //Did you get some of them?
-				source.visible_message("<span class='alert'><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+				source.visible_message(SPAN_ALERT("<B>[source.name] rips out some of the staples from \the [src]!</B>"), SPAN_ALERT("<B>You rip out some of the staples from \the [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 				. = 0
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
@@ -176,14 +166,16 @@
 	proc/on_fart(var/mob/farted_on) // what is wrong with me
 		return
 
+TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
+	mat_appearances_to_ignore = list("pharosium")
 /obj/item/clothing/head/butt/cyberbutt // what the fuck am I doing with my life
 	name = "robutt"
 	desc = "This is a butt, made of metal. A futuristic butt. Okay."
 	icon_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
-	made_from = "pharosium"
-	sound_fart = "sound/voice/farts/poo2_robot.ogg"
+	default_material = "pharosium"
+	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 
@@ -200,6 +192,10 @@
 			user.u_equip(W)
 		else
 			return ..()
+
+	emp_act()
+		. = ..()
+		donor?.emote("fart", FALSE)
 
 // moving this from plants_crop.dm because SERIOUSLY WHY -- cirr
 /obj/item/clothing/head/butt/synth

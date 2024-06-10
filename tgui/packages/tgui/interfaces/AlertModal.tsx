@@ -11,12 +11,16 @@ import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
+import { getAlertContentWindow } from './AlertContentWindows/index';
+
 type AlertModalData = {
   autofocus: boolean;
   items: string[];
   message: string;
+  content_window: string;
   timeout: number;
   title: string;
+  theme: string;
 };
 
 const KEY_DECREMENT = -1;
@@ -28,15 +32,21 @@ export const AlertModal = (props, context) => {
     autofocus,
     items = [],
     message = '',
+    content_window = '',
     timeout,
     title,
+    theme,
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
+
+  const typedContentWindow = content_window ? getAlertContentWindow(content_window) : null;
+
   // Dynamically sets window dimensions
   const windowHeight
-     = 115
-     + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
-  const windowWidth = 325 + (items.length > 2 ? 55 : 0);
+    = typedContentWindow ? typedContentWindow.height
+      : 115 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
+  const windowWidth = typedContentWindow ? typedContentWindow.width : 325 + (items.length > 2 ? 55 : 0);
+
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(items.length - 1);
@@ -48,7 +58,11 @@ export const AlertModal = (props, context) => {
   };
 
   return (
-    <Window height={windowHeight} title={title} width={windowWidth}>
+    <Window
+      height={windowHeight}
+      title={typedContentWindow ? typedContentWindow.title : title}
+      width={windowWidth}
+      theme={theme || 'nanotrasen'}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
@@ -73,7 +87,7 @@ export const AlertModal = (props, context) => {
           <Stack fill vertical>
             <Stack.Item grow m={1}>
               <Box color="label" overflow="hidden">
-                {message}
+                {typedContentWindow ? typedContentWindow.content : message}
               </Box>
             </Stack.Item>
             <Stack.Item>

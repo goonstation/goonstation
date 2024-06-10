@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/storage/closet,
-/obj/critter/wraithskeleton,
+/mob/living/critter/skeleton/wraith,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "b" = (

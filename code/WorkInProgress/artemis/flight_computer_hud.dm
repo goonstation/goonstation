@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/hud/flight_computer
 	var/atom/movable/screen/hud
 		leave
@@ -36,6 +38,7 @@
 	var/coffee_level = 3
 
 	New(P)
+		..()
 		var/throttle_slide_xy = "[round(17/32)+1]:[17%32],[round(2/32)+1]:[2%32]"
 		var/throttle_stick_xy = "[round(2/32)+1]:[2%32],[round(6/32)+1]:[6%32]"
 		var/engine_health_xy = "[round(97/32)+1]:[97%32],[round(4/32)+1]:[4%32]"
@@ -100,14 +103,21 @@
 			if (M.loc != master)
 				remove_client(C)
 
+	proc/update()
+		var/tele_locked = FALSE
+		for(var/obj/background_star/galactic_object/G in src.master.ship.my_galactic_objects)
+			if(G.has_ship_body && G.my_ship_body?.landing_zones)
+				tele_locked = TRUE
+		src.tele_ok.icon_state = "lrt-[tele_locked ? "ok" : "nok"]"
+		src.buoy_counter.icon_state = "buoy-[master.ship.buoy_count]"
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
-			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
+			boutput(user, SPAN_ALERT("You're not in the pod doofus. (Call 1-800-CODER.)"))
 			remove_client(user.client)
 			return
 		if (is_incapacitated(user))
-			boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
+			boutput(user, SPAN_ALERT("Not when you are incapacitated."))
 			return
 		switch (id)
 
@@ -119,9 +129,9 @@
 			if ("scan")
 				flick("sonarbutton_push",scan)
 				if(master.ship.control_lock)
-					user.show_message("<span class='alert'>The controls are locked!</span>")
+					user.show_message(SPAN_ALERT("The controls are locked!"))
 					return
-				user.show_message("<span class='notice'>Click what you want to scan!</span>")
+				user.show_message(SPAN_NOTICE("Click what you want to scan!"))
 				var/datum/targetable/artemis_active_scanning/A = new()
 				user.targeting_ability = A
 				user.update_cursor()
@@ -136,7 +146,7 @@
 					toggle_tracking.icon_state = "tracking-on"
 
 				if(master.ship.control_lock)
-					user.show_message("<span class='alert'>The controls are locked!</span>")
+					user.show_message(SPAN_ALERT("The controls are locked!"))
 					SPAWN(0.3 SECONDS)
 						if(toggle_tracking.icon_state == "tracking-on")
 							toggle_tracking.icon_state = "tracking-off"
@@ -157,21 +167,21 @@
 				if(master.ship.show_tracking)
 					master.ship.remove_arrows(user)
 					master.ship.show_tracking = 0
-					user.show_message("<span class='notice'>Tracking arrows disabled.</span>")
+					user.show_message(SPAN_NOTICE("Tracking arrows disabled."))
 				else
 					master.ship.apply_arrows(user)
 					master.ship.show_tracking = 1
-					user.show_message("<span class='notice'>Tracking arrows enabled.</span>")
+					user.show_message(SPAN_NOTICE("Tracking arrows enabled."))
 
 			if("toggle_nav")
 				if(master.ship.control_lock)
-					user.show_message("<span class='alert'>The controls are locked!</span>")
+					user.show_message(SPAN_ALERT("The controls are locked!"))
 					return
 
 				if(master.ship.navigating)
 					master.ship.remove_nav_arrow(user)
 					master.ship.navigating = 0
-					user.show_message("<span class='notice'>No longer navigating.</span>")
+					user.show_message(SPAN_NOTICE("No longer navigating."))
 					flick("nav-turn-off",toggle_nav)
 					toggle_nav.icon_state = "nav-off"
 				else
@@ -184,12 +194,12 @@
 					if(target)
 
 						if(master.ship in target.nearby_ships)
-							user.show_message("<span class='notice'>You are already at waypoint [target]!</span>")
+							user.show_message(SPAN_NOTICE("You are already at waypoint [target]!"))
 							return
 						master.ship.nav_arrow = master.ship.create_nav_arrow(target)
 						master.ship.apply_nav_arrow(user)
 						master.ship.navigating = 1
-						user.show_message("<span class='notice'>Now navigating to waypoint [target].</span>")
+						user.show_message(SPAN_NOTICE("Now navigating to waypoint [target]."))
 						flick("nav-turn-on",toggle_nav)
 						toggle_nav.icon_state = "nav-on"
 
@@ -198,11 +208,11 @@
 				flick("buoybutton_push",src.launch_nav_sat)
 
 				if(master.ship.control_lock)
-					user.show_message("<span class='alert'>The controls are locked!</span>")
+					user.show_message(SPAN_ALERT("The controls are locked!"))
 					return
 
 				if(!master.ship.buoy_count)
-					user.show_message("<span class='alert'>Out of navigation probes!</span>")
+					user.show_message(SPAN_ALERT("Out of navigation probes!"))
 					return
 
 				var/satellite_name = input(user,"What would you like to name this satellite?", "Name:",null)
@@ -234,15 +244,15 @@
 					src.buoy_counter.icon_state = "buoy-[master.ship.buoy_count]"
 
 			if("coffee")
-				user.visible_message("<span class='notice'>[user] takes a sip of coffee.</span>")
+				user.visible_message(SPAN_NOTICE("[user] takes a sip of coffee."))
 				if(src.coffee_level)
 					src.coffee_level--
 					src.coffee.icon_state = null
-					playsound(get_turf(user),"sound/items/drink.ogg", rand(10,50), 1)
+					playsound(get_turf(user),'sound/items/drink.ogg', rand(10,50), 1)
 					SPAWN(0.5 SECONDS)
 						src.coffee.icon_state = "coffee[coffee_level]"
 				else
-					user.show_message("<span class='alert'>Oh no! Out of coffee!</span>")
+					user.show_message(SPAN_ALERT("Oh no! Out of coffee!"))
 
 			if("control_lock")
 				if(master.ship.control_lock)
@@ -254,3 +264,5 @@
 					control_lock.icon_state = "key_locked"
 					control_light.icon_state = "control_locked"
 				master.ship.control_lock = !master.ship.control_lock
+
+#endif

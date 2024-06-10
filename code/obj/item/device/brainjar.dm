@@ -126,7 +126,7 @@
 					var/obj/item/cable_coil/C = W
 					if(C.use(5))
 						user.show_text("You attach the wires to the cyborg head and secure them to the assembly. Needs a monitoring tool before it'll work, by all appearances.", "blue")
-						playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 20, 1)
+						playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 20, 1)
 						crafting_stage = 1
 						UpdateIcon()
 					else
@@ -144,13 +144,13 @@
 			if(2)
 				if (ispulsingtool(W))
 					user.show_text("You use \the [W] to root the health analyzer, voiding the warranty! Probably won't be enough to power the assembly, though.", "blue")
-					playsound(src.loc, "sound/effects/brrp.ogg", 50, 1)
+					playsound(src.loc, 'sound/effects/brrp.ogg', 50, 1)
 					crafting_stage = 3
 					return
 			if(3)
 				if (istype(W, /obj/item/cell))
 					user.show_text("You attach \the [W] to the assembly. It drones slightly. Won't do much good without a comms interface, however.", "blue")
-					playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 20, 1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 20, 1)
 					user.u_equip(W)
 					qdel(W)
 					crafting_stage = 4
@@ -159,7 +159,7 @@
 			if(4)
 				if(istype(W, /obj/item/device/radio))
 					user.show_text("You hook up \the [W] to the assembly. It emits a loud screech!", "blue")
-					var/bad_noise = pick("sound/machines/glitch1.ogg", "sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg", "sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg")
+					var/bad_noise = pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg')
 					playsound(src.loc, bad_noise, 50, 1)
 					user.u_equip(W)
 					rad = W
@@ -184,7 +184,7 @@
 				return
 
 			var/obj/item/organ/brain/B = W
-			if(B.owner && !B.owner.dnr)
+			if(B.owner && !B.owner.get_player().dnr)
 				the_brain = B
 				user.u_equip(B)
 				B.set_loc(src)
@@ -230,10 +230,10 @@
 			update_controller_verbs()
 		if ("pulse")
 			controller.say("[pick("BZ", "FZ", "GZ")][pick("A", "U", "O")][pick("P", "T", "ZZ")]")
-			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, TRUE)
 		if ("cut")
 			controller.show_text("You no longer feel connected to the [det]!", "red")
-			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, TRUE)
 			detonator_part = null
 			update_controller_verbs()
 
@@ -241,7 +241,7 @@
 	if(!controller || M == controller) return
 	var/heardname = real_name ? M.name : real_name
 
-	var/rendered = "<span class='game say'>[heardname] <span class='message'>[M.say_quote(text[1])]</span></span>"
+	var/rendered = SPAN_SAY("[heardname] [SPAN_MESSAGE("[M.say_quote(text[1])]")]")
 	controller.show_message(rendered, 2)
 
 
@@ -258,7 +258,7 @@
 		controller.show_text("Interface failure with the radio!", "red")
 		return
 
-	src.rad.attack_self(controller)
+	src.rad.AttackSelf(controller)
 
 /obj/item/device/brainjar/proc/control_signaller()
 	set name = "Control Signaller"
@@ -270,7 +270,7 @@
 		controller.show_text("Interface failure with the remote signalling device!", "red")
 		return
 
-	src.signal.attack_self(controller)
+	src.signal.AttackSelf(controller)
 
 
 /obj/item/device/brainjar/proc/control_canister_detonator()
@@ -316,7 +316,7 @@
 			det.failsafe_engage()
 
 			if(timing)
-				AIviewers(get_turf(src)) << "<span class='alert'><B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B></span>"
+				AIviewers(get_turf(src)) << SPAN_ALERT("<B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B>")
 
 /obj/item/device/brainjar/proc/detonate_tank_transfer_valve()
 	set name = "Detonate bomb!"
@@ -325,7 +325,7 @@
 	set src = usr.loc
 
 	if(!istype(src.master, /obj/item/device/transfer_valve))
-		boutput(usr, "<span class='alert'>Interface failure with the valve controls!</span>")
+		boutput(usr, SPAN_ALERT("Interface failure with the valve controls!"))
 		return
 
 	var/obj/item/device/transfer_valve/TV = src.master

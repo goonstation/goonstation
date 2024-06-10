@@ -9,24 +9,24 @@
 		real_name = "Cyalume Knight"
 		desc = "A knight of modern times."
 
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
 		my_mask.vchange = new(src) // apply voice changer on the mask
-		src.equip_if_possible(my_mask, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_if_possible(my_mask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
 
-		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
 		my_sword = new /obj/item/sword(src)
 		my_sword.bladecolor = "P"
-		src.equip_if_possible(my_sword, slot_l_store)
+		src.equip_if_possible(my_sword, SLOT_L_STORE)
 
 		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
 		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
@@ -55,20 +55,20 @@
 		if(deflecting_sword)
 			if(deflecting_sword.active == 0)  // turn the sword on if it's off
 				deflecting_sword.AttackSelf(src)
-				src.visible_message("<span class='alert'>[src] instinctively switches his [deflecting_sword] on in response to the incoming [P.name]!</span>")
+				src.visible_message(SPAN_ALERT("[src] instinctively switches his [deflecting_sword] on in response to the incoming [P.name]!"))
 			var/datum/abilityHolder/cyalume_knight/my_ability_holder = src.get_ability_holder(/datum/abilityHolder/cyalume_knight)
 			var/force_drain_multiplier = 0.3  // projectile's damage(power) is multiplied by this and then subtracted from ability holder's points
 			var/drained_force = 5 + (P.power * force_drain_multiplier)
 			my_ability_holder.points -= drained_force
 			if(my_ability_holder.points > 0) // we didn't run out of ability holder points, deflect successful
 				if(P.proj_data.damage_type == D_ENERGY || P.proj_data.damage_type == D_BURNING || P.proj_data.damage_type == D_TOXIC || P.proj_data.damage_type == D_RADIOACTIVE) // energy-related damage types
-					src.visible_message("<span class='alert'>[src] deflects the [P.name] with his [deflecting_sword]!</span>")
+					src.visible_message(SPAN_ALERT("[src] deflects the [P.name] with his [deflecting_sword]!"))
 					shoot_reflected_to_sender(P, src)
 					P.die()
 					playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 60, 0.1, 0, 2.6)
 					return
 				else
-					src.visible_message("<span class='alert'>[src] vaporizes the [P.name] in its trajectory with [deflecting_sword]!</span>")
+					src.visible_message(SPAN_ALERT("[src] vaporizes the [P.name] in its trajectory with [deflecting_sword]!"))
 					P.die()
 					playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 90, 0.1, 0, 2.6)
 					return
@@ -90,7 +90,7 @@
 	name = "Cyalume Knight Helmet"
 	desc = "An ominous armored article of clothing."
 	icon_state = "cknight_hood"
-	see_face = 0
+	see_face = FALSE
 
 /atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
@@ -109,11 +109,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='hint'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_HINT("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -135,7 +135,7 @@
 	usesPoints = 1
 	regenRate = 3
 	tabName = "Cyalume Knight"
-	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 100
 	pointName = "force"
 	//var/atom/movable/screen/kudzu/meter/nutrients_meter = null
@@ -189,7 +189,7 @@
 
 
 		if(!src.sword)
-			boutput(holder.owner, "<span class='alert'>Your sword appears to have been banished from the physical realm!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your sword appears to have been banished from the physical realm!"))
 			return 1
 
 	disposing()
@@ -202,7 +202,7 @@
 
 		var/mob/living/my_mob = holder.owner
 		if(!src.sword)
-			boutput(my_mob, "<span class='alert'>Your sword appears to have been banished from the physical realm!</span>")
+			boutput(my_mob, SPAN_ALERT("Your sword appears to have been banished from the physical realm!"))
 			var/obj/item/R = my_mob.find_type_in_hand(/obj/item/sword, "right") // same with grabs
 			var/obj/item/L = my_mob.find_type_in_hand(/obj/item/sword, "left") // same for the other hand
 			if (R)
@@ -217,38 +217,36 @@
 					knight.my_sword = L
 
 			if (src.sword)
-				boutput(my_mob, "<span class='notice'>You have claimed [src.sword] as your own! You'll be able to call it back to you!</span>")
+				boutput(my_mob, SPAN_NOTICE("You have claimed [src.sword] as your own! You'll be able to call it back to you!"))
 			return 1
 
-		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
+		my_mob.visible_message(SPAN_ALERT("<b>[holder.owner] raises his hand into the air wide open!</b>"))
+		playsound(sword, 'sound/effects/gust.ogg', 70, TRUE)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
-				boutput(holder.owner, "<span class='alert'>You're already holding your [sword]!</span>")
+				boutput(holder.owner, SPAN_ALERT("You're already holding your [sword]!"))
 				return 1
 			else
 				var/mob/HH = sword.loc
-				HH.visible_message("<span class='alert'>[sword] somehow escapes [HH]'s grasp!</span>", "<span class='alert'>The [sword] somehow escapes your grasp!</span>")
+				HH.visible_message(SPAN_ALERT("[sword] somehow escapes [HH]'s grasp!"), SPAN_ALERT("The [sword] somehow escapes your grasp!"))
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
-		if (istype(sword.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = sword.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(sword)
-			sword.set_loc(get_turf(sword))
-			sword.visible_message("<span class='alert'>[sword] somehow escapes the [S_temp] that it was inside of!</span>")
+		if (sword.stored)
+			var/atom/previous_storage = sword.stored.linked_item
+			sword.stored.transfer_stored_item(sword, get_turf(sword))
+			sword.visible_message(SPAN_ALERT("[sword] somehow escapes the [previous_storage] that it was inside of!"))
 
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (BOUNDS_DIST(sword, my_mob) == 0)
-				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, TRUE)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
-					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
+					my_mob.visible_message(SPAN_ALERT("<b>[my_mob] catches the [sword]!</b>"))
 				else
-					my_mob.visible_message("<span class='alert'><b>[sword] lands at [my_mob]'s feet!</b></span>")
+					my_mob.visible_message(SPAN_ALERT("<b>[sword] lands at [my_mob]'s feet!</b>"))
 				i=100
 			sleep(0.1 SECONDS)
 
@@ -257,12 +255,12 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	shot_sound = null
-	power = 0
+	damage = 0
 	dissipation_delay = 8
 	dissipation_rate = 5
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
 
@@ -270,8 +268,7 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			//if(!M.stat) M.emote("scream")
-			M.do_disorient(15, weakened = 10)
+			M.do_disorient(15, knockdown = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
 
@@ -298,17 +295,17 @@
 
 		var/turf/S = get_turf(holder.owner)
 		if (get_turf(target) == S)
-			boutput(holder.owner, "<span class='alert'>You have to aim in a direction!</span>")
+			boutput(holder.owner, SPAN_ALERT("You have to aim in a direction!"))
 			return 1
 
 		var/mob/owner_mob = holder.owner
-		owner_mob.visible_message("<span class='alert'><b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b></span>")
+		owner_mob.visible_message(SPAN_ALERT("<b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b>"))
 		playsound(holder.owner, 'sound/effects/gust.ogg', 50, 1)
 		var/increment_value = (end_angle - start_angle) / (num_projectiles - 1)
 		var/current_angle = start_angle
 		var/i
 		for(i = 0; i < num_projectiles; i++)
-			var/obj/projectile/P = initialize_projectile_ST(holder.owner, fired_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, fired_projectile, target)
 			if (P)
 				P.mob_shooter = holder.owner
 				P.rotateDirection(current_angle)
@@ -334,7 +331,7 @@
 		var/turf/S = get_turf(holder.owner)
 		var/turf/target_turf = get_turf(target)
 		if (target_turf == S)
-			boutput(holder.owner, "<span class='alert'>You have to aim in a direction!</span>")
+			boutput(holder.owner, SPAN_ALERT("You have to aim in a direction!"))
 			return 1
 
 		var/mob/living/M = holder.owner
@@ -347,21 +344,20 @@
 				target_turf = get_step_away(target_turf, M)
 
 			if(GET_DIST(holder.owner, target_turf) < (radius + 1)) // we could have hit the edge of the map or otherwise couldn't maneuver into a proper distance
-				boutput(M, "<span class='alert'>That's too close, you could end up frying yourself.</span>")
+				boutput(M, SPAN_ALERT("That's too close, you could end up frying yourself."))
 				return 1
 
 		var/list/lightning_targets = list()
 		for (var/turf/T in range(radius, target_turf))
 			lightning_targets += T
 
-		M.visible_message("<span class='alert'><b>[M] starts to release a storm of lightning from his hands!</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] starts to release a storm of lightning from his hands!</b>"))
 
 		actions.start(new/datum/action/bar/icon/force_lightning_action(M,holder,target_turf,src,lightning_targets), M)
 
 /datum/action/bar/icon/force_lightning_action // UNLIMITED POWER
 	duration = 5
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_lightning"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_lightning_action"
 	var/mob/living/carbon/human/M
@@ -424,9 +420,9 @@
 	onInterrupt()
 		..()
 		if (H.points == 0)
-			boutput(M, "<span class='alert'>You don't have enough energy to continue casting the lightning.</span>")
+			boutput(M, SPAN_ALERT("You don't have enough energy to continue casting the lightning."))
 		else
-			boutput(M, "<span class='alert'>Your lightning ability was interrupted.</span>")
+			boutput(M, SPAN_ALERT("Your lightning ability was interrupted."))
 
 /datum/targetable/cyalume_knight/force_choke
 	name = "Telekinetic Grip"
@@ -444,7 +440,7 @@
 			return 1
 
 		if (target == holder.owner)
-			boutput(holder.owner, "<span class='alert'>No choking yourself!</span>")
+			boutput(holder.owner, SPAN_ALERT("No choking yourself!"))
 			return 1
 
 		var/mob/living/M = holder.owner
@@ -453,18 +449,18 @@
 
 		var/original_pixel_y = mob_target.pixel_y
 
-		M.visible_message("<span class='alert'><b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b>"))
 		mob_target.changeStatus("stunned", 15 SECONDS)
 		mob_target.force_laydown_standup()
 
 		sleep(1.5 SECONDS)
-		M.visible_message("<span class='alert'><b>[M] begins lifting his hand, with [mob_target] following!</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] begins lifting his hand, with [mob_target] following!</b>"))
 		var/i
 		for(i = 0; i < 12; i++)
 			mob_target.pixel_y += 2
 			sleep(0.1 SECONDS)
 		sleep(0.5 SECONDS)
-		M.visible_message("<span class='alert'><b>[M] closes his grip!</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] closes his grip!</b>"))
 		mob_target.losebreath += 10
 
 		actions.start(new/datum/action/bar/icon/force_choke_action(M,holder,mob_target,src,original_pixel_y), M)
@@ -473,7 +469,6 @@
 /datum/action/bar/icon/force_choke_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_choke"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_grip_action"
 	var/mob/living/carbon/human/M
@@ -516,7 +511,7 @@
 
 		if(HH.losebreath < 8)
 			HH.losebreath += 5
-			HH.visible_message("<span class='alert'><b>[HH] is grasping their neck desperately trying to breathe in!</b></span>", "<span class='alert'><b>Something is constricting your throat, you cannot breathe!</b></span>")
+			HH.visible_message(SPAN_ALERT("<b>[HH] is grasping their neck desperately trying to breathe in!</b>"), SPAN_ALERT("<b>Something is constricting your throat, you cannot breathe!</b>"))
 		HH.changeStatus("stunned", 10 SECONDS)
 
 		H.points -= 5
@@ -532,9 +527,9 @@
 		..()
 		HH.pixel_y = original_pixel_y
 		if (H.points == 0)
-			boutput(M, "<span class='alert'>You don't have enough energy to continue gripping the target.</span>")
+			boutput(M, SPAN_ALERT("You don't have enough energy to continue gripping the target."))
 		else
-			boutput(M, "<span class='alert'>Your grip ability was interrupted.</span>")
+			boutput(M, SPAN_ALERT("Your grip ability was interrupted."))
 
 /datum/targetable/cyalume_knight/force_heal
 	name = "Heal"
@@ -550,14 +545,13 @@
 
 		var/mob/living/M = holder.owner
 
-		M.visible_message("<span class='alert'><b>[M] stands still, focused in meditation!</b></span>", "<span class='alert'><b>You begin meditation.</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] stands still, focused in meditation!</b>"), SPAN_ALERT("<b>You begin meditation.</b>"))
 
 		actions.start(new/datum/action/bar/icon/force_heal_action(M,holder,src), M)
 
 /datum/action/bar/icon/force_heal_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_heal"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_heal_action"
 	var/mob/living/carbon/human/M
@@ -598,11 +592,11 @@
 			M.take_toxin_damage(-15)
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
-			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(M, 'sound/items/mender.ogg', 50, 1)
+			M.visible_message(SPAN_ALERT("Some of [M]'s wounds slowly fade away!"), SPAN_ALERT("Your wounds begin to fade away."))
+			playsound(M, 'sound/items/mender.ogg', 50, TRUE)
 		else
 			..()
-			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
+			boutput(M, SPAN_ALERT("You don't have any lingering wounds to heal."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -618,9 +612,9 @@
 	onInterrupt()
 		..()
 		if (H.points == 0)
-			boutput(M, "<span class='alert'>You don't have enough energy to continue healing.</span>")
+			boutput(M, SPAN_ALERT("You don't have enough energy to continue healing."))
 		else
-			boutput(M, "<span class='alert'>Your healing meditation was interrupted.</span>")
+			boutput(M, SPAN_ALERT("Your healing meditation was interrupted."))
 
 ////////////////////////////////////////////////// Cyalume knight stuff /////////////////////////////////////////////
 
@@ -632,7 +626,7 @@
 
 	Login()
 		..()
-		boutput(src, "<span class='notice'>Access special emotes through *neutral, *sad, *happy, *flip, *wave!</span>")
+		boutput(src, SPAN_NOTICE("Access special emotes through *neutral, *sad, *happy, *flip, *wave!"))
 
 
 	emote(var/act, var/voluntary = 1)
@@ -693,25 +687,25 @@
 /obj/item/mutation_orb
 	name = "empty orb"
 	desc = "You have a feeling you shouldn't be able to see this."
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	var/list/datum/mutation_orb_mutdata/mutations_to_add
 	var/envelop_message // envelops [user] in [envelop_message]
 	var/leaving_message // before [leaving_message]!
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	attack_self(mob/user as mob)
 		if (!iscarbon(user))
-			boutput(user, "<span class='alert'>\The [src] rejects you!</span>")
+			boutput(user, SPAN_ALERT("\The [src] rejects you!"))
 			return
 
 		var/mutations_length = length(mutations_to_add)
 		if(user.bioHolder && mutations_length)
 			var/turf/T = get_turf(user)
-			T.visible_message("<span class='notice'>\The [src] envelops [user] in [envelop_message] before [leaving_message]!</span>")
-			playsound(T, 'sound/effects/mag_warp.ogg', 70, 1)
+			T.visible_message(SPAN_NOTICE("\The [src] envelops [user] in [envelop_message] before [leaving_message]!"))
+			playsound(T, 'sound/effects/mag_warp.ogg', 70, TRUE)
 			for (var/i = 1 to mutations_length)
 				var/datum/mutation_orb_mutdata/mut = mutations_to_add[i]
 
@@ -735,7 +729,7 @@
 
 	afterattack(var/atom/target, mob/user, flag)
 		if (target == user)
-			src.attack_self(user)
+			src.AttackSelf(user)
 		else
 			. = ..()
 
@@ -765,9 +759,9 @@
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "feather_fire"
 	color = "#ff8902"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
@@ -786,11 +780,11 @@
 
 		if (did_something)
 			var/turf/T = get_turf(target)
-			T.visible_message("<span class='notice'>As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!</span>")
+			T.visible_message(SPAN_NOTICE("As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!"))
 			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 50, TRUE, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
 			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
@@ -798,7 +792,7 @@
 				qdel(lightbeam)
 			qdel(src)
 		else
-			boutput(user, "<span class='notice'>\The [src] doesn't seem to do anything as you touch [target] with it.</span>")
+			boutput(user, SPAN_NOTICE("\The [src] doesn't seem to do anything as you touch [target] with it."))
 
 ////////////////////////////////////////////////// Generic unique items stuff ///////////////////////////////////////////////
 
@@ -825,16 +819,34 @@
 	desc = "You shouldn't see this."
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "fabric"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/list/datum/property_setter_property/properties_to_set
 	var/prefix_to_set = ""
 	var/suffix_to_set = ""
 	var/color_to_set
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
+		if (istype(target, /obj/item/clothing/))
+			if (apply_property(target)) // some property got changed, display a message and delete src
+				var/turf/T = get_turf(target)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
+				T.visible_message(SPAN_NOTICE("As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!"))
+				if (src.loc)
+					if (ishuman(src.loc))
+						var/mob/living/carbon/human/wearer = src.loc
+						wearer.update_clothing()
+						wearer.update_equipped_modifiers() // required for things like movespeed changes
+				qdel(src)
+			else // nothing got changed, stats might be at cap already
+				boutput(user, SPAN_NOTICE("You can't seem to find a way to improve \the [target] with \the [src]."))
+
+		else
+			..()
+
+	proc/apply_property(var/atom/target)
 		var/did_something = 0
 
 		if (istype(target, /obj/item/clothing/))
@@ -866,29 +878,17 @@
 							target_clothing.setProperty(property.property_name, property.property_value)
 							did_something = 1
 
-			if (did_something) // some property got changed, display a message and delete src
-				var/turf/T = get_turf(target)
-				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
-				if (length(src.prefix_to_set))
-					target.name_prefix(prefix_to_set)
-					target.UpdateName()
-				if (length(src.suffix_to_set))
-					target.name_suffix(suffix_to_set)
-					target.UpdateName()
-				if (src.color_to_set)
-					target.color = src.color_to_set
-				if (src.loc)
-					if (ishuman(src.loc))
-						var/mob/living/carbon/human/wearer = src.loc
-						wearer.update_clothing()
-						wearer.update_equipped_modifiers() // required for things like movespeed changes
-				qdel(src)
-			else // nothing got changed, stats might be at cap already
-				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+				if(did_something)
+					if (length(src.prefix_to_set))
+						target.name_prefix(prefix_to_set)
+						target.UpdateName()
+					if (length(src.suffix_to_set))
+						target.name_suffix(suffix_to_set)
+						target.UpdateName()
+					if (src.color_to_set)
+						target.color = src.color_to_set
 
-		else
-			..()
+		return did_something
 
 /obj/item/property_setter/fire_jewel
 	name = "fire jewel"
@@ -942,3 +942,288 @@
 
 
 ////////////////////////////////////////////////// Clothing properties stuff ///////////////////////////////////////////////
+
+#ifdef SECRETS_ENABLED
+////////////////////////////////////////////////// PIZZA TOWER //////////////////////////////////////////////////
+
+// Mob, design and assets inspired and/or sourced from Pizza Tower, developed by Tour De Pizza, also known as Pizza Tower Guy, used with their permission.
+#define NOT_MOVING 0
+#define MOVING_RIGHT 1
+#define MOVING_UP 2
+#define MOVING_LEFT 3
+#define MOVING_DOWN 4
+
+/mob/living/critter/peppino
+	name = "extremely anxious looking chef"
+	real_name = "extremely anxious looking chef"
+	desc = "He looks like he's having a REALLY bad day."
+	icon = '+secret/icons/mob/peppino.dmi'
+	icon_state = "walk"
+	icon_state_dead = "dead"
+	density = 1
+	hand_count = 2
+	can_throw = 1
+	can_grab = 1
+	can_disarm = 1
+	blood_id = "pizza"
+	burning_suffix = "humanoid"
+	base_walk_delay = 1.6
+	base_move_delay = 1.6
+	var/base_movement_delay = 1.6
+	var/minimum_movement_delay = 0.58
+	var/momentum_step_increase = 0.15
+	var/machrun_animation_min_momentum = 1
+	var/last_location_x
+	var/last_location_y
+	var/last_bumped_object_timestamp = 0
+	var/combo_counter
+	var/last_combo_time = 0
+	var/combo_grace_time = 5 SECONDS
+	var/steps = 0
+
+	var/lastdirection = NOT_MOVING
+	var/momentum
+
+	New()
+		. = ..()
+		buildIcon()
+		last_location_x = src.loc.x
+		last_location_y = src.loc.y
+		add_stam_mod_max("AAAAAA", 999999)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/pain_immune, src.type)
+		src.maptext_height = 32
+		src.maptext_width = 96
+		src.maptext_x = 36
+		src.maptext_y = 64
+
+		src.m_intent = "walk"
+		hud.update_mintent()
+
+		// dirty code for a loop since taking up an actual processing loop for a gimmick seems excessive
+		while(src)
+			if (!isdead(src) && world.time > src.next_move + 0.5 SECONDS) // stopped moving
+				src.momentum = 0
+				src.icon_state = "walk"
+				src.lastdirection = NOT_MOVING
+
+			if(world.time > last_combo_time + combo_grace_time)
+				combo_counter = 0
+				update_combo_counter()
+			sleep(0.5 SECONDS)
+
+	proc/buildIcon()
+		var/icon/icon_to_be_scaled = icon(src.icon)
+		icon_to_be_scaled.Scale(80, 80)
+		src.icon = icon(icon_to_be_scaled)
+		src.pixel_x = -24
+		src.pixel_y = -4
+
+	Login()
+		. = ..()
+		boutput(src, {"<h1>[SPAN_ALERT("PIZZA, PASTA.")]</h1>
+			[SPAN_NOTICE("Walk/run intent toggles MACH RUN.")]
+			<br>[SPAN_NOTICE("*scream, *fart and *dance have special effects.")]"})
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+
+		// bad code to counteract other things resetting the sprite offset
+		src.pixel_x = -24
+		src.pixel_y = -4
+
+	bump(atom/A)
+		. = ..()
+		var/atom/movable/AM = A
+		if ((isturf(A) || isobj(A)) && momentum >= machrun_animation_min_momentum)
+			if(world.time > last_bumped_object_timestamp + 0.2 SECONDS)
+				flick("mach_hit_wall", src)
+				last_bumped_object_timestamp = world.time
+				animate_storage_thump(A)
+		if (ismob(AM) && momentum >= machrun_animation_min_momentum)
+			last_combo_time = world.time
+			combo_counter++;
+			update_combo_counter()
+			src.visible_message(SPAN_ALERT("<B>[src]</B> slams into [A]!"))
+			playsound(AM.loc, 'sound/impact_sounds/Generic_Hit_heavy_1.ogg', 100, 1)
+			var/throw_dir = turn(get_dir(src, A),rand(-1,1)*45)
+			AM.throw_at(get_edge_cheap(src.loc, throw_dir),  20, 3)
+			var/obj/decal/batman_pow/pow = new /obj/decal/batman_pow/wham(AM.loc)
+			src.momentum = max(src.momentum - 0.15, 0)
+			animate_portal_appear(pow)
+			animate(pow, pixel_x = rand(-24,24), pixel_y = rand(4,28), easing = LINEAR_EASING, time = 10, flags = ANIMATION_PARALLEL)
+			SPAWN(1 SECOND) qdel(pow)
+
+	proc/update_combo_counter()
+		if(combo_counter > 0)
+			src.maptext = "<span class='vb c sh ol pixel' style='color:#9966CC'>[combo_counter] COMBO!</span>"
+		else
+			src.maptext = ""
+
+		//"\n<span class='c pixel sh'>[bet_type_name]<span class='vga'>"
+
+
+	OnMove(source)
+		. = ..()
+		var/new_x = src.loc.x
+		var/new_y = src.loc.y
+		// 0 - didn't change, 1 - moving in that direction, -1 - moving in other direction
+		var/moved_right = new_x == last_location_x ? 0 : new_x > last_location_x ? 1 : -1
+		var/moved_up = new_y == last_location_y ? 0 : new_y > last_location_y ? 1 : -1
+
+		src.last_location_x = new_x
+		src.last_location_y = new_y
+
+		src.base_move_delay = base_movement_delay
+
+		steps++
+		if(momentum > machrun_animation_min_momentum)
+			if(steps >= 6)
+				playsound(src.loc, '+secret/sound/misc/peppino_mach4.ogg', 45)
+				steps = 0
+		else
+			if(steps >= 3)
+				playsound(src.loc, '+secret/sound/misc/peppino_step.ogg', 75)
+				steps = 0
+
+		if (world.time > src.next_move + 0.5 SECONDS)
+			anchored = UNANCHORED
+			momentum = 0
+			src.icon_state = "walk"
+			src.lastdirection = NOT_MOVING
+
+
+		if (src.m_intent == "walk")
+			anchored = UNANCHORED
+			momentum = 0
+			return
+
+		if(src.lastdirection == NOT_MOVING)
+			anchored = UNANCHORED
+			momentum = 0
+			update_current_moving_direction(moved_right, moved_up)
+			return
+
+		if(src.lastdirection == MOVING_RIGHT)
+			if(moved_right != 1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					flick("mach_right_to_left", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_LEFT)
+			if(moved_right != -1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					flick("mach_left_to_right", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_UP)
+			if(moved_up != 1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					if(moved_right == 1)
+						flick("mach_left_to_right", src)
+					else
+						flick("mach_right_to_left", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_DOWN)
+			if(moved_up != -1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					if(moved_right == -1)
+						flick("mach_right_to_left", src)
+					else
+						flick("mach_left_to_right", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+
+		momentum += momentum_step_increase
+		var/current_movement_delay = max(minimum_movement_delay, base_movement_delay - momentum)
+
+		src.base_move_delay = current_movement_delay
+
+		if(momentum > machrun_animation_min_momentum)
+			anchored = ANCHORED // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
+			src.icon_state = "machrun"
+
+
+
+
+
+	proc/update_current_moving_direction(var/moved_right, var/moved_up)
+		if(moved_right != 0)
+			src.lastdirection = moved_right == 1 ? MOVING_RIGHT : MOVING_LEFT
+		else if(moved_up != 0)
+			src.lastdirection = moved_up == 1 ? MOVING_UP : MOVING_DOWN
+		else
+			src.lastdirection = 0
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					flick("scream", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_scream.ogg', 90, 1)
+					return SPAN_ALERT("<b>[src] screams!</b>")
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					flick("breakdance", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_breakdance.ogg', 75)
+					return SPAN_ALERT("<b>[src] breaks out some sick moves!</b>")
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					if(prob(50))
+						attack_twitch(src)
+					else
+						animate_buff_in(src)
+					flick("taunt_[rand(1,10)]", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_taunt.ogg', 75)
+					return null
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+			if ("dance")
+				return 2
+			if ("fart")
+				return 2
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+
+	setup_healths()
+		add_hh_flesh(150, 0.85)
+		add_hh_flesh_burn(150, 0.85)
+		add_health_holder(/datum/healthHolder/toxin)
+		add_health_holder(/datum/healthHolder/suffocation)
+		add_health_holder(/datum/healthHolder/brain)
+
+
+#undef MOVING_RIGHT
+#undef MOVING_UP
+#undef MOVING_LEFT
+#undef MOVING_DOWN
+
+////////////////////////////////////////////////// PIZZA TOWER //////////////////////////////////////////////////
+#endif

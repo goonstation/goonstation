@@ -4,34 +4,37 @@
 	var/can_be_recharged = TRUE
 	var/max_cell_size = INFINITY
 	var/swappable_cell = TRUE
+	var/restrict_cell_type
 
 TYPEINFO(/datum/component/cell_holder)
 	initialization_args = list(
 		ARG_INFO("new_cell", DATA_INPUT_REF, "ref to cell that will be first used"),
 		ARG_INFO("chargable", DATA_INPUT_BOOL, "If it can be placed in a recharger", TRUE),
 		ARG_INFO("max_cell", DATA_INPUT_NUM, "Maximum size of cell that can be held", INFINITY),
-		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE)
+		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE),
+		ARG_INFO("restrict_cell", DATA_INPUT_TYPE, "Path to restrict cell types to", null)
 	)
 
-/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
+/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE, restrict_cell = null)
+	. = ..()
 	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_CELL_IS_CELL))
 		return COMPONENT_INCOMPATIBLE
-	. = ..()
 	if(SEND_SIGNAL(new_cell, COMSIG_CELL_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, PROC_REF(UpdateIcon))
 	can_be_recharged = chargable
 	max_cell_size = max_cell
 	swappable_cell = swappable
+	restrict_cell_type = restrict_cell
 
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
-	RegisterSignal(parent, COMSIG_CELL_SWAP, .proc/do_swap)
-	RegisterSignal(parent, COMSIG_CELL_TRY_SWAP, .proc/try_swap)
-	RegisterSignal(parent, COMSIG_CELL_CHARGE, .proc/do_charge)
-	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, .proc/can_charge)
-	RegisterSignal(parent, COMSIG_CELL_USE, .proc/use)
-	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, .proc/check_charge)
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	RegisterSignal(parent, COMSIG_CELL_SWAP, PROC_REF(do_swap))
+	RegisterSignal(parent, COMSIG_CELL_TRY_SWAP, PROC_REF(try_swap))
+	RegisterSignal(parent, COMSIG_CELL_CHARGE, PROC_REF(do_charge))
+	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, PROC_REF(can_charge))
+	RegisterSignal(parent, COMSIG_CELL_USE, PROC_REF(use))
+	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, PROC_REF(check_charge))
 
 
 /datum/component/cell_holder/InheritComponent(datum/component/cell_holder/C, i_am_original, new_cell = null, chargable = null, max_cell = null, swappable = null)
@@ -39,6 +42,7 @@ TYPEINFO(/datum/component/cell_holder)
 		src.can_be_recharged = C.can_be_recharged
 		src.max_cell_size = C.max_cell_size
 		src.swappable_cell = C.swappable_cell
+		src.restrict_cell_type = C.restrict_cell_type
 		qdel(src.cell)
 		src.cell = C.cell
 		src.cell?.set_loc(parent)
@@ -49,7 +53,7 @@ TYPEINFO(/datum/component/cell_holder)
 				qdel(src.cell)
 				src.cell = new_cell
 				src.cell.set_loc(parent)
-				RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
+				RegisterSignal(cell, COMSIG_UPDATE_ICON, PROC_REF(UpdateIcon))
 		else if(istype(new_cell, /datum/component/power_cell))
 			src.cell.AddComponent(new_cell)
 		else if(islist(new_cell))
@@ -75,28 +79,43 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/component/cell_holder/proc/begin_swap(mob/user, atom/movable/P)
 	if(src.swappable_cell)
 		var/list/ret = list()
+		if (restrict_cell_type && !istype(P, restrict_cell_type))
+			boutput(user, SPAN_NOTICE("[parent] can't fit the [P]."))
+			return
 		if((SEND_SIGNAL(P, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) && (ret["max_charge"] <= src.max_cell_size))
 			actions.start(new /datum/action/bar/icon/cellswap(user, P, parent), user)
 		else
-			boutput(user, "<span class='notice'>[parent] cannot handle the amount of power in [P].</span>")
+			boutput(user, SPAN_NOTICE("[parent] cannot handle the amount of power in [P]."))
 	else
-		boutput(user, "<span class='notice'>[parent] doesn't have a port to swap power cells.</span>")
+		boutput(user, SPAN_NOTICE("[parent] doesn't have a port to swap power cells."))
 
 /datum/component/cell_holder/proc/do_swap(source, atom/movable/P, mob/user)
 	var/atom/movable/old_cell = src.cell
 	var/atom/old_loc = get_turf(parent)
+	var/atom/new_cell_stored = null
 	if(P)
-		old_loc = P.loc
+		if (istype(P, /obj/item))
+			var/obj/item/I = P
+			if (I.stored)
+				new_cell_stored = I.stored.linked_item
+				I.stored.transfer_stored_item(I, get_turf(I), user = user)
+			else
+				old_loc = P.loc
+		else
+			old_loc = P.loc
 		if(user)
 			user.u_equip(P)
 			P.add_fingerprint(user)
 		src.cell = P
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, PROC_REF(UpdateIcon))
 		P.set_loc(src.parent)
 		SEND_SIGNAL(P, COMSIG_UPDATE_ICON)
 
 	if(old_cell)
-		old_cell.set_loc(old_loc)
+		if (new_cell_stored)
+			new_cell_stored.storage.add_contents(old_cell, user, FALSE)
+		else
+			old_cell.set_loc(old_loc)
 		SEND_SIGNAL(old_cell, COMSIG_UPDATE_ICON)
 		UnregisterSignal(old_cell, COMSIG_UPDATE_ICON)
 		if(!P)
@@ -110,7 +129,7 @@ TYPEINFO(/datum/component/cell_holder)
 			var/mob/M = old_loc
 			M.put_in_hand_or_drop(old_cell)
 
-	playsound(parent, "sound/weapons/gunload_click.ogg", 50, 1)
+	playsound(parent, 'sound/weapons/gunload_click.ogg', 50, TRUE)
 
 /datum/component/cell_holder/proc/try_swap(source, obj/item/I, mob/user)
 	begin_swap(user, I)
@@ -140,7 +159,6 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/action/bar/icon/cellswap
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
-	id = "powercellswap"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	var/mob/living/user

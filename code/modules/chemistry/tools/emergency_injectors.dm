@@ -17,63 +17,82 @@
 	var/image/fluid_image
 	var/empty = 0
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
+	var/manipulated_injection = FALSE //! is this injector being tampered with and being unuseable for injecting people?
+
+	New()
+		..()
+		src.item_state = "emerg_inj-[src.label]"
+		src.fluid_image = image(src.icon, "emerg_inj-fluid")
+		src.fluid_image.color = src.reagents.get_average_color().to_rgba()
+		src.UpdateIcon()
+		// auto-injector + cutting tool  -> sabotaged auto-injector
+		src.AddComponent(/datum/component/assembly, TOOL_CUTTING, PROC_REF(knife_manipulation), FALSE)
 
 	on_reagent_change()
 		..()
 		src.UpdateIcon()
 
 	update_icon()
-		src.underlays = null
-		if (reagents.total_volume)
-			icon_state = "emerg_inj-[label]"
-			var/datum/color/average = reagents.get_average_color()
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "emerg_inj-fluid", -1)
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
+		if (src.reagents.total_volume)
+			src.icon_state = "emerg_inj-[src.label]"
 		else
-			icon_state = "emerg_inj-[label]0"
-		item_state = "emerg_inj-[label]"
+			src.icon_state = "emerg_inj-[src.label]0"
+			src.fluid_image = image(src.fluid_image, "emerg_inj-fluid-flick")
+			flick("emerg_inj-[src.label]-flick", src)
+		UpdateOverlays(src.fluid_image, "fluid")
 
-	attack(mob/M, mob/user)
-		if (iscarbon(M) || ismobcritter(M))
-			if (src.empty || !src.reagents)
-				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
-				return
-			else
-				if (!M.reagents)
-					return ..()
-				logTheThing(LOG_COMBAT, user, "injects [constructTarget(M,"combat")] with [src] [log_reagents(src)]")
-				src.reagents.trans_to(M, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [M == user ? himself_or_herself(user) : M] with [src]!</span>",\
-				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
-				playsound(M, "sound/items/hypo.ogg", 40, 0)
-				if(!src.reagents.total_volume)
-					src.empty = 1
-				return
-		else
-			boutput(user, "<span class='alert'>You can only use [src] on people!</span>")
-			return
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		src.try_injection(user, target)
+		return
 
 	attack_self(mob/user)
-		if (iscarbon(user) || ismobcritter(user))
-			if (src.empty || !src.reagents)
-				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
-				return
-			else
-				if (!user.reagents)
-					return ..()
-				logTheThing(LOG_COMBAT, user, "injects themself with [src] [log_reagents(src)]")
-				src.reagents.trans_to(user, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
-				"<span class='alert'>You inject yourself with [src]!</span>")
-				playsound(user, "sound/items/hypo.ogg", 40, 0)
-				if(!src.reagents.total_volume)
-					src.empty = 1
-				return
-		else
+		src.try_injection(user, user)
+		return
+
+
+	get_help_message(dist, mob/user)
+		if(!src.manipulated_injection && !src.empty)
+			. += " You can use a <b>knife</b> to sabotage the injector."
+
+	proc/try_injection(mob/user, mob/target)
+		if (src.empty || !src.reagents)
+			boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
 			return
+		if (iscarbon(target) || ismobcritter(target) || target.reagents)
+			if (src.manipulated_injection)
+				logTheThing(LOG_COMBAT, user, "tries to inject [target == user ? himself_or_herself(user) : constructTarget(target,"combat")] with a sabotaged [src] [log_reagents(src)]")
+				user.visible_message(SPAN_ALERT("[user] tries to use [src] on [target == user ? himself_or_herself(user) : target], but [src] fails and sprays its contents on the ground!"),\
+				SPAN_ALERT("You try to use [src] on [target == user ? "yourself" : target], but [src] jams prematurely and all its contents spray onto the ground!"))
+				var/turf/target_turf = get_turf(user)
+				var/datum/reagents/temp_holder = new
+				src.reagents.trans_to_direct(temp_holder, src.amount_per_transfer_from_this)
+				target_turf.fluid_react(temp_holder, temp_holder.total_volume)
+				temp_holder.reaction(target_turf, TOUCH)
+				playsound(user, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, FALSE)
+			else
+				logTheThing(LOG_COMBAT, user, "injects [target == user ? himself_or_herself(user) : constructTarget(target,"combat")] with [src] [log_reagents(src)]")
+				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+				user.visible_message(SPAN_ALERT("[user] injects [target == user ? himself_or_herself(user) : target] with [src]!"),\
+				SPAN_ALERT("You inject [target == user ? "yourself" : target] with [src]!"))
+				playsound(target, 'sound/items/hypo.ogg', 40, FALSE)
+			if(!src.reagents.total_volume)
+				src.empty = 1
+				src.name += " (expended)"
+		else
+			boutput(user, SPAN_ALERT("You can only use [src] on people!"))
+
+/// autoinjector manipulation procs
+	proc/knife_manipulation(var/atom/to_combine_atom, var/mob/user)
+		if (src.empty || !src.reagents)
+			boutput(user, SPAN_ALERT("There's no reason to sabotage this, [src] has already been expended!"))
+		else
+			boutput(user, SPAN_NOTICE("You cut into the spring mechanism, making it unusable for medical use."))
+			src.manipulated_injection = TRUE
+			src.desc += " You can see a deep cut on its side."
+			//Since we sucessfully manipulated the injector, remove all the assembly components
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			return TRUE
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -114,6 +133,12 @@
 	label = "blue"
 	desc = "An auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
+/obj/item/reagent_containers/emergency_injector/omnizine
+	name = "emergency auto-injector (omnizine)"
+	initial_reagents = list("omnizine"=5)
+	label = "white"
+	desc = "An auto-injector containing omnizine, the manufacturer's label is scratched off."
+
 /obj/item/reagent_containers/emergency_injector/insulin
 	name = "emergency auto-injector (insulin)"
 	initial_reagents = "insulin"
@@ -142,7 +167,7 @@
 	name = "emergency auto-injector (diphenhydramine)"
 	initial_reagents = "antihistamine"
 	label = "blue"
-	desc = "An auto-injector containing dyphenhidramine, useful for reducing the severity of allergic reactions."
+	desc = "An auto-injector containing diphenhydramine, useful for reducing the severity of allergic reactions."
 
 /obj/item/reagent_containers/emergency_injector/salbutamol
 	name = "emergency auto-injector (salbutamol)"
@@ -214,7 +239,7 @@
 	label = "black"
 	desc = "An auto-injector containing uhh, well, y'see... Hmm. You're unsure on this one."
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "psilocybin", "omnizine")
 		..()
 
 
@@ -273,6 +298,12 @@
 	label = "purple"
 	desc = "A high-capacity auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
+/obj/item/reagent_containers/emergency_injector/high_capacity/charcoal
+	name = "high-capacity auto-injector (charcoal)"
+	initial_reagents = "charcoal"
+	label = "green"
+	desc = "A high-capacity auto-injector containing charcoal, a reliable anti-tox medicine and poison depletor."
+
 /obj/item/reagent_containers/emergency_injector/high_capacity/mannitol
 	name = "high-capacity auto-injector (mannitol)"
 	initial_reagents = "mannitol"
@@ -293,14 +324,16 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
-	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations.."
+	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
 	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut
 	name = "Juggernaut injector"
 	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains juggernaut, a potent pain-killing chemical."
+	#ifdef SECRETS_ENABLED
 	initial_reagents = "juggernaut"
+	#endif
 	label = "bigred"
 	initial_volume = 60
 	amount_per_transfer_from_this = 20

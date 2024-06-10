@@ -23,6 +23,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	health_brute = 10
 	health_burn = 10
 
+	faction = list(FACTION_NEUTRAL)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.5
@@ -33,10 +34,10 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		..()
 		UpdateIcon()
 
-		SPAWN(rand(0.5 SECOND, 2 SECONDS))
+		SPAWN(randfloat(0.5 SECOND, 2 SECONDS))
 
 			//modified bumble
-			var/floatspeed = rand(1 SECOND,1.4 SECONDS)
+			var/floatspeed = randfloat(1 SECOND,1.4 SECONDS)
 			animate(src, pixel_y = 3, time = floatspeed, loop = -1, easing = LINEAR_EASING, , flags=ANIMATION_PARALLEL)
 			animate(pixel_y = -3, time = floatspeed, easing = LINEAR_EASING)
 
@@ -81,12 +82,12 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		. = ..()
 
 		bulb = SafeGetOverlayImage("bulb", src.icon, "firefly-bulb")
-		bulb.appearance_flags = RESET_COLOR
+		bulb.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		bulb.color = light_color
 		UpdateOverlays(bulb, "bulb")
 
 		bulb_light = SafeGetOverlayImage("bulb-light", src.icon, "firefly-light")
-		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
 		bulb_light.blend_mode = BLEND_ADD
@@ -100,16 +101,15 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /mob/living/critter/small_animal/firefly/pyre
@@ -140,8 +140,8 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			pop(M)
 
 	proc/pop()
-		src.visible_message("<span class='alert'><b>[src]</b> erupts into a huge column of flames! That was unexpected!</span>")
-		fireflash_sm(get_turf(src), 1, 3000, 1000)
+		src.visible_message(SPAN_ALERT("<b>[src]</b> erupts into a huge column of flames! That was unexpected!"))
+		fireflash_melting(get_turf(src), 1, 3000, 1000, chemfire = CHEM_FIRE_RED)
 		death()
 
 	update_icon()
@@ -150,16 +150,15 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /obj/effects/firefly_pyre
@@ -177,7 +176,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			A.vis_contents += src
 
 		var/image/fire_light = SafeGetOverlayImage("pyre_light", 'icons/effects/fire.dmi', "1old")
-		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART
+		fire_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		fire_light.layer = LIGHTING_LAYER_BASE
 		fire_light.plane = PLANE_LIGHTING
 		fire_light.blend_mode = BLEND_ADD
@@ -190,7 +189,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		..()
 
 /mob/living/critter/small_animal/firefly/lightning
-	desc = "A bioluminescent insect that has some suspecious extra glow to it."
+	desc = "A bioluminescent insect that has some suspicious extra glow to it."
 	var/obj/effects/firefly_lightning/lightning
 
 	New()
@@ -218,16 +217,15 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /obj/effects/firefly_lightning
@@ -237,17 +235,17 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	icon_state = "energyorb"
 	vis_flags = VIS_INHERIT_ID
 	mouse_opacity = 0
-	var/list/color_on = list(1.0, 0.0, 0.0, -0.5, \
-					 0.0, 1.0, 0.0, -0.5, \
-					 0.0, 0.0, 1.0,  1.0, \
-					 0.0, 0.0, 0.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0 )
+	var/list/color_on = list(1.0, 0.0, 0.0, -0.5,
+					0.0, 1.0, 0.0, -0.5,
+					0.0, 0.0, 1.0,  1.0,
+					0.0, 0.0, 0.0,  0.0,
+					0.0, 0.0, 0.0,  0.0 )
 
-	var/list/color_off = list(1.0, 0.0, 0.0, -0.5, \
-					 0.0, 1.0, 0.0, -0.5, \
-					 0.0, 0.0, 1.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0, \
-					 0.0, 0.0, 0.0,  0.0 )
+	var/list/color_off = list(1.0, 0.0, 0.0, -0.5,
+					0.0, 1.0, 0.0, -0.5,
+					0.0, 0.0, 1.0,  0.0,
+					0.0, 0.0, 0.0,  0.0,
+					0.0, 0.0, 0.0,  0.0 )
 
 	New(newLoc)
 		..()
@@ -300,21 +298,21 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 
 	ai_controlled
 		is_npc = 1
+		ailment_immune = TRUE
 		New()
 			..()
 			src.ai = new /datum/aiHolder/wanderer(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
-			remove_lifeprocess(/datum/lifeprocess/viruses)
 
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 	Move(NewLoc, direct)
 		. = ..()
-		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
+		if (!ON_COOLDOWN(src, "move_bumble", 5 SECONDS))
+			animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
@@ -331,11 +329,12 @@ TYPEINFO(/datum/component/bug_capture)
 	initialization_args = list()
 
 /datum/component/bug_capture/Initialize(atom/A, mob/living/critter/B, mob/living/carbon/human/user)
+	. = ..()
 	if(add_bug(A, B, user))
-		RegisterSignal(parent, list(COMSIG_ITEM_PICKUP), .proc/pickup)
-		RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped)
-		RegisterSignal(parent, list(COMSIG_ATOM_POST_UPDATE_ICON), .proc/update_icon)
-		RegisterSignal(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), .proc/bye_bugs)
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(pickup))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(dropped))
+		RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, PROC_REF(update_icon))
+		RegisterSignals(parent, list(COMSIG_ATOM_REAGENT_CHANGE, COMSIG_ITEM_ATTACK_SELF), PROC_REF(bye_bugs))
 
 		update_jar(A,user)
 	else
@@ -348,24 +347,24 @@ TYPEINFO(/datum/component/bug_capture)
 	var/allowed_bug_count = can_jar(B)
 	if(allowed_bug_count)
 		if(B.client)
-			boutput(user, "<span class='alert'>[B] seems just to squirley to capture!  Need a more lazy one.</span>")
+			boutput(user, SPAN_ALERT("[B] seems just to squirrelly to capture!  Need a more lazy one."))
 			return FALSE
 	else
 		return FALSE
 	var/bug_count = 0
 	for(var/atom/C in A.contents)
 		if(!istype(C, B.type) && !istype(B, C.type))
-			boutput(user, "<span class='alert'>[B] doesn't seem like it belongs with anything else.</span>")
+			boutput(user, SPAN_ALERT("[B] doesn't seem like it belongs with anything else."))
 			return FALSE
 		else
 			bug_count++
 
 	if(bug_count >= allowed_bug_count)
-		boutput(user, "<span class='alert'>[B] won't first with everything else inside of [A].</span>")
+		boutput(user, SPAN_ALERT("[B] won't first with everything else inside of [A]."))
 		return FALSE
 
 	if(A != user && A.reagents?.total_volume)
-		boutput(user, "<span class='alert'>You should probably pour out [A] first.</span>")
+		boutput(user, SPAN_ALERT("You should probably pour out [A] first."))
 		return FALSE
 
 	B.set_loc(A)
@@ -387,7 +386,7 @@ TYPEINFO(/datum/component/bug_capture)
 			if(can_jar(B))
 				B.set_loc(get_turf(A))
 		if(istype(user))
-			boutput(user, "<span class='alert'>The contents of the [A] take this moment to escape!</span>")
+			boutput(user, SPAN_ALERT("The contents of the [A] take this moment to escape!"))
 		firefly_count = 0
 	qdel(src)
 
@@ -437,13 +436,13 @@ TYPEINFO(/datum/component/bug_capture)
 				firefly_image_count = 3
 
 		var/image/bulb = image('icons/mob/insect.dmi', "jar_fire_[firefly_image_count]", pixel_y=pixel_y_offset)
-		bulb.appearance_flags = RESET_COLOR
+		bulb.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		bulb.color = rgb(light_color[1], light_color[2], light_color[3])
 		A.underlays = list(bulb)
 
 		var/image/bulb_light = A.SafeGetOverlayImage("bulb-light", 'icons/mob/insect.dmi', "jar_glow")
 		bulb_light.pixel_y = pixel_y_offset
-		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART
+		bulb_light.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 		bulb_light.layer = LIGHTING_LAYER_BASE
 		bulb_light.plane = PLANE_LIGHTING
 		bulb_light.blend_mode = BLEND_ADD

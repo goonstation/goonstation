@@ -13,7 +13,7 @@
 			var/datum/reagent/S = R.get_reagent("styptic_powder")
 			if (S)
 				holder.emote("scream")
-				boutput(holder, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
+				boutput(holder, SPAN_NOTICE("The styptic powder stings like hell as it closes some of your wounds."))
 				HealDamage(fract * S.volume * 2)
 			S = R.get_reagent("synthflesh")
 			if (S)

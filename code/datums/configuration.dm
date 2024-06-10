@@ -6,6 +6,7 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/server_region = null
+	var/server_on_hub = TRUE
 
 	var/server_specific_configs = 0		// load extra config files (by port)
 
@@ -29,6 +30,7 @@
 	var/log_telepathy = 0				// log telepathy events
 	var/log_debug = 0					// log debug events
 	var/log_vehicles = 0					//I feel like this is a better place for listing who entered what, than the admin log.
+	var/log_gamemode = 0				// log gamemode events
 
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_sounds = 1			// allows admin sound playing
@@ -43,10 +45,6 @@
 	var/allow_ai = 1					// allow ai job
 	var/respawn = 1
 
-	// Goonhub Parser
-	var/goonhub_parser_url = "localhost"
-	var/goonhub_parser_key = "foo"
-
 	// MySQL
 	var/sql_enabled = 0
 	var/sql_hostname = "localhost"
@@ -55,38 +53,28 @@
 	var/sql_password = null
 	var/sql_database = null
 
-	// Player notes
-	var/player_notes_baseurl = "https://playernotes.goonhub.com"
-	var/player_notes_auth = null
-
-	// Server list for cross-bans and other stuff
-	var/list/servers = list()
-	var/crossbans = 0
-	var/crossban_password = null
-
 	//IRC Bot stuff
 	var/irclog_url = null
 	var/ircbot_api = null
 	var/ircbot_ip = null
-	var/spacebee_api_url = "https://spacebee.goonhub.com"
-	var/spacebee_api_key = null
 
 	//External server configuration (for central bans etc)
-	var/goonhub_api_version = 0
+	var/goonhub_url = null
 	var/goonhub_api_endpoint = null
 	var/goonhub_api_ip = null
 	var/goonhub_api_token = null
-	var/goonhub_api_web_token = null
 
-	//Goonhub2 server
-	var/goonhub2_hostname = null
+	var/goonhub_events_endpoint = null
+	var/goonhub_events_port = null
+	var/goonhub_events_channel = null
+	var/goonhub_events_password = null
 
-	//youtube audio converter
-	var/youtube_audio_key = null
+	var/goonhub_auth_enabled = FALSE
 
 	//Environment
 	var/env = "dev"
 	var/cdn = ""
+	var/rsc = null
 	var/disableResourceCache = 0
 
 	//Map switching stuff
@@ -100,12 +88,16 @@
 	//Rotating full logs saved to disk
 	var/allowRotatingFullLogs = 0
 
-	//Are we limiting connected players to certain ckeys?
+	/// Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
+	var/baseWhitelistEnabled = 0 //! The config value of whitelistEnabled (actual value might be modified mid-round)
+	var/roundsLeftWithoutWhitelist = -1 //! How many rounds are left without the whitelist being enabled
 	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
+
+	var/already_loaded_once = FALSE
 
 /datum/configuration/New()
 	..()
@@ -141,7 +133,7 @@
 		if (!t)
 			continue
 
-		t = trim(t)
+		t = trimtext(t)
 		if (length(t) == 0)
 			continue
 		else if (copytext(t, 1, 2) == "#")
@@ -176,7 +168,6 @@
 			if ("log_game")
 				config.log_game = 1
 
-
 			if ("log_whisper")
 				config.log_whisper = 1
 
@@ -201,6 +192,9 @@
 			if ("log_vehicles")
 				config.log_vehicles = 1
 
+			if ("log_gamemode")
+				config.log_gamemode = 1
+
 			if ("allow_admin_jump")
 				config.allow_admin_jump = 1
 
@@ -223,7 +217,7 @@
 				config.server_key = text2num(value)
 
 			if ("serverid")
-				config.server_id = trim(value)
+				config.server_id = trimtext(value)
 
 			if ("servername")
 				config.server_name = value
@@ -233,6 +227,10 @@
 
 			if ("serverregion")
 				config.server_region = value
+
+			if ("server_on_hub")
+				config.server_on_hub = text2num(value)
+				world.visibility = config.server_on_hub
 
 			if ("medalhub")
 				config.medal_hub = value
@@ -271,78 +269,64 @@
 				config.sql_enabled = 1
 
 			if ("mysql_hostname")
-				config.sql_hostname = trim(value)
+				config.sql_hostname = trimtext(value)
 
 			if ("mysql_port")
 				config.sql_port = text2num(value)
 
 			if ("mysql_username")
-				config.sql_username = trim(value)
+				config.sql_username = trimtext(value)
 
 			if ("mysql_password")
-				config.sql_password = trim(value)
+				config.sql_password = trimtext(value)
 
 			if ("mysql_database")
-				config.sql_database = trim(value)
+				config.sql_database = trimtext(value)
 
 			if ("server_specific_configs")
 				config.server_specific_configs = 1
 
-			if ("servers")
-				for(var/sv in splittext(trim(value), " "))
-					sv = trim(sv)
-					if(sv)
-						config.servers.Add(sv)
-
-			if ("use_crossbans")
-				config.crossbans = 1
-			if ("crossban_password")
-				config.crossban_password = trim(value)
-
 			if ("irclog_url")
-				config.irclog_url = trim(value)
+				config.irclog_url = trimtext(value)
 			if ("ircbot_api")
-				config.ircbot_api = trim(value)
+				config.ircbot_api = trimtext(value)
 			if ("ircbot_ip")
-				config.ircbot_ip = trim(value)
-
-			if ("spacebee_api_url")
-				config.spacebee_api_url = trim(value)
-			if ("spacebee_api_key")
-				config.spacebee_api_key = trim(value)
-
-			if ("goonhub_parser_url")
-				config.goonhub_parser_url = trim(value)
-			if ("goonhub_parser_key")
-				config.goonhub_parser_key = trim(value)
+				config.ircbot_ip = trimtext(value)
 
 			if ("ticklag")
 				world.tick_lag = text2num(value)
 
-			if ("goonhub_api_version")
-				config.goonhub_api_version = text2num(value)
+			if ("goonhub_url")
+				config.goonhub_url = trimtext(value)
 			if ("goonhub_api_endpoint")
-				config.goonhub_api_endpoint = trim(value)
+				config.goonhub_api_endpoint = trimtext(value)
 			if ("goonhub_api_ip")
-				config.goonhub_api_ip = trim(value)
+				config.goonhub_api_ip = trimtext(value)
 			if ("goonhub_api_token")
-				config.goonhub_api_token = trim(value)
-			if ("goonhub_api_web_token")
-				config.goonhub_api_web_token = trim(value)
+				config.goonhub_api_token = trimtext(value)
 
-			if ("goonhub2_hostname")
-				config.goonhub2_hostname = trim(value)
+			if ("goonhub_events_endpoint")
+				config.goonhub_events_endpoint = trimtext(value)
+			if ("goonhub_events_port")
+				config.goonhub_events_port = trimtext(value)
+			if ("goonhub_events_channel")
+				config.goonhub_events_channel = trimtext(value)
+			if ("goonhub_events_password")
+				config.goonhub_events_password = trimtext(value)
 
-			if ("youtube_audio_key")
-				config.youtube_audio_key = trim(value)
+			if ("goonhub_auth_enabled")
+				config.goonhub_auth_enabled = TRUE
+
 			if ("update_check_enabled")
 				config.update_check_enabled = 1
 			if ("dmb_filename")
-				config.dmb_filename = trim(value)
+				config.dmb_filename = trimtext(value)
 			if ("env")
-				config.env = trim(value)
+				config.env = trimtext(value)
 			if ("cdn")
-				config.cdn = trim(value)
+				config.cdn = trimtext(value)
+			if ("rsc")
+				config.rsc = trimtext(value)
 			if ("disable_resource_cache")
 				config.disableResourceCache = 1
 
@@ -363,19 +347,14 @@
 				config.allowRotatingFullLogs = 1
 
 			if ("whitelist_enabled")
-				config.whitelistEnabled = 1
-
-			if ("player_notes_baseurl")
-				config.player_notes_baseurl = trim(value)
-
-			if ("player_notes_auth")
-				config.player_notes_auth = trim(value)
+				config.whitelistEnabled = TRUE
+				config.baseWhitelistEnabled = TRUE
 
 			if ("whitelist_path")
-				config.whitelist_path = trim(value)
+				config.whitelist_path = trimtext(value)
 
 			if ("server_buddy_id")
-				config.server_buddy_id = trim(value)
+				config.server_buddy_id = trimtext(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")
@@ -383,6 +362,18 @@
 	if (config.env == "dev")
 		config.cdn = ""
 		config.disableResourceCache = 1
+
+	if(!already_loaded_once)
+		roundsLeftWithoutWhitelist = world.load_intra_round_value("whitelist_disabled")
+		if(roundsLeftWithoutWhitelist >= 0)
+			roundsLeftWithoutWhitelist--
+			world.save_intra_round_value("whitelist_disabled", roundsLeftWithoutWhitelist)
+
+	if(roundsLeftWithoutWhitelist >= 0)
+		config.whitelistEnabled = FALSE
+
+	already_loaded_once = TRUE
+
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
@@ -395,13 +386,13 @@
 
 	return new /datum/game_mode/extended // Let's fall back to extended! Better than erroring and having to manually restart.
 
-/datum/configuration/proc/pick_random_mode()
+/datum/configuration/proc/pick_random_mode(list/exclusions = list())
 	var/total = 0
 	var/list/accum = list()
 	var/list/avail_modes = list()
 
 	for(var/M in src.modes)
-		if (src.probabilities[M] && getSpecialModeCase(M))
+		if (!exclusions.Find(M) && src.probabilities[M] && getSpecialModeCase(M))
 			total += src.probabilities[M]
 			avail_modes += M
 			accum[M] = total
@@ -415,27 +406,26 @@
 			break
 
 	if (!mode_name)
-		boutput(world, "Failed to pick a random game mode.")
+		boutput(world, "<h1 class='alert>Failed to pick a random game mode.</h1>")
 		return null // This essentially will never happen (you'd have to not be able to choose any mode in secret), so it's okay to leave it null, I think
 
 	//boutput(world, "Returning mode [mode_name]")
-	message_admins("[mode_name] was chosen as the random game mode!")
 
 	return src.pick_mode(mode_name)
 
 /datum/configuration/proc/get_used_mode_names()
-	var/list/names = list()
-
+	. = list()
 	for (var/M in src.modes)
 		if (src.probabilities[M] > 0)
-			names += src.mode_names[M]
-
-	return names
+			. += src.mode_names[M]
 
 //return 0 to block the mode from being chosen for whatever reason
 /datum/configuration/proc/getSpecialModeCase(mode)
 	switch (mode)
 		if ("blob")
+			if (map_setting == "NADIR")
+				return 0
+
 			if (src.blob_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)
@@ -475,6 +465,6 @@ var/list/server_authorized = null
 	if(!server_authorized)
 		if(!fexists( "../authorized_keys.txt" )) return 1// oh no!
 		server_authorized = splittext( file2text("../authorized_keys.txt"), ";" )
-	if(server_authorized.len == 0) return 1//TODO: Remove this?
+	if(length(server_authorized) == 0) return 1//TODO: Remove this?
 	if(server_authorized.Find( ckey )) return 1
 	return 0

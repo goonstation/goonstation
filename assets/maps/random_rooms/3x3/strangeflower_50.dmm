@@ -1,0 +1,103 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/device/light/spirit_candle{
+	pixel_y = 8;
+	icon_state = "melted-unlit"
+	},
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/space)
+"f" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/writing{
+	icon_state = "writing4";
+	pixel_y = -2;
+	pixel_x = 12;
+	name = "blood writing";
+	words = "Nothing left";
+	color = "#8b0000";
+	sample_reagent = "blood"
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 5
+	},
+/area/space)
+"k" = (
+/obj/candle_light{
+	pixel_y = 7;
+	pixel_x = 7
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/space)
+"n" = (
+/obj/candle_light{
+	pixel_y = 7
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/space)
+"D" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
+/area/space)
+"G" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/grasstodirt,
+/area/space)
+"K" = (
+/obj/decal/alienflower{
+	dir = 6
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/grass,
+/area/space)
+"U" = (
+/obj/candle_light{
+	pixel_x = 11
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grasstodirt{
+	dir = 6
+	},
+/area/space)
+"V" = (
+/obj/candle_light{
+	pixel_x = -7
+	},
+/obj/decal/cleanable/blood/drip,
+/turf/simulated/floor/grasstodirt{
+	dir = 10
+	},
+/area/space)
+
+(1,1,1) = {"
+U
+n
+f
+"}
+(2,1,1) = {"
+G
+K
+a
+"}
+(3,1,1) = {"
+V
+k
+D
+"}

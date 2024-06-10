@@ -1,14 +1,13 @@
 /datum/bioEffect/mutantrace
 	name = "Saurian Genetics"
-	desc = "Enables vestigal non-mammal traits in the subject's body."
+	desc = "Enables vestigial non-mammal traits in the subject's body."
 	id = "lizard"
 	mutantrace_option = "Lizard"
 	effectType = EFFECT_TYPE_MUTANTRACE
-	effect_group = "mutantrace"
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	var/mutantrace_path = /datum/mutantrace/lizard
 	lockProb = 33
 	lockedGaps = 1
@@ -22,21 +21,19 @@
 		..() // caaaaaaall yooooooour paaaareeeeents
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			if (!istype(H.mutantrace, src.mutantrace_path))
+				H.set_mutantrace(src.mutantrace_path)
 			for (var/ID in H.bioHolder.effects)
 				// clear away any existing mutantraces first
 				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/mutantrace) && ID != src.id)
 					H.bioHolder.RemoveEffect(ID)
-			if (!istype(H.mutantrace, src.mutantrace_path))
-				H.set_mutantrace(src.mutantrace_path)
-		return
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace,src.mutantrace_path))
+			if (istype(H.mutantrace,src.mutantrace_path) && !ispath(H.default_mutantrace, src.mutantrace_path))
 				H.set_mutantrace(null)
-		return
 
 	OnLife()
 		if(..()) return
@@ -44,7 +41,6 @@
 			var/mob/living/carbon/human/H = owner
 			if (!istype(H.mutantrace, src.mutantrace_path))
 				holder.RemoveEffect(id)
-		return
 
 /datum/bioEffect/mutantrace/flashy
 	name = "Bioluminescent Overdrive"
@@ -69,7 +65,7 @@
 
 /datum/bioEffect/mutantrace/ithillid
 	name = "Aquatic Genetics"
-	desc = "Re-enables ancient vestigal genes in the subject's body."
+	desc = "Re-enables ancient vestigial genes in the subject's body."
 	id = "ithillid"
 	mutantrace_option = "Squid"
 	mutantrace_path = /datum/mutantrace/ithillid
@@ -79,7 +75,7 @@
 
 /datum/bioEffect/mutantrace/roach
 	name = "Blattodean Genetics"
-	desc = "Re-enables ancient vestigal genes in the subject's body."
+	desc = "Re-enables ancient vestigial genes in the subject's body."
 	id = "roach"
 	mutantrace_option = "Roach"
 	mutantrace_path = /datum/mutantrace/roach
@@ -87,9 +83,20 @@
 	msgLose = "You shed your roachy skin!"
 	icon_state  = "roach"
 
+/datum/bioEffect/mutantrace/human
+	name = "Less Primal Genetics"
+	desc = "Makes one into a boring-old human being."
+	id = "human"
+	mutantrace_option = "Human"
+	mutantrace_path = /datum/mutantrace/human
+	research_level = EFFECT_RESEARCH_ACTIVATED
+	msgGain = "" //BOOOOORING
+	msgLose = ""
+	icon_state  = "blank"
+
 /datum/bioEffect/mutantrace/monkey
 	name = "Primal Genetics"
-	desc = "Enables and exaggerates vestigal ape traits."
+	desc = "Enables and exaggerates vestigial ape traits."
 	id = "monkey"
 	mutantrace_option = "Monkey"
 	mutantrace_path = /datum/mutantrace/monkey
@@ -100,7 +107,7 @@
 
 /datum/bioEffect/mutantrace/seamonkey
 	name = "Aquatic Primal Genetics"
-	desc = "Enables and exaggerates vestigal aquatic ape traits."
+	desc = "Enables and exaggerates vestigial aquatic ape traits."
 	id = "seamonkey"
 	mutantrace_option = "Seamonkey"
 	mutantrace_path = /datum/mutantrace/monkey/seamonkey
@@ -139,6 +146,14 @@
 	msgLose = "Your fur falls out."
 	icon_state  = "cat"
 
+/datum/bioEffect/mutantrace/cat/bingus
+	name = "Bingus Genetics"
+	id = "bingus"
+	mutantrace_option = "Bingus"
+	mutantrace_path = /datum/mutantrace/cat/bingus
+	msgGain = "You feel like wearing jeans."
+	msgLose = "Your love of jeans fades."
+	icon_state = null
 
 /datum/bioEffect/mutantrace/cow
 	name = "Bovine Genetics"

@@ -3,15 +3,13 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "40mmgatling"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 3
+	damage = 3
 //How much ammo this costs
 	cost = 1
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 1
 //name of the projectile setting, used when you change a guns setting
 	sname = "40mm"
 //file location for the sound you want it to play
@@ -38,7 +36,7 @@ toxic - poisons
 	color_red = 0.8
 	color_green = 0
 	color_blue = 0
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 
 
 //Any special things when it hits shit?
@@ -52,7 +50,7 @@ toxic - poisons
 	name = "sparks"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		src.pixel_x = rand(-8,8)

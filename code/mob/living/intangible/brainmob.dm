@@ -2,7 +2,7 @@
 	//Sort of like a holder mob for brain-triggered assemblies
 	name = "brain thing"
 	real_name = "brain thing"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "cool_brain"
 	canmove = 0
 	nodamage = 1
@@ -11,7 +11,7 @@
 
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -31,7 +31,7 @@
 			return
 		var/message_mode = ""
 		var/prefix = copytext(message, 1, 2)
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		switch(prefix)
 			if("*")
 				return src.emote(copytext(message, 2), 1)
@@ -59,11 +59,6 @@
 
 		return "warbles, \"[text]\"";
 
-
-
-	emote()
-		return
-
 	proc/display_message(var/message, var/quiet = 0, var/emote = 0)
 		//This will make sure the surroundings can hear what the brain thing has to say
 		var/message_range = quiet ? 1 : 7
@@ -75,7 +70,7 @@
 		if(quiet)
 			message = "<I>[message]</I>"
 
-		var/rendered = "<span class='game say'>[src.get_heard_name()] <span class='message'>[say_quote(message)]</span></span>"
+		var/rendered = SPAN_SAY("[src.get_heard_name()] [SPAN_MESSAGE("[say_quote(message)]")]")
 
 		for(var/mob/M in listening)
 			M.heard_say(src)
@@ -104,7 +99,7 @@
 								M.show_message(thisR, 2)
 						else
 							if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-								M.show_message("<span class='bold'>[thisR]</span>", 2) //awwwww yeeeeeah lookat dat bold
+								M.show_message(SPAN_BOLD("[thisR]"), 2) //awwwww yeeeeeah lookat dat bold
 							else
 								M.show_message(thisR, 2)
 					else
@@ -116,7 +111,7 @@
 	ghostize()
 		var/mob/dead/observer/O = ..()
 		if(O)
-			O.icon = 'icons/obj/surgery.dmi'
+			O.icon = 'icons/obj/items/organs/brain.dmi'
 			O.icon_state = "cool_brain"
 			O.alpha = 155
 

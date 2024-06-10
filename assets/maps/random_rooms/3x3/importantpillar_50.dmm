@@ -1,0 +1,145 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "2-6"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/item/device/light/glowstick/red,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "1-9"
+	},
+/obj/item/device/light/glowstick/red,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/cable{
+	icon_state = "1-5"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/item/device/light/glowstick/red,
+/obj/item/paper/thermal/portable_printer{
+	pixel_y = 6;
+	pixel_x = 7;
+	name = "certificate of purchase";
+	info = "Thank you for your purchase of #ONE# Super Support Structure, which will boost your structural integrity by upwards of 500%!"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/obj/decal/cleanable/writing/infrared{
+	pixel_y = 30;
+	words = "Cannot believe I scammed NT into paying me 5k to build this.";
+	name = "Faint Scrawlings"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/cable{
+	icon_state = "2-10"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/item/device/light/glowstick/red,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/cable{
+	icon_state = "4-10"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/creepy_sound_trigger,
+/obj/decal/cleanable/rust,
+/obj/cable{
+	icon_state = "8-10"
+	},
+/obj/cable{
+	icon_state = "8-9"
+	},
+/obj/cable{
+	icon_state = "4-5"
+	},
+/obj/cable{
+	icon_state = "4-6"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/jen/red{
+	name = "super important structural support beam";
+	desc = "An incredibly important structural component that should definitly not be removed or damaged in any way."
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+a
+D
+m
+"}
+(2,1,1) = {"
+K
+L
+s
+"}
+(3,1,1) = {"
+B
+k
+c
+"}

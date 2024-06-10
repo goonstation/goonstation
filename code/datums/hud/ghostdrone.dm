@@ -136,10 +136,10 @@
 				return
 			var/content_id = items_screen + i - 1
 			if (content_id > master.tools.len || content_id < 1)
-				boutput(usr, "<span class='alert'>An error occurred. Please notify Marquesas immediately. (Content ID: [content_id].)</span>")
+				boutput(usr, SPAN_ALERT("An error occurred. Please notify Marquesas immediately. (Content ID: [content_id].)"))
 
 			if (master.active_tool && istype(master.active_tool, /obj/item/magtractor) && master.active_tool:holding)
-				actions.stopId("magpickerhold", master)
+				actions.stopId(/datum/action/magPickerHold, master)
 			var/obj/item/O = master.tools[content_id]
 			master.active_tool = O
 			O.set_loc(master)
@@ -254,11 +254,11 @@
 			if ("face")
 				master.setFaceDialog()
 			if ("charge")
-				out(master, "<span class='notice'>Your charge is: [master.cell.charge]/[master.cell.maxcharge]</span>")
+				boutput(master, SPAN_NOTICE("Your charge is: [master.cell.charge]/[master.cell.maxcharge]"))
 			if ("health")
-				out(master, "<span class='notice'>Your health is: [master.health / master.max_health * 100]%</span>")
+				boutput(master, SPAN_NOTICE("Your health is: [master.health / master.max_health * 100]%"))
 			if ("oxy", "temp")
-				out(master, scan_atmospheric(get_turf(master)))
+				boutput(master, scan_atmospheric(get_turf(master)))
 			else
 				//Handle box BG clicks
 				if (length(id) >= 10)
@@ -347,7 +347,7 @@
 						maptextc = "#9cbcff"
 
 				temp.maptext_y = 19
-				temp.maptext = "<span style='text-align: center; font-family: \"Small Fonts\"; font-size: 7px; font-weight: bold; -dm-text-outline: 1px black; color: [maptextc];'>[environment.temperature >= (1000 + T0C) ? "ERR" : "[round(environment.temperature - T0C)]'"]</span>"
+				temp.maptext = "<span style='text-align: center; font-family: \"Small Fonts\"; font-size: 7px; font-weight: bold; -dm-text-outline: 1px black; color: [maptextc];'>[environment.temperature >= (1000 + T0C) ? "ERR" : "[round(TO_CELSIUS(environment.temperature))]'"]</span>"
 
 		update_ability_hotbar()
 			if (!master.client)
@@ -355,8 +355,6 @@
 			if(isdead(master))
 				return
 
-			for(var/atom/movable/screen/ability/topBar/genetics/G in master.client.screen)
-				master.client.screen -= G
 			for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 				master.client.screen -= PO
 			for(var/obj/ability_button/B in master.client.screen)

@@ -30,12 +30,6 @@
 #define STAMINA_FLIP_COST 25
 /// Base chance of landing a critical hit to stamina.
 #define STAMINA_CRIT_CHANCE 25
-/// Divide stamina by how much on a crit
-#define STAMINA_CRIT_DIVISOR 2
-/// Chance to block an attack in disarm mode. Settings this to 0 effectively disables the blocking system.
-#define STAMINA_BLOCK_CHANCE 40
-/// Chance to block grabs.
-#define STAMINA_GRAB_BLOCK_CHANCE 85
 /// Chance to resist out of passive grabs.
 #define STAMINA_P_GRAB_RESIST_CHANCE 100
 /// Chance to resist out of a strong grab (i.e. werewolves)
@@ -60,6 +54,8 @@
 #define SUSTAINED_RUN_GRACE 0.5 SECONDS
 /// how many tiles to start sustained run
 #define SUSTAINED_RUN_REQ 8
+/// how much additional stamina damage on crit
+#define STAMINA_CRIT_DAMAGE 40
 
 //This is a bad solution. Optimally this should scale.
 /// Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
@@ -85,6 +81,12 @@
 #define STAMINA_EXHAUSTED_STR "<p style=\"color:red;font-weight:bold;\">You are too exhausted to attack.</p>"
 
 /// How much farting costs. I am not even kidding.
-#define STAMINA_DEFAULT_FART_COST 0
+#define STAMINA_DEFAULT_FART_COST 1
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+//disorient target defines
+#define DISORIENT_NONE 0
+#define DISORIENT_BODY 1
+#define DISORIENT_EYE 2
+#define DISORIENT_EAR 4

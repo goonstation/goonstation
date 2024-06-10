@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
+	mats = 12
+
 /obj/machinery/portable_atmospherics/scrubber
 	name = "Portable Air Scrubber"
 
@@ -7,7 +10,6 @@
 
 	var/on = FALSE
 	var/inlet_flow = 100 // percentage
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	volume = 750
 	desc = "A device which filters out harmful air from an area."
@@ -17,6 +19,13 @@
 	//for smoke
 	var/drain_min = 5
 	var/drain_max = 12
+	///Temporary reagent buffer, reagents are stored in src.reagents
+	var/obj/item/reagent_containers/glass/buffer = null
+
+	New()
+		..()
+		src.buffer = new(src, 500)
+		src.create_reagents(500)
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	if(on)
@@ -40,13 +49,6 @@
 		filtered_out.oxygen = 0
 		removed.nitrogen = filtered_out.nitrogen
 		filtered_out.nitrogen = 0
-
-		if(length(removed.trace_gases))
-			var/datum/gas/filtered_gas
-			for(var/datum/gas/trace_gas as anything in removed.trace_gases)
-				filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
-				filtered_gas.moles = trace_gas.moles
-				removed.remove_trace_gas(trace_gas)
 
 		//Remix the resulting gases
 		air_contents.merge(filtered_out)
@@ -73,21 +75,24 @@
 			src.on = FALSE
 			src.updateDialog()
 			src.UpdateIcon()
-			src.visible_message("<span class='alert'>[src] shuts down due to lack of APC power.</span>")
+			src.visible_message(SPAN_ALERT("[src] shuts down due to lack of APC power."))
 		return
 
 	if(on)
-		var/power_usage = src.inlet_flow * 50 WATTS
+		var/active_power_usage = src.inlet_flow * 50 WATTS
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
-			var/obj/fluid/F = my_turf.active_airborne_liquid
+			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
-				power_usage += (inlet_flow / 8) * 5 KILO WATTS
-				F.group.queued_drains += inlet_flow / 8
-				F.group.last_drain = my_turf
-				if (!F.group.draining)
-					F.group.add_drain_process()
+				F.group.drain(F, inlet_flow / 8, src.buffer)
+				active_power_usage += src.buffer.reagents.total_volume * 5 KILO WATTS
+				// src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
+				if (src.reagents.total_volume < src.reagents.maximum_volume)
+					src.buffer.transfer_all_reagents(src)
+				else
+					src.buffer.reagents.reaction(get_turf(src), TOUCH, src.buffer.reagents.total_volume)
+				src.buffer.reagents.clear_reagents()
 
 		var/original_my_moles = TOTAL_MOLES(src.air_contents)
 		if(src.holding)
@@ -97,8 +102,8 @@
 				if(issimulatedturf(T) && isfloor(T))
 					src.scrub_turf(T, T == src.loc ? src.inlet_flow : src.inlet_flow / 2)
 		var/filtered_out_moles = TOTAL_MOLES(src.air_contents) - original_my_moles
-		power_usage += filtered_out_moles * 700 WATTS
-		A.use_power(power_usage, ENVIRON)
+		active_power_usage += filtered_out_moles * 700 WATTS
+		A.use_power(active_power_usage, ENVIRON)
 		src.updateDialog()
 	src.UpdateIcon()
 
@@ -108,23 +113,23 @@
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
+		else if (src.anchored) boutput(user, SPAN_ALERT("\The [src] is attached!"))
 		else
-			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(user)
 	else if(iswrenchingtool(W))
 		if(!connected_port)//checks for whether the scrubber is connected to a port, if it is calls parent.
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector) in loc
 			if(!possible_port)//checks for whether there's something that could be connected to on the scrubber's loc, if there is it calls parent.
 				if(src.anchored)
-					src.anchored = 0
-					boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
+					src.anchored = UNANCHORED
+					boutput(user, SPAN_NOTICE("You unanchor [name] from the floor."))
 				else
-					src.anchored = 1
-					boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
+					src.anchored = ANCHORED
+					boutput(user, SPAN_NOTICE("You anchor [name] to the floor."))
 			else ..()
 		else ..()
 	else ..()
@@ -136,6 +141,8 @@
 	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
+	if (src.holding)
+		SEND_SIGNAL(src.holding.reagents, COMSIG_REAGENTS_ANALYZED, user)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "PortableScrubber", name)
@@ -149,11 +156,8 @@
 		"inletFlow" = src.inlet_flow
 	)
 
-	.["holding"] = isnull(holding) ? null : list(
-		"name" = src.holding.name,
-		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-	)
+	.["holding"] = src.holding?.ui_describe()
+	.["reagent_container"] = ui_describe_reagents(src)
 
 /obj/machinery/portable_atmospherics/scrubber/ui_static_data(mob/user)
 	. = list(

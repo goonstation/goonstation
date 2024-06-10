@@ -19,6 +19,7 @@ CONTENTS:
 	sound_group = "void"
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/void
 
 /area/crunch/New()
 	. = ..()
@@ -38,13 +39,21 @@ CONTENTS:
 		for(var/mob/living/carbon/human/H in src)
 			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
+/area/crunch/artifact_boh_pocket_dimension
+	name = "unknown dimension"
+	ambient_light = null
+	area_parallax_render_source_group = null
+	teleport_blocked = 2
+
+TYPEINFO(/turf/unsimulated/wall/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
-	mat_appearances_to_ignore = list("steel")
+	plane = PLANE_SPACE
 #ifdef IN_MAP_EDITOR
 	icon_state = "darkvoid-map" //so we can actually the walls from the floor
 #else
@@ -54,16 +63,22 @@ CONTENTS:
 /turf/unsimulated/wall/void/crunch //putting these here for now
 	fullbright = 0
 
+TYPEINFO(/turf/unsimulated/floor/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
-	mat_appearances_to_ignore = list("steel")
+	plane = PLANE_SPACE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
 
+TYPEINFO(/turf/simulated/wall/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
@@ -71,7 +86,7 @@ CONTENTS:
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
-	mat_appearances_to_ignore = list("steel")
+	plane = PLANE_SPACE
 
 	ex_act()
 		return
@@ -89,14 +104,18 @@ CONTENTS:
 		return
 
 
+TYPEINFO(/turf/simulated/floor/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
+	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("steel")
+	can_burn = FALSE
+	can_break = FALSE
 
 	ex_act()
 		return
@@ -121,7 +140,7 @@ CONTENTS:
 	name = "complicated contraption"
 	desc = "A big machine with lots of buttons and dials on it. Looks kinda dangerous."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/obj/machines/mindswap.dmi'
 	icon_state = "mindswap"
@@ -318,7 +337,7 @@ CONTENTS:
 		if(activating) return
 		activating = 1
 		src.updateUsrDialog()
-		playsound(src.loc, "sound/machines/computerboot_pc_start.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_start.ogg', 50, 0)
 
 		sleep(boot_duration / 2)
 		activating = 2
@@ -344,12 +363,12 @@ CONTENTS:
 
 	proc/make_some_noise()
 		do
-			playsound(src.loc, "sound/machines/computerboot_pc_loop.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/computerboot_pc_loop.ogg', 50, 0)
 			sleep(loop_duration)
 		while(active && !activating && remain_active-- > 0) //So it will shut itself down after a while
 
 		if(remain_active <= 0)
-			src.visible_message("<span class='alert'>You hear a quiet click as \the [src] deactivates itself.</span>")
+			src.visible_message(SPAN_ALERT("You hear a quiet click as \the [src] deactivates itself."))
 			deactivate()
 
 
@@ -357,7 +376,7 @@ CONTENTS:
 	proc/deactivate()
 		if(!active || activating || operating) return
 		activating = 1
-		playsound(src.loc, "sound/machines/computerboot_pc_end.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_end.ogg', 50, 0)
 		sleep(2 SECONDS)
 		activating = 0
 		active = 0
@@ -377,23 +396,22 @@ CONTENTS:
 	proc/can_operate()
 		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
 
-	proc/valid_mindswap(mob/M)
-		. = 0
-		if(isliving(M))
-			. = 1
+	proc/valid_mindswap(mob/living/L)
+		. = 1
+		if(!istype(L))
+			return
 
-		if(issilicon(M))
-			. = 0
-
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
 			if(H.on_chair)
 				. = 0
-		if(istype(M, /mob/living/critter))
-			var/mob/living/critter/C = M
+
+		if(istype(L, /mob/living/critter))
+			var/mob/living/critter/C = L
 			if(C.dormant || C.ghost_spawned)
 				. = 0
-		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+
+		if(!L.void_mindswappable)
 			. = 0
 
 	proc/do_swap()
@@ -424,12 +442,12 @@ CONTENTS:
 				playsound(src.loc, 'sound/machines/modem.ogg', 75, 1)
 
 				A.emote("scream")
-				A.changeStatus("weakened", 5 SECONDS)
+				A.changeStatus("knockdown", 5 SECONDS)
 				A.show_text("<B>IT HURTS!</B>", "red")
 				A.shock(src, 75000, ignore_gloves=1)
 
 				B.emote("scream")
-				B.changeStatus("weakened", 5 SECONDS)
+				B.changeStatus("knockdown", 5 SECONDS)
 				B.show_text("<B>IT HURTS!</B>", "red")
 				B.shock(src, 75000, ignore_gloves=1)
 				SPAWN(5 SECONDS)
@@ -443,11 +461,11 @@ CONTENTS:
 				playsound(src.loc,'sound/effects/elec_bzzz.ogg', 60, 1)
 				if(A && B && can_operate()) //We're all here, still
 					A.emote("faint")
-					A.changeStatus("paralysis", 25 SECONDS)
+					A.changeStatus("unconscious", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					B.emote("faint")
-					B.changeStatus("paralysis", 25 SECONDS)
+					B.changeStatus("unconscious", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					if(A.mind)
@@ -485,14 +503,14 @@ CONTENTS:
 
 			if(success)
 				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50,1)
-				src.visible_message("<span class='alert'>\The [src] emits a loud crackling sound and the smell of ozone fills the air!</span>")
+				src.visible_message(SPAN_ALERT("\The [src] emits a loud crackling sound and the smell of ozone fills the air!"))
 				loop_duration = 7 //Something is amiss oh no!
 				remain_active = min(remain_active, 100)
 				remain_active_max = 100
 				used = 1
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50,1)
-				src.visible_message("<span class='alert'>\The [src] emits a whirring and clicking noise followed by an angry beep!</span>")
+				src.visible_message(SPAN_ALERT("\The [src] emits a whirring and clicking noise followed by an angry beep!"))
 
 		SPAWN(5 SECONDS)
 			operating = 0

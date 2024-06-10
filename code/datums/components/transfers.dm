@@ -8,12 +8,13 @@
 	var/atom/output_target
 
 /datum/component/transfer_output/Initialize()
+	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/transfer_output/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, .proc/handle_drop)
-	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, .proc/handle_outgoing)
+	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, PROC_REF(handle_drop))
+	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, PROC_REF(handle_outgoing))
 
 /datum/component/transfer_output/proc/handle_outgoing(comsig_target, obj/item/outgoing)
 	if(!output_target)
@@ -34,7 +35,7 @@
 		return
 
 	if(over_object == parent)
-		boutput(dropper, "<span class='notice'>You reset the output location of [parent]!</span>")
+		boutput(dropper, SPAN_NOTICE("You reset the output location of [parent]!"))
 		src.output_target = null
 		return
 
@@ -42,15 +43,15 @@
 		return
 
 	if(!in_interact_range(over_object, parent))
-		boutput(dropper, "<span class='alert'>[over_object] is too far away!</span>")
+		boutput(dropper, SPAN_ALERT("[over_object] is too far away!"))
 		return
 
 	if (isturf(over_object) || SEND_SIGNAL(over_object, COMSIG_TRANSFER_CAN_LINK, parent))
-		boutput(dropper, "<span class='notice'>You set [parent] to output to [over_object].</span>")
+		boutput(dropper, SPAN_NOTICE("You set [parent] to output to [over_object]."))
 		output_target = over_object
 		return TRUE
 	else
-		boutput(dropper, "<span class='alert'>\The [over_object] cannot be used as an output for [parent].</span>")
+		boutput(dropper, SPAN_ALERT("\The [over_object] cannot be used as an output for [parent]."))
 
 
 /// Provides many common item input features.
@@ -68,6 +69,7 @@
 #define DEFAULT_TRANSFER_FILTER list(/obj/item/)
 
 /datum/component/transfer_input/Initialize(list/filter=null, transfer_proc=null, filter_proc=null, filter_link_proc=null)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.filter = filter || DEFAULT_TRANSFER_FILTER
@@ -78,9 +80,9 @@
 #undef DEFAULT_TRANSFER_FILTER
 
 /datum/component/transfer_input/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, .proc/handle_incoming)
-	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, .proc/handle_incoming_link)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/handle_attackby)
+	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, PROC_REF(handle_incoming))
+	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, PROC_REF(handle_incoming_link))
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(handle_attackby))
 
 /datum/component/transfer_input/proc/handle_incoming_link(comsig_target, obj/other)
 	return !filter_link_proc || call(parent, filter_link_proc)(other)
@@ -127,7 +129,7 @@
 		if (M.holding)
 			incoming = M.holding
 
-	if (istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
+	if (incoming.storage || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
 		var/action
 		if(is_permitted(incoming))
 			if(length(incoming.contents))
@@ -141,29 +143,32 @@
 			return
 
 		if (!in_interact_range(parent, attacker))
-			boutput(attacker, "<span class='alert'>You need to be closer to [parent] to do that.</span>")
+			boutput(attacker, SPAN_ALERT("You need to be closer to [parent] to do that."))
 			return
 
 		if (action == CONTAINER_CHOICE_DUMP)
-			if (!length(incoming.contents)) // We check here too in case it changed between asking and them responding
-				boutput(attacker, "<span class='alert'>There is nothing in [incoming]!</span>")
+			if (!length(incoming.contents)) // in case it changed between asking and them responding
+				boutput(attacker, SPAN_ALERT("There is nothing in [incoming]!"))
 				return
 			if (istype(incoming, /obj/item/ore_scoop))
 				var/obj/item/ore_scoop/scoop = incoming
 				incoming = scoop.satchel
 			var/transfers = 0
-			for(var/obj/item/I in incoming)
+			for(var/obj/item/I in (incoming.storage?.get_contents() || incoming))
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
 				transfers++
 			incoming.UpdateIcon()
+			if (istype(incoming, /obj/item/satchel))
+				var/obj/item/satchel/changed_satchel = incoming
+				changed_satchel.tooltip_rebuild = 1
 			if (transfers)
-				attacker.visible_message("<span class='notice'>[attacker] dumps [transfers] items out of [incoming] into [parent].</span>")
+				attacker.visible_message(SPAN_NOTICE("[attacker] dumps [transfers] items out of [incoming] into [parent]."))
 			else
-				boutput(attacker, "<span class='alert'>[parent] didn't find anything it wants in [incoming]!</span>")
+				boutput(attacker, SPAN_ALERT("[parent] didn't find anything it wants in [incoming]!"))
 			return TRUE
 
 	if (SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, incoming))
-		attacker.visible_message("<span class='notice'>[attacker] places [incoming] into [parent]</span>")
+		attacker.visible_message(SPAN_NOTICE("[attacker] places [incoming] into [parent]"))
 		if(isitem(incoming))
 			var/obj/item/I = incoming
 			attacker.u_equip(incoming)
@@ -178,7 +183,7 @@
 
 /datum/component/transfer_input/quickloading/RegisterWithParent()
 	..()
-	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP_T, .proc/handle_drop_t)
+	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP_T, PROC_REF(handle_drop_t))
 
 /datum/component/transfer_input/quickloading/proc/handle_drop_t(comsig_target, atom/dropped, mob/user)
 	if(cant_do_shit(user))
@@ -188,18 +193,18 @@
 		return
 
 	if(!in_interact_range(dropped, parent))
-		boutput(user, "<span class='alert'>[dropped] is too far away!</span>")
+		boutput(user, SPAN_ALERT("[dropped] is too far away!"))
 		return
 
 	if (istype(dropped, /obj/storage/crate) || istype(dropped, /obj/storage/cart/))
 		var/obj/storage/S = dropped
 		if (S.welded || S.locked)
-			boutput(user, "<span class='alert'>You have to be able to open [dropped] to quick-load from it!")
+			boutput(user, SPAN_ALERT("You have to be able to open [dropped] to quick-load from it!"))
 			return
 
 		for(var/obj/item/AM in S.contents)
 			SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, AM)
-		user.visible_message("<span class='notice'>[user] quick-loads [S] into [parent]</span>")
+		user.visible_message(SPAN_NOTICE("[user] quick-loads [S] into [parent]"))
 	else if (isitem(dropped))
 		var/obj/item/I = dropped
 		if(SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I))
@@ -208,7 +213,6 @@
 
 /datum/action/bar/quickload
 	duration = 0.1 SECONDS
-	id = "quickloading"
 	/// The target of transfers during quickloading
 	var/atom/target
 	/// The type of the item we are stuffing into the target.
@@ -222,7 +226,7 @@
 	onStart()
 		. = ..()
 		loopStart()
-		owner.visible_message("<span class='notice'>[owner] begins quickly stuffing things into [target]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins quickly stuffing things into [target]!"))
 
 	onUpdate()
 		. = ..()
@@ -247,7 +251,7 @@
 			if (M.type != load_type)
 				continue
 			if(SEND_SIGNAL(target, COMSIG_TRANSFER_INCOMING, M))
-				playsound(target, "sound/items/Deconstruct.ogg", 40, 1)
+				playsound(target, 'sound/items/Deconstruct.ogg', 40, TRUE)
 				onRestart()
 				return
 

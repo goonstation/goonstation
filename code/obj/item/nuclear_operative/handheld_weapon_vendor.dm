@@ -72,14 +72,14 @@
 	proc/accepted_token(token, mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
-		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
+		boutput(user, SPAN_NOTICE("You insert the requisition token into [src]."))
 		if(log_purchase)
-			logTheThing(LOG_DEBUG, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
 
 	proc/vended(atom/A)
 		if(log_purchase)
-			logTheThing(LOG_DEBUG, usr, "bought [A] from [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_STATION, usr, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
 
 /obj/item/device/weapon_vendor/syndicate
@@ -114,7 +114,7 @@
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
-		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/saxitoxin_grenade
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac

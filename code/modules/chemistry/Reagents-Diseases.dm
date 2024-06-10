@@ -90,6 +90,28 @@ datum
 			transparency = 235
 			disease = /datum/ailment/disease/cold
 
+
+		disease/lungrot
+			name = "lungrot bloom"
+			id = "lungrot_bloom"
+			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
+			reagent_state = SOLID
+			minimum_to_infect = 7.5
+			fluid_r = 43
+			fluid_b = 54
+			fluid_g = 25
+			transparency = 166
+			disease = /datum/ailment/disease/lungrot
+
+			on_mob_life(var/mob/affected_mob, var/mult = 1)
+				if(!affected_mob)
+					affected_mob = holder.my_atom
+				//let's not make the lungrot reaction effectively double the depletion rate of miasma
+				affected_mob.reagents.add_reagent("miasma", mult * depletion_rate)
+				..()
+
+
+
 		disease/stringy_gibbis // Fake GBS
 			name = "stringy gibbis"
 			id = "stringy gibbis"
@@ -317,6 +339,22 @@ datum
 			penetrates_skin = 1
 			disease = /datum/ailment/disease/tissue_necrosis
 
+		disease/rat_plague // Rat Plague
+			name = "rat spit"
+			id = "rat_spit"
+			description = "The spit of a disease rat. Contains a whole bunch of known and unknown disease."
+			reagent_state = LIQUID
+			depletion_rate = 0.4
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/rat_plague
+
+			on_mob_life(mob/M, mult)
+				M.take_toxin_damage(1.5 * mult)
+				. = ..()
+
 		disease/plague // Space Plague
 			name = "rat venom"
 			id = "rat_venom"
@@ -326,6 +364,7 @@ datum
 			fluid_g = 40
 			fluid_b = 40
 			transparency = 50
+			random_chem_blacklisted = TRUE
 			disease = /datum/ailment/disease/space_plague
 
 		disease/loose_screws // Space Madness
@@ -517,10 +556,10 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(prob(100-H.get_disease_protection()))
 							if(H.infected(P))
-								H.show_message("<span class='alert'>Ew, some of that disgusting green stuff touched you!</span>")
+								H.show_message(SPAN_ALERT("Ew, some of that disgusting green stuff touched you!"))
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				return
 
 		antiviral

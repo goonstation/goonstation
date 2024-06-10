@@ -1,4 +1,5 @@
 #define DC_ALL "Disconnect All"
+#define LIST_CONNECTIONS "List Connections"
 #define CONNECT_COMP "Connect Component"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
@@ -8,6 +9,8 @@
 #define _MECHCOMP_VALIDATE_RESPONSE_BAD 1
 #define _MECHCOMP_VALIDATE_RESPONSE_HALT 2
 #define _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER 3
+
+#define MAX_OUTGOING_PER_TICK 25
 
 /datum/mechanicsMessage
 	var/signal = "1"
@@ -79,35 +82,42 @@
 
 	var/defaultSignal = "1"
 
+	var/activation_count = 0
+	var/current_tick = 0
+
 TYPEINFO(/datum/component/mechanics_holder)
 	initialization_args = list()
 
 /datum/component/mechanics_holder/Initialize()
+	// associative list of atoms to the input they're registered to
+	// list[atom] = "name of input"
 	src.connected_outgoing = list()
+	// simple list of atoms that are connected (no inputs)
+	// list[] = [atom, atom, ...]
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
 
-	src.configs.Add(list(DC_ALL, CONNECT_COMP))
+	src.configs.Add(list(DC_ALL, CONNECT_COMP, LIST_CONNECTIONS))
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_INPUT), .proc/addInput)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RECEIVE_MSG), .proc/fireInput)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_SIGNAL), .proc/fireOutSignal)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_MSG), .proc/fireOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG), .proc/fireDefault) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_INCOMING), .proc/removeIncoming)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_RM_OUTGOING), .proc/removeOutgoing)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_RM_ALL_CONNECTIONS), .proc/WipeConnections)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_OUTGOING), .proc/getOutgoing)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_GET_INCOMING), .proc/getIncoming)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_DROPCONNECT), .proc/dropConnect)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_LINK), .proc/link_devices)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ADD_CONFIG), .proc/addConfig)
-	RegisterSignal(parent, list(COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL), .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/attackby)
-	RegisterSignal(parent, list(_COMSIG_MECHCOMP_COMPATIBLE), .proc/compatible)//Better that checking GetComponent()?
+	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, PROC_REF(addInput))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RECEIVE_MSG, PROC_REF(fireInput))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, PROC_REF(fireOutSignal))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG, PROC_REF(fireOutgoing))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, PROC_REF(fireDefault)) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_INCOMING, PROC_REF(removeIncoming))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_OUTGOING, PROC_REF(removeOutgoing))
+	RegisterSignal(parent, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS, PROC_REF(WipeConnections))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_OUTGOING, PROC_REF(getOutgoing))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_INCOMING, PROC_REF(getIncoming))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_DROPCONNECT, PROC_REF(dropConnect))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_LINK, PROC_REF(link_devices))
+	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_CONFIG, PROC_REF(addConfig))
+	RegisterSignal(parent, COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL, PROC_REF(allowManualSingalSetting)) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_COMPATIBLE, PROC_REF(compatible))//Better that checking GetComponent()?
 	return  //No need to ..()
 
 /datum/component/mechanics_holder/UnregisterFromParent()
@@ -141,6 +151,29 @@ TYPEINFO(/datum/component/mechanics_holder)
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_INCOMING, parent)
 	src.connected_incoming.Cut()
 	src.connected_outgoing.Cut()
+	return
+
+// List all of the incoming and outgoing connections to/from this thing
+/datum/component/mechanics_holder/proc/ListConnections(mob/user)
+	var/list/out = list()
+	out += "<b>Connections to [bicon(parent)] [src.parent]:</b>"
+	if (length(src.connected_incoming))
+		out += "<br>Incoming:"
+		for(var/atom/A in src.connected_incoming)
+			var/pointer_container[1] //A list of size 1, to store the address of the list we want
+			SEND_SIGNAL(A, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
+			var/list/trg_outgoing = pointer_container[1]
+			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)] &rarr; [SPAN_SUCCESS(trg_outgoing[parent])]"
+	else
+		out += "<br>No incoming connections."
+
+	if (length(src.connected_outgoing))
+		out += "<br>Outgoing:"
+		for(var/atom/A in src.connected_outgoing)
+			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)] &rarr; [SPAN_SUCCESS(src.connected_outgoing[A])]"
+	else
+		out += "<br>No outgoing connections."
+	boutput(user, out.Join())
 	return
 
 //Remove a device from our list of transitting devices.
@@ -195,6 +228,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 //Fire an outgoing connection with given value. Try to re-use incoming messages for outgoing signals whenever possible!
 //This reduces load AND preserves the node list which prevents infinite loops.
 /datum/component/mechanics_holder/proc/fireOutgoing(var/comsig_target, var/datum/mechanicsMessage/msg)
+	//ratelimit components
+	if(current_tick == TIME)
+		if(activation_count++ > MAX_OUTGOING_PER_TICK)
+			return 0
+	else //if it's the next tick, reset the trackers
+		activation_count = 0
+		current_tick = TIME
+
 	//If we're already in the node list we will not send the signal on.
 	if(msg.hasNode(parent))
 		return 0
@@ -233,23 +274,27 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return
 
 	if (!user.find_tool_in_hand(TOOL_PULSING))
-		boutput(user, "<span class='alert'>[MECHFAILSTRING]</span>")
+		boutput(user, SPAN_ALERT("[MECHFAILSTRING]"))
 		return
 
 	//Need to use comsig_target instead of parent, to access .loc
 	if(A.loc != comsig_target.loc) //If these aren't sharing a container
 		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(A.loc, /obj/item/storage/mechanics))
-			cabinet = A.loc
+		if(istype(comsig_target, /obj/item))
+			var/obj/item/I = comsig_target
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
-				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
+				boutput(user,SPAN_ALERT("Cannot create connection through an unsecured component housing"))
 				return
 
 	if(GET_DIST(parent, A) > SQUARE_TILE_WIDTH)
-		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
+		boutput(user, SPAN_ALERT("Components need to be within a range of 14 meters to connect."))
 		return
 
 	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
@@ -267,34 +312,38 @@ TYPEINFO(/datum/component/mechanics_holder)
 /datum/component/mechanics_holder/proc/link_devices(atom/comsig_target, atom/trigger, mob/user)
 	var/atom/receiver = parent
 	if(trigger == comsig_target)
-		boutput(user, "<span class='alert'>Can not connect a component to itself.</span>")
+		boutput(user, SPAN_ALERT("Can not connect a component to itself."))
 		return
 	if(trigger in src.connected_outgoing)
-		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
+		boutput(user, SPAN_ALERT("Can not create a direct loop between 2 components."))
 		return
 	if(trigger.loc != comsig_target.loc)
 		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(trigger.loc, /obj/item/storage/mechanics))
-			cabinet = trigger.loc
+		if(istype(comsig_target, /obj/item))
+			var/obj/item/I = comsig_target
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
+		if(istype(trigger, /obj/item))
+			var/obj/item/I = trigger
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
-				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
+				boutput(user,SPAN_ALERT("Cannot create connection through an unsecured component housing"))
 				return
 	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
-		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
+		boutput(user, SPAN_ALERT("These two components are too far apart to connect."))
 		return
 	var/atom/movable/moveable_target = comsig_target
 	if(istype(moveable_target) && !moveable_target.anchored)
-		boutput(user, "<span class='alert'>[moveable_target] must be anchored to connect it.</span>")
+		boutput(user, SPAN_ALERT("[moveable_target] must be anchored to connect it."))
 		return
 	var/atom/movable/moveable_trigger = trigger
 	if(istype(moveable_trigger) && !moveable_trigger.anchored)
-		boutput(user, "<span class='alert'>[moveable_trigger] must be anchored to connect it.</span>")
+		boutput(user, SPAN_ALERT("[moveable_trigger] must be anchored to connect it."))
 		return
 	if(!src.inputs.len)
-		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
+		boutput(user, SPAN_ALERT("[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger."))
 		return
 
 	var/pointer_container[1] //A list of size 1, to store the address of the list we want
@@ -306,8 +355,8 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing |= receiver //Let's not allow making many of the same connection.
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
-	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	boutput(user, SPAN_SUCCESS("You connect the [trigger.name] to the [receiver.name]."))
+	logTheThing(LOG_STATION, user, "connects a [log_object(trigger)] [log_loc(trigger)] to a [log_object(receiver)] [log_loc(receiver)].")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
@@ -334,7 +383,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
-		if(hacked_door.p_open)
+		if(hacked_door.panel_open)
 			return
 	if(istype(comsig_target, /obj/machinery/vending))
 		var/obj/machinery/vending/hacked_vendor = comsig_target
@@ -346,27 +395,31 @@ TYPEINFO(/datum/component/mechanics_holder)
 		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
-					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+					var/inp = input(user,"Please enter Signal:", "Signal setting", defaultSignal) as text
 					if(!in_interact_range(parent, user) || user.stat)
 						return
-					inp = trim(strip_html_tags(inp))
+					inp = trimtext(strip_html_tags(inp))
 					if(length(inp))
 						defaultSignal = inp
-						boutput(user, "Signal set to [inp]")
+						boutput(user, SPAN_SUCCESS("The signal is now set to [inp]."))
 				if(DC_ALL)
 					WipeConnections()
 					if(istype(parent, /atom))
 						var/atom/AP = parent
-						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
+						boutput(user, SPAN_NOTICE("You disconnect [AP.name]."))
 					return TRUE
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
-					boutput(user, "<span class='notice'>Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!</span>")
+					boutput(user, SPAN_NOTICE("Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!"))
+					return TRUE
+				if(LIST_CONNECTIONS)
+					ListConnections(user)
 					return TRUE
 				else
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
 					call(parent, path)(W, user)
+					return TRUE
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/compatible()
@@ -383,16 +436,19 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/atom/connectee
 
 /datum/component/mechanics_connector/Initialize(var/datum/component/mechanics_holder/C)
+	. = ..()
 	if(!ispulsingtool(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.connectee = C
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/stop_linking)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(stop_linking))
 
 /// we remove ourself here, the user no longer wishes to link components via us :(
 /datum/component/mechanics_connector/proc/stop_linking(var/obj/item/thing, mob/user)
-	boutput(user, "<span class='notice'>You stop linking with the [parent].</span>")
+	boutput(user, SPAN_NOTICE("You stop linking with the [parent]."))
 	src.RemoveComponent()
 
 /datum/component/mechanics_connector/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	. = ..()
+
+#undef MAX_OUTGOING_PER_TICK

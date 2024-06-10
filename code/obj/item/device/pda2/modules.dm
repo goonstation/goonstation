@@ -4,13 +4,15 @@
 //T-ray scanner module.
 //Computer 3 Emulator / Associated Bits
 
+TYPEINFO(/obj/item/device/pda_module)
+	mats = 4
+
 /obj/item/device/pda_module
 	name = "PDA module"
 	desc = "A piece of expansion circuitry for PDAs."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
-	mats = 4
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
@@ -199,6 +201,11 @@
 		if (src.host)
 			src.host.updateSelfDialog()
 
+	disposing() // Remove lightsources first upon deletion for no lingering light effects
+		if (src.on)
+			src.toggle_light()
+		..()
+
 /obj/item/device/pda_module/flashlight/dan
 	name = "Deluxe Dan's Fancy Flashlight Module"
 	desc = "What a name, what an experience."
@@ -242,7 +249,7 @@
 		scanner = new(src)
 
 	return_menu_badge()
-		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-Scanner</a>"
+		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-ray Scanner</a>"
 		return text
 
 	Topic(href, href_list)
@@ -268,7 +275,7 @@
 		scanner.set_on(FALSE)
 
 /obj/ability_button/pda_tray_toggle
-	name = "Toggle PDA T-Scanner"
+	name = "Toggle PDA T-ray Scanner"
 	icon_state = "pda0"
 
 	execute_ability()
@@ -292,15 +299,15 @@
 		if(..())
 			return
 		if(href_list["toggle"])
-			src.send_alert()
+			src.send_alert(usr)
 		return
 
-	proc/send_alert()
+	proc/send_alert(mob/user)
 		if (!src.host)
-			boutput(usr, "<span class='alert'>No PDA detected.")
+			boutput(user, SPAN_ALERT("No PDA detected."))
 			return
 		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
-			boutput(usr, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			boutput(user, SPAN_ALERT("[src] is still on cooldown mode!"))
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
@@ -309,9 +316,20 @@
 		signal.data["sender_name"] = src.host.owner
 		signal.data["group"] = mailgroups + MGA_CRISIS
 		var/area/A = get_area(src.host)
-		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
+		signal.data["message"]  = SPAN_ALERT("<b>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!</b>")
+		signal.data["noreply"] = TRUE
 		src.host.post_signal(signal)
-		boutput(usr, "<span class='notice'>Alert sent.</span>")
+
+		if(isliving(user))
+			playsound(src, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this officer.", "color: #D30000; font-size: 6px;", alpha = 215)
+			for (var/mob/O in hearers(user))
+				O.show_message(assoc_maptext = map_text, just_maptext = TRUE)
+			user.visible_message(SPAN_ALERT("[user] presses a red button on the side of their [src.host]."),
+			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.host]."),
+			SPAN_ALERT("You see [user] press a button on the side of their [src.host]."))
+
 
 /obj/ability_button/pda_security_alert
 	name = "Send Security Alert"
@@ -320,4 +338,4 @@
 	execute_ability()
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
-			J.send_alert()
+			J.send_alert(src.the_mob)

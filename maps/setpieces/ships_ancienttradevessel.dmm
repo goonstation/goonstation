@@ -1,0 +1,4089 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/obj/trigger/critter,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"aM" = (
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"bg" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/spawner/ancient_robot_artifact,
+/obj/random_item_spawner/junk/lots,
+/obj/item/shipcomponent/engine/hermes{
+	color = "#332222";
+	currentgen = 10000;
+	desc = "An alien power source that looks like it could fit in a pod. Huh.";
+	move_speed = 10;
+	name = "Anomalous Engine";
+	portaldelay = 15;
+	powergenerated = 10000;
+	warprecharge = 900
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"bk" = (
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"bq" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"bI" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/head/helmet/space/nanotrasen/pilot{
+	pixel_y = 12
+	},
+/obj/item/clothing/suit/space/nanotrasen/pilot/commander{
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"cp" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/trigger/spooky_emote,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"cH" = (
+/obj/creepy_sound_trigger,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"dj" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 8;
+	tag = "ancientship_mainhallN"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"dx" = (
+/obj/item/parts/human_parts/arm/mutant/skeleton/left,
+/obj/item/device/pda_module/flashlight/dan,
+/obj/item/device/light/zippo/dan,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"dS" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_corridorN";
+	timer = 3
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"dU" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/material_piece/cloth/beewool,
+/obj/item/clothing/mask/beard,
+/obj/item/clothing/mask/beard,
+/obj/item/clothing/mask/beard,
+/obj/item/clothing/mask/beard,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"dZ" = (
+/obj/npc/trader/random{
+	icon = 'icons/obj/trader.dmi';
+	icon_state = "bot";
+	trader_area = "/area/shuttle/merchant_shuttle/left_station"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ew" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/soulskull{
+	pixel_y = 9
+	},
+/obj/item/clothing/head/headband/nyan/black{
+	pixel_y = 12
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"eR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"fe" = (
+/mob/living/critter/robotic/repairbot/security,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"fo" = (
+/obj/item/material_piece/bone,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"gd" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/critter/ancient_thing,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"gP" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"gU" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/iomoon_puzzle/lock/red{
+	id = "bluelock";
+	tag = "redlock"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"hg" = (
+/obj/rack/iomoon,
+/obj/item/iomoon_key/red{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/map/light/purple,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"hi" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/suit/cultist/hastur,
+/obj/item/book_kinginyellow{
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/obj/item/kitchen/utensil/knife{
+	force = 5;
+	icon = 'icons/obj/items/weapons.dmi';
+	icon_state = "dagger";
+	name = "rusty blade";
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"iI" = (
+/turf/simulated/wall/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"iQ" = (
+/obj/trigger/spooky_emote,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"iX" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_skeletoncages";
+	timer = 3
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"jh" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "obscene doohickey"
+	},
+/obj/map/light/purple,
+/mob/living/critter/mechmonstrosity,
+/obj/random_item_spawner/prosthetics,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"jA" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"jB" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"kG" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"kM" = (
+/obj/item/paper/businesscard/skulls,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"kX" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/clothing/suit/armor/ancient,
+/obj/item/clothing/suit/armor/ancient,
+/obj/item/clothing/suit/armor/ancient,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"lc" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/head/that/white{
+	pixel_y = 17
+	},
+/obj/item/clothing/under/shirt_pants_b/blacktie{
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/noir{
+	pixel_y = 9
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ld" = (
+/obj/iomoon_boss/bot_spawner{
+	pixel_y = 3
+	},
+/obj/item/power_stones/Soul{
+	pixel_y = 12
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"lt" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird reservoir.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-6";
+	interesting = "It seems to be an ancient equivalent to a hydroponics tray.";
+	name = "bizarro planter";
+	pixel_y = -5
+	},
+/obj/decal/alienflower{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/decal/alienflower{
+	pixel_y = 6
+	},
+/obj/decal/alienflower{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ly" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"lE" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"lM" = (
+/obj/rack/iomoon,
+/obj/item/iomoon_key{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/map/light/purple,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"lO" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-5";
+	interesting = "It seems to be some sort of high voltage equipment.";
+	name = "buzzing machine"
+	},
+/obj/item/orb/lightning{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/orb/lightning{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"lR" = (
+/obj/spawner/ancient_robot_artifact,
+/obj/item/scrapweapons/weapons/club/plasmaglass,
+/obj/item/scrapweapons/weapons/club/plasmaglass,
+/obj/rack/iomoon,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"mg" = (
+/mob/living/critter/martian/initiate{
+	name = "martian prisoner"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"mh" = (
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 1;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"mA" = (
+/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/item/clothing/mask/mummy,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"mF" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/toy/plush/small/stress_ball{
+	color = "blue";
+	pixel_y = 9
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"mQ" = (
+/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/item/stamp/classified,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ob" = (
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"oq" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ow" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-5";
+	interesting = "It seems to be some sort of high voltage equipment.";
+	name = "buzzing machine"
+	},
+/obj/item/orb/lightning{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/orb/lightning{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"oC" = (
+/mob/living/critter/skeleton/multihat,
+/obj/item/clothing/mask/bandana/nt,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"oL" = (
+/obj/random_item_spawner/junk/lots,
+/obj/item/baguette,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"pf" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/mob/living/critter/robotic/repairbot,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"pm" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/spawner/ancient_robot_artifact,
+/obj/random_item_spawner/junk/lots,
+/obj/item/shipcomponent/mainweapon/UFO{
+	current_projectile = new /datum/projectile/special/inferno;
+	name = "Ancient Blaster"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"pu" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"pG" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/material_piece/cloth/jean,
+/obj/item/pen/crayon/golden,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"pH" = (
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"pZ" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"qB" = (
+/mob/living/critter/rockworm,
+/obj/item/raw_material/uqill,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"qD" = (
+/mob/living/critter/robotic/crawler,
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "obscene doohickey"
+	},
+/obj/map/light/purple,
+/obj/random_item_spawner/prosthetics,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"qJ" = (
+/mob/living/critter/rockworm,
+/obj/item/relic,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"qL" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 4;
+	tag = "ancientship_storeroomN"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"qO" = (
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"rj" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	tag = "ancientship_skeletoncages"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"rl" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"rS" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/staff/thunder,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"rT" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 1;
+	tag = "ancientship_corridorN"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"sc" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_rockwormcages";
+	timer = 3
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"sd" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"so" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/trigger/spooky_emote,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"sq" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/trigger/critter,
+/obj/iomoon_puzzle/ancient_robot_door/lavatemple/royalchamber{
+	dir = 4;
+	tag = "ancientship_engine"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"sD" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"sJ" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 2;
+	tag = "ancientship_corridorS"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"sK" = (
+/obj/item/rocko{
+	name = "Rocko Junior"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"sL" = (
+/mob/living/critter/rockworm,
+/obj/item/seed/alien/rocks,
+/obj/item/seed/alien/rocks,
+/obj/item/seed/alien/rocks,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"tk" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/button{
+	id = "ancientship_labN";
+	timer = 3
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"tE" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_corridorS";
+	timer = 3
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"tN" = (
+/turf/space,
+/area/space)
+"va" = (
+/obj/item/implant/artifact/ancient,
+/obj/iomoon_puzzle/button{
+	id = "ancientship_storeroomN";
+	timer = 3
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"vg" = (
+/obj/item/spook,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"vr" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/cell/artifact,
+/obj/item/clothing/suit/armor/ancient,
+/obj/item/clothing/suit/armor/ancient,
+/obj/item/clothing/suit/armor/ancient,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"vF" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/iomoon_puzzle/lock{
+	activations_needed = 2;
+	dir = 4;
+	id = "ancientship_engine";
+	tag = "bluelock"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"xp" = (
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"xA" = (
+/obj/item/photo/beepsky1,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"xY" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-5";
+	interesting = "It seems to be some sort of high voltage equipment.";
+	name = "buzzing machine"
+	},
+/obj/item/orb/lightning{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/orb/lightning{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"yp" = (
+/mob/living/critter/rockworm,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"yz" = (
+/obj/marker/supplymarker,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"yJ" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_storeroomS";
+	timer = 3
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"yU" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/clothing/mask/hastur,
+/obj/item/clothing/mask/hastur,
+/obj/item/clothing/mask/hastur,
+/obj/item/clothing/mask/hastur,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"yW" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_labS";
+	timer = 3
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zd" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zf" = (
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 4;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zm" = (
+/obj/spawner/ancient_robot_artifact,
+/obj/rack/iomoon,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zp" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "obscene doohickey"
+	},
+/obj/map/light/purple,
+/mob/living/critter/mechmonstrosity,
+/obj/random_item_spawner/organs/bloody,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zw" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-3";
+	interesting = "It seems to be some sort of atmospheric shielding equipment.";
+	name = "obtuse machine"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zG" = (
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"zU" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/material_piece/cloth/hauntium,
+/obj/item/clothing/gloves/ring/wizard/soulguard,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"AD" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Bt" = (
+/obj/creepy_sound_trigger,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"BM" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"BP" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Cj" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 4;
+	tag = "ancientship_mainhallS"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Cq" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-1";
+	name = "confounding thing-a-ma-bob"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Dw" = (
+/obj/item/parts/human_parts/leg/mutant/skeleton/left,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Dx" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"DS" = (
+/mob/living/critter/robotic/repairbot,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"EP" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_airlock2"
+	},
+/obj/map/light/dimred,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"FD" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	tag = "ancientship_labS"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Gl" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_martiancages";
+	timer = 3
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Gu" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-5";
+	interesting = "It seems to be some sort of high voltage equipment.";
+	name = "buzzing machine"
+	},
+/obj/item/orb/lightning{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/orb/lightning{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"GQ" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 1;
+	tag = "ancientship_rockwormcages2"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"GU" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/iomoon_puzzle/button{
+	id = "ancientship_airlock2"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"He" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"HB" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/mask/gas/plague{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/clothing/suit/armor/death_commando{
+	desc = "The hell is this?";
+	name = "plague armor";
+	pixel_y = -4
+	},
+/obj/item/baton/cane,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"HY" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/item/decoration/walpfeathers,
+/obj/item/clothing/mask/blossommask,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Ia" = (
+/obj/iomoon_boss/bot_spawner{
+	pixel_y = 3
+	},
+/obj/item/power_stones/Time{
+	pixel_y = 11
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"IM" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/creepy_sound_trigger,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"IO" = (
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/obj/item/material_piece/soulsteel,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"IY" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/creepy_sound_trigger,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Jj" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_corridorN";
+	timer = 3
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"JJ" = (
+/obj/item/parts/human_parts/arm/mutant/skeleton/right,
+/obj/item/material_piece/bone,
+/obj/random_item_spawner/prosthetics,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"JP" = (
+/obj/critter/ancient_thing,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Kb" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Kp" = (
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 1;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Kx" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/soulskull{
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/cigarette/cigar/gold{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"KR" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-5";
+	interesting = "It seems to be some sort of high voltage equipment.";
+	name = "buzzing machine"
+	},
+/obj/item/orb/lightning{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/orb/lightning{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Lo" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_corridorEN"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"LE" = (
+/mob/living/critter/rockworm,
+/obj/item/seed/alien/rocks,
+/obj/item/seed/alien/rocks,
+/obj/item/seed/alien/rocks,
+/obj/item/seed/alien/rocks,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"LS" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/under/gimmick/kilt,
+/obj/item/paper/businesscard/bonktek{
+	pixel_y = -12
+	},
+/obj/item/stamp/syndicate{
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Mf" = (
+/obj/map/light/dimred,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/iomoon_puzzle/ancient_robot_door{
+	tag = "ancientship_corridorES"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Mp" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/critter/ancient_thing,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"MA" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 1;
+	tag = "ancientship_labN"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ME" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 4;
+	tag = "ancientship_storeroomS"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"No" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/head/caphat{
+	desc = "A symbol of the captain's rank. The designation shows it came from NT-11.";
+	interesting = "Wait, what the hell is NT-11?";
+	name = "Captain's hat (NT-11)";
+	pixel_y = 13
+	},
+/obj/item/device/radio/headset/command/captain{
+	frequency = 1365;
+	pixel_x = -3;
+	pixel_y = -8;
+	secure_frequencies = list("h" = 1367, "g" = 1365, "e" = 1363, "r" = 1362, "m" = 1361, "c" = 1369)
+	},
+/obj/item/clothing/suit/armor/capcoat,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Ny" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"NG" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"NH" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"NT" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_storeroomN";
+	timer = 3
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Od" = (
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"OR" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"OU" = (
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/obj/item/material_piece/neutronium,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Pg" = (
+/obj/marker/supplymarker,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Pl" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 2;
+	tag = "ancientship_martiancages"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Po" = (
+/obj/map/light/dimred,
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 1;
+	tag = "ancientship_corridorEN"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Pt" = (
+/obj/trigger/spooky_emote,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	dir = 1;
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Pz" = (
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/obj/item/material_piece/uqill,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"PI" = (
+/obj/forcefield/energyshield/perma{
+	color = "purple";
+	dir = 4
+	},
+/obj/iomoon_puzzle/ancient_robot_door{
+	dir = 4;
+	tag = "ancientship_airlock2"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"PS" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Qc" = (
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"QH" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"QU" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 6;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/effects/lightshaft/blue,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"RI" = (
+/obj/item/material_piece/bone,
+/obj/item/material_piece/hamburgris,
+/obj/item/clothing/mask/skull,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"RK" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_corridorS";
+	timer = 3
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"RV" = (
+/obj/map/light/dimred,
+/obj/iomoon_puzzle/ancient_robot_door{
+	density = 0;
+	desc = "A partially open door of mysterious origin.  There is no gap between it and whatever its sliding into.";
+	dir = 4;
+	icon_state = "ancientdoor_opened";
+	name = "unsealed door";
+	opacity = 0;
+	opened = 1;
+	tag = "ancientship_airlock"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Se" = (
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Sl" = (
+/obj/spawner/ancient_robot_artifact,
+/obj/item/artifact/instrument,
+/obj/item/scrapweapons/weapons/spear/plasmaglass,
+/obj/item/scrapweapons/weapons/spear/plasmaglass,
+/obj/rack/iomoon,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"SC" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "ancientwindow";
+	name = "ancient window";
+	tag = ""
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"SU" = (
+/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/item/cloth/handkerchief/colored/red,
+/obj/item/clothing/head/helmet/space/industrial/syndicate{
+	pixel_x = 11
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"SZ" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_airlock"
+	},
+/obj/map/light/dimred,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Tb" = (
+/mob/living/critter/robotic/repairbot,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Tq" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"TF" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/random_item_spawner/organs/bloody,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"TI" = (
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/obj/item/material_piece/spacelag,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"TL" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_mainhallS"
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"UE" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"UF" = (
+/turf/simulated/wall/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"UQ" = (
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black set of metal stairs.";
+	icon_state = "ancient_stairs";
+	name = "strange stairs"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"VB" = (
+/obj/item/raw_material/uqill,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Wl" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Wo" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line-broken1"
+	},
+/obj/creepy_sound_trigger,
+/mob/living/critter/robotic/repairbot/security,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Wr" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	icon_state = "body3"
+	},
+/obj/item/paper/xg_tapes,
+/obj/item/weldingtool/arcwelder,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"WF" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/suit/hazard/paramedic/armored/para_troop{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/paper/sop{
+	pixel_x = 5;
+	pixel_y = -8
+	},
+/obj/item/clothing/head/helmet/hardhat/security/improved{
+	pixel_y = 12
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"WX" = (
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Xo" = (
+/mob/living/critter/rockworm,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Xp" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/trigger/spooky_emote,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Xq" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Xz" = (
+/obj/item/material_piece/bone,
+/obj/random_item_spawner/prosthetics,
+/obj/item/spook,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"XC" = (
+/obj/npc/trader/skeleton{
+	name = "Clack Hat Sr."
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"XR" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "specimen rack"
+	},
+/obj/decal/fakeobjects/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/clothing/head/boater_hat{
+	pixel_y = 14
+	},
+/obj/item/plant/flower/rose/holorose,
+/obj/item/clothing/shoes/tourist{
+	pixel_y = -12
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"XS" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_storeroomS";
+	timer = 3
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Yb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A perplexing pillar.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-2";
+	interesting = "Strange energies emanate within the socket.";
+	name = "stolid plinth"
+	},
+/obj/item/elemental_attunement/death/empowered{
+	anchored = 1;
+	pixel_y = 1
+	},
+/obj/item/orb/void{
+	anchored = 1;
+	pixel_y = 1
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Yf" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/creepy_sound_trigger,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Yj" = (
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Yk" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"YA" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/soulskull{
+	pixel_y = 9
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"YH" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"YM" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_mainhallN"
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"YT" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_corridorES"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Za" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "obscene doohickey"
+	},
+/obj/map/light/purple,
+/mob/living/critter/robotic/crawler,
+/obj/random_item_spawner/organs/bloody,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Zc" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A perplexing pillar.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-2";
+	interesting = "Strange energies emanate within the socket.";
+	name = "stolid plinth"
+	},
+/obj/item/elemental_attunement/fire{
+	anchored = 1;
+	pixel_y = 1
+	},
+/obj/item/orb/fire{
+	anchored = 1;
+	pixel_y = 1
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Zg" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 9;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Zq" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line-broken1"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 10;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A weird doodad.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-5";
+	interesting = "It seems to be some sort of high voltage equipment.";
+	name = "buzzing machine"
+	},
+/obj/item/orb/lightning{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/orb/lightning{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
+	})
+"Zu" = (
+/obj/iomoon_puzzle/button{
+	id = "ancientship_rockwormcages2";
+	timer = 3
+	},
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ZG" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ZO" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor2"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"ZW" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/material_piece/cloth/dyneema,
+/obj/item/boarvessel,
+/turf/simulated/floor/ancient,
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+
+(1,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+RV
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(2,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+UF
+tN
+UF
+al
+UF
+tN
+UF
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(3,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+EP
+UF
+UF
+UF
+xp
+UF
+UF
+UF
+SZ
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(4,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+UF
+xp
+xp
+Tq
+Tq
+Bt
+Tq
+Tq
+xp
+xp
+UF
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(5,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+UF
+zw
+fe
+xp
+ZG
+bq
+xp
+Yk
+BM
+xp
+fe
+zw
+UF
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(6,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+SC
+UF
+UF
+SC
+SC
+UF
+UF
+PI
+UF
+UF
+SC
+SC
+UF
+UF
+SC
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+"}
+(7,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+zm
+lt
+zm
+BP
+yz
+dZ
+BP
+GU
+xp
+Cq
+BP
+dZ
+yz
+BP
+zm
+lt
+zm
+UF
+UF
+tN
+tN
+tN
+tN
+"}
+(8,1,1) = {"
+tN
+tN
+tN
+tN
+UF
+UF
+Qc
+Yj
+WX
+cH
+rT
+iQ
+zG
+Kp
+Tq
+xp
+Tq
+UQ
+zG
+iQ
+sJ
+cH
+WX
+Yj
+Qc
+UF
+UF
+tN
+tN
+tN
+"}
+(9,1,1) = {"
+tN
+tN
+tN
+UF
+UF
+sL
+Qc
+WX
+Jj
+Qc
+Qc
+zG
+zG
+Kp
+Tq
+xp
+Tq
+UQ
+zG
+zG
+Qc
+Qc
+RK
+WX
+Qc
+mg
+UF
+UF
+tN
+tN
+"}
+(10,1,1) = {"
+tN
+tN
+UF
+UF
+Qc
+sK
+GQ
+WX
+PS
+Qc
+Xq
+Xq
+Xq
+SC
+NH
+Ny
+oq
+SC
+Xq
+Xq
+Xq
+Qc
+He
+WX
+Pl
+Od
+Qc
+UF
+UF
+tN
+"}
+(11,1,1) = {"
+tN
+tN
+UF
+SC
+Qc
+yp
+BP
+WX
+sc
+Qc
+Zc
+zG
+NT
+UF
+UF
+Cj
+UF
+UF
+yJ
+zG
+Zc
+Qc
+Gl
+WX
+BP
+Od
+Qc
+SC
+UF
+tN
+"}
+(12,1,1) = {"
+tN
+UF
+UF
+Za
+Qc
+qB
+BP
+UE
+UF
+UF
+UF
+zf
+BP
+UF
+UF
+dj
+UF
+UF
+BP
+zf
+UF
+UF
+UF
+WX
+BP
+mg
+Qc
+zp
+UF
+UF
+"}
+(13,1,1) = {"
+tN
+UF
+LS
+Od
+Qc
+Qc
+Qc
+WX
+UF
+va
+UF
+qL
+BP
+UF
+Wo
+so
+IY
+UF
+BP
+ME
+UF
+XS
+UF
+WX
+Qc
+Qc
+Qc
+Dw
+bI
+UF
+"}
+(14,1,1) = {"
+tN
+UF
+hi
+dx
+Od
+Pt
+MA
+WX
+zd
+Tb
+xp
+xp
+xp
+UF
+kG
+Tq
+AD
+UF
+xp
+xp
+xp
+oL
+zd
+WX
+FD
+Pt
+fo
+Od
+lc
+UF
+"}
+(15,1,1) = {"
+tN
+UF
+UF
+Od
+Wr
+Qc
+Qc
+WX
+UF
+ZW
+dU
+pG
+xp
+UF
+gd
+Tq
+Mp
+UF
+xp
+Pz
+Pz
+Pz
+UF
+WX
+Qc
+Qc
+mQ
+ZO
+UF
+UF
+"}
+(16,1,1) = {"
+tN
+UF
+YM
+Od
+Xz
+Qc
+tk
+WX
+UF
+UF
+SC
+SC
+DS
+UF
+gd
+Tq
+Mp
+UF
+Wl
+SC
+SC
+UF
+UF
+WX
+yW
+Qc
+vg
+Od
+TL
+UF
+"}
+(17,1,1) = {"
+tN
+UF
+UF
+TF
+Od
+Qc
+Qc
+WX
+Yb
+UF
+aM
+pH
+xp
+UF
+SC
+Kb
+SC
+UF
+Tb
+IO
+TI
+UF
+Yb
+UE
+Qc
+Qc
+xA
+mA
+UF
+UF
+"}
+(18,1,1) = {"
+tN
+UF
+No
+Od
+Od
+lM
+Qc
+WX
+UF
+UF
+SC
+SC
+Wl
+UF
+gd
+Tq
+vF
+UF
+Wl
+SC
+SC
+UF
+UF
+WX
+Qc
+hg
+JJ
+Od
+WF
+UF
+"}
+(19,1,1) = {"
+tN
+UF
+XR
+RI
+Qc
+Qc
+Qc
+WX
+UF
+yU
+zU
+HY
+xp
+UF
+kG
+Tq
+OR
+UF
+xp
+OU
+OU
+OU
+UF
+WX
+Qc
+Qc
+Qc
+SU
+HB
+UF
+"}
+(20,1,1) = {"
+tN
+UF
+UF
+qD
+Qc
+qJ
+BP
+WX
+zd
+Tb
+xp
+xp
+xp
+UF
+ly
+Tq
+AD
+UF
+xp
+xp
+xp
+Tb
+zd
+WX
+BP
+oC
+Qc
+jh
+UF
+UF
+"}
+(21,1,1) = {"
+tN
+tN
+UF
+SC
+Qc
+Xo
+BP
+WX
+UF
+dS
+UF
+UF
+UF
+UF
+gd
+Tq
+gU
+UF
+UF
+UF
+UF
+tE
+UF
+WX
+BP
+kM
+Qc
+SC
+UF
+tN
+"}
+(22,1,1) = {"
+tN
+tN
+UF
+UF
+Qc
+VB
+GQ
+WX
+UF
+UF
+UF
+lR
+mF
+UF
+iI
+sq
+iI
+UF
+rS
+Sl
+UF
+UF
+UF
+WX
+rj
+Pg
+Qc
+UF
+UF
+tN
+"}
+(23,1,1) = {"
+tN
+tN
+tN
+UF
+UF
+LE
+Qc
+WX
+Zu
+qO
+Lo
+ob
+JP
+eR
+jB
+NG
+pf
+eR
+ob
+JP
+YT
+qO
+iX
+WX
+Qc
+XC
+UF
+UF
+tN
+tN
+"}
+(24,1,1) = {"
+tN
+tN
+tN
+tN
+UF
+UF
+Qc
+QH
+zd
+qO
+Ia
+ob
+ob
+eR
+cp
+NG
+Xp
+eR
+ob
+ob
+ld
+qO
+zd
+lE
+Qc
+UF
+UF
+tN
+tN
+tN
+"}
+(25,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+gP
+Yf
+Po
+rl
+JP
+ob
+mh
+pZ
+QU
+jA
+Se
+ob
+JP
+Zg
+Mf
+IM
+pu
+UF
+UF
+tN
+tN
+tN
+tN
+"}
+(26,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+lt
+qO
+YH
+sd
+ob
+eR
+xY
+lO
+Zq
+eR
+ob
+JP
+YH
+qO
+lt
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+"}
+(27,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+UF
+qO
+kX
+ob
+JP
+iI
+sD
+sD
+sD
+iI
+sd
+ob
+vr
+qO
+UF
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(28,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+UF
+iI
+pm
+YA
+ew
+Dx
+Gu
+KR
+ow
+Dx
+YA
+Kx
+bg
+iI
+UF
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(29,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+iI
+iI
+iI
+iI
+iI
+iI
+bk
+iI
+iI
+iI
+iI
+iI
+iI
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}
+(30,1,1) = {"
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+iI
+tN
+tN
+tN
+iI
+iI
+iI
+tN
+tN
+tN
+iI
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+tN
+"}

@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/surgery/organ_swap
 	name = "Organ Swap"
 	weight = 50
-	payout = 8000
+	payout = PAY_DOCTORATE*10*2
 	var/mob/living/carbon/human/target
 	var/target_organs = list()
 	sendingCrate = new /obj/storage/crate/wooden
@@ -143,13 +143,13 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/weed_sampler
 	name = "Weed Flight"
 	req_sheet = new /obj/item/paper/requisition/weed_sample
-	payout = 41714
+	payout = PAY_DONTBUYIT*2
 
 	New()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/whiteweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/omegaweed,1)
-		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza/spacer,6)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza/spacer,12)
 		..()
 
 /datum/rc_entry/item
@@ -163,31 +163,32 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		name = "Omega Weed"
 		typepath = /obj/item/plant/herb/cannabis/omega
 
-/datum/rc_entry/stack/pizza/spacer
-	name = "Pizza Hexa-Subsections (May Be Unseparated)"
+/datum/rc_entry/food/pizza/spacer
+	name = "Pizza Mouthfuls (Must Be Unseparated)"
 
 
 
 /datum/req_contract/special/pizza_party
 	name = "Pizza Party"
 	req_sheet = new /obj/item/paper/requisition/pizza_party
-	payout = 2500 //pizza adds from 2400 to 3600
+	payout = PAY_TRADESMAN*10
 
 	nt
 		name = "Pizza Party (NanoTrasen)"
 		req_sheet = new /obj/item/paper/requisition/pizza_party/nt
-		payout = 3300
+		payout =  PAY_TRADESMAN*10
 
 	New()
-		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(20,30)*6)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*12)
 		..()
 
-
+//contract below defines the details itself based on variety of order - this is just a dummy so as not to use an abstract type
+/datum/rc_entry/food/mealfood
 
 ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/req_contract/special/chef
 	weight = 50
-	payout = 12000
+	payout = PAY_TRADESMAN*18*3
 	req_sheet = new /obj/item/paper/requisition/food_order
 	var/mealflag = MEAL_TIME_BREAKFAST
 	var/list/cornucopia = list()
@@ -199,7 +200,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/food/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 30; 2, 10; 3)
@@ -212,7 +213,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/food/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 40; 2)
@@ -225,7 +226,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/food/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(60; 1, 40; 2)
@@ -238,7 +239,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
-				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
+				var/datum/rc_entry/item/nom = new /datum/rc_entry/food/mealfood
 				nom.typepath = pick(src.cornucopia)
 				nom.name = src.name_of_food[nom.typepath]
 				nom.count = pick(40; 1, 40; 2, 20; 3)
@@ -260,10 +261,10 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	payout = 0 //price in blood
 
 	New()
-		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/blood,rand(8,12)*100)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/blood,rand(5,10)*100)
 		..()
 
 /datum/rc_entry/reagent/blood
 	name = "blood"
 	chem_ids = "blood"
-	feemod = 10
+	feemod = PAY_UNTRAINED/10

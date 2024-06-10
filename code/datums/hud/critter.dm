@@ -77,8 +77,7 @@
 	if (src.master.can_bleed)
 		src.create_bleeding_element()
 
-	if (src.master.can_throw)
-		src.create_throwing_element()
+	src.create_throwing_element()
 
 	src.create_intent_element()
 	src.create_pulling_element()
@@ -95,21 +94,17 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (src.left_offset < -6) // wraps vertically if the magnitude of left offset is greater than 6
+	if (src.left_offset < -9) // Wraps vertically if the magnitude of left offset is greater than 9. Leave a 1 space column for storage containers.
 		src.wraparound_offset_left++
-		if (src.wraparound_offset_right < src.wraparound_offset_left)
-			src.right_offset = 0
-		else
-			src.right_offset = -1
 
 	var/next_left_offset = src.next_left()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_left_offset < 0)
-		x_offset = next_left_offset
+		x_offset = next_left_offset + src.wraparound_offset_left
 	else if (next_left_offset > 0)
-		x_offset = "+[next_left_offset]"
+		x_offset = "+[next_left_offset + src.wraparound_offset_left]"
 	else
 		x_offset = ""
 
@@ -122,21 +117,17 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 6) // wraps vertically if the magnitude of right offset is greater than 6
+	if (src.right_offset > 9) // Wraps vertically if the magnitude of right offset is greater than 8. Leave a 1 space column for the leave pod button.
 		src.wraparound_offset_right++
-		if (src.wraparound_offset_left < src.wraparound_offset_right)
-			src.right_offset = 0
-		else
-			src.right_offset = 1
 
 	var/next_right_offset = src.next_right()
 	var/x_offset = 0
 	var/y_offset = 0
 
 	if (next_right_offset < 0)
-		x_offset = next_right_offset
+		x_offset = next_right_offset - src.wraparound_offset_right
 	else if (next_right_offset > 0)
-		x_offset = "+[next_right_offset]"
+		x_offset = "+[next_right_offset - src.wraparound_offset_right]"
 	else
 		x_offset = ""
 
@@ -173,6 +164,13 @@
 /datum/hud/critter/proc/get_left()
 	return "-[src.left_offset]"
 
+/// update the oxygen and tox indicators based on status
+/datum/hud/critter/proc/update_breathing_indicators(datum/organ_status/lung/status_updates)
+		src.set_suffocating(status_updates.show_oxy_indicator)
+		src.update_tox_indicator(status_updates.show_tox_indicator)
+		// fire indicator is handled in critter on_life
+		// src.set_breathing_fire(status_updates.show_fire_indicator)
+
 /// sets the suffocation icon on the hud to show suffocation status
 /datum/hud/critter/proc/set_suffocating(var/status)
 	if (!src.oxygen)
@@ -201,11 +199,11 @@
 		return
 	src.throwing.icon_state = "throw[src.master.in_throw_mode]"
 
-/// recieves clicks from the screen hud objects
+/// receives clicks from the screen hud objects
 /datum/hud/critter/relay_click(id, mob/user, list/params)
 	if (copytext(id, 1, 5) == "hand")
 		var/handid = text2num(copytext(id, 5))
-		src.master.active_hand = handid
+		src.master.set_hand(handid)
 		src.master.hand = handid
 		src.update_hands()
 
@@ -231,14 +229,13 @@
 						src.master.set_a_intent(INTENT_HELP)
 					else
 						src.master.set_a_intent(INTENT_GRAB)
-				src.update_intent()
 
 			if ("mintent")
 				if (src.master.m_intent == "run")
 					src.master.m_intent = "walk"
 				else
 					src.master.m_intent = "run"
-				out(src.master, "You are now [src.master.m_intent == "walk" ? "walking" : "running"]")
+				boutput(src.master, "You are now [src.master.m_intent == "walk" ? "walking" : "running"]")
 				src.update_mintent()
 
 			if ("pull")
@@ -247,7 +244,7 @@
 					master.remove_pulling()
 					src.update_pulling()
 				else if(!isturf(master.loc))
-					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+					boutput(master, SPAN_NOTICE("You can't pull things while inside \a [master.loc]."))
 				else
 					var/list/atom/movable/pullable = list()
 					for(var/atom/movable/AM in range(1, get_turf(master)))
@@ -258,7 +255,7 @@
 					if(length(pullable) == 1)
 						to_pull = pullable[1]
 					else if(length(pullable) < 1)
-						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+						boutput(master, SPAN_NOTICE("There is nothing to pull."))
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
@@ -267,14 +264,15 @@
 			if ("throw")
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_y > 16 || src.master.in_throw_mode)
-					src.master.toggle_throw_mode()
+					if (src.master.can_throw)
+						src.master.toggle_throw_mode()
 				else
-					src.master.drop_item()
+					src.master.drop_item(null, TRUE)
 			if ("resist")
 				src.master.resist()
 
 			if ("health")
-				boutput(src.master, "<span class='notice'>Your health: [src.master.health]/[src.master.max_health]</span>")
+				boutput(src.master, SPAN_NOTICE("Your health: [src.master.health]/[src.master.max_health]"))
 
 			if ("rest")
 				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN))
@@ -355,7 +353,7 @@
 				pos_x -= spacing
 			else
 				if(S.visible)
-					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect(src.master, S)
+					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect
 					U.init(src.master,S)
 					U.icon = src.hud_icon
 					src.statusUiElements.Add(S)
@@ -451,9 +449,10 @@
 	src.toxin.icon_state = "tox[status]"
 
 /// updates radiation hud element
-/datum/hud/critter/proc/update_rad_indicator(var/status)
+/datum/hud/critter/proc/update_rad_indicator()
 	if (!src.rad) // not rad :'(
 		return
+	var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 	src.rad.icon_state = "rad[status]"
 
 /// updates resting status
@@ -525,7 +524,7 @@
 /datum/hud/critter/proc/create_radiation_element()
 	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
 	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-	src.rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+	src.rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_bleeding_element()
 	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
@@ -533,7 +532,7 @@
 	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 /datum/hud/critter/proc/create_throwing_element()
-	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, "throw0",\
+	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, src.master.can_throw ? "throw0" : "drop0",\
 	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
 
 /datum/hud/critter/proc/create_intent_element()

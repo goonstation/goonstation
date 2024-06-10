@@ -12,15 +12,33 @@ ABSTRACT_TYPE(/datum/customization_style/makeup)
 ABSTRACT_TYPE(/datum/customization_style/biological)
 
 
+
+
 #define FEMININE 1
 #define MASCULINE 2
 
+TYPEINFO(/datum/customization_style)
+	/// Does this hair have some special unlock condition? (medal, rank, etc.)
+	var/special_criteria = FALSE
+	/// Is this a gimmick hairstyle? (available to genetics/barbers, not to char setup)
+	var/gimmick = FALSE
+
+// typeinfo macro doesn't play nice with absolute pathed types so here we are
+TYPEINFO(/datum/customization_style/hair/gimmick)
+	gimmick = TRUE
 /datum/customization_style
 	var/name = null
 	var/id = null
 	var/gender = 0
 	/// Which mob icon layer this should go on (under or over glasses)
 	var/default_layer = MOB_HAIR_LAYER1 //Under by default, more direct subtypes where that makes sense
+	/// Icon file this hair should be pulled from
+	var/icon = 'icons/mob/human_hair.dmi'
+	/// For blacklisting the weird partial hairstyles that just look broken on random characters
+	var/random_allowed = TRUE
+	/// Only used if typeinfo.special_criteria is TRUE
+	proc/check_available(client/C)
+		return TRUE
 
 	none
 		name = "None"
@@ -34,48 +52,66 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Afro"
 				id = "afro"
 				gender = MASCULINE | FEMININE
+			afro_fade
+				name = "Afro: Faded"
+				id = "afro_fade"
+				random_allowed = FALSE
 			afroHR
 				name = "Afro: Left Half"
 				id = "afroHR"
+				random_allowed = FALSE
 			afroHL
 				name = "Afro: Right Half"
 				id = "afroHL"
+				random_allowed = FALSE
 			afroST
 				name = "Afro: Top"
 				id = "afroST"
+				random_allowed = FALSE
 			afroSM
 				name = "Afro: Middle Band"
 				id = "afroSM"
+				random_allowed = FALSE
 			afroSB
 				name = "Afro: Bottom"
 				id = "afroSB"
+				random_allowed = FALSE
 			afroSL
 				name = "Afro: Left Side"
 				id = "afroSL"
+				random_allowed = FALSE
 			afroSR
 				name = "Afro: Right Side"
 				id = "afroSR"
+				random_allowed = FALSE
 			afroSC
 				name = "Afro: Center Streak"
 				id = "afroSC"
+				random_allowed = FALSE
 			afroCNE
 				name = "Afro: NE Corner"
 				id = "afroCNE"
+				random_allowed = FALSE
 			afroCNW
 				name = "Afro: NW Corner"
 				id = "afroCNW"
+				random_allowed = FALSE
 			afroCSE
 				name = "Afro: SE Corner"
 				id = "afroCSE"
+				random_allowed = FALSE
 			afroCSW
 				name = "Afro: SW Corner"
 				id = "afroCSW"
+				random_allowed = FALSE
 			afroSV
 				name = "Afro: Tall Stripes"
 				id = "afroSV"
+				random_allowed = FALSE
 			afroSH
 				name = "Afro: Long Stripes"
 				id = "afroSH"
+				random_allowed = FALSE
 			balding
 				name = "Balding"
 				id = "balding"
@@ -114,12 +150,15 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			clownT
 				name = "Clown: Top"
 				id = "clownT"
+				random_allowed = FALSE
 			clownM
 				name = "Clown: Middle Band"
 				id = "clownM"
+				random_allowed = FALSE
 			clownB
 				name = "Clown: Bottom"
 				id = "clownB"
+				random_allowed = FALSE
 			combed_s
 				name = "Combed"
 				id = "combed_s"
@@ -153,7 +192,14 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			flick
 				name = "Flick"
 				id = "flick"
-				gender = FEMININE
+				gender = MASCULINE | FEMININE
+			flick_fade
+				name = "Flick: Faded"
+				id = "flick_fade"
+			flick_half
+				name = "Flick: Split"
+				id = "flick_half"
+				random_allowed = FALSE
 			floof
 				name = "Floof"
 				id = "floof"
@@ -162,6 +208,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Ignite"
 				id = "ignite"
 				gender = MASCULINE
+			igniteshaved
+				name = "Ignite: Shaved"
+				id = "igniteshaved"
 			streak
 				name = "Hair Streak"
 				id = "streak"
@@ -186,6 +235,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Mullet"
 				id = "long"
 				gender = MASCULINE | FEMININE
+			suave
+				name = "Suave Mullet"
+				id = "suave_mullet"
+				gender = MASCULINE | FEMININE
 			part
 				name = "Parted Hair"
 				id = "part"
@@ -197,12 +250,21 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			pompS
 				name = "Pompadour: Greaser Shine"
 				id = "pompS"
+				random_allowed = FALSE
+			scruffy
+				name = "Scruffy"
+				id = "scruffy"
+				gender = MASCULINE | FEMININE
 			shavedhead
 				name = "Shaved Head"
 				id = "shavedhead"
 			shortflip
 				name = "Punky Flip"
 				id = "shortflip"
+				gender = MASCULINE | FEMININE
+			sparks
+				name = "Sparks"
+				id = "sparks"
 				gender = MASCULINE | FEMININE
 			spiky
 				name = "Spiky"
@@ -235,29 +297,131 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			combedfront
 				name = "Combed Front"
 				id = "combedfront"
+			combedfrontbangs
+				name = "Bangs: Combed Front"
+				id = "combedfrontbangs"
+				random_allowed = FALSE
 			combedfrontshort
 				name = "Combed Front Short"
 				id = "combedfrontshort"
+			combedfrontshortbangs
+				name = "Bangs: Combed Front Short"
+				id = "combedfrontshortbangs"
+				random_allowed = FALSE
 			longfront
 				name = "Long Front"
 				id = "longfront"
+			longfrontbangs
+				name = "Bangs: Long Front"
+				id = "longfrontbangs"
+				random_allowed = FALSE
+			salty
+				name = "Salty"
+				id = "salty"
+			wolfcut
+				name = "Wolfcut"
+				id = "wolfcut"
+			brushed
+				name = "Brushed"
+				id = "brushed"
+			walnut
+				name = "Walnut"
+				id = "walnut"
+			mop
+				name = "Mop"
+				id = "mop"
+			acorn
+				name = "Acorn"
+				id = "acorn"
+			curtain
+				name = "Curtain"
+				id = "curtain"
+			scott
+				name = "Scott"
+				id = "scott"
+			curly_bob
+				name = "Curly Bob"
+				id = "curly_bob"
+			curly_bob_fade
+				name = "Curly Bob: Faded"
+				id = "curly_bob_fade"
+				random_allowed = FALSE
+			charming
+				name = "Charming"
+				id = "charming"
+			spoon
+				name = "Spoon"
+				id = "spoon"
+			spoonbangs
+				name = "Bangs: Spoon"
+				id = "spoonbangs"
+				random_allowed = FALSE
+			messy_waves
+				name = "Messy Waves"
+				id = "messy_waves"
+			messy_waves_half
+				name = "Messy Waves: Split"
+				id = "messy_waves_half"
+				random_allowed = FALSE
+			blunt_bob
+				name = "Blunt Bob"
+				id = "blunt_bob"
+
+			jelly
+				name = "Jelly"
+				id = "jelly"
 		long
 			chub2_s
 				name = "Bang: Left"
 				id = "chub2_s"
+				random_allowed = FALSE
 			chub_s
 				name = "Bang: Right"
 				id = "chub_s"
+				random_allowed = FALSE
 			twobangs_long
 				name = "Two Bangs: Long"
 				id = "2bangs_long"
+				random_allowed = FALSE
 			twobangs_short
 				name = "Two Bangs: Short"
 				id = "2bangs_short"
+				random_allowed = FALSE
+			flatbangs
+				name = "Bangs: Flat"
+				id = "flatbangs"
+				random_allowed = FALSE
+			shortflatbangs
+				name = "Bangs: Flat Shorter"
+				id = "shortflatbangs"
+				random_allowed = FALSE
+			longwavebangs
+				name = "Bangs: Long Wavy"
+				id = "longwavebangs"
+				random_allowed = FALSE
+			shortwavebangs
+				name = "Bangs: Short Wavy"
+				id = "shortwavebangs"
+				random_allowed = FALSE
+			sidebangs
+				name = "Bangs: Sides"
+				id = "sidebangs"
+				random_allowed = FALSE
+			mysterybangs
+				name = "Bangs: Mysterious"
+				id = "mysterybangs"
+				random_allowed = FALSE
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"
 				gender = MASCULINE | FEMININE
+			breezy
+				name = "Breezy"
+				id = "breezy"
+				gender = MASCULINE | FEMININE
+			breezy_fade
+				name = "Breezy: Faded"
+				id = "breezy_fade"
 			disheveled
 				name = "Disheveled"
 				id = "disheveled"
@@ -276,6 +440,7 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			dreadsA
 				name = "Dreadlocks: Alternating"
 				id = "dreadsA"
+				random_allowed = FALSE
 			fabio
 				name = "Fabio"
 				id = "fabio"
@@ -314,6 +479,17 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Long and Froofy"
 				id = "froofy_long"
 				gender = FEMININE
+			lionsmane
+				name = "Lionsmane"
+				id = "lionsmane"
+				gender = MASCULINE
+			lionsmane_fade
+				name = "Lionsmane: Faded"
+				id = "lionsmane_fade"
+			pinion
+				name = "Pinion"
+				id = "pinion"
+				gender = MASCULINE
 			longbraid
 				name = "Long Braid"
 				id = "longbraid"
@@ -334,6 +510,17 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Long Flip"
 				id = "longsidepart_s"
 				gender = FEMININE
+			longwaves
+				name = "Waves"
+				id = "longwaves"
+				gender = FEMININE
+			longwaves_fade
+				name = "Waves: Faded"
+				id = "longwaves_fade"
+			longwaves_half
+				name = "Waves: Split"
+				id = "longwaves_half"
+				random_allowed = FALSE
 			pulledb
 				name = "Pulled Back"
 				id = "pulledb"
@@ -342,6 +529,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Ripley"
 				id = "ripley"
 				gender = FEMININE
+			ripley_fade
+				name = "Ripley: Faded"
+				id = "ripley_fade"
 			sage
 				name = "Sage"
 				id = "sage"
@@ -369,6 +559,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			smoothwave_fade
 				name = "Smooth Waves: Faded"
 				id = "smoothwave_fade"
+			smoothwave_half
+				name = "Smooth Waves: Split"
+				id = "smoothwave_half"
+				random_allowed = FALSE
 			mermaid
 				name = "Mermaid"
 				id = "mermaid"
@@ -392,10 +586,20 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Violet"
 				id = "violet"
 				gender = FEMININE
+			violet_fade
+				name = "Violet: Faded"
+				id = "violet_fade"
+			violet_half
+				name = "Violet: Split"
+				id = "violet_half"
+				random_allowed = FALSE
 			willow
 				name = "Willow"
 				id = "willow"
 				gender = MASCULINE | FEMININE
+			willow_fade
+				name = "Willow: Faded"
+				id = "willow_fade"
 		hairup
 			bun
 				name = "Bun"
@@ -440,13 +644,32 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Long Mini Tail"
 				id = "longtailed"
 				gender = FEMININE
+			longtwintail
+				name = "Long Twin Tails"
+				id = "longtwintail"
+				gender = FEMININE
+			longtwintail_half
+				name = "Long Twin Tails: Split"
+				id = "longtwintail_half"
+				random_allowed = FALSE
 			glamponytail
 				name = "Glam Ponytail"
 				id = "glamponytail"
+			glamponytail_half
+				name = "Glam Ponytail: Split"
+				id = "glamponytail_half"
+				random_allowed = FALSE
 			rockponytail
 				name = "Rock Ponytail"
 				id = "rockponytail"
 				gender = FEMININE
+			rockponytail_fade
+				name = "Rock Ponytail: Faded"
+				id = "rockponytail_fade"
+			rockponytail_half
+				name = "Rock Ponytail: Split"
+				id = "rockponytail_half"
+				random_allowed = FALSE
 			spikyponytail
 				name = "Spiky Ponytail"
 				id = "spikyponytail"
@@ -454,6 +677,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			messyponytail
 				name = "Messy Ponytail"
 				id = "messyponytail"
+				gender = MASCULINE | FEMININE
+			untidyponytail
+				name = "Untidy Ponytail"
+				id = "untidyponytail"
 				gender = MASCULINE | FEMININE
 			lowpig
 				name = "Low Pigtails"
@@ -471,6 +698,14 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Pigtails"
 				id = "pig"
 				gender = FEMININE
+			pig_half
+				name = "Pigtails: Split"
+				id = "pig_half"
+				random_allowed = FALSE
+			pompompigtail
+				name = "Pompom Pigtails"
+				id = "pompompigtail"
+				gender = FEMININE
 			ponytail
 				name = "Ponytail"
 				id = "ponytail"
@@ -487,6 +722,11 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Wavy Ponytail"
 				id = "wavy_tail"
 				gender = FEMININE
+			wavy_tail_half
+				name = "Wavy Ponytail: Split"
+				id = "wavy_tail_half"
+				random_allowed = FALSE
+
 		gimmick
 			afroHA
 				name = "Afro: Alternating Halves"
@@ -506,6 +746,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			goku
 				name = "Goku"
 				id = "goku"
+			super
+				name = "Super"
+				id = "super"
 			homer
 				name = "Homer"
 				id = "homer"
@@ -546,9 +789,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 		dali
 			name = "Dali"
 			id = "dali"
-		hogan
-			name = "Hogan"
-			id = "hogan"
+		handlebar
+			name = "Handlebar"
+			id = "handlebar"
 		devil
 			name = "Old Nick"
 			id = "devil"
@@ -580,6 +823,12 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 		chin
 			name = "Chinstrap"
 			id = "chin"
+		dwarfbeard
+			name = "Dwarven Beard"
+			id = "dwarfbeard"
+		dwarfbraided
+			name = "Dwarven Braided Beard"
+			id = "dwarfbraided"
 		fullbeard
 			name = "Full Beard"
 			id = "fullbeard"
@@ -639,24 +888,73 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			name = "Heterochromia: Right"
 			id = "hetcroR"
 
-proc/select_custom_style(list/datum/customization_style/customization_types, mob/living/carbon/human/user as mob)
+proc/select_custom_style(mob/living/carbon/human/user, no_gimmick_hair = FALSE)
 	var/list/datum/customization_style/options = list()
-	for (var/datum/customization_style/styletype as anything in customization_types)
-		var/datum/customization_style/CS = new styletype
-		options[CS.name] = CS
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client, no_gimmick_hair))
+		options[initial(styletype.name)] = styletype
 	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
-	return options[new_style]
+	var/selected_type = options[new_style]
+	if (selected_type)
+		return new selected_type
 
-proc/find_style_by_name(var/target_name)
-	for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
-		var/datum/customization_style/CS = new styletype
-		if(CS.name == target_name)
-			return CS
+proc/find_style_by_name(var/target_name, client/C, no_gimmick_hair = FALSE)
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
+		if(cmptext(initial(styletype.name), target_name))
+			return new styletype
+	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none
 
-proc/find_style_by_id(var/target_id)
-	for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
-		var/datum/customization_style/CS = new styletype
-		if(CS.id == target_id)
-			return CS
+proc/find_style_by_id(var/target_id, client/C, no_gimmick_hair = FALSE)
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
+		if(initial(styletype.id) == target_id)
+			return new styletype
+	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
 	return new /datum/customization_style/none
+
+/// Gets all the customization_styles which are available to a given client. Can be filtered by providing a gender flag or a type
+proc/get_available_custom_style_types(client/C, no_gimmick_hair = FALSE, filter_gender=0, filter_type=null, for_random=FALSE)
+	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
+	// Styles with no restriction
+	var/static/list/always_available
+	// Styles which aren't available in char setup but are available everywhere else
+	var/static/list/gimmick_styles
+	// Styles which have special unlock requirements
+	var/static/list/locked_styles
+
+	// only one check since the 3 lists are built at the same time
+	if (!always_available)
+		always_available = list()
+		gimmick_styles = list()
+		locked_styles = list()
+		for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
+			var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(styletype)
+			if (!typeinfo.special_criteria)
+				if (!typeinfo.gimmick)
+					always_available += styletype
+				else
+					gimmick_styles += styletype
+			else
+				locked_styles += styletype
+
+	var/list/available = always_available.Copy()
+	if (!no_gimmick_hair)
+		available += gimmick_styles
+
+	if (C)
+		for (var/style in locked_styles)
+			var/datum/customization_style/instance = new style()
+			if (instance.check_available(C))
+				available += style
+
+	for (var/datum/customization_style/style as anything in available)
+		if (filter_gender && !(initial(style.gender) & filter_gender))
+			available -= style
+			continue
+		if (filter_type && !ispath(style, filter_type))
+			available -= style
+			continue
+		if (for_random && !(initial(style.random_allowed)))
+			available -= style
+			continue
+
+	return available

@@ -6,6 +6,7 @@ client/proc/enable_waterflow(var/enabled as num)
 	set desc = "0 to disable, 1 to enable"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	waterflow_enabled = !!enabled
 
 client/proc/delete_fluids()
@@ -13,6 +14,7 @@ client/proc/delete_fluids()
 	set desc = "Probably safe to run. Probably."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/exenabled = waterflow_enabled
 	enable_waterflow(0)
@@ -45,6 +47,7 @@ client/proc/special_fullbright()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	message_admins("[key_name(src)] is making all Z1 Sea Lights static...")
 	SPAWN(0)
@@ -69,9 +72,9 @@ client/proc/replace_space()
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -102,6 +105,7 @@ client/proc/replace_space_exclusive()
 	set desc = "This is the safer one."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -112,9 +116,9 @@ client/proc/replace_space_exclusive()
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -163,10 +167,22 @@ client/proc/replace_space_exclusive()
 #ifdef UNDERWATER_MAP
 			T.name = ocean_name
 #endif
-
 			T.color = ocean_color
 			LAGCHECK(LAG_REALTIME)
 
+// catwalks sim water otherwise
+#ifndef UNDERWATER_MAP
+		for(var/turf/simulated/floor/airless/plating/catwalk/C in world)
+			if (C.z != 1 || istype(C, /turf/space/fluid/warp_z5)) continue
+			var/turf/orig = locate(C.x, C.y, C.z)
+			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+			T.color = ocean_color
+			LAGCHECK(LAG_REALTIME)
+#endif
+
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -185,6 +201,7 @@ client/proc/dereplace_space()
 	set desc = "uh oh."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
@@ -200,11 +217,15 @@ client/proc/dereplace_space()
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_DEBRIS)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_MINING)
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0

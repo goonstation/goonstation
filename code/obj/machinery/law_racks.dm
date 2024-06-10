@@ -4,11 +4,12 @@
 	icon_state = "airack_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_WRENCH | DECON_NOBORG
 	layer = EFFECTS_LAYER_UNDER_1 //high layer, same as trees which are also tall as shit
 	_health = 120 //more resistant to damage since it can no longer be mechscanned, CE manudrive is the only source of blueprint
 	_max_health = 120
+	power_usage = 1000 // + 100 per law
 	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
 	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
@@ -41,8 +42,8 @@
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
 		for (var/i in 1 to MAX_CIRCUITS)
-			src.welded[i] = false
-			src.screwed[i] = false
+			src.welded[i] = FALSE
+			src.screwed[i] = FALSE
 			if(src.law_circuits[i])
 				src.law_circuits[i].set_loc(get_turf(src))
 				src.law_circuits[i] = null
@@ -53,6 +54,12 @@
 		src.drop_all_modules()
 		UpdateIcon()
 		. = ..()
+
+	build_deconstruction_buttons(mob/user) //mild hack to give a custom "can't be deconstructed" message
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				return "[src] cannot be deconstructed while it still has law modules inside!"
+		return ..()
 
 	was_deconstructed_to_frame(mob/user)
 		logTheThing(LOG_STATION, user, "<b>deconstructed</b> rack [constructName(src)]")
@@ -97,8 +104,8 @@
 
 		if(_health <= 0)
 			logTheThing(LOG_STATION, causer, "[causer] <b>destroyed</b> the [constructName(src)] causing a law update")
-			src.visible_message("<span class='alert'><b>The [src] collapses completely!</b></span>")
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			src.visible_message(SPAN_ALERT("<b>The [src] collapses completely!</b>"))
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			for(var/turf/T in range(src,0))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
 			qdel(src)
@@ -109,13 +116,13 @@
 			//partially damaged - make a module glitch
 			if(prob(50))
 				src.cause_law_glitch(phrase_log.random_custom_ai_law(),rand(1,9),FALSE)
-				playsound(src, "sound/effects/sparks6.ogg", 50)
+				playsound(src, 'sound/effects/sparks6.ogg', 50)
 				law_update_needed = TRUE
 		if(_health <= 50 && prevHealth > 50)
 			//more than half damaged, spit out a module or cause a severe glitch
 			if(prob(50))
 				src.cause_law_glitch(phrase_log.random_custom_ai_law(),rand(1,9),TRUE)
-				playsound(src, "sound/effects/sparks4.ogg", 50)
+				playsound(src, 'sound/effects/sparks4.ogg', 50)
 				law_update_needed = TRUE
 			else
 				var/list/mod_index_list = list()
@@ -124,25 +131,25 @@
 						mod_index_list += i
 				if(length(mod_index_list) > 0)
 					var/i = pick(mod_index_list)
-					src.welded[i] = false
-					src.screwed[i] = false
+					src.welded[i] = FALSE
+					src.screwed[i] = FALSE
 					src.law_circuits[i].set_loc(get_turf(src))
 					src.law_circuits[i] = null
-					src.visible_message("<span class='alert'><b>A module tumbles out of the [src]!</b></span>")
-					playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+					src.visible_message(SPAN_ALERT("<b>A module tumbles out of the [src]!</b>"))
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 					law_update_needed = TRUE
 		if(_health <= 25 && prevHealth > 25)
 			//severely damaged - we're basically falling apart here
 			//break all the welds and screws, eject half of remaining modules
 			for (var/i in 1 to MAX_CIRCUITS)
-				src.welded[i] = false
-				src.screwed[i] = false
+				src.welded[i] = FALSE
+				src.screwed[i] = FALSE
 				if(src.law_circuits[i] && prob(50))
 					src.law_circuits[i].set_loc(get_turf(src))
 					src.law_circuits[i] = null
 					law_update_needed = TRUE
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-			src.visible_message("<span class='alert'><b>Some of the [src]'s shelves collapse!</b></span>")
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			src.visible_message(SPAN_ALERT("<b>Some of the [src]'s shelves collapse!</b>"))
 
 		if(law_update_needed)
 			logTheThing(LOG_STATION, causer, "[causer] damaged the [constructName(src)] causing a law update")
@@ -155,19 +162,19 @@
 		//handle particles
 		if(_health <= 75)
 			if(!src.GetParticles("rack_spark"))
-				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
+				playsound(src, 'sound/effects/electric_shock_short.ogg', 50)
 				src.UpdateParticles(new/particles/rack_spark,"rack_spark")
-				src.visible_message("<span class='alert'><b>The [src] starts sparking!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] starts sparking!</b>"))
 		else if(prevHealth <= 75)
-			src.visible_message("<span class='alert'><b>The [src] stops sparking.</b></span>")
+			src.visible_message(SPAN_ALERT("<b>The [src] stops sparking.</b>"))
 			src.ClearSpecificParticles("rack_spark")
 
 		if(_health <= 50)
 			if(!src.GetParticles("rack_smoke"))
 				src.UpdateParticles(new/particles/rack_smoke,"rack_smoke")
-				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
 		else if(prevHealth <= 50)
-			src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
+			src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
 			src.ClearSpecificParticles("rack_smoke")
 
 	examine(mob/user)
@@ -181,7 +188,7 @@
 				test_connection = S.law_rack_connection
 
 			if(test_connection == src)
-				. += "<b>You are connected to this law rack.<b>"
+				. += "<b>You are connected to this law rack.</b>"
 			else
 				. += "You are not connected to this law rack."
 		if(src._health == src._max_health)
@@ -203,16 +210,16 @@
 		changeHealth(-power*0.15,"blob")
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
-				changeHealth(rand(-105,-90),"explosion severity [severity]")
+				changeHealth(rand(-90,-70),"explosion severity [severity]")
 				return
 			if(2)
-				changeHealth(rand(-80,-50),"explosion severity [severity]")
+				changeHealth(rand(-60,-40),"explosion severity [severity]")
 				return
 			if(3)
-				changeHealth(rand(-30,-10),"explosion severity [severity]")
+				changeHealth(rand(-20,-10),"explosion severity [severity]")
 				return
 
 	bullet_act(obj/projectile/P)
@@ -222,11 +229,10 @@
 		damage = damage - min(damage,3) //bullet resist
 		if (damage < 1 || istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
 			if(!P.proj_data.silentshot)
-				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
+				src.visible_message(SPAN_ALERT("[src] is hit by the [P] but it deflects harmlessly."))
 			return
 
-		if (src.material)
-			src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if (D_KINETIC)
@@ -241,7 +247,7 @@
 				changeHealth(-damage*0.75,P.shooter)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
+			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	update_icon()
 		var/image/circuit_image = null
@@ -264,7 +270,7 @@
 	attack_hand(mob/user)
 		if (!src.law_circuits)
 			// YOU BETRAYED THE LAW!!!!!!
-			boutput(user, "<span class='alert'>Oh dear, this really shouldn't happen. Call an admin.</span>")
+			boutput(user, SPAN_ALERT("Oh dear, this really shouldn't happen. Call an admin."))
 			return
 
 		if(issilicon(user) || isAI(user))
@@ -276,7 +282,7 @@
 				test_connection = S.law_rack_connection
 
 			if(test_connection == src)
-				boutput(user,"<b>You are connected to this law rack.<b>")
+				boutput(user,"<b>You are connected to this law rack.</b>")
 			else
 				boutput(user,"You are not connected to this law rack.")
 
@@ -302,31 +308,31 @@
 			return
 		else if (istype(I, /obj/item/aiModule) && !issilicon(user))
 			var/obj/item/aiModule/AIM = I
-			var/inserted = false
+			var/inserted = FALSE
 			var/count = 1
 			while (!inserted && count <= MAX_CIRCUITS)
 				if(!src.law_circuits[count])
-					inserted = true
+					inserted = TRUE
 				else
 					count++
 			if(!inserted)
-				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
+				boutput(user,SPAN_ALERT("There's no more space on the rack!"))
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().appearance, null, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(insert_module_callback), list(count,user,AIM), user.equipped().appearance, null, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
 				if(M.law_rack_connection == src)
 					M.moustache_mode = 1
-					user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [M.name]!"))
 					M.update_appearance()
 		else if (istype(I, /obj/item/peripheral/videocard))
 			var/obj/item/peripheral/videocard/V = I
 			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().appearance, null, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(insert_videocard_callback), list(user,V), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 			else
-				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
+				user.visible_message(SPAN_ALERT("The [src]'s graphics port isn't ready to accept [I] yet."))
 		else
 			return ..()
 
@@ -353,8 +359,8 @@
 				lawText[i] = law_circuits[i].get_law_text()
 				lawTitles[i] = law_circuits[i].get_law_name()
 			else
-				src.welded[i] = false
-				src.screwed[i] = false
+				src.welded[i] = FALSE
+				src.screwed[i] = FALSE
 
 		. = list(
 			"lawTitles" = lawTitles,
@@ -390,12 +396,11 @@
 					return
 				else
 					if(welded[slotNum])
-						ui.user.visible_message("<span class='alert'>[ui.user] starts cutting the welds on a module!</span>", "<span class='alert'>You start cutting the welds on the module!</span>")
+						ui.user.visible_message(SPAN_ALERT("[ui.user] starts cutting the welds on a module!"), SPAN_ALERT("You start cutting the welds on the module!"))
 					else
-						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
+						ui.user.visible_message(SPAN_ALERT("[ui.user] starts welding a module in place!"), SPAN_ALERT("You start to weld the module in place!"))
 					var/positions = src.get_welding_positions(slotNum)
-					playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
-					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
+					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, PROC_REF(toggle_welded_callback), list(slotNum,ui.user), \
 			  		"",	positions[1], positions[2]), ui.user)
 
 				return
@@ -411,11 +416,11 @@
 					return
 
 				if(screwed[slotNum])
-					ui.user.visible_message("<span class='alert'>[ui.user] starts unscrewing a module!</span>", "<span class='alert'>You start unscrewing the module!</span>")
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts unscrewing a module!"), SPAN_ALERT("You start unscrewing the module!"))
 				else
-					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/toggle_screwed_callback, list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts screwing a module in place!"), SPAN_ALERT("You start to screw the module in place!"))
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(toggle_screwed_callback), list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 				"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
@@ -423,18 +428,18 @@
 				if(!in_interact_range(src, ui.user))
 					return
 				if (welded[slotNum])
-					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's welded in place!</span>", "<span class='alert'>You struggle with the module but it's welded in place!</span>")
+					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's welded in place!"), SPAN_ALERT("You struggle with the module but it's welded in place!"))
 					return
 				if (screwed[slotNum])
-					ui.user.visible_message("<span class='alert'>[ui.user] tries to tug a module out of the rack, but it's still screwed in!</span>", "<span class='alert'>You struggle with the module but it's still screwed in!</span>")
+					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's still screwed in!"), SPAN_ALERT("You struggle with the module but it's still screwed in!"))
 					return
 
 				if(law_circuits[slotNum])
 					if(issilicon(ui.user))
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
 						return
-					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a module!</span>", "<span class='alert'>You start removing the module!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/remove_module_callback, list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a module!"), SPAN_ALERT("You start removing the module!"))
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 				else
 					var/equipped = ui.user.equipped()
@@ -442,11 +447,11 @@
 						return
 
 					if(!istype(equipped,/obj/item/aiModule))
-						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the rack. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the rack. You feel very foolish.</span>")
+						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to shove \a [equipped] into the rack. Silly [ui.user]!"), SPAN_ALERT("You try to put \a [equipped] into the rack. You feel very foolish."))
 						return
 
-					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting a module!</span>", "<span class='alert'>You start inserting the module!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/insert_module_callback, list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts inserting a module!"), SPAN_ALERT("You start inserting the module!"))
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(insert_module_callback), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 
@@ -508,11 +513,11 @@
 					var/list/lawtext = last_laws[i]["law"]
 					if (islist(lawtext))
 						for (var/law in lawtext)
-							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
+							removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
 							if (lawtext.Find(law) != length(lawtext)) //screm
 								removed_law_offset++
 					else
-						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
+						removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
 				continue
 			var/lt = module.get_law_text(TRUE)
 			var/class = "regular"
@@ -520,13 +525,13 @@
 				class = "lawupdate"
 			if(islist(lt))
 				for(var/law in lt)
-					lawOut += "<span class=\"[class]\">[law_counter++]: [law]</span>"
+					lawOut += "<span class='[class]'>[law_counter++]: [law]</span>"
 			else
-				lawOut += "<span class=\"[class]\">[law_counter++]: [lt]</span>"
+				lawOut += "<span class='[class]'>[law_counter++]: [lt]</span>"
 
 		var/text_output = ""
 		if (length(removed_laws))
-			text_output += "<span class=\"alert\">Removed law[(length(removed_laws) > 1) ? "s" : ""]:</span>" + glue + jointext(removed_laws, glue) + glue
+			text_output += SPAN_ALERT("Removed law[(length(removed_laws) > 1) ? "s" : ""]:") + glue + jointext(removed_laws, glue) + glue
 		text_output += jointext(lawOut, glue)
 		return text_output
 
@@ -571,29 +576,18 @@
 				if(R.dependent && R?.mainframe?.law_rack_connection != src)
 					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
 					continue
-				R.playsound_local(R, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text(notification_text, "red")
 				src.show_laws(R)
 				affected_mobs |= R
 				if(isAI(R))
 					var/mob/living/silicon/ai/holoAI = R
 					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-
-					var/ability_type
-					var/datum/abilityHolder/silicon/ai/aiAH = R.abilityHolder
-					var/list/current_abilities = list()
-					for(var/datum/ability in aiAH.abilities)
-						current_abilities |= ability.type
-					var/list/abilities_to_remove = current_abilities - ai_abilities
-					for(ability_type in abilities_to_remove)
-						aiAH.removeAbility(ability_type)
-					var/list/abilities_to_add = ai_abilities - current_abilities
-					for(ability_type in abilities_to_add)
-						aiAH.addAbility(ability_type)
-
+					src.reset_ai_abilities(R)
+		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
-				E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				src.show_laws(E)
 				affected_mobs |= E.mainframe
 				var/mob/living/silicon/ai/holoAI = E.mainframe
@@ -607,17 +601,17 @@
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
-			user.visible_message("<span class='alert'>[user] cuts the welds on the module.</span>","<span class='alert'>You cut the welds on the module.</span>")
+			user.visible_message(SPAN_ALERT("[user] cuts the welds on the module."),SPAN_ALERT("You cut the welds on the module."))
 		else
-			user.visible_message("<span class='alert'>[user] welds the module in place.</span>","<span class='alert'>You weld the module in place.</span>")
+			user.visible_message(SPAN_ALERT("[user] welds the module in place."),SPAN_ALERT("You weld the module in place."))
 		src.welded[slot_number] = !src.welded[slot_number]
 		tgui_process.update_uis(src)
 
 	proc/toggle_screwed_callback(var/slot_number,var/mob/user)
 		if(src.screwed[slot_number])
-			user.visible_message("<span class='alert'>[user] unscrews the module.</span>","<span class='alert'>You unscrew the module from the rack.</span>")
+			user.visible_message(SPAN_ALERT("[user] unscrews the module."),SPAN_ALERT("You unscrew the module from the rack."))
 		else
-			user.visible_message("<span class='alert'>[user] screws in the module.</span>","<span class='alert'>You screw the module into the rack.</span>")
+			user.visible_message(SPAN_ALERT("[user] screws in the module."),SPAN_ALERT("You screw the module into the rack."))
 		src.screwed[slot_number] = !src.screwed[slot_number]
 		tgui_process.update_uis(src)
 
@@ -627,8 +621,8 @@
 		src.law_circuits[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
-		playsound(src, "sound/machines/law_insert.ogg", 80)
-		user.visible_message("<span class='alert'>[user] slides a module into the law rack</span>", "<span class='alert'>You slide the module into the rack.</span>")
+		playsound(src, 'sound/machines/law_insert.ogg', 80)
+		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
 		tgui_process.update_uis(src)
 		if(istype(equipped,/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = equipped
@@ -636,17 +630,19 @@
 		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = equipped
 			src.ai_abilities |= expansion.ai_abilities
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
+		if(isnull(src.law_circuits[slotNum]))
+			return FALSE
 		//add circuit to hand
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
-		playsound(src, "sound/machines/law_remove.ogg", 80)
-		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")
+		playsound(src, 'sound/machines/law_remove.ogg', 80)
+		user.visible_message(SPAN_ALERT("[user] slides a module out of the law rack"), SPAN_ALERT("You slide the module out of the rack."))
 		user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
@@ -664,29 +660,29 @@
 		ON_COOLDOWN(src, "mine_cooldown", 30 SECONDS)
 		user.u_equip(I)
 		I.set_loc(src)
-		playsound(src, "sound/misc/JetpackMK2on.ogg", 70, extrarange=3)
-		src.visible_message("<span class='alert'>[I] emits a loud whirring noise as it connects into the [src]!</span>")
+		playsound(src, 'sound/misc/JetpackMK2on.ogg', 70, extrarange=3)
+		src.visible_message(SPAN_ALERT("[I] emits a loud whirring noise as it connects into the [src]!"))
 		SPAWN(6 SECONDS)
 			if (src && !src.GetParticles("mine_spark"))
-				playsound(src, "sound/effects/electric_shock_short.ogg", 50)
+				playsound(src, 'sound/effects/electric_shock_short.ogg', 50)
 				src.UpdateParticles(new/particles/rack_spark,"mine_spark")
-				src.visible_message("<span class='alert'><b>The [src] starts sparking!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] starts sparking!</b>"))
 			sleep(2 SECONDS)
 			if (!src) return
 			src.use_power(500)
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))
 						if (!isintangible(mob))
 							target = mob
 							break
-					playsound(src, "sound/machines/bweep.ogg", rand(45,70), 1, pitch = 1.6)
+					playsound(src, 'sound/machines/bweep.ogg', rand(45,70), 1, pitch = 1.6)
 					mined.throw_at(target, 7, rand(4,6))
-					src.visible_message("<span class='alert'>[I] energetically expels [mined]!</span>")
+					src.visible_message(SPAN_ALERT("[I] energetically expels [mined]!"))
 			sleep(1 SECOND)
 			if (src && I)
 				target = get_step(src, rand(1,8))
@@ -695,17 +691,26 @@
 					if (!isintangible(mob))
 						target = mob
 						break
-				playsound(src, "sound/impact_sounds/Metal_Clang_3.ogg", 90)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 90)
 				I.throw_at(target, 7, rand(6,9))
-				src.visible_message("<span class='alert'>The [I] is forcefully ejected from the [src]!</span>")
+				src.visible_message(SPAN_ALERT("The [I] is forcefully ejected from the [src]!"))
 				src.ClearSpecificParticles("mine_spark")
 			sleep(0.7 SECONDS) // just enough time to recognize the card
 			if (I)
-				fireflash(I,0,TRUE)
+				fireflash(I,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 				I.combust()
 
-	/// Sets an arbitrary slot to the passed aiModule - will override any module in the slot. Does not call UpdateLaws()
-	proc/SetLaw(var/obj/item/aiModule/mod,var/slot=1,var/screwed_in=false,var/welded_in=false)
+	/**
+	 * Sets an arbitrary slot to the passed aiModule - will override any module in the slot.
+	 * Does not call UpdateLaws()
+	 */
+	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
+		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
@@ -714,13 +719,19 @@
 			if(istype(mod,/obj/item/aiModule/hologram_expansion))
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
+			else if(istype(mod,/obj/item/aiModule/ability_expansion))
+				var/obj/item/aiModule/ability_expansion/expansion = mod
+				src.ai_abilities |= expansion.ai_abilities
 			UpdateIcon()
-			return true
+			src.calculate_power_usage()
+			return TRUE
 
-	/** Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot. Does not call UpdateLaws()
+	/**
+	 * Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot.
+	 * Does not call UpdateLaws()
 	 * Intended for Admemery
-	*/
-	proc/SetLawCustom(var/lawName,var/lawText,var/slot=1,var/screwed_in=false,var/welded_in=false)
+	 */
+	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE)
 		var/mod = new /obj/item/aiModule/custom(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
@@ -729,10 +740,14 @@
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
 			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slot]=null
-		src.welded[slot]=false
-		src.screwed[slot]=false
+		src.welded[slot] = FALSE
+		src.screwed[slot] = FALSE
 		tgui_process.update_uis(src)
+		src.calculate_power_usage()
 		UpdateIcon()
 
 	/// Deletes all laws. Does not call UpdateLaws()
@@ -740,12 +755,13 @@
 		for (var/i in 1 to MAX_CIRCUITS)
 			src.DeleteLaw(i)
 
-	/** This will cause a module to glitch, either totally replace it law or adding picked_law
-	* to its text (depening on replace). Lawnumber is a suggestion, not a guarentee - if there is no
-	* law in that slot, this will trigger on the law closest to that slot
-	* if there are no laws to glitch, just do nothing
-	*/
-	proc/cause_law_glitch(var/picked_law="Beep repeatedly.",var/lawnumber=1,var/replace=false)
+	/**
+	 * This will cause a module to glitch, either totally replace it law or adding picked_law to its text (depening on replace).
+	 * Lawnumber is a suggestion, not a guarentee.
+	 * - If there is no law in that slot, this will trigger on the law closest to that slot.
+	 * - If there are no laws to glitch, just do nothing.
+	 */
+	proc/cause_law_glitch(picked_law = "Beep repeatedly.", lawnumber = 1, replace = FALSE)
 		var/lawnumber_actual = 1
 		if(src.law_circuits[lawnumber])
 			lawnumber_actual = lawnumber
@@ -755,15 +771,35 @@
 				if(src.law_circuits[i] && (abs(lawnumber - i) <= abs(lawnumber - lawnumber_actual)))
 					lawnumber_actual = i
 		if(!src.law_circuits[lawnumber_actual])
-			return false //we could not find a law to modify, sorry
+			return FALSE //we could not find a law to modify, sorry
 		else
 			src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
 			tgui_process.update_uis(src)
 			if(replace)
-				src.visible_message("<span class='alert'><b>The [src] sparks violently!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] sparks violently!</b>"))
 			else
-				src.visible_message("<span class='alert'><b>The [src] makes a brief fizzing noise!</b></span>")
-			return true
+				src.visible_message(SPAN_ALERT("<b>The [src] makes a brief fizzing noise!</b>"))
+			return TRUE
+
+	proc/calculate_power_usage()
+		src.power_usage = 1000
+		for (var/i in 1 to MAX_CIRCUITS)
+			if (src.law_circuits[i])
+				src.power_usage += 100
+
+	proc/reset_ai_abilities(mob/living/silicon/ai/target)
+		var/ability_type
+		var/datum/abilityHolder/silicon/ai/aiAH = target.abilityHolder
+		var/list/current_abilities = list()
+		for(var/datum/ability in aiAH.abilities)
+			current_abilities |= ability.type
+		var/list/abilities_to_remove = current_abilities - src.ai_abilities
+		for(ability_type in abilities_to_remove)
+			if (ispath(ability_type, /datum/targetable/ai/module))
+				aiAH.removeAbility(ability_type)
+		var/list/abilities_to_add = src.ai_abilities - current_abilities
+		for(ability_type in abilities_to_add)
+			aiAH.addAbility(ability_type)
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'
@@ -801,3 +837,11 @@
 	name = "AI Law Mount Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()

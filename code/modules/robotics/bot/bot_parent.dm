@@ -1,5 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -7,6 +8,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
+	pass_unstable = TRUE
 	var/obj/item/card/id/botcard // ID card that the bot "holds".
 	var/access_lookup = "Assistant" // For the get_access() proc. Defaults to staff assistant.
 	var/locked = null
@@ -79,7 +81,8 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitbyproj)
+		START_TRACKING
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
@@ -87,8 +90,7 @@
 		src.processing_tier = src.PT_idle
 		src.SubscribeToProcess()
 		if(!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
@@ -99,6 +101,7 @@
 		#endif
 
 	disposing()
+		STOP_TRACKING
 		botcard = null
 		qdel(chat_text)
 		chat_text = null
@@ -136,16 +139,12 @@
 		var/turf/T = get_turf(src)
 		if(isnull(T))
 			return FALSE
-		for (var/mob/M in GET_NEARBY(T, src.hash_check_range))
-			if(M.client)
-				return TRUE
-		return FALSE
+		return length(GET_NEARBY(/datum/spatial_hashmap/clients, T, src.hash_check_range))
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
-		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
@@ -164,15 +163,19 @@
 	proc/explode()
 		return
 
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
+
 	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)
 			return
 		var/image/chat_maptext/chatbot_text = null
 		if (src.speech2text && src.chat_text && !just_chat)
 			if(src.use_speech_bubble)
-				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
+				AddOverlays(bot_speech_bubble, "bot_speech_bubble")
 				SPAWN(1.5 SECONDS)
-					UpdateOverlays(null, "bot_speech_bubble")
+					ClearSpecificOverlays("bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
 				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
@@ -189,7 +192,7 @@
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
@@ -207,16 +210,30 @@
 	var/healthpct = src.health / initial(src.health)
 	if (healthpct <= 0.8)
 		if (healthpct >= 0.4)
-			. += "<span class='alert'>[src]'s parts look loose.</span>"
+			. += SPAN_ALERT("[src]'s parts look loose.")
 		else
-			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
+			. += SPAN_ALERT("<B>[src]'s parts look very loose!</B>")
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
-	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
-		P.initial_power -= 10
-		if(P.initial_power <= 0)
-			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
-			P.die()
+	hit_twitch(src)
+	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)))
+		if (!ON_COOLDOWN(src, "projectile_bot_hit", 0.5 SECONDS))
+			var/obj/particle/attack/bot_hit/hit_particle = new
+			hit_particle.set_loc(src.loc)
+			hit_particle.transform.Turn(rand(0, 360))
+			if (P.proj_data.damage > 1)
+				flick("block_spark", hit_particle)
+				if (P.proj_data.damage_type & D_KINETIC)
+					playsound(src, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE) // replace with more unique sound if found later
+			else
+				flick("block_spark_armor", hit_particle)
+				if (P.proj_data.damage_type & D_ENERGY)
+					playsound(src, 'sound/effects/sparks6.ogg', 40, TRUE)
+		if (P.proj_data.ks_ratio > 0)
+			P.initial_power -= 10
+			if(P.initial_power <= 0)
+				src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
+				P.die()
 	if(!src.density)
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
 
@@ -263,8 +280,8 @@
 				return T
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
-	var/target_turf = get_pathable_turf(the_target)
-	if((BOUNDS_DIST(the_target, src) == 0))
+	var/target_turf = adjacent ? get_turf(the_target) : get_pathable_turf(the_target)
+	if((BOUNDS_DIST(the_target, src) < 0))
 		return
 	if(src.bot_mover?.the_target == target_turf && frustration == 0)
 		return 0
@@ -272,7 +289,8 @@
 		return 0
 
 	src.KillPathAndGiveUp(0)
-	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	var/datum/robot_mover/mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
+	src.bot_mover = !QDELETED(mover) ? mover : null
 	return 0
 
 /// movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm
@@ -284,6 +302,7 @@
 	var/adjacent = 0
 	var/scanrate = 10
 	var/max_dist = 600
+	var/max_seen = 1000
 
 	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
@@ -331,7 +350,8 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE)
+		master.path = get_path_to(src.master, src.the_target, mintargetdist = adjacent ? 1 : 0, \
+			max_distance=src.max_dist, max_seen=src.max_seen, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return
@@ -340,9 +360,6 @@
 			if (!istype(master) || (master && (!length(master.path) || !src.the_target)))
 				qdel(src)
 				return
-
-			if(src.adjacent && (length(master?.path) > 1)) //Make sure to check it isn't null!!
-				master.path.len-- //Only go UP to the target, not the same tile.
 
 			master?.moving = 1
 

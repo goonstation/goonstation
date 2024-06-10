@@ -53,7 +53,7 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
-
+	. = ..()
 	SPAWN( 0 )
 		src.part1.sense()
 		return
@@ -94,14 +94,14 @@
 		src.part3 = null
 		qdel(src)
 		return
-	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
+	if (!(isweldingtool(W) && W:try_weld(user,0,-1,1,0)))
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message(SPAN_NOTICE("A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited."), 1)
 	else
 		src.status = 0
-		boutput(user, "<span class='notice'>The hole has been closed.</span>")
+		boutput(user, SPAN_NOTICE("The hole has been closed."))
 
 	src.bomb_logs(user, src, "proximity", src.status == 1 ? 0 : 1, 0)
 	src.part2.status = src.status
@@ -110,8 +110,8 @@
 
 /obj/item/assembly/proximity_bomb/attack_self(mob/user as mob)
 
-	playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
-	src.part1.attack_self(user, 1)
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
+	src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -122,7 +122,7 @@
 		//Foreach goto(19)
 
 	if (src.status)
-		src.part1.armed = 0
+		src.part1.armed = FALSE
 		src.c_state(0)
 		if (src.force_dud == 1)
 			src.bomb_logs(usr, src, "proximity", 0, 1)
@@ -130,7 +130,7 @@
 		src.part3.ignite()
 	else
 		if (!src.status && src.force_dud == 0)
-			src.part1.armed = 0
+			src.part1.armed = FALSE
 			src.c_state(0)
 			src.part3.release()
 
@@ -154,7 +154,7 @@
 		if(src.part1.armed)
 			//boutput(world, "sending signal")
 			receive_signal()
-		else
+		// else
 			//boutput(world, "not active")
 	..()
 
@@ -169,6 +169,10 @@
 
 	SPAWN(1 SECOND)
 		prox_check()
+
+/obj/item/assembly/proximity_bomb/return_air()
+	return src.part3?.return_air()
+
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////
 
@@ -222,14 +226,14 @@
 		src.part3 = null
 		qdel(src)
 		return
-	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
+	if (!(isweldingtool(W) && W:try_weld(user,0,-1,1,0)))
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message(SPAN_NOTICE("A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited."), 1)
 	else
 		src.status = 0
-		boutput(user, "<span class='notice'>The hole has been closed.</span>")
+		boutput(user, SPAN_NOTICE("The hole has been closed."))
 
 	src.part2.status = src.status
 	src.bomb_logs(user, src, "timer", src.status == 1 ? 0 : 1, 0)
@@ -239,8 +243,8 @@
 /obj/item/assembly/time_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		src.part1.attack_self(user, 1)
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		src.part1.AttackSelf(user, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -257,6 +261,9 @@
 		if (!src.status && src.force_dud == 0)
 			src.part3.release()
 	return
+
+/obj/item/assembly/time_bomb/return_air()
+	return src.part3?.return_air()
 
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
 
@@ -306,14 +313,14 @@
 		src.part3 = null
 		qdel(src)
 		return
-	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
+	if (!(isweldingtool(W) && W:try_weld(user,0,-1,1,0)))
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message(SPAN_NOTICE("A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited."), 1)
 	else
 		src.status = 0
-		boutput(user, "<span class='notice'>The hole has been closed.</span>")
+		boutput(user, SPAN_NOTICE("The hole has been closed."))
 
 	src.bomb_logs(user, src, "radio", src.status == 1 ? 0 : 1, 0)
 	src.part2.status = src.status
@@ -324,8 +331,8 @@
 /obj/item/assembly/radio_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
-		src.part1.attack_self(user, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
+		src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -342,3 +349,6 @@
 		if (!src.status && src.force_dud == 0)
 			src.part3.release()
 	return
+
+/obj/item/assembly/radio_bomb/return_air()
+	return src.part3?.return_air()

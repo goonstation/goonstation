@@ -4,7 +4,7 @@
 	icon_state = "reactor_stats"
 	desc = "TODO"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	light_r =1
 	light_g = 0.8
@@ -22,10 +22,6 @@
    <script src="https://ce.gl/hterm.js"></script>
    <script src="https://ce.gl/ht.js"></script>
    <script type="text/javascript">
-
-	var firebugEl = document.createElement('script');
-	firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-	document.body.appendChild(firebugEl);
 
    </script>
 

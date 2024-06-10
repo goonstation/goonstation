@@ -1,4 +1,4 @@
-/mob/wraith/poltergeist
+/mob/living/intangible/wraith/poltergeist
 	name = "Poltergeist"
 	real_name = "Poltergeist"
 	desc = "Jesus Christ, how spooky."
@@ -6,9 +6,9 @@
 	icon_state = "poltergeist"
 	deaths = 1					//only 1 life
 	hud_path = /datum/hud/wraith/poltergeist
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/obj/spookMarker/marker = null
-	haunt_duration = 150
+	forced_haunt_duration = 15 SECONDS
 	death_icon_state = "derangedghost"
 	weak_tk = TRUE
 	var/max_dist_marker = 15
@@ -42,7 +42,7 @@
 		theName = theName  + "[pick(" the Poltergeist", " the Mischievous", " the Playful", " the Trickster", " the Sneaky", " the Child", " the Kid", " the Ass", " the Inquisitive", " the Exiled")]"
 		return theName
 
-	New(var/turf/T, var/mob/wraith/master, var/obj/spookMarker/marker)
+	New(var/turf/T, var/mob/living/intangible/wraith/master, var/obj/spookMarker/marker)
 		..(T)
 		src.master = master
 		src.marker = marker
@@ -80,13 +80,14 @@
 
 		else if (dist_from_master > max_dist_marker && dist_from_marker > max_dist_master && health > 50)
 			TakeDamage("all", 5, 0)
-			// boutput(src, "<span class='alert'>You are damaged from being too far from a well of power!</span>")
+			// boutput(src, SPAN_ALERT("You are damaged from being too far from a well of power!"))
 		//else
 			//You're close to a well of power, gain extra spell points
 
 	death()
 		if (master)
-			boutput(master, "<span class='alert'>Your poltergeist, [src], has been destroyed!</span>")
+			master.poltergeists -= src
+			boutput(master, SPAN_ALERT("Your poltergeist, [src], has been destroyed!"))
 		qdel(marker)
 		..()
 
@@ -97,7 +98,7 @@
 		qdel(orbit_anchor)
 		..()
 
-	addAllAbilities()
+	addAllBasicAbilities()
 		src.addAbility(/datum/targetable/wraithAbility/decay)
 		src.addAbility(/datum/targetable/wraithAbility/command)
 		src.addAbility(/datum/targetable/wraithAbility/animateObject)
@@ -119,24 +120,6 @@
 
 		src.removeAbility(/datum/targetable/wraithAbility/retreat)
 
-	makeCorporeal()
-		if (!src.density)
-			src.set_density(1)
-			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-			src.icon_state = "poltergeist-corp"
-			src.see_invisible = INVIS_NONE
-			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
-		update_body()
-
-	makeIncorporeal()
-		if (src.density)
-			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
-			src.set_density(0)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
-			src.icon_state = "poltergeist"
-			src.see_invisible = INVIS_GHOST
-		update_body()
-
 	Move(var/turf/NewLoc, direct)
 		..()
 		update_well_dist(master, marker)
@@ -157,7 +140,7 @@
 			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(1)
-			boutput(src, "<span class='alert'>You start following your master. You can leave by pressing the 'X' Button at the top right and can move around slightly with your movement keys!</span>")
+			boutput(src, SPAN_ALERT("You start following your master. You can leave by pressing the 'X' Button at the top right and can move around slightly with your movement keys!"))
 			return 1
 		return 0
 
@@ -227,34 +210,18 @@
 			p_hud.update_well_dist(power_well_dist)
 
 //switch to poltergeist after testing
-/mob/wraith/poltergeist/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
-		use_movement_controller = null
-
-	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
-		var/obj/machinery/vehicle/V = src.loc
-		V.eject(src)
-
+/mob/living/intangible/wraith/poltergeist/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
 	. = ..(new_loc)
-	src.loc_pixel_x = new_pixel_x
-	src.loc_pixel_y = new_pixel_y
-	src.update_camera()
 
 	//wraith shit
 	if (iswraith(src.loc))	//&& src.loc == src.master
-		use_movement_controller = src.loc
+		var/mob/living/intangible/wraith/W = src.loc
+		src.override_movement_controller = W.movement_controller
 		//Remove this shit after testing --kyle
 		src.following_master = 1
 	else
-		use_movement_controller = null
+		override_movement_controller = null
 		src.following_master = 0
-
-
-	if (isobj(src.loc))
-		if(src.loc:get_movement_controller())
-			use_movement_controller = src.loc
-
-	walk(src,0) //cancel any walk movements
 
 /////////////////abilities////////////////////////
 
@@ -274,9 +241,9 @@
 			return 1
 
 		if (ispoltergeist(holder.owner))
-			var/mob/wraith/poltergeist/P = holder.owner
+			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (P.density)
-				boutput(P, "<span class='alert'>You cannot retreat while corporeal!</span>")
+				boutput(P, SPAN_ALERT("You cannot retreat while corporeal!"))
 				return 1
 
 			var/I = tgui_input_list(holder.owner, "Where to retreat", "Where to retreat", list("Master", "Anchor"))

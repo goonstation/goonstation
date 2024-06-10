@@ -61,7 +61,7 @@ proc/check_compid_list(var/client/C)
 		CI.times_seen = 1
 
 		//Has this computerid changed recently and does it have a habit of changing?
-		if(C.compid_info_list.len >= 2) //Do they have more than 2 CID's on file? Weird
+		if(length(C.compid_info_list) >= 2) //Do they have more than 2 CID's on file? Weird
 			var/today = time2text(world.realtime, "YYYYMMDD")
 			var/current_hour = time2text(world.realtime, "hh")
 			var/current_minute = time2text(world.realtime, "mm")
@@ -106,7 +106,7 @@ proc/check_compid_list(var/client/C)
 
 		C.compid_info_list += CI
 	/* Pointless alert
-	if(C.compid_info_list.len > 10) //Holy evasion, Batman!
+	if(length(C.compid_info_list) > 10) //Holy evasion, Batman!
 		message_admins("[key_name(C)] (ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
 		logTheThing(LOG_ADMIN, C, "(ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
 	*/
@@ -134,14 +134,15 @@ proc/do_computerid_test(var/client/C)
 	logTheThing(LOG_DIARY, C, msg, "admin")
 	if(is_fucker)
 		//message_admins("[key_name(C)] was automatically banned for using the CID DLL.")
-		var/banData[] = new()
-		banData["ckey"] = C.ckey
-		banData["compID"] = C.computer_id
-		banData["akey"] = "Auto Banner"
-		banData["ip"] = C.address
-		banData["reason"] = "Using a modified dreamseeker client."
-		banData["mins"] = 0
-		addBan(banData)
+		bansHandler.add(
+			"bot",
+			null,
+			C.ckey,
+			C.computer_id,
+			C.address,
+			"Using a modified dreamseeker client.",
+			FALSE
+		)
 
 
 proc/view_client_compid_list(mob/user, var/C)

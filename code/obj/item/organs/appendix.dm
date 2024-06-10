@@ -3,14 +3,15 @@
 	organ_name = "appendix"
 	organ_holder_name = "appendix"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3
 	icon_state = "appendix"
 	failure_disease = /datum/ailment/disease/appendicitis
+	surgery_flags = SURGERY_SNIPPING
+	region = ABDOMINAL
 
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2) && !robotic)
+		if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2) && !robotic)
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -24,6 +25,9 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+TYPEINFO(/obj/item/organ/appendix/cyber)
+	mats = 6
+
 /obj/item/organ/appendix/cyber
 	name = "cyberappendix"
 	desc = "A fancy robotic appendix to replace one that someone's lost!"
@@ -31,15 +35,14 @@
 	// item_state = "cyber-"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "pharosium"
+	default_material = "pharosium"
 	edible = 0
-	mats = 6
 
 	//A bad version of the robutsec... For now.
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() < FAIL_DAMAGE && probmult(10) && donor.health <= donor.max_health)
+		if (src.get_damage() < fail_damage && probmult(10) && donor.health <= donor.max_health)
 			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
 			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 2 : 4) //salicyclic has very low depletion, reduce chances of overdose
 			if(donor.health <= donor.max_health * 0.9)
@@ -60,7 +63,7 @@
 	breakme()
 		if(..() && emagged)
 			donor.emote("collapse")
-			donor.setStatus("weakened", 3 SECONDS)
+			donor.setStatus("knockdown", 3 SECONDS)
 
 			donor.reagents.add_reagent("salbutamol", 20) //copied mostly from robusttec
 			donor.reagents.add_reagent("epinephrine", 15)
@@ -69,4 +72,4 @@
 			#ifdef CREATE_PATHOGENS
 			add_pathogens(donor, 30) //oh no
 			#endif
-			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")
+			boutput(donor, SPAN_ALERT("Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon."))

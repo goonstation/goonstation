@@ -12,6 +12,7 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 	var/list/items_to_drop
 
 /datum/component/drop_loot_on_death/Initialize(loot)
+	. = ..()
 	if (islist(loot) && length(loot))
 		src.items_to_drop = loot
 	else if (ispath(loot))
@@ -20,9 +21,9 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 		return COMPONENT_INCOMPATIBLE // no items to drop were provided, no point in adding the component
 
 	if (ismob(parent))
-		RegisterSignal(parent, list(COMSIG_MOB_DEATH), .proc/drop_loot)
+		RegisterSignal(parent, COMSIG_MOB_DEATH, PROC_REF(drop_loot))
 	else if (iscritter(parent))
-		RegisterSignal(parent, list(COMSIG_OBJ_CRITTER_DEATH), .proc/drop_loot)
+		RegisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH, PROC_REF(drop_loot))
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -56,6 +57,6 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 		else
 			dropped_items_string += ", \a [dropped_item]"
 
-	dead_parent.visible_message("<span class='notice'>As [dead_parent] falls, they leave behind [dropped_items_string].</span>")
+	dead_parent.visible_message(SPAN_NOTICE("As [dead_parent] falls, they leave behind [dropped_items_string]."))
 
 	RemoveComponent()

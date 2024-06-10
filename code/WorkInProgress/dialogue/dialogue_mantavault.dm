@@ -4,7 +4,7 @@
 	icon_state = "keypad"
 	density = 0
 	desc = "A device built straight into the wall. It looks like there is six slots for somekind of keys?"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()

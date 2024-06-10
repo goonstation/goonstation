@@ -4,12 +4,23 @@
 			set category = "Commands"
 			set name = "Changelog"
 			set desc = "Show or hide the changelog"
-
-			if (winget(src, "changes", "is-visible") == "true")
+			if (winexists(src, "changes") && winget(src, "changes", "is-visible") == "true")
 				src.Browse(null, "window=changes")
 			else
 				var/changelogHtml = grabResource("html/changelog.html")
 				var/data = changelog:html
+				var/fontcssdata = {"
+				<style type="text/css">
+				@font-face {
+					font-family: 'Twemoji';
+					src: url('[resource("css/fonts/Twemoji.eot")]');
+					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
+						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					text-rendering: optimizeLegibility;
+				}
+				</style>
+				"}
+				changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
 				src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
 				src.changes = 1
@@ -60,9 +71,9 @@
 			set desc = "Open an interactive map in your browser"
 			set hidden = 1
 			if (map_settings)
-				src << link(map_settings.goonhub_map)
+				src << link(goonhub_href(map_settings.goonhub_map))
 			else
-				src << link("http://goonhub.com/maps/cogmap")
+				src << link(goonhub_href("/maps/cogmap"))
 
 		forum()
 			set category = "Commands"

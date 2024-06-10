@@ -59,7 +59,11 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		if (!istype(T) || !istype(T.cameras) || T.cameras.len == 0)
+		if(get_z(src) != Z_LEVEL_STATION)
+			src.show_text("Your mainframe was unable relay this command that far away!", "red")
+			return
+
+		if (!istype(T) || length(T?.camera_coverage_emitters) == 0)
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 
@@ -74,7 +78,7 @@
 			if(src.holoHolder.text_expansion)
 				for(var/te in src.holoHolder.text_expansion)
 					holo_sentences += strings("hologram.txt", "sentences_[te]")
-			holo_sentences = sortList(holo_sentences)
+			holo_sentences = sortList(holo_sentences, /proc/cmp_text_asc)
 			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_sentences, allowIllegal=TRUE)
 			if(!text)
 				return
@@ -85,15 +89,15 @@
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_actions += strings("hologram.txt", "verbs_[te]")
-					holo_actions = sortList(holo_actions)
+					holo_actions = sortList(holo_actions, /proc/cmp_text_asc)
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
-					holo_nouns = sortList(strings("hologram.txt", "nouns"))
+					holo_nouns += strings("hologram.txt", "nouns")
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_nouns += strings("hologram.txt", "nouns_[te]")
-					holo_nouns = sortList(holo_nouns)
+					holo_nouns = sortList(holo_nouns, /proc/cmp_text_asc)
 					var/blank_found = findtext(text,"...")
 					while(blank_found)
 						var/selection = tgui_input_list(usr, "Select a word:", text, holo_nouns, allowIllegal=TRUE)
@@ -106,7 +110,7 @@
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
-		showContextActions(hologramContextActions, T, contextLayout)
+		src.eyecam.showContextActions(hologramContextActions, T, contextLayout)
 
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe
@@ -124,66 +128,65 @@
 
 		..()
 
-	caution
-		name = "Caution"
-		icon_state = "caution"
-		holo_type = "caution"
-	o2
-		name = "o2"
-		icon_state = "o2"
-		holo_type = "o2"
-	beepsky
-		name = "beepsky"
-		icon_state = "beepsky"
-		holo_type = "beepsky"
 	up_arrow
 		name = "up_arrow"
 		icon_state = "up_arrow"
 		holo_type = "up_arrow"
-	down_arrow
-		name = "down_arrow"
-		icon_state = "down_arrow"
-		holo_type = "down_arrow"
-	left_arrow
-		name = "left_arrow"
-		icon_state = "left_arrow"
-		holo_type = "left_arrow"
-	right_arrow
-		name = "right_arrow"
-		icon_state = "right_arrow"
-		holo_type = "right_arrow"
-	happy_face
-		name = "happy_face"
-		icon_state = "happy_face"
-		holo_type = "happy_face"
-	neutral_face
-		name = "neutral_face"
-		icon_state = "neutral_face"
-		holo_type = "neutral_face"
-	sad_face
-		name = "sad_face"
-		icon_state = "sad_face"
-		holo_type = "sad_face"
-	angry_face
-		name = "angry_face"
-		icon_state = "angry_face"
-		holo_type = "angry_face"
+	beepsky
+		name = "beepsky"
+		icon_state = "beepsky"
+		holo_type = "beepsky"
+	o2
+		name = "o2"
+		icon_state = "o2"
+		holo_type = "o2"
+	caution
+		name = "Caution"
+		icon_state = "caution"
+		holo_type = "caution"
 	write
 		name = "write"
 		icon_state = "write"
 		holo_type = "write"
-
-
+	angry_face
+		name = "angry_face"
+		icon_state = "angry_face"
+		holo_type = "angry_face"
+	sad_face
+		name = "sad_face"
+		icon_state = "sad_face"
+		holo_type = "sad_face"
+	neutral_face
+		name = "neutral_face"
+		icon_state = "neutral_face"
+		holo_type = "neutral_face"
+	happy_face
+		name = "happy_face"
+		icon_state = "happy_face"
+		holo_type = "happy_face"
+	right_arrow
+		name = "right_arrow"
+		icon_state = "right_arrow"
+		holo_type = "right_arrow"
+	left_arrow
+		name = "left_arrow"
+		icon_state = "left_arrow"
+		holo_type = "left_arrow"
+	down_arrow
+		name = "down_arrow"
+		icon_state = "down_arrow"
+		holo_type = "down_arrow"
 
 /obj/hologram
 	name = "hologram"
 	desc = "A hologram projected by an AI. Usually lasts about 30 seconds."
 	icon = 'icons/misc/holograms.dmi'
 	icon_state = "caution"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	alpha = 0		//animates to 180 in New
 	// plane = PLANE_HUD
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	var/duration = 30 SECONDS
 	var/mob/living/silicon/ai/owner
 	var/hologram_value = 1
@@ -222,10 +225,10 @@
 		..()
 		var/mob/living/intangible/aieye/eye = user
 		if (owner == user || (istype(eye) && eye.mainframe == owner))
-			boutput(src, "<span class='notice'>You stop projecting [src].</span>")
+			boutput(user, SPAN_NOTICE("You stop projecting [src]."))
 			qdel(src)
 		else
-			boutput(src, "<span class='notice'>It would be pretty rude for you to mess with another AI's hologram.</span>")
+			boutput(user, SPAN_NOTICE("It would be pretty rude for you to mess with another AI's hologram."))
 
 	disposing()
 		if (owner)
@@ -233,8 +236,51 @@
 			owner = null
 		..()
 
+	emp_act()
+		src.emag_act()
 
-/obj/effect/distort/hologram
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.hologram_type == HOLOGRAM_PICTURE)
+			switch(src.icon_state) //crime
+				if ("caution")
+					src.blowthefuckup(0)
+				if ("o2")
+					var/turf/simulated/T = get_turf(src)
+					if (istype(T))
+						ZERO_GASES(T.air)
+					qdel(src)
+				if ("beepsky")
+					var/sound/sound = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg', 'sound/machines/siren_police.ogg')
+					playsound(get_turf(src), sound, 50, FALSE)
+					animate_bouncy(src)
+					SPAWN(2 SECONDS)
+						qdel(src)
+				if ("down_arrow", "up_arrow", "left_arrow", "right_arrow")
+					var/dirs = list("down_arrow" = SOUTH, "up_arrow" = NORTH, "left_arrow" = WEST, "right_arrow" = EAST)
+					var/dir = dirs[src.icon_state]
+					SPAWN(0)
+						for (var/i in 1 to 5)
+							for (var/atom/movable/AM in get_turf(src))
+								if (!AM.anchored)
+									step(AM, dir)
+							step(src, dir)
+							sleep(0.3 SECONDS)
+						qdel(src)
+				if ("happy_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "sad_face")
+					qdel(src)
+				if ("neutral_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "angry_face")
+					qdel(src)
+				if ("sad_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "happy_face")
+					qdel(src)
+				if ("angry_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "neutral_face")
+					qdel(src)
+
+
+/obj/effect/rt/hologram
 	icon = 'icons/misc/holograms.dmi' // move to effects?
 	icon_state = "d_slow"
 	var/distort_size = 2
@@ -254,7 +300,7 @@
 	var/message
 	var/original_color
 	var/hsv
-	var/obj/effect/distort/hologram/E
+	var/obj/effect/rt/hologram/E
 	hologram_type = HOLOGRAM_TEXT
 
 	New(loc, owner, msg)
@@ -281,5 +327,33 @@
 			src.vis_contents += E
 			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		new /obj/hologram/text(get_turf(src), owner = src.owner, msg = phrase_log.random_phrase("say", include_new = FALSE))
+		qdel(src)
+
 #undef MAX_TILES_PER_HOLOGRAM_HORIZONTAL
 #undef MAX_TILES_PER_HOLOGRAM_VERTICAL
+
+///Turns the atom into a transparent, blueish, flickering hologram
+///if you want to ignore lighting you also have to render above EVERYTHING ELSE so use with caution
+/atom/movable/proc/hologram_effect(over_lighting = FALSE)
+	src.color = list(
+		1.5, 0, 1, 0,
+		0, 1.5, 1, 0,
+		0, 0, 1.5, 0,
+		0, 0, 0, 0.65,
+		0, 0, 0, 0
+	)
+	if (over_lighting)
+		src.plane = PLANE_ABOVE_LIGHTING
+	var/obj/effect/rt/hologram/E = new
+	E.icon_state = "d_fast"
+	src.vis_contents += E
+	src.add_filter("hologram", 1, list(type="displace", size=E.distort_size, render_source = E.render_target))
+
+/atom/movable/proc/remove_hologram_effect()
+	src.color = null
+	src.remove_filter("hologram")
+	var/obj/effect/rt/hologram/E = locate() in src.vis_contents
+	src.vis_contents -= E
+	qdel(E)

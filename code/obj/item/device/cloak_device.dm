@@ -1,9 +1,11 @@
+TYPEINFO(/obj/item/cloaking_device)
+	mats = 15
+
 /obj/item/cloaking_device
 	name = "cloaking device"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
-	uses_multiple_icon_states = 1
 	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
@@ -12,7 +14,6 @@
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
 	stamina_damage = 0
 	stamina_cost = 0
@@ -32,9 +33,10 @@
 			src.deactivate(user)
 		else
 			if (src.activate(user))
-				user.show_text("You can't have more than one active [src.name] on your person.", "red")
-			else
 				user.show_text("The [src.name] is now active.", "blue")
+			else
+				user.show_text("You can't have more than one active [src.name] on your person.", "red")
+
 
 	update_icon()
 		if (src.active)
@@ -49,10 +51,10 @@
 		for (var/obj/item/cloaking_device/C in user)
 			if (C.active)
 				number_of_devices += C
-		if (number_of_devices.len > 0)
+		if (length(number_of_devices) > 0)
 			return FALSE
 
-		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, .proc/deactivate)
+		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, PROC_REF(deactivate))
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
 		cloak_overlay.loc = user
 		user.client?.images += cloak_overlay
@@ -66,7 +68,7 @@
 		cloak_overlay.loc = null
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
-			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
 		src.active = FALSE
 		src.UpdateIcon()
 
@@ -97,6 +99,11 @@
 	emp_act()
 		if (src.active && ismob(src.loc))
 			src.deactivate(src.loc)
+
+	disposing()
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
+		..()
 
 	limited
 		name = "limited-use cloaking device"
@@ -130,4 +137,5 @@
 
 		disposing()
 			. = ..()
-			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+			if (hunter_key)
+				STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)

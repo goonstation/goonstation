@@ -65,7 +65,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 
 		if (ctrl)
 			if (!procname_c)
-				boutput(usr, "<span class='alert'>No proc defined for CTRL! Please right click the buildmode button with CTRL held down to enter a proc.</span>")
+				boutput(usr, SPAN_ALERT("No proc defined for CTRL! Please right click the buildmode button with CTRL held down to enter a proc."))
 				return
 			proc2call = procname_c
 			targeted = targeted_c
@@ -73,7 +73,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 
 		else if (alt)
 			if (!procname_a)
-				boutput(usr, "<span class='alert'>No proc defined for ALT! Please right click the buildmode button with ALT held down to enter a proc.</span>")
+				boutput(usr, SPAN_ALERT("No proc defined for ALT! Please right click the buildmode button with ALT held down to enter a proc."))
 				return
 			proc2call = procname_a
 			targeted = targeted_a
@@ -81,7 +81,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 
 		else if (shift)
 			if (!procname_s)
-				boutput(usr, "<span class='alert'>No proc defined for SHIFT! Please right click the buildmode button with SHIFT held down to enter a proc.</span>")
+				boutput(usr, SPAN_ALERT("No proc defined for SHIFT! Please right click the buildmode button with SHIFT held down to enter a proc."))
 				return
 			proc2call = procname_s
 			targeted = targeted_s
@@ -89,7 +89,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 
 		else
 			if (!procname_n)
-				boutput(usr, "<span class='alert'>No proc defined! Please right click the buildmode button to enter a proc.</span>")
+				boutput(usr, SPAN_ALERT("No proc defined! Please right click the buildmode button to enter a proc."))
 				return
 			proc2call = procname_n
 			targeted = targeted_n
@@ -101,25 +101,25 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 		try
 			var/returnval = null
 			if (targeted)
-				boutput(usr, "<span class='notice'>Calling '[proc2call]' with [islist(args2use) ? args2use.len : "0"] arguments on '[object]'</span>")
+				boutput(usr, SPAN_NOTICE("Calling '[proc2call]' with [islist(args2use) ? args2use.len : "0"] arguments on '[object]'"))
 				if (islist(args2use) && length(args2use))
 					returnval = call(object,proc2call)(arglist(args2use))
 				else
 					returnval = call(object,proc2call)()
 				blink(get_turf(object))
 			else
-				boutput(usr, "<span class='notice'>Calling '[proc2call]' with [islist(args2use) ? args2use.len : "0"] arguments</span>")
+				boutput(usr, SPAN_NOTICE("Calling '[proc2call]' with [islist(args2use) ? args2use.len : "0"] arguments"))
 				if (islist(args2use) && length(args2use))
 					returnval = call(proc2call)(arglist(args2use))
 				else
 					returnval = call(proc2call)()
-			boutput(usr, "<span class='notice'>Proc returned:</span> [!isnull(returnval) ? returnval : "null"]")
+			boutput(usr, "[SPAN_NOTICE("Proc returned:")] [!isnull(returnval) ? returnval : "null"]")
 		catch(var/exception/e)
 			world.log << "[usr.key] called a bad proc in buildmode and this can probably be ignored! ([e] on [e.file]:[e.line])"
-			boutput(usr, "<span class='alert'>Proc returned: [e] ([e.file]:[e.line])</span>")
+			boutput(usr, SPAN_ALERT("Proc returned: [e] ([e.file]:[e.line])"))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		var/info2print = "<span class='notice'>***********************************************************</span>"
+		var/info2print = SPAN_NOTICE("***********************************************************")
 		var/modkey = null
 		var/proc2list = null
 		var/targeted = 0
@@ -153,18 +153,18 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 				args2list = listargs_n
 
 		if (proc2list)
-			info2print += "<br><span class='notice'>Modifier key: [modkey ? modkey : "None"]</span>"
-			info2print += "<br><span class='notice'>Proc name: [proc2list]</span>"
-			info2print += "<br><span class='notice'>Global: [targeted ? "NO" : "YES"] (will [targeted ? null : " not"]be called on the clicked target)</span>"
+			info2print += "<br>[SPAN_NOTICE("Modifier key: [modkey ? modkey : "None"]")]"
+			info2print += "<br>[SPAN_NOTICE("Proc name: [proc2list]")]"
+			info2print += "<br>[SPAN_NOTICE("Global: [targeted ? "NO" : "YES"] (will [targeted ? null : " not"]be called on the clicked target)")]"
 			if (islist(args2list) && length(args2list))
 				var/argnum = 0
 				for (var/thing in args2list)
 					argnum++
-					info2print += "<br><span class='notice'>Arg#[argnum]:</span> [thing]"
+					info2print += "<br>[SPAN_NOTICE("Arg#[argnum]:")] [thing]"
 			else
 				info2print += "<br>No arguments defined."
 		else
-			info2print += "<br><span class='alert'>No proc defined[modkey ? " for [modkey]" : null]! Please right click the buildmode button[modkey ? " with [modkey] held down" : null] to enter a proc.</span>"
+			info2print += "<br>[SPAN_ALERT("No proc defined[modkey ? " for [modkey]" : null]! Please right click the buildmode button[modkey ? " with [modkey] held down" : null] to enter a proc.")]"
 
-		info2print += "<br><span class='notice'>***********************************************************</span>"
+		info2print += "<br>[SPAN_NOTICE("***********************************************************")]"
 		boutput(usr, info2print)

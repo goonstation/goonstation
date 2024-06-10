@@ -24,6 +24,7 @@
 	hud_state = "cloak"
 	f_active = 1
 	var/image/shield = null
+	icon_state = "medusa"
 
 	Use(mob/user as mob)
 		if(!active)
@@ -61,12 +62,18 @@
 		onclose(user, "ship_sec_system")
 		return
 
+	run_component()
+		if (!src.ship.passengers)
+			src.deactivate()
+
 /obj/item/shipcomponent/secondary_system/orescoop
 	name = "Alloyed Solutions Ore Scoop/Hold"
 	desc = "Allows the ship to scoop up ore automatically."
 	var/capacity = 300
+	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	hud_state = "cargo"
 	f_active = 1
+	icon_state = "ore_hold"
 
 	Use(mob/user as mob)
 		activate()
@@ -100,8 +107,8 @@
 		return
 
 	Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
-		if (contents.len < 1)
-			boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
+		if (length(contents) < 1)
+			boutput(user, SPAN_ALERT("[src] has nothing to unload."))
 			return
 
 		var/turf/T = get_turf(A)
@@ -112,12 +119,15 @@
 				inrange = 1
 				break
 		if (!inrange)
-			boutput(user, "<span class='alert'>That tile too far away.</span>")
+			boutput(user, SPAN_ALERT("That tile too far away."))
+			return
+
+		if (T.density)
 			return
 
 		for(var/obj/O in T.contents)
 			if(O.density)
-				boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
+				boutput(user, SPAN_ALERT("That tile is blocked by [O]."))
 				return
 
 		for(var/obj/item/I in src.contents)
@@ -140,7 +150,9 @@
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
 	/obj/machinery/nuclearbomb,
-	/obj/bomb_decoy)
+	/obj/bomb_decoy,
+	/obj/gold_bee,
+	/obj/reagent_dispensers/beerkeg)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -164,6 +176,8 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
 	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
+	if(usr.loc != src.ship)
+		return
 	switch(loadmode)
 		if("Load")
 			var/atom/movable/AM = null
@@ -176,10 +190,10 @@
 			return
 		if("Unload")
 			var/crate
-			if (load.len == 1)
+			if (length(load) == 1)
 				crate = load[1]
 			else
-				crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+				crate = src.get_unloadable(usr)
 			if(!crate)
 				return
 			unload(crate)
@@ -203,65 +217,74 @@
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
 	if (!length(src.load))
-		boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
+		boutput(user, SPAN_ALERT("[src] has nothing to unload."))
 		return
-	var/turf/T = get_turf(A)
 
+	var/crate = src.get_unloadable(user)
+	if(!crate)
+		return
+
+	var/turf/T = get_turf(A)
 	var/inrange = 0
 	for(var/turf/ST in src.ship.locs)
 		if (in_interact_range(T,ST) && in_interact_range(user,ST))
 			inrange = 1
 			break
 	if (!inrange)
-		boutput(user, "<span class='alert'>That tile too far away.</span>")
+		boutput(user, SPAN_ALERT("That tile too far away."))
+		return
+
+	if (T.density)
 		return
 
 	for(var/obj/O in T.contents)
 		if(O.density)
-			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
+			boutput(user, SPAN_ALERT("That tile is blocked by [O]."))
 			return
 
-	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
-	if(!crate)
-		return
 	unload(crate,T)
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_ObjectToPod(var/mob/living/user,var/atom/A)
+	if(isturf(A))
+		return
 	if (length(src.load) > src.maxcap)
-		boutput(user, "<span class='alert'>[src] has no available cargo space.</span>")
+		boutput(user, SPAN_ALERT("[src] has no available cargo space."))
 		return
 
 	switch(src.load(A))
 		if (1)
 			// if cargo system is not emagged, only allow crates to be loaded
-			boutput(user, "<span class='alert'>The pod's cargo autoloader rejects [A].</span>")
+			boutput(user, SPAN_ALERT("The pod's cargo autoloader rejects [A]."))
 			return
 		if (2)
 			// cargo system full (this should never happen)
-			boutput(user, "<span class='alert'>[src] has no available cargo space.</span>")
+			boutput(user, SPAN_ALERT("[src] has no available cargo space."))
 			return
 		if (3)
 			// out of range (this should never happen)
-			boutput(user, "<span class='alert'>Something is too far away to do that.</span>")
+			boutput(user, SPAN_ALERT("Something is too far away to do that."))
 			return
 		if (0)
 			// success
-			src.visible_message("<span style=\"color:blue\">[user] loads the [A] into [src]'s cargo bay.</span>")
+			src.visible_message(SPAN_NOTICE("[user] loads the [A] into [src]'s cargo bay."))
 			return
 
-	boutput(user, "<span class='alert'>[src] has no cargo system or no available cargo space.</span>")
+	boutput(user, SPAN_ALERT("[src] has no cargo system or no available cargo space."))
 	return
 
-/obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C)
+/obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C, var/mob/user)
+	if(!user)
+		user = usr
+
 	if(length(src.load) >= maxcap)
-		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
-		boutput(usr, "[ship.ship_message("Cargo hold is full!")]")
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		boutput(user, "[ship.ship_message("Cargo hold is full!")]")
 		return 2
 
 	var/inrange = 0
 	for (var/turf/T in src.ship.locs)
-		if (in_interact_range(T,C) && in_interact_range(usr,C))
+		if (in_interact_range(T, C) && in_interact_range(user, C))
 			inrange = 1
 			break
 	if (!inrange)
@@ -282,12 +305,12 @@
 		if(isdead(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
-		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return 1 // invalid cargo
 
 	C.set_loc(src)
 	load += C
-	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 	return 0
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/unload(var/atom/movable/C,var/turf/T)
@@ -301,16 +324,131 @@
 	step(C, turn(ship.dir,180))
 	return C
 
+/obj/item/shipcomponent/secondary_system/cargo/proc/get_unloadable(mob/user)
+	var/list/cargo_by_name = list()
+	var/list/counts_by_type = list()
+	for (var/atom/movable/AM as anything in src.load)
+		counts_by_type[AM.type] += 1
+		if (counts_by_type[AM.type] == 1)
+			cargo_by_name[AM.name] = AM
+		else
+			cargo_by_name["[AM.name] #[counts_by_type[AM.type]]"] = AM
+
+	return cargo_by_name[tgui_input_list(user, "Choose which cargo to unload", "Choose Cargo", sortList(cargo_by_name, GLOBAL_PROC_REF(cmp_text_asc)))]
+
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
-	while(length(load))
-		var/obj/O = src.unload(pick(load))
-		if (O)
-			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
-			O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(3,7), 3)
+	shuffle_list(src.load)
+	for(var/atom/movable/AM in src.load)
+		if (src.unload(AM))
+			AM.visible_message(SPAN_ALERT("<b>[AM]</b> is flung out of [src.ship]!"))
+			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 		else
 			break
 	..()
 
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat
+	name = "personal containment unit"
+	desc = "Allows the ship to load people as cargo. It is designed to integrate with the Life-Support System so it is probably safe?"
+	acceptable = list(/mob/living/carbon, /mob/living/silicon)
+	maxcap = 1
+	hud_state = "jumpseat"
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		. = src.ship.handle_internal_lifeform(lifeform_inside_me, breath_request, mult)
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/activate()
+	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
+	switch(loadmode)
+		if("Load")
+			var/mob/AM = null
+			for(var/mob/living/LM in get_step(ship.loc, turn(ship.dir,180) ))
+				if(!LM.anchored)
+					AM = LM
+					break
+			if(AM)
+				AM.show_text(SPAN_NOTICE("\The [src.ship] is trying to load you in!"))
+				SETUP_GENERIC_ACTIONBAR(AM, src, 2 SECONDS, /obj/item/shipcomponent/secondary_system/cargo/proc/load, list(AM,usr), src.icon, src.icon_state, "[AM] successfully enters [his_or_her(AM)] \the [src.ship]'s!", null)
+			return
+		if("Unload")
+			if (length(load) == 1)
+				unload(load[1])
+		else
+			return
+	return
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/relaymove(mob/user as mob)
+	if(is_incapacitated(user))
+		return
+	if(ON_COOLDOWN(src, "relaymove", 1.5 SECOND))
+		return
+
+	if(!user.restrained() && prob(33))
+		user.show_text(SPAN_NOTICE("You manage to find the internal manual release!"))
+		if(tgui_alert(user, "Are you sure you want to activate the release?", "Exit [src.ship]", list("Yes", "No")) == "Yes")
+			src.unload(user)
+	else
+		user.show_text(SPAN_ALERT("You kick at [src], but it doesn't budge!"))
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/mob_flip_inside(var/mob/user)
+	..(user)
+	if(prob(3) || (!user.restrained() && prob(33)))
+		if (src.unload(user))
+			user.show_text(SPAN_ALERT("You manage to catch something and hear a click!"))
+			user.visible_message(SPAN_ALERT("<b>[user]</b> is flung out of [src.ship]!"))
+			user.throw_at(get_edge_target_turf(user, pick(alldirs)), rand(3,7), 3)
+
+/obj/item/shipcomponent/secondary_system/storage
+	name = "Storage Hold"
+	desc = "Allows the ship to hold many smaller items, versus a typical cargo hold."
+	hud_state = "cargo"
+	f_active = TRUE
+	var/obj/dummy_storage/dummy_storage
+
+	New()
+		..()
+		src.dummy_storage = new(null, src)
+
+	disposing()
+		qdel(src.dummy_storage)
+		src.dummy_storage = null
+		..()
+
+/obj/item/shipcomponent/secondary_system/storage/Use(mob/user)
+	src.dummy_storage.storage.show_hud(user)
+
+/obj/item/shipcomponent/secondary_system/storage/activate()
+	src.dummy_storage.storage.show_hud(usr)
+
+/obj/item/shipcomponent/secondary_system/storage/deactivate()
+	for (var/atom/A as anything in src.dummy_storage.storage.get_contents())
+		src.dummy_storage.storage.transfer_stored_item(A, get_turf(src))
+
+/obj/item/shipcomponent/secondary_system/storage/Clickdrag_PodToObject(mob/living/user, atom/A)
+	if (user == A)
+		src.dummy_storage.storage.show_hud(user)
+
+/obj/item/shipcomponent/secondary_system/storage/Clickdrag_ObjectToPod(mob/living/user, atom/A)
+	if (istype(A, /obj/item) && src.dummy_storage.storage.check_can_hold(A) == STORAGE_CAN_HOLD)
+		src.dummy_storage.storage.add_contents(A, user)
+	else
+		boutput(user, SPAN_NOTICE("[src] can't hold this!"))
+
+/obj/item/shipcomponent/secondary_system/storage/on_shipdeath(var/obj/machinery/vehicle/ship)
+	var/atom/movable/AM
+	for (var/atom/A in src.dummy_storage.storage.get_contents())
+		src.dummy_storage.storage.transfer_stored_item(A, get_turf(src.ship))
+		A.visible_message(SPAN_ALERT("<b>[A]</b> is flung out of [src.ship]!"))
+		if (istype(A, /atom/movable))
+			AM = A
+			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3, 7), 3)
+
+/obj/dummy_storage
+	name = "Storage Hold"
+
+	New(turf/newLoc, obj/item/shipcomponent/secondary_system/storage/parent_storage)
+		..()
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
+		src.set_loc(parent_storage)
 
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
@@ -322,6 +460,7 @@
 	f_active = 1
 	power_used = 80
 	hud_state = "tractor_beam"
+	icon_state = "trac_beam"
 
 	run_component()
 		if(settingup)
@@ -341,25 +480,34 @@
 		..()
 		if(!active)
 			return
-		var/list/targets = list()
+
+		var/list/targets_by_name = list()
+		var/list/counts_by_type = list()
 		for (var/atom/movable/a in view(src.seekrange,ship.loc))
 			if(!a.anchored)
-				targets += a
+				counts_by_type[a.type] += 1
+				if (counts_by_type[a.type] == 1)
+					targets_by_name[a.name] = a
+				else
+					targets_by_name["[a.name] #[counts_by_type[a.type]]"] = a
 
-		target = input(usr, "Choose what to use the tractor beam on", "Choose Target")  as null|anything in targets
+		target = targets_by_name[tgui_input_list(usr, "Choose what to use the tractor beam on", "Choose Target", sortList(targets_by_name, GLOBAL_PROC_REF(cmp_text_asc)))]
 
 		if(!target)
 			deactivate()
 			return
 		tractor = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "tractor", "layer" = FLOAT_LAYER)
 		target.overlays += tractor
+		RegisterSignal(src.ship, COMSIG_MOVABLE_MOVED, PROC_REF(tractor_drag))
 		settingup = 0
+
 	deactivate()
 		..()
 		settingup = 1
 		if(target)
 			target.overlays -= tractor
 			target = null
+			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
 		return
 
 	opencomputer(mob/user as mob)
@@ -375,6 +523,12 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
+
+	proc/tractor_drag(obj/machinery/vehicle/holding_ship, atom/previous_loc, direction)
+		if (QDELETED(src.target) || GET_DIST(holding_ship, src.target) > src.seekrange)
+			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
+			return
+		step_to(src.target, src.ship, 1)
 
 /obj/item/shipcomponent/secondary_system/repair
 	name = "Duracorp Construction Device"
@@ -400,15 +554,15 @@
 					return
 				var/turf/T = get_turf(get_step(ship.loc, ship.dir))
 				if (istype(T, /turf/space) && ammo >= 1)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					T:ReplaceWithFloor()
 					ammo--
 					return
 				if (istype(T, /turf/simulated/floor) && ammo >= 3)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(20))
 						T:ReplaceWithWall()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						ammo -= 3
 					return
 
@@ -417,7 +571,7 @@
 					var/turf/T = get_turf(G.loc)
 					qdel(G)
 					T:ReplaceWithWall()
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					break
 				return
 
@@ -425,26 +579,26 @@
 			if("Deconstruct")
 				var/turf/T = get_turf(get_step(ship.loc, ship.dir))
 				if (istype(T, /turf/simulated/wall) && ammo >= 5)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(50))
 						ammo -= 5
 						T:ReplaceWithFloor()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					return
 				if ((istype(T, /turf/simulated/wall/r_wall) || istype(T, /turf/simulated/wall/auto/reinforced) ) && ammo >= 5)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(50))
 						ammo -= 5
 						T:ReplaceWithWall()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 					return
 				if (istype(T, /turf/simulated/floor) && ammo >= 5)
-					playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(after_time(50))
 						ammo -= 5
 						T:ReplaceWithSpace()
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					return
 
 	opencomputer(mob/user as mob)
@@ -466,11 +620,14 @@
 	desc = "A useful navigation device for those lost in space."
 	f_active = 1
 	power_used = 50
+	icon_state = "ship_gps"
 
 	Use(mob/user as mob)
 		opencomputer(user)
 		return
 	opencomputer(mob/user as mob)
+		if(user.loc != src.ship)
+			return
 		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
@@ -489,12 +646,14 @@
 	Use(mob/user as mob)
 		var/mob/target = input(user, "Choose Who to Abduct", "Choose Target")  as mob in view(ship.loc)
 		if(target)
-			boutput(target, "<span class='alert'><B>You have been abducted!</B></span>")
+			boutput(target, SPAN_ALERT("<B>You have been abducted!</B>"))
 			showswirl(get_turf(target))
 			target.set_loc(ship)
 		return
 
 	opencomputer(mob/user as mob)
+		if(user.loc != src.ship)
+			return
 		var/dat = "<TT><B>[src] Console</B><BR><HR>"
 		for(var/mob/M in ship)
 			if(M == ship.pilot) continue
@@ -680,7 +839,7 @@
 					usr << output("!OK!&0", "ship_lock.browser:updateReadout")
 					if (ship)
 						ship.locked = 0
-						boutput(usr, "<span class='alert'>The lock mechanism clicks unlocked.</span>")
+						boutput(usr, SPAN_ALERT("The lock mechanism clicks unlocked."))
 					//	ship.access_computer(usr)
 				else
 					usr << output("ERR!&0", "ship_lock.browser:updateReadout")
@@ -745,31 +904,31 @@
 								desctext += "a rather long boop"
 
 						if (desctext)
-							boutput(usr, "<span class='alert'>The lock panel emits [desctext].</span>")
+							boutput(usr, SPAN_ALERT("The lock panel emits [desctext]."))
 
 		else if (href_list["lock"])
 			if  (usr.loc != src.ship)
-				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
+				boutput(usr, SPAN_ALERT("You must be inside the ship to do that!"))
 				return
 
 			if (ship && !ship.locked)
 				ship.locked = 1
-				boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
+				boutput(usr, SPAN_ALERT("The lock mechanism clunks locked."))
 				//ship.access_computer(usr)
 
 		else if (href_list["unlock"])
 			if  (usr.loc != src.ship)
-				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
+				boutput(usr, SPAN_ALERT("You must be inside the ship to do that!"))
 				return
 
 			if (ship?.locked)
 				ship.locked = 0
-				boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
+				boutput(usr, SPAN_ALERT("The ship mechanism clicks unlocked."))
 				//ship.access_computer(usr)
 
 		else if (href_list["setcode"])
 			if  (usr.loc != src.ship)
-				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
+				boutput(usr, SPAN_ALERT("You must be inside the ship to do that!"))
 				return
 
 			src.configure_mode = 1
@@ -780,6 +939,47 @@
 			boutput(usr, "Code reset.  Please type new code and press enter.")
 			show_lock_panel(usr)
 
+/obj/item/shipcomponent/secondary_system/lock/bioscan
+	name = "Biometric Hatch Locking Unit"
+	desc = "A basic hatch locking mechanism with a biometric scan."
+	system = "Lock"
+	f_active = 1
+	power_used = 0
+	icon_state = "lock"
+	code = ""
+	configure_mode = 0 //If true, entering a valid code sets that as the code.
+	var/bdna = null
+
+	show_lock_panel(mob/living/user)
+		if (isliving(user))
+			if (isnull(bdna))
+				boutput(user, SPAN_NOTICE("[ship]'s locking mechanism recognizes you as its key!"))
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+				bdna = user?.bioHolder?.Uid
+				ship.locked = 0
+			else if ((bdna == user.bioHolder?.Uid) || (bdna == user.blood_DNA) )
+				ship.locked = !ship.locked
+				boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
+			else
+				var/valid_dna_source = null
+				if(ishuman(user))
+					var/obj/item/parts/human_parts/limb
+					var/mob/living/carbon/human/H = user
+					limb = H.l_hand
+					if(limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+						valid_dna_source = limb
+					limb = H.r_hand
+					if(!valid_dna_source && limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+						valid_dna_source = limb
+
+				if(valid_dna_source)
+					if(user.loc == src.ship)
+						boutput(user, SPAN_ALERT("You press [valid_dna_source] against \the [src] for a moment."))
+					else
+						src.ship.visible_message("[user] holds [valid_dna_source] against the [src.ship] for a moment.")
+					ship.locked = !ship.locked
+					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
+
 /obj/item/shipcomponent/secondary_system/crash
 	name = "Syndicate Explosive Entry Device"
 	desc = "The SEED that when explosively planted in a space station, lets you grow into the best death blossom you can be."
@@ -789,6 +989,7 @@
 	var/crashhits = 10
 	var/in_bump = 0
 	hud_state = "seed"
+	icon_state = "pod_seed"
 
 	Use(mob/user as mob)
 		activate()
@@ -806,32 +1007,17 @@
 
 /obj/item/shipcomponent/secondary_system/crash/proc/dispense()
 	for (var/mob/living/B in ship.contents)
-		boutput(B, "<span class='alert'>You eject!</span>")
+		boutput(B, SPAN_ALERT("You eject!"))
 		ship.leave_pod(B)
-		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
+		ship.visible_message(SPAN_ALERT("[B] launches out of the [ship]!"))
+		for(var/i in 1 to 3)
+			step(B, turn(ship.dir, 180), 0)
 		step_rand(B, 0)
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)
 		SC.on_shipdeath()
 	SPAWN(0) //???? otherwise we runtime
 		qdel(ship)
-
-/obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
-	var/tempstate = ship.icon_state
-	ship.icon_state = "flaming"
-	if(!istype(A, /obj/critter/gunbot/drone))
-		A.meteorhit(ship)
-	playsound(ship.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-	ship.icon_state = tempstate
-	crashhits --
-	if (crashhits <= 0)
-		explosion(ship, ship.loc, 1, 2, 2, 3)
-		playsound(ship.loc, "explosion", 50, 1)
-		dispense()
-	return
 
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime2(atom/A as mob|obj|turf)
 	if (in_bump)
@@ -841,6 +1027,7 @@
 	walk(src, 0)
 	in_bump = 1
 	crashhits--
+	logTheThing(LOG_COMBAT, ship.pilot, "uses a SEED to crash into [A] at [log_loc(A)]")
 	if(isturf(A))
 		if((istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced)) && prob(40))
 			in_bump = 0
@@ -848,9 +1035,9 @@
 		if(istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/T = A
 			T.dismantle_wall(1)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			boutput(ship.pilot, "<span class='alert'><B>You crash through the wall!</B></span>")
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
+			boutput(ship.pilot, SPAN_ALERT("<B>You crash through the wall!</B>"))
 			in_bump = 0
 		if(istype(A, /turf/simulated/floor))
 			var/turf/T = A
@@ -858,29 +1045,35 @@
 				T.ReplaceWithLattice()
 			else
 				T.ReplaceWithSpace()
+			if(prob(50))
+				for (var/mob/M in src)
+					shake_camera(M, 6, 8)
+			if(prob(30))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
+				boutput(ship.pilot, SPAN_ALERT("<B>You plow through the floor!</B>"))
 	if(ismob(A))
 		var/mob/M = A
-		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
+		boutput(ship.pilot, SPAN_ALERT("<B>You crash into [M]!</B>"))
 		shake_camera(M, 8, 16)
-		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
+		boutput(M, SPAN_ALERT("<B>The [src] crashes into you!</B>"))
 		M.changeStatus("stunned", 8 SECONDS)
-		M.changeStatus("weakened", 5 SECONDS)
+		M.changeStatus("knockdown", 5 SECONDS)
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
 		M.throw_at(target, 4, 2)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
-		if(O.density && O.anchored != 2)
-			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
-			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
+		var/turf/T = get_turf(O)
+		if(O.density && O.anchored != ANCHORED_ALWAYS && !isrestrictedz(T?.z))
+			boutput(ship.pilot, SPAN_ALERT("<B>You crash into [O]!</B>"))
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-			O.throw_at(target, 4, 2)
-			O.anchored = 0
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
+			O.throw_at(target, 20, 3, allow_anchored = TRUE, bonus_throwforce = 15)
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3
@@ -916,7 +1109,7 @@
 	f_active = 1
 	hud_state = "SRS_icon"
 	var/cooldown = 0
-	var/core_inserted = false
+	var/core_inserted = FALSE
 	var/health_snapshot
 	var/image/rewind
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
@@ -931,14 +1124,14 @@
 
 	activate()
 		if(!core_inserted)
-			boutput(ship.pilot, "<span class='alert'><B>The system requires a unique power source to function!</B></span>")
+			boutput(ship.pilot, SPAN_ALERT("<B>The system requires a unique power source to function!</B>"))
 			return
 		else if(cooldown > TIME)
-			boutput(ship.pilot, "<span class='alert'><B>The system is still recharging!</B></span>")
+			boutput(ship.pilot, SPAN_ALERT("<B>The system is still recharging!</B>"))
 			return
 		else
-			boutput(ship.pilot, "<span class='alert'><B>Snapshot created!</B></span>")
-			playsound(ship.loc, "sound/machines/reprog.ogg", 75, 1)
+			boutput(ship.pilot, SPAN_ALERT("<B>Snapshot created!</B>"))
+			playsound(ship.loc, 'sound/machines/reprog.ogg', 75, 1)
 			cooldown = 20 SECONDS + TIME
 			health_snapshot = ship.health
 			if(ship.capacity == 1 || istype(/obj/machinery/vehicle/miniputt, ship) || istype(/obj/machinery/vehicle/recon, ship) || istype(/obj/machinery/vehicle/cargo, ship))
@@ -951,29 +1144,29 @@
 			spawn(5 SECONDS)
 				spawn(1 SECONDS)
 					src.ship.UpdateOverlays(null, "rewind")
-				playsound(ship.loc, "sound/machines/bweep.ogg", 75, 1)
+				playsound(ship.loc, 'sound/machines/bweep.ogg', 75, 1)
 				if(ship.health < health_snapshot)
 					ship.health = health_snapshot
-					boutput(ship.pilot, "<span class='alert'><B>Snapshot applied!</B></span>")
+					boutput(ship.pilot, SPAN_ALERT("<B>Snapshot applied!</B>"))
 				else
-					boutput(ship.pilot, "<span class='alert'><B>Snapshot discarded!</B></span>")
+					boutput(ship.pilot, SPAN_ALERT("<B>Snapshot discarded!</B>"))
 				return
 		return
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			set_icon_state("SRS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
-			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
+			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SRS")
-			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)
+			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
 			tooltip_rebuild = 1
 			return

@@ -4,8 +4,9 @@
 	desc = "Did you know that if you laid your guts out in a straight line, they'd be about 9 meters long? Also, you'd probably be dying, so it's not something you should do. Probably."
 	organ_holder_name = "intestines"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4
 	icon_state = "intestines"
+	surgery_flags = SURGERY_SAWING | SURGERY_CUTTING
+	region = ABDOMINAL
 	var/digestion_efficiency = 1
 
 	// on_transplant()
@@ -50,16 +51,18 @@
 		..()
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
 
+TYPEINFO(/obj/item/organ/intestines/cyber)
+	mats = 6
+
 /obj/item/organ/intestines/cyber
 	name = "cyberintestines"
 	desc = "A fancy robotic intestines to replace one that someone's lost!"
 	icon_state = "cyber-intestines"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()

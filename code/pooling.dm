@@ -17,7 +17,7 @@ var
 									/obj/fluid = 10000, // f u c k (mbc note : drsingh says this is fine.)
 									/obj/fluid/airborne = 10000,
 									/obj/particle = 300,// FUCKING SPARKLES
-									/obj/item/spacecash = 300,
+									/obj/item/currency/spacecash = 300,
 									/obj/item/paper = 300,
 									/obj/decal/cleanable = 800,
 									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
@@ -105,7 +105,7 @@ proc/pool_deprecated(var/datum/to_pool)
 			type_pool = createPool(to_pool.type)
 
 
-		if(type_pool.len < get_pool_size_limit(to_pool.type))
+		if(length(type_pool) < get_pool_size_limit(to_pool.type))
 			#ifdef DETAILED_POOL_STATS
 			increment_pool_stats(to_pool.type, POOLINGS)
 			#endif

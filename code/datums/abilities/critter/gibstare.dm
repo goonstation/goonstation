@@ -5,7 +5,6 @@
 /datum/action/bar/icon/gibstareAbility
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target
@@ -20,51 +19,43 @@
 		max_range = new_max_range
 		..()
 
-	onUpdate()
-		if(istype(owner, /obj/critter))
-			var/obj/critter/ownerCritter = owner
-			if (!ownerCritter.alive)
-				interrupt(INTERRUPT_ALWAYS)
-				return
-		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
-			interrupt(INTERRUPT_ALWAYS)
-			return
 
 	onStart()
 		..()
-		if(!(target in view(owner)) || target == null || owner == null || (ability && !ability.cooldowncheck()))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
-		playsound(owner.loc, "sound/effects/mindkill.ogg", 50, 1)
-		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
+		owner.visible_message(SPAN_ALERT("<B>[owner]</B> stares at [target]!"))
+		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
+		boutput(target, SPAN_ALERT("You feel a horrible pain in your head!"))
 		target.changeStatus("stunned", 1 SECOND)
+		ability.disabled = TRUE
 
 	onEnd()
 		..()
-		if(istype(owner, /obj/critter))
-			var/obj/critter/ownerCritter = owner
-			if (!ownerCritter.alive)
-				interrupt(INTERRUPT_ALWAYS)
-				return
-		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
-			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
-			if (target == owner)
-				boutput(owner, "<span class='success'>Good. Job.</span>")
+		logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
+		if (target == owner)
+			boutput(owner, SPAN_SUCCESS("Good. Job."))
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.head_explosion()
+		else
 			target.gib()
-			ability?.actionFinishCooldown()
+		ability.disabled = FALSE
+		ability?.actionFinishCooldown()
+
+	canRunCheck(in_start)
+		. = ..()
+		var/mob/M = owner
+		if(isdead(M) || !(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
+			interrupt(INTERRUPT_ALWAYS)
+			ability.disabled = FALSE
 
 /datum/targetable/critter/gibstare
 	name = "Psychic Stare"
-	desc = "After a medium delay, instantly devour a mob. You must stand still for this and maintain vision of the target."
+	desc = "After a medium delay, instantly gib a mob. You must stand still for this and maintain vision of the target."
 	cooldown = 0
 	var/actual_cooldown = 600
-	targeted = 1
-	target_anything = 1
+	disabled = FALSE
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown
@@ -74,12 +65,14 @@
 	cast(atom/target)
 		if (..())
 			return 1
+		if (disabled)
+			return
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to gib there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to gib there."))
 				return 1
 		actions.start(new/datum/action/bar/icon/gibstareAbility(target, src), holder.owner)
 		return 0

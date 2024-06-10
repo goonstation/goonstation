@@ -21,7 +21,6 @@
 #define MGO_SILICON "silicon"
 #define MGO_JANITOR "janitor"
 #define MGO_ENGINEER "engineer"
-#define MGO_MECHANIC "mechanic"
 
 // Mail Groups (Alerts)
 // These cannot be joined, and no PDAs start in them.
@@ -41,3 +40,17 @@
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"
+
+// Job categories
+#define JOB_SPECIAL "special"
+#define JOB_COMMAND "command"
+#define JOB_SECURITY "security"
+#define JOB_RESEARCH "research"
+#define JOB_ENGINEERING "engineering"
+#define JOB_CIVILIAN "civilian"
+#define JOB_CREATED "created"
+
+// Job categories
+#define STAPLE_JOBS (1<<0)
+#define SPECIAL_JOBS (1<<1)
+#define HIDDEN_JOBS (1<<2)

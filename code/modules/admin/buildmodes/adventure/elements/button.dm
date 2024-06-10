@@ -9,13 +9,13 @@
 
 	initialize()
 		selection = new /obj/adventurepuzzle/marker
-		button_type = input("Button type", "Button type", "ancient") in list("ancient", "red", "runes")
+		button_type = input("Button type", "Button type", "comp_button") in list("ancient", "red", "runes", "comp_button", "comp_switch")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		button_name = input("Button name", "Button name", "button") as text
 		var/bdstr = input("Is the button dense (impassable)?", "Passability", "yes") in list("yes", "no")
 		button_density = (bdstr == "yes") ? 1 : 0
-		boutput(usr, "<span class='notice'>Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make buttons for extra comfort!</span>")
+		boutput(usr, SPAN_NOTICE("Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish."))
+		boutput(usr, SPAN_NOTICE("NOTE: Select stuff first, then make buttons for extra comfort!"))
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -39,6 +39,8 @@
 				button.name = button_name
 				button.set_dir(holder.dir)
 				button.icon_state = "button_[button_type]_unpressed"
+				if(startswith(button_type, "comp")) //crimes
+					button.icon = 'icons/misc/mechanicsExpansion.dmi'
 				button.button_type = button_type
 				button.set_density(button.density)
 				button.triggered = selected_triggerable.Copy()
@@ -58,7 +60,7 @@
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, SPAN_ALERT("ERROR: Missing actions definition for triggerable [object]."))
 
 /obj/adventurepuzzle/triggerer/button
 	icon = 'icons/obj/randompuzzles.dmi'
@@ -67,7 +69,7 @@
 	icon_state = "button_red_unpressed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/button_type = "red"
 	var/pressed = 0
 
@@ -75,7 +77,7 @@
 		if (!istype(user))
 			return
 		if (!(user in range(1)))
-			boutput(user, "<span class='alert'>You must go closer!</span>")
+			boutput(user, SPAN_ALERT("You must go closer!"))
 			return
 		if (!pressed)
 			pressed = 1
@@ -98,7 +100,7 @@
 	desc = "A wooden furniture used for the storage of books. One of the books appears to be loose."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "bookcase_full_alone_button"
 	var/pressed = 0
@@ -121,13 +123,14 @@
 		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 
 	proc/update_dir(var/D)
 		src.set_dir(D)
-		if (!(dir & 2))
-			src.set_dir(2)
+		if (!(dir & SOUTH))
+			src.set_dir(SOUTH)
 		pixel_y = 28
 		effect_overlay.set_dir(src.dir)
 

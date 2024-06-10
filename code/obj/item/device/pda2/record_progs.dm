@@ -37,6 +37,7 @@
 				if (istype(src.active1, /datum/db_record) && data_core.general.has_record(src.active1))
 					dat += "Full Name: [src.active1["full_name"]] ID: [src.active1["id"]]<br>"
 					dat += "Sex: [src.active1["sex"]]<br>"
+					dat += "Pronouns: [src.active1["pronouns"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
 					dat += "Fingerprint: [src.active1["fingerprint"]]<br>"
 					dat += "DNA: [src.active1["dna"]]<br>"
@@ -120,6 +121,7 @@
 				if (istype(src.active1, /datum/db_record) && data_core.general.has_record(src.active1))
 					dat += "Full Name: [src.active1["full_name"]] ID: [src.active1["id"]]<br>"
 					dat += "Sex: [src.active1["sex"]]<br>"
+					dat += "Pronouns: [src.active1["pronouns"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
 					dat += "Fingerprint: [src.active1["fingerprint"]]<br>"
 					dat += "DNA: [src.active1["dna"]]<br>"
@@ -148,7 +150,8 @@
 					dat += "Current Diseases: [src.active2["cdi"]]<br>"
 					dat += "Details: [src.active2["cdi_d"]]<br><br>"
 
-					dat += "Traits: [src.active2["traits"]]<br><br>"
+					dat += "Cloner Defects: [src.active2["cl_def"]]<br>"
+					dat += "Details: [src.active2["cl_def_d"]]<br><br>"
 
 					dat += "Important Notes: [src.active2["notes"]]<br>"
 				else

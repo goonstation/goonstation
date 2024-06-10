@@ -60,7 +60,7 @@
 
 					var/is_folder = istype(P, /datum/computer/folder)
 					message += "\[[add_zero("[is_folder ? "--" : P.size]", 2)]] [add_zero( (P.metadata && ("group" in P.metadata) && isnum(text2num_safe(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)][print_file_permissions(P)] [is_folder ? "DIR" : "[copytext(P:extension,1,4)]"]"
-					message += " [add_lspace((!P.metadata || isnull(P.metadata["owner"]) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
+					message += " [add_leading((!P.metadata || isnull(P.metadata["owner"]) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
 				else
 					if (dd_hasprefix(P.name, "_"))
 						continue
@@ -77,7 +77,7 @@
 				var/message = "\[[add_zero("[P.size]", 2)]] "
 				message += add_zero((P.metadata && P.metadata.Find("group") && isnum(text2num_safe(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)
 				message += "[print_file_permissions(P)] [copytext(P.extension,1,4)]"
-				message += " [add_lspace(( (!P.metadata || !P.metadata.Find("owner") || isnull(P.metadata["owner"])) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
+				message += " [add_leading(( (!P.metadata || !P.metadata.Find("owner") || isnull(P.metadata["owner"])) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
 				message_user(message, "multiline")
 			else
 				message_user("Error: Invalid resource or directory.")
@@ -270,7 +270,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || initlist.len < 2)
+		if (!initparams || length(initlist) < 2)
 			message_user("Error: Filepaths of target and destination must be specified.")
 			mainframe_prog_exit
 			return
@@ -337,7 +337,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || initlist.len < 2)
+		if (!initparams || length(initlist) < 2)
 			message_user("Error: Filepaths of target and new location must be specified.")
 			mainframe_prog_exit
 			return
@@ -465,7 +465,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || initlist.len < 2)
+		if (!initparams || length(initlist) < 2)
 			message_user("Error: Must specify target and link paths.")
 			mainframe_prog_exit
 			return
@@ -585,7 +585,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || initlist.len < 2)
+		if (!initparams || length(initlist) < 2)
 			message_user("Error: Must specify permission value and target path.")
 			mainframe_prog_exit
 			return
@@ -668,7 +668,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || initlist.len < 2)
+		if (!initparams || length(initlist) < 2)
 			message_user("Error: Must specify owner/group value(s) and target path.")
 			mainframe_prog_exit
 			return
@@ -677,12 +677,12 @@
 		var/newgroup = null
 
 		var/list/newlist = splittext(initlist[1], ":") //New owner/group values should given in form owner:group
-		if (!newlist.len || newlist.len > 2)
+		if (!newlist.len || length(newlist) > 2)
 			message_user("Error: Input values should be of form \[owner]:\[group]")
 			mainframe_prog_exit
 			return
 
-		if (newlist.len == 2)
+		if (length(newlist) == 2)
 			newgroup = text2num_safe(newlist[2])
 			if (isnull(newgroup))
 				message_user("Error: Invalid group ID.")
@@ -764,7 +764,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || initlist.len < 2)
+		if (!initparams || length(initlist) < 2)
 			message_user("Error: Must specify device file and mount point names.")
 			mainframe_prog_exit
 			return
@@ -798,7 +798,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (initlist.len > 1)
+		if (length(initlist) > 1)
 			var/case_sensitive = 1
 			var/print_only_match = 0
 			var/recursive = 0
@@ -820,7 +820,7 @@
 				if (findtext(options, "h"))
 					plain = 1
 				initlist.Cut(1,2)
-				if (initlist.len < 2)
+				if (length(initlist) < 2)
 					. += "No pattern or target file. Try 'help grep'"
 					mainframe_prog_exit
 					return

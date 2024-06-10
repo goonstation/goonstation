@@ -103,6 +103,6 @@ For maximum cyberbenefits, both inserted kidneys must be cyberorgans.  </p>
 you if you do this!).. </p>
 <p>Best of luck in your continued work, Roboticist!</p>
 <br>
-<h4>Additonal documentation is available at:</h4>
+<h4>Additional documentation is available at:</h4>
 <ul><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
 </span>

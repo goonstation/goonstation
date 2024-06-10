@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Divider, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { formatMoney, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -14,6 +14,7 @@ export const PowerTransmissionLaser = (props, context) => {
   const { data } = useBackend(context);
   const {
     lifetimeEarnings,
+    storedBalance,
     name = 'Power Transmission Laser',
   } = data;
   return (
@@ -26,7 +27,7 @@ export const PowerTransmissionLaser = (props, context) => {
         <InputControls />
         <OutputControls />
         <NoticeBox success>
-          Earned Credits : {formatMoney(lifetimeEarnings)}
+          Stored Credits : {formatMoney(storedBalance)}⪽
         </NoticeBox>
       </Window.Content>
     </Window>
@@ -69,7 +70,7 @@ const Status = (props, context) => {
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
-        value={gridLoad / totalGridPower} />
+        value={totalGridPower ? (gridLoad / totalGridPower) : 0} />
     </Section>
   );
 };
@@ -193,12 +194,11 @@ const OutputControls = (props, context) => {
           mr="0.5em"
           size={1.25}
           animated
-          bipolar={isEmagged}
           inline
           step={5}
           stepPixelSize={2}
           minValue={isEmagged ? -999 : 0}
-          maxValue={999}
+          maxValue={isEmagged ? 0 : 999}
           ranges={{ bad: [-Infinity, -1] }}
           value={outputNumber}
           onDrag={(e, setOutput) => act('setOutput', { setOutput })} />

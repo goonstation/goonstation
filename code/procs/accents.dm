@@ -1,3 +1,15 @@
+proc/random_accent()
+	RETURN_TYPE(/datum/bioEffect/speech)
+	var/static/list/datum/bioEffect/speech/accents = null
+	if(isnull(accents))
+		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
+			var/datum/bioEffect/speech/effect = new bio_type()
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
+				continue
+			LAZYLISTADD(accents, effect)
+	. = pick(accents)
+
+
 /datum/parse_result
 	var/string = ""
 	var/chars_used = 0
@@ -811,19 +823,73 @@
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
-/* nnnoooooope!
-/proc/wonk_parse(var/string)
-	string = lowertext(string)
-	if(prob(1))
-		return pick("yiff yiff mrr", "fuckable owwwwwwls")
 
-	var/list/broken_string = splittext(string, " ")
-	for(var/i = 1; i <= broken_string.len;i++)
-		if(prob(20))
-			broken_string[i] = pick("actually most of this is really gross and isn't appropriate for any player to be saying, so here it is gone!")
+/proc/german_parse(var/datum/text_roamer/R)
+	var/S = R.curr_char
+	var/new_string = S
+	var/used = 1
+	// Case insensitivity
+	var/upper = S == uppertext(S)
+	S = lowertext(S)
+	switch(S)
 
-	return kText.list2text(broken_string)
-*/
+		if("w") //germans pronounce W like V, but generally keep the "ow" sound at the end of words and such.
+			if (!is_null_or_space(lowertext(R.next_char)))
+				new_string = "v"
+				used = 1
+		if("t") //unlinke the stereotypical zat- it's more like dat, because both the t and the h are pronounced in german. Of course, the Z still does happen quite often.
+			if(lowertext(R.next_char) == "h")
+				if(prob(50))
+					new_string = "d"
+					used = 2
+				else
+					new_string = "z"
+					used = 2
+		if("z")//z acts like an english ts
+			new_string = "ts"
+			used = 1
+
+		if("q")//qu is pronounced like kv, like in quatsch - kvahtch
+			if(lowertext(R.next_char) == "u")
+				new_string = "kv"
+				used = 2
+
+		if("r")
+			if(lowertext(R.prev_char) == " "  || lowertext(R.prev_char) == ""|| isVowel(lowertext(R.next_char)) || !isVowel(lowertext(R.next_char) && lowertext(R.next_char) != "r" && R.prev_char != ":")) //tries to emulate the rolling of the R or the gutteral R
+				new_string = "rr"
+				used = 1
+		if("c")
+			if(lowertext(R.next_char) == "h" && !lowertext(lowertext(R.next_char)) == "" || !lowertext(lowertext(R.next_char)) == " ")
+				new_string = "sh" //this sound isn't really able to be written in english, but sh is a close approximate. The ch in ich.
+				used = 1
+
+		if("j")
+			new_string = "y"
+			used = 1
+		if("e")
+			if(lowertext(R.next_char) == "" || lowertext(R.next_char) == " " && prob(50))
+				new_string = "eh"
+			if(lowertext(R.prev_char) == "u")
+				new_string = "ee"
+				used = 1
+			if(lowertext(R.next_char) == "u")
+				new_string = "oi"
+				used = 2
+
+		if("v")
+			new_string = "f"
+			used = 1
+
+		if("s")
+			if(isVowel(lowertext(R.next_char)))
+				new_string = "z"
+				used = 1
+
+	var/datum/parse_result/P = new
+	P.string = upper ? uppertext(new_string) : new_string
+	P.chars_used = used
+	return P
+
 /proc/russify(var/string)
 	var/modded = ""
 	var/datum/text_roamer/T = new/datum/text_roamer(string)
@@ -854,10 +920,77 @@
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(2))
-		modded += " :DDDDD"
 	return modded
+
+/proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller, as scots and english are mutually intelligible while english and german are not.
+
+	var/list/phrase = list(
+		"excuse me" = "entschuldigung",
+		"yes sir" = "jawohl",
+		"yes maam" = "jawohl",
+		"yes ma'am" = "jawohl",
+		"good morning" = "guten morgen",
+		"good day" = "guten tag",
+		"good afternoon" = "guten tag",
+		"good evening" = "guten abend",
+		"good night" = "guten nacht",
+		"thank you" = "danke",
+		"that's too bad" = "schade",
+		"thats too bad" = "schade",
+		"too bad" = "schade",
+		"no problem" = "kein problem"
+	) //this list is seperate from the text document, as the current accent system does not support multi word phrases. This could use reworking.
+
+	var/substitute = null
+	for(var/i=1,i <= length(phrase),i++)
+		substitute = phrase[i]
+		string = replacetext(string, substitute, phrase[substitute])
+
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/german.txt", lowertext(original_word), 1)
+		if(matching_token)
+			var/pre_parse_modified_token = replacetext(original_word, lowertext(original_word), matching_token)//grab the cognates, replace them, and then feed them into the parser for consistency
+			var/datum/text_roamer/T = new/datum/text_roamer(pre_parse_modified_token)
+			for(var/i = 0, i < length(pre_parse_modified_token), i=i)
+				var/datum/parse_result/P = german_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update() //This runs the text through the cognate list first, then runs it through the parser to remain consistent.
+		else
+			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
+			for(var/i = 0, i < length(original_word), i=i)
+				var/datum/parse_result/P = german_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update()
+
+		modified_token += punct
+		modded_tokens += modified_token
+
+	var/modded = jointext(modded_tokens, " ")
+
+	return modded
+
+
+
+
 
 /proc/tommify(var/string)
 	var/modded = ""
@@ -887,9 +1020,9 @@
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
 
-	if(prob(15))
-		modded += " Bork Bork Bork!"
 	if(prob(5))
+		modded += " Bork Bork Bork!"
+	if(prob(1))
 		modded += " Bork."
 
 	return modded
@@ -1290,43 +1423,43 @@
 
 //those go UP
 var/list/zalgo_up = list(
-	"&#x030d;", 		"&#x030e;", 		"&#x0304;", 		"&#x0305;",
-	"&#x033f;", 		"&#x0311;", 		"&#x0306;", 		"&#x0310;",
-	"&#x0352;", 		"&#x0357;", 		"&#x0351;", 		"&#x0307;",
-	"&#x0308;", 		"&#x030a;", 		"&#x0342;", 		"&#x0343;",
-	"&#x0344;", 		"&#x034a;", 		"&#x034b;", 		"&#x034c;",
-	"&#x0303;", 		"&#x0302;", 		"&#x030c;", 		"&#x0350;",
-	"&#x0300;", 		"&#x0301;", 		"&#x030b;", 		"&#x030f;",
-	"&#x0312;", 		"&#x0313;", 		"&#x0314;", 		"&#x033d;",
-	"&#x0309;", 		"&#x0363;", 		"&#x0364;", 		"&#x0365;",
-	"&#x0366;", 		"&#x0367;", 		"&#x0368;", 		"&#x0369;",
-	"&#x036a;", 		"&#x036b;", 		"&#x036c;", 		"&#x036d;",
-	"&#x036e;", 		"&#x036f;", 		"&#x033e;", 		"&#x035b;",
-	"&#x0346;", 		"&#x031a;"
+	"\u030d", 		"\u030e", 		"\u0304", 		"\u0305",
+	"\u033f", 		"\u0311", 		"\u0306", 		"\u0310",
+	"\u0352", 		"\u0357", 		"\u0351", 		"\u0307",
+	"\u0308", 		"\u030a", 		"\u0342", 		"\u0343",
+	"\u0344", 		"\u034a", 		"\u034b", 		"\u034c",
+	"\u0303", 		"\u0302", 		"\u030c", 		"\u0350",
+	"\u0300", 		"\u0301", 		"\u030b", 		"\u030f",
+	"\u0312", 		"\u0313", 		"\u0314", 		"\u033d",
+	"\u0309", 		"\u0363", 		"\u0364", 		"\u0365",
+	"\u0366", 		"\u0367", 		"\u0368", 		"\u0369",
+	"\u036a", 		"\u036b", 		"\u036c", 		"\u036d",
+	"\u036e", 		"\u036f", 		"\u033e", 		"\u035b",
+	"\u0346", 		"\u031a"
 )
 
 //those go DOWN
 var/list/zalgo_down = list(
-	"&#x0316;", 		"&#x0317;", 		"&#x0318;", 		"&#x0319;",
-	"&#x031c;", 		"&#x031d;", 		"&#x031e;", 		"&#x031f;",
-	"&#x0320;", 		"&#x0324;", 		"&#x0325;", 		"&#x0326;",
-	"&#x0329;", 		"&#x032a;", 		"&#x032b;", 		"&#x032c;",
-	"&#x032d;", 		"&#x032e;", 		"&#x032f;", 		"&#x0330;",
-	"&#x0331;", 		"&#x0332;", 		"&#x0333;", 		"&#x0339;",
-	"&#x033a;", 		"&#x033b;", 		"&#x033c;", 		"&#x0345;",
-	"&#x0347;", 		"&#x0348;", 		"&#x0349;", 		"&#x034d;",
-	"&#x034e;", 		"&#x0353;", 		"&#x0354;", 		"&#x0355;",
-	"&#x0356;", 		"&#x0359;", 		"&#x035a;", 		"&#x0323;"
+	"\u0316", 		"\u0317", 		"\u0318", 		"\u0319",
+	"\u031c", 		"\u031d", 		"\u031e", 		"\u031f",
+	"\u0320", 		"\u0324", 		"\u0325", 		"\u0326",
+	"\u0329", 		"\u032a", 		"\u032b", 		"\u032c",
+	"\u032d", 		"\u032e", 		"\u032f", 		"\u0330",
+	"\u0331", 		"\u0332", 		"\u0333", 		"\u0339",
+	"\u033a", 		"\u033b", 		"\u033c", 		"\u0345",
+	"\u0347", 		"\u0348", 		"\u0349", 		"\u034d",
+	"\u034e", 		"\u0353", 		"\u0354", 		"\u0355",
+	"\u0356", 		"\u0359", 		"\u035a", 		"\u0323"
 )
 
 //those always stay in the middle
 var/list/zalgo_mid = list(
-	"&#x0315;", 		"&#x031b;", 		"&#x0340;", 		"&#x0341;",
-	"&#x0358;", 		"&#x0321;", 		"&#x0322;", 		"&#x0327;",
-	"&#x0328;", 		"&#x0334;", 		"&#x0335;", 		"&#x0336;",
-	"&#x034f;", 		"&#x035c;", 		"&#x035d;", 		"&#x035e;",
-	"&#x035f;", 		"&#x0360;", 		"&#x0362;", 		"&#x0338;",
-	"&#x0337;", 		"&#x0361;", 		"&#x0489;"
+	"\u0315", 		"\u031b", 		"\u0340", 		"\u0341",
+	"\u0358", 		"\u0321", 		"\u0322", 		"\u0327",
+	"\u0328", 		"\u0334", 		"\u0335", 		"\u0336",
+	"\u034f", 		"\u035c", 		"\u035d", 		"\u035e",
+	"\u035f", 		"\u0360", 		"\u0362", 		"\u0338",
+	"\u0337", 		"\u0361", 		"\u0489"
 )
 
 /proc/zalgoify(var/message, var/up, var/mid, var/down)
@@ -1476,11 +1609,7 @@ var/list/zalgo_mid = list(
 
 // this list got too big to maintain as a list literal, so now it lives in strings/language/scots.txt
 
-/proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)
-	// at hufflaw's request
-	if(prob(1) && prob(1))
-		string += " You just made an enemy for life!"
-
+/proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)scot
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
@@ -1513,10 +1642,11 @@ var/list/zalgo_mid = list(
 		modded_tokens += modified_token
 
 	var/modded = jointext(modded_tokens, " ")
-	if(prob(2))
-		modded += pick(" Och!"," Och aye the noo!"," Help ma Boab!"," Hoots!"," Micthy me!"," Get tae fuck!")
 
 	return modded
+
+
+
 
 /proc/owo_parse(var/datum/text_roamer/R)
     var/new_string = ""
@@ -1570,19 +1700,6 @@ var/list/zalgo_mid = list(
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(5))
-		modded += " Tabarnak!"
-	if(prob(3))
-		modded += " Calisse de merde."
-	if(prob(3))
-		modded += " You dum-h'ass!"
-	if(prob(2))
-		modded += " Saint-simonac de viarge!"
-	if(prob(2))
-		modded += " Mon hosti d'con."
-	if(prob(1))
-		modded += " Hon Hon Hon. :3"
 	return modded
 
 /proc/tabarnak_parse(var/datum/text_roamer/R)
@@ -2342,3 +2459,181 @@ var/list/zalgo_mid = list(
 		modded += pick(" rhaggy!"," rir bruddy."," rhoinks!"," rharoo!")
 
 	return modded
+
+/proc/thrall_parse(var/string)
+	var/list/end_punctuation = list("!", "?", ".")
+	var/pos = length(string)
+	while (pos > 0 && (string[pos] in end_punctuation))
+		string = copytext(string, 1, pos--)
+	return string + "..."
+
+/proc/pirateify(var/string)
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/pirate.txt", lowertext(original_word), 1)
+		if(matching_token)
+			modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+			modified_token += punct
+		else
+			modified_token = token
+
+		modded_tokens += modified_token
+	var/modded = jointext(modded_tokens, " ")
+	if(prob(33))
+		modded += pick(" Arrr!"," Arr!", " Yarrrrr!")
+	return modded
+
+
+proc/accent_scramble(string)
+	var/list/tokens = splittext(string, regex("\\b", "i"))
+	var/regex/word_check = regex("^\\w+$", "i")
+	var/list/modded_tokens = list()
+	for(var/token in tokens)
+		if (length(token) <= 2 || !word_check.Find(token))
+			modded_tokens += token
+		else
+			var/list/letters = list()
+			for(var/i = 1, i <= length(token), i++)
+				letters += copytext(token, i, i + 1)
+			shuffle_list_interval(letters, 2, length(letters) - 1)
+			modded_tokens += jointext(letters, "")
+	return jointext(modded_tokens, "")
+
+
+proc/accent_shuffle_words(string)
+	var/list/tokens = splittext(string, regex("\\b", "i"))
+	var/regex/word_check = regex("^\\w+$", "i")
+	var/list/just_words = list()
+	var/sentence_ended = TRUE
+	for(var/token in tokens)
+		if (length(token) > 2 && word_check.Find(token))
+			if (sentence_ended)
+				token = lowertext(token)
+			just_words += token
+			sentence_ended = FALSE
+		else
+			var/last_char = copytext(token, length(token), 0)
+			if (last_char in list(".", "!", "?"))
+				sentence_ended = TRUE
+			else
+				sentence_ended = FALSE
+	shuffle_list(just_words)
+	sentence_ended = TRUE
+	var/i = 1
+	var/list/modded_tokens = list()
+	for(var/token in tokens)
+		if (length(token) > 2 && word_check.Find(token))
+			var/word_to_add = just_words[i++]
+			if (sentence_ended)
+				word_to_add = capitalize(word_to_add)
+			modded_tokens += word_to_add
+			sentence_ended = FALSE
+		else
+			modded_tokens += token
+			var/last_char = copytext(token, length(token), 0)
+			if (last_char in list(".", "!", "?"))
+				sentence_ended = TRUE
+			else
+				sentence_ended = FALSE
+	return jointext(modded_tokens, "")
+
+
+proc/accent_mocking(string)
+	var/list/letters = list()
+	var/letter_count = 0
+	for(var/i = 1, i <= length(string), i++)
+		var/letter = lowertext(copytext(string, i, i + 1))
+		var/letter_ascii = text2ascii(letter)
+		if (letter_ascii >= text2ascii("a") && letter_ascii <= text2ascii("z") && (letter_count++) % 2)
+			letter = capitalize(letter)
+		letters += letter
+	return jointext(letters, "")
+
+proc/accent_piglatin(string)
+	var/list/tokens = splittext(string, regex(@"\b", "i"))
+	var/list/modded_tokens = list()
+	var/regex/consclust = regex(@"(^[bcdfghjklmnpqrstvwxys]+)?(\l+)", "i")
+	for (var/token in tokens)
+		if(length(token) > 1)
+			token = consclust.Replace(token, GLOBAL_PROC_REF(piglatin_replace))
+		modded_tokens += token
+	return jointext(modded_tokens, "")
+
+proc/piglatin_replace(match, one, two)
+	if(!one && findtext(two, regex(@"[aeiou]", "i"), length(two)))
+		return "[two]yay"
+	else
+		return "[two][one]ay"
+
+proc/accent_hacker(string, leet_chance=100)
+	var/static/list/leetspeak_suffix_translation = list(
+		"and" = "&",
+		"anned" = "&",
+		"ant" = "&",
+		"or" = "xor",
+		"er" = "xor",
+		"ed" = "d",
+	)
+
+	var/list/tokens = splittext(string, regex("\\b", "i"))
+	var/list/modded_tokens = list()
+	for (var/token in tokens)
+		var/processed = FALSE
+		var/maybe_replacement = strings("language/hacker.txt", lowertext(token), 1)
+		if (maybe_replacement)
+			token = replacetext(token, lowertext(token), maybe_replacement)
+			processed = TRUE
+		if (!processed)
+			for (var/suffix in leetspeak_suffix_translation)
+				if (endswith(token, suffix))
+					token = copytext(token, 1, length(token) + 1 - length(suffix)) + leetspeak_suffix_translation[suffix]
+				if (endswith(token, uppertext(suffix)))
+					token = copytext(token, 1, length(token) + 1 - length(suffix)) + uppertext(leetspeak_suffix_translation[suffix])
+		token = leetspeakify(token, processed ? leet_chance / 2 : leet_chance)
+		modded_tokens += token
+
+	return jointext(modded_tokens, "")
+
+proc/leetspeakify(string, chance=100)
+	var/static/list/leetspeak_translation = list(
+		"a" = "4",
+		"b" = "8",
+		"e" = "3",
+		"g" = "6",
+		"i" = "1",
+		"o" = "0",
+		"s" = "5",
+		"t" = "7",
+		"z" = "2",
+	)
+	var/list/letters = list()
+	for(var/i = 1, i <= length(string), i++)
+		var/letter = copytext(string, i, i + 1)
+		if ((lowertext(letter) in leetspeak_translation) && prob(chance))
+			letter = leetspeak_translation[lowertext(letter)]
+		letters += letter
+	return jointext(letters, "")
+
+/proc/bingus_parse(var/string)
+	var/bingus_list = list(
+		@{"\bbingus\b"} = "bingus my beloved",
+		@{"\bantag\b"} = "floppa",
+		@{"\bantagonist\b"} = "big floppa",
+		@{"\bI love [a-zA-Z]+"} = "I love bingus"
+	)
+	for (var/pattern in bingus_list)
+		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
+	return string

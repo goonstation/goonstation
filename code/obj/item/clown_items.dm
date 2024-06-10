@@ -41,9 +41,9 @@ VUVUZELA
 		var/mob/M =	AM
 		LAZYLISTADDUNIQUE(M.attached_objs, src)
 		src.glide_size = M.glide_size
-		RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
-		if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
-			boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
+		RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end), override=TRUE)
+		if (M.slip(walking_matters=TRUE, ignore_actual_delay=TRUE, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
+			boutput(M, SPAN_NOTICE("You slipped on the banana peel!"))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
@@ -54,7 +54,7 @@ VUVUZELA
 				if (last_touched.sims)
 					last_touched.sims.affectMotive("fun", 10)
 			if(M.bioHolder.HasEffect("clumsy"))
-				M.changeStatus("weakened", 5 SECONDS)
+				M.changeStatus("knockdown", 5 SECONDS)
 				JOB_XP(M, "Clown", 2)
 			else
 				if (prob(20))
@@ -76,14 +76,15 @@ VUVUZELA
 			return
 		opened = 1
 		icon_state = "crushed-5"
-		playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
+		w_class = W_CLASS_TINY
+		playsound(user.loc, 'sound/items/can_open.ogg', 50, 0)
 
 		SPAWN(0.5 SECONDS)
 			// Wow your joke sucks
 			if(prob(5))
-				playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)
+				playsound(user.loc, 'sound/misc/laughter/boo.ogg', 50,0)
 			else
-				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 5)].ogg",50,0)
+				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 4)].ogg",50,0)
 
 	crushed
 		name = "used up Canned laughter"

@@ -3,7 +3,7 @@
 	name = "Arc Flash"
 	desc = "Unleash a ranged bolt of electricity towards a creature. Nearby targets will also be shocked by chain lightning, although with reduced effectiveness."
 	icon_state = "arcflash"
-	cooldown = 15 SECONDS
+	cooldown = 12 SECONDS
 	pointCost = 50
 	target_anything = TRUE
 	targeted = TRUE
@@ -28,7 +28,7 @@
 		for (var/i in 1 to src.chain_count)
 			var/list/potential_targets = list()
 			for (var/mob/M in range(src.chain_range, get_turf(chain_source)))
-				if (M in exempt_targets || isobserver(M) || isintangible(M))
+				if ((M in exempt_targets) || isobserver(M) || isintangible(M))
 					continue
 				potential_targets.Add(M)
 			if (length(potential_targets))

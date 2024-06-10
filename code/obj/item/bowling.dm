@@ -18,12 +18,12 @@
 	throw_speed = 1
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message(SPAN_ALERT("[hitMob] is hit by [user]'s [src]!"))
 
 		src.damage(hitMob, 5, 10, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message(SPAN_ALERT("[hitMob] is knocked over by [user]'s [src]!"))
 
 		src.damage(hitMob, 10, 15, user)
 
@@ -32,7 +32,7 @@
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			if (damMax-10 > 0)
 				hitMob.changeStatus("stunned", 4 SECONDS)
-				hitMob.changeStatus("weakened", 4 SECONDS)
+				hitMob.changeStatus("knockdown", 4 SECONDS)
 				hitMob.force_laydown_standup()
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else
@@ -40,7 +40,7 @@
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
 		..()
@@ -51,11 +51,11 @@
 			src.icon_state = "bowling_ball"
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		var/mob/living/carbon/human/user = usr
+		var/mob/living/carbon/human/user = thr.user || usr
 
 		src.icon_state = "bowling_ball"
 		if(hit_atom)
-			playsound(src.loc, "sound/effects/exlow.ogg", 65, 1)
+			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
@@ -77,7 +77,14 @@
 	desc = "Just keep rollin' rollin'."
 	icon_state = "armadillo_ball"
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = 0, bonus_throwforce = 0)
+	pickup(mob/user)
+		if(locate(/mob/living/critter/small_animal/armadillo) in src)
+			..()
+		else
+			user.remove_item(src)
+			qdel(src)
+
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = UNANCHORED, bonus_throwforce = 0)
 		if(!ismob(target))
 			throw_unlimited = 1
 		..()
@@ -105,4 +112,9 @@
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
-					hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
+					hitMob.visible_message(SPAN_ALERT("[hitMob] is hit by [user]'s [src]!"))
+
+	mob_flip_inside(mob/user)
+		var/mob/living/critter/small_animal/armadillo/A = user
+		if(istype(A))
+			. = A.ball_up(TRUE)

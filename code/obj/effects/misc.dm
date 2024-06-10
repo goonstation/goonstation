@@ -1,6 +1,6 @@
 /obj/effects/lightshaft
 	name = "light"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "light2"
 	pixel_x = -96
@@ -12,7 +12,7 @@
 
 /obj/effects/electro
 	name = "energy"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "electro"
 	pixel_x = -96
@@ -21,7 +21,7 @@
 
 /obj/effects/explosion/small
 	name = "explosion"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "explsmall"
 	pixel_x = -16
@@ -30,7 +30,7 @@
 
 /obj/effects/explosion/fiery
 	name = "explosion"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "explo_fiery"
 	pixel_x = -16
@@ -39,9 +39,17 @@
 
 /obj/effects/explosion/smoky
 	name = "explosion"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explo_smoky"
 	pixel_x = -32
 	pixel_y = -32
+	layer = EFFECTS_LAYER_4
+
+/obj/effects/gang_crate_indicator
+	name = "gang crate indicator"
+	anchored = ANCHORED
+	icon = null
+	pixel_x = 0
+	pixel_y = 0
 	layer = EFFECTS_LAYER_4

@@ -7,7 +7,7 @@
 	var/power = 1
 	var/code = 1
 	var/id = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2.6
 	var/drive_range = 200 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 	plane = PLANE_NOSHADOW_BELOW
@@ -23,7 +23,7 @@
 		O_limit++
 		if(O_limit >= 20)
 			for(var/mob/M in hearers(src, null))
-				boutput(M, "<span class='notice'>The mass driver lets out a screech, it mustn't be able to handle any more items.</span>")
+				boutput(M, SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
 			break
 		use_power(500)
 		O.throw_at(target, drive_range * src.power, src.power)

@@ -5,13 +5,34 @@
  * @license ISC
  */
 
-import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip } from '../../components';
+import { Box, ColorBox, Flex, Icon, NoticeBox, ProgressBar, Section, Stack, Tooltip } from '../../components';
 import { freezeTemperature } from './temperatureUtils';
 import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
 
-interface ReagentContainer {
+export enum MatterState {
+  Solid = 1,
+  Liquid = 2,
+  Gas = 3,
+}
+
+export const MatterStateIconMap = {
+  [MatterState.Solid]: {
+    icon: 'square',
+    pr: 0.5,
+  },
+  [MatterState.Liquid]: {
+    icon: 'tint',
+    pr: 0.9,
+  },
+  [MatterState.Gas]: {
+    icon: 'wind',
+    pr: 0.5,
+  },
+};
+
+export interface ReagentContainer {
   name?: string;
   id?: string;
   maxVolume: number;
@@ -22,17 +43,19 @@ interface ReagentContainer {
   fake?: BooleanLike;
 }
 
-interface Reagent {
+export interface Reagent {
   name: string;
   id: string;
   volume: number;
   colorR: number;
   colorG: number;
   colorB: number;
+  state?: MatterState;
 }
 
 export const NoContainer: ReagentContainer = {
   name: "No Beaker Inserted",
+  contents: [],
   id: "inserted",
   maxVolume: 100,
   totalVolume: 0,
@@ -42,20 +65,28 @@ export const NoContainer: ReagentContainer = {
 };
 
 interface ReagentInfoProps extends BoxProps {
-  container: ReagentContainer;
+  /**
+   * The reagent container object to use. The ui_describe_reagents proc can generate an object like this.
+   */
+  container: ReagentContainer | null;
+  /**
+   * Optional sort function for the reagents.
+   */
+  sort?: (a: Reagent, b: Reagent) => number;
 }
 
 interface ReagentGraphProps extends ReagentInfoProps {}
 
 export const ReagentGraph = (props: ReagentGraphProps) => {
   const {
-    className = '',
-    container,
+    className: _className,
     height,
+    sort,
     ...rest
   } = props;
-  const { maxVolume, totalVolume, finalColor } = container;
-  const contents = container.contents || [];
+  const container = props.container ?? NoContainer;
+  const { contents = [], maxVolume, totalVolume, finalColor } = container;
+  const maybeSortedContents = sort ? [...contents].sort(sort): contents;
   rest.height = height || "50px";
 
   return (
@@ -63,7 +94,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Flex height="100%">
-            {contents.map(reagent => (
+            {maybeSortedContents.map(reagent => (
               <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
                 <Tooltip content={`${reagent.name} (${reagent.volume}u)`} position="bottom">
                   <Box
@@ -76,7 +107,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
               </Flex.Item>
             ))}
             <Flex.Item grow={((maxVolume - totalVolume)/maxVolume)}>
-              <Tooltip content={`Nothing (${maxVolume - totalVolume}u)`} position="bottom">
+              <Tooltip content={`Nothing${container.fake ? "" : ` (${maxVolume - totalVolume}u)`}`} position="bottom">
                 <NoticeBox
                   px={0}
                   my={0}
@@ -96,7 +127,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
             }
             position="bottom">
             <Box height="14px" // same height as a Divider
-              backgroundColor={contents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
+              backgroundColor={maybeSortedContents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
               textAlign="center">
               {container.fake || (
                 <Box
@@ -115,29 +146,44 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
 };
 
 interface ReagentListProps extends ReagentInfoProps {
-  renderButtons(reagent: Reagent): InfernoNode;
+  /**
+   * Allows you to render elements (such as buttons) for each reagent in the list.
+   */
+  renderButtons?(reagent: Reagent): InfernoNode;
+  /**
+   * If you are using the renderButtons property, and you want the buttons to change based on certain dependency
+   * value(s), pass the value(s) to this property (in an array if there are multiple dependency values).
+   */
+  renderButtonsDeps?: string | number | boolean | (string | number | boolean)[];
+  /**
+   * Whether or not to show the matter state of the elements in the list.
+   */
+  showState?: BooleanLike;
 }
 
 export const ReagentList = (props: ReagentListProps) => {
   const {
     className = '',
-    container,
     renderButtons,
+    sort,
+    showState,
     height,
     ...rest
   } = props;
-  const contents = container.contents || [];
+  const container = props.container ?? NoContainer;
+  const { contents = [] } = container;
+  const maybeSortedContents = sort ? [...contents].sort(sort): contents;
   rest.height = height || 6;
 
   return (
-    <Section scrollable>
+    <Section scrollable={height !== "auto"}>
       <Box {...rest}>
-        {contents.length ? contents.map(reagent => (
-          <Flex key={reagent.id} mb={0.5} align="center">
+        {maybeSortedContents.length ? contents.map(reagent => (
+          <Flex key={reagent.id} mb={0.2} align="center">
             <Flex.Item grow>
               <Icon
-                pr={0.9}
-                name="circle"
+                pr={showState && reagent.state ? MatterStateIconMap[reagent.state].pr : 0.9}
+                name={showState && reagent.state ? MatterStateIconMap[reagent.state].icon : "circle"}
                 style={{
                   "text-shadow": "0 0 3px #000;",
                 }}
@@ -168,7 +214,10 @@ export const ReagentList = (props: ReagentListProps) => {
 };
 
 const reagentCheck = (a: Reagent, b: Reagent): boolean => {
-  if (a.volume !== b.volume
+  if (a === b) return false;
+  if (!a
+      || !b
+      || a.volume !== b.volume
       || a.name !== b.name
       || a.id !== b.id
       || a.colorR !== b.colorR
@@ -177,45 +226,113 @@ const reagentCheck = (a: Reagent, b: Reagent): boolean => {
   return false;
 };
 
-const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
+const containerCheck = (a: ReagentContainer | null, b: ReagentContainer| null): boolean => {
   if (a === b) return false; // same object or both null, no update
   if (a === null || b === null) return true; // only one object is null, update
   if (a.totalVolume !== b.totalVolume
       || a.finalColor !== b.finalColor
       || a.maxVolume !== b.maxVolume) return true; // a property used by ReagentGraph/List has changed, update
   if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
-  for (const i in a) {
-    if (reagentCheck(a[i], b[i])) return true; // one of the reagents has changed, update
+  if (a.contents && b.contents) {
+    for (let i = 0; i < a.contents.length; i++) {
+      if (reagentCheck(a.contents[i], b.contents[i])) return true; // one of the reagents has changed, update
+    }
   }
   return false;
 };
 
-// modified version of the shallowDiffers function from common/react.ts
-const reagentInfoDiffers = (a: ReagentInfoProps, b:ReagentInfoProps) => {
-  let i;
-  for (i in a) {
-    if (i === "container") continue;
-    if (!(i in b)) {
-      return true;
-    }
-  }
-  for (i in b) {
-    if (i === "container") continue;
-    if (a[i] !== b[i]) {
-      return true;
-    }
-  }
-  return containerCheck(a.container, b.container);
-};
-
+// modified versions of the shallowDiffers function from common/react.ts
 ReagentGraph.defaultHooks = {
-  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return reagentInfoDiffers(lastProps, nextProps);
+  onComponentShouldUpdate: (a: ReagentGraphProps, b: ReagentGraphProps) => {
+    let i;
+    for (i in a) {
+      if (i === "container") continue;
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (i in b) {
+      if (i === "container") continue;
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return containerCheck(a.container, b.container);
   },
 };
 
 ReagentList.defaultHooks = {
-  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return reagentInfoDiffers(lastProps, nextProps);
+  onComponentShouldUpdate: (a: ReagentListProps, b: ReagentListProps) => {
+    let i;
+    for (i in a) {
+      if (i === "container" || i === "renderButtons") continue;
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (i in b) {
+      if (i === "container" || i === "renderButtons") continue;
+      if (i === "renderButtonsDeps" && typeof a.renderButtonsDeps === 'object' && typeof b.renderButtonsDeps === 'object') {
+        // The renderButtonsDeps is an array in the previous and next props, so perform a shallow difference check
+        const aDeps = a.renderButtonsDeps;
+        const bDeps = b.renderButtonsDeps;
+        if (aDeps.length !== bDeps.length) {
+          return true;
+        }
+        let j;
+        for (j in aDeps) {
+          if (aDeps[j] !== bDeps[j]) {
+            return true;
+          }
+        }
+        // There is no difference between the deps
+        continue;
+      }
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return containerCheck(a.container, b.container);
   },
+};
+
+export const ReagentBar = (props: ReagentInfoProps) => {
+  const {
+    className = '',
+    container,
+    ...rest
+  } = props;
+  if (!container) {
+    return null;
+  }
+  const { maxVolume, totalVolume, finalColor } = container;
+  return (
+    <Stack align="center" pb={1}>
+      <Stack.Item>
+        <Box
+          textAlign="right"
+          width="3em"
+        >
+          {`${totalVolume}u`}
+        </Box>
+      </Stack.Item>
+      <Stack.Item grow>
+        <ProgressBar
+          value={totalVolume}
+          minValue={0}
+          maxValue={maxVolume}
+          color={finalColor}
+          {...rest}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Box
+          textAlign="left"
+          width="3em"
+        >
+          {`${maxVolume}u`}
+        </Box>
+      </Stack.Item>
+    </Stack>
+  );
 };

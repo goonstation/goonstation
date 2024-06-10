@@ -53,7 +53,7 @@
 			if (L.hearing_check(1))
 				if(count++ > 15) break
 				if(picked_emote == "fart")
-					if(!(locate(/obj/item/storage/bible) in get_turf(L))) //bible fart bad
+					if(!(locate(/obj/item/bible) in get_turf(L))) //bible fart bad
 						L.emote(picked_emote, FALSE)
 				else
 					L.emote(picked_emote, FALSE)

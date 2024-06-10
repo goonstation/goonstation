@@ -51,6 +51,7 @@
 	var/amount_left = 0
 	var/max_amount = 1000
 	var/unusualCell
+	/// TRUE if this ammo can be refilled from an ammo bag. Used to prevent duping
 	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
@@ -101,7 +102,7 @@
 				src.UpdateIcon()
 				if (A.delete_on_reload)
 					qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining.</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining."))
 				return // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (src.amount_left == src.max_amount))
 				A.UpdateIcon()
@@ -109,7 +110,7 @@
 				if (A.amount_left == 0)
 					if (A.delete_on_reload)
 						qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name].</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name]."))
 				return // Full reload or ammo left over.
 		else return ..()
 
@@ -178,7 +179,8 @@
 			K.ammo = ammoGun
 			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
-				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+				K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+				K.current_projectile.shot_sound_extrarange = -10
 			K.UpdateIcon()
 
 			return 1
@@ -195,25 +197,25 @@
 		else if (K.ammo_cats == null) //someone forgot to set ammo cats. scream
 			check = 1
 		if (!check)
-			return 1
+			return AMMO_RELOAD_INCOMPATIBLE
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
 		if(K.sound_load_override)
 			playsound(K, K.sound_load_override, 50, 1)
 		else
-			playsound(K, sound_load, 50, 1)
+			playsound(K, sound_load, 50, TRUE)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
 		if (A.amount_left < 1)
-			return 2 // Magazine's empty.
+			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
 			if (K.ammo.ammo_type.type != A.ammo_type.type)
-				return 6 // Call swap().
-			return 3 // Gun's full.
+				return AMMO_RELOAD_TYPE_SWAP // Call swap().
+			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
 		if (K.ammo.amount_left > 0 && K.ammo.ammo_type.type != A.ammo_type.type)
-			return 6 // Call swap().
+			return AMMO_RELOAD_TYPE_SWAP // Call swap().
 
 		else
 
@@ -230,11 +232,17 @@
 				K.ammo = ammoGun
 				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
-					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+					K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+					K.current_projectile.shot_sound_extrarange = -10
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
-			var/move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
+			var/move_amount
+			if (K.max_move_amount <= 0)
+				move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
+			else
+				move_amount = min(K.max_move_amount,min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left))
+
 			A.amount_left -= move_amount
 			K.ammo.amount_left += move_amount
 			K.ammo.ammo_type = A.ammo_type
@@ -246,7 +254,7 @@
 				if (A.delete_on_reload)
 					//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on partial reload.")
 					qdel(A) // No duplicating empty magazines, please (Convair880).
-				return 4 // Couldn't fully reload the gun.
+				return AMMO_RELOAD_PARTIAL // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (K.ammo.amount_left == K.max_ammo_capacity))
 				A.UpdateIcon()
 				K.UpdateIcon()
@@ -255,7 +263,13 @@
 					if (A.delete_on_reload)
 						//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on full reload.")
 						qdel(A) // No duplicating empty magazines, please (Convair880).
-				return 5 // Full reload or ammo left over.
+				return AMMO_RELOAD_FULLY // Full reload or ammo left over.
+
+			if ((A.amount_left >= 0) && (move_amount == K.max_move_amount))
+				A.UpdateIcon()
+				K.ammo.UpdateIcon()
+				K.UpdateIcon()
+				return AMMO_RELOAD_CAPPED
 
 	update_icon()
 
@@ -302,25 +316,26 @@
 	icon_empty = "custom-0"
 
 	onMaterialChanged()
-		ammo_type.material = copyMaterial(src.material)
+		ammo_type.material = src.material
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
-			if((src.material.material_flags & MATERIAL_CRYSTAL))
+			if((src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
-			if((src.material.material_flags & MATERIAL_METAL))
+			if((src.material.getMaterialFlags() & MATERIAL_METAL))
 				ammo_type.damage_type = D_KINETIC
-			if((src.material.material_flags & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				ammo_type.damage_type = D_TOXIC
-			if((src.material.material_flags & MATERIAL_ENERGY))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY))
 				ammo_type.damage_type = D_ENERGY
-			if((src.material.material_flags & MATERIAL_METAL) && (src.material.material_flags & MATERIAL_CRYSTAL))
+			if((src.material.getMaterialFlags() & MATERIAL_METAL) && (src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_SLASHING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				ammo_type.damage_type = D_BURNING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_METAL))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_METAL))
 				ammo_type.damage_type = D_RADIOACTIVE
 
 		return ..()
@@ -335,6 +350,11 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	ammo_cat = AMMO_PISTOL_22
 
+	american_180
+		ammo_type = new/datum/projectile/bullet/bullet_22/a180
+		amount_left = 177
+		max_amount = 177
+		desc = "177 rounds of .22 unceremoniously crammed into a goofy pancake magazine."
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."
@@ -376,6 +396,12 @@
 		ammo_type = new/datum/projectile/bullet/assault_rifle/armor_piercing
 		icon_state = "stenag_mag-AP"
 
+	remington
+		sname = ".223 Remington JHP"
+		name = ".223 magazine"
+		desc = "An M16 magazine loaded with .223 Remington. Works in a 5.56 NATO firearm, but shoots a much lighter bullet."
+		ammo_type = new/datum/projectile/bullet/assault_rifle/remington
+
 //0.308
 /obj/item/ammo/bullets/minigun
 	sname = "7.62×51mm NATO"
@@ -383,31 +409,39 @@
 	ammo_type = new/datum/projectile/bullet/minigun
 	icon_state = "lmg_ammo-old" // reusing old sprites for variety
 	icon_empty = "lmg_ammo-0-old"
-	amount_left = 100
-	max_amount = 100
+	amount_left = 200
+	max_amount = 200
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-/obj/item/ammo/bullets/ak47
-	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
-	name = "AK magazine"
-	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine."
-	ammo_type = new/datum/projectile/bullet/ak47
+/obj/item/ammo/bullets/akm
+	sname = "7.62x39mm"
+	name = "AKM magazine"
+	desc = "A curved 30 round magazine, for the AKM assault rifle."
+	ammo_type = new/datum/projectile/bullet/akm
 	icon_state = "ak47"
 	amount_left = 30
 	max_amount = 30
-	ammo_cat = AMMO_AUTO_308
+	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	draco
+		name = "Draco Magazine"
+		desc = "A curved 30 round magazine, for the Draco Pistol."
+		ammo_type = new/datum/projectile/bullet/draco
 
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
-	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit."
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
 	ammo_type = new/datum/projectile/bullet/rifle_3006
-	icon_state = "rifle_clip"
+	icon_state = "rifle_clip-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
 
 /obj/item/ammo/bullets/rifle_762_NATO
 	sname = "7.62×51mm NATO"
@@ -422,15 +456,41 @@
 /obj/item/ammo/bullets/tranq_darts
 	sname = ".308 Tranquilizer"
 	name = ".308 tranquilizer darts"
-	desc = "A box of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
+	desc = "A stripper clip of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
 	ammo_type = new/datum/projectile/bullet/tranq_dart
-	icon_state = "tranq_clip"
+	icon_state = "rifle_clip_dart-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_TRANQ_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip_dart"
+	icon_empty = "rifle_clip_empty"
+
+	var/image/reagent_image
+
+	New()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (!src.icon_dynamic || !src.ammo_type.reagent_payload)
+			return
+
+		src.underlays = null
+		if (!src.reagent_image)
+			src.reagent_image = image(src.icon, "rifle_clip_dart_underlay-[src.amount_left]", -1)
+		else
+			src.reagent_image.icon_state = "rifle_clip_dart_underlay-[src.amount_left]"
+
+
+		var/datum/reagent/reagent = reagents_cache[src.ammo_type.reagent_payload]
+		src.reagent_image.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b, reagent.transparency)
+		src.underlays += src.reagent_image
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
+		desc = "A stripper clip of sodium thiopental darts. Will weaken and eventually knock out targets."
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
 
 		pistol
@@ -440,6 +500,7 @@
 			icon_state = "pistol_tranq"
 			amount_left = 10
 			max_amount = 15
+			icon_dynamic = 0
 			ammo_cat = AMMO_TRANQ_9MM//i prefer having tranqs grouped up- owari.
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
 
@@ -474,7 +535,7 @@
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
 	desc = "A handgun magazine full of 9x19mm rounds, an intermediate pistol cartridge."
-	icon_state = "pistol_magazine"
+	icon_state = "branwen_magazine"
 	amount_left = 15
 	max_amount = 15
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
@@ -492,6 +553,11 @@
 		ammo_cat = AMMO_SMG_9MM
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
+	lopoint
+		name = "9mm Lo-Point magazine"
+		amount_left = 10
+		max_amount = 10
+
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm frangible"
 	name = "9mm frangible magazine"
@@ -502,8 +568,53 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
 
-/obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
-	amount_left = 0
+	boomerang //empty clip for the clock_188/boomerang
+		amount_left = 0
+
+
+/obj/item/ammo/bullets/nine_mm_surplus
+	sname = "9x19mm Soft Point"
+	name = "9mm Soft Point magazine"
+	desc = "A magazine full of 9x19mm ammunition. This particular load has the lead core exposed at the tip for increased expansion."
+	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	amount_left = 12
+	max_amount = 12
+	ammo_type = new/datum/projectile/bullet/nine_mm_surplus
+	ammo_cat = AMMO_SMG_9MM
+
+	mag_mor
+		icon_state = "uzi"
+		icon_empty = "uzi-empty"
+		name = "9mm MOR magazine"
+		amount_left = 30
+		max_amount = 30
+	mag_grease
+		icon_state = "grease"
+		icon_empty = "grease-empty"
+		name = "9mm Grease Gun magazine"
+		amount_left = 30
+		max_amount = 30
+/obj/item/ammo/bullets/nine_mm_soviet
+	sname = "9x18mm Makarov"
+	name = "9x18mm magazine"
+	desc = "A standard 8 round magazine, for the PM pistol. It featuring an observation slot for checking remaining munitions."
+	icon_state = "makarov_magazine"
+	icon_empty = "makarov_magazine-empty"
+	amount_left = 8
+	max_amount = 8
+	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
+	ammo_cat = AMMO_PISTOL_9MM_SOVIET
+
+//medic primary
+/obj/item/ammo/bullets/veritate
+	sname = "6.5×20mm AP"
+	name = "6.5×20mm magazine"
+	desc = "High-velocity pistol cartridges, loaded with armor-piercing bullets."
+	icon_state = "stenag_mag"
+	amount_left = 21
+	max_amount = 21
+	ammo_type = new/datum/projectile/bullet/veritate
+	ammo_cat = AMMO_FLECHETTE
 
 //0.357
 /obj/item/ammo/bullets/a357
@@ -541,6 +652,13 @@
 	icon_dynamic = 1
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
+
+
+/obj/item/ammo/bullets/a38/mag
+	name = ".38 Hi-Tek magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 10
+	max_amount = 10
 
 //0.38
 /obj/item/ammo/bullets/a38/AP
@@ -581,6 +699,7 @@
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
+	throwforce = 0
 
 //0.40
 /obj/item/ammo/bullets/blow_darts
@@ -639,14 +758,19 @@
 	icon_empty = "speedloader_empty"
 
 //0.58
-/obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
+/obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
-	name = ".58 Flintlock"
+	name = ".58 flintlock pouch"
+	desc = "A small pouch containing .58 lead balls for flintlock pistols."
 	ammo_type = new/datum/projectile/bullet/flintlock
-	icon_state = null
-	amount_left = 1
-	max_amount = 1
+	icon_state = "flintlock_ammo_pouch"
+	amount_left = 15
+	max_amount = 15
 	ammo_cat = AMMO_FLINTLOCK
+
+	single
+		amount_left = 1
+		max_amount = 1
 
 //0.72
 /obj/item/ammo/bullets/a12
@@ -664,6 +788,23 @@
 
 	weak //for nuke ops engineer
 		ammo_type = new/datum/projectile/bullet/a12/weak
+
+
+	bird //for gangs
+		ammo_type = new/datum/projectile/special/spreader/uniform_burst/bird12
+		ammo_cat = AMMO_SHOTGUN_LOW
+		sound_load = 'sound/weapons/gunload_click.ogg'
+		sname = "12ga Birdshot"
+		name = "12ga birdshot ammo box"
+		desc = "A box of birdshot shells. Still capable of murder. Likely by exsanguination."
+
+		seven //for striker
+			amount_left = 7
+			max_amount = 7
+		two //for coachgun
+			amount_left = 2
+			max_amount = 2
+
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
@@ -690,7 +831,12 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
+	sname = "plasmaglass load"
+	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/plasglass
+	icon_state = "makeshiftplasglass"
 
 /obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"
@@ -703,6 +849,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
 
+/obj/item/ammo/bullets/pipeshot/scrap/five
+	amount_left = 5
+	max_amount = 5
+
+/obj/item/ammo/bullets/pipeshot/bone // scrap handmade bone shells
+	sname = "bone load"
+	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -764,6 +918,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		amount_left = 1
 		max_amount = 1
 
+//0.75
+/obj/item/ammo/bullets/flintlock/rifle
+	sname = ".75 Flintlock"
+	name = ".75 flintlock pouch"
+	desc = "A small pouch containing .75 lead balls for flintlock rifles."
+	ammo_type = new/datum/projectile/bullet/flintlock/rifle
+	icon_state = "flintlock_rifle_ammo_pouch"
+	ammo_cat = AMMO_FLINTLOCK_RIFLE
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 //0.787
 /obj/item/ammo/bullets/cannon
 	sname = "20mm APHE"
@@ -795,6 +962,40 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_COILGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/four_bore
+	sname = "Four-Bore Termination Round"
+	name = "four-bore termination rounds"
+	desc = "A box of inch wide lethal rounds. These are for monsters that shouldn't exist."
+	ammo_type = new/datum/projectile/bullet/four_bore
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4b-6"
+	icon_empty = "4b-0"
+	icon_dynamic = 1
+	icon_short = "4b"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/four_bore/stun
+	sname = "Four-Bore Roundhouse Slug"
+	name = "four-bore roundhouse slugs"
+	desc = "A box of massive rubber slugs. These are sublethal, not nonlethal."
+	ammo_type = new/datum/projectile/bullet/four_bore_stunners
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4bs-6"
+	icon_empty = "4bs-0"
+	icon_dynamic = 1
+	icon_short = "4bs"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	two //spawns in albatross
+		amount_left = 2
+		max_amount = 2
+
 //1.57
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
@@ -819,13 +1020,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		name = "40mm HE pod-seeking shells"
 		desc = "Some fancy high explosive shells that really, really love pods."
 		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
-
-	knocker
-		sname = "40mm HE Knocker"
-		name = "40mm HE airlock-breaching shells"
-		desc = "Some explosive breaching shells."
-		icon_state = "40mm_HE"
-		ammo_type = new/datum/projectile/bullet/autocannon/knocker
 
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm"
@@ -886,7 +1080,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mm_nonlethal-0"
+	icon_empty = "40mm_paint-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 /obj/item/ammo/bullets/pbr
@@ -902,6 +1096,38 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_dynamic = 0
 	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+/obj/item/ammo/bullets/stunbaton
+	sname = "40mm Stun Baton Rounds"
+	name = "40mm stun-baton rounds"
+	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
+	ammo_type = new/datum/projectile/bullet/stunbaton
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mm_nonlethal"
+	ammo_cat = AMMO_GRENADE_40MM
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mm_nonlethal-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+/obj/item/ammo/bullets/breach_flashbang
+	sname = "40mm Door-Breaching Rounds"
+	name = "40mm door-breaching rounds"
+	desc = "Some high-tech shells with an ID-chipped tip and a pyrotechnic payload."
+	ammo_type = new/datum/projectile/bullet/breach_flashbang
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mm_nonlethal"
+	ammo_cat = AMMO_GRENADE_40MM
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mm_nonlethal-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+	single
+		amount_left = 1
+		max_amount = 1
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
@@ -940,7 +1166,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 				src.amount_left++
 				boutput(user, "You load [W] into the [src].")
 			else
-				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
+				boutput(user, SPAN_ALERT("For <i>some reason</i>, you are unable to place [W] into an already filled chamber."))
 				return
 		else
 			return ..()
@@ -992,6 +1218,32 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+/obj/item/ammo/bullets/pod_seeking_missile
+	sname = "pod-seeking missile"
+	name = "pod-seeking missile"
+	desc = "A high-explosive missile, equipped with pod-seeking guidance systems."
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	ammo_type = new /datum/projectile/bullet/homing/pod_seeking_missile
+	ammo_cat = AMMO_ROCKET_RPG
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
+/obj/item/ammo/bullets/mrl
+	sname = "MRL rocket pack"
+	name = "MRL rocket pack"
+	amount_left = 6
+	max_amount = 6
+	icon_state = "mrl_rocketpack"
+	ammo_type = new /datum/projectile/bullet/homing/mrl
+	ammo_cat = AMMO_ROCKET_MRL
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = 1
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
 	name = "Singularity buster rocket"
@@ -1020,6 +1272,26 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+//2.5
+/obj/item/ammo/bullets/flintlock/mortar
+	sname = "2.5 Mortar"
+	name = "2.5 mortar grenades"
+	desc = "Ancient 63.5mm grenades, meant for use in a hand mortar."
+	ammo_type = new/datum/projectile/bullet/flintlock/mortar
+	icon_state = "mortar-10"
+	icon_empty = "mortar-0"
+	icon_dynamic = TRUE
+	icon_short = "mortar"
+	ammo_cat = AMMO_FLINTLOCK_MORTAR
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	amount_left = 10
+	max_amount = 10
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 //3.0
 /obj/item/ammo/bullets/gun
 	name = "Briefcase of guns"
@@ -1041,7 +1313,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	m_amt = 40000
 	g_amt = 0
@@ -1054,7 +1326,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
 	g_amt = 0
@@ -1093,6 +1365,38 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/howitzer
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/staples
+	sname = "staples"
+	name = "staples"
+	desc = "A tiny case of staples. You really shouldn't be seeing this."
+	icon_state = "power_cell"
+	icon_empty = "power_cell"
+	amount_left = 2
+	max_amount = 2
+	ammo_type = new/datum/projectile/bullet/staple
+	ammo_cat = AMMO_STAPLE
+	w_class = W_CLASS_TINY
+
+	after_unload(mob/user)
+		. = ..()
+		for(var/i in 1 to src.amount_left)
+			new/obj/item/implant/projectile/staple(get_turf(src))
+		qdel(src)
+
+/obj/item/ammo/bullets/webley
+	sname = ".455 Webley"
+	name = ".455 Webley Bullets"
+	desc = "A small speedloader of reproduction .455 Webley ammunition, with a custom armor-penetrating core."
+	icon_state = "455-6"
+	amount_left = 6
+	max_amount = 6
+	ammo_type = new/datum/projectile/bullet/webley
+	ammo_cat = AMMO_WEBLEY
+	icon_dynamic = 1
+	icon_short = "455"
+	icon_empty = "speedloader_empty"
+
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1105,13 +1409,15 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/charge = 100
 	var/max_charge = 100
 	var/recharge_rate = 0
+	var/recharge_delay = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 	var/rechargable = TRUE
+	var/component_type = /datum/component/power_cell
 
 	New()
 		..()
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, rechargable)
+		AddComponent(src.component_type, max_charge, charge, recharge_rate, recharge_delay, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		UpdateIcon()
@@ -1155,6 +1461,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
+	proc/get_charge()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			return clamp(ret["charge"], 0, src.max_charge)
 
 /obj/item/ammo/power_cell/empty
 	charge = 0
@@ -1211,14 +1521,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 40PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 60PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	m_amt = 18000
 	g_amt = 38000
-	charge = 40
-	max_charge = 40
-	recharge_rate = 5
+	charge = 60
+	max_charge = 60
+	recharge_rate = 2.5
 
 
 /obj/item/ammo/power_cell/self_charging/custom
@@ -1232,33 +1542,33 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
 
 			recharge_rate = 0
-			recharge_rate += material.getProperty("radioactive")/2
-			recharge_rate += material.getProperty("n_radioactive")
+			recharge_rate += material.getProperty("radioactive")/4
+			recharge_rate += material.getProperty("n_radioactive")/2
 
 
 		charge = max_charge
 
-		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, recharge_delay)
 		return
 
 
 	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
 		src.setMaterial(coreMat)
 		if(genMat)
-			src.name = "[genMat.name]-doped [src.name]"
+			src.name = "[genMat.getName()]-doped [src.name]"
 
 			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
 			max_charge = round((conductivity ** 2) * 4, 25)
 
 			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
-			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 3 //weight this too
+			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 6 //weight this too
 
-			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate)
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate, recharge_delay)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
-	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
-	recharge_rate = 2.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
+	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 60PU."
+	recharge_rate = 2 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
 
 /obj/item/ammo/power_cell/self_charging/disruptor
 	name = "Power Cell - Disruptor Charger"
@@ -1277,7 +1587,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "recharger_cell"
 	charge = 150
 	max_charge = 150
-	recharge_rate = 7.5
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	name = "Power Cell - NTSO D49"
@@ -1286,13 +1596,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "recharger_cell"
 	charge = 250
 	max_charge = 250
-	recharge_rate = 9
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
 	charge = 150
 	max_charge = 150
-	recharge_rate = 4
+	recharge_rate = 2
 
 /obj/item/ammo/power_cell/self_charging/medium
 	name = "Power Cell - Hicap RTG"
@@ -1301,14 +1611,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
-	recharge_rate = 7.5
+	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/mediumbig
 	name = "Power Cell - Fission"
 	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU."
 	max_charge = 200
 	charge = 200
-	recharge_rate = 20
+	recharge_rate = 10
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
@@ -1319,7 +1629,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	g_amt = 38000
 	charge = 400
 	max_charge = 400
-	recharge_rate = 40
+	recharge_rate = 20
 
 /obj/item/ammo/power_cell/self_charging/lawbringer
 	name = "Power Cell - Lawbringer Charger"
@@ -1330,12 +1640,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	g_amt = 38000
 	charge = 300
 	max_charge = 300
-	recharge_rate = 10
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	charge = 175
 	max_charge = 175
-	recharge_rate = 6
+	recharge_rate = 3
 
 /obj/item/ammo/power_cell/self_charging/howitzer
 	name = "Miniaturized SMES"
@@ -1343,40 +1654,43 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	charge = 2500
 	max_charge = 2500
 
+/obj/item/ammo/power_cell/self_charging/flockdrone
+	name = "Flockdrone incapacitor cell"
+	desc = "You should not be seeing this!"
+	charge = 40
+	max_charge = 40
+	recharge_rate = 5
+	component_type = /datum/component/power_cell/flockdrone
 
-/datum/action/bar/icon/powercellswap
-	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "powercellswap"
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "power_cell"
-	var/mob/living/user
-	var/obj/item/ammo/power_cell/cell
-	var/obj/item/gun/energy/gun
+/obj/item/ammo/power_cell/redirect
+	component_type = /datum/component/power_cell/redirect
+	var/target_type = null
+	var/internal = FALSE
 
-	New(User, Cell, Gun)
-		user = User
-		cell = Cell
-		gun = Gun
+/obj/item/ammo/power_cell/lasergat
+	name = "Mod. 93R Repeating Laser Cell"
+	desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm."
+	charge = 120
+	max_charge = 120
+	icon_state = "burst_laspistol"
+	rechargable = FALSE
+	New()
 		..()
+		desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm. It has [src.max_charge]PU."
 
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			interrupt(INTERRUPT_ALWAYS)
+	update_icon()
+		var/list/ret = list()
+		overlays = null
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 33)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			switch(ratio)
+				if(33)
+					overlays += "burst_laspistol-33"
+				if(66)
+					overlays += "burst_laspistol-66"
+				if(99)
+					overlays += "burst_laspistol-100"
 			return
 
-	onStart()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		return
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			..()
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		cell.swap(gun,user)

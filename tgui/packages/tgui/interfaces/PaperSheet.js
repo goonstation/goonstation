@@ -10,7 +10,7 @@ import { resolveAsset } from '../assets';
 import { Component } from 'inferno';
 import marked from 'marked';
 import { useBackend } from '../backend';
-import { Box, Flex, Tabs, TextArea, Table } from '../components';
+import { Box, Flex, Table, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { sanitizeText } from '../sanitize';

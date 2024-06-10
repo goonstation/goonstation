@@ -1,6 +1,6 @@
 // TODO make this mob/living/intangible. the fuck is it doing here?
-/mob/living/seanceghost
-	name = "Seance Ghost"
+/mob/living/intangible/seanceghost
+	name = "seance ghost"
 	desc = "Ominous hooded figure!"
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "seanceghost"
@@ -8,7 +8,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	var/obj/machinery/playerzoldorf/homebooth
@@ -16,6 +16,7 @@
 
 	New(var/mob/M)
 		..()
+		invisibility = INVIS_NONE
 
 	is_spacefaring()
 		return 1
@@ -48,7 +49,7 @@
 
 		if (ishuman(other))
 			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace || !H.mutantrace.exclusive_language)
+			if (!H.mutantrace.exclusive_language)
 				return 1
 			else
 				return 0
@@ -60,7 +61,7 @@
 	Move(NewLoc, direct) //just a copy paste from ghost move
 		if(!canmove) return
 
-		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+		if (!can_ghost_be_here(src, NewLoc))
 			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)
@@ -100,17 +101,19 @@
 		return 0
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
 		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
 
 	emote(var/act, var/voluntary)
+		..()
 		var/message
 		switch (lowertext(act))
 			if("flip")
@@ -160,7 +163,7 @@
 	if(originalz) //theres different handling for if that previous mob was a zoldorf or not
 		originalg = originalz
 	if (src.mind || src.client)
-		var/mob/living/seanceghost/Z = new/mob/living/seanceghost(src)
+		var/mob/living/intangible/seanceghost/Z = new/mob/living/intangible/seanceghost(src)
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
@@ -200,7 +203,7 @@
 	return null
 
 /obj/item/paper/soulsell101
-	name = "Selling Your Soul 101"
+	name = "\improper Selling Your Soul 101"
 	desc = "informational pamphlet about selling your soul"
 	icon_state = "paper"
 

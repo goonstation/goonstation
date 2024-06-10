@@ -1,0 +1,81 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"b" = (
+/obj/decal/cleanable/cobweb,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"c" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"d" = (
+/mob/living/critter/spider/clown,
+/obj/decal/cleanable/cobweb2,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"e" = (
+/obj/decal/cleanable/dirt,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"f" = (
+/mob/living/critter/spider/clownqueen,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"g" = (
+/obj/item/material_piece/cloth/spidersilk,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"h" = (
+/mob/living/critter/spider/clown,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"i" = (
+/obj/decal/cleanable/vomit/spiders,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"j" = (
+/obj/decal/cleanable/dirt,
+/obj/item/bananapeel,
+/turf/variableTurf/floor,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+e
+h
+a
+"}
+(3,1,1) = {"
+a
+c
+f
+c
+j
+"}
+(4,1,1) = {"
+a
+d
+g
+i
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

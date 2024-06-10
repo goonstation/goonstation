@@ -1,0 +1,87 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/airless/caution/east,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal,
+/turf/simulated/floor/airless/caution/corner/ne,
+/area/dmm_suite/clear_area)
+"f" = (
+/turf/simulated/floor/airless/caution/west,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/airless/caution/west,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/stool/chair/office,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/airless/caution/east,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/decal/fakeobjects/shuttleweapon/base,
+/turf/simulated/floor/airless/caution/corner,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/item/paper/safehouse/delivery_note{
+	desc = "A Test Report Card, Seems Something Went Wrong.";
+	name = "Engine Test 53";
+	info = "<b>Seems that a part of the card is burnt.</b><br>Engine Report 53<br><br>-------------------------------------------<br>The engine seems to be acting normaly without any errors i suspect we can use this engine very very so-<br>-------------------------------------------<br>Rest of the card is burnt off"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/simulated/floor/airless/caution/corner/sw,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/storage/closet/radiation,
+/turf/simulated/floor/airless/caution/corner/nw,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/decal/cleanable/blood/gibs,
+/obj/machinery/light/emergency,
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/simulated/floor/airless/caution/corner/se,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/airless/caution/south,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/simulated/floor/airless/caution/corner,
+/area/dmm_suite/clear_area)
+"G" = (
+/turf/simulated/floor/airless/caution/north,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/machinery/light/emergency,
+/turf/simulated/floor/airless/caution/corner,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/airless/caution/west,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+y
+m
+f
+V
+v
+"}
+(2,1,1) = {"
+G
+P
+s
+F
+C
+"}
+(3,1,1) = {"
+e
+p
+a
+a
+z
+"}

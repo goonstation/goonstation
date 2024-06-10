@@ -6,7 +6,7 @@
 	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
 	opacity = 0
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
@@ -50,8 +50,8 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
-			. += A.examine_hint
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+			. += SPAN_ARTHINT(A.examine_hint)
 
 	ex_act(severity)
 		switch(severity)
@@ -79,7 +79,7 @@
 		src.Artifact_blob_act(power)
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
@@ -104,7 +104,7 @@
 	mob_flip_inside(mob/user)
 		. = ..()
 		src.ArtifactTakeDamage(rand(5,20))
-		boutput(user, "<span class='alert'>It seems to be a bit more damaged!</span>")
+		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
 
 /obj/machinery/artifact
 	name = "artifact large art piece"
@@ -112,7 +112,7 @@
 	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
 	opacity = 0
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
@@ -137,8 +137,8 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
-			. += A.examine_hint
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -242,8 +242,8 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
-			. += A.examine_hint
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -276,8 +276,8 @@
 		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
-			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
-			playsound(T,"sound/effects/teleport.ogg",50,1)
+			T.visible_message(SPAN_ALERT("<b>An artifact suddenly warps into existence!</b>"))
+			playsound(T, 'sound/effects/teleport.ogg', 50,TRUE)
 			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
 			SPAWN(1.5 SECONDS)

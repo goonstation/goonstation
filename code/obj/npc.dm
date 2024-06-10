@@ -3,7 +3,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/status = 0
 	var/mob/current_user = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/health = 100 //how much health the npc has
 	var/angry = 0 //Is the npc aggressive
@@ -27,7 +27,7 @@
 //Handles what happens when the npc becomes aggresive
 /obj/npc/proc/anger()
 	for(var/mob/M in AIviewers(src))
-		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
+		boutput(M, SPAN_ALERT("<B>[src.name]</B> becomes angry!"))
 	src.desc = "[src] looks angry"
 	SPAWN(rand(1000,3000))
 		src.visible_message("<b>[src.name] calms down.</b>")
@@ -76,10 +76,8 @@
 			health = health -50
 		if(3)
 			health = health -25
-		else
-	if(health <=0)
+	if(health <= 0)
 		src.death()
-	return
 
 /obj/npc/blob_act(var/power)
 	// Called when attacked by a blob
@@ -94,7 +92,7 @@
 		activatesecurity()
 		src.anger()
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data)
 		switch(P.proj_data.damage_type)
@@ -131,7 +129,7 @@
 
 	else
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span class='alert'><B>[user]</B> pokes [src] with [W.name]!</span>")
+			boutput(M, SPAN_ALERT("<B>[user]</B> pokes [src] with [W.name]!"))
 
 		if(angry!=2)
 			if(prob(25))
@@ -139,5 +137,5 @@
 				src.anger()
 				activatesecurity()
 		*/
-	src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W.name].</span>")
+	src.visible_message(SPAN_ALERT("<B>[user]</B> pokes [src] with [W.name]."))
 	return

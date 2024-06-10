@@ -29,6 +29,10 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 		..()
 		if(isnull(name) && !isnull(prefabPath))
 			src.generate_default_name()
+		src.init()
+
+	proc/init()
+		return
 
 	proc/post_init()
 		if(isnull(name) && !isnull(prefabPath))
@@ -71,7 +75,7 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 
 		pre_cleanup(target)
 
-		var/dmm_suite/D = new/dmm_suite()
+		var/dmm_suite/D = new/dmm_suite(debug_id="prefab [name], path [prefabPath]")
 		var/datum/loadedProperties/props = D.read_map(loaded, target.x, target.y, target.z, prefabPath, flags=overwrite_args)
 		if(!isnull(prefabSizeX) && prefabSizeX != props.maxX - props.sourceX + 1 || !isnull(prefabSizeY) && prefabSizeY != props.maxY - props.sourceY + 1)
 			CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
@@ -104,6 +108,8 @@ proc/get_map_prefabs(prefab_type)
 	if(typeinfo.stored_as_subtypes)
 		for(var/datum/mapPrefab/prefabType as anything in concrete_typesof(prefab_type, cache=FALSE))
 			var/datum/mapPrefab/prefab = get_singleton(prefabType)
+			if(prefab.name in prefab_cache[prefab_type])
+				stack_trace("mapPrefab: Prefab type '[prefab_type]' has multiple prefabs with the same name '[prefab.name]'")
 			prefab_cache[prefab_type][prefab.name] = prefab
 	else
 		for(var/base_path in list("assets/maps/[typeinfo.folder]/", "+secret/assets/[typeinfo.folder]/"))
@@ -113,6 +119,10 @@ proc/get_map_prefabs(prefab_type)
 					continue
 				if(isnull(prefab.name))
 					prefab.generate_default_name()
+				if(prefab.name in prefab_cache[prefab_type])
+					stack_trace("mapPrefab: Prefab type '[prefab_type]' has multiple prefabs with the same name '[prefab.name]'")
+				// TODO: figure out a way how do allow duplicate prefab names if they are from different folders
+				// but note that currently some code rightly assumes that get_map_prefabs(foo)[bar].name == bar
 				prefab_cache[prefab_type][prefab.name] = prefab
 
 	return prefab_cache[prefab_type]
@@ -124,27 +134,45 @@ proc/get_map_prefabs(prefab_type)
  *
  * Prefab max count is respected. However, note that the count of a prefab is only updated in prefab's applyTo() function.
  */
-proc/pick_map_prefab(prefab_type, list/wanted_tags=null, list/unwanted_tags=null)
+proc/pick_map_prefab(prefab_type, list/wanted_tags_any=null, list/wanted_tags_all=null,list/unwanted_tags=null)
 	RETURN_TYPE(/datum/mapPrefab)
 	var/prefab_list = get_map_prefabs(prefab_type)
-	if(!length(prefab_list))
+	if (!length(prefab_list))
 		return null
 
 	var/list/required = list()
 	var/list/choices = list()
-	for(var/name in prefab_list)
+	for (var/name in prefab_list)
 		var/datum/mapPrefab/prefab = prefab_list[name]
-		if(
-				length(prefab.tags & unwanted_tags) || \
-				length(prefab.tags & wanted_tags) != length(wanted_tags) || \
-				prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum
-			)
+		if (!(prefab.tags & wanted_tags_any)) // Uses bitflags inclusively IE if it has any wanted tag its viable
+			continue
+		if (length(prefab.tags & wanted_tags_all) != length(wanted_tags_all)) // Compares length exclusive IE needs exactly that tag
+			continue
+		if (prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum)
 			continue
 		choices[prefab] = prefab.probability
-		if(prefab.required)
+		if (prefab.required)
 			required[prefab] = prefab.probability
 
-	if(length(required))
+	if (length(required))
 		return weighted_pick(required)
 
 	return weighted_pick(choices)
+
+proc/get_prefab_tags()
+	var/wanted_tags = null
+	wanted_tags	= PREFAB_ANYWHERE
+	if (map_currently_underwater)
+		wanted_tags |= PREFAB_NADIR_SAFE
+#if defined(MAP_OVERRIDE_OSHAN)
+		wanted_tags |= PREFAB_OSHAN | PREFAB_NADIR_UNSAFE
+#endif
+#if defined(MAP_OVERRIDE_NADIR)
+		wanted_tags |= PREFAB_NADIR
+#endif
+#if defined(MAP_OVERRIDE_MANTA)
+		wanted_tags |= PREFAB_MANTA | PREFAB_NADIR_UNSAFE
+#endif
+	else
+		wanted_tags |= PREFAB_SPACE
+	return wanted_tags

@@ -36,12 +36,14 @@
 	health_burn = 25
 	health_burn_vuln = 0.5
 	metabolizes = 0 // for now?
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
+	player_can_spawn_with_pet = FALSE // That's what beestfriend is for nerd
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 3
 	add_abilities = list(/datum/targetable/critter/bite/bee,
-						 /datum/targetable/critter/bee_sting)
+						 /datum/targetable/critter/bee_sting,
+						 /datum/targetable/critter/bee_puke_honey)
 	var/limb_path = /datum/limb/small_critter/bee
 	var/mouth_path = /datum/limb/mouth/small/bee
 
@@ -61,7 +63,6 @@
 		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
-			//statlog_bees(src)
 			src.UpdateIcon()
 
 			if (!isdead(src))
@@ -159,8 +160,8 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 		if (prob(10))
-			user.visible_message("<span class='notice'>[src] hugs [user] back!</span>",\
-			"<span class='notice'>[src] hugs you back!</span>")
+			user.visible_message(SPAN_NOTICE("[src] hugs [user] back!"),\
+			SPAN_NOTICE("[src] hugs you back!"))
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 
@@ -205,7 +206,7 @@
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if (findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!")
 				return
 			if (!W.reagents)
 				boutput(user, "<b>[src]</b> respectfully declines, being a strict nectarian.")
@@ -217,7 +218,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> buzzes delightedly.", 1)
+			src.visible_message("<b>[src]</b> buzzes delightedly.")
 
 			user.HealDamage("All", 10, 10)
 			W.reagents.del_reagent("nectar")
@@ -252,21 +253,19 @@
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
 		E.name = "sticky [E.name]"
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		E.set_loc(get_turf(src))
 		return
 
 	proc/puke_honey()
 		var/turf/honeyTurf = get_turf(src)
 		var/obj/item/reagent_containers/food/snacks/pizza/floor_pizza = locate() in honeyTurf
-		var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey
+		var/obj/item/reagent_containers/food/snacks/honey
 		if (istype(floor_pizza))
-			honey = new /obj/item/reagent_containers/food/snacks/pizza(honeyTurf)
+			honey = floor_pizza
 			src.visible_message("<b>[src]</b> regurgitates a blob of honey directly onto [floor_pizza]![prob(10) ? " This is a thing that makes sense." : null]",\
 			"You regurgitate a blob of honey directly onto [floor_pizza]!")
 			honey.name = replacetext(floor_pizza.name, "pizza", "beezza")
-			qdel(floor_pizza)
-
 		else
 			honey = new /obj/item/reagent_containers/food/snacks/ingredient/honey(honeyTurf)
 			src.visible_message("<b>[src]</b> regurgitates a blob of honey![prob(10) ? " Gross!" : null]",\
@@ -279,7 +278,7 @@
 			honey.reagents.maximum_volume += honey_production_amount
 
 		src.reagents.trans_to(honey, honey_production_amount)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		if (src.honey_color)
 			var/icon/composite = icon(honey.icon, honey.icon_state)
 			composite.ColorTone( src.honey_color )
@@ -357,7 +356,7 @@
 		else if (isitem(target))
 			var/obj/item/potentially_food = target
 			if (findtext(target.name,"bee") && !istype(target, /obj/item/reagent_containers/food/snacks/beefood))
-				boutput(user, "<span class='alert'>Oh god, that's <b>repulsive</b>!</span>")
+				boutput(user, SPAN_ALERT("Oh god, that's <b>repulsive</b>!"))
 				return
 			else if (potentially_food.edible)
 				potentially_food.Eat(user, user, 1)
@@ -377,11 +376,8 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
-				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
-					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
-
+			var/list/additional_reagents = HYPget_assoc_reagents(planter.current, planter.plantgenes)
+			if (length(additional_reagents))
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
 				user.reagents.add_reagent("honey", nectarTransferAmt*0.75)
 				for (var/X in additional_reagents)
@@ -414,7 +410,7 @@
 			return 0
 		if (!target.melee_attack_test(user))
 			return
-		src.custom_msg = "<b><span class='combat'>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</span></b>"
+		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b>")
 		..()
 
 /datum/limb/mouth/small/bee/queen
@@ -433,13 +429,13 @@
 /datum/limb/small_critter/bee/strong/bubs // da bubs
 	dam_low = 18
 	dam_high = 22
-	sound_attack = "sound/impact_sounds/Flesh_Stab_1.ogg"
+	sound_attack = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	dmg_type = DAMAGE_STAB
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (check_target_immunity(target))
 			return 0
-		src.custom_msg = "<span class='combat'><b>[user]</b> shanks [target] with [his_or_her(user)] [pick("tiny","eeny-weeny","minute","little")] switchblade!</span>"
+		src.custom_msg = SPAN_COMBAT("<b>[user]</b> shanks [target] with [his_or_her(user)] [pick("tiny","eeny-weeny","minute","little")] switchblade!")
 		..()
 
 /* -------------------- Abilities -------------------- */
@@ -448,17 +444,15 @@
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
 	icon_state = "bee_sting"
-	cooldown = 50
-	targeted = 1
-	target_anything = 1
+	cooldown = 5 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/venom1 = "histamine"
 	var/amt1 = 5
 	var/venom2 = "toxin"
 	var/amt2 = 4
 	var/list/sting_adjectives = list("nubby little","stubby little","tiny little")
 	var/brute_damage = 2
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -468,15 +462,15 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to sting there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to sting."))
 			return 1
 		var/mob/living/MT = target
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pokes [MT] with [his_or_her(holder.owner)] [pick(src.sting_adjectives)] stinger!</b></span>")
+		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] pokes [MT] with [his_or_her(holder.owner)] [pick(src.sting_adjectives)] stinger!</b>"))
 		if (MT.reagents)
 			if (MT.reagents.get_reagent_amount(venom1) < 10)
 				MT.reagents.add_reagent(venom1, amt1)
@@ -510,7 +504,7 @@
 		var/mob/MT = target
 		playsound(target, src.sound_bite, 100, 1, -1)
 		MT.TakeDamageAccountArmor("All", src.brute_damage, 0, 0, DAMAGE_CRUSH)
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT] with [his_or_her(holder.owner)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b></span>")
+		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] bites [MT] with [his_or_her(holder.owner)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b>"))
 		return 0
 
 /datum/targetable/critter/bite/bee/queen
@@ -522,11 +516,9 @@
 	name = "Swallow"
 	desc = "Swallow a mob, trapping them in honey."
 	icon_state = "bee_swallow"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -536,20 +528,22 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to swallow there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to swallow there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to swallow.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to swallow."))
 			return 1
 		var/mob/living/MT = target
 		if (MT.loc != holder.owner)
-			holder.owner.visible_message("<span class='combat'><b>[holder.owner] swallows [MT] whole!</b></span>")
+			holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] swallows [MT] whole!</b>"))
 			MT.set_loc(holder.owner)
 			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
+				honeycube.melttemp = T20C
+				honeycube.cooltemp = T20C
 				honeycube.name = "block of honey"
 				honeycube.desc = "It's a block of honey. I guess there's someone trapped inside? Is it Han Solo?"
 				honeycube.steam_on_death = 0
@@ -562,19 +556,17 @@
 
 				honeycube.set_loc(holder.owner.loc)
 				holder.owner.visible_message("<b>[holder.owner] regurgitates [MT]!</b>")
-				playsound(holder.owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(holder.owner, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		return 0
 
 /datum/targetable/critter/bee_teleport
 	name = "Stare"
 	desc = "Stare at a mob, teleporting them away after a short time."
 	icon_state = "bee_teleport"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-	var/do_buzz = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/do_buzz = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -584,27 +576,51 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to teleport there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to teleport there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		var/mob/living/MT = target
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to teleport away.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to teleport away."))
 			return 1
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
+		logTheThing(LOG_COMBAT, src.holder.owner, "begins casting teleport stare on [constructTarget(target)] at [log_loc(src.holder.owner)]")
+		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]</b> stares at [MT]!"))
 		if(do_buzz)
 			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
-		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
+		boutput(MT, SPAN_COMBAT("You feel a horrible pain in your head!"))
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN(2.5 SECONDS)
 			if ((GET_DIST(holder.owner, MT) <= 6) && !isdead(holder.owner))
-				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
+				MT.visible_message(SPAN_COMBAT("<b>[MT] clutches their temples!</b>"))
 				MT.emote("scream")
-				MT.setStatusMin("paralysis", 20 SECONDS)
+				MT.setStatusMin("unconscious", 20 SECONDS)
 				MT.take_brain_damage(10)
+				var/turf/turf = locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1)
+				logTheThing(LOG_COMBAT, src.holder.owner, "stuns and teleports [constructTarget(target)] to [log_loc(turf)] using teleport stare")
+				do_teleport(MT, turf, 0)
 
-				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
+
+/datum/targetable/critter/bee_puke_honey
+	name = "Puke Honey"
+	desc = "Regurgitate your reagents in the form of a blob of honey."
+	targeted = FALSE
+	cooldown = 5 SECONDS
+	icon_state = "clean_dump"
+
+	cast(atom/target)
+		if(!holder?.owner?.reagents)
+			return TRUE
+
+		if (holder.owner.reagents.total_volume < holder.owner.reagents.maximum_volume / 2)
+			boutput(holder.owner, "You aren't full enough to make honey yet! Eat more!")
+			return TRUE
+		. = ..()
+		var/mob/living/critter/small_animal/bee/us = holder.owner
+		if (istype(us))
+			us.puke_honey()
+
+
 
 /* ================================================== */
 /* -------------------- Subtypes -------------------- */
@@ -625,21 +641,21 @@
 
 		if (istype(W, /obj/item/device/gps))
 			if (src.jittered)
-				boutput(user, "<span class='alert'>[src] politely declines.</span>")
+				boutput(user, SPAN_ALERT("[src] politely declines."))
 				return
 
 			src.jittered = 1
-			user.visible_message("<span class='alert'>[user] hands [src] the [W.name]</span>","You hand [src] the [W.name].")
+			user.visible_message(SPAN_ALERT("[user] hands [src] the [W.name]"),"You hand [src] the [W.name].")
 
 			W.layer = initial(src.layer)
 			user.u_equip(W)
 			W.set_loc(src)
 
 			SPAWN(rand(10,20))
-				src.visible_message("<span class='alert'><b>[src] begins to move at unpredicable speeds!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src] begins to move at unpredicable speeds!</b>"))
 				animate_bumble(src, floatspeed = 3)
 				sleep(rand(30,50))
-				src.visible_message("<span class='alert'>[W] goes flying!</span>")
+				src.visible_message(SPAN_ALERT("[W] goes flying!"))
 				if (W)
 					W.set_loc(src.loc)
 					var/edge = get_edge_target_turf(src, pick(alldirs))
@@ -656,7 +672,7 @@
 			..()
 
 /mob/living/critter/small_animal/bee/buddy
-	name = "B-33"
+	name = "\improper B-33"
 	desc = "It appears to be a hybrid of a domestic space-bee and a PR-6 Robuddy. How is that even possible?"
 	icon_state = "buddybee-wings"
 	icon_state_dead = "buddybee-dead"
@@ -765,8 +781,8 @@
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
-				"<span class='alert'><b>You die!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"),\
+				SPAN_ALERT("<b>You die!</b>"))
 				src.set_density(0)
 			src.playing_dead = clamp((src.playing_dead + addtime), 0, 30)
 		if (src.playing_dead <= 0)
@@ -775,15 +791,15 @@
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span class='notice'><b>[src]</b> seems to rise from the dead!</span>")
-			boutput(src, "<span class='notice'><b>You rise from the dead!</b></span>") // visible_message doesn't go through when this triggers
+			src.visible_message(SPAN_NOTICE("<b>[src]</b> seems to rise from the dead!"))
+			boutput(src, SPAN_NOTICE("<b>You rise from the dead!</b>")) // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("unconscious", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
+			src.setStatus("knockdown", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -822,8 +838,8 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] buzzes[prob(50) ? " happily!" : ""]!",2)
 		if (prob(10))
-			user.visible_message("<span class='notice'>[src] hugs [user] back!</span>",\
-			"<span class='notice'>[src] hugs you back!</span>")
+			user.visible_message(SPAN_NOTICE("[src] hugs [user] back!"),\
+			SPAN_NOTICE("[src] hugs you back!"))
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 		switch (src.hug_count++)
@@ -833,11 +849,11 @@
 				src.visible_message("<b>[src]</b> burps!  It smells...coppery.  What'd that bee eat?")
 			if (100)
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
-					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 				else
-					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"
@@ -853,7 +869,8 @@
 	icon_body = "overbee"
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 						 /datum/targetable/critter/bee_sting,
-						 /datum/targetable/critter/bee_teleport)
+						 /datum/targetable/critter/bee_teleport,
+						 /datum/targetable/critter/bee_puke_honey)
 
 	puke_honey()
 		var/turf/T = locate(src.x + rand(-2,2), src.y + rand(-2,2), src.z)
@@ -869,7 +886,7 @@
 			honey.reagents.maximum_volume = honey_production_amount
 		src.reagents.trans_to(honey, honey_production_amount)
 		src.visible_message("<b>[src]</b> wills a blob of honey into existence![prob(10) ? " Weird!" : null]")
-		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/mag_forcewall.ogg', 50, 1)
 
 	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
@@ -892,7 +909,7 @@
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")
 				W.name = "golden key"
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				W.set_loc(get_turf(src))
 		else
 			return ..()
@@ -964,9 +981,9 @@
 		src.pixel_y = 0
 		src.icon_state = "bubsbee"
 		src.sleeping = rand(10, 20)
-		src.setStatus("paralysis", 2 SECONDS)
+		src.setStatus("unconscious", 2 SECONDS)
 		src.UpdateIcon()
-		src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
+		src.visible_message(SPAN_NOTICE("[src] gets tired from all that work and takes a nap!"))
 		src.is_dancing = 0
 
 /mob/living/critter/small_animal/bee/queen
@@ -988,7 +1005,8 @@
 	fits_under_table = 0
 	add_abilities = list(/datum/targetable/critter/bite/bee/queen,
 						 /datum/targetable/critter/bee_sting/queen,
-						 /datum/targetable/critter/bee_swallow)
+						 /datum/targetable/critter/bee_swallow,
+						 /datum/targetable/critter/bee_puke_honey)
 	limb_path = /datum/limb/small_critter/bee/strong
 	mouth_path = /datum/limb/mouth/small/bee/queen
 
@@ -1038,7 +1056,7 @@
 	non_admin_bee_allowed = 1
 
 /mob/living/critter/small_animal/bee/ascbee
-	name = "ASCBee"
+	name = "\improper ASCBee"
 	desc = "This bee looks rather... old school."
 	icon_body = "ascbee"
 	icon_state = "ascbee-wings"

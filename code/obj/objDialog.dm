@@ -11,7 +11,7 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list(src)
 	else
-		if (!clients_operating || clients_operating.len <= 0)
+		if (!clients_operating || length(clients_operating) <= 0)
 			objects_using_dialogs += src
 
 	if (!clients_operating)
@@ -31,7 +31,7 @@ var/global/list/objects_using_dialogs
 	if (!objects_using_dialogs)
 		objects_using_dialogs = list()
 	else
-		if (clients_operating.len <= 0)
+		if (length(clients_operating) <= 0)
 			objects_using_dialogs -= src
 
 /obj/proc/remove_dialogs()
@@ -84,14 +84,14 @@ var/global/list/objects_using_dialogs
 	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob && BOUNDS_DIST(C.mob, src) == 0)
-				src.attack_self(C.mob)
+				src.AttackSelf(C.mob)
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			var/mob/AI = M
 			if (M.deployed_to_eyecam)
 				AI = M.eyecam
 			if (AI.client && (AI.client in clients_operating))
-				src.attack_self(AI)
+				src.AttackSelf(AI)
 
 /obj/item/proc/updateSelfDialog()
 	if (length(clients_operating))
@@ -102,7 +102,7 @@ var/global/list/objects_using_dialogs
 				if (AI.deployed_to_eyecam)
 					M = AI.eyecam
 			if(M.client && (M.client in clients_operating))
-				src.attack_self(M)
+				src.AttackSelf(M)
 
 
 /proc/AutoUpdateAI(obj/subject)

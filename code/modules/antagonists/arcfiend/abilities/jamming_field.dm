@@ -11,7 +11,7 @@
 	cast(atom/target)
 		. = ..()
 		src.holder.owner.changeStatus("jamming_field", src.duration)
-		playsound(src.holder.owner, "sound/effects/radio_sweep2.ogg", 30)
+		playsound(src.holder.owner, 'sound/effects/radio_sweep2.ogg', 30)
 
 /datum/statusEffect/jamming_field
 	id = "jamming_field"
@@ -31,7 +31,7 @@
 		. = ..()
 		if (!(src.owner in by_cat[TR_CAT_RADIO_JAMMERS]))
 			OTHER_START_TRACKING_CAT(src.owner, TR_CAT_RADIO_JAMMERS)
-		src.owner.UpdateOverlays(src.aura, "jamming_field_aura")
+		src.owner.AddOverlays(src.aura, "jamming_field_aura")
 
 	onRemove()
 		. = ..()

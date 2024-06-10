@@ -115,7 +115,7 @@
 			fill_left.transform = flip
 			//fill_left.pixel_x = -480
 			fill_left.screen_loc = "LEFT-12,CENTER-7"
-			fill_left.appearance_flags = TILE_BOUND
+			fill_left.appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 			var/atom/movable/screen/screenoverlay/fill_right = new()
 			fill_right.icon = D.d_icon
@@ -130,7 +130,7 @@
 			fill_right.transform = flip
 			//fill_right.pixel_x = 480
 			fill_right.screen_loc = "RIGHT+12,CENTER-7"
-			fill_right.appearance_flags = TILE_BOUND
+			fill_right.appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 			added_for_fill += fill_left
 			added_for_fill += fill_right
@@ -343,6 +343,27 @@
 /datum/overlayComposition/static_noise/sub
 	special_blend = BLEND_SUBTRACT
 
+/datum/overlayComposition/low_signal
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/weldingmask.dmi'
+		dither.d_icon_state = "weldingmask"
+		dither.d_alpha = 240
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0
+		definitions.Add(dither)
+
+		var/datum/overlayDefinition/zero = new()
+		zero.d_icon = 'icons/effects/overlays/noise.dmi'
+		zero.d_icon_state = "noise"
+		zero.d_blend_mode = 5
+		zero.d_color = "#111"
+		zero.d_alpha = 100
+		zero.d_mouse_opacity = 0
+		definitions.Add(zero)
+
+		return ..()
+
 
 /datum/overlayComposition/weldingmask
 	New()
@@ -434,7 +455,11 @@
 	var/warp_dir = "warp"
 	New()
 		var/datum/overlayDefinition/warp = new()
+#if defined(HALLOWEEN) && defined(SECRETS_ENABLED)
+		warp.d_icon = '+secret/icons/effects/overlays/warp.dmi'
+#else
 		warp.d_icon = 'icons/effects/overlays/warp.dmi'
+#endif
 		warp.d_icon_state = src.warp_dir
 		warp.d_blend_mode = 1
 		warp.d_layer = BACKGROUND_LAYER
@@ -447,15 +472,20 @@
 	warp_dir = "warp_ew"
 
 /datum/overlayComposition/flockmindcircuit
+	var/alpha = 140
+
 	New()
 		var/datum/overlayDefinition/flockmindcircuit = new()
 		flockmindcircuit.d_icon = 'icons/effects/overlays/flockmindcircuit.dmi'
 		flockmindcircuit.d_icon_state = "flockmindcircuit"
 		flockmindcircuit.d_blend_mode = BLEND_DEFAULT
-		flockmindcircuit.d_alpha = 192
+		flockmindcircuit.d_alpha = src.alpha
 		definitions.Add(flockmindcircuit)
 
 		return ..()
+
+	flocktrace_death
+		alpha = 40
 
 /datum/overlayComposition/sniper_scope
 	New()
@@ -479,3 +509,17 @@
 		definitions.Add(insanity)
 
 		return ..()
+
+/datum/overlayComposition/insanity_light
+	New()
+		var/datum/overlayDefinition/insanity = new()
+		insanity.d_icon = 'icons/effects/overlays/insanity.dmi'
+		insanity.d_icon_state = "insanity"
+		insanity.d_blend_mode = 2
+		insanity.do_wide_fill = 0
+		insanity.d_alpha = 120
+		insanity.d_screen_loc = "CENTER-10,CENTER-7"
+		definitions.Add(insanity)
+
+		return ..()
+

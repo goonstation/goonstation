@@ -1,0 +1,716 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"aj" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"az" = (
+/obj/decal/cleanable/machine_debris,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"bm" = (
+/obj/machinery/light/small/floor,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"bo" = (
+/obj/random_item_spawner/junk/one,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"bE" = (
+/obj/item/basketball,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"cu" = (
+/turf/simulated/wall/auto/supernorn/wood,
+/area/noGenerate)
+"dE" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/random_item_spawner/tableware/two,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"en" = (
+/turf/variableTurf/wall,
+/area/allowGenerate)
+"eM" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fb" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"gc" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"gJ" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jI" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/noGenerate)
+"nE" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"oy" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/obj/machinery/light/small,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"oA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"pn" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"pS" = (
+/obj/item/bballbasket{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"rX" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"sL" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"sP" = (
+/obj/decal/cleanable/oil,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"sS" = (
+/turf/simulated/shuttle/wall{
+	name = "window";
+	opacity = 0
+	},
+/area/noGenerate)
+"uV" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"vj" = (
+/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/random_item_spawner/kineticgun/safer/one,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"wp" = (
+/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"xt" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"xK" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"yN" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"yQ" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"zQ" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/noGenerate)
+"AG" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"CF" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/noGenerate)
+"Dc" = (
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"DL" = (
+/obj/item/mine/stun/armed,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"DR" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"FM" = (
+/turf/unsimulated/wall/auto/adventure/shuttle,
+/area/noGenerate)
+"GA" = (
+/obj/item/scrap,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"GR" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "door1";
+	name = "broken door";
+	icon = 'icons/obj/doors/shuttle.dmi'
+	},
+/area/noGenerate)
+"IB" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"IH" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"Jp" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"KF" = (
+/turf/simulated/shuttle/wall/cockpit{
+	icon_state = "shuttlecock_busted"
+	},
+/area/noGenerate)
+"KQ" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"LJ" = (
+/mob/living/carbon/human/npc/survivor,
+/obj/machinery/light/small/floor,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"LM" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"LP" = (
+/obj/random_item_spawner/junk/one,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"NK" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"NO" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"OR" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"QR" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"RH" = (
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"Sr" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"TX" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"UG" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Vi" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"VZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"YH" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/machinery/drainage,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"YU" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+"Zn" = (
+/obj/storage/crate,
+/obj/random_item_spawner/junk/lots,
+/turf/unsimulated/floor/wood/two,
+/area/noGenerate)
+"ZI" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/grey,
+/area/noGenerate)
+
+(1,1,1) = {"
+nE
+nE
+xt
+xt
+xt
+nE
+nE
+nE
+nE
+nE
+en
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(2,1,1) = {"
+nE
+oA
+zQ
+CF
+jI
+eM
+nE
+nE
+nE
+oA
+en
+en
+GA
+xt
+nE
+nE
+nE
+nE
+"}
+(3,1,1) = {"
+nE
+FM
+LM
+RH
+AG
+FM
+FM
+FM
+FM
+FM
+en
+DR
+az
+DR
+nE
+nE
+nE
+nE
+"}
+(4,1,1) = {"
+nE
+FM
+Sr
+fb
+YH
+FM
+LP
+Zn
+Zn
+cu
+DR
+DR
+DL
+DR
+GA
+gJ
+nE
+nE
+"}
+(5,1,1) = {"
+oA
+FM
+FM
+rX
+FM
+FM
+sL
+LP
+Zn
+cu
+sP
+DR
+DR
+az
+DR
+DR
+nE
+nE
+"}
+(6,1,1) = {"
+FM
+xK
+RH
+IB
+RH
+rX
+Dc
+pn
+ae
+aj
+DR
+DR
+DR
+DR
+DL
+DR
+nE
+nE
+"}
+(7,1,1) = {"
+FM
+gc
+IH
+IB
+yQ
+FM
+vj
+bo
+Jp
+cu
+DR
+en
+en
+en
+DR
+DR
+nE
+nE
+"}
+(8,1,1) = {"
+FM
+QR
+RH
+LJ
+RH
+FM
+FM
+FM
+en
+en
+en
+en
+en
+en
+en
+en
+nE
+nE
+"}
+(9,1,1) = {"
+cu
+yN
+YU
+IB
+fb
+RH
+Vi
+FM
+en
+en
+en
+en
+en
+en
+en
+en
+nE
+nE
+"}
+(10,1,1) = {"
+cu
+cu
+YU
+NO
+RH
+yQ
+RH
+FM
+en
+en
+FM
+en
+en
+en
+en
+en
+en
+nE
+"}
+(11,1,1) = {"
+nE
+cu
+cu
+cu
+FM
+FM
+rX
+FM
+GR
+FM
+FM
+OR
+en
+en
+en
+en
+en
+en
+"}
+(12,1,1) = {"
+nE
+nE
+nE
+nE
+FM
+wp
+fb
+RH
+dE
+oy
+FM
+nE
+nE
+en
+en
+nE
+en
+nE
+"}
+(13,1,1) = {"
+nE
+nE
+nE
+nE
+VZ
+KQ
+NK
+YU
+uV
+uV
+VZ
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(14,1,1) = {"
+nE
+nE
+nE
+nE
+VZ
+ZI
+NK
+bm
+YU
+NK
+VZ
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(15,1,1) = {"
+nE
+nE
+nE
+nE
+FM
+pS
+bE
+YU
+fb
+TX
+FM
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(16,1,1) = {"
+nE
+nE
+nE
+nE
+UG
+RH
+RH
+ZI
+yQ
+RH
+OR
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(17,1,1) = {"
+nE
+nE
+nE
+nE
+nE
+UG
+sS
+sS
+sS
+OR
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(18,1,1) = {"
+nE
+nE
+nE
+nE
+nE
+DR
+DR
+KF
+DR
+DR
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}
+(19,1,1) = {"
+nE
+nE
+nE
+nE
+nE
+nE
+DR
+DR
+DR
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+nE
+"}

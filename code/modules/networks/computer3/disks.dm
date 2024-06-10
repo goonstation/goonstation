@@ -19,17 +19,11 @@
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = W_CLASS_TINY
-	//DNA machine vars
-	var/data = ""
-	var/ue = 0
-	var/data_type = "ui" //ui|se
-	var/owner = "Farmer Jeff"
 	var/read_only = 0 //Well,it's still a floppy disk
 	//Filesystem vars
 	var/datum/computer/folder/root = null
 	var/file_amount = 32
 	var/file_used = 0
-	var/portable = 1
 	var/title = "Data Disk"
 
 	New()
@@ -42,8 +36,6 @@
 		if (root)
 			root.dispose()
 			root = null
-
-		data = null
 		. = ..()
 
 	clone()
@@ -51,12 +43,7 @@
 		if (!D)
 			return
 
-		D.data = src.data
-		D.ue = src.ue
-		D.data_type = src.data_type
-		D.owner = src.owner
 		D.read_only = src.read_only
-
 		D.title = src.title
 		D.file_amount = src.file_amount
 		if (src.root)
@@ -67,7 +54,7 @@
 
 	proc/wipe_or_zap(mob/user)
 		if(!read_only)
-			user.visible_message("<span class='alert'><b>[user] wipes the [src.name]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] wipes the [src.name]!</b>"))
 			elecflash(src,0, power=2, exclude_center = 0)
 			if (src.root)
 				src.root.dispose()
@@ -76,12 +63,21 @@
 			src.root.holder = src
 			src.root.name = "root"
 		else
-			user.visible_message("<span class='alert'><b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b>"))
 			elecflash(user,0, power=2, exclude_center = 0)
+
+	emp_act()
+		. = ..()
+		if (src.root)
+			src.root.dispose()
+
+		src.root = new /datum/computer/folder
+		src.root.holder = src
+		src.root.name = "root"
 
 	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
-			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] begins to wipe [src.name]!</b>"))
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
 
 /obj/item/disk/data/floppy
@@ -103,22 +99,65 @@
 
 /obj/item/disk/data/floppy/demo
 	name = "data disk - 'Farmer Jeff'"
-	data = "0C80C80C80C80C80C8000000000000161FBDDEF"
-	ue = 1
 	read_only = 1
 
 /obj/item/disk/data/floppy/monkey
 	name = "data disk - 'Mr. Muggles'"
-	data_type = "se"
-	data = "0983E840344C39F4B059D5145FC5785DC6406A4FFF"
 	read_only = 1
+
+/obj/item/disk/data/floppy/lrt
+	name = "galactic coordinate disk - 'Blank'"
+	title = "Teleconsole"
+	icon_state = "datadisktele0"
+	random_color = FALSE
+
+	var/target_name
+
+	New()
+		. = ..()
+		var/datum/computer/file/lrt_data/place = new /datum/computer/file/lrt_data(src)
+		place.place_name = src.target_name
+		src.root.add_file( place )
+
+	icemoon
+		name = "galactic coordinate disk - 'Moon X15'"
+		target_name = "Moon X15"
+
+	solarium
+		name = "galactic coordinate disk - 'Sol'"
+		icon_state = "datadisktele1"
+		target_name = "Sol"
+
+	biodome
+		name = "galactic coordinate disk - 'Moon X05'"
+		target_name = "Moon X05"
+
+	mars_outpost
+		name = "galactic coordinate disk - 'Mars'"
+		target_name = "Mars"
+
+	lavamoon
+		name = "galactic coordinate disk - 'Io'"
+		target_name = "Io"
+
+	luna_museum
+		name = "galactic coordinate disk - 'Lunar Museum'"
+		target_name = "Luna"
+
+	ainley
+		name = "galactic coordinate disk - 'Ainley'"
+		target_name = "Ainley Staff Retreat"
+
+	meat_derelict
+		name = "galactic coordinate disk - 'Derelict Station'"
+		target_name = "Derelict Station"
+
 
 /obj/item/disk/data/fixed_disk
 	name = "Storage Drive"
 	icon_state = "harddisk"
 	title = "Storage Drive"
 	file_amount = 80
-	portable = 0
 
 /obj/item/disk/data/memcard
 	name = "Memory Board"
@@ -126,7 +165,6 @@
 	desc = "A large board of non-volatile memory."
 	title = "MEMCORE"
 	file_amount = 640
-	portable = 0
 
 /obj/item/disk/data/tape
 	name = "ThinkTape"
@@ -136,7 +174,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	file_amount = 128
-	portable = 0
 
 	New()
 		. = ..()
@@ -163,7 +200,7 @@
 	name = "permafloppy"
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='alert'>You can't flip the write-protect tab, it's held in place with glue or something!</span>")
+		boutput(user, SPAN_ALERT("You can't flip the write-protect tab, it's held in place with glue or something!"))
 		return
 
 /obj/item/disk/data/floppy/computer3boot
@@ -271,6 +308,9 @@
 		src.read_only = 1
 #endif
 
+TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
+	mats = 15
+
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
@@ -278,7 +318,6 @@
 	item_state = "card-id"
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
-	mats = 15
 	random_color = 0
 	file_amount = 32
 

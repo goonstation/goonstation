@@ -1,7 +1,7 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
@@ -32,13 +32,13 @@
 	proc/railing_break(obj/railing/The_Railing)
 		if(!(railing_is_broken(The_Railing)))
 			The_Railing.broken = 1
-			The_Railing.density = 0
+			The_Railing.set_density(FALSE)
 			var/random_sprite = rand(1, 4)
 			The_Railing.icon_state = "railing-broken-" + "[random_sprite]"
 
 	proc/railing_fix(obj/railing/The_Railing)
 		if(railing_is_broken(The_Railing))
-			The_Railing.density = 1
+			The_Railing.set_density(TRUE)
 			The_Railing.broken = 0
 
 
@@ -96,14 +96,14 @@
 	Cross(atom/movable/O as mob|obj)
 		if (O == null)
 			return 0
-		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			return 1
 		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
 
 	Uncross(atom/movable/O, do_bump = TRUE)
-		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			. = 1
 		// Second part prevents two same-dir, unanchored railings from infinitely looping and either crashing the server or breaking throwing when they try to cross
 		else if ((src.dir & get_dir(O.loc, O.movement_newloc)) && !(isobj(O) && (O:object_flags & HAS_DIRECTIONAL_BLOCKING) && (O.dir & src.dir)))
@@ -128,6 +128,7 @@
 				user.show_text("You cut off the reinforcement on [src].", "blue")
 				src.icon_state = "railing"
 				src.is_reinforced = 0
+				src.flags &= !ALWAYS_SOLID_FLUID
 				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
 				R.amount = 1
 				if(src.material)
@@ -144,22 +145,28 @@
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
+					src.flags |= ALWAYS_SOLID_FLUID
 			else
 				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
 		src.try_vault(user)
 
+	attack_ai(mob/user)
+		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
+			return
+		return src.Attackhand(user)
+
 	Bumped(var/mob/AM as mob)
 		. = ..()
 		if(!istype(AM)) return
-		if(AM.client?.check_key(KEY_RUN))
+		if(AM.client?.check_key(KEY_RUN) || AM.client?.check_key(KEY_BOLT))
 			src.try_vault(AM, TRUE)
 
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else if(!actions.hasAction(user, "railing_jump"))
+		else if(!actions.hasAction(user, /datum/action/bar/icon/railing_jump))
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
@@ -217,7 +224,6 @@
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
 	resumable = FALSE
@@ -273,8 +279,7 @@
 		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		for(var/mob/O in AIviewers(ownerMob))
-			O.show_text("[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing].", "red")
+		ownerMob.visible_message(SPAN_ALERT("[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing]."))
 
 	onEnd()
 		..()
@@ -303,18 +308,16 @@
 		if(obstacle) // did we end up ever bumping the dest or two corners?
 			// if they are a living mob, make them TASTE THE PAIN
 			if (istype(ownerMob, /mob/living))
-				if (!ownerMob.hasStatus("weakened"))
-					ownerMob.changeStatus("weakened", 4 SECONDS)
-					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, -1)
-					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]", "red")
+				if (!ownerMob.hasStatus("knockdown"))
+					ownerMob.changeStatus("knockdown", 4 SECONDS)
+					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE, -1)
+					ownerMob.visible_message(SPAN_ALERT("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]"))
 				// chance for additional head bump damage
 				if (prob(25))
-					ownerMob.changeStatus("weakened", 4 SECONDS)
+					ownerMob.changeStatus("knockdown", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
-					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
+					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE, -1)
+					ownerMob.visible_message(SPAN_ALERT("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]"))
 			return TRUE
 		return FALSE
 
@@ -326,19 +329,17 @@
 
 	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
-		for(var/mob/O in AIviewers(ownerMob))
-			var/the_text = null
-			if (is_athletic_jump) // athletic jumps are more athletic!!
-				the_text = "[ownerMob] swooces right over [the_railing]!"
-			else
-				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
-			O.show_text("[the_text]", "red")
+		var/the_text = null
+		if (is_athletic_jump) // athletic jumps are more athletic!!
+			the_text = "[ownerMob] swooces right over [the_railing]!"
+		else
+			the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
+		ownerMob.visible_message(SPAN_ALERT("[the_text]"))
 
 
 /datum/action/bar/icon/railing_tool_interact
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_deconstruct"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/railing/the_railing
@@ -381,21 +382,19 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] at [log_loc(the_railing)] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
-		for(var/mob/O in AIviewers(ownerMob))
-			O.show_text("[owner] begins [verbing] [the_railing].", "red")
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
+		ownerMob.visible_message(SPAN_ALERT("[owner] begins [verbing] [the_railing]."))
 
 	onEnd()
 		..()
@@ -405,16 +404,14 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
-				the_railing.anchored = 1
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
+				the_railing.anchored = ANCHORED
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
-				the_railing.anchored = 0
-				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
-		for(var/mob/O in AIviewers(ownerMob))
-			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")
+				the_railing.anchored = UNANCHORED
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
+		ownerMob.visible_message(SPAN_ALERT("[owner] [verbens] [the_railing]."))
+		logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing] at [log_loc(the_railing)].")
 

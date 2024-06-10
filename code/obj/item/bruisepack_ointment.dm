@@ -11,22 +11,29 @@
 	stamina_damage = 3
 	stamina_cost = 3
 	stamina_crit_chance = 3
+	inventory_counter_enabled = TRUE
+
+	New()
+		..()
+		create_inventory_counter()
 
 	examine()
 		. = ..()
-		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
+		. += "[bicon(src)] [SPAN_NOTICE("There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!")]"
 
 	attack_hand(mob/user)
 		if (user.r_hand == src || user.l_hand == src)
 			src.add_fingerprint(user)
 			var/obj/item/medical/split = new src.type(user)
 			split.amount = 1
+			split.inventory_counter?.update_number(split.amount)
 			user.put_in_hand_or_drop(split)
 
 			src.amount--
 			if (src.amount < 1)
 				qdel(src)
 				return
+			src.inventory_counter?.update_number(src.amount)
 		else
 			..()
 			return
@@ -40,59 +47,43 @@
 
 		if (W.amount + src.amount > 5)
 			src.amount = (W.amount + src.amount) - 5
+			src.inventory_counter?.update_number(src.amount)
 			W.amount = 5
+			W.inventory_counter?.update_number(W.amount)
 		else
 			W.amount += src.amount
+			W.inventory_counter?.update_number(W.amount)
 			qdel(src)
 		return
 
-	attack(mob/M, mob/user)
-		if (issilicon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (issilicon(target))
 			if (prob(5))
 				user.show_text("I'm a doctor, not a mechanic.", "red")
 			else
 				user.show_text("You can't seem to find any flesh on this patient.", "red")
 			return
 		if (user)
-			if (M != user)
-				M.visible_message("<span class='alert'>[user] applies [src] to [M].</span>",)
-			else
-				M.visible_message("<span class='alert'>[M] applies [src] to [himself_or_herself(M)].</span>")
+			var/self = FALSE
+			if (target != user)
+				self = TRUE
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/medical/proc/do_use, list(target, user),\
+			src.icon, src.icon_state, SPAN_ALERT("[user] applies [src] to [self ? "[target]" : "[himself_or_herself(target)]"]."), null)
 
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["chest"]
+	proc/do_use(mob/M, mob/user)
+		if (M != user && ishuman(M) && ishuman(user))
+			if (M.gender != user.gender)
+				M.unlock_medal("Oh, Doctor!", 1)
+				user.unlock_medal("Oh, Doctor!", 1)
 
-			if (ishuman(user))
-				var/mob/living/carbon/human/user2 = user
-				var/t = user2.zone_sel.selecting
-
-				if (H.organs[t])
-					affecting = H.organs[t]
-			else
-				if (!isitem(affecting) || affecting:burn_dam <= 0)
-					affecting = H.organs["head"]
-					if (!isitem(affecting) || affecting:burn_dam <= 0)
-						affecting = H.organs["chest"]
-
-			if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-				H.UpdateDamageIcon()
-
-				if (M != user && ishuman(M) && ishuman(user))
-					if (M.gender != user.gender)
-						M.unlock_medal("Oh, Doctor!", 1)
-						user.unlock_medal("Oh, Doctor!", 1)
-			else
-				health_update_queue |= H
-		else
-			M.HealDamage("All", src.heal_brute, src.heal_burn)
+		M.HealDamage("All", src.heal_brute, src.heal_burn)
 
 		repair_bleeding_damage(M, 50, 1)
 
 		src.amount--
 		if (src.amount <= 0)
 			qdel(src)
-		return
+		src.inventory_counter?.update_number(src.amount)
 
 /obj/item/medical/bruise_pack
 	name = "bruise pack"
@@ -104,6 +95,7 @@
 		name = "Tissue Mender"
 		heal_brute = 60
 		amount = INFINITY
+		inventory_counter_enabled = FALSE
 
 /obj/item/medical/ointment
 	name = "ointment"
@@ -115,3 +107,4 @@
 		name = "Burn Salve Dispenser"
 		heal_burn = 40
 		amount = INFINITY
+		inventory_counter_enabled = FALSE

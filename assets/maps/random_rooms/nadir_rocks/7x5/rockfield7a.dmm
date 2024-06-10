@@ -1,0 +1,77 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/trench,
+/area/space)
+"d" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/acid,
+/area/space)
+"f" = (
+/turf/space/fluid/acid,
+/area/space)
+"v" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib3"
+	},
+/obj/beacon_deployer,
+/turf/space/fluid/acid/clear,
+/area/space)
+"y" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space/fluid/acid,
+/area/space)
+"M" = (
+/turf/unsimulated/wall/trench/side,
+/area/space)
+
+(1,1,1) = {"
+f
+a
+M
+f
+f
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+M
+"}
+(3,1,1) = {"
+a
+M
+f
+f
+f
+"}
+(4,1,1) = {"
+f
+y
+f
+a
+M
+"}
+(5,1,1) = {"
+a
+M
+v
+d
+f
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+M
+"}
+(7,1,1) = {"
+a
+a
+M
+f
+f
+"}

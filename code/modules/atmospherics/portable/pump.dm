@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/portable_atmospherics/pump)
+	mats = 12
+
 /obj/machinery/portable_atmospherics/pump
 	name = "Portable Air Pump"
 
@@ -5,7 +8,6 @@
 	icon_state = "psiphon-off"
 	dir = NORTH //so it spawns with the fan side showing
 	density = 1
-	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
@@ -37,7 +39,7 @@
 		tank_hatch.icon_state = "psiphon-T-overlay"
 	else
 		tank_hatch.icon_state = ""
-	src.UpdateOverlays(tank_hatch, "tankhatch")
+	src.AddOverlays(tank_hatch, "tankhatch")
 
 
 /obj/machinery/portable_atmospherics/pump/process()
@@ -95,10 +97,10 @@
 /obj/machinery/portable_atmospherics/pump/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
+		else if (src.anchored) boutput(user, SPAN_ALERT("\The [src] is attached!"))
 		else
-			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(user)
@@ -124,11 +126,7 @@
 		"direction_out" = src.direction_out
 	)
 
-	.["holding"] = isnull(holding) ? null : list(
-		"name" = src.holding.name,
-		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
-		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
-	)
+	.["holding"] = src.holding?.ui_describe()
 
 /obj/machinery/portable_atmospherics/pump/ui_static_data(mob/user)
 	. = list(
@@ -166,7 +164,7 @@
 		on = 1
 		UpdateIcon()
 
-	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b>"))
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
@@ -178,7 +176,7 @@
 
 	for (var/mob/living/carbon/human/V in oviewers(user, null))
 		if (prob(33))
-			V.show_message("<span class='alert'>Oh fuck, that's going to leave a mark on your psyche.</span>", 1)
+			V.show_message(SPAN_ALERT("Oh fuck, that's going to leave a mark on your psyche."), 1)
 			V.vomit()
 	if (user) //ZeWaka: Fix for null.loc
 		health_update_queue |= user

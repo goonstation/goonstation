@@ -5,7 +5,7 @@
 
 
 /obj/machinery/computer/secure_data
-	name = "Security Records"
+	name = "security records"
 	icon_state = "datasec"
 	req_access = list(access_security)
 	circuit_type = /obj/item/circuitboard/secure_data
@@ -118,8 +118,12 @@
 			<td><a href="javascript:goBYOND('action=field;field=id');">[src.active_record_general["id"]]</a></td>
 		</tr>
 		<tr>
-			<th>Gender</th>
+			<th>Body Type</th>
 			<td><a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general["sex"]]</a></td>
+		</tr>
+		<tr>
+			<th>Pronouns</th>
+			<td><a href="javascript:goBYOND('action=field;field=pronouns');">[src.active_record_general["pronouns"]]</a></td>
 		</tr>
 		<tr>
 			<th>Age</th>
@@ -471,6 +475,12 @@
 								src.active_record_general["sex"] = "Female"
 							else
 								src.active_record_general["sex"] = "Male"
+					if ("pronouns")
+						if (istype(src.active_record_general, /datum/db_record))
+							var/datum/pronouns/pronouns = choose_pronouns(usr, "Please select pronouns:", "Security Records", src.active_record_general["pronouns"])
+							if (!pronouns || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["pronouns"] = pronouns.name
 					if ("age")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
@@ -603,18 +613,24 @@
 				if (src.active_record_security)
 					switch(href_list["criminal"])
 						if ("none")
-							src.active_record_security["criminal"] = "None"
+							src.active_record_security["criminal"] = ARREST_STATE_NONE
 						if ("arrest")
-							src.active_record_security["criminal"] = "*Arrest*"
+							src.active_record_security["criminal"] = ARREST_STATE_ARREST
 							if (usr && src.active_record_general["name"])
 								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("incarcerated")
-							src.active_record_security["criminal"] = "Incarcerated"
+							src.active_record_security["criminal"] = ARREST_STATE_INCARCERATED
 						if ("parolled")
-							src.active_record_security["criminal"] = "Parolled"
+							src.active_record_security["criminal"] = ARREST_STATE_PAROLE
 						if ("released")
-							src.active_record_security["criminal"] = "Released"
+							src.active_record_security["criminal"] = ARREST_STATE_RELEASED
 					src.temp = null
+
+					var/target_name = src.active_record_general["name"]
+
+					for (var/mob/living/carbon/human/H in mobs)
+						if (H.real_name == target_name || H.name == target_name)
+							H.update_arrest_icon()
 
 			if ("del_security_record")
 				if (href_list["answer"] == "yes" && src.active_record_security)
@@ -658,9 +674,10 @@
 			if ("new_general_record")
 				var/datum/db_record/G = new /datum/db_record()
 				G["name"] = "New Record"
-				G["id"] = num2hex(rand(1, 1.6777215E7), 6)
+				G["id"] = num2hex(rand(1, 0xffffff), 6)
 				G["rank"] = "Unassigned"
 				G["sex"] = "Unknown"
+				G["pronouns"] = "Unknown"
 				G["age"] = "Unknown"
 				G["fingerprint"] = "Unknown"
 				G["p_stat"] = "Active"
@@ -675,7 +692,7 @@
 					var/datum/db_record/R = new /datum/db_record(  )
 					R["name"] = src.active_record_general["name"]
 					R["id"] = src.active_record_general["id"]
-					R["criminal"] = "None"
+					R["criminal"] = ARREST_STATE_NONE
 					R["mi_crim"] = "None"
 					R["mi_crim_d"] = "No minor crime convictions."
 					R["ma_crim"] = "None"
@@ -757,7 +774,7 @@
 			if ("print_record")
 				if (!( src.printing ))
 					src.printing = 1
-					playsound(src.loc, "sound/machines/printer_press.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 0)
 					sleep(3 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<center><b>Security Record</b></center><br>"
@@ -767,6 +784,8 @@
 						Name: [src.active_record_general["name"]] ID: [src.active_record_general["id"]]
 						<br>
 						<br>Sex: [src.active_record_general["sex"]]
+						<br>
+						<br>Pronouns: [src.active_record_general["pronouns"]]
 						<br>
 						<br>Age: [src.active_record_general["age"]]
 						<br>

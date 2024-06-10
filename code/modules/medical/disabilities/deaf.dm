@@ -1,7 +1,7 @@
 /datum/ailment/disability/deaf
 	name = "Deafness"
 	max_stages = 1
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	affected_species = list("Human","Monkey")
 
 /datum/ailment/disability/deaf/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

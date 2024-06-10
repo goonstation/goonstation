@@ -43,7 +43,8 @@
 
 		// give back stored pills first
 		if (src.contents.len)
-			P = src.contents[src.contents.len]
+			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
+				P = src.contents[i]
 
 		// otherwise create a new one from the reagent holder
 		else if (pcount)
@@ -84,7 +85,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
-			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			boutput(user, SPAN_NOTICE("You put [W] in [src]."))
 			rebuild_desc()
 		else ..()
 
@@ -97,13 +98,13 @@
 				P.set_loc(T)
 				P = src.create_pill()
 				i--
-			if (src.pcount + src.contents.len > 0)
-				boutput(user, "<span class='notice'>You tip out a bunch of pills from [src] into [T].</span>")
+			if (src.pcount + length(src.contents) > 0)
+				boutput(user, SPAN_NOTICE("You tip out a bunch of pills from [src] into [T]."))
 			else
-				boutput(user, "<span class='notice'>You tip out all the pills from [src] into [T].</span>")
+				boutput(user, SPAN_NOTICE("You tip out all the pills from [src] into [T]."))
 			rebuild_desc()
 		else
-			boutput(user, "<span class='alert'>It's empty.</span>")
+			boutput(user, SPAN_ALERT("It's empty."))
 			return
 
 	attack_hand(mob/user)
@@ -114,14 +115,14 @@
 				boutput(user, "You take [P] from [src].")
 				rebuild_desc()
 			else
-				boutput(user, "<span class='alert'>It's empty.</span>")
+				boutput(user, SPAN_ALERT("It's empty."))
 				return
 
 		else
 			return ..()
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			user.show_text("That's too far away!", "red")
@@ -130,7 +131,7 @@
 			user.show_text("\The [src] can't hold anything but pills!", "red")
 			return
 
-		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins quickly filling [src]!"))
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
 			if (P in user)
@@ -141,4 +142,4 @@
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
-		boutput(user, "<span class='notice'>You finish filling [src]!</span>")
+		boutput(user, SPAN_NOTICE("You finish filling [src]!"))

@@ -14,11 +14,12 @@
 
 	New()
 		..()
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_color(src.color_r, src.color_g, src.color_b)
-		light.set_brightness(src.brightness / 5)
-		light.enable()
+		if(!QDELETED(src)) //It's possible. Don't ask.
+			light = new /datum/light/point
+			light.attach(src)
+			light.set_color(src.color_r, src.color_g, src.color_b)
+			light.set_brightness(src.brightness / 5)
+			light.enable()
 
 	disposing()
 		qdel(src.light)
@@ -43,6 +44,13 @@
 	yellow
 		name = "glow - YELLOW"
 		brightness = 3
+		color_b = 0.2
+		color_g = 0.45
+		color_r = 0.5
+
+	yellowbright
+		name = "glow - YELLOW BRIGHT"
+		brightness = 5
 		color_b = 0.2
 		color_g = 0.45
 		color_r = 0.5

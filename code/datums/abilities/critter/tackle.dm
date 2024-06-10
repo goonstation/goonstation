@@ -4,12 +4,10 @@
 /datum/targetable/critter/tackle
 	name = "Tackle"
 	desc = "Tackle a mob, making them fall over."
-	cooldown = 150
+	cooldown = 15 SECONDS
 	icon_state = "tackle"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -19,15 +17,15 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to tackle there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to tackle there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to tackle.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to tackle."))
 			return 1
-		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 		var/mob/MT = target
-		MT.changeStatus("weakened", 3 SECONDS)
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] tackles [MT]!</b></span>", "<span class='alert'>You tackle [MT]!</span>")
-		return 0
+		MT.changeStatus("knockdown", 3 SECONDS)
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] tackles [MT]!</b>"), SPAN_ALERT("You tackle [MT]!"))
+		return FALSE

@@ -22,12 +22,12 @@ TYPEINFO(/datum/component/arable)
 	initialization_args = list()
 
 /datum/component/arable/Initialize()
+	. = ..()
 	if(!istype(parent, /turf) && !istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ATTACKBY), .proc/plant_seed)
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(plant_seed))
 
-/datum/component/arable/proc/plant_seed(atom/A, obj/item/I, mob/user)
-	PRIVATE_PROC(TRUE)
+/datum/component/arable/proc/plant_seed(atom/A, obj/item/I, mob/user = null)
 	if(P?.disposed)
 		if(istype(A, /atom/movable))
 			var/atom/movable/AM = A
@@ -36,6 +36,12 @@ TYPEINFO(/datum/component/arable)
 
 	if(P)
 		return
+
+
+	var/datum/component/seedy/seed_container = I.GetComponent(/datum/component/seedy)
+	if(seed_container)
+		I = seed_container.generate_seed()
+
 	if(istype(I, /obj/item/seed) || istype(I, /obj/item/seedplanter/) )
 		if(isturf(A))
 			var/turf/T = A
@@ -50,17 +56,17 @@ TYPEINFO(/datum/component/arable)
 		else if(istype(I, /obj/item/seedplanter/))
 			var/obj/item/seedplanter/SP = I
 			if(!SP.selected)
-				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
+				boutput(user, SPAN_ALERT("You need to select something to plant first."))
 				return TRUE
 
 			if(SP.selected.unique_seed)
 				SEED = new SP.selected.unique_seed
 			else
 				SEED = new /obj/item/seed
-			SEED.generic_seed_setup(SP.selected)
+			SEED.generic_seed_setup(SP.selected, FALSE)
 
 		src.P = new /obj/machinery/plantpot/bareplant(A, SEED)
-		RegisterSignal(src.P, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_plantpot)
+		RegisterSignal(src.P, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_plantpot))
 
 		// Add to visual contents so it can be interacted with
 		if(istype(A, /atom/movable))
@@ -69,16 +75,19 @@ TYPEINFO(/datum/component/arable)
 		P.auto_water = src.auto_water
 
 		if(SEED.planttype)
-			user.visible_message("<span class='notice'>[user] plants a seed in \the [A].</span>")
-			user.u_equip(SEED)
+			user?.visible_message(SPAN_NOTICE("[user] plants a seed in \the [A]."))
+			user?.u_equip(SEED)
 			SEED.set_loc(P)
-			if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-				logTheThing(LOG_COMBAT, user, "plants a [SEED.planttype] seed at [log_loc(P)].")
-			if(!(user in P.contributors))
+			logTheThing(LOG_STATION, user || usr, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(P)].")
+			if(user && !(user in P.contributors))
 				P.contributors += user
 		else
-			boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 			qdel(SEED)
+
+		if(seed_container)
+			user?.u_equip(seed_container.parent)
+			qdel(seed_container.parent)
 
 		return TRUE
 

@@ -12,16 +12,11 @@
 	initial_volume = 25
 	initial_reagents = "yuck"
 
-/obj/item/reagent_containers/food/snacks/yuckburn
+/obj/item/reagent_containers/food/snacks/yuck/burn
 	name = "smoldering mess"
 	desc = "This looks more like charcoal than food..."
-	icon = 'icons/obj/foodNdrink/food_yuck.dmi'
 	icon_state = "burnt"
-	bites_left = 1
-	heal_amt = 0
 	food_color = "#33302b"
-	initial_volume = 25
-	initial_reagents = "yuck"
 
 /obj/item/reagent_containers/food/snacks/shell
 	name = "incinerated embodiment of culinary disaster"
@@ -38,8 +33,7 @@
 		if(iscarbon(eater))
 			var/mob/living/carbon/C = eater
 			for(var/atom/movable/MO as mob|obj in src)
-				MO.set_loc(C)
-				C.stomach_contents += MO
+				C.organHolder.stomach.consume(MO) //if they don't have a stomach then this deserves to runtime and blow up
 
 	disposing()
 		for (var/mob/M in src)
@@ -62,239 +56,6 @@
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "fried" // fix this
 
-/obj/item/reagent_containers/food/snacks/pizza
-	name = "pizza"
-	desc = "A plain cheese and tomato pizza."
-	icon = 'icons/obj/foodNdrink/food_meals.dmi'
-	icon_state = "pizza_p"
-	bites_left = 6
-	heal_amt = 3
-	var/topping_color = "#ff0000"
-	var/sharpened = FALSE
-	var/sliced = FALSE
-	var/topping = FALSE
-	var/num = 0
-	var/list/topping_types = list()
-	var/list/topping_colors = list()
-	var/list/topping_holder = list()
-	var/sliced_icon = "pslice"
-	custom_food = 0
-
-	mat_changeappearance = 0
-	mat_changename = 0
-	mat_changedesc = 0
-
-	food_effects = list("food_deep_burp", "food_all")
-
-	New()
-		..()
-		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
-		if (prob(1))
-			SPAWN( rand(300, 900) )
-				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
-			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
-			if (cutter.sharpener_mode)
-				if (src.sharpened)
-					boutput(user, "<span class='alert'>This has already been sharpened.</span>")
-					return
-				src.sharpened = TRUE
-				if(src.sliced)
-					boutput(user, "<span class='notice'>You sharpen the pizza slice. Somehow.</span>")
-					return
-				else
-					boutput(user, "<span class='notice'>You sharpen the pizza, and start slicing it.</span>")
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.sliced)
-				boutput(user, "<span class='alert'>This has already been sliced.</span>")
-				return
-			boutput(user, "<span class='notice'>You cut the pizza into slices.</span>")
-			if (src.name == "cheese keyzza")
-				boutput(user, "<i>You feel as though something of value has been lost...</i>")
-			src.make_slices()
-
-	proc/make_slices()
-		var/makeslices = src.bites_left
-		. = list()
-		while (makeslices > 0)
-			var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
-			P.topping_holder += src.topping_colors
-			P.overlays.len = 0
-			P.sharpened = src.sharpened
-			P.sliced = TRUE
-			P.bites_left = 1
-			P.icon_state = sliced_icon
-			P.quality = src.quality
-			P.heal_amt += round((src.heal_amt/makeslices))
-			P.topping_color = src.topping_color
-			if(src.sharpened)
-				src.throw_spin = 0
-			if(topping)
-				P.name = src.name
-				P.desc = src.desc
-				P.topping = TRUE
-				P.num = src.num
-				P.add_topping(num)
-			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
-			P.pixel_x = rand(-6, 6)
-			P.pixel_y = rand(-6, 6)
-			. += P
-			makeslices--
-		qdel(src)
-
-
-	attack(mob/M, mob/user, def_zone)
-		if (sharpened && prob(15))
-			boutput(M, "<span class='alert'>That pizza was sharp!</span>")
-			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
-		if (!src.sliced)
-			if (user == M)
-				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
-				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-				return
-			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
-				return
-		else
-			if (sharpened)
-				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
-				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
-			..()
-
-	attack_self(var/mob/user as mob)
-		if (sharpened && prob(15))
-			boutput(user, "<span class='alert'>The pizza was sharp!</span>")
-			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
-		if (!src.sliced)
-			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			if (sharpened)
-				boutput(user, "<span class='alert'>The pizza was too pointy!</span>")
-				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
-			..()
-
-	throw_impact(M)
-		..()
-		if (!sharpened || isnull(M))
-			return
-		if (sliced)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.implant.Add(src)
-				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
-				H.changeStatus("weakened", 2 SECONDS)
-				src.set_loc(M)
-				src.transfer_all_reagents(M)
-			random_brute_damage(M, 11)
-			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
-
-	proc/add_topping(var/num)
-		var/icon/I
-		if (!sliced)
-			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_1")
-			I.Blend(topping_color, ICON_ADD)
-			src.overlays += I
-		else if (num == 0 && sliced == 1) // Bad, I know, sorry!
-			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_s1")
-			I.Blend(topping_color, ICON_ADD)
-			src.overlays += I
-		else
-			var/x = 0
-			while(x++ < num)
-				I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_s[x]")
-				topping_color = pick(src.topping_holder)
-				src.topping_holder -= topping_color
-				I.Blend(topping_color, ICON_ADD)
-				src.overlays += I
-
-/obj/item/reagent_containers/food/snacks/pizza/pepperoni
-	name = "pepperoni pizza"
-	desc = "A typical pepperoni pizza."
-	topping = TRUE
-	topping_color = "#C90E0E"
-
-	New()
-		..()
-		src.add_topping(0)
-
-/obj/item/reagent_containers/food/snacks/pizza/meatball
-	name = "meatball pizza"
-	desc = "A typical meatball pizza."
-	topping = TRUE
-	topping_color = "#663300"
-
-	New()
-		..()
-		src.add_topping(0)
-
-/obj/item/reagent_containers/food/snacks/pizza/mushroom
-	name = "mushroom pizza"
-	desc = "A typical mushroom pizza."
-	topping = TRUE
-	topping_color = "#CFCFCF"
-	food_effects = list("food_disease_resist")
-
-	New()
-		..()
-		src.add_topping(0)
-
-/obj/item/reagent_containers/food/snacks/pizza/xmas
-	name = "\improper Spacemas pizza"
-	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
-	topping = TRUE
-	topping_color = "#3CFF00"
-
-	New()
-		..()
-		src.add_topping(0)
-
-/obj/item/reagent_containers/food/snacks/pizza/fresh
-    name = "fresh pizza"
-    desc = "A cheesy pizza pie with thick tomato sauce."
-    icon_state = "cheesy"
-    sliced_icon = "cheesy-slice"
-
-/obj/item/reagent_containers/food/snacks/pizza/ball
-    name = "fresh meatball pizza"
-    desc = "A fresh pizza pie topped with succulent meatballs."
-    icon_state = "meatball"
-    sliced_icon = "meatball-slice"
-
-/obj/item/reagent_containers/food/snacks/pizza/pepper
-    name = "fresh pepperoni  pizza"
-    desc = "A cheesy pizza pie toped with bright red sizzling pepperoni slices."
-    icon_state = "peper"
-    sliced_icon = "peper-slice"
-
-/obj/item/reagent_containers/food/snacks/pizza/shroom
-    name = "fresh mushroom  pizza"
-    desc = "A pizza pie toped fresh picked mushrooms."
-    icon_state = "shroom"
-    sliced_icon = "shroom-slice"
-
-/obj/item/reagent_containers/food/snacks/pizza/bad
-    name = "soft serve cheese pizza"
-    desc = "A pizza shipped from god knows where straight to cargo."
-    icon_state = "pizza-b"
-    sliced_icon = "slice-b"
-
-/obj/item/reagent_containers/food/snacks/pizza/pepperbad
-    name = "soft serve pepperoni pizza"
-    desc = "A pizza shipped from god knows where straight to cargo."
-    icon_state = "pizza_m"
-    sliced_icon = "psliceM"
-
-/obj/item/reagent_containers/food/snacks/pizza/mushbad
-    name = "soft serve mushroom pizza"
-    desc = "A pizza shipped from god knows where straight to cargo."
-    icon_state = "pizza_v"
-    sliced_icon = "psliceV"
-
 /obj/item/reagent_containers/food/snacks/stroopwafel
 	name = "stroopwafel"
 	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
@@ -312,6 +73,9 @@
 	icon_state = "cookie-sugar"
 	bites_left = 1
 	heal_amt = 1
+	fill_amt = 0.5
+	initial_volume = 30
+	initial_reagents = list("sugar" = 15)
 	var/frosted = 0
 	food_color = "#CC9966"
 	festivity = 1
@@ -343,14 +107,16 @@
 		heal_amt = 0
 		icon_state = "cookie-metal"
 		food_effects = list("food_hp_up")
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "iron" = 10)
 
 	chocolate_chip
 		name = "chocolate-chip cookie"
 		desc = "Invented during the Great Depression, this chocolate-laced cookie was a key element of FDR's New Deal policies."
 		icon_state = "cookie-chips"
 		heal_amt = 2
-		initial_volume = 15
-		initial_reagents = list("chocolate"=10)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 15, "chocolate" = 5)
 
 	oatmeal
 		name = "oatmeal cookie"
@@ -362,22 +128,24 @@
 		name = "bacon cookie"
 		desc = "A cookie made out of bacon. Is this intended to be savory or a sweet candied bacon sort of thing? Whatever it is, it's pretty dumb."
 		icon_state = "cookie-bacon"
-		initial_volume = 50
-		initial_reagents = list("porktonium"=25)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "porktonium"=10)
 		food_effects = list("food_sweaty")
 
 	jaffa
 		name = "jaffa cake"
 		desc = "Legally a cake, this edible consists of precision layers of chocolate, sponge cake, and orange jelly."
 		icon_state = "cookie-jaffa"
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "chocolate"=5, "juice_orange"=5)
 
 	spooky
 		name = "spookie"
 		desc = "Two ounces of pure terror."
 		icon_state = "cookie-spooky"
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("ectoplasm"=10)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "ectoplasm"=10)
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	butter
@@ -385,16 +153,14 @@
 		desc = "Little bite-sized heart attacks." //no kidding
 		icon_state = "cookie-butter"
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("butter"=10)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "butter"=10)
 
 	peanut
 		name = "peanut butter cookie"
 		desc = "It's delicious and nutritious... probably."
 		icon_state = "cookie-peanut"
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("sugar"=20)
 		food_effects = list("food_deep_burp")
 
 	dog
@@ -411,12 +177,12 @@
 		heal(var/mob/M)
 			if (ispug(M) || iswerewolf(M))
 				..()
-				boutput(M, "<span class='notice'>That tasted delicious!</span>")
+				boutput(M, SPAN_NOTICE("That tasted delicious!"))
 			else
 				src.heal_amt = 0
 				..()
 				src.heal_amt = initial(src.heal_amt)
-				boutput(M, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
+				boutput(M, SPAN_NOTICE("That tasted awful! Why would you eat it!?"))
 
 		on_bite(var/mob/M)
 			var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
@@ -432,6 +198,8 @@
 	icon_state = "moonpie-sugar"
 	bites_left = 1
 	heal_amt = 6
+	initial_volume = 100
+	initial_reagents = list("sugar" = 30, "cream" = 10)
 	var/frosted = 0
 	food_effects = list("food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK
@@ -460,6 +228,8 @@
 		icon_state = "moonpie-metal"
 		heal_amt = 0
 		food_effects = list("food_hp_up_big")
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "iron" = 20, "cream" = 10)
 
 	chocolate_chip
 		name = "chocolate-chip moon pie"
@@ -467,6 +237,8 @@
 		icon_state = "moonpie-chips"
 		heal_amt = 7
 		food_effects = list("food_refreshed_big")
+		initial_volume = 100
+		initial_reagents = list("sugar" = 30, "chocolate" = 10, "cream" = 10)
 
 	oatmeal
 		name = "oatmeal moon pie"
@@ -480,8 +252,8 @@
 		desc = "How is this even food?"
 		icon_state = "moonpie-bacon"
 		heal_amt = 5
-		initial_volume = 50
-		initial_reagents = "porktonium"
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "porktonium" = 20, "cream" = 10)
 		food_effects = list("food_sweaty_big")
 
 	jaffa
@@ -489,6 +261,8 @@
 		desc = "This dish was named in an attempt to dodge sales taxes on pie production. However, it is actually legally considered a form of crumble."
 		icon_state = "moonpie-jaffa"
 		heal_amt = 8
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "chocolate" = 10, "juice_orange" = 10, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 
 	chocolate
@@ -496,6 +270,8 @@
 		desc = "A confection infamous for being especially terrible for you, in a culture noted for having nothing but foods that are terrible for you."
 		icon_state = "moonpie-chocolate"
 		heal_amt = 25 //oh jesus
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "chocolate" = 30, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 
 	spooky
@@ -504,8 +280,8 @@
 		icon_state = "moonpie-spooky"
 		heal_amt = 6
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("ectoplasm"=10)
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "ectoplasm"=20, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -515,8 +291,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A soup of indeterminable type."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "gruel"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
+	fill_amt = 3
 	heal_amt = 1
 	w_class = W_CLASS_SMALL
 	initial_volume = 100
@@ -525,7 +302,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	use_bite_mask = FALSE
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/dippable/))
 			if (bites_left <= 1)
 				boutput(user, "You scoop up the last of [src] with the [W.name].")
 			else
@@ -536,6 +313,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 			src.bites_left--
 			if (!bites_left)
+				new src.dropped_item(get_turf(src))
 				qdel(src)
 		else
 			..()
@@ -544,7 +322,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "tomato soup"
 	desc = "A rich and creamy soup made from tomatoes."
 	icon_state = "tomsoup"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_effects = list("food_warm","food_refreshed")
@@ -554,7 +332,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "guacamole"
 	desc = "A spiced paste made of smashed avocados."
 	icon_state = "guacamole"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#007B1C"
@@ -565,7 +343,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "mint chutney"
 	desc = "A flavorful paste that smells strongly of mint."
 	icon_state = "mintchutney"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#2DAB1F"
@@ -576,7 +354,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "refried beans"
 	desc = "A dish made of mashed beans cooked with lard. It has bits of bacon in it."
 	icon_state = "refriedbeans"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#AA7777"
@@ -587,7 +365,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con carne"
 	desc = "Meat pieces in a spicy pepper sauce. Delicious."
 	icon_state = "tomsoup"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("capsaicin"=20)
@@ -598,7 +376,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con queso"
 	desc = "Spicy mexican cheese stuff."
 	icon_state = "custard"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#FF8C00"
@@ -609,7 +387,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con flagration"
 	desc = "God damn. This stuff smells strong."
 	icon_state = "tomsoup"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("capsaicin"=50)
@@ -619,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "El Diablo"
 	desc = "You feel overheated just looking at this dish."
 	icon_state = "hotchili"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 2
 	heal_amt = 6
 	initial_reagents = list("el_diablo"=90)
@@ -629,20 +407,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "gruel"
 	desc = "Asking if you can have more is probably ill-advised."
 	icon_state = "gruel"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 0
 	food_color = "#808080"
 	food_effects = list("food_sweaty")
 
 	heal(var/mob/M)
-		if (prob(15)) boutput(M, "<span class='alert'>You feel depressed.</span>")
+		..()
+		if (prob(15)) boutput(M, SPAN_ALERT("You feel depressed."))
 
 /obj/item/reagent_containers/food/snacks/soup/porridge
 	name = "porridge"
 	desc = "Mushy rice. Basically."
 	icon_state = "porridge"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 1
 	food_color = "#E1E1E1"
@@ -653,7 +432,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "oatmeal"
 	desc = "Sometimes the station gets the fun kind with the little candy dinosaur eggs. This isn't the fun kind."
 	icon_state = "oatmeal-plain"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
 	var/randomized = 1
@@ -673,38 +452,37 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		heal(var/mob/M)
 			var/dinosaur = pick("Ohmdenosaurus","Velafrons","Saurophaganax","Bissektipelta","Aardonyx","Tsintaosaurus","Barapasaurus","Rahonavis")
-			boutput(M, "<span class='notice'>You found a marshmallow [dinosaur] in this bite!</span>")
+			boutput(M, SPAN_NOTICE("You found a marshmallow [dinosaur] in this bite!"))
 			..()
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
+	initial_reagents = list("cream"=10)
 	food_effects = list("food_tox", "food_disease_resist")
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 30
-	initial_reagents = list("amanitin"=30)
+	initial_reagents = list("amanitin"=30, "cream"=10)
 	food_effects = list("food_disease_resist", "food_rad_resist")
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 60
-	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20)
+	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20, "cream"=10)
 	food_effects = list("food_tox", "food_disease_resist", "food_rad_resist")
 
 /obj/item/reagent_containers/food/snacks/salad
@@ -712,7 +490,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly plants. Good for healthy eating."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "salad"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_energized", "food_refreshed")
@@ -732,11 +511,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if (prize > 0)
 			prize = prob(prize)
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			user.visible_message("<b>[user]</b> pours [src] directly into their mouth!", "You eat straight from the box!")
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> pours [src] into [M]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> pours [src] into [target]'s mouth!"))
 
 		//Hello, here is a dumb hack to get around "you take a bite of cerealbox-'Pope Crunch'!"
 		// apparently there was a runtime error here, i'm guessing someone edited a cereal box's name?
@@ -766,7 +545,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 /obj/item/reagent_containers/food/snacks/cereal_box/roach
 	name = "cereal box -'Roach Puffs'"
-	desc = "A puffy, chocolately breakfast cereal. Probably."
+	desc = "A puffy, chocolatey breakfast cereal. Probably."
 	icon_state = "cereal_box4"
 	prize = 0
 
@@ -778,25 +557,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("atropine"=10,"space_drugs"=10)
 	prize = 0
 
-/obj/item/reagent_containers/food/snacks/cereal_box/cirrial
-	name = "cereal box -'Flocked-Flakes Cirrial'"
-	desc = "A bluey-green cereal that beeps gently at you, they're grrrrowing out of the box oh fuck!"
-	icon_state = "cereal_box5"
-	initial_volume = 20
-	initial_reagents = list("feather_fluid"=10)
+/obj/item/reagent_containers/food/snacks/cereal_box/flock
+	name = "cereal box -'Flocked-Flakes'"
+	desc = "A bluey-green cereal that beeps gently at you, they're grrrrowing out of the box, oh fuck!"
+	icon_state = "cereal_box6"
 	prize = 0
+
+	heal(mob/M)
+		. = ..()
+		M.reagents?.add_reagent("flockdrone_fluid", 5)
 
 /obj/item/reagent_containers/food/snacks/soup/cereal
 	name = "dry cereal"
 	desc = "A bowl of colorful breakfast cereal, each piece sharp enough to slice the roof of your mouth into meat confetti."
-	icon_state = "cereal_bowl"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	bites_left = 5
 	heal_amt = 1
 	var/dry = 1
 	var/hasPrize = 0
 	food_effects = list("food_refreshed")
 
-	New(loc, prize_inside)
+	New(loc, prize_inside, var/obj/item/reagent_containers/food/drinks/bowl/bowl)
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+		src.UpdateOverlays(image(icon = 'icons/obj/foodNdrink/food_meals.dmi', icon_state = src.icon_state + "_cereal"), "cereal")
 		..()
 		hasPrize = (prize_inside == 1)
 
@@ -811,18 +598,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal(var/mob/M)
 		M.reagents.add_reagent("sugar",15)
 		if(src.dry)
-			boutput(M, "<span class='alert'>It cuts the roof of your mouth! WHY DID YOU TRY EATING THIS DRY?!</span>")
+			boutput(M, SPAN_ALERT("It cuts the roof of your mouth! WHY DID YOU TRY EATING THIS DRY?!"))
 			random_brute_damage(M, 3)
 			take_bleeding_damage(M, null, 0, DAMAGE_STAB, 0)
 			bleed(M, 3, 1)
-			M.emote("scream")
 
 		if(src.hasPrize && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["head"]
-			boutput(H, "<span class='alert'>You slash your mouth and tongue open on a piece of jagged rusty metal! Looks like you found the prize inside!</span>")
-			H.changeStatus("weakened", 3 SECONDS)
-			affecting.take_damage(10, 0)
+			boutput(H, SPAN_ALERT("You slash your mouth and tongue open on a piece of jagged rusty metal! Looks like you found the prize inside!"))
+			H.changeStatus("knockdown", 3 SECONDS)
+			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			take_bleeding_damage(H, null, 0, DAMAGE_STAB, 0)
 			bleed(H, rand(10,30), rand(1,3))
 			H.UpdateDamageIcon()
@@ -867,16 +652,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	heal(var/mob/M)
 		if(src.warm == DONK_SCALDING)
-			boutput(M, "<span class='alert'>It's as hot as molten steel! Maybe try proper cookware?</span>")
+			boutput(M, SPAN_ALERT("It's as hot as molten steel! Maybe try proper cookware?"))
 			M.TakeDamage("All", 0, 5, damage_type = DAMAGE_BURN)
 			M.reagents?.add_reagent("yuck", 10)
 		else if(src.warm == DONK_WARM)
 			M.reagents?.add_reagent("omnizine", 10)
 		else
-			boutput(M, "<span class='alert'>It's just not good enough cold..</span>")
+			boutput(M, SPAN_ALERT("It's just not good enough cold.."))
 		..()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		switch(exposed_temperature)
 			if(T0C + 176 to T0C + 260)
 				if(src.warm <= DONK_WARM)
@@ -924,7 +709,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if(src.warm == DONK_WARM)
 			M.reagents?.add_reagent("honk_fart",15)
 		else
-			M.reagents?.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("anti_fart",15)
 		..()
 
 	cooltime()
@@ -942,9 +727,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "bacon and eggs"
 	desc = "A plate containing a breakfast meal of both bacon AND eggs. Together!"
 	icon_state = "breakfast"
+	fill_amt = 3
 	bites_left = 4
 	heal_amt = 4
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	food_effects = list("food_energized_big")
 	meal_time_flags = MEAL_TIME_BREAKFAST
 
@@ -965,7 +751,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "swedish meatballs"
 	desc = "It's even got a little rice-paper swedish flag in it. How cute."
 	icon_state = "swede_mball"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
 	food_color ="#663300"
@@ -986,14 +773,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = ""
 	food_effects = list("food_bad_breath")
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.icon_state == "surs")
-			if (user == M)
-				boutput(user, "<span class='alert'>You need to take the lid off first, you greedy beast!</span>")
+			if (user == target)
+				boutput(user, SPAN_ALERT("You need to take the lid off first, you greedy beast!"))
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 				return
 		else
 			..()
@@ -1007,12 +794,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			for(var/mob/living/carbon/H in viewers(src, null))
 				if (H.bioHolder.HasEffect("accent_swedish"))
 					return
-				boutput(H, "<span class='alert'>[stinkString()]</span>")
+				boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
 				if(prob(30))
 					H.changeStatus("stunned", 2 SECONDS)
-					boutput(H, "<span class='alert'>[stinkString()]</span>")
-					H.visible_message("<span class='alert'>[H] vomits, unable to handle the fishy stank!</span>")
-					H.vomit()
+					boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
+					var/vomit_message = SPAN_ALERT("[H] vomits, unable to handle the fishy stank!")
+					H.vomit(0, null, vomit_message)
 
 	disposing()
 		processing_items.Remove(src)
@@ -1021,38 +808,37 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	heal(var/mob/M)
 		if (M.bioHolder.HasEffect("accent_swedish"))
-			boutput(M, "<span class='notice'>It tastes just like the old country!</span>")
+			boutput(M, SPAN_NOTICE("It tastes just like the old country!"))
 			M.reagents.add_reagent("love", 5)
 			..()
 		else
 			var/effect = rand(1,21)
 			switch(effect)
 				if(1 to 5)
-					boutput(M, "<span class='alert'>aaaaaAAAAA<b>AAAAAAAA</b></span>")
-					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-					M.vomit()
-					M.changeStatus("weakened", 4 SECONDS)
+					boutput(M, SPAN_ALERT("aaaaaAAAAA<b>AAAAAAAA</b>"))
+					var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
+					M.vomit(0, null, vomit_message)
+					M.changeStatus("knockdown", 4 SECONDS)
 				if(6 to 10)
-					boutput(M, "<span class='alert'>A squirt of some foul-smelling juice gets in your sinuses!!!</span>")
-					M.emote("scream")
+					boutput(M, SPAN_ALERT("A squirt of some foul-smelling juice gets in your sinuses!!!"))
 					M.emote("sneeze")
-					M.changeStatus("weakened", 4 SECONDS)
+					M.changeStatus("knockdown", 4 SECONDS)
 					SPAWN(0)
 						while(prob(75))
 							sleep(rand(50,75))
-							boutput(M, "<span class='alert'>Some of the horrible juice in your nose drips into the back of your throat!!</span>")
+							boutput(M, SPAN_ALERT("Some of the horrible juice in your nose drips into the back of your throat!!"))
 							M.emote("sneeze")
 							M.vomit()
 							M.changeStatus("stunned", 2 SECONDS)
 				if(11 to 15)
-					boutput(M, "<span class='notice'>Huh. That wasn't so bad. <span class='alert'>WAIT NEVERMIND THERE'S THE AFTERTASTE</span></span>")
+					boutput(M, SPAN_NOTICE("Huh. That wasn't so bad. [SPAN_ALERT("WAIT NEVERMIND THERE'S THE AFTERTASTE")]"))
 					M.emote ("cry")
-					M.changeStatus("weakened", 4 SECONDS)
+					M.changeStatus("knockdown", 4 SECONDS)
 				if(16 to 20)
-					boutput(M, "<span class='alert'>AGHBGLBLGHLGBGLHGHBLGH</span>")
-					M.visible_message("<span class='alert'>[M] pukes their guts out!</span>")
-					playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-					M.changeStatus("weakened", 4 SECONDS)
+					boutput(M, SPAN_ALERT("AGHBGLBLGHLGBGLHGHBLGH"))
+					M.visible_message(SPAN_ALERT("[M] pukes their guts out!"))
+					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					M.changeStatus("knockdown", 4 SECONDS)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 
@@ -1065,15 +851,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 						if (prob(5) && H.organHolder && H.organHolder.heart)
 							H.organHolder.drop_organ("heart")
 
-							H.visible_message("<span class='alert'><b>Wait, is that their heart!?</b></span>")
+							H.visible_message(SPAN_ALERT("<b>Wait, is that their heart!?</b>"))
 				if(21)
 					if (!M.bioHolder.HasEffect("stinky"))
-						boutput(M, "<span class='alert'>Oh God, the stink is <b>inside</b> you now!</span>")
+						boutput(M, SPAN_ALERT("Oh God, the stink is <b>inside</b> you now!"))
 						M.bioHolder.AddEffect("stinky")
 						M.changeStatus("stunned", 2 SECONDS)
 						return
 					else
-						boutput(M, "<span class='alert'>The stink of the surströmming combines with your inherent body funk to create a stench of BIBLICAL PROPORTIONS!</span>")
+						boutput(M, SPAN_ALERT("The stink of the surströmming combines with your inherent body funk to create a stench of BIBLICAL PROPORTIONS!"))
 						M.name_suffix("the Stinky")
 						M.UpdateName()
 		..()
@@ -1095,25 +881,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "surs")
-			boutput(user, "<span class='notice'>You pop the lid off the [src].</span>")
+			boutput(user, SPAN_NOTICE("You pop the lid off the [src]."))
 			src.icon_state = "surs-open" //todo: get real sprite
 			for(var/mob/living/carbon/M in viewers(user, null))
 				if (M == user)
 					if (user.bioHolder.HasEffect("accent_swedish"))
-						boutput(user, "<span class='notice'>Ahhh, that smells wonderful!</span>")
+						boutput(user, SPAN_NOTICE("Ahhh, that smells wonderful!"))
 					else
-						boutput(user, "<span class='alert'><font size=4><B>HOLY FUCK THAT REEKS!!!!!</b></font></span>")
-						user.changeStatus("weakened", 8 SECONDS)
-						user.visible_message("<span class='alert'>[user] suddenly and violently vomits!</span>")
-						user.vomit()
+						boutput(user, SPAN_ALERT("<font size=4><B>HOLY FUCK THAT REEKS!!!!!</b></font>"))
+						user.changeStatus("knockdown", 8 SECONDS)
+						var/vomit_message = SPAN_ALERT("[user] suddenly and violently vomits!")
+						user.vomit(0, null, vomit_message)
 				else
 					if(M.bioHolder.HasEffect("accent_swedish"))
-						boutput(M, "<span class='notice'>Hey, something smells good!</span>")
+						boutput(M, SPAN_NOTICE("Hey, something smells good!"))
 					else
-						boutput(M, "<span class='alert'><font size=4><B>WHAT THE FUCK IS THAT SMELL!?</b></font></span>")
-						M.changeStatus("weakened", 4 SECONDS)
-						M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-						M.vomit()
+						boutput(M, SPAN_ALERT("<font size=4><B>WHAT THE FUCK IS THAT SMELL!?</b></font>"))
+						M.changeStatus("knockdown", 4 SECONDS)
+						var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
+						M.vomit(0, null, vomit_message)
 
 /obj/item/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -1135,13 +921,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_cateyes")
 	meal_time_flags = MEAL_TIME_SNACK
 
-/obj/item/reagent_containers/food/snacks/spaghetti/
+/obj/item/reagent_containers/food/snacks/spaghetti
 	name = "spaghetti noodles"
 	desc = "Just noodles on their own."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "spag-plain"
 	var/random_name = TRUE
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	heal_amt = 1
 	bites_left = 3
 	food_effects = list("food_brute","food_burn")
@@ -1154,11 +941,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
-			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] with tomato sauce...</span>")
+			boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
 			if (user.mob_flags & IS_BONEY)
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
-				boutput(user, "<span class='alert'>... whoa, that felt good. Like really good.</span>")
+				boutput(user, SPAN_ALERT("... whoa, that felt good. Like really good."))
 				user.reagents.add_reagent("boneyjuice",20)
 			else
 				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
@@ -1172,12 +959,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
-					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
-					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
-					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
+					src.visible_message(SPAN_ALERT("<b>[H] hits the [src] with [W]!</b>"))
+					src.visible_message(SPAN_ALERT("The [src] barks at [H]!"))
+					playsound(src, 'sound/voice/animal/dogbark.ogg', 40, TRUE)
 					SPAWN(0.75 SECONDS)
 						if (src && H)
-							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
+							src.visible_message(SPAN_ALERT("The [src] takes a bite out of [H]!"))
 							random_brute_damage(H, 10)
 
 		else
@@ -1185,14 +972,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	heal(var/mob/M) // ditto goddammit - arrabiata is not fuckin bland you dorks
 		if (icon_state == "spag_plain")
-			boutput(M, "<span class='alert'>This is really bland.</span>")
+			boutput(M, SPAN_ALERT("This is really bland."))
 		. = ..()
 
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal
 	name = "boneless spaghetti"
 	desc = "Eh, this isn't very good at all..."
 	icon_state = "spag-dish"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
@@ -1211,7 +998,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti with tomato sauce"
 	desc = "Eh, the sauce tastes pretty bland..."
 	icon_state = "spag-dish"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
@@ -1223,7 +1010,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/hotsauce))
-			boutput(user, "<span class='notice'>You create [random_spaghetti_name()] arrabbiata!</span>")
+			boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] arrabbiata!"))
 			var/obj/item/reagent_containers/food/snacks/spaghetti/spicy/D = new/obj/item/reagent_containers/food/snacks/spaghetti/spicy(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
@@ -1231,8 +1018,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			qdel(src)
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/pizza))
 			var/obj/item/reagent_containers/food/snacks/pizza/P = W
-			boutput(user, "<span class='notice'>You create pizza-ghetti!</span>")
-			var/obj/item/reagent_containers/food/snacks/spaghetti/spicy/D = new/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti(W.loc)
+			boutput(user, SPAN_NOTICE("You create pizza-ghetti!"))
+			var/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti/D = new/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti(W.loc)
 			D.food_effects += P.food_effects
 			D.food_effects += src.food_effects
 			user.u_equip(W)
@@ -1246,7 +1033,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Pasta in a creamy, cheesy sauce."
 	icon_state = "spag-alfredo"
 	random_name = FALSE
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
@@ -1256,23 +1043,41 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
 	icon_state = "spag-dish-spicy"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
 	initial_reagents = list("capsaicin"=50,"omnizine"=5,"synaptizine"=5)
 	food_effects = list("food_energized","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
+	/// Is this spaghetti under high security? (ie will it burn non security members who eat it)
+	var/secured = FALSE
 
 	New()
 		. = ..()
-		name = "[random_spaghetti_name()] arrabbiata"
+		if (istype(get_area(src), /area/station/security))
+			src.secured = TRUE // var is also set in a subtype, hence the seperated checks
+
+		if (src.secured)
+			src.name = "[random_spaghetti_name()] arrabbrigata"
+		else
+			src.name = "[random_spaghetti_name()] arrabbiata"
+
+	heal(mob/M)
+		if (src.secured && !(M.traitHolder && M.traitHolder.hasTrait("training_security")) && !M.reagents.has_reagent("milk"))
+			random_burn_damage(M, rand(30, 40))
+			boutput(M, SPAN_ALERT("You're not trained to resist this level of spice! No wonder they kept [src] locked up!"))
+		else
+			. = ..()
+
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security
+	secured = TRUE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/meatball
 	name = "spaghetti and meatballs"
 	desc = "That's better!"
 	icon_state = "spag-meatball"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1289,7 +1094,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Spaghetti AND fried chicken? You must be dreaming."
 	icon_state = "spag-chickenparm"
 	random_name = FALSE
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1302,7 +1107,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Fettucine alfredo with grilled chicken on top."
 	icon_state = "spag-c-alfredo"
 	random_name = FALSE
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1315,7 +1120,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Layers of saucy, cheesy goodness."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "lasagna"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1327,7 +1132,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
 	icon_state = "pizzaghetti"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 50
@@ -1340,7 +1145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		name = "pizza-ghetti"
 
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>Tastes like pizza and spaghetti, but way less convenient.</span>")
+		boutput(M, SPAN_ALERT("Tastes like pizza and spaghetti, but way less convenient."))
 		. = ..()
 
 /obj/item/reagent_containers/food/snacks/donut
@@ -1348,8 +1153,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Goes great with Robust Coffee."
 	icon = 'icons/obj/foodNdrink/donuts.dmi'
 	icon_state = "base"
+	item_state = "donut1"
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	fill_amt = 2
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("sugar" = 20)
@@ -1367,7 +1174,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant", "Part-time Vice Officer")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Consultant", "Security Assistant")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
@@ -1429,18 +1236,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		frosted
 			name = "frosted donut"
 			icon_state = "donut2"
+			item_state = "donut2"
 			heal_amt = 2
+			bites_left = 4
+			initial_reagents = list("sugar"=12)
 
 		cinnamon
-			name = "cinnamon sugar donut"
+			name = "cinnamon donut"
 			desc = "One of Delectable Dan's seasonal bestsellers."
 			icon_state = "donut3"
+			item_state = "donut3"
 			heal_amt = 3
+			bites_left = 4
+			initial_reagents = list("cinnamon"=12)
 
 		robust
 			name = "robust donut"
 			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
 			icon_state = "donut4"
+			item_state = "donut4"
 			bites_left = 4
 			initial_volume = 36
 			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
@@ -1449,6 +1263,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			name = "robusted donut"
 			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
+			item_state = "donut5"
 			bites_left = 4
 			initial_volume = 40
 			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=16)
@@ -1457,6 +1272,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			New()
 				if(rand(1,3) == 1)
 					src.icon_state = "donut2"
+					src.item_state = "donut2"
 					src.name = "frosted donut"
 					src.heal_amt = 2
 				..()
@@ -1467,7 +1283,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.suiciding = 0
 			return 0
 		user.u_equip(src)
-		user.visible_message("<span class='alert'><b>[user] accidentally inhales part of a [src], blocking their windpipe!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] accidentally inhales part of a [src], blocking their windpipe!</b>"))
 		user.take_oxygen_deprivation(123)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -1508,12 +1324,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 0
 	food_effects = list("food_disease_resist")
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		switch(quality_status)
+			if("jumbo")
+				src.heal_amt *= 2
+				src.bites_left *= 2
+			if("rotten")
+				src.heal_amt = 0
+			if("malformed")
+				src.heal_amt += rand(-2,2)
+				src.bites_left += rand(-2,2)
+		if (src.bites_left < 1)
+			src.bites_left = 1
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
 /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. This one is quite different."
 	icon_state = "mushroom-poison"
 	food_color = "#AF2B2B"
-	bites_left = 1
 	heal_amt = 3
 
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
@@ -1521,14 +1351,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A mushroom cap of Space Fungus. It's slightly more vibrant than usual."
 	icon_state = "mushroom-magic"
 	food_color = "#A76933"
-	bites_left = 1
 	heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It doesn't smell of anything."
 	icon_state = "mushroom-M3"
-	bites_left = 1
 	heal_amt = 0
 
 
@@ -1556,13 +1384,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal(mob/M)
 		..()
 		var/ughmessage = pick("Your mouth feels haunted. Haunted with bad flavors.","It tastes like flavor died.", "It tastes like a ghost fart.", "It has the texture of ham aspic.  From the 1950s.  Left out in the sun.")
-		boutput(M, "<span class='alert'>Ugh, why did you eat that? [ughmessage]</span>")
+		boutput(M, SPAN_ALERT("Ugh, why did you eat that? [ughmessage]"))
 
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"
 	desc = "A hotdog inside a fried cornmeal shell.  On a stick."
 	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "corndog"
+	fill_amt = 2
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
@@ -1617,6 +1446,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A plain hotdog."
 	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
 	icon_state = "hotdog"
+	fill_amt = 2
 	bites_left = 3
 	heal_amt = 2
 	var/bun = 0
@@ -1636,7 +1466,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice))
 			if(src.bun)
-				boutput(user, "<span class='alert'>It already has a bun!</span>")
+				boutput(user, SPAN_ALERT("It already has a bun!"))
 				return
 
 			if(istype(W, /obj/item/reagent_containers/food/snacks/breadslice/banana))
@@ -1704,17 +1534,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
 			if(!src.bun)
-				boutput(user, "<span class='alert'>You need to bread it first!</span>")
+				boutput(user, SPAN_ALERT("You need to bread it first!"))
 				return
 
 			// Check for broken sticks
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
+					boutput(user, SPAN_ALERT("You can't use a broken stick!"))
 					return
 
-			boutput(user, "<span class='notice'>You create a corndog...</span>")
+			boutput(user, SPAN_NOTICE("You create a corndog..."))
 			var/obj/item/reagent_containers/food/snacks/corndog/newdog = null
 			switch(src.bun)
 				if(2)
@@ -1746,10 +1576,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 		else if (istype(W,/obj/item/plant/herb) && !src.herb)
 			if(src.bun)
-				boutput(user, "<span class='alert'>It's too late! This hotdog is already in a bun, you see.</span>")
+				boutput(user, SPAN_ALERT("It's too late! This hotdog is already in a bun, you see."))
 				return
 
-			boutput(user, "<span class='notice'>You create a herbal sausage...</span>")
+			boutput(user, SPAN_NOTICE("You create a herbal sausage..."))
 			src.herb = 1
 			src.icon_state = "sausage"
 			src.name = "herbal sausage"
@@ -1884,7 +1714,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/kitchen/utensil/knife) && (src.icon_state == "hotdog-octo"))
-			src.visible_message("<span class='success'>[user.name] carves a cute little face on the [src]!</span>")
+			src.visible_message(SPAN_SUCCESS("[user.name] carves a cute little face on the [src]!"))
 			src.icon_state = "hotdog-octo2"
 			src.reagents.add_reagent("love", 1)
 		else
@@ -1904,6 +1734,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "empty taco shell"
 	desc = "A lone taco shell, devoid of any filling."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	fill_amt = 2
 	bites_left = 3
 	heal_amt = 1
 	icon_state = "taco0"
@@ -1914,14 +1745,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	heal(var/mob/M)
 		if(!src.salsa)
-			boutput(M, "<span class='alert'>Could use sauce...</span>")
+			boutput(M, SPAN_ALERT("Could use sauce..."))
 		..()
 		return
 
 	attack_self(mob/user as mob)
 		if (!src.stage)
 			boutput(user, "You crunch up the tortilla shell into tortilla chips.")
-			new /obj/item/reagent_containers/food/snacks/tortilla_chip_spawner(user.loc)
+			new /obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner(user.loc)
 			user.u_equip(src)
 			qdel(src)
 		else
@@ -1930,19 +1761,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat))
 			if(src.stage)
-				boutput(user, "<span class='alert'>It can't hold any more!</span>")
+				boutput(user, SPAN_ALERT("It can't hold any more!"))
 				return
 			src.stage++
 			src.icon_state = "taco1"
 			src.name = "[W.name] taco"
 			src.heal_amt++
 			desc = "A meat taco. Pretty plain, really."
-			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]!"))
 			food_effects += W:food_effects
 			qdel (W)
 
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/hotsauce) || istype(W,/obj/item/reagent_containers/food/snacks/condiment/coldsauce))
-			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]!"))
 			if(!src.salsa)
 				src.heal_amt++
 				src.salsa = 1
@@ -1952,9 +1783,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice))
 			switch(src.stage)
 				if(0)
-					boutput(user, "<span class='alert'>You really should add the meat first.</span>")
+					boutput(user, SPAN_ALERT("You really should add the meat first."))
 				if(1)
-					boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+					boutput(user, SPAN_NOTICE("You add [W] to [src]!"))
 					qdel (W)
 					src.stage++
 					src.heal_amt++
@@ -1962,7 +1793,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					src.desc = "A complete taco. Looks pretty good."
 					food_effects += "food_energized_big"
 				if(2)
-					boutput(user, "<span class='alert'>It can't hold any more!</span>")
+					boutput(user, SPAN_ALERT("It can't hold any more!"))
 			return
 		else return ..()
 
@@ -1980,6 +1811,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "steak"
 	desc = "Made of people."
 	icon_state = "meat-grilled"
+	fill_amt = 2
 	bites_left = 2
 	heal_amt = 3
 	var/hname = null
@@ -1994,6 +1826,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "monkey steak"
 	desc = "You'll go bananas for it."
 	icon_state = "meat-grilled"
+	fill_amt = 2
 	bites_left = 2
 	heal_amt = 3
 	food_color = "#999966"
@@ -2005,6 +1838,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "synth-steak"
 	desc = "And they thought processed food was artificial..."
 	icon_state = "meat-plant-grilled"
+	fill_amt = 2
 	bites_left = 2
 	heal_amt = 3
 	food_color = "#999966"
@@ -2017,6 +1851,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "mutagenic steak"
 	desc  = "It stopped moving. Thank god."
 	icon_state = "meat-changeling-grilled"
+	fill_amt = 2
 	bites_left = 2
 	heal_amt = 4
 	food_color = "#999966"
@@ -2025,21 +1860,91 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+/obj/item/reagent_containers/food/snacks/turkey
+	name = "roast turkey"
+	desc = "A perfectly roast turkey. It's ready to be carved!"
+	food_color = "#999966"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyroast"
+	w_class = W_CLASS_NORMAL
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
+
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+			boutput(user, "<span class='notice'>You carve [src] for serving!</span>")
+			var/turf/T = get_turf(src)
+			for (var/i in 1 to 2)
+				new /obj/item/reagent_containers/food/snacks/turkey_drum(T)
+			for (var/i in 1 to 3)
+				new /obj/item/reagent_containers/food/snacks/turkey_slice(T)
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			qdel(src)
+		else ..()
+
+/obj/item/reagent_containers/food/snacks/turkey_drum
+	name = "turkey drumstick"
+	desc = "A drumstick from a roast turkey. Not actually for drumming."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeydrum"
+	bites_left = 3
+	heal_amt = 4 //very filling
+	food_color =  "#999966"
+	initial_volume = 30
+	initial_reagents = list("gravy" = 10) //drippings
+	food_effects = list("food_hp_up_big", "food_brute")
+	meal_time_flags = MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/turkey_slice
+	name = "turkey slice"
+	desc = "A slice of roast turkey. Somehow it's not too dry!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyslice"
+	bites_left = 3
+	heal_amt = 2
+	food_color =  "#999966"
+	initial_volume = 30
+	initial_reagents = list("gravy" = 10) //drippings
+	food_effects = list("food_hp_up_big", "food_brute")
+	meal_time_flags = MEAL_TIME_DINNER
+
 /obj/item/reagent_containers/food/snacks/fish_fingers
 	name = "fish fingers"
 	desc = "What kind of fish did it start out as? Who knows!"
 	icon_state = "fish_fingers"
+	fill_amt = 2
 	bites_left = 3
 	heal_amt = 2
 	food_color = "#FFCC33"
 	food_effects = list("food_burn", "food_sweaty", "food_tox")
 	meal_time_flags = MEAL_TIME_LUNCH
 
+/obj/item/reagent_containers/food/snacks/shrimp
+	name = "cooked shrimp meat"
+	desc = "A perfectly boiled shrimp meat ready to serve. Fancy!"
+	icon_state = "shrimp_meat_cooked"
+	bites_left = 1
+	heal_amt = 2
+	food_color = "#e14531"
+	food_effects = list("food_warm", "food_brute")
+
 /obj/item/reagent_containers/food/snacks/bakedpotato
 	name = "baked potato"
 	desc = "Would go good with some cheese or steak."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "potato-baked"
+	fill_amt = 3
 	bites_left = 6
 	heal_amt = 1
 	food_color = "#FFFF99"
@@ -2050,9 +1955,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "omelette"
 	desc = "A delicious breakfast food."
 	icon_state = "omelette"
+	fill_amt = 3
 	bites_left = 3
 	heal_amt = 4
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	food_color = "#FFCC00"
 	initial_volume = 10
 	initial_reagents = list("cholesterol"=1)
@@ -2068,6 +1974,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "pancakes"
 	desc = "They seem to be lacking something"
 	icon_state = "pancake"
+	fill_amt = 2
 	bites_left = 3
 	heal_amt = 1
 	var/syrup = 0
@@ -2077,7 +1984,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/syrup))
-			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			icon_state = "pancake_s"
 			syrup = 1
 			heal_amt = 5
@@ -2089,7 +1996,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal(var/mob/M)
 		..()
 		if(!syrup)
-			boutput(M, "<span class='alert'>[src] seem a bit dry.</span>")
+			boutput(M, SPAN_ALERT("[src] seem a bit dry."))
 
 /obj/item/reagent_containers/food/snacks/pancake/classic
 	icon = 'icons/obj/foodNdrink/food_shitty.dmi'
@@ -2098,10 +2005,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name ="mashed potatoes"
 	desc = "A classic dish."
 	icon_state = "mashedpotatoes"
+	fill_amt = 2
 	bites_left = 5
 	heal_amt = 1
-	needfork = 1
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
 	food_color = "#FFFFFF"
 	initial_volume = 50
 	initial_reagents = list("mashedpotatoes"=25)
@@ -2112,10 +2019,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "mashed brains"
 	desc = "Rumored to be a good brain food"
 	icon_state = "mashedbrains"
+	fill_amt = 2
 	bites_left = 5
 	heal_amt = 1
-	needfork = 1
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 
@@ -2125,10 +2032,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(prob(1))
-					boutput(M, "<span class='alert'>You feel dumber.</span>")
+					boutput(M, SPAN_ALERT("You feel dumber."))
 					H:bioHolder:RandomEffect("bad")
 				else if(prob(1))
-					boutput(M, "<span class='notice'>You feel smarter.</span>")
+					boutput(M, SPAN_NOTICE("You feel smarter."))
 					H:bioHolder:RandomEffect("good")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -2136,15 +2043,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "meatloaf"
 	desc = "A loaf of meat"
 	icon_state = "meatloaf"
+	fill_amt = 4
 	bites_left = 5
 	heal_amt = 1
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=2)
 	food_effects = list("food_hp_up_big")
 	meal_time_flags = MEAL_TIME_DINNER
 
-/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner
+/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner
 	name = "INVISIBLE GHOST OF PANCHO VILLA'S BAKER BROTHER, GARY VILLA"
 	desc = "IGNORE ME"
 
@@ -2153,32 +2061,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		SPAWN(0.5 SECONDS)
 			if (isturf(src.loc))
 				for (var/x = 1, x <= 4, x++)
-					new /obj/item/reagent_containers/food/snacks/tortilla_chip(src.loc)
+					new /obj/item/reagent_containers/food/snacks/dippable/tortilla_chip(src.loc)
 
 			qdel(src)
-
-/obj/item/reagent_containers/food/snacks/tortilla_chip
-	name = "tortilla chip"
-	desc = "A crispy little tortilla disk."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "tortilla-chip"
-	bites_left = 1
-	heal_amt = 1
-	food_effects = list("food_energized")
-
-	New()
-		..()
-		src.pixel_x = rand(-6, 6)
-		src.pixel_y = rand(-6, 6)
-
-	on_reagent_change()
-		..()
-		if (src.reagents && src.reagents.total_volume)
-			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
-			dip.color = src.reagents.get_average_color().to_rgba()
-			src.UpdateOverlays(dip, "dip")
-		else
-			src.UpdateOverlays(null, "dip")
 
 /obj/item/reagent_containers/food/snacks/wonton_spawner
 	name = "wonton spawner"
@@ -2200,26 +2085,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 1
 	var/obj/item/wrapped = null
-	var/maximum_wrapped_size = 2
+	var/maximum_wrapped_size = W_CLASS_SMALL
 	food_effects = list("food_energized")
 
 	attackby(obj/item/W, mob/user)
 		if (wrapped)
 			if (iscuttingtool(W) || issawingtool(W))
-				user.visible_message("<span class='alert'>[user] performs an act of wonton destruction!</span>","You slice open the wrapper.")
+				user.visible_message(SPAN_ALERT("[user] performs an act of wonton destruction!"),"You slice open the wrapper.")
 				wrapped.set_loc(get_turf(src))
 				src.reagents = null
 				qdel(src)
 			else
-				boutput(user, "<span class='alert'>That wrapper is already full!</span>")
+				boutput(user, SPAN_ALERT("That wrapper is already full!"))
 			return
 		else
 			if (istype(W, /obj/item/reagent_containers/food/snacks/wonton_wrapper))
-				boutput(user, "<span class='alert'>A wrapped wrapper? That's ridiculous.</span>")
+				boutput(user, SPAN_ALERT("A wrapped wrapper? That's ridiculous."))
 				return
 
-			else if (W.w_class > src.maximum_wrapped_size || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure))
-				boutput(user, "<span class='alert'>There is no way that could fit!</span>")
+			else if (W.w_class > src.maximum_wrapped_size || W.storage)
+				boutput(user, SPAN_ALERT("There is no way that could fit!"))
 				return
 
 			boutput(user, "You wrap \the [W] into a dumpling.")
@@ -2246,10 +2131,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		src.pixel_y = rand(-6, 6)
 
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>Ugh, you really should've cooked that first.</span>")
+		..()
+		boutput(M, SPAN_ALERT("Ugh, you really should've cooked that first."))
 		if(prob(25))
 			M.reagents.add_reagent("salmonella",15)
-		..()
 
 /obj/item/reagent_containers/food/snacks/agar_block
 	name = "Agar Block"
@@ -2283,7 +2168,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))
-			boutput(user, "<span class='notice'>You cut [src] into halves</span>")
+			boutput(user, SPAN_NOTICE("You cut [src] into halves"))
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
 			qdel(src)
@@ -2301,7 +2186,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/butter))
-			boutput(user, "<span class='notice'>You butter up the english muffin</span>")
+			boutput(user, SPAN_NOTICE("You butter up the english muffin"))
 			new /obj/item/reagent_containers/food/snacks/emuffin/butter(get_turf(src))
 			qdel(W)
 			qdel(src)
@@ -2328,9 +2213,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#6A532D"
 
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>OH GOD! You bite down and break a few teeth!</span>")
+		..()
+		boutput(M, SPAN_ALERT("OH GOD! You bite down and break a few teeth!"))
 		random_brute_damage(M, 2)
-		M.emote("scream")
 
 /obj/item/reagent_containers/food/snacks/pickle
 	name = "pickle"
@@ -2384,7 +2269,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly egg. Good for eating eggs."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "eggsalad"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_energized", "food_bad_breath")
@@ -2395,8 +2281,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "haggis"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "haggis"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	var/isbutt = 0
+	fill_amt = 4
 	bites_left = 6
 	heal_amt = 1
 	food_color ="#663300"
@@ -2425,9 +2312,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal(var/mob/M)
 		if (M.bioHolder.HasEffect("accent_scots"))
 			heal_amt *= 2
-			boutput(M, "<span class='notice'>Och aye! That's th' stuff!</span>")
+			boutput(M, SPAN_NOTICE("Och aye! That's th' stuff!"))
 			..()
 			heal_amt /= 2
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/haggis/ass
 	name = "haggass"
@@ -2467,7 +2356,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(user, "You wrap the seaweed around the rice ball. A good decision.")
 			new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
 			qdel(src)
-		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice))
 			var/spawnloc = get_turf(src)
 			var/handspawn
 			if(istype(src.loc,/mob))
@@ -2476,12 +2365,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			src.set_loc(user)
 			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
 			switch(W.icon_state)
-				if("fillet-orange")
+				if("filletslice-orange")
 					nigiri.icon_state = "nigiri1"
-				if("fillet-pink")
+				if("filletslice-pink")
 					nigiri.icon_state = "nigiri2"
-				if("fillet-white")
+				if("filletslice-white")
 					nigiri.icon_state = "nigiri3"
+				if("filletslice-small")
+					nigiri.icon_state = "nigiri4"
+			user.u_equip(W)
+			qdel(W)
+			if(handspawn)
+				user.put_in_hand_or_drop(nigiri)
+			else
+				nigiri.set_loc(spawnloc)
+			qdel(src)
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/shrimp))
+			var/spawnloc = get_turf(src)
+			var/handspawn
+			if(istype(src.loc,/mob))
+				user.u_equip(src)
+				handspawn = TRUE
+			src.set_loc(user)
+			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
+			nigiri.icon_state = "nigiri_shrimp"
+			nigiri.desc = "A ball of sticky rice with a cooked shrimp on top."
 			user.u_equip(W)
 			qdel(W)
 			if(handspawn)
@@ -2501,6 +2409,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A roll of seaweed, sticky rice, and freshly caught fish of unknown origin."
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushi_roll"
+	fill_amt = 4
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_hp_up_big")
@@ -2509,9 +2418,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if (src.cut == 1)
-				boutput(user, "<span class='alert'>This has already been cut.</span>")
+				boutput(user, SPAN_ALERT("This has already been cut."))
 				return
-			boutput(user, "<span class='notice'>You cut the sushi roll into pieces.</span>")
+			boutput(user, SPAN_NOTICE("You cut the sushi roll into pieces."))
 			var/makepieces = src.bites_left
 			while (makepieces > 0)
 				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type(get_turf(src))
@@ -2525,17 +2434,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				makepieces--
 			qdel (src)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.cut)
-			if (user == M)
-				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			if (user == target)
+				boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 				return
 		else
 			..()
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
@@ -2545,12 +2457,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if(src.cut == 1)
-				boutput(user, "<span class='alert'>This has already been cut.</span>")
+				boutput(user, SPAN_ALERT("This has already been cut."))
 				return
 			if(istype(src.loc,/mob))
 				user.u_equip(src)
 				src.set_loc(user)
-			boutput(user, "<span class='notice'>You cut the sushi roll into pieces.</span>")
+			boutput(user, SPAN_NOTICE("You cut the sushi roll into pieces."))
 			var/makepieces = src.bites_left
 			var/spawnloc = get_turf(src)
 			while (makepieces > 0)
@@ -2590,14 +2502,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	New()
 		..()
-		src.icon_state = "nigiri[rand(1,3)]"
+		src.icon_state = "nigiri[rand(1,4)]"
 
 /obj/item/reagent_containers/food/snacks/riceandbeans
 	name = "rice and beans"
 	desc = "A filling plate of rice and beans."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "riceandbeans"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
 	food_effects = list("food_deep_fart", "food_space_farts")
@@ -2607,7 +2520,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A plate of fried rice. There's even an egg!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "friedrice"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
 	bites_left = 6
 	heal_amt = 3
 	food_effects = list("food_brute", "food_all")
@@ -2618,7 +2532,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "The ketchup drawing looks like George."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "omurice"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_warm", "food_hp_up_big")
@@ -2628,7 +2543,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Not a sandwich."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "risotto"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
 	food_effects = list("food_all", "food_energized_big")
@@ -2645,20 +2561,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_all", "food_energized_big")
 
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (unwrapped)
 			..()
-		else if (user == M)
-			boutput(user, "<span class='alert'>You need to unwrap it first, you greedy beast!</span>")
+		else if (user == target)
+			boutput(user, SPAN_ALERT("You need to unwrap it first, you greedy beast!"))
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
 	attack_self(mob/user as mob)
 		if (unwrapped)
-			return
+			attack(user, user)
 
 		unwrapped = 1
 		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
@@ -2670,11 +2586,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A cookie that heralds your future."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "fortune-cookie"
+	fill_amt = 0.1
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#f6ad58"
-	var/open = 0
-	var/fortune = 0
+	var/open = FALSE
+	var/fortune = FALSE
 
 	attack_self(mob/user as mob)
 		if (!open)
@@ -2686,11 +2603,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.desc = "Half of a fortune cookie."
 			icon_state = "fortune-open"
 			B.icon_state = "fortune-top"
-			open = 1
-			B.open = 1
-			fortune = 1
+			open = TRUE
+			B.open = TRUE
+			fortune = TRUE
+		else
+			return ..()
 
-	attack_hand(mob/user, unused, flag)
+	attack_hand(mob/user)
 		if (fortune)
 			desc = "Half of a fortune cookie."
 			icon_state = "fortune-bottom"
@@ -2698,9 +2617,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.set_loc(user)
 
 			user.put_in_hand_or_drop(B)
-			fortune = 0
+			fortune = FALSE
 		else
-			..()
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/healgoo
 	name = "weird goo"
@@ -2717,7 +2636,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		reagents.add_reagent("saline",7)
 		reagents.add_reagent("charcoal",7)
 		reagents.add_reagent("anti_rad",7)
-		reagents.add_reagent("omnnizine",7)
+		reagents.add_reagent("omnizine",7)
 
 
 /obj/item/reagent_containers/food/snacks/greengoo
@@ -2814,11 +2733,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "tandoorichicken"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	heal_amt = 2
 	bites_left = 4
 	initial_volume = 20
-	initial_reagents = list("currypowder"=10, "capsaicin"=5, "holywater"=5)
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "water_holy"=5)
 	food_effects = list("food_hp_up","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/potatocurry
@@ -2826,7 +2746,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A rich Indian curry full of potatoes, carrots, and peas."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "potatocurry"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 4
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 15
@@ -2838,7 +2759,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A creamy Thai curry made with coconut milk, served on a bed of rice."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "coconutcurry"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 15
@@ -2850,7 +2772,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A sweet-and-spicy curry that expertly balances the tang of pineapple with the heat of the curry powder."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "chickenpapplecurry"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 4
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 25
@@ -2862,7 +2785,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A hearty bowl of real Japanese ramen with a halved boiled egg; not the instant stuff!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
-	needfork = TRUE
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 20
@@ -2874,7 +2798,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of very chewy wheat noodles and fish cake served in a warm, savoury broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
-	needfork = TRUE
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
 	initial_volume = 20
@@ -2886,9 +2811,188 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of very chewy wheat noodles with a halved boiled egg in a fragrant curry broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon_curry"
-	needfork = TRUE
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+/obj/item/reagent_containers/food/snacks/mapo_tofu_meat
+	name = "bowl of mapo tofu"
+	desc = "A bowl of tender bean curd, onions, and minced meat in a spicy oil suspension."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "mapo_tofu"
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
+	heal_amt = 3
+	bites_left = 5
+	initial_volume = 25
+	initial_reagents = "capsaicin"
+	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
+
+/obj/item/reagent_containers/food/snacks/mapo_tofu_synth
+	name = "bowl of synth mapo tofu"
+	desc = "A bowl of tender bean curd, onions, and minced synthmeat in a spicy oil suspension."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "mapo_tofu_synth"
+	required_utensil = REQUIRED_UTENSIL_FORK
+	fill_amt = 3
+	heal_amt = 3
+	bites_left = 5
+	initial_volume = 25
+	initial_reagents = "capsaicin"
+	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
+
+
+/obj/item/reagent_containers/food/snacks/cheesewheel
+	name = "cheese wheel"
+	desc = "A giant wheel of cheese. It seems a slice is already missing."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "cheesewheel"
+	throwforce = 6
+	real_name = "cheesewheel"
+	throw_speed = 2
+	throw_range = 5
+	stamina_cost = 5
+	stamina_damage = 2
+	fill_amt = 4
+	sliceable = TRUE
+	slice_amount = 4
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	initial_volume = 40
+	initial_reagents = "cheese"
+	food_effects = list("food_warm")
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
+
+/obj/item/reagent_containers/food/snacks/ratatouille
+	name = "ratatouille"
+	desc = "Stewed and caramalized vegetables. Remy not included."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "ratatouille"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
+	heal_amt = 2
+	bites_left = 3
+	food_effects = list("food_refreshed","food_warm")
+
+// Dippable food
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
+/obj/item/reagent_containers/food/snacks/dippable
+	name = "dippable food"
+	desc = "YOU'RE NOT MEANT TO SEE THIS GO AWAY"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "tortilla-chip"
+	var/dipOverlayImage = "tortilla-chip-overlay"
+
+	New()
+		..()
+		src.pixel_x = rand(-6, 6)
+		src.pixel_y = rand(-6, 6)
+
+	on_reagent_change()
+		..()
+		if (src.reagents && src.reagents.total_volume)
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "[dipOverlayImage]")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
+
+/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip
+	name = "tortilla chip"
+	desc = "A crispy little tortilla disk."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "tortilla-chip"
+	fill_amt = 0.5
+	bites_left = 1
+	heal_amt = 1
+	food_effects = list("food_energized")
+	dipOverlayImage = "tortilla-chip-overlay"
+
+/obj/item/reagent_containers/food/snacks/dippable/churro
+	name = "churro"
+	desc = "It's like a donut, but long."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "churro"
+	bites_left = 3
+	heal_amt = 1
+	food_effects = list("food_energized")
+	dipOverlayImage = "churro-overlay"
+
+/obj/item/reagent_containers/food/snacks/french_toast
+	name = "french toast"
+	desc = "A very eggy piece of bread."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "french-toast"
+	fill_amt = 2
+	bites_left = 3
+	heal_amt = 2
+	var/syrup = 0
+	food_color = "#FFFF99"
+	food_effects = list("food_energized", "food_hp_up")
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/syrup))
+			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
+			syrup = 1
+			heal_amt = 6
+			user.u_equip(W)
+			qdel (W)
+			return
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/brownie
+	name = "brownie"
+	desc = "A perfectly baked square of chocolatey goodness. Yum!"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie"
+	bites_left = 3
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 10
+	initial_reagents = list("chocolate" = 5)
+	food_effects = list("food_warm","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/brownie_batch
+	name = "brownies"
+	desc = "A whole batch of freshly baked and chewy brownies."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie_batch"
+	bites_left = 12
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 40
+	initial_reagents = list("chocolate" = 20)
+	food_effects = list("food_warm","food_energized")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/brownie
+	slice_amount = 4
+	slice_suffix = "square"
+	w_class = W_CLASS_BULKY
+	use_bite_mask = FALSE
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)

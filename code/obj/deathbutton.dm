@@ -7,7 +7,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = 1
+	anchored = ANCHORED
 	var/numkills = 0
 
 	get_desc()
@@ -58,7 +58,7 @@
 		if (H.get_organ("butt"))
 			H.drop_organ("butt")
 
-			H.visible_message("[H]'s butt falls off.", "<span class='alert'>You butt fall off!</span>")
+			H.visible_message("[H]'s butt falls off.", SPAN_ALERT("You butt fall off!"))
 			H.emote("scream")
 
 			numkills++

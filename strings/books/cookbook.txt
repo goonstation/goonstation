@@ -83,13 +83,12 @@
 	<h2>Cream of Mushroom</h2>
 	<h3>Ingredients</h3>
 	<div class = "creamofmush">
-	<li>1 Mushroom
-	<li>1 Milk
+	<li>1 Mushroom (Any kind)
+	<li>1 Cream
 	</div>
 	<h3>Steps</h3>
 	<div class = "creamofmushsteps">
-	<li> Mix the ingredients together
-	<li>Cook the ingredients in the oven for 7 seconds on low
+	<li> Cook the ingredients in the oven for 8 seconds on low
 	</div>
 
 	<hr>
@@ -169,6 +168,20 @@
 	<h3>Steps</h3>
 	<div class = "risotto">
 	<li>Cook the ingredients in the oven for 10 seconds on low.
+	</div>
+
+<hr>
+	<h2>Ratatouille</h2>
+	<h3>Ingredients</h3>
+	<div class = "ratatouille">
+	<li>1 Cucumber
+	<li>1 Eggplant
+	<li>1 Garlic
+	<li>1 Tomato
+	</div>
+	<h3>Steps</h3>
+	<div class = "ratatouille">
+	<li>Cook the ingredients in the oven for 3 seconds on high.
 	</div>
 
 	<hr>

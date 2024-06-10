@@ -1,0 +1,155 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/chainlink_fence{
+	dir = 5;
+	pixel_y = -2;
+	pixel_x = -18;
+	density = 0;
+	plane = -100
+	},
+/obj/decal/cleanable/dirt/dirt5{
+	pixel_y = 8;
+	pixel_x = 2
+	},
+/obj/decal/stalagmite{
+	pixel_y = -6;
+	plane = -99;
+	density = 0
+	},
+/obj/map/light/dimreddish,
+/obj/grille/steel/broken{
+	pixel_y = -2;
+	pixel_x = 2
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/decal/cleanable/dirt/dirt2{
+	pixel_y = -15;
+	pixel_x = 15
+	},
+/turf/simulated/floor/plating/jen,
+/area/dmm_suite/clear_area)
+"s" = (
+/turf/simulated/floor/plating/jen,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/cable{
+	icon_state = "0-8";
+	pixel_x = 7;
+	layer = 4;
+	plane = -101;
+	desc = "Just how long can he be contained..?";
+	name = "Bad Little Cable"
+	},
+/obj/map/light/brightwhite,
+/obj/item/clothing/head/beret/prisoner{
+	desc = "An orange beret, fitted oddly small.";
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating/jen,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/chainlink_fence{
+	dir = 9;
+	pixel_y = -2;
+	pixel_x = 18;
+	density = 0;
+	plane = -100
+	},
+/obj/chainlink_fence{
+	pixel_y = -2;
+	pixel_x = -6;
+	density = 0;
+	plane = -100
+	},
+/obj/chainlink_fence{
+	dir = 1;
+	pixel_x = 18;
+	pixel_y = 8;
+	density = 0;
+	plane = -100
+	},
+/obj/decal/cleanable/dirt,
+/obj/map/light/dimreddish,
+/obj/decal/cleanable/rust/jen{
+	pixel_x = 32
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/chainlink_fence{
+	pixel_y = 20;
+	pixel_x = 18;
+	dir = 10;
+	density = 0
+	},
+/obj/grille/steel/broken{
+	pixel_y = 17;
+	pixel_x = -1
+	},
+/obj/decal/stalagtite{
+	pixel_y = 22;
+	plane = -99;
+	pixel_x = -7
+	},
+/obj/map/light/dimreddish,
+/obj/decal/cleanable/rust{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/obj/map/light/dimreddish,
+/obj/decal/cleanable/rust/jen{
+	pixel_y = 31
+	},
+/obj/decal/cleanable/cobweb{
+	pixel_y = 18;
+	pixel_x = -7;
+	plane = -100
+	},
+/obj/decal/cleanable/blood/splatter{
+	pixel_y = 2;
+	pixel_x = 14
+	},
+/obj/item/material_piece/bone{
+	pixel_y = -10;
+	desc = "What remains of the one who imprisoned him."
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+T
+s
+a
+"}
+(2,1,1) = {"
+q
+D
+s
+"}
+(3,1,1) = {"
+O
+s
+H
+"}

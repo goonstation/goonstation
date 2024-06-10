@@ -1,6 +1,10 @@
 
-/obj/item/reagent_containers/food/snacks/sandwich/
+/obj/item/reagent_containers/food/snacks/sandwich
+	name = "sandwich"
+	desc = "An uninitialized sandwich. You shouldn't see this..."
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "sandwich_m"	// default sandwich-ish appearance
+	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
 	var/hname = null
@@ -206,21 +210,23 @@
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "hburger"
 	item_state = "burger"
+	fill_amt = 3
 	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
-	initial_volume = 20
+	initial_volume = 25
 	initial_reagents = list("cholesterol"=5)
 	food_effects = list("food_hp_up", "food_warm")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/))
 			src.bites_left += 1
-		else return ..()
+		else
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger
 	name = "buttburger"
-	desc = "This burger's all buns."
+	desc = "This burger's all buns. It seems to be made out of a gross normal butt."
 	icon_state = "assburger"
 	initial_reagents = list("fartonium"=10)
 	food_effects = list("food_sweaty_big")
@@ -230,10 +236,26 @@
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","buttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
 
+/obj/item/reagent_containers/food/snacks/burger/buttburger/synth
+	name = "buttburger"
+	desc = "This burger's all buns. It seems to be made out of a green synthetic butt."
+	icon_state = "synthbuttburger"
+
+/obj/item/reagent_containers/food/snacks/burger/slugburger
+	name = "slurger"
+	desc = "Unspeakable... And chewy."
+	icon_state = "slugBurger"
+	initial_reagents = "slime"
+	food_effects = list("food_slimy", "food_bad_breath")
+
+/obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+	name = "buttburger"
+	desc = "This burger's all buns. It seems to made out of a cybernetic butt."
+	icon_state = "robobuttburger"
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger
 	name = "heartburger"
-	desc = "A hearty meal, made with Love."
+	desc = "A hearty meal, made with Love. This one seems to contain a normal fleshy heart."
 	icon_state = "heartburger"
 	food_effects = list("food_sweaty_big", "food_hp_up_big")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
@@ -242,13 +264,43 @@
 		..()
 		reagents.add_reagent("love", 15)
 
+/obj/item/reagent_containers/food/snacks/burger/heartburger/synth
+	name = "synthetic heartburger"
+	desc = "A hearty meal, made with Love. This one seems to contain a green synthetic heart."
+	icon_state = "synthheartburger"
+
+/obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
+	name = "cyber heartburger"
+	desc = "A hearty meal, made with Love. This one seems to contain a shiny cyberheart."
+	icon_state = "roboheartburger"
+
+/obj/item/reagent_containers/food/snacks/burger/heartburger/flock
+	name = "flock heartburger"
+	desc = "A hearty meal, made with Love. This one seems to cotain a teal pulsing octahedron."
+	icon_state = "flockheartburger"
+
 /obj/item/reagent_containers/food/snacks/burger/brainburger
 	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient."
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a normal fleshy Brain."
 	icon_state = "brainburger"
 	initial_reagents = list("cholesterol"=5,"prions"=10)
-	food_effects = list("food_sweaty_big", "food_hp_up_big")
+	food_effects = list("food_sweaty_big", "food_hp_up_big", "brain_food_ithillid")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+/obj/item/reagent_containers/food/snacks/burger/brainburger/synth
+	name = "synthetic brainburger"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a green synthetic brain."
+	icon_state = "synthbrainburger"
+
+/obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
+	name = "cyber brainburger"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain a Spontaneous Intelligence Creation Core."
+	icon_state = "robobrainburger"
+
+/obj/item/reagent_containers/food/snacks/burger/brainburger/flock
+	name = "flock brainburger"
+	desc = "A strange looking burger. It looks almost sentient. It seems to contain an odd crystal."
+	icon_state = "flockbrainburger"
 
 /obj/item/reagent_containers/food/snacks/burger/humanburger
 	name = "burger"
@@ -289,7 +341,7 @@
 	food_effects = list("food_bad_breath")
 
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>Oof, how old was that?</span>")
+		boutput(M, SPAN_ALERT("Oof, how old was that?"))
 		if(prob(66))
 			M.reagents.add_reagent("salmonella",15)
 		..()
@@ -315,7 +367,7 @@
 			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
 				wrap_pathogen(reagents, generate_random_pathogen(), 15)
 			else
-				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+				boutput(user, SPAN_NOTICE("You feel that it was too soon for this..."))
 			. = ..()
 
 
@@ -326,7 +378,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseborger
@@ -336,13 +388,13 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/synthburger
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."
-	icon_state = "hburger"
+	icon_state = "synthburger"
 	bites_left = 5
 	heal_amt = 2
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
@@ -376,9 +428,9 @@
 		if(prob(20))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
-			boutput(M, "<span class='alert'>You drip some meat on the floor</span>")
-			M.visible_message("<span class='alert'>[M] drips some meat on the floor!</span>")
-			playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			boutput(M, SPAN_ALERT("You drip some meat on the floor"))
+			M.visible_message(SPAN_ALERT("[M] drips some meat on the floor!"))
+			playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		else
 			..()
@@ -396,17 +448,17 @@
 			var/effect = rand(1,4)
 			switch(effect)
 				if(1)
-					boutput(M, "<span class='alert'>Ugh. Tasted all greasy and gristly.</span>")
+					boutput(M, SPAN_ALERT("Ugh. Tasted all greasy and gristly."))
 					M.nutrition += 20
 				if(2)
-					boutput(M, "<span class='alert'>Good grief, that tasted awful!</span>")
+					boutput(M, SPAN_ALERT("Good grief, that tasted awful!"))
 					M.take_toxin_damage(2)
 				if(3)
-					boutput(M, "<span class='alert'>There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK</span>")
-					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-					M.vomit(20)
+					boutput(M, SPAN_ALERT("There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK"))
+					var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
+					M.vomit(20, null, vomit_message)
 				if(4)
-					boutput(M, "<span class='alert'>You bite down on a chunk of bone, hurting your teeth.</span>")
+					boutput(M, SPAN_ALERT("You bite down on a chunk of bone, hurting your teeth."))
 					random_brute_damage(M, 2)
 		..()
 
@@ -443,15 +495,17 @@
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	heal(var/mob/M)
-		if(prob(3) && ishuman(M))
-			boutput(M, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
-			M.set_mutantrace(/datum/mutantrace/lizard)
-			M:update_face()
-			M:update_body()
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(3))
+				boutput(H, SPAN_ALERT("You wackily and randomly turn into a lizard."))
+				H.set_mutantrace(/datum/mutantrace/lizard)
+				H.update_face()
+				H.update_body()
 
-		if(prob(3))
-			boutput(M, "<span class='alert'>You wackily and randomly turn into a monkey.</span>")
-			M:monkeyize()
+			if(prob(3))
+				boutput(M, SPAN_ALERT("You wackily and randomly turn into a monkey."))
+				H.monkeyize()
 
 		..()
 
@@ -470,13 +524,14 @@
 	name = "THE MONSTER"
 	desc = "There are no words to describe the sheer unhealthiness of this abomination."
 	icon_state = "giantburger"
-	bites_left = 1
-	heal_amt = 50
+	fill_amt = 10
+	bites_left = 20
+	heal_amt = 3
 	throwforce = 10
 	initial_volume = 330
 	initial_reagents = list("cholesterol"=200)
 	unlock_medal_when_eaten = "That's no moon, that's a GOURMAND!"
-	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
+	food_effects = list("food_hp_up_big", "food_sweaty_bigger", "food_bad_breath", "food_warm")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/aburgination
@@ -493,9 +548,9 @@
 
 	take_a_bite(mob/consumer, mob/feeder)
 		if (prob(50))
-			consumer.visible_message("<span class='alert'>[consumer] tries to take a bite of [src], but [src] takes a bite of [consumer] instead!</span>",
-				"<span class='alert'>You tries to take a bite of [src], but [src] takes a bite of you instead!</span>",
-				"<span class='alert'>You hear something bite down.</span>")
+			consumer.visible_message(SPAN_ALERT("[consumer] tries to take a bite of [src], but [src] takes a bite of [consumer] instead!"),
+				SPAN_ALERT("You tries to take a bite of [src], but [src] takes a bite of you instead!"),
+				SPAN_ALERT("You hear something bite down."))
 			playsound(get_turf(feeder), pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 			random_brute_damage(consumer, rand(5, 15), FALSE)
 			take_bleeding_damage(consumer, null, rand(5, 15), DAMAGE_BLUNT)
@@ -511,10 +566,23 @@
 	desc = "Lightly salted potato fingers."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "fries"
+	fill_amt = 2
 	bites_left = 6
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("cholesterol"=1)
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/chilifries
+	name = "chili cheese fries"
+	desc = "Lightly salted potato fingers, topped with chili and cheese."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "chilifries"
+	bites_left = 6
+	heal_amt = 2
+	initial_volume = 5
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
 /obj/item/reagent_containers/food/snacks/macguffin

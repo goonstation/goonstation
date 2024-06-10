@@ -101,27 +101,27 @@
 				var/obj/critter/P = pet
 				if(P.alive)
 					if (istype(get_area(P), /area/pod_wars/team1))
-						pet_dat += "<span class='notice'>Sylvester is safe and sound on the Pytheas! Good job NanoTrasen!</span><br>"
+						pet_dat += "[SPAN_NOTICE("Sylvester is safe and sound on the Pytheas! Good job NanoTrasen!")]<br>"
 					else if (istype(get_area(P), /area/pod_wars/team2))
-						pet_dat += "<span class='alert'>Sylvester was captured by the Syndicate! Oh no!</span><br>"
+						pet_dat += "[SPAN_ALERT("Sylvester was captured by the Syndicate! Oh no!")]<br>"
 					else
-						pet_dat += "<span class='notice'>Sylvester survived! Yay!</span><br>"
+						pet_dat += "[SPAN_NOTICE("Sylvester survived! Yay!")]<br>"
 
 				else
-					pet_dat += "<span class='alert'>Sylvester was killed! Oh no!</span><br>"
+					pet_dat += "[SPAN_ALERT("Sylvester was killed! Oh no!")]<br>"
 
 			else if(istype(pet, /mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars))
 				var/mob/living/carbon/human/opp = pet
 				if (isalive(opp))
 					if (istype(get_area(opp), /area/pod_wars/team2))
-						pet_dat += "<span class='notice'>Oppenheimer is safe and sound on the Lodbrok! Good job Syndicates!</span><br>"
+						pet_dat += "[SPAN_NOTICE("Oppenheimer is safe and sound on the Lodbrok! Good job Syndicates!")]<br>"
 					else if (istype(get_area(opp), /area/pod_wars/team1))
-						pet_dat += "<span class='alert'>Oppenheimer was captured by NanoTrasen! Oh no!</span><br>"
+						pet_dat += "[SPAN_ALERT("Oppenheimer was captured by NanoTrasen! Oh no!")]<br>"
 					else
-						pet_dat += "<span class='notice'>Oppenheimer survived! Yay!</span><br>"
+						pet_dat += "[SPAN_NOTICE("Oppenheimer survived! Yay!")]<br>"
 
 				else
-					pet_dat += "<span class='alert'>Oppenheimer was killed! Oh no!</span><br>"
+					pet_dat += "[SPAN_ALERT("Oppenheimer was killed! Oh no!")]<br>"
 
 		//write the player stats as a simple table
 		var/p_stat_text = ""
@@ -213,11 +213,11 @@ Player Stats
 
 		return {"
 
-<div class=\"column\">
+<div class='column'>
   <h3>NanoTrasen</h3>
   [cr_stats_NT]
 </div>
-<div class=\"column\">
+<div class='column'>
   <h3>Syndicate</h3>
   [cr_stats_SY]
 </div>

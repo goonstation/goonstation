@@ -6,8 +6,7 @@
 		if (master_mode == "construction")
 			return
 		for (var/datum/mind/crewMind in minds)
-			if(prob(10)) generate_miscreant_objectives(crewMind)
-			else generate_individual_objectives(crewMind)
+			generate_individual_objectives(crewMind)
 
 		return
 
@@ -72,6 +71,9 @@
 
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
+	var/XPreward = 50
+
+/datum/objective/crew/custom
 
 ABSTRACT_TYPE(/datum/objective/crew/captain)
 /datum/objective/crew/captain/hat
@@ -264,6 +266,11 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 	check_completion()
 		return length(shippingmarket.complete_orders)
 
+/datum/objective/crew/quartermaster/maildelivery
+	explanation_text = "Ensure 30 pieces of mail are opened by their addressees."
+	check_completion()
+		return game_stats.GetStat("mail_opened") >= 30
+
 ABSTRACT_TYPE(/datum/objective/crew/detective)
 /datum/objective/crew/detective/drunk
 	explanation_text = "Have alcohol in your bloodstream at the end of the round."
@@ -426,9 +433,18 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
-		for(var/i in 1 to DRINK_OBJ_COUNT)
+		for (var/i = 1; i <= DRINK_OBJ_COUNT; i++)
 			var/choiceType = pick(cocktails)
-			var/datum/reagent/fooddrink/instance =  new choiceType
+			var/datum/reagent/fooddrink/instance = new choiceType
+			var/hidden = 0
+			var/list/reactions = chem_reactions_by_result[instance.id]
+			for (var/datum/chemical_reaction/reaction_type in reactions)
+				if (initial(reaction_type.hidden))
+					hidden++
+			//if all reactions producing this reagent are hidden, then skip it and try again
+			if (hidden == length(reactions))
+				i--
+				continue
 			names[i] = instance.name
 			ids[i] = instance.id
 		explanation_text = "Mix a "
@@ -446,21 +462,6 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 #define PIZZA_OBJ_COUNT 3
 ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef
-	var/static/list/blacklist = list(
-		/obj/item/reagent_containers/food/snacks/burger/humanburger,
-		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
-		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
-		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
-		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
-		/obj/item/reagent_containers/food/snacks/meatball,
-		/obj/item/reagent_containers/food/snacks/mushroom,
-		/obj/item/reagent_containers/food/snacks/pickle/trash,
-		/obj/item/reagent_containers/food/snacks/pizza/xmas,
-		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
-		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
-	)
-	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
 	var/choices[CAKE_OBJ_COUNT]
 	var/completed = FALSE
@@ -468,14 +469,22 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 	set_up()
 		..()
 		var/list/names[CAKE_OBJ_COUNT]
-		for(var/i in 1 to CAKE_OBJ_COUNT)
-			choices[i] = pick(ingredients)
+		var/i = 0
+		var/current_rolls = 0
+		var/max_rolls = 30
+		while (i < CAKE_OBJ_COUNT)
+			i++
+			choices[i] = pick(allowed_favorite_ingredients)
 			var/choiceType = choices[i]
 			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
-			if(!instance.custom_food)
+			if(instance.custom_food)
+				names[i] = instance.name
+			else
 				i--
-				continue
-			names[i] = instance.name
+			current_rolls++
+			if (current_rolls > max_rolls)
+				stack_trace("Failed to generate a cake objective for chef. Aborting.")
+				return
 		explanation_text = "Create a custom, three-tier cake with layers of "
 		for (var/ingredient in names)
 			if (ingredient != names[CAKE_OBJ_COUNT])
@@ -494,14 +503,20 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 	set_up()
 		..()
 		var/list/names[PIZZA_OBJ_COUNT]
+		var/current_rolls = 0
+		var/max_rolls = 30
 		for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)
-			choices[i] = pick(ingredients)
+			choices[i] = pick(allowed_favorite_ingredients)
 			var/choiceType = choices[i]
 			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
-			if(!instance.custom_food || !instance.name)
+			if(instance.custom_food && instance.w_class <= W_CLASS_SMALL)
+				names[i] = instance.name
+			else
 				i--
-				continue
-			names[i] = instance.name
+			current_rolls++
+			if (current_rolls > max_rolls)
+				stack_trace("Failed to generate a pizza objective for chef. Aborting.")
+				return
 		explanation_text = "Create a custom pizza with "
 		for (var/ingredient in names)
 			if (ingredient != names[PIZZA_OBJ_COUNT])
@@ -549,51 +564,17 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 						check_result = FALSE
 		return check_result
 
-ABSTRACT_TYPE(/datum/objective/crew/miner)
-	// just fyi dont make a "gather ore" objective, it'd be a boring-ass grind (like mining is(dohohohoho))
-/datum/objective/crew/miner/isa
-	explanation_text = "Create at least three suits of Industrial Space Armor."
-	medal_name = "40K"
-	var/static/check_result = null
-	check_completion()
-		var/suitcount = 0
-		if(isnull(check_result))
-			suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
-			if(suitcount > 2)
-				check_result = TRUE
-			else
-				check_result = FALSE
-		return check_result
-/datum/objective/crew/miner/forsale
-	explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
-	var/static/check_result = null
-	check_completion()
-		var/list/materials = list()
-		if(isnull(check_result))
-			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-				if(S.broken)
-					continue
-				var/list/ores = S.ores
-				for(var/ore in ores)
-					var/datum/ore_cloud_data/OCD = ores[ore]
-					if(OCD.for_sale && OCD.amount)
-						materials |= ore
-			check_result = materials.len >= 10
-		return check_result
-
-
-ABSTRACT_TYPE(/datum/objective/crew/mechanic)
-/datum/objective/crew/mechanic/scanned
+/datum/objective/crew/engineer/scanned
 	explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
 	medal_name = "Man with a Scan"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
-			if(mechanic_controls.scanned_items.len > 9)
+			if(length(mechanic_controls.scanned_items) > 9)
 				check_result = TRUE
 		return check_result
-/datum/objective/crew/mechanic/teleporter
+/datum/objective/crew/engineer/teleporter
 	explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
 	medal_name = "It's not 'Door to Heaven'"
 	var/static/check_result = null
@@ -623,6 +604,38 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 			if(clonecount > 1) return 1
 			return 0
 */
+
+ABSTRACT_TYPE(/datum/objective/crew/miner)
+	// just fyi dont make a "gather ore" objective, it'd be a boring-ass grind (like mining is(dohohohoho))
+/datum/objective/crew/miner/isa
+	explanation_text = "Create at least three suits of Industrial Space Armor."
+	medal_name = "40K"
+	var/static/check_result = null
+	check_completion()
+		var/suitcount = 0
+		if(isnull(check_result))
+			suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
+			if(suitcount > 2)
+				check_result = TRUE
+			else
+				check_result = FALSE
+		return check_result
+/datum/objective/crew/miner/forsale
+	explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
+	var/static/check_result = null
+	check_completion()
+		var/list/materials = list()
+		if(isnull(check_result))
+			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+				if(S.is_disabled())
+					continue
+				var/list/ores = S.ores
+				for(var/ore in ores)
+					var/datum/ore_cloud_data/OCD = ores[ore]
+					if(OCD.for_sale && OCD.amount)
+						materials |= ore
+			check_result = length(materials) >= 10
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/heisenbee
@@ -744,7 +757,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-				if(C.records.len > 4)
+				if(length(C.records) > 4)
 					check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldirector/cyborgs
@@ -803,7 +816,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldirector/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)
@@ -835,7 +848,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-				if(C.records.len > 4)
+				if(length(C.records) > 4)
 					check_result = TRUE
 		return check_result
 
@@ -910,7 +923,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldoctor/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)
@@ -940,7 +953,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(H.butt_op_stage == 4) return 1
+			if (H.organHolder && !H.organHolder.get_organ("butt")) return 1
 		return 0
 
 /datum/objective/crew/staffassistant/wearbutt
@@ -959,8 +972,10 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(in_centcom(H) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(in_centcom(H) && H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 
 /datum/objective/crew/staffassistant/clown
 	explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
@@ -975,12 +990,12 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	explanation_text = "Ensure that Gnome Chompski escapes on the shuttle."
 	medal_name = "Guardin' gnome"
 	check_completion()
-		for_by_tcl(G, /obj/item/gnomechompski)
+		for(var/obj/item/gnomechompski/G in by_cat[TR_CAT_GHOST_OBSERVABLES])
 			if (in_centcom(G)) return 1
 		return 0
 
-/datum/objective/crew/staffassistant/mailman
-	explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
+/datum/objective/crew/staffassistant/mailcourier
+	explanation_text = "Escape on the shuttle alive wearing at least one piece of mail courier clothing."
 	medal_name = "The mail always goes through"
 	check_completion()
 		if(owner.current && ishuman(owner.current))
@@ -1024,8 +1039,8 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 			var/mob/living/carbon/human/H = owner.current
 			if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
 		return 0
-/datum/objective/crew/technicalassistant/mailman
-	explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
+/datum/objective/crew/technicalassistant/mailcourier
+	explanation_text = "Escape on the shuttle alive wearing at least one piece of mail courier clothing."
 	medal_name = "The mail always goes through"
 	check_completion()
 		if(owner.current && ishuman(owner.current))
@@ -1038,8 +1053,10 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 /datum/objective/crew/technicalassistant/spacesuit
 	explanation_text = "Get your grubby hands on a spacesuit."
 	medal_name = "Vacuum Sealed"
@@ -1062,10 +1079,13 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
+
 /datum/objective/crew/medicalassistant/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)

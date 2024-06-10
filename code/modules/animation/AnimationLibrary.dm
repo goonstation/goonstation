@@ -190,7 +190,7 @@
 	if(prob(10))
 		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
-	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	A.underlays += underneath
 	var/matrix/pivot = matrix()
 	pivot.Scale(0.2, 1.0)
@@ -203,15 +203,18 @@
 /mob/New()
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
-	src.attack_particle.appearance_flags = TILE_BOUND
+	src.attack_particle.appearance_flags = TILE_BOUND | PIXEL_SCALE
 	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
 	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
 	src.sprint_particle = new /obj/particle/attack/sprint //don't use pooling for these particles
 
 /obj/particle/attack
+	var/belongs_to_mob = TRUE
 
 	disposing() //kinda slow but whatever, block that gc ok
+		if (!src.belongs_to_mob)
+			return
 		for (var/mob/M in mobs)
 			if (M.attack_particle == src)
 				M.attack_particle = null
@@ -223,13 +226,17 @@
 		icon = 'icons/mob/mob.dmi'
 		icon_state = "sprint_cloud"
 		layer = MOB_LAYER_BASE - 0.1
-		appearance_flags = TILE_BOUND
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	muzzleflash
 		icon = 'icons/mob/mob.dmi'
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
+	bot_hit
+		icon = 'icons/mob/mob.dmi'
+		belongs_to_mob = FALSE
 
 
 /mob/var/obj/particle/attack/attack_particle
@@ -243,6 +250,8 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
+	if(istype(M, /mob/dead))
+		return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
 
@@ -287,6 +296,8 @@
 /mob/var/last_interact_particle = 0
 
 /proc/interact_particle(var/mob/M, var/atom/target)
+	if(istype(M, /mob/dead))
+		return
 	if (!M || !target) return
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x
@@ -491,7 +502,7 @@
 	M.attack_particle.transform.Turn(rand(0,360))
 
 	SPAWN(1 SECOND)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
 	SPAWN(0.1 SECONDS)
@@ -523,7 +534,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/firing_angle = get_angle(origin, target)
 	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25, var/horizontal_offset=0)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
@@ -536,7 +547,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzleflash.overlays += muzzle_simple_light
 
 	var/matrix/mat = new
-	mat.Translate(0, offset)
+	mat.Translate(horizontal_offset, offset)
 	mat.Turn(firing_angle)
 	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer
@@ -603,6 +614,64 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN(0.3 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
+
+/obj/particle/chemical_reaction
+	icon = 'icons/effects/chemistry_effects.dmi'
+	plane = PLANE_OVERLAY_EFFECTS
+
+/obj/particle/chemical_shine
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "shine"
+	plane = PLANE_OVERLAY_EFFECTS
+
+/obj/particle/cryo_sparkle
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "cryo-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("cryo-1", "cryo-2", "cryo-3", "cryo-4") //slightly different timings on these to give a less static look
+		..()
+
+/obj/particle/fire_puff
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "flame-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("flame-1", "flame-2", "flame-3", "flame-4")
+		..()
+
+/obj/particle/heat_swirl
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "heat-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("heat-1", "heat-2", "heat-3", "heat-4")
+		..()
+
+/proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
+	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
+		return
+	var/obj/holder_object = holder.my_atom
+
+	var/obj/particle/chemical_reaction/chemical_reaction = new /obj/particle/chemical_reaction
+	var/y_offset = 0
+
+	if(!reaction.reaction_icon_color)
+		chemical_reaction.color = holder.get_average_rgb()
+	else
+		chemical_reaction.color = reaction.reaction_icon_color
+
+	y_offset = holder_object.get_chemical_effect_position()
+	chemical_reaction.set_loc(holder_object.loc)
+	chemical_reaction.icon_state = pick(reaction.reaction_icon_state)
+	chemical_reaction.pixel_x = holder_object.pixel_x
+	chemical_reaction.pixel_y = holder_object.pixel_y + y_offset
+
+	SPAWN(2 SECONDS)
+		qdel(chemical_reaction)
 
 /proc/attack_twitch(var/atom/A, move_multiplier=1, angle_multiplier=1)
 	if (!istype(A) || islivingobject(A))
@@ -795,6 +864,27 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
+/proc/animate_lag(atom/A, steps=15, loopnum=-1, magnitude=10, step_time_low=0.2 SECONDS, step_time_high = 0.25 SECONDS)
+	if (!istype(A))
+		return
+	for (var/i in 1 to steps)
+		if (i == 1)
+			animate(A,
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+		else
+			animate(
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+
 /proc/animate_revenant_shockwave(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
 	if (!istype(A))
 		return
@@ -866,6 +956,29 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
 	return
 
+/proc/animate_flubber(var/atom/A, var/jiggle_duration_start = 6, var/jiggle_duration_end = 12, var/amount = 3, var/severity = 1.5)
+	//makes the person quickly increase it's y-size up and down
+	if (!istype(A))
+		return
+	var/matrix/M1 = matrix(1, 1, MATRIX_SCALE)
+	var/matrix/M2 = matrix(1, severity, MATRIX_SCALE)
+	var/current_jiggle_duration = jiggle_duration_start
+	var/do_loops = amount
+	SPAWN(0)
+		while (do_loops > 0)
+			do_loops--
+			if (istype(A))
+				animate(A, transform = M2, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			else
+				break
+			sleep(round(current_jiggle_duration / 2))
+			if (istype(A))
+				animate(A, transform = M1, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			sleep(round(current_jiggle_duration / 2) )
+			//make the jiggling slower/faster towards the end
+			current_jiggle_duration += (jiggle_duration_end - jiggle_duration_start) / min(1,(amount - 1))
+	return
+
 /proc/animate_teleport(var/atom/A)
 	if (!istype(A))
 		return
@@ -896,15 +1009,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	return
 
-/proc/animate_rainbow_glow(var/atom/A)
+/proc/animate_rainbow_glow(var/atom/A, min_time = 5, max_time = 10)
 	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
 		return
-	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#00FF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#00FFFF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#FF00FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+	animate(A, color = "#FF0000", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#FFFF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#00FF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#00FFFF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#0000FF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#FF00FF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
 	return
 
 /proc/oscillate_colors(var/atom/A, var/list/colors_to_swap)
@@ -932,7 +1045,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	var/color_old = A.color
 	animate(A, color = the_color, time = time, loop = loops, easing = LINEAR_EASING)
-	animate(A, color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
+	animate(color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
 
 /proc/animate_clownspell(var/atom/A)
 	if (!istype(A))
@@ -1014,8 +1127,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	if(isliving(A))
 		var/mob/living/L = A
-		if(!A.hasStatus("weakened"))
-			L.changeStatus("weakened", stun_duration)
+		if(!A.hasStatus("knockdown"))
+			L.changeStatus("knockdown", stun_duration)
 			L.force_laydown_standup()
 		if(!L.lying) // oh no, they didn't fall down actually, time to unflip them 😰
 			animate_rest(L, TRUE)
@@ -1105,7 +1218,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
+	var/image/underlay
+	if (isturf(A))
+		underlay = image('icons/turf/floors.dmi', icon_state = "solid_black")
+		underlay.appearance_flags |= RESET_TRANSFORM
+		underlay.plane = PLANE_UNDERFLOOR
+		A.underlays += underlay
+
+	animate(A, transform = list(1, 0, px, 0, 1, py), time = T, easing = ease, flags=ANIMATION_PARALLEL)
+
+	if (underlay)
+		SPAWN(T)
+			A.underlays -= underlay
+			qdel(underlay)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
@@ -1117,6 +1242,21 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/fall_left_or_right = pick(1, -1) //A multiplier of one makes the atom rotate to the right, negative makes them fall to the left.
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = fall_left_or_right
+
+/proc/animate_180_rest(atom/A, stand, pixel_y_offset=5)
+	if(!istype(A))
+		return
+	var/rest_mult = stand ? A.rest_mult : pick(1, -1)
+	var/matrix/M1 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 90).Translate(0, -pixel_y_offset))
+	var/matrix/M2 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 180).Translate(0, -pixel_y_offset))
+	if(stand)
+		animate(A, transform = M1, time = 1.5, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.5, easing = LINEAR_EASING)
+		A.rest_mult = 0
+	else if(!A.rest_mult)
+		animate(A, transform = M1, time = 1.2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.2, easing = LINEAR_EASING)
+		A.rest_mult = rest_mult
 
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
@@ -1195,7 +1335,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1212,7 +1352,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1229,7 +1369,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1313,7 +1453,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/M2 = matrix()
 	M2.Scale(1.2,0.8)
 
-	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_END_NOW)
+	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	animate(transform = M1, time = 2, easing = SINE_EASING)
 
 /proc/shrink_teleport(var/atom/teleporter)
@@ -1346,33 +1486,51 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/atom/movable/A)
+/proc/heavenly_spawn(var/atom/movable/A, reverse = FALSE)
 	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
+	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
-	A.anchored = 1
-	A.alpha = 0
-	A.pixel_y = 176
+	A.anchored = ANCHORED
+	if (!reverse)
+		A.alpha = 0
+		A.pixel_y = 176
 	lightbeam.alpha = 0
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			old_canbegrabbed = living.canbegrabbed
+			living.canbegrabbed = FALSE
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
-	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
+	playsound(A.loc, 'sound/voice/heavenly3.ogg', 50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
 	sleep(4.5 SECONDS)
-	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(A, pixel_y = reverse ? 176 : 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	sleep(12 SECONDS)
 	A.anchored = was_anchored
 	A.layer = oldlayer
 	animate(lightbeam,alpha = 0, time=15)
+	if (reverse)
+		animate(A,alpha=0,time=15)
 	sleep(1.5 SECONDS)
 	qdel(lightbeam)
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			living.canbegrabbed = old_canbegrabbed
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+	if (reverse)
+		if (ismob(A))
+			var/mob/M = A
+			M.ghostize()
+			M.set_loc(null)
+			M.death()
+		qdel(A)
 
 /obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
@@ -1391,13 +1549,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!center) return
 
 	A.plane = PLANE_UNDERFLOOR
-	A.anchored = TRUE
+	A.anchored = ANCHORED
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
-		playsound(center,"sound/effects/darkspawn.ogg",50,0)
+		playsound(center, 'sound/effects/darkspawn.ogg', 50,FALSE)
 	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
@@ -1431,7 +1589,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 
@@ -1467,7 +1625,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(A, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -1499,7 +1657,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	orig.color = T.color
 	orig.appearance_flags |= RESET_TRANSFORM
 	T.ReplaceWith(new_turf_type)
-	T.underlays += orig
 	T.layer--
 	switch(dir)
 		if(WEST)
@@ -1555,7 +1712,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(slide, transform=tr, time=time)
 	if(!had_fullbright && T.fullbright) // eww
 		T.fullbright = 0
-		T.UpdateOverlays(null, "fullbright")
+		T.ClearSpecificOverlays("fullbright")
 		T.RL_Init() // turning off fullbright
 		var/obj/full_light = new/obj/overlay/tile_effect/fake_fullbright(T)
 		full_light.color = T.color
@@ -1581,7 +1738,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		qdel(slide)
 	if(initial(T.fullbright))
 		T.fullbright = 1
-		T.UpdateOverlays(new /image/fullbright, "fullbright")
+		T.AddOverlays(new /image/fullbright, "fullbright")
 		T.RL_Init()
 
 /proc/animate_open_from_floor(atom/A, time=1 SECOND, self_contained=1)
@@ -1614,10 +1771,12 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
-	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
-	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+	var/initial_dir = (A.dir & (EAST|WEST)) ? A.dir : pick(EAST, WEST)
+	var/opposite_dir = turn(initial_dir, 180)
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = initial_dir, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = initial_dir)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = opposite_dir)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = opposite_dir)
 
 /proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
 	if (!istype(A))
@@ -1668,4 +1827,139 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "hatstomp")
 			M.update_canmove()
 
+/obj/decal/laserbeam
+	anchored = ANCHORED
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "Contain_F"
 
+/proc/spawn_beam(atom/movable/AM)
+	var/scale_x = 3
+	var/scale_y = -15
+	var/beam_time = 4 DECI SECONDS
+	AM.alpha = 0
+	var/turf/T = get_turf(AM)
+	var/matrix/M = matrix()
+	M.Scale(scale_x, scale_y)
+	var/obj/decal/laserbeam/beam = new(T)
+	beam.pixel_y =  abs(scale_y * 32)
+	beam.Scale(scale_x, 1)
+	beam.plane = PLANE_ABOVE_LIGHTING
+	beam.layer = NOLIGHT_EFFECTS_LAYER_BASE
+	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, TRUE)
+	animate(beam, time = beam_time / 2, pixel_y = abs(scale_y * 32 / 2 + 16), transform = M, flags = ANIMATION_PARALLEL)
+	animate(time = beam_time / 2, transform = matrix(0,0,0,0,scale_y,0))
+	SPAWN(beam_time / 2)
+		AM.alpha = initial(AM.alpha)
+		if (issimulatedturf(T))
+			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched[rand(1,2)]")
+			burn_overlay.alpha = 200
+			T.AddOverlays(burn_overlay,"burn")
+	SPAWN(beam_time)
+		qdel(beam)
+
+proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8 SECONDS, loops=-1, clockwise=FALSE)
+	orbiter.pixel_x = center_x + radius
+	orbiter.pixel_y = center_y
+
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x,
+		flags = ANIMATION_PARALLEL,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x - radius)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x + radius)
+
+	var/cw_factor = clockwise ? -1 : 1
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y + radius * cw_factor,
+		flags = ANIMATION_PARALLEL,,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y - radius * cw_factor)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)
+
+/proc/animate_juggle(atom/thing, time = 0.7 SECONDS)
+	animate(thing, time/3, pixel_x = -15, loop = -1)
+	animate(time = time, pixel_x = 15, loop = -1)
+	animate(thing, time = time/3, flags = ANIMATION_PARALLEL, loop = -1)
+	animate(time = time/2, pixel_y = 45, easing = CUBIC_EASING | EASE_OUT, loop = -1)
+	animate(time = time/2, pixel_y = 0, easing = CUBIC_EASING | EASE_IN, loop = -1)
+	animate_spin(thing, parallel = TRUE)
+
+/proc/animate_psy_juggle(atom/thing, duration = 2 SECONDS)
+	var/eighth_duration = duration / 8  // Divide the duration for each segment of the octagon
+	var/distance = 24  // Max distance from the center in pixels
+	animate(thing, pixel_x = distance, pixel_y = distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = distance * 0.5, pixel_y = distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance * 0.5, pixel_y = distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance, pixel_y = distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance, pixel_y = -distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance * 0.5, pixel_y = -distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = distance * 0.5, pixel_y = -distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = distance, pixel_y = -distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate_spin(thing, parallel = TRUE, T = 2 SECONDS)
+
+///Animate being stretched and spun around a point. Looks best when combined with a distortion map. Note that the resulting dummy object is added to center.vis_contents and deleted when done.
+///atom/A is the thing to spaghettify. Note this proc does not delete A, you must handle that separately
+///atom/center is the central atom around which to spin, usually the singulo
+///spaget_time is how long to run the animation. Default 15 seconds.
+///right_spinning is whether to go clockwise or anti-clockwise. Default true.
+///client/C is to show the spaghetti to only one client, or null to show it to everybody. Default null.
+/proc/animate_spaghettification(atom/A, atom/center, spaget_time = 15 SECONDS, right_spinning = TRUE, client/C = null)
+	var/obj/dummy/spaget_overlay = new()
+	var/tmp = null
+	if(istype(C, /client)) //if we're doing a client image, operate on the image instead of the object
+		tmp = spaget_overlay
+		spaget_overlay = image(loc = spaget_overlay)
+	spaget_overlay.appearance = A.appearance
+	spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+	spaget_overlay.pixel_x = A.pixel_x + (A.x - center.x + 0.5)*32
+	spaget_overlay.pixel_y = A.pixel_y + (A.y - center.y + 0.5)*32
+	spaget_overlay.plane = PLANE_DEFAULT
+	spaget_overlay.mouse_opacity = 0
+	spaget_overlay.transform = A.transform
+	if(prob(0.1)) // easteregg
+		spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+		spaget_overlay.icon_state = "spag-dish"
+		spaget_overlay.Scale(2, 2)
+	if(istype(C, /client)) //if we're doing a client image, push that to the client and then continue operating on the object
+		C << spaget_overlay
+		spaget_overlay = tmp
+		tmp = null
+	var/angle = get_angle(A, center)
+	var/matrix/flatten = matrix((A.x - center.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - center.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
+	animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+	var/obj/dummy/spaget_turner = new()
+	spaget_turner.vis_contents += spaget_overlay
+	spaget_turner.mouse_opacity = 0
+	spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+	animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
+	if(!istype(center, /area))
+		center:vis_contents += spaget_turner
+	else
+		throw EXCEPTION("Can't use /area as a center point in spaget animation")
+	SPAWN(spaget_time + 1 SECOND)
+		qdel(spaget_overlay)
+		qdel(spaget_turner)

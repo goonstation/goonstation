@@ -6,7 +6,7 @@ proc/generate_procs_by_type()
 	procs_by_type = list()
 	var/subaddr = 0
 	while(TRUE)
-		var/addr = BUILD_ADDR("26", subaddr) // 26 is the type id used by procs for ref
+		var/addr = BUILD_ADDR(PROC_TYPEID, subaddr) // 26 is the type id used by procs for ref
 		var/pr = locate(addr)
 		if(!pr)
 			break
@@ -26,7 +26,7 @@ proc/generate_procs_by_type()
 			LAGCHECK(LAG_MED)
 		subaddr++
 	for(var/type in procs_by_type)
-		procs_by_type[type] = sortList(procs_by_type[type])
+		procs_by_type[type] = sortList(procs_by_type[type], /proc/cmp_text_asc)
 		LAGCHECK(LAG_MED)
 
 /*

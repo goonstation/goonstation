@@ -5,9 +5,10 @@
 #define BOUNTY_TYPE_BIG		5
 
 /datum/game_mode/spy_theft
-	name = "spy_thief"
+	name = "Spy Theft"
 	config_tag = "spy_theft"
 
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
@@ -34,11 +35,11 @@
 	var/list/organ_bounties = list()				// Things that belong to people that are on the inside
 	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
-	var/const/organ_bounty_amt = 4
-	var/const/person_bounty_amt = 4
-	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 5
-	var/const/big_station_bounty_amt = 3
+	var/organ_bounty_amt = 4
+	var/person_bounty_amt = 4
+	var/photo_bounty_amt = 4
+	var/station_bounty_amt = 5
+	var/big_station_bounty_amt = 3
 
 	var/list/possible_areas = list()
 	var/list/active_bounties = list()
@@ -47,24 +48,24 @@
 
 /datum/bounty_item
 	var/name = "bounty name (this is a BUG)" 	//When a bounty object is deleted, we will still need a ref to its name
-	var/obj/item = 0										//Ref to exact item
-	var/path = 0												//Req path of item
-	var/claimed = 0											//Claimed already?
-	var/area/delivery_area = 0					//You need to stand here to deliver this
-	var/photo_containing = 0 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
-	var/reveal_area = 0									//Show area of target in pda
+	var/obj/item = null										//Ref to exact item
+	var/path = null												//Req path of item
+	var/claimed = null											//Claimed already?
+	var/area/delivery_area = null					//You need to stand here to deliver this
+	var/photo_containing = null 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
+	var/reveal_area = FALSE									//Show area of target in pda
 	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
-	var/bounty_type = 0 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
+	var/bounty_type = null 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
 	var/difficulty = 0									//Stored difficulty for items and big items
-	var/hot_bounty = 0									//This bounty randomly rolled a high tier reward
+	var/hot_bounty = FALSE									//This bounty randomly rolled a high tier reward
 
-	var/datum/syndicate_buylist/reward = 0
+	var/datum/syndicate_buylist/reward = null
 	var/value_low = 0
 	var/value_high = 10
 
-	var/datum/game_mode/spy_theft/game_mode = 0
+	var/datum/game_mode/spy_theft/game_mode = null
 
-	var/reward_was_spawned = 0
+	var/reward_was_spawned = FALSE
 
 	New(var/datum/game_mode/spy_theft/ST)
 		game_mode = ST
@@ -104,9 +105,9 @@
 				continue
 
 			if (S.cost <= value_high && S.cost >= value_low)
-				possible_items += S
+				possible_items[S] = S.surplus_weight
 
-		reward = pick(possible_items)
+		reward = weighted_pick(possible_items)
 
 	proc/spawn_reward(var/mob/user,var/obj/item/device/pda2/hostpda)
 		if (reward_was_spawned) return
@@ -115,17 +116,15 @@
 		playsound(pda_turf, "warp", 15, 1, 0.2, 1.2)
 		animate_portal_tele(hostpda)
 
-		if (user.mind)
-			user.mind.purchased_traitor_items += reward
-
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
 			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
-			//if (src.is_VR_uplink == 0)
-			//	statlog_traitor_item(user, reward.name, reward.cost)
+			if (istype(antag_role))
+				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)
 			new reward.item2(pda_turf)
 		if (reward.item3)
@@ -145,12 +144,7 @@
 	boutput(world, "<B>There are spies planted on [station_or_ship()]. They plan to steal valuables and assasinate rival spies  - Do not let them succeed!</B>")
 
 /datum/game_mode/spy_theft/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
@@ -181,22 +175,8 @@
 	return 1
 
 /datum/game_mode/spy_theft/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/spy in traitors)
-		objective_set_path = null // Gotta reset this.
-
-		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
-
-		new objective_set_path(spy)
-		SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs (can't find PDA)
-			equip_spy_theft(spy.current)
-
-		var/obj_count = 1
-		for(var/datum/objective/objective in spy.objectives)
-			boutput(spy.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
-
-		//spy_name_list += spy.current.real_name
+		spy.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
@@ -211,28 +191,7 @@
 		src.update_bounty_readouts()
 
 /datum/game_mode/spy_theft/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested status information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
-
+	..(src.traitors)
 /datum/game_mode/spy_theft/declare_completion()
 	. = ..()
 
@@ -244,7 +203,7 @@
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
 		if (M.special_role == ROLE_SPY_THIEF && M.current)
-			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
+			boutput(M.current, SPAN_NOTICE("<b>Spy Console</b> has been updated with new requests.")) //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current.playsound_local(M.current, 'sound/machines/twobeep.ogg', 35)
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
@@ -293,21 +252,22 @@
 
 		//Personal bounties (items that belong to a person)
 		//Pair list, stores job for difficulty lookup
-		if (H.trinket && istype(H.trinket))
-			personal_bounties += list(list(H.trinket, H.job))
+		var/datum/deref = H?.trinket?.deref()
+		if (istype(deref, /obj/item))
+			personal_bounties += list(list(H.trinket.deref(), H.job))
 		if (H.wear_id)
 			personal_bounties += list(list(H.wear_id, H.job))
 
 
-		if (H.client && length(H.organs))
-			if (H.organs["l_arm"])
-				organ_bounties += list(list(H.organs["l_arm"], H.job))
-			if (H.organs["r_arm"])
-				organ_bounties += list(list(H.organs["r_arm"], H.job))
-			if (H.organs["l_leg"])
-				organ_bounties += list(list(H.organs["l_leg"], H.job))
-			if (H.organs["r_leg"])
-				organ_bounties += list(list(H.organs["r_leg"], H.job))
+		if (H.client)
+			if (H.limbs.get_limb("l_arm"))
+				organ_bounties += list(list(H.limbs.get_limb("l_arm"), H.job))
+			if (H.limbs.get_limb("r_arm"))
+				organ_bounties += list(list(H.limbs.get_limb("r_arm"), H.job))
+			if (H.limbs.get_limb("l_leg"))
+				organ_bounties += list(list(H.limbs.get_limb("l_leg"), H.job))
+			if (H.limbs.get_limb("r_leg"))
+				organ_bounties += list(list(H.limbs.get_limb("r_leg"), H.job))
 
 
 		//Add photographs of the crew
@@ -352,10 +312,10 @@
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
 
-	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
-	station_bounties[/obj/item/clothing/suit/bio_suit/paramedic] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
-	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
@@ -407,10 +367,6 @@
 	station_bounties[/obj/item/storage/belt/utility] = 1
 	station_bounties[/obj/item/storage/belt/security] = 2
 
-	station_bounties[/obj/item/instrument/large/piano/grand] = 1
-	station_bounties[/obj/item/instrument/large/piano] = 1
-	station_bounties[/obj/item/instrument/large/organ] = 1
-	station_bounties[/obj/item/instrument/large/jukebox] = 1
 	station_bounties[/obj/item/instrument/saxophone] = 1
 	station_bounties[/obj/item/instrument/bagpipe] = 1
 	station_bounties[/obj/item/instrument/bikehorn/dramatic] = 1
@@ -425,7 +381,7 @@
 	station_bounties[/obj/item/instrument/tambourine] = 1
 
 	station_bounties[/obj/item/clothing/glasses/blindfold] = 1
-	station_bounties[/obj/item/clothing/glasses/meson] = 1
+	station_bounties[/obj/item/clothing/glasses/toggleable/meson] = 1
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
@@ -465,7 +421,6 @@
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 	station_bounties[/obj/item/device/radio/headset/miner] = 1
-	station_bounties[/obj/item/device/radio/headset/mechanic] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
@@ -503,7 +458,6 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/lawrack] = 3
 	big_station_bounties[/obj/machinery/turret] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
@@ -550,10 +504,15 @@
 	big_station_bounties[/obj/reagent_dispensers/still] = 2
 
 	big_station_bounties[/obj/machinery/communications_dish] = 2
-	big_station_bounties[/obj/item/teg_semiconductor] = 2
+	big_station_bounties[/obj/item/teg_semiconductor/prototype] = 2
 	big_station_bounties[/obj/machinery/power/smes] = 2
 	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3
+
+	big_station_bounties[/obj/item/instrument/large/piano/grand] = 1
+	big_station_bounties[/obj/item/instrument/large/piano] = 1
+	big_station_bounties[/obj/item/instrument/large/organ] = 1
+	big_station_bounties[/obj/item/instrument/large/jukebox] = 1
 
 	active_bounties.len = 0
 
@@ -617,7 +576,7 @@
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
-		if (big_station_bounties.len <= 0)
+		if (length(big_station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
@@ -656,7 +615,7 @@
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
-		if (station_bounties.len <= 0)
+		if (length(station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
@@ -682,28 +641,13 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_unblocked_turfs(/area/station)
-	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/jucer_trader)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
-	possible_areas -= /area/sim/test_area
-
-	for (var/area/A in possible_areas)
+	for (var/area/A in (get_areas_with_unblocked_turfs(/area/station) + get_areas_with_unblocked_turfs(/area/diner)))
 		LAGCHECK(LAG_LOW)
 		if (A.virtual)
-			possible_areas -= A
-			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area" || A.name == "Ocean") //I have no idea what "AI Perimeter Defenses" or "Ocean" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
-			possible_areas -= A
-			break
+			continue
+		var/typeinfo/area/typeinfo = A.get_typeinfo()
+		if (typeinfo.valid_bounty_area)
+			possible_areas += A
 
 	for (var/datum/bounty_item/B in active_bounties)
 		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)

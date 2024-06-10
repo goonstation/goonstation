@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
@@ -76,9 +75,9 @@ export const TerrainToggles = props => {
   } = props;
 
   return (
-    terrain && typeData[terrain].toggles?.length ? (
-      <Section title="Toggles" >
-        {typeData[terrain].toggles.map((toggleOption, buttonIndex) => (
+    terrain && typeData[terrain].toggles && Object.keys(typeData[terrain].toggles).length ? (
+      <Section title="Toggles">
+        {Object.keys(typeData[terrain].toggles).map((toggleOption, buttonIndex) => (
           <Flex.Item mb={1} key={buttonIndex}>
             <Button.Checkbox
               checked={activeToggles[toggleOption]}
@@ -173,13 +172,7 @@ export const Terrainify = (props, context) => {
       width={500}
       height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Terrainify
-            </Box>
-          }>
+        <Section title="Terrainify">
           <Flex direction="row">
             <TerrainChoice
               typeData={typeData}
@@ -187,7 +180,7 @@ export const Terrainify = (props, context) => {
               onTerrainValue={handleSetTerrain} />
             <Flex.Item ml={2} />
             <Flex.Item ml={1}>
-              <Section title="Description" >
+              <Section title="Description">
                 {!terrain ? "..." : typeData[terrain].description}
               </Section>
               <TerrainVehicleChoice

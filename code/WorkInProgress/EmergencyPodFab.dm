@@ -11,10 +11,14 @@
 	var/steps_moved = 0
 	var/failing = 0
 
+	New()
+		. = ..()
+		for(var/datum/contextAction/CA in src.contextActions)
+			if(istype(CA, /datum/contextAction/vehicle/parts))
+				src.contextActions -= CA
+				break
+
 	attackby(obj/item/W, mob/living/user)
-		if (ispryingtool(W))
-			boutput(user, "There's no maintenance panel to open.")
-			return
 		if (isweldingtool(W))
 			boutput(user, "You can't repair this pod.")
 			return
@@ -39,15 +43,15 @@
 
 	proc/fail()
 		failing = 1
-		pilot << sound('sound/machines/engine_alert1.ogg')
-		boutput(pilot, "<span class='alert'>Your emergency pod is falling apart around you!</span>")
+		pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+		boutput(pilot, SPAN_ALERT("Your emergency pod is falling apart around you!"))
 		while(src)
 			step(src,src.dir)
 			if(prob(steps_moved * 0.1))
 				make_cleanable( /obj/decal/cleanable/robot_debris/gib ,src.loc)
 			if(prob(steps_moved * 0.05))
 				if(pilot)
-					boutput(pilot, "<span class='alert'>You are ejected from the emergency pod as it disintegrates!</span>")
+					boutput(pilot, SPAN_ALERT("You are ejected from the emergency pod as it disintegrates!"))
 					src.eject(pilot)
 				new /obj/effects/explosion (src.loc)
 				playsound(src.loc, "explosion", 50, 1)
@@ -60,7 +64,7 @@
 	desc = "A sophisticated machine that fabricates large objects from a nearby reserve of supplies."
 	icon = 'icons/obj/machines/podfab.dmi'
 	icon_state = "fab-still"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = 2.9
 	var/active = 0
@@ -73,27 +77,26 @@
 	var/override_dir = null
 	var/turf/outputLoc = null
 	var/sound_happy = 'sound/machines/chime.ogg'
-	var/sound_volume = 50
-	var/static/list/fabsounds = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
-	'sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/machines/romhack1.ogg','sound/machines/romhack3.ogg')
+	var/sound_volume = 20
+	var/static/list/fabsounds = list('sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/machines/mixer.ogg','sound/machines/pc_process.ogg','sound/machines/rock_drill.ogg','sound/machines/scan.ogg') //holy fuck these were awful sounds, these ones are slightly less awful but i hate the way this works
 
 	attack_hand(var/mob/user)
 		if (active)
-			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
+			boutput(user, SPAN_ALERT("Manufacture in progress, please wait."))
 			return
 
 		if (!isSetup) initialAlloc()
 
 		outputLoc = get_turf(src.loc)
 		if(outputLoc.density)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		blocked = 0
 		for (var/obj/block in outputLoc)
 			if (block.density) blocked = 1
 		if(blocked)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		src.visible_message("<b>[user.name]</b> switches on [src].")
@@ -101,21 +104,21 @@
 
 	attack_ai(var/mob/user as mob)
 		if (active)
-			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
+			boutput(user, SPAN_ALERT("Manufacture in progress, please wait."))
 			return
 
 		if (!isSetup) initialAlloc()
 
 		outputLoc = get_turf(src.loc)
 		if(outputLoc.density)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		blocked = 0
 		for (var/obj/block in outputLoc)
 			if (block.density) blocked = 1
 		if(blocked)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		src.visible_message("[src] activates itself.")
@@ -197,6 +200,6 @@
 	name = "semi-constructed object"
 	desc = "A thing in the process of being assembled by a fabricator."
 	alpha = 5
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0

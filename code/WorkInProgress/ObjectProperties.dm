@@ -197,7 +197,7 @@ var/list/globalPropList = null
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"
-		desc = "Reduces armor piercing on recieved attacks." //Value is flat reduction of incoming piercing %
+		desc = "Reduces armor piercing on received attacks." //Value is flat reduction of incoming piercing %
 		tooltipImg = "protpierce.png"
 		defaultValue = 30
 		getTooltipDesc(var/obj/propOwner, var/propVal)
@@ -420,13 +420,13 @@ to say if there's demand for that.
 /datum/objectProperty/equipment/radiationprot
 	name = "Resistance (Radiation)"
 	id = "radprot"
-	desc = "Protects from harmful radiation." //Value is % protection.
+	desc = "Protects from harmful radiation." //Value is vaguely related to % protection.
 	tooltipImg = "radiation.png"
 	defaultValue = 10
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal]%"
+		return "[propVal] radOhms"
 
-	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT_EXT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"
@@ -488,6 +488,23 @@ to say if there's demand for that.
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_REFLECTPROT, owner)
+
+/datum/objectProperty/equipment/toy_reflection // reflects foam darts.
+	name = "Toy Reflection"
+	id = "toyreflection"
+	desc = "Reflects toy projectiles while held."
+	tooltipImg = "disorient_resist.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Reflecting toy projectiles"
+
+	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
 
 /datum/objectProperty/equipment/enchantarmor
 	hidden = 1
@@ -590,6 +607,24 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] movement delay"
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED)
+
+/datum/objectProperty/equipment/movement/in_hand
+	name = "Speed"
+	id = "carried_movespeed"
+	desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
+
+	onEquipped(obj/item/owner, mob/user, value, slot)
+		if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+			return 0
+		. = ..()
+
+	onUnequipped(obj/item/owner, mob/user, value)
+		if(owner.equipped_in_slot != SLOT_L_HAND && owner.equipped_in_slot != SLOT_R_HAND)
+			return 0
+		. = ..()
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay - 0 when worn."
 
 /datum/objectProperty/equipment/movement/space
 	name = "Speed"

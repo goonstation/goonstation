@@ -55,6 +55,11 @@
 	font-size: 0.8em;
 }
 
+#runtime-list .usr {
+	display: none;
+	font-size: 0.8em;
+}
+
 
 #runtime-details .control .back {
 	margin: 0;

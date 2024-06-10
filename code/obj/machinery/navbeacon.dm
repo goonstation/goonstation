@@ -1,6 +1,9 @@
 // Navigation beacon for AI robots
 // Functions as a transponder: looks for incoming signal matching
 
+TYPEINFO(/obj/machinery/navbeacon)
+	mats = 4
+
 /obj/machinery/navbeacon
 
 	icon = 'icons/obj/objects.dmi'
@@ -9,7 +12,7 @@
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = 2.5 // TODO layer whatever
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0		// true if cover is open
@@ -23,7 +26,6 @@
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = 4
 	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
@@ -199,15 +201,13 @@
 
 			UpdateIcon()
 
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if (istype(I, /obj/item/card/id))
+		if (istype(get_id_card(I), /obj/item/card/id))
 			if (open)
 				if (src.allowed(user))
 					src.locked = !src.locked
 					boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				else
-					boutput(user, "<span class='alert'>Access denied.</span>")
+					boutput(user, SPAN_ALERT("Access denied."))
 				updateDialog()
 			else
 				boutput(user, "You must open the cover first!")
@@ -339,14 +339,16 @@ Transponder Codes:<UL>"}
 		get_radio_connection_by_id(src, "navbeacon").update_frequency(freq)
 
 //Wired nav device
+TYPEINFO(/obj/machinery/wirenav)
+	mats = 8
+
 /obj/machinery/wirenav
 	name = "Wired Nav Beacon"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "wirednav"//-f"
 	level = 1		// underfloor
 	layer = OBJ_LAYER
-	anchored = 1
-	mats = 8
+	anchored = ANCHORED
 	var/nav_tag = null
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -742,6 +744,16 @@ Transponder Codes:<UL>"}
 			codes_txt = "delivery;dir=8"
 	news_office
 		location = "News Office"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	mining_north
+		location = "Mining"
 		codes_txt = "delivery;dir=1"
 
 		east
@@ -1193,7 +1205,7 @@ Transponder Codes:<UL>"}
 	tour11
 		name = "tour beacon - 'Hydroponics'"
 		location = "tour11"
-		codes_txt = "tour;next_tour=tour12;desc=As we wind down, we're just heading past the hydroponics department, where our friendly botanists tend to the crops that supply the catering department and keep our personnel full and healthy! Please note that Greater Domestic Space Bee's are supposed to be that big. No really!"
+		codes_txt = "tour;next_tour=tour12;desc=As we wind down, we're just heading past the hydroponics department, where our friendly botanists tend to the crops that supply the catering department and keep our personnel full and healthy! Please note that Greater Domestic Space Bees are supposed to be that big. No really!"
 
 	tour12
 		name = "tour beacon - 'Kitchen'"

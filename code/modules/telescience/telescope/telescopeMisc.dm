@@ -1,15 +1,17 @@
 var/datum/telescope_manager/tele_man
-var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
+var/list/special_places = list("Luna", "Observatory") //list of location names, which are coincidentally also landmark ids
 
-var/list/magnet_locations = list()
-
+TYPEINFO(/obj/machinery/lrteleporter)
+	mats = list("telecrystal" = 10,
+				"metal" = 10,
+				"conductive" = 10)
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
@@ -18,11 +20,16 @@ var/list/magnet_locations = list()
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/mechcompsend)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", .proc/mechcompreceive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		ui_interact(user)
@@ -59,8 +66,8 @@ var/list/magnet_locations = list()
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("lrport1", src)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			flick("[src.icon_state]-act", src)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
 					continue
@@ -68,7 +75,7 @@ var/list/magnet_locations = list()
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN(6 DECI SECONDS) M.set_loc(target)
+				SPAWN(6 DECI SECONDS) do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
@@ -84,8 +91,8 @@ var/list/magnet_locations = list()
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("lrport1", src)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			flick("[src.icon_state]-act", src)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
 					continue
@@ -93,7 +100,7 @@ var/list/magnet_locations = list()
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN(6 DECI SECONDS) M.set_loc(src.loc)
+				SPAWN(6 DECI SECONDS) do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
@@ -138,6 +145,9 @@ var/list/magnet_locations = list()
 			var/place = params["name"]
 			src.lrtreceive(place)
 
+/obj/machinery/lrteleporter/mining
+	icon_state = "englrt"
+
 //////////////////////////////////////////////////
 /datum/telescope_manager
 	var/list/events_inactive = list() //Events that are currently not visible but might show up.
@@ -157,7 +167,7 @@ var/list/magnet_locations = list()
 		return
 
 	proc/tick()
-		if(events_active.len < 3)
+		if(length(events_active) < 3)
 
 			var/can_spawn = 0 //If there's only events with less than 100% rarity left, we don't spawn anything.
 			//This is to stop the system from spawning only rare events when there's few left.
@@ -212,21 +222,21 @@ var/list/magnet_locations = list()
 /obj/critter/gunbot/drone/buzzdrone/naniteswarm
 	name = "nanite swarm"
 	desc = "A swarm of angry nanites."
+	icon = 'icons/mob/critter/robotic/nanites.dmi'
 	icon_state = "nanites"
 	dead_state = "nanites-dead"
-	icon = 'icons/misc/critter.dmi'
 	health = 30
 	maxhealth = 30
 	score = 1
 	projectile_type = /datum/projectile/laser/drill/cutter
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
-	smashes_shit = 1
+	smashes_shit = FALSE
 
 	ChaseAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
-			src.visible_message("<span class='alert'><b>[src]</b> floats towards [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> floats towards [M]!"))
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -237,8 +247,8 @@ var/list/magnet_locations = list()
 	CritterAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> shreds [M]!</span>")
+			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
+			src.visible_message(SPAN_ALERT("<b>[src]</b> shreds [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -252,15 +262,15 @@ var/list/magnet_locations = list()
 		return
 
 	CritterDeath()
-		if(prob(20) && alive)
-			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
+		if(prob(33) && alive && !dying)
+			src.visible_message(SPAN_ALERT("<b>[src]</b> begins to reassemble!"))
 			var/turf/T = src.loc
 			SPAWN(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)
 				if(src)
 					qdel(src)
 
-		if(prob(1) && alive)
+		if(prob(5) && alive && !dying)
 			new/obj/item/material_piece/iridiumalloy(src.loc)
 
 		..()

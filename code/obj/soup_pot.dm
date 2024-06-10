@@ -1,6 +1,7 @@
 /datum/custom_soup
 	var/name
 	var/bites_left = 3
+	var/uneaten_bites_left = 3
 	var/heal_amt = 0
 	var/desc = null
 	var/initial_volume = 60
@@ -17,21 +18,30 @@
 	initial_volume = null
 	initial_reagents = null
 	food_effects = list()
-	var/image/fluid_icon
+	var/image/fluid_image
 
-	New(var/datum/custom_soup/S)
+	New(var/datum/custom_soup/S, var/obj/item/reagent_containers/food/drinks/bowl/bowl = null)
 		if(!S || !istype(S))
 			qdel(src)
 			return
+
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+			src.inhand_image_icon = bowl.inhand_image_icon
+			src.item_state = bowl.item_state
+		src.fluid_image = bowl?.fluid_image || image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "bowl_fluid")
 		src.name = S.name
 		src.bites_left = S.bites_left
+		src.uneaten_bites_left = S.uneaten_bites_left
 		if(S.desc)
 			src.desc = S.desc
 		src.heal_amt = S.heal_amt
 		src.initial_volume = S.initial_volume
 		src.initial_reagents = S.initial_reagents
 
-		if(S.food_effects.len <= 4)
+		if(length(S.food_effects) <= 4)
 			src.food_effects = S.food_effects
 		else
 			var/list/temp = S.food_effects
@@ -40,26 +50,25 @@
 				src.food_effects += effect
 				temp -= effect
 
-
-		fluid_icon = image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "fluid")
-
 		..()
 
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
-			fluid_icon.color = average.to_rgba()
-			src.UpdateOverlays(src.fluid_icon, "fluid")
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid")
 		else
 			src.UpdateOverlays(null, "fluid")
+
+TYPEINFO(/obj/stove)
+	mats = 18
 
 /obj/stove
 	name = "stove"
 	desc = "A perfectly ordinary kitchen stove; not that you'll be doing anything ordinary with it.<br>It seems this model doesn't have a built in igniter, so you'll have to light it manually."
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "stove0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/obj/item/soup_pot/pot
 	var/on = 0
@@ -68,7 +77,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/soup_pot))
 			if(src.pot)
-				boutput(user,"<span class='alert'><b>There's already a pot on the stove, dummy!</span>")
+				boutput(user,SPAN_ALERT("<b>There's already a pot on the stove, dummy!"))
 			else
 				src.icon_state = "stove1"
 				src.pot = W
@@ -78,19 +87,19 @@
 		if (!src.on && src.pot)
 
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, "<span class='alert'><b>[user] casually lights [src] with [W], what a badass.</b></span>")
+				src.light(user, SPAN_ALERT("<b>[user] casually lights [src] with [W], what a badass.</b>"))
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, SPAN_ALERT("<b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b>"))
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span class='alert'>[user] fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, SPAN_ALERT("[user] fumbles around with [W]; a small flame erupts from [src]."))
 				return
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'><b>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</b></span>")
+				src.light(user, SPAN_ALERT("<b>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</b>"))
 				return
 
 			else if (istype(W, /obj/item/match))
@@ -99,18 +108,18 @@
 					if (-1) // broken
 						user.visible_message("[user] stares at [match] for a while. Seeming confused, they just chuck it into [src].", "\The [match] confuses you, so you just chuck it into [src].")
 					if (0) // unlit
-						src.light(user, "<span class='alert'><b>With a swift motion, [user] strikes [match] on [src] and lights both ablaze. Damn, they're slick.</b></span>")
+						src.light(user, SPAN_ALERT("<b>With a swift motion, [user] strikes [match] on [src] and lights both ablaze. Damn, they're slick.</b>"))
 						return
 					if (1) // lit
-						src.light(user, "<span class='alert'>[user] lights [src] with [match].</span>")
+						src.light(user, SPAN_ALERT("[user] lights [src] with [match]."))
 						return
 
 			else if (istype(W, /obj/item/device/light/candle) && W:on)
-				src.light(user, "<span class='alert'>[user] lights [src] with [W].</span>")
+				src.light(user, SPAN_ALERT("[user] lights [src] with [W]."))
 				return
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Goddamn.</b></span>")
+				src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]. Goddamn.</b>"))
 				return
 
 			else
@@ -125,7 +134,7 @@
 
 	attack_hand(mob/user)
 		if(src.on)
-			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
+			boutput(user,SPAN_ALERT("<b>Cooking soup takes time, be patient!</b>"))
 			return
 		if(src.pot)
 			src.icon_state = "stove0"
@@ -139,13 +148,13 @@
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)
-			boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</b></span>")
+			boutput(user,SPAN_ALERT("<b>There's still soup in the pot, dummy!</b>"))
 			return
 		if(!pot.total_wclass)
-			boutput(user,"<span class='alert'><b>You can't have a soup with no ingredients, dummy!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You can't have a soup with no ingredients, dummy!</b>"))
 			return
 		if(!pot.reagents.total_volume)
-			boutput(user,"<span class='alert'><b>You can't have a soup with no broth, dummy!</b></span>")
+			boutput(user,SPAN_ALERT("<b>You can't have a soup with no broth, dummy!</b>"))
 			return
 		user.visible_message(message)
 		src.on = 1
@@ -218,6 +227,7 @@
 						S.initial_reagents[id] = I.reagents.reagent_list[id].volume/pot.total_wclass
 
 		S.bites_left = max(1,round(S.bites_left))
+		S.uneaten_bites_left = S.bites_left
 
 		if(biggester)
 			if(biggest)
@@ -365,10 +375,10 @@
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever
-					boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
+					boutput(user, SPAN_ALERT("You can't put that in \the [src] when it's attached to you!"))
 				return ..()
 			if(src.my_soup)
-				boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</span>")
+				boutput(user,SPAN_ALERT("<b>There's still soup in the pot, dummy!"))
 				return
 			if(W.w_class <= max_wclass)
 				if(!(W.flags & OPENCONTAINER)) // is it a reagent container?
@@ -395,9 +405,9 @@
 			var/obj/item/ladle/L = W
 			if(!src.my_soup)
 				if(src.total_wclass || src.reagents.total_volume)
-					boutput(user,"<span class='alert'><b>That's not ready to serve!</span>")
+					boutput(user,SPAN_ALERT("<b>That's not ready to serve!"))
 				else
-					boutput(user,"<span class='alert'><b>There's nothing in there to serve!</span>")
+					boutput(user,SPAN_ALERT("<b>There's nothing in there to serve!"))
 
 			else if (L.my_soup)
 				if(L.my_soup == src.my_soup)
@@ -407,7 +417,7 @@
 					L.UpdateOverlays(null, "fluid")
 					user.visible_message("[user] empties [L] into [src].", "You empty [L] into [src]")
 				else
-					boutput(user,"<span class='alert'><b>You can't mix soups! That'd be ridiculous!</span>")
+					boutput(user,SPAN_ALERT("<b>You can't mix soups! That'd be ridiculous!"))
 			else
 				src.total_wclass--
 				tooltip_rebuild = 1
@@ -436,13 +446,13 @@
 						return
 				if (!T.density)
 					if(src.my_soup)
-						usr.visible_message("<span class='alert'>[usr] dumps the soup out of [src] and onto [T]!</span>")
+						usr.visible_message(SPAN_ALERT("[usr] dumps the soup out of [src] and onto [T]!"))
 						src.total_wclass = 0
 						tooltip_rebuild = 1
 						src.my_soup = null
 						src.on_reagent_change()
 						return
-					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
+					usr.visible_message(SPAN_ALERT("[usr] dumps the contents of [src] onto [T]!"))
 					src.reagents.reaction(T,TOUCH)
 					src.reagents.clear_reagents()
 					for (var/obj/item/I in src)

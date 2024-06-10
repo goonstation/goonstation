@@ -6,26 +6,23 @@ TYPEINFO(/datum/component/send_to_target_mob)
 	initialization_args = list()
 
 /datum/component/send_to_target_mob/Initialize(tracked_item)
+	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(isitem(tracked_item))
-		RegisterSignal(tracked_item, COMSIG_SEND_TO_MOB, .proc/send)
+		RegisterSignal(tracked_item, COMSIG_SEND_TO_MOB, PROC_REF(send))
 
 /datum/component/send_to_target_mob/proc/send(datum/source, var/mob/living/M, teleport_effect = FALSE, )
 	var/obj/item/I = src.parent
 	if (!I || !istype(I) || !M || !istype(M))
 		return
 
-	I.visible_message("<span class='alert'><b>The [I.name] is suddenly warped away!</b></span>")
+	I.visible_message(SPAN_ALERT("<b>The [I.name] is suddenly warped away!</b>"))
 	elecflash(I)
 
 	if (ismob(I.loc))
 		var/mob/M2 = I.loc
 		M2.u_equip(I)
-	if (istype(I.loc, /obj/item/storage))
-		var/obj/item/storage/S_temp = I.loc
-		var/datum/hud/storage/H_temp = S_temp.hud
-		H_temp.remove_object(I)
 
 	I.set_loc(get_turf(M))
 	if (teleport_effect)

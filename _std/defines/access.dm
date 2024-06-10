@@ -2,6 +2,7 @@
 //       when you re-enable old credentials or add new ones.
 //       Also check proc/get_access_desc() (ID computer lookup) in access.dm
 
+/// This is useful for scenarios where login is required but no particular access is needed.
 #define access_fuck_all 0 // Because completely empty access lists can make things grump
 #define access_security 1
 #define access_brig 2
@@ -105,3 +106,12 @@
 
 //pathologist job
 #define access_pathology 84
+
+//extra research access
+#define access_researchfoyer 85
+#define access_artlab 86
+#define access_telesci 87
+#define access_robotdepot 88
+
+// Pirate ship access:
+#define access_pirate 89

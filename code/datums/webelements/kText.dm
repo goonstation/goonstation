@@ -178,7 +178,7 @@ kText
 		 * IE: list2text(list("this", "is", "a", "test"), " ") would return "this is a test".
 		 */
 		list2text(list/list, delimiter=" ")
-			if(!list || !islist(list) || list.len < 1)
+			if(!list || !islist(list) || length(list) < 1)
 				return null
 
 			var/stringified = "[list[1]]"

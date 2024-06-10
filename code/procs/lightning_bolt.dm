@@ -1,22 +1,22 @@
 /proc/lightning_bolt(atom/center, var/caster, var/duration = 9 SECONDS)
 	showlightning_bolt(center)
-	playsound(center, 'sound/effects/lightning_strike.ogg', 70, 1)
+	playsound(center, 'sound/effects/lightning_strike.ogg', 70, TRUE)
 	elecflash(center,0, power=4, exclude_center = 0)
 	if(duration > 0 SECONDS)
 		residual_spark(center, caster, duration)
 
 	for(var/mob/living/M in range(1,center))
 		if (M.bioHolder?.HasEffect("resist_electric") || M.traitHolder?.hasTrait("training_chaplain"))
-			boutput(M, "<span class='notice'>The lightning bolt arcs around you harmlessly.</span>")
+			boutput(M, SPAN_NOTICE("The lightning bolt arcs around you harmlessly."))
 		if (M != caster && iswizard(M))
-			boutput(M, "<span class='notice'>The other wizard's lightning strike refuses to hurt you out of respect to other wizards.</span>")
+			boutput(M, SPAN_NOTICE("The other wizard's lightning strike refuses to hurt you out of respect to other wizards."))
 			continue
 		else if (check_target_immunity(M))
 			continue
 		else
 			M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
-			boutput(M, "<span class='alert'>You feel a strong electric shock!</span>")
-			M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10)
+			boutput(M, SPAN_ALERT("You feel a strong electric shock!"))
+			M.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 10)
 			if (M.loc == center)
 				M.TakeDamage("chest", 0, 25, 0, DAMAGE_BURN)
 				M.emote("scream")
@@ -37,7 +37,7 @@
 	icon_state = "residual_electricity"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	var/duration = 9 SECONDS
 	var/caster
@@ -56,12 +56,12 @@
 			if (L != src.caster && iswizard(L))
 				return
 			L.changeStatus("slowed", 1 SECONDS)
-			L.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
+			L.do_disorient(stamina_damage = 0, knockdown = 0, stunned = 0, disorient = 20)
 		..()
 
 /obj/decal/lightning_bolt
 	name = "lightning bolt"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_NOSHADOW_ABOVE
@@ -76,7 +76,7 @@
 			qdel(src)
 
 /obj/lightning_target
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_NOSHADOW_ABOVE

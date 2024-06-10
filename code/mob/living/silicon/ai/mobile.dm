@@ -12,7 +12,6 @@
 	network = "SS13"
 	pixel_y = 15
 	layer = MOB_LAYER
-	announcearrival = 0
 	classic_move = 0
 	a_intent = "disarm" //So we don't get brohugged right off a rail.
 	var/malf = 0
@@ -186,7 +185,7 @@
 	icon = 'icons/mob/mobile_ai.dmi'
 	icon_state = "intact"
 	layer = AI_RAIL_LAYER
-	anchored = 1
+	anchored = ANCHORED
 	var/bitdir = 0 //Valid direction bitflags
 
 	New()
@@ -223,7 +222,7 @@
 	icon_state = "drone"
 	pixel_y = 15
 	layer = MOB_LAYER
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()
@@ -254,7 +253,7 @@
 
 	return_mainframe()
 		if(!isAI(src.mainframe) || !src.mind)
-			boutput(src, "<span class='alert'>--Host System Error</span>")
+			boutput(src, SPAN_ALERT("--Host System Error"))
 			return 1
 
 		src.mind.transfer_to(src.mainframe)

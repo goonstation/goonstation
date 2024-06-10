@@ -1,7 +1,7 @@
 /obj/decal/residual_energy
 	name = "residual energy"
 	desc = "faintly glowing residual energy."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/effects/effects.dmi'
@@ -9,7 +9,7 @@
 
 /obj/decal/teleport_swirl
 	name = "swirling energy"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE

@@ -10,7 +10,7 @@
 		"tgui/.pnp.*": true
 	},
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "explicit"
 	},
 	"[javascript]": {
 		"editor.rulers": [
@@ -37,7 +37,6 @@
 		"-w"
 	],
 	"diffEditor.codeLens": true,
-	"vscode-as-git-mergetool.settingsAssistantOnStartup": false,
 	"errorLens.enabledDiagnosticLevels": [
 		"error",
 		"warning",
