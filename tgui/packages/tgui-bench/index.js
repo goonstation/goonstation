@@ -57,6 +57,7 @@ const setup = async () => {
     }
     if (type === 'finished') {
       await res.send();
+      exec(`kill_ie.vbs`);
       process.exit(0);
     }
     // Unhandled message
@@ -72,7 +73,7 @@ const setup = async () => {
   }
 
   if (process.platform === 'win32') {
-    exec(`launch_test.vbs`);
+    exec(`launch_ie.vbs`);
   }
 
   console.log('Waiting for Internet Explorer to respond.');
