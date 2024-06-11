@@ -136,8 +136,9 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
-
+	mats = list("metal_dense" = 25,
+				"conductive" = 5,
+				"energy_high" = 5)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"

@@ -28,8 +28,6 @@
 	var/max_range = PROJ_INFINITE_RANGE
 	/// What kind of implant this projectile leaves in impacted mobs
 	var/implanted = null
-	/// Forensic ID of the gun, etc that shot this projectile, used for forensics on implanted projectiles
-	var/forensic_ID = null
 	/// The mob/thing that fired this projectile
 	var/atom/shooter = null
 	/// Mob-typed copy of `shooter` var to save time on casts later
@@ -568,7 +566,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
 	var/window_pass = 0          // Can we pass windows
 	var/obj/projectile/master = null // The projectile obj that we're associated with
-	var/silentshot = 0           // Standard visible message upon bullet_act.
+	var/silentshot = 0           // Standard hit message upon bullet_act.
 	var/implanted                // Path of "bullet" left behind in the mob on successful hit
 	var/disruption = 0           // planned thing to deal with pod electronics / etc
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj

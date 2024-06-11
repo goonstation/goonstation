@@ -42,7 +42,7 @@ export const SpellItem = (props: SpellItemProps, context) => {
     <Stack align="center">
       {!!spell_img && (
         <Stack.Item height={THUMBNAIL_SIZE}>
-          <Image pixelated height={THUMBNAIL_SIZE} width={THUMBNAIL_SIZE} src={`data:image/png;base64,${spell_img}`} />
+          <Image height={THUMBNAIL_SIZE} width={THUMBNAIL_SIZE} src={`data:image/png;base64,${spell_img}`} />
         </Stack.Item>
       )}
       <Stack.Item grow>{name}</Stack.Item>

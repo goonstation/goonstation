@@ -207,7 +207,7 @@
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
-						access_telesci, access_teleporter)
+						access_telesci, access_teleporter, access_money)
 		if("Head of Security")
 #ifdef RP_MODE
 			var/list/hos_access = get_all_accesses()
@@ -385,7 +385,7 @@
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
 	            access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 	            access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_hangar, access_medical_director, access_special_club,
-				access_researchfoyer, access_telesci, access_artlab, access_robotdepot)
+				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
 
 /proc/syndicate_spec_ops_access() //syndie spec ops need to get out of the listening post.
 	return list(access_security, access_brig, access_forensics_lockers, access_armory,
@@ -543,6 +543,8 @@ var/list/access_name_lookup //Generated at round start.
 			return "Telescience"
 		if(access_robotdepot)
 			return "Robot Depot"
+		if (access_money)
+			return "Budget Control"
 
 
 proc/colorAirlock(access)

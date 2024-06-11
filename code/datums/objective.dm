@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/objective)
 			return TRUE
 		if(isVRghost(M.current))
 			return TRUE
-		if(!iscarbon(M.current))
+		if(isghostcritter(M.current) || isghostdrone(M.current) || issilicon(M.current))
 			return TRUE
 		return FALSE
 
@@ -300,7 +300,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 	riot_shotguns
 		text = "riot shotguns"
-		path = /obj/item/gun/kinetic/riotgun
+		path = /obj/item/gun/kinetic/pumpweapon/riotgun
 		amt_high = 3
 	cards
 		text = "ID cards"
