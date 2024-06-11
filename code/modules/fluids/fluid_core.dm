@@ -787,6 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	if (F.my_depth_level == 1)
 		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
 			do_reagent_reaction = 0
+			F.group.reagents.reaction(src.shoes, TOUCH, can_spawn_fluid = FALSE)
 
 	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
