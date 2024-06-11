@@ -29,7 +29,6 @@
 		// We couldn't stack everything or at all, try to insert into an available slot
 		if (amt_stacked < I.amount)
 			if (src.slots > length(src.stored_items))
-				var/obj/item/I_to_add = I
 				src.stored_items += I
 				I.set_loc(src.linked_item, FALSE)
 				I.stored = src
