@@ -1813,7 +1813,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
 	proc/get_contents()
 		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud, can_hold=list(/obj/item/material_piece))
+			src.create_storage(/datum/storage/machine, can_hold=list(/obj/item/material_piece))
 		var/list/storage_contents = src.storage.get_contents()
 		for (var/obj/item/I as anything in storage_contents)
 			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
