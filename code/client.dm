@@ -402,6 +402,7 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
@@ -994,7 +995,7 @@ var/global/curr_day = null
 			if( !A.mouse_opacity || A.invisibility > mob.see_invisible ) continue
 			stat( A )
 
-	if (!src.holder)//todo : maybe give admins a toggle
+	if (!src.holder || src.holder.slow_stat)
 		sleep(1.2 SECONDS) //and make this number larger
 	else
 		sleep(0.1 SECONDS)
@@ -1219,12 +1220,10 @@ var/global/curr_day = null
 
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
 		qdel(src.parallax_controller)
-		src.parallax_controller = new(null, src)
-		src.mob?.register_parallax_signals()
+		src.parallax_controller = new(src)
 
 	else if (src.parallax_controller)
 		qdel(src.parallax_controller)
-		src.mob?.unregister_parallax_signals()
 
 /client/verb/apply_view_tint()
 	set hidden = 1

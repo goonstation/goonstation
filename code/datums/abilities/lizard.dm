@@ -1,24 +1,3 @@
-/mob/living/carbon/human/proc/give_lizard_powers()
-	if (ishuman(src)) // not4long
-		var/datum/abilityHolder/lizard/A = src.get_ability_holder(/datum/abilityHolder/lizard)
-		if (A && istype(A))
-			return
-		var/datum/abilityHolder/lizard/W = src.add_ability_holder(/datum/abilityHolder/lizard)
-		W.addAbility(/datum/targetable/lizardAbility/colorshift)
-		W.addAbility(/datum/targetable/lizardAbility/colorchange)
-		W.addAbility(/datum/targetable/lizardAbility/regrow_tail)
-	else return
-
-/mob/living/carbon/human/proc/remove_lizard_powers()
-	if (ishuman(src))
-		var/datum/abilityHolder/lizard/W = src.get_ability_holder(/datum/abilityHolder/lizard)
-		if (W && istype(W))
-			W.removeAbility(/datum/targetable/lizardAbility/colorshift)
-			W.removeAbility(/datum/targetable/lizardAbility/colorchange)
-			W.removeAbility(/datum/targetable/lizardAbility/regrow_tail)
-			src.remove_ability_holder(/datum/abilityHolder/lizard)
-	else return
-
 /mob/living/carbon/human/proc/update_lizard_parts()
 	if (ishuman(src))
 		var/mob/living/carbon/human/liz = src

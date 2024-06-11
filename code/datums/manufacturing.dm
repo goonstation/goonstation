@@ -58,7 +58,6 @@
 		// use this if you want the outputted item to be customised in any way by the manufacturer
 		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
-			//A.quality -= rand(25,50)
 		if (src.apply_material && length(materials) > 0)
 			var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
 			var/datum/material/mat = applicable_material?.material
@@ -77,10 +76,10 @@
 	var/generate_costs = FALSE
 
 	New()
-		. = ..()
 		if(src.generate_costs)
 			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
+		. = ..()
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
@@ -700,13 +699,16 @@
 	name = "Chemical Barrel"
 	item_requirements = list("metal_dense" = 6,
 							 "cobryl" = 9)
-	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
 	create = 1
 	time = 30 SECONDS
 	category = "Machinery"
 
 	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+		
 	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
 
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
@@ -3420,7 +3422,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/riot_shotgun	//
 	name = "Riot Shotgun"
 	item_requirements = list("metal" = 20)
-	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	create = 1
 	time = 20 SECONDS
 	category = "Weapon"
