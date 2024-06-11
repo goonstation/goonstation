@@ -38,5 +38,5 @@
 			M.get_oxygen_deprivation(),
 			gibbed ? TRUE : FALSE,
 			html_decode(M.last_words),
-			map_setting
+			global.map_setting
 		)
