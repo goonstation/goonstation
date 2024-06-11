@@ -48,11 +48,12 @@
 		var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
 		if(istype(typeinfo) && islist(typeinfo.mats))
 			item_requirements = list()
-			for(var/req in typeinfo.mats)
-				var/amt = typeinfo.mats[req]
+			for(var/req_id in typeinfo.mats)
+				var/amt = typeinfo.mats[req_id]
+				var/datum/manufacturing_requirement/R = getRequirement(req_id)
 				if(isnull(amt))
 					amt = 1
-				item_requirements[req] = amt
+				item_requirements[R] = amt
 
 	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
