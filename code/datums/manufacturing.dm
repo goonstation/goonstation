@@ -77,10 +77,10 @@
 	var/generate_costs = FALSE
 
 	New()
-		. = ..()
 		if(src.generate_costs)
 			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
+		. = ..()
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
