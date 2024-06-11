@@ -39295,6 +39295,294 @@ module.exports = function () {
 
 /***/ }),
 
+/***/ "./packages/tgui-bench/tests/BlueprintButton.test.tsx":
+/*!************************************************************!*\
+  !*** ./packages/tgui-bench/tests/BlueprintButton.test.tsx ***!
+  \************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Default = exports.data = exports.BlueprintButtonTest = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _BlueprintButton = __webpack_require__(/*! tgui/interfaces/Manufacturer/components/BlueprintButton */ "./packages/tgui/interfaces/Manufacturer/components/BlueprintButton.tsx");
+
+var _backend = __webpack_require__(/*! tgui/backend */ "./packages/tgui/backend.ts");
+
+var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
+
+var _store = __webpack_require__(/*! tgui/store */ "./packages/tgui/store.js");
+
+// This component needs a lot of special properties and thus
+// should be setup as it is in the wild
+var BlueprintButtonTest = function BlueprintButtonTest(_, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      data = _useBackend.data;
+
+  return (0, _inferno.createComponentVNode)(2, _BlueprintButton.BlueprintButton, {
+    "actionRemoveBlueprint": data.actionRemoveBlueprint,
+    "actionVendProduct": data.actionVendProduct,
+    "blueprintData": data.blueprintData,
+    "manufacturerSpeed": data.manufacturerSspeed,
+    "materialData": data.materialData,
+    "deleteAllowed": data.delete_allowed !== 0,
+    "hasPower": !!data.hasPower
+  }, data.byondRef);
+};
+
+exports.BlueprintButtonTest = BlueprintButtonTest;
+var store = (0, _store.configureStore)({
+  sideEffets: false
+});
+var renderUi = (0, _renderer.createRenderer)(function (dataJson) {
+  store.dispatch((0, _backend.backendUpdate)({
+    data: Byond.parseJson(dataJson)
+  }));
+  return (0, _inferno.createComponentVNode)(2, _store.StoreProvider, {
+    "store": store,
+    children: (0, _inferno.createComponentVNode)(2, BlueprintButtonTest)
+  });
+});
+
+var aRB = function aRB(byondRef) {
+  return Math.random();
+};
+
+var aVP = function aVP() {
+  return Math.random();
+};
+
+var data = JSON.stringify({
+  actionRemoveBlueprint: aRB,
+  actionVendProduct: aVP,
+  blueprintData: {
+    name: "Test Blueprint",
+    requirement_data: [{
+      name: "Dense Metal",
+      id: "metal_dense",
+      amount: "5"
+    }],
+    item_names: ["Dense Metal"],
+    item_descriptions: [""],
+    create: 1,
+    time: 5,
+    category: "Tool",
+    byondRef: "[0x000000]",
+    img: null,
+    apply_material: false,
+    show_cost: false,
+    isMechBlueprint: false
+  },
+  materialData: [{
+    name: "Steel",
+    id: "steel",
+    amount: 5,
+    byondRef: "[0x000000]",
+    satisfies: []
+  }],
+  manufacturerSpeed: 3,
+  deleteAllowed: 1,
+  hasPower: 1
+});
+exports.data = data;
+
+var Default = function Default() {
+  return renderUi(data);
+};
+
+exports.Default = Default;
+
+/***/ }),
+
+/***/ "./packages/tgui-bench/tests/Button.test.tsx":
+/*!***************************************************!*\
+  !*** ./packages/tgui-bench/tests/Button.test.tsx ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ListOfButtonsWithTooltips = exports.ListOfButtonsWithIcons = exports.ListOfButtonsWithLinkEvent = exports.ListOfButtonsWithCallback = exports.ListOfButtons = exports.SingleButtonWithLinkEvent = exports.SingleButtonWithCallback = exports.SingleButton = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! tgui/components */ "./packages/tgui/components/index.js");
+
+var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
+
+var render = (0, _renderer.createRenderer)();
+
+var handleClick = function handleClick() {
+  return undefined;
+};
+
+var SingleButton = function SingleButton() {
+  var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+    children: "Hello world!"
+  });
+  render(node);
+};
+
+exports.SingleButton = SingleButton;
+
+var SingleButtonWithCallback = function SingleButtonWithCallback() {
+  var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+    "onClick": function () {
+      function onClick() {
+        return undefined;
+      }
+
+      return onClick;
+    }(),
+    children: "Hello world!"
+  });
+  render(node);
+};
+
+exports.SingleButtonWithCallback = SingleButtonWithCallback;
+
+var SingleButtonWithLinkEvent = function SingleButtonWithLinkEvent() {
+  var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+    "onClick": (0, _inferno.linkEvent)(null, handleClick),
+    children: "Hello world!"
+  });
+  render(node);
+};
+
+exports.SingleButtonWithLinkEvent = SingleButtonWithLinkEvent;
+
+var ListOfButtons = function ListOfButtons() {
+  var nodes = [];
+
+  for (var i = 0; i < 100; i++) {
+    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+      children: ["Hello world! ", i]
+    }, i);
+    nodes.push(node);
+  }
+
+  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
+};
+
+exports.ListOfButtons = ListOfButtons;
+
+var ListOfButtonsWithCallback = function ListOfButtonsWithCallback() {
+  var nodes = [];
+
+  for (var i = 0; i < 100; i++) {
+    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "onClick": function () {
+        function onClick() {
+          return undefined;
+        }
+
+        return onClick;
+      }(),
+      children: ["Hello world! ", i]
+    }, i);
+    nodes.push(node);
+  }
+
+  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
+};
+
+exports.ListOfButtonsWithCallback = ListOfButtonsWithCallback;
+
+var ListOfButtonsWithLinkEvent = function ListOfButtonsWithLinkEvent() {
+  var nodes = [];
+
+  for (var i = 0; i < 100; i++) {
+    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "onClick": (0, _inferno.linkEvent)(null, handleClick),
+      children: ["Hello world! ", i]
+    }, i);
+    nodes.push(node);
+  }
+
+  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
+};
+
+exports.ListOfButtonsWithLinkEvent = ListOfButtonsWithLinkEvent;
+
+var ListOfButtonsWithIcons = function ListOfButtonsWithIcons() {
+  var nodes = [];
+
+  for (var i = 0; i < 100; i++) {
+    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": 'arrow-left',
+      children: ["Hello world! ", i]
+    }, i);
+    nodes.push(node);
+  }
+
+  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
+};
+
+exports.ListOfButtonsWithIcons = ListOfButtonsWithIcons;
+
+var ListOfButtonsWithTooltips = function ListOfButtonsWithTooltips() {
+  var nodes = [];
+
+  for (var i = 0; i < 100; i++) {
+    var node = (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "tooltip": 'Hello world!',
+      children: ["Hello world! ", i]
+    }, i);
+    nodes.push(node);
+  }
+
+  render((0, _inferno.createVNode)(1, "div", null, nodes, 0));
+};
+
+exports.ListOfButtonsWithTooltips = ListOfButtonsWithTooltips;
+
+/***/ }),
+
+/***/ "./packages/tgui-bench/tests/Flex.test.tsx":
+/*!*************************************************!*\
+  !*** ./packages/tgui-bench/tests/Flex.test.tsx ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Default = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! tgui/components */ "./packages/tgui/components/index.js");
+
+var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
+
+var render = (0, _renderer.createRenderer)();
+
+var Default = function Default() {
+  var node = (0, _inferno.createComponentVNode)(2, _components.Flex, {
+    "align": "baseline",
+    children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      "mr": 1,
+      children: ["Text ", Math.random()]
+    }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      "grow": 1,
+      "basis": 0,
+      children: ["Text ", Math.random()]
+    })]
+  });
+  render(node);
+};
+
+exports.Default = Default;
+
+/***/ }),
+
 /***/ "./packages/tgui-bench/tests/Image.test.tsx":
 /*!**************************************************!*\
   !*** ./packages/tgui-bench/tests/Image.test.tsx ***!
@@ -39394,6 +39682,133 @@ var WithPath = function WithPath() {
 };
 
 exports.WithPath = WithPath;
+
+/***/ }),
+
+/***/ "./packages/tgui-bench/tests/Manufacturer.test.tsx":
+/*!*********************************************************!*\
+  !*** ./packages/tgui-bench/tests/Manufacturer.test.tsx ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Default = exports.data = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _Manufacturer = __webpack_require__(/*! tgui/interfaces/Manufacturer */ "./packages/tgui/interfaces/Manufacturer/index.tsx");
+
+var _backend = __webpack_require__(/*! tgui/backend */ "./packages/tgui/backend.ts");
+
+var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
+
+var _store = __webpack_require__(/*! tgui/store */ "./packages/tgui/store.js");
+
+var store = (0, _store.configureStore)({
+  sideEffets: false
+});
+var renderUi = (0, _renderer.createRenderer)(function (dataJson) {
+  store.dispatch((0, _backend.backendUpdate)({
+    data: Byond.parseJson(dataJson)
+  }));
+  return (0, _inferno.createComponentVNode)(2, _store.StoreProvider, {
+    "store": store,
+    children: (0, _inferno.createComponentVNode)(2, _Manufacturer.Manufacturer)
+  });
+});
+var data = JSON.stringify({
+  delete_allowed: 1,
+  queue: [],
+  progress_pct: 0,
+  panel_open: 1,
+  hacked: 1,
+  malfunction: 0,
+  mode: "ready",
+  wire_bitflags: 15,
+  banking_info: {
+    name: "Staffie McPubs",
+    current_money: 69420
+  },
+  speed: 4,
+  repeat: 1,
+  resource_data: [{
+    name: "Steel",
+    id: "steel",
+    amount: 5,
+    byondRef: "[0x000000]",
+    satisfies: []
+  }],
+  manudrive_uses_left: 0,
+  indicators: {
+    electrified: 0,
+    malfunctioning: 0,
+    hacked: 1,
+    hasPower: 1
+  },
+  fabricator_name: "Manufacturer Performance Testing Dummy Data 9001",
+  all_categories: ["Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded"],
+  available_blueprints: [],
+  hidden_blueprints: [],
+  downloaded_blueprints: [],
+  recipe_blueprints: [],
+  wires: [],
+  rockboxes: [],
+  manudrive: {
+    name: "",
+    limit: 0
+  },
+  min_speed: 1,
+  max_speed_normal: 3,
+  max_speed_hacked: 5
+});
+exports.data = data;
+
+var Default = function Default() {
+  return renderUi(data);
+};
+
+exports.Default = Default;
+
+/***/ }),
+
+/***/ "./packages/tgui-bench/tests/Stack.test.tsx":
+/*!**************************************************!*\
+  !*** ./packages/tgui-bench/tests/Stack.test.tsx ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Default = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! tgui/components */ "./packages/tgui/components/index.js");
+
+var _renderer = __webpack_require__(/*! tgui/renderer */ "./packages/tgui/renderer.ts");
+
+var render = (0, _renderer.createRenderer)();
+
+var Default = function Default() {
+  var node = (0, _inferno.createComponentVNode)(2, _components.Stack, {
+    "align": "baseline",
+    children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+      children: ["Text ", Math.random()]
+    }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+      "grow": 1,
+      "basis": 0,
+      children: ["Text ", Math.random()]
+    })]
+  });
+  render(node);
+};
+
+exports.Default = Default;
 
 /***/ }),
 
@@ -49797,6 +50212,1354 @@ exports.listenForKeyEvents = listenForKeyEvents;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/Manufacturer/components/BlueprintButton.tsx":
+/*!******************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/BlueprintButton.tsx ***!
+  \******************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.BlueprintButton = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../../../components */ "./packages/tgui/components/index.js");
+
+var _math = __webpack_require__(/*! common/math */ "./packages/common/math.ts");
+
+var _ButtonWithBadge = __webpack_require__(/*! ./ButtonWithBadge */ "./packages/tgui/interfaces/Manufacturer/components/ButtonWithBadge.tsx");
+
+var _CenteredText = __webpack_require__(/*! ./CenteredText */ "./packages/tgui/interfaces/Manufacturer/components/CenteredText.tsx");
+
+var _format = __webpack_require__(/*! ../../../format */ "./packages/tgui/format.js");
+
+var _constant = __webpack_require__(/*! ../constant */ "./packages/tgui/interfaces/Manufacturer/constant.ts");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+var getBlueprintTime = function getBlueprintTime(time, manufacturerSpeed) {
+  return (0, _math.round)(time / 10 / manufacturerSpeed, 0.01);
+};
+
+/*
+Get whether or not there is a sufficient amount to make. does NOT affect sanity checks on the DM side,
+this just offloads some of the computation to the client.
+
+Consequently, if the checks on the .dm end change, this has to change as well.
+
+Only the DM checks matter for actually making the item though, this just enables and disables buttons /
+shows what materials are missing.
+*/
+var getProductionSatisfaction = function getProductionSatisfaction(requirement_data, materials_stored) {
+  // Copy values of mats stored to edit in case we need to try the same material twice
+  var material_amts_predicted = {};
+  materials_stored.forEach(function (value) {
+    return material_amts_predicted[value.byondRef] = value.amount;
+  });
+  var patterns_satisfied = [];
+
+  var _loop = function _loop(i) {
+    var target_pattern = requirement_data[i].id;
+    var target_amount = requirement_data[i].amount;
+    var matchingMaterial = materials_stored.find(function (material) {
+      var _material$satisfies;
+
+      return material.amount >= target_amount / 10 && (target_pattern === "ALL" || ((_material$satisfies = material.satisfies) == null ? void 0 : _material$satisfies.includes(target_pattern)) || material.id === target_pattern);
+    });
+
+    if (matchingMaterial !== undefined) {
+      material_amts_predicted[i] -= target_amount / 10;
+      patterns_satisfied.push(true);
+    } else {
+      patterns_satisfied.push(false);
+    }
+  };
+
+  for (var i in requirement_data) {
+    _loop(i);
+  }
+
+  return patterns_satisfied;
+};
+
+var BlueprintButton = function BlueprintButton(props) {
+  var actionRemoveBlueprint = props.actionRemoveBlueprint,
+      actionVendProduct = props.actionVendProduct,
+      blueprintData = props.blueprintData,
+      materialData = props.materialData,
+      manufacturerSpeed = props.manufacturerSpeed,
+      deleteAllowed = props.deleteAllowed,
+      hasPower = props.hasPower;
+  var blueprintSatisfaction = getProductionSatisfaction(blueprintData.requirement_data, materialData); // Condense producability
+
+  var notProduceable = blueprintSatisfaction.includes(false); // Don't include this flavor if we only output one item, because if so, then we know what we're making
+
+  var outputs = blueprintData.item_names.length < 2 && blueprintData.create < 2 && !blueprintData.apply_material ? null : (0, _inferno.createFragment)([(0, _inferno.createVNode)(1, "br"), (0, _inferno.createTextVNode)("Outputs: "), (0, _inferno.createVNode)(1, "br"), blueprintData.item_names.map(function (value, index) {
+    return (0, _inferno.createVNode)(1, "b", null, [blueprintData.create, (0, _inferno.createTextVNode)("x "), value, (0, _inferno.createVNode)(1, "br")], 0, null, index);
+  })], 0);
+  var content_requirements = (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Requirements",
+    "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": "hourglass",
+      "backgroundColor": "rgba(0,0,0,0)",
+      children: [getBlueprintTime(blueprintData.time, manufacturerSpeed), "s"]
+    }),
+    children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: Object.keys(blueprintData.requirement_data).map(function (value, index) {
+        return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "labelColor": blueprintSatisfaction[index] ? undefined : "bad",
+          "label": blueprintData.requirement_data[value].name,
+          "textAlign": "right",
+          children: blueprintData.requirement_data[value].amount / 10
+        }, index);
+      })
+    }), outputs]
+  });
+  var canDelete = blueprintData.isMechBlueprint && deleteAllowed; // /datum/manufacture contains no description of its 'contents', so the first item works
+
+  var content_info = "";
+
+  if (canDelete) {
+    content_info = "Click this to remove the blueprint from the fabricator.";
+  } else {
+    content_info = blueprintData.item_descriptions[0];
+  }
+
+  return (0, _inferno.createComponentVNode)(2, _components.Stack, {
+    "inline": true,
+    children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+      "ml": _constant.BlueprintButtonStyle.MarginX,
+      "my": _constant.BlueprintButtonStyle.MarginY,
+      children: (0, _inferno.createComponentVNode)(2, _ButtonWithBadge.ButtonWithBadge, {
+        "width": _constant.BlueprintButtonStyle.Width,
+        "height": _constant.BlueprintButtonStyle.Height,
+        "imagePath": blueprintData.img,
+        "disabled": !hasPower || notProduceable,
+        "onClick": function () {
+          function onClick() {
+            return actionVendProduct(blueprintData.byondRef);
+          }
+
+          return onClick;
+        }(),
+        children: (0, _inferno.createComponentVNode)(2, _CenteredText.CenteredText, {
+          "height": _constant.BlueprintButtonStyle.Height,
+          "text": (0, _format.truncate)(blueprintData.name, 40)
+        })
+      }, blueprintData.name)
+    }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+      "mr": _constant.BlueprintButtonStyle.MarginX,
+      children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+        "vertical": true,
+        "my": _constant.BlueprintButtonStyle.MarginY,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "mb": _constant.BlueprintMiniButtonStyle.Spacing,
+          children: (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+            "content": content_info,
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "width": _constant.BlueprintMiniButtonStyle.Width,
+              "height": (_constant.BlueprintButtonStyle.Height - _constant.BlueprintMiniButtonStyle.Spacing) / 2,
+              "align": "center",
+              "disabled": canDelete ? false : !hasPower || notProduceable,
+              "onClick": function () {
+                function onClick() {
+                  return canDelete ? actionRemoveBlueprint(blueprintData.byondRef) : actionVendProduct(blueprintData.byondRef);
+                }
+
+                return onClick;
+              }(),
+              "py": _constant.BlueprintMiniButtonStyle.IconSize / 2,
+              children: (0, _inferno.createComponentVNode)(2, _components.Icon, {
+                "name": canDelete ? "trash" : "info",
+                "size": _constant.BlueprintMiniButtonStyle.IconSize
+              })
+            })
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "mt": _constant.BlueprintMiniButtonStyle.Spacing,
+          children: (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+            "content": content_requirements,
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "width": _constant.BlueprintMiniButtonStyle.Width,
+              "height": (_constant.BlueprintButtonStyle.Height - _constant.BlueprintMiniButtonStyle.Spacing) / 2,
+              "align": "center",
+              "disabled": !hasPower || notProduceable,
+              "onClick": function () {
+                function onClick() {
+                  return actionVendProduct(blueprintData.byondRef);
+                }
+
+                return onClick;
+              }(),
+              "py": _constant.BlueprintMiniButtonStyle.IconSize / 2,
+              children: (0, _inferno.createComponentVNode)(2, _components.Icon, {
+                "name": "gear",
+                "size": _constant.BlueprintMiniButtonStyle.IconSize
+              })
+            })
+          })
+        })]
+      })
+    })]
+  });
+};
+
+exports.BlueprintButton = BlueprintButton;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/ButtonWithBadge.tsx":
+/*!******************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/ButtonWithBadge.tsx ***!
+  \******************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ButtonWithBadge = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _Stack = __webpack_require__(/*! ../../../components/Stack */ "./packages/tgui/components/Stack.tsx");
+
+var _Button = __webpack_require__(/*! ../../../components/Button */ "./packages/tgui/components/Button.js");
+
+var _Image = __webpack_require__(/*! ../../../components/Image */ "./packages/tgui/components/Image.tsx");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+var ButtonWithBadge = function ButtonWithBadge(props) {
+  var width = props.width,
+      height = props.height,
+      noImageShadow = props.noImageShadow,
+      imagePath = props.imagePath,
+      children = props.children,
+      onClick = props.onClick,
+      onMouseEnter = props.onMouseEnter,
+      onMouseLeave = props.onMouseLeave,
+      opacity = props.opacity,
+      disabled = props.disabled;
+  return (0, _inferno.createComponentVNode)(2, _Button.Button, {
+    "opacity": opacity,
+    "onClick": onClick,
+    "width": width || "100%",
+    "height": height || "100%",
+    "p": 0,
+    "onMouseEnter": onMouseEnter,
+    "onMouseLeave": onMouseLeave,
+    "disabled": disabled,
+    children: (0, _inferno.createComponentVNode)(2, _Stack.Stack, {
+      children: [(0, _inferno.createComponentVNode)(2, _Stack.Stack.Item, {
+        children: (0, _inferno.createComponentVNode)(2, _Image.Image, {
+          "verticalAlign": "top",
+          "height": height || "100%",
+          "src": imagePath,
+          "backgroundColor": noImageShadow ? null : "rgba(0,0,0,0.2)"
+        })
+      }), (0, _inferno.createComponentVNode)(2, _Stack.Stack.Item, {
+        "grow": true,
+        "mx": 1,
+        children: children
+      })]
+    })
+  });
+};
+
+exports.ButtonWithBadge = ButtonWithBadge;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/CardInfo.tsx":
+/*!***********************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/CardInfo.tsx ***!
+  \***********************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.CardInfo = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../../../components */ "./packages/tgui/components/index.js");
+
+var _format = __webpack_require__(/*! ../../../format */ "./packages/tgui/format.js");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+var CardInfo = function CardInfo(props) {
+  var actionCardLogin = props.actionCardLogin,
+      actionCardLogout = props.actionCardLogout,
+      banking_info = props.banking_info;
+  return banking_info === null ? (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "textAlign": "center",
+    children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+      "vertical": true,
+      children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        children: "No Account Found."
+      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "icon": "add",
+          "onClick": function () {
+            function onClick() {
+              return actionCardLogin();
+            }
+
+            return onClick;
+          }(),
+          children: "Add Account"
+        })
+      })]
+    })
+  }) : (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Account Info",
+    "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": "minus",
+      "onClick": function () {
+        function onClick() {
+          return actionCardLogout();
+        }
+
+        return onClick;
+      }(),
+      children: "Log Out"
+    }),
+    children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Owner",
+        children: banking_info == null ? void 0 : banking_info.name
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Balance",
+        children: [(0, _format.formatMoney)(banking_info == null ? void 0 : banking_info.current_money), "\u2ABD"]
+      })]
+    })
+  });
+};
+
+exports.CardInfo = CardInfo;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/CenteredText.tsx":
+/*!***************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/CenteredText.tsx ***!
+  \***************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.CenteredText = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _Box = __webpack_require__(/*! ../../../components/Box */ "./packages/tgui/components/Box.tsx");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+var CenteredText = function CenteredText(props) {
+  var position = props.position,
+      width = props.width,
+      height = props.height,
+      text = props.text;
+  return (0, _inferno.createComponentVNode)(2, _Box.Box, {
+    "preserveWhitespace": true,
+    "inline": true,
+    "position": position,
+    "width": width !== undefined ? width : "100%",
+    "height": height !== undefined ? height : "100%",
+    "lineHeight": height !== undefined ? height : "100%",
+    "style": {
+      "text-align": "center"
+    },
+    "px": 0.5,
+    children: (0, _inferno.createVNode)(1, "span", null, text, 0, {
+      "style": {
+        "display": "inline-block",
+        "vertical-align": "middle",
+        "line-height": "normal"
+      }
+    })
+  });
+};
+
+exports.CenteredText = CenteredText;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/CollapsibleWireMenu.tsx":
+/*!**********************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/CollapsibleWireMenu.tsx ***!
+  \**********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.CollapsibleWireMenu = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../../../components */ "./packages/tgui/components/index.js");
+
+var _bitflag = __webpack_require__(/*! ../../common/bitflag */ "./packages/tgui/interfaces/common/bitflag.ts");
+
+var _constant = __webpack_require__(/*! ../constant */ "./packages/tgui/interfaces/Manufacturer/constant.ts");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+var ManufacturerWireData = [{
+  name: "Teal",
+  colorName: "teal"
+}, {
+  name: "Red",
+  colorName: "red"
+}, {
+  name: "Gold",
+  colorName: "gold"
+}, {
+  name: "Lime",
+  colorName: "lime"
+}];
+
+var CollapsibleWireMenu = function CollapsibleWireMenu(props) {
+  var actionWirePulse = props.actionWirePulse,
+      actionWireCutOrMend = props.actionWireCutOrMend,
+      indicators = props.indicators,
+      wires = props.wires,
+      wire_bitflags = props.wire_bitflags;
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "textAlign": "center",
+    "title": "Maintenance Panel",
+    children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: wires.map(function (_, i) {
+        return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": ManufacturerWireData[i].name,
+          "labelColor": ManufacturerWireData[i].colorName,
+          "buttons": (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Button, {
+            "width": _constant.WIRE_PANEL_BUTTONS_WIDTH,
+            "textAlign": "center",
+            "content": "Pulse",
+            "onClick": function () {
+              function onClick() {
+                return actionWirePulse(i);
+              }
+
+              return onClick;
+            }()
+          }, i), (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "width": _constant.WIRE_PANEL_BUTTONS_WIDTH,
+            "textAlign": "center",
+            "content": (0, _bitflag.is_set)(wire_bitflags, wires[i] - 1) ? "Cut" : "Mend",
+            "onClick": function () {
+              function onClick() {
+                return actionWireCutOrMend(i);
+              }
+
+              return onClick;
+            }()
+          }, i)], 8)
+        }, i);
+      })
+    }), (0, _inferno.createComponentVNode)(2, _components.Divider), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Electrification Risk",
+        children: indicators.electrified ? "High" : "None"
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "System Stability",
+        children: indicators.malfunctioning ? "Unstable" : "Stable"
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Inventory",
+        children: indicators.hacked ? "Expanded" : "Standard"
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Power",
+        children: indicators.hasPower ? "Sufficient" : "Insufficient"
+      })]
+    })]
+  });
+};
+
+exports.CollapsibleWireMenu = CollapsibleWireMenu;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/ManufacturerSettings.tsx":
+/*!***********************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/ManufacturerSettings.tsx ***!
+  \***********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ManufacturerSettings = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _components = __webpack_require__(/*! ../../../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+var ManufacturerSettings = function ManufacturerSettings(props) {
+  var repeat = props.repeat,
+      hacked = props.hacked,
+      speed = props.speed,
+      max_speed_normal = props.max_speed_normal,
+      max_speed_hacked = props.max_speed_hacked,
+      mode = props.mode,
+      actionSetSpeed = props.actionSetSpeed,
+      actionRepeat = props.actionRepeat;
+  var max_speed = hacked ? max_speed_hacked : max_speed_normal;
+  return (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+      "textAlign": "center",
+      "title": "Fabricator Settings",
+      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Repeat",
+          "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "icon": "repeat",
+            "onClick": function () {
+              function onClick() {
+                return actionRepeat();
+              }
+
+              return onClick;
+            }(),
+            children: "Toggle Repeat"
+          }),
+          "textAlign": "center",
+          children: repeat ? "On" : "Off"
+        }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Speed",
+          children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+            children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                "icon": "angle-double-left",
+                "onClick": function () {
+                  function onClick() {
+                    return actionSetSpeed(1);
+                  }
+
+                  return onClick;
+                }()
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              "grow": true,
+              children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
+                "minValue": 1,
+                "value": speed,
+                "maxValue": max_speed,
+                "step": 1,
+                "stepPixelSize": 50,
+                "disabled": mode === "working",
+                "onChange": function () {
+                  function onChange(_e, value) {
+                    return actionSetSpeed(value);
+                  }
+
+                  return onChange;
+                }()
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                "icon": "angle-double-right",
+                "onClick": function () {
+                  function onClick() {
+                    return actionSetSpeed(max_speed);
+                  }
+
+                  return onClick;
+                }()
+              })
+            })]
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.ManufacturerSettings = ManufacturerSettings;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/PowerAlertModal.tsx":
+/*!******************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/PowerAlertModal.tsx ***!
+  \******************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.PowerAlertModal = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts");
+
+var _components = __webpack_require__(/*! ../../../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+// Modal is made to resemble the modal of SeedFabricator.js
+// Mostly custom code to properly align the modal box with the screen while applying the dimmer to a specific element
+var PowerAlertModal = function PowerAlertModal(props) {
+  var width = props.width,
+      height = props.height;
+  return (0, _inferno.createComponentVNode)(2, _components.Flex, {
+    "width": width,
+    "height": height,
+    "justify": "center",
+    "position": "absolute",
+    "align": "center",
+    "inline": true,
+    children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      "textAlign": "center",
+      "width": 35,
+      "height": 10,
+      "fontSize": 3,
+      "fontFamily": "Courier",
+      "color": "red",
+      "className": (0, _react.classes)(["Modal"]),
+      "style": {
+        "z-index": 2
+      },
+      children: [(0, _inferno.createComponentVNode)(2, _components.Blink, {
+        "time": 500,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
+          "name": "exclamation-triangle",
+          "pr": 1.5
+        }), "MALFUNCTION", (0, _inferno.createComponentVNode)(2, _components.Icon, {
+          "name": "exclamation-triangle",
+          "pl": 1.5
+        })]
+      }), "CHECK WIRES"]
+    })
+  });
+};
+
+exports.PowerAlertModal = PowerAlertModal;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/components/ProductionCard.tsx":
+/*!*****************************************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/components/ProductionCard.tsx ***!
+  \*****************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ProductionCard = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _format = __webpack_require__(/*! ../../../format */ "./packages/tgui/format.js");
+
+var _components = __webpack_require__(/*! ../../../components */ "./packages/tgui/components/index.js");
+
+var _ButtonWithBadge = __webpack_require__(/*! ./ButtonWithBadge */ "./packages/tgui/interfaces/Manufacturer/components/ButtonWithBadge.tsx");
+
+var _CenteredText = __webpack_require__(/*! ./CenteredText */ "./packages/tgui/interfaces/Manufacturer/components/CenteredText.tsx");
+
+var _constant = __webpack_require__(/*! ../constant */ "./packages/tgui/interfaces/Manufacturer/constant.ts");
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+
+/*
+  Card which shows the blueprint being produced/queued, and if currently being produced,
+  a progressbar for how close it is to being done.
+*/
+var ProductionCard = function ProductionCard(props) {
+  var actionQueueRemove = props.actionQueueRemove,
+      img = props.img,
+      index = props.index,
+      mode = props.mode,
+      name = props.name; // dont display Weird things
+
+  if (img === undefined || index === undefined || mode === undefined || name === undefined) {
+    return null;
+  }
+
+  return (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+      "content": "Click to remove from queue.",
+      children: (0, _inferno.createComponentVNode)(2, _ButtonWithBadge.ButtonWithBadge, {
+        "imagePath": img,
+        "onClick": function () {
+          function onClick() {
+            return actionQueueRemove(index);
+          }
+
+          return onClick;
+        }(),
+        "width": _constant.ProductionCardStyle.Width,
+        "height": _constant.ProductionCardStyle.Height,
+        children: (0, _inferno.createComponentVNode)(2, _CenteredText.CenteredText, {
+          "height": _constant.ProductionCardStyle.Height,
+          "text": (0, _format.truncate)(name, 40)
+        })
+      })
+    })
+  });
+};
+
+exports.ProductionCard = ProductionCard;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/constant.ts":
+/*!***********************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/constant.ts ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ProductionCardStyle = exports.BlueprintMiniButtonStyle = exports.BlueprintButtonStyle = exports.AccessLevels = exports.RockboxStyle = exports.MANUDRIVE_UNLIMITED = exports.WIRE_PANEL_BUTTONS_WIDTH = exports.SETTINGS_WINDOW_WIDTH = void 0;
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+// Controls the amount of space the settings window takes up.
+var SETTINGS_WINDOW_WIDTH = 20; // Controls the width of buttons on the panel to be constant, so that cut/mend are of equal widths
+
+exports.SETTINGS_WINDOW_WIDTH = SETTINGS_WINDOW_WIDTH;
+var WIRE_PANEL_BUTTONS_WIDTH = 5; // Manudrives use a non-infinite value to specify there is unlimited uses, improve clarity for now
+
+exports.WIRE_PANEL_BUTTONS_WIDTH = WIRE_PANEL_BUTTONS_WIDTH;
+var MANUDRIVE_UNLIMITED = -1; // Constants for the rockbox display, there needs to be a bit of custom defines to make it look decent
+
+exports.MANUDRIVE_UNLIMITED = MANUDRIVE_UNLIMITED;
+var RockboxStyle; // Constants for the representation obj proc "allowed" has in its return values of a response
+
+exports.RockboxStyle = RockboxStyle;
+
+(function (RockboxStyle) {
+  RockboxStyle[RockboxStyle["MarginTop"] = 2] = "MarginTop";
+})(RockboxStyle || (exports.RockboxStyle = RockboxStyle = {}));
+
+var AccessLevels; // Controls the size and spacing of blueprint buttons on the main panel.
+
+exports.AccessLevels = AccessLevels;
+
+(function (AccessLevels) {
+  AccessLevels[AccessLevels["DENIED"] = 0] = "DENIED";
+  AccessLevels[AccessLevels["IMPLICIT"] = 1] = "IMPLICIT";
+  AccessLevels[AccessLevels["ALLOWED"] = 2] = "ALLOWED";
+})(AccessLevels || (exports.AccessLevels = AccessLevels = {}));
+
+var BlueprintButtonStyle; // Controls the smaller 'settings' and 'info' buttons on the side of each larger button.
+
+exports.BlueprintButtonStyle = BlueprintButtonStyle;
+
+(function (BlueprintButtonStyle) {
+  BlueprintButtonStyle[BlueprintButtonStyle["Width"] = 15.5] = "Width";
+  BlueprintButtonStyle[BlueprintButtonStyle["Height"] = 5] = "Height";
+  BlueprintButtonStyle[BlueprintButtonStyle["MarginX"] = 0.5] = "MarginX";
+  BlueprintButtonStyle[BlueprintButtonStyle["MarginY"] = 0.5] = "MarginY";
+})(BlueprintButtonStyle || (exports.BlueprintButtonStyle = BlueprintButtonStyle = {}));
+
+var BlueprintMiniButtonStyle; // Controls the production card styling
+
+exports.BlueprintMiniButtonStyle = BlueprintMiniButtonStyle;
+
+(function (BlueprintMiniButtonStyle) {
+  BlueprintMiniButtonStyle[BlueprintMiniButtonStyle["Width"] = 2] = "Width";
+  BlueprintMiniButtonStyle[BlueprintMiniButtonStyle["IconSize"] = 1] = "IconSize";
+  BlueprintMiniButtonStyle[BlueprintMiniButtonStyle["Spacing"] = 0.4] = "Spacing";
+})(BlueprintMiniButtonStyle || (exports.BlueprintMiniButtonStyle = BlueprintMiniButtonStyle = {}));
+
+var ProductionCardStyle;
+exports.ProductionCardStyle = ProductionCardStyle;
+
+(function (ProductionCardStyle) {
+  ProductionCardStyle[ProductionCardStyle["Width"] = SETTINGS_WINDOW_WIDTH] = "Width";
+  ProductionCardStyle[ProductionCardStyle["Height"] = 4] = "Height";
+  ProductionCardStyle[ProductionCardStyle["ButtonWidth"] = 2] = "ButtonWidth";
+  ProductionCardStyle[ProductionCardStyle["ButtonInternalSpacing"] = 0.5] = "ButtonInternalSpacing";
+})(ProductionCardStyle || (exports.ProductionCardStyle = ProductionCardStyle = {}));
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Manufacturer/index.tsx":
+/*!*********************************************************!*\
+  !*** ./packages/tgui/interfaces/Manufacturer/index.tsx ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Manufacturer = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-fa814fcb5f.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../../backend */ "./packages/tgui/backend.ts");
+
+var _layouts = __webpack_require__(/*! ../../layouts */ "./packages/tgui/layouts/index.js");
+
+var _bitflag = __webpack_require__(/*! ../common/bitflag */ "./packages/tgui/interfaces/common/bitflag.ts");
+
+var _math = __webpack_require__(/*! common/math */ "./packages/common/math.ts");
+
+var _string = __webpack_require__(/*! common/string */ "./packages/common/string.js");
+
+var _stringUtils = __webpack_require__(/*! ../common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
+
+var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/components/index.js");
+
+var _constant = __webpack_require__(/*! ./constant */ "./packages/tgui/interfaces/Manufacturer/constant.ts");
+
+var _BlueprintButton = __webpack_require__(/*! ./components/BlueprintButton */ "./packages/tgui/interfaces/Manufacturer/components/BlueprintButton.tsx");
+
+var _CardInfo = __webpack_require__(/*! ./components/CardInfo */ "./packages/tgui/interfaces/Manufacturer/components/CardInfo.tsx");
+
+var _CollapsibleWireMenu = __webpack_require__(/*! ./components/CollapsibleWireMenu */ "./packages/tgui/interfaces/Manufacturer/components/CollapsibleWireMenu.tsx");
+
+var _ProductionCard = __webpack_require__(/*! ./components/ProductionCard */ "./packages/tgui/interfaces/Manufacturer/components/ProductionCard.tsx");
+
+var _PowerAlertModal = __webpack_require__(/*! ./components/PowerAlertModal */ "./packages/tgui/interfaces/Manufacturer/components/PowerAlertModal.tsx");
+
+var _ManufacturerSettings = __webpack_require__(/*! ./components/ManufacturerSettings */ "./packages/tgui/interfaces/Manufacturer/components/ManufacturerSettings.tsx");
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (it) return (it = it.call(o)).next.bind(it); if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var Manufacturer = function Manufacturer(_, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var _useLocalState = (0, _backend.useLocalState)(context, "query", ""),
+      search = _useLocalState[0],
+      setSearchData = _useLocalState[1];
+
+  var _useLocalState2 = (0, _backend.useLocalState)(context, "swap", null),
+      swappingMaterialRef = _useLocalState2[0],
+      setSwappingMaterialRef = _useLocalState2[1]; // Define some actions for the interface and its children
+
+
+  var actionCardLogout = function actionCardLogout() {
+    return act("card", {
+      "remove": true
+    });
+  };
+
+  var actionCardLogin = function actionCardLogin() {
+    return act("card", {
+      "scan": true
+    });
+  };
+
+  var actionQueueClear = function actionQueueClear() {
+    return act("clear");
+  };
+
+  var actionQueueRemove = function actionQueueRemove(index) {
+    return act("remove", {
+      "index": index + 1
+    });
+  };
+
+  var actionQueueTogglePause = function actionQueueTogglePause(mode) {
+    return act("pause_toggle", {
+      "action": mode === "working" ? "pause" : "continue"
+    });
+  };
+
+  var actionWirePulse = function actionWirePulse(index) {
+    return act('wire', {
+      action: "pulse",
+      wire: index + 1
+    });
+  };
+
+  var actionWireCutOrMend = function actionWireCutOrMend(index) {
+    return act("wire", {
+      action: (0, _bitflag.is_set)(data.wire_bitflags, data.wires[index] - 1) ? "cut" : "mend",
+      wire: index + 1
+    });
+  };
+
+  var actionVendProduct = function actionVendProduct(byondRef) {
+    return act("request_product", {
+      "blueprint_ref": byondRef
+    });
+  };
+
+  var actionRemoveBlueprint = function actionRemoveBlueprint(byondRef) {
+    return act("delete", {
+      "blueprint_ref": byondRef
+    });
+  };
+
+  var actionSetSpeed = function actionSetSpeed(new_speed) {
+    return act("speed", {
+      "value": new_speed
+    });
+  };
+
+  var actionRepeat = function actionRepeat() {
+    return act("repeat");
+  }; // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
+
+
+  var swapPriority = function swapPriority(materialRef) {
+    if (swappingMaterialRef === null) {
+      setSwappingMaterialRef(materialRef);
+    } else if (swappingMaterialRef === materialRef) {
+      setSwappingMaterialRef(null);
+    } else {
+      act("material_swap", {
+        "resource_1": swappingMaterialRef,
+        "resource_2": materialRef
+      });
+      setSwappingMaterialRef(null);
+    }
+  };
+
+  var all_blueprints = {
+    available: data.available_blueprints,
+    download: data.downloaded_blueprints,
+    drive_recipes: data.recipe_blueprints,
+    hidden: data.hidden_blueprints
+  };
+  var blueprint_types = Object.keys(all_blueprints);
+  /*
+    Converts the blueprints we get into one larger list sorted by category.
+    This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
+  */
+
+  var blueprints_by_category = {};
+
+  for (var category_index = 0; category_index < data.all_categories.length; category_index++) {
+    var category = data.all_categories[category_index];
+    blueprints_by_category[category] = [];
+
+    for (var blueprint_index = 0; blueprint_index < blueprint_types.length; blueprint_index++) {
+      var category_name = blueprint_types[blueprint_index];
+
+      if (!data.hacked && category_name === "hidden") {
+        continue;
+      }
+
+      var blueprint_list = all_blueprints[category_name];
+
+      if (blueprint_list[category] === undefined) {
+        continue;
+      }
+
+      for (var _iterator = _createForOfIteratorHelperLoose(blueprint_list[category]), _step; !(_step = _iterator()).done;) {
+        var _blueprint$name;
+
+        var blueprint = _step.value;
+
+        if ((_blueprint$name = blueprint.name) != null && _blueprint$name.toLowerCase().includes(search)) {
+          blueprints_by_category[blueprint.category].push(blueprint);
+        }
+      }
+    }
+  } // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
+
+
+  var queueBlueprintRefs = data.queue.map(function (queued) {
+    return blueprints_by_category[queued.category].find(function (key) {
+      return key.name === queued.name;
+    });
+  });
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 1200,
+    "height": 600,
+    "title": data.fabricator_name,
+    children: [!data.indicators.hasPower && (0, _inferno.createComponentVNode)(2, _PowerAlertModal.PowerAlertModal, {
+      "width": 100 - _constant.SETTINGS_WINDOW_WIDTH,
+      "height": "100%"
+    }), (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      "scrollable": true,
+      children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "grow": true,
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            children: [!data.indicators.hasPower && (0, _inferno.createComponentVNode)(2, _components.Dimmer), data.all_categories.map(function (category) {
+              return blueprints_by_category[category].length > 0 && (0, _inferno.createComponentVNode)(2, _components.Collapsible, {
+                "open": true,
+                "title": category + " (" + blueprints_by_category[category].length + ")",
+                children: blueprints_by_category[category].map(function (blueprint, index) {
+                  return (0, _inferno.createComponentVNode)(2, _BlueprintButton.BlueprintButton, {
+                    "actionRemoveBlueprint": actionRemoveBlueprint,
+                    "actionVendProduct": actionVendProduct,
+                    "blueprintData": blueprint,
+                    "manufacturerSpeed": data.speed,
+                    "materialData": data.resource_data,
+                    "deleteAllowed": data.delete_allowed !== _constant.AccessLevels.DENIED,
+                    "hasPower": !!data.indicators.hasPower
+                  }, index);
+                })
+              }, category);
+            })]
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "width": _constant.SETTINGS_WINDOW_WIDTH,
+          children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+            "vertical": true,
+            children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+                "placeholder": "Search...",
+                "width": "100%",
+                "onInput": function () {
+                  function onInput(_, value) {
+                    return setSearchData(value);
+                  }
+
+                  return onInput;
+                }()
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+                "title": "Loaded Materials",
+                "textAlign": "center",
+                children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+                  children: data.resource_data.map(function (resourceData) {
+                    return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                      "buttons": (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Button, {
+                        "icon": "eject",
+                        "onClick": function () {
+                          function onClick() {
+                            return act("material_eject", {
+                              "resource": resourceData.byondRef
+                            });
+                          }
+
+                          return onClick;
+                        }()
+                      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+                        "icon": "arrows-up-down",
+                        "color": swappingMaterialRef !== resourceData.byondRef ? null : "green",
+                        "onClick": function () {
+                          function onClick() {
+                            return swapPriority(resourceData.byondRef);
+                          }
+
+                          return onClick;
+                        }()
+                      })], 4),
+                      "label": (0, _string.toTitleCase)(resourceData.name),
+                      "textAlign": "center",
+                      children: resourceData.amount.toFixed(1).padStart(5, "\u2007")
+                    }, resourceData.byondRef);
+                  })
+                })
+              })
+            }), (0, _inferno.createComponentVNode)(2, _ManufacturerSettings.ManufacturerSettings, {
+              "repeat": data.repeat,
+              "hacked": data.hacked,
+              "speed": data.speed,
+              "max_speed_normal": data.max_speed_normal,
+              "max_speed_hacked": data.max_speed_hacked,
+              "mode": data.mode,
+              "actionSetSpeed": actionSetSpeed,
+              "actionRepeat": actionRepeat
+            }), data.manudrive.limit !== null && (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+                "title": "Loaded Manudrive",
+                "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "icon": "eject",
+                  "content": "Eject",
+                  "disabled": data.mode !== "ready",
+                  "onClick": function () {
+                    function onClick() {
+                      return act("manudrive", {
+                        "action": "eject"
+                      });
+                    }
+
+                    return onClick;
+                  }()
+                }),
+                children: [data.manudrive.name, (0, _inferno.createComponentVNode)(2, _components.Divider), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+                  children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                    "label": "Fabrication Limit",
+                    children: data.manudrive.limit === _constant.MANUDRIVE_UNLIMITED ? "Unlimited" : data.manudrive.limit + " " + (0, _stringUtils.pluralize)("use", data.manudrive.limit)
+                  }), data.manudrive.limit !== _constant.MANUDRIVE_UNLIMITED && (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                    "label": "Remaining Uses",
+                    children: data.manudrive_uses_left
+                  })]
+                })]
+              })
+            }), !!data.panel_open && (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _CollapsibleWireMenu.CollapsibleWireMenu, {
+                "actionWirePulse": actionWirePulse,
+                "actionWireCutOrMend": actionWireCutOrMend,
+                "indicators": data.indicators,
+                "wires": data.wires,
+                "wire_bitflags": data.wire_bitflags
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _CardInfo.CardInfo, {
+                "actionCardLogin": actionCardLogin,
+                "actionCardLogout": actionCardLogout,
+                "banking_info": data.banking_info
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+                "title": "Rockbox™ Containers",
+                "textAlign": "center",
+                children: data.rockboxes.map(function (rockbox) {
+                  return (0, _inferno.createComponentVNode)(2, _components.Box, {
+                    children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+                      "mt": _constant.RockboxStyle.MarginTop,
+                      "textAlign": "left",
+                      "bold": true,
+                      children: [rockbox.area_name, (0, _inferno.createComponentVNode)(2, _components.Divider)]
+                    }), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+                      children: rockbox.ores.length !== 0 ? rockbox.ores.map(function (ore) {
+                        return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                          "label": ore.name,
+                          "textAlign": "center",
+                          "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+                            "textAlign": "center",
+                            "onClick": function () {
+                              function onClick() {
+                                return act("ore_purchase", {
+                                  "ore": ore.name,
+                                  "storage_ref": rockbox.byondRef
+                                });
+                              }
+
+                              return onClick;
+                            }(),
+                            children: [ore.cost, "\u2ABD"]
+                          }, ore.name),
+                          children: ore.amount.toString().padStart(5, "\u2007")
+                        }, ore.name);
+                      }) : "No Ores Loaded."
+                    })]
+                  }, rockbox.byondRef);
+                })
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+                "vertical": true,
+                children: [data.error !== null && (0, _inferno.createComponentVNode)(2, _components.Section, {
+                  "title": "ERROR",
+                  children: data.error
+                }), (0, _inferno.createComponentVNode)(2, _components.Stack, {
+                  "textAlign": "center",
+                  children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                    "width": "50%",
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": data.mode !== "working" ? "play" : "pause",
+                      "onClick": function () {
+                        function onClick() {
+                          return actionQueueTogglePause(data.mode);
+                        }
+
+                        return onClick;
+                      }(),
+                      "width": "100%",
+                      children: data.mode !== "working" ? "Resume" : "Pause"
+                    })
+                  }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                    "grow": true,
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "trash",
+                      "onClick": function () {
+                        function onClick() {
+                          return actionQueueClear();
+                        }
+
+                        return onClick;
+                      }(),
+                      "width": "100%",
+                      children: "Clear Queue"
+                    })
+                  })]
+                }), data.queue.length > 0 && (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                  children: (0, _inferno.createComponentVNode)(2, _components.ProgressBar, {
+                    "value": (0, _math.clamp)(data.progress_pct, 0, 1),
+                    "minValue": 0,
+                    "maxValue": 1,
+                    "position": "relative"
+                  })
+                }), queueBlueprintRefs.map(function (queued, index) {
+                  return queued && (0, _inferno.createComponentVNode)(2, _ProductionCard.ProductionCard, {
+                    "index": index,
+                    "actionQueueRemove": actionQueueRemove,
+                    "mode": data.mode,
+                    "img": queued.img,
+                    "name": queued.name
+                  }, index);
+                })]
+              })
+            })]
+          })
+        })]
+      })
+    })]
+  });
+};
+
+exports.Manufacturer = Manufacturer;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/common/bitflag.ts":
+/*!****************************************************!*\
+  !*** ./packages/tgui/interfaces/common/bitflag.ts ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.is_set = void 0;
+
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+// Check if the nth bit is set in a number
+var is_set = function is_set(bits, bit) {
+  return bits & 1 << bit;
+};
+
+exports.is_set = is_set;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/common/mathUtils.ts":
+/*!******************************************************!*\
+  !*** ./packages/tgui/interfaces/common/mathUtils.ts ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.randInt = void 0;
+
+var randInt = function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+exports.randInt = randInt;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/common/stringUtils.ts":
+/*!********************************************************!*\
+  !*** ./packages/tgui/interfaces/common/stringUtils.ts ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.glitch = exports.spaceUnderscores = exports.capitalize = exports.pluralize = void 0;
+
+var _mathUtils = __webpack_require__(/*! ./mathUtils */ "./packages/tgui/interfaces/common/mathUtils.ts");
+
+var pluralize = function pluralize(word, n) {
+  return n !== 1 ? word + 's' : word;
+};
+
+exports.pluralize = pluralize;
+
+var capitalize = function capitalize(word) {
+  return word.replace(/(^\w{1})|(\s+\w{1})/g, function (letter) {
+    return letter.toUpperCase();
+  });
+};
+
+exports.capitalize = capitalize;
+
+var spaceUnderscores = function spaceUnderscores(word) {
+  return word.replace(/[_]/g, function (letter) {
+    return " ";
+  });
+};
+
+exports.spaceUnderscores = spaceUnderscores;
+var glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ѫ', '/', '#', '~'];
+
+var glitch = function glitch(text, amount) {
+  var chars = text.split('');
+
+  for (var i = 0; i < amount; i++) {
+    var charIndex = (0, _mathUtils.randInt)(0, chars.length ? chars.length - 1 : 0);
+    chars[charIndex] = glitches[(0, _mathUtils.randInt)(0, glitches.length - 1)];
+  }
+
+  return chars.join('');
+};
+
+exports.glitch = glitch;
+
+/***/ }),
+
 /***/ "./packages/tgui/layouts/Layout.js":
 /*!*****************************************!*\
   !*** ./packages/tgui/layouts/Layout.js ***!
@@ -52147,7 +53910,12 @@ exports.BoxWithSampleText = BoxWithSampleText;
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 var map = {
-	"./Image.test.tsx": "./packages/tgui-bench/tests/Image.test.tsx"
+	"./BlueprintButton.test.tsx": "./packages/tgui-bench/tests/BlueprintButton.test.tsx",
+	"./Button.test.tsx": "./packages/tgui-bench/tests/Button.test.tsx",
+	"./Flex.test.tsx": "./packages/tgui-bench/tests/Flex.test.tsx",
+	"./Image.test.tsx": "./packages/tgui-bench/tests/Image.test.tsx",
+	"./Manufacturer.test.tsx": "./packages/tgui-bench/tests/Manufacturer.test.tsx",
+	"./Stack.test.tsx": "./packages/tgui-bench/tests/Stack.test.tsx"
 };
 
 
