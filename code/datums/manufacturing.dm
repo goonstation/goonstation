@@ -50,10 +50,9 @@
 			item_requirements = list()
 			for(var/req_id in typeinfo.mats)
 				var/amt = typeinfo.mats[req_id]
-				var/datum/manufacturing_requirement/R = getRequirement(req_id)
 				if(isnull(amt))
 					amt = 1
-				item_requirements[R] = amt
+				item_requirements[req_id] = amt
 
 	proc/modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		// use this if you want the outputted item to be customised in any way by the manufacturer
@@ -78,10 +77,10 @@
 	var/generate_costs = FALSE
 
 	New()
-		. = ..()
 		if(src.generate_costs)
 			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
+		. = ..()
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
