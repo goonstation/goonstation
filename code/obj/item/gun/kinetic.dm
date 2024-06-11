@@ -2193,6 +2193,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			. += " It seems severely damaged!"
 		else if (guaranteed_uses < 6)
 			. += " It seems damaged."
+		else if(guaranteed_uses < 10)
+			. += " It's barely damaged."
 
 	shoot(var/target, var/start, var/mob/user)
 
@@ -2241,8 +2243,26 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		if(guaranteed_uses == MAX_USES)
 			boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
-		else
+			//ideally we want to force-exit the loop here.
+		else if(guaranteed_uses > 6)
 			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still a bit damaged..."))
+		else if(guaranteed_uses > 8)
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's starting to look better..."))
+
+	proc/get_welding_positions()
+
+		var/xstr = rand(7, 16)
+		var/xstp = rand(7, 16)
+		var/ystr = rand(4, -4)
+		var/ystp = rand(4, -4)
+
+
+		if(prob(50))
+			yoffset = 4
+
+		startpos = list(8, yoffset)
+		stoppos = list(10, yoffset)
+		return list(startpos, stoppos)
 
 	attackby(obj/item/I, mob/user)
 
@@ -2252,29 +2272,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(guaranteed_uses >= MAX_USES)
 				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
 			else //We are good to repair!
-				boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
-				//first: set up the offsets FOR the action bar (shamelessly stolen from vehicle.dm)
-				var/startpos
-				var/stoppos
-				// 0,0 coords correspond to 16,16 on sprite of any size
-				// so we need to shift the range by -16
-				var/startX = rand(-8, (src.bound_width-24))
-				var/startY = rand(-8, (src.bound_height-24))
-				var/difference = rand(3, 6) // small x means bigger y, vice versa
-				var/endX = startX + (difference * (prob(50) ? 1 : -1))
-				var/endY = startY + ((8 - difference) * (prob(50) ? 1 : -1))
-
-				startpos = list(startX, startY)
-				stoppos = list(endX, endY)
-
-				//second: create the action bar
 				var/datum/action/bar/icon/callback/action_bar
+				boutput(user, SPAN_NOTICE("You start to repair the [src]..."))
+
+				//create the action bar
+
+				var/positions = src.get_welding_positions()
 
 				action_bar = new /datum/action/bar/private/welding/loop(user, src, 1.5 SECONDS, \
 				proc_path = /obj/item/gun/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
 				proc_args=list(src, user), \
-				start = startpos, \
-				stop = stoppos, \
+				start = positions[1], \
+				stop = positions[2], \
 				tool = welder, \
 				cost = 2)
 
@@ -2307,10 +2316,42 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 
 	attack_self(mob/user as mob)
-		boutput(user, SPAN_NOTICE("You pull some scraps off the [src]."))
-		user.drop_item(src)
+
+		user.drop_item(src) //clear hands
+		boutput(user, SPAN_NOTICE("You pull apart the the [src]!"))
+
+		// give an OPEN slamgun
 		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
 		user.put_in_hand_or_drop(newgun)
+		newgun.AttackSelf(user)
+
+
+		var/turf/T = get_turf(src)
+
+		//give some other random junk that'd reasonably be pulled off, for flavor
+		var/obj/item/raw_material/scrap_metal/W = new /obj/item/raw_material/scrap_metal
+		W.setMaterial(getMaterial("wood"))
+		W.name = "mangled chunk of wood"
+		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
+
+		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
+		G.icon_state = "gib1"
+
+		var/obj/item/rods/steel/R = new /obj/item/rods/steel
+		var/obj/item/scrap/S1 = new /obj/item/scrap
+		var/obj/item/scrap/S2 = new /obj/item/scrap
+		var/obj/item/scrap/S3 = new /obj/item/scrap
+		S3.icon_state = "2metal0"
+
+		var/flavordebris = list(W, G, R, S1, S2, S3)
+		var/obj/item/currentitem
+		var/i
+		for(i=1, i<=6, i++)
+			currentitem = flavordebris[i]
+			currentitem.set_loc(T)
+			currentitem.pixel_x = rand(-8,8)
+			currentitem.pixel_y = rand(-8,8)
+
 		qdel(src)
 
 //0.75
