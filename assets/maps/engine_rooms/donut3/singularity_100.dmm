@@ -1,0 +1,1061 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/turf/simulated/floor/yellowblack,
+/area/station/engine/inner)
+"bJ" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"dp" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/map/light/cyan,
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"dA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/map/light/cyan,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange,
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"dX" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"dY" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"ep" = (
+/turf/space,
+/area/station/engine/inner)
+"fq" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 1
+	},
+/area/station/engine/inner)
+"fB" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"fN" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/hazard_rad,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"gj" = (
+/obj/cable/orange{
+	icon_state = "5-10"
+	},
+/obj/machinery/emitter{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"gl" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/station/engine/inner)
+"gZ" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/map/light/cyan,
+/obj/cable/orange,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"hG" = (
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/area/station/engine/inner)
+"hO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"hQ" = (
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"hS" = (
+/obj/machinery/the_singularitygen,
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/airless/plating,
+/area/station/engine/inner)
+"hY" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"jd" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/inner)
+"ms" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 8
+	},
+/area/station/engine/inner)
+"mD" = (
+/obj/machinery/emitter{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"nY" = (
+/obj/grille/catwalk,
+/obj/railing/red{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"oJ" = (
+/obj/machinery/power/data_terminal,
+/obj/decal/stripe_delivery,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"qw" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"rk" = (
+/obj/grille/catwalk,
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"rn" = (
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/collector_control,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"rq" = (
+/obj/machinery/light/small/floor/warm,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"rQ" = (
+/obj/cable/orange{
+	icon_state = "6-9"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"th" = (
+/obj/machinery/power/data_terminal,
+/obj/decal/stripe_delivery,
+/obj/cable/orange,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"uA" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"uC" = (
+/obj/cable/orange{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"vM" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"ws" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/map/light/cyan,
+/obj/cable/orange,
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"wx" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Engineering"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"wV" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack/corner,
+/area/station/engine/inner)
+"xz" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/station/engine/inner)
+"xK" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/collector_array,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"xT" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/collector_control,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"ye" = (
+/obj/grille/catwalk,
+/obj/railing/red{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"zk" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"zG" = (
+/obj/grille/catwalk,
+/obj/railing/red,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"Ac" = (
+/obj/cable/orange{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Bn" = (
+/obj/cable/orange{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Bz" = (
+/turf/simulated/floor/yellowblack/corner{
+	dir = 1
+	},
+/area/station/engine/inner)
+"Cj" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"EK" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Fl" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/map/light/cyan,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"Ga" = (
+/obj/grille/catwalk,
+/obj/railing/red{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"Gb" = (
+/obj/machinery/light/small/floor/warm,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/inner)
+"HD" = (
+/obj/cable/orange{
+	icon_state = "5-10"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"HG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/space,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"Is" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 8;
+	name = "Engineering"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/decal/stripe_delivery,
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"ID" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Jn" = (
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/inner)
+"Kb" = (
+/obj/railing/red{
+	dir = 8
+	},
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"Kp" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"ME" = (
+/turf/simulated/floor/yellowblack/corner,
+/area/station/engine/inner)
+"MM" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/map/light/cyan,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"Ni" = (
+/obj/railing/red{
+	dir = 4
+	},
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"NM" = (
+/obj/cable/orange{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Oj" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 8;
+	name = "Engineering"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/decal/stripe_delivery,
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"PV" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/obj/railing/red{
+	dir = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"Qf" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big,
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"QQ" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"QW" = (
+/obj/cable/orange{
+	icon_state = "6-9"
+	},
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"SY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/map/light/cyan,
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"TC" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/obj/railing/red,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/engine/inner)
+"UL" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/collector_array,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Vh" = (
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+"Vy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"Xs" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/map/light/cyan,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"XK" = (
+/turf/simulated/floor/airless/plating,
+/area/station/engine/inner)
+"Ye" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/map/light/cyan,
+/obj/cable/orange,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/inner)
+"YK" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/engine/inner)
+"Zf" = (
+/obj/machinery/light/small/floor/warm,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/cable/orange,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/inner)
+"Zg" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Engineering"
+	},
+/obj/mapping_helper/access/engineering,
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/black,
+/area/station/engine/inner)
+
+(1,1,1) = {"
+Jn
+Jn
+Bz
+hQ
+hQ
+zk
+oJ
+vM
+wV
+Gb
+ms
+Qf
+th
+Kp
+hY
+Bn
+hQ
+hQ
+hQ
+"}
+(2,1,1) = {"
+hQ
+hQ
+Vh
+hQ
+hG
+Vy
+fN
+Vy
+HG
+Is
+HG
+Vy
+fN
+Vy
+hG
+dX
+QW
+hQ
+hQ
+"}
+(3,1,1) = {"
+hQ
+fB
+Vy
+Vy
+Vy
+ep
+ep
+ep
+Ga
+rk
+zG
+ep
+ep
+ep
+Vy
+Vy
+Vy
+rQ
+hQ
+"}
+(4,1,1) = {"
+hQ
+hQ
+Vy
+ep
+ep
+ep
+ep
+ep
+PV
+rk
+TC
+ep
+ep
+ep
+ep
+ep
+Vy
+ID
+NM
+"}
+(5,1,1) = {"
+hQ
+hG
+Vy
+ep
+ep
+ep
+ep
+ep
+Ga
+rk
+zG
+ep
+ep
+ep
+ep
+ep
+Vy
+hG
+dY
+"}
+(6,1,1) = {"
+hQ
+Vy
+ep
+ep
+ep
+hO
+hO
+hO
+hO
+Oj
+hO
+hO
+hO
+hO
+ep
+ep
+ep
+Vy
+UL
+"}
+(7,1,1) = {"
+fB
+fN
+ep
+ep
+ep
+hO
+Fl
+SY
+SY
+ws
+SY
+SY
+gZ
+hO
+ep
+ep
+ep
+fN
+xT
+"}
+(8,1,1) = {"
+hQ
+Vy
+ep
+ep
+ep
+hO
+MM
+XK
+ep
+YK
+ep
+XK
+Cj
+hO
+ep
+ep
+ep
+Vy
+xK
+"}
+(9,1,1) = {"
+ME
+HG
+ye
+Kb
+ye
+hO
+MM
+ep
+ep
+YK
+ep
+ep
+Cj
+hO
+ep
+ep
+ep
+Vy
+UL
+"}
+(10,1,1) = {"
+aw
+Zg
+uA
+uA
+uA
+wx
+MM
+jd
+jd
+hS
+jd
+jd
+Cj
+hO
+ep
+ep
+ep
+Vy
+rn
+"}
+(11,1,1) = {"
+gl
+HG
+nY
+Ni
+nY
+hO
+MM
+ep
+ep
+YK
+ep
+ep
+Cj
+hO
+ep
+ep
+ep
+Vy
+UL
+"}
+(12,1,1) = {"
+hQ
+Vy
+ep
+ep
+ep
+hO
+MM
+XK
+ep
+YK
+ep
+XK
+Cj
+hO
+ep
+ep
+ep
+Vy
+xK
+"}
+(13,1,1) = {"
+fB
+fN
+ep
+ep
+ep
+hO
+Xs
+dp
+dp
+dA
+dp
+dp
+Ye
+hO
+ep
+ep
+ep
+fN
+xT
+"}
+(14,1,1) = {"
+hQ
+Vy
+ep
+ep
+ep
+hO
+hO
+hO
+hO
+Oj
+hO
+hO
+hO
+hO
+ep
+ep
+ep
+Vy
+UL
+"}
+(15,1,1) = {"
+hQ
+hG
+Vy
+ep
+ep
+ep
+ep
+ep
+Ga
+rk
+zG
+ep
+ep
+ep
+ep
+ep
+Vy
+hG
+dY
+"}
+(16,1,1) = {"
+hQ
+hQ
+Vy
+ep
+ep
+ep
+ep
+ep
+PV
+rk
+TC
+ep
+ep
+ep
+ep
+ep
+Vy
+ID
+uC
+"}
+(17,1,1) = {"
+hQ
+fB
+Vy
+Vy
+Vy
+ep
+ep
+ep
+Ga
+rk
+zG
+ep
+ep
+ep
+Vy
+Vy
+Vy
+HD
+hQ
+"}
+(18,1,1) = {"
+hQ
+hQ
+mD
+hQ
+hG
+Vy
+fN
+Vy
+HG
+Is
+HG
+Vy
+fN
+Vy
+hG
+rq
+gj
+hQ
+hQ
+"}
+(19,1,1) = {"
+hQ
+hQ
+hQ
+hQ
+hQ
+QQ
+oJ
+EK
+xz
+Zf
+fq
+bJ
+th
+qw
+hY
+Ac
+hQ
+hQ
+hQ
+"}

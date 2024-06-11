@@ -1,5 +1,17 @@
+#ifdef MAP_OVERRIDE_COGMAP1
 TYPEINFO(/datum/mapPrefab/engine_room)
-	folder = "engine_rooms"
+	folder = "engine_rooms/cogmap1"
+#endif
+
+#ifdef MAP_OVERRIDE_DONUT3
+TYPEINFO(/datum/mapPrefab/engine_room)
+	folder = "engine_rooms/donut3"
+#endif
+
+#ifdef MAP_OVERRIDE_PAMGOC
+TYPEINFO(/datum/mapPrefab/engine_room)
+	folder = "engine_rooms/pamgoc"
+#endif
 
 /datum/mapPrefab/engine_room
 	name = null
@@ -18,14 +30,7 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		. = ..()
 		var/comp1type = null
 		var/comp2type = null
-		// dumb hack currently for pamgoc
-		// currently the prefab system does not allow multiple prefabs with the same name (even if in different folders)
-		// so pamgoc has reversed names in the spirit of the map, someone should fix the prefab issue later
-		#ifdef REVERSED_MAP
-		switch(reverse_text(src.name))
-		#else
 		switch(src.name)
-		#endif
 			if("choice")
 				comp1type = /obj/machinery/engine_selector //type select computer
 				comp2type = /obj/landmark/engine_computer/two
@@ -86,11 +91,10 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		var/list/datum/mapPrefab/engine_room/room_prefabs = list()
 		for(var/name in prefab_list)
 			var/datum/mapPrefab/prefab = prefab_list[name]
-			if(lowertext(map_settings.name) in prefab.tags)
-				if(!type_force)
-					room_prefabs[prefab] = prefab.probability
-				else if(prefab.name == type_force)
-					room_prefabs[prefab] = prefab.probability
+			if(!type_force)
+				room_prefabs[prefab] = prefab.probability
+			else if(prefab.name == type_force)
+				room_prefabs[prefab] = prefab.probability
 		if(!length(room_prefabs))
 			CRASH("No engine room prefab found for map: [lowertext(map_settings.name)] [type_force ? "and forced type [type_force]" : ""]")
 		var/datum/mapPrefab/engine_room/room_prefab = weighted_pick(room_prefabs)
