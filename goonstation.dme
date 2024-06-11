@@ -1697,6 +1697,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\status_system\statusFoodBad.dm"
 #include "code\modules\status_system\statusFoodBuffs.dm"
 #include "code\modules\status_system\statusSystem.dm"
+#include "code\modules\storage\machine.dm"
 #include "code\modules\storage\no_hud.dm"
 #include "code\modules\storage\storage.dm"
 #include "code\modules\storage\unholdable.dm"
