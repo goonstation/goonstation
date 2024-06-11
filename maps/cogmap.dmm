@@ -861,10 +861,6 @@
 "adW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"adY" = (
-/obj/item/tile/steel,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction2)
 "adZ" = (
 /obj/decal/cleanable/dirt,
 /obj/stool,
@@ -1213,20 +1209,12 @@
 /area/station/crew_quarters/clown)
 "afm" = (
 /obj/decal/cleanable/dirt,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/marker/supplymarker,
-/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/damaged1,
 /area/station/crew_quarters/clown)
-"afn" = (
-/obj/item/rods/steel,
-/obj/storage/crate,
-/obj/item/clothing/under/gimmick/police,
-/obj/item/clothing/head/helmet/bobby,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction2)
 "afo" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1263,6 +1251,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "aft" = (
@@ -1538,18 +1528,11 @@
 /area/station/ai_monitored/armory)
 "age" = (
 /obj/decal/cleanable/dirt,
-/obj/item/bananapeel,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"agg" = (
-/obj/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/ears/earmuffs,
-/turf/simulated/floor/plating/scorched,
-/area/station/hallway/secondary/construction2)
 "agh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1559,6 +1542,7 @@
 "agi" = (
 /obj/item/sheet/steel,
 /obj/storage/closet/office,
+/obj/item/tile/steel,
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/secondary/construction2)
 "agj" = (
@@ -44242,6 +44226,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"hFt" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/computer/announcement/clown,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "hFD" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular{
@@ -47418,6 +47407,11 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/engine)
+"kii" = (
+/obj/decal/cleanable/dirt,
+/obj/item/bananapeel,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "kiI" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -56360,6 +56354,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"rdh" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "rdI" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -60227,6 +60229,14 @@
 /obj/machinery/cargo_router/Router15,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"uec" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'CONSTRUCTION AREA'";
+	name = "CONSTRUCTION";
+	pixel_y = -4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/clown)
 "ueu" = (
 /obj/rack,
 /obj/item/clothing/gloves/yellow{
@@ -108526,9 +108536,9 @@ acB
 acB
 acB
 adW
-adW
-adW
-adW
+hFt
+rdh
+kii
 adW
 ahL
 aiJ
@@ -108827,11 +108837,11 @@ air
 acB
 acB
 acB
-acJ
-oUt
-afn
-agg
-agT
+adW
+adW
+adW
+adW
+uec
 ahO
 aiG
 ajP
@@ -109130,7 +109140,7 @@ aca
 aca
 abY
 acJ
-adY
+oUt
 afo
 agh
 gfj

@@ -8542,11 +8542,6 @@
 /area/station/turret_protected/ai_upload)
 "aTs" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},

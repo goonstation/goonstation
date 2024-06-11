@@ -1344,6 +1344,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/crate/clown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -56409,7 +56410,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/firealarm/east,
-/obj/storage/crate/clown,
+/obj/machinery/computer/announcement/clown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"

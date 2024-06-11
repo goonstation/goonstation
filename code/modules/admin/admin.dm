@@ -248,6 +248,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				src.skip_manifest = !skip_manifest
 				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
+				src.show_pref_window(usr)
 		if ("toggle_slow_stat")
 			if (src.level >= LEVEL_MOD)
 				src.slow_stat = !slow_stat
