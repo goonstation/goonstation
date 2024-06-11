@@ -1,4 +1,4 @@
-#ifdef MAP_OVERRIDE_COGMAP1
+#ifdef MAP_OVERRIDE_COGMAP
 TYPEINFO(/datum/mapPrefab/engine_room)
 	folder = "engine_rooms/cogmap"
 #endif
