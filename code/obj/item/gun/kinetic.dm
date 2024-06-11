@@ -2174,7 +2174,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new/obj/item/ammo/bullets/pipeshot/plasglass
 		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/plasglass)
 		name = "Four Letter Word" //I kinda like the fact that it'll pull from the DB name pool but I kinda don't.
-		ammo.amount_left = 4 // hopefully this'll fix it showing up as starting with 2 shots
+		UpdateIcon()
 
 	get_help_message(dist, mob/user)
 		.+= "You can use a <b>welding tool</b> to repair its state. \n You can also use a <b>screwdriver</b> to cycle firing modes."
@@ -2197,54 +2197,93 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	shoot(var/target, var/start, var/mob/user)
 
 		var/i //Because we can't initialize variables when we're declaring the loop. thanks, DM.
-		var/priorarmmo = src.ammo.amount_left
+		var/priorammo = src.ammo.amount_left
 
 		//Go up to the limit defined by the firing mode, but don't exceed however many bullets are in the gun BEFORE we started firing
-		for(i=1, ((i <= priorarmmo) && (i <= firemode)), i++)
+		for(i=1, ((i <= priorammo) && (i <= firemode)), i++)
 			..() //shoot an additional ith time
 			guaranteed_uses-- //damage the gun an additional ith time
 
 		//you're shooting multiple shotgun shells out of a garbage gun at the same time. don't think there won't be consequences
-		if((firemode == TWO_BARRELS) && (priorarmmo != 0))
+		if((firemode == TWO_BARRELS) && (priorammo != 0))
 			boutput(user, SPAN_ALERT("The [src] jumps in your hands!"))
 			animate_shake(user, 2, 3, 3, 0, 0)
 			user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 5, remove_stamina_below_zero = 0)
-		if((firemode == ALL_BARRELS) && (priorarmmo != 0))
+		if((firemode == ALL_BARRELS) && (priorammo != 0))
 			sleep(0.3) //give it a micro-delay
 			if (src.canshoot(user))
 				boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
 				animate_shake(user, 2, 5, 5, 0, 0)
-				//this might seem punishing but keep in mind this is still FOUR whole shotgun shells at once.
+				//this might seem punishing but keep in mind it's FOUR whole shotgun shells at once.
 				user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 
 		//check the gun's condition, break as needed
-		if(guaranteed_uses < 0)
-			//warn the user that they're in the danger zone
-			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-			user.visible_message(SPAN_COMBAT("The [src] [pick(list("rattles!", "bulges!", "thunks!", "makes a concerning click...", "cracks!"))]"))
-			if (prob(5 + (guaranteed_uses*-5))) //roll for failure. Since [uses] is now negative, we need another minus sign to cancel out
+		if(priorammo > 0) //make sure the gun isn't empty before we roll to break
+			if(guaranteed_uses < 0)
+				//warn the user that they're in the danger zone
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				user.visible_message(SPAN_COMBAT("The [src] [pick(list("rattles!", "bulges!", "thunks!", "makes a concerning click...", "cracks!"))]"))
+				if (prob(5 + (guaranteed_uses*-5))) //roll for failure. Since [uses] is now negative, we need another minus sign to cancel out
 
-				user.visible_message(SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"), SPAN_ALERT("The [src] gives out!"))
+					user.visible_message(SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"), SPAN_ALERT("The [src] gives out!"))
 
-				if(firemode == ALL_BARRELS) //ohhh, you REALLY fucked up now.
-					explosion(src, get_turf(src), 0, 0.5, 1.5, 4)
+					if(firemode == ALL_BARRELS) //ohhh, you REALLY fucked up now.
+						explosion(src, get_turf(src), 0, 0.5, 1.5, 4)
 
-				//replace the gun with broken version
-				var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
-				user.drop_item(src)
-				user.put_in_hand_or_drop(broken)
-				qdel(src)
+					//replace the gun with broken version
+					var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
+					user.drop_item(src)
+					user.put_in_hand_or_drop(broken)
+					qdel(src)
+
+	proc/repairdamage(obj/item/gun/kinetic/sawnoff/quadbarrel/Q, mob/user)
+		Q.guaranteed_uses ++
+
+		if(guaranteed_uses == MAX_USES)
+			boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
+		else
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still a bit damaged..."))
 
 	attackby(obj/item/I, mob/user)
-		if (isweldingtool(I)) //are we repairing?
+
+		//are we repairing?
+		if (isweldingtool(I))
 			var/obj/item/weldingtool/welder = I
 			if(guaranteed_uses >= MAX_USES)
 				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
-			else if (welder.try_weld(user, 2, 2))
-				boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]."))
-				guaranteed_uses ++
+			else //We are good to repair!
+				boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
+				//first: set up the offsets FOR the action bar (shamelessly stolen from vehicle.dm)
+				var/startpos
+				var/stoppos
+				// 0,0 coords correspond to 16,16 on sprite of any size
+				// so we need to shift the range by -16
+				var/startX = rand(-8, (src.bound_width-24))
+				var/startY = rand(-8, (src.bound_height-24))
+				var/difference = rand(3, 6) // small x means bigger y, vice versa
+				var/endX = startX + (difference * (prob(50) ? 1 : -1))
+				var/endY = startY + ((8 - difference) * (prob(50) ? 1 : -1))
 
-		else if(isscrewingtool(I)) //are we cycling through firing modes?
+				startpos = list(startX, startY)
+				stoppos = list(endX, endY)
+
+				//second: create the action bar
+				var/datum/action/bar/icon/callback/action_bar
+
+				action_bar = new /datum/action/bar/private/welding/loop(user, src, 1.5 SECONDS, \
+				proc_path = /obj/item/gun/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
+				proc_args=list(src, user), \
+				start = startpos, \
+				stop = stoppos, \
+				tool = welder, \
+				cost = 2)
+
+				//begin repairing!
+				actions.start(action_bar, user)
+				return
+
+		//are we cycling through firing modes?
+		else if(isscrewingtool(I))
 			if(firemode == ONE_BARREL)
 				firemode = TWO_BARRELS
 				boutput(user, SPAN_NOTICE("You set [src] to fire two barrels at a time."))
