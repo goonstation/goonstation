@@ -183,7 +183,7 @@ datum
 										hygiene_restore = -3
 								if (hygiene_distance_from_cap == 0 && !(hygiene_cap == 0) && hygiene_change == 0)
 									if(!ON_COOLDOWN(H, "Hygiene_restoration_blocked_by_clothes", 1 MINUTE))
-										boutput(M, SPAN_NOTICE("Your clothes prevent you from getting any cleaner!"))
+										boutput(M, SPAN_ALERT("Your clothes prevent you from getting any cleaner!"))
 								H.sims.affectMotive("Hygiene", hygiene_change)
 
 				if(INGEST)
