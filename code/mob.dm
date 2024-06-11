@@ -2441,6 +2441,9 @@
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 	actions.interrupt(src, INTERRUPT_ACT)
 
+/mob/proc/adjust_throw(datum/thrown_thing/thr)
+	return
+
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if (thr.throw_type & THROW_PEEL_SLIP)
 		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
