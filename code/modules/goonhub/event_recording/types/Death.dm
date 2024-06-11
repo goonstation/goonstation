@@ -11,5 +11,6 @@
 		"toxloss", // int
 		"oxyloss", // int
 		"gibbed", // boolean
-		"last_words" // string
+		"last_words", // string
+		"map", // string
 	)
