@@ -12,5 +12,5 @@
 		"oxyloss", // int
 		"gibbed", // boolean
 		"last_words", // string
-		"map", // string
+		"map" // string
 	)
