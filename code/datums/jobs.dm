@@ -1363,6 +1363,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 // randomizd gimmick jobs
 
+ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random
 	limit = 0
 	name = "Random"

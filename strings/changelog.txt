@@ -1,5 +1,10 @@
 
 (t)mon jun 10 24
+(u)Zamujasa
+(e)🪲|C-Bug
+(*)The Job EXP window now shows level progress properly.
+(u)LeahTheTech
+(*)Walking through fluid puddles will now expose your shoes to them. Acid WILL melt your Jordans.
 (u)TDHooligan, Blackrep
 (p)18446
 (e)🆕🗺🎨🔒🔊📦|C-Feature, A-Mapping, C-Sprites, A-Secret, C-Sound, A-Game-Objects
