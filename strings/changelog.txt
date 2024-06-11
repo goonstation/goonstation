@@ -1,4 +1,19 @@
 
+(t)mon jun 10 24
+(u)Zamujasa
+(e)🪲|C-Bug
+(*)The Job EXP window now shows level progress properly.
+(u)LeahTheTech
+(*)Walking through fluid puddles will now expose your shoes to them. Acid WILL melt your Jordans.
+(u)TDHooligan, Blackrep
+(p)18446
+(e)🆕🗺🎨🔒🔊📦|C-Feature, A-Mapping, C-Sprites, A-Secret, C-Sound, A-Game-Objects
+(+)The KS-23 'Kuvalda Carbine' (read: big shotgun) can now be found in gang weapon crates.
+(u)Colossusqw
+(p)19413
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Changed cloth rag grabs to begin transfering chems on aggressive grabs, after a two second delay.
+(+)Cloth rags now can hold up to 20 units of chems, and transfer 1.5(ripped cloth rags) or 2(bartender handkerchiefs) per cycle, but don't cause ingest effects anymore.
 (t)sun jun 09 24
 (u)Mintyphresh
 (p)19110
