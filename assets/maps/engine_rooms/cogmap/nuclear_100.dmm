@@ -297,13 +297,7 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "OH" = (
-/obj/storage/secure/crate/eng,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
+/obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "PB" = (
