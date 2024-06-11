@@ -16,7 +16,8 @@
 		toxloss,
 		oxyloss,
 		gibbed,
-		last_words
+		last_words,
+		map
 	)
 		. = ..(args)
 
@@ -36,5 +37,6 @@
 			M.get_toxin_damage(),
 			M.get_oxygen_deprivation(),
 			gibbed ? TRUE : FALSE,
-			html_decode(M.last_words)
+			html_decode(M.last_words),
+			map_setting
 		)
