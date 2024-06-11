@@ -69,6 +69,8 @@
 
 #define access_supply_console 58 // QM Console
 
+#define access_money 59 //bank computer, because having bridge door access should not let you empty the budget
+
 // skipping a few here to reserve a block
 // for terra 8 and syndicate security clearances
 #define access_syndicate_4 60

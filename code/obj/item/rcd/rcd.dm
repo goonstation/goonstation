@@ -293,6 +293,7 @@ TYPEINFO(/obj/item/rcd)
 	proc/do_deconstruct_wall(turf/simulated/wall/target, mob/user)
 		PROTECTED_PROC(TRUE)
 
+		log_construction(user, "deconstructs a wall ([target])")
 		var/turf/simulated/floor/T = target.ReplaceWithFloor()
 		if (!restricted_materials || !safe_deconstruct)
 			T.setMaterial(getMaterial(material_name))
@@ -300,7 +301,6 @@ TYPEINFO(/obj/item/rcd)
 			T.setMaterial(getMaterial("steel"))
 		else
 			T.setMaterial(getMaterial("negativematter"))
-		log_construction(user, "deconstructs a wall ([target])")
 		return
 
 	proc/do_deconstruction(atom/target, mob/user, thing)
