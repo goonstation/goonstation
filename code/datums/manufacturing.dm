@@ -32,7 +32,7 @@
 		src.setup_manufacturing_requirements()
 		if (!length(src.item_names))
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
-				src.item_names += R.name
+				src.item_names += R.getName()
 
 	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
 	proc/setup_manufacturing_requirements()
@@ -41,7 +41,7 @@
 			return
 		var/list/R = list()
 		for (var/R_path in src.item_requirements)
-			R[getRequirement(R_path)] = src.item_requirements[R_path]
+			R[getManufacturingRequirement(R_path)] = src.item_requirements[R_path]
 		src.item_requirements = R
 
 	proc/use_generated_costs(obj/item_type)
@@ -637,7 +637,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		var/obj/item/sheet/S = A
 		..()
-		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("metal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/glass
@@ -662,7 +662,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
@@ -894,8 +894,8 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/obj/item/material_piece/applicable_insulator = locate(materials[getRequirement("insulated")])
-		var/obj/item/material_piece/applicable_conductor = locate(materials[getRequirement("conductive")])
+		var/obj/item/material_piece/applicable_insulator = locate(materials[getManufacturingRequirement("insulated")])
+		var/obj/item/material_piece/applicable_conductor = locate(materials[getManufacturingRequirement("conductive")])
 		coil.setInsulator(applicable_insulator.material)
 		coil.setConductor(applicable_conductor.material)
 		return 1

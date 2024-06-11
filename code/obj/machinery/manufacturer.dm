@@ -427,7 +427,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (isnull(M.item_names))
 			M.item_names = list()
 			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-				M.item_names += R.name
+				M.item_names += R.getName()
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -451,7 +451,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		var/requirement_data = list()
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
+			requirement_data += list(list("name" = R.getName(), "id" = R.getID(), "amount" = M.item_requirements[R]))
 
 		return list(
 			"name" = M.name,
@@ -1505,9 +1505,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
 		for (var/R_id as anything in requirement_cache)
-			var/datum/manufacturing_requirement/R = getRequirement(R_id)
+			var/datum/manufacturing_requirement/R = getManufacturingRequirement(R_id)
 			if (R.is_match(M))
-				. += R.id
+				. += R.getID()
 
 	/// Returns material which matches ref from storage, else returns null
 	proc/get_material_by_ref(var/mat_ref)
