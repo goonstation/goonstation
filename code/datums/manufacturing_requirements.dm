@@ -254,16 +254,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed
 	VAR_PROTECTED/list/requirement_ids = list() //! A list of requirement IDs to populate requirements with their instances in the cache
-	VAR_PROTECTED/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
+	VAR_PROTECTED/list/datum/manufacturing_requirement/requirements = null //! A list of requirements which must all be satisfied for this to return TRUE
 
 	/// Resolve the requirement paths to instances in the cache.
 	New()
 		. = ..()
-		var/list/datum/manufacturing_requirement/requirement_instances = list()
-
-		for (var/requirement_id in src.requirement_ids)
-			requirement_instances += getManufacturingRequirement(requirement_id)
-		src.requirements = requirement_instances
+		src.requirements = new
+		for (var/requirement_id as anything in src.requirement_ids)
+			src.requirements += getManufacturingRequirement(requirement_id)
 
 	is_match(datum/material/M)
 		. = ..()
