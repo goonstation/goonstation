@@ -137,13 +137,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "ls" = (
-/obj/storage/secure/crate/eng,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
+/obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "lz" = (
