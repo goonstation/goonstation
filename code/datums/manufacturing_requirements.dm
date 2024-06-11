@@ -253,6 +253,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 /// Manufacturing requirements which check several conditions at once.
 ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed
+	VAR_PROTECTED/list/requirement_ids = list() //! A list of requirement IDs to populate requirements with their instances in the cache
 	VAR_PROTECTED/list/datum/manufacturing_requirement/requirements = list() //! A list of requirements which must all be satisfied for this to return TRUE
 
 	/// Resolve the requirement paths to instances in the cache.
@@ -260,7 +261,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		. = ..()
 		var/list/datum/manufacturing_requirement/requirement_instances = list()
 
-		for (var/requirement_id in src.requirements)
+		for (var/requirement_id in src.requirement_ids)
 			requirement_instances += getManufacturingRequirement(requirement_id)
 		src.requirements = requirement_instances
 
@@ -273,7 +274,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed/dense_crystal
 	name = "Extraordinarily Dense Crystalline Matter"
 	id = "crystal_dense"
-	requirements = list(
+	requirement_ids = list(
 		"dense_property_ultra",
 		"crystal",
 	)
@@ -281,14 +282,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed/metal
 	name = "Metal"
 	id = "metal"
-	requirements = list(
+	requirement_ids = list(
 		"metal_flag",
 	)
 
 /datum/manufacturing_requirement/mixed/metal_tough
 	name = "Sturdy Metal"
 	id = "metal_dense"
-	requirements = list(
+	requirement_ids = list(
 		"metal_flag",
 		"tough",
 	)
@@ -296,7 +297,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed/metal_tough_extreme
 	name = "Extremely Tough Metal"
 	id = "metal_superdense"
-	requirements = list(
+	requirement_ids = list(
 		"metal_flag",
 		"tough_super",
 	)
@@ -304,7 +305,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed/insulated
 	name = "Insulative"
 	id = "insulated"
-	requirements = list(
+	requirement_ids = list(
 		"insulative_flags",
 		"insulated_property",
 	)
@@ -312,7 +313,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed/insulated_high
 	name = "Highly Insulative"
 	id = "insulative_high"
-	requirements = list(
+	requirement_ids = list(
 		"insulative_flags",
 		"insulated_property_high",
 	)
@@ -320,14 +321,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 /datum/manufacturing_requirement/mixed/energy_high
 	name = "Significant Power Source"
 	id = "energy_high"
-	requirements = list(
+	requirement_ids = list(
 		"energy",
 		"energy_property",
 	)
 /datum/manufacturing_requirement/mixed/energy_extreme
 	name = "Extreme Power Source"
 	id = "energy_extreme"
-	requirements = list(
+	requirement_ids = list(
 		"energy",
 		"energy_property_high",
 	)
