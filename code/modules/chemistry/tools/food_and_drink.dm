@@ -1236,7 +1236,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 					JOB_XP(user, "Bartender", 1)
 				return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/pineappleslice))
 			if (src.wedge)
 				boutput(user, SPAN_ALERT("You can't add another wedge to [src], that would just look silly!!"))
 				return
@@ -1713,7 +1713,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			var/P = pick(/obj/item/reagent_containers/food/snacks/plant/orange/wedge,\
 			/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge,\
 			/obj/item/reagent_containers/food/snacks/plant/lime/wedge,\
-			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge)
+			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/pineappleslice)
 			src.wedge = new P(src)
 		if (prob(33))
 			src.umbrella = new /obj/item/cocktail_stuff/drink_umbrella(src)

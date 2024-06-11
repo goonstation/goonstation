@@ -515,7 +515,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+		adjust_throw(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src))
 
 		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 

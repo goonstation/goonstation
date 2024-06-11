@@ -2249,7 +2249,7 @@
 	checkRequirements(var/obj/item/device/speech_pro/sp, var/mob/user)
 		if(!can_act(user))
 			return FALSE
-		return sp in user
+		return sp == user.equipped()
 
 	greeting
 		name = "Greeting"

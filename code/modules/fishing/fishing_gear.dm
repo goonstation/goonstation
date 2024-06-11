@@ -45,7 +45,7 @@
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
-					return
+					return TRUE
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
 

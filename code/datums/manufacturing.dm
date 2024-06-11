@@ -76,10 +76,10 @@
 	var/generate_costs = FALSE
 
 	New()
-		. = ..()
 		if(src.generate_costs)
 			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
+		. = ..()
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
@@ -3419,7 +3419,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/riot_shotgun	//
 	name = "Riot Shotgun"
 	item_requirements = list("metal" = 20)
-	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	create = 1
 	time = 20 SECONDS
 	category = "Weapon"
