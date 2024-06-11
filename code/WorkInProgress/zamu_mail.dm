@@ -84,7 +84,6 @@
 		// copied from basketballs, but without the stun if you get beaned.
 		..(hit_atom)
 		if(hit_atom)
-			playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 			if(ismob(hit_atom))
 				var/mob/M = hit_atom
 				if(ishuman(M))
