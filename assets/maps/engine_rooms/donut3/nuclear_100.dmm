@@ -17,35 +17,35 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "bZ" = (
 /obj/machinery/nanofab/nuclear,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "cn" = (
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "co" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "cz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 5
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "dt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 9
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "dx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -53,13 +53,13 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "dG" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "ea" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -71,23 +71,28 @@
 	dir = 5
 	},
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "er" = (
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
+"eu" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/engine/core/nuclear)
 "ez" = (
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "eY" = (
 /obj/storage/closet/radiation,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "fh" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -95,32 +100,37 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "gW" = (
-/obj/machinery/atmospherics/binary/volume_pump/active{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	transfer_rate = 1000
+	name = "gas supply valve"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
+"hc" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1;
+	name = "Cold Loop Gas Supply 1"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
 "hy" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "hK" = (
 /obj/machinery/atmospherics/binary/pump/active{
-	id = "Cold Loop Gas Supply 1";
+	id = "Reactor Gas Supply 2";
 	target_pressure = 1000;
-	dir = 1
+	dir = 1;
+	name = "reactor gas supply pump 2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "hM" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "ia" = (
 /obj/decal/poster/wallsign/accident_sign,
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
@@ -130,21 +140,21 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "iY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/meter,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "ls" = (
 /obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "lz" = (
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "mq" = (
 /turf/simulated/floor/yellowblack/corner{
 	dir = 4
@@ -156,7 +166,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "mM" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 1;
@@ -175,7 +185,7 @@
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 10
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "nj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -184,7 +194,7 @@
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 1
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "nz" = (
 /obj/cable/orange,
 /obj/cable/orange{
@@ -192,7 +202,7 @@
 	},
 /obj/machinery/atmospherics/binary/reactor_turbine,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "nC" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 8;
@@ -202,16 +212,16 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "nT" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "oa" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 8
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "py" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -219,28 +229,30 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "pW" = (
 /obj/machinery/centrifuge_nuclear,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "pZ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/light/small/floor/warm,
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Reactor Gas Purge Pump";
+	target_pressure = 1000;
 	dir = 8
 	},
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "qo" = (
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "qP" = (
 /obj/storage/closet/radiation,
 /turf/simulated/floor/engine/caution/corner,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "qY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_rad,
@@ -261,40 +273,41 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "sT" = (
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "sZ" = (
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "th" = (
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "tL" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "ug" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/lattice{
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 10
 	},
 /turf/space,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "uz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 10
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "uU" = (
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -303,13 +316,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "ve" = (
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "vR" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -325,7 +338,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "vZ" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -340,7 +353,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "wT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 8
@@ -349,23 +362,15 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "yM" = (
 /obj/machinery/light/small/floor/warm,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 6
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 4;
+	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
-"zb" = (
-/obj/machinery/light/small/floor/warm,
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop bypass valve";
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "zn" = (
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
@@ -378,7 +383,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "zZ" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -386,38 +391,38 @@
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 4
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Ae" = (
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 8
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Ar" = (
 /turf/simulated/floor/engine/caution/corner,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Cp" = (
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "CJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 4
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "CR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "DH" = (
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Em" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -426,18 +431,17 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "EA" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop bypass valve";
-	dir = 8
+/obj/machinery/atmospherics/binary/valve/purge{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/misc{
 	dir = 6
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "EC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "EJ" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4
@@ -460,14 +464,14 @@
 /area/station/engine/inner)
 "Fa" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "cold loop bypass valve";
+	name = "emergency freezer valve";
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Fn" = (
 /obj/decal/poster/wallsign/hazard_rad,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "Fp" = (
@@ -479,10 +483,14 @@
 	},
 /area/station/engine/inner)
 "Gp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Gt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -501,23 +509,46 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "GL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/meter,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
+"Hs" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
 "HV" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "cold loop bypass valve";
-	dir = 1
+	dir = 1;
+	name = "reactor gas supply valve 2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
+"If" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Reactor Gas Supply 1";
+	target_pressure = 1000;
+	dir = 1;
+	name = "reactor gas supply pump 1"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
 "Is" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
+"JH" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1;
+	name = "reactor gas supply value 1"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
 "JU" = (
 /turf/simulated/floor/black,
 /area/station/engine/inner)
@@ -526,20 +557,20 @@
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Kf" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Cold Loop Gas Supply 1"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Kk" = (
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/corner2,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Ng" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -549,7 +580,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Ou" = (
 /obj/machinery/light/small/floor/warm,
 /obj/machinery/camera{
@@ -573,14 +604,14 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Pe" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "PL" = (
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Qo" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -588,7 +619,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Qy" = (
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -596,14 +627,14 @@
 /area/station/engine/inner)
 "QE" = (
 /turf/space,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Rz" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/space,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "RO" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/black,
@@ -613,14 +644,14 @@
 	dir = 9
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "TI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/meter,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "UI" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 1;
@@ -635,10 +666,17 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Vm" = (
 /turf/simulated/floor/yellowblack/corner,
 /area/station/engine/inner)
+"VC" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 4
+	},
+/turf/space,
+/area/station/engine/core/nuclear)
 "Wm" = (
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/black,
@@ -653,20 +691,19 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "Yo" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 "Zm" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 5
 	},
-/area/station/engine/inner)
+/area/station/engine/core/nuclear)
 
 (1,1,1) = {"
 Qy
@@ -703,7 +740,7 @@ nC
 Ng
 Ng
 Fn
-nT
+Ng
 zp
 Wm
 JU
@@ -717,17 +754,17 @@ Ng
 Ng
 ia
 Gp
-PL
-PL
-PL
+If
+JH
+hc
 Ae
 PL
 Ar
 nT
 QE
-nT
-nT
-nT
+Ng
+Ng
+Ng
 JU
 JU
 "}
@@ -736,7 +773,7 @@ JU
 JU
 Ng
 zL
-PL
+Hs
 Yo
 hK
 HV
@@ -748,7 +785,7 @@ hM
 Rz
 ug
 QE
-nT
+Ng
 ea
 JU
 "}
@@ -758,25 +795,25 @@ zp
 Ng
 DH
 yM
-sP
-hK
-zb
-Kf
+th
+th
+cn
+th
 th
 th
 pZ
 nT
 QE
+VC
 QE
-QE
-nT
+Ng
 zp
 JU
 "}
 (6,1,1) = {"
 JU
 Ng
-Gp
+eu
 sT
 gW
 th
