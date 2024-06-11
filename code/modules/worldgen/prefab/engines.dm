@@ -1,6 +1,6 @@
 #ifdef MAP_OVERRIDE_COGMAP1
 TYPEINFO(/datum/mapPrefab/engine_room)
-	folder = "engine_rooms/cogmap1"
+	folder = "engine_rooms/cogmap"
 #endif
 
 #ifdef MAP_OVERRIDE_DONUT3
