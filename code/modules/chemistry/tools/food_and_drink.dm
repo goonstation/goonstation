@@ -2089,5 +2089,5 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	icon_state = "creamer"
 	item_state = "creamer"
 	initial_volume = 50
-	initial_reagents = list("milk"=40, "sugar"=10)
+	initial_reagents = list("cream"=40, "sugar"=10)
 	can_recycle = 0
