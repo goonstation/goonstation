@@ -2080,8 +2080,6 @@
 			else
 				mix_phrase = "The mixture groans scarily, turning in on itself and disintegrating."
 				holder.remove_reagent("lostcoke", created_volume)
-			for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )
-				boutput(M, SPAN_NOTICE("[bicon(my_atom)] [mix_phrase]"))
 
 	redspot
 		name = "Redspot"
