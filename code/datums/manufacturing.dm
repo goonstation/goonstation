@@ -700,13 +700,16 @@
 	name = "Chemical Barrel"
 	item_requirements = list("metal_dense" = 6,
 							 "cobryl" = 9)
-	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
 	create = 1
 	time = 30 SECONDS
 	category = "Machinery"
 
 	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+		
 	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
 
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
