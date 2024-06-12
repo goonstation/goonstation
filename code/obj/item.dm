@@ -119,6 +119,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
 	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
 	var/edible = 0 // can you eat the thing?
+	var/eat_sound = 'sound/items/eatfood.ogg'
 
 	/*_____*/
 	/*Other*/
@@ -432,6 +433,10 @@ ABSTRACT_TYPE(/obj/item)
 	..()
 
 
+/obj/item/proc/eat_msg(mob/M)
+	M.visible_message(SPAN_NOTICE("[M] takes a bite of [src]!"),\
+		SPAN_NOTICE("You take a bite of [src]!"))
+
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
@@ -446,9 +451,7 @@ ABSTRACT_TYPE(/obj/item)
 		return FALSE
 
 	if (M == user)
-		M.visible_message(SPAN_NOTICE("[M] takes a bite of [src]!"),\
-		SPAN_NOTICE("You take a bite of [src]!"))
-
+		src.eat_msg(M)
 		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
 
@@ -457,7 +460,7 @@ ABSTRACT_TYPE(/obj/item)
 			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
-		playsound(M.loc,'sound/items/eatfood.ogg', rand(10, 50), 1)
+		playsound(M.loc, src.eat_sound, rand(10, 50), 1)
 		eat_twitch(M)
 		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
@@ -468,7 +471,7 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
-			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+			if (!istype(src, /obj/item/reagent_containers/food) && isliving(user))
 				var/mob/living/L = user
 				if (L.organHolder.stomach)
 					L.organHolder.stomach.consume(src)
@@ -482,42 +485,43 @@ ABSTRACT_TYPE(/obj/item)
 			SPAN_ALERT("<b>[user]</b> tries to feed you [src]!"))
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (!do_mob(user, M))
-			return TRUE
-		if (BOUNDS_DIST(user, M) > 0)
-			return TRUE
-
-		user.tri_message(M, SPAN_ALERT("<b>[user]</b> feeds [M] [src]!"),\
-			SPAN_ALERT("You feed [M] [src]!"),\
-			SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
-		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-		if (src.material && (src.material.getEdible() || edibility_override))
-			src.material.triggerEat(M, src)
-
-		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(M, INGEST)
-			SPAWN(0.5 SECONDS) // Necessary.
-				src.reagents.trans_to(M, src.reagents.total_volume)
-
-		playsound(M.loc, 'sound/items/eatfood.ogg', rand(10, 50), 1)
-		eat_twitch(M)
-		SPAWN(1 SECOND)
-			if (!src || !M || !user)
-				return
-			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
-			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
-			if (src.amount > 1)
-				src.change_stack_amount(-1)
-				return
-			user.u_equip(src)
-			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
-				var/mob/living/L = user
-				if (L.organHolder.stomach)
-					L.organHolder.stomach.consume(src)
-					return
-			qdel(src)
+		SETUP_GENERIC_ACTIONBAR(user, M, 3 SECONDS, /mob/proc/accept_forcefeed, list(src, user, edibility_override), src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED)
 		return TRUE
+
+/obj/item/proc/forcefeed(mob/M, mob/user, edibility_override)
+	if (BOUNDS_DIST(user, M) > 0)
+		return TRUE
+	user.tri_message(M, SPAN_ALERT("<b>[user]</b> feeds [M] [src]!"),\
+		SPAN_ALERT("You feed [M] [src]!"),\
+		SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
+	logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
+
+	if (src.material && (src.material.getEdible() || edibility_override))
+		src.material.triggerEat(M, src)
+
+	if (src.reagents && src.reagents.total_volume)
+		src.reagents.reaction(M, INGEST)
+		SPAWN(0.5 SECONDS) // Necessary.
+			src.reagents.trans_to(M, src.reagents.total_volume)
+
+	playsound(M.loc, src.eat_sound, rand(10, 50), 1)
+	eat_twitch(M)
+	SPAWN(1 SECOND)
+		if (!src || !M || !user)
+			return
+		SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
+		SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
+		if (src.amount > 1)
+			src.change_stack_amount(-1)
+			return
+		user.u_equip(src)
+		if (!istype(src, /obj/item/reagent_containers/food) && isliving(user))
+			var/mob/living/L = M
+			if (L.organHolder.stomach)
+				L.organHolder.stomach.consume(src)
+				return
+		qdel(src)
+	return TRUE
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
 	// this is a helper for organs and limbs
@@ -596,6 +600,8 @@ ABSTRACT_TYPE(/obj/item)
 	if ((amount + diff) < 0)
 		return 0
 	amount += diff
+	// Fix some of the floating point imprecision
+	amount = round(amount, 0.1)
 	if (!inventory_counter)
 		create_inventory_counter()
 	inventory_counter.update_number(amount)
@@ -1737,3 +1743,19 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/can_arm_attach()
 	return ..() && !(src.cant_drop || src.two_handed)
+
+/obj/item/proc/update_inhand(hand, hand_offset) // L, R or LR
+	if (!src.inhand_image)
+		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
+
+	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
+	if(!(state in icon_states(src.inhand_image_icon)))
+		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
+
+	src.inhand_image.icon_state = state
+	if (src.color)
+		src.inhand_image.color = src.color
+	else if (src.inhand_color)
+		src.inhand_image.color = src.inhand_color
+	src.inhand_image.pixel_x = 0
+	src.inhand_image.pixel_y = hand_offset

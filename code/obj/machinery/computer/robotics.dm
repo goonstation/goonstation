@@ -1,5 +1,5 @@
 /obj/machinery/computer/robotics
-	name = "Robotics Control"
+	name = "robotics control"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robotics"
 	req_access = list(access_ai_upload)

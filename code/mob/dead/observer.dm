@@ -303,10 +303,6 @@
 				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 					antagonist.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
-				if (istype(src.loc, /obj/cryotron))
-					var/datum/job/job = find_job_in_controller_by_string(src.job, soft=TRUE)
-					if (job)
-						job.assigned = max(0, job.assigned - 1)
 				src.ghostize()
 				qdel(src)
 			else

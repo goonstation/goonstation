@@ -266,7 +266,8 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 	check_completion()
 		return length(shippingmarket.complete_orders)
 
-/datum/objective/crew/quartermaster/maildelivery
+ABSTRACT_TYPE(/datum/objective/crew/mailcourier)
+/datum/objective/crew/mailcourier/maildelivery
 	explanation_text = "Ensure 30 pieces of mail are opened by their addressees."
 	check_completion()
 		return game_stats.GetStat("mail_opened") >= 30

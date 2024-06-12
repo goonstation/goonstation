@@ -185,6 +185,7 @@
 
 	proc/set_antag_tokens(amt as num)
 		src.antag_tokens = amt
+		src.client?.antag_tokens = amt //blegh, this var should be killed but I am sleepy so it lives for now
 		src.cloudSaves.putData( "antag_tokens", amt )
 		. = TRUE
 

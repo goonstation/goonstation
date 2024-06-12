@@ -751,9 +751,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	#define PRISONER_MODE_PAROLED 2
 	#define PRISONER_MODE_RELEASED 3
 	#define PRISONER_MODE_INCARCERATED 4
+	#define PRISONER_MODE_SUSPECT 5
 
 	///List of record settings
-	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED, PRISONER_MODE_SUSPECT)
 	///The current setting
 	var/mode = PRISONER_MODE_NONE
 	/// The sechud flag that will be applied when scanning someone
@@ -780,6 +781,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			mode_string = "Released"
 		else if (src.mode == PRISONER_MODE_INCARCERATED)
 			mode_string = "Incarcerated"
+		else if (src.mode == PRISONER_MODE_SUSPECT)
+			mode_string = "Suspect"
 
 		. += "<br>Arrest mode: [SPAN_NOTICE("[mode_string]")]"
 		if (sechud_flag != initial(src.sechud_flag))
@@ -839,17 +842,21 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if(E)
 			switch (mode)
 				if(PRISONER_MODE_NONE)
-					E["criminal"] = "None"
+					E["criminal"] = ARREST_STATE_NONE
 
 				if(PRISONER_MODE_PAROLED)
-					E["criminal"] = "Parolled"
+					E["criminal"] = ARREST_STATE_PAROLE
 
 				if(PRISONER_MODE_RELEASED)
-					E["criminal"] = "Released"
+					E["criminal"] = ARREST_STATE_RELEASED
 
 				if(PRISONER_MODE_INCARCERATED)
-					E["criminal"] = "Incarcerated"
+					E["criminal"] = ARREST_STATE_INCARCERATED
+
+				if(PRISONER_MODE_SUSPECT)
+					E["criminal"] = ARREST_STATE_SUSPECT
 			E["sec_flag"] = src.sechud_flag
+			target.update_arrest_icon()
 			return
 
 		src.active2 = new /datum/db_record()
@@ -857,16 +864,19 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["id"] = src.active1["id"]
 		switch (mode)
 			if(PRISONER_MODE_NONE)
-				src.active2["criminal"] = "None"
+				src.active2["criminal"] = ARREST_STATE_ARREST
 
 			if(PRISONER_MODE_PAROLED)
-				src.active2["criminal"] = "Parolled"
+				src.active2["criminal"] = ARREST_STATE_PAROLE
 
 			if(PRISONER_MODE_RELEASED)
-				src.active2["criminal"] = "Released"
+				src.active2["criminal"] = ARREST_STATE_RELEASED
 
 			if(PRISONER_MODE_INCARCERATED)
-				src.active2["criminal"] = "Incarcerated"
+				src.active2["criminal"] = ARREST_STATE_INCARCERATED
+
+			if(PRISONER_MODE_SUSPECT)
+				src.active2["criminal"] = ARREST_STATE_SUSPECT
 
 		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
@@ -875,6 +885,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["ma_crim_d"] = "No major crime convictions."
 		src.active2["notes"] = "No notes."
 		data_core.security.add_record(src.active2)
+
+		target.update_arrest_icon()
 
 		return
 
@@ -903,6 +915,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 				if(PRISONER_MODE_INCARCERATED)
 					boutput(user, SPAN_NOTICE("you switch the record mode to Incarcerated."))
+
+				if(PRISONER_MODE_SUSPECT)
+					boutput(user, SPAN_NOTICE("you switch the record mode to Suspect."))
 
 		add_fingerprint(user)
 		return
@@ -949,6 +964,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		name = "Released"
 		icon_state = "released"
 		mode = PRISONER_MODE_RELEASED
+	suspect
+		name = "Suspect"
+		icon_state = "suspect"
+		mode = PRISONER_MODE_SUSPECT
 	none
 		name = "None"
 		icon_state = "none"
@@ -958,6 +977,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 #undef PRISONER_MODE_PAROLED
 #undef PRISONER_MODE_RELEASED
 #undef PRISONER_MODE_INCARCERATED
+#undef PRISONER_MODE_SUSPECT
 
 /obj/item/device/ticket_writer
 	name = "security TicketWriter 2000"
@@ -992,11 +1012,11 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
-		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
+		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text | null
 		if (!ticket_target)
 			return
 		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
-		var/ticket_reason = input(user, "Ticket reason:", "Reason") as text
+		var/ticket_reason = input(user, "Ticket reason:", "Reason") as text | null
 		if (!ticket_reason)
 			return
 		ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
