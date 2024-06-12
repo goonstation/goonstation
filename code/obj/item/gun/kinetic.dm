@@ -2147,11 +2147,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 #define ONE_BARREL 1
 #define TWO_BARRELS 2
 #define ALL_BARRELS 4
-#define MAX_USES 11
+#define MAX_USES 9
 
 /obj/item/gun/kinetic/sawnoff/quadbarrel //for salvagers
 
-	name = "Four Letter Word"
+	name = "\improper Four Letter Word"
 	desc = "For when you REALLY need to get the point across."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "coachgun" //for sake of not rewriting a ton of break action code, it uses the same names as the DB, but in a different DMI. (change?)
@@ -2173,7 +2173,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		ammo = new/obj/item/ammo/bullets/pipeshot/plasglass
 		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/plasglass)
-		name = "Four Letter Word" //I kinda like the fact that it'll pull from the DB name pool but I kinda don't.
+		name = "Four Letter Word" //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
 		UpdateIcon()
 
 	get_help_message(dist, mob/user)
@@ -2189,11 +2189,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				. += "two barrels."
 			if(ALL_BARRELS)
 				. += "all four barrels!"
-		if(guaranteed_uses <= 0)
+		if (guaranteed_uses == MAX_USES)
+			. += "It's in perfect condition!"
+		else if (guaranteed_uses <= 0) //negative damage
 			. += " It seems severely damaged!"
-		else if (guaranteed_uses < 6)
-			. += " It seems damaged."
-		else if(guaranteed_uses < 10)
+		else if (guaranteed_uses < 4) //0-4
+			. += " It seems pretty damaged."
+		else if(guaranteed_uses < 7) //4-7
+			. += " It's damaged."
+		else  //7+
 			. += " It's barely damaged."
 
 	shoot(var/target, var/start, var/mob/user)
@@ -2220,12 +2224,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 
 		//check the gun's condition, break as needed
-		if(priorammo > 0) //make sure the gun isn't empty before we roll to break
+		if((priorammo > 0) && !(src.broke_open)) //make sure the gun isn't empty and also closed (shooting conditions) before we roll to break
 			if(guaranteed_uses < 0)
 				//warn the user that they're in the danger zone
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-				user.visible_message(SPAN_COMBAT("The [src] [pick(list("rattles!", "bulges!", "thunks!", "makes a concerning click...", "cracks!"))]"))
-				if (prob(5 + (guaranteed_uses*-5))) //roll for failure. Since [uses] is now negative, we need another minus sign to cancel out
+				user.visible_message(SPAN_COMBAT("The [src] [pick(list("rattles!", "bulges!", "pops!", "thunks!", "jolts!", "makes a concerning click...", "cracks!"))]"))
+				if (prob(guaranteed_uses*-5)) //roll for failure. Since [uses] is now negative, we need another minus sign to cancel out
 
 					user.visible_message(SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"), SPAN_ALERT("The [src] gives out!"))
 
@@ -2239,29 +2243,23 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					qdel(src)
 
 	proc/repairdamage(obj/item/gun/kinetic/sawnoff/quadbarrel/Q, mob/user)
-		Q.guaranteed_uses ++
+		if(guaranteed_uses < MAX_USES)
+			Q.guaranteed_uses ++
 
 		if(guaranteed_uses == MAX_USES)
 			boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
-			//ideally we want to force-exit the loop here.
-		else if(guaranteed_uses > 6)
-			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still a bit damaged..."))
-		else if(guaranteed_uses > 8)
+			actions.interrupt(user, INTERRUPT_ACT) //break the loop
+		else if(guaranteed_uses <= 0) //negative
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still severely damaged..."))
+		else if(guaranteed_uses < 5) //0-4
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still pretty damaged..."))
+		else //5+
 			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's starting to look better..."))
 
 	proc/get_welding_positions()
 
-		var/xstr = rand(7, 16)
-		var/xstp = rand(7, 16)
-		var/ystr = rand(4, -4)
-		var/ystp = rand(4, -4)
-
-
-		if(prob(50))
-			yoffset = 4
-
-		startpos = list(8, yoffset)
-		stoppos = list(10, yoffset)
+		var/startpos = list(rand(7, 16), rand(4, -4))
+		var/stoppos = list(rand(7, 16), rand(4, -4))
 		return list(startpos, stoppos)
 
 	attackby(obj/item/I, mob/user)
@@ -2269,16 +2267,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		//are we repairing?
 		if (isweldingtool(I))
 			var/obj/item/weldingtool/welder = I
-			if(guaranteed_uses >= MAX_USES)
+			if(guaranteed_uses == MAX_USES)
 				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
 			else //We are good to repair!
 				var/datum/action/bar/icon/callback/action_bar
 				boutput(user, SPAN_NOTICE("You start to repair the [src]..."))
 
 				//create the action bar
-
 				var/positions = src.get_welding_positions()
-
 				action_bar = new /datum/action/bar/private/welding/loop(user, src, 1.5 SECONDS, \
 				proc_path = /obj/item/gun/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
 				proc_args=list(src, user), \
@@ -2289,8 +2285,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 				//begin repairing!
 				actions.start(action_bar, user)
-				return
-
 		//are we cycling through firing modes?
 		else if(isscrewingtool(I))
 			if(firemode == ONE_BARREL)
@@ -2318,35 +2312,34 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	attack_self(mob/user as mob)
 
 		user.drop_item(src) //clear hands
-		boutput(user, SPAN_NOTICE("You pull apart the the [src]!"))
+		boutput(user, SPAN_NOTICE("You rip apart the the [src]!"))
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		// give an OPEN slamgun
 		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
 		user.put_in_hand_or_drop(newgun)
 		newgun.AttackSelf(user)
 
-
+		//give some other random junk that'd reasonably be pulled off, for flavor
 		var/turf/T = get_turf(src)
 
-		//give some other random junk that'd reasonably be pulled off, for flavor
 		var/obj/item/raw_material/scrap_metal/W = new /obj/item/raw_material/scrap_metal
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
+		W.icon = "scrap4"
 
 		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
 		G.icon_state = "gib1"
 
 		var/obj/item/rods/steel/R = new /obj/item/rods/steel
 		var/obj/item/scrap/S1 = new /obj/item/scrap
-		var/obj/item/scrap/S2 = new /obj/item/scrap
-		var/obj/item/scrap/S3 = new /obj/item/scrap
-		S3.icon_state = "2metal0"
+		S1.icon_state = "2metal0"
 
-		var/flavordebris = list(W, G, R, S1, S2, S3)
+		var/flavordebris = list(W, G, R, S1)
 		var/obj/item/currentitem
 		var/i
-		for(i=1, i<=6, i++)
+		for(i=1, i<=4, i++)
 			currentitem = flavordebris[i]
 			currentitem.set_loc(T)
 			currentitem.pixel_x = rand(-8,8)
