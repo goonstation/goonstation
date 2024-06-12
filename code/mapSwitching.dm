@@ -492,6 +492,7 @@ var/global/datum/map_vote_holder/map_vote_holder = new()
 
 /datum/MapVoteReport
 	var/list/mapList
+	var/winner
 
 	New(list/reportDataSimple, list/reportDataDetailed)
 		src.mapList = mapSwitcher.get_player_pickable_map_list()
@@ -506,6 +507,8 @@ var/global/datum/map_vote_holder/map_vote_holder = new()
 				map["voters"] = reportDataDetailed[map["name"]]
 
 		sortList(src.mapList, /proc/compare_map_vote_count)
+
+		src.winner = mapSwitcher.voteChosenMap
 
 		..()
 
@@ -522,7 +525,7 @@ var/global/datum/map_vote_holder/map_vote_holder = new()
 			ui.open()
 
 	ui_static_data(mob/user)
-		. = list("mapList" = mapList)
+		. = list("mapList" = mapList, "winner" = winner)
 
 /proc/compare_map_vote_count(list/a, list/b)
 	. = b["count"] - a["count"]

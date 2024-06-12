@@ -13,7 +13,7 @@ import { MapVoteReportData } from './type';
 
 export const MapVoteReport = (_props, context) => {
   const { data } = useBackend<MapVoteReportData>(context);
-  const { mapList } = data;
+  const { mapList, winner } = data;
 
   return (
     <Window height={185} width={106 * mapList.length + 6}>
@@ -21,7 +21,7 @@ export const MapVoteReport = (_props, context) => {
         <Stack>
           {mapList.map(map => {
             return (
-              <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail}>
+              <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail} winner={map.name === winner}>
                 <VoteCountLabel voteCount={map.count} />
                 {map.voters && <Voters voters={map.voters} />}
               </MapPanel>

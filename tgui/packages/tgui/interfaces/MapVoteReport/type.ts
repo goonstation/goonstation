@@ -13,5 +13,6 @@ interface MapVoteReportMapData extends MapVoteMapData {
 }
 
 export interface MapVoteReportData {
-  mapList: Array<MapVoteReportMapData>
+  mapList: Array<MapVoteReportMapData>,
+  winner: string
 }

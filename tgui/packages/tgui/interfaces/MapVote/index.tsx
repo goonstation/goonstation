@@ -59,7 +59,12 @@ export const MapVote = (_props, context) => {
 export const MapPanel = (props) => {
   return (
     <Stack.Item>
-      <Section title={props.mapName} textAlign="center" width="100px">
+      <Section
+        title={props.mapName}
+        textAlign="center"
+        width="100px"
+        backgroundColor={props.winner ? "#a17f1a" : null}
+      >
         <Box>
           <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
         </Box>
