@@ -626,7 +626,7 @@
 					message = "<B>[src]</B> birdwells."
 					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
+				else if (voluntary)
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 					return
 
@@ -2262,7 +2262,7 @@
 				else
 					message = "<b>[src]</b> woofs!"
 					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
-			else
+			else if (voluntary)
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 

@@ -1171,3 +1171,55 @@ proc/spawn_kitchen_note()
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
 	"}
+
+/obj/item/paper/marionette_implant_readme
+	name = "marionette implant readme"
+	icon_state = "paper"
+	info ={"
+	<i>Once you're done reading these instructions, you may activate the provided self-destruct function by using them in your hand.</i>
+
+	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
+	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
+
+	<p>You should have received a wireless control remote for easy convenience of using this implant.
+	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
+	This remote should be automatically linked to the implant you purchased. You can use additional implanters on the remote
+	to link them as well, should you purchase additional implants.</p>
+
+	<p>Once implanted into a target, simply use the remote to your heart's content! Be wary that <b>each activation of an implant
+	will cause heat buildup that may destroy it.</b> The components are delicate and are not built for repeated short-term stress.
+	Heat will dissipate slowly over time. <b>Heat will build up upon activation even if the conditions for the provided action are not met.</b></p>
+
+	<p>The implant will function in any living creature. <b>Dead human bodies are also affected by some commands,
+	as long as they have not decomposed.</b></p>
+
+	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
+	<b>fully compatible with wireless packets.</b> The implanter should list the frequency and network address of the contained implant,
+	as well as a unique <b>passkey</b> that must be provided in the signal under the <code>passkey</code> parameter to authorize most signals.</p>
+
+	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
+	<ul>
+	<li><b>ping</b> - Returns a bounceback containing information about the implant. Passkey not required.
+	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field.</li>
+	<li><b>emote</b> - As <b>say</b>, but with an emote instead.</li>
+	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field as a number.
+	North, south, south, and west are 1, 2, 4, and 8 respectively.</li>
+	<li><b>shock</b> or <b>zap</b>* - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
+	<li><b>drop</b> or <b>release</b>* - The implantee will release a held item from their hands.
+	<li><b>use</b> or <b>activate</b>* - The implantee will activate any item held in their hands.
+	</ul>
+	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
+	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it.
+	You can also get the passkey by pinging the implant!</p>
+	"}
+
+	attack_self(mob/user)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Read", "Self-Destruct"))
+		if (choice == "Read")
+			src.examine(user)
+		else
+			var/turf/T = get_turf(src)
+			new /obj/effect/supplyexplosion (T)
+			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
+			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
+			qdel(src)

@@ -169,6 +169,20 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/generic/marionette_implant
+	name = "Marionette Implant"
+	item = /obj/item/implanter/marionette
+	cost = 1
+	desc = "Receives data signals and converts them into synaptic impulses, for remote-control puppeting! Packet compatible.<br><br>\
+		The first purchase of this item will be contained in a box that also includes instructions and a remote. Subsequent purchases will only \
+		provide additional implanters."
+	vr_allowed = FALSE
+
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		if (!uplink?.purchase_log[src.type])
+			var/obj/item/storage/box/marionette_implant/MI = new(item.loc)
+			MI.storage.add_contents(item)
+
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
 	item = /obj/item/pen/sleepypen

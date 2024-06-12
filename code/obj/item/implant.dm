@@ -51,7 +51,7 @@ THROWING DARTS
 		owner = null
 		former_implantee = null
 		if (uses_radio)
-			mailgroups.Cut()
+			mailgroups?.Cut()
 		. = ..()
 
 	proc/can_implant(mob/target, mob/user)
@@ -889,6 +889,297 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.custom_orders = copytext(sanitize(html_encode(orders)), 1, MAX_MESSAGE_LEN)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
+
+/obj/item/implant/marionette
+	name = "marionette implant"
+	desc = "This thing looks really complicated."
+	icon_state = "implant-mh"
+	impcolor = "r"
+	instant = TRUE
+	scan_category = "syndicate"
+	uses_radio = TRUE
+	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
+	var/parent_address = null
+	var/passkey = null
+	var/heat = 0
+
+	New()
+		. = ..()
+		var/datum/reagent/R = pick(concrete_typesof(/datum/reagent/fooddrink/alcoholic))
+		src.passkey = lowertext(replacetext(replacetext(R.name, " ", "_"), "'", ""))
+		if (!src.passkey)
+			src.passkey = "IMP-[rand(111, 999)]"
+		processing_items.Add(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_MARIONETTE_IMPLANT)
+
+	disposing()
+		processing_items.Remove(src)
+		..()
+
+	deactivate()
+		..()
+		logTheThing(LOG_COMBAT, src.owner, "had their [src.name] burn out and become useless.")
+		if (ismob(src.owner))
+			boutput(src.owner, SPAN_ALERT("You feel a painful burning, like there's a something hot inside your body."))
+			src.owner.TakeDamage("All", burn = 7, damage_type = DAMAGE_BURN)
+		if (src.parent_address)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.data["device"] = "IMP_PACKET"
+			newsignal.data["command"] = "text_message"
+			newsignal.data["status"] = "BURNED OUT"
+			newsignal.data["address_1"] = parent_address
+			newsignal.data["sender"] = src.net_id
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		src.name_prefix("melted")
+		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
+		processing_items.Remove(src)
+
+	process()
+		src.adjust_heat(-1)
+
+	can_implant(mob/target, mob/user)
+		if (istype(target, /mob/living/critter/wraith/trickster_puppet))
+			boutput(user, SPAN_ALERT("The implanter shows an error on its little LCD screen: \"TARGET IS SECRETLY A GHOST\". Huh. \
+			You didn't know it even checked for that!"))
+			return
+		return ..()
+
+	receive_signal(datum/signal/signal)
+		if (!src.online || ON_COOLDOWN(src, "activate", 1 SECOND))
+			return
+		if (!signal || signal.encryption)
+			return
+
+		if (lowertext(signal.data["address_1"]) != src.net_id)
+			return
+
+		if (lowertext(signal.data["sender"]) == src.net_id)
+			return
+
+		var/command = lowertext(signal.data["command"])
+		if (command == "ping")
+			var/datum/signal/pingsignal = get_free_signal()
+			pingsignal.source = src
+			pingsignal.data["device"] = "IMP_PACKET"
+			pingsignal.data["sender"] = src.net_id
+			pingsignal.data["passkey"] = src.passkey
+			pingsignal.data["status"] = src.heat > 100 ? "DANGER" : ismob(src.owner) ? "ACTIVE" : "IDLE"
+			pingsignal.data["address_1"] = signal.data["sender"]
+			pingsignal.data["command"] = "ping_reply"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
+			return
+
+		if (src.passkey && src.passkey != signal.data["passkey"])
+			if (lowertext(signal.data["sender"]) != src.parent_address)
+				return
+
+		if (!ismob(src.owner))
+			if (!istype(src.loc, /obj/item/implanter))
+				src.visible_message(SPAN_ALERT("\The [src] vibrates a little bit."))
+				animate_shake(src)
+				playsound(src, 'sound/effects/sparks6.ogg', 25, TRUE)
+			return
+
+		var/mob/living/carbon/human/H = src.owner
+		if (istype(H) && H.decomp_stage != DECOMP_STAGE_NO_ROT)
+			return
+
+		var/data = lowertext(signal.data["data"])
+		switch (command)
+			if ("say", "speak")
+				if (!isdead(src.owner))
+					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+					src.owner.say(data)
+				src.adjust_heat(15)
+			if ("emote")
+				if (!isdead(src.owner))
+					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+					src.owner.emote(data)
+				src.adjust_heat(15)
+			if ("move", "step", "bump")
+				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+				var/step_dir = text2dir(data)
+				if (step_dir && (step_dir in cardinal))
+					step(src.owner, step_dir)
+				src.adjust_heat(5)
+			if ("shock", "zap")
+				logTheThing(LOG_COMBAT, src.owner, "was shocked by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+				boutput(src.owner, SPAN_ALERT("You feel a shock from inside your body!"))
+				src.owner.do_disorient(90, knockdown = 7 SECONDS, disorient = 30)
+				playsound(src.owner, 'sound/impact_sounds/Energy_Hit_3.ogg', 20, TRUE, -1)
+				src.adjust_heat(50)
+			if ("drop", "release")
+				if (!isdead(src.owner))
+					var/obj/item/I = src.owner.equipped()
+					if (istype(I))
+						logTheThing(LOG_COMBAT, src.owner, "was forced to drop \the [I] by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+						boutput(src.owner, SPAN_ALERT("Your grip on \the [I] suddenly relaxes!"))
+						H.drop_item()
+					src.adjust_heat(60)
+			if ("use", "activate")
+				if (!isdead(src.owner))
+					var/obj/item/I = src.owner.equipped()
+					if (istype(I))
+						logTheThing(LOG_COMBAT, src.owner, "was forced to activate \the [I] by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+						boutput(src.owner, SPAN_ALERT("Your hand involuntarily jerks."))
+						src.owner.click(I, list())
+					src.adjust_heat(35)
+
+	proc/adjust_heat(to_heat)
+		src.heat = max(0, src.heat + to_heat)
+		if (src.heat > 100 && prob(20) && to_heat > 0)
+			src.deactivate()
+
+/obj/item/storage/box/marionette_implant
+	name = "foam-lined case"
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/remote/marionette_implant, /obj/item/paper/marionette_implant_readme)
+
+	make_my_stuff()
+		..()
+		// We do this because buying the box from the uplink will add the implanter from that to the box right afterwards
+		// This way, placed or spawned boxes will still have their implant, but the uplink one will not have a duplicate
+		SPAWN(1 SECOND)
+			for (var/obj/item/implanter/marionette/I in src.storage.get_contents())
+				return
+			src.storage.add_contents(new /obj/item/implanter/marionette)
+
+	get_desc(dist, mob/user)
+		if (user.mind?.is_antagonist())
+			. += "Contains one marionette implant and the tools to use it. At least, if it hasn't been opened already."
+		else
+			. += "Seems like it's supposed to hold a syringe or something?"
+
+/obj/item/remote/marionette_implant
+	name = "marionette implant remote"
+	desc = "A remote control that allows the sending and receiving of data from linked marionette implants."
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	flags = TGUI_INTERACTIVE
+	w_class = W_CLASS_SMALL
+	var/net_id
+	var/packet_data_field = "UNSET"
+	var/selected_command = "say"
+	var/list/implant_status = list()
+
+	New()
+		. = ..()
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_MARIONETTE_IMPLANT)
+
+	attack_self(mob/user)
+		src.ui_interact(user)
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/implanter))
+			var/obj/item/implanter/I = W
+			var/obj/item/implant/marionette/M = I.imp
+			if (!istype(M))
+				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
+				return
+			if (!(M.net_id in src.implant_status))
+				boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
+				src.implant_status[M.net_id] = "IDLE"
+				M.parent_address = src.net_id
+				user.playsound_local(user, 'sound/machines/tone_beep.ogg', 30)
+			else
+				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
+			return
+		return ..()
+
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
+		if (!signal || signal.encryption)
+			return
+
+		if (lowertext(signal.data["address_1"]) != src.net_id)
+			return
+
+		var/sender_address = lowertext(signal.data["sender"])
+		if (sender_address == src.net_id)
+			return
+
+		if (sender_address in src.implant_status)
+			if (signal.data["command"] == "ping_reply" || signal.data["command"] == "text_message")
+				if (signal.data["status"] == "BURNED OUT" && src.implant_status[sender_address] != "BURNED OUT")
+					for (var/mob/M in get_turf(src))
+						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant has burned out and is no longer usable."))
+						M.playsound_local(src, 'sound/machines/twobeep.ogg', 50)
+				src.implant_status[sender_address] = signal.data["status"]
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "MarionetteRemote", name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		var/list/implant_entries = list()
+		for (var/address in src.implant_status)
+			implant_entries += list(list(
+				"address" = address,
+				"status" = src.implant_status[address]
+			))
+		.["data_field"] = src.packet_data_field
+		.["set_command"] = src.selected_command
+		.["implants"] = implant_entries
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		if (action == "set_data")
+			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.packet_data_field, 30)
+			src.packet_data_field = new_data
+			playsound(src.loc, "keyboard", 25, TRUE, -15)
+			. = TRUE
+		else if (action == "set_command")
+			src.selected_command = params["new_command"]
+			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -15)
+			. = TRUE
+		else if (action == "remove_implant")
+			src.implant_status.Remove(params["address"])
+			boutput(usr, SPAN_NOTICE("Implant removed from tracking list."))
+			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -15)
+			. = TRUE
+		else
+			var/address = params["address"]
+			var/command = params["packet_command"]
+			var/data = params["packet_data"]
+			if (action == "message_implant")
+				var/datum/signal/newsignal = get_free_signal()
+				newsignal.source = src
+				newsignal.data["device"] = "IMP_REMOTE"
+				newsignal.data["address_1"] = address
+				newsignal.data["sender"] = src.net_id
+				newsignal.data["command"] = command
+				newsignal.data["data"] = data
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+				. = TRUE
+			else if ((action == "ping_implant" || action == "ping_all") && !ON_COOLDOWN(src, "do_ping", 2 SECONDS))
+				var/list/to_ping = action == "ping_implant" ? list(address) : src.implant_status
+				for (var/implant_to_ping in to_ping)
+					if (src.implant_status[implant_to_ping] == "BURNED OUT")
+						continue
+					var/datum/signal/newsignal = get_free_signal()
+					newsignal.source = src
+					newsignal.data["device"] = "IMP_REMOTE"
+					newsignal.data["address_1"] = address
+					newsignal.data["sender"] = src.net_id
+					newsignal.data["command"] = "ping"
+					newsignal.data["address_1"] = implant_to_ping
+					src.implant_status[implant_to_ping] = "WAITING..."
+					// Slightly delay the actual ping, as otherwise the text could be immediately overwritten
+					// This way it's clear to the player that the ping did actually happen!
+					SPAWN (0.4 SECONDS)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+						SPAWN (2 SECONDS)
+							if (src.implant_status[implant_to_ping] == "WAITING...")
+								src.implant_status[implant_to_ping] = "NO RESPONSE"
+				. = TRUE
 
 /obj/item/implant/mindhack/super
 	name = "mindhack DELUXE implant"
@@ -1887,6 +2178,33 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	New()
 		src.imp = new /obj/item/implant/revenge/wasp(src)
 		..()
+
+/obj/item/implanter/marionette
+	name = "marionette implanter"
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"Allows remote signals to exert limited control over the implanted target. Compatible with packets. \
+	You can hit this implanter with an item to scan it, causing the contained implant to send status updates to the targeted device."})
+
+	New()
+		src.imp = new /obj/item/implant/marionette(src)
+		..()
+
+	get_desc(dist)
+		. = ..()
+		var/obj/item/implant/marionette/P = src.imp
+		if (istype(P))
+			. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
+			. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
+			. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
+
+	attackby(obj/item/W, mob/user)
+		var/obj/item/implant/marionette/M = src.imp
+		if (istype(M) && istype(W, /obj/item/remote/marionette_implant))
+			var/obj/item/remote/marionette_implant/I = W
+			I.Attackby(src, user)
+			return
+		return ..()
 
 /* ================================================================ */
 /* ------------------------- Implant Case ------------------------- */
