@@ -357,6 +357,7 @@ var/list/removed_jobs = list(
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
+							return TRUE
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
