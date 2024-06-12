@@ -17,37 +17,45 @@ export const MapVote = (_props, context) => {
 
 
   return (
-    <Window height={270} width={106 * mapList.length + 6}>
+    <Window height={220} width={126 * mapList.length + 6}>
       <Window.Content>
 
         <Stack>
           {mapList.map(map => (
-            <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail}>
-              <Button.Checkbox
-                checked={clientVoteMap[map.name]}
-                color={clientVoteMap[map.name] ? "green" : "red"}
-                onClick={() => act('toggle_vote', { map_name: map.name })}
-                mt={1}>
-                {clientVoteMap[map.name] ? "Yes" : "No"}
-              </Button.Checkbox>
-            </MapPanel>
+            <MapPanel
+              key={map.name}
+              mapName={map.name}
+              mapThumbnail={map.thumbnail}
+              button={
+                <Button.Checkbox
+                  checked={clientVoteMap[map.name]}
+                  color={clientVoteMap[map.name] ? "green" : "red"}
+                  onClick={() => act('toggle_vote', { map_name: map.name })}
+                  tooltip="Vote" />
+              } />
+
           ))}
         </Stack>
 
-        <Section title="All" mt={1}>
-          <Button.Checkbox
-            checked
-            color="green"
-            onClick={() => act('all_yes')}>
-            Vote Yes to All
-          </Button.Checkbox>
-          <Button.Checkbox
-            color="red"
-            onClick={() => act('all_no')}
-            ml={1}>
-            Vote No to All
-          </Button.Checkbox>
-        </Section>
+        <Section
+          title="All"
+          mt={1}
+          buttons={
+            <>
+              <Button.Checkbox
+                checked
+                color="green"
+                onClick={() => act('all_yes')}>
+                Vote Yes to All
+              </Button.Checkbox>
+              <Button.Checkbox
+                color="red"
+                onClick={() => act('all_no')}
+                ml={1}>
+                Vote No to All
+              </Button.Checkbox>
+            </>
+          } />
 
         {!playersVoting && (<Dimmer fontSize={1.5}>Map Vote has ended</Dimmer>)}
       </Window.Content>
@@ -61,11 +69,12 @@ export const MapPanel = (props) => {
     <Stack.Item>
       <Section
         title={props.mapName}
-        textAlign="center"
-        width="100px"
         backgroundColor={props.winner ? "#a17f1a" : null}
+        buttons={props.button}
+        width="120px"
+        align={props.button ? null : "center"}
       >
-        <Box>
+        <Box align="center">
           <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
         </Box>
         { props.children }
