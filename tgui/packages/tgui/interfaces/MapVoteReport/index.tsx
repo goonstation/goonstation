@@ -16,7 +16,7 @@ export const MapVoteReport = (_props, context) => {
   const { mapList, winner } = data;
 
   return (
-    <Window height={185} width={106 * mapList.length + 6}>
+    <Window height={185} width={126 * mapList.length + 6}>
       <Window.Content>
         <Stack>
           {mapList.map(map => {
