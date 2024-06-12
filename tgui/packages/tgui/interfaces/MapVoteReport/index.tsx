@@ -8,7 +8,7 @@
 import { Window } from '../../layouts';
 import { useBackend } from '../../backend';
 import { Box, Stack } from '../../components';
-// import { MapPanel } from '../MapVote';
+import { MapPanel } from '../MapVote';
 import { MapVoteReportData } from './type';
 
 export const MapVoteReport = (_props, context) => {
@@ -19,14 +19,14 @@ export const MapVoteReport = (_props, context) => {
     <Window height={185} width={(126 * mapList.length) + 6}>
       <Window.Content>
         <Stack>
-          {/* {mapList.map(map => {
+          {mapList.map(map => {
             return (
               <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail} winner={map.name === winner}>
                 <VoteCountLabel voteCount={map.count} />
                 {map.voters && <Voters voters={map.voters} />}
               </MapPanel>
             );
-          })} */}
+          })}
         </Stack>
       </Window.Content>
     </Window>
