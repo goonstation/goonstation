@@ -182,7 +182,6 @@ datum
 										hygiene_restore = 3
 									else if (istype(src, /datum/reagent/water))
 										hygiene_restore = -3
-								boutput(M, SPAN_ALERT("hyg [hygiene] || resto [hygiene_restore] || cap [hygiene_cap] || dist frm cap [hygiene_distance_from_cap] || change [hygiene_change]"))
 								if (hygiene_distance_from_cap == 0 && !(hygiene_cap == 0) && hygiene_change == 0)
 									if(!ON_COOLDOWN(H, "Hygiene_restoration_blocked_by_clothes", 1 MINUTE))
 										boutput(M, SPAN_ALERT("Your clothes prevent you from getting any cleaner!"))
