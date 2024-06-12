@@ -10,16 +10,13 @@ import { useBackend } from '../../backend';
 import { Box, Button, Dimmer, Image, Section, Stack } from '../../components';
 import { MapVoteData } from './type';
 
-
 export const MapVote = (_props, context) => {
   const { data, act } = useBackend<MapVoteData>(context);
   const { playersVoting, mapList, clientVoteMap } = data;
 
-
   return (
-    <Window height={220} width={126 * mapList.length + 6}>
+    <Window height={220} width={(126 * mapList.length) + 6}>
       <Window.Content>
-
         <Stack>
           {mapList.map(map => (
             <MapPanel
@@ -36,7 +33,6 @@ export const MapVote = (_props, context) => {
 
           ))}
         </Stack>
-
         <Section
           title="All"
           mt={1}
@@ -56,7 +52,6 @@ export const MapVote = (_props, context) => {
               </Button.Checkbox>
             </>
           } />
-
         {!playersVoting && (<Dimmer fontSize={1.5}>Map Vote has ended</Dimmer>)}
       </Window.Content>
     </Window>
@@ -77,7 +72,7 @@ export const MapPanel = (props) => {
         <Box align="center">
           <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
         </Box>
-        { props.children }
+        {props.children}
       </Section>
     </Stack.Item>
   );
