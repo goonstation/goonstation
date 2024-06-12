@@ -186,8 +186,9 @@
 			if (src.emote_check(voluntary, 10, 1, 0))
 				message = "<B>[src]</B> [act]s."
 
-		else if (voluntary)
-			src.show_text("Unusable emote '[act]'.", "blue")
+		else
+			if (voluntary)
+				src.show_text("Unusable emote '[act]'.", "blue")
 			return
 
 	if (message)
