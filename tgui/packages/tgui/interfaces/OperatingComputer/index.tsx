@@ -26,7 +26,7 @@ export const OperatingComputer = (props, context) => {
   const [tabIndex, setTabIndex] = useSharedState(context, 'tabIndex', 1);
 
   return (
-    <Window title="Operating Computer" width="561" height="760">
+    <Window title="Operating Computer" width="560" height="760">
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
