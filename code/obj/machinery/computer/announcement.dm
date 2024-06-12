@@ -234,28 +234,28 @@
 	send_message(mob/user, message)
 		. = ..()
 		if(.)
-			sleep(5)
-			new /obj/effects/explosion (src.loc)
-			playsound(src.loc, "explosion", 50, 1)
-			src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
-			user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
+			SPAWN(0.5 SECONDS)
+				new /obj/effects/explosion (src.loc)
+				playsound(src.loc, "explosion", 50, 1)
+				src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
+				user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
 
-			var/mob/living/carbon/clown = user
-			if(istype(clown))
-				var/datum/db_record/S = data_core.security.find_record("id", clown.datacore_id)
-				S?["criminal"] = "*Arrest*"
-				S?["mi_crim"] = "Making a very irritating announcement."
+				var/mob/living/carbon/clown = user
+				if(istype(clown))
+					var/datum/db_record/S = data_core.security.find_record("id", clown.datacore_id)
+					S?["criminal"] = "*Arrest*"
+					S?["mi_crim"] = "Making a very irritating announcement."
 
-				clown.update_burning(15) // placed here since update_burning is only for mob/living
-			if(ID)
-				user.put_in_hand_or_eject(ID)
+					clown.update_burning(15) // placed here since update_burning is only for mob/living
+				if(ID)
+					user.put_in_hand_or_eject(ID)
 
-			if (emagged)
-				var/turf/T = get_turf(src.loc)
-				if(T)
-					src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
-					explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
-			qdel(src)
+				if (emagged)
+					var/turf/T = get_turf(src.loc)
+					if(T)
+						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
+						explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
+				qdel(src)
 
 
 	attackby(obj/item/W, mob/user)
