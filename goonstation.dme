@@ -1279,6 +1279,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\routes\apiRoute.dm"
 #include "code\modules\goonhub\api\routes\RandomEntries.dm"
 #include "code\modules\goonhub\api\routes\RemoteMusic.dm"
+#include "code\modules\goonhub\api\routes\TestRoute.dm"
 #include "code\modules\goonhub\api\routes\bans\AddBanDetails.dm"
 #include "code\modules\goonhub\api\routes\bans\AddBans.dm"
 #include "code\modules\goonhub\api\routes\bans\CheckBans.dm"
