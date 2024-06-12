@@ -26,24 +26,27 @@ export const MarionetteRemote = (_props, context) => {
                         disabled={set_command !== "say" && set_command !== "emote"}
                         content={data_field ? data_field : "UNSET"}
                       />)
-                      : <><Button
-                          onClick={() => act("set_data", { new_data: "NORTH" })}
-                          icon="arrow-up"
-                          selected={data_field === "NORTH"}
-                      /><Button
-                        onClick={() => act("set_data", { new_data: "SOUTH" })}
-                        icon="arrow-down"
-                        selected={data_field === "SOUTH"}
-                      /><Button
-                        onClick={() => act("set_data", { new_data: "WEST" })}
-                        icon="arrow-left"
-                        selected={data_field === "WEST"}
-                      /><Button
-                        onClick={() => act("set_data", { new_data: "EAST" })}
-                        icon="arrow-right"
-                        selected={data_field === "EAST"}
-                      />
-                      </>}
+                      : (
+                        <>
+                          <Button
+                            onClick={() => act("set_data", { new_data: "NORTH" })}
+                            icon="arrow-up"
+                            selected={data_field === "NORTH"}
+                          />
+                          <Button
+                            onClick={() => act("set_data", { new_data: "SOUTH" })}
+                            icon="arrow-down"
+                            selected={data_field === "SOUTH"}
+                          /><Button
+                            onClick={() => act("set_data", { new_data: "WEST" })}
+                            icon="arrow-left"
+                            selected={data_field === "WEST"}
+                          /><Button
+                            onClick={() => act("set_data", { new_data: "EAST" })}
+                            icon="arrow-right"
+                            selected={data_field === "EAST"}
+                          />
+                        </>)}
                   </LabeledList.Item>
                   <LabeledList.Item key="command" label="Command">
                     <Button
