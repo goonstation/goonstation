@@ -175,12 +175,14 @@ datum
 								var/hygiene_restore = hygiene_value
 								var/hygiene_cap = 100 - H.get_chem_protection() * 4 // Hygiene will not restore above this cap; typical minimum of 40%
 								var/hygiene_distance_from_cap = hygiene_cap - hygiene
-								var/hygiene_change = min(volume * hygiene_restore * (H.get_chem_protection() / 100), max(hygiene_distance_from_cap, 0))
+								var/hygiene_change = min(volume * hygiene_restore * (1 - (H.get_chem_protection() / 100)), max(hygiene_distance_from_cap, 0))
+
 								if (H.mutantrace.aquaphobic)
 									if (istype(src, /datum/reagent/oil))
 										hygiene_restore = 3
 									else if (istype(src, /datum/reagent/water))
 										hygiene_restore = -3
+								boutput(M, SPAN_ALERT("hyg [hygiene] || resto [hygiene_restore] || cap [hygiene_cap] || dist frm cap [hygiene_distance_from_cap] || change [hygiene_change]"))
 								if (hygiene_distance_from_cap == 0 && !(hygiene_cap == 0) && hygiene_change == 0)
 									if(!ON_COOLDOWN(H, "Hygiene_restoration_blocked_by_clothes", 1 MINUTE))
 										boutput(M, SPAN_ALERT("Your clothes prevent you from getting any cleaner!"))
