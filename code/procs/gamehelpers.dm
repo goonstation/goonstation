@@ -33,7 +33,6 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a hose","a new bottle of cologne")
 /proc/stinkStringHygiene(var/mob/stinker)
 	var/someone = "someone"
-	var/them = "them"
 	var/they = "it"
 	var/their = "their"
 	var/blank_or_s = "s"
