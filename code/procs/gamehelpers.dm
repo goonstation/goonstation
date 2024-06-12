@@ -55,7 +55,7 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		if(6)
 			return "[pick(stinkExclamations)], what you wouldn't give to be staffed on a station where people bathe..."
 		if(7)
-			return "You reckon [someone] has [their] very own locker room in [their] backpack, because, damn! It REEKS!"
+			return "You reckon [someone] has [their] very own locker room in [their] backpack, because, damn! [they] REEK[capitalize(blank_or_s)]!"
 		if(8)
 			return "[capitalize(someone)] must have skipped laundry day for the past month. At least, [they] smell[blank_or_s] like it."
 		if(9)
