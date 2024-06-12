@@ -315,7 +315,7 @@ var/bombini_saved
 	icon_state = "syndiepc4"
 
 /obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
-	if(!(istype(W, /obj/item/disk/data/floppy/read_only/authentication) || istype(W, /obj/item/card/id)) && (status & (BROKEN|NOPOWER)))
+	if(!(istype(W, /obj/item/disk/data/floppy/read_only/authentication) || istype(W, /obj/item/card/id)) || (status & (BROKEN|NOPOWER)))
 		return ..()
 
 	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
