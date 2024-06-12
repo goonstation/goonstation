@@ -1706,7 +1706,16 @@ datum
 					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
+				if(method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if (!ON_COOLDOWN(M, "ants_scream", 15 SECONDS)) //lets make it less spammy
+					M.emote("scream")
+					if (method == INGEST || method == INJECT)
+						boutput(M, SPAN_ALERT("<b>OH SHIT, ANTS [pick("", "IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b>"))
+					else
+						boutput(M, SPAN_ALERT("<b>OH SHIT, ANTS![pick("", "!", "!!", "!!!", "!!!!")]</b>"))
 				random_brute_damage(M, 4)
+				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
