@@ -38,7 +38,6 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 	var/blank_or_s = "s"
 	if(stinker)
 		someone = stinker.name
-		them = "[him_or_her(stinker)]"
 		they = "[he_or_she(stinker)]"
 		their = "[his_or_her(stinker)]"
 		blank_or_s = "[blank_or_s(stinker)]"
