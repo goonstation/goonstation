@@ -22,7 +22,8 @@ export const MapVoteReport = (_props, context) => {
           {mapList.map(map => {
             return (
               <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail}>
-                <VoteCountLabel voteCount={map.count} voters={map.voters} />
+                <VoteCountLabel voteCount={map.count} />
+                {map.voters && <Voters voters={map.voters} />}
               </MapPanel>
             );
           })}
@@ -34,26 +35,24 @@ export const MapVoteReport = (_props, context) => {
 
 const VoteCountLabel = props => {
   return (
-    <Box
-      as="span"
-      size={1.5}
-      bold
-      style={props.tooltipped && { "border-bottom": "1px dotted" }}>
+    <Box size={1.5} bold>
       {props.voteCount || 0} vote{props.voteCount > 1 && "s"}
-      {props.voters && (
-        <Box
-          scrollable
-          maxHeight={6}
-          style={{
-            'word-break': 'break-word',
-            'overflow': 'hidden',
-          }}
-          align="left"
-          fontSize={0.8}
-          bold={false}>
-          {props.voters.join(', ')}
-        </Box>
-      )}
+    </Box>
+  );
+};
+
+const Voters = props => {
+  return (
+    <Box
+      scrollable
+      maxHeight={6}
+      style={{
+        'word-break': 'break-word',
+        'overflow': 'hidden',
+      }}
+      align="left"
+      fontSize={0.8}>
+      {props.voters.join(', ')}
     </Box>
   );
 };
