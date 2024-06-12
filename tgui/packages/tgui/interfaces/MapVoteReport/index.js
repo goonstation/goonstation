@@ -7,11 +7,10 @@
 
 import { Window } from '../../layouts';
 
-export const MapVote = (_props, context) => {
+export const MapVoteReport = (props, context) => {
   return (
     <Window>
       <Window.Content />
     </Window>
   );
 };
-

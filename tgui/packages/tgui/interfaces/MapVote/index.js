@@ -6,13 +6,12 @@
  */
 
 import { Window } from '../../layouts';
-// import { MapPanel } from '../MapVote';
 
-export const MapVoteReport = (_props, context) => {
-
+export const MapVote = (props, context) => {
   return (
     <Window>
       <Window.Content />
     </Window>
   );
 };
+
