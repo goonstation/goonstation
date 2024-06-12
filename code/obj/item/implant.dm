@@ -1276,6 +1276,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				access.access = get_access("Captain")
 
+		chef
+			New()
+				..()
+				access.access = get_access("Chef")
+
+
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
 /* ============================================================ */

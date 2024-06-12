@@ -366,23 +366,24 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
+/// Adds zeroes to the beginning of a string until it reaches the desired length
 /proc/add_zero(text, desired_length)
-	text = "[text]"
-	if ((desired_length - length(text)) <= 0)
-		return text
-	return (num2text(0, desired_length - length(text), 10) + text)
+	. = "[text]" // We stringify this because the input might be a number
+	if ((desired_length - length(.)) <= 0)
+		return .
+	return (num2text(0, desired_length - length(.), 10) + .)
 
-/// Adds 'char' ahead of 'text' until there are 'length' characters total
-/proc/add_leading(text, length, char = " ")
-	. = "[text]"
-	var/count = length - length_char(text)
+/// Adds `char` ahead of `text` until it reaches `length` characters total
+/proc/pad_leading(text, length, char = " ")
+	. = "[text]" // We stringify this because the input might be a number
+	var/count = length - length_char(.)
 	var/list/chars_to_add[max(count + 1, 0)]
 	return jointext(chars_to_add, char) + .
 
-/// Adds 'char' behind 'text' until there are 'length' characters total
-/proc/add_trailing(text, length, char = " ")
-	. = "[text]"
-	var/count = length - length_char(text)
+/// Adds `char` after `text` until it reaches `length` characters total
+/proc/pad_trailing(text, length, char = " ")
+	. = "[text]" // We stringify this because the input might be a number
+	var/count = length - length_char(.)
 	var/list/chars_to_add[max(count + 1, 0)]
 	return . + jointext(chars_to_add, char)
 
@@ -450,7 +451,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		else if(delta % 2)
 			. = " " + message
 		delta--
-		var/spaces = add_leading("",delta/2-1)
+		var/spaces = pad_leading("",delta/2-1)
 		. = spaces + . + spaces
 
 /proc/dd_limittext(message, length)
