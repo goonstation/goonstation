@@ -1706,8 +1706,6 @@ datum
 					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
-				if(method == TOUCH)
-					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "ants_scream", 15 SECONDS)) //lets make it less spammy
 					M.emote("scream")
 					if (method == INGEST || method == INJECT)
