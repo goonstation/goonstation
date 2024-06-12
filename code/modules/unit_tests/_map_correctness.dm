@@ -20,6 +20,7 @@ proc/check_map_correctness()
 	#endif
 	check_turf_underlays()
 	check_mass_drivers()
+	check_bolter_ids()
 
 proc/check_missing_navbeacons()
 	var/list/all_beacons = list()
@@ -217,4 +218,12 @@ proc/check_turf_underlays()
 	if(log_msg)
 		CRASH(log_msg)
 
+proc/check_bolter_ids()
+	var/list/missing = list()
+	for_by_tcl(/obj/machinery/door_control/bolter)
+		if(bolter.id == "")
+			missing += "[bolter] at [bolter.x], [bolter.y], [bolter.z] missing ID"
+	if(length(missing))
+		var/missing_text = jointext(missing, "\n")
+		CRASH("Bolters missing ID:\n" + missing_text)
 #endif
