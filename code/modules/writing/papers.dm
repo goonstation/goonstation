@@ -1183,8 +1183,7 @@ proc/spawn_kitchen_note()
 
 	<p>You should have received a wireless control remote for easy convenience of using this implant.
 	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
-	This remote should be automatically linked to the implant you purchased. You can use additional implanters on the remote
-	to link them as well, should you purchase additional implants.</p>
+	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
 
 	<p>Once implanted into a target, simply use the remote to your heart's content! Be wary that <b>each activation of an implant
 	will cause heat buildup that may destroy it.</b> The components are delicate and are not built for repeated short-term stress.
@@ -1202,8 +1201,8 @@ proc/spawn_kitchen_note()
 	<li><b>ping</b> - Returns a bounceback containing information about the implant. Passkey not required.
 	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field.</li>
 	<li><b>emote</b> - As <b>say</b>, but with an emote instead.</li>
-	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field as a number.
-	North, south, south, and west are 1, 2, 4, and 8 respectively.</li>
+	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
+	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance.</li>
 	<li><b>shock</b> or <b>zap</b>* - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
 	<li><b>drop</b> or <b>release</b>* - The implantee will release a held item from their hands.
 	<li><b>use</b> or <b>activate</b>* - The implantee will activate any item held in their hands.

@@ -4,7 +4,7 @@ import { Button, Flex, LabeledList, Section, Stack } from '../components';
 
 export const MarionetteRemote = (_props, context) => {
   const { act, data } = useBackend(context);
-  const { data_field, set_command, implants } = data;
+  const { entered_data, selected_command, implants } = data;
 
   return (
     <Window
@@ -19,32 +19,32 @@ export const MarionetteRemote = (_props, context) => {
               <Flex.Item>
                 <LabeledList>
                   <LabeledList.Item key="data" label="Data">
-                    {set_command !== "step" ? (
+                    {selected_command !== "step" ? (
                       <Button
                         fluid
                         onClick={() => act("set_data")}
-                        disabled={set_command !== "say" && set_command !== "emote"}
-                        content={data_field ? data_field : "UNSET"}
+                        disabled={selected_command !== "say" && selected_command !== "emote"}
+                        content={entered_data ? entered_data : "UNSET"}
                       />)
                       : (
                         <>
                           <Button
                             onClick={() => act("set_data", { new_data: "NORTH" })}
                             icon="arrow-up"
-                            selected={data_field === "NORTH"}
+                            selected={entered_data === "NORTH"}
                           />
                           <Button
                             onClick={() => act("set_data", { new_data: "SOUTH" })}
                             icon="arrow-down"
-                            selected={data_field === "SOUTH"}
+                            selected={entered_data === "SOUTH"}
                           /><Button
                             onClick={() => act("set_data", { new_data: "WEST" })}
                             icon="arrow-left"
-                            selected={data_field === "WEST"}
+                            selected={entered_data === "WEST"}
                           /><Button
                             onClick={() => act("set_data", { new_data: "EAST" })}
                             icon="arrow-right"
-                            selected={data_field === "EAST"}
+                            selected={entered_data === "EAST"}
                           />
                         </>)}
                   </LabeledList.Item>
@@ -52,32 +52,32 @@ export const MarionetteRemote = (_props, context) => {
                     <Button
                       onClick={() => act("set_command", { new_command: "say" })}
                       content="Say"
-                      selected={set_command === "say"}
+                      selected={selected_command === "say"}
                     />
                     <Button
                       onClick={() => act("set_command", { new_command: "emote" })}
                       content="Emote"
-                      selected={set_command === "emote"}
+                      selected={selected_command === "emote"}
                     />
                     <Button
                       onClick={() => act("set_command", { new_command: "step" })}
                       content="Step"
-                      selected={set_command === "step"}
+                      selected={selected_command === "step"}
                     />
                     <Button
                       onClick={() => act("set_command", { new_command: "drop" })}
                       content="Drop"
-                      selected={set_command === "drop"}
+                      selected={selected_command === "drop"}
                     />
                     <Button
                       onClick={() => act("set_command", { new_command: "use" })}
                       content="Use"
-                      selected={set_command === "use"}
+                      selected={selected_command === "use"}
                     />
                     <Button
                       onClick={() => act("set_command", { new_command: "shock" })}
                       content="Shock"
-                      selected={set_command === "shock"}
+                      selected={selected_command === "shock"}
                     />
                   </LabeledList.Item>
                 </LabeledList>
@@ -91,7 +91,7 @@ export const MarionetteRemote = (_props, context) => {
               onClick={() => act('ping_all')}
             />
           )}>
-            {mapImplants(act, data_field, set_command, implants)}
+            {mapImplants(act, entered_data, selected_command, implants)}
           </Section>
         </Stack>
       </Window.Content>
@@ -118,7 +118,7 @@ const tooltipForStatus = (status) => {
   }
 };
 
-const mapImplants = (act, data_field, set_command, implants) => {
+const mapImplants = (act, entered_data, selected_command, implants) => {
   if (!implants || !implants.length)
   { return (<i>No implants detected.</i>); }
   return (
@@ -136,18 +136,18 @@ const mapImplants = (act, data_field, set_command, implants) => {
               <Button
                 icon="satellite-dish"
                 content="Ping"
-                onClick={() => act('ping_implant', { address: implant.address })}
+                onClick={() => act('ping', { address: implant.address })}
                 disabled={implant.status === "BURNED OUT"}
               />
               <Button
                 icon="envelope"
                 content="Activate"
-                onClick={() => act('message_implant', { address: implant.address, packet_data: data_field, packet_command: set_command })}
+                onClick={() => act('activate', { address: implant.address, packet_data: entered_data, packet_command: selected_command })}
                 disabled={implant.status === "BURNED OUT"}
               />
               <Button.Confirm
                 icon="x"
-                onClick={() => act('remove_implant', { address: implant.address })}
+                onClick={() => act('remove_from_list', { address: implant.address })}
               />
             </>
           )}>

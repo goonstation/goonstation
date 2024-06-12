@@ -899,7 +899,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = "syndicate"
 	uses_radio = TRUE
 	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
-	var/parent_address = null
+	var/linked_address = null
 	var/passkey = null
 	var/heat = 0
 
@@ -922,15 +922,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ismob(src.owner))
 			boutput(src.owner, SPAN_ALERT("You feel a painful burning, like there's a something hot inside your body."))
 			src.owner.TakeDamage("All", burn = 7, damage_type = DAMAGE_BURN)
-		if (src.parent_address)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.data["device"] = "IMP_PACKET"
-			newsignal.data["command"] = "text_message"
-			newsignal.data["status"] = "BURNED OUT"
-			newsignal.data["address_1"] = parent_address
-			newsignal.data["sender"] = src.net_id
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		if (src.linked_address)
+			var/datum/signal/burnout_signal = get_free_signal()
+			burnout_signal.source = src
+			burnout_signal.data["device"] = "IMP_MARIONETTE"
+			burnout_signal.data["sender"] = src.net_id
+			burnout_signal.data["address_1"] = src.linked_address
+			burnout_signal.data["command"] = "ping_reply"
+			burnout_signal.data["status"] = "BURNED OUT"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, burnout_signal)
 		src.name_prefix("melted")
 		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
 		processing_items.Remove(src)
@@ -945,33 +945,37 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return
 		return ..()
 
+	implanted(mob/M, mob/I)
+		. = ..()
+		// this is an anti-frustration feature with the goal of both making it easier to reference chat logs to know who is implanted with what,
+		// as well as to make sure players can still use packets if they forget to scan it onto their remote and didn't write down the network data
+		boutput(I, SPAN_NOTICE("You make a mental note that this implant's network ID is <b>[src.net_id]</b> and its passkey is <b>[src.passkey]</b>."))
+
 	receive_signal(datum/signal/signal)
 		if (!src.online || ON_COOLDOWN(src, "activate", 1 SECOND))
 			return
 		if (!signal || signal.encryption)
 			return
-
-		if (lowertext(signal.data["address_1"]) != src.net_id)
+		if (signal.data["address_1"] != src.net_id)
+			return
+		if (signal.data["sender"] == src.net_id)
 			return
 
-		if (lowertext(signal.data["sender"]) == src.net_id)
-			return
-
-		var/command = lowertext(signal.data["command"])
+		var/command = signal.data["command"]
 		if (command == "ping")
-			var/datum/signal/pingsignal = get_free_signal()
-			pingsignal.source = src
-			pingsignal.data["device"] = "IMP_PACKET"
-			pingsignal.data["sender"] = src.net_id
-			pingsignal.data["passkey"] = src.passkey
-			pingsignal.data["status"] = src.heat > 100 ? "DANGER" : ismob(src.owner) ? "ACTIVE" : "IDLE"
-			pingsignal.data["address_1"] = signal.data["sender"]
-			pingsignal.data["command"] = "ping_reply"
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
+			var/datum/signal/ping_reply = get_free_signal()
+			ping_reply.source = src
+			ping_reply.data["device"] = "IMP_MARIONETTE"
+			ping_reply.data["sender"] = src.net_id
+			ping_reply.data["address_1"] = signal.data["sender"]
+			ping_reply.data["command"] = "ping_reply"
+			ping_reply.data["passkey"] = src.passkey
+			ping_reply.data["status"] = src.heat > 100 ? "DANGER" : ismob(src.owner) ? "ACTIVE" : "IDLE"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping_reply)
 			return
 
 		if (src.passkey && src.passkey != signal.data["passkey"])
-			if (lowertext(signal.data["sender"]) != src.parent_address)
+			if (signal.data["sender"] != src.linked_address)
 				return
 
 		if (!ismob(src.owner))
@@ -985,7 +989,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (istype(H) && H.decomp_stage != DECOMP_STAGE_NO_ROT)
 			return
 
-		var/data = lowertext(signal.data["data"])
+		var/data = signal.data["data"]
 		switch (command)
 			if ("say", "speak")
 				if (!isdead(src.owner))
@@ -993,13 +997,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					src.owner.say(data)
 				src.adjust_heat(15)
 			if ("emote")
+				data = lowertext(data)
 				if (!isdead(src.owner))
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 					src.owner.emote(data)
 				src.adjust_heat(15)
 			if ("move", "step", "bump")
 				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
-				var/step_dir = text2dir(data)
+				var/step_dir = text2dir(uppertext(data))
 				if (step_dir && (step_dir in cardinal))
 					step(src.owner, step_dir)
 				src.adjust_heat(5)
@@ -1060,7 +1065,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	flags = TGUI_INTERACTIVE
 	w_class = W_CLASS_SMALL
 	var/net_id
-	var/packet_data_field = "UNSET"
+	var/entered_data
 	var/selected_command = "say"
 	var/list/implant_status = list()
 
@@ -1083,7 +1088,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (!(M.net_id in src.implant_status))
 				boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
 				src.implant_status[M.net_id] = "IDLE"
-				M.parent_address = src.net_id
+				M.linked_address = src.net_id
 				user.playsound_local(user, 'sound/machines/tone_beep.ogg', 30)
 			else
 				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
@@ -1102,7 +1107,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return
 
 		if (sender_address in src.implant_status)
-			if (signal.data["command"] == "ping_reply" || signal.data["command"] == "text_message")
+			if (signal.data["command"] == "ping_reply")
 				if (signal.data["status"] == "BURNED OUT" && src.implant_status[sender_address] != "BURNED OUT")
 					for (var/mob/M in get_turf(src))
 						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant has burned out and is no longer usable."))
@@ -1123,8 +1128,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				"address" = address,
 				"status" = src.implant_status[address]
 			))
-		.["data_field"] = src.packet_data_field
-		.["set_command"] = src.selected_command
+		.["entered_data"] = src.entered_data
+		.["selected_command"] = src.selected_command
 		.["implants"] = implant_entries
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -1132,15 +1137,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (.)
 			return
 		if (action == "set_data")
-			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.packet_data_field, 30)
-			src.packet_data_field = new_data
+			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.entered_data, 30)
+			src.entered_data = new_data
 			playsound(src.loc, "keyboard", 25, TRUE, -15)
 			. = TRUE
 		else if (action == "set_command")
 			src.selected_command = params["new_command"]
 			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -15)
 			. = TRUE
-		else if (action == "remove_implant")
+		else if (action == "remove_from_list")
 			src.implant_status.Remove(params["address"])
 			boutput(usr, SPAN_NOTICE("Implant removed from tracking list."))
 			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -15)
@@ -1149,33 +1154,32 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			var/address = params["address"]
 			var/command = params["packet_command"]
 			var/data = params["packet_data"]
-			if (action == "message_implant")
-				var/datum/signal/newsignal = get_free_signal()
-				newsignal.source = src
-				newsignal.data["device"] = "IMP_REMOTE"
-				newsignal.data["address_1"] = address
-				newsignal.data["sender"] = src.net_id
-				newsignal.data["command"] = command
-				newsignal.data["data"] = data
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+			if (action == "activate")
+				var/datum/signal/activation_packet = get_free_signal()
+				activation_packet.source = src
+				activation_packet.data["device"] = "IMP_MARIONETTE_REMOTE"
+				activation_packet.data["sender"] = src.net_id
+				activation_packet.data["address_1"] = address
+				activation_packet.data["command"] = command
+				activation_packet.data["data"] = data
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_packet)
 				. = TRUE
-			else if ((action == "ping_implant" || action == "ping_all") && !ON_COOLDOWN(src, "do_ping", 2 SECONDS))
-				var/list/to_ping = action == "ping_implant" ? list(address) : src.implant_status
+			else if ((action == "ping" || action == "ping_all") && !ON_COOLDOWN(src, "do_ping", 2 SECONDS))
+				var/list/to_ping = action == "ping" ? list(address) : src.implant_status
 				for (var/implant_to_ping in to_ping)
 					if (src.implant_status[implant_to_ping] == "BURNED OUT")
 						continue
-					var/datum/signal/newsignal = get_free_signal()
-					newsignal.source = src
-					newsignal.data["device"] = "IMP_REMOTE"
-					newsignal.data["address_1"] = address
-					newsignal.data["sender"] = src.net_id
-					newsignal.data["command"] = "ping"
-					newsignal.data["address_1"] = implant_to_ping
+					var/datum/signal/ping = get_free_signal()
+					ping.source = src
+					ping.data["device"] = "IMP_MARIONETTE_REMOTE"
+					ping.data["sender"] = src.net_id
+					ping.data["address_1"] = implant_to_ping
+					ping.data["command"] = "ping"
 					src.implant_status[implant_to_ping] = "WAITING..."
-					// Slightly delay the actual ping, as otherwise the text could be immediately overwritten
+					// Slightly delay the actual ping, as otherwise the text could be immediately overwritten with unlucky timing
 					// This way it's clear to the player that the ping did actually happen!
 					SPAWN (0.4 SECONDS)
-						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping)
 						SPAWN (2 SECONDS)
 							if (src.implant_status[implant_to_ping] == "WAITING...")
 								src.implant_status[implant_to_ping] = "NO RESPONSE"
