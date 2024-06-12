@@ -1,4 +1,12 @@
 
+(t)wed jun 12 24
+(u)Ilysen
+(p)18889
+(e)🎨🔎💅⚙|C-Sprites, C-Code-Quality, C-QoL, A-Internal
+(+)Wraith possession now shows an action bar to the wraith and all ghosts, and has a status effect showing its duration.
+(+)After a trickster wraith finishes possessing someone, they will be moved to that person's location.
+(+)Ghosts are now alerted when a trickster wraith possesses someone, or ends their possession.
+(+)Ghosts are now alerted when a poltergeist spawns in, so people are explicitly aware if they didn't get the role!
 (t)mon jun 10 24
 (u)Zamujasa
 (e)🪲|C-Bug
