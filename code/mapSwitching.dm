@@ -286,7 +286,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		for (var/map in src.playerPickable)
 			. += list(list(
 				name = map,
-				thumbnail = "[config.goonhub_url]/storage/maps/[src.playerPickable[map]["id"]]/thumb.png"
+				thumbnail = "[config.goonhub_url]/storage/maps/[lowertext(src.playerPickable[map]["id"])]/thumb.png"
 			))
 /proc/isMapSwitcherBusted()
 	if (!mapSwitcher || !mapSwitcher.active)
