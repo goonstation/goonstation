@@ -7,7 +7,7 @@
 
 import { Window } from '../../layouts';
 import { useBackend } from '../../backend';
-import { Box, Stack, Tooltip } from '../../components';
+import { Box, Stack } from '../../components';
 import { MapPanel } from '../MapVote';
 import { MapVoteReportData } from './type';
 
@@ -22,11 +22,7 @@ export const MapVoteReport = (_props, context) => {
           {mapList.map(map => {
             return (
               <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail}>
-                {map.voters ? (
-                  <Tooltip content={map.voters.join(', ')}>
-                    <VoteCountLabel voteCount={map.count} tooltipped />
-                  </Tooltip>
-                ) : <VoteCountLabel voteCount={map.count} />}
+                <VoteCountLabel voteCount={map.count} voters={map.voters} />
               </MapPanel>
             );
           })}
@@ -44,6 +40,20 @@ const VoteCountLabel = props => {
       bold
       style={props.tooltipped && { "border-bottom": "1px dotted" }}>
       {props.voteCount || 0} vote{props.voteCount > 1 && "s"}
+      {props.voters && (
+        <Box
+          scrollable
+          maxHeight={6}
+          style={{
+            'word-break': 'break-word',
+            'overflow': 'hidden',
+          }}
+          align="left"
+          fontSize={0.8}
+          bold={false}>
+          {props.voters.join(', ')}
+        </Box>
+      )}
     </Box>
   );
 };
