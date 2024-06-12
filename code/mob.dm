@@ -923,34 +923,28 @@
 	if (IsGuestKey(src.key))
 		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
 		return
-	else if (!config)
-		boutput(src, SPAN_ALERT("Sorry, medal information is currently not available."))
-		return
-	else if (!config.medal_hub || !config.medal_password)
-		boutput(src, SPAN_ALERT("Sorry, this server does not have medals enabled."))
-		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
 
 	SPAWN(0)
 		var/list/output = list()
-		var/list/medals = src.mind.get_player().get_all_medals()
+		var/datum/player/player = src.mind.get_player()
+		var/list/medals = player.get_all_medals()
 
 		if (isnull(medals))
-			output += SPAN_ALERT("Sorry, could not contact the BYOND hub for your medal information.")
+			output += SPAN_ALERT("Sorry, could not retrieve your medal information.")
 			return
 
+		medals = medals["data"]
 		if (length(medals) == 0)
 			boutput(src, "<b>You don't have any medals.</b>")
 			return
 
-		sortList(medals, /proc/cmp_text_asc)
-
 		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			output += "&emsp;[medal]"
+			output += "&emsp;[medal["medal"]["title"]]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
+		output += {"<br><a href="[goonhub_href("/players/[player.id]")]" target="_blank">Medal Details</a>"}
 		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
