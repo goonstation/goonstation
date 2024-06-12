@@ -221,7 +221,7 @@ proc/check_turf_underlays()
 proc/check_bolter_ids()
 	var/list/missing = list()
 	for_by_tcl(bolter, /obj/machinery/door_control/bolter)
-		if(bolter.id == "")
+		if(isnull(bolter.id))
 			missing += "[bolter] at [bolter.x], [bolter.y], [bolter.z] missing ID"
 	if(length(missing))
 		var/missing_text = jointext(missing, "\n")
