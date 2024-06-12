@@ -1,5 +1,9 @@
 
 (t)wed jun 12 24
+(u)glowbold
+(p)19423
+(e)🔄📦|C-Rework, A-Game-Objects
+(*)The authentication disk can be used on the escape shuttle console to immediately launch it.
 (u)Ilysen
 (p)18889
 (e)🎨🔎💅⚙|C-Sprites, C-Code-Quality, C-QoL, A-Internal
