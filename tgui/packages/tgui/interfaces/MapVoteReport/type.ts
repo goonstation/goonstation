@@ -5,9 +5,9 @@
  * @license ISC
  */
 
-import { MapVoteMapData } from '../MapVote/type';
+// import { MapVoteMapData } from '../MapVote/type';
 
-interface MapVoteReportMapData extends MapVoteMapData {
+interface MapVoteReportMapData /* extends MapVoteMapData*/ {
   count: number,
   voters?: Array<string>
 }
