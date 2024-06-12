@@ -59,7 +59,7 @@ export const MapVote = (_props, context) => {
 };
 
 
-export const MapPanel = (props) => {
+const MapPanel = (props) => {
   return (
     <Stack.Item>
       <Section
