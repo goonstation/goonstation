@@ -3332,7 +3332,7 @@
 		name = "Cryoxadone" // leaving this name alone
 		id = "cryoxadone"
 		result = "cryoxadone"
-		required_reagents = list("cryostylane" = 2, "water" = 2, "plasma" = 1)
+		required_reagents = list("cryostylane" = 2, "water" = 2, "platinum" = 1)
 		result_amount = 2
 		instant = 0
 		reaction_speed = 1
