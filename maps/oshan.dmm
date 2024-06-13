@@ -42575,7 +42575,9 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "rrl" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 5000
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
