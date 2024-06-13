@@ -15448,16 +15448,7 @@
 	name = "South Catalytic Substation"
 	})
 "gLf" = (
-/obj/storage/secure/crate/eng{
-	name = "Fissile Materials Crate"
-	},
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/mapping_helper/access/engineering_engine,
+/obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"

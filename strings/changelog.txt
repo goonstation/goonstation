@@ -1,4 +1,44 @@
 
+(t)wed jun 12 24
+(u)glowbold
+(p)19423
+(e)🔄📦|C-Rework, A-Game-Objects
+(*)The authentication disk can be used on the escape shuttle console to immediately launch it.
+(u)Ilysen
+(p)18889
+(e)🎨🔎💅⚙|C-Sprites, C-Code-Quality, C-QoL, A-Internal
+(+)Wraith possession now shows an action bar to the wraith and all ghosts, and has a status effect showing its duration.
+(+)After a trickster wraith finishes possessing someone, they will be moved to that person's location.
+(+)Ghosts are now alerted when a trickster wraith possesses someone, or ends their possession.
+(+)Ghosts are now alerted when a poltergeist spawns in, so people are explicitly aware if they didn't get the role!
+(t)mon jun 10 24
+(u)Zamujasa
+(e)🪲|C-Bug
+(*)The Job EXP window now shows level progress properly.
+(u)LeahTheTech
+(*)Walking through fluid puddles will now expose your shoes to them. Acid WILL melt your Jordans.
+(u)TDHooligan, Blackrep
+(p)18446
+(e)🆕🗺🎨🔒🔊📦|C-Feature, A-Mapping, C-Sprites, A-Secret, C-Sound, A-Game-Objects
+(+)The KS-23 'Kuvalda Carbine' (read: big shotgun) can now be found in gang weapon crates.
+(u)Colossusqw
+(p)19413
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Changed cloth rag grabs to begin transfering chems on aggressive grabs, after a two second delay.
+(+)Cloth rags now can hold up to 20 units of chems, and transfer 1.5(ripped cloth rags) or 2(bartender handkerchiefs) per cycle, but don't cause ingest effects anymore.
+(t)sun jun 09 24
+(u)Mintyphresh
+(p)19110
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Increased chance to get figurines of donators that joined the round.
+(u)LeahTheTech
+(p)19274
+(e)🚄💅⛔|C-Performance, C-QoL, C-Removal
+(+)Bullet hit by messages now only show to the person being hit.
+(u)mintyphresh
+(p)19284
+(e)🆕💊⚗🍝💪|C-Feature, A-Medical, A-Chemistry, A-Catering, A-Traits
+(+)Alcohol resistance from genetics, jobs, and traits now helps stave off addiction, too.
 (t)sat jun 08 24
 (u)Emily
 (*)Big Chicken Evolution Refactor. Please report anything strange IMMEDIATELY.

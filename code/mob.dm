@@ -1598,7 +1598,7 @@
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
-		src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+		boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	return
@@ -2440,6 +2440,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 	actions.interrupt(src, INTERRUPT_ACT)
+
+/mob/proc/adjust_throw(datum/thrown_thing/thr)
+	return
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if (thr.throw_type & THROW_PEEL_SLIP)
