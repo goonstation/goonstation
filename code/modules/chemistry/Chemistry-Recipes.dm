@@ -3336,6 +3336,7 @@
 		result_amount = 2
 		instant = 0
 		reaction_speed = 1
+		max_temperature = T0C + 50
 		mix_phrase = "The solution bubbles as frost precipitates from the sorrounding air."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_ice-1", "reaction_ice-2")
