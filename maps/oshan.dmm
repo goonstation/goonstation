@@ -34833,6 +34833,19 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
+"gmm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 4;
+	tag = ""
+	},
+/turf/space/fluid,
+/area/station/quartermaster/cargobay)
 "gmC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36593,16 +36606,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"iRq" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/space/fluid,
-/area/space)
 "iSg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73441,7 +73444,7 @@ aqn
 aqn
 aqn
 aqn
-iRq
+aqn
 aqn
 aqn
 aqn
@@ -75551,7 +75554,7 @@ jmA
 buE
 aqn
 hEm
-wqp
+gmm
 nXd
 kcC
 pMN
