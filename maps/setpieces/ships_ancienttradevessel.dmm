@@ -122,7 +122,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/helmet/space/nanotrasen/pilot{
@@ -350,7 +350,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/suit/cultist/hastur,
@@ -499,7 +499,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/that/white{
@@ -661,7 +661,7 @@
 	name = "Power Core"
 	})
 "mA" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/item/clothing/mask/mummy,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -686,7 +686,7 @@
 	name = "Power Core"
 	})
 "mQ" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/item/stamp/classified,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -1769,7 +1769,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/mask/gas/plague{
@@ -2058,7 +2058,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/under/gimmick/kilt,
@@ -2135,7 +2135,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/caphat{
@@ -2529,7 +2529,7 @@
 	name = "Strange Vessel"
 	})
 "SU" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/item/cloth/handkerchief/colored/red,
 /obj/item/clothing/head/helmet/space/industrial/syndicate{
 	pixel_x = 11
@@ -2573,7 +2573,7 @@
 	name = "Strange Vessel"
 	})
 "TF" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/random_item_spawner/organs/bloody,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -2667,7 +2667,7 @@
 	name = "Strange Vessel"
 	})
 "Wr" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body3"
 	},
 /obj/item/paper/xg_tapes,
@@ -2686,7 +2686,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/suit/hazard/paramedic/armored/para_troop{
@@ -2773,7 +2773,7 @@
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/boater_hat{

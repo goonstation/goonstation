@@ -5,7 +5,7 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_open";
@@ -441,7 +441,7 @@
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Zh" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;

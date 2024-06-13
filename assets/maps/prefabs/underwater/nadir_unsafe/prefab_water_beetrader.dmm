@@ -194,7 +194,7 @@
 /turf/simulated/floor/white,
 /area/bee_trader)
 "A" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/marker/supplymarker,
 /turf/simulated/floor{
 	icon_state = "hive"

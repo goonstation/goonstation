@@ -30,8 +30,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/water_treatment)
 "aj" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/blood/drip/high,
 /obj/item/toy/sponge_capsule/syndicate{
 	pixel_y = 9;
@@ -134,7 +134,7 @@
 	},
 /area/prefab/water_treatment)
 "aF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -342,7 +342,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "bH" = (
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
@@ -615,11 +615,11 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/water_treatment)
 "Bz" = (
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
 "BW" = (
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/prefab/water_treatment)
@@ -770,7 +770,7 @@
 /turf/simulated/floor/purple,
 /area/prefab/water_treatment)
 "Pm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -915,7 +915,7 @@
 "ZL" = (
 /obj/item/sponge,
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/drip/high{
 	icon_state = "gibdown1"

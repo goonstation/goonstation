@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aY" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17,7 +17,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "bt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -30,7 +30,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "bP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/valve.dmi';
 	icon_state = "valve0-map";
@@ -386,7 +386,7 @@
 	},
 /area/shuttle/escape/centcom)
 "vN" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -553,7 +553,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "DB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "pipe";
 	color = "b4b4b4"
@@ -662,7 +662,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "GQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -866,7 +866,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "OU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -881,7 +881,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Pm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	name = "pipe";
 	color = "b4b4b4"
@@ -908,7 +908,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "QF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map";
@@ -959,7 +959,7 @@
 	},
 /area/centcom)
 "Sn" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1022,7 +1022,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "VQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1051,7 +1051,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "Xm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	name = "pipe";
 	color = "b4b4b4"

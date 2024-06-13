@@ -8022,7 +8022,7 @@
 	name = "Dockside Restroom"
 	})
 "ciU" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},
@@ -21439,7 +21439,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 20
 	},
 /turf/simulated/floor/white/grime,
@@ -39434,7 +39434,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "krs" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -55314,7 +55314,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/ranch)
 "oyw" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/white/grime,
@@ -70165,7 +70165,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -73365,7 +73365,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
 "sZL" = (
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "sZO" = (
@@ -75100,7 +75100,7 @@
 	},
 /area/station/hallway/primary/east)
 "twc" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -75674,7 +75674,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "tDD" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "tDE" = (
@@ -91342,7 +91342,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "xov" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},

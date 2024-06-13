@@ -233,7 +233,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "iR" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 18
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
@@ -480,7 +480,7 @@
 /turf/simulated/floor/red,
 /area/prefab/secbot_academy)
 "vQ" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 18
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,

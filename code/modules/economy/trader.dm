@@ -725,7 +725,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"Get 'em boys!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/N = pick(1,2)
 				var/mob/living/critter/martian/P = null
 				if (N == 1)
@@ -796,7 +796,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)

@@ -95,7 +95,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "hw" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "hB" = (
@@ -456,7 +456,7 @@
 /turf/simulated/floor/yellow/corner,
 /area/prefab/sequestered_cloner)
 "zf" = (
-/obj/decal/fakeobjects/creepytv{
+/obj/fakeobject/creepytv{
 	desc = "It's a looping video. Instructions on how to set up a T.E.G. and iconography of the Syndicate are interlaced with happy sounds. Then it turns to cruel images interlaced with NT logos...";
 	name = "educational television"
 	},
@@ -505,7 +505,7 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "Bz" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -974,7 +974,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "VK" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/machinery/door/window{
 	dir = 1
 	},

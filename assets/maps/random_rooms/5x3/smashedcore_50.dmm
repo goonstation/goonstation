@@ -125,7 +125,7 @@
 /turf/simulated/floor/circuit/vintage,
 /area/dmm_suite/clear_area)
 "m" = (
-/obj/decal/fakeobjects/beacon{
+/obj/fakeobject/beacon{
 	desc = "A small tracking beacon that looks like it's been bashed apart with something blunt. Technical geniuses, the crew here were not. It seems to have at least turned it off, though, to give credit where due."
 	},
 /turf/simulated/floor/caution/north,
@@ -157,7 +157,7 @@
 /obj/item/cable_coil/green/cut/small{
 	pixel_y = 13
 	},
-/obj/decal/fakeobjects/tapedeck{
+/obj/fakeobject/tapedeck{
 	pixel_x = -6;
 	pixel_y = -1;
 	layer = 3.1;
@@ -312,7 +312,7 @@
 	},
 /area/dmm_suite/clear_area)
 "T" = (
-/obj/decal/fakeobjects/cpucontroller{
+/obj/fakeobject/cpucontroller{
 	pixel_x = 5;
 	pixel_y = 2;
 	desc = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. It's been aged, gutted of parts, and wires trail out of an open panel on its side. Even without a power source, a few of the LEDs are still flickering weakly.";

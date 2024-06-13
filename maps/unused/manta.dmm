@@ -222,7 +222,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	anchored = 2
 	},
 /turf/simulated/floor/longtile,
@@ -807,7 +807,7 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "acn" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "aco" = (
@@ -979,7 +979,7 @@
 /area/diner/bathroom)
 "ade" = (
 /obj/decal/cleanable/cobweb2,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/damaged2,
 /area/diner/bathroom)
@@ -1738,7 +1738,7 @@
 /turf/space/fluid/manta,
 /area/abandonedmedicalship/robot_trader)
 "agh" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/grime,
@@ -1915,7 +1915,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "agO" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white/grime,
@@ -2590,7 +2590,7 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ajC" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
 "ajD" = (
@@ -13838,7 +13838,7 @@
 	},
 /area/station/security/hos)
 "aNZ" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aOa" = (
@@ -22328,7 +22328,7 @@
 /area/station/medical/medbay/lobby)
 "blg" = (
 /obj/item/clothing/mask/cigarette/random,
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/eight{
@@ -29276,7 +29276,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEn" = (
-/obj/decal/fakeobjects/mantacontainer/blue,
+/obj/fakeobject/mantacontainer/blue,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEo" = (
@@ -29579,7 +29579,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bFy" = (
-/obj/decal/fakeobjects/mantacontainer,
+/obj/fakeobject/mantacontainer,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bFB" = (
@@ -29979,7 +29979,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bGP" = (
-/obj/decal/fakeobjects/mantacontainer{
+/obj/fakeobject/mantacontainer{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -30224,7 +30224,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bHS" = (
-/obj/decal/fakeobjects/mantacontainer/blue{
+/obj/fakeobject/mantacontainer/blue{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -33024,7 +33024,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "cUA" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "cUH" = (
@@ -36691,7 +36691,7 @@
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -36770,7 +36770,7 @@
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -40000,7 +40000,7 @@
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "sOt" = (
-/obj/decal/fakeobjects/mantacontainer/upwards,
+/obj/fakeobject/mantacontainer/upwards,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "sTs" = (
@@ -40171,7 +40171,7 @@
 "tlH" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/dirt/dirt4,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 8;
 	pixel_x = -10
 	},

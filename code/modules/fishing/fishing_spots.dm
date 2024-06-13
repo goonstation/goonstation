@@ -638,7 +638,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 //ainsley
 /datum/fishing_spot/nuclear_core_decal
-	fishing_atom_type = /obj/decal/fakeobjects/core
+	fishing_atom_type = /obj/fakeobject/core
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/bass = 20,\

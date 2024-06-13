@@ -173,19 +173,65 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hazard_delivery"
 
-obj/decal/fakeobjects
+/obj/fakeobject
+	text = ""
+	plane = PLANE_NOSHADOW_BELOW
+	var/list/random_icon_states = list()
+	var/random_dir = 0
+	pass_unstable = FALSE
+
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
 	var/true_name = "fuck you erik"	//How else will players banish it or place curses on it?? honestly people
 
-	New()
-		..()
-		true_name = name
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.true_name][name_suffix(null, 1)]"
 
-/obj/decal/fakeobjects/skeleton
+	New()
+		true_name = name
+		..()
+		if (random_icon_states && length(src.random_icon_states) > 0)
+			src.icon_state = pick(src.random_icon_states)
+		if (src.random_dir)
+			if (random_dir >= 8)
+				src.set_dir(pick(alldirs))
+			else
+				src.set_dir(pick(cardinal))
+
+		if (!real_name)
+			real_name = name
+		src.flags |= UNCRUSHABLE
+
+	proc/setup(var/L)
+		if (random_icon_states && length(src.random_icon_states) > 0)
+			src.icon_state = pick(src.random_icon_states)
+		if (src.random_dir)
+			if (random_dir >= 8)
+				src.set_dir(pick(alldirs))
+			else
+				src.set_dir(pick(cardinal))
+
+		if (!real_name)
+			real_name = name
+
+	meteorhit(obj/M as obj)
+		if (isrestrictedz(src.z))
+			return
+		else
+			return ..()
+
+	ex_act(severity)
+		if (isrestrictedz(src.z))
+			return
+		else
+			qdel(src)
+			//return ..()
+
+	track_blood()
+		src.tracked_blood = null
+		return
+
+/obj/fakeobject/skeleton
 	name = "skeleton"
 	desc = "The remains of a human."
 	opacity = 0
@@ -219,7 +265,7 @@ obj/decal/fakeobjects
 		icon = 'icons/obj/adventurezones/void.dmi'
 		icon_state = "skeleton_l"
 
-/obj/decal/fakeobjects/pole
+/obj/fakeobject/pole
 	name = "Barber Pole"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "pole"
@@ -229,7 +275,7 @@ obj/decal/fakeobjects
 	layer = EFFECTS_LAYER_UNDER_2
 	plane = PLANE_DEFAULT
 
-/obj/decal/fakeobjects/oven
+/obj/fakeobject/oven
 	name = "Oven"
 	desc = "An old oven."
 	icon = 'icons/obj/kitchen.dmi'
@@ -239,7 +285,7 @@ obj/decal/fakeobjects
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
 
-/obj/decal/fakeobjects/sink
+/obj/fakeobject/sink
 	name = "Sink"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
@@ -249,19 +295,19 @@ obj/decal/fakeobjects
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
 
-/obj/decal/fakeobjects/console_lever
+/obj/fakeobject/console_lever
 	name = "lever console"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "lever0"
 	density = 1
 
-/obj/decal/fakeobjects/console_randompc
+/obj/fakeobject/console_randompc
 	name = "computer console"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "randompc"
 	density = 1
 
-/obj/decal/fakeobjects/console_radar
+/obj/fakeobject/console_radar
 	name = "radar console"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "radar"
@@ -274,7 +320,7 @@ obj/decal/fakeobjects/cargopad
 	icon_state = "cargopad"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/robot
+/obj/fakeobject/robot
 	name = "Inactive Robot"
 	desc = "The robot looks to be in good condition."
 	icon = 'icons/mob/robots.dmi'
@@ -282,7 +328,7 @@ obj/decal/fakeobjects/cargopad
 	anchored = UNANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/robot/security
+/obj/fakeobject/robot/security
 	name = "robot"
 	desc = "A Security Robot, something seems a bit off."
 	icon = 'icons/mob/critter/robotic/gunbot.dmi'
@@ -294,7 +340,7 @@ obj/decal/fakeobjects/cargopad
 	henk
 		name = "HENK"
 
-/obj/decal/fakeobjects/apc_broken
+/obj/fakeobject/apc_broken
 	name = "broken APC"
 	desc = "A smashed local power unit."
 	icon = 'icons/obj/power.dmi'
@@ -309,21 +355,21 @@ obj/decal/fakeobjects/teleport_pad
 	layer = FLOOR_EQUIP_LAYER1
 	desc = "A pad used for scientific teleportation."
 
-/obj/decal/fakeobjects/firealarm_broken
+/obj/fakeobject/firealarm_broken
 	name = "broken fire alarm"
 	desc = "This fire alarm is burnt out, ironically."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "firex"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/firelock_broken
+/obj/fakeobject/firelock_broken
 	name = "rusted firelock"
 	desc = "Rust has rendered this firelock useless."
 	icon = 'icons/obj/doors/door_fire2.dmi'
 	icon_state = "door0"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/airlock_broken
+/obj/fakeobject/airlock_broken
 	name = "rusted airlock"
 	desc = "Rust has rendered this airlock useless."
 	icon = 'icons/obj/doors/Door1.dmi';
@@ -332,28 +378,28 @@ obj/decal/fakeobjects/teleport_pad
 	density = 1
 	opacity = 1
 
-/obj/decal/fakeobjects/lighttube_broken
+/obj/fakeobject/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-broken"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/lightbulb_broken
+/obj/fakeobject/lightbulb_broken
 	name = "shattered light bulb"
 	desc = "Something has broken this light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-broken"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/airmonitor_broken
+/obj/fakeobject/airmonitor_broken
 	name = "broken air monitor"
 	desc = "Something has broken this air monitor."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarmx"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/shuttlethruster
+/obj/fakeobject/shuttlethruster
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
 	icon = 'icons/obj/shuttle.dmi'
@@ -362,7 +408,7 @@ obj/decal/fakeobjects/teleport_pad
 	density = 1
 	opacity = 0
 
-/obj/decal/fakeobjects/shuttleweapon
+/obj/fakeobject/shuttleweapon
 	name = "weapons unit"
 	desc = "A weapons system for shuttles and similar craft."
 	icon = 'icons/obj/shuttle.dmi'
@@ -374,7 +420,7 @@ obj/decal/fakeobjects/teleport_pad
 	base
 		icon_state = "alt_heater"
 
-/obj/decal/fakeobjects/pipe
+/obj/fakeobject/pipe
 	name = "rusted pipe"
 	desc = "Good riddance."
 	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
@@ -385,7 +431,7 @@ obj/decal/fakeobjects/teleport_pad
 	heat
 		icon = 'icons/obj/atmospherics/pipes/heat_pipe.dmi'
 
-/obj/decal/fakeobjects/oldcanister
+/obj/fakeobject/oldcanister
 	name = "old gas canister"
 	desc = "All the gas in it seems to be long gone."
 	icon = 'icons/misc/evilreaverstation.dmi'
@@ -399,7 +445,7 @@ obj/decal/fakeobjects/teleport_pad
 		icon_state = "old_plasma"
 		desc = "This used to be the most feared piece of equipment on the station, don't you believe it?"
 
-/obj/decal/fakeobjects/shuttleengine
+/obj/fakeobject/shuttleengine
 	name = "engine unit"
 	desc = "A generator unit that uses complex technology."
 	icon = 'icons/obj/shuttle.dmi'
@@ -408,7 +454,7 @@ obj/decal/fakeobjects/teleport_pad
 	density = 1
 	opacity = 0
 
-/obj/decal/fakeobjects/falseladder
+/obj/fakeobject/falseladder
 	name = "ladder"
 	desc = "The ladder is blocked, you can't get down there."
 	icon = 'icons/misc/worlds.dmi'
@@ -416,7 +462,7 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 	density = 0
 
-/obj/decal/fakeobjects/sealedsleeper
+/obj/fakeobject/sealedsleeper
 	name = "sleeper"
 	desc = "This one appears to still be sealed. Who's in there?"
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -426,7 +472,7 @@ obj/decal/fakeobjects/teleport_pad
 
 // Laundry machines
 
-/obj/decal/fakeobjects/Laundry
+/obj/fakeobject/Laundry
 	name = "laundry machine"
 	desc = "The door has been pried off..."
 	icon = 'icons/obj/janitor.dmi'
@@ -467,7 +513,7 @@ obj/decal/fakeobjects/teleport_pad
 
 //sealab prefab fakeobjs
 
-/obj/decal/fakeobjects/pcb
+/obj/fakeobject/pcb
 	name = "PCB constructor"
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
 	icon = 'icons/obj/manufacturer.dmi'
@@ -475,7 +521,7 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/palmtree
+/obj/fakeobject/palmtree
 	name = "palm tree"
 	desc = "This is a palm tree. Smells like plastic."
 	icon = 'icons/misc/beach2.dmi'
@@ -483,7 +529,7 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 	density = 0
 
-/obj/decal/fakeobjects/brokenportal
+/obj/fakeobject/brokenportal
 	name = "broken portal ring"
 	desc = "This portal ring looks completely fried."
 	icon = 'icons/obj/teleporter.dmi'
@@ -491,7 +537,7 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/lawrack
+/obj/fakeobject/lawrack
 	name = "defunct AI Law Mount Rack"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
 	icon = 'icons/obj/large/32x48.dmi'
@@ -501,7 +547,7 @@ obj/decal/fakeobjects/teleport_pad
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_DEFAULT
 
-/obj/decal/fakeobjects/artifact_boh_pocket_dimension_artifact
+/obj/fakeobject/artifact_boh_pocket_dimension_artifact
 	name = "fake artifact"
 	desc = "Looking at this fills you with even more dread."
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
@@ -513,7 +559,7 @@ obj/decal/fakeobjects/teleport_pad
 		icon_state = "eldritch-[rand(1, 7)]"
 		..()
 
-/obj/decal/fakeobject/crashed_arrivals
+/obj/fakeobject/crashed_arrivals
 	name = "crashed human capsule missile"
 	desc = "Some kind of deliver means to get humans from here to there."
 	anchored = ANCHORED

@@ -170,7 +170,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aR" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7";
@@ -239,7 +239,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/turret_protected/sea_crashed)
 "ba" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 4;
 	icon_state = "firex";
 	pixel_x = -24
@@ -340,7 +340,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "bp" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "bq" = (
@@ -356,7 +356,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "bs" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 10;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -372,7 +372,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bv" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_x = 0;
 	pixel_y = 24
 	},
@@ -426,7 +426,7 @@
 "bM" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -449,7 +449,7 @@
 "bQ" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -734,7 +734,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "cN" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -880,7 +880,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -970,7 +970,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "du" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 8;
 	icon_state = "firex";
 	pixel_x = -24
@@ -1289,7 +1289,7 @@
 "sR" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	
+
 	},
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,

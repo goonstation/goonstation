@@ -344,7 +344,7 @@
 	},
 /area/mars)
 "aT" = (
-/obj/decal/fakeobjects/mars_billboard,
+/obj/fakeobject/mars_billboard,
 /turf/unsimulated/mars/t1,
 /area/mars)
 "aU" = (
@@ -562,7 +562,7 @@
 	},
 /area/mars)
 "bz" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	tag = "icon-bdoorbroken (EAST)";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -612,7 +612,7 @@
 	},
 /area/mars)
 "bF" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	tag = "icon-bdoorbroken";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -626,7 +626,7 @@
 	},
 /area/marsoutpost)
 "bG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "It probably doesn't work anymore.";
 	dir = 2;
@@ -640,12 +640,12 @@
 	},
 /area/mars)
 "bH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	tag = "icon-intact (EAST)";
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
@@ -873,7 +873,7 @@
 /area/marsoutpost)
 "cf" = (
 /obj/stool/chair/office/blue,
-/obj/decal/fakeobjects/robot/servotron,
+/obj/fakeobject/robot/servotron,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/mars_outpost.dmi';
 	icon_state = "floor_factory"
@@ -965,7 +965,7 @@
 	},
 /area/marsoutpost)
 "cq" = (
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	icon_state = "marsfactory_arm";
 	dir = 1
 	},
@@ -974,7 +974,7 @@
 	},
 /area/marsoutpost)
 "cr" = (
-/obj/decal/fakeobjects/robotarm,
+/obj/fakeobject/robotarm,
 /turf/unsimulated/floor{
 	icon_state = "caution_south"
 	},
@@ -1018,7 +1018,7 @@
 	},
 /area/marsoutpost)
 "cx" = (
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	dir = 4;
 	icon_state = "marsfactory_arm";
 	pixel_x = -22;
@@ -1058,7 +1058,7 @@
 	},
 /area/mars)
 "db" = (
-/obj/decal/fakeobjects/robotarm,
+/obj/fakeobject/robotarm,
 /turf/unsimulated/floor{
 	icon_state = "caution_west"
 	},
@@ -1168,7 +1168,7 @@
 	},
 /area/marsoutpost)
 "dq" = (
-/obj/decal/fakeobjects/mule_xl{
+/obj/fakeobject/mule_xl{
 	pixel_y = -10
 	},
 /turf/unsimulated/floor{
@@ -1176,7 +1176,7 @@
 	},
 /area/marsoutpost)
 "dr" = (
-/obj/decal/fakeobjects/mule_xl{
+/obj/fakeobject/mule_xl{
 	pixel_y = -10
 	},
 /turf/unsimulated/floor{
@@ -1227,7 +1227,7 @@
 /turf/unsimulated/wall/setpieces/martian,
 /area/marsoutpost)
 "dC" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
@@ -1241,7 +1241,7 @@
 	},
 /area/mars)
 "dD" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	tag = "icon-bdoorbroken (SOUTHEAST)";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -1374,10 +1374,10 @@
 	},
 /area/marsoutpost)
 "eH" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron{
+/obj/fakeobject/robot/servotron{
 	pixel_y = 15
 	},
 /turf/unsimulated/floor{
@@ -1398,7 +1398,7 @@
 	},
 /area/marsoutpost)
 "eJ" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor{
@@ -1478,10 +1478,10 @@
 	},
 /area/marsoutpost)
 "eQ" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron/old{
+/obj/fakeobject/robot/servotron/old{
 	pixel_y = 15
 	},
 /turf/unsimulated/floor{
@@ -1491,10 +1491,10 @@
 	},
 /area/marsoutpost)
 "eR" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	pixel_y = 15
 	},
 /turf/unsimulated/floor{
@@ -1504,10 +1504,10 @@
 	},
 /area/marsoutpost)
 "eS" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	pixel_y = 5
 	},
-/obj/decal/fakeobjects/robot/servotron/old{
+/obj/fakeobject/robot/servotron/old{
 	icon_state = "statue_oldgunrobot";
 	pixel_y = 12
 	},

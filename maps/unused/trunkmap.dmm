@@ -1770,7 +1770,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aeV" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/firelock_broken,
 /turf/simulated/floor,
 /area/russian)
 "aeY" = (
@@ -1885,7 +1885,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "afp" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/firelock_broken,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3231,7 +3231,7 @@
 /turf/simulated/floor/white,
 /area/russian)
 "akq" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
 /obj/cable{
@@ -25910,7 +25910,7 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "ezU" = (
-/obj/decal/fakeobjects/shuttleengine,
+/obj/fakeobject/shuttleengine,
 /turf/simulated/shuttle/wall,
 /area/space)
 "eBe" = (
@@ -27466,7 +27466,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "jJG" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "pwall";
@@ -28543,7 +28543,7 @@
 	},
 /area/station/teleporter)
 "mpp" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -30380,7 +30380,7 @@
 /turf/space,
 /area/station/security/prison)
 "seX" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "sfI" = (
@@ -31602,7 +31602,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "vKn" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/space)
 "vLE" = (

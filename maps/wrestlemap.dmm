@@ -4043,7 +4043,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
 "bOP" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets{
 	name = "Engineering Toilets"
@@ -12858,7 +12858,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "fHe" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
+/obj/fakeobject/mantacontainer/upwards/yellow,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "fHf" = (
@@ -16640,7 +16640,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hsK" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -25631,7 +25631,7 @@
 	},
 /area/station/medical/medbay/treatment1)
 "lmk" = (
-/obj/decal/fakeobjects/firealarm_broken,
+/obj/fakeobject/firealarm_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "lmJ" = (
@@ -28208,7 +28208,7 @@
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "mto" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "mue" = (
@@ -36220,7 +36220,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
@@ -36523,7 +36523,7 @@
 /turf/simulated/floor/white/grime,
 /area/station/bridge)
 "qdD" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	pixel_x = -10
 	},
@@ -37926,7 +37926,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
 "qIe" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -42393,7 +42393,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
 "sIk" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets{
 	name = "Central Toilets"
@@ -45566,7 +45566,7 @@
 /area/station/medical/dome)
 "udG" = (
 /obj/decal/cleanable/rust,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/airless/black,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -49582,7 +49582,7 @@
 /area/station/hallway/secondary/exit)
 "vRO" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/airless/plating,
 /area/abandonedship{
 	name = "Crashed Limo"

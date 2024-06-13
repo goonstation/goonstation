@@ -17637,7 +17637,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eIM" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
@@ -20320,7 +20320,7 @@
 /area/station/security/processing)
 "hjm" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -38095,7 +38095,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "wVZ" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,

@@ -30,7 +30,7 @@
 /turf/space,
 /area/space)
 "aah" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "aai" = (
@@ -59,7 +59,7 @@
 /turf/simulated/floor/airless/damaged1,
 /area/space)
 "aan" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -90,7 +90,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -9816,7 +9816,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "aMs" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aMt" = (
@@ -10022,7 +10022,7 @@
 /turf/space,
 /area/space)
 "aNx" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
@@ -10577,7 +10577,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
 "aQi" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /obj/stool/chair{
@@ -10586,7 +10586,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aQj" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -10924,7 +10924,7 @@
 /area/ghostdrone_factory)
 "aRr" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aRs" = (
@@ -11444,7 +11444,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "aTs" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
@@ -11626,14 +11626,14 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/escape)
 "aUf" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUg" = (
 /obj/machinery/drone_recharger/factory,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -11769,20 +11769,20 @@
 /area/station/crew_quarters/sauna)
 "aUQ" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUR" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUS" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -12088,7 +12088,7 @@
 /area/ghostdrone_factory)
 "aWd" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aWe" = (
@@ -39972,7 +39972,7 @@
 /turf/simulated/floor/caution/corner/se,
 /area/station/engine/hotloop)
 "jpl" = (
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,
@@ -54750,7 +54750,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "uqp" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},
