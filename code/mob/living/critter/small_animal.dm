@@ -309,6 +309,10 @@ proc/filter_carrier_pets(var/type)
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 
+	New()
+		. = ..()
+		new /obj/item/implant/access/infinite/chef(src)
+
 	setup_overlays()
 		return
 

@@ -36692,6 +36692,9 @@
 	icon_state = "0-4"
 	},
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/computer/announcement/clown{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "oFu" = (
