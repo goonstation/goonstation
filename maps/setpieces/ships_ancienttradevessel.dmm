@@ -115,7 +115,7 @@
 	name = "Strange Vessel"
 	})
 "bI" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -198,7 +198,7 @@
 	name = "Strange Vessel"
 	})
 "dU" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -242,7 +242,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -260,7 +260,7 @@
 	name = "Power Core"
 	})
 "eR" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -343,7 +343,7 @@
 	name = "Strange Vessel"
 	})
 "hi" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -407,7 +407,7 @@
 	name = "Strange Vessel"
 	})
 "jh" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -492,7 +492,7 @@
 	name = "Power Core"
 	})
 "lc" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -529,7 +529,7 @@
 	name = "Power Core"
 	})
 "lt" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird reservoir.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -610,7 +610,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -670,7 +670,7 @@
 	name = "Strange Vessel"
 	})
 "mF" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -754,7 +754,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -855,7 +855,7 @@
 	name = "Strange Vessel"
 	})
 "pG" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -936,7 +936,7 @@
 	})
 "qD" = (
 /mob/living/critter/robotic/crawler,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1004,7 +1004,7 @@
 	name = "Power Core"
 	})
 "rS" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1098,7 +1098,7 @@
 	name = "Power Core"
 	})
 "sD" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1282,7 +1282,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -1331,7 +1331,7 @@
 	name = "Strange Vessel"
 	})
 "yU" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1367,7 +1367,7 @@
 	name = "Strange Vessel"
 	})
 "zd" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1413,7 +1413,7 @@
 	name = "Strange Vessel"
 	})
 "zp" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1430,7 +1430,7 @@
 	name = "Strange Vessel"
 	})
 "zw" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1448,7 +1448,7 @@
 	name = "Strange Vessel"
 	})
 "zU" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1500,7 +1500,7 @@
 	name = "Strange Vessel"
 	})
 "BP" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1551,7 +1551,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1571,7 +1571,7 @@
 	name = "Strange Vessel"
 	})
 "Dx" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1677,7 +1677,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -1735,7 +1735,7 @@
 	name = "Strange Vessel"
 	})
 "He" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1762,7 +1762,7 @@
 	name = "Strange Vessel"
 	})
 "HB" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1789,7 +1789,7 @@
 	name = "Strange Vessel"
 	})
 "HY" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1966,7 +1966,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2009,7 +2009,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -2051,7 +2051,7 @@
 	name = "Strange Vessel"
 	})
 "LS" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2128,7 +2128,7 @@
 	name = "Strange Vessel"
 	})
 "No" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2355,7 +2355,7 @@
 	name = "Strange Vessel"
 	})
 "PS" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -2504,7 +2504,7 @@
 	name = "Power Core"
 	})
 "SC" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -2679,7 +2679,7 @@
 	name = "Strange Vessel"
 	})
 "WF" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2766,7 +2766,7 @@
 	name = "Strange Vessel"
 	})
 "XR" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2800,7 +2800,7 @@
 	name = "Strange Vessel"
 	})
 "Yb" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A perplexing pillar.";
@@ -2901,7 +2901,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2952,7 +2952,7 @@
 	name = "Power Core"
 	})
 "Za" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2969,7 +2969,7 @@
 	name = "Strange Vessel"
 	})
 "Zc" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A perplexing pillar.";
@@ -3035,7 +3035,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -3105,7 +3105,7 @@
 	name = "Strange Vessel"
 	})
 "ZW" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';

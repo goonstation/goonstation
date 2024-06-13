@@ -313,7 +313,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon_state = "radar"
 	density = 1
 
-obj/decal/fakeobjects/cargopad
+/obj/fakeobject/cargopad
 	name = "Cargo Pad"
 	desc = "Used to receive objects transported by a Cargo Transporter."
 	icon = 'icons/obj/objects.dmi'
@@ -347,7 +347,7 @@ obj/decal/fakeobjects/cargopad
 	icon_state = "apc-b"
 	anchored = ANCHORED
 
-obj/decal/fakeobjects/teleport_pad
+/obj/fakeobject/teleport_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"

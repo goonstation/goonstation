@@ -23,16 +23,16 @@
 /obj/fakeobject/pipe{icon_state="valve0"} : /obj/fakeobject/pipe{@OLD;icon_state="valve0-map"}
 /obj/fakeobject/pipe{icon_state="valve1"} : /obj/fakeobject/pipe{@OLD;icon_state="valve1-map"}
 
-/obj/decal/fakeobjects{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="vent"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
-/obj/decal/fakeobjects{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact-f"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
+//obj/fakeobject{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="vent"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
+//obj/fakeobject{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact-f"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
 /obj/fakeobject/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="vent"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
 /obj/fakeobject/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact-f"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
 /obj/fakeobject/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
 /obj/fakeobject/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state=@UNSET} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
-/obj/decal/fakeobjects{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
-/obj/decal/fakeobjects{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state=@UNSET} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
+//obj/fakeobject{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
+//obj/fakeobject{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state=@UNSET} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map"}
 /obj/fakeobject/pipe{icon='icons/obj/atmospherics/pipes.dmi';icon_state="vent"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map";icon='icons/obj/atmospherics/pipe_vent.dmi'}
-/obj/decal/fakeobjects{icon_state="vent"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map";icon='icons/obj/atmospherics/pipe_vent.dmi'}
+//obj/fakeobject{icon_state="vent"} : /obj/fakeobject/pipe{@OLD;icon_state="vent-map";icon='icons/obj/atmospherics/pipe_vent.dmi'}
 
 /obj/fakeobject/pipe{icon=@UNSET;icon_state="intact"} : /obj/fakeobject/pipe{@OLD;icon_state=@SKIP}
 

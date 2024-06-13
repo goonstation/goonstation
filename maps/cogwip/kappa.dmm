@@ -5601,7 +5601,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "qr" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -5723,7 +5723,7 @@
 /turf/simulated/floor/darkblue,
 /area/space)
 "qL" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A slightly more recent Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.  This one is attached to a track.";
@@ -5953,7 +5953,7 @@
 	},
 /area/space)
 "rv" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -6127,7 +6127,7 @@
 /turf/simulated/floor/darkpurple,
 /area/space)
 "rT" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -6153,7 +6153,7 @@
 /turf/simulated/floor,
 /area/space)
 "rV" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -6227,7 +6227,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -6728,7 +6728,7 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -6801,7 +6801,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "ty" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Looks like it's cooling down!";
@@ -6917,7 +6917,7 @@
 	},
 /area/space)
 "tN" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -6933,7 +6933,7 @@
 	},
 /area/space)
 "tO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -6949,7 +6949,7 @@
 	},
 /area/space)
 "tP" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -6972,7 +6972,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Compartment Hatch"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -6994,7 +6994,7 @@
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "vent-map"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -7014,7 +7014,7 @@
 	icon_state = "valve";
 	name = "rusted valve"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -7027,7 +7027,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "tT" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -7048,7 +7048,7 @@
 	icon_state = "vent-map";
 	name = "crusty vent"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of command repeater.";

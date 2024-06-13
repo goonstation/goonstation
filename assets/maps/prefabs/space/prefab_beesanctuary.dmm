@@ -19,7 +19,7 @@
 /area/noGenerate)
 "bj" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -86,7 +86,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/prefab/bee_sanctuary)
 "en" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -222,7 +222,7 @@
 /area/prefab/bee_sanctuary)
 "iP" = (
 /obj/storage/secure/crate/bee/loaded,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -318,7 +318,7 @@
 /turf/unsimulated/floor/green/side,
 /area/prefab/bee_sanctuary)
 "lY" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -613,7 +613,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "wI" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -625,7 +625,7 @@
 /area/prefab/bee_sanctuary)
 "xc" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 10;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -904,7 +904,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "DJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 9;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -944,7 +944,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "EC" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -1011,7 +1011,7 @@
 /obj/shrub{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -1116,7 +1116,7 @@
 	layer = 3;
 	pixel_y = -10
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 10;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -1452,7 +1452,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "cameraemp";
@@ -1538,7 +1538,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "SM" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";

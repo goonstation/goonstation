@@ -846,7 +846,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/turret_protected/ai)
 "acJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -857,7 +857,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acK" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -55791,7 +55791,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "dmV" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -55834,7 +55834,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnf" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

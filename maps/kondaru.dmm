@@ -83,7 +83,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aar" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -178,7 +178,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aaC" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -2569,7 +2569,7 @@
 	name = "Information Office persistent notice board";
 	persistent_id = "information office"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
@@ -5822,7 +5822,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "avC" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -12677,7 +12677,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "aYn" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -28565,7 +28565,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/research_outpost/indigo_rye)
 "cli" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -28645,7 +28645,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/research_outpost/indigo_rye)
 "clu" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -29217,7 +29217,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cnh" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -29236,7 +29236,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cni" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -29248,7 +29248,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cnj" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -29355,7 +29355,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "cnC" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -48065,7 +48065,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;

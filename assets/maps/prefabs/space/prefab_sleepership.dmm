@@ -99,7 +99,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "as" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-offbroken (EAST)";
 	name = "broken computer";
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -119,7 +119,7 @@
 /turf/simulated/floor/airless/damaged2,
 /area/noGenerate)
 "av" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";

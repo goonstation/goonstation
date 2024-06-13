@@ -534,7 +534,7 @@
 /area/swampzone/ground/canyon)
 "aGg" = (
 /obj/map/light/dimreddish,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What in the hell is this?";
@@ -1102,7 +1102,7 @@
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "bpR" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "..How the hell is this even possible?";
@@ -2031,7 +2031,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "cuO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -2133,7 +2133,7 @@
 /area/swampzone/ground)
 "cDt" = (
 /obj/decal/cliff,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -2343,7 +2343,7 @@
 /turf/unsimulated/floor/wood/eight,
 /area/swampzone/interiors/bonktek)
 "cOw" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "You're getting a really uncomfortable vibe just looking at this thing, whatever it is.";
@@ -2511,7 +2511,7 @@
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
 "dan" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "It's pretty weird. Is it some sort of seating? Who knows.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2755,7 +2755,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/interiors/bonktek)
 "dro" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -2764,7 +2764,7 @@
 /turf/unsimulated/floor/caution/corner/ne,
 /area/crypt/sigma/lab)
 "dsk" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -3494,7 +3494,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "eiZ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
@@ -4047,7 +4047,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "syndcorpse7";
 	name = "syndicate infiltrator corpse"
@@ -4575,7 +4575,7 @@
 /turf/unsimulated/floor/auto/swamp,
 /area/swampzone/interiors/bonktek)
 "fru" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -5002,7 +5002,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "fOQ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It seems slightly warm.";
@@ -5505,7 +5505,7 @@
 /obj/fluid_pipe/source{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
@@ -5726,7 +5726,7 @@
 "gJj" = (
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "These shapes are all wrong.";
@@ -6290,7 +6290,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "hrF" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -7132,7 +7132,7 @@
 /area/crypt/sigma/mainhall)
 "iwS" = (
 /obj/critter/ancient_thing,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "It's pretty weird. Is it some sort of seating? Who knows.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -7434,7 +7434,7 @@
 	},
 /area/crater/biodome/crew)
 "iRq" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -7900,7 +7900,7 @@
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
 "jtQ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -9133,7 +9133,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "kJq" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -9590,7 +9590,7 @@
 "lnA" = (
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What in the hell is this?";
@@ -10081,7 +10081,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
 "lUJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -10207,7 +10207,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/entry)
 "mbK" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
@@ -10437,7 +10437,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "mrw" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
@@ -10686,7 +10686,7 @@
 	},
 /area/swampzone/ground)
 "mIt" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -10962,7 +10962,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "mYB" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -11367,7 +11367,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "nzh" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
@@ -12566,7 +12566,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
 "oUE" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -13396,7 +13396,7 @@
 	},
 /area/swampzone/interiors)
 "pVS" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -13691,7 +13691,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/interiors/quarry)
 "qpJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -14769,7 +14769,7 @@
 	},
 /area/swampzone/ground/canyon)
 "rKT" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "coffee-broken";
@@ -16598,7 +16598,7 @@
 /area/crater/biodome/north)
 "tUS" = (
 /obj/table/reinforced/auto,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -18067,7 +18067,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
 /area/swampzone/interiors/bonktek/blastotek)
 "vEK" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -18246,7 +18246,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "vNI" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
 	icon = 'icons/obj/computer.dmi';
@@ -18318,7 +18318,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "vSf" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -18925,7 +18925,7 @@
 "wzD" = (
 /obj/decal/cleanable/cobweb2,
 /obj/map/light/dimreddish,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What in the hell is this?";

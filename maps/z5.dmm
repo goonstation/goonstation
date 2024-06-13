@@ -969,7 +969,7 @@
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "pL" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
@@ -3050,7 +3050,7 @@
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Ci" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -3140,7 +3140,7 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "Df" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be working yet.";
@@ -3740,7 +3740,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "GX" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -3893,7 +3893,7 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
 "HX" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
@@ -4488,7 +4488,7 @@
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "LM" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -5140,7 +5140,7 @@
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "QE" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";

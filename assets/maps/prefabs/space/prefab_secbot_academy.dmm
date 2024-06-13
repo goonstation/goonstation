@@ -382,7 +382,7 @@
 /area/prefab/secbot_academy)
 "pi" = (
 /obj/table/reinforced/bar/auto,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
 	name = "Old Printer";

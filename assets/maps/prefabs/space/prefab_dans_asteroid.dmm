@@ -1005,7 +1005,7 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -1189,7 +1189,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "Se" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What was this thing even supposed to do?";
@@ -1210,7 +1210,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "SO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's just sideways but apparently that's enough to stop it dead in its tracks.";

@@ -216,7 +216,7 @@
 /area/prefab/crashed_shuttle)
 "iq" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	name = "motor";
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -594,7 +594,7 @@
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
 "Qf" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	name = "motor";
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -669,7 +669,7 @@
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "Xl" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";

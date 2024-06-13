@@ -49,7 +49,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "er" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -165,7 +165,7 @@
 /turf/simulated/floor/scorched2,
 /area/prefab/sequestered_cloner)
 "oU" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large video server. Garish branding reads Subliminal Mission Implanter Mk.2! Now with fewer seizures!";
@@ -224,7 +224,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -528,7 +528,7 @@
 /turf/simulated/floor/purple/checker,
 /area/prefab/sequestered_cloner)
 "Cw" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

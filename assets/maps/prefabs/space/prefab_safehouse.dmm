@@ -343,7 +343,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/prefab/safehouse)
 "kP" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. You can't feel any airflow.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';

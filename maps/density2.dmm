@@ -2904,7 +2904,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';

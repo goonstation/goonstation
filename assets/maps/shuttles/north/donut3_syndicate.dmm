@@ -35,7 +35,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "bj" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -50,7 +50,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "br" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -117,7 +117,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -143,7 +143,7 @@
 /area/shuttle/escape/centcom)
 "ej" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	icon = 'icons/obj/radiostation.dmi';
 	icon_state = "mixtable-3";
 	name = "Record Player"
@@ -175,7 +175,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "fh" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -253,7 +253,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -382,7 +382,7 @@
 	},
 /area/centcom)
 "nh" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	icon = 'icons/obj/radiostation.dmi';
 	icon_state = "mixtable-1";
 	name = "Broadcast Radio"
@@ -392,7 +392,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "nk" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -627,7 +627,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -703,7 +703,7 @@
 /area/centcom/outside)
 "Ei" = (
 /obj/machinery/atmospherics/unary/portables_connector,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -857,7 +857,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ma" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	icon = 'icons/obj/radiostation.dmi';
 	icon_state = "tapedeck";
 	name = "Tape Deck"
@@ -1009,7 +1009,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -1018,7 +1018,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1090,7 +1090,7 @@
 /area/shuttle/escape/centcom)
 "Xh" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	icon = 'icons/obj/radiostation.dmi';
 	icon_state = "mixtable-2";
 	name = "Mixing Desk"
@@ -1117,7 +1117,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1146,7 +1146,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/atmospherics/unary/portables_connector,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";

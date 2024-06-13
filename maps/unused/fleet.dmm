@@ -98,7 +98,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "as" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -185,7 +185,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aC" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -15883,7 +15883,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "IW" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -15927,7 +15927,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "Jd" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -16525,7 +16525,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "KH" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -16544,7 +16544,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "KI" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -16556,7 +16556,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "KJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -17026,7 +17026,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
@@ -20221,7 +20221,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "RJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';

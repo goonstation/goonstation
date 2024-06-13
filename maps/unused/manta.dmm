@@ -191,7 +191,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "aaA" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -266,7 +266,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/sw,
 /area/station/communications/bedroom)
 "aaN" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -758,7 +758,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
 "ace" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? Yes?  Oh, good...wait, where's the outlet?.";
 	icon = 'icons/obj/computer.dmi';
@@ -795,7 +795,7 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "acm" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -1400,7 +1400,7 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "aeP" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -3244,7 +3244,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "alt" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -3255,7 +3255,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "alu" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -3293,7 +3293,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "aly" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -3322,7 +3322,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alE" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3545,7 +3545,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amj" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3560,7 +3560,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "aml" = (
 /obj/machinery/optable,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -3770,7 +3770,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -4045,7 +4045,7 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/reagent_containers/iv_drip/blood,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -4202,7 +4202,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/furnace,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -4306,7 +4306,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/furnace,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -6177,7 +6177,7 @@
 /turf/simulated/floor,
 /area/abandonedship)
 "asL" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -6193,7 +6193,7 @@
 /turf/simulated/floor,
 /area/abandonedship)
 "asO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -6542,7 +6542,7 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "atU" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -9663,7 +9663,7 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
 "aCf" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -21576,7 +21576,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bjo" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
@@ -31857,7 +31857,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "bMA" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -31885,7 +31885,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "bMD" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -31898,7 +31898,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "bME" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -35843,7 +35843,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -36683,7 +36683,7 @@
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/listeningpost/syndicateassaultvessel)
 "kRd" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -36762,7 +36762,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
 "len" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -39018,7 +39018,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -39641,7 +39641,7 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "rRP" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -40830,7 +40830,7 @@
 	},
 /area/station/crewquarters/cryotron)
 "vfw" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';

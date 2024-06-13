@@ -131,7 +131,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -227,7 +227,7 @@
 /area/marsoutpost)
 "aD" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -270,7 +270,7 @@
 	},
 /area/marsoutpost)
 "aK" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-solar_panel (SOUTHWEST)";
 	name = "solar panel";
 	desc = "It's probably broken.";
@@ -666,7 +666,7 @@
 	},
 /area/marsoutpost)
 "bJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-1-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -703,14 +703,14 @@
 	},
 /area/mars)
 "bO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-1-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-6";
 	color = "#DD0000"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-4-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -735,14 +735,14 @@
 	},
 /area/mars)
 "bR" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-2-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-6";
 	color = "#DD0000"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-8-9";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -808,7 +808,7 @@
 	},
 /area/marsoutpost)
 "bZ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-1-8";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -830,7 +830,7 @@
 	},
 /area/mars)
 "cb" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-2-9";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -927,7 +927,7 @@
 	},
 /area/marsoutpost)
 "cm" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	color = "#DD0000";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-2";
@@ -988,7 +988,7 @@
 	},
 /area/marsoutpost)
 "ct" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -1037,7 +1037,7 @@
 	},
 /area/marsoutpost)
 "cI" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-1-6";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -1064,7 +1064,7 @@
 	},
 /area/marsoutpost)
 "dc" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
@@ -1268,7 +1268,7 @@
 /turf/unsimulated/mars/t2,
 /area/mars)
 "dW" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	tag = "icon-8-9";
 	name = "power cable";
 	icon = 'icons/obj/power_cond.dmi';
@@ -1295,7 +1295,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -1341,7 +1341,7 @@
 	icon_state = "cubicle";
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -1361,7 +1361,7 @@
 	icon_state = "cubicle";
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';

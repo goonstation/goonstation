@@ -7532,7 +7532,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cfq" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -25339,7 +25339,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -25436,7 +25436,7 @@
 	name = "Funeral Parlor"
 	})
 "hzO" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -35756,7 +35756,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "kNY" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -36900,7 +36900,7 @@
 /turf/simulated/floor/carpet/red/standard,
 /area/station/crew_quarters/cafeteria)
 "lfJ" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -43070,7 +43070,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "mYl" = (
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -59725,7 +59725,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+//obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
