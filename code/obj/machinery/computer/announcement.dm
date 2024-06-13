@@ -230,6 +230,7 @@
 	var/emagged = FALSE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"
+	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
 
 	send_message(mob/user, message)
 		. = ..()
