@@ -28,3 +28,18 @@
 	desc = "A box containing an implanting tool and five access implant cases. The implanter can remove the implants from their cases and inject them into a subject, granting them accesses defined by an ID computer."
 	spawn_contents = list(/obj/item/implantcase/access = 6,\
 	/obj/item/implanter)
+
+/obj/item/storage/box/marionetteimp_kit
+	name = "marionette implant kit"
+	desc = "Contains one marionette implant and the peripherals required to use it."
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/remote/marionette_implant, /obj/item/paper/marionette_implant_readme)
+
+	make_my_stuff()
+		..()
+		// We do this because buying the box from the uplink will add the implanter from that to the box right afterwards
+		// This way, placed or spawned boxes will still have their implant, but the uplink one will not have a duplicate
+		SPAWN(1 SECOND)
+			for (var/obj/item/implanter/marionette/I in src.storage.get_contents())
+				return
+			src.storage.add_contents(new /obj/item/implanter/marionette)

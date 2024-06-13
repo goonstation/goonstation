@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		if (!uplink?.purchase_log[src.type])
-			var/obj/item/storage/box/marionette_implant/MI = new(item.loc)
+			var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc)
 			MI.storage.add_contents(item)
 
 /datum/syndicate_buylist/generic/spen
