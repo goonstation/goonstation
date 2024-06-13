@@ -261,7 +261,7 @@
 	attackby(obj/item/W, mob/user)
 		..()
 		if (istype(W, /obj/item/card/id))
-			if (!istype (W, /obj/item/card/id/clown))
+			if ( W.icon_state != "id_clown")
 				src.unlocked = 0
 				update_status()
 
@@ -269,7 +269,7 @@
 		..()
 		switch(action)
 			if ("id")
-				if(  !istype (src.ID, /obj/item/card/id/clown))
+				if ( ID.icon_state != "id_clown")
 					src.unlocked = 0 // clowns ONLY
 					update_status()
 
