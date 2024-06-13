@@ -108,7 +108,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		var/obj/O = target
 
-		if (access_maxsec in O.req_access)
+		if (access_maxsec in O.req_access || access_armory in O.req_access)
 			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
 			boutput(user, SPAN_NOTICE("[src] can't reprogram this."))
 			return

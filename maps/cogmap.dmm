@@ -41478,18 +41478,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"fsC" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "fsG" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/red/side{
@@ -50514,7 +50502,7 @@
 	req_access = null;
 	turretArea = /area/station/turret_protected/armory_outside
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "mMJ" = (
@@ -62548,10 +62536,10 @@
 	name = "Armory"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "vVq" = (
@@ -96767,7 +96755,7 @@ adE
 adE
 adE
 aji
-fsC
+vUR
 iqt
 dSf
 aHB

@@ -60835,7 +60835,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "iix" = (
@@ -67086,8 +67086,8 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 4
 	},
-/obj/mapping_helper/access/hos,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "owx" = (
@@ -75381,7 +75381,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "xEv" = (

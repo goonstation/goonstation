@@ -34413,11 +34413,11 @@
 	name = "Armory";
 	req_access_txt = "37"
 	},
-/obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "fGJ" = (

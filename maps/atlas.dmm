@@ -18010,7 +18010,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ogX" = (

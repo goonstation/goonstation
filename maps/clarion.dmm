@@ -33062,7 +33062,7 @@
 	pixel_x = -24;
 	turretArea = /area/station/turret_protected/armory_outside
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -40885,11 +40885,11 @@
 	name = "Armory";
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "wMt" = (
