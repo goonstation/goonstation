@@ -1953,7 +1953,7 @@
 	},
 /area/listeningpost)
 "afB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -2017,7 +2017,7 @@
 	},
 /area/space)
 "afJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

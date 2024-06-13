@@ -1884,7 +1884,7 @@
 /obj/rail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A slightly more recent Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.  This one is attached to a track.";
@@ -2201,7 +2201,7 @@
 	},
 /area/moon/museum/west)
 "gq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2264,7 +2264,7 @@
 	},
 /area/moon/museum/west)
 "gy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -2277,7 +2277,7 @@
 	},
 /area/moon/museum/west)
 "gz" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2289,7 +2289,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2301,7 +2301,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2313,7 +2313,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2325,7 +2325,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2406,7 +2406,7 @@
 	},
 /area/moon/museum/west)
 "gO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2601,7 +2601,7 @@
 	},
 /area/moon/museum/west)
 "hj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -2630,7 +2630,7 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "ho" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A United States flag, placed here 84 years ago.  Well, placed and then moved and placed again...  It's faded from decades of ultraviolet light exposure.";
 	icon = 'icons/misc/lunar.dmi';
@@ -2986,7 +2986,7 @@
 	},
 /area/moon/museum/west)
 "hW" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of LESA base equipment doodad.  It's not clear what it was used for originally, but now it seems to just be configured for blinky lights.";
@@ -3132,7 +3132,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "im" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -3429,7 +3429,7 @@
 	},
 /area/moon/museum)
 "iK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3755,7 +3755,7 @@
 	},
 /area/moon/museum)
 "js" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A photo of the Apollo 11 astronauts.  Buzz Aldrin, Neil Armstrong, and that third guy who didn't actually land on the moon.";
 	icon = 'icons/misc/lunar.dmi';
@@ -4210,7 +4210,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -4332,7 +4332,7 @@
 	},
 /area/moon/museum/west)
 "kw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Hi, Greg.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "greg";
@@ -4368,7 +4368,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
@@ -4590,7 +4590,7 @@
 	},
 /area/moon/museum/west)
 "kY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
@@ -4805,7 +4805,7 @@
 	pixel_x = 6;
 	pixel_y = 0
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -4976,7 +4976,7 @@
 /turf/unsimulated/floor/wood,
 /area/moon/museum/west)
 "lM" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -4987,7 +4987,7 @@
 /turf/unsimulated/floor/wood,
 /area/moon/museum/west)
 "lN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 0;
 	density = 1;
 	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
@@ -5000,7 +5000,7 @@
 /turf/unsimulated/floor/circuit/white,
 /area/moon/museum/west)
 "lO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This is the central node of the MNX-12/777 superminicomputer that managed Lunaport for decades.";
@@ -5076,7 +5076,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "lZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -5242,7 +5242,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "ms" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -5493,7 +5493,7 @@
 	},
 /area/moon/museum)
 "mS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -5572,7 +5572,7 @@
 	pixel_x = -4;
 	pixel_y = 0
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -5695,7 +5695,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/moon/museum)
 "nq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -5728,7 +5728,7 @@
 	anchored = 1;
 	dir = 8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -5786,7 +5786,7 @@
 	},
 /area/moon/museum)
 "ny" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;

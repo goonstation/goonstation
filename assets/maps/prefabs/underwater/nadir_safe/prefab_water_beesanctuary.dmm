@@ -11,7 +11,7 @@
 /area/prefab/bee_sanctuary)
 "aC" = (
 /obj/storage/secure/crate/bee/loaded,
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -210,7 +210,7 @@
 	layer = 3;
 	pixel_y = -10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 10;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -279,7 +279,7 @@
 /turf/unsimulated/floor/caution/corner/sw,
 /area/prefab/bee_sanctuary)
 "nv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -311,7 +311,7 @@
 /area/prefab/bee_sanctuary)
 "nX" = (
 /obj/decal/cleanable/dirt/dirt5,
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -320,7 +320,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "om" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -420,7 +420,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "cameraemp";
@@ -548,7 +548,7 @@
 /turf/unsimulated/floor/black,
 /area/prefab/bee_sanctuary)
 "uG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 1;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -673,7 +673,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "DO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -767,7 +767,7 @@
 /turf/unsimulated/floor/void,
 /area/prefab/bee_sanctuary)
 "GR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -936,7 +936,7 @@
 /obj/shrub{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 4;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";
@@ -987,7 +987,7 @@
 /area/prefab/bee_sanctuary)
 "Nw" = (
 /obj/decal/cleanable/dirt/dirt4,
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 10;
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camera";

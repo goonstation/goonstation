@@ -39,7 +39,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/hospital/samostrel)
 "abt" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -60,7 +60,7 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "abA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -88,7 +88,7 @@
 	},
 /area/hospital/samostrel)
 "abF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -147,7 +147,7 @@
 	},
 /area/hospital/samostrel)
 "abS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -159,7 +159,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
 "abT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -181,7 +181,7 @@
 /turf/unsimulated/floor/setpieces/hospital/cavern,
 /area/hospital)
 "abX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -233,7 +233,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "acn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -294,7 +294,7 @@
 /turf/unsimulated/floor/bluewhite,
 /area/hospital)
 "acN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -306,7 +306,7 @@
 	},
 /area/hospital)
 "acP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -360,7 +360,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "adq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -420,7 +420,7 @@
 	},
 /area/hospital/samostrel)
 "adw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -436,7 +436,7 @@
 /area/hospital/samostrel)
 "adx" = (
 /obj/decal/cleanable/cobweb,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -763,7 +763,7 @@
 /obj/machinery/light/worn{
 	brightness = 2
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -921,7 +921,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/hospital)
 "afq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -976,7 +976,7 @@
 /turf/unsimulated/wall/auto/adventure/moon,
 /area/moon)
 "afE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
@@ -1040,7 +1040,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
 "afS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -1088,7 +1088,7 @@
 /area/hospital/samostrel)
 "afY" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -1214,7 +1214,7 @@
 	},
 /area/hospital/samostrel)
 "agF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -1229,7 +1229,7 @@
 	},
 /area/hospital/samostrel)
 "agG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't seem to have a tape in it, but finger marks in the dust indicate that somebody removed it recently.  Weird.";
@@ -1325,7 +1325,7 @@
 /area/hospital)
 "agY" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -1385,7 +1385,7 @@
 	},
 /area/hospital/samostrel)
 "ahj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -1421,7 +1421,7 @@
 	},
 /area/hospital/samostrel)
 "ahs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1444,7 +1444,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "ahv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -1457,7 +1457,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "ahw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -1467,7 +1467,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (SOUTHWEST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -1480,7 +1480,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "ahx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1490,7 +1490,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTH)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -1516,7 +1516,7 @@
 	},
 /area/hospital/samostrel)
 "ahB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1614,7 +1614,7 @@
 /obj/rail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A slightly more recent Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.  This one is attached to a track.";
@@ -1790,7 +1790,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/hospital)
 "ajl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -1840,7 +1840,7 @@
 /turf/unsimulated/floor/black,
 /area/hospital)
 "ajv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. The locking mechanism is jammed.";
@@ -1870,7 +1870,7 @@
 /area/hospital)
 "ajy" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? Yes?  Oh, good...wait, where's the outlet?.";
 	icon = 'icons/obj/computer.dmi';
@@ -1948,7 +1948,7 @@
 /area/hospital)
 "aka" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -2151,7 +2151,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "alw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -2212,7 +2212,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "alF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -2289,7 +2289,7 @@
 	},
 /area/hospital)
 "amg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -2301,7 +2301,7 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "amh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -2313,7 +2313,7 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "ami" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -2323,7 +2323,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -2336,7 +2336,7 @@
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "amj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -2383,7 +2383,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "ams" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2428,7 +2428,7 @@
 /turf/unsimulated/floor/setpieces/hospital/cavern,
 /area/hospital)
 "amI" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -2450,7 +2450,7 @@
 /turf/unsimulated/floor/black,
 /area/hospital)
 "amL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -2479,7 +2479,7 @@
 /area/hospital)
 "amP" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This microwave does not look well.";
@@ -2496,7 +2496,7 @@
 /obj/rail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -2527,7 +2527,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "amW" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -2536,7 +2536,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -2548,7 +2548,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
 "amX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -2580,7 +2580,7 @@
 	},
 /area/hospital/samostrel)
 "ane" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -2591,7 +2591,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "anf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2603,7 +2603,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "ang" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2615,7 +2615,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "anh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2627,7 +2627,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "ani" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2639,7 +2639,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "anj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2738,7 +2738,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "anL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -2748,7 +2748,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTH)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A broken panel, originally intended to control pod doors.";
 	icon = 'icons/misc/worlds.dmi';
@@ -2772,7 +2772,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "anO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -2820,7 +2820,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "anY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2935,7 +2935,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "aoA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "There was a point in time where coffee came out of this.";
@@ -2961,7 +2961,7 @@
 /obj/rail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -2976,7 +2976,7 @@
 /obj/rail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -2985,7 +2985,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -3001,7 +3001,7 @@
 /obj/rail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -3016,7 +3016,7 @@
 /obj/rail/junction{
 	dir = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -3028,7 +3028,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aoI" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -3039,7 +3039,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aoJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -3121,7 +3121,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
 "apk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -3149,7 +3149,7 @@
 	},
 /area/hospital)
 "apu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A broken panel, originally intended to control pod doors.";
 	icon = 'icons/misc/worlds.dmi';
@@ -3169,7 +3169,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "apw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -3182,7 +3182,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "apx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -3194,7 +3194,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "apy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -3203,7 +3203,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -3240,7 +3240,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "apF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3259,7 +3259,7 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "apK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A United States flag, placed here 84 years ago.  Well, placed and then moved and placed again...  It's faded from decades of ultraviolet light exposure.";
 	icon = 'icons/misc/lunar.dmi';
@@ -3327,7 +3327,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "aql" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -3537,7 +3537,7 @@
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital)
 "arq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "There was a point in time where coffee came out of this.";
@@ -3573,7 +3573,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/hospital/samostrel)
 "arw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -3588,7 +3588,7 @@
 	},
 /area/hospital/samostrel)
 "arx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -3703,7 +3703,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -3712,7 +3712,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -3724,7 +3724,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -3741,7 +3741,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asi" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -3806,7 +3806,7 @@
 	},
 /area/moon/museum/west)
 "asv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of LESA base equipment doodad.  It's not clear what it was used for originally, but now it seems to just be configured for blinky lights.";
@@ -3856,7 +3856,7 @@
 	},
 /area/moon/museum)
 "asT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -3873,7 +3873,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asV" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3909,7 +3909,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ata" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -3925,7 +3925,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -3938,7 +3938,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atd" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -3947,7 +3947,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -3959,7 +3959,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ate" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -3978,7 +3978,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -4183,7 +4183,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -4219,7 +4219,7 @@
 	},
 /area/moon/museum)
 "aua" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -4261,7 +4261,7 @@
 /obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4286,7 +4286,7 @@
 	id = "samostrel_nuke_outer";
 	opacity = 0
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -4355,7 +4355,7 @@
 	},
 /area/hospital)
 "auZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -4424,7 +4424,7 @@
 	},
 /area/moon/museum)
 "avq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A photo of the Apollo 11 astronauts.  Buzz Aldrin, Neil Armstrong, and that third guy who didn't actually land on the moon.";
 	icon = 'icons/misc/lunar.dmi';
@@ -4482,7 +4482,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "avK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -4498,7 +4498,7 @@
 	},
 /area/hospital/samostrel)
 "avL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -4513,7 +4513,7 @@
 	},
 /area/hospital/samostrel)
 "avM" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -4667,7 +4667,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "awQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A long-dead industrial washing machine.  I guess it's more of a dirtying machine now.  A rusting machine.";
@@ -4680,7 +4680,7 @@
 /area/hospital)
 "awS" = (
 /obj/decal/cleanable/cobweb2,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A dead industrial dryer.  The side loading kind.  That just happens to look identical to a washing machine.";
@@ -4737,7 +4737,7 @@
 	icon_state = "bdoorright1";
 	id = "samostrel_nuke_inner"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -4776,7 +4776,7 @@
 /turf/space/dense,
 /area/space)
 "axz" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A dead industrial dryer.  The side loading kind.  That just happens to look identical to a washing machine.";
@@ -4788,7 +4788,7 @@
 /turf/unsimulated/floor,
 /area/hospital)
 "axC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -4818,7 +4818,7 @@
 /turf/unsimulated/floor/black,
 /area/hospital/samostrel)
 "axH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -4916,7 +4916,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -4958,7 +4958,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ayA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -4971,7 +4971,7 @@
 /turf/unsimulated/floor/black,
 /area/hospital/samostrel)
 "ayB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -4983,7 +4983,7 @@
 /turf/unsimulated/floor/black,
 /area/hospital/samostrel)
 "ayC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -4992,7 +4992,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -5066,7 +5066,7 @@
 	},
 /area/moon/museum/west)
 "ayO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Hi, Greg.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "greg";
@@ -5102,7 +5102,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
@@ -5180,7 +5180,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "azt" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
@@ -5342,7 +5342,7 @@
 	},
 /area/moon/museum/west)
 "aAl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
@@ -5458,7 +5458,7 @@
 	},
 /area/owlery/gangzone)
 "aBb" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
@@ -5718,7 +5718,7 @@
 /turf/unsimulated/floor/wood,
 /area/moon/museum/west)
 "aCe" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -5729,7 +5729,7 @@
 /turf/unsimulated/floor/wood,
 /area/moon/museum/west)
 "aCf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
 	icon = 'icons/misc/lunar.dmi';
@@ -5739,7 +5739,7 @@
 /turf/unsimulated/floor/circuit/white,
 /area/moon/museum/west)
 "aCg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This is the central node of the MNX-12/777 superminicomputer that managed Lunaport for decades.";
@@ -5798,7 +5798,7 @@
 /turf/unsimulated/wall/auto/adventure/moon,
 /area/moon/museum/giftshop)
 "aCv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -5833,7 +5833,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "aCA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -6002,7 +6002,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "aDs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -6201,7 +6201,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "aEC" = (
 /obj/decal/cleanable/cobweb2,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This particular geegaw is probably related to power control or fire systems or something.  It could also be a really elaborate light switch.";
@@ -6321,7 +6321,7 @@
 	},
 /area/moon/museum)
 "aFf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -6408,7 +6408,7 @@
 	name = "unchained pen";
 	pixel_x = -4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -6507,7 +6507,7 @@
 	},
 /area/marsoutpost)
 "aGh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -6581,7 +6581,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/moon/museum)
 "aGz" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -6609,7 +6609,7 @@
 	color = "b4b4b4";
 	dir = 5
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -6663,7 +6663,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "aHv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -6885,7 +6885,7 @@
 	},
 /area/marsoutpost)
 "aJc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -6950,7 +6950,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost/vault)
 "aJu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -6961,7 +6961,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "aJv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -6972,7 +6972,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "aJw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The only thing displayed on the screen is ''0:00''";
 	dir = 1;
@@ -7150,7 +7150,7 @@
 	},
 /area/marsoutpost)
 "aKd" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -7255,7 +7255,7 @@
 	},
 /area/marsoutpost)
 "aKu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -7270,7 +7270,7 @@
 	},
 /area/marsoutpost)
 "aKv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -7451,7 +7451,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aLh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -8456,7 +8456,7 @@
 	},
 /area/marsoutpost)
 "aOr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "grife-fallen";
@@ -9449,7 +9449,7 @@
 	},
 /area/marsoutpost)
 "aRx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -9695,7 +9695,7 @@
 	},
 /area/marsoutpost)
 "aSx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-10";
 	name = "power cable"
@@ -9710,7 +9710,7 @@
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-8";
 	name = "power cable"
@@ -9993,7 +9993,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aTy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -10002,7 +10002,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aTz" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -10433,7 +10433,7 @@
 /turf/unsimulated/floor/green/corner,
 /area/marsoutpost)
 "aUU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -10444,7 +10444,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aUV" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
@@ -10455,7 +10455,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aUW" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -10464,12 +10464,12 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-6";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-8";
 	name = "power cable"
@@ -10483,7 +10483,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aUY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "5-10";
 	name = "power cable"
@@ -10504,7 +10504,7 @@
 	},
 /area/marsoutpost)
 "aVa" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This siphon appears to be in a rather poor state of repair.";
@@ -11113,7 +11113,7 @@
 /area/marsoutpost)
 "aXc" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -11133,7 +11133,7 @@
 /area/marsoutpost)
 "aXe" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -11888,7 +11888,7 @@
 	},
 /area/crater/cave)
 "aZH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-10";
 	name = "power cable"
@@ -12068,7 +12068,7 @@
 	},
 /area/marsoutpost/duststorm)
 "baj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "5-10";
 	name = "power cable"
@@ -12287,7 +12287,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "baS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "5-10";
 	name = "power cable"
@@ -12429,7 +12429,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bbz" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This rover has aged ho- JESUS CHRIST!";
@@ -12602,7 +12602,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bca" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "5-6";
 	name = "power cable"
@@ -12684,7 +12684,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-10";
 	name = "power cable"
@@ -12692,7 +12692,7 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "bcr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "9-10";
 	name = "power cable"
@@ -12700,13 +12700,13 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "bcs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 10;
 	icon = 'icons/obj/power.dmi';
@@ -12721,13 +12721,13 @@
 	},
 /area/marsoutpost/duststorm)
 "bct" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "solar_panel-b";
@@ -12741,13 +12741,13 @@
 	},
 /area/marsoutpost/duststorm)
 "bcu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 6;
 	icon = 'icons/obj/power.dmi';
@@ -12762,7 +12762,7 @@
 	},
 /area/marsoutpost/duststorm)
 "bcv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -12774,7 +12774,7 @@
 /turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
 "bcw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -12788,7 +12788,7 @@
 	},
 /area/marsoutpost)
 "bcx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -12797,7 +12797,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -12890,7 +12890,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An antenna to boost a distress signal.";
@@ -12903,7 +12903,7 @@
 	},
 /area/marsoutpost/duststorm)
 "bcP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-5";
 	name = "power cable"
@@ -12911,7 +12911,7 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "bcQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-5";
 	name = "power cable"
@@ -12919,7 +12919,7 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "bcR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-6";
 	name = "power cable"
@@ -12929,12 +12929,12 @@
 	},
 /area/marsoutpost/duststorm)
 "bcS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-10";
 	name = "power cable"
@@ -12944,12 +12944,12 @@
 	},
 /area/marsoutpost/duststorm)
 "bcT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-10";
 	name = "power cable"
@@ -12959,7 +12959,7 @@
 	},
 /area/marsoutpost/duststorm)
 "bcU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
 	name = "power cable"
@@ -12969,7 +12969,7 @@
 	},
 /area/marsoutpost/duststorm)
 "bcW" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -13007,7 +13007,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bdh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-2";
 	name = "power cable"
@@ -13017,13 +13017,13 @@
 	},
 /area/marsoutpost/duststorm)
 "bdi" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	dir = 6;
 	icon = 'icons/obj/power.dmi';
@@ -13039,13 +13039,13 @@
 	},
 /area/marsoutpost/duststorm)
 "bdj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "solar_panel-b";
@@ -13126,7 +13126,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "bdx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-2";
 	name = "power cable"
@@ -13231,7 +13231,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bea" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-6";
 	name = "power cable"
@@ -13245,7 +13245,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bed" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -13301,7 +13301,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bep" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-9";
 	name = "power cable"
@@ -13311,7 +13311,7 @@
 	},
 /area/marsoutpost/duststorm)
 "beq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
 	name = "power cable"
@@ -13319,7 +13319,7 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "ber" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-8";
 	name = "power cable"
@@ -13383,7 +13383,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-2";
 	name = "power cable"
@@ -13391,7 +13391,7 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "beD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -13496,7 +13496,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "beT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -13535,7 +13535,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This rover has aged horribly.";
@@ -13583,7 +13583,7 @@
 	},
 /area/marsoutpost/duststorm)
 "bfe" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -13680,7 +13680,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bfv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -13705,7 +13705,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bfx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The only thing displayed on the screen is ''0:00''";
 	dir = 4;
@@ -13853,7 +13853,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bfY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This rover has aged horribly.";
@@ -13909,7 +13909,7 @@
 /area/marsoutpost)
 "bgi" = (
 /obj/map/light/cyan,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of alien gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -14132,7 +14132,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bgY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The only thing displayed on the screen is ''0:00''";
 	icon = 'icons/misc/worlds.dmi';
@@ -14170,7 +14170,7 @@
 /area/upper_arctic/exterior/surface)
 "bhg" = (
 /obj/map/light/cyan,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of alien gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -14288,7 +14288,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of alien gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -14315,7 +14315,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bhM" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The only thing displayed on the screen is ''0:00''";
 	dir = 1;
@@ -14523,7 +14523,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bix" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "coffee-broken";
@@ -14583,7 +14583,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/crew_quarters)
 "biG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -14596,7 +14596,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/engineering)
 "biI" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -14606,7 +14606,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/engineering)
 "biK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -14620,7 +14620,7 @@
 /area/crater/cave/lower)
 "biM" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -14642,7 +14642,7 @@
 /obj/item/staple_gun/red{
 	layer = 7
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -14658,7 +14658,7 @@
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
 "biO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -14850,7 +14850,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/office)
 "bjl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "You're getting a really uncomfortable vibe just looking at this thing, whatever it is.";
@@ -14903,7 +14903,7 @@
 /area/crater/cave/lower)
 "bjq" = (
 /obj/item/tile/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "5-6";
 	name = "power cable"
@@ -15079,7 +15079,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -15091,7 +15091,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/drone/engineering)
 "bjQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -15102,7 +15102,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/drone/engineering)
 "bjR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -15110,7 +15110,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -15121,7 +15121,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/drone/engineering)
 "bjS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -15195,7 +15195,7 @@
 "bkb" = (
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "These shapes are all wrong.";
@@ -15211,7 +15211,7 @@
 	},
 /area/crater/cave/lower)
 "bkd" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It seems slightly warm.";
@@ -15429,7 +15429,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost)
 "bkK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of alien gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -15706,7 +15706,7 @@
 /area/crater/cave/lower)
 "bly" = (
 /obj/map/light/dimreddish,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What in the hell is this?";
@@ -15724,7 +15724,7 @@
 "blz" = (
 /obj/decal/cleanable/cobweb2,
 /obj/map/light/dimreddish,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What in the hell is this?";
@@ -15787,7 +15787,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "blG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The only thing displayed on the screen is ''0:00''";
 	dir = 1;
@@ -16179,7 +16179,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bnb" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -16201,7 +16201,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bne" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-6";
 	name = "power cable"
@@ -16212,7 +16212,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/marsoutpost)
 "bnf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -16223,7 +16223,7 @@
 /turf/unsimulated/floor/circuit/green,
 /area/marsoutpost)
 "bng" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
@@ -16234,7 +16234,7 @@
 /turf/unsimulated/floor/circuit/green,
 /area/marsoutpost)
 "bnh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -16311,17 +16311,17 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bnu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-9";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-4";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-2";
 	name = "power cable"
@@ -16329,22 +16329,22 @@
 /turf/unsimulated/floor/green,
 /area/marsoutpost)
 "bnv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-8";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-8";
 	name = "power cable"
@@ -16352,22 +16352,22 @@
 /turf/unsimulated/floor/green,
 /area/marsoutpost)
 "bnw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "2-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-10";
 	name = "power cable"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "1-9";
 	name = "power cable"
@@ -16375,7 +16375,7 @@
 /turf/unsimulated/floor/green,
 /area/marsoutpost)
 "bnx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -16475,7 +16475,7 @@
 /area/precursor)
 "bnP" = (
 /obj/critter/ancient_thing,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "It's pretty weird. Is it some sort of seating? Who knows.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -16500,7 +16500,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bnS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -16516,7 +16516,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/marsoutpost)
 "bnU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -16536,7 +16536,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The only thing displayed on the screen is ''0:00''";
 	icon = 'icons/misc/worlds.dmi';
@@ -16665,7 +16665,7 @@
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "box" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "It's pretty weird. Is it some sort of seating? Who knows.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -17380,7 +17380,7 @@
 "brh" = (
 /obj/decal/lightshaft,
 /obj/map/light/graveyard,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What in the hell is this?";
@@ -17427,7 +17427,7 @@
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "brm" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -17440,7 +17440,7 @@
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "brn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A partially open door of mysterious origin.  There is no gap between it and whatever its sliding into.";
 	dir = 8;
@@ -17605,7 +17605,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -17650,7 +17650,7 @@
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "brX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -17769,7 +17769,7 @@
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bsy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A partially open door of mysterious origin.  There is no gap between it and whatever its sliding into.";
 	dir = 1;
@@ -17833,7 +17833,7 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon)
 "bsJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -18155,7 +18155,7 @@
 	},
 /area/iomoon/caves)
 "btZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -18202,7 +18202,7 @@
 /area/iomoon/base)
 "buo" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -18422,7 +18422,7 @@
 	},
 /area/iomoon)
 "bvq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -18435,7 +18435,7 @@
 	},
 /area/iomoon/base)
 "bvr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
@@ -18548,7 +18548,7 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "bvS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -18796,7 +18796,7 @@
 	},
 /area/centcom)
 "bxs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -19031,7 +19031,7 @@
 /turf/unsimulated/floor/purple/corner,
 /area/iomoon/base)
 "byV" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
@@ -19073,7 +19073,7 @@
 	},
 /area/iomoon/caves)
 "bzf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A partially open door of mysterious origin.  There is no gap between it and whatever its sliding into.";
 	icon = 'icons/misc/worlds.dmi';
@@ -19192,7 +19192,7 @@
 "bzP" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
@@ -19606,7 +19606,7 @@
 	},
 /area/iomoon/base/underground)
 "bBE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -19717,7 +19717,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -20877,7 +20877,7 @@
 	name = "inactive light bulb";
 	tag = ""
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -22344,7 +22344,7 @@
 /area/crunch)
 "bLG" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -22674,7 +22674,7 @@
 	},
 /area/crypt/sigma/lab)
 "bMS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -23241,7 +23241,7 @@
 /area/crunch)
 "bON" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -23513,7 +23513,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bPH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -23615,7 +23615,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "bQc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -23624,7 +23624,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/crypt/sigma/lab)
 "bQe" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -23669,7 +23669,7 @@
 	dir = 8
 	},
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -23806,7 +23806,7 @@
 	},
 /area/crunch)
 "bQD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
 	icon = 'icons/obj/computer.dmi';
@@ -23819,7 +23819,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -23851,7 +23851,7 @@
 /area/crunch)
 "bQM" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -23880,7 +23880,7 @@
 /turf/unsimulated/floor/blue/checker,
 /area/crunch)
 "bQP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This siphon appears to be in a rather poor state of repair.";
@@ -24024,7 +24024,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bRl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -24216,7 +24216,7 @@
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/crypt/sigma)
 "bSa" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -24392,7 +24392,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bSN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -25020,7 +25020,7 @@
 /area/crypt/sigma/rd)
 "bVz" = (
 /obj/table/reinforced/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -25120,7 +25120,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
 "bVQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "coffee-broken";
@@ -25369,7 +25369,7 @@
 	},
 /area/sim/racing_track)
 "bWP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -25400,7 +25400,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "bXb" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -25463,7 +25463,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "bXq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "..How the hell is this even possible?";
@@ -25474,7 +25474,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "bXr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -25609,7 +25609,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/afterlife/heaven)
 "bXO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -25760,7 +25760,7 @@
 	},
 /area/meat_derelict/main)
 "bYh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -26081,7 +26081,7 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/heaven)
 "bZn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -26097,7 +26097,7 @@
 	},
 /area/afterlife/heaven)
 "bZp" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -26224,7 +26224,7 @@
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "bZD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It smells like durian.  Angry durian.";
@@ -26367,7 +26367,7 @@
 /area/meat_derelict/guts)
 "caf" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -26484,7 +26484,7 @@
 /area/meat_derelict/guts)
 "caA" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A computer that is obviously completely broken, more so than previous obviously broken computers.";
 	icon = 'icons/obj/computer.dmi';
@@ -26797,7 +26797,7 @@
 /area/crypt/graveyard/swamp)
 "ccf" = (
 /obj/map/light/secretblue,
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -27000,7 +27000,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ccZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -27240,7 +27240,7 @@
 	},
 /area/sim/bball)
 "cea" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -27266,7 +27266,7 @@
 /area/meat_derelict/entry)
 "ced" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -27756,7 +27756,7 @@
 	},
 /area/sim/racing_track)
 "cgx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -27768,7 +27768,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cgy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -27784,7 +27784,7 @@
 	},
 /area/meat_derelict/entry)
 "cgD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -27796,7 +27796,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cgE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -27823,7 +27823,7 @@
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cgJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It smells like rotten meatloaf.";
@@ -28196,7 +28196,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/meat_derelict/entry)
 "chL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -28206,7 +28206,7 @@
 /turf/unsimulated/floor/grime,
 /area/meat_derelict/entry)
 "chM" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hvending";
@@ -28266,7 +28266,7 @@
 	name = "Thunderdome Lounge"
 	})
 "cib" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -28790,7 +28790,7 @@
 	},
 /area/sim/area2)
 "cjO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A chair too covered in weird lumpy flesh to actually be used as a chair.";
 	dir = 10;
@@ -28813,7 +28813,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/meat_derelict/guts)
 "cjR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "That is, in fact, a really big fang.  Gosh.";
@@ -28851,7 +28851,7 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "cjZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Geocities, is that you?";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -28913,7 +28913,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/meat_derelict/guts)
 "ckf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Yes, this is certainly a fang of impressive size.";
@@ -29305,7 +29305,7 @@
 	},
 /area/meat_derelict/soviet)
 "clo" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It smells like rotten meatloaf.";
@@ -29425,7 +29425,7 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "clE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "Something about this robot seems very familiar.";
 	icon = 'icons/obj/bots/robuddy/pr-1.dmi';
@@ -29584,7 +29584,7 @@
 	},
 /area/meat_derelict/guts)
 "cmn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "solar_panel-b";
@@ -29797,7 +29797,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
 "cmY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It smells like durian.  Angry durian.";
@@ -31136,7 +31136,7 @@
 	},
 /area/crunch/wtc)
 "crK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Looks like it's cooling down!";
@@ -31534,7 +31534,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "ctm" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -31639,7 +31639,7 @@
 	},
 /area/afterlife/hell)
 "ctH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An override panel.  A very broken one, at that.";
 	icon = 'icons/misc/worlds.dmi';
@@ -31672,7 +31672,7 @@
 	},
 /area/afterlife/hell)
 "ctO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -32021,7 +32021,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cuT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -32044,7 +32044,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "cuW" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -32081,7 +32081,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "cva" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Looks like it's cooling down!";
@@ -32167,7 +32167,7 @@
 /turf/space,
 /area/noGenerate)
 "cvl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -32191,7 +32191,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "cvn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -32539,7 +32539,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "cwu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Water pumps for the nearby botanical lab.";
@@ -32676,7 +32676,7 @@
 /turf/space,
 /area/space)
 "cwU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A clamp for docking shuttles. It's all busted.";
 	dir = 1;
@@ -32697,7 +32697,7 @@
 /area/space)
 "cwX" = (
 /obj/item/scrap,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A clamp for docking shuttles. It's all busted.";
 	dir = 1;
@@ -33596,7 +33596,7 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "czN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
@@ -33818,7 +33818,7 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "cAs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A dead industrial dryer.  The side loading kind.  That just happens to look identical to a washing machine.";
@@ -34485,7 +34485,7 @@
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cCk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A long-dead industrial washing machine.  I guess it's more of a dirtying machine now.  A rusting machine.";
@@ -34836,7 +34836,7 @@
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cDs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -35749,7 +35749,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/office)
 "cGc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -35940,7 +35940,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
 "cGG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -36134,7 +36134,7 @@
 	layer = 4
 	},
 /obj/table/reinforced/bar/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -36348,7 +36348,7 @@
 /area/owlery/office)
 "cHU" = (
 /obj/table/reinforced/bar/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A computer that is obviously completely broken, more so than previous obviously broken computers.";
 	icon = 'icons/obj/computer.dmi';
@@ -36430,7 +36430,7 @@
 /turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cIg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A clamp for docking shuttles.";
 	dir = 8;
@@ -36619,7 +36619,7 @@
 	},
 /area/owlery/gangzone)
 "cII" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "morgue1";
@@ -37571,7 +37571,7 @@
 	},
 /area/owlery/gangzone)
 "cLL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -38405,7 +38405,7 @@
 	},
 /area/owlery/office)
 "cOk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
@@ -39640,7 +39640,7 @@
 	},
 /area/owlery/office)
 "cRn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -39829,7 +39829,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owllock)
 "cRO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -40135,7 +40135,7 @@
 /obj/fakeobject/lightbulb_broken{
 	dir = 8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -41362,7 +41362,7 @@
 /obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -41681,7 +41681,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cWz" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -42080,7 +42080,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/fungus,
 /obj/decal/cleanable/cobweb2,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -42249,7 +42249,7 @@
 /area/owlery/Owlmait)
 "cYa" = (
 /obj/decal/cleanable/fungus,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -42593,7 +42593,7 @@
 /obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -42681,7 +42681,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cZn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -44198,7 +44198,7 @@
 	},
 /area/sim/racing_track)
 "deL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44213,7 +44213,7 @@
 	},
 /area/sim/racing_track)
 "deM" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44228,7 +44228,7 @@
 	},
 /area/sim/racing_track)
 "deQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44262,7 +44262,7 @@
 	},
 /area/sim/racing_track)
 "deT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44280,7 +44280,7 @@
 	},
 /area/sim/racing_track)
 "deU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44298,7 +44298,7 @@
 	},
 /area/sim/racing_track)
 "deV" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44312,7 +44312,7 @@
 	},
 /area/sim/racing_track)
 "deW" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44355,7 +44355,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
 "dfb" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44373,7 +44373,7 @@
 	},
 /area/sim/racing_track)
 "dfc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44391,7 +44391,7 @@
 	},
 /area/sim/racing_track)
 "dfe" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44409,7 +44409,7 @@
 	},
 /area/sim/racing_track)
 "dfh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44445,7 +44445,7 @@
 	},
 /area/afterlife/bar)
 "dfk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44486,7 +44486,7 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44504,7 +44504,7 @@
 	},
 /area/sim/racing_track)
 "dfs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44530,7 +44530,7 @@
 	},
 /area/sim/racing_track)
 "dfu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -44636,7 +44636,7 @@
 	},
 /area/iomoon/caves)
 "dfJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -44651,7 +44651,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "dfK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -44663,7 +44663,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "dfN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -44672,7 +44672,7 @@
 	layer = 1.9;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -46507,7 +46507,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "dnt" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -46517,7 +46517,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (SOUTHWEST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -46561,7 +46561,7 @@
 	},
 /area/hospital/underground)
 "dnR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -46619,7 +46619,7 @@
 /area/hospital/underground)
 "doQ" = (
 /obj/fakeobject/tallsmes,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -46641,7 +46641,7 @@
 /area/centcom/garden)
 "doY" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -46669,7 +46669,7 @@
 /turf/unsimulated/floor/plating,
 /area/solarium)
 "dpp" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This is some kind of status terminal for a nuclear reactor.  Probably.  It may be a status panel for a vending machine, that just so happens to be next to a nuclear reactor.";
 	icon = 'icons/obj/computer.dmi';
@@ -46679,7 +46679,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/hospital/underground)
 "dpq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -46692,7 +46692,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/hospital/underground)
 "dpr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -46719,7 +46719,7 @@
 	},
 /area/centcom/lounge)
 "dpE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -46981,7 +46981,7 @@
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
 	icon_state = "reactoroff"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -47081,7 +47081,7 @@
 	},
 /area/crypt/sigma/morgue)
 "dtG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -47160,7 +47160,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/centcom/gallery)
 "dub" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -47207,7 +47207,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "duk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -47329,7 +47329,7 @@
 	},
 /area/crypt/sigma/morgue)
 "duP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -48184,7 +48184,7 @@
 /turf/unsimulated/floor/void,
 /area/centcom/offices/lyra)
 "dxN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -48205,7 +48205,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/wire)
 "dxQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -48637,7 +48637,7 @@
 	icon_state = "blue"
 	})
 "dyS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -48712,7 +48712,7 @@
 /turf/unsimulated/floor/darkblue,
 /area/centcom/offices/simianc)
 "dzk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This conduit is all burned and melty.";
 	dir = 8;
@@ -48724,7 +48724,7 @@
 /turf/unsimulated/floor/circuit,
 /area/centcom/offices/simianc)
 "dzl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -48837,7 +48837,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
 "dAf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -54491,7 +54491,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "dTP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -54521,7 +54521,7 @@
 /turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
 "dTT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -54812,7 +54812,7 @@
 	},
 /area/centcom/offices/walpvrgis)
 "ebn" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -55743,7 +55743,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome1)
 "eWy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -56060,7 +56060,7 @@
 	anchored = 1;
 	dir = 8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -56151,7 +56151,7 @@
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
 "foX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -56298,7 +56298,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
 "fAb" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This particular gizmo relates to teleportation in some way.  Alternatively, it might mix drinks.";
@@ -56371,7 +56371,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
 "fCw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -56476,7 +56476,7 @@
 	dir = 4;
 	name = "grimy pipe"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -56710,7 +56710,7 @@
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -56785,7 +56785,7 @@
 	},
 /area/centcom/gallery)
 "fXD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that furance gizmo.  The screen is off and there isn't any visible power switch.";
 	icon = 'icons/obj/computer.dmi';
@@ -56819,7 +56819,7 @@
 	},
 /area/centcom)
 "gas" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -56894,7 +56894,7 @@
 /turf/simulated/floor/white/grime,
 /area/observatory)
 "gdS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Well, it's old and dirty so it can be assumed to be broken.";
@@ -56966,7 +56966,7 @@
 /area/owlery/Owlmait2)
 "giu" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -56975,7 +56975,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -56985,7 +56985,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -57002,7 +57002,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "gjA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -57329,7 +57329,7 @@
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/entry)
 "gxc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of teleporter part.  In all likelihood.  It might just be an industrial arcade cabinet.";
@@ -57418,7 +57418,7 @@
 /area/space)
 "gzZ" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -57427,7 +57427,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -57638,7 +57638,7 @@
 	dir = 4;
 	pixel_y = -6
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -57745,7 +57745,7 @@
 /area/hospital/samostrel)
 "gNx" = (
 /obj/map/light/cyan,
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 1;
 	icon = 'icons/turf/walls/precursor.dmi';
 	icon_state = "details";
@@ -58056,7 +58056,7 @@
 	},
 /area/crunch/wtc)
 "hfT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -58089,7 +58089,7 @@
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "hhE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 1;
 	icon = 'icons/turf/walls/ancient_smooth.dmi';
 	icon_state = "details";
@@ -58357,7 +58357,7 @@
 /area/owlery/gangzone)
 "huB" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -58367,7 +58367,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -58464,7 +58464,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "hAp" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Well, it's old and dirty so it can be assumed to be broken.";
@@ -58479,7 +58479,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
 "hBl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -58736,7 +58736,7 @@
 /obj/machinery/light/small/iomoon{
 	dir = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
@@ -58781,7 +58781,7 @@
 /area/lower_arctic/mining)
 "hQy" = (
 /obj/item/instrument/saxophone,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
@@ -59117,7 +59117,7 @@
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
 "ikE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
@@ -59179,7 +59179,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "inE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -59499,7 +59499,7 @@
 /turf/unsimulated/wall/void,
 /area/void_diner)
 "iBp" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -59603,7 +59603,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "iEA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -59687,7 +59687,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "iJc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -59737,7 +59737,7 @@
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/afterlife/bar/sanctuary)
 "iLO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -59911,7 +59911,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "iUd" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -60047,7 +60047,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "jbe" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -60278,7 +60278,7 @@
 /turf/unsimulated/floor/black,
 /area/iomoon/base/underground)
 "jiu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
@@ -60311,7 +60311,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "jiZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -60346,7 +60346,7 @@
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "jla" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -60613,7 +60613,7 @@
 	},
 /area/space)
 "jxd" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -61075,7 +61075,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -61104,7 +61104,7 @@
 	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
 	icon_state = "mars_bot-0"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -61600,7 +61600,7 @@
 /turf/unsimulated/floor/plating,
 /area/solarium)
 "ktR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
@@ -61630,7 +61630,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "kuN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/turf/walls/ancient_smooth.dmi';
 	icon_state = "details";
 	name = "symbols"
@@ -61773,7 +61773,7 @@
 /area/crypt/graveyard)
 "kCa" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -61782,7 +61782,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -61792,7 +61792,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -61802,7 +61802,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -61884,7 +61884,7 @@
 /area/moon/museum)
 "kHd" = (
 /obj/decal/cleanable/generic,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -61918,7 +61918,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "kIF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -61938,7 +61938,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kIU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	dir = 1;
 	icon = 'icons/turf/walls/precursor.dmi';
 	icon_state = "details";
@@ -62007,7 +62007,7 @@
 /area/iomoon/caves)
 "kMj" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -62017,7 +62017,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -62183,7 +62183,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
 "kSk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A thermoelectric generator that appears to have fallen into disrepair.";
@@ -62211,7 +62211,7 @@
 /area/owlery/staffhall)
 "kUo" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -62220,7 +62220,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -62414,7 +62414,7 @@
 	},
 /area/centcom/offices/marknstein)
 "lfc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -62665,7 +62665,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
 "lrB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -62675,7 +62675,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "lrK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -62799,7 +62799,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
 "lxy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/turf/walls/ancient_smooth.dmi';
 	icon_state = "details";
 	name = "symbols"
@@ -63033,7 +63033,7 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "lLS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An antenna to boost a distress signal.";
@@ -63058,7 +63058,7 @@
 	icon_state = "blue"
 	})
 "lMN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -63221,7 +63221,7 @@
 	color = "b4b4b4";
 	dir = 6
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -63254,7 +63254,7 @@
 	},
 /area/titlescreen)
 "lWU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -63305,7 +63305,7 @@
 	},
 /area/afterlife/bar)
 "lZC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -63315,7 +63315,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
 "maa" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -63478,7 +63478,7 @@
 	},
 /area/centcom/offices/janantilles)
 "mhs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -63533,7 +63533,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "mlf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -63934,7 +63934,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "mFL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -63951,7 +63951,7 @@
 	color = "b4b4b4"
 	},
 /obj/item/wirecutters,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -63983,7 +63983,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/observatory)
 "mIm" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -64042,7 +64042,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
 "mLm" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
@@ -64097,7 +64097,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "mPA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A broken gas circulator from a generator.";
@@ -64119,7 +64119,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
 "mRb" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -64193,7 +64193,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "mVD" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of alien gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -64331,7 +64331,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "mZE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A sensor array for a ship.  A Soviet ship.  full of communists.";
 	dir = 1;
@@ -64439,7 +64439,7 @@
 	color = "b4b4b4";
 	dir = 10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -64557,7 +64557,7 @@
 	},
 /area/shuttle/battle)
 "nmg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -64647,7 +64647,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/void_diner)
 "nqU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -64714,7 +64714,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "nun" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -64745,7 +64745,7 @@
 	dir = 4;
 	pixel_y = -6
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine that is assuredly important.  It is also assuredly covered in words you cannot read.";
@@ -65088,7 +65088,7 @@
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -65503,7 +65503,7 @@
 	},
 /area/titlescreen)
 "nUN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -65515,7 +65515,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "nVA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -65703,7 +65703,7 @@
 	},
 /area/centcom/offices/walpvrgis)
 "odc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A turret for ships.  Like this ship that it's attached to.";
 	dir = 1;
@@ -65731,7 +65731,7 @@
 	},
 /area/hospital)
 "oeC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -65739,7 +65739,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -65920,7 +65920,7 @@
 	},
 /area/centcom/gallery)
 "ooX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -66029,7 +66029,7 @@
 /turf/unsimulated/floor/grime,
 /area/owlery/Owlmait)
 "ove" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -66335,7 +66335,7 @@
 	name = "grimy pipe";
 	tag = "icon-intact (NORTHWEST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -66350,7 +66350,7 @@
 	},
 /area/hospital/samostrel)
 "oQJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -66471,7 +66471,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/meat_derelict/soviet)
 "oVu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Well, it's old and dirty so it can be assumed to be broken.";
@@ -66479,7 +66479,7 @@
 	icon_state = "circ1-broken";
 	name = "old gas turbine"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -67378,7 +67378,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "pGH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -67399,7 +67399,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "pGP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -67668,7 +67668,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
 "pQI" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -67853,7 +67853,7 @@
 /area/space)
 "pXt" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -67863,7 +67863,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -67873,7 +67873,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -67886,7 +67886,7 @@
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
 "pXE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -68261,7 +68261,7 @@
 	},
 /area/afterlife/bar)
 "qrF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/turf/walls/precursor.dmi';
 	icon_state = "details";
 	name = "symbols"
@@ -68417,7 +68417,7 @@
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -68464,7 +68464,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -68492,7 +68492,7 @@
 	icon_state = "mars_bot-dead";
 	name = "Smashed Robot"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -68699,7 +68699,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
 "qJY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -68880,7 +68880,7 @@
 /area/space)
 "qRe" = (
 /obj/grille/steel,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -68889,7 +68889,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -68899,7 +68899,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -68959,7 +68959,7 @@
 /turf/unsimulated/floor/wood,
 /area/afterlife/bar)
 "qUB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -69253,7 +69253,7 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "rjl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -69262,7 +69262,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -69477,7 +69477,7 @@
 /turf/unsimulated/floor/martian,
 /area/crunch)
 "rtJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -69643,7 +69643,7 @@
 	},
 /area/afterlife/heaven/hydroponics/inside)
 "ryU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -70100,7 +70100,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "rQO" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This conduit is all burned and melty, like something was sheared off it.  By a ball of plasma (the state of matter).";
 	dir = 8;
@@ -70302,7 +70302,7 @@
 /turf/space,
 /area/space)
 "sbi" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A giant server dedicated to intercepting and answering mhelps. Looks like it's disabled.";
@@ -70310,7 +70310,7 @@
 	icon_state = "server0";
 	name = "mhelp interceptor"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Exclusively for transporting questions like \"how i pee\".";
 	dir = 1;
@@ -70608,7 +70608,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station/assault_pod)
 "soh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -70630,7 +70630,7 @@
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "soC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -70701,7 +70701,7 @@
 	dir = 4;
 	pixel_y = -10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -71107,7 +71107,7 @@
 "sOt" = (
 /obj/item/cable_coil,
 /obj/decal/tile_edge/stripe/extra_big,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -71170,7 +71170,7 @@
 	},
 /area/sim/area2)
 "sQP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -71206,7 +71206,7 @@
 /obj/rail/cap{
 	dir = 8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -71439,7 +71439,7 @@
 	},
 /area/drone/assembly)
 "thE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -71576,7 +71576,7 @@
 /turf/unsimulated/floor/marble,
 /area/centcom/gallery)
 "tqK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -72109,7 +72109,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
 "tWe" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An override panel.  A very broken one, at that.";
 	icon = 'icons/misc/worlds.dmi';
@@ -72303,7 +72303,7 @@
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
 "uci" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -72313,7 +72313,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -72412,7 +72412,7 @@
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma/mainhall)
 "ugE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -72835,14 +72835,14 @@
 	icon_state = "blue"
 	})
 "uDt" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that blast door.  It doesn't seem to work.  Maybe there is an override or something?";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -72993,7 +72993,7 @@
 /turf/unsimulated/floor/stairs/quilty,
 /area/owlery/Owlopen)
 "uIr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -73084,7 +73084,7 @@
 /turf/simulated/floor/white/grime,
 /area/observatory)
 "uMs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
 	icon = 'icons/obj/computer.dmi';
@@ -73332,7 +73332,7 @@
 	},
 /area/sim/racing_track)
 "vaX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -73342,7 +73342,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -73458,7 +73458,7 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Exclusively for transporting questions like \"how i pee\".";
 	dir = 4;
@@ -73695,7 +73695,7 @@
 	name = "grimy pipe";
 	pixel_x = 6
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -73831,7 +73831,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -73853,7 +73853,7 @@
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "vuf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -74268,7 +74268,7 @@
 	color = "b4b4b4";
 	dir = 6
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -74294,7 +74294,7 @@
 /turf/space,
 /area/space)
 "vOL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -74332,7 +74332,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "vRK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -74452,7 +74452,7 @@
 	icon_state = "meter";
 	name = "meter"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -74590,7 +74590,7 @@
 	dir = 1;
 	pixel_y = 10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "It's moving a ton of air! Those blades sure do look sharp...";
 	icon = 'icons/obj/shuttle.dmi';
 	icon_state = "sea_propulsion";
@@ -74609,7 +74609,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "wdK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -74672,7 +74672,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -74733,7 +74733,7 @@
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
 "wky" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Exclusively for transporting questions like \"how i pee\".";
 	dir = 10;
@@ -74889,7 +74889,7 @@
 	name = "grimy pipe";
 	tag = "icon-intact (NORTHWEST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine that is assuredly important.  It is also assuredly covered in words you cannot read.";
@@ -74965,7 +74965,7 @@
 	color = "b4b4b4";
 	dir = 5
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -75203,7 +75203,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "rung";
 	name = "hand rail";
@@ -75513,7 +75513,7 @@
 	},
 /area/sim/gunsim/arena)
 "wOh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A broken gas circulator from a generator.";
@@ -76087,7 +76087,7 @@
 	},
 /area/hospital/samostrel)
 "xqw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -76096,7 +76096,7 @@
 	layer = 8;
 	name = "window"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's brown for some strange reason.";
@@ -76327,7 +76327,7 @@
 	color = "b4b4b4";
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -76635,7 +76635,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "xIB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -76783,7 +76783,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
 "xPQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -76795,7 +76795,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "xQs" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

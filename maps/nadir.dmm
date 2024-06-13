@@ -7405,7 +7405,7 @@
 	name = "The Warrens"
 	})
 "dsY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
@@ -7414,7 +7414,7 @@
 	name = "Planetary Survey Hardcopies";
 	pixel_x = -8
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
@@ -11235,7 +11235,7 @@
 	},
 /area/station/engine/core/nuclear)
 "eZZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and some of the modules seem slightly scorched.";
@@ -26183,7 +26183,7 @@
 	name = "South Catalytic Substation"
 	})
 "kXy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and several components seem to have been unceremoniously yanked out.";
@@ -31502,7 +31502,7 @@
 	name = "Drop Capsule"
 	})
 "nfE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "What was this thing even supposed to do?";
@@ -42447,7 +42447,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge/captain)
 "sdl" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";

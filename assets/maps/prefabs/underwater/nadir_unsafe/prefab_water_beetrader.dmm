@@ -260,7 +260,7 @@
 	},
 /area/bee_trader)
 "J" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An older biopod for the creation of space bee eggs.";

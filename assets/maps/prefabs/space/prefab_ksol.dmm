@@ -11,7 +11,7 @@
 /area/noGenerate)
 "ad" = (
 /obj/grille/catwalk,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -37,7 +37,7 @@
 /area/noGenerate)
 "ah" = (
 /obj/grille/catwalk,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -48,14 +48,14 @@
 /area/noGenerate)
 "ai" = (
 /obj/grille/catwalk,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -67,14 +67,14 @@
 /area/noGenerate)
 "aj" = (
 /obj/grille/catwalk,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -170,7 +170,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -185,7 +185,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -296,7 +296,7 @@
 /area/noGenerate)
 "aO" = (
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -351,7 +351,7 @@
 /area/noGenerate)
 "aW" = (
 /obj/decal/cleanable/dirt,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even cloned.";
@@ -485,7 +485,7 @@
 /area/noGenerate)
 "bl" = (
 /obj/decal/cleanable/dirt,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine are spattered with blood.";
@@ -509,7 +509,7 @@
 "bn" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This microwave does not look well.";
@@ -586,7 +586,7 @@
 /turf/simulated/floor/airless/scorched,
 /area/noGenerate)
 "bx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -619,7 +619,7 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -680,7 +680,7 @@
 /area/noGenerate)
 "bI" = (
 /obj/decal/cleanable/dirt,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Looks like this worked, once. Just once.";
@@ -789,7 +789,7 @@
 "bZ" = (
 /obj/lattice,
 /obj/item/cable_coil/cut,
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
 	name = "power cable"
@@ -798,7 +798,7 @@
 /area/noGenerate)
 "ca" = (
 /obj/lattice,
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
 	name = "power cable"
@@ -814,7 +814,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/item/raw_material/shard/glass,
-//obj/fakeobject{
+/obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
 	name = "power cable"
@@ -841,7 +841,7 @@
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "ch" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -889,7 +889,7 @@
 /area/noGenerate)
 "cn" = (
 /obj/table/wood/auto,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "This appears to be a control panel for that blast door.  It doesn't seem to work.  Maybe there is an override or something?";
 	icon = 'icons/obj/computer.dmi';
@@ -957,7 +957,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cx" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's just sideways but apparently that's enough to stop it dead in its tracks.";
@@ -997,7 +997,7 @@
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -1131,7 +1131,7 @@
 /area/noGenerate)
 "cS" = (
 /obj/decal/cleanable/dirt,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Looks like this worked, once. Just once.";

@@ -20632,7 +20632,7 @@
 /turf/space,
 /area/space)
 "bsZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -20643,7 +20643,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bta" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -23802,7 +23802,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/teleporter)
 "bIV" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -36261,7 +36261,7 @@
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "czk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -36313,7 +36313,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -36794,7 +36794,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "cAZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Yikes.";
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
@@ -36826,7 +36826,7 @@
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "cBc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -39266,7 +39266,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "dTr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';

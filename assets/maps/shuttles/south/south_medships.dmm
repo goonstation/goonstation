@@ -51,7 +51,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -98,7 +98,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "jf" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -170,7 +170,7 @@
 /area/shuttle/escape/centcom)
 "lL" = (
 /obj/machinery/atmospherics/unary/portables_connector,
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -271,7 +271,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "rr" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -426,7 +426,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -435,7 +435,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -479,7 +479,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -508,7 +508,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Es" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -556,7 +556,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -663,7 +663,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -782,7 +782,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "Ol" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -873,7 +873,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";

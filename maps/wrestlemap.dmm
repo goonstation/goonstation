@@ -20743,7 +20743,7 @@
 /turf/simulated/floor/carpet/green/decal,
 /area/station/crew_quarters/bar)
 "jbX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -30999,7 +30999,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "nHi" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -38275,7 +38275,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "qQw" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -44947,7 +44947,7 @@
 	name = "The Cage Arena"
 	})
 "tLR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -49732,7 +49732,7 @@
 /area/station/crew_quarters/captain)
 "vTN" = (
 /obj/disposalpipe/junction/left/east,
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';

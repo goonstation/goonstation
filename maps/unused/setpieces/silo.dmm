@@ -164,7 +164,7 @@
 	},
 /area/space)
 "aA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -583,7 +583,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "bF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -599,7 +599,7 @@
 	},
 /area/space)
 "bG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -615,7 +615,7 @@
 	},
 /area/space)
 "bH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -630,7 +630,7 @@
 	},
 /area/space)
 "bI" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -646,7 +646,7 @@
 /area/space)
 "bJ" = (
 /obj/grille/catwalk,
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -658,7 +658,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "bK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -675,7 +675,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "bL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -704,7 +704,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "bP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -720,7 +720,7 @@
 	},
 /area/space)
 "bQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	tag = "icon-conduit (EAST)";
 	name = "power conduit";
 	desc = "Like conventional cables, but more burly.";
@@ -735,7 +735,7 @@
 	},
 /area/space)
 "bR" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be working yet.";
@@ -754,7 +754,7 @@
 	},
 /area/space)
 "bT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -1150,7 +1150,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "cF" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";

@@ -4743,7 +4743,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
@@ -9536,7 +9536,7 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "aFC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -11732,7 +11732,7 @@
 /turf/simulated/floor/circuit,
 /area/listeningpost)
 "aNH" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -11767,7 +11767,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aNS" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -13699,7 +13699,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aUU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -13888,7 +13888,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aVK" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "snack-broken";
@@ -13897,7 +13897,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVL" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "grife-fallen";
@@ -14116,7 +14116,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aXg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
@@ -14440,7 +14440,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "aZG" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -14510,7 +14510,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/security)
 "baj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -14536,7 +14536,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "baq" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
@@ -16920,7 +16920,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "bkC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -17111,7 +17111,7 @@
 	},
 /area/station/hallway/primary/east)
 "bli" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";

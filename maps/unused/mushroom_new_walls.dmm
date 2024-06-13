@@ -6717,7 +6717,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aJt" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -11941,7 +11941,7 @@
 	},
 /area/space)
 "blg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -12000,7 +12000,7 @@
 	},
 /area/space)
 "blo" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -24326,7 +24326,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "lng" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

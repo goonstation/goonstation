@@ -319,7 +319,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "bZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -513,7 +513,7 @@
 	},
 /area/wrecknsspolaris)
 "cA" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -524,7 +524,7 @@
 /turf/simulated/floor/plating,
 /area/wrecknsspolaris)
 "cB" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "snack-broken";
@@ -605,7 +605,7 @@
 	name = "Dead plant";
 	pixel_y = 10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -652,7 +652,7 @@
 /obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -671,7 +671,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cT" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -688,7 +688,7 @@
 	},
 /area/wrecknsspolaris)
 "cV" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -708,7 +708,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cX" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -719,7 +719,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cY" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -732,7 +732,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -740,7 +740,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -760,7 +760,7 @@
 	},
 /area/wrecknsspolaris)
 "db" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -770,7 +770,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -778,7 +778,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -790,7 +790,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dc" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -799,7 +799,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -819,7 +819,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "de" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -831,7 +831,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "df" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -843,7 +843,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -852,7 +852,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -864,7 +864,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dh" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -873,7 +873,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -882,7 +882,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -894,7 +894,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "di" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -903,7 +903,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -912,7 +912,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -924,7 +924,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dj" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -1077,7 +1077,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "dJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A broken gas circulator from a generator.";
@@ -1120,7 +1120,7 @@
 /area/wrecknsspolaris)
 "dP" = (
 /obj/fluid_spawner/shortdelaybig,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -1337,7 +1337,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "en" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1349,7 +1349,7 @@
 /area/wrecknsspolaris)
 "eo" = (
 /obj/decal/cleanable/dirt/dirt5,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1475,7 +1475,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1532,7 +1532,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eM" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -1567,7 +1567,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eP" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1580,7 +1580,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eQ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -1803,7 +1803,7 @@
 /area/wrecknsspolaris)
 "fz" = (
 /obj/item/scrap,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Seems to be broken due to an impact.";
@@ -1969,7 +1969,7 @@
 /area/wrecknsspolaris/vault)
 "fZ" = (
 /obj/decal/cleanable/dirt/dirt4,
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -2995,7 +2995,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "ne" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";

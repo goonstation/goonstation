@@ -105,7 +105,7 @@
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "aau" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -164,7 +164,7 @@
 	},
 /area/space)
 "aaC" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -26650,7 +26650,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "iAp" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -33418,7 +33418,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -37136,7 +37136,7 @@
 	},
 /area/station/science/teleporter)
 "oSE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";

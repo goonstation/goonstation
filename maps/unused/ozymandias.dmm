@@ -19106,7 +19106,7 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
 "fch" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A solar electrical generator.";
 	icon = 'icons/obj/power.dmi';
@@ -24818,7 +24818,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/north)
 "gBu" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -33075,7 +33075,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
 "iJi" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A strange solar tracker. You can't tell if it's operating.";
 	icon = 'icons/obj/power.dmi';
@@ -48899,7 +48899,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "mOE" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -51533,7 +51533,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "nDg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -52367,7 +52367,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "nNp" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -54151,7 +54151,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/research)
 "ojv" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -54346,7 +54346,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "oml" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
@@ -59019,7 +59019,7 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
@@ -70158,7 +70158,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "sok" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -88193,7 +88193,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";

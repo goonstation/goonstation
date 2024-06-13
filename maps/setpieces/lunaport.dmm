@@ -1909,7 +1909,7 @@
 	name = "Concourse B"
 	})
 "gU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This particular geegaw is probably related to power control or fire systems or something.  It could also be a really elaborate light switch.";
@@ -2702,7 +2702,7 @@
 	name = "Concourse D"
 	})
 "km" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo trainyard machine.  It might be broken.  Or just off.  Who knows!!";
@@ -3063,7 +3063,7 @@
 	desc = "An old camping cot.";
 	name = "cot"
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "Hi, Greg.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "greg";
@@ -3259,7 +3259,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "lZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A 2030's model robuddy. It looks like it hasn't been active for at least a decade.";
 	icon = 'icons/misc/lunar.dmi';
@@ -4568,7 +4568,7 @@
 	name = "Hogge & Wylde"
 	})
 "rk" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An old tape drive of train schedules.  It doesn't look like it has been touched in a while";
@@ -5043,7 +5043,7 @@
 	name = "Blue Line platform"
 	})
 "ta" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A photo of the Apollo 11 astronauts.  Buzz Aldrin, Neil Armstrong, and that third guy who didn't actually land on the moon.";
 	icon = 'icons/misc/lunar.dmi';
@@ -5768,7 +5768,7 @@
 	name = "Concourse B"
 	})
 "vJ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Looks like it fell off a train. The body has been stripped for parts.";
@@ -7852,7 +7852,7 @@
 	name = "Concourse B"
 	})
 "Dd" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Part of an older automated trackyard system. It's been offline for a long time.";
@@ -8377,7 +8377,7 @@
 	name = "Concourse D"
 	})
 "Fy" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -8692,7 +8692,7 @@
 	dir = 4;
 	pixel_x = 6
 	},
-//obj/fakeobject{
+/obj/fakeobject{
 	density = 1;
 	desc = "A 2030's model robuddy. It looks like it hasn't been active for at least a decade.";
 	icon = 'icons/misc/lunar.dmi';
@@ -10430,7 +10430,7 @@
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "NN" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hvending";
@@ -10499,7 +10499,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "NZ" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's busted! These fans have been running on their own for a long time. ";
@@ -10895,7 +10895,7 @@
 	name = "Wine Cellar"
 	})
 "Py" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine from Old Lunaport.";
@@ -12990,7 +12990,7 @@
 	name = "Concourse B"
 	})
 "Xg" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -13163,7 +13163,7 @@
 	name = "Concourse D"
 	})
 "XU" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An auxilliary node of the MNX-12/777 superminicomputer that managed Lunaport for decades. It's been offline since 2041.";
@@ -13527,7 +13527,7 @@
 	},
 /area/moon/underground)
 "Ze" = (
-//obj/fakeobject{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
