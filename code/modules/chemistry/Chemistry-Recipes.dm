@@ -3332,18 +3332,18 @@
 		name = "Cryoxadone" // leaving this name alone
 		id = "cryoxadone"
 		result = "cryoxadone"
-		required_reagents = list("cryostylane" = 2, "saline" = 1, "plasma" = 1)
+		required_reagents = list("cryostylane" = 2, "water" = 2, "plasma" = 1)
 		result_amount = 2
 		instant = 0
-		reaction_speed = 2
+		reaction_speed = 1
 		mix_phrase = "The solution bubbles as frost precipitates from the sorrounding air."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_ice-1", "reaction_ice-2")
 		reaction_icon_color = "#24ccff"
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			//that factor of 100 in exposed_volume is apparently a relict of old chemistry code, but whatever. It calculates as if created_volume of the liquid with a 150K lower temperature was added.
-			holder.temperature_reagents(max(holder.total_temperature - 150, 1), exposed_volume = created_volume*100, exposed_heat_capacity = holder.composite_heat_capacity, change_min = 1)
+			//that factor of 100 in exposed_volume is apparently a relict of old chemistry code, but whatever. It calculates as if created_volume of the liquid with a 175K lower temperature was added.
+			holder.temperature_reagents(max(holder.total_temperature - 175, 1), exposed_volume = created_volume*100, exposed_heat_capacity = holder.composite_heat_capacity, change_min = 1)
 
 
 	cryostylane
