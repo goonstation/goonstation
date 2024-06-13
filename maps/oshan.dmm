@@ -46129,7 +46129,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "xcK" = (
-/obj/rack/organized/techstorage_eng,
+/obj/rack/organized/techstorage_eng/transception,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "xda" = (
