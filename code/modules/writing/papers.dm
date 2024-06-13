@@ -1199,7 +1199,7 @@ proc/spawn_kitchen_note()
 	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
 	<ul>
 	<li><b>ping</b> - Returns a bounceback containing information about the implant. Passkey not required.
-	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field.</li>
+	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field. Max 45 characters.</li>
 	<li><b>emote</b> - As <b>say</b>, but with an emote instead.</li>
 	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
 	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance.</li>

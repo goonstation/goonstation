@@ -897,7 +897,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	desc = "This thing looks really complicated."
 	icon_state = "implant-mh"
 	impcolor = "r"
-	instant = TRUE
 	scan_category = "syndicate"
 	uses_radio = TRUE
 	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
@@ -1010,6 +1009,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if ("say", "speak")
 				if (!isdead(src.owner))
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+					data = copytext(data, 1, 46)
 					src.owner.say(data)
 				src.adjust_heat(15)
 			if ("emote")
@@ -1027,7 +1027,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if ("shock", "zap")
 				logTheThing(LOG_COMBAT, src.owner, "was shocked by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 				boutput(src.owner, SPAN_ALERT("You feel a shock from inside your body!"))
-				src.owner.do_disorient(90, knockdown = 7 SECONDS, disorient = 30)
+				src.owner.do_disorient(90, knockdown = 7 SECONDS, disorient = 3 SECONDS)
 				playsound(src.owner, 'sound/impact_sounds/Energy_Hit_3.ogg', 20, TRUE, -1)
 				src.adjust_heat(50)
 			if ("drop", "release")
@@ -1146,7 +1146,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (.)
 			return
 		if (action == "set_data")
-			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.entered_data, 30)
+			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.entered_data, 45)
 			src.entered_data = new_data
 			playsound(src.loc, "keyboard", 25, TRUE, -15)
 			. = TRUE
