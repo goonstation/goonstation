@@ -165,6 +165,8 @@
 						var/list/record_to_display = list(
 							"none" = "None",
 							"arrest" = "*Arrest*",
+							"detain" = "*Detain*",
+							"suspect" = "Suspect",
 							"incarcerated" = "Incarcerated",
 							"parolled" = "Parolled",
 							"released" = "Released"
@@ -287,12 +289,16 @@
 
 		.none         {}
 		.arrest       { color: #ff0000; background: #ffeeee; }
+		.detain       { color: #deb41d; background: #ffffbb; }
+		.suspect      { color: #2d302f; background: #ffffbb; }
 		.incarcerated { color: #888800; background: #ffffbb; }
 		.parolled     { color: #339966; background: #bbffdd; }
 		.released     { color: #3366ff; background: #bbddff; }
 		.crimer .active { border: 3px solid black; }
 		.none.active,         .none:hover         { background: #ffffff; color: black; }
 		.arrest.active,       .arrest:hover       { background: #ff0000; color: white; }
+		.detain.active,       .detain:hover       { background: #deb41d; color: white; }
+		.suspect.active,      .suspect:hover      { background: #2d302f; color: white; }
 		.incarcerated.active, .incarcerated:hover { background: #ffff33; color: black; }
 		.parolled.active,     .parolled:hover     { background: #33cc66; color: black; }
 		.released.active,     .released:hover     { background: #3399ff; color: black; }
@@ -618,6 +624,12 @@
 							src.active_record_security["criminal"] = ARREST_STATE_ARREST
 							if (usr && src.active_record_general["name"])
 								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
+						if ("detain")
+							src.active_record_security["criminal"] = ARREST_STATE_DETAIN
+							if (usr && src.active_record_general["name"])
+								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to detain by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
+						if ("suspect")
+							src.active_record_security["criminal"] = ARREST_STATE_SUSPECT
 						if ("incarcerated")
 							src.active_record_security["criminal"] = ARREST_STATE_INCARCERATED
 						if ("parolled")

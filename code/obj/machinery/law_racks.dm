@@ -228,8 +228,6 @@
 		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
 		damage = damage - min(damage,3) //bullet resist
 		if (damage < 1 || istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
-			if(!P.proj_data.silentshot)
-				src.visible_message(SPAN_ALERT("[src] is hit by the [P] but it deflects harmlessly."))
 			return
 
 		src.material_trigger_on_bullet(src, P)
@@ -245,9 +243,6 @@
 				changeHealth(-damage*0.5,P.shooter)
 			if (D_ENERGY)
 				changeHealth(-damage*0.75,P.shooter)
-
-		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	update_icon()
 		var/image/circuit_image = null

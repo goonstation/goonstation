@@ -351,6 +351,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 
 	New()
 		..()
+		src.item_function_flags |= IMMUNE_TO_ACID
 		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
 

@@ -59,7 +59,7 @@
 	var/ircbot_ip = null
 
 	//External server configuration (for central bans etc)
-	var/goonhub_url = null
+	var/goonhub_url = "https://goonhub.com"
 	var/goonhub_api_endpoint = null
 	var/goonhub_api_ip = null
 	var/goonhub_api_token = null
