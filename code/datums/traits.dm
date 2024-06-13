@@ -1151,7 +1151,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "skeletonT"
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
-	points = -2
+	points = -4
 	category = list("species")
 	mutantRace = /datum/mutantrace/skeleton
 
