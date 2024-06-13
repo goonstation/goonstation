@@ -331,11 +331,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.update_body()
 			H.update_clothing()
 
-			// if something changed our scream, instead of overwriting it go yell at whoever did it instead
-			H.sound_scream = H.sound_scream || screamsounds[screamsound || "male"]
-			// if something changed our fart, instead of overwriting it go yell at whoever did it instead
-			H.sound_fart = H.sound_fart || fartsounds[fartsound || "default"]
-
 			H.voice_type = voicetype || RANDOM_HUMAN_VOICE
 
 			if (H.mutantrace.voice_override)
