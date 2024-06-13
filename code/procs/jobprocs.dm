@@ -429,7 +429,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 			logTheThing(LOG_STATION, src, "has the Party Animal trait and has finished iterating through spots.")
 
-			if(!joined_late) // We got special late-join handling
+			if(!joined_late && length(valid_stools) > 0) // We got special late-join handling
 				var/obj/stool/stool = pick(valid_stools)
 				if (stool)
 					var/list/spawn_range = orange(1, get_turf(stool)) // Skip the actual stool
@@ -847,6 +847,7 @@ var/list/trinket_safelist = list(
 	/obj/item/instrument/vuvuzela,
 	/obj/item/wrench,
 	/obj/item/device/light/zippo,
+	/obj/item/device/speech_pro,
 	/obj/item/reagent_containers/food/drinks/bottle/beer,
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,
 	/obj/item/reagent_containers/food/drinks/bottle/vodka,

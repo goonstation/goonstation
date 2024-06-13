@@ -2173,7 +2173,7 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
+					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Inspector")))
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19

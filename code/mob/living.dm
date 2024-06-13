@@ -37,6 +37,7 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
+	var/has_offline_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
@@ -2075,7 +2076,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
+		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))

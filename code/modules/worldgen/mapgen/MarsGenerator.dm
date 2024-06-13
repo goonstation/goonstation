@@ -56,6 +56,7 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	var/floor_only_biome = /datum/biome/mars
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
 	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/mars
 
@@ -87,6 +88,8 @@
 		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area/duststorm
 		)
 	)
+	floor_only_biome = /datum/biome/mars/duststorm
+	floor_turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -103,7 +106,9 @@
 		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
 
 		var/datum/biome/selected_biome
-		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
+		if(flags & MAPGEN_FLOOR_ONLY)
+			selected_biome = floor_only_biome
+		else if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
 			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
 			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH

@@ -26,23 +26,25 @@ LOG_GAMEMODE
 # default probability is 1, increase to make that mode more likely to be picked
 # set to 0 to disable that mode
 PROBABILITY BLOB 4
-PROBABILITY CHANGELING 6
+PROBABILITY CHANGELING 5
 PROBABILITY DISASTER 0
 PROBABILITY EXTENDED 0
-PROBABILITY MIXED 4
-PROBABILITY MIXED_RP 4
+PROBABILITY MIXED 8
+PROBABILITY MIXED_RP 5
 PROBABILITY NUCLEAR 6
 PROBABILITY REVOLUTION 5
 PROBABILITY SANDBOX 0
 PROBABILITY TRAITOR 20
-PROBABILITY VAMPIRE 6
+PROBABILITY VAMPIRE 5
 PROBABILITY WALDO 0
-PROBABILITY WIZARD 6
-PROBABILITY GANG 4
+PROBABILITY WIZARD 1
+PROBABILITY GANG 5
 PROBABILITY SPY 0
 PROBABILITY CONSTRUCTION 0
 PROBABILITY CONSPIRACY 0
 PROBABILITY SPY_THEFT 5
+PROBABILITY ARCFIEND 3
+PROBABILITY SALVAGER 0
 
 # these represent what % of total rounds a player should play as antag x
 # so for example, TRAITOR 10 means "players should be chosen for traitor in 10% of their traitor-eligible rounds played"
@@ -64,6 +66,8 @@ PLAY_ANTAG WEREWOLF 10
 PLAY_ANTAG WIZARD 10
 PLAY_ANTAG WRAITH 10
 PLAY_ANTAG WRESTLER 10
+PLAY_ANTAG ARCFIEND 10
+PLAY_ANTAG SALVAGER 10
 
 # The minimum amount of "ready" players required for a specific round type
 BLOB_MIN_PLAYERS 15
@@ -88,5 +92,29 @@ CDN https://cdn-main1.goonhub.com
 RSC https://cdn-main1.goonhub.com/rsc.zip
 ENV dev
 
-# Spacebee API
-SPACEBEE_API_URL https://spacebee.goonhub.com
+# If the server should check for an updated .dmb file
+# UPDATE_CHECK_ENABLED
+
+# medals
+# MEDALHUB Slurm.GoonStationMedals
+# MEDALPASS
+
+# goonhub api
+GOONHUB_URL https://goonhub.com
+# GOONHUB_API_ENDPOINT https://goonhub.com/api
+# GOONHUB_API_IP
+# GOONHUB_API_TOKEN
+
+# Goonhub Redis Events Serv
+# GOONHUB_EVENTS_ENDPOINT
+# GOONHUB_EVENTS_PORT 63780
+# GOONHUB_EVENTS_CHANNEL events
+# GOONHUB_EVENTS_PASSWORD
+
+# ircbot
+# IRCLOG_URL https://medass.pali.link
+# IRCBOT_API
+# IRCBOT_IP
+
+# list of people that can access ~stuff~ that in turn allows access to the server filesystem. space delimited
+# SERVER_AUTHORIZED somepotato wirewraith

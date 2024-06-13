@@ -2259,7 +2259,7 @@ datum
 			transparency = 77
 			taste = "hot"
 			addiction_prob = 0.1 // heh
-			addiction_min = 2
+			addiction_min = 7.5
 			max_addiction_severity = "LOW"
 			//penetrates_skin = 1
 			viscosity = 0.2
@@ -2649,8 +2649,6 @@ datum
 			taste = "herbal"
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 0.01
-			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
 			caffeine_content = 0.2
 			var/list/flushed_reagents = list("toxin","toxic_slurry")
@@ -2684,8 +2682,6 @@ datum
 			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 0.02
-			addiction_min = 10
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -4799,8 +4795,6 @@ datum
 			thirst_value = 1
 			bladder_value = 0.04
 			energy_value = 0.04
-			addiction_prob = 0.02
-			addiction_min = 10
 			var/list/flushed_reagents = list("cholesterol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
