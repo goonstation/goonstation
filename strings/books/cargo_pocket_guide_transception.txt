@@ -6,7 +6,7 @@
 		<hr>
 		<h3>OPERATE THE TRANSCEPTION ARRAY</h3>
 		<br>
-		As you are stationed at the Nadir Extraction Site, the conventional mass-driver cargo system used by most other Nanotrasen facilities is unavailable due to the corrosive conditions on-site. Cargo is instead sent and received by transception array.
+		As you are stationed at an underwater planet site, the conventional mass-driver cargo system used by most other Nanotrasen facilities is unavailable due to the difficulty of sending crates through oceans of liquid. Cargo is instead sent and received by transception array.
 		<br>
 		<br>
 		Transception pads and interlink computers are provided to you for the operation of the transception array. Pads must be directly linked by contiguous cable line to the array; interlink computers connect to the pads wirelessly.

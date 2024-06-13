@@ -1,4 +1,4 @@
-///Station's transception anrray, used for cargo I/O operations on maps that include one
+///Station's transception array, used for cargo I/O operations on maps that include one
 var/global/obj/machinery/communications_dish/transception/transception_array
 
 //Cost to "kick-start" a transception, charged against area APC in cell units of power

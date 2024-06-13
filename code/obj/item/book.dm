@@ -92,8 +92,8 @@ Custom Books
 	quartermaster
 		name = "Cargo Pocket Guide"
 		icon_state = "cargoguide"
-#ifdef MAP_OVERRIDE_NADIR
-		file_path = "strings/books/cargo_pocket_guide_nadir.txt"
+#ifdef CARGO_TRANSCEPTION
+		file_path = "strings/books/cargo_pocket_guide_transception.txt"
 #else
 		file_path = "strings/books/cargo_pocket_guide.txt"
 #endif

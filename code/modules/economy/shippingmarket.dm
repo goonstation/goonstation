@@ -661,8 +661,7 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-	//NADIR: Transception antenna cargo I/O
-#ifdef MAP_OVERRIDE_NADIR
+#ifdef CARGO_TRANSCEPTION
 	proc/receive_crate(atom/movable/shipped_thing)
 
 		pending_crates.Add(shipped_thing)

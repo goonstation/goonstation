@@ -46,9 +46,11 @@
 #define UNDERWATER_MAP 1
 #define SCIENCE_PATHO_MAP 1
 #define HOTSPOTS_ENABLED 1
+#define CARGO_TRANSCEPTION 1
 
 #elif defined(MAP_OVERRIDE_NADIR)
 #define UNDERWATER_MAP 1
+#define CARGO_TRANSCEPTION 1
 
 // Non rotation
 #elif defined(MAP_OVERRIDE_MANTA)
