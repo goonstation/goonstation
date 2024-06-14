@@ -12,7 +12,7 @@
 	material_amt = 0.1
 
 	proc/rackbreak()
-		icon_state += "-broken"
+		src.icon_state = initial(src.icon_state) + "-broken"
 		src.set_density(0)
 
 /obj/rack/New()

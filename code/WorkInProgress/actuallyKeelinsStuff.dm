@@ -2262,6 +2262,7 @@ Returns:
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	mouse_opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
@@ -2270,6 +2271,7 @@ Returns:
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
+	mouse_opacity = 0
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
