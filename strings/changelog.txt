@@ -1,4 +1,9 @@
 
+(t)thu jun 13 24
+(u)ZeWaka
+(p)19484
+(e)🚄🔎📄⚙|C-Performance, C-Code-Quality, A-UI, A-Internal
+(*)Internet Explorer 8-10 support has been dropped. Basically nobody should be affected by this.
 (t)wed jun 12 24
 (u)glowbold
 (p)19423
