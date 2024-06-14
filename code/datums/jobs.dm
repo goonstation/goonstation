@@ -71,6 +71,8 @@
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
+	var/rounds_allowed_to_play = 0 //0 by default (which means infinite), set to the amount of rounds they are allowed to have in order to play this, primarily for assistant jobs
+	var/newbee_only = FALSE // in case jobs should only be playable for new players
 	var/map_can_autooverride = TRUE //! Base the initial limit of job slots on the number of map-defined job start locations.
 	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
 	var/uses_character_profile = TRUE
@@ -201,15 +203,20 @@
 				if (cmptext(src.name, string))
 					return TRUE
 
-	proc/has_rounds_needed(datum/player/player)
-		if (!src.rounds_needed_to_play)
+	proc/has_rounds_needed(datum/player/player, var/min = 0, var/max = 0)
+		if (src.rounds_needed_to_play)
+			min = src.rounds_needed_to_play
+		if (src.rounds_allowed_to_play)
+			max = src.rounds_allowed_to_play
+		if (!min || !max)
 			return TRUE
+
 		var/round_num = player.get_rounds_participated()
 		if (isnull(round_num)) //fetch failed, assume they're allowed because everything is probably broken right now
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > src.rounds_needed_to_play)
+		if (round_num > min && round_num <= max)
 			return TRUE
 		return FALSE
 
@@ -258,7 +265,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
-	rounds_needed_to_play = 30
+	rounds_needed_to_play = ROUNDS_REQ_CAPTAIN
 
 	derelict
 		//name = "NT-SO Commander"
@@ -531,7 +538,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
-	rounds_needed_to_play = 30 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
+	rounds_needed_to_play = ROUNDS_REQ_SECURITY
 	wiki_link = "https://wiki.ss13.co/Security_Officer"
 
 	assistant
@@ -552,7 +559,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_poc1 = list(/obj/item/storage/security_pouch/assistant)
 		slot_poc2 = list(/obj/item/requisition_token/security/assistant)
 		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
-		rounds_needed_to_play = 5
+		rounds_needed_to_play = ROUNDS_REQ_SECASS
 		wiki_link = "https://wiki.ss13.co/Security_Assistant"
 
 	derelict
@@ -595,7 +602,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 	map_can_autooverride = FALSE
-	rounds_needed_to_play = 15 // Half of sec, please stop shooting people with lethals
+	rounds_needed_to_play = ROUNDS_REQ_DETECTIVE
 	wiki_link = "https://wiki.ss13.co/Detective"
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -685,23 +692,13 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
 	wiki_link = "https://wiki.ss13.co/Scientist"
 
-	New()
-		..()
-		src.access = get_access("Scientist")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.traitHolder.addTrait("training_scientist")
-
 /datum/job/research/research_assistant
 	name = "Research Assistant"
 	limit = 2
 	wages = PAY_UNTRAINED
-	trait_list = list("training_scientist")
-	access_string = "Research Assistant"
+	access_string = "Scientist"
+	rounds_allowed_to_play = ROUNDS_MAX_RESASS
+	newbee_only = TRUE
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_ears = list(/obj/item/device/radio/headset/research)
@@ -752,7 +749,9 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Medical Assistant"
 	limit = 2
 	wages = PAY_UNTRAINED
-	access_string = "Medical Assistant"
+	access_string = "Medical Doctor"
+	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
+	newbee_only = TRUE
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
@@ -859,7 +858,9 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	name = "Technical Assistant"
 	limit = 2
 	wages = PAY_UNTRAINED
-	access_string = "Technical Assistant"
+	access_string = "Engineer"
+	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
+	newbee_only = TRUE
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)

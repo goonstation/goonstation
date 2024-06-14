@@ -1383,6 +1383,13 @@ var/list/removed_jobs = list(
 					src.job_favorite = null
 				else
 					print_the_job = TRUE
+			else if (J_Fav.newbee_only && (user.client && user.client.player))
+				if (!user.client.player.is_newbee)
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> That job is only for new players! You're not a newbee anymore. They grow up so fast...</b>"))
+					src.jobs_unwanted += J_Fav.name
+					src.job_favorite = null
+				else
+					print_the_job = TRUE
 			else
 				print_the_job = TRUE
 			if (print_the_job)

@@ -115,6 +115,8 @@ var/datum/job_controller/job_controls
 
 		if (!job.has_rounds_needed(player.client.player))
 			return
+		if (job.newbee_only && !player.is_newbee)
+			return
 		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			return
 		if (job.requires_whitelist && !NT.Find(ckey(player.mind.key)))
