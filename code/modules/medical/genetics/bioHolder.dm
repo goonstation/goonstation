@@ -340,7 +340,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// The hair style / detail thing that gets displayed on your spaceperson
 	var/datum/customization_style/style = new /datum/customization_style/hair/short/short
 	/// The hair style / detail thing that was set by the player in their settings
-	var/style_original = "None"
+	var/datum/customization_style/style_original = new /datum/customization_style/none
 	/// The Y offset to display this image
 	var/offset_y = 0
 

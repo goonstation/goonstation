@@ -747,11 +747,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						SPAN_NOTICE("You [cut] [M]'s hair."))
 					switch(which_part)
 						if (BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customizations[1].style = new_style
+							M.bioHolder.mobAppearance.customizations[3].style = new_style
 						if (MIDDLE_DETAIL)
 							M.bioHolder.mobAppearance.customizations[2].style = new_style
 						if (TOP_DETAIL)
-							M.bioHolder.mobAppearance.customizations[3].style = new_style
+							M.bioHolder.mobAppearance.customizations[1].style = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		M.update_colorful_parts()

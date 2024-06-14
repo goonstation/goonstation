@@ -268,17 +268,17 @@
 
 			// why are we searching these by name? why not by id? - Glamurio
 			if(!istype(src.AH.customizations[1].style, /datum/customization_style))
-				src.AH.customizations[1].style = find_style_by_name(src.AH.customizations[1].style.name, no_gimmick_hair=TRUE)
+				src.AH.customizations[1].style = find_style_by_id(src.AH.customizations[1].style.id, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customizations[2].style, /datum/customization_style))
-				src.AH.customizations[2].style = find_style_by_name(src.AH.customizations[2].style.name, no_gimmick_hair=TRUE)
-			if(!istype(src.AH.customizations[3], /datum/customization_style))
-				src.AH.customizations[3].style = find_style_by_name(src.AH.customizations[3].style.name, no_gimmick_hair=TRUE)
+				src.AH.customizations[2].style = find_style_by_id(src.AH.customizations[2].style.id, no_gimmick_hair=TRUE)
+			if(!istype(src.AH.customizations[3].style, /datum/customization_style))
+				src.AH.customizations[3].style = find_style_by_id(src.AH.customizations[3].style.id, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customizations[1].style_original, /datum/customization_style))
-				src.AH.customizations[1].style_original = find_style_by_name(src.AH.customizations[1].style_original, no_gimmick_hair=TRUE)
+				src.AH.customizations[1].style_original = find_style_by_id(src.AH.customizations[1].style_original.id, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customizations[2].style_original, /datum/customization_style))
-				src.AH.customizations[2].style_original = find_style_by_name(src.AH.customizations[2].style_original, no_gimmick_hair=TRUE)
+				src.AH.customizations[2].style_original = find_style_by_id(src.AH.customizations[2].style_original, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customizations[3].style_original, /datum/customization_style))
-				src.AH.customizations[3].style_original = find_style_by_name(src.AH.customizations[3].style_original, no_gimmick_hair=TRUE)
+				src.AH.customizations[3].style_original = find_style_by_id(src.AH.customizations[3].style_original.id, no_gimmick_hair=TRUE)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite
