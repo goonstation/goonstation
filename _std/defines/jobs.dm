@@ -62,6 +62,6 @@
 #define ROUNDS_REQ_SECASS 5
 
 // Job round maximum (for newbees)
-#define ROUNDS_MAX_RESASS 30 // setting these to be the same amount as SecOff / Captain
-#define ROUNDS_MAX_MEDASS 30
-#define ROUNDS_MAX_TECHASS 30
+#define ROUNDS_MAX_RESASS 75 // setting these to be the same amount as SecOff / Captain
+#define ROUNDS_MAX_MEDASS 75
+#define ROUNDS_MAX_TECHASS 75

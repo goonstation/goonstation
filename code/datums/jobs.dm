@@ -698,7 +698,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	wages = PAY_UNTRAINED
 	access_string = "Scientist"
 	rounds_allowed_to_play = ROUNDS_MAX_RESASS
-	newbee_only = TRUE
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_ears = list(/obj/item/device/radio/headset/research)
@@ -751,7 +750,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	wages = PAY_UNTRAINED
 	access_string = "Medical Doctor"
 	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
-	newbee_only = TRUE
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
@@ -860,7 +858,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_UNTRAINED
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
-	newbee_only = TRUE
 	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
