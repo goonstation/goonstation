@@ -46,7 +46,7 @@ export const GroupingTag = (props: ClothingBoothGroupingTagsData) => {
   return (
     <Box
       className={'clothingbooth__groupingtag'}
-      color={colour && colour}
+      color={!!colour && colour}
       style={{ border: `0.0835rem solid ${colour ? colour : 'currentColor'}` }}
       px={0.5}>
       {name}
