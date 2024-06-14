@@ -409,7 +409,7 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if(!can_act(user) || !in_interact_range(target, user))
+		if(!can_act(user) || !in_interact_range(target, user) || GB.status & (NOPOWER | BROKEN))
 			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE

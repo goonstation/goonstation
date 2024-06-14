@@ -24,31 +24,6 @@
 
   type ByondType = {
     /**
-     * True if javascript is running in BYOND.
-     */
-    IS_BYOND: boolean;
-
-    /**
-     * True if browser is IE8 or lower.
-     */
-    IS_LTE_IE8: boolean;
-
-    /**
-     * True if browser is IE9 or lower.
-     */
-    IS_LTE_IE9: boolean;
-
-    /**
-     * True if browser is IE10 or lower.
-     */
-    IS_LTE_IE10: boolean;
-
-    /**
-     * True if browser is IE11 or lower.
-     */
-    IS_LTE_IE11: boolean;
-
-    /**
      * Makes a BYOND call.
      *
      * If path is empty, this will trigger a Topic call.
