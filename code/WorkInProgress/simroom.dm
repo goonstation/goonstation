@@ -298,6 +298,7 @@
 	return
 
 /obj/machinery/sim/vr_bed/MouseDrop_T(mob/living/target, mob/user)
+	if (BOUNDS_DIST(user, src) > 0 || !in_interact_range(src,user)) return
 	if (target == user)
 		move_inside()
 
