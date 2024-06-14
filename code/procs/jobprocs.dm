@@ -847,6 +847,7 @@ var/list/trinket_safelist = list(
 	/obj/item/instrument/vuvuzela,
 	/obj/item/wrench,
 	/obj/item/device/light/zippo,
+	/obj/item/device/speech_pro,
 	/obj/item/reagent_containers/food/drinks/bottle/beer,
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,
 	/obj/item/reagent_containers/food/drinks/bottle/vodka,
