@@ -82,6 +82,12 @@
 	icon_override = "head"
 	icon_tooltip = "Head of Staff"
 
+/obj/item/device/radio/headset/command/inspector
+	name = "inspector's headset"
+	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
+	icon_override = "inspector"
+	icon_tooltip = "Inspector"
+
 /obj/item/device/radio/headset/command/ai
 	name = "\improper AI headset"
 	desc = "A radio headset capable of communicating over additional, secure frequencies. This one seems designed for an AI."

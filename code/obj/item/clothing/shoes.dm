@@ -432,6 +432,12 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	desc = "This pair of leather boots has seen better days."
 	icon_state = "detective"
 
+/obj/item/clothing/shoes/inspector
+	name = "inspector's boots"
+	icon_state = "inspector"
+	item_state = "inspector"
+	desc = "This pair of boots has seen many awful stations."
+
 /obj/item/clothing/shoes/chef
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
