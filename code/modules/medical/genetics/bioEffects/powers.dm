@@ -542,13 +542,13 @@
 		if (H.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = H.bioHolder.mobAppearance
 
-			var/col1 = AHs.customization_first_color
-			var/col2 = AHs.customization_second_color
-			var/col3 = AHs.customization_third_color
+			var/col1 = AHs.customizations[1].color
+			var/col2 = AHs.customizations[2].color
+			var/col3 = AHs.customizations[3].color
 
-			AHs.customization_first_color = col3
-			AHs.customization_second_color = col1
-			AHs.customization_third_color = col2
+			AHs.customizations[1].color = col3
+			AHs.customizations[2].color = col1
+			AHs.customizations[3].color = col2
 
 			H.visible_message(SPAN_NOTICE("<b>[H.name]</b>'s hair changes colors!"))
 			H.update_colorful_parts()

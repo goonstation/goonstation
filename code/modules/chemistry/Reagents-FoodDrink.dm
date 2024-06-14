@@ -611,9 +611,9 @@ datum
 					return
 
 				if (probmult(8) && (M.gender == "male"))
-					if (M.bioHolder.mobAppearance.customization_second.id != "gt" && M.bioHolder.mobAppearance.customization_second.id != "neckbeard" && M.bioHolder.mobAppearance.customization_second.id != "fullbeard" && M.bioHolder.mobAppearance.customization_second.id != "longbeard")
+					if (M.bioHolder.mobAppearance.customizations[2].style.id != "gt" && M.bioHolder.mobAppearance.customizations[2].style.id != "neckbeard" && M.bioHolder.mobAppearance.customizations[2].style.id != "fullbeard" && M.bioHolder.mobAppearance.customizations[2].style.id != "longbeard")
 						var/second_type = pick(/datum/customization_style/beard/gt,/datum/customization_style/beard/neckbeard,/datum/customization_style/beard/fullbeard,/datum/customization_style/beard/longbeard)
-						M.bioHolder.mobAppearance.customization_second = new second_type
+						M.bioHolder.mobAppearance.customizations[2].style =  new second_type
 						M.set_face_icon_dirty()
 						boutput(M, SPAN_NOTICE("You feel manly!"))
 
@@ -805,10 +805,10 @@ datum
 						logTheThing(LOG_COMBAT, src, "was gibbed by the reagent [name].")
 						H.gib()
 						return
-					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
+					if(H.bioHolder.mobAppearance.customizations[1].style.id != "dreads" || H.bioHolder.mobAppearance.customizations[2].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
-						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+						H.bioHolder.mobAppearance.customizations[1].style = new /datum/customization_style/hair/long/dreads
+						H.bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")
 

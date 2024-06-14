@@ -51,6 +51,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
 
+	// It's probably smarter to have customizations in a list to iterate over for later - Glamurio
+	var/list/datum/customizationHolder/customizations = list(
+		new /datum/customizationHolder/first,
+		new /datum/customizationHolder/second,
+		new /datum/customizationHolder/third,
+	)
+
 	/// Currently changes which sprite sheet is used
 	var/special_style
 
@@ -172,6 +179,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		body_icon_state = toCopy.body_icon_state
 
 		CopyOtherHeadAppearance(toCopy)
+		CopyOtherCustomizationAppearance(toCopy)
 
 		mob_detail_1_icon = toCopy.mob_detail_1_icon
 		mob_detail_1_state = toCopy.mob_detail_1_state
@@ -238,6 +246,19 @@ var/list/datum/bioEffect/mutini_effects = list()
 		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
 		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
+	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
+		if (!src.CanCopyCustomization(toCopy))
+			return
+
+		for(var/i in 1 to length(src.customizations))
+			var/datum/customizationHolder/custom = src.customizations[i]
+			var/datum/customizationHolder/customCopy = toCopy.customizations[i]
+			custom.color_original = customCopy.color_original
+			custom.color = customCopy.color
+			custom.style_original = customCopy.style_original
+			custom.style = customCopy.style
+			custom.offset_y = customCopy.offset_y
+
 	disposing()
 		owner = null
 		if(src.parentHolder)
@@ -248,6 +269,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
+	// I might have messed this up when introducting customizationHolders - Glamurio
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
@@ -261,12 +283,31 @@ var/list/datum/bioEffect/mutini_effects = list()
 			mutant_race = toCopy.mutant_race
 			original_mutant_race = toCopy.original_mutant_race
 
+		if (progress >= 9 || prob(progress * 10))
+
+			for(var/i in 1 to length(src.customizations))
+				if (!src.CanCopyCustomization(toCopy))
+					continue
+				var/datum/customizationHolder/custom = src.customizations[i]
+				var/datum/customizationHolder/customCopy = toCopy.customizations[i]
+
+				custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
+				custom.style = customCopy.style
+
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.update_colorful_parts()
 		return
+
+	proc/CanCopyCustomization(var/datum/appearanceHolder/toCopy)
+		if (!length(src.customizations) > 0 || !length(toCopy.customizations) > 0)
+			logTheThing(LOG_DEBUG, null, {"<b>Customizations:</b> Tried to copy customization [!length(src.customizations) > 0 ? "from" : "to"]
+			 [toCopy.owner ? "\ref[toCopy.owner] [toCopy.owner.name]" : "*NULL*"] to [src.owner ? "\ref[src.owner] [src.owner.name]" : "*NULL*"],
+			but the holder we are copying [!length(src.customizations) > 0 ? "to" : "from"] has no customizations!"})
+			return FALSE
+		return TRUE
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
@@ -292,53 +333,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /// Holds all the customization information.
 /datum/customizationHolder
-	var/mob/owner = null
-
-	// It's probably smarter to have customizations in a list to iterate over for later - Glamurio
-	var/list/datum/customization/customizations = list(
-		new /datum/customization/first,
-		new /datum/customization/second,
-		new /datum/customization/third,
-	)
-
-	proc/CanCopyCustomization(var/datum/customizationHolder/toCopy)
-		if (!length(src.customizations) > 0 || !length(toCopy.customizations) > 0)
-			logTheThing(LOG_DEBUG, null, {"<b>Customizations:</b> Tried to copy customization [!length(src.customizations) > 0 ? "from" : "to"]
-			 [toCopy.owner ? "\ref[toCopy.owner] [toCopy.owner.name]" : "*NULL*"] to [src.owner ? "\ref[src.owner] [src.owner.name]" : "*NULL*"],
-			but the holder we are copying [!length(src.customizations) > 0 ? "to" : "from"] has no customizations!"})
-			return FALSE
-		return TRUE
-
-	proc/CopyOtherCustomizationAppearance(var/datum/customizationHolder/toCopy)
-		if (!src.CanCopyCustomization(toCopy))
-			return
-		var/maxCopies = length(toCopy.customizations)
-		for(var/i in 1 to length(src.customizations))
-			var/datum/customization/custom = src.customizations[i]
-			var/datum/customization/customCopy = toCopy.customizations[i]
-			custom.color_original = customCopy.color_original
-			custom.color = customCopy.color
-			custom.style_original = customCopy.style_original
-			custom.style = customCopy.style
-			custom.offset_y = customCopy.offset_y
-
-	// This is weird to migrate and I'm not sure if it's right
-	proc/StaggeredCopyOther(var/datum/customizationHolder/toCopy, var/progress = 1)
-		if (!src.CanCopyCustomization(toCopy))
-			return
-
-		for(var/i in 1 to length(src.customizations))
-			var/adjust_denominator = 11 - progress
-			var/datum/customization/custom = src.customizations[i]
-			var/datum/customization/customCopy = toCopy.customizations[i]
-
-			custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
-
-			if (progress >= 9 || prob(progress * 10))
-				custom.style = customCopy.style
-
-/// Datum that determines the customization.
-/datum/customization
 	/// The color that gets used for determining your colors
 	var/color = "#101010"
 	/// The color that was set by the player's preferences

@@ -2816,9 +2816,9 @@
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 
 	var/hair_list = list()
-	hair_list[src.bioHolder.mobAppearance.customization_first.id] = src.bioHolder.mobAppearance.customization_first_color
-	hair_list[src.bioHolder.mobAppearance.customization_second.id] = src.bioHolder.mobAppearance.customization_second_color
-	hair_list[src.bioHolder.mobAppearance.customization_third.id] = src.bioHolder.mobAppearance.customization_third_color
+	hair_list[src.bioHolder.mobAppearance.customizations[1].style.id] = src.bioHolder.mobAppearance.customizations[1].color
+	hair_list[src.bioHolder.mobAppearance.customizations[2].style.id] = src.bioHolder.mobAppearance.customizations[2].color
+	hair_list[src.bioHolder.mobAppearance.customizations[3].style.id] = src.bioHolder.mobAppearance.customizations[3].color
 
 	W.setup_wig(hair_list)
 

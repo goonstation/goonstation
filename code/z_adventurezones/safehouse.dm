@@ -93,12 +93,12 @@
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
 		bioHolder.ownerType = src.type
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/moustache/vandyke
-		bioHolder.mobAppearance.customization_first_color = "#241200"
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_second_color = "#241200"
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_third_color = "#241200"
+		bioHolder.mobAppearance.customizations[1].style =  new /datum/customization_style/moustache/vandyke
+		bioHolder.mobAppearance.customizations[1].color = "#241200"
+		bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations[2].color = "#241200"
+		bioHolder.mobAppearance.customizations[3].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations[3].color = "#241200"
 		bioHolder.mobAppearance.e_color = "#363978"
 		bioHolder.mobAppearance.s_tone = "#FFCC99"
 		bioHolder.age = 52

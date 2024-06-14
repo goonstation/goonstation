@@ -74,6 +74,9 @@ var/list/removed_jobs = list(
 	var/pda_ringtone_index = "Two-Beep"
 
 	var/datum/appearanceHolder/AH = new
+	var/datum/customizationHolder/customization_first = new
+	var/datum/customizationHolder/customization_second = new
+	var/datum/customizationHolder/customization_third = new
 
 	var/datum/movable_preview/character/preview = null
 
@@ -235,12 +238,12 @@ var/list/removed_jobs = list(
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
-			"customColor1" = src.AH.customization_first_color,
-			"customStyle1" = src.AH.customization_first.name,
-			"customColor2" = src.AH.customization_second_color,
-			"customStyle2" = src.AH.customization_second.name,
-			"customColor3" = src.AH.customization_third_color,
-			"customStyle3" = src.AH.customization_third.name,
+			"customColor1" = src.customization_first.color,
+			"customStyle1" = src.customization_first.style.name,
+			"customColor2" = src.customization_second.color,
+			"customStyle2" = src.customization_second.style.name,
+			"customColor3" = src.customization_third.color,
+			"customStyle3" = src.customization_third.style.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
 			"randomAppearance" = src.be_random_look,
@@ -698,22 +701,22 @@ var/list/removed_jobs = list(
 				var/current_color
 				switch (params["id"])
 					if ("custom1")
-						current_color = src.AH.customization_first_color
+						current_color = src.customization_first.color
 					if ("custom2")
-						current_color = src.AH.customization_second_color
+						current_color = src.customization_second.color
 					if ("custom3")
-						current_color = src.AH.customization_third_color
+						current_color = src.customization_third.color
 					if ("underwear")
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first_color = new_color
+							src.customization_first.color = new_color
 						if ("custom2")
-							src.AH.customization_second_color = new_color
+							src.customization_second.color = new_color
 						if ("custom3")
-							src.AH.customization_third_color = new_color
+							src.customization_third.color = new_color
 						if ("underwear")
 							src.AH.u_color = new_color
 					src.update_preview_icon()
@@ -730,11 +733,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first = new_style
+							src.customization_first.style = new_style
 						if ("custom2")
-							src.AH.customization_second = new_style
+							src.customization_second.style = new_style
 						if ("custom3")
-							src.AH.customization_third = new_style
+							src.customization_third.style = new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -749,11 +752,11 @@ var/list/removed_jobs = list(
 
 				switch (params["id"])
 					if ("custom1")
-						current_style = src.AH.customization_first.type
+						current_style = src.customization_first.style.type
 					if ("custom2")
-						current_style = src.AH.customization_second.type
+						current_style = src.customization_second.style.type
 					if ("custom3")
-						current_style = src.AH.customization_third.type
+						current_style = src.customization_third.style.type
 					if ("underwear")
 						current_style = src.AH.underwear
 
@@ -778,11 +781,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first = new new_style
+							src.customization_first.style = new new_style
 						if ("custom2")
-							src.AH.customization_second = new new_style
+							src.customization_second.style = new new_style
 						if ("custom3")
-							src.AH.customization_third = new new_style
+							src.customization_third.style = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -981,14 +984,14 @@ var/list/removed_jobs = list(
 				src.AH.gender = MALE
 				src.randomize_name()
 
-				src.AH.customization_first = new /datum/customization_style/hair/short/short
-				src.AH.customization_second = new /datum/customization_style/none
-				src.AH.customization_third = new /datum/customization_style/none
+				src.customization_first.style = new /datum/customization_style/hair/short/short
+				src.customization_second.style = new /datum/customization_style/none
+				src.customization_third.style = new /datum/customization_style/none
 				src.AH.underwear = "No Underwear"
 
-				src.AH.customization_first_color = initial(src.AH.customization_first_color)
-				src.AH.customization_second_color = initial(src.AH.customization_second_color)
-				src.AH.customization_third_color = initial(src.AH.customization_third_color)
+				src.customization_first.color = initial(src.customization_first.color)
+				src.customization_second.color = initial(src.customization_second.color)
+				src.customization_third.color = initial(src.customization_third.color)
 				src.AH.e_color = "#101010"
 				src.AH.u_color = "#FEFEFE"
 
@@ -1856,18 +1859,18 @@ var/list/removed_jobs = list(
 			src.AH = new
 		if (src.AH.gender != src.gender)
 			src.AH.gender = src.gender
-		if (src.AH.customization_first_color == null)
-			src.AH.customization_first_color = "#101010"
-		if (src.AH.customization_first == null)
-			src.AH.customization_first = new  /datum/customization_style/none
-		if (src.AH.customization_second_color == null)
-			src.AH.customization_second_color = "#101010"
-		if (src.AH.customization_second == null)
-			src.AH.customization_second = new /datum/customization_style/none
-		if (src.AH.customization_third_color == null)
-			src.AH.customization_third_color = "#101010"
-		if (src.AH.customization_third == null)
-			src.AH.customization_third = new /datum/customization_style/none
+		if (src.customization_first.color == null)
+			src.customization_first.color = "#101010"
+		if (src.customization_first.style == null)
+			src.customization_first.style = new  /datum/customization_style/none
+		if (src.customization_second.color == null)
+			src.customization_second.color = "#101010"
+		if (src.customization_second.style == null)
+			src.customization_second.style = new /datum/customization_style/none
+		if (src.customization_third.color == null)
+			src.customization_third.color = "#101010"
+		if (src.customization_third.style == null)
+			src.customization_third.style = new /datum/customization_style/none
 		if (src.AH.e_color == null)
 			src.AH.e_color = "#101010"
 		if (src.AH.u_color == null)

@@ -72,14 +72,14 @@
 		if (src.AH)
 			F["[profileNum]_pronouns"] << (isnull(AH.pronouns) ? "" : AH.pronouns.name)
 			F["[profileNum]_eye_color"] << AH.e_color
-			F["[profileNum]_hair_color"] << AH.customization_first_color
-			F["[profileNum]_facial_color"] << AH.customization_second_color
-			F["[profileNum]_detail_color"] << AH.customization_third_color
+			F["[profileNum]_hair_color"] << AH.customizations[1].color
+			F["[profileNum]_facial_color"] << AH.customizations[2].color
+			F["[profileNum]_detail_color"] << AH.customizations[3].color
 			F["[profileNum]_skin_tone"] << AH.s_tone
 			F["[profileNum]_special_style"] << AH.special_style
-			F["[profileNum]_hair_style_name"] << AH.customization_first
-			F["[profileNum]_facial_style_name"] << AH.customization_second
-			F["[profileNum]_detail_style_name"] << AH.customization_third
+			F["[profileNum]_hair_style_name"] << AH.customizations[1].style
+			F["[profileNum]_facial_style_name"] << AH.customizations[2].style
+			F["[profileNum]_detail_style_name"] << AH.customizations[3].style
 			F["[profileNum]_underwear_style_name"] << AH.underwear
 			F["[profileNum]_underwear_color"] << AH.u_color
 
@@ -248,35 +248,37 @@
 					AH.pronouns = pronouns
 					break
 			F["[profileNum]_eye_color"] >> AH.e_color
-			F["[profileNum]_hair_color"] >> AH.customization_first_color
-			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
-			F["[profileNum]_facial_color"] >> AH.customization_second_color
-			F["[profileNum]_facial_color"] >> AH.customization_second_color_original
-			F["[profileNum]_detail_color"] >> AH.customization_third_color
-			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
+			F["[profileNum]_hair_color"] >> AH.customizations[1].color
+			F["[profileNum]_hair_color"] >> AH.customizations[1].color_original
+			F["[profileNum]_facial_color"] >> AH.customizations[2].color
+			F["[profileNum]_facial_color"] >> AH.customizations[2].color_original
+			F["[profileNum]_detail_color"] >> AH.customizations[3].color
+			F["[profileNum]_detail_color"] >> AH.customizations[3].color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
 			F["[profileNum]_skin_tone"] >> AH.s_tone_original
 			F["[profileNum]_special_style"] >> AH.special_style
-			F["[profileNum]_hair_style_name"] >> AH.customization_first
-			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
-			F["[profileNum]_facial_style_name"] >> AH.customization_second
-			F["[profileNum]_facial_style_name"] >> AH.customization_second_original
-			F["[profileNum]_detail_style_name"] >> AH.customization_third
-			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
+			F["[profileNum]_hair_style_name"] >> AH.customizations[1].style
+			F["[profileNum]_hair_style_name"] >> AH.customizations[1].style_original
+			F["[profileNum]_facial_style_name"] >> AH.customizations[2].style
+			F["[profileNum]_facial_style_name"] >> AH.customizations[2].style_original
+			F["[profileNum]_detail_style_name"] >> AH.customizations[3].style
+			F["[profileNum]_detail_style_name"] >> AH.customizations[3].style_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
-			if(!istype(src.AH.customization_first,/datum/customization_style))
-				src.AH.customization_first = find_style_by_name(src.AH.customization_first, no_gimmick_hair=TRUE)
-			if(!istype(src.AH.customization_second,/datum/customization_style))
-				src.AH.customization_second = find_style_by_name(src.AH.customization_second, no_gimmick_hair=TRUE)
-			if(!istype(src.AH.customization_third,/datum/customization_style))
-				src.AH.customization_third = find_style_by_name(src.AH.customization_third, no_gimmick_hair=TRUE)
-			if(!istype(src.AH.customization_first_original,/datum/customization_style))
-				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original, no_gimmick_hair=TRUE)
-			if(!istype(src.AH.customization_second_original,/datum/customization_style))
-				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original, no_gimmick_hair=TRUE)
-			if(!istype(src.AH.customization_third_original,/datum/customization_style))
-				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original, no_gimmick_hair=TRUE)
+
+			// why are we searching these by name? why not by id? - Glamurio
+			if(!istype(src.AH.customizations[1].style, /datum/customization_style))
+				src.AH.customizations[1].style = find_style_by_name(src.AH.customizations[1].style.name, no_gimmick_hair=TRUE)
+			if(!istype(src.AH.customizations[2].style, /datum/customization_style))
+				src.AH.customizations[2].style = find_style_by_name(src.AH.customizations[2].style.name, no_gimmick_hair=TRUE)
+			if(!istype(src.AH.customizations[3], /datum/customization_style))
+				src.AH.customizations[3].style = find_style_by_name(src.AH.customizations[3].style.name, no_gimmick_hair=TRUE)
+			if(!istype(src.AH.customizations[1].style_original, /datum/customization_style))
+				src.AH.customizations[1].style_original = find_style_by_name(src.AH.customizations[1].style_original, no_gimmick_hair=TRUE)
+			if(!istype(src.AH.customizations[2].style_original, /datum/customization_style))
+				src.AH.customizations[2].style_original = find_style_by_name(src.AH.customizations[2].style_original, no_gimmick_hair=TRUE)
+			if(!istype(src.AH.customizations[3].style_original, /datum/customization_style))
+				src.AH.customizations[3].style_original = find_style_by_name(src.AH.customizations[3].style_original, no_gimmick_hair=TRUE)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite
