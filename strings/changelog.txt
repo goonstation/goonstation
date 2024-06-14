@@ -1,4 +1,9 @@
 
+(t)fri jun 14 24
+(u)Azrun
+(p)19503
+(e)⚖🧛💪|C-Balance, A-Gamemodes, A-Traits
+(*)Salvagers no longer receive selected character traits.  They are truly just someone else entirely.
 (t)wed jun 12 24
 (u)glowbold
 (p)19423
