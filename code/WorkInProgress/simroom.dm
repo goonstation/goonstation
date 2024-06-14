@@ -293,7 +293,12 @@
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)
+	playsound(src, 'sound/machines/sleeper_close.ogg', 50, 1)
 	return
+
+/obj/machinery/sim/vr_bed/MouseDrop_T(mob/living/target, mob/user)
+	if (target == user)
+		move_inside()
 
 /obj/machinery/sim/vr_bed/verb/move_eject()
 	set src in oview(1)
@@ -345,6 +350,7 @@
 	src.active = 0
 	src.con_user = null
 	src.UpdateIcon()
+	playsound(src, 'sound/machines/sleeper_open.ogg', 50, 1)
 	return
 
 /obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
