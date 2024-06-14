@@ -86,16 +86,16 @@
 		return
 
 	proc/pre_attack_damage_modifier(obj/item/parent_item, atom/A, mob/user)
-			var/mob/living/carbon/human/human_user = user
-			if(human_user.w_uniform && istype(human_user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
-				//bashing someones skull in with a bowling ball should hurt if you are worthy of the bowling ball
-				src.force = 20
-				src.stamina_damage = 40
-				spawn(1)
-					//Doing this over a spawn should cover all cases where the attack gets cancelled prematurely
-					//which would normally prevent an event-based way for force to be returned to its initial state
-					src.force = initial(src.force)
-					src.stamina_damage = initial(src.stamina_damage)
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.w_uniform && istype(human_user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+			//bashing someones skull in with a bowling ball should hurt if you are worthy of the bowling ball
+			src.force = 20
+			src.stamina_damage = 40
+			spawn(1)
+				//Doing this over a spawn should cover all cases where the attack gets cancelled prematurely
+				//which would normally prevent an event-based way for force to be returned to its initial state
+				src.force = initial(src.force)
+				src.stamina_damage = initial(src.stamina_damage)
 
 /obj/item/armadillo_ball
 	name = "armadillo ball"
