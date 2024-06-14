@@ -1011,7 +1011,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if ("say", "speak")
 				if (!isdead(src.owner))
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
-					data = copytext(data, 1, 46)
+					data = copytext(strip_prefix(data, "*"), 1, 46) // Trim starting asterisks to prevent force-emoting
 					src.owner.say(data)
 				else
 					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
