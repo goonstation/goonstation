@@ -1,4 +1,8 @@
 #define MARIONETTE_IMPLANT_STATUS_BURNED_OUT "BURNED OUT"
+#define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
+#define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
+#define MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY "BADPASS"
+#define MARIONETTE_IMPLANT_ERROR_INVALID "INVALID"
 
 /*
 CONTAINS:
@@ -892,10 +896,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
-#define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
-#define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
-#define MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY "BADPASS"
-#define MARIONETTE_IMPLANT_ERROR_INVALID "INVALID"
 /obj/item/implant/marionette
 	name = "marionette implant"
 	desc = "This thing looks really complicated."
@@ -1104,9 +1104,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
 		src.burned_out = TRUE
 		src.deactivate()
-#undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
-#undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
-#undef MARIONETTE_IMPLANT_ERROR_INVALID
 
 
 /obj/item/remote/marionette_implant
@@ -2651,3 +2648,7 @@ TYPEINFO(/obj/item/gun/implanter)
 			src.implanted(H)
 
 #undef MARIONETTE_IMPLANT_STATUS_BURNED_OUT
+#undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
+#undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+#undef MARIONETTE_IMPLANT_ERROR_INVALID
+#undef MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY
