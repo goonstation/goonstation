@@ -1169,8 +1169,10 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			limbs += src.mob.limbs.l_leg?.remove(FALSE)
 			limbs += src.mob.limbs.r_leg?.remove(FALSE)
 
-			for (var/limb in limbs)
-				ThrowRandom(limb, rand(2, 4))
+			for (var/obj/limb in limbs) // You do not know my pain.
+				ThrowRandom(limb, 1)
+
+			ThrowRandom(src.mob, 1)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
@@ -1182,9 +1184,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
-				ThrowRandom(I, rand(1, 3))
-
-			ThrowRandom(src.mob, rand(2, 3))
+				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
 			var/list/organlist = list()
