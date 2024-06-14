@@ -1215,12 +1215,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			. = TRUE
 		else if (action == "set_command")
 			src.selected_command = params["new_command"]
-			playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
+			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
 			. = TRUE
 		else if (action == "remove_from_list")
 			src.implant_status.Remove(params["address"])
 			boutput(usr, SPAN_NOTICE("Implant removed from tracking list."))
-			playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
+			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
 			. = TRUE
 		else
 			var/address = params["address"]
@@ -1235,7 +1235,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				activation_packet.data["command"] = command
 				activation_packet.data["data"] = data
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_packet)
-				playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
+				playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
 				. = TRUE
 			else if ((action == "ping" || action == "ping_all") && !ON_COOLDOWN(src, "do_ping", 2 SECONDS))
 				var/list/to_ping = action == "ping" ? list(address) : src.implant_status
@@ -1256,7 +1256,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						SPAWN (2 SECONDS)
 							if (src.implant_status[implant_to_ping] == "WAITING...")
 								src.implant_status[implant_to_ping] = "NO RESPONSE"
-				playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
+				playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
 				. = TRUE
 
 /obj/item/implant/mindhack/super
