@@ -10,21 +10,56 @@ env:
   browser: true
   node: true
 plugins:
-  - radar
+  - sonarjs
   - react
   - unused-imports
+extends:
+  - 'plugin:sonarjs/recommended-legacy'
 settings:
   react:
     version: '16.10'
 rules:
 
   ## Possible Errors
+  ## ----------- SonarJS Crap ---------------
+  # sonarjs/cognitive-complexity: error
+  # sonarjs/elseif-without-else: error
+  sonarjs/max-switch-cases: error
+  sonarjs/no-all-duplicated-branches: off
+  sonarjs/no-collapsible-if: off
+  sonarjs/no-collection-size-mischeck: error
+  sonarjs/no-duplicate-string: off
+  sonarjs/no-duplicated-branches: off
+  sonarjs/no-element-overwrite: error
+  sonarjs/no-empty-collection: error
+  sonarjs/no-extra-arguments: off
+  sonarjs/no-gratuitous-expressions: error
+  sonarjs/no-identical-conditions: error
+  sonarjs/no-identical-expressions: error
+  sonarjs/no-identical-functions: error
+  sonarjs/no-ignored-return: error
+  sonarjs/no-inverted-boolean-check: error
+  sonarjs/no-nested-switch: error
+  sonarjs/no-nested-template-literals: off
+  sonarjs/no-one-iteration-loop: error
+  sonarjs/no-redundant-boolean: error
+  sonarjs/no-redundant-jump: off
+  sonarjs/no-same-line-conditional: error
+  sonarjs/no-small-switch: off
+  sonarjs/no-unused-collection: error
+  sonarjs/no-use-of-empty-return-value: error
+  sonarjs/no-useless-catch: error
+  sonarjs/non-existent-operator: error
+  sonarjs/prefer-immediate-return: off
+  sonarjs/prefer-object-literal: error
+  sonarjs/prefer-single-boolean-return: error
+  sonarjs/prefer-while: error
   ## ----------------------------------------
   ## Enforce “for” loop update clause moving the counter in the right
   ## direction.
   # for-direction: error
   ## Enforce return statements in getters
-  # getter-return: error
+  # getter-return: errorr
   ## Disallow using an async function as a Promise executor
   no-async-promise-executor: error
   ## Disallow await inside of loops
@@ -650,7 +685,7 @@ rules:
   ## Enforce ES5 or ES6 class for React Components
   react/prefer-es6-class: error
   ## Enforce that props are read-only
-  react/prefer-read-only-props: error
+  # react/prefer-read-only-props: error
   ## Enforce stateless React Components to be written as a pure function
   react/prefer-stateless-function: error
   ## Prevent missing props validation in a React component definition
