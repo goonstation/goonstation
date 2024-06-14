@@ -29,7 +29,7 @@
 			var/obj/racing_clowncar/R = A
 			R.speed = R.base_speed - R.turbo
 			R.drive(R.dir, R.speed)
-			R.AddOverlays(image('icons/mob/robots.dmi', "up-speed"),"boost")
+			R.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
 			SPAWN(1.5 SECONDS)
 				R.speed = R.base_speed
 				if (R.driving) R.drive(R.dir, 2)
@@ -519,6 +519,9 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	var/returndir = null
 	var/turf/returnloc = null
 
+	var/occupant_vis_flags
+	var/cover_state = "kart_blue"
+
 	New()
 		..()
 		returndir = dir
@@ -538,8 +541,14 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		M.set_loc(src)
 		driver = M
-		layer = MOB_EFFECT_LAYER
-		src.AddOverlays(driver,"driver")
+
+		src.vis_contents += driver
+		occupant_vis_flags = driver.vis_flags
+		driver.pixel_x = 0
+		driver.pixel_y = 0
+		driver.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_DIR
+
+		src.AddOverlays(image('icons/misc/racing.dmi', src.cover_state,layer=ABOVE_OBJ_LAYER),"driver_cover")
 		update()
 
 		// setup kart abilities
@@ -576,17 +585,15 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		src.remove_suffixes(" ([driver.name])")
 		src.UpdateName()
+		driver.vis_flags = occupant_vis_flags
+		src.vis_contents -= driver
 		driver = null
 		driving = 0
-		layer = OBJ_LAYER
 		update()
 
 	proc/update()
 		if(!driver)
-			src.ClearSpecificOverlays("driver")
-			icon_state = "kart_blue_u"
-		else
-			icon_state = "kart_blue"
+			src.ClearSpecificOverlays("driver_cover")
 
 	proc/returntoline()
 		if(returnloc)
@@ -607,7 +614,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		else
 			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
 
-		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed"),"boost")
+		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
 		SPAWN(5 SECONDS)
 			speed = base_speed
 			if (driving) drive(dir, speed)
@@ -616,10 +623,4 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 /obj/racing_clowncar/kart/red
 	icon_state = "kart_red_u"
-
-	update()
-		if(!driver)
-			src.ClearSpecificOverlays("driver")
-			icon_state = "kart_red_u"
-		else
-			icon_state = "kart_red"
+	cover_state = "kart_red"
