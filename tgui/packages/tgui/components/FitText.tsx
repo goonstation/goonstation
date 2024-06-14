@@ -18,10 +18,9 @@ export class FitText extends Component<{
   fontSize: number,
 }> {
   ref: RefObject<HTMLDivElement> = createRef();
-
   state = {
     fontSize: 0,
-  };
+  }
 
   constructor() {
     super();
@@ -62,7 +61,7 @@ export class FitText extends Component<{
         end = middle;
       } else if (
         difference
-        < (this.props.acceptableDifference ?? DEFAULT_ACCEPTABLE_DIFFERENCE)
+          < (this.props.acceptableDifference ?? DEFAULT_ACCEPTABLE_DIFFERENCE)
       ) {
         start = middle;
       } else {

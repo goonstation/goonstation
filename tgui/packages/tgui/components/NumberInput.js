@@ -127,7 +127,8 @@ export class NumberInput extends Component {
       else if (this.inputRef) {
         const input = this.inputRef.current;
         input.value = internalValue;
-
+        // IE8: Dies when trying to focus a hidden element
+        // (Error: Object does not support this action)
         try {
           input.focus();
           input.select();
@@ -164,9 +165,11 @@ export class NumberInput extends Component {
     if (dragging || suppressingFlicker) {
       displayValue = intermediateValue;
     }
-
+    // IE8: Use an "unselectable" prop because "user-select" doesn't work.
     const renderContentElement = value => (
-      <div className="NumberInput__content">
+      <div
+        className="NumberInput__content"
+        unselectable={Byond.IS_LTE_IE8}>
         {value + (unit ? ' ' + unit : '')}
       </div>
     );
