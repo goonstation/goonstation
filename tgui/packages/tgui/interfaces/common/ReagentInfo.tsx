@@ -215,7 +215,6 @@ export const ReagentList = (props: ReagentListProps) => {
 
 const reagentCheck = (a: Reagent, b: Reagent): boolean => {
   if (a === b) return false;
-  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
   if (!a
       || !b
       || a.volume !== b.volume
