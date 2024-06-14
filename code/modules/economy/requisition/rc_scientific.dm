@@ -611,6 +611,14 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath = /obj/item/material_piece/cloth/carbon
 	typepath_alt = /obj/item/material_piece/cloth/beewool
 
+	rc_eval(obj/item/eval_item)
+		. = ..()
+		if (.) return
+		if (istype(eval_item, /obj/item/material_piece/cloth))
+			if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
+				rollcount += eval_item.amount
+				. = TRUE
+
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"
 	commodity = /datum/commodity/ore/uqill

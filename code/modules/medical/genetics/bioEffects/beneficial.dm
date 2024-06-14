@@ -559,6 +559,7 @@ var/list/radio_brains = list()
 	degrade_to = "strong"
 	icon_state  = "hulk"
 	var/visible = TRUE
+	var/hulk_skin = "#4CBB17" // a striking kelly green
 
 	OnAdd()
 		owner.unlock_medal("It's not easy being green", 1)
@@ -571,7 +572,6 @@ var/list/radio_brains = list()
 				HAH.customization_second_color_original = HAH.customization_second_color
 				HAH.customization_third_color_original = HAH.customization_third_color
 				HAH.s_tone_original = HAH.s_tone
-				var/hulk_skin = "#4CBB17" // a striking kelly green
 				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
 					hulk_skin = rgb(gray_af, gray_af, gray_af)
@@ -603,10 +603,19 @@ var/list/radio_brains = list()
 	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
+
+		if (ishuman(owner) && src.visible)
+			if(H?.bioHolder?.mobAppearance)
+				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
+				HAH.customization_first_color = "#4F7942" // a pleasant fern green
+				HAH.customization_second_color = "#3F704D" // a bold hunter green
+				HAH.customization_third_color = "#0B6623" // a vibrant forest green
+				HAH.s_tone = hulk_skin
+
 		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1
 			boutput(owner, SPAN_ALERT("You suddenly feel very weak."))
-			H.changeStatus("weakened", 3 SECONDS)
+			H.changeStatus("knockdown", 3 SECONDS)
 			H.emote("collapse")
 
 /datum/bioEffect/hulk/hidden

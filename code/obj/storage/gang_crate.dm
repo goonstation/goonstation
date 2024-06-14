@@ -63,8 +63,8 @@
 	shotguns
 		New()
 			initialize_loot_master(4,4)
-			lootMaster.place_loot_instance(src, 1,3, new /obj/randomloot_spawner/long/striker, FALSE)
-			lootMaster.place_loot_instance(src, 1,2, new /obj/randomloot_spawner/long/striker, FALSE)
+			lootMaster.place_loot_instance(src, 1,3, new /obj/loot_spawner/random/long/striker, FALSE)
+			lootMaster.place_loot_instance(src, 1,2, new /obj/loot_spawner/random/long/striker, FALSE)
 			lootMaster.fill_remaining(src, GANG_CRATE_AMMO, 3)
 			..()
 		unlocked
@@ -331,6 +331,10 @@
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)
 		invisibility = floor_intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
+		if (invisibility)
+			anchored = ANCHORED
+		else
+			anchored = UNANCHORED
 		UpdateIcon()
 
 	proc/open(mob/user)
@@ -445,17 +449,35 @@
 		return spawnedLootInstances
 
 	/// place a loot object that's been created externally
-	proc/place_loot_instance(loc, x,y,obj/randomloot_spawner/loot, invisible)
+	proc/place_loot_instance(loc, x,y,obj/loot_spawner/loot, invisible)
 		var/override = add_loot_instance(loc,loot,x,y)
 		if (!invisible && !override)
 			lootGrid.mark_used(x,y,loot.xSize,loot.ySize)
 
 
+	/// Fills all remaining space with as many instances as possible of a loot object that's been created externally
+	/// Ignores override, due to infinite loop.
+	proc/fill_remaining_with_instance(loc, obj/loot_spawner/loot)
+		var/done = FALSE
+		var/pos = new/list(2)
+		pos[1] = 1
+		pos[2] = 1
+		while (!done)
+			pos = lootGrid.get_next_empty_space(pos[1],pos[2])
+			if (!pos) break
+			var/maxSize = lootGrid.get_largest_space(pos[1],pos[2])
+			if (maxSize[1] < loot.xSize)
+				pos[2]++
+			else
+				add_loot_instance(loc,loot,pos[1],pos[2])
+				lootGrid.mark_used(pos[1],pos[2],loot.xSize,loot.ySize)
+
+
 	/// Place a random loot instance of a specific size at a specific position
 	proc/place_random_loot_sized(loc, xPos,yPos,sizeX,sizeY, tier, invisible = FALSE)
 		var/chosenType = pick_weighted_option(sizeX,sizeY,tier)
-		var/obj/randomloot_spawner = new chosenType
-		var/override = add_loot_instance(loc,randomloot_spawner,xPos,yPos)
+		var/obj/new_spawner = new chosenType
+		var/override = add_loot_instance(loc,new_spawner,xPos,yPos)
 		if (!override && !invisible)
 			lootGrid.mark_used(xPos,yPos,sizeX,sizeY)
 		return override
@@ -468,18 +490,18 @@
 		lootGrid = new/datum/loot_grid(xSize, ySize)
 		..()
 
-	/// Initialize spawners & weights for all loot spawners
+	/// Initialize spawners & weights for all random loot spawners
 	proc/populate()
 		// setting these manually to map class names to sizes
 		// this avoids having to instantiate them just to read their xSize & ySize
-		spawners[1][1] = /obj/randomloot_spawner/short
-		spawners[2][1] = /obj/randomloot_spawner/medium
-		spawners[3][1] = /obj/randomloot_spawner/long
-		spawners[4][1] = /obj/randomloot_spawner/xlong
-		spawners[1][2] = /obj/randomloot_spawner/short_tall
-		spawners[2][2] = /obj/randomloot_spawner/medium_tall
-		spawners[3][2] = /obj/randomloot_spawner/long_tall
-		spawners[4][2] = /obj/randomloot_spawner/xlong_tall
+		spawners[1][1] = /obj/loot_spawner/random/short
+		spawners[2][1] = /obj/loot_spawner/random/medium
+		spawners[3][1] = /obj/loot_spawner/random/long
+		spawners[4][1] = /obj/loot_spawner/random/xlong
+		spawners[1][2] = /obj/loot_spawner/random/short_tall
+		spawners[2][2] = /obj/loot_spawner/random/medium_tall
+		spawners[3][2] = /obj/loot_spawner/random/long_tall
+		spawners[4][2] = /obj/loot_spawner/random/xlong_tall
 
 		// determine the total weight of all our spawners
 		for(var/spawnersByLength in spawners)
@@ -489,7 +511,7 @@
 				var/childtypes = concrete_typesof(spawner)
 
 				for(var/childType in childtypes)
-					var/obj/randomloot_spawner/item = new childType()
+					var/obj/loot_spawner/random/item = new childType()
 					if (length(totalWeights[spawner]) < item.tier)
 						totalWeights[spawner].len = item.tier
 						weights[spawner].len = item.tier
@@ -526,13 +548,13 @@
 		// select the largest valid crate (proritizing X size)
 		for (var/xTest = 1 to desiredX)
 			for (var/yTest = 1 to desiredY)
-				var/obj/randomloot_spawner/chosenSpawner = spawners[1+desiredX-xTest][1+desiredY-yTest]
+				var/obj/loot_spawner/random/chosenSpawner = spawners[1+desiredX-xTest][1+desiredY-yTest]
 				if (totalWeights[chosenSpawner][tier])
 					var/size = list(1+desiredX-xTest,1+desiredY-yTest)
 					return size
 
 	/// creates a loot object and offset info
-	proc/add_loot_instance(loc,obj/randomloot_spawner/instance,xPos,yPos)
+	proc/add_loot_instance(loc,obj/loot_spawner/instance,xPos,yPos)
 		src.spawned_instances += instance
 		var/datum/loot_spawner_info/info = new /datum/loot_spawner_info()
 		info.parent = src
@@ -685,47 +707,16 @@
 
 // LOOT SPAWNERS
 //
-// The random loot master checks all definitions of randomloot_spawner when it's first created.
-// To define new loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
-// Uncomment the above item_placer if you'd like to scale the items spawned by this.
+// The non-random base exists for loot you don't want to put in a random pool.
+// In addition, the loot_spawner/specified child allows for definition of an item and size in New(), useful for live use.
 
-ABSTRACT_TYPE(/obj/randomloot_spawner)
-
-
-/obj/randomloot_spawner
+ABSTRACT_TYPE(/obj/loot_spawner)
+/obj/loot_spawner
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-r"
-	var/tier = GIMMICK	//! what tier must be selected to select this spawner.
-	var/weight = 3		//! the weight this spawner has to be selected in its' tier, defaults to 3.
 
 	var/xSize = 1 //! The width of this spawner
 	var/ySize = 1 //! The height of this spawner
-
-
-	/// generic booze loot pool
-	var/static/booze_items = list(
-		/obj/item/reagent_containers/food/drinks/bottle/beer,
-		/obj/item/reagent_containers/food/drinks/bottle/wine,
-		/obj/item/reagent_containers/food/drinks/bottle/mead,
-		/obj/item/reagent_containers/food/drinks/bottle/cider,
-		/obj/item/reagent_containers/food/drinks/bottle/rum,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka,
-		/obj/item/reagent_containers/food/drinks/bottle/tequila,
-		/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-		/obj/item/reagent_containers/food/drinks/curacao
-	)
-	/// generic drug loot pool
-	var/static/drug_items = list(
-		/obj/item/storage/pill_bottle/methamphetamine,
-		/obj/item/storage/pill_bottle/crank,
-		/obj/item/storage/pill_bottle/bathsalts,
-		/obj/item/storage/pill_bottle/catdrugs,
-		/obj/item/storage/pill_bottle/cyberpunk,
-		/obj/item/storage/pill_bottle/epinephrine
-	)
-	/// uncommon, valuable drugs, for placement in syringes
-	var/static/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","cocktail_triple","energydrink","grog")
-
 
 	// for testing, or if you want to spawn these into the world for whatever reason
 	attack_hand(mob/user as mob)
@@ -774,8 +765,70 @@ ABSTRACT_TYPE(/obj/randomloot_spawner)
 	/// Spawn the loot for this instance. Return TRUE if this should not take up grid squares.
 	proc/spawn_loot(loc,datum/loot_spawner_info/I)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/short)
-/obj/randomloot_spawner/short //1x1
+ABSTRACT_TYPE(/obj/loot_spawner/short)
+/obj/loot_spawner/short //1x1
+	xSize = 1
+	ySize = 1
+
+	two_stx_grenades
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/chem_grenade/saxitoxin,off_y=2,scale_x=0.825,scale_y=0.65)
+			spawn_item(C,I,/obj/item/chem_grenade/saxitoxin,off_y=-2,scale_x=0.825,scale_y=0.65)
+/obj/loot_spawner/medium //1x1
+	xSize = 2
+	ySize = 1
+	ks23_shrapnel
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_y=3,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_y=-3,scale_x=0.5,scale_y=0.5)
+	ks23_slug
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_y=3,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_y=-3,scale_x=0.5,scale_y=0.5)
+
+/obj/loot_spawner/xlong_tall //4x2
+	xSize = 4
+	ySize = 2
+
+	ks23_empty
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+
+// The random loot master checks all definitions of loot_spawner/random when it's first created.
+// To define new random loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
+// Uncomment the above item_placer if you'd like to scale the items spawned by this.
+
+ABSTRACT_TYPE(/obj/loot_spawner/random)
+/obj/loot_spawner/random
+	var/tier = GIMMICK	//! what tier must be selected to select this spawner.
+	var/weight = 3		//! the weight this spawner has to be selected in its' tier, defaults to 3.
+
+	/// generic booze loot pool
+	var/static/booze_items = list(
+		/obj/item/reagent_containers/food/drinks/bottle/beer,
+		/obj/item/reagent_containers/food/drinks/bottle/wine,
+		/obj/item/reagent_containers/food/drinks/bottle/mead,
+		/obj/item/reagent_containers/food/drinks/bottle/cider,
+		/obj/item/reagent_containers/food/drinks/bottle/rum,
+		/obj/item/reagent_containers/food/drinks/bottle/vodka,
+		/obj/item/reagent_containers/food/drinks/bottle/tequila,
+		/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+		/obj/item/reagent_containers/food/drinks/curacao
+	)
+	/// generic drug loot pool
+	var/static/drug_items = list(
+		/obj/item/storage/pill_bottle/methamphetamine,
+		/obj/item/storage/pill_bottle/crank,
+		/obj/item/storage/pill_bottle/bathsalts,
+		/obj/item/storage/pill_bottle/catdrugs,
+		/obj/item/storage/pill_bottle/cyberpunk,
+		/obj/item/storage/pill_bottle/epinephrine
+	)
+	/// uncommon, valuable drugs, for placement in syringes
+	var/static/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","cocktail_triple","energydrink","grog")
+
+ABSTRACT_TYPE(/obj/loot_spawner/random/short)
+/obj/loot_spawner/random/short //1x1
 	xSize = 1
 	ySize = 1
 
@@ -802,7 +855,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 					newAmmo.amount = 3
 					newAmmo.amount_left = 3
 				else if (ispath(ammoSelected, /obj/item/ammo/bullets/smoke))
-					I.parent.place_loot_instance(C, I.position_x, I.position_y, new /obj/randomloot_spawner/short/flashbang)
+					I.parent.place_loot_instance(C, I.position_x, I.position_y, new /obj/loot_spawner/random/short/flashbang)
 					return TRUE
 				else
 					spawn_item(C,I,ammoSelected)
@@ -935,8 +988,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,pick(drug_items),scale_x=0.75,scale_y=0.75)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
-/obj/randomloot_spawner/medium //2x1
+ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
+/obj/loot_spawner/random/medium //2x1
 	xSize = 2
 	ySize = 1
 	// GANG_CRATE_GUN:
@@ -1046,8 +1099,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=-4,rot=45,scale_x=0.75,scale_y=0.75)
 
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/long)
-/obj/randomloot_spawner/long //3x1
+ABSTRACT_TYPE(/obj/loot_spawner/random/long)
+/obj/loot_spawner/random/long //3x1
 	xSize = 3
 	ySize = 1
 
@@ -1096,15 +1149,15 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=-4,off_y=0,scale_x=0.825,scale_y=0.825)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=-4,off_y=-2,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/xlong)
-/obj/randomloot_spawner/xlong //4x1:// these are rare finds
+ABSTRACT_TYPE(/obj/loot_spawner/random/xlong)
+/obj/loot_spawner/random/xlong //4x1:// these are rare finds
 	xSize = 4
 	ySize = 1
 	// GANG_CRATE_GUN
 	riotgun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=0)
+			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/riotgun,off_x=-8,off_y=0)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	m16
@@ -1119,8 +1172,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong)
 			spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=-8)
 			spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=8)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/short_tall)
-/obj/randomloot_spawner/short_tall //1x2
+ABSTRACT_TYPE(/obj/loot_spawner/random/short_tall)
+/obj/loot_spawner/random/short_tall //1x2
 	xSize = 1
 	ySize = 2
 	// good for tall items, like booze
@@ -1182,8 +1235,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short_tall)
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/instrument/bikehorn/airhorn,scale_x=0.825,scale_y=0.825)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/medium_tall)
-/obj/randomloot_spawner/medium_tall //2x2
+ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
+/obj/loot_spawner/random/medium_tall //2x2
 	xSize = 2
 	ySize = 2
 
@@ -1277,8 +1330,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium_tall)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=4,off_y=-4,scale_x=0.825,scale_y=0.825)
 			spawn_item(C,I,/obj/item/currency/spacecash/fivehundred,off_x=4,off_y=-6,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
-/obj/randomloot_spawner/long_tall //3x2
+ABSTRACT_TYPE(/obj/loot_spawner/random/long_tall)
+/obj/loot_spawner/random/long_tall //3x2
 	xSize = 3
 	ySize = 2
 
@@ -1355,8 +1408,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
 			spawn_item(C,I,/obj/item/device/light/zippo/syndicate,6,0,scale_x=0.85,scale_y=0.85)
 
 
-ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
-/obj/randomloot_spawner/xlong_tall //4x2, these are INCREDIBLY rare and will take up the majority of a crate. can probably be a lil crazy
+ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
+/obj/loot_spawner/random/xlong_tall //4x2, these are INCREDIBLY rare and will take up the majority of a crate. can probably be a lil crazy
 	xSize = 4
 	ySize = 2
 
@@ -1365,6 +1418,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/american180,off_x=-8,scale_x=0.8,scale_y=0.8)
+	ks23
+		tier = GANG_CRATE_GUN
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_x=-7,off_y=-4,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
 
 	// GANG_CRATE_GEAR
 

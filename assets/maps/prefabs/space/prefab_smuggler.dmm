@@ -99,7 +99,7 @@
 /area/prefab/smuggler_den)
 "ar" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 10
+	free_resources = list(/obj/item/material_piece/steel = 10, /obj/item/material_piece/copper = 10, /obj/item/material_piece/glass = 10)
 	},
 /obj/machinery/light/small{
 	dir = 1;

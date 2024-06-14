@@ -2,7 +2,9 @@
 #define SW_NE 1
 
 TYPEINFO(/obj/laser_sink/mirror)
-	mats = list("MET-1"=10, "CRY-1"=10, "REF-1"=30)
+	mats = list("metal" = 10,
+				"crystal" = 10,
+				"reflective" = 30)
 /obj/laser_sink/mirror
 	name = "laser mirror"
 	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."

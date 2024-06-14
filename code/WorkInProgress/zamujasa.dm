@@ -272,7 +272,7 @@
 		return " It's saved a total of [round(total_score)] points, with [round(round_score)] points added today."
 
 	proc/update_totals()
-		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
+		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [pad_leading(round(total_score), 7)]\nROUND [pad_leading(round(round_score), 7)]</span>"
 
 
 	attackby(obj/item/W, mob/user)
@@ -1231,6 +1231,12 @@
 			monitored_var = "mail_opened"
 			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
+		frauded_mail
+			name = "frauded mail counter"
+			desc = "The number of times someone has frauded someone's mail."
+			monitored_var = "mail_fraud"
+			maptext_prefix = "<span class='c pixel sh'>Mail frauded:\n<span class='vga'>"
+
 		last_death
 			name = "last death monitor"
 			desc = "RIP this idiot. Hope it wasn't you!"
@@ -1347,13 +1353,13 @@
 		get_value()
 			var/lagc = "#ffffff"
 			switch (world.tick_lag)
-				if (0 to 0.4)
+				if (0   to 0.2)
 					lagc = "#00ff00"
-				if (0.4 to 0.6)
+				if (0.2 to 0.4)
 					lagc = "#ffff00"
-				if (0.6 to 0.8)
+				if (0.4 to 0.6)
 					lagc = "#ff8800"
-				if (0.8 to INFINITY)
+				if (0.6 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
@@ -1365,6 +1371,8 @@
 			New()
 				..()
 				src.maptext_y += 35	// appear *over* the fake server.
+				src.maptext_prefix = "<span class='c pixel sh' style='font-size: 6px;'>"
+				src.maptext_suffix = "</span>"
 
 				the_server = new(get_turf(src))
 				the_server.name = "server rack"
@@ -1382,19 +1390,19 @@
 			get_value()
 				if (src.the_server)
 					switch (world.tick_lag)
-						if (0 to 0.4)
+						if (0   to 0.2)
 							the_server.icon_state = "server0"
-						if (0.4 to 0.6)
+						if (0.2 to 0.4)
 							the_server.icon_state = "server"
-						if (0.6 to 0.8)
+						if (0.4 to 0.6)
 							the_server.icon_state = "server2"
-						if (0.8 to INFINITY)
+						if (0.6 to INFINITY)
 							the_server.icon_state = "serverf"
 
-					if (world.tick_lag > 1.0 && !src.is_smoking)
-						// starts smoking over 1.0, not at it
+					if (world.tick_lag >= 0.8 && !src.is_smoking)
+						// starts smoking
 						src.update_smoking(1)
-					else if (world.tick_lag <= 1.0 && src.is_smoking)
+					else if (world.tick_lag <= 0.8 && src.is_smoking)
 						src.update_smoking(0)
 
 				. = ..()
@@ -1508,22 +1516,30 @@ Read the rules, don't grief, and have fun!</div>"}
 
 	encourage
 		maptext_area = "leftside"
+		var/update_delay = 1 MINUTE
 
 		New()
 			..()
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
+			src.maptext_x = 0
+			src.maptext_width = 600
+			src.maptext_height = 400
+			update_text() // kick start
+			setup_process_signal()
 
+		proc/setup_process_signal()
+			set waitfor = FALSE
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
+
+		proc/update_text()
 			var/serverList = ""
 			for (var/serverId in global.game_servers.servers)
 				var/datum/game_server/server = global.game_servers.servers[serverId]
 				if (server.is_me() || !server.publ)
 					continue
-				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name]</a>"}
-
-			src.maptext_x = 0
-			src.maptext_width = 600
-			src.maptext_height = 400
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
 New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
@@ -1799,6 +1815,7 @@ Other Goonstation servers:[serverList]</span>"})
 	var/tmp/obj/maptext_junk/price_text = null
 	var/tmp/obj/maptext_junk/quantity_text = null
 	var/tmp/list/purchaser_ckeys = list()
+	var/admin_ckey = null
 
 	get_desc()
 		if (set_up)
@@ -1810,7 +1827,7 @@ Other Goonstation servers:[serverList]</span>"})
 				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
 				return
 
-			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
+			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type", "Cancel")
 			if (copyOrType == "Copies")
 				// copy
 				alert(user, "Click on the thing you want to sell copies of.")
@@ -1824,7 +1841,7 @@ Other Goonstation servers:[serverList]</span>"})
 				src.appearance = thing.appearance
 				src.thing_name = thing.name
 
-			else
+			else if (copyOrType == "Type")
 
 				alert(user, "Click on something for the store to copy the appearance of (the actual item you're selling comes after this; you might have to varedit the store later)")
 				var/atom/thing = pick_ref(user)
@@ -1840,9 +1857,14 @@ Other Goonstation servers:[serverList]</span>"})
 				copy_mode = FALSE
 				src.type_to_spawn = objpath
 
+			else
+				// cancel
+				return
+
 			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
 			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
 			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
+			src.admin_ckey = (alert(user, "Attach it to your adminness? This will tell you when people buy it (and also give you the money they spend).", "FEED ME SPACEBUX", "Yes", "No") == "Yes") ? user.ckey : null
 
 			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
 			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
@@ -1891,6 +1913,14 @@ Other Goonstation servers:[serverList]</span>"})
 					return FALSE
 
 				user.client.add_to_bank(-src.price)
+				if (src.admin_ckey)
+					try
+						var/client/A = getClientFromCkey(src.admin_ckey)
+						A.add_to_bank(src.price)
+						boutput(A, SPAN_ALERT("[usr.real_name] bought \a [src.name] for [src.price]."))
+
+					catch
+						// do nothing. if they're offline we dont care.
 
 			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
 

@@ -26,6 +26,6 @@
 			return 1
 		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 		var/mob/MT = target
-		MT.changeStatus("weakened", 3 SECONDS)
+		MT.changeStatus("knockdown", 3 SECONDS)
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] tackles [MT]!</b>"), SPAN_ALERT("You tackle [MT]!"))
 		return FALSE

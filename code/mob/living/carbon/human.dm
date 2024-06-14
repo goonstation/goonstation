@@ -153,6 +153,7 @@
 	var/hair_override = 0 // only really works if they have hair. Barbering might help
 	/// forces the mob to display their special hair, even if their flags tell them not to
 	var/special_hair_override = 0 // only really works if they have any special hair
+	var/trample_cooldown = 4 SECONDS
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
@@ -204,10 +205,11 @@
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	prodoc_icons = list()
-	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	// 0.01 layering increases to guarantee layering over the health monitor icon
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
 	for (var/implant in prodoc_icons)
 		var/image/image = prodoc_icons[implant]
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
@@ -743,7 +745,7 @@
 	src.canmove = 0
 	src.lying = 1
 	src.last_sleep = 0
-	src.UpdateOverlays(null, "sleep_bubble")
+	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -757,6 +759,8 @@
 		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
+	add_lifeprocess(/datum/lifeprocess/decomposition)
+	remove_lifeprocess(/datum/lifeprocess/blood)
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
@@ -872,7 +876,7 @@
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
 		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
-		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.setStatus("unconscious", 10 SECONDS)
 		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
@@ -1043,12 +1047,18 @@
 
 	var/obj/item/I = src.equipped()
 
-	if (!I || !isitem(I) || I.cant_drop) return
+	if (!I || !isitem(I) || I.cant_drop)
+		return
 
+	var/obj/item/grab/grab = null
 	if (istype(I, /obj/item/grab))
-		var/obj/item/grab/G = I
-		I = G.handle_throw(src, target)
-		if (!I) return
+		grab = I
+	else if (I.chokehold)
+		grab = I.chokehold
+	if (grab)
+		I = grab.handle_throw(src, target)
+		if (!I)
+			return
 
 	I.set_loc(src.loc)
 
@@ -1092,7 +1102,7 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+		adjust_throw(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src))
 		if(yeet)
 			new/obj/effect/supplyexplosion(I.loc)
 
@@ -1101,9 +1111,7 @@
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 		src.next_click = world.time + src.combat_click_delay
 
@@ -1250,6 +1258,8 @@
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
+
+	src.update_arrest_icon()
 
 
 /mob/living/carbon/human/admin_visible_name()
@@ -2291,6 +2301,8 @@
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
+	if (src.autoequip_slot(I, SLOT_IN_BELT))
+		return
 	if (src.autoequip_slot(I, SLOT_L_STORE))
 		return
 	if (src.autoequip_slot(I, SLOT_R_STORE))
@@ -2970,6 +2982,9 @@
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
+		if(istype(A, /obj/item/device/light)) //i hate this
+			var/obj/item/device/light/L = A
+			L.light.attach(L)
 		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
@@ -3341,7 +3356,7 @@
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")
-				src.changeStatus("weakened", 3 SECONDS)
+				src.changeStatus("knockdown", 3 SECONDS)
 			else if (src.shoes.laces == LACES_CUT) // Laces cut
 				var/obj/item/clothing/shoes/S = src.shoes
 				src.u_equip(S)
@@ -3605,6 +3620,79 @@
 		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
 	src.bandaged -= bandaged_part
 	src.update_body()
+
+/mob/living/carbon/human/proc/drag_onto_op_table(obj/machinery/optable/table)
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()
+	src.set_loc(get_turf(table))
+	table.victim = src
+
+/mob/living/carbon/human/proc/update_health_monitor_icon()
+	if (!src.health_mon)
+		return
+	if (src.bioHolder.HasEffect("dead_scan") || isdead(src))
+		src.health_mon.icon_state = "-1"
+		return
+	// Handle possible division by zero
+	var/health_prc = (src.health / (src.max_health != 0 ? src.max_health : 1)) * 100
+	switch (health_prc)
+		if (98 to INFINITY)
+			src.health_mon.icon_state = "100"
+		if (80 to 98)
+			src.health_mon.icon_state = "80"
+		if (60 to 80)
+			src.health_mon.icon_state = "75"
+		if (40 to 60)
+			src.health_mon.icon_state = "50"
+		if (20 to 40)
+			src.health_mon.icon_state = "25"
+		if (0 to 20)
+			src.health_mon.icon_state = "10"
+		if (-INFINITY to 0)
+			src.health_mon.icon_state = "0"
+
+/mob/living/carbon/human/proc/update_arrest_icon()
+	if (!src.arrestIcon)
+		return
+
+	var/arrestState = ""
+	var/visibleName = src.face_visible() ? src.real_name : src.name
+	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+	if(record)
+		var/criminal = record["criminal"]
+		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_DETAIN || criminal == ARREST_STATE_SUSPECT || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
+				criminal == ARREST_STATE_CLOWN)
+			arrestState = criminal
+	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
+		arrestState = ARREST_STATE_ARREST
+	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
+		if (locate(/obj/item/implant/counterrev) in src.implant)
+			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
+			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				arrestState = ARREST_STATE_REVHEAD
+			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+				arrestState = ARREST_STATE_LOYAL_IN_PROGRESS
+			else
+				arrestState = ARREST_STATE_LOYAL
+		else
+			var/obj/item/card/id/myID = 0
+			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
+			//this does mean that if an ID has no registered owner + carry permit enabled it will blink off as contraband. however i dont care!
+			if (src.l_hand?.registered_owner())
+				myID = src.l_hand
+			else if (src.r_hand?.registered_owner())
+				myID = src.r_hand
+			if (!myID)
+				myID = src.wear_id
+			var/has_contraband_permit = 0
+			var/has_carry_permit = 0
+			if (myID)
+				has_contraband_permit = (access_contrabandpermit in myID.access)
+				has_carry_permit = (access_carrypermit in myID.access)
+			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
+				arrestState = ARREST_STATE_CONTRABAND
+	src.arrestIcon.icon_state = arrestState
 
 /mob/living/carbon/human/get_genetic_traits()
 	return list(5,5)

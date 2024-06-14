@@ -96,7 +96,7 @@
 */
 
 /obj/machinery/computer/general_alert
-	name = "General Alert Computer"
+	name = "general alert computer"
 	icon_state = "alert:0"
 	circuit_type = /obj/item/circuitboard/general_alert
 	var/list/priority_alarms = list()
@@ -122,7 +122,7 @@
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)	qdel(src)
@@ -176,7 +176,7 @@
 			screen_image.blend_mode = BLEND_ADD
 			screen_image.layer = LIGHTING_LAYER_BASE
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
+			src.AddOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
 			src.icon_state = "[src.base_icon_state]0"
@@ -199,7 +199,7 @@
 		src.screen_image.blend_mode = BLEND_ADD
 		src.screen_image.layer = LIGHTING_LAYER_BASE
 		src.screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 	. = ..()
 
 /obj/machinery/computer/proc/set_broken()

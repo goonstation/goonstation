@@ -16,7 +16,7 @@ datum
 			fluid_g = 250
 			fluid_b = 250
 			transparency = 100
-			addiction_prob = 15//80
+			addiction_prob = 15
 			addiction_min = 5
 			overdose = 20
 			depletion_rate = 0.6
@@ -53,9 +53,7 @@ datum
 						SPAWN(0.3 SECONDS)
 							M.visible_message(SPAN_ALERT("<b>[M.name]</b> has a wild look in their eyes!"))
 					if(check < 60)
-						if(H.getStatusDuration("paralysis")) H.delStatus("paralysis")
-						H.delStatus("stunned")
-						H.delStatus("weakened")
+						H.remove_stuns()
 					if(check < 30)
 						H.emote(pick("twitch", "twitch_s", "scream", "drool", "grumble", "mumble"))
 
@@ -162,7 +160,7 @@ datum
 						M.make_jittery(50)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatusMin("weakened", 9 SECONDS * mult)
+						M.setStatusMin("knockdown", 9 SECONDS * mult)
 						M.emote("gasp")
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
@@ -181,7 +179,7 @@ datum
 			fluid_b = 0
 			fluid_g = 200
 			transparency = 40
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 5
 			overdose = 20
 			value = 20 // 10 2 1 3 1 heat explosion :v
@@ -238,7 +236,7 @@ datum
 						M.make_jittery(100)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(8 * mult)
-						M.setStatusMin("weakened", 4 SECONDS * mult)
+						M.setStatusMin("knockdown", 4 SECONDS * mult)
 						M.change_misstep_chance(25 * mult)
 						M.emote("scream")
 						M.reagents.add_reagent("salts1", 5 * mult)
@@ -322,11 +320,11 @@ datum
 				//pretty colors
 				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
 
-				//get attacked
+			//get attacked
 				if(prob(60)) //monkey mode
-					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=20, max_attackers=3)
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=4, max_attackers=1)
 				else
-					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=4, max_attackers=1)
 
 				//THE VOICES GET LOUDER
 				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
@@ -377,7 +375,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
 				var/image/imagekey = pick(bee_halluc)
-				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=7, max_attackers = 1)
 				if (probmult(12))
 					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", SPAN_ALERT("<b>THE BUZZING GETS LOUDER</b>"), SPAN_ALERT("<b>THE BUZZING WON'T STOP</b>")))
 				if (probmult(15))
@@ -402,8 +400,8 @@ datum
 			fluid_r = 200
 			fluid_g = 185
 			fluid_b = 230
-			addiction_prob = 15//65
-			addiction_min = 10
+			addiction_prob = 15
+			addiction_min = 25
 			depletion_rate = 0.2
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.2
@@ -435,8 +433,8 @@ datum
 			fluid_r = 230
 			fluid_g = 220
 			fluid_b = 230
-			addiction_prob = 1 //It lasts a while, it's not as low as it seems
-			addiction_min = 100
+			addiction_prob = 1 //Less addictive than ethanol due to its higher depletion rate
+			addiction_min = 50
 			max_addiction_severity = "LOW"
 			stun_resist = 3
 			depletion_rate = 0.1
@@ -649,7 +647,7 @@ datum
 					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
 						M.visible_message(SPAN_ALERT("<B>[M]</B> starts convulsing violently!"),\
 											"You feel as if your body is tearing itself apart!")
-						M.setStatusMin("weakened", 10 SECONDS)
+						M.setStatusMin("knockdown", 10 SECONDS)
 						M.make_jittery(500)
 
 				qdel(invisible_group)
@@ -725,7 +723,7 @@ datum
 					boutput(M, "[pick("You feel peaceful.","You breathe softly.","You feel chill.","You vibe.")]")
 				if(probmult(10))
 					M.change_misstep_chance(-5)
-					M.delStatus("weakened")
+					M.delStatus("knockdown")
 				if (holder.get_reagent_amount(src.id) >= 70 && probmult(25))
 					if (holder.get_reagent_amount("THC") <= 20)
 						M.setStatus("drowsy", 20 SECONDS)
@@ -744,7 +742,7 @@ datum
 			fluid_b = 0
 			viscosity = 0.2
 			transparency = 190
-			addiction_prob = 15//70
+			addiction_prob = 15
 			addiction_min = 10
 			max_addiction_severity = "LOW"
 			overdose = 35 // raise if too low - trying to aim for one sleepypen load being problematic, two being deadlyish
@@ -805,13 +803,13 @@ datum
 						M.emote("drool")
 						M.make_jittery(10)
 						M.take_toxin_damage(5 * mult)
-						M.setStatusMin("weakened", 1 SECOND * mult)
+						M.setStatusMin("knockdown", 1 SECOND * mult)
 						M.change_misstep_chance(33 * mult)
 					else if (effect <= 7)
 						M.emote("collapse")
 						boutput(M, SPAN_ALERT("<b>Your heart is pounding!</b>"))
 						M.playsound_local_not_inworld('sound/effects/heartbeat.ogg', 100)
-						M.setStatusMin("paralysis", 5 SECONDS * mult)
+						M.setStatusMin("unconscious", 5 SECONDS * mult)
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
 						M.take_oxygen_deprivation(20 * mult)
@@ -854,10 +852,7 @@ datum
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(2)
 				if(probmult(5))
-					M.delStatus("paralysis")
-					M.delStatus("stunned")
-					M.delStatus("weakened")
-					M.delStatus("paralysis")
+					M.remove_stuns()
 					M.sleeping = 0
 					M.make_jittery(30)
 					M.emote(pick("twitch","twitch_v","shiver","shudder","flinch","blink_r"))
@@ -903,13 +898,13 @@ datum
 						M.emote("drool")
 						M.make_jittery(20)
 						M.take_toxin_damage(5)
-						M.changeStatus("weakened", 10 * mult)
+						M.changeStatus("knockdown", 10 * mult)
 						M.change_misstep_chance(66)
 					else if (effect <= 7)
 						M.emote("collapse")
 						boutput(M, SPAN_ALERT("<b>Your heart is pounding! You need help!</b>"))
 						M << sound('sound/effects/heartbeat.ogg')
-						M.changeStatus("weakened", 50 * mult)
+						M.changeStatus("knockdown", 50 * mult)
 						M.make_jittery(60)
 						M.take_toxin_damage(5)
 						M.take_oxygen_deprivation(20)*/
@@ -952,12 +947,12 @@ datum
 								if(3)
 									boutput(M, SPAN_ALERT("<b>Unknown has punched [M]</b>"))
 									boutput(M, SPAN_ALERT("<b>Unknown has weakened [M]</b>"))
-									M.setStatusMin("weakened", 1 SECOND * mult)
+									M.setStatusMin("knockdown", 1 SECOND * mult)
 									M.playsound_local(M.loc, pick(sounds_punch), 50, 1)
 								if(4)
 									boutput(M, SPAN_ALERT("<b>[M] has been attacked with the taser gun by Unknown</b>"))
 									boutput(M, "<i>You can almost hear someone talking...</i>")
-									M.setStatusMin("paralysis", 3 SECONDS * mult)
+									M.setStatusMin("unconscious", 3 SECONDS * mult)
 				..()
 
 
@@ -970,7 +965,7 @@ datum
 			fluid_g = 100
 			fluid_b = 180
 			transparency = 250
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 10
 			overdose = 20
 			hunger_value = -0.1
@@ -1019,7 +1014,7 @@ datum
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> sways and falls over!"))
 						M.take_toxin_damage(3 * mult)
 						M.take_brain_damage(3 * mult)
-						M.setStatusMin("weakened", 9 SECONDS * mult)
+						M.setStatusMin("knockdown", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
 						if (ishuman(M))
@@ -1139,7 +1134,7 @@ datum
 					if (effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
 						M.change_misstep_chance(12 * mult)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.empty_hands()
@@ -1152,7 +1147,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor and flails uncontrollably!"))
 						M.make_jittery(10)
-						M.setStatusMin("weakened", 10 SECONDS * mult)
+						M.setStatusMin("knockdown", 10 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 
@@ -1165,7 +1160,7 @@ datum
 			fluid_g = 250
 			fluid_b = 250
 			transparency = 220
-			addiction_prob = 10//60
+			addiction_prob = 10
 			addiction_min = 5
 			overdose = 20
 			depletion_rate = 0.6
@@ -1229,7 +1224,7 @@ datum
 					if (effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
 						M.change_misstep_chance(20 * mult)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.empty_hands()
@@ -1247,7 +1242,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor and flails uncontrollably!"))
 						M.make_jittery(10)
-						M.setStatusMin("weakened", 2 SECONDS * mult)
+						M.setStatusMin("knockdown", 2 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 
@@ -1316,7 +1311,7 @@ datum
 					if(check < 20)
 						boutput(M, SPAN_ALERT("Your throat feels like it's on fire!"))
 						M.emote(pick("scream","cry","twitch_s","choke","gasp","grumble"))
-						M.changeStatus("paralysis", 2 SECONDS)
+						M.changeStatus("unconscious", 2 SECONDS)
 					if(check < 20)
 						boutput(M, SPAN_NOTICE("<b>You feel A LOT warmer.</b>"))
 						M.bodytemperature += rand(30,60)
@@ -1347,4 +1342,4 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 			continue
 		if (GET_DIST(M,F) > range)
 			continue
-		fireflash(F,1,temp)
+		fireflash(F,1,temp, chemfire = CHEM_FIRE_RED)

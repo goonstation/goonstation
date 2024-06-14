@@ -8,6 +8,7 @@
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
 	duration_remove = 5 SECONDS
+	compatible_species = list("human", "cow", "werewolf", "flubber") // No helmets for martians / blobs
 
 	setupProperties()
 		..()
@@ -685,8 +686,9 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
 TYPEINFO(/obj/item/clothing/head/helmet/camera)
-	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
-
+	mats = list("metal" = 4,
+				"crystal" = 2,
+				"conductive" = 2)
 /obj/item/clothing/head/helmet/camera
 	name = "camera helmet"
 	desc = "A helmet with a built in camera."
@@ -1061,8 +1063,10 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
-	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"uqill" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/clothing/head/helmet/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat helmet"
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."

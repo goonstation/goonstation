@@ -4,7 +4,8 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "h7beam1"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	//How dangerous is this beam, anyhow? 1-5. 1-3 cause minor teleport hops and radiation damage, 4 tends to deposit people in a place separate from their stuff (or organs), and 5 tears their molecules apart
+	///How dangerous is this beam, anyhow? 1-5. 1-3 cause minor teleport hops and radiation damage, 4 tends to deposit people in a place separate from their stuff (or organs), and 5 tears their molecules apart
+	power = 1
 	var/obj/machinery/networked/h7_emitter/master = null
 	max_length = 48
 
@@ -13,10 +14,11 @@
 	src.add_simple_light("laser_beam", list(0.28 * 255, 0.07 * 255, 0.58 * 255, brightness * 255))
 
 /obj/linked_laser/h7_beam/get_icon_state()
-	return "h7beam[min(src.get_power(), 5)]"
+	return "h7beam[min(round(src.get_power(), 1), 5)]"
 
 /obj/linked_laser/h7_beam/copy_laser(turf/T, dir)
 	var/obj/linked_laser/h7_beam/new_laser = ..()
+	new_laser.power = src.power
 	new_laser.master = src.master
 	return new_laser
 
@@ -25,7 +27,9 @@
 	src.update_master_power()
 
 /obj/linked_laser/h7_beam/proc/get_power()
-	return src.master.crystalCount
+	if (src.master)
+		src.power = src.master.crystalCount
+	return src.power
 
 /obj/linked_laser/h7_beam/disposing()
 	if (src.master)
@@ -77,7 +81,7 @@
 			//telehop + radiation
 			if (iscarbon(hitMob))
 				hitMob.take_radiation_dose(3 SIEVERTS)
-				hitMob.changeStatus("weakened", 2 SECONDS)
+				hitMob.changeStatus("knockdown", 2 SECONDS)
 			telehop(hitMob, src.power, src.power > 2)
 			return
 
@@ -87,7 +91,7 @@
 				hitMob.take_radiation_dose(3 SIEVERTS)
 
 				random_brute_damage(hitMob, 25)
-				hitMob.changeStatus("weakened", 2 SECONDS)
+				hitMob.changeStatus("knockdown", 2 SECONDS)
 				if (ishuman(hitMob) && prob(25))
 					var/mob/living/carbon/human/hitHuman = hitMob
 					if (hitHuman.organHolder && hitHuman.organHolder.brain)

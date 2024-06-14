@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend } from "../../backend";
 import { Box, Button, ByondUi, ColorBox, Dropdown, Flex, Knob, LabeledList, Section } from "../../components";
 
@@ -33,7 +32,7 @@ export const AppearanceEditor = (params, context) => {
     <Section
       title="Appearance Editor"
       buttons={
-        <Fragment>
+        <>
           <Button
             onClick={() => act("editappearance", { apply: true })}
             icon="user"
@@ -44,7 +43,7 @@ export const AppearanceEditor = (params, context) => {
             onClick={() => act("editappearance", { cancel: true })}
             icon="times"
             color="bad" />
-        </Fragment>
+        </>
       }>
       <Flex>
         <Flex.Item shrink="1">

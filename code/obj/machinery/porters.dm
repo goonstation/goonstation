@@ -224,8 +224,9 @@ TYPEINFO(/obj/item/remote/porter)
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
-	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
-
+	mats = list("metal" = 5,
+				"conductive" = 5,
+				"telecrystal" = 10)
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -390,7 +391,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -473,13 +474,13 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if(src.occupant)
 			src.occupant.set_loc(src.loc)
-			src.occupant.changeStatus("weakened", 2 SECONDS)
+			src.occupant.changeStatus("knockdown", 2 SECONDS)
 		return
 
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
+		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "unconscious", "knockdown", "handcuffed")))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -603,7 +604,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -741,7 +742,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			return
 		if ((usr in src.contents) || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -834,7 +835,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 						var/list/temp = src.contents.Copy()
 						src.open()
 						src.visible_message(SPAN_ALERT("<B>\the [src]'s door flies open and a gout of flame erupts from within!"))
-						fireflash(src, 2)
+						fireflash(src, 2, chemfire = CHEM_FIRE_RED)
 						for(var/mob/living/carbon/M in temp)
 							M.update_burning(100)
 							var/turf/T = get_edge_target_turf(M, turn(NORTH, rand(0,7) * 45))
@@ -931,7 +932,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 			return
 		if (!isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")

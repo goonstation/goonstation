@@ -32,6 +32,7 @@
 
 /datum/targetable/dancing
 	icon = 'icons/mob/dance_ui.dmi'
+	do_logs = FALSE
 	var/style = null
 	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
 											"[EAST]"=list(-8,1),
@@ -62,9 +63,9 @@
 		AH.lead = holder.owner
 		AH.follow = null
 
-		if(AH.lead.getStatusDuration("weakened") || AH.lead.getStatusDuration("stunned") || AH.lead.getStatusDuration("paralysis") || AH.lead.lying)
+		if(AH.lead.getStatusDuration("knockdown") || AH.lead.getStatusDuration("stunned") || AH.lead.getStatusDuration("unconscious") || AH.lead.lying)
 			. = FALSE
-		if(AH.follow && (AH.follow.getStatusDuration("weakened") || AH.follow.getStatusDuration("stunned") || AH.follow.getStatusDuration("paralysis") || AH.follow.lying))
+		if(AH.follow && (AH.follow.getStatusDuration("knockdown") || AH.follow.getStatusDuration("stunned") || AH.follow.getStatusDuration("unconscious") || AH.follow.lying))
 			. = FALSE
 		else
 			for (var/obj/item/grab/G in AH.lead?.equipped_list(check_for_magtractor = 0))
@@ -145,6 +146,7 @@
 		var/time_change
 
 		cast(atom/target)
+			. = ..()
 			var/datum/abilityHolder/dancing/AH = holder
 			if(AH)
 				AH.time_per_count += time_change

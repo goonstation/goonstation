@@ -175,6 +175,9 @@
 			var/stamp_y = text2num_safe(params["y"])
 			var/stamp_r = text2num_safe(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
+			if(!istype(stamp))
+				boutput(usr, "What stamp? Where stamp?")
+				return
 
 			if(length(stamps) < PAPER_MAX_STAMPS)
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
@@ -205,7 +208,8 @@
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
-					phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
+					if(length(info) <= 2000)
+						phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
 					update_static_data(usr,ui)
 			. = TRUE
 

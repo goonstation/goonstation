@@ -28,30 +28,50 @@
 
 	New(loc, var/datum/figure_info/newInfo)
 		..()
+		if (!length(donator_ckeys)) //creates a list of existing donator Ckeys if one does not already exist
+			for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
+				donator_ckeys += initial(fig.ckey)
+
 		if (istype(newInfo))
 			src.info = newInfo
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
 			var/potential_donator_ckey = usr?.mind?.ckey
-			var/donator_figtype = null
-			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
-				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
-					if (initial(fig.ckey) == potential_donator_ckey)
-						donator_figtype = fig
-						src.patreon_prob *= 2	// x2 chance of getting patreon figure
+			var/donator_fig_ckey = null
+			var/list/online_donator_ckeys_nouser = online_donator_ckeys.Copy()
+
+			if (online_donator_ckeys.Find(potential_donator_ckey))
+				donator_fig_ckey = potential_donator_ckey
+				online_donator_ckeys_nouser -= donator_fig_ckey
+				src.patreon_prob *= 2	// x2 chance of getting patreon figure
+
 			if (prob(src.patreon_prob))
-				if (donator_figtype && prob(30)) // 30% additional chance of donators getting their fig
-					randomInfo = donator_figtype
-				else
-					randomInfo = pick(figure_patreon_rarity)
+				var/fig_ckey = null
+				switch (rand(1,100))
+					if (1 to 20)
+						fig_ckey = donator_fig_ckey
+					if (20 to 40)
+						if (length(online_donator_ckeys_nouser))
+							fig_ckey = pick(online_donator_ckeys_nouser)
+					if (40 to 100)
+						if (length(donator_ckeys))
+							fig_ckey = pick(donator_ckeys)
+				if (!fig_ckey) fig_ckey = pick(donator_ckeys)
+
+				//Now that we've picked the ckey to look for, find its randomInfo
+				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
+					if (initial(fig.ckey) == fig_ckey)
+						randomInfo = fig
+						break
+
 			else if (prob(src.rare_prob))
 				randomInfo = pick(figure_high_rarity)
 			else
 				randomInfo = pick(figure_low_rarity)
 
 			src.info = new randomInfo(src)
-		src.name = "[src.info.name] figure"
+ 		src.name = "[src.info.name] figure"
 		src.icon_state = "fig-[src.info.icon_state]"
 		if (src.info.rare_varieties.len && prob(5))
 			src.icon_state = "fig-[pick(src.info.rare_varieties)]"
@@ -147,6 +167,10 @@
 			src.name = "[name_prefix(null, 1)][src.info.name] figure[name_suffix(null, 1)]"
 		else
 			return ..()
+
+proc/add_to_donator_list(var/potential_donator_ckey)
+	if (donator_ckeys.Find(potential_donator_ckey))
+		online_donator_ckeys += potential_donator_ckey
 
 var/list/figure_low_rarity = list(\
 /datum/figure_info/assistant,
@@ -1029,6 +1053,18 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Sam Relius"
 		icon_state = "samrelius"
 		ckey = "torchwick"
+	klushy225
+		name = "\improper Munches Paper"
+		icon_state = "munchespaper"
+		ckey = "klushy225"
+	linkey
+		name = "\improper Kate Smith"
+		icon_state = "katesmith"
+		ckey = "linkey"
+	gibusgame
+		name = "\improper Harper Costache"
+		icon_state = "harpercostache"
+		ckey = "gibusgame"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

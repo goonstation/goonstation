@@ -27,8 +27,8 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint))
-			. += A.examine_hint
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -118,7 +118,7 @@
 				if ("ancient")
 					O.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 				if ("wizard")
-					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
+					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","mirabilis", "mugwort", "carpet")
 				if ("precursor")
 					O.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
 			if(prob(10))

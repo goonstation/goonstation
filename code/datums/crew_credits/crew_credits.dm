@@ -342,6 +342,10 @@
 			"value" = round(score_tracker.score_enemy_failure_rate),
 		),
 		list(
+			"name" = "Monsieur Stirstir Survived",
+			"value" = score_tracker.score_stirstir_alive ? "Yes" : "No",
+		),
+		list(
 			"name" = "Total Department Score",
 			"type" = "colorPercent",
 			"value" =  round(score_tracker.final_score_sec),
@@ -392,6 +396,10 @@
 			"name" = "Station Profitability",
 			"type" = "colorPercent",
 			"value" = round(score_tracker.score_expenses),
+		),
+		list(
+			"name" = "Mails Delivered / Frauded",
+			"value" = "[score_tracker.mail_opened] / [score_tracker.mail_fraud]"
 		),
 		list(
 			"name" = "Total Department Score",
