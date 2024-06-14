@@ -561,6 +561,14 @@
 
 	. = ..()
 
+/mob/dead/observer/set_loc(atom/new_loc, new_pixel_x, new_pixel_y)
+	var/turf/NewTurf = get_turf(new_loc)
+	if (!can_ghost_be_here(src, NewTurf))
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
+		src.set_loc(OS)
+		return
+	. = ..()
+
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A) || A == src) return
 	if (ismob(A))
