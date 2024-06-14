@@ -1446,6 +1446,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_glov = list(/obj/item/clothing/gloves/black/inspector)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_rhan = list(/obj/item/device/ticket_writer)
+	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 
 	proc/inspector_miranda()
