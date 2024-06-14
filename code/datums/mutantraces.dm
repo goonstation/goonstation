@@ -1148,21 +1148,34 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			src.mob.mob_flags &= ~IS_BONEY
 		. = ..()
 
-	proc/set_head(var/obj/item/organ/head/head)
+	proc/head_moved(removed = FALSE)
+		if (isnull(src.head_tracker))
+			return
+
+		if (removed)
+			src.mob.set_eye(src.head_tracker)
+			src.mob.ensure_say_tree().update_speaker_origin(src.head_tracker)
+			src.mob.ensure_listen_tree().update_listener_origin(src.head_tracker)
+
+		else
+			src.mob.set_eye(null)
+			src.mob.ensure_say_tree().update_speaker_origin(src.mob)
+			src.mob.ensure_listen_tree().update_listener_origin(src.mob)
+
+	proc/set_head(obj/item/organ/head/head)
 		// if the head was previous linked to someone else
-		if (isskeleton(head?.linked_human) && head?.linked_human != src.mob)
-			var/mob/living/carbon/human/H = head.linked_human
-			var/datum/mutantrace/skeleton/S = H.mutantrace
-			if (H.eye == head)
-				H.set_eye(null)
-			S.head_tracker = null
-			boutput(H, SPAN_ALERT("<b>You feel as if your head has been repossessed by another!</b>"))
-		// if we were previously linked to another head
-		if (src.head_tracker)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
-			src.head_tracker.linked_human = null
+		if (isnull(head))
+			src.mob.set_eye(null)
+
+		if (isskeleton(head?.linked_human) && (src.mob != head.linked_human))
+			var/datum/mutantrace/skeleton/S = head.linked_human.mutantrace
+			S.set_head(null)
+			boutput(head.linked_human, SPAN_ALERT("<b>You feel as if your head has been repossessed by another!</b>"))
+			head.linked_human = null
+
+		if ((head != head_tracker) && !isnull(head_tracker))
+			head_tracker.linked_human = null
+
 		head_tracker = head
 		if (src.head_tracker)
 			head_tracker.linked_human = src.mob

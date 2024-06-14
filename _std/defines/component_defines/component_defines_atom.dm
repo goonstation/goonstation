@@ -242,15 +242,6 @@
 	/// Make cloaking devices turn off - sent to the mob
 	#define COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
 
-	// ---- typing indicator signals ----
-
-	/// Create typing indicator
-	#define COMSIG_CREATE_TYPING "create_typing"
-	/// Remove typing indicator
-	#define COMSIG_REMOVE_TYPING "remove_typing"
-	/// Speech bubble
-	#define COMSIG_SPEECH_BUBBLE "speech_bubble"
-
 	// ---- disguiser device signal ----
 
 	/// Make disguiser devices turn off - sent to the mob

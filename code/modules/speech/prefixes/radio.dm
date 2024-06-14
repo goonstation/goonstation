@@ -1,12 +1,28 @@
 /datum/say_prefix/radio
 	id = list(";", ":")
 
+/datum/say_prefix/radio/is_compatible_with(datum/say_message/message, datum/speech_module_tree/say_tree)
+	. = FALSE
+
+	if (ismob(message.message_origin))
+		return TRUE
+
+	if (istype(message.message_origin, /obj/item/organ/head))
+		return TRUE
+
 /datum/say_prefix/radio/process(datum/say_message/message, datum/speech_module_tree/say_tree)
 	. = message
 
-	var/mob/mob_speaker = message.message_origin
-	var/obj/item/device/radio/radio = mob_speaker.find_radio()
-	if (!radio)
+	var/obj/item/device/radio/radio
+
+	if (ismob(message.message_origin))
+		var/mob/mob_speaker = message.message_origin
+		radio = mob_speaker.find_radio()
+	else
+		var/obj/item/organ/head/head = message.message_origin
+		radio = head.ears
+
+	if (!istype(radio))
 		return
 
 	message.atom_listeners_to_be_excluded ||= list()
