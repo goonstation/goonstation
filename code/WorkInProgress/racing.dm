@@ -369,6 +369,19 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 				abilities.addAbility(new_powerup)
 
 		return
+	// copied from clown cars
+	Click()
+		if(usr != driver)
+			..()
+			return
+		if(can_act(usr))
+			exit()
+		return
+
+	// allow people to enter the car by clickdragging
+	MouseDrop_T(mob/living/target, mob/user)
+		if (target == user)
+			enter()
 
 	verb/enter()
 		set src in oview(1)
@@ -392,6 +405,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		name = "Turbo Clowncar 2000 ([driver.name])"
 		src.name_suffix(" ([driver.name])")
+		src.UpdateName()
 		driving = 0
 
 	verb/exit()
@@ -409,6 +423,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		abilities = null
 
 		src.remove_suffixes(" ([driver.name])")
+		src.UpdateName()
 		driver = null
 		driving = 0
 
@@ -533,7 +548,8 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 			A = driver.add_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = A
 
-		src.name_prefix("[driver.name]'s ")
+		src.name_suffix(" ([driver.name])")
+		src.UpdateName()
 		driving = 0
 		update()
 
@@ -558,7 +574,8 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		src.ClearSpecificOverlays("spin")
 		src.ClearSpecificOverlays("super")
 
-		src.remove_prefixes("[driver.name]'s ")
+		src.remove_suffixes(" ([driver.name])")
+		src.UpdateName()
 		driver = null
 		driving = 0
 		layer = OBJ_LAYER
