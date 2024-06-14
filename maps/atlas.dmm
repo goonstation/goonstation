@@ -10275,20 +10275,11 @@
 /area/listeningpost)
 "aNo" = (
 /obj/rack,
-/obj/item/clothing/suit/space/syndicate,
-/obj/item/clothing/head/helmet/space/syndicate,
-/obj/item/tank/jetpack,
+/obj/item/tank/oxygen,
 /turf/simulated/floor/red,
 /area/listeningpost)
-"aNq" = (
-/obj/storage/closet,
-/obj/item/clothing/under/misc/syndicate,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "aNr" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -10696,17 +10687,8 @@
 	dir = 4
 	},
 /area/listeningpost)
-"aOO" = (
-/obj/rack,
-/turf/simulated/floor/red,
-/area/listeningpost)
-"aOQ" = (
-/obj/storage/closet,
-/obj/item/clothing/under/misc/syndicate,
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "aOR" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -18277,8 +18259,6 @@
 	},
 /area/station/medical/medbay)
 "oYk" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
 /obj/machinery/light{
 	layer = 3
 	},
@@ -21077,8 +21057,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "xce" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -97258,7 +97236,7 @@ aZF
 aOA
 aNe
 aUH
-aOO
+aNo
 aNf
 aMX
 aYB
@@ -98156,7 +98134,7 @@ aaa
 aaa
 acl
 aNe
-aNq
+aOB
 aUH
 aNe
 aNZ
@@ -98164,7 +98142,7 @@ aJf
 aNX
 aNe
 aUH
-aOQ
+aNY
 aNe
 aJe
 aaa
@@ -98458,7 +98436,7 @@ aaa
 aaa
 aaa
 ohq
-aNq
+aOB
 aUH
 aNe
 aNY
@@ -98466,7 +98444,7 @@ aJf
 aOB
 aNe
 aUH
-aOQ
+aNY
 ohq
 aaa
 aaa
@@ -98760,7 +98738,7 @@ aaa
 aaa
 aaa
 ohq
-aNq
+aOB
 aUH
 aNL
 aOa
@@ -98768,7 +98746,7 @@ aFQ
 aOa
 aNL
 aUH
-aOQ
+aNY
 ohq
 aaa
 aaa

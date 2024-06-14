@@ -12179,7 +12179,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/listeningpost)
 "aPv" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/listeningpost)
 "aPx" = (

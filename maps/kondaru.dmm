@@ -28816,18 +28816,15 @@
 /turf/space,
 /area/research_outpost/indigo_rye)
 "clR" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "clS" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/clothing/under/misc/syndicate,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
-/obj/item/storage/fanny/syndie,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "clT" = (

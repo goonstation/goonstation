@@ -22929,6 +22929,7 @@
 	pixel_x = -6;
 	pixel_y = 16
 	},
+/obj/item/crowbar,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -25586,19 +25587,7 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "kIX" = (
-/obj/storage/closet/syndicate,
-/obj/item/clothing/under/misc/syndicate{
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/storage/fanny/syndie,
-/obj/item/device/multitool{
-	pixel_x = 5
-	},
-/obj/item/crowbar,
-/obj/item/cell/supercell/charged{
-	pixel_y = -8
-	},
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost)
 "kJh" = (
@@ -43026,6 +43015,12 @@
 /obj/item/device/nanoloom{
 	pixel_x = -2;
 	pixel_y = 15
+	},
+/obj/item/cell/supercell/charged{
+	pixel_y = -8
+	},
+/obj/item/device/multitool{
+	pixel_x = 5
 	},
 /turf/simulated/floor/engine,
 /area/listeningpost/power)

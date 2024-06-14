@@ -573,6 +573,12 @@
 ///// syndicate trader /////////
 ////////////////////////////////
 
+/datum/commodity/clothing_restock
+	comname = "Clothing Vendor Restock Cartridge"
+	desc = "A restock cartridge for restocking clothing vending machines."
+	comtype = /obj/item/vending/restock_cartridge/jobclothing
+	price = PAY_IMPORTANT
+
 /datum/commodity/contraband
 	comname = "Contraband"
 	desc = "Stolen gear and syndicate products."
