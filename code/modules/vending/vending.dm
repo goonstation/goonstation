@@ -791,7 +791,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 			src.vend_ready = 0
 			src.prevend_effect()
-			if(!src.freestuff) R.product_amount--
+			if(!src.freestuff && !R.infinite) R.product_amount--
 
 			if (src.pay)
 				if (src.acceptcard && account)
@@ -989,9 +989,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		else
 			continue
 
-		while(R.product_amount>0)
+		while(R.product_amount>0 || R.infinite)
 			new dump_path(src.loc)
-			R.product_amount--
+			if (!R.infinite)
+				R.product_amount--
+			else if(prob(20))
+				break
 		break
 
 	status |= BROKEN
@@ -1050,14 +1053,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	else if (isfile(R.product_path))
 		var/sound/S = sound(R.product_path)
 		if (S)
-			R.product_amount--
+			if (!R.infinite)
+				R.product_amount--
 			SPAWN(0)
 				playsound(src.loc, S, 50, 0)
 				src.visible_message(SPAN_ALERT("<b>[src] launches [R.product_name] at [target.name]!</b>"))
 			return 1
 
 	if (throw_item)
-		R.product_amount--
+		if(!R.infinite)
+			R.product_amount--
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)

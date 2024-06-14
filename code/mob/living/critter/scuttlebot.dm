@@ -102,6 +102,7 @@
 				boutput(src, SPAN_ALERT("A horrible sense of dread looms over you. Your real body is dead! The scuttlebot's advanced AI takes over and retains your conscience."))
 			else
 				src.mind.transfer_to(controller)
+			controller.network_device = null
 			controller = null
 
 /mob/living/critter/robotic/scuttlebot/weak

@@ -181,7 +181,6 @@ export const Vendors = (props, context) => {
                     <Image
                       height="128px"
                       width="128px"
-                      pixelated
                       src={
                         `data:image/png;base64,${productList.find(product => product.name === currentlyVending).img}`
                       } />

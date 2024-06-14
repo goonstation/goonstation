@@ -84,6 +84,8 @@
 		buildMaterialPropertyCache()	//Order is important.
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
+		Z_LOG_DEBUG("Preload", "Building manufacturing requirement cache...")
+		buildManufacturingRequirementCache() // ^^
 
 		// no log because this is functionally instant
 		global_signal_holder = new
@@ -223,3 +225,21 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
+
+/proc/buildManufacturingRequirementCache()
+	requirement_cache = list()
+	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material
+	for (var/datum/manufacturing_requirement/R_path as anything in requirementList)
+		var/datum/manufacturing_requirement/R = new R_path()
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.getID() in requirement_cache)
+			CRASH("ID conflict: [R.getID()] from [R]")
+		#endif
+		requirement_cache[R.getID()] = R
+	for (var/datum/material/mat as anything in material_cache)
+		var/datum/manufacturing_requirement/match_material/R = new /datum/manufacturing_requirement/match_material(mat)
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.getID() in requirement_cache)
+			CRASH("ID conflict: [R.getID()] from [R]")
+		#endif
+		requirement_cache[R.getID()] = R

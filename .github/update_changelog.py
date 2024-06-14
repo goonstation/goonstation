@@ -19,6 +19,7 @@ from github import Github, InputGitAuthor
 labels_to_emoji = {
 	'a-admin': '🚨',
 	'a-ai': '📡',
+	'a-api': '☁',
 	'a-atmospherics': '💨',
 	'a-catering': '🍝',
 	'a-chemistry': '⚗',

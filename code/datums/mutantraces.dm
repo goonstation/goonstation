@@ -230,6 +230,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/self_click_fluff //used when clicking self on help intent
 
+	/// Abilityholder associated with this mutantrace, will be automatically given to mobs on spawn
+	var/mutant_abilityholder = null
+	/// List of abilities associated with this mutantrace, requires mutant_abilityholder to be set
+	var/list/mutant_abilities = list()
+
 	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
 	/// Each sub-proc passes its obj to this proc, which you can then operate on.
 	/// Should return a filter or list of filters, to be added to the obj's wear_image.filters
@@ -321,6 +326,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
 
+		if(src.mutant_abilityholder)
+			var/datum/abilityHolder/mutantHolder = M.get_ability_holder(src.mutant_abilityholder)
+			if(!mutantHolder)
+				mutantHolder = M.add_ability_holder(src.mutant_abilityholder)
+			for(var/ability in src.mutant_abilities)
+				mutantHolder.addAbility(ability)
+
+
 		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M?.organHolder?.skull)
 				M.assign_gimmick_skull() // For hunters (Convair880).
@@ -376,6 +389,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				var/mob/living/carbon/human/H = src.mob
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
+
+				if(src.mutant_abilityholder)
+					var/datum/abilityHolder/mutantHolder = src.mob.get_ability_holder(src.mutant_abilityholder)
+					if(mutantHolder)
+						for(var/ability in src.mutant_abilities)
+							mutantHolder.removeAbility(ability)
+						src.mob.remove_ability_holder(src.mutant_abilityholder)
 
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
@@ -764,18 +784,15 @@ TYPEINFO(/datum/mutantrace/virtual)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
+	mutant_abilityholder = /datum/abilityHolder/virtual
+	mutant_abilities = list(/datum/targetable/virtual/logout)
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(src.mob))
 			var/color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
 			src.mob.blood_color = color
 			src.mob.bioHolder.bloodColor = color
-			var/datum/abilityHolder/virtual/A = H.get_ability_holder(/datum/abilityHolder/virtual)
-			if (A && istype(A))
-				return
-			var/datum/abilityHolder/virtual/W = H.add_ability_holder(/datum/abilityHolder/virtual)
-			W.addAbility(/datum/targetable/virtual/logout)
-//for sure didnt steal code from ww. no siree
 
 /datum/mutantrace/blank
 	name = "blank"
@@ -849,10 +866,16 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	ghost_icon_state = "ghost-lizard"
 
+	mutant_abilityholder = /datum/abilityHolder/lizard
+	mutant_abilities = list(
+		/datum/targetable/lizardAbility/colorshift,
+		/datum/targetable/lizardAbility/colorchange,
+		/datum/targetable/lizardAbility/regrow_tail
+	)
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
-			H.give_lizard_powers()
 			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
 			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 			H.mob_flags |= SHOULD_HAVE_A_TAIL
@@ -886,7 +909,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			C?.RemoveComponent(/datum/component/consume/organpoints)
 			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
-			L.remove_lizard_powers()
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			src.mob.thermoregulation_mult = initial(src.mob.thermoregulation_mult)
 			src.mob.base_body_temp = initial(src.mob.base_body_temp)
@@ -2028,6 +2050,17 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
 
+	mutant_abilityholder = /datum/abilityHolder/kudzu
+	mutant_abilities = list(
+		/datum/targetable/kudzu/guide,
+		/datum/targetable/kudzu/growth,
+		/datum/targetable/kudzu/seed,
+		/datum/targetable/kudzu/heal_other,
+		/datum/targetable/kudzu/stealth,
+		/datum/targetable/kudzu/kudzusay,
+		/datum/targetable/kudzu/vine_appendage
+	)
+
 	custom_attack(atom/target)
 		if(ishuman(target))
 			src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> waves its limbs at [target] threateningly!"))
@@ -2045,15 +2078,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
-				H.abilityHolder.owner = H
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/growth)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/seed)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/vine_appendage)
 
 				H.ensure_say_tree().AddOutput(SPEECH_OUTPUT_KUDZUCHAT)
 				H.ensure_listen_tree().AddInput(LISTEN_INPUT_KUDZUCHAT)
@@ -2062,14 +2086,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
-			if(H.abilityHolder)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 

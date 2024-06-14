@@ -295,7 +295,7 @@
 		var/dna_gain = absorbed_dna
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
 			dna_gain = dna_gain / 2
-		dna_gain += 4
+		dna_gain += CHANGELING_HANDSPIDER_COST
 		boutput(hivemind_owner.owner, SPAN_NOTICE("A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
@@ -541,7 +541,7 @@
 				else
 					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B>"))
 
-		var/dna_gain = 6 //spend dna
+		var/dna_gain = CHANGELING_LEGWORM_COST
 		boutput(hivemind_owner.owner, SPAN_NOTICE("A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
@@ -617,7 +617,7 @@
 				else
 					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B>"))
 
-		var/dna_gain = 1 //spend dna
+		var/dna_gain = CHANGELING_BUTTCRAB_COST
 		boutput(hivemind_owner.owner, SPAN_NOTICE("A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)

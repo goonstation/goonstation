@@ -76,7 +76,7 @@
 		adminMsg += adminClient ? key_name(adminClient) : adminKey
 		adminMsg += " has banned [targetClient ? targetClient : replacementText] [serverLogSnippet].<br>Reason: [reason]<br>Duration: [durationHuman]."
 		if (ban)
-			adminMsg += " <a href='https://goonhub.com/admin/bans/[ban.id]' target='_blank'>View Ban</a>"
+			adminMsg += " <a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>View Ban</a>"
 		adminMsg += "</span>"
 		message_admins(adminMsg)
 
@@ -85,7 +85,7 @@
 			var/ircmsg[] = new()
 			ircmsg["key"] = adminKey
 			ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
-			ircmsg["msg"] = reason + "\n\n\[View Ban\](<https://goonhub.com/admin/bans/[ban.id]>)"
+			ircmsg["msg"] = reason + "\n\n\[View Ban\](<[goonhub_href("/admin/bans/[ban.id]")]>)"
 			ircmsg["time"] = durationHuman
 			ircmsg["timestamp"] = ((world.realtime / 10) / 60) + (duration / 60) // duration is in seconds, bot expects minutes
 			ircbot.export_async("ban", ircmsg)
@@ -194,13 +194,13 @@
 		var/logMsg = "edited [constructTarget(target,"admin")]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, logMsg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, logMsg, "admin")
-		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] edited [target]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]. <a href='https://goonhub.com/admin/bans/[ban.id]' target='_blank'>View Ban</a></span>")
+		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] edited [target]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]. <a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>View Ban</a></span>")
 
 		// Tell Discord
 		var/ircmsg[] = new()
 		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
 		ircmsg["name"] = (adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A")
-		ircmsg["msg"] = "edited [target]'s ban. Reason: [ban.reason]. Duration: [durationHuman]. [serverLogSnippet].\n\n\[View Ban\](<https://goonhub.com/admin/bans/[ban.id]>)"
+		ircmsg["msg"] = "edited [target]'s ban. Reason: [ban.reason]. Duration: [durationHuman]. [serverLogSnippet].\n\n\[View Ban\](<[goonhub_href("/admin/bans/[ban.id]")]>)"
 		ircbot.export_async("admin", ircmsg)
 
 	/// Remove a ban
@@ -247,13 +247,13 @@
 		var/original_ckey = ban.original_ban_detail["ckey"]
 
 		// Tell admins
-		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='https://goonhub.com/admin/bans/[ban.id]' target='_blank'>[ban.id]</a>, Original Ckey: [original_ckey]"
+		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>[ban.id]</a>, Original Ckey: [original_ckey]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
 		message_admins("<span class='internal'>[messageAdminsAdmin] [msg]</span>")
 
 		// Tell discord
-		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[ban.id]\](<https://goonhub.com/admin/bans/[ban.id]>), Original Ckey: [original_ckey]"
+		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[ban.id]\](<[goonhub_href("/admin/bans/[ban.id]")]>), Original Ckey: [original_ckey]"
 		var/ircmsg[] = new()
 		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"

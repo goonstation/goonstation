@@ -37,13 +37,13 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	can_burn = FALSE
 	pet_text = "cuddles"
 	hand_count = 1 //stabby hands
+	ailment_immune = TRUE
 
 	faction = list(FACTION_SYNDICATE)
 
 	New()
 		..()
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 
 		if(name == initial(name))
@@ -167,7 +167,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		remove_lifeprocess(/datum/lifeprocess/mutations)
 		remove_lifeprocess(/datum/lifeprocess/organs)
 		remove_lifeprocess(/datum/lifeprocess/sight)
-		remove_lifeprocess(/datum/lifeprocess/skin)
 		remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 

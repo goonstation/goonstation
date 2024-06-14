@@ -901,6 +901,9 @@
 	var/prev_invis = ghost_invisibility
 	ghost_invisibility = new_invis
 	for (var/mob/dead/observer/G in mobs)
+		if (G.invisibility == INVIS_ALWAYS)
+			// logged out ghosts stay invisible
+			continue
 		G.invisibility = new_invis
 		REMOVE_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G)
 		APPLY_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G, new_invis)

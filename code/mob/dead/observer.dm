@@ -107,7 +107,7 @@
 	var/datum/trait/trait
 	for (var/trait_id in P.traitPreferences.traits_selected)
 		trait = getTraitById(trait_id)
-		if (trait.mutantRace)
+		if (trait.mutantRace && src.icon == initial(src.icon))
 			src.icon_state = trait.mutantRace.ghost_icon_state
 			is_mutantrace = TRUE
 			break
@@ -305,10 +305,6 @@
 				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 					antagonist.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
-				if (istype(src.loc, /obj/cryotron))
-					var/datum/job/job = find_job_in_controller_by_string(src.job, soft=TRUE)
-					if (job)
-						job.assigned = max(0, job.assigned - 1)
 				src.ghostize()
 				qdel(src)
 			else

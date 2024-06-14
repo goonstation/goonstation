@@ -4,6 +4,7 @@
 #define SPEECH_OUTPUT_EQUIPPED "equipped"
 #define SPEECH_OUTPUT_FLOCK "flock"
 #define SPEECH_OUTPUT_FLOCK_GLOBAL "global_flock"
+#define SPEECH_OUTPUT_FLOCK_ION "flock_ion"
 #define SPEECH_OUTPUT_FLOCK_SYSTEM "flock_system"
 #define SPEECH_OUTPUT_GHOSTDRONE "ghostdrone"
 #define SPEECH_OUTPUT_HIVECHAT "hivechat"

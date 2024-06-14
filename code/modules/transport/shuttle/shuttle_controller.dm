@@ -286,7 +286,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
 							if(length(turfs_to_fix))
-								station_repair.repair_turfs(turfs_to_fix)
+								station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
 
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)

@@ -137,6 +137,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
 	var/locking = 0
+	HELP_MESSAGE_OVERRIDE(null)
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
@@ -252,6 +253,22 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/full_heal()
 	..()
 	src.turn_it_back_on()
+
+/mob/living/silicon/ai/get_help_message(dist, mob/user)
+	switch(src.dismantle_stage)
+		if(0)
+			. = "You can swipe an <b>ID card</b> to unlock the cover."
+		if(1)
+			. = "You can use a <b>crowbar</b> to pry open the cover, or swipe an <b>ID card</b> to lock it."
+		if(2)
+			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
+		if(3)
+			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
+		if(4)
+			. = "You can insert a <b>brain</b> to activate the AI."
+	if(src.dismantle_stage < 4 && isdead(src))
+		. += " You can use an <b>empty hand</b> to reboot the AI."
+	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
@@ -470,23 +487,13 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
-			var/turf/T = user.loc
-			SPAWN(6 SECONDS)
-				if (user.loc != T || !can_act(user))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
-				src.dismantle_stage = 3
+			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (src.dismantle_stage == 3)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
-			var/turf/T = user.loc
-			SPAWN(6 SECONDS)
-				if (user.loc != T || !can_act(user))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
-				src.dismantle_stage = 2
+			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else ..()
 
 	else if (isweldingtool(W))
@@ -707,6 +714,15 @@ or don't if it uses a custom topopen overlay
 		return TRUE
 	return FALSE
 
+/// for dismantle action bar
+/mob/living/silicon/ai/proc/toggle_CPU_bolts(mob/user)
+	switch(src.dismantle_stage)
+		if(2)
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
+			src.dismantle_stage = 3
+		if(3)
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
+			src.dismantle_stage = 2
 
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")

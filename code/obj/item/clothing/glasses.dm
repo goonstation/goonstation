@@ -51,7 +51,7 @@
 		setProperty("disorient_resist_eye", 100)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user.zone_sel.selecting == "head" && ishuman(target)) //ishuman() works on monkeys too apparently.
+		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
 			var/mob/living/carbon/human/Htarget = target //can't equip to mobs unless they are human
 			if(user == Htarget) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, SPAN_ALERT("Put it on your eyes, dingus!"))
@@ -447,6 +447,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			else if(!connected_scuttlebot.loc)
 				boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot couldnt be found."))
 			else
+				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else

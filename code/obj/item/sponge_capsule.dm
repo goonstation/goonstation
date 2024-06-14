@@ -12,6 +12,8 @@
 	stamina_crit_chance = 1
 	rand_pos = 1
 	color = "#FF0000"
+	edible = TRUE
+	eat_sound = 'sound/misc/gulp.ogg'
 	var/colors = list("#FF0000", "#0000FF", "#00FF00", "#FFFF00")
 	var/obj/critter/animal_to_spawn = null
 	var/animals = list(/mob/living/critter/small_animal/cat,
@@ -35,6 +37,17 @@
 					/mob/living/critter/lion,
 					/mob/living/critter/fermid)
 
+	add_water()
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.setStatus("unconscious", 10 SECONDS)
+			M.TakeDamage("all", 60)
+			take_bleeding_damage(M, M, 50, DAMAGE_CUT)
+			SPAWN(1)
+				boutput(M, SPAN_ALERT("Something horrible forces its way out of your stomach! HOLY SHIT!!!"))
+		. = ..()
+
+
 /obj/item/toy/sponge_capsule/New()
 	..()
 	color = pick(colors)
@@ -48,20 +61,22 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	if (iscarbon(target) && target == user)
-		target.visible_message(SPAN_NOTICE("[target] stuffs [src] into [his_or_her(target)] mouth and and eats it."))
-		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
-		eat_twitch(target)
-		user.u_equip(src)
-		qdel(src)
-	else
-		return
+/obj/item/toy/sponge_capsule/eat_msg(mob/M)
+	M.visible_message(SPAN_NOTICE("[M] stuffs [src] into [his_or_her(M)] mouth and and eats it."))
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	var/turf/T = get_turf(src)
 	if (!T)
 		return
+	if (ismob(src.loc))
+		var/mob/idiot = src.loc
+		idiot.emote("scream")
+		if (ishuman(idiot))
+			var/mob/living/carbon/human/human_idiot = idiot
+			if (src in human_idiot.organHolder?.stomach?.stomach_contents)
+				boutput(human_idiot, SPAN_ALERT("You feel your stomach suddenly bloat horribly!"))
+				human_idiot.organHolder.stomach.eject(src)
+				human_idiot.organHolder.stomach.take_damage(30)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)

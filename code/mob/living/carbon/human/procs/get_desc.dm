@@ -367,7 +367,14 @@
 					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
 						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
 				else
-					. += "<br>[src.name] seems to be staring blankly into space."
+					. += "<br>[src.name] seems to be staring blankly into space. "
+					if (src.last_ckey && src.logout_at)
+						var/gone_time_s = floor((TIME - src.logout_at) / 10)
+						var/gone_time_m = floor(gone_time_s / 60)
+						if (gone_time_s <= 60)
+							. += SPAN_SUBTLE("<br>They slipped into it [gone_time_s] second\s ago.")
+						else
+							. += SPAN_SUBTLE("<br>They've been like this for [gone_time_m] minute\s.")
 
 	switch (src.decomp_stage)
 		if (DECOMP_STAGE_BLOATED)

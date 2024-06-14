@@ -836,3 +836,19 @@ TYPEINFO(/obj/storage/crate/chest)
 			stx_filler =  new /datum/loot_generator(3,2)
 			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
 			..()
+
+/obj/storage/crate/ks23
+	name = "Kuvalda Carbine crate"
+	desc = "A hefty container, presumably containing an equally hefty shotgun."
+	icon_state = "attachecase"
+	icon_opened = "attachecase_open"
+	icon_closed = "attachecase"
+
+	New()
+		var/datum/loot_generator/shotgun_gen
+		src.vis_controller = new(src)
+		shotgun_gen =  new /datum/loot_generator(4,3)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
+		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
+		..()

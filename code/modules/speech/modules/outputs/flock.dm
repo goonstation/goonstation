@@ -140,3 +140,39 @@
 	"}
 
 	. = ..()
+
+
+/datum/speech_module/output/ion_flock
+	id = SPEECH_OUTPUT_FLOCK_ION
+	channel = SAY_CHANNEL_DISTORTED_FLOCK
+
+/datum/speech_module/output/ion_flock/process(datum/say_message/message)
+	var/mind_ref = ""
+	if (ismob(message.speaker))
+		var/mob/mob_speaker = message.speaker
+		mind_ref = "\ref[mob_speaker.mind]"
+
+	message.speaker_to_display ||= message.speaker.name
+	message.speaker_to_display = radioGarbleText(message.speaker_to_display, FLOCK_RADIO_GARBLE_CHANCE)
+	message.content = radioGarbleText(message.content, FLOCK_RADIO_GARBLE_CHANCE)
+
+	message.format_speaker_prefix = {"\
+		<span class='game flocksay sentient'>\
+			<span class='bold'>\[?????\] </span>\
+			<span class='name' data-ctx='[mind_ref]'>\
+	"}
+
+	message.format_verb_prefix = {"\
+		</span> \
+		<span class='message'>\
+	"}
+
+	message.format_content_prefix = {"\
+		, \
+	"}
+
+	message.format_message_suffix = {"\
+		</span></span>\
+	"}
+
+	. = ..()

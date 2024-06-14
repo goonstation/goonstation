@@ -976,8 +976,13 @@
 
 			if ("raisehand")
 				if (!src.restrained())
-					message = "<B>[src]</B> raises a hand."
-					maptext_out = "<I>raises a hand</I>"
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<B>[src]</B> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<B>[src]</B> raises a hand."
+						maptext_out = "<I>raises a hand</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
 					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
@@ -1999,6 +2004,7 @@
 									break
 					if(length(combatflipped))
 						actions.interrupt(src, INTERRUPT_ACT)
+					src.drop_juggle()
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 						maptext_out = "<I>flops on the floor like a fish</I>"
@@ -2182,7 +2188,7 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
+					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Inspector")))
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
@@ -2201,9 +2207,10 @@
 					src.add_karma(-4)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-						if(sec_record && sec_record["criminal"] != "*Arrest*")
-							sec_record["criminal"] = "*Arrest*"
+						if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
+							sec_record["criminal"] = ARREST_STATE_ARREST
 							sec_record["mi_crim"] = "Public dabbing."
+							src.update_arrest_icon()
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 

@@ -362,6 +362,10 @@ TRASH BAG
 		src.reagents.reaction(T, 1, 5)
 		src.reagents.remove_any(5)
 		mopcount++
+		if (istype(T, /turf/simulated))
+			var/turf/simulated/S = T
+			if (S.wet < 1)
+				S.wetify(1, rand(20, 35) SECONDS)
 
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
@@ -435,13 +439,7 @@ TRASH BAG
 
 			if(istype(U,/turf/simulated))
 				var/turf/simulated/T = U
-				var/wetoverlay = image('icons/effects/water.dmi',"wet_floor")
-				T.overlays += wetoverlay
-				T.wet = 1
-				SPAWN(30 SECONDS)
-					if (istype(T))
-						T.wet = 0
-						T.overlays -= wetoverlay
+				T.wetify(1, 75 SECONDS)
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
 			SPAWN(0.5 SECONDS)
@@ -895,8 +893,8 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list("bamboo"=3, "MET-1"=10)
-
+	mats = list("bamboo" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
@@ -1108,8 +1106,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list("neutronium"=3, "MET-1"=10)
-
+	mats = list("neutronium" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
 	color = list(0,0,1, 0,1,0, 1,0,0)

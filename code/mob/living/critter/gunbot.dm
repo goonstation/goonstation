@@ -1,6 +1,7 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
-	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
-
+	mats = list("metal_dense" = 12,
+				"conductive_high" = 12,
+				"dense" = 6)
 /mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
@@ -299,8 +300,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
-	mats = list("MET-2" = 16, "CON-2" = 12, "DEN-2" = 6, "POW-1"=4)
-
+	mats = list("metal_dense" = 16,
+				"conductive_high" = 12,
+				"dense_super" = 6,
+				"energy" = 4)
 /mob/living/critter/robotic/gunbot/mrl
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -315,8 +318,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
 		src.UpdateOverlays(image(src.icon,"gunbot-mrls"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
-	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-2"=4)
-
+	mats = list("metal_dense" = 12,
+				"conductive_high" = 12,
+				"dense" = 6,
+				"energy_high" = 4)
 /mob/living/critter/robotic/gunbot/flame
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -331,7 +336,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
 		src.UpdateOverlays(image(src.icon, "gunbot-flamethrower"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
-	mats = list("MET-3" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
+	mats = list("metal_superdense" = 12,
+				"conductive_high" = 12,
+				"dense" = 6,
+				"energy" = 4)
 /mob/living/critter/robotic/gunbot/cannon
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -359,7 +367,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
 		src.UpdateOverlays(image(src.icon, "gunbot-striker"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
-	mats = list("MET-2" = 18, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
+	mats = list("metal_dense" = 18,
+				"conductive_high" = 12,
+				"dense" = 6,
+				"energy" = 4)
 /mob/living/critter/robotic/gunbot/minigun
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -375,7 +386,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
 		src.UpdateOverlays(image(src.icon, "gunbot-heavy"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
-	mats = list("MET-3" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
+	mats = list("metal_superdense" = 12,
+				"conductive_high" = 12,
+				"dense" = 6,
+				"energy" = 4)
 /mob/living/critter/robotic/gunbot/chainsaw
 	icon_state = "gunbot-base"
 	setup_hands()

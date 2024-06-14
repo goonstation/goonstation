@@ -333,3 +333,18 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(obj/machinery/camera/camera)
 		camera.break_camera()
+
+/datum/ion_category/flock_speak //hehehe
+	amount_max = 7
+	amount_min = 3
+	var/atom/movable/abstract_say_source/ion_flock/flock_say_source
+
+	New()
+		. = ..()
+		src.flock_say_source = new()
+
+	fuck_up()
+		SPAWN(0)
+			for (var/i in 1 to rand(src.amount_min, src.amount_max))
+				src.flock_say_source.say(phrase_log.random_phrase("radio"))
+				sleep(rand(2 SECONDS, 30 SECONDS))

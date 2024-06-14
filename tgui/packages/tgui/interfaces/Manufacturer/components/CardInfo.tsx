@@ -6,23 +6,22 @@
  */
 
 import { Button, LabeledList, Section, Stack } from '../../../components';
+import { BankAccount } from '../type';
 import { formatMoney } from '../../../format';
 
 export type CardInfoProps = {
   actionCardLogin: () => void;
   actionCardLogout: () => void;
-  card_owner: string;
-  card_balance: number;
+  banking_info: BankAccount
 }
 
 export const CardInfo = (props:CardInfoProps) => {
   const {
     actionCardLogin,
     actionCardLogout,
-    card_owner,
-    card_balance,
+    banking_info,
   } = props;
-  return (card_owner === null || card_balance === null) ? (
+  return (banking_info === null) ? (
     <Section
       textAlign="center"
     >
@@ -44,12 +43,12 @@ export const CardInfo = (props:CardInfoProps) => {
         <LabeledList.Item
           label="Owner"
         >
-          {card_owner}
+          {banking_info?.name}
         </LabeledList.Item>
         <LabeledList.Item
           label="Balance"
         >
-          {formatMoney(card_balance)}⪽
+          {formatMoney(banking_info?.current_money)}⪽
         </LabeledList.Item>
       </LabeledList>
     </Section>
