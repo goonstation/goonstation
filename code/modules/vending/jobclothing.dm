@@ -253,7 +253,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_fallen = "syndieclothing-fallen"
 	pay = 1
 	acceptcard = 1
-	req_access = list(access_syndicate_shuttle)
+	req_access = list()
 
 	create_products(restocked)
 		..()
