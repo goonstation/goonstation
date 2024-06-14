@@ -7,6 +7,8 @@
 	icon_state = "bowling"
 	item_state = "bowling"
 	item_function_flags = IMMUNE_TO_ACID
+	HELP_MESSAGE_OVERRIDE("Wear this to wield bowling balls effectively in melee or thrown combat.")
+
 
 /obj/item/bowling_ball
 	name = "bowling ball"
@@ -17,6 +19,17 @@
 	force = 5
 	throw_speed = 1
 
+	HELP_MESSAGE_OVERRIDE("While wearing a bowling suit, you can throw this to stun and deal decent damage to someone. You can also effectively wield it in melee combat while wearing the bowling suit.")
+
+	New()
+		. = ..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attack_damage_modifier))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
+		. = ..()
+
+
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
 		hitMob.visible_message(SPAN_ALERT("[hitMob] is hit by [user]'s [src]!"))
 
@@ -25,7 +38,7 @@
 	proc/hitHard(var/mob/hitMob, var/mob/user)
 		hitMob.visible_message(SPAN_ALERT("[hitMob] is knocked over by [user]'s [src]!"))
 
-		src.damage(hitMob, 10, 15, user)
+		src.damage(hitMob, 20, 30, user)
 
 	proc/damage(var/mob/hitMob, damMin, damMax, var/mob/living/carbon/human/user)
 		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
@@ -71,6 +84,18 @@
 						else
 							src.hitWeak(hitMob, user)
 		return
+
+	proc/pre_attack_damage_modifier(obj/item/parent_item, atom/A, mob/user)
+			var/mob/living/carbon/human/human_user = user
+			if(human_user.w_uniform && istype(human_user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+				//bashing someones skull in with a bowling ball should hurt if you are worthy of the bowling ball
+				src.force = 20
+				src.stamina_damage = 40
+				spawn(1)
+					//Doing this over a spawn should cover all cases where the attack gets cancelled prematurely
+					//which would normally prevent an event-based way for force to be returned to its initial state
+					src.force = initial(src.force)
+					src.stamina_damage = initial(src.stamina_damage)
 
 /obj/item/armadillo_ball
 	name = "armadillo ball"
