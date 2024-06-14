@@ -1182,16 +1182,22 @@ proc/spawn_kitchen_note()
 	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
 	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
 
-	<p>You should have received a wireless control remote for easy convenience of using this implant.
+	<h3>Control Remote</h3>
+	<p>You should have received a control remote for easy convenience of using this implant.
 	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
 	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
 
 	<p>Once implanted into a target, simply use the remote to your heart's content! There is a short cooldown period between activations.</p>
 
+	<p>The remote is programmed to interpret response signals sent by activated implants. If the activation triggered an effect successfully, the
+	remote will bloop; if it failed -- whether due to the implantee being dead or the conditions for the effect not being met -- then the remote will
+	rumble. Only the person holding the remote (hopefully you) and anyone sharing a space with them can hear these bloops and grumbles,
+	although the button presses that come from actually using it are audible to anyone within a few tiles!</p>
+
 	<h3>Heat</h3>
-	<p>Be wary that <b>each activation of an implant will cause heat buildup that may destroy it.</b> The components are delicate and are not built for
-	repeated short-term stress. Heat will dissipate slowly over time.
-	<b>Heat will build up upon activation even if the conditions for the provided action are not met.</b></p>
+	<p>Be wary that <u>each activation of an implant will cause heat buildup that may destroy it.</u> The components are delicate and are not built for
+	repeated short-term stress. Heat will dissipate slowly over time. Heat will build up upon activation even if the conditions for the provided
+	action are not met.</p>
 
 	<h3>Packets</h3>
 	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
@@ -1214,6 +1220,11 @@ proc/spawn_kitchen_note()
 	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
 	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it.
 	You can also get the passkey by pinging the implant!</p>
+
+	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
+	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code. <code>TARG_DEAD</code> means that the implantee is deceased,
+	while <code>TARG_NULL</code> means that the implant isn't inside a creature. <code>INVALID</code> means that the command is invalid, or that the
+	conditions for triggering the provided command were not met.</p>
 	"}
 
 	attack_self(mob/user)

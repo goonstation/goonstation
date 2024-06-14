@@ -892,6 +892,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
+#define IMP_MARIONETTE_ERROR_NO_TARGET "TARG_NULL"
+#define IMP_MARIONETTE_ERROR_DEAD_TARGET "TARG_DEAD"
+#define IMP_MARIONETTE_ERROR_INVALID "INVALID"
 /obj/item/implant/marionette
 	name = "marionette implant"
 	desc = "This thing looks really complicated."
@@ -930,7 +933,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!src.passkey)
 			src.passkey = "IMP-[rand(111, 999)]"
 		processing_items.Add(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_MARIONETTE_IMPLANT)
 
 	disposing()
 		processing_items.Remove(src)
@@ -986,15 +988,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				return
 
 		src.heat_dissipation = initial(src.heat_dissipation)
+
+		var/fail_reason
 		if (!ismob(src.owner))
-			if (!istype(src.loc, /obj/item/implanter))
-				src.visible_message(SPAN_ALERT("\The [src] vibrates a little bit."))
-				animate_shake(src)
-				playsound(src, 'sound/effects/sparks6.ogg', 25, TRUE)
+			fail_reason = IMP_MARIONETTE_ERROR_NO_TARGET
+			send_activation_reply(signal.data["sender"], fail_reason)
 			return
 
 		var/mob/living/carbon/human/H = src.owner
 		if (istype(H) && H.decomp_stage != DECOMP_STAGE_NO_ROT)
+			fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+			send_activation_reply(signal.data["sender"], fail_reason)
 			return
 
 		var/data = signal.data["data"]
@@ -1004,18 +1008,27 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 					data = copytext(data, 1, 46)
 					src.owner.say(data)
+				else
+					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
 			if ("emote")
 				data = lowertext(data)
-				if (!isdead(src.owner) && !(data in src.emote_blacklist))
-					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
-					src.owner.emote(data)
+				if (!isdead(src.owner))
+					if (data in src.emote_blacklist)
+						fail_reason = IMP_MARIONETTE_ERROR_INVALID
+					else
+						logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+						src.owner.emote(data)
+				else
+					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
 			if ("move", "step", "bump")
 				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 				var/step_dir = text2dir(uppertext(data))
 				if (step_dir && (step_dir in cardinal))
 					step(src.owner, step_dir)
+				else
+					fail_reason = IMP_MARIONETTE_ERROR_INVALID
 				src.adjust_heat(5)
 			if ("shock", "zap")
 				logTheThing(LOG_COMBAT, src.owner, "was shocked by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
@@ -1030,7 +1043,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						logTheThing(LOG_COMBAT, src.owner, "was forced to drop \the [I] by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 						boutput(src.owner, SPAN_ALERT("Your grip on \the [I] suddenly relaxes!"))
 						H.drop_item()
+					else
+						fail_reason = IMP_MARIONETTE_ERROR_INVALID
 					src.adjust_heat(60)
+				else
+					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
 			if ("use", "activate")
 				if (!isdead(src.owner))
 					var/obj/item/I = src.owner.equipped()
@@ -1038,7 +1055,25 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						logTheThing(LOG_COMBAT, src.owner, "was forced to activate \the [I] by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 						boutput(src.owner, SPAN_ALERT("Your hand involuntarily jerks."))
 						src.owner.click(I, list())
+					else
+						fail_reason = IMP_MARIONETTE_ERROR_INVALID
 					src.adjust_heat(35)
+				else
+					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+			else
+				fail_reason = IMP_MARIONETTE_ERROR_INVALID
+		send_activation_reply(signal.data["sender"], fail_reason)
+
+	proc/send_activation_reply(sender_address, fail_reason)
+		var/datum/signal/activation_signal = get_free_signal()
+		activation_signal.source = src
+		activation_signal.data["device"] = "IMP_MARIONETTE"
+		activation_signal.data["sender"] = src.net_id
+		activation_signal.data["address_1"] = sender_address
+		activation_signal.data["command"] = "activate"
+		if (fail_reason)
+			activation_signal.data["stack"] = fail_reason
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_signal)
 
 	proc/adjust_heat(to_heat)
 		src.heat = max(0, src.heat + to_heat)
@@ -1059,10 +1094,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			burnout_signal.data["command"] = "ping_reply"
 			burnout_signal.data["status"] = MARIONETTE_IMPLANT_STATUS_BURNED_OUT
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, burnout_signal)
-		src.name_prefix("melted")
+		src.name = "melted [src.name]" // Specifically change the name here instead of using prefix, so that it appears in the removed implant item
 		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
-		src.deactivate()
 		src.burned_out = TRUE
+		src.deactivate()
+#undef IMP_MARIONETTE_ERROR_NO_TARGET
+#undef IMP_MARIONETTE_ERROR_DEAD_TARGET
+#undef IMP_MARIONETTE_ERROR_INVALID
+
 
 /obj/item/remote/marionette_implant
 	name = "marionette implant remote"
@@ -1075,7 +1114,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_SMALL
 
-	HELP_MESSAGE_OVERRIDE({"Can track and control any number of marionette implants. To link an implant, simply use the remote on the implanter (or vice-versa)."})
+	HELP_MESSAGE_OVERRIDE({"
+	Can track and control any number of marionette implants. To link an implant, simply use the remote on the implanter (or vice-versa).
+	<br><br>
+	If the remote beeps after activation, the implant triggered successfully; if it buzzes, the implant received the signal, but failed to trigger.
+	Only the remote's holder can hear these sounds!"})
 
 	/// The network ID of the remote. Communicated to tracked implants when pinging.
 	var/net_id
@@ -1132,8 +1175,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (signal.data["status"] == MARIONETTE_IMPLANT_STATUS_BURNED_OUT && src.implant_status[sender_address] != MARIONETTE_IMPLANT_STATUS_BURNED_OUT)
 					for (var/mob/M in get_turf(src))
 						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant has burned out and is no longer usable."))
-						M.playsound_local(src, 'sound/machines/twobeep.ogg', 50)
+						M.playsound_local(src, "sound/machines/twobeep.ogg", 50)
 				src.implant_status[sender_address] = signal.data["status"]
+			if (signal.data["command"] == "activate")
+				for (var/mob/M in get_turf(src))
+					M.playsound_local(src, !signal.data["stack"] ? "sound/machines/claw_machine_success.ogg" : "sound/machines/claw_machine_fail.ogg", 10, TRUE)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -1160,16 +1206,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (action == "set_data")
 			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.entered_data, 45)
 			src.entered_data = new_data
-			playsound(src.loc, "keyboard", 25, TRUE, -15)
+			playsound(src.loc, "keyboard", 25, TRUE, -(MAX_SOUND_RANGE - 5))
 			. = TRUE
 		else if (action == "set_command")
 			src.selected_command = params["new_command"]
-			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -15)
+			playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
 			. = TRUE
 		else if (action == "remove_from_list")
 			src.implant_status.Remove(params["address"])
 			boutput(usr, SPAN_NOTICE("Implant removed from tracking list."))
-			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -15)
+			playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
 			. = TRUE
 		else
 			var/address = params["address"]
@@ -1184,6 +1230,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				activation_packet.data["command"] = command
 				activation_packet.data["data"] = data
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_packet)
+				playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
 				. = TRUE
 			else if ((action == "ping" || action == "ping_all") && !ON_COOLDOWN(src, "do_ping", 2 SECONDS))
 				var/list/to_ping = action == "ping" ? list(address) : src.implant_status
@@ -1204,6 +1251,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						SPAWN (2 SECONDS)
 							if (src.implant_status[implant_to_ping] == "WAITING...")
 								src.implant_status[implant_to_ping] = "NO RESPONSE"
+				playsound(src.loc, "sound/machines/keypress.ogg", 25, TRUE, -(MAX_SOUND_RANGE - 5))
 				. = TRUE
 
 /obj/item/implant/mindhack/super
