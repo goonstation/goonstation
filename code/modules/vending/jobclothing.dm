@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_fallen = "secclothing-fallen"
 	pay = 1
 	acceptcard = 1
-	req_access = list()
+	req_access = list(access_security)
 
 	create_products(restocked)
 		..()
