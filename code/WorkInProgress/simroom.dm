@@ -293,7 +293,8 @@
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)
-	playsound(src, 'sound/machines/sleeper_close.ogg', 50, 1)
+	if (!isobserver(usr))
+		playsound(src, 'sound/machines/sleeper_close.ogg', 50, 1)
 	return
 
 /obj/machinery/sim/vr_bed/MouseDrop_T(mob/living/target, mob/user)
