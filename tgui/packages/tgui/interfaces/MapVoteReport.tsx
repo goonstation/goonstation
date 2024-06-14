@@ -5,11 +5,21 @@
  * @license ISC
  */
 
-import { Window } from '../../layouts';
-import { useBackend } from '../../backend';
-import { Box, Stack } from '../../components';
-import { MapPanel } from '../MapVote';
-import { MapVoteReportData } from './type';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
+import { Box, Stack } from '../components';
+import { MapPanel } from './MapVote';
+import { MapVoteMapData } from './MapVote';
+
+interface MapVoteReportMapData extends MapVoteMapData {
+  count: number,
+  voters?: Array<string>
+}
+
+export interface MapVoteReportData {
+  mapList: Array<MapVoteReportMapData>,
+  winner: string
+}
 
 export const MapVoteReport = (_props, context) => {
   const { data } = useBackend<MapVoteReportData>(context);

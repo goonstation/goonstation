@@ -5,10 +5,20 @@
  * @license ISC
  */
 
-import { Window } from '../../layouts';
-import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Image, Section, Stack } from '../../components';
-import { MapVoteData } from './type';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
+import { Box, Button, Dimmer, Image, Section, Stack } from '../components';
+
+export interface MapVoteMapData {
+  name: string,
+  thumbnail: string,
+}
+
+export interface MapVoteData {
+  playersVoting: boolean,
+  mapList: Array<MapVoteMapData>,
+  clientVoteMap: any,
+}
 
 export const MapVote = (_props, context) => {
   const { data, act } = useBackend<MapVoteData>(context);
