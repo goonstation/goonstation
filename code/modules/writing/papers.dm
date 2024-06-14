@@ -1194,6 +1194,8 @@ proc/spawn_kitchen_note()
 	rumble. Only the person holding the remote (hopefully you) and anyone sharing a space with them can hear these bloops and grumbles,
 	although the button presses that come from actually using it are audible to anyone within a few tiles!</p>
 
+	<p>When using a remote, the implant's passkey is not required. You don't need this value unless you plan to use packet control, detailed below.</p>
+
 	<h3>Heat</h3>
 	<p>Be wary that <u>each activation of an implant will cause heat buildup that may destroy it.</u> The components are delicate and are not built for
 	repeated short-term stress. Heat will dissipate slowly over time. Heat will build up upon activation even if the conditions for the provided
@@ -1222,9 +1224,15 @@ proc/spawn_kitchen_note()
 	You can also get the passkey by pinging the implant!</p>
 
 	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
-	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code. <code>TARG_DEAD</code> means that the implantee is deceased,
-	while <code>TARG_NULL</code> means that the implant isn't inside a creature. <code>INVALID</code> means that the command is invalid, or that the
-	conditions for triggering the provided command were not met.</p>
+	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code, detailed below.</p>
+
+	<h4>Error Codes</h4>
+	<ul>
+	<li><code>TARG_DEAD</code> means that the implantee is deceased.</li>
+	<li><code>TARG_NULL</code> means that the implant isn't inside a creature.</li>
+	<li><code>INVALID</code> means that the command is invalid, or that the conditions for triggering the provided command were not met.</li>
+	<li><code>BADPASS</code> means that the provided passkey is incorrect.</li>
+	</ul></p>
 	"}
 
 	attack_self(mob/user)

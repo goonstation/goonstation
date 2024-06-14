@@ -892,16 +892,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
-#define IMP_MARIONETTE_ERROR_NO_TARGET "TARG_NULL"
-#define IMP_MARIONETTE_ERROR_DEAD_TARGET "TARG_DEAD"
-#define IMP_MARIONETTE_ERROR_INVALID "INVALID"
+#define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
+#define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
+#define MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY "BADPASS"
+#define MARIONETTE_IMPLANT_ERROR_INVALID "INVALID"
 /obj/item/implant/marionette
 	name = "marionette implant"
 	desc = "This thing looks really complicated."
 	icon_state = "implant-mh"
 	impcolor = "r"
 	scan_category = "syndicate"
-	uses_radio = TRUE
 	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
 
 	/// A network address that this implant is linked to. Can be null.
@@ -932,6 +932,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.passkey = lowertext(replacetext(replacetext(R.name, " ", "_"), "'", ""))
 		if (!src.passkey)
 			src.passkey = "IMP-[rand(111, 999)]"
+		// The `uses_radio` variable only adds a sender component, not a two-way one. So we have to do that manually!
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.pda_alert_frequency)
 		processing_items.Add(src)
 
 	disposing()
@@ -985,19 +989,20 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		if (src.passkey && src.passkey != signal.data["passkey"])
 			if (signal.data["sender"] != src.linked_address)
+				send_activation_reply(signal.data["sender"], MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY)
 				return
 
 		src.heat_dissipation = initial(src.heat_dissipation)
 
 		var/fail_reason
 		if (!ismob(src.owner))
-			fail_reason = IMP_MARIONETTE_ERROR_NO_TARGET
+			fail_reason = MARIONETTE_IMPLANT_ERROR_NO_TARGET
 			send_activation_reply(signal.data["sender"], fail_reason)
 			return
 
 		var/mob/living/carbon/human/H = src.owner
 		if (istype(H) && H.decomp_stage != DECOMP_STAGE_NO_ROT)
-			fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+			fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 			send_activation_reply(signal.data["sender"], fail_reason)
 			return
 
@@ -1009,18 +1014,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					data = copytext(data, 1, 46)
 					src.owner.say(data)
 				else
-					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
 			if ("emote")
 				data = lowertext(data)
 				if (!isdead(src.owner))
 					if (data in src.emote_blacklist)
-						fail_reason = IMP_MARIONETTE_ERROR_INVALID
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 					else
 						logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 						src.owner.emote(data)
 				else
-					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
 			if ("move", "step", "bump")
 				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
@@ -1028,7 +1033,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (step_dir && (step_dir in cardinal))
 					step(src.owner, step_dir)
 				else
-					fail_reason = IMP_MARIONETTE_ERROR_INVALID
+					fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 				src.adjust_heat(5)
 			if ("shock", "zap")
 				logTheThing(LOG_COMBAT, src.owner, "was shocked by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
@@ -1044,10 +1049,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						boutput(src.owner, SPAN_ALERT("Your grip on \the [I] suddenly relaxes!"))
 						H.drop_item()
 					else
-						fail_reason = IMP_MARIONETTE_ERROR_INVALID
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 					src.adjust_heat(60)
 				else
-					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 			if ("use", "activate")
 				if (!isdead(src.owner))
 					var/obj/item/I = src.owner.equipped()
@@ -1056,12 +1061,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						boutput(src.owner, SPAN_ALERT("Your hand involuntarily jerks."))
 						src.owner.click(I, list())
 					else
-						fail_reason = IMP_MARIONETTE_ERROR_INVALID
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 					src.adjust_heat(35)
 				else
-					fail_reason = IMP_MARIONETTE_ERROR_DEAD_TARGET
+					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 			else
-				fail_reason = IMP_MARIONETTE_ERROR_INVALID
+				fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 		send_activation_reply(signal.data["sender"], fail_reason)
 
 	proc/send_activation_reply(sender_address, fail_reason)
@@ -1078,7 +1083,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	proc/adjust_heat(to_heat)
 		src.heat = max(0, src.heat + to_heat)
 		if (src.heat > src.heat_danger_zone && prob(20) && to_heat > 0)
-			src.burn_out()
+			SPAWN (0.25 SECONDS) // Give the implant time to send the activation reply
+				src.burn_out()
 
 	proc/burn_out()
 		if (ismob(src.owner))
@@ -1098,9 +1104,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
 		src.burned_out = TRUE
 		src.deactivate()
-#undef IMP_MARIONETTE_ERROR_NO_TARGET
-#undef IMP_MARIONETTE_ERROR_DEAD_TARGET
-#undef IMP_MARIONETTE_ERROR_INVALID
+#undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
+#undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
+#undef MARIONETTE_IMPLANT_ERROR_INVALID
 
 
 /obj/item/remote/marionette_implant
@@ -1114,11 +1120,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_SMALL
 
-	HELP_MESSAGE_OVERRIDE({"
-	Can track and control any number of marionette implants. To link an implant, simply use the remote on the implanter (or vice-versa).
-	<br><br>
-	If the remote beeps after activation, the implant triggered successfully; if it buzzes, the implant received the signal, but failed to trigger.
-	Only the remote's holder can hear these sounds!"})
+	HELP_MESSAGE_OVERRIDE({"Can track and control any number of marionette implants. To link an implant, simply use the remote on the implanter (or vice-versa)."})
 
 	/// The network ID of the remote. Communicated to tracked implants when pinging.
 	var/net_id
@@ -1149,11 +1151,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (!istype(M))
 				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
 				return
+			if (M.burned_out)
+				boutput(user, SPAN_ALERT("The implant is burned out and permanently unusable."))
+				return
 			if (!(M.net_id in src.implant_status))
 				boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
-				src.implant_status[M.net_id] = "IDLE"
+				src.implant_status[M.net_id] = "UNKNOWN"
 				M.linked_address = src.net_id
-				user.playsound_local(user, 'sound/machines/tone_beep.ogg', 30)
+				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
 			else
 				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
 			return
