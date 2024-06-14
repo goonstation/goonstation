@@ -1178,6 +1178,7 @@ proc/spawn_kitchen_note()
 	info ={"
 	<i>Once you're done reading these instructions, you may activate the provided self-destruct function by using them in your hand.</i>
 
+	<h3>Summary</h3>
 	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
 	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
 
@@ -1185,27 +1186,30 @@ proc/spawn_kitchen_note()
 	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
 	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
 
-	<p>Once implanted into a target, simply use the remote to your heart's content! Be wary that <b>each activation of an implant
-	will cause heat buildup that may destroy it.</b> The components are delicate and are not built for repeated short-term stress.
-	Heat will dissipate slowly over time. <b>Heat will build up upon activation even if the conditions for the provided action are not met.</b></p>
+	<p>Once implanted into a target, simply use the remote to your heart's content! There is a short cooldown period between activations.</p>
 
-	<p>The implant will function in any living creature. <b>Dead human bodies are also affected by some commands,
-	as long as they have not decomposed.</b></p>
+	<h3>Heat</h3>
+	<p>Be wary that <b>each activation of an implant will cause heat buildup that may destroy it.</b> The components are delicate and are not built for
+	repeated short-term stress. Heat will dissipate slowly over time.
+	<b>Heat will build up upon activation even if the conditions for the provided action are not met.</b></p>
 
+	<h3>Packets</h3>
 	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
 	<b>fully compatible with wireless packets.</b> The implanter should list the frequency and network address of the contained implant,
 	as well as a unique <b>passkey</b> that must be provided in the signal under the <code>passkey</code> parameter to authorize most signals.</p>
 
 	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
 	<ul>
-	<li><b>ping</b> - Returns a bounceback containing information about the implant. Passkey not required.
+	<li><b>ping</b> - Prompts the implant to send a signal containing information about its status. Passkey not required.
 	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field. Max 45 characters.</li>
-	<li><b>emote</b> - As <b>say</b>, but with an emote instead.</li>
+	<li><b>emote</b> - As <b>say</b>, but with an emote instead. Many emotes can't be replicated with this function, including but not limited to deathgasps,
+	fainting, and tripping.</li>
 	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
-	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance.</li>
-	<li><b>shock</b> or <b>zap</b>* - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
-	<li><b>drop</b> or <b>release</b>* - The implantee will release a held item from their hands.
-	<li><b>use</b> or <b>activate</b>* - The implantee will activate any item held in their hands.
+	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance. Notably,
+	this command will function even if the implantee is dead, as long as they haven't decomposed.</li>
+	<li><b>shock</b> or <b>zap</b> - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
+	<li><b>drop</b> or <b>release</b> - The implantee will release a held item from their hands.
+	<li><b>use</b> or <b>activate</b> - The implantee will activate any item held in their hands.
 	</ul>
 	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
 	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it.

@@ -907,6 +907,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/linked_address = null
 	/// A string that's (usually) unique to each implant. Signals must provide the correct passkey to issue commands to the implant.
 	var/passkey = null
+	/// If TRUE, this implant is burned out and permanently unusable.
+	var/burned_out = FALSE
 	/// The implant's heat level, increased by various actions. Slowly reduces over time.
 	var/heat = 0
 	/// The implant's heat dissipation. `heat` is reduced by this value every processing tick.
@@ -915,6 +917,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/heat_dissipation = 1
 	/// If `heat` is above this value, each activation has a chance to break the implant permanently.
 	var/const/heat_danger_zone = 100
+	/// This is some messy code, but emotes are like that. Anything in this list will not be triggered by the force-emote function.
+	var/list/emote_blacklist = list(
+		"custom", "customv", "customh", "me", "give", "help", "listbasic", "listtarget", "list", "suicide", "uguu", "juggle", "airquote", "airquotes",
+		"faint", "deathgasp", "collapse", "trip", "monologue", "miranda"
+	)
 
 	New()
 		. = ..()
@@ -931,21 +938,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	deactivate()
 		..()
-		logTheThing(LOG_COMBAT, src.owner, "had their [src.name] burn out and become useless.")
-		if (ismob(src.owner))
-			boutput(src.owner, SPAN_ALERT("You feel a painful burning, like there's a something hot inside your body."))
-			src.owner.TakeDamage("All", burn = 7, damage_type = DAMAGE_BURN)
-		if (src.linked_address)
-			var/datum/signal/burnout_signal = get_free_signal()
-			burnout_signal.source = src
-			burnout_signal.data["device"] = "IMP_MARIONETTE"
-			burnout_signal.data["sender"] = src.net_id
-			burnout_signal.data["address_1"] = src.linked_address
-			burnout_signal.data["command"] = "ping_reply"
-			burnout_signal.data["status"] = MARIONETTE_IMPLANT_STATUS_BURNED_OUT
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, burnout_signal)
-		src.name_prefix("melted")
-		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
 		processing_items.Remove(src)
 
 	process()
@@ -961,12 +953,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	implanted(mob/M, mob/I)
 		. = ..()
-		// this is an anti-frustration feature with the goal of both making it easier to reference chat logs to know who is implanted with what,
-		// as well as to make sure players can still use packets if they forget to scan it onto their remote and didn't write down the network data
-		boutput(I, SPAN_NOTICE("You make a mental note that this implant's network ID is <b>[src.net_id]</b> and its passkey is <b>[src.passkey]</b>."))
+		if (!src.burned_out)
+			// this is an anti-frustration feature with the goal of both making it easier to reference chat logs to know who is implanted with what,
+			// as well as to make sure players can still use packets if they forget to scan it onto their remote and didn't write down the network data
+			boutput(I, SPAN_NOTICE("You make a mental note that this implant's network ID is <b>[src.net_id]</b> and its passkey is <b>[src.passkey]</b>."))
 
 	receive_signal(datum/signal/signal)
-		if (!src.online || ON_COOLDOWN(src, "activate", 1 SECOND))
+		if (src.burned_out || ON_COOLDOWN(src, "activate", 1 SECOND))
 			return
 		if (!signal || signal.encryption)
 			return
@@ -1014,7 +1007,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				src.adjust_heat(15)
 			if ("emote")
 				data = lowertext(data)
-				if (!isdead(src.owner))
+				if (!isdead(src.owner) && !(data in src.emote_blacklist))
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to emote \"[data]\" at [log_loc(src.owner)] by (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 					src.owner.emote(data)
 				src.adjust_heat(15)
@@ -1050,7 +1043,26 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	proc/adjust_heat(to_heat)
 		src.heat = max(0, src.heat + to_heat)
 		if (src.heat > src.heat_danger_zone && prob(20) && to_heat > 0)
-			src.deactivate()
+			src.burn_out()
+
+	proc/burn_out()
+		if (ismob(src.owner))
+			logTheThing(LOG_COMBAT, src.owner, "had their [src.name] burn out and become useless.")
+			boutput(src.owner, SPAN_ALERT("You feel a painful burning, like there's a something hot inside your body."))
+			src.owner.TakeDamage("All", burn = 7, damage_type = DAMAGE_BURN)
+		if (src.linked_address)
+			var/datum/signal/burnout_signal = get_free_signal()
+			burnout_signal.source = src
+			burnout_signal.data["device"] = "IMP_MARIONETTE"
+			burnout_signal.data["sender"] = src.net_id
+			burnout_signal.data["address_1"] = src.linked_address
+			burnout_signal.data["command"] = "ping_reply"
+			burnout_signal.data["status"] = MARIONETTE_IMPLANT_STATUS_BURNED_OUT
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, burnout_signal)
+		src.name_prefix("melted")
+		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
+		src.deactivate()
+		src.burned_out = TRUE
 
 /obj/item/remote/marionette_implant
 	name = "marionette implant remote"
@@ -2207,9 +2219,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		. = ..()
 		var/obj/item/implant/marionette/P = src.imp
 		if (istype(P))
-			. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
-			. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
-			. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
+			if (P.burned_out)
+				. += "<br>[SPAN_ALERT("The implant is completely melted and will not function.")]"
+			else
+				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
+				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
+				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
 
 	attackby(obj/item/W, mob/user)
 		var/obj/item/implant/marionette/M = src.imp
