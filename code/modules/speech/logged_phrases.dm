@@ -230,7 +230,7 @@ var/global/datum/phrase_log/phrase_log = new
 			usr << ftp(file(src.filename))
 
 	proc/import_file_and_stop_panic()
-		var/file/F = input(usr, "json file") as file|null
+		var/F = input(usr, "json file") as file|null
 		if(F)
 			src.phrases = json_decode(file2text(F))
 		if(islist(src.phrases))
