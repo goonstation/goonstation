@@ -20831,7 +20831,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
 "byr" = (
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
 /obj/machinery/transception_pad,
 /obj/cable{
 	icon_state = "0-2"
@@ -24252,6 +24254,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/quartermaster/cargobay)
 "bJA" = (
@@ -24339,7 +24344,7 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/turf/simulated/floor/scorched,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bKj" = (
 /turf/simulated/floor,
@@ -25569,9 +25574,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"bPh" = (
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "bPi" = (
 /obj/storage/crate/internals,
 /obj/decal/stripe_caution,
@@ -26554,11 +26556,6 @@
 /obj/stool/chair/office/blue,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bSk" = (
-/obj/tug_cart,
-/obj/machinery/light/incandescent/blueish,
-/turf/simulated/floor/plating/random,
-/area/station/quartermaster/cargobay)
 "bSl" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/warehouse)
@@ -32371,6 +32368,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"dem" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/cargobay)
 "dfU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -33092,15 +33095,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/storage)
-"eak" = (
-/obj/machinery/computer/trsc_array{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/quartermaster/cargobay)
 "ebg" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -35336,9 +35330,12 @@
 /area/station/maintenance/disposal)
 "gRS" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/computer/trsc_array{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles/black,
 /area/station/quartermaster/cargobay)
 "gRX" = (
 /obj/machinery/camera{
@@ -36454,7 +36451,9 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/obj/machinery/light/incandescent/harsh,
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -38958,9 +38957,6 @@
 /obj/mapping_helper/access/mining,
 /turf/simulated/floor,
 /area/station/storage/eeva)
-"mqY" = (
-/turf/simulated/floor/caution/corner/ne,
-/area/station/quartermaster/office)
 "mrA" = (
 /obj/storage/crate/freezer/milk,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -40216,8 +40212,8 @@
 /turf/space/fluid,
 /area/station/quartermaster/cargobay)
 "nXq" = (
-/obj/machinery/light/incandescent/warm/very,
-/turf/simulated/floor/plating/random,
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor/minitiles/black,
 /area/station/quartermaster/cargobay)
 "nXQ" = (
 /obj/table/wood/auto/desk{
@@ -41935,11 +41931,18 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light/incandescent/warm/very{
+/obj/machinery/light/incandescent/blueish{
 	dir = 4
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/quartermaster/cargobay)
+"qsD" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/caution/corner/ne,
+/area/station/quartermaster/office)
 "qsH" = (
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/uqill,
@@ -42577,15 +42580,6 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"rrl" = (
-/obj/machinery/power/apc/autoname_north{
-	cell_type = 5000
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/quartermaster/cargobay)
 "rsA" = (
 /obj/item/trench_map,
 /turf/simulated/floor/shuttlebay,
@@ -42810,13 +42804,6 @@
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
-"rNB" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/fluid,
-/area/station/quartermaster/cargobay)
 "rNN" = (
 /obj/table/round/auto,
 /obj/item/paper_bin,
@@ -43265,11 +43252,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
-"sEn" = (
-/obj/machinery/light/incandescent/harsh,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "sEw" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -44060,11 +44042,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "tVM" = (
-/obj/cable{
-	icon_state = "6-8"
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 5000
 	},
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1
+/obj/cable{
+	icon_state = "0-6"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/cargobay)
@@ -44679,12 +44661,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"vcg" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "vcL" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/camera{
@@ -45189,16 +45165,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
-"vXl" = (
-/obj/decal/cleanable/dirt,
-/obj/cable{
-	icon_state = "6-9"
-	},
-/obj/cable{
-	icon_state = "6-8"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "vYb" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -45845,6 +45811,9 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"wMf" = (
+/turf/simulated/floor/minitiles/black,
+/area/station/quartermaster/cargobay)
 "wNp" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/sanitary,
@@ -46723,7 +46692,10 @@
 	dir = 8
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "6-8"
+	},
+/obj/cable{
+	icon_state = "1-6"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -74044,11 +74016,11 @@ aqn
 aqn
 aqn
 aqn
-hEm
-dZH
-dZH
-dZH
-hEm
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -74345,13 +74317,13 @@ aqn
 aqn
 aqn
 aqn
+aqn
 hEm
+dZH
+dZH
+dZH
 hEm
-rNB
-rKg
-lkc
-hEm
-hEm
+aqn
 aqn
 aqn
 aqn
@@ -74647,13 +74619,13 @@ aqn
 aqn
 aqn
 aqn
-dZH
+hEm
+hEm
 rKg
 rKg
-dxp
-sfb
-wqp
-dZH
+lkc
+hEm
+hEm
 aqn
 aqn
 aqn
@@ -74952,9 +74924,9 @@ aqn
 dZH
 rKg
 rKg
-rKg
-eOf
-rKg
+dxp
+sfb
+wqp
 dZH
 aqn
 aqn
@@ -75254,9 +75226,9 @@ aqn
 dZH
 rKg
 rKg
-vat
-leF
-wqp
+rKg
+eOf
+rKg
 dZH
 aqn
 aqn
@@ -75553,13 +75525,13 @@ buE
 jmA
 buE
 aqn
-hEm
-gmm
-nXd
-kcC
-pMN
+dZH
 rKg
-hEm
+rKg
+vat
+leF
+wqp
+dZH
 aqn
 aqn
 aqn
@@ -75856,11 +75828,11 @@ oVp
 buE
 buE
 hEm
-hEm
-dZH
-iNb
-dZH
-hEm
+gmm
+nXd
+kcC
+pMN
+rKg
 hEm
 aqn
 aqn
@@ -76157,12 +76129,12 @@ cin
 btZ
 cij
 buE
-rrl
-qNg
-qNg
-kTs
-qNg
-eak
+hEm
+hEm
+dZH
+iNb
+dZH
+hEm
 hEm
 hEm
 aqn
@@ -76463,7 +76435,7 @@ tVM
 qNg
 qNg
 kIf
-qNg
+wMf
 gRS
 nXq
 hEm
@@ -77070,10 +77042,10 @@ hEm
 hLj
 hEm
 hEm
-bSk
 bTk
 bTk
-qNg
+bTk
+dem
 kTs
 hEm
 aqn
@@ -77667,12 +77639,12 @@ bFW
 bHQ
 bFW
 hwl
-vcg
+bFW
 xZr
 bKj
 bKj
 bKj
-sEn
+bQj
 bJA
 sPl
 bTl
@@ -77970,11 +77942,11 @@ bHR
 bIC
 oUo
 bKj
-vXl
-bKj
-bKj
-bPh
 bQi
+wmM
+mlz
+xkA
+bKj
 bJA
 bSn
 bTm
@@ -78273,10 +78245,10 @@ bJA
 bJA
 iHN
 bLL
-wmM
-mlz
-xkA
-bKj
+rIp
+hNA
+vyp
+bQi
 bJA
 bSo
 cfT
@@ -78575,8 +78547,8 @@ bID
 bJA
 nyw
 bLM
-rIp
-hNA
+cUT
+bKj
 vyp
 bKj
 bJA
@@ -78877,8 +78849,8 @@ bIE
 bJA
 bKm
 bLN
-cUT
-bPh
+bLO
+hNA
 vyp
 bKj
 fgm
@@ -79179,9 +79151,9 @@ bIE
 bJA
 bKn
 bLO
-bLO
-hNA
-vyp
+qsD
+bOe
+iFF
 bQj
 bJA
 bSr
@@ -79481,10 +79453,10 @@ bIF
 bJA
 bKo
 bLP
-mqY
-bOe
-iFF
-bPh
+bKj
+bKj
+bQi
+bKj
 bJA
 bSl
 xKH
