@@ -1035,6 +1035,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 				src.adjust_heat(5)
 			if ("shock", "zap")
+				// Note the lack of immunity from the elec_resist mutation here here
+				// This is intentional; in this case, it's moreso overstimulating the nervous system than actually causing electrical shocks!
 				logTheThing(LOG_COMBAT, src.owner, "was shocked by \a [src] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 				boutput(src.owner, SPAN_ALERT("You feel a shock from inside your body!"))
 				src.owner.do_disorient(90, knockdown = 7 SECONDS, disorient = 3 SECONDS)
