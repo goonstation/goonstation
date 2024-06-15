@@ -44,8 +44,7 @@
 		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			if (damMax-10 > 0)
-				hitMob.changeStatus("stunned", 4 SECONDS)
-				hitMob.changeStatus("knockdown", 4 SECONDS)
+				hitMob.changeStatus("knockdown", 5 SECONDS)
 				hitMob.force_laydown_standup()
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else
@@ -56,7 +55,8 @@
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
-		..()
+		var/datum/thrown_thing/thr = ..()
+		thr.stops_on_mob_hit = FALSE
 
 	attack_hand(mob/user)
 		..()
@@ -76,8 +76,9 @@
 						if (istype(user))
 							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 								src.hitHard(hitMob, user)
-
-								if(!(hitMob == user))
+								var/turf/new_target = get_steps(hitMob, get_dir(thr.thrown_from, get_turf(hitMob)), 8)
+								hitMob.throw_at(new_target, 8, thr.speed, thr.params, thr.thrown_from, thr.thrown_by, thr.throw_type)
+								if(!(hitMob == user) && !ON_COOLDOWN(user, "bowling_speak", 1 SECOND))
 									user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
 							else
 								src.hitWeak(hitMob, user)

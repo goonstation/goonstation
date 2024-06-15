@@ -42,6 +42,7 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
             </LabeledList.Item>
           );
         })}
+        {/* eslint-disable-next-line sonarjs/no-inverted-boolean-check */ }
         {!!(bookmarks.length < maxBookmarks) && (
           <LabeledList.Item
             key="new"

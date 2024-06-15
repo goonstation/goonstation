@@ -49,17 +49,12 @@ type DangerDoNotUse = {
 export const unit = (value: unknown) => {
   if (typeof value === 'string') {
     // Transparently convert pixels into rem units
-    // |GOONSTATION-CHANGE| (-> && !Byond.IS_LTE_IE8)
-    if (value.endsWith('px') && !Byond.IS_LTE_IE8) {
+    if (value.endsWith('px')) {
       return parseFloat(value) / 12 + 'rem';
     }
     return value;
   }
   if (typeof value === 'number') {
-    // |GOONSTATION-CHANGE| IE8 early return
-    if (Byond.IS_LTE_IE8) {
-      return value * 12 + 'px';
-    }
     return value + 'rem';
   }
 };

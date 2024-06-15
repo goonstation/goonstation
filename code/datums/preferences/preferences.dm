@@ -823,7 +823,7 @@ var/list/removed_jobs = list(
 					src.font_size = initial(src.font_size)
 					return TRUE
 				else
-					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 100, 1)
+					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
 					if (!isnull(new_font_size))
 						src.font_size = new_font_size
 						src.profile_modified = TRUE
