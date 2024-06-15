@@ -381,7 +381,7 @@ proc/load_intraround_jars()
 		. = ..()
 		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
 		//heehee hooha component abuse (the alternative was worse sadly because we don't have anonymous functions)
-		var/datum/component/extradimensional_storage/shrink/component = src.AddComponent(/datum/component/extradimensional_storage/shrink, prefab.prefabSizeX, prefab.prefabSizeX)
+		var/datum/component/extradimensional_storage/shrink/component = src.AddComponent(/datum/component/extradimensional_storage/shrink, prefab.prefabSizeX + 2, prefab.prefabSizeX + 2)
 		prefab.applyTo(get_step(component.region.bottom_left, NORTHEAST), overwrite_args = DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
 
 		var/datum/allocated_region/region = component.region
