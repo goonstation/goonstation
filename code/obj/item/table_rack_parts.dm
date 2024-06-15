@@ -208,6 +208,11 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
 	furniture_type = /obj/table/nanotrasen/auto
 
+/obj/item/furniture_parts/table/sleek
+	name = "sleek table parts"
+	desc = "A collection of parts that can be used to make a sleek table."
+	icon = 'icons/obj/furniture/table_sleek.dmi'
+	furniture_type = /obj/table/sleek/auto
 /* ---------- Glass Table Parts ---------- */
 TYPEINFO(/obj/item/furniture_parts/table/glass)
 	mat_appearances_to_ignore = list("glass")
