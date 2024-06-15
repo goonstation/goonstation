@@ -35,11 +35,7 @@
 	icon_state = "hard_case"
 	spawn_contents = list(/obj/item/remote/marionette_implant, /obj/item/paper/marionette_implant_readme)
 
-	make_my_stuff()
+	New(loc, flag_that_prevents_the_box_from_having_its_free_implanter)
 		..()
-		// We do this because buying the box from the uplink will add the implanter from that to the box right afterwards
-		// This way, placed or spawned boxes will still have their implant, but the uplink one will not have a duplicate
-		SPAWN(1 SECOND)
-			for (var/obj/item/implanter/marionette/I in src.storage.get_contents())
-				return
+		if (!flag_that_prevents_the_box_from_having_its_free_implanter)
 			src.storage.add_contents(new /obj/item/implanter/marionette)

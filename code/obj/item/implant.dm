@@ -1,3 +1,6 @@
+#define MARIONETTE_IMPLANT_STATUS_IDLE "IDLE"
+#define MARIONETTE_IMPLANT_STATUS_ACTIVE "ACTIVE"
+#define MARIONETTE_IMPLANT_STATUS_DANGER "DANGER"
 #define MARIONETTE_IMPLANT_STATUS_BURNED_OUT "BURNED OUT"
 #define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
 #define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
@@ -914,6 +917,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/burned_out = FALSE
 	/// The implant's heat level, increased by various actions. Slowly reduces over time.
 	var/heat = 0
+	/// The implant's previous heat level, set after it's adjusted.
+	/// This is used so that the implant can send an alert signal when it enters the danger zone for the first time.
+	var/prev_heat = 0
 	/// The implant's heat dissipation. `heat` is reduced by this value every processing tick.
 	/// The value slowly ramps up over time, but is reset upon being activated. This makes short-term overuse very punishing,
 	/// but allows it to recover decently quickly if given time to rest.
@@ -923,7 +929,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	/// This is some messy code, but emotes are like that. Anything in this list will not be triggered by the force-emote function.
 	var/list/emote_blacklist = list(
 		"custom", "customv", "customh", "me", "give", "help", "listbasic", "listtarget", "list", "suicide", "uguu", "juggle", "airquote", "airquotes",
-		"faint", "deathgasp", "collapse", "trip", "monologue", "miranda"
+		"faint", "deathgasp", "collapse", "trip", "monologue", "miranda", "birdwell"
 	)
 
 	New()
@@ -947,13 +953,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		processing_items.Remove(src)
 
 	process()
-		src.adjust_heat(-1)
+		src.adjust_heat(-src.heat_dissipation)
 		src.heat_dissipation = min(3, src.heat_dissipation + 0.05)
 
 	can_implant(mob/target, mob/user)
 		if (istype(target, /mob/living/critter/wraith/trickster_puppet))
-			boutput(user, SPAN_ALERT("The implanter shows an error on its little LCD screen: \"TARGET IS SECRETLY A GHOST\". Huh. \
-			You didn't know it even checked for that!"))
+			boutput(user, SPAN_ALERT("The implanter shows an error: \"TARGET IS SECRETLY A GHOST\". Huh. You didn't know it even checked for that!"))
 			return
 		return ..()
 
@@ -965,7 +970,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(I, SPAN_NOTICE("You make a mental note that this implant's network ID is <b>[src.net_id]</b> and its passkey is <b>[src.passkey]</b>."))
 
 	receive_signal(datum/signal/signal)
-		if (src.burned_out || ON_COOLDOWN(src, "activate", 1 SECOND))
+		// Note the lack of a src.burned_out check here -- this is because burning out removes the implant's radio component,
+		// meaning that it can't send or receive signals to begin with
+		if (ON_COOLDOWN(src, "activate", 1 SECOND))
 			return
 		if (!signal || signal.encryption)
 			return
@@ -976,20 +983,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		var/command = signal.data["command"]
 		if (command == "ping")
-			var/datum/signal/ping_reply = get_free_signal()
-			ping_reply.source = src
-			ping_reply.data["device"] = "IMP_MARIONETTE"
-			ping_reply.data["sender"] = src.net_id
-			ping_reply.data["address_1"] = signal.data["sender"]
-			ping_reply.data["command"] = "ping_reply"
-			ping_reply.data["passkey"] = src.passkey
-			ping_reply.data["status"] = src.heat > src.heat_danger_zone ? "DANGER" : ismob(src.owner) ? "ACTIVE" : "IDLE"
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping_reply)
+			src.send_ping(signal.data["sender"])
 			return
 
 		if (src.passkey && src.passkey != signal.data["passkey"])
 			if (signal.data["sender"] != src.linked_address)
-				send_activation_reply(signal.data["sender"], MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY)
+				src.send_activation_reply(signal.data["sender"], MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY)
 				return
 
 		src.heat_dissipation = initial(src.heat_dissipation)
@@ -997,13 +996,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/fail_reason
 		if (!ismob(src.owner))
 			fail_reason = MARIONETTE_IMPLANT_ERROR_NO_TARGET
-			send_activation_reply(signal.data["sender"], fail_reason)
+			src.send_activation_reply(signal.data["sender"], fail_reason)
 			return
 
 		var/mob/living/carbon/human/H = src.owner
 		if (istype(H) && H.decomp_stage != DECOMP_STAGE_NO_ROT)
 			fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
-			send_activation_reply(signal.data["sender"], fail_reason)
+			src.send_activation_reply(signal.data["sender"], fail_reason)
 			return
 
 		var/data = signal.data["data"]
@@ -1067,8 +1066,26 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 			else
 				fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
-		send_activation_reply(signal.data["sender"], fail_reason)
+		src.send_activation_reply(signal.data["sender"], fail_reason)
 
+	/// Sends a ping packet to the provided address, containing information about the implant's status.
+	/// If `special` is non-null, it will be provided in the `special` parameter;
+	/// this is currently used to indicate when an implant goes above the danger zone when it was previously safe.
+	proc/send_ping(sender_address, special = null)
+		var/datum/signal/ping_reply = get_free_signal()
+		ping_reply.source = src
+		ping_reply.data["device"] = "IMP_MARIONETTE"
+		ping_reply.data["sender"] = src.net_id
+		ping_reply.data["address_1"] = sender_address
+		ping_reply.data["command"] = "ping_reply"
+		ping_reply.data["status"] = src.burned_out ? MARIONETTE_IMPLANT_STATUS_BURNED_OUT : \
+			src.heat > src.heat_danger_zone ? MARIONETTE_IMPLANT_STATUS_DANGER : \
+			ismob(src.owner) ? MARIONETTE_IMPLANT_STATUS_ACTIVE : MARIONETTE_IMPLANT_STATUS_IDLE
+		if (special)
+			ping_reply.data["special"] = special
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping_reply)
+
+	/// Sends an activation reply to the provided address. Any activation with a non-null `fail_reason` is considered a fail.
 	proc/send_activation_reply(sender_address, fail_reason)
 		var/datum/signal/activation_signal = get_free_signal()
 		activation_signal.source = src
@@ -1080,30 +1097,30 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			activation_signal.data["stack"] = fail_reason
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, activation_signal)
 
+	/// Adjusts `heat` by `to_heat`. Also handles potentially burning out when overheating, and alerting a linked address if we enter the danger zone.
 	proc/adjust_heat(to_heat)
-		src.heat = max(0, src.heat + to_heat)
 		if (src.heat > src.heat_danger_zone && prob(20) && to_heat > 0)
 			SPAWN (0.25 SECONDS) // Give the implant time to send the activation reply
 				src.burn_out()
+		src.heat = max(0, src.heat + to_heat)
+		if (src.heat > src.heat_danger_zone && src.prev_heat <= src.heat_danger_zone && src.linked_address)
+			src.send_ping(src.linked_address, TRUE)
+		src.prev_heat = src.heat
 
+	/// Burns out the implant and makes it permanently unusable.
 	proc/burn_out()
 		if (ismob(src.owner))
 			logTheThing(LOG_COMBAT, src.owner, "had their [src.name] burn out and become useless.")
 			boutput(src.owner, SPAN_ALERT("You feel a painful burning, like there's a something hot inside your body."))
 			src.owner.TakeDamage("All", burn = 7, damage_type = DAMAGE_BURN)
-		if (src.linked_address)
-			var/datum/signal/burnout_signal = get_free_signal()
-			burnout_signal.source = src
-			burnout_signal.data["device"] = "IMP_MARIONETTE"
-			burnout_signal.data["sender"] = src.net_id
-			burnout_signal.data["address_1"] = src.linked_address
-			burnout_signal.data["command"] = "ping_reply"
-			burnout_signal.data["status"] = MARIONETTE_IMPLANT_STATUS_BURNED_OUT
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, burnout_signal)
 		src.name = "melted [src.name]" // Specifically change the name here instead of using prefix, so that it appears in the removed implant item
 		src.desc = "Charred and most definitely broken. This thing must have been pushed really hard."
 		src.burned_out = TRUE
 		src.deactivate()
+		if (src.linked_address)
+			src.send_ping(src.linked_address)
+		// goodbye my sweet son
+		src.RemoveComponentsOfType(/datum/component/packet_connected/radio)
 
 
 /obj/item/remote/marionette_implant
@@ -1111,13 +1128,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	desc = "A remote control that allows the sending and receiving of data from linked marionette implants."
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 
 	flags = FPRINT | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_SMALL
 
-	HELP_MESSAGE_OVERRIDE({"Can track and control any number of marionette implants. To link an implant, simply use the remote on the implanter (or vice-versa)."})
+	HELP_MESSAGE_OVERRIDE({"Can track and control any number of marionette implants. To link an implant, simply use the remote on an implanter, implant case, \
+	or implant. Vice-versa also works."})
 
 	/// The network ID of the remote. Communicated to tracked implants when pinging.
 	var/net_id
@@ -1142,24 +1159,39 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.ui_interact(user)
 
 	attackby(obj/item/W, mob/user, params)
+		var/obj/item/implant/marionette/M
 		if (istype(W, /obj/item/implanter))
 			var/obj/item/implanter/I = W
-			var/obj/item/implant/marionette/M = I.imp
-			if (!istype(M))
+			if (!istype(I.imp, /obj/item/implant/marionette))
 				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
 				return
+			M = I.imp
+		else if (istype(W, /obj/item/implantcase))
+			var/obj/item/implantcase/IC = W
+			if (!istype(IC.imp, /obj/item/implant/marionette))
+				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
+				return
+			M = IC.imp
+		else if (istype(W, /obj/item/implant))
+			M = W
+		if (istype(M))
 			if (M.burned_out)
 				boutput(user, SPAN_ALERT("The implant is burned out and permanently unusable."))
 				return
-			if (!(M.net_id in src.implant_status))
-				boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
-				src.implant_status[M.net_id] = "UNKNOWN"
-				M.linked_address = src.net_id
-				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
-			else
+			if (M.net_id in src.implant_status)
 				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
-			return
+				return
+			boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
+			src.implant_status[M.net_id] = "UNKNOWN"
+			M.linked_address = src.net_id
+			user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
 		return ..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/implanter) || istype(target, /obj/item/implantcase) || istype(target, /obj/item/implant))
+			src.Attackby(target, user, params)
+		else
+			return ..()
 
 	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if (!signal || signal.encryption)
@@ -1177,6 +1209,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (signal.data["status"] == MARIONETTE_IMPLANT_STATUS_BURNED_OUT && src.implant_status[sender_address] != MARIONETTE_IMPLANT_STATUS_BURNED_OUT)
 					for (var/mob/M in get_turf(src))
 						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant has burned out and is no longer usable."))
+						M.playsound_local(src, "sound/machines/twobeep.ogg", 50)
+				else if (signal.data["status"] == MARIONETTE_IMPLANT_STATUS_DANGER && signal.data["special"])
+					for (var/mob/M in get_turf(src))
+						boutput(M, SPAN_ALERT("Your [src.name] alerts you that a tracked implant is dangerously hot."))
 						M.playsound_local(src, "sound/machines/twobeep.ogg", 50)
 				src.implant_status[sender_address] = signal.data["status"]
 			if (signal.data["command"] == "activate")
@@ -2259,7 +2295,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implanter1-g"
 	sneaky = TRUE
 	HELP_MESSAGE_OVERRIDE({"Allows remote signals to exert limited control over the implanted target. Compatible with packets. \
-	You can hit this implanter with an item to scan it, causing the contained implant to send status updates to the targeted device."})
+	You can hit this implanter with a marionette implant remote to scan it, causing the contained implant to send status updates to it."})
 
 	New()
 		src.imp = new /obj/item/implant/marionette(src)
@@ -2272,17 +2308,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (P.burned_out)
 				. += "<br>[SPAN_ALERT("The implant is completely melted and will not function.")]"
 			else
+				if (P.linked_address)
+					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [src.linked_address].")]"
 				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
 				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
 				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
-
-	attackby(obj/item/W, mob/user)
-		var/obj/item/implant/marionette/M = src.imp
-		if (istype(M) && istype(W, /obj/item/remote/marionette_implant))
-			var/obj/item/remote/marionette_implant/I = W
-			I.Attackby(src, user)
-			return
-		return ..()
 
 /* ================================================================ */
 /* ------------------------- Implant Case ------------------------- */
@@ -2647,6 +2677,9 @@ TYPEINFO(/obj/item/gun/implanter)
 			take_bleeding_damage(H, null, 10, DAMAGE_CUT)
 			src.implanted(H)
 
+#undef MARIONETTE_IMPLANT_STATUS_IDLE
+#undef MARIONETTE_IMPLANT_STATUS_ACTIVE
+#undef MARIONETTE_IMPLANT_STATUS_DANGER
 #undef MARIONETTE_IMPLANT_STATUS_BURNED_OUT
 #undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
 #undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET

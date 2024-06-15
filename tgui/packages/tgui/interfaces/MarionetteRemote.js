@@ -80,6 +80,10 @@ export const MarionetteRemote = (_props, context) => {
                       selected={selected_command === "shock"}
                     />
                   </LabeledList.Item>
+                  <LabeledList.Item key="action_heat" label="Heat Per Action">
+                    {selected_command === "shock" || selected_command === "drop" ? "HIGH"
+                      : selected_command === "step" ? "LOW" : "MEDIUM"}
+                  </LabeledList.Item>
                 </LabeledList>
               </Flex.Item>
             </Flex>

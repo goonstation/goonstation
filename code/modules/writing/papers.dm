@@ -1220,8 +1220,8 @@ proc/spawn_kitchen_note()
 	<li><b>use</b> or <b>activate</b> - The implantee will activate any item held in their hands.
 	</ul>
 	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
-	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it.
-	You can also get the passkey by pinging the implant!</p>
+	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it, because there's
+	no way to retrieve it once the implant is applied.</p>
 
 	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
 	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code, detailed below.</p>
