@@ -116,7 +116,12 @@ export const MapPanel = (props: MapPanelProps) => {
 
   const panel = (
     <Section
-      title={mapName}
+      title={(
+        <Box inline nowrap overflow="hidden"
+          style={{ "text-overflow": "ellipsis" }}
+          maxWidth={`${MAP_PANEL_WIDTH - 35}px`}>
+          {mapName}
+        </Box>)}
       buttons={button}
       width={`${MAP_PANEL_WIDTH}px`}
       align={button ? null : "center"}
