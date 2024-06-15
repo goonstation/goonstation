@@ -1,5 +1,19 @@
 
+(t)sat jun 15 24
+(u)Carton171
+(p)19481
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Players will once again lose their shit upon being filled with/covered in ants
+(u)Lord_Earthfire
+(p)19521
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The bowling kit's cost was reduced to 6, down from 7.
+(+)Bowling balls from the bowling kit now deal additional damage when thrown or in melee while wearing the bowling suit.
 (t)fri jun 14 24
+(u)LeahTheTech
+(p)19525
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Traitor bowling balls thrown while wearing the bowling suit now throw people flying and can continue through multiple targets.
 (u)Azrun
 (p)19503
 (e)⚖🧛💪|C-Balance, A-Gamemodes, A-Traits
