@@ -756,6 +756,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		icon_state = "lawyerR"
 		item_state = "lawyerR"
 
+	inspector
+		name = "inspector's suit"
+		desc = "A suit for inspecting things"
+		icon_state = "inspectorj"
+		item_state = "viceG"
+
 /obj/item/clothing/under/misc/lawyer/red/demonic
 	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()

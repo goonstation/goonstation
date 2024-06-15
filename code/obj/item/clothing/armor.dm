@@ -451,6 +451,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		..()
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
+/obj/item/clothing/suit/armor/NT/inspector
+	name = "inspector's armored coat"
+	desc = "A coat lined with protective material, worn by inspectors."
+	icon_state = "inspectorc"
+	item_state = "inspectorc"
+	coat_style = "inspectorc"
+
 TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 	mat_appearances_to_ignore = list("carbonfibre")
 /obj/item/clothing/suit/armor/NT_alt
