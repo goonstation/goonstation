@@ -23,7 +23,6 @@
 	Crossed(atom/movable/A)
 		..()
 		if(istype(A,/obj/racing_clowncar))
-			playsound(A, 'sound/mksounds/boost.ogg', 30, FALSE)
 			step(A,src.dir)
 
 			var/obj/racing_clowncar/R = A
