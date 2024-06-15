@@ -71,6 +71,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
+	has_genes = TRUE
 
 	var/aggressive = FALSE
 	var/random_name = FALSE
@@ -254,6 +255,7 @@ proc/filter_carrier_pets(var/type)
 		set_hand(2) // mouth hand
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
+
 
 /mob/living/critter/small_animal/mouse/dead
 	player_can_spawn_with_pet = FALSE
@@ -2165,6 +2167,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "robot_roach-dead"
 	pull_w_class = W_CLASS_NORMAL
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
+	has_genes = FALSE
 
 	base_move_delay = 1.6
 	base_walk_delay = 2.1
@@ -2870,6 +2873,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	faction = list(FACTION_NEUTRAL)
 	isFlying = TRUE
+	has_genes = FALSE
 
 	setup_hands()
 		..()
@@ -3567,6 +3571,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "asks"
 	health_brute = 20
 	health_burn = 20
+	has_genes = FALSE
 	var/emagged = FALSE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -3682,6 +3687,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/pick_random_icon_state = 1
 	is_npc = FALSE
 	player_can_spawn_with_pet = TRUE
+	has_genes = FALSE
 
 	New()
 		..()
@@ -3746,6 +3752,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/datum/figure_info/info = 0
 	var/voice_gender = "male"
 	is_npc = FALSE
+	has_genes = FALSE
 
 	New()
 		..()
@@ -3859,6 +3866,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/allow_pickup_requests = TRUE
 	void_mindswappable = FALSE
 	player_can_spawn_with_pet = FALSE
+	has_genes = FALSE
 
 	New()
 		..()

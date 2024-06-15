@@ -548,6 +548,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/filteredGood = new/list()
 		var/list/filteredBad = new/list()
 		var/list/filteredSecret = new/list()
+		var/datum/bioEffect/selectedNew
 
 		for(var/datum/bioEffect/BE in effectPool)
 			qdel(BE)
@@ -562,10 +563,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return
 		var/good_genes = 0
 		var/bad_genes = 0
-		var/genetics_count = L.get_genetic_traits()
-		if(length(genetics_count) == 2)
-			good_genes = genetics_count[1]
-			bad_genes = genetics_count[2]
+		var/secret_genes = 0
+		var/genetic_counts = L.get_genetic_traits()
+		if(length(genetic_counts) == 3)
+			good_genes = genetic_counts[1]
+			bad_genes = genetic_counts[2]
+			secret_genes = genetic_counts[3]
+
+		if(!good_genes && !bad_genes && !secret_genes)
+			return
 
 		for(var/T in bioEffectList)
 			var/datum/bioEffect/instance = bioEffectList[T]
@@ -583,7 +589,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					filteredGood[instance] = instance.probability
 
-		if(!filteredGood.len || !length(filteredBad))
+		if(!length(filteredGood) || !length(filteredBad))
 			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
@@ -592,7 +598,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/g=0, g<good_genes, g++)
 			var/datum/bioEffect/selectedG = weighted_pick(filteredGood)
 			if(selectedG)
-				var/datum/bioEffect/selectedNew = selectedG.GetCopy()
+				selectedNew = selectedG.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 				selectedNew.holder = src
 				selectedNew.owner = src.owner
@@ -604,7 +610,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/b=0, b<bad_genes, b++)
 			var/datum/bioEffect/selectedB = weighted_pick(filteredBad)
 			if(selectedB)
-				var/datum/bioEffect/selectedNew = selectedB.GetCopy()
+				selectedNew = selectedB.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 				selectedNew.holder = src
 				selectedNew.owner = src.owner
@@ -614,13 +620,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		if (filteredSecret.len)
-			var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
-			var/datum/bioEffect/selectedNew = selectedS.GetCopy()
-			selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
-			selectedNew.holder = src
-			selectedNew.owner = src.owner
-			effectPool[selectedNew.id] = selectedNew
-			filteredBad.Remove(selectedS)
+			for(var/s=0, s<secret_genes, s++)
+				var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
+				if(selectedS)
+					selectedNew = selectedS.GetCopy()
+					selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
+					selectedNew.holder = src
+					selectedNew.owner = src.owner
+					effectPool[selectedNew.id] = selectedNew
+					filteredSecret.Remove(selectedS)
+				else
+					break
 
 		shuffle_list(effectPool)
 

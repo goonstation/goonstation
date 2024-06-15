@@ -3695,4 +3695,7 @@
 	src.arrestIcon.icon_state = arrestState
 
 /mob/living/carbon/human/get_genetic_traits()
-	return list(5,5)
+	return list(5,5,1)
+
+mob/living/carbon/human/has_genetics()
+	return TRUE

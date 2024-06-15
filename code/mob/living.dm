@@ -2346,5 +2346,3 @@
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
 
-/mob/living/proc/get_genetic_traits()
-	return list()

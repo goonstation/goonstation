@@ -55,8 +55,8 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			src.togglelock(1)
 
 	relaymove(mob/user as mob, dir)
-		eject_occupant(user)
-
+		if(!ismobcritter(user) || user.client)
+			eject_occupant(user)
 
 	Click(location, control, params)
 		if(!src.ghost_observe_occupant(usr, src.occupant))
@@ -96,6 +96,9 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if(ismobcritter(target))
 			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
 				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+			if(!M.has_genetics())
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this genetic structure.</B>"))
 				return 0
 		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
