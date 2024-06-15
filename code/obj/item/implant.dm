@@ -2309,7 +2309,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				. += "<br>[SPAN_ALERT("The implant is completely melted and will not function.")]"
 			else
 				if (P.linked_address)
-					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [src.linked_address].")]"
+					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [P.linked_address].")]"
 				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
 				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
 				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
