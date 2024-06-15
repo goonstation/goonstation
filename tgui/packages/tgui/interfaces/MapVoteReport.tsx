@@ -32,7 +32,7 @@ export const MapVoteReport = (_props, context) => {
   const { mapList, winner, isDetailed } = data;
 
   const height = BASE_HEIGHT
-    + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / 4) : 1)
+    + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / PANEL_PER_LINE) : 1)
     + (!isDetailed ? 0 : VOTERS_HEIGHT);
   const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * (!isDetailed ? PANEL_PER_LINE : mapList.length)
     + WINDOW_HOZ_PADDING;

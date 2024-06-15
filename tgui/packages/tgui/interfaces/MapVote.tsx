@@ -42,7 +42,7 @@ export const MapVote = (_props, context) => {
   const { data, act } = useBackend<MapVoteData>(context);
   const { playersVoting, mapList, clientVoteMap } = data;
 
-  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * Math.ceil(mapList.length / 4);
+  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * Math.ceil(mapList.length / PANEL_PER_LINE);
   const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * PANEL_PER_LINE + WINDOW_HOZ_PADDING;
 
   return (
