@@ -21,15 +21,6 @@
 
 	HELP_MESSAGE_OVERRIDE("While wearing a bowling suit, you can throw this to stun and deal decent damage to someone. You can also effectively wield it in melee combat while wearing the bowling suit.")
 
-	New()
-		. = ..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attack_damage_modifier))
-
-	disposing()
-		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
-		. = ..()
-
-
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
 		hitMob.visible_message(SPAN_ALERT("[hitMob] is hit by [user]'s [src]!"))
 
@@ -38,7 +29,7 @@
 	proc/hitHard(var/mob/hitMob, var/mob/user)
 		hitMob.visible_message(SPAN_ALERT("[hitMob] is knocked over by [user]'s [src]!"))
 
-		src.damage(hitMob, 20, 30, user)
+		src.damage(hitMob, 15, 20, user)
 
 	proc/damage(var/mob/hitMob, damMin, damMax, var/mob/living/carbon/human/user)
 		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
@@ -74,7 +65,7 @@
 				if (ishuman(hitMob))
 					SPAWN( 0 )
 						if (istype(user))
-							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+							if (istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 								src.hitHard(hitMob, user)
 								var/turf/new_target = get_steps(hitMob, get_dir(thr.thrown_from, get_turf(hitMob)), 8)
 								hitMob.throw_at(new_target, 8, thr.speed, thr.params, thr.thrown_from, thr.thrown_by, thr.throw_type)
@@ -86,17 +77,15 @@
 							src.hitWeak(hitMob, user)
 		return
 
-	proc/pre_attack_damage_modifier(obj/item/parent_item, atom/A, mob/user)
+	attack(obj/item/W, mob/user, params)
 		var/mob/living/carbon/human/human_user = user
 		if(istype(human_user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 			//bashing someones skull in with a bowling ball should hurt if you are worthy of the bowling ball
-			src.force = 20
+			src.force = 15
 			src.stamina_damage = 40
-			spawn(1)
-				//Doing this over a spawn should cover all cases where the attack gets cancelled prematurely
-				//which would normally prevent an event-based way for force to be returned to its initial state
-				src.force = initial(src.force)
-				src.stamina_damage = initial(src.stamina_damage)
+		. = ..()
+		src.force = initial(src.force)
+		src.stamina_damage = initial(src.stamina_damage)
 
 /obj/item/armadillo_ball
 	name = "armadillo ball"
