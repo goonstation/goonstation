@@ -55,6 +55,9 @@
 	proc/consume(atom/movable/AM)
 		if (AM in src.stomach_contents)
 			return
+		if (istype(AM, /obj/item/organ)) // organs don't have a digestion proc, so just delete them instead
+			AM.Del()
+			return
 		AM.set_loc(src.donor)
 		src.stomach_contents |= AM
 		src.food_amount += src.food_value(AM)
