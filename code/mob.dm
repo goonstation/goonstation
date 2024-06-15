@@ -333,6 +333,14 @@
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
+	qdel(chat_text)
+	chat_text = null
+
+	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
+	src.ghost = src.ghostize()
+	if (src.ghost?.corpse == src)
+		src.ghost.corpse = null
+
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
@@ -343,14 +351,6 @@
 		else
 			m.set_loc(src.loc)
 			m.ghostize()
-
-	qdel(chat_text)
-	chat_text = null
-
-	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
-	src.ghost = src.ghostize()
-	if (src.ghost?.corpse == src)
-		src.ghost.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -2440,6 +2440,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 	actions.interrupt(src, INTERRUPT_ACT)
+
+/mob/proc/adjust_throw(datum/thrown_thing/thr)
+	return
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if (thr.throw_type & THROW_PEEL_SLIP)

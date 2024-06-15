@@ -47562,7 +47562,9 @@
 	rand_pos = 1
 	},
 /obj/item/pen/fancy,
-/obj/machinery/door_control/bolter/new_walls/west,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_diplo"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
@@ -55332,7 +55334,8 @@
 "uLm" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Diplomatic Quarters"
+	name = "Diplomatic Quarters";
+	id = "cc_diplo"
 	},
 /obj/cable{
 	icon_state = "4-8"

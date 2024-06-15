@@ -18168,14 +18168,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "fyI" = (
-/obj/rack,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
+/obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "fyY" = (

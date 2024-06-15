@@ -1,5 +1,37 @@
 
+(t)sat jun 15 24
+(u)Lord_Earthfire
+(p)19521
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The bowling kit's cost was reduced to 6, down from 7.
+(+)Bowling balls from the bowling kit now deal additional damage when thrown or in melee while wearing the bowling suit.
+(t)fri jun 14 24
+(u)LeahTheTech
+(p)19525
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Traitor bowling balls thrown while wearing the bowling suit now throw people flying and can continue through multiple targets.
+(u)Azrun
+(p)19503
+(e)⚖🧛💪|C-Balance, A-Gamemodes, A-Traits
+(*)Salvagers no longer receive selected character traits.  They are truly just someone else entirely.
+(t)wed jun 12 24
+(u)glowbold
+(p)19423
+(e)🔄📦|C-Rework, A-Game-Objects
+(*)The authentication disk can be used on the escape shuttle console to immediately launch it.
+(u)Ilysen
+(p)18889
+(e)🎨🔎💅⚙|C-Sprites, C-Code-Quality, C-QoL, A-Internal
+(+)Wraith possession now shows an action bar to the wraith and all ghosts, and has a status effect showing its duration.
+(+)After a trickster wraith finishes possessing someone, they will be moved to that person's location.
+(+)Ghosts are now alerted when a trickster wraith possesses someone, or ends their possession.
+(+)Ghosts are now alerted when a poltergeist spawns in, so people are explicitly aware if they didn't get the role!
 (t)mon jun 10 24
+(u)Zamujasa
+(e)🪲|C-Bug
+(*)The Job EXP window now shows level progress properly.
+(u)LeahTheTech
+(*)Walking through fluid puddles will now expose your shoes to them. Acid WILL melt your Jordans.
 (u)TDHooligan, Blackrep
 (p)18446
 (e)🆕🗺🎨🔒🔊📦|C-Feature, A-Mapping, C-Sprites, A-Secret, C-Sound, A-Game-Objects
