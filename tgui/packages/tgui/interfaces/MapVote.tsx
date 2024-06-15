@@ -7,11 +7,20 @@
 
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Image, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from '../components';
+
+interface MapVoteMapDetials {
+  description: string,
+  location: string,
+  engine: string,
+  mining: string,
+  idealPlayers: string
+}
 
 export interface MapVoteMapData {
   name: string,
   thumbnail: string,
+  details: MapVoteMapDetials
 }
 
 export interface MapVoteData {
@@ -51,10 +60,11 @@ export const MapVote = (_props, context) => {
                   tooltip="Vote" />
               }
               onClick={() => act('toggle_vote', { map_name: map.name })}
-              style={{cursor: "pointer"}}
+              style={{ cursor: "pointer" }}
               backgroundColor={clientVoteMap[map.name] ? "darkgreen" : null}
               mb={1}
-               />
+              details={map.details}
+            />
           ))}
         </Stack>
         <Section
@@ -84,23 +94,42 @@ export const MapVote = (_props, context) => {
 
 
 export const MapPanel = (props) => {
+  const panel = (
+    <Section
+      title={props.mapName}
+      backgroundColor={props.backgroundColor}
+      buttons={props.button}
+      width="180px"
+      align={props.button ? null : "center"}
+      onClick={props.onClick}
+      style={props.style}
+      mb={props.mb}
+    >
+      <Box align="center">
+        <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
+      </Box>
+      {props.children}
+    </Section>
+  );
+
   return (
     <Stack.Item>
-      <Section
-        title={props.mapName}
-        backgroundColor={props.backgroundColor}
-        buttons={props.button}
-        width="180px"
-        align={props.button ? null : "center"}
-        onClick={props.onClick}
-        style={props.style}
-        mb={props.mb}
-      >
-        <Box align="center">
-          <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
-        </Box>
-        {props.children}
-      </Section>
+      {props.details
+        ? <Tooltip content={<MapPanelTooltip mapName={props.mapName} details={props.details} />}>{panel}</Tooltip>
+        : panel}
     </Stack.Item>
+  );
+};
+
+const MapPanelTooltip = (props) => {
+  return (
+    <>
+      <strong>{props.mapName}</strong><br />
+      {props.details.description}<br />
+      <strong>Location:</strong> {props.details.description}<br />
+      <strong>Engine:</strong> {props.details.engine}<br />
+      <strong>Mining:</strong> {props.details.mining}<br />
+      <strong>Ideal Players:</strong> {props.details.idealPlayers}<br />
+    </>
   );
 };

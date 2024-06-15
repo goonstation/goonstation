@@ -35,8 +35,11 @@ export const MapVoteReport = (_props, context) => {
   const { data } = useBackend<MapVoteReportData>(context);
   const { mapList, winner, isDetailed } = data;
 
-  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / 4) : 1) + (!isDetailed ? 0 : VOTERS_HEIGHT);
-  const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * (!isDetailed ? PANEL_PER_LINE : mapList.length) + WINDOW_HOZ_PADDING;
+  const height = BASE_HEIGHT
+    + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / 4) : 1)
+    + (!isDetailed ? 0 : VOTERS_HEIGHT);
+  const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * (!isDetailed ? PANEL_PER_LINE : mapList.length)
+    + WINDOW_HOZ_PADDING;
 
   return (
     <Window height={height} width={width}>
@@ -47,11 +50,12 @@ export const MapVoteReport = (_props, context) => {
           {mapList.map(map => {
             return (
               <MapPanel
-                  key={map.name}
-                  mapName={map.name}
-                  mapThumbnail={map.thumbnail}
-                  backgroundColor={map.name === winner ? "#a17f1a" : null}
-                  mb={1}>
+                key={map.name}
+                mapName={map.name}
+                mapThumbnail={map.thumbnail}
+                backgroundColor={map.name === winner ? "#a17f1a" : null}
+                mb={1}
+                details={map.details}>
                 <VoteCountLabel voteCount={map.count} />
                 {isDetailed && <Voters voters={map.voters} />}
               </MapPanel>
