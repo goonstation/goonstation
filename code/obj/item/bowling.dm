@@ -87,7 +87,7 @@
 
 	proc/pre_attack_damage_modifier(obj/item/parent_item, atom/A, mob/user)
 		var/mob/living/carbon/human/human_user = user
-		if(human_user.w_uniform && istype(human_user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+		if(istype(human_user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 			//bashing someones skull in with a bowling ball should hurt if you are worthy of the bowling ball
 			src.force = 20
 			src.stamina_damage = 40
