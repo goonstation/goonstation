@@ -235,10 +235,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, FALSE)
 		// remove ourselves when we're used
-		racer.removeAbility(src)
-		holder.abilities -= src
-		racer = null
-		qdel(src)
+		racer.removeAbilityInstance(src)
 
 /datum/targetable/kart_powerup/butt
 	name = "Butt"
@@ -419,7 +416,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		driver.set_loc(get_turf(src))
 
 		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
-		if (A && istype(A))
+		if (istype(A))
 			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = null
 
@@ -558,7 +555,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 			A = driver.add_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = A
 
-		src.name_suffix(" ([driver.name])")
+		src.name_suffix("([driver.name])")
 		src.UpdateName()
 		driving = 0
 		update()
