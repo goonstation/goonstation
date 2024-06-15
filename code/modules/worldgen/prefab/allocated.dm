@@ -56,6 +56,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeY = 38
 
 /datum/mapPrefab/allocated/jar
-	prefabSizeX = 9
-	prefabSizeY = 9
+	prefabSizeX = 7
+	prefabSizeY = 7
 	prefabPath = "assets/maps/allocated/jar.dmm"
