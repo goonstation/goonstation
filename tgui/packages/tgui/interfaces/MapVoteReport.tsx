@@ -49,7 +49,7 @@ export const MapVoteReport = (_props, context) => {
                 key={map.name}
                 mapName={map.name}
                 mapThumbnail={map.thumbnail}
-                backgroundColor={map.name === winner ? "#a17f1a" : null}
+                won={map.name === winner}
                 details={map.details}>
                 <VoteCountLabel voteCount={map.count} />
                 {!!isDetailed && <Voters voters={map.voters} />}

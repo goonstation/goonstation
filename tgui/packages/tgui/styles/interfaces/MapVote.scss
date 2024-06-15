@@ -1,0 +1,25 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+
+
+.MapPanel {
+  &--voted {
+    background-color: #023301;
+  }
+  &--won {
+    background-color: #8E6F19;
+  }
+
+  .mode-light & {
+    &--voted {
+      background-color: lightgreen !important;
+    }
+    &--won {
+      background-color: #F9F998 !important;
+    }
+  }
+}

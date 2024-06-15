@@ -31,7 +31,7 @@ export interface MapVoteData {
   clientVoteMap: any,
 }
 
-export const MAP_PANEL_WIDTH = 180;
+export const MAP_PANEL_WIDTH = 150;
 export const SPACE_BETWEEN_PANELS = 5;
 export const WINDOW_HOZ_PADDING = 12;
 export const PANEL_PER_LINE = 4;
@@ -63,7 +63,7 @@ export const MapVote = (_props, context) => {
               }
               onClick={() => act('toggle_vote', { map_name: map.name })}
               style={{ cursor: "pointer" }}
-              backgroundColor={clientVoteMap[map.name] ? "darkgreen" : null}
+              voted={!!clientVoteMap[map.name]}
               details={map.details}
             />
           ))}
@@ -95,7 +95,8 @@ export const MapVote = (_props, context) => {
 
 interface MapPanelProps {
   mapName: string,
-  backgroundColor: string | null,
+  voted?: boolean,
+  won?: boolean,
   button?: InfernoNode,
   onClick?: () => void,
   style?: Record<string, string>,
@@ -111,6 +112,8 @@ export const MapPanel = (props: MapPanelProps) => {
     mapThumbnail,
     children,
     details,
+    voted,
+    won,
     ...rest
   } = props;
 
@@ -122,6 +125,7 @@ export const MapPanel = (props: MapPanelProps) => {
           maxWidth={`${MAP_PANEL_WIDTH - 35}px`}>
           {mapName}
         </Box>)}
+      className={`MapPanel ${voted ? "MapPanel--voted" : ""} ${won ? "MapPanel--won" : ""}`}
       buttons={button}
       width={`${MAP_PANEL_WIDTH}px`}
       align={button ? null : "center"}
