@@ -240,6 +240,10 @@
 		return
 
 	proc/onRemove(var/mob/owner)
+		if(mutantRace && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.default_mutantrace = /datum/mutantrace/human
+			H.set_mutantrace(H.default_mutantrace)
 		return
 
 	proc/onLife(var/mob/owner, var/mult)
@@ -277,6 +281,10 @@
 	onLife(var/mob/owner) //Just to be super safe.
 		if(!owner.ear_disability)
 			owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
+
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("deaf")
+
 
 /datum/trait/nolegs
 	name = "Stumped"
@@ -316,6 +324,28 @@
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
 			created_organ = new /obj/item/organ/lung/plasmatoid/right()
+			owner.organHolder.drop_organ(right.organ_holder_name)
+			qdel(right)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+	onRemove(mob/living/carbon/human/owner)
+		if (!istype(owner))
+			return
+		var/obj/item/organ/created_organ
+		var/obj/item/organ/lung/plasmatoid/left = owner?.organHolder?.left_lung
+		var/obj/item/organ/lung/plasmatoid/right = owner?.organHolder?.right_lung
+		if(istype(left))
+			created_organ = new /obj/item/organ/lung/left()
+			owner.organHolder.drop_organ(left.organ_holder_name)
+			qdel(left)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+		if(istype(right))
+			created_organ = new /obj/item/organ/lung/right()
 			owner.organHolder.drop_organ(right.organ_holder_name)
 			qdel(right)
 
@@ -392,8 +422,6 @@
 		return
 */
 
-
-
 /datum/trait/german
 	name = "German"
 	desc = "You're from somewhere in the middle of Texas. Prost y'all."
@@ -404,6 +432,7 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_german")
+
 /datum/trait/finnish
 	name = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"
@@ -465,6 +494,9 @@
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("bad_eyesight"))
 			owner.bioHolder.AddEffect("bad_eyesight", 0, 0, 0, 1)
 
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("bad_eyesight")
+
 /datum/trait/blind
 	name = "Blind"
 	desc = "Spawn with permanent blindness and a VISOR."
@@ -485,6 +517,9 @@
 	onLife(var/mob/owner) //Just to be safe.
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("blind"))
 			owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
+
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("blind")
 
 // GENETICS - Blue Border
 
@@ -726,6 +761,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
 
+	onRemove(mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.remove_stam_mod_max("trait", STAMINA_MAX * 0.1)
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait")
+
 /datum/trait/bigbruiser
 	name = "Big Bruiser"
 	desc = "Stronger punches but higher stamina cost!"
@@ -745,6 +786,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_CANTSPRINT, "trait")
+
+	onRemove(mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTSPRINT, "trait")
 
 //Category: Background.
 
@@ -843,6 +889,10 @@ TYPEINFO(/datum/trait/partyanimal)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
 
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("resist_alcohol")
+
+
 /datum/trait/random_allergy
 	name = "Allergy"
 	desc = "You're allergic to... something. You can't quite remember, but how bad could it possibly be?"
@@ -921,6 +971,11 @@ TYPEINFO(/datum/trait/partyanimal)
 		AD.name = "[selected_reagent] addiction"
 		AD.affected_mob = M
 		M.ailments += AD
+
+	onRemove(mob/owner)
+		for(var/datum/ailment_data/addiction/AD in owner.ailments)
+			if(AD.associated_reagent == selected_reagent)
+				owner.ailments -= AD
 
 /datum/trait/strongwilled
 	name = "Strong willed"

@@ -371,7 +371,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/bowling
 	name = "Bowling Kit"
 	item = /obj/item/storage/bowling
-	cost = 7
+	cost = 6
 	desc = "Comes with several bowling balls and a suit. You won't be able to pluck up the courage to throw them very hard without wearing the suit!"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
