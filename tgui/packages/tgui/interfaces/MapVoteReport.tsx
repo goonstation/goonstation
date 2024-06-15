@@ -67,9 +67,10 @@ interface VoteCountLabelProps {
 }
 
 const VoteCountLabel = (props: VoteCountLabelProps) => {
+  const { voteCount } = props;
   return (
     <Box size={1.5} bold>
-      {props.voteCount || 0} vote{props.voteCount > 1 && "s"}
+      {voteCount || 0} vote{voteCount > 1 && "s"}
     </Box>
   );
 };
@@ -79,13 +80,14 @@ interface VotersProps {
 }
 
 const Voters = (props: VotersProps) => {
+  const { voters } = props;
   return (
     <Box
       scrollable
       height={`${VOTERS_HEIGHT}px`}
       overflow="auto"
       align="left">
-      {props.voters && props.voters.map(voter => (<>{voter}<br /></>))}
+      {voters && voters.map(voter => (<>{voter}<br /></>))}
     </Box>
   );
 };

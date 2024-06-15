@@ -9,6 +9,7 @@ import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from '../components';
 import type { InfernoNode } from 'inferno';
+import { computeBoxProps } from '../components/Box';
 
 interface MapVoteMapDetials {
   description: string,
@@ -104,28 +105,35 @@ interface MapPanelProps {
 }
 
 export const MapPanel = (props: MapPanelProps) => {
+  const {
+    mapName,
+    button,
+    mapThumbnail,
+    children,
+    details,
+    ...rest
+  } = props;
+
   const panel = (
     <Section
-      title={props.mapName}
-      backgroundColor={props.backgroundColor}
-      buttons={props.button}
+      title={mapName}
+      buttons={button}
       width={`${MAP_PANEL_WIDTH}px`}
-      align={props.button ? null : "center"}
-      onClick={props.onClick}
-      style={props.style}
+      align={button ? null : "center"}
       mb={1}
+      {...computeBoxProps(rest)}
     >
       <Box align="center">
-        <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
+        <Image src={mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
       </Box>
-      {props.children}
+      {children}
     </Section>
   );
 
   return (
     <Stack.Item>
-      {props.details
-        ? <Tooltip content={<MapPanelTooltip mapName={props.mapName} details={props.details} />}>{panel}</Tooltip>
+      {details
+        ? <Tooltip content={<MapPanelTooltip mapName={mapName} details={details} />}>{panel}</Tooltip>
         : panel}
     </Stack.Item>
   );
@@ -137,14 +145,15 @@ interface MapPanelTooltipProps {
 }
 
 const MapPanelTooltip = (props: MapPanelTooltipProps) => {
+  const { mapName, details } = props;
   return (
     <>
-      <strong>{props.mapName}</strong><br />
-      {props.details.description}<br />
-      <strong>Location:</strong> {props.details.description}<br />
-      <strong>Engine:</strong> {props.details.engine}<br />
-      <strong>Mining:</strong> {props.details.mining}<br />
-      <strong>Ideal Players:</strong> {props.details.idealPlayers}<br />
+      <strong>{mapName}</strong><br />
+      {details.description}<br />
+      <strong>Location:</strong> {details.description}<br />
+      <strong>Engine:</strong> {details.engine}<br />
+      <strong>Mining:</strong> {details.mining}<br />
+      <strong>Ideal Players:</strong> {details.idealPlayers}<br />
     </>
   );
 };
