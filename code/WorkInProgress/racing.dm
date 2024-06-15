@@ -380,6 +380,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 	// allow people to enter the car by clickdragging
 	MouseDrop_T(mob/living/target, mob/user)
+		if (BOUNDS_DIST(user, src) > 0 || !in_interact_range(src,user)) return
 		if (target == user)
 			enter()
 
