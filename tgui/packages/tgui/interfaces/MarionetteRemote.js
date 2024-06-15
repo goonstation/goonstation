@@ -112,7 +112,7 @@ const tooltipForStatus = (status) => {
     case "WAITING...":
       return "Awaiting ping response...";
     case "DANGER":
-      return "This implant is dangerously hot. Further use will likely cause it to break.";
+      return "This implant is dangerously hot. Further short-term use will likely cause it to break.";
     case "NO RESPONSE":
       return "This implant is not responding to pings. It could have been destroyed, or it could just be far away.";
     case "BURNED OUT":
