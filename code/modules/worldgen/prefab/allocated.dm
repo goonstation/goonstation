@@ -54,3 +54,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/pirate_ship.dmm"
 	prefabSizeX = 33
 	prefabSizeY = 38
+
+/datum/mapPrefab/allocated/jar
+	prefabSizeX = 9
+	prefabSizeY = 9
+	prefabPath = "assets/maps/allocated/jar.dmm"
