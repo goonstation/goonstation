@@ -221,6 +221,11 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if(!istype(racer?.loc,/obj/racing_clowncar))
 			return 1
 
+	disposing()
+		racer = null
+		. = ..()
+
+
 /datum/targetable/kart_powerup/banana_peel
 	name = "Bananapeel"
 	desc = "Click to use"
@@ -235,7 +240,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, FALSE)
 		// remove ourselves when we're used
-		racer.removeAbilityInstance(src)
+		holder.removeAbilityInstance(src)
 
 /datum/targetable/kart_powerup/butt
 	name = "Butt"
@@ -258,10 +263,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		playsound(racer.loc, 'sound/mksounds/throw.ogg', 33, FALSE)
 
 		// remove ourselves when we're used
-		racer.removeAbility(src)
-		holder.abilities -= src
-		racer = null
-		qdel(src)
+		holder.removeAbilityInstance(src)
 
 /datum/targetable/kart_powerup/superbutt
 	name = "Superbutt"
@@ -284,10 +286,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		playsound(racer.loc, 'sound/mksounds/throw.ogg', 33, FALSE)
 
 		// remove ourselves when we're used
-		racer.removeAbility(src)
-		holder.abilities -= src
-		racer = null
-		qdel(src)
+		holder.removeAbilityInstance(src)
 
 /datum/targetable/kart_powerup/mushroom
 	name = "Mushroom"
@@ -304,10 +303,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		R.boost()
 
 		// remove ourselves when we're used
-		racer.removeAbility(src)
-		holder.abilities -= src
-		racer = null
-		qdel(src)
+		holder.removeAbilityInstance(src)
 
 /datum/targetable/kart_powerup/superboost
 	name = "Super Boost"
@@ -323,10 +319,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		R.boost(TRUE)
 
 		// remove ourselves when we're used
-		racer.removeAbility(src)
-		holder.abilities -= src
-		racer = null
-		qdel(src)
+		holder.removeAbilityInstance(src)
 
 /obj/racing_clowncar
 	name = "Turbo Clowncar 2000"
@@ -517,6 +510,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	var/returndir = null
 	var/turf/returnloc = null
 
+	/// the vis_flags to be restored on exiting the vehicle
 	var/occupant_vis_flags
 	var/cover_state = "kart_blue"
 
