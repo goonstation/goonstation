@@ -1172,8 +1172,6 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			for (var/obj/limb in limbs) // You do not know my pain.
 				ThrowRandom(limb, 1)
 
-			ThrowRandom(src.mob, 1)
-
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
 			if(H)
