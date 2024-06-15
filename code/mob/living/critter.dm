@@ -1664,6 +1664,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				. = list(0,2,0)
 			if(5 to 7)
 				. = list(0,1,0)
+			else
+				. = list()
 
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)

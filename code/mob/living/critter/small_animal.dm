@@ -4169,6 +4169,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	can_hat = FALSE
 	player_can_spawn_with_pet = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+	has_genes = FALSE
 
 /mob/living/critter/small_animal/crab/lava
 	name = "magma crab"
@@ -4481,6 +4482,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	generic = FALSE
 	butcherable = FALSE
 	no_stamina_stuns = TRUE
+	has_genes = FALSE
 
 	ai_retaliates = FALSE
 
