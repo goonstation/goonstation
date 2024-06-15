@@ -806,7 +806,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	Handling for early return if a card is scanned successfully
 	Handling for calling parent proc + hitting the machine
 	*/
-	proc/
 
 	attackby(obj/item/W, mob/user)
 		// Handling for shocking the user
