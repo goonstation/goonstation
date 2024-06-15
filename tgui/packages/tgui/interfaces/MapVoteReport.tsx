@@ -13,30 +13,44 @@ import { MapVoteMapData } from './MapVote';
 
 interface MapVoteReportMapData extends MapVoteMapData {
   count: number,
-  voters?: Array<string>,
-  isDetailed: boolean
+  voters?: Array<string>
 }
 
 export interface MapVoteReportData {
   mapList: Array<MapVoteReportMapData>,
-  winner: string
+  winner: string,
+  isDetailed: boolean
 }
+
+const MAP_PANEL_WIDTH = 180;
+const SPACE_BETWEEN_PANELS = 5;
+const WINDOW_HOZ_PADDING = 12;
+const PANEL_PER_LINE = 4;
+
+const BASE_HEIGHT = 70;
+const MAP_ROW_HEIGHT = 130;
 
 export const MapVoteReport = (_props, context) => {
   const { data } = useBackend<MapVoteReportData>(context);
-  const { mapList, winner } = data;
+  const { mapList, winner, isDetailed } = data;
+
+  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / 4) : 1);
+  const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * (!isDetailed ? PANEL_PER_LINE : mapList.length) + WINDOW_HOZ_PADDING;
 
   return (
-    <Window height={185} width={(126 * mapList.length) + 6}>
+    <Window height={height} width={width}>
       <Window.Content>
-        <Stack>
+        <Stack
+          wrap={!isDetailed}
+          justify={!isDetailed ? "space-around" : null}>
           {mapList.map(map => {
             return (
               <MapPanel
                   key={map.name}
                   mapName={map.name}
                   mapThumbnail={map.thumbnail}
-                  backgroundColor={map.name === winner ? "gold" : null}>
+                  backgroundColor={map.name === winner ? "#a17f1a" : null}
+                  mb={1}>
                 <VoteCountLabel voteCount={map.count} />
                 {map.voters && <Voters voters={map.voters} />}
               </MapPanel>

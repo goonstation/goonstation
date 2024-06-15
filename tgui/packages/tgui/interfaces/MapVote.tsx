@@ -20,14 +20,25 @@ export interface MapVoteData {
   clientVoteMap: any,
 }
 
+const MAP_PANEL_WIDTH = 180;
+const SPACE_BETWEEN_PANELS = 5;
+const WINDOW_HOZ_PADDING = 12;
+const PANEL_PER_LINE = 4;
+
+const BASE_HEIGHT = 100;
+const MAP_ROW_HEIGHT = 130;
+
 export const MapVote = (_props, context) => {
   const { data, act } = useBackend<MapVoteData>(context);
   const { playersVoting, mapList, clientVoteMap } = data;
 
+  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * Math.ceil(mapList.length / 4);
+  const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * PANEL_PER_LINE + WINDOW_HOZ_PADDING;
+
   return (
-    <Window height={220} width={(126 * mapList.length) + 6}>
+    <Window height={height} width={width}>
       <Window.Content>
-        <Stack>
+        <Stack wrap justify="space-around">
           {mapList.map(map => (
             <MapPanel
               key={map.name}
@@ -42,6 +53,7 @@ export const MapVote = (_props, context) => {
               onClick={() => act('toggle_vote', { map_name: map.name })}
               style={{cursor: "pointer"}}
               backgroundColor={clientVoteMap[map.name] ? "darkgreen" : null}
+              mb={1}
                />
           ))}
         </Stack>
@@ -78,10 +90,11 @@ export const MapPanel = (props) => {
         title={props.mapName}
         backgroundColor={props.backgroundColor}
         buttons={props.button}
-        width="120px"
+        width="180px"
         align={props.button ? null : "center"}
         onClick={props.onClick}
         style={props.style}
+        mb={props.mb}
       >
         <Box align="center">
           <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
