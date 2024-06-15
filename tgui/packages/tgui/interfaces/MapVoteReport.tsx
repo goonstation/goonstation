@@ -75,7 +75,7 @@ const VoteCountLabel = (props: VoteCountLabelProps) => {
 };
 
 interface VotersProps {
-  voters: any
+  voters: Array<string>
 }
 
 const Voters = (props: VotersProps) => {
@@ -85,7 +85,7 @@ const Voters = (props: VotersProps) => {
       height={`${VOTERS_HEIGHT}px`}
       overflow="auto"
       align="left">
-      {props.voters && props.voters.join(<br />)}
+      {props.voters && props.voters.map(voter => (<>{voter}<br /></>))}
     </Box>
   );
 };
