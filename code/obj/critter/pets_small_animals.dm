@@ -81,6 +81,13 @@
 	health_gain_from_food = 2
 	feed_text = "chirps happily!"
 	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
+
+	speech_verb_say = list("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
+
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/species = "parrot"						// the species, used to update icon
 	var/list/learned_words = null				// the single words that the bird knows
 	var/list/learned_phrases = null				// ^^^ for complete phrases
@@ -115,26 +122,31 @@
 		if (src.treasure)
 			. += "<br>[src] is holding \a [src.treasure]."
 
-	hear_talk(mob/M as mob, messages, heardname, lang_id)
-		if (!src.alive || src.sleeping || !text)
+	hear(datum/say_message/message)
+		. = ..()
+
+		if (!src.alive || src.sleeping || !src.text)
 			return
-		var/m_id = (lang_id == "english" || lang_id == "") ? 1 : 2
-		if (M.singing)
-			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
+
+		var/boost = 0
+		if ((message.flags & SAYFLAG_SINGING) && ismob(message.speaker))
+			if (message.flags & (SAYFLAG_LOUD_SINGING | SAYFLAG_BAD_SINGING))
 				SPAWN(0.3 SECONDS)
-					if(BOUNDS_DIST(src, M) == 0)
-						src.CritterAttack(M)
+					if (BOUNDS_DIST(src, message.speaker) == 0)
+						src.CritterAttack(message.speaker)
 					else
 						flick("[src.species]-flaploop", src)
-			else
-				spawn(rand(4,10))
-					chatter(1)
 
-		var/boost = M.singing ? signing_learn_boost : 0
-		if (prob(learn_words_chance + boost))
-			src.learn_stuff(messages[m_id])
-		if (prob(learn_phrase_chance + boost))
-			src.learn_stuff(messages[m_id], 1)
+			else
+				SPAWN(rand(4, 10))
+					src.chatter(TRUE)
+
+			boost = src.signing_learn_boost
+
+		if (prob(src.learn_words_chance + boost))
+			src.learn_stuff(message.content)
+		if (prob(src.learn_phrase_chance + boost))
+			src.learn_stuff(message.content, TRUE)
 
 	proc/learn_stuff(var/message, var/learn_phrase = 0)
 		if (!message)
@@ -185,17 +197,8 @@
 		else if (islist(src.learned_words) && length(src.learned_words))
 			thing_to_say = pick(src.learned_words) // :monocle:
 			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
-		// format
-		var/quote = "'"
-		if (sing)
-			quote = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/note.png")]'>"
-			thing_to_say = "<span style='color: bisque; font-style: italic;'>[thing_to_say]</span>"
-		thing_to_say = "[quote][thing_to_say][quote]"
-		src.say(thing_to_say)
 
-	proc/say(var/text) // mehhh
-		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [my_verb], [text]"))
+		src.say(thing_to_say, (sing ? SAYFLAG_SINGING : 0))
 
 	proc/take_stuff()
 		if (src.treasure)

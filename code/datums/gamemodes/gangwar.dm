@@ -192,13 +192,9 @@
 	if (istype(victorius_gang))
 		return victorius_gang
 
-proc/broadcast_to_all_gangs(var/message)
-	var/datum/language/L = languages.language_cache["english"]
-	var/list/messages = L.get_messages(message)
-
-	for (var/datum/gang/gang in get_all_gangs())
-		gang.announcer_radio.set_secure_frequency("g", gang.gang_frequency)
-		gang.announcer_radio.talk_into(gang.announcer_source, messages, "g", gang.announcer_source.name, "english")
+/proc/broadcast_to_all_gangs(message)
+	for (var/datum/gang/gang as anything in global.get_all_gangs())
+		gang.announcer_say_source.say(message)
 
 /// For a given tile, this contains the number of gang tags that see or influence this tile for a gang. Used to track overlays.
 /datum/gangtileclaim
@@ -227,11 +223,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/static/list/headwear_list
 	var/static/list/color_list = list("#88CCEE","#117733","#332288","#DDCC77","#CC6677","#AA4499") //(hopefully) colorblind friendly palette
 	var/static/list/colors_left = null
-	/// The radio source for the gang's announcer, who will announce various messages of importance over the gang's frequency.
-	var/datum/generic_radio_source/announcer_source
-	/// The radio headset that the gang's announcer will use.
-	var/obj/item/device/radio/headset/gang/announcer_radio
-
+	/// The abstarct radio say source for this gang's announcer, who will announce various messages of importance over the gang's frequency.
+	var/atom/movable/abstract_say_source/radio/gang_announcer/announcer_say_source
 	/// The chosen name of this gang.
 	var/gang_name = "Gang Name"
 	/// The randomly selected tag of this gang.
@@ -322,33 +315,32 @@ proc/broadcast_to_all_gangs(var/message)
 			choose_new_leader()
 			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early with no locker.")
 			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early with no locker.")
-			broadcast_to_gang("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
+			src.announcer_say_source.say("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
 		else
-			broadcast_to_gang("Your leader has died early into the shift. If not revived, a new leader will be picked in [GANG_LEADER_SOFT_DEATH_DELAY/(1 MINUTE)] minutes.")
+			src.announcer_say_source.say("Your leader has died early into the shift. If not revived, a new leader will be picked in [GANG_LEADER_SOFT_DEATH_DELAY/(1 MINUTE)] minutes.")
 			SPAWN (GANG_LEADER_SOFT_DEATH_DELAY)
 				if (!isalive(src.leader.current))
 					choose_new_leader()
 					logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early and wasn't respawned/revived.")
 					message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early and wasn't respawned/revived.")
-					broadcast_to_gang("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
+					src.announcer_say_source.say("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
 
 	/// how to handle the gang leader entering cryo (but not guaranteed to be permanent)
 	proc/handle_leader_temp_cryo()
 		if (!src.locker)
 			choose_new_leader()
 		else
-			// the delay here is handled by the locker.
-			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
+			src.announcer_say_source.say("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
 
 	/// handle the gang leader entering cryo permanently
 	proc/handle_leader_perma_cryo()
 		if (src.locker)
-			broadcast_to_gang("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
+			src.announcer_say_source.say("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
 			leader_claimable = TRUE
 		else
 			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their leader cryo'd without a locker.")
 			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as leader cryo'd without a locker.")
-			broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [src.leader.current.real_name] is now your new leader.")
+			src.announcer_say_source.say("As your leader has entered cryogenic storage without a locker, [src.leader.current.real_name] is now your new leader.")
 			choose_new_leader()
 
 	proc/choose_new_leader()
@@ -505,9 +497,7 @@ proc/broadcast_to_all_gangs(var/message)
 		src.used_frequencies += src.gang_frequency
 		protected_frequencies += gang_frequency
 
-		src.announcer_source = new /datum/generic_radio_source()
-		src.announcer_source.set_name("The [pick("Kingpin","Cabal","Council","Boss")]")
-		src.announcer_radio = new /obj/item/device/radio/headset/gang()
+		src.announcer_say_source = new(null, src)
 
 		if (istype(ticker?.mode, /datum/game_mode/gang))
 			var/datum/game_mode/gang/gamemode = ticker.mode
@@ -582,13 +572,6 @@ proc/broadcast_to_all_gangs(var/message)
 			src.headwear = src.headwear_list[temporary_headwear]
 			src.headwear_list -= temporary_headwear
 
-	proc/broadcast_to_gang(var/message)
-		var/datum/language/L = languages.language_cache["english"]
-		var/list/messages = L.get_messages(message)
-
-		src.announcer_radio.set_secure_frequency("g", src.gang_frequency)
-		src.announcer_radio.talk_into(src.announcer_source, messages, "g", src.announcer_source.name, "english")
-
 	proc/num_tiles_controlled()
 		return src.tiles_controlled
 
@@ -603,15 +586,6 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return round(score)
 
-	/// Shows maptext to the gang, with formatting for score increases.
-	proc/show_score_maptext(amount, turf/location)
-		var/image/chat_maptext/chat_text = null
-		chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 0.5 SECONDS)
-		chat_text.show_to(src.leader?.current.client)
-		for (var/datum/mind/userMind as anything in src.members)
-			var/client/userClient = userMind.current.client
-			if (userClient?.preferences?.flying_chat_hidden)
-				chat_text.show_to(userClient)
 	/// add points to this gang, bonusMob optionally getting a bonus
 	/// if location is defined, maptext will come from that location, for all members.
 	proc/add_points(amount, mob/bonusMob = null, turf/location = null, showText = FALSE)
@@ -635,15 +609,9 @@ proc/broadcast_to_all_gangs(var/message)
 		if (!showText)
 			return
 		if (location)
-			show_score_maptext(amount, location)
-		else if (bonusMob.client && !bonusMob.client.preferences?.flying_chat_hidden)
-			var/image/chat_maptext/chat_text = null
-			if (amount >= 1000)
-				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e; font-weight: bold; font-size: 24px;'>+[amount]</span>", alpha = 180, time = 3 SECONDS)
-			else
-				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
-			if (chat_text)
-				chat_text.show_to(bonusMob.client)
+			global.display_gang_score_maptext(location, (src.members + src.leader), amount)
+		else if (bonusMind)
+			global.display_gang_score_maptext(bonusMob, list(bonusMind), amount)
 
 	proc/can_be_joined() //basic for now but might be expanded on so I'm making it a proc of its own
 		if(length(src.members) >= src.current_max_gang_members)
@@ -1549,14 +1517,14 @@ proc/broadcast_to_all_gangs(var/message)
 			ThrowRandom(cashObj, 1, bonus_throwforce = -10)
 			superlaunder_stacks = min(superlaunder_stacks, round(src.stored_cash/(GANG_LAUNDER_RATE*1.5)))
 			if (!ON_COOLDOWN(src, "damage_warning", 60 SECONDS))
-				src.gang.broadcast_to_gang("Your locker is under attack!")
+				src.gang.announcer_say_source.say("Your locker is under attack!")
 
 	/// Add score to the next maptext that can be shown once per second.
 	proc/aggregate_score(var/score)
 		if (!is_aggregating_item_scores)
 			is_aggregating_item_scores = TRUE
 			SPAWN (aggregate_item_score_time)
-				gang.show_score_maptext(aggregate_score_count, get_turf(src))
+				global.display_gang_score_maptext(get_turf(src), (src.gang.members + src.gang.leader), src.aggregate_score_count)
 				aggregate_score_count = 0
 				is_aggregating_item_scores = FALSE
 		aggregate_score_count += score
@@ -2331,7 +2299,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/gang/ourGang = locker.gang
 		var/datum/mind/target = ourGang.get_random_civvie()
 		ourGang.target_loot_spawn(target, ourGang)
-		ourGang.broadcast_to_gang("An extra tip off has been purchased; "+ target.current.real_name + " recieved the location on their PDA.")
+		ourGang.announcer_say_source.say("An extra tip off has been purchased; [target.current.real_name] recieved the location on their PDA.")
 		return TRUE //don't spawn anything
 
 
@@ -2435,7 +2403,7 @@ proc/broadcast_to_all_gangs(var/message)
 		score = ceil(mappedHeat * GANG_TAG_POINTS_PER_HEAT)
 		owners.score_turf += score
 		owners.add_points(score)
-		owners.show_score_maptext(score, get_turf(src))
+		global.display_gang_score_maptext(get_turf(src), (src.owners.members + src.owners.leader), score)
 		heatTracker.icon_state = "gang_heat_[mappedHeat]"
 
 	New()

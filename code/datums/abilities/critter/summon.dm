@@ -52,4 +52,4 @@
 
     playsound(T, 'sound/effects/ghost2.ogg', 100, TRUE)
     holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner]</b> summons [martian.name]!"), SPAN_NOTICE("You pull [martian.real_name] through space to you!"))
-    holder.owner.say("SUMMON!", 1)
+    holder.owner.say("SUMMON!", flags = SAYFLAG_IGNORE_STAMINA)

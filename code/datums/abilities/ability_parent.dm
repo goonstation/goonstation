@@ -428,6 +428,7 @@
 
 	///Returns the actual mob currently controlling this holder, in case src.owner and composite_owner.owner differ (eg flockmind in a drone)
 	proc/get_controlling_mob()
+		RETURN_TYPE(/mob)
 		return src.composite_owner?.owner || src.owner
 
 /atom/movable/screen/ability

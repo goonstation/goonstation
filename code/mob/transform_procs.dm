@@ -171,12 +171,17 @@
 
 /mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
-	if(ghost_spawned)
-		newmob.ghost_spawned = ghost_spawned
+	if (ghost_spawned || newmob.ghost_spawned)
+		newmob.ghost_spawned = TRUE
+
+		newmob.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_SILICONCHAT)
+		newmob.ensure_listen_tree().RemoveInput(LISTEN_INPUT_SILICONCHAT)
+
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
 			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
+
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
@@ -510,7 +515,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	C.say_language = LANGUAGE_ANIMAL
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
@@ -553,7 +558,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint, ghost_spawned=TRUE)
 
 	C.mind.assigned_role = "Animal"
-	C.say_language = "animal"
+	C.say_language = LANGUAGE_ANIMAL
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE

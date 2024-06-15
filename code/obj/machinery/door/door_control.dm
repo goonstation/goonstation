@@ -16,13 +16,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
-	/// for the speak proc, relays the message to speak.
-	var/image/chat_maptext/welcome_text
 	///alpha value for speak proc
 	var/welcome_text_alpha = 140
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
 	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
+
+	speech_verb_say = "beeps"
+	start_speech_modifiers = list(SPEECH_MODIFIER_DOOR_CONTROL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -504,21 +506,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		src.visible_message(SPAN_ALERT("[src] emits a sad thunk.  That can't be good."))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
-		boutput(user, SPAN_ALERT("It's broken."))
-// Stolen from the vending module
-/// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
-/obj/machinery/door_control/proc/speak(var/message)
-	var/image/chat_maptext/speak_text = welcome_text
-	if ((src.status & NOPOWER) || !message)
+		boutput(user, "<span class='alert'>It's broken.</span>")
+
+/obj/machinery/door_control/say(message, flags, message_params, atom_listeners_override)
+	if (src.status & NOPOWER)
 		return
-	else
-		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
-		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), assoc_maptext = speak_text)
-		if (speak_text && src.chat_text && length(src.chat_text.lines))
-			speak_text.measure(src)
-			for (var/image/chat_maptext/I in src.chat_text.lines)
-				if (I != speak_text)
-					I.bump_up(speak_text.measured_height)
+
+	. = ..()
 
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner
@@ -532,7 +526,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
-	welcome_text = "Welcome, Agent."
 
 /obj/machinery/door_control/ex_act(severity)
 	return
@@ -542,12 +535,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
-		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
 		src.toggle()
 		if (src.entrance_scanner)
-			src.speak(src.welcome_text)
+			src.say("Biometric profile accepted. Welcome, Agent.")
 	else
-		boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
+		src.say("Invalid biometric profile. Access denied.")
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////

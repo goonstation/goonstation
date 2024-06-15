@@ -5,6 +5,10 @@
 	desc = "A remote control switch for a door."
 	req_access = list(access_security)
 	anchored = ANCHORED
+
+	speech_verb_say = "beeps"
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 	var/id = null
 	var/time = 30
 	var/timing = FALSE
@@ -219,7 +223,7 @@
 	if (src.status & (NOPOWER|BROKEN))
 		return
 
-	src.obj_speak("Time expired. Unlocking...")
+	src.say("Time expired. Unlocking...")
 
 	for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 		if (!IN_RANGE(M, src, 30))
@@ -311,7 +315,7 @@
 				// the timer is starting
 				// set the last time to now
 				src.last_tick = TIME
-				src.obj_speak("Timer set to [src.get_time_left()].")
+				src.say("Timer set to [src.get_time_left()].")
 				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 					if (!IN_RANGE(M, src, 10))
 						continue
@@ -320,7 +324,7 @@
 						break
 			else
 				// the timer is being turned off
-				src.obj_speak("Timer cancelled.")
+				src.say("Timer cancelled.")
 				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 					if (!IN_RANGE(M, src, 10))
 						continue

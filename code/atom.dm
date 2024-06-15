@@ -44,8 +44,6 @@ TYPEINFO(/atom)
 
 	var/interesting = ""
 	var/stops_space_move = 0
-	/// Anything can speak... if it can speak
-	var/obj/chat_maptext_holder/chat_text
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
@@ -200,10 +198,6 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
-
-		if (!isnull(chat_text))
-			qdel(chat_text)
-			chat_text = null
 
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me

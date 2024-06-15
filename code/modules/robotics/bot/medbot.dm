@@ -388,7 +388,7 @@
 			var/message = pick("Radar, put a mask on!","I'm a doctor.","There's always a catch, and it's the best there is.",\
 			"I knew it, I should've been a plastic surgeon.",\
 			"What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
-			src.speak(message)
+			src.say(message)
 		src.seek_patient()
 
 	if (src.patient)
@@ -425,7 +425,7 @@
 			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
-				src.speak(message)
+				src.say(message)
 
 			if(IN_RANGE(src,src.patient,1))
 				src.KillPathAndGiveUp(0)
@@ -533,13 +533,13 @@
 
 	if(isdead(C))
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
-		src.speak(death_message)
+		src.say(death_message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 
 	if (C.loc && !isturf(C.loc)) // don't stab people while they're still in the cloner, wait till they're out first!
 		var/missing_message = pick("Wait, where'd [he_or_she(C)] go?","That's okay, I'll just wait here until you're ready.")
-		src.speak(missing_message)
+		src.say(missing_message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 
@@ -588,7 +588,7 @@
 
 	if (length(reagent_id) < 1) //If they don't need any of that they're probably cured!
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
-		src.speak(message)
+		src.say(message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
 	else if(!actions.hasAction(src, /datum/action/bar/icon/medbot_inject))
@@ -645,7 +645,7 @@
 					"MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00",\
 					"ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a",\
 					"This will all be over soon.")
-					master.speak(message)
+					master.say(message)
 				else
 					master.visible_message("<b>[master] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
 					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg',\
@@ -717,41 +717,9 @@
 		if(!master.terrifying && !(BOUNDS_DIST(master, master.patient) == 0))
 			return TRUE
 
-// copied from transposed scientists
 
-#define fontSizeMax 3
-#define fontSizeMin -3
-
-/obj/machinery/bot/medbot/terrifying/speak(var/message)
-	if ((!src.on) || (!message))
-		return
-
-	var/list/audience = hearers(src, null)
-	if (!audience || !length(audience))
-		return
-
-	var/fontSize = 1
-	var/fontIncreasing = 1
-	var/messageLen = length(message)
-	var/processedMessage = ""
-
-	for (var/i = 1, i <= messageLen, i++)
-		processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-		if (fontIncreasing)
-			fontSize = min(fontSize+1, fontSizeMax)
-			if (fontSize >= fontSizeMax)
-				fontIncreasing = 0
-		else
-			fontSize = max(fontSize-1, fontSizeMin)
-			if (fontSize <= fontSizeMin)
-				fontIncreasing = 1
-
-	message = processedMessage
-
-	..()
-
-#undef fontSizeMax
-#undef fontSizeMin
+/obj/machinery/bot/medbot/terrifying
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, "accent_transposed")
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/projectile/P)
 	..()

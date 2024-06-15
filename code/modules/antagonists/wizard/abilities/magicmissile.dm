@@ -35,7 +35,7 @@
 			missile_targets += M
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ICEE BEEYEM", FALSE, maptext_style, maptext_colors) // EHM-EYEARRVEE
+			holder.owner.say("ICEE BEEYEM", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors)) // EHM-EYEARRVEE
 		..()
 
 		var/num_shots = src.base_shots

@@ -441,6 +441,8 @@
 	beacon_freq = 1440
 	control_freq = FREQ_AINLEY_BUDDY
 
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SOVIET, "accent_russian")
+
 	New()
 		..()
 #ifndef SAMOSTREL_LIVE
@@ -449,9 +451,6 @@
 		SPAWN(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += FREQ_AINLEY_BUDDY
-
-	speak(var/message)
-		return ..("<font face=Consolas>[russify( uppertext(message) )]</font>")
 
 	turn_on()
 		if(!src.cell || src.cell.charge <= 0)
@@ -465,9 +464,9 @@
 		src.UpdateIcon()
 		if(!warm_boot)
 			src.scratchpad.len = 0
-			src.speak("Bytovoj Robot v6 aktivirovan.")
+			src.say("Bytovoj Robot v6 aktivirovan.")
 			if (src.health < initial(src.health))
-				src.speak("Obnaruzhena oshibka, [src.health < (initial(src.health) / 2) ? "Tyazhelyye" : "Umerennyye"] travmy nashli!")
+				src.say("Obnaruzhena oshibka, [src.health < (initial(src.health) / 2) ? "Tyazhelyye" : "Umerennyye"] travmy nashli!")
 
 			if(!src.tasks.len && (src.model_task || src.setup_default_startup_task))
 				if(!src.model_task)
@@ -482,7 +481,7 @@
 		src.exploding = 1
 		//some of the death lines are just transliterated normal death lines, because parts of the soviet buddy rom were just copied from the original buds wholesale.
 		var/death_message = pick("A muzhiki-to, muzhiki, kak umirayut!","Malfunction!","Neispravnost'!","I had a good run.")
-		speak(death_message)
+		src.say(death_message)
 		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
@@ -560,14 +559,14 @@
 		if (somebody_to_talk_to)
 			var/talk_prob = (world.time - last_idle_dialog) / 20
 			if (prob(talk_prob))
-				src.master.speak( pick(idle_dialog) )
+				src.master.say( pick(idle_dialog) )
 				last_idle_dialog = world.time
 				return
 
 			if (istype(get_area(src.master), /area/solarium) && !(dialogChecklist & SB_SOLARIUM))
 				dialogChecklist |= SB_SOLARIUM
 
-				src.master.speak( "Pochemu ty vernul menya k etomu mestu?")
+				src.master.say("Pochemu ty vernul menya k etomu mestu?")
 
 				return
 
@@ -583,7 +582,7 @@
 				if (istype(theFake))
 					dialogChecklist |= SB_FAKEBEE
 
-					src.master.speak("Smotrite, kosmos pchela! Etot blagorodnyj rabotnik yavlyaetsya rezul'tatom mnogoletnikh issledovanij.")
+					src.master.say("Smotrite, kosmos pchela! Etot blagorodnyj rabotnik yavlyaetsya rezul'tatom mnogoletnikh issledovanij.")
 
 			else if (!(dialogChecklist & SB_CHEGET))
 				var/obj/machinery/computer3/luggable/cheget/cheget = locate() in view(7, master)

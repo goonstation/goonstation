@@ -55,7 +55,7 @@
 			if (!(class in src.secure_classes))
 				src.secure_classes[class] = R.secure_classes[class]
 
-		set_secure_frequencies(src)
+		src.set_secure_frequencies(src)
 		R.set_loc(src)
 
 	proc/remove_radio_upgrade()
@@ -416,6 +416,23 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
+/obj/item/device/radio/commentator
+	name = "commentator radio"
+	icon_state = "radio"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator Radio"
+
+/obj/item/device/radio/headset/commentator
+	name = "commentator headset"
+	icon_state = "command headset"
+	icon_override = "commentator"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator"
+	secure_frequencies = list("z" = 555)
+	secure_classes = list("z" = RADIOCL_SYNDICATE)
+
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
@@ -534,13 +551,6 @@
 	item_state = "headset"
 	block_hearing_when_worn = HEARING_ANTIDEAF
 
-/obj/item/device/radio/headset/gang
-	name = "radio headset"
-	desc = "A radio headset, pre-tuned to your gang's frequency. Convenient!"
-	secure_frequencies = list("g" = R_FREQ_GANG) //placeholder so it sets up right
-	secure_classes = list("g" = RADIOCL_SYNDICATE)
-	protected_radio = 1
-
 /obj/item/device/radio/headset/multifreq
 	name = "multi-frequency headset"
 	desc = "A radio headset that can communicate over multiple customizable channels."
@@ -561,8 +571,8 @@ Blue Wire:  <A href='byond://?src=\ref[src];wires=1'>[src.wires & 1 ? "Cut" : "M
 		t1 = "-------"
 	var/dat = {"
 <TT>
-Microphone [src.broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Always on</A>" : "<A href='byond://?src=\ref[src];talk=1'>Push to talk</A>"]<BR>
-Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>On</A>" : "<A href='byond://?src=\ref[src];listen=1'>Off</A>"]<BR>
+Microphone [src.microphone_enabled ? "<A href='byond://?src=\ref[src];talk=0'>Always on</A>" : "<A href='byond://?src=\ref[src];talk=1'>Push to talk</A>"]<BR>
+Speaker: [src.speaker_enabled ? "<A href='byond://?src=\ref[src];listen=0'>On</A>" : "<A href='byond://?src=\ref[src];listen=1'>Off</A>"]<BR>
 Frequency:
 <A href='byond://?src=\ref[src];freq=-10'>-</A>
 <A href='byond://?src=\ref[src];freq=-2'>-</A>

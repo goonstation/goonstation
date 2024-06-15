@@ -10,9 +10,9 @@
 	can_grab = FALSE
 	can_disarm = TRUE
 	fits_under_table = TRUE
-	speechverb_say = "beeps"
-	speechverb_exclaim = "boops"
-	speechverb_ask = "beeps curiously"
+	speech_verb_say = "beeps"
+	speech_verb_exclaim = "boops"
+	speech_verb_ask = "beeps curiously"
 	add_abilities = list(/datum/targetable/critter/takepicture,
 						/datum/targetable/critter/flash,
 						/datum/targetable/critter/scuttle_scan,

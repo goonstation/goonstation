@@ -5,9 +5,9 @@
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
 	icon_state = "shade"
-	speechverb_say = "says"
-	speechverb_exclaim = "exclaims"
-	speechverb_ask = "asks"
+	speech_verb_say = "says"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_ask = "asks"
 	var/const/life_tick_spacing = 20
 	health_brute = 8
 	health_brute_vuln = 1

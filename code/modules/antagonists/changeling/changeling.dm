@@ -45,6 +45,12 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
 
+		var/datum/speech_module/output/bundled/hivemind/output = src.owner.current.ensure_say_tree().AddOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER)
+		output.subchannel = "\ref[src.ability_holder]"
+
+		var/datum/listen_module/input/bundled/hivemind/input = src.owner.current.ensure_listen_tree().AddInput(LISTEN_INPUT_HIVECHAT)
+		input.ChangeSubchannel("\ref[src.ability_holder]")
+
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current
 			L.blood_id = "bloodc"
@@ -79,6 +85,9 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/changeling)
+
+		src.owner.current.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER)
+		src.owner.current.ensure_listen_tree().RemoveInput(LISTEN_INPUT_HIVECHAT)
 
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current

@@ -16,6 +16,9 @@
 	var/const/maxTime = 1 HOUR
 	var/const/minTime = 0
 
+	speech_verb_say = "dings"
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 	proc/buttonState()
 		if (src.turn) // Apparently White is always gonna be on the left. Huh.
 			icon_state = "chessclock_R"
@@ -38,12 +41,7 @@
 		return timeValue
 
 	proc/timeFlag()
-		var/winner = src.turn ? "Black" : "White"
-		var/loser = !src.turn ? "Black" : "White"
-		var/map_text = make_chat_maptext(src, "[winner] wins on time.", "color: #A8E9F0;", alpha = 150)
-		for (var/mob/O in hearers(src))
-			O.show_message(assoc_maptext = map_text)
-		src.visible_message("[src] stops. [loser] has flagged and [winner] wins on time.")
+		src.say("[src.turn ? "Black" : "White"] wins on time.")
 		src.icon_state = "[src.icon_state]_stopped"
 		playsound(src.loc, 'sound/effects/bell_high_pitch.ogg', 30)
 

@@ -139,6 +139,13 @@ var/global/IP_alerts = 1
 	SHOW_VERB_DESC
 
 	src.only_local_looc = !src.only_local_looc
+	if (src.only_local_looc)
+		src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+		src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+	else
+		src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+		src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+
 	boutput(usr, SPAN_NOTICE("Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!"))
 
 /client/proc/toggle_hearing_all()
@@ -149,10 +156,25 @@ var/global/IP_alerts = 1
 	SHOW_VERB_DESC
 
 	if(src.mob)
-		src.mob.mob_flags ^= MOB_HEARS_ALL
+		src.mob.toggle_hearing_all(!(src.mob.mob_flags & MOB_HEARS_ALL))
 		boutput(usr, SPAN_NOTICE("Toggled seeing all messages [src.mob.mob_flags & MOB_HEARS_ALL ? "on" : "off"]!"))
 	else
 		boutput(usr, SPAN_NOTICE("You don't have a mob, somehow, what!"))
+
+/mob/proc/toggle_hearing_all(global_hearing_enabled)
+	if (global_hearing_enabled && !(src.mob_flags & MOB_HEARS_ALL))
+		src.mob_flags |= MOB_HEARS_ALL
+
+		src.listen_tree.RemoveInput(LISTEN_INPUT_EARS)
+		src.listen_tree.AddInput(LISTEN_INPUT_GLOBAL_HEARING)
+		src.listen_tree.AddInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
+
+	else if (src.mob_flags & MOB_HEARS_ALL)
+		src.mob_flags &= ~MOB_HEARS_ALL
+
+		src.listen_tree.RemoveInput(LISTEN_INPUT_GLOBAL_HEARING)
+		src.listen_tree.RemoveInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
+		src.listen_tree.AddInput(LISTEN_INPUT_EARS)
 
 /client/proc/toggle_attack_messages()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -276,9 +298,25 @@ client/proc/toggle_ghost_respawns()
 		player_mode_asay = 0
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
+
+		if (src.preferences.listen_ooc)
+			src.listen_tree.AddInput(LISTEN_INPUT_OOC_ADMIN)
+			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC)
+		if (src.preferences.listen_looc)
+			if (src.only_local_looc)
+				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+			else
+				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC)
+
+		src.holder.admin_say_tree.update_target_speech_tree(src.say_tree)
+		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
+
 		boutput(usr, SPAN_NOTICE("Player mode now OFF."))
+
 	else
 		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to receive") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
+		var/remove_holder = FALSE
 		switch (choice)
 			if ("ASAY, AHELP & MHELP")
 				player_mode = 1
@@ -325,10 +363,26 @@ client/proc/toggle_ghost_respawns()
 				player_mode_asay = 0
 				player_mode_ahelp = 0
 				player_mode_mhelp = 0
-				cmd_admin_disable()
+				remove_holder = TRUE
 			else
 				// Cancel = don't turn on player mode
 				return
+
+		if (src.preferences.listen_ooc)
+			src.listen_tree.AddInput(LISTEN_INPUT_OOC)
+			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC_ADMIN)
+		if (src.preferences.listen_looc)
+			src.listen_tree.AddInput(LISTEN_INPUT_LOOC)
+			if (src.only_local_looc)
+				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+			else
+				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+
+		src.holder.admin_say_tree.update_target_speech_tree()
+		src.holder.admin_listen_tree.update_target_listen_tree()
+
+		if (remove_holder)
+			src.cmd_admin_disable()
 
 		boutput(usr, SPAN_NOTICE("Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]"))
 
@@ -1152,6 +1206,7 @@ client/proc/toggle_ghost_respawns()
 		forced_desussification_worse = (getsWorse == "Nah") ? 0 : 1
 
 		message += ", with shock level [shockLevel][forced_desussification_worse ? " (and rising)" : ""]"
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_ATOM_SAY, PROC_REF(desuss_zap))
 
 	logTheThing(LOG_ADMIN, usr, message)
 	logTheThing(LOG_DIARY, usr, message, "admin")

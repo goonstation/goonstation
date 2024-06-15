@@ -69,25 +69,17 @@
 	points = -4
 	unselectable = 1
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.robot_talk_understand = 1
-		return
+	onAdd(mob/M)
+		M.ensure_say_tree().AddOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().AddInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_BINARY)
 
-	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.robot_talk_understand = 1
-		return
-/*
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.organHolder != null)
-				H.organHolder.receive_organ(var/obj/item/I, var/type, var/op_stage = 0.0)
-		return
-*/
+	onRemove(mob/M)
+		M.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().RemoveInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_BINARY)
 
 /datum/trait/deathwish
 	name = "Death wish"

@@ -6,18 +6,26 @@ TYPEINFO(/mob/living/critter/flock)
 	desc = "Well, that's a thing."
 	icon = 'icons/misc/featherzone.dmi'
 	density = FALSE
-	say_language = "feather"
 	voice_name = "synthetic chirps"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "inquires"
-	speechverb_gasp = "clatters"
-	speechverb_stammer = "buzzes"
+	speech_verb_say = "chirps"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "inquires"
+	speech_verb_gasp = "clatters"
+	speech_verb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
+
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_FLOCK)
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
+	say_language = LANGUAGE_FEATHER
+
 	// HEALTHS
 	health_brute = 1
 	health_burn = 1
@@ -60,6 +68,8 @@ TYPEINFO(/mob/living/critter/flock)
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	src.flock = F || get_default_flock()
+	src.flock.update_speech_channels_of_flockmob(src)
+
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -158,28 +168,6 @@ TYPEINFO(/mob/living/critter/flock)
 		return
 	src.resources -= amount
 
-/mob/living/critter/flock/say(message, involuntary = FALSE)
-	if(isdead(src) && src.is_npc)
-		return
-	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	..(message) // caw at the non-drones
-
-	if (message == "" || stat)
-		return
-	if (dd_hasprefix(message, "*"))
-		return
-
-	var/prefixAndMessage = separate_radio_prefix_and_message(message)
-	message = prefixAndMessage[2]
-
-	flock_speak(src, message, src.flock, involuntary)
-
-/mob/living/critter/flock/understands_language(var/langname)
-	if (langname == say_language || langname == "feather" || langname == "english")
-		return TRUE
-	return FALSE
-
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent) || isdead(src))
 		return TRUE
@@ -187,7 +175,7 @@ TYPEINFO(/mob/living/critter/flock)
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
 		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, TRUE, -3)
-		boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b>"))
+		src.flock.system_say_source.say("Fire detected in critical systems. Integrated extinguishing systems are engaging.", atom_listeners_override = list(src))
 		src.extinguishing = TRUE
 		SPAWN(5 SECONDS)
 			var/obj/fire_foam/F = (locate(/obj/fire_foam) in src.loc)
@@ -228,7 +216,8 @@ TYPEINFO(/mob/living/critter/flock)
 			var/datum/aiHolder/flock/flockai = ai
 			flockai.rally(target)
 	else
-		boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: The flockmind requests your presence immediately.\]</b>"))
+		src.flock.system_say_source.say("The flockmind requests your presence immediately.", atom_listeners_override = list(src))
+
 
 /mob/living/critter/flock/death(var/gibbed)
 	..()

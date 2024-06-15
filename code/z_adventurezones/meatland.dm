@@ -276,6 +276,17 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	bound_height = 64
 	bound_width = 64
 	angertext = "shakes and wobbles furiously at"
+
+	speech_verb_say = list("mutters", "gurgles", "whimpers")
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	start_listen_languages = list(LANGUAGE_ALL)
+	say_language = LANGUAGE_ENGLISH
+
 	var/list/dialog = null
 	var/obj/item/clothing/head/hat = null
 	var/static/list/meathead_noises = list('sound/misc/meat_gargle.ogg', 'sound/misc/meat_hork.ogg', 'sound/misc/meat_plop.ogg', 'sound/misc/meat_splat.ogg')
@@ -328,8 +339,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			if (prob(10) && length(dialog))
-				speak(pick(dialog))
+			if (prob(10) && length(src.dialog) && src.alive)
+				flick("meatboss_chatter", src)
+				playsound(src.loc, pick(src.meathead_noises), 40, 1)
+				src.say(pick(src.dialog))
+
 			return ..()
 
 	CritterAttack(mob/M)
@@ -382,11 +396,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		return 0
 
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if (prob(20))
-			update_meat_head_dialog(messages[1])
-
+	hear(datum/say_message/message)
+		if (prob(80))
 			return
+
+		src.update_meat_head_dialog(message.content)
 
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))
@@ -419,17 +433,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		else
 			return ..()
-
-	proc/speak(var/message)
-		if(!src.alive || !message)
-			return
-
-		flick("meatboss_chatter", src)
-		playsound(src.loc, pick(meathead_noises), 40, 1)
-
-		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
-			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\""), 2)
-		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
 

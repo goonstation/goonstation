@@ -4,8 +4,11 @@
 	var/isghost = 0 //Should contain a string of the original ghosts real_name
 	var/escape_vr = 0
 
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_EQUIPPED)
+	default_speech_output_channel = SAY_CHANNEL_DEAD
 
-	New()
+	New(newLoc, is_ghost)
 		..()
 		sound_burp = 'sound/voice/virtual_gassy.ogg'
 		//sound_malescream = 'sound/voice/virtual_scream.ogg'
@@ -13,6 +16,10 @@
 		sound_fart = 'sound/voice/virtual_gassy.ogg'
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
+		if (!is_ghost)
+			src.ensure_say_tree().AddOutput(SPEECH_OUTPUT_SPOKEN)
+			src.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_DEADCHAT)
+			src.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 
@@ -56,23 +63,6 @@
 		if(severity == 1)
 			src.death()
 		return
-
-	say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
-		if(!isghost)
-			return ..()
-
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return src.emote(copytext(message, 2),1)
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
-
-		. = src.say_dead(message, 1)
 
 	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)

@@ -43,5 +43,5 @@
 		cast(atom/target)
 			if (..())
 				return 1
-			holder.owner.say("PSYBLAST!", 1)
+			holder.owner.say("PSYBLAST!", flags = SAYFLAG_IGNORE_STAMINA)
 			return 0

@@ -542,32 +542,40 @@
 		theft_target.Attackhand(src)
 		src.set_a_intent(src.ai_default_intent)
 
-	hear_talk(mob/M as mob, messages, heardname, lang_id)
-		if (isalive(src) && messages)
-			if (M.singing)
-				if (M.singing & (BAD_SINGING | LOUD_SINGING))
-					if (prob(20))
-						// monkey is angered by singing
-						spawn(0.5 SECONDS)
-							was_harmed(M)
-							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
-							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!")
-							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
-					else
-						spawn(0.5 SECONDS)
-							src.visible_message(pick("<B>[name]</B> doesn't seem to like [M]'s singing", \
-							"<B>[name]</B> puts their hands over their ears", \
-							), 1)
-						// monkey merely doesn't like the singing
-							src.say(pick("You human sing worse than a baboon!", \
-							"Me know gorillas with better vocal pitch than you!", \
-							"Monkeys ears too sensitive for this cacophony!", \
-							"You sound like you singing in two keys at same time!", \
-							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
-							if (prob(40))
-								if(!ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
-									src.emote("scream")
-		..()
+	hear(datum/say_message/message)
+		. = ..()
+
+		if (!isalive(src) || !ismob(message.speaker) || !(message.flags & (SAYFLAG_LOUD_SINGING | SAYFLAG_BAD_SINGING)))
+			return
+
+		SPAWN(0.5 SECONDS)
+			// The monkey is angered.
+			if (prob(20))
+				src.visible_message("<B>[src.name]</B> becomes furious at [message.speaker] for their [(message.flags & SAYFLAG_BAD_SINGING) ? "bad" : "loud"] singing!")
+				src.say(pick(
+					"Must take revenge for insult to music!",
+					"I now attack you like your singing attacked my ears!",
+				))
+
+				src.was_harmed(message.speaker)
+
+			// The monkey is merely irritated.
+			else
+				src.visible_message(pick(
+					"<B>[name]</B> doesn't seem to like [message.speaker]'s singing",
+					"<B>[name]</B> puts their hands over their ears",
+				), TRUE)
+
+				src.say(pick(
+					"You human sing worse than a baboon!",
+					"Me know gorillas with better vocal pitch than you!",
+					"Monkeys ears too sensitive for this cacophony!",
+					"You sound like you singing in two keys at same time!",
+					"Monkey no like atonal music!",
+				))
+
+				if (prob(40) && !ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
+					src.emote("scream")
 
 	proc/pursuited_by(atom/movable/AM)
 		src.ai_set_state(AI_FLEEING)

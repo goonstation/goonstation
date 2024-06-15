@@ -11,6 +11,8 @@
 	canbegrabbed = FALSE
 	can_lie = FALSE
 
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	New()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
@@ -26,8 +28,6 @@
 		return 0
 	is_active()
 		return 0
-	say_understands(var/other)
-		return 1
 	Cross(atom/movable/mover)
 		return 1
 
