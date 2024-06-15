@@ -159,7 +159,7 @@ const MapPanelTooltip = (props: MapPanelTooltipProps) => {
     <>
       <strong>{mapName}</strong><br />
       {details.description}<br />
-      <strong>Location:</strong> {details.description}<br />
+      <strong>Location:</strong> {details.location}<br />
       <strong>Engine:</strong> {details.engine}<br />
       <strong>Mining:</strong> {details.mining}<br />
       <strong>Ideal Players:</strong> {details.idealPlayers}<br />
