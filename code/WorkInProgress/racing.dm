@@ -27,13 +27,7 @@
 			step(A,src.dir)
 
 			var/obj/racing_clowncar/R = A
-			R.speed = R.base_speed - R.turbo
-			R.drive(R.dir, R.speed)
-			R.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
-			SPAWN(1.5 SECONDS)
-				R.speed = R.base_speed
-				if (R.driving) R.drive(R.dir, 2)
-				R.ClearSpecificOverlays("boost")
+			R.boost()
 
 
 /obj/racing_powerup_spawner
