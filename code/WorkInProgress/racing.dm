@@ -590,21 +590,23 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		speed = base_speed - turbo
 		drive(dir, speed)
 
+		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
+
 		if (super_boost)
 			src.super = TRUE
 			src.AddOverlays(image('icons/misc/racing.dmi', "kart_super"),"super")
 			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
 			SPAWN(10 SECONDS)
 				src.super = FALSE
+				speed = base_speed
+				if (driving) drive(dir, speed)
 				src.ClearSpecificOverlays("super")
 		else
 			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
-
-		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
-		SPAWN(5 SECONDS)
-			speed = base_speed
-			if (driving) drive(dir, speed)
-			src.ClearSpecificOverlays("boost")
+			SPAWN(5 SECONDS)
+				speed = base_speed
+				if (driving) drive(dir, speed)
+				src.ClearSpecificOverlays("boost")
 
 
 /obj/racing_clowncar/kart/red
