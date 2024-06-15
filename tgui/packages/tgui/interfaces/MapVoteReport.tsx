@@ -29,12 +29,13 @@ const PANEL_PER_LINE = 4;
 
 const BASE_HEIGHT = 70;
 const MAP_ROW_HEIGHT = 130;
+const VOTERS_HEIGHT = 80;
 
 export const MapVoteReport = (_props, context) => {
   const { data } = useBackend<MapVoteReportData>(context);
   const { mapList, winner, isDetailed } = data;
 
-  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / 4) : 1);
+  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * (!isDetailed ? Math.ceil(mapList.length / 4) : 1) + (!isDetailed ? 0 : VOTERS_HEIGHT);
   const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * (!isDetailed ? PANEL_PER_LINE : mapList.length) + WINDOW_HOZ_PADDING;
 
   return (
@@ -52,7 +53,7 @@ export const MapVoteReport = (_props, context) => {
                   backgroundColor={map.name === winner ? "#a17f1a" : null}
                   mb={1}>
                 <VoteCountLabel voteCount={map.count} />
-                {map.voters && <Voters voters={map.voters} />}
+                {isDetailed && <Voters voters={map.voters} />}
               </MapPanel>
             );
           })}
@@ -74,14 +75,10 @@ const Voters = props => {
   return (
     <Box
       scrollable
-      maxHeight={6}
-      style={{
-        'word-break': 'break-word',
-        'overflow': 'hidden',
-      }}
-      align="left"
-      fontSize={0.8}>
-      {props.voters.join(', ')}
+      height={`${VOTERS_HEIGHT}px`}
+      overflow="auto"
+      align="left">
+      {props.voters && props.voters.join(<br />)}
     </Box>
   );
 };
