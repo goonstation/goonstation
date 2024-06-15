@@ -601,6 +601,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 				speed = base_speed
 				if (driving) drive(dir, speed)
 				src.ClearSpecificOverlays("super")
+				src.ClearSpecificOverlays("boost")
 		else
 			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
 			SPAWN(5 SECONDS)
