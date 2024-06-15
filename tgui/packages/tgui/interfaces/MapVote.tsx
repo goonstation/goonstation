@@ -37,10 +37,12 @@ export const MapVote = (_props, context) => {
                 <Button.Checkbox
                   checked={clientVoteMap[map.name]}
                   color={clientVoteMap[map.name] ? "green" : "red"}
-                  onClick={() => act('toggle_vote', { map_name: map.name })}
                   tooltip="Vote" />
-              } />
-
+              }
+              onClick={() => act('toggle_vote', { map_name: map.name })}
+              style={{cursor: "pointer"}}
+              backgroundColor={clientVoteMap[map.name] ? "darkgreen" : null}
+               />
           ))}
         </Stack>
         <Section
@@ -74,10 +76,12 @@ export const MapPanel = (props) => {
     <Stack.Item>
       <Section
         title={props.mapName}
-        backgroundColor={props.winner ? "#a17f1a" : null}
+        backgroundColor={props.backgroundColor}
         buttons={props.button}
         width="120px"
         align={props.button ? null : "center"}
+        onClick={props.onClick}
+        style={props.style}
       >
         <Box align="center">
           <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />

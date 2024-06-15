@@ -13,7 +13,8 @@ import { MapVoteMapData } from './MapVote';
 
 interface MapVoteReportMapData extends MapVoteMapData {
   count: number,
-  voters?: Array<string>
+  voters?: Array<string>,
+  isDetailed: boolean
 }
 
 export interface MapVoteReportData {
@@ -31,7 +32,11 @@ export const MapVoteReport = (_props, context) => {
         <Stack>
           {mapList.map(map => {
             return (
-              <MapPanel key={map.name} mapName={map.name} mapThumbnail={map.thumbnail} winner={map.name === winner}>
+              <MapPanel
+                  key={map.name}
+                  mapName={map.name}
+                  mapThumbnail={map.thumbnail}
+                  backgroundColor={map.name === winner ? "gold" : null}>
                 <VoteCountLabel voteCount={map.count} />
                 {map.voters && <Voters voters={map.voters} />}
               </MapPanel>
