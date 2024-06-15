@@ -177,6 +177,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 		The first purchase of this item will be contained in a box that also includes instructions and a remote. Subsequent purchases will only \
 		provide additional implanters."
 	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		if (!uplink?.purchase_log[src.type])
