@@ -180,15 +180,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
-		SPAWN(0)
-			if (!uplink?.purchase_log[src.type])
-				var/mob/M = item.loc
-				if (istype(M)) // This is used for spiefs, whose items get put into their hand automatically
-					M.drop_item(item)
-				var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc, TRUE)
-				MI.storage.add_contents(item)
-				if (istype(M))
-					M.put_in_hand(MI)
+		if (!uplink?.purchase_log[src.type])
+			var/mob/M = item.loc
+			if (istype(M)) // This is used for spiefs, whose items get put into their hand automatically
+				M.drop_item(item)
+			var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc, TRUE)
+			MI.storage.add_contents(item)
+			if (istype(M))
+				M.put_in_hand(MI)
 
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
