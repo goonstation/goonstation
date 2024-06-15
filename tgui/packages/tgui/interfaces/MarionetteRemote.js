@@ -9,7 +9,7 @@ export const MarionetteRemote = (_props, context) => {
   return (
     <Window
       title="Marionette Remote"
-      width={400}
+      width={410}
       height={550}
       theme="syndicate" >
       <Window.Content scrollable>

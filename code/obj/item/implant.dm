@@ -1,6 +1,8 @@
 #define MARIONETTE_IMPLANT_STATUS_IDLE "IDLE"
 #define MARIONETTE_IMPLANT_STATUS_ACTIVE "ACTIVE"
 #define MARIONETTE_IMPLANT_STATUS_DANGER "DANGER"
+#define MARIONETTE_IMPLANT_STATUS_WAITING "WAITING..."
+#define MARIONETTE_IMPLANT_STATUS_NO_RESPONSE "NO RESPONSE"
 #define MARIONETTE_IMPLANT_STATUS_BURNED_OUT "BURNED OUT"
 #define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
 #define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
@@ -1283,14 +1285,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					ping.data["sender"] = src.net_id
 					ping.data["address_1"] = implant_to_ping
 					ping.data["command"] = "ping"
-					src.implant_status[implant_to_ping] = "WAITING..."
+					src.implant_status[implant_to_ping] = MARIONETTE_IMPLANT_STATUS_WAITING
 					// Slightly delay the actual ping, as otherwise the text could be immediately overwritten with unlucky timing
 					// This way it's clear to the player that the ping did actually happen!
 					SPAWN (0.4 SECONDS)
 						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, ping)
 						SPAWN (2 SECONDS)
-							if (src.implant_status[implant_to_ping] == "WAITING...")
-								src.implant_status[implant_to_ping] = "NO RESPONSE"
+							if (src.implant_status[implant_to_ping] == MARIONETTE_IMPLANT_STATUS_WAITING)
+								src.implant_status[implant_to_ping] = MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
 				playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
 				. = TRUE
 
@@ -2682,6 +2684,8 @@ TYPEINFO(/obj/item/gun/implanter)
 #undef MARIONETTE_IMPLANT_STATUS_IDLE
 #undef MARIONETTE_IMPLANT_STATUS_ACTIVE
 #undef MARIONETTE_IMPLANT_STATUS_DANGER
+#undef MARIONETTE_IMPLANT_STATUS_WAITING
+#undef MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
 #undef MARIONETTE_IMPLANT_STATUS_BURNED_OUT
 #undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
 #undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
