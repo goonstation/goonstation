@@ -10,6 +10,8 @@ import { useBackend } from '../backend';
 import { Box, Stack } from '../components';
 import { MapPanel } from './MapVote';
 import { MapVoteMapData } from './MapVote';
+import { MAP_PANEL_WIDTH, MAP_ROW_HEIGHT, PANEL_PER_LINE, SPACE_BETWEEN_PANELS, WINDOW_HOZ_PADDING } from './MapVote';
+import { BooleanLike } from 'common/react';
 
 interface MapVoteReportMapData extends MapVoteMapData {
   count: number,
@@ -19,16 +21,10 @@ interface MapVoteReportMapData extends MapVoteMapData {
 export interface MapVoteReportData {
   mapList: Array<MapVoteReportMapData>,
   winner: string,
-  isDetailed: boolean
+  isDetailed: BooleanLike
 }
 
-const MAP_PANEL_WIDTH = 180;
-const SPACE_BETWEEN_PANELS = 5;
-const WINDOW_HOZ_PADDING = 12;
-const PANEL_PER_LINE = 4;
-
 const BASE_HEIGHT = 70;
-const MAP_ROW_HEIGHT = 130;
 const VOTERS_HEIGHT = 80;
 
 export const MapVoteReport = (_props, context) => {
@@ -54,10 +50,9 @@ export const MapVoteReport = (_props, context) => {
                 mapName={map.name}
                 mapThumbnail={map.thumbnail}
                 backgroundColor={map.name === winner ? "#a17f1a" : null}
-                mb={1}
                 details={map.details}>
                 <VoteCountLabel voteCount={map.count} />
-                {isDetailed && <Voters voters={map.voters} />}
+                {!!isDetailed && <Voters voters={map.voters} />}
               </MapPanel>
             );
           })}
@@ -67,7 +62,11 @@ export const MapVoteReport = (_props, context) => {
   );
 };
 
-const VoteCountLabel = props => {
+interface VoteCountLabelProps {
+  voteCount: number;
+}
+
+const VoteCountLabel = (props: VoteCountLabelProps) => {
   return (
     <Box size={1.5} bold>
       {props.voteCount || 0} vote{props.voteCount > 1 && "s"}
@@ -75,7 +74,11 @@ const VoteCountLabel = props => {
   );
 };
 
-const Voters = props => {
+interface VotersProps {
+  voters: any
+}
+
+const Voters = (props: VotersProps) => {
   return (
     <Box
       scrollable

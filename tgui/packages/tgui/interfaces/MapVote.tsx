@@ -8,6 +8,7 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from '../components';
+import type { InfernoNode } from 'inferno';
 
 interface MapVoteMapDetials {
   description: string,
@@ -29,13 +30,13 @@ export interface MapVoteData {
   clientVoteMap: any,
 }
 
-const MAP_PANEL_WIDTH = 180;
-const SPACE_BETWEEN_PANELS = 5;
-const WINDOW_HOZ_PADDING = 12;
-const PANEL_PER_LINE = 4;
+export const MAP_PANEL_WIDTH = 180;
+export const SPACE_BETWEEN_PANELS = 5;
+export const WINDOW_HOZ_PADDING = 12;
+export const PANEL_PER_LINE = 4;
 
 const BASE_HEIGHT = 100;
-const MAP_ROW_HEIGHT = 130;
+export const MAP_ROW_HEIGHT = 130;
 
 export const MapVote = (_props, context) => {
   const { data, act } = useBackend<MapVoteData>(context);
@@ -62,7 +63,6 @@ export const MapVote = (_props, context) => {
               onClick={() => act('toggle_vote', { map_name: map.name })}
               style={{ cursor: "pointer" }}
               backgroundColor={clientVoteMap[map.name] ? "darkgreen" : null}
-              mb={1}
               details={map.details}
             />
           ))}
@@ -92,18 +92,28 @@ export const MapVote = (_props, context) => {
   );
 };
 
+interface MapPanelProps {
+  mapName: string,
+  backgroundColor: string | null,
+  button?: InfernoNode,
+  onClick?: () => void,
+  style?: Record<string, string>,
+  mapThumbnail: string,
+  children?: InfernoNode,
+  details: MapVoteMapDetials | null
+}
 
-export const MapPanel = (props) => {
+export const MapPanel = (props: MapPanelProps) => {
   const panel = (
     <Section
       title={props.mapName}
       backgroundColor={props.backgroundColor}
       buttons={props.button}
-      width="180px"
+      width={`${MAP_PANEL_WIDTH}px`}
       align={props.button ? null : "center"}
       onClick={props.onClick}
       style={props.style}
-      mb={props.mb}
+      mb={1}
     >
       <Box align="center">
         <Image src={props.mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
@@ -121,7 +131,12 @@ export const MapPanel = (props) => {
   );
 };
 
-const MapPanelTooltip = (props) => {
+interface MapPanelTooltipProps {
+  mapName: string,
+  details: MapVoteMapDetials
+}
+
+const MapPanelTooltip = (props: MapPanelTooltipProps) => {
   return (
     <>
       <strong>{props.mapName}</strong><br />
