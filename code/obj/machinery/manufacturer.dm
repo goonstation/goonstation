@@ -272,6 +272,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
+		if (QDELETED(src))
+			return
 		if(src.is_broken())
 			src.build_icon()
 		else
