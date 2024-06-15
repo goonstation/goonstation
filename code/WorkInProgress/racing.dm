@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		abilities = A
 
 		name = "Turbo Clowncar 2000 ([driver.name])"
-		src.name_suffix(" ([driver.name])")
+		src.name_suffix("([driver.name])")
 		src.UpdateName()
 		driving = 0
 
@@ -407,7 +407,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = null
 
-		src.remove_suffixes(" ([driver.name])")
+		src.remove_suffixes("([driver.name])")
 		src.UpdateName()
 		driver = null
 		driving = 0
@@ -569,7 +569,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		src.ClearSpecificOverlays("spin")
 		src.ClearSpecificOverlays("super")
 
-		src.remove_suffixes(" ([driver.name])")
+		src.remove_suffixes("([driver.name])")
 		src.UpdateName()
 		driver.vis_flags = occupant_vis_flags
 		src.vis_contents -= driver
