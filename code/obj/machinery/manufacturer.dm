@@ -836,7 +836,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M)
+				src.storage.add_contents(M, visible = FALSE)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
@@ -861,7 +861,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.storage.add_contents(W, visible = FALSE)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -882,7 +882,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.change_contents(mat_piece = C, user = user)
+				src.storage.add_contents(C, visible = FALSE)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -904,7 +904,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.storage.add_contents(W, visible = FALSE)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == DISMANTLE_NONE)
@@ -983,7 +983,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.change_contents(mat_piece = W, user = user)
+			src.storage.add_contents(W, user, visible = FALSE)
 
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
@@ -1170,7 +1170,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.storage.add_contents(M, user = user, visible = FALSE)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1187,7 +1187,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.storage.add_contents(M, user = user, visible = FALSE)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
@@ -1550,7 +1550,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return // how
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
-			src.change_contents(-required_amount/10, mat_piece = locate(mats_used[R]))
+			for (var/obj/item/material_piece/P as anything in src.get_contents())
+				if (!("\ref[P]" != mats_used[R]))
+					continue
+				P.amount -= required_amount/10
+				if (P.amount <= 0)
+					qdel(P)
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1824,71 +1829,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	on_add_contents(obj/item/I)
 		material_patterns_by_ref["\ref[I]"] = src.get_requirements_material_satisfies(I.material)
 
-	/*
-	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
-	Parameters for selection of material (requires at least one non-null):
-	mat_id = material id to set. creates a new material if none of that id exists
-	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	mat_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
-	material = material datum to add. acts as/overrides mat_id if provided
-	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
-	user = (optional) any mob that may be loading this
-	*/
-	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
-		if (!isnull(mat_path))
-			mat_piece = new mat_path
-			if (amount)
-				mat_piece.amount = amount
-
-		if (!amount)
-			if (isnull(mat_piece))
-				return
-			else
-				amount = mat_piece.amount
-
-		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum) && isnull(mat_path))
-			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
-
-		// Try stacking with existing same material in storage
-		var/list/C = src.get_contents()
-		if (!isnull(mat_datum))
-			mat_id = mat_datum.getID()
-		for (var/obj/item/material_piece/P as anything in C)
-			if (!P.material)
-				continue
-			// Match by material piece or id
-			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
-				mat_id && mat_id == P.material.getID())
-				// fuck floating point, lets pretend we only use tenths
-				P.change_stack_amount(amount)
-				// Handle inserting pieces into the machine
-				if (user)
-					user.u_equip(mat_piece)
-					mat_piece.dropped(user)
-					qdel(mat_piece)
-				if (P.amount <= 0)
-					qdel(P)
-				return
-
-		// No same material in storage, create/add the one we have and update the requirements index accordingly
-		if (!isnull(mat_piece))
-			if (isnull(mat_piece.material))
-				return
-			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(mat_piece.material)
-			return
-
-		if (isnull(mat_datum))
-			// we gave an ID but no M, so override 'M' for this
-			mat_datum = getMaterial(mat_id)
-
-		var/T = getProcessedMaterialForm(mat_datum)
-		var/obj/item/material_piece/P = new T
-		P.amount = max(0, amount)
-		src.storage.add_contents(P, user = user, visible = FALSE)
-
-		material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(P.material)
-
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
 			return
@@ -1923,8 +1863,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resources = list()
 			return
 
+		src.get_contents() // potentially load storage datum if it doesnt exist yet
 		for (var/mat_path in src.free_resources)
-			src.change_contents(amount = src.free_resources[mat_path], mat_path = mat_path)
+			var/obj/item/material_piece/P = new mat_path
+			P.amount = src.free_resources[mat_path]
+			src.storage.add_contents(P, visible = FALSE)
 
 		free_resources = list()
 
