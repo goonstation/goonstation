@@ -1553,7 +1553,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/material_piece/P as anything in src.get_contents())
 				if ("\ref[P]" != mats_used[R])
 					continue
-				P.amount -= required_amount/10
+				P.amount = round( (P.amount - (required_amount/10)), 4)
 				if (P.amount <= 0)
 					qdel(P)
 
