@@ -252,7 +252,7 @@
 			apiHandler.queryAPI(addMedal)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
-			if (error.status_code === 409)
+			if (error.status_code == 409)
 				// player already has that medal
 				return FALSE
 			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>unlock_medal</b> for <b>[medal_name]</b>: [error.message]")
