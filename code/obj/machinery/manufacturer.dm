@@ -1551,7 +1551,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
 			for (var/obj/item/material_piece/P as anything in src.get_contents())
-				if (!("\ref[P]" != mats_used[R]))
+				if ("\ref[P]" != mats_used[R])
 					continue
 				P.amount -= required_amount/10
 				if (P.amount <= 0)
