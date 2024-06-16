@@ -61,8 +61,12 @@
 		src.ship.myhud.update_states()
 	return TRUE
 
-///Component does this constantly
-/obj/item/shipcomponent/proc/run_component()
+///Component does this constantly while on
+/obj/item/shipcomponent/proc/run_component(mult)
+	return
+
+/// runs while component is off
+/obj/item/shipcomponent/proc/run_component_off(mult)
 	return
 
 ///What the component does when deactived

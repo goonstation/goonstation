@@ -30,7 +30,9 @@
 		/datum/manufacture/pod/weapon/laser,
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
-		/datum/manufacture/pod/weapon/shotgun
+		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod_light_shielding,
+		/datum/manufacture/pod_combat_shielding,
 	)
 
 	New()
@@ -80,6 +82,8 @@
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod_light_shielding,
+		/datum/manufacture/pod_combat_shielding,
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
 		/datum/manufacture/pod_wars/pod/armor_robust/nt
 
@@ -110,6 +114,8 @@
 		/datum/manufacture/pod/weapon/disruptor,
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
+		/datum/manufacture/pod_light_shielding,
+		/datum/manufacture/pod_combat_shielding,
 		/datum/manufacture/pod_wars/pod/armor_light/sy,
 		/datum/manufacture/pod_wars/pod/armor_robust/sy
 		)

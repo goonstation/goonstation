@@ -358,6 +358,12 @@
 	desc = "Usually only seen on cruiser-class ships. How the hell did this end up here?"
 	price = PAY_DONTBUYIT*2
 
+/datum/commodity/podparts/heavy_shielding
+	comname = "Heavy Duty Shielding System"
+	comtype = /obj/item/shipcomponent/secondary_system/shielding/heavy
+	desc = "A rare, high-powered shielding system. Provides a lot of shielding, at high plasma cost."
+	price = PAY_EMBEZZLED * 2
+
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
 	comtype = /obj/item/podarmor/armor_black

@@ -1170,3 +1170,127 @@
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
 			tooltip_rebuild = 1
 			return
+
+ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
+/// general "shielding" ship component. protects against damage, uses plasma while active, regenerates life on its own
+/obj/item/shipcomponent/secondary_system/shielding
+	name = "Shielding System"
+	desc = "Draws plasma from the ship's fueltank to provide remote shielding to the ship, protecting against high-speed projectiles and meteors."
+	f_active = TRUE
+	power_used = 50
+	hud_state = "repair"
+	/// % of damage, that the shielding blocks (0.5 would make a 40 dmg projectile deal 20 dmg instead)
+	var/block_pct = 0
+	/// health of the shield
+	var/life = 100
+	/// amount of life restored per tick of the componenet
+	var/life_recharge_per_tick = 10
+	/// moles of plasma consumed per tick of the component
+	var/plasma_per_tick = 1 MOLE
+	/// waiting for full recharge before it can be turned on
+	var/needs_full_recharge = FALSE
+	/// shield color (correlates with icon state name)
+	var/shield_color = null
+	HELP_MESSAGE_OVERRIDE({"User notes:
+							1. Plasma is rapidly consumed during use. Only keep on when needed.
+							2. The shield has limited health, which will regenerate only when turned off.
+							3. If the shield sustains full damage, it will need to fully recharge before it can be turned on again."})
+
+	New()
+		..()
+		src.desc += " Has a life of [src.life] damage, providing [round(block_pct * 100, 1)]% damage reduction."
+
+	activate()
+		if (src.life <= 0 || src.needs_full_recharge)
+			for(var/mob/M in src.ship)
+				boutput(M, "[src.ship.ship_message("[src] is currently recharging, and cannot be turned on.")]")
+				return FALSE
+
+		if (!src.ship.fueltank || src.ship.fueltank.air_contents.toxins < src.plasma_per_tick)
+			for(var/mob/M in src.ship)
+				boutput(M, "[src.ship.ship_message("No plasma available to power [src]!")]")
+				return FALSE
+
+		if (!..())
+			return FALSE
+
+		var/image/I = image('icons/effects/effects.dmi', src.ship, "enshield[src.shield_color]", OVERLAY_EFFECT_LAYER_BASE)
+
+		if (istype(src.ship, /obj/machinery/vehicle/pod_smooth)) // 2x2 vehicles
+			I.transform = matrix(I.transform, 2, 2, MATRIX_SCALE)
+			I.transform = matrix(I.transform, 8, 8, MATRIX_TRANSLATE)
+		else
+			I.transform = matrix(I.transform, 1.1, 1.1, MATRIX_SCALE)
+
+		src.ship.AddOverlays(I, "pod_plasmashield")
+		if (!ON_COOLDOWN(src, "shield_activate_sound", 1 SECOND))
+			playsound(src.ship.loc, 'sound/effects/MagShieldUp.ogg', 75, TRUE, pitch = 1.5)
+
+	deactivate()
+		if (src.active)
+			if (src.life <= 0 || src.needs_full_recharge)
+				for(var/mob/M in src.ship)
+					boutput(M, "[src.ship.ship_message("[src]'s shield is broken. Please wait for full recharge.")]")
+			else if (!src.ship.fueltank || src.ship.fueltank.air_contents.toxins < src.plasma_per_tick)
+				for(var/mob/M in src.ship)
+					boutput(M, "[src.ship.ship_message("Insufficient plasma to run! [src] is turning off.")]")
+			src.ship.ClearSpecificOverlays("pod_plasmashield")
+			if (!ON_COOLDOWN(src, "shield_deactivate_sound", 0.5 SECONDS))
+				playsound(src.ship.loc, 'sound/effects/MagShieldDown.ogg', 75, TRUE, pitch = 1.5)
+		..()
+
+	run_component(mult)
+		if (src.life <= 0 || src.needs_full_recharge)
+			src.deactivate()
+			return
+
+		if (!src.ship.fueltank || src.ship.fueltank.air_contents.toxins < src.plasma_per_tick * mult)
+			src.deactivate()
+			return
+
+		src.ship.fueltank.remove_air(src.plasma_per_tick * mult)
+		src.ship.myhud?.update_fuel()
+
+	run_component_off(mult)
+		src.life = min(initial(src.life), src.life + src.life_recharge_per_tick * mult)
+		if (src.life >= initial(src.life))
+			if (src.needs_full_recharge)
+				for(var/mob/M in src.ship)
+					boutput(M, "[src.ship.ship_message("[src]'s shield has been fully recharged.")]")
+			src.needs_full_recharge = FALSE
+
+	// takes incoming damage "dmg", returns damage dealt to pod
+	proc/process_incoming_dmg(dmg)
+		var/dmg_dealt = dmg * (1 - src.block_pct)
+
+		src.life = max(src.life - dmg_dealt, 0)
+
+		if (src.life <= 0)
+			src.deactivate()
+			src.needs_full_recharge = TRUE
+
+		return dmg_dealt
+
+/obj/item/shipcomponent/secondary_system/shielding/light
+	name = "Remote Shielding System"
+	block_pct = 0.1
+	life = 100
+	life_recharge_per_tick = 10 // ~ 40 seconds to recharge
+	plasma_per_tick = 0.16 MOLES // intended to consume remove ~100 kPA over ~60 seconds from initial stored plasma tank
+
+/obj/item/shipcomponent/secondary_system/shielding/heavy
+	name = "Heavy Duty Shielding System"
+	power_used = 100
+	block_pct = 1
+	life = 50
+	life_recharge_per_tick = 2.5
+	plasma_per_tick = 0.48 MOLES
+	shield_color = "-orange"
+
+/obj/item/shipcomponent/secondary_system/shielding/podwars
+	name = "Combat Shielding System"
+	block_pct = 0.33
+	life = 100
+	life_recharge_per_tick = 10
+	plasma_per_tick = 0.32 MOLES
+	shield_color = "-green"

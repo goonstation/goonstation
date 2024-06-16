@@ -2419,6 +2419,27 @@
 	time = 12 SECONDS
 	category = "Resource"
 
+/datum/manufacture/pod_light_shielding
+	name = "Remote Shielding System"
+	item_requirements = list("metal_dense" = 5,
+							 "crystal" = 10,
+							 "conductive" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/light)
+	create = 1
+	time = 20 SECONDS
+	category = "Resource"
+
+/datum/manufacture/pod_combat_shielding
+	name = "Combat Shielding System"
+	item_requirements = list("metal_dense" = 5,
+							 "crystal" = 10,
+							 "conductive_high" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/podwars)
+	create = 1
+	time = 25 SECONDS
+	category = "Resource"
+
+
 /datum/manufacture/orescoop
 	name = "Alloyed Solutions Ore Scoop/Hold"
 	item_requirements = list("metal_dense" = 20,
