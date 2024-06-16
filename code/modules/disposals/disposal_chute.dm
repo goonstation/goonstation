@@ -41,7 +41,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
-		if((src.pixel_x == 0) && (src.dir == 8))
+		if((src.pixel_x == 0) && (src.dir == WEST))
 			src.pixel_x += 5
 		if((src.pixel_x == 0) && (src.dir == 4))
 			src.pixel_x += -5
