@@ -1211,6 +1211,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
+				src.get_contents() // Ensure contents exist first
 				src.storage.add_contents(M, user = user, visible = FALSE)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
