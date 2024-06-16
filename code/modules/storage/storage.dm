@@ -37,7 +37,7 @@
 	/// Don't show the contents of the storage on its description
 	var/stealthy_storage = FALSE
 	/// Whether or not this storage allows stacking stackables into its contents
-	var/stack_stackables = TRUE
+	var/stack_stackables = FALSE
 	/// Prevent accessing storage when clicked when worn, ex. in pocket
 	var/opens_if_worn = FALSE
 	/// Maximum w_class that can be held
@@ -329,10 +329,10 @@
 		if (ispath(type) && istype(W, type))
 			return STORAGE_RESTRICTED_TYPE
 
-	var/full = src.is_full(W)
+	var/fullness = src.get_fullness(W)
 
 	// if can_hold is defined, check against that
-	if (length(src.can_hold) && !full)
+	if (length(src.can_hold) && (fullness != STORAGE_IS_FULL))
 		// early skip if weight class is allowed
 		if (src.check_wclass && W.w_class <= src.max_wclass)
 			return STORAGE_CAN_HOLD
@@ -347,23 +347,54 @@
 	else if (W.w_class > src.max_wclass)
 		return STORAGE_WONT_FIT
 
-	if (full)
-		return STORAGE_IS_FULL
-
-	return STORAGE_CAN_HOLD
+	return fullness
 
 /// when adding an item in
 /datum/storage/proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
 	if (I in user?.equipped_list())
 		user.u_equip(I)
-	src.stored_items += I
+	if (src.stack_stackables)
+		I = src.try_stack_contents(obj/item/I)
+		if (isnull(I)) // we couldn't stack everything. this shouldn't happen
+			logTheThing(LOG_DEBUG, src, "[I] failed to be added to [src] after trying to stack contents")
+			return
+	else
+		src.stored_items += I
 	I.set_loc(src.linked_item, FALSE)
 	src.hud.add_item(I, user)
 	I.stored = src
 
 	src.add_contents_extra(I, user, visible)
 
-/// available if add_contents needs to be overridden
+/// For adding an item by trying to stack it with other items.
+/// Returns the item the input was stacked into if that happened, returns W
+/// if it was instead stacked into an available slot. Returns null if it wasn't stacked.
+/datum/storage/proc/try_stack_contents(obj/item/W)
+	var/amt_stacked = 0
+	var/item_starting_amount = W.amount
+
+	// Try stacking with one of the things in the storage
+	for (var/obj/item/I in src.stored_items)
+		if (!W.check_valid_stack(I))
+			continue
+		var/amt_add = min(W.amount, (I.max_stack - I.amount))
+		if (amt_add == W.amount)
+			amt_stacked += I.stack_item(W)
+		else
+			var/obj/item/W_to_stack = W.split_stack(amt_add, src.linked_item)
+			amt_stacked += I.stack_item(W_to_stack)
+		if (amt_stacked >= item_starting_amount)
+			return I
+
+	// We couldn't stack everything or at all, try to insert into an available slot
+	if (amt_stacked < W.amount)
+		if (src.slots > length(src.stored_items))
+			src.Is += W
+			W.set_loc(src.linked_item, FALSE)
+			W.stored = src
+			return W
+
+/// Available if add_contents needs to be overridden
 /datum/storage/proc/add_contents_extra(obj/item/I, mob/user, visible)
 	// make sure storage item tooltip will be updated
 	if (istype(src.linked_item, /obj/item))
