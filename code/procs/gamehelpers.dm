@@ -30,6 +30,38 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 // TODO convert the above to use a file/string picker
 
 
+var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a hose","a new bottle of cologne")
+/proc/stinkStringHygiene(var/mob/stinker)
+	var/someone = "someone"
+	var/they = "it"
+	var/their = "their"
+	var/blank_or_s = "s"
+	if(stinker)
+		someone = stinker.name
+		they = "[he_or_she(stinker)]"
+		their = "[his_or_her(stinker)]"
+		blank_or_s = "[blank_or_s(stinker)]"
+	switch(rand(1,9))
+		if(1)
+			return "Smells like [someone] needs [pick(stink_remedy)]."
+		if(2)
+			return "[pick(stinkExclamations)], has anyone here heard of a shower before?"
+		if(3)
+			return "[capitalize(someone)] smells positively vile."
+		if(4)
+			return "[capitalize(someone)]'s odor hangs the air. You get a whiff. Disgusting."
+		if(5) //You wonder if John Joe even notices how gross he smells anymore.
+			return "You wonder if people around here ever notice how gross they smell sometimes."
+		if(6)
+			return "[pick(stinkExclamations)], what you wouldn't give to be staffed on a station where people bathe..."
+		if(7)
+			return "You reckon [someone] has [their] very own locker room in [their] backpack, because, damn! [they] REEK[capitalize(blank_or_s)]!"
+		if(8)
+			return "[capitalize(someone)] must have skipped laundry day for the past month. At least, [they] smell[blank_or_s] like it."
+		if(9)
+			return "Dirt and grime is practically airborne around you. [capitalize(someone)] must be responsible."
+
+
 /proc/get_local_apc(O)
 	var/turf/T = get_turf(O)
 	if (!T)
