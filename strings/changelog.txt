@@ -1,5 +1,9 @@
 
 (t)sun jun 16 24
+(u)Glamurio (Ryou)
+(p)19398
+(e)🆕🗺|C-Feature, A-Mapping
+(*)NT put aside some funding for an escape pod bay in Clarion.
 (u)Retrino
 (p)19105
 (e)🪲🗺|C-Bug, A-Mapping
