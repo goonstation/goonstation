@@ -151,7 +151,7 @@
 	if (canhold != STORAGE_CAN_HOLD)
 		if (canhold == STORAGE_CANT_HOLD || canhold == STORAGE_WONT_FIT || canhold == STORAGE_RESTRICTED_TYPE)
 			// if item has a storage, dump contents into this storage
-			if (W.storage && !src.is_full())
+			if (W.storage && (!src.is_full() || src.stack_stackables))
 				for (var/obj/item/I as anything in (W.storage.get_contents() - src.linked_item))
 					if (src.check_can_hold(I) == STORAGE_CAN_HOLD)
 						if (I.anchored)
@@ -354,7 +354,7 @@
 	if (I in user?.equipped_list())
 		user.u_equip(I)
 	if (src.stack_stackables)
-		I = src.try_stack_contents(obj/item/I)
+		I = src.try_stack_contents(I)
 		if (isnull(I)) // we couldn't stack everything. this shouldn't happen
 			logTheThing(LOG_DEBUG, src, "[I] failed to be added to [src] after trying to stack contents")
 			return
@@ -389,7 +389,7 @@
 	// We couldn't stack everything or at all, try to insert into an available slot
 	if (amt_stacked < W.amount)
 		if (src.slots > length(src.stored_items))
-			src.Is += W
+			src.stored_items += W
 			W.set_loc(src.linked_item, FALSE)
 			W.stored = src
 			return W
@@ -452,11 +452,9 @@
 
 /// storage is full or not
 /datum/storage/proc/is_full(obj/item/W)
-	if (!src.stack_stackables)
+	if (!src.stack_stackables || isnull(W))
 		return length(src.get_contents()) >= src.slots
 	else
-		if (isnull(W))
-			CRASH("is_full given null W, requires defined type to check stackability")
 		return (src.get_fullness(W) == STORAGE_CANT_HOLD)
 
 /// storage is full or not, or can hold some of the given item in it
