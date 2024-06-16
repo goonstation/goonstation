@@ -35,7 +35,7 @@
 
 	// if there's no new message but there WAS one, we're deleting the current set one
 	if (!new_message && message)
-		if (!player.cloudSaves.putData("login_notice", null))
+		if (!player.cloudSaves.deleteData("login_notice"))
 			tgui_alert(src.owner.mob, "ERROR: Failed to clear login notice to cloud for [target_key].")
 			return
 		addPlayerNote(target_key, src.owner.ckey, "Cleared the previous login notice.")
