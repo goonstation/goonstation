@@ -1,5 +1,9 @@
 
 (t)sun jun 16 24
+(u)glowbold
+(p)19529
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The Buttes Motel has installed door locks.
 (u)Glamurio (Ryou)
 (p)19398
 (e)🆕🗺|C-Feature, A-Mapping
