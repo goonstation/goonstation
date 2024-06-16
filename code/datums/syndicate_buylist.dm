@@ -977,6 +977,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/syndicate_radio_upgrade
+	name = "Syndicate Radio Upgrade"
+	item = /obj/item/device/radio_upgrade/syndicatechannel
+	cost = 1
+	desc = "A small device that may be installed in a headset to grant access to a radio channel reserved for Syndicate operatives."
+	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/tape
 	name = "Ducktape"
 	item = /obj/item/handcuffs/tape_roll
