@@ -1,5 +1,9 @@
 
 (t)sun jun 16 24
+(u)JORJ949
+(p)19426
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate now offers a cheaper version of the radio upgrade granting access to the syndicate frequency.
 (u)Glamurio (Ryou)
 (p)19508
 (e)🪲💅|C-Bug, C-QoL
