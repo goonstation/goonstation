@@ -293,8 +293,9 @@
 
 	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/has_medal(medal_name)
+		if (!medal_name) return FALSE
 		var/datum/apiRoute/players/medals/has/hasMedals = new
-		hasMedals.routeParams = list("player" = src.id ? src.id : src.ckey)
+		hasMedals.routeParams = list(src.id ? src.id : src.ckey)
 		hasMedals.queryParams = list("medal" = medal_name)
 		var/datum/apiModel/HasMedalResource/hasMedal
 
