@@ -19,10 +19,10 @@
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
-		explosion_new(null, get_turf(hit), 12)
-		for (var/i in -2 to 2)
+		explosion_new(null, get_turf(hit), 10)
+		for (var/i in -4 to 4)
 			var/obj/projectile/P = initialize_projectile(get_turf(O), new/datum/projectile/bullet/homing/glatisant_submuntitions, O.xo, O.yo, O.shooter)
-			P.rotateDirection(180 + 15*i)
+			P.rotateDirection(180 + 8*i)
 			P.launch()
 
 
@@ -46,7 +46,7 @@
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
-		explosion_new(null, get_turf(hit), 12)
+		explosion_new(null, get_turf(hit), 16)
 
 //much of this shamelessly copy-pasted from the pod-seeker
 /obj/item/gun/kinetic/glatisant
