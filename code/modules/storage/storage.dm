@@ -421,6 +421,13 @@
 
 /// storage is full or not
 /datum/storage/proc/is_full(obj/item/W)
+	if (!src.stack_stackables)
+		return length(src.get_contents()) >= src.slots
+	else
+		return (src.get_fullness(W) == STORAGE_CANT_HOLD)
+
+/// storage is full or not
+/datum/storage/proc/get_fullness(obj/item/W)
 	if (length(src.get_contents()) < src.slots)
 		return STORAGE_CAN_HOLD
 	else if (!src.stack_stackables)
