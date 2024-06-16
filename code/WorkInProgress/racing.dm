@@ -187,7 +187,331 @@
 /// This holds all of your abilities for kart racing
 /datum/abilityHolder/kart_racing
 	topBarRendered = 1
+	var/obj/racing_clowncar/kart
 
+	New()
+		..()
+
+	onLife(mult)
+		if (should_show_info())
+			src.updateText(0, src.x_occupied, src.y_occupied)
+		. = ..()
+
+	proc/should_show_info()
+		if (kart?.progress?.in_race) return TRUE
+
+	proc/get_race_progress()
+		if (kart?.progress) return kart.progress
+
+	onAbilityStat()
+		..()
+		.= list()
+		var/datum/vr_race_progress/P = src.get_race_progress()
+		if (P?.in_race)
+			// the difference between the race's starting time and now
+			.["TIME:"] = P.get_time_display()
+			// the lap we're on
+			.["LAP:"] = P.get_lap_display()
+			// the position in the race
+			.["PLACE:"] = P.get_position()
+
+			.["COMPLETION:"] = "[(P.checkpoints_crossed/22)*100]%"
+
+		return
+
+/// the physical checkpoint, place in races will be determined by these
+/obj/landmark/vr_race_checkpoint
+	name = "VR Race Checkpoint"
+	var/datum/vr_racetrack/race
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
+	/// this will trigger a lap update when we cross it and meet the requirements
+	var/crossing_joins_race = FALSE
+	/// checkpoint id, force people to go through checkpoints in order
+	var/checkpoint_id = 0
+
+		// the idea is you can set up invisible walls of these through the race track to track progress
+		// going through these walls will
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (race && istype(AM,/obj/racing_clowncar))
+			var/obj/racing_clowncar/R = AM
+
+			// the current racetrack datum will check this on all participants
+			// to determine scoring
+			if (R.progress && race)
+
+				// need to worry about crossing backwards
+				if (crossing_joins_race && !(R.progress in race.participants))
+					race.join_race(R.progress)
+					// if we're already in the race
+				else if (crossing_joins_race)
+					race.advance_lap(R.progress)
+				else
+					// is this the next checkpoint id for this racer, if so give them an update
+					if (R.progress.checkpoints_crossed == src.checkpoint_id-1)
+						R.progress.checkpoints_crossed = src.checkpoint_id
+
+						race.update_all_positions()
+
+/// todo: code this
+/obj/machinery/computer/vr_race_console
+	name = "VR Race Console"
+	desc = "This console appears to allow you to control the race track."
+	icon_state = "announcement"
+	/// the datum that manages the race that is started by this console
+	var/datum/vr_racetrack/race
+	/// the time until we tell the race to begin
+	var/start_delay = 3 SECONDS
+
+	// results given back to the race console when a race completes
+	var/list/race_results
+
+/obj/machinery/computer/vr_race_console/New()
+	race = new
+	race.race_console = src
+	..()
+
+/obj/machinery/computer/vr_race_console/disposing()
+	if (race)
+		race.race_console = null
+	race = null
+	. = ..()
+
+/obj/machinery/computer/vr_race_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "VRRaceControl")
+		ui.open()
+
+/obj/machinery/computer/vr_race_console/ui_static_data(mob/user)
+	. = ..()
+	. = list("Active" = race.active)
+	for (var/datum/vr_race_progress/P in race_results)
+		var/position_text = "[P.race_position]"
+		if (P.finished)
+			switch(copytext("[P.race_position]",-1))
+				if("1")
+					position_text += "st"
+				if("2")
+					position_text += "nd"
+				if("3")
+					position_text += "rd"
+				else
+					position_text += "th"
+
+		// did they finish the race at all
+		.["race_results" ] += list(
+		list(
+		"driver" = P.holder?.driver ? P.holder.driver : "N/A",
+		"place" = P.finished ? P.race_position : "DNF",
+		"times" = P.lap_start_times
+		))
+
+/obj/machinery/computer/vr_race_console/attack_hand(mob/user)
+	if(..())
+		return
+	src.ui_interact(user)
+
+/obj/machinery/computer/vr_race_console/proc/start_race()
+
+	// get ready
+	var/time_till_race = start_delay/10
+	src.visible_message("The race will begin in [time_till_race] seconds.")
+	maptext = "<span class='vb c ol ps2p'>Starting in:</span>"
+	maptext_width = 64
+	maptext_x = -16
+	maptext_y = 32
+	var/done_counting = FALSE
+	while (!done_counting)
+		sleep(1 SECOND)
+		var/time_color = "#ff6666"
+		switch (time_till_race)
+			if (2)
+				time_color = "#ffb400"
+			if (1)
+				time_color = "#ffff00"
+			if (0)
+				time_color = "#33dd33"
+		maptext = "<span class='vb c ol ps2p' style='font-size: 1em; color: [time_color];'>[time_till_race == 0 ? "GO!" : time_till_race]</span>"
+		if (!time_till_race)
+			done_counting = TRUE
+			break
+		else
+			time_till_race--
+
+	// alright we're done here
+	SPAWN(5 SECONDS)
+		maptext = null
+
+	race.start_race()
+/obj/machinery/computer/vr_race_console/proc/end_race()
+	src.visible_message("The race has been forcibly ended.")
+	race.end_race()
+
+/// this holds all race progress for a given kart participating in a race
+/datum/vr_race_progress
+
+	/// the race that this is tracking progress for
+	var/datum/vr_racetrack/race
+	/// the vehicle this belongs to
+	var/obj/racing_clowncar/holder
+
+	/// what position are we in in the race
+	var/race_position = 1
+
+	/// what lap number are we on
+	var/current_lap = 1
+
+	/// the times when each lap started, can be used to figure out lap length
+	var/list/lap_start_times
+
+	/// what checkpoint number are we on
+	var/checkpoints_crossed = 0
+	/// are we in a race
+	var/in_race = FALSE
+	/// are we in the victory lap
+	var/finished = FALSE
+
+	/// get our total checkpoint count
+	proc/get_standing()
+		return (current_lap-1) * race.last_checkpoint_id + checkpoints_crossed
+
+	proc/get_time_display()
+		if (length(lap_start_times))
+			var/current_lap_time = lap_start_times[length(lap_start_times)]
+			var/start_time = lap_start_times[1]
+			return "<span style='color: #f4f400;'>[formatTimeText(TIME-current_lap_time)]</span> (<span style='color: #f4f400;'>[formatTimeText(TIME-start_time)]</span>)"
+
+	proc/get_lap_display()
+		return "[current_lap]/[race.lap_count]"
+
+
+	proc/get_position()
+		. = "[race_position]"
+		switch(copytext("[race_position]",-1))
+			if("1")
+				. += "st"
+			if("2")
+				. += "nd"
+			if("3")
+				. += "rd"
+			else
+				. += "th"
+
+/datum/vr_racetrack
+	var/list/participants
+	var/race_start_time
+
+	var/obj/machinery/computer/vr_race_console/race_console
+
+	var/lap_count = 3
+
+	var/list/checkpoints
+
+	var/last_checkpoint_id = 22
+
+	var/active = FALSE
+
+	var/time_till_end = 10 SECONDS
+
+	proc/advance_lap(var/datum/vr_race_progress/P)
+		if (P.checkpoints_crossed == last_checkpoint_id)
+			if (P.current_lap < lap_count)
+				P.current_lap += 1
+				P.checkpoints_crossed = 0
+				P.lap_start_times += TIME
+			else
+				// RESETTING THESE FOR DEBUG
+				P.finished = TRUE
+				// they completed the race, start winding things up
+				SPAWN(time_till_end)
+					end_race()
+
+
+
+	proc/start_race()
+		active = TRUE
+		participants = list()
+
+		checkpoints = list()
+		for_by_tcl(C,/obj/landmark/vr_race_checkpoint)
+			checkpoints += C
+			C.race = src
+		race_start_time = TIME
+
+	proc/join_race(var/datum/vr_race_progress/P)
+		if (P)
+			participants += P
+			P.checkpoints_crossed = 0
+			P.current_lap = 1
+			P.in_race = TRUE
+			// you join late, you pay the price
+			P.lap_start_times = list(race_start_time)
+			P.finished = FALSE
+			P.race = src
+
+			// if we can, hurry up the update for the timer display so things happen immediately
+			var/datum/abilityHolder/kart_racing/A = P.holder?.driver?.get_ability_holder(/datum/abilityHolder/kart_racing)
+			if (A)
+				A.updateText(0, A.x_occupied, A.y_occupied)
+
+	proc/on_race_end()
+		// if the race completed, start generating the results data
+		if (!race_console)
+			return
+
+		var/list/sorted_by_place = sortList(participants)
+		for(var/i=1, i<length(participants), i++ )
+			for (var/datum/vr_race_progress/P in participants)
+				if (i == P.race_position) sorted_by_place += P
+
+		race_console.race_results = sorted_by_place
+
+
+
+
+
+	proc/end_race()
+		active = FALSE
+		// start resetting
+		for (var/datum/vr_race_progress/P in participants)
+			P.in_race = FALSE
+			P.race = null
+		participants = null
+		for_by_tcl(C,/obj/landmark/vr_race_checkpoint)
+			C.race = null
+		checkpoints = null
+
+	proc/update_all_positions()
+		for (var/datum/vr_race_progress/P in participants)
+			if (!P.finished)
+				src.update_position(P)
+
+
+	proc/update_position(var/datum/vr_race_progress/need_update)
+
+		var/position = 1
+		for (var/datum/vr_race_progress/P in participants)
+			if (P == need_update) continue
+			// assume we lost to them, maybe this will work
+			if (P.finished)
+				position += 1
+			// grab their number of checkpoints and compare to ours to see if they're in a higher position
+			else if (P.get_standing() > need_update.get_standing())
+				position += 1
+
+		need_update.race_position = position
 /// the base kart ability
 ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 /datum/targetable/kart_powerup
@@ -338,6 +662,14 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	var/mob/living/carbon/human/driver = null
 	var/datum/abilityHolder/kart_racing/abilities = null
 
+	/// store race progress on this
+	var/datum/vr_race_progress/progress
+
+	New()
+		..()
+		progress = new
+		progress.holder = src
+
 	proc/random_powerup()
 		var/list/powerups = concrete_typesof(/datum/targetable/kart_powerup)
 		if(!length(powerups))
@@ -386,6 +718,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if (!A || !istype(A))
 			A = driver.add_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = A
+		A.kart = src
 
 		name = "Turbo Clowncar 2000 ([driver.name])"
 		src.name_suffix("([driver.name])")
@@ -404,6 +737,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
 		if (istype(A))
 			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
+			A.kart = null
 		abilities = null
 
 		src.remove_suffixes("([driver.name])")
@@ -541,6 +875,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if (!A || !istype(A))
 			A = driver.add_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = A
+		A.kart = src
 
 		src.name_suffix("([driver.name])")
 		src.UpdateName()
@@ -562,6 +897,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
 		if (A && istype(A))
 			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
+			A.kart = null
 		abilities = null
 
 		src.ClearSpecificOverlays("boost")
