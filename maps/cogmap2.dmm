@@ -68953,6 +68953,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
+"qyl" = (
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/security/main)
 "qzf" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -130880,7 +130888,7 @@ bSH
 bUi
 bYY
 bXm
-bYx
+qyl
 bZP
 bgK
 bgK

@@ -65106,6 +65106,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/turret_protected/AIbaseoutside)
+"tHE" = (
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/security/quarters)
 "tHG" = (
 /obj/machinery/light_switch/south,
 /turf/simulated/floor,
@@ -103535,7 +103543,7 @@ dzQ
 ulb
 nfO
 nfO
-nfO
+tHE
 kfJ
 jLN
 lJM
