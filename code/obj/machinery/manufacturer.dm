@@ -311,7 +311,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P]"]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -1827,8 +1827,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return storage_contents
 
 	on_add_contents(obj/item/I)
-		if (!("\ref[I]" in src.material_patterns_by_ref))
-			src.material_patterns_by_ref["\ref[I]"] = src.get_requirements_material_satisfies(I.material)
+		if (!("\ref[I.material]" in src.material_patterns_by_ref))
+			src.material_patterns_by_ref["\ref[I.material]"] = src.get_requirements_material_satisfies(I.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
