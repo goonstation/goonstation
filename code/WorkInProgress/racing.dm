@@ -497,11 +497,15 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	name = "Go-Kart"
 	desc = "A Go-Kart, whatever the kids spell it these days."
 	icon = 'icons/misc/racing.dmi'
-	icon_state = "kart_blue_u"
+	icon_state = "kart_nopaint"
 	layer = OBJ_LAYER
 	var/returnpoint = null
 	var/returndir = null
 	var/turf/returnloc = null
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+
+	/// the paintjob this kart attempts to use
+	var/kart_color = "#3249c7"
 
 	/// the vis_flags to be restored on exiting the vehicle
 	var/occupant_vis_flags
@@ -512,7 +516,44 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		returndir = dir
 		if(returnpoint)
 			returnloc = pick_landmark(returnpoint)
+		src.UpdateIcon()
 
+	update_icon()
+		. = ..()
+		if (icon_state != "kart_nopaint")
+			// i do not want to go fix z2's varedited red karts right now
+			icon_state = "kart_nopaint"
+
+		if (driver && !(driver in vis_contents))
+			src.vis_contents += driver
+			occupant_vis_flags = driver.vis_flags
+			driver.pixel_x = 0
+			driver.pixel_y = 0
+			driver.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_DIR
+		else if (!driver)
+			src.ClearSpecificOverlays("driver_cover")
+
+		src.ClearSpecificOverlays("boost1")
+		src.ClearSpecificOverlays("boost2")
+		src.ClearSpecificOverlays("spin")
+		src.ClearSpecificOverlays("super")
+
+		var/image/I = image('icons/misc/racing.dmi', "paint_cover1",layer=ABOVE_OBJ_LAYER)
+		I.color = kart_color
+		src.AddOverlays(I,"paintjob")
+
+		I = image('icons/misc/racing.dmi', "paint_cover2",layer=ABOVE_OBJ_LAYER)
+		I.color = kart_color
+		src.AddOverlays(I,"driver_cover")
+
+		// do not paint this
+		src.AddOverlays(image('icons/misc/racing.dmi', "paint_bumper",layer=ABOVE_OBJ_LAYER),"bumper_cover")
+
+	// if someone just varedited the kart paint, update immediately
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "kart_color")
+			src.UpdateIcon()
 	enter()
 		set src in oview(1)
 		set category = "Local"
@@ -526,15 +567,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		M.set_loc(src)
 		driver = M
-
-		src.vis_contents += driver
-		occupant_vis_flags = driver.vis_flags
-		driver.pixel_x = 0
-		driver.pixel_y = 0
-		driver.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_DIR
-
-		src.AddOverlays(image('icons/misc/racing.dmi', src.cover_state,layer=ABOVE_OBJ_LAYER),"driver_cover")
-		update()
+		src.UpdateIcon()
 
 		// setup kart abilities
 		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
@@ -545,7 +578,6 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		src.name_suffix("([driver.name])")
 		src.UpdateName()
 		driving = 0
-		update()
 
 	exit()
 		set src in oview(1)
@@ -553,20 +585,24 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if(!ishuman(usr) || usr != driver) return
 		reset()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.driver)
+			exit()
+
 	proc/reset()
 		stop()
 		returntoline()
 		if(driver)
 			driver.set_loc(get_turf(src))
+		// take anything you dropped with you
+		for (var/obj/O in src)
+			O.set_loc(get_turf(src))
 
 		var/datum/abilityHolder/kart_racing/A = driver.get_ability_holder(/datum/abilityHolder/kart_racing)
 		if (A && istype(A))
 			driver.remove_ability_holder(/datum/abilityHolder/kart_racing)
 		abilities = null
-
-		src.ClearSpecificOverlays("boost")
-		src.ClearSpecificOverlays("spin")
-		src.ClearSpecificOverlays("super")
 
 		src.remove_suffixes("([driver.name])")
 		src.UpdateName()
@@ -574,11 +610,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		src.vis_contents -= driver
 		driver = null
 		driving = 0
-		update()
-
-	proc/update()
-		if(!driver)
-			src.ClearSpecificOverlays("driver_cover")
+		src.UpdateIcon()
 
 	proc/returntoline()
 		if(returnloc)
@@ -589,7 +621,8 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		speed = base_speed - turbo
 		drive(dir, speed)
 
-		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
+		src.AddOverlays(image('icons/misc/racing.dmi', "boost_below"),"boost1")
+		src.AddOverlays(image('icons/misc/racing.dmi', "boost_ontop",layer=ABOVE_OBJ_LAYER),"boost2")
 
 		if (super_boost)
 			src.super = TRUE
@@ -600,15 +633,16 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 				speed = base_speed
 				if (driving) drive(dir, speed)
 				src.ClearSpecificOverlays("super")
-				src.ClearSpecificOverlays("boost")
+				src.ClearSpecificOverlays("boost1")
+				src.ClearSpecificOverlays("boost2")
 		else
 			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
 			SPAWN(5 SECONDS)
 				speed = base_speed
 				if (driving) drive(dir, speed)
-				src.ClearSpecificOverlays("boost")
+				src.ClearSpecificOverlays("boost1")
+				src.ClearSpecificOverlays("boost2")
 
 
 /obj/racing_clowncar/kart/red
-	icon_state = "kart_red_u"
-	cover_state = "kart_red"
+	kart_color = "#BE3A3A"
