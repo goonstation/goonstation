@@ -174,8 +174,8 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
 	var/list/list/datum/listen_module/input/listen_modules_by_type = list()
 
-	if (isturf(message.message_origin.loc))
-		var/turf/centre = message.message_origin.loc
+	if (!ismob(message.message_origin.loc))
+		var/turf/centre = get_turf(message.message_origin)
 		SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
 		for (var/type in src.listeners)

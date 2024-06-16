@@ -5,8 +5,8 @@
 	if (!(message.flags & SAYFLAG_WHISPER))
 		var/list/list/datum/listen_module/input/listen_modules_by_type = list()
 
-		if (isturf(message.message_origin.loc))
-			var/turf/centre = message.message_origin.loc
+		if (!ismob(message.message_origin.loc))
+			var/turf/centre = get_turf(message.message_origin)
 			SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
 			for (var/type in src.listeners)
@@ -48,8 +48,8 @@
 		var/list/list/datum/listen_module/input/heard_clearly_listen_modules_by_type = list()
 		var/list/list/datum/listen_module/input/heard_distorted_listen_modules_by_type = list()
 
-		if (isturf(message.message_origin.loc))
-			var/turf/centre = message.message_origin.loc
+		if (!ismob(message.message_origin.loc))
+			var/turf/centre = get_turf(message.message_origin)
 			SET_UP_HEARD_TURFS(heard_clearly_turfs, WHISPER_RANGE, centre)
 			SET_UP_HEARD_DISTORTED_TURFS(heard_distorted_turfs, message.heard_range, centre, heard_clearly_turfs)
 

@@ -40,8 +40,8 @@
 			message.speaker_location_text = "(inside [bicon(outermost)] [outermost])"
 
 		else if (relative_thickness < 20)
-			message.card_ident = null //muffled voicetype - hacky, use a flag instead
-			message.speaker_location_text = "muffled (inside [bicon(outermost)] [outermost])"
+			message.speaker_to_display = "muffled"
+			message.speaker_location_text = "(inside [bicon(outermost)] [outermost])"
 
 		else
 			return

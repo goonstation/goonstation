@@ -99,7 +99,7 @@
 /// Displays an atom's speech bubble overlay, then removes it after a short delay.
 /atom/proc/show_speech_bubble(image/override_image)
 	src.AddOverlays(override_image || src.speech_bubble, "speech_bubble")
-	OVERRIDE_COOLDOWN(src, "speech_bubble", 1.5 SECONDS)
+	OVERRIDE_COOLDOWN(src, "speech_bubble", 1.4 SECONDS)
 
 	SPAWN(1.5 SECONDS)
 		if (!GET_COOLDOWN(src, "speech_bubble"))
@@ -156,6 +156,7 @@ Cleanup:
 Things To Implement:
 - AI
 - Observers (not ghosts)
+- Zoldorf
 - Ghostdrones (language)
 - Radio brain (bioeffect)
 - Radio station mixing desk
