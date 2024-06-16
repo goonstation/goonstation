@@ -1821,6 +1821,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.storage.transfer_stored_item(I, src.loc)
 		return storage_contents
 
+	on_add_contents(obj/item/I)
+		material_patterns_by_ref["\ref[I]"] = src.get_requirements_material_satisfies(I.material)
+
 	/*
 	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	Parameters for selection of material (requires at least one non-null):
