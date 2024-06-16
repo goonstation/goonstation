@@ -424,25 +424,27 @@
 	if (!src.stack_stackables)
 		return length(src.get_contents()) >= src.slots
 	else
+		if (isnull(W))
+			CRASH("is_full given null W, requires defined type to check stackability")
 		return (src.get_fullness(W) == STORAGE_CANT_HOLD)
 
-/// storage is full or not
+/// storage is full or not, or can hold some of the given item in it
 /datum/storage/proc/get_fullness(obj/item/W)
 	if (length(src.get_contents()) < src.slots)
 		return STORAGE_CAN_HOLD
 	else if (!src.stack_stackables)
-		return STORAGE_CANT_HOLD
-
-	if (isnull(W))
-		CRASH("is_full given null W, requires defined type to check stackability")
+		return STORAGE_IS_FULL
 
 	var/amount_holdable = 0
 	for (var/obj/item/I as anything in src.stored_items)
-		if (amount_holdable >= W.amount)
-			return STORAGE_CAN_HOLD
 		if (!W.check_valid_stack(I))
 			continue
 		amount_holdable += (I.max_stack - I.amount)
+		if (amount_holdable >= W.amount)
+			return STORAGE_CAN_HOLD
+
+	if (amount_holdable == 0)
+		return STORAGE_IS_FULL
 
 	return STORAGE_CAN_HOLD_SOME
 
