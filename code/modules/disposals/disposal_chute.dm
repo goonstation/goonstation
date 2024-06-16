@@ -43,7 +43,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		..()
 		if((src.pixel_x == 0) && (src.dir == WEST))
 			src.pixel_x += 5
-		if((src.pixel_x == 0) && (src.dir == 4))
+		if((src.pixel_x == 0) && (src.dir == EAST))
 			src.pixel_x += -5
 
 		START_TRACKING
