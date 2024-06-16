@@ -36,6 +36,8 @@
 	var/sneaky = FALSE
 	/// Don't show the contents of the storage on its description
 	var/stealthy_storage = FALSE
+	/// Whether or not this storage allows stacking stackables into its contents
+	var/stack_stackables = TRUE
 	/// Prevent accessing storage when clicked when worn, ex. in pocket
 	var/opens_if_worn = FALSE
 	/// Maximum w_class that can be held
@@ -327,8 +329,10 @@
 		if (ispath(type) && istype(W, type))
 			return STORAGE_RESTRICTED_TYPE
 
+	var/full = src.is_full(W)
+
 	// if can_hold is defined, check against that
-	if (length(src.can_hold) && !src.is_full())
+	if (length(src.can_hold) && !full)
 		// early skip if weight class is allowed
 		if (src.check_wclass && W.w_class <= src.max_wclass)
 			return STORAGE_CAN_HOLD
@@ -343,7 +347,7 @@
 	else if (W.w_class > src.max_wclass)
 		return STORAGE_WONT_FIT
 
-	if (src.is_full())
+	if (full)
 		return STORAGE_IS_FULL
 
 	return STORAGE_CAN_HOLD
@@ -416,8 +420,24 @@
 		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
 /// storage is full or not
-/datum/storage/proc/is_full()
-	return length(src.get_contents()) >= src.slots
+/datum/storage/proc/is_full(obj/item/W)
+	if (length(src.get_contents()) < src.slots)
+		return STORAGE_CAN_HOLD
+	else if (!src.stack_stackables)
+		return STORAGE_CANT_HOLD
+
+	if (isnull(W))
+		CRASH("is_full given null W, requires defined type to check stackability")
+
+	var/amount_holdable = 0
+	for (var/obj/item/I as anything in src.stored_items)
+		if (amount_holdable >= W.amount)
+			return STORAGE_CAN_HOLD
+		if (!W.check_valid_stack(I))
+			continue
+		amount_holdable += (I.max_stack - I.amount)
+
+	return STORAGE_CAN_HOLD_SOME
 
 /// return stored contents
 /datum/storage/proc/get_contents()
