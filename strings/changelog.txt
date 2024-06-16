@@ -1,4 +1,9 @@
 
+(t)sun jun 16 24
+(u)Glamurio (Ryou)
+(p)19508
+(e)🪲💅|C-Bug, C-QoL
+(+)You can now choose not to have a middle name in character creation by leaving it empty.
 (t)sat jun 15 24
 (u)Skeletonman0
 (p)19513
