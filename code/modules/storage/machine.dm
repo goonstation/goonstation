@@ -8,7 +8,7 @@
 		visible = FALSE
 
 		var/obj/machinery/M = src.linked_item
-		M.on_add_contents()
+		M.on_add_contents(I)
 
 		. = ..()
 
