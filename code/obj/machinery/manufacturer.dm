@@ -272,6 +272,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
+		if (QDELETED(src))
+			return
 		if(src.is_broken())
 			src.build_icon()
 		else
@@ -381,7 +383,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return null
 
-
 	/// Gets rockbox data as list for ui_static_data
 	proc/rockboxes_as_list()
 		var/rockboxes = list()
@@ -428,7 +429,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (isnull(M.item_names))
 			M.item_names = list()
 			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-				M.item_names += R.name
+				M.item_names += R.getName()
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -452,7 +453,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		var/requirement_data = list()
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			requirement_data += list(list("name" = R.name, "id" = R.id, "amount" = M.item_requirements[R]))
+			requirement_data += list(list("name" = R.getName(), "id" = R.getID(), "amount" = M.item_requirements[R]))
 
 		return list(
 			"name" = M.name,
@@ -521,8 +522,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Helper to play the grump with or without a grump message/sound. Just as a note the sound is appropriate when the machine is reporting the error,
 	/// if its a grump that the player probably had to think about or find out then theres no "reason" for there to be sound
 	proc/grump_message(mob/target = null, var/message = null, var/sound = FALSE)
-		if (!isnull(message) && !isnull(target))
-			boutput(target, SPAN_ALERT(message))
+		if (!isnull(message))
+			if (!isnull(target))
+				boutput(target, SPAN_ALERT(message))
+			else
+				src.visible_message(SPAN_ALERT(message))
 		if (sound)
 			playsound(src.loc, src.sound_grump, 50, 1)
 
@@ -783,15 +787,38 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
+	/*
+	Handling for shocking the user
+	Handling for getting the satchel of an ore scoop
+	Handling for getting the blueprint into a fabricator
+	Handling for loading material bars from a satchel
+	Handling for tools (screwdriver, open maint panel)
+	Handling for tools (welding, repair/load)
+	Handling for cable coils (repair, load)
+	Handling for tools (crowbar, dismantle)
+	Handling for tools (snipping, dismantle)
+	Handling for reconstruction (sheets, reconstruct)
+	Handling for cable coils (reconstruct)
+	Handling for inserting manudrives
+	Grumping for trying to insert sheets/coils/raw mats
+	Handling for inserting material pieces
+	Handling for.. snipping/pulsing calling Attackhand when the panel is open?
+	Handling for early return if a card is scanned successfully
+	Handling for calling parent proc + hitting the machine
+	*/
+
 	attackby(obj/item/W, mob/user)
+		// Handling for shocking the user
 		if (src.is_electrified())
 			if (src.shock(user, 33))
 				return
 
+		// Handling for getting the satchel of an ore scoop
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
 
+		// Handling for getting the blueprint into a fabricator
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
 				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
@@ -830,6 +857,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 			return
 
+		// Handling for loading material bars from a satchel
 		else if (istype(W, /obj/item/satchel))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [W]!"), SPAN_NOTICE("You use [src]'s automatic loader on [W]."))
 			var/amtload = 0
@@ -842,6 +870,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
 			else boutput(user, SPAN_ALERT("No materials loaded!"))
 
+		// Handling for tools (screwdriver, open maint panel)
 		else if (isscrewingtool(W))
 			if (!src.panel_open)
 				src.panel_open = TRUE
@@ -851,6 +880,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 			tgui_process.try_update_ui(user, src)
 
+		// Handling for tools (welding, repair/load)
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -871,6 +901,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health == 100)
 						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
+		// Handling for cable coils (repair, load, reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.panel_open)
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
@@ -894,6 +925,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health >= 50)
 						boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
+		// Handling for tools (wrench, dismantle/reconstruct/load)
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -920,6 +952,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				src.build_icon()
 
+		// Handling for tools (crowbar, dismantle)
 		else if (ispryingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -927,6 +960,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
 
+		// Handling for tools (snipping, dismantle)
 		else if (issnippingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			if (!(status & NOPOWER))
 				if (src.shock(user,100))
@@ -940,12 +974,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			C.UpdateIcon()
 			src.build_icon()
 
+		// Handling for reconstruction (sheets, reconstruct)
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_BOLTS
 			qdel(W)
 			src.build_icon()
 
+		// Handling for cable coils (reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
@@ -955,6 +991,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.shock(user,100)
 			src.build_icon()
 
+		// Handling for inserting manudrives
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
@@ -976,22 +1013,26 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.drive_recipes = MD.drivestored
 			should_update_static = TRUE
 
-
+		// Grumping for trying to insert sheets/coils/raw mats
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
+		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
 			src.storage.add_contents(W, user, visible = FALSE)
 
+		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
 			return
 
+		// Handling for early return if a card is scanned successfully
 		else if(scan_card(W))
 			return
 
+		// Handling for calling parent proc + hitting the machine
 		else
 			..()
 			user.lastattacked = src
@@ -1503,9 +1544,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
 		for (var/R_id as anything in requirement_cache)
-			var/datum/manufacturing_requirement/R = getRequirement(R_id)
+			var/datum/manufacturing_requirement/R = getManufacturingRequirement(R_id)
 			if (R.is_match(M))
-				. += R.id
+				. += R.getID()
 
 	/// Returns material which matches ref from storage, else returns null
 	proc/get_material_by_ref(var/mat_ref)
@@ -1514,40 +1555,45 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return P
 		return null
 
-	/// Returns associative list of manufacturing requirement to material piece reference, but does not guarantee all item_paths are satisfied or that
-	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Mats not used are not added to the return value
+	/// Returns associative list of manufacturing requirement to material piece references, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Reqs not satisfied are not added to mats_used
 	proc/get_materials_needed(datum/manufacture/M)
-		var/list/C = src.get_contents()
-
 		var/list/mats_used = list()
-		var/list/mats_projected = list()
-		for (var/obj/item/material_piece/P in C)
-			mats_projected["\ref[P]"] = P.amount * 10
+		var/list/mats_reserved = list()
 
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			var/required_amount = M.item_requirements[R]
-			for (var/obj/item/material_piece/P in C)
-				var/P_ref = "\ref[P]"
-				if (mats_projected[P_ref] < required_amount)
-					continue
-				if (R.is_match(P.material))
-					mats_used[R] = P_ref
-					mats_projected[P_ref] -= required_amount
-					break
+			var/piece_ref = src.get_material_for_requirement(R, M.item_requirements[R], mats_reserved)
+			if (!isnull(piece_ref))
+				mats_used[R] = piece_ref
 
 		return mats_used
 
+	/// Get the material in storage which satisfies some amount of a requirement.
+	proc/get_material_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
+		var/list/C = src.get_contents()
+		for (var/obj/item/material_piece/P as anything in C)
+			if (!R.is_match(P.material))
+				continue
+			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
+			var/P_ref = "\ref[P]"
+			var/amount_free = P.amount - mats_reserved[P_ref]
+			var/amount_to_use = min(amount_free, required_amount / 10)
+			if ((amount_to_use * 10) < required_amount)
+				continue
+			mats_reserved[P_ref] ||= 0
+			mats_reserved[P_ref] += amount_to_use
+			return P_ref
+
 	/// Check if a blueprint can be manufactured with the current materials.
-	proc/check_enough_materials(datum/manufacture/M)
-		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == length(M.item_requirements)) // we have enough materials, so return the materials list, else return null
-			return mats_used
+	/// mats_used - a list from get_materials_needed to avoid calling the proc twice
+	proc/check_enough_materials(datum/manufacture/M, var/list/mats_used = null)
+		if (isnull(mats_used))
+			mats_used = get_materials_needed(M)
+		return length(mats_used) == length(M.item_requirements)
 
 	/// Go through the material requirements of a blueprint, removing the respective used materials
 	proc/remove_materials(datum/manufacture/M)
-		var/list/mats_used = check_enough_materials(M)
-		if (isnull(mats_used))
-			return // how
+		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
 			for (var/obj/item/material_piece/P as anything in src.get_contents())
@@ -1597,8 +1643,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.malfunction && prob(40))
 			src.flip_out()
 		if (new_production)
-			var/list/mats_used = check_enough_materials(M)
-			if (!mats_used)
+			var/list/mats_used = get_materials_needed(M)
+			if (!(length(mats_used) == length(M.item_requirements)))
 				src.mode = MODE_HALT
 				src.error = "Insufficient usable materials to continue queue production."
 				src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
@@ -1655,8 +1701,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (length(M.item_outputs) <= 0)
 			return
-		var/materials_used = check_enough_materials(M)
-		if(materials_used)
+		var/list/materials_used = src.get_materials_needed(M)
+		if(src.check_enough_materials(M, materials_used))
 			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop

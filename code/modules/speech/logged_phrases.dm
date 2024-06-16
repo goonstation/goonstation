@@ -225,6 +225,17 @@ var/global/datum/phrase_log/phrase_log = new
 				src.phrases[category] = phrases.Copy(1, src.max_length + 1)
 		rustg_file_write(json_encode(src.phrases), src.filename)
 
+	proc/export_file_to_client()
+		if(fexists(src.filename))
+			usr << ftp(file(src.filename))
+
+	proc/import_file_and_stop_panic()
+		var/F = input(usr, "json file") as file|null
+		if(F)
+			src.phrases = json_decode(file2text(F))
+		if(islist(src.phrases))
+			PANIC = FALSE
+
 	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
 	proc/random_api_phrase(category)
 		if(!length(src.cached_api_phrases[category]))
