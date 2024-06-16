@@ -211,7 +211,7 @@ TYPEINFO(/obj/stool/wooden)
 	name = "sleek bar stool"
 	icon_state = "sleek_stool"
 	desc = "Like a bar stool, but sleek and stylish."
-	parts_type = /obj/item/furniture_parts/stool/neon
+	parts_type = /obj/item/furniture_parts/stool/sleek
 
 /* ================================================= */
 /* -------------------- Benches -------------------- */
@@ -1097,13 +1097,14 @@ TYPEINFO(/obj/item/chair/folded)
 	parts_type = /obj/item/furniture_parts/throne_gold
 
 /obj/stool/chair/comfy/sleek
-	name = "comfy sleek chair"
+	name = "sleek chair"
 	desc = "This advanced seat commands authority and respect. Everyone is super envious of whoever sits in this chair."
 	icon_state = "chair_comfy_sleek"
 	arm_icon_state = "arm_sleek"
 	comfort_value = 7
 	anchored= UNANCHORED
 	deconstructable = 1
+	parts_type = /obj/item/furniture_parts/sleekchair
 
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
