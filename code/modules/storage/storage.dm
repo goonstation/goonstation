@@ -151,7 +151,7 @@
 	if (canhold != STORAGE_CAN_HOLD)
 		if (canhold == STORAGE_CANT_HOLD || canhold == STORAGE_WONT_FIT || canhold == STORAGE_RESTRICTED_TYPE)
 			// if item has a storage, dump contents into this storage
-			if (W.storage && (!src.is_full() || src.stack_stackables))
+			if (W.storage && (src.stack_stackables || !src.is_full()))
 				for (var/obj/item/I as anything in (W.storage.get_contents() - src.linked_item))
 					if (src.check_can_hold(I) == STORAGE_CAN_HOLD)
 						if (I.anchored)
