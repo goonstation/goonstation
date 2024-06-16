@@ -341,6 +341,10 @@
 /obj/machinery/proc/is_disabled()
 	return src.is_broken() || src.has_no_power()
 
+/// Called when contents are added to the machine so it can do any special things it needs to
+/obj/machinery/proc/on_add_contents(obj/item/I)
+	return
+
 /obj/machinery/sec_lock
 	name = "Security Pad"
 	icon = 'icons/obj/stationobjs.dmi'
