@@ -1,8 +1,10 @@
 ///
 
 TYPEINFO(/obj/item/rcd)
-	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"crystal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /// Base RCD this is the variant actually used in most scenarios
 /obj/item/rcd
 	name = "rapid construction device"
@@ -291,6 +293,7 @@ TYPEINFO(/obj/item/rcd)
 	proc/do_deconstruct_wall(turf/simulated/wall/target, mob/user)
 		PROTECTED_PROC(TRUE)
 
+		log_construction(user, "deconstructs a wall ([target])")
 		var/turf/simulated/floor/T = target.ReplaceWithFloor()
 		if (!restricted_materials || !safe_deconstruct)
 			T.setMaterial(getMaterial(material_name))
@@ -298,7 +301,6 @@ TYPEINFO(/obj/item/rcd)
 			T.setMaterial(getMaterial("steel"))
 		else
 			T.setMaterial(getMaterial("negativematter"))
-		log_construction(user, "deconstructs a wall ([target])")
 		return
 
 	proc/do_deconstruction(atom/target, mob/user, thing)
@@ -481,7 +483,7 @@ TYPEINFO(/obj/item/rcd)
 			if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
 				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
 				random_brute_damage(user, 35)
-				Huser.changeStatus("weakened", 3 SECONDS)
+				Huser.changeStatus("knockdown", 3 SECONDS)
 				take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
 			else	//Limb's here? We lose it
 				if (user.zone_sel.selecting == "chest")

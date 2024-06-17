@@ -3,8 +3,10 @@
 
 ABSTRACT_TYPE(/obj/machinery/power/power_wheel)
 TYPEINFO(/obj/machinery/power/power_wheel)
-	mats = list("CON-1"=5, "MET-1"=25, "INS-1"=3, "POW-2"=10)
-
+	mats = list("conductive" = 5,
+				"metal" = 25,
+				"insulated" = 3,
+				"energy_high" = 10)
 /obj/machinery/power/power_wheel
 	name = "Kinetic Generator"
 	desc = "A large wheel used to generate power."
@@ -73,7 +75,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		else if(src.occupant && W.force)
 			W.attack(src.occupant, user)
 			user.lastattacked = src
-			if (occupant.hasStatus(list("weakened", "paralysis", "stunned")))
+			if (occupant.hasStatus(list("knockdown", "unconscious", "stunned")))
 				eject_occupant()
 			W.visible_message(SPAN_ALERT("[user] swings at [src.occupant] with [W]!"))
 		else if(!src.occupant && isgrab(W))
@@ -280,8 +282,8 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 	proc/tumble(mob/user)
 		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
 		animate_spin(user, was_running == WEST ? "L" : "R", 1, 0)
-		user.changeStatus("paralysis", 2 SECONDS)
-		user.changeStatus("weakened", 2 SECONDS)
+		user.changeStatus("unconscious", 2 SECONDS)
+		user.changeStatus("knockdown", 2 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and tumbles inside of [src]."))
 		animate_storage_thump(src)
 		return TRUE
@@ -368,7 +370,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 
 	tumble(mob/user)
 		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
-		user.changeStatus("weakened", 2 SECONDS)
+		user.changeStatus("knockdown", 2 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and slides off [src]."))
 		eject_occupant()
 		var/dx = 2

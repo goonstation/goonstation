@@ -919,7 +919,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "mH" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "mM" = (
@@ -3130,7 +3130,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "OM" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/devzone)
 "OO" = (

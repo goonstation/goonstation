@@ -722,9 +722,7 @@ TYPEINFO(/atom/movable)
 	if (!( src.anchored ))
 		user.set_pulling(src)
 
-		if (user.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
 /atom/movable/set_dir(new_dir)
 	..()

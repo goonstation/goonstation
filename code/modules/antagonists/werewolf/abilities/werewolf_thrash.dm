@@ -16,6 +16,7 @@
 		var/mob/living/M = holder.owner
 		if (!M)
 			return 1
+		. = ..()
 		var/turf/thrash_loc = M.loc
 		M.canmove = 0
 		for (var/i = 0, i < 20, i++)

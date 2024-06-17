@@ -231,6 +231,8 @@
 
 		if (src.robotic)
 			H.robotic_organs++
+			var/image/I = H.prodoc_icons["robotic_organs"]
+			I.icon_state = "organs-cyber"
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
 		if (src.donor)
@@ -258,6 +260,9 @@
 
 			if (src.robotic)
 				src.donor.robotic_organs--
+				var/image/I = src.donor.prodoc_icons["robotic_organs"]
+				if (src.donor.robotic_organs <= 0)
+					I.icon_state = null
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid

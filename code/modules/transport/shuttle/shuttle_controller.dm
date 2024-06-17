@@ -261,7 +261,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)
-										M.changeStatus("weakened", 2 SECONDS)
+										M.changeStatus("knockdown", 2 SECONDS)
 
 										if (prob(50) || bonus_stun)
 											var/atom/target = get_edge_target_turf(M, pick(alldirs))
@@ -269,7 +269,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 												if (M.buckled) M.buckled.unbuckle()
 												M.throw_at(target, 25, 1)
 												if (bonus_stun)
-													M.changeStatus("paralysis", 6 SECONDS)
+													M.changeStatus("unconscious", 6 SECONDS)
 													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 
@@ -286,7 +286,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
 							if(length(turfs_to_fix))
-								station_repair.repair_turfs(turfs_to_fix)
+								station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
 
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)

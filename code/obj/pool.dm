@@ -28,6 +28,9 @@
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 
+/obj/pool/perspective/innercorners
+	name = "pool"
+	icon_state = "pool_inner"
 /obj/pool_springboard
 	name = "springboard"
 	density = 0
@@ -94,7 +97,7 @@
 			user.buckled = null
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
 				user.throw_at(target, 5, 1)
-				user:changeStatus("weakened", 2 SECONDS)
+				user:changeStatus("knockdown", 2 SECONDS)
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
 				src.visible_message(SPAN_ALERT("<b>[user.name] dives headfirst at the [target.name]!</b>"))

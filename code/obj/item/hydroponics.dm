@@ -136,8 +136,9 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
-
+	mats = list("metal_dense" = 25,
+				"conductive" = 5,
+				"energy_high" = 5)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -146,7 +147,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
 	force = 6
-	active_force = 20
+	active_force = 30
 	off_force = 6
 	health = 10
 	throwforce = 5
@@ -160,13 +161,13 @@ TYPEINFO(/obj/item/saw/syndie)
 	arm_icon = "chainsaw_s-D"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
-	stamina_cost = 30
-	stamina_crit_chance = 40
+	stamina_cost = 20
+	stamina_crit_chance = 20
 	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		. = ..()
-		setProperty("deflection", 75)
+		setProperty("deflection", 40)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "redsaw_toggle", 1 SECOND))
@@ -197,10 +198,8 @@ TYPEINFO(/obj/item/saw/syndie)
 			return ..()
 
 		if (!ishuman(target))
-			target.changeStatus("weakened", 3 SECONDS)
 			return ..()
 
-		target.changeStatus("weakened", 3 SECONDS)
 		var/mob/living/carbon/human/H = target
 		if(prob(35))
 			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -660,7 +659,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	icon_state = "bong"
 	fluid_overlay_states = 8
 	container_style = "bong"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 	filled
 

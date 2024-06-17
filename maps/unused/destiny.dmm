@@ -6040,9 +6040,7 @@
 /area/station/medical/medbay/pharmacy)
 "aBF" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 7
-	},
+/obj/machinery/glass_recycler,
 /obj/item/device/reagentscanner{
 	pixel_x = -12
 	},
@@ -34795,8 +34793,7 @@
 /obj/machinery/traymachine/morgue{
 	dir = 2
 	},
-/obj/item/reagent_containers/food/snacks/pizza{
-	icon_state = "pizza_m";
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball{
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/cool{
@@ -37612,7 +37609,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "mwc" = (
@@ -54958,7 +54955,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "vqY" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},

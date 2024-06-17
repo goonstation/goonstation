@@ -24,7 +24,10 @@
 		image_url = "images/titlecards/s_titlecard.png"
 
 	nightshade
-		image_url = "images/titlecards/nightshade_titlecard.png"
+		image_url = "images/titlecards/nightshade2024_titlecard.png"
+
+	nightshade_2
+		image_url = "images/titlecards/nightshade2024_titlecard2.png"
 
 	disaster
 		overlay_image_url = "images/titlecards/disaster_titlecard.gif"

@@ -26,58 +26,54 @@ interface SpellItemProps extends EnvironmentProps {
   spell: SpellData;
 }
 
+// needed to standardize a button within the `title` prop of a `Section` component
+const titleButtonResetProps = {
+  fontSize: 1,
+  style: { 'font-weight': 'normal' },
+};
+
 export const SpellItem = (props: SpellItemProps, context) => {
   const { act } = useBackend<WizardSpellbookData>(context);
   const { spell, isVr, spellSlots } = props;
   const { name, desc, cooldown, cost, spell_img, vr_allowed } = spell;
   const [purchased, setPurchased] = useSharedState(context, name + '-purchased', false);
 
+  const title = (
+    <Stack align="center">
+      {!!spell_img && (
+        <Stack.Item height={THUMBNAIL_SIZE}>
+          <Image height={THUMBNAIL_SIZE} width={THUMBNAIL_SIZE} src={`data:image/png;base64,${spell_img}`} />
+        </Stack.Item>
+      )}
+      <Stack.Item grow>{name}</Stack.Item>
+      <Stack.Item>
+        <Button
+          {...titleButtonResetProps}
+          color="good"
+          disabled={spellSlots < cost || purchased}
+          onClick={() => {
+            setPurchased(true);
+            act('buyspell', { spell: name });
+          }}>
+          {buildPurchaseText(purchased, cost, spellSlots)}
+        </Button>
+      </Stack.Item>
+    </Stack>
+  );
   return (
-    <Stack.Item>
-      <Section>
-        {isVr && !vr_allowed && (
-          <Dimmer>
-            <Box fontSize={1.5} backgroundColor="#384e68">
-              Spell unavailable in VR
-            </Box>
-          </Dimmer>
-        )}
-        <Stack vertical>
-          <Stack.Item>
-            <Stack align="center" height={THUMBNAIL_SIZE}>
-              {!!spell_img && (
-                <Stack.Item>
-                  <Image
-                    pixelated
-                    height={THUMBNAIL_SIZE}
-                    width={THUMBNAIL_SIZE}
-                    src={`data:image/png;base64,${spell_img}`}
-                  />
-                </Stack.Item>
-              )}
-              <Stack.Item grow fontSize={1.25}>
-                <Box>{name}</Box>
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  color="good"
-                  disabled={spellSlots < cost || purchased}
-                  onClick={() => {
-                    setPurchased(true);
-                    act('buyspell', { spell: name });
-                  }}>
-                  {buildPurchaseText(purchased, cost, spellSlots)}
-                </Button>
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-          <Stack.Item>
-            <LabeledList>
-              {cooldown && <LabeledList.Item label="Cooldown">{`${cooldown} seconds`}</LabeledList.Item>}
-              <LabeledList.Item label="Description">{desc}</LabeledList.Item>
-            </LabeledList>
-          </Stack.Item>
-        </Stack>
+    <Stack.Item position="relative">
+      {isVr && !vr_allowed && (
+        <Dimmer>
+          <Box fontSize={1.5} backgroundColor="#384e68">
+            Spell unavailable in VR
+          </Box>
+        </Dimmer>
+      )}
+      <Section title={title}>
+        <LabeledList>
+          {cooldown && <LabeledList.Item label="Cooldown">{`${cooldown} seconds`}</LabeledList.Item>}
+          <LabeledList.Item label="Description">{desc}</LabeledList.Item>
+        </LabeledList>
       </Section>
     </Stack.Item>
   );

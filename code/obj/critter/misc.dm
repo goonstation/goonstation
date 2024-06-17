@@ -92,7 +92,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if (prob(30)) M.changeStatus("weakened", 3 SECONDS)
+		if (prob(30)) M.changeStatus("knockdown", 3 SECONDS)
 
 	CritterAttack(mob/M)
 		..()
@@ -170,7 +170,7 @@
 			boutput(M, SPAN_COMBAT("<b>You are forced to the ground by \the [src]!</b>"))
 			random_brute_damage(M, rand(0,5))
 			M.changeStatus("stunned", 5 SECONDS)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 			src.attacking = 0
 			return
 

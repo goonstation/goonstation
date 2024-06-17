@@ -135,6 +135,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
+		/client/proc/toggle_tracy_profiling,
 
 		/client/proc/debug_deletions,
 
@@ -247,6 +248,7 @@ var/list/admin_verbs = list(
 		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
+		/client/proc/toggle_hide_offline,
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
@@ -423,7 +425,10 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
-		/client/proc/spawn_all_type
+		/client/proc/spawn_all_type,
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
+		/client/proc/set_round_req_bypass,
 		),
 
 	7 = list(
@@ -689,10 +694,12 @@ var/list/special_pa_observing_verbs = list(
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
+		APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are now invisible."))
 	else
 		src.mob.mouse_opacity = 1
 		src.mob.alpha = 255
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_HIDE_ICONS, "admin_invis")
 		boutput(src, SPAN_NOTICE("You are no longer invisible!"))
 
 /client/proc/admin_observe()
@@ -1038,7 +1045,7 @@ var/list/fun_images = list()
 		if("Heavenly")
 			src.respawn_as_self()
 			var/mob/M = src.mob
-			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 			heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()
@@ -1157,12 +1164,12 @@ var/list/fun_images = list()
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)
-		H.Equip_Rank(jobstring, 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.Equip_Rank(jobstring, 2, skip_manifest = src.holder.skip_manifest) //ZeWaka: joined_late is 2 so you don't get announced.
 		H.update_colorful_parts()
 	qdel(mymob)
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
-			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+			M.apply_flash(animation_duration = 30, knockdown = 5, uncloak_prob = 0, stamina_damage = 250)
 
 /client/proc/respawn_list_players()
 	set name = "Respawn List of Players"
@@ -1354,6 +1361,13 @@ var/list/fun_images = list()
 	if (confirm7 == "Yes")
 		src.set_saturation(1)
 		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
+
+	var/confirm8 = tgui_alert(src.mob, "Disable Global Parallax?", "Disable Global Parallax?", list("Yes", "No"))
+	if (confirm8 == "Yes")
+		parallax_enabled = !parallax_enabled
+
+		for (var/client/client in clients)
+			client.toggle_parallax()
 
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
@@ -1738,7 +1752,7 @@ var/list/fun_images = list()
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
-			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
+			M.apply_flash(animation_duration = 30, knockdown = 5, uncloak_prob = 0, stamina_damage = 250)
 		animate(src.mob, transform = matrix(50, 50, MATRIX_SCALE), time = 15, alpha = 0, easing = CIRCULAR_EASING, flags = EASE_OUT)
 		sleep(1.5 SECONDS)
 
@@ -2238,7 +2252,8 @@ var/list/fun_images = list()
 
 	var/client/C = src.client
 	if (choice in type_procs)
-		call(A, type_procs[choice])()
+		var/procpath/procpath = type_procs[choice]
+		call(A, procpath.name)()
 		src.update_cursor()
 		return
 
@@ -2626,3 +2641,33 @@ var/list/fun_images = list()
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
 	logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
 	logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
+
+/client/proc/region_allocator_panel()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Region Allocator"
+	set desc = "Region Allocator front end panel. Allows you to dynamically allocate and deallocate areas of reserved space."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (isnull(src.holder.region_allocator_panel))
+		src.holder.region_allocator_panel = new
+
+	src.holder.region_allocator_panel.ui_interact(src.mob)
+
+/client/proc/set_round_req_bypass(ckey as text)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Set round req bypass"
+	set desc = "Set a flag for a specific ckey to allow them to bypass round requirements for jobs etc."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/datum/player/player = make_player(ckey)
+	if (!player)
+		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
+		return
+	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+		boutput(src, "Successfully set round requirement bypass flag")
+		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
+	else
+		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))

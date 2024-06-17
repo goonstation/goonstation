@@ -96,7 +96,7 @@
 
 ///control for siphon and associated resonators: receives siphon and resonator data, and controls resonator operation
 /obj/machinery/computer/siphon_control
-	name = "Siphon Systems Control"
+	name = "siphon systems control"
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine1"
 	req_access = list(access_research)
@@ -119,7 +119,7 @@
 	New()
 		..()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, FREQ_HARMONIC_SIPHON)
 
 	receive_signal(datum/signal/signal)
 		if(status & NOPOWER)

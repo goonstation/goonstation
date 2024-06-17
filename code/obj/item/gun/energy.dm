@@ -276,8 +276,11 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/phaser_huge)
-	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
-
+	mats = list("metal" = 15,
+				"metal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 15,
+				"crystal" = 10)
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
@@ -302,8 +305,9 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 ///////////////////////////////////////Rad Crossbow
 TYPEINFO(/obj/item/gun/energy/crossbow)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
-
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
 	desc = "The XIANG|GIESEL Wenshen (瘟神) crossbow favored by many of the Syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Giesel Radiofabrik."
@@ -345,8 +349,9 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
-	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
-
+	mats = list("metal" = 15,
+				"conductive" = 5,
+				"energy" = 5)
 /obj/item/gun/energy/egun
 	name = "energy gun"
 	icon_state = "energy"
@@ -484,8 +489,9 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 ////////////////////////////////////VUVUV
 TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
-
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
 	icon_state = "vuvuzela"
@@ -537,7 +543,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
-	desc = "The versatile XIANG|GIESEL model '三才' with three nonlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1070,8 +1076,9 @@ TYPEINFO(/obj/item/gun_parts)
 
 ///////////////////////////////////////Hunter
 TYPEINFO(/obj/item/gun/energy/plasma_gun)
-	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
-
+	mats = list("metal_superdense" = 7,
+				"crystal" = 13,
+				"energy_high" = 10)
 /obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
 	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
@@ -1127,8 +1134,9 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 TYPEINFO(/obj/item/gun/energy/pickpocket)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
-
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/pickpocket
 	name = "pickpocket grapple gun" // absurdly shitty name
 	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It steals shit."
@@ -1237,8 +1245,9 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 TYPEINFO(/obj/item/gun/energy/alastor)
-	mats = list("MET-2"=15, "CON-2"=10, "POW-2"=10)
-
+	mats = list("metal_dense" = 15,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1269,8 +1278,9 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 
 ///////////////////////////////////////////////////
 TYPEINFO(/obj/item/gun/energy/lawbringer)
-	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
-
+	mats = list("metal" = 15,
+				"conductive_high" = 5,
+				"energy_high" = 5)
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	item_state = "lawg-detain"
@@ -1286,6 +1296,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	rechargeable = 0
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
+	var/emagged = FALSE
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
@@ -1293,7 +1304,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
-		assign_name(M)
+		src.assign_name(M)
 
 		..()
 
@@ -1303,25 +1314,27 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
+			src.assign_name(user)
 		..()
-
 
 	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
-		else
+		if (owner_prints != user.bioHolder.Uid)
 			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+			return
+		else
+			src.assign_name(user)
+
 
 	proc/assign_name(var/mob/M)
+		if (owner_prints)
+			return
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
+				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. You are now the owner!"))
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
@@ -1359,65 +1372,76 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		var/text = msg[1]
 		text = sanitize_talk(text)
 		if (fingerprints_can_shoot(M))
-			switch(text)
-				if ("detain")
-					set_current_projectile(projectiles["detain"])
-					item_state = "lawg-detain"
-					playsound(M, 'sound/vox/detain.ogg', 50)
-					src.toggle_recoil(FALSE)
-				if ("execute", "exterminate")
-					set_current_projectile(projectiles["execute"])
-					current_projectile.cost = 30
-					item_state = "lawg-execute"
-					playsound(M, 'sound/vox/exterminate.ogg', 50)
-					src.toggle_recoil(TRUE)
-				if ("smokeshot","fog")
-					set_current_projectile(projectiles["smokeshot"])
-					current_projectile.cost = 50
-					item_state = "lawg-smokeshot"
-					playsound(M, 'sound/vox/smoke.ogg', 50)
-					src.toggle_recoil(TRUE)
-				if ("knockout", "sleepshot")
-					set_current_projectile(projectiles["knockout"])
-					current_projectile.cost = 60
-					item_state = "lawg-knockout"
-					playsound(M, 'sound/vox/sleep.ogg', 50)
-					src.toggle_recoil(FALSE)
-				if ("hotshot","incendiary")
-					set_current_projectile(projectiles["hotshot"])
-					current_projectile.cost = 60
-					item_state = "lawg-hotshot"
-					playsound(M, 'sound/vox/hot.ogg', 50)
-					src.toggle_recoil(TRUE)
-				if ("bigshot","highexplosive","he")
-					set_current_projectile(projectiles["bigshot"])
-					current_projectile.cost = 170
-					item_state = "lawg-bigshot"
-					playsound(M, 'sound/vox/high.ogg', 50)
-					SPAWN(0.4 SECONDS)
-						playsound(M, 'sound/vox/explosive.ogg', 50)
-					src.toggle_recoil(TRUE)
-				if ("clownshot","clown")
-					set_current_projectile(projectiles["clownshot"])
-					item_state = "lawg-clownshot"
-					playsound(M, 'sound/vox/clown.ogg', 30)
-					src.toggle_recoil(FALSE)
-				if ("pulse", "push", "throw")
-					set_current_projectile(projectiles["pulse"])
-					item_state = "lawg-pulse"
-					playsound(M, 'sound/vox/push.ogg', 50)
-					src.toggle_recoil(FALSE)
+			src.change_mode(M, text)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
 					random_burn_damage(M, 50)
-					M.changeStatus("weakened", 4 SECONDS)
+					M.changeStatus("knockdown", 4 SECONDS)
 					elecflash(src,power=2)
 					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
 					return
 
 		M.update_inhands()
 		UpdateIcon()
+
+	proc/change_mode(var/mob/M, var/text, var/sound = TRUE)
+		switch(text)
+			if ("detain")
+				set_current_projectile(projectiles["detain"])
+				item_state = "lawg-detain"
+				if (sound)
+					playsound(M, 'sound/vox/detain.ogg', 50)
+				src.toggle_recoil(FALSE)
+			if ("execute", "exterminate")
+				set_current_projectile(projectiles["execute"])
+				current_projectile.cost = 30
+				item_state = "lawg-execute"
+				if (sound)
+					playsound(M, 'sound/vox/exterminate.ogg', 50)
+				src.toggle_recoil(TRUE)
+			if ("smokeshot","fog")
+				set_current_projectile(projectiles["smokeshot"])
+				current_projectile.cost = 50
+				item_state = "lawg-smokeshot"
+				if (sound)
+					playsound(M, 'sound/vox/smoke.ogg', 50)
+				src.toggle_recoil(TRUE)
+			if ("knockout", "sleepshot")
+				set_current_projectile(projectiles["knockout"])
+				current_projectile.cost = 60
+				item_state = "lawg-knockout"
+				if (sound)
+					playsound(M, 'sound/vox/sleep.ogg', 50)
+				src.toggle_recoil(FALSE)
+			if ("hotshot","incendiary")
+				set_current_projectile(projectiles["hotshot"])
+				current_projectile.cost = 60
+				item_state = "lawg-hotshot"
+				if (sound)
+					playsound(M, 'sound/vox/hot.ogg', 50)
+				src.toggle_recoil(TRUE)
+			if ("bigshot","highexplosive","he")
+				set_current_projectile(projectiles["bigshot"])
+				current_projectile.cost = 170
+				item_state = "lawg-bigshot"
+				if (sound)
+					playsound(M, 'sound/vox/high.ogg', 50)
+					SPAWN(0.4 SECONDS)
+						playsound(M, 'sound/vox/explosive.ogg', 50)
+				src.toggle_recoil(TRUE)
+			if ("clownshot","clown")
+				set_current_projectile(projectiles["clownshot"])
+				item_state = "lawg-clownshot"
+				if (sound)
+					playsound(M, 'sound/vox/clown.ogg', 30)
+				src.toggle_recoil(FALSE)
+			if ("pulse", "push", "throw")
+				set_current_projectile(projectiles["pulse"])
+				item_state = "lawg-pulse"
+				if (sound)
+					playsound(M, 'sound/vox/push.ogg', 50)
+				src.toggle_recoil(FALSE)
 
 	//Are you really the law? takes the mob as speaker, and the text spoken, sanitizes it. If you say "i am the law" and you in fact are NOT the law, it's gonna blow. Moved out of the switch statement because it that switch is only gonna run if the owner speaks
 	proc/are_you_the_law(mob/M as mob, text)
@@ -1426,7 +1450,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			//you must be holding/wearing the weapon
 			//this check makes it so that someone can't stun you, stand on top of you and say "I am the law" to kill you
 			if (src in M.contents)
-				if (M.job != "Head of Security")
+				if (M.job != "Head of Security" || src.emagged)
 					src.cant_self_remove = 1
 					playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 					logTheThing(LOG_COMBAT, src, "Is not the law. Caused explosion with Lawbringer.")
@@ -1510,13 +1534,17 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		return 0
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+
+		if (src.emagged)
+			src.change_mode(user, pick(src.projectiles), sound = FALSE)
+
 		if (canshoot(user))
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
 			// if (!fingerprints_can_shoot(user))
 			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
-			// 	user.changeStatus("weakened", 4 SECONDS)
+			// 	user.changeStatus("knockdown", 4 SECONDS)
 			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
@@ -1529,6 +1557,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
+		src.emagged = TRUE
 		boutput(user, SPAN_ALERT("Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)"))
 		owner_prints = null
 		return TRUE
@@ -1551,7 +1580,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			continue
 		if (GET_DIST(user,F) > range)
 			continue
-		fireflash(F,0.5,2400)
+		fireflash(F, 0.5, 2400, chemfire = CHEM_FIRE_RED)
 
 // Pulse Rifle //
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
@@ -1577,8 +1606,9 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
-
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_high" = 10)
 /obj/item/gun/energy/wasp
 	name = "mini wasp-egg-crossbow"
 	desc = "A weapon favored by many of the syndicate's stealth apiarists, which does damage over time using swarms of angry wasps. Utilizes a self-recharging atomic power cell to synthesize more wasp eggs. Somehow."
@@ -1645,7 +1675,9 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
 TYPEINFO(/obj/item/gun/energy/optio1)
-	mats = list("iridiumalloy" = 30, "plutonium" = 15, "electrum" = 25)
+	mats = list("iridiumalloy" = 30,
+				"plutonium" = 15,
+				"electrum" = 25)
 /obj/item/gun/energy/optio1
 	name = "\improper Optio I"
 	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
@@ -1662,7 +1694,9 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/signifer2)
-	mats = list("POW-2" = 15, "CON-2" = 15, "MET-3" = 20)
+	mats = list("energy_high" = 15,
+				"conductive_high" = 15,
+				"metal_superdense" = 20)
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
@@ -1724,7 +1758,11 @@ TYPEINFO(/obj/item/gun/energy/signifer2)
 		. = ..()
 
 TYPEINFO(/obj/item/gun/energy/cornicen3)
-	mats = list("iridiumalloy" = 50, "starstone" = 30, "plutonium" = 25, "electrum" = 50, "exoweave" = 5)
+	mats = list("iridiumalloy" = 50,
+				"starstone" = 30,
+				"plutonium" = 25,
+				"electrum" = 50,
+				"exoweave" = 5)
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
 	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
@@ -1775,7 +1813,12 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 		M.update_inhands()
 
 TYPEINFO(/obj/item/gun/energy/vexillifer4)
-	mats = list("iridiumalloy" = 50, "starstone" = 10, "MET-3" = 150, "CRY-2" = 100, "CON-2" = 100, "POW-3" = 50)
+	mats = list("iridiumalloy" = 50,
+				"starstone" = 10,
+				"metal_superdense" = 150,
+				"crystal_dense" = 100,
+				"conductive_high" = 100,
+				"energy_extreme" = 50)
 /obj/item/gun/energy/vexillifer4
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."

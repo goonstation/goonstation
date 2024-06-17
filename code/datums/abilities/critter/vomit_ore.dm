@@ -9,11 +9,12 @@
 	target_anything = TRUE
 
 	cast(atom/T)
+		. = ..()
 		var/mob/living/critter/C = holder.owner
 		if (istype(C, /mob/living/critter/rockworm))
 			var/mob/living/critter/rockworm/worm = C
 			if (worm.eaten < worm.rocks_per_gem)
-				boutput(worm,SPAN_ALERT(" you don't feel full enough to vomit."))
+				boutput(worm, SPAN_ALERT("You don't feel full enough to vomit."))
 				return
 			worm.eaten -= worm.rocks_per_gem
 		var/obj/item/created
@@ -26,4 +27,4 @@
 		ammo.throw_at(T, 32, 4)
 		doCooldown()
 
-		C.visible_message(SPAN_ALERT("<b>[C] vomits up a [ammo]!</b>"))
+		C.visible_message(SPAN_ALERT("<b>[C] vomits up \a [ammo]!</b>"))

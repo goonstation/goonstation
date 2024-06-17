@@ -25,6 +25,11 @@
 	var/rad_immune = FALSE
 	var/breaths_oxygen = TRUE
 
+	attach_organ(mob/living/carbon/M, mob/user)
+		. = ..()
+		if (M.traitHolder?.hasTrait("plasmalungs") && src.breaths_oxygen)
+			src.broken = TRUE
+
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
@@ -87,7 +92,7 @@
 			if (!donor.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				donor.co2overloadtime = world.time
 			else if (world.time - donor.co2overloadtime > 12 SECONDS)
-				donor.changeStatus("paralysis", 4 SECONDS * mult/LUNG_COUNT)
+				donor.changeStatus("unconscious", 4 SECONDS * mult/LUNG_COUNT)
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
 				if (world.time - donor.co2overloadtime > 30 SECONDS) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
@@ -107,7 +112,7 @@
 
 		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
 		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
-			donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
+			donor.changeStatus("unconscious", 5 SECONDS/LUNG_COUNT)
 			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
 				donor.sleeping = max(donor.sleeping, 2)
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
@@ -243,10 +248,18 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
+	safe_co2_max = INFINITY
 
 	New()
 		..()
 		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
+
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
+		breath.carbon_dioxide /= 2
+		breath.oxygen += breath.carbon_dioxide
+		. = ..()
+		breath.oxygen += breath.carbon_dioxide
+		breath.carbon_dioxide = 0
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"

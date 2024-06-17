@@ -933,6 +933,11 @@
 	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	price = PAY_TRADESMAN*2
 
+/datum/commodity/diner/monster
+	comname = "THE MONSTER"
+	comtype = /obj/item/reagent_containers/food/snacks/burger/monsterburger
+	price = PAY_TRADESMAN*2
+
 // sell
 
 /datum/commodity/diner
@@ -943,11 +948,6 @@
 	comname = "Mystery Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/mysteryburger
 	price = PAY_UNTRAINED/10
-
-/datum/commodity/diner/monster
-	comname = "THE MONSTER"
-	comtype = /obj/item/reagent_containers/food/snacks/burger/monsterburger
-	price = PAY_UNTRAINED/2
 
 /datum/commodity/diner/sloppyjoe
 	comname = "Sloppy Joe"
@@ -1421,6 +1421,11 @@
 /datum/commodity/costume/wonka
 	comname = "Victorian Confectionery Factory Owner Costume"
 	comtype = /obj/item/storage/box/costume/crap/wonka
+	price = PAY_TRADESMAN
+
+/datum/commodity/costume/goku
+	comname = "Anime Martial Artist Costume"
+	comtype = /obj/item/storage/box/costume/crap/goku
 	price = PAY_TRADESMAN
 
 /datum/commodity/costume/light_borg //YJHGHTFH's light borg costume
