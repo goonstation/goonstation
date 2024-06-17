@@ -299,6 +299,11 @@
 	req_access = list(access_maxsec)
 	color = SECURITY
 
+/obj/mapping_helper/access/armory
+	name = "Armory access spawn"
+	req_access = list(access_armory)
+	color = SECURITY
+
 /obj/mapping_helper/access/engineering_chief
 	name = "CE access spawn"
 	req_access = list(access_engineering_chief)

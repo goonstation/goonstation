@@ -181,6 +181,20 @@
 	dir = 9
 	},
 /area/mining/magnet)
+"aax" = (
+/obj/machinery/turretid{
+	pixel_y = 28
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/turret_protected/armory_outside)
 "aaz" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -19897,6 +19911,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"fUg" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/turret_protected/armory_outside)
 "fUz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20567,21 +20595,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"geZ" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner,
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "gfk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -23703,20 +23716,6 @@
 	dir = 1
 	},
 /turf/space,
-/area/station/turret_protected/armory_outside)
-"hag" = (
-/obj/machinery/turretid{
-	pixel_y = 28
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "hai" = (
 /obj/stool/chair/yellow{
@@ -29237,6 +29236,20 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"iOl" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_delivery,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "iOn" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
@@ -42000,20 +42013,6 @@
 /obj/machinery/power/tracker/west,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
-"mGp" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
 "mGx" = (
 /obj/railing/green{
 	dir = 1;
@@ -50968,6 +50967,21 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"psu" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner,
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "psA" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/large/burn{
@@ -66853,20 +66867,6 @@
 "ujy" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/storage/tech)
-"uke" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/stripe_delivery,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "ukq" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -104422,11 +104422,11 @@ uAJ
 syV
 oya
 hvR
-geZ
+psu
 rZQ
 wzZ
 jso
-uke
+iOl
 vDP
 pzR
 sEJ
@@ -105028,7 +105028,7 @@ vFX
 neh
 jJd
 jJd
-mGp
+fUg
 jJd
 jJd
 fAb
@@ -105933,7 +105933,7 @@ xYm
 rYD
 rtR
 jJd
-hag
+aax
 kQY
 fiB
 hsP
