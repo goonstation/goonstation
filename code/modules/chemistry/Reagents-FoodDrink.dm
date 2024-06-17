@@ -164,18 +164,8 @@ datum
 
 							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped()
 							if(helddrink && helddrink.reagents.has_reagent("legendairy"))
-								helddrink.take_a_drink(M, M) // forces you to drink from held glasses.
+								helddrink.take_a_drink(M, M) // forces you to drink from held glasses
 								if (probmult(70)) M.say("Wow! Great drink!") // The iconic line!!
-
-						else if (probmult(6))
-							M.say(pick("[coke] [milk] was great.",\
-								"Mmm. I love [coke] [milk]!",\
-								"I liked that drink!",\
-								"Wow!",\
-								"Gee whillickers, that's refreshing!",\
-								"What legendary taste!",\
-								"Gotta get me a sippy of that dranky drank!",\
-								"This really [coke]s my [milk]!"))
 
 					if(TRUE)
 						if (probmult (6))
@@ -184,14 +174,6 @@ datum
 							"Your stomach rolls. Must be because of that [coke] [milk].",\
 							"The vile taste of [coke] [milk] lingers in your throat.",\
 							"You feel nauseous. You resolve to never drink [coke] [milk] again.")))
-						else if (probmult(6))
-							M.say(pick("I don't want any more of that [coke] [milk].",\
-								"I'm not thirsty anymore.",\
-								"I want to go home.",\
-								"I'm tired.",\
-								"I feel sick.",\
-								"[get_area(M)] looks too exciting for me.",\
-								"I want to be on a station more thrilling than [the_station_name]."))
 				..()
 				return
 
