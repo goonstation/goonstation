@@ -1867,7 +1867,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/add_contents(obj/item/W, mob/user = null)
 		src.ensure_contents()
-		src.storage.add_contents(I, user, visible=FALSE)
+		src.storage.add_contents(W, user, visible=FALSE)
 
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
