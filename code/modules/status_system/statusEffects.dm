@@ -2994,7 +2994,8 @@
 			C.cant_control = FALSE
 			C.set_density(1)
 
-			// unspin the kart to be safe
-			C.set_dir(C.drive_dir)
-			C.facing = C.drive_dir
+			// unspin the kart to our last drive direction to be safe
+			if (C.drive_dir)
+				C.set_dir(C.drive_dir)
+				C.facing = C.drive_dir
 
