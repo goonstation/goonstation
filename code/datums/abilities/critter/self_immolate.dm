@@ -23,7 +23,7 @@
 
 		// fireflash(get_turf(fe), 1, checkLos = FALSE, chemfire = CHEM_FIRE_BLUE)
 		var/T = get_turf(fe)
-		new /obj/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+
 
 		var/dir = fe.dir
 		var/T1 = null
@@ -36,8 +36,18 @@
 			T2 = get_step(T, SOUTH)
 		else
 			return 1
-		new /obj/hotspot/chemfire(T1,  CHEM_FIRE_DARKRED)
-		new /obj/hotspot/chemfire(T2,  CHEM_FIRE_DARKRED)
+
+		var/obj/hotspot/chemfire/cf = locate(/obj/hotspot/chemfire) in T
+		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
+			new /obj/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+
+		cf = locate(/obj/hotspot/chemfire) in T1
+		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
+			new /obj/hotspot/chemfire(T1,  CHEM_FIRE_DARKRED)
+
+		cf = locate(/obj/hotspot/chemfire) in T2
+		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
+			new /obj/hotspot/chemfire(T2,  CHEM_FIRE_DARKRED)
 
 		return 0
 

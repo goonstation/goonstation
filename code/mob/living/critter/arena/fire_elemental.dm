@@ -67,7 +67,7 @@
 			T.hotspot_expose(1500,200)
 		var count = 0
 		for (var/obj/hotspot/chemfire/cf in range(3, T))
-			if (count > 3) return
+			if (count > 4) return
 			if (cf.fire_color != CHEM_FIRE_DARKRED) continue
 			if (prob(50)) continue
 			var/obj/projectile/proj = initialize_projectile_pixel_spread(cf, new/datum/projectile/special/homing/fire_heal, src)
@@ -93,7 +93,7 @@
 		return TRUE
 
 
-/datum/projectile/special/fire_heal
+/datum/projectile/special/homing/fire_heal
 	icon_state = "ember"
 	start_speed = 3
 	goes_through_walls = 0
@@ -111,11 +111,25 @@
 
 		..()
 
+	proc/place_fire(hit)
+		var/turf/T = get_turf(hit)
+		if (!T || istype(T, /turf/space))
+			return
+		var/obj/hotspot/chemfire/cf = locate(/obj/hotspot/chemfire) in T
+		if (cf == null)
+			fireflash(T, 0, 1)
+
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		if(istype(hit, /mob/living/critter/fire_elemental))
 			var/mob/living/critter/fire_elemental/fe = hit
 			fe.HealDamage("All", 2, 2, 2)
-			fe.add_stamina(20)
-		..()
+			fe.add_stamina(10)
+			// place_fire(hit)
 
+		else if (istype(hit, /mob))
+			place_fire(hit)
+		else if (istype(hit, /obj))
+			place_fire(hit)
+
+		..()
 
