@@ -26,8 +26,9 @@
 
 
 		var/dir = fe.dir
-		var/T1 = null
-		var/T2 = null
+		var/turf/T1 = null
+		var/turf/T2 = null
+		// Get the turfs to the East/West or North/South of the mob based on the direction its facing
 		if (dir == NORTH || dir == SOUTH)
 			T1 = get_step(T, EAST)
 			T2 = get_step(T, WEST)
