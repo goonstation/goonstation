@@ -322,13 +322,16 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 	src.intcap_door_open = TRUE
 	src.repair_status = ARRAY_INTEG_WELD0
 	if (src.intcap)
+		src.visible_message(SPAN_ALERT("<b>[src]'s internal capacitor is violently ejected!</b>"))
 		var/obj/item/cell/former_cell = src.intcap
 		former_cell.set_loc(get_turf(src))
 		var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
 		former_cell.throw_at(target,5,1)
 		src.intcap = null
+	else
+		src.visible_message(SPAN_ALERT("<b>[src] is severely damaged!</b>"))
 	src.UpdateIcon()
-	src.visible_message(SPAN_ALERT("<b>[src]'s internal capacitor is violently ejected!</b>"))
+
 
 /obj/machinery/communications_dish/transception/attack_hand(mob/user)
 	if(src.intcap && intcap_door_open)
