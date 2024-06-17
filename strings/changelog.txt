@@ -1,4 +1,6 @@
-
+(t)mon jun 17 24
+(u)LeahTheTech
+(+)The PTL is now correctly more dangerous at lower power levels.
 (t)sun jun 16 24
 (u)glowbold
 (p)19529
