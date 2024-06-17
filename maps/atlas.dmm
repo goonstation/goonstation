@@ -4112,10 +4112,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"arb" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "arc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9240,6 +9236,12 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aJG" = (
+/obj/machinery/door_control{
+	id = "chamber_1";
+	layer = 3;
+	name = "Vent Control";
+	pixel_y = -24
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/science/lab)
 "aJI" = (
@@ -9364,10 +9366,8 @@
 	},
 /area/station/chapel/sanctuary)
 "aKi" = (
-/obj/machinery/door_control{
-	id = "chamber_2";
-	name = "Vent Control";
-	pixel_x = 24
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
@@ -10148,11 +10148,6 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aMS" = (
-/obj/machinery/door_control{
-	id = "chamber_1";
-	name = "Vent Control";
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -17313,6 +17308,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"mmr" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "moQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -18254,6 +18255,9 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/gps_waypoint,
+/obj/item/device/radio/beacon{
+	pixel_y = 15
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "oXp" = (
@@ -18917,6 +18921,14 @@
 	},
 /turf/simulated/floor,
 /area/station/ranch)
+"qJI" = (
+/obj/machinery/door_control{
+	id = "chamber_2";
+	name = "Vent Control";
+	pixel_y = -24
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/science/lab)
 "qLQ" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
@@ -63924,8 +63936,8 @@ aGG
 aCs
 aIT
 nUY
-arb
-aJI
+exF
+mmr
 aYN
 aKH
 aaa
@@ -64528,7 +64540,7 @@ aDb
 aCs
 aIR
 aJS
-aJG
+qJI
 aIR
 aIR
 aIR

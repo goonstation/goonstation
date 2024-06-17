@@ -29654,18 +29654,22 @@
 /area/station/science/storage)
 "ccM" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
-"ccN" = (
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
+"ccN" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ccO" = (
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ccP" = (
@@ -57338,6 +57342,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"rWP" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "rWQ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -91124,7 +91132,7 @@ bWo
 bXu
 eOu
 cah
-cak
+ccM
 ccM
 cec
 cfk
@@ -91426,7 +91434,7 @@ bWp
 bHW
 bYS
 gAp
-cak
+rWP
 ccN
 bXs
 bXs

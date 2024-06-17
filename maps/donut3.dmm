@@ -49187,6 +49187,14 @@
 	},
 /turf/space,
 /area/space)
+"oPK" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/stripe_delivery,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "oPO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -70353,6 +70361,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"vmh" = (
+/obj/machinery/light/incandescent/harsh,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "vmk" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -116880,7 +116895,7 @@ gjM
 nxW
 gjM
 nxW
-gjM
+oPK
 hyr
 vDz
 cyo
@@ -117182,7 +117197,7 @@ dXx
 cEz
 mVp
 nxW
-oqm
+vmh
 hyr
 jcb
 cyo

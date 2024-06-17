@@ -36851,6 +36851,9 @@
 /area/station/engine/gas)
 "bOe" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bOf" = (
@@ -40824,8 +40827,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "bWt" = (
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bWu" = (
@@ -50739,10 +50744,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "cqb" = (
-/obj/window/reinforced{
-	dir = 8
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	current_temperature = 150;
+	dir = 8;
+	on = 1
 	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cqc" = (
@@ -64224,6 +64230,10 @@
 /obj/random_item_spawner/med_tool,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
+"uXM" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "uXV" = (
 /obj/grille/steel,
 /obj/lattice{
@@ -131049,7 +131059,7 @@ boM
 cAI
 cqc
 tXG
-cwe
+uXM
 cqb
 cAJ
 cAJ
@@ -131351,7 +131361,7 @@ bls
 bhY
 sgw
 big
-cwe
+bOe
 bOe
 bkF
 bkB

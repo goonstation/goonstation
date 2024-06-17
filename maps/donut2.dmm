@@ -10703,6 +10703,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"bdz" = (
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "bdB" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -34356,10 +34363,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
-"nqw" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "nqI" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/trunk,
@@ -41457,6 +41460,11 @@
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
+"rGf" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/turf/simulated/floor/blue,
+/area/station/science/lab)
 "rGr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47239,10 +47247,10 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "vri" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
 	},
+/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "vrj" = (
@@ -129753,7 +129761,7 @@ lgb
 ajz
 alf
 yha
-nzs
+rGf
 vri
 alf
 snz
@@ -130660,7 +130668,7 @@ ajz
 alf
 tDT
 eDg
-nqw
+nzs
 alf
 xwa
 ahz
@@ -130962,7 +130970,7 @@ alf
 alf
 wuK
 crm
-afy
+bdz
 alf
 lms
 ahA
