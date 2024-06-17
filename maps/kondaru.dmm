@@ -29672,10 +29672,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/hos,
 /obj/deployable_turret/riot/active{
 	dir = 1
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -52617,7 +52617,6 @@
 	name = "Armory";
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -52629,6 +52628,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "sNO" = (
