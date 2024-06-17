@@ -3414,6 +3414,15 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
+"aqA" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 21
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "aqE" = (
 /turf/unsimulated/floor/specialroom/freezer{
 	dir = 1
@@ -9561,6 +9570,15 @@
 /obj/item/scrap,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
+"aRS" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 15
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "aRT" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	locked = 1;
@@ -17664,6 +17682,16 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/catacombs)
+"bsd" = (
+/obj/racing_powerup_spawner,
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 16
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "bse" = (
 /obj/decal/stalagmite{
 	desc = "It's a rock.  A big old silicate-y one.";
@@ -25341,6 +25369,15 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
+"bWL" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 5
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "bWM" = (
 /obj/racing_boosterstrip{
 	dir = 4
@@ -46808,6 +46845,15 @@
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
+"dqU" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 9
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "drz" = (
 /obj/railing/yellow/reinforced{
 	dir = 8
@@ -55094,6 +55140,12 @@
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
+"eny" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 2
+	},
+/turf/unsimulated/floor/grass/leafy,
+/area/sim/racing_track)
 "eow" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -55448,6 +55500,15 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"eGl" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 13
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "eGn" = (
 /obj/adventurepuzzle/triggerable/light/gauntlet,
 /turf/unsimulated/floor/plating,
@@ -56028,6 +56089,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"fjl" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 2
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "fjo" = (
 /turf/unsimulated/wall/auto/lead/white{
 	name = "virtual lead wall"
@@ -56731,6 +56802,16 @@
 	icon_state = "shore-28"
 	},
 /area/titlescreen)
+"fUs" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 9
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "fUS" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -56838,6 +56919,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"gaD" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 10
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "gaE" = (
 /obj/admin_plaque{
 	name = "Vaughn Moon's Office"
@@ -56881,6 +56971,15 @@
 	dir = 6
 	},
 /area/crypt/graveyard)
+"gce" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 20
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "gcn" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
@@ -57577,6 +57676,16 @@
 	},
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/bilo)
+"gFC" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 18
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -57807,6 +57916,16 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"gRf" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 1
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "gRn" = (
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/centcom/offices/walpvrgis)
@@ -57992,6 +58111,15 @@
 	dir = 1
 	},
 /area/owlery/owleryhall)
+"hbp" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 14
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
@@ -58935,6 +59063,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"hZp" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 19
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "hZA" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 6
@@ -59178,6 +59316,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"imT" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 1
+	},
+/turf/unsimulated/floor/grass/leafy,
+/area/sim/racing_track)
 "inE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -59552,6 +59696,15 @@
 /obj/decal/stage_edge/dojo,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"iEe" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 2
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "iEg" = (
 /obj/table/auto,
 /obj/item/disk/data/floppy/lrt/luna_museum{
@@ -59763,6 +59916,15 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"iNF" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 7
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "iNJ" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -59955,6 +60117,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/sim/gunsim/lobby)
+"iWv" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 21
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -60078,6 +60250,15 @@
 	},
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
+"jbH" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 22
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "jbK" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/iomoon/base)
@@ -60747,6 +60928,10 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"jDn" = (
+/obj/racing_boosterstrip,
+/turf/unsimulated/floor/grass/leafy,
+/area/sim/racing_track)
 "jDF" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -61163,6 +61348,15 @@
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"kcr" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 6
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "kcx" = (
 /obj/map/light/cyan,
 /obj/decal/fakeobjects/pipe/sarin{
@@ -62465,6 +62659,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"lgY" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 17
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "lhd" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 4
@@ -62513,6 +62717,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"lkn" = (
+/obj/landmark/vr_race_checkpoint{
+	crossing_joins_race = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "lkO" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
@@ -63431,6 +63644,15 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"mfR" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 9
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "mgq" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -63508,6 +63730,16 @@
 /mob/living/critter/crunched,
 /turf/unsimulated/floor,
 /area/crunch)
+"miz" = (
+/obj/racing_powerup_spawner,
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 10
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "miM" = (
 /obj/decal/fakeobjects/vacuumtape{
 	desc = "A large switchboard of some kind.";
@@ -63532,6 +63764,12 @@
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"mle" = (
+/obj/machinery/computer/vr_race_console,
+/turf/unsimulated/floor/blackwhite{
+	icon_state = "metalfoam"
+	},
+/area/sim/racing_track)
 "mlf" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -63971,6 +64209,16 @@
 	dir = 4
 	},
 /area/centcom)
+"mHQ" = (
+/obj/landmark/vr_race_checkpoint{
+	crossing_joins_race = 1
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "mHR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -65183,6 +65431,16 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
+"nKv" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 22
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "nKN" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -66165,6 +66423,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"oDg" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 6
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "oDT" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 6
@@ -66664,6 +66932,15 @@
 /obj/item/motherboard,
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"peY" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 2
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "pfp" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 8
@@ -66860,6 +67137,16 @@
 	},
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"pli" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 3
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "plw" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -66881,6 +67168,16 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/shuttle/icebase_elevator/upper)
+"pmy" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 3
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "pmE" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -67022,6 +67319,16 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"poE" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 7
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "poK" = (
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
@@ -67519,6 +67826,16 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
+"pKQ" = (
+/obj/racing_powerup_spawner,
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 15
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "pKT" = (
 /obj/securearea{
 	desc = "It looks pretty dangerous in there.";
@@ -68926,6 +69243,15 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qRZ" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 16
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "rainbow_road"
+	},
+/area/sim/racing_track)
 "qSB" = (
 /turf/unsimulated/wall/generic{
 	desc = "It won't budge.";
@@ -69653,6 +69979,15 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"rzd" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 11
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "rzw" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -70362,6 +70697,15 @@
 	tag = "icon-bdoormid1 (EAST)"
 	},
 /area/owlery/staffhall)
+"scl" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 20
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "scU" = (
 /obj/admin_plaque{
 	name = "Pali's Office"
@@ -70414,6 +70758,15 @@
 	icon_state = "shore-12"
 	},
 /area/titlescreen)
+"sfr" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 12
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "sgg" = (
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -71429,6 +71782,16 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/Owlmait2)
+"thw" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 8
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "thx" = (
 /turf/unsimulated/wall/generic{
 	desc = "They're sealed shut.";
@@ -71490,6 +71853,15 @@
 	},
 /turf/space,
 /area/syndicate_station/assault_pod)
+"tjv" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 3
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "tkf" = (
 /obj/machinery/communications_dish{
 	tag = "MAIN_DISH_CENTCOM"
@@ -71791,6 +72163,15 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
+"tCS" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "tDJ" = (
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
@@ -73004,6 +73385,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"uIW" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 4
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "uJb" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -73104,6 +73495,15 @@
 /mob/living/critter/small_animal/cockroach/weak,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"uNs" = (
+/obj/landmark/vr_race_checkpoint{
+	crossing_joins_race = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "uNO" = (
 /obj/item/sticker/gold_star{
 	anchored = 1;
@@ -73261,6 +73661,15 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
+"uUB" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 22
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "uUO" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Bedroom"
@@ -73446,6 +73855,15 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
+"vfk" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "vfY" = (
 /obj/fitness/speedbag/captain,
 /turf/unsimulated/floor/wood/eight{
@@ -73827,6 +74245,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
+"vsR" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "vsX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -73893,6 +74320,25 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
+"vvs" = (
+/obj/racing_powerup_spawner,
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 5
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
+"vvJ" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 5
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "vvS" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-8"
@@ -74425,6 +74871,15 @@
 	dir = 1
 	},
 /area/centcom)
+"vTR" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "vTT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -74608,6 +75063,15 @@
 /obj/storage/secure/closet/engineering/engineer,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"wdt" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 7
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "wdK" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -75706,6 +76170,15 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"wYD" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "wZe" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -75820,6 +76293,15 @@
 	},
 /turf/unsimulated/floor/circuit/white,
 /area/centcom/offices/bilo)
+"xfP" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 6
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "xfY" = (
 /obj/lattice{
 	dir = 4;
@@ -75827,6 +76309,16 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"xgq" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 10
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
@@ -76493,6 +76985,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"xCa" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "xCw" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -76537,6 +77039,16 @@
 	opacity = 0
 	},
 /area/centcom/lounge)
+"xEY" = (
+/obj/racing_powerup_spawner,
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 11
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_track)
 "xFI" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -77116,6 +77628,16 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"ycN" = (
+/obj/landmark/vr_race_checkpoint{
+	checkpoint_id = 5
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_2"
+	},
+/area/sim/racing_track)
 "ycV" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -105941,7 +106463,7 @@ bOA
 bOA
 bOA
 bOA
-bOA
+pli
 bOA
 bOA
 bOA
@@ -106243,7 +106765,7 @@ bOB
 bOB
 bOB
 bOB
-bOB
+tjv
 bOB
 bOB
 bOB
@@ -106545,7 +107067,7 @@ bOB
 bOB
 bOB
 bOB
-bOB
+tjv
 bOB
 bOB
 bOB
@@ -106847,7 +107369,7 @@ bOB
 bOB
 bOB
 bOD
-bOD
+pmy
 bOD
 bOD
 bOD
@@ -107748,10 +108270,10 @@ cnw
 cnw
 aaa
 bXs
-bOi
-bOB
-bOB
-bPy
+tCS
+vfk
+vfk
+uIW
 bXs
 bXs
 bXs
@@ -108060,14 +108582,14 @@ bOA
 bOA
 bRS
 bUm
-bMc
-bMc
-bOi
-bOB
-bOB
-bPy
-bMc
-bMc
+eny
+eny
+iEe
+peY
+peY
+fjl
+eny
+eny
 bXs
 bMc
 bMc
@@ -108075,7 +108597,7 @@ bMc
 bMc
 bMc
 bMc
-bMc
+jDn
 bMc
 bMc
 bMc
@@ -108984,7 +109506,7 @@ bMc
 bMc
 bMc
 bMc
-bMc
+imT
 cil
 aaa
 cnw
@@ -109285,7 +109807,7 @@ bMc
 bMc
 bMc
 bMc
-bMc
+imT
 bMc
 cil
 aaa
@@ -109565,10 +110087,10 @@ bXs
 bXs
 bXs
 bXs
-bOi
-bOC
-bOB
-bPy
+vvJ
+vvs
+bWL
+ycN
 bXs
 bMc
 bMc
@@ -109586,7 +110108,7 @@ bMc
 bMc
 bMc
 bMc
-bMc
+imT
 bMc
 bMc
 cil
@@ -109887,7 +110409,7 @@ bMc
 bMc
 bMc
 bMc
-bMc
+imT
 bMc
 bMc
 bMc
@@ -110188,7 +110710,7 @@ bOA
 bOA
 bOA
 bOA
-bOA
+gRf
 bRS
 bMc
 bMc
@@ -110489,7 +111011,7 @@ bOB
 bOB
 bOB
 bOB
-bOB
+wYD
 bOB
 bPy
 bMc
@@ -110790,7 +111312,7 @@ bOB
 bOB
 bOB
 bOB
-bOB
+wYD
 bOB
 bOB
 bPy
@@ -111091,7 +111613,7 @@ bOD
 bOD
 bOD
 bOD
-bOD
+xCa
 bOB
 bOB
 bOB
@@ -111392,7 +111914,7 @@ bMc
 bMc
 bMc
 bMc
-bMc
+imT
 bMc
 bOi
 bOB
@@ -111674,10 +112196,10 @@ cnw
 cnw
 aaa
 bXs
-bOi
-bOB
-bOB
-bPy
+xfP
+kcr
+kcr
+oDg
 bXs
 bXs
 bXs
@@ -114090,10 +114612,10 @@ cnw
 cnw
 aaa
 bXs
-bOi
-bOB
-bOB
-bPy
+iNF
+wdt
+wdt
+poE
 uQX
 cbT
 cbV
@@ -114716,10 +115238,10 @@ pkE
 cbs
 cgu
 cbt
-bOi
-bOB
-bOB
-bPy
+lkn
+uNs
+uNs
+mHQ
 tMB
 cka
 ckr
@@ -115017,7 +115539,7 @@ chE
 eeF
 cbt
 cgu
-cbt
+mle
 cja
 cjG
 cjG
@@ -116506,10 +117028,10 @@ oum
 oum
 aaa
 bXs
-bOi
-bOB
-bOB
-bPy
+vTR
+vsR
+vsR
+thw
 cbn
 cbV
 ccB
@@ -118038,10 +118560,10 @@ bXs
 bXs
 bXs
 bMU
-bOi
-bOB
-bOB
-bPy
+uUB
+jbH
+jbH
+nKv
 cin
 ckH
 ckH
@@ -118620,10 +119142,10 @@ bYr
 kxa
 aaa
 bXs
-bOi
-bOB
-bOB
-bPy
+dqU
+mfR
+mfR
+fUs
 hCh
 hCh
 npm
@@ -119548,7 +120070,7 @@ bOA
 bOA
 bOA
 bOA
-bOB
+aqA
 bOB
 bOB
 bPy
@@ -119851,7 +120373,7 @@ bOB
 bOB
 bOB
 bOB
-bOB
+aqA
 bOB
 bPy
 ckI
@@ -120154,7 +120676,7 @@ bOB
 bOB
 bOB
 bOB
-bOB
+aqA
 bPy
 ckI
 bYa
@@ -120435,7 +120957,7 @@ bXs
 bOj
 bOB
 bOB
-bPy
+xgq
 bXs
 bXs
 bXs
@@ -120457,7 +120979,7 @@ bOD
 bOD
 bOD
 bOD
-bRT
+iWv
 ckI
 bYb
 ckH
@@ -120736,7 +121258,7 @@ dTe
 bXs
 bOB
 bOB
-bOB
+gaD
 bOB
 bOB
 bOB
@@ -121037,7 +121559,7 @@ dTe
 dTe
 bXs
 bOB
-bOB
+gaD
 bOB
 bOB
 bOB
@@ -121338,7 +121860,7 @@ bOB
 chC
 bXs
 bXs
-bOB
+gaD
 bOB
 bOB
 bOB
@@ -121349,7 +121871,7 @@ bOC
 bOB
 bOB
 bOB
-bOB
+rzd
 bMU
 bOi
 bOB
@@ -121639,7 +122161,7 @@ dTe
 dTe
 bOB
 bXg
-bOC
+miz
 bXg
 bXg
 bOB
@@ -121650,7 +122172,7 @@ bOB
 bOB
 bOB
 bOB
-bOC
+xEY
 bOB
 bMU
 bOi
@@ -121951,7 +122473,7 @@ bUm
 bUm
 bUm
 bOB
-bOB
+rzd
 bOB
 bOB
 bMU
@@ -122252,17 +122774,17 @@ bOB
 bXg
 bXg
 bOB
-bOB
+rzd
 bOB
 bOB
 bOB
 bMU
-bOi
-bOB
-bOB
-bOB
-bOB
-bOB
+gce
+scl
+scl
+scl
+scl
+scl
 bUm
 kEJ
 sQB
@@ -123762,10 +124284,10 @@ bVU
 bVT
 aaa
 bUm
-bOB
-bOB
-bOB
-bOB
+sfr
+sfr
+jbH
+sfr
 bUm
 cfs
 cfR
@@ -125876,10 +126398,10 @@ bVU
 bVT
 aaa
 bUm
-bOB
-bOB
-bOB
-bOB
+eGl
+eGl
+eGl
+eGl
 bUm
 cfs
 cfs
@@ -126187,7 +126709,7 @@ cfs
 cfs
 cfs
 cfS
-cfS
+hZp
 bUm
 bUm
 bUm
@@ -126488,7 +127010,7 @@ bUm
 cfs
 cfs
 cfS
-cfS
+hZp
 cfS
 cfS
 cby
@@ -126789,9 +127311,9 @@ bOB
 bUm
 cfs
 cfS
+hZp
 cfS
 cfS
-cfS
 cby
 cby
 cby
@@ -126804,7 +127326,7 @@ cby
 cby
 cby
 cfS
-cfS
+gFC
 cfS
 bUm
 ccg
@@ -127090,9 +127612,9 @@ bOB
 bOB
 bUm
 cfS
+hZp
 cfS
 cfS
-cfS
 cby
 cby
 cby
@@ -127105,7 +127627,7 @@ cby
 cby
 cby
 cfS
-cfS
+gFC
 cfS
 cfs
 bUm
@@ -127406,7 +127928,7 @@ cby
 cby
 cby
 cfS
-cfS
+gFC
 cfS
 cfs
 cfs
@@ -127688,10 +128210,10 @@ aaa
 aaa
 aaa
 bUm
-bOB
-bOB
-bOB
-bOB
+hbp
+hbp
+hbp
+hbp
 bUm
 bUm
 bUm
@@ -127707,7 +128229,7 @@ bUm
 bUm
 bUm
 bUm
-cfS
+gFC
 cfS
 cfs
 cfs
@@ -128602,7 +129124,7 @@ bUm
 cby
 cby
 cby
-cby
+aRS
 bXQ
 cby
 cby
@@ -128904,18 +129426,18 @@ cby
 cby
 cby
 cby
+aRS
 cby
 cby
 cby
 cby
 cby
-cby
-cby
+qRZ
 cby
 bUm
 bUm
 cby
-cfS
+lgY
 cfS
 cfS
 cfS
@@ -129212,12 +129734,12 @@ bUm
 cby
 bXQ
 cby
+qRZ
 cby
 cby
 cby
 cby
-cby
-cfS
+lgY
 cfS
 cfS
 cfS
@@ -129514,12 +130036,12 @@ bUm
 bUm
 bUm
 cby
-cby
+qRZ
 cby
 bXQ
 cby
 cby
-cfS
+lgY
 bUm
 bUm
 cfS
@@ -129823,9 +130345,9 @@ bUm
 bUm
 bUm
 bUm
-cfS
-cfS
-cfS
+lgY
+lgY
+lgY
 bUm
 ccg
 ccg
@@ -130112,14 +130634,14 @@ cby
 bXQ
 bXV
 cby
+aRS
 cby
 cby
 cby
 cby
 cby
 cby
-cby
-bXV
+bsd
 cby
 cby
 cby
@@ -130414,14 +130936,14 @@ bXQ
 cby
 cby
 cby
+aRS
 cby
 cby
 cby
 cby
 cby
 cby
-cby
-cby
+qRZ
 cby
 cby
 cby
@@ -130716,14 +131238,14 @@ cby
 bXQ
 cby
 cby
-bXV
+pKQ
 cby
 cby
 cby
 cby
 bXV
 cby
-cby
+qRZ
 cby
 cby
 cby
@@ -131018,14 +131540,14 @@ bXQ
 cby
 cby
 cby
+aRS
 cby
 cby
 cby
 cby
 cby
 cby
-cby
-cby
+qRZ
 cby
 cby
 cby
@@ -131320,14 +131842,14 @@ cby
 bXQ
 cby
 cby
-cby
+aRS
 cby
 cby
 bXV
 cby
 cby
 cby
-cby
+qRZ
 cby
 cby
 cby

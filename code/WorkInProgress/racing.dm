@@ -296,27 +296,20 @@
 
 /obj/machinery/computer/vr_race_console/ui_static_data(mob/user)
 	. = ..()
-	. = list("Active" = race.active)
-	for (var/datum/vr_race_progress/P in race_results)
-		var/position_text = "[P.race_position]"
-		if (P.finished)
-			switch(copytext("[P.race_position]",-1))
-				if("1")
-					position_text += "st"
-				if("2")
-					position_text += "nd"
-				if("3")
-					position_text += "rd"
-				else
-					position_text += "th"
+	// last race's data
+	.["race_results" ] = race_results
+/obj/machinery/computer/vr_race_console/ui_data(mob/user)
+	. = ..()
+	. = list("active" = race.active)
 
-		// did they finish the race at all
-		.["race_results" ] += list(
-		list(
-		"driver" = P.holder?.driver ? P.holder.driver : "N/A",
-		"place" = P.finished ? P.race_position : "DNF",
-		"times" = P.lap_start_times
-		))
+/obj/machinery/computer/vr_race_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.) return
+	switch(action)
+		if ("start_race")
+			src.start_race()
+		if ("stop_race")
+			src.end_race()
 
 /obj/machinery/computer/vr_race_console/attack_hand(mob/user)
 	if(..())
@@ -356,7 +349,7 @@
 
 	race.start_race()
 /obj/machinery/computer/vr_race_console/proc/end_race()
-	src.visible_message("The race has been forcibly ended.")
+	src.visible_message("The race has been stopped.")
 	race.end_race()
 
 /// this holds all race progress for a given kart participating in a race
@@ -432,8 +425,10 @@
 				P.checkpoints_crossed = 0
 				P.lap_start_times += TIME
 			else
-				// RESETTING THESE FOR DEBUG
+
 				P.finished = TRUE
+				// so the lap time code can calculate the final lap
+				P.lap_start_times += TIME
 				// they completed the race, start winding things up
 				SPAWN(time_till_end)
 					end_race()
@@ -471,19 +466,47 @@
 		if (!race_console)
 			return
 
-		var/list/sorted_by_place = sortList(participants)
-		for(var/i=1, i<length(participants), i++ )
+		// take a snapshot and build the data list
+		var/list/sorted_by_place = list()
+		for(var/i=1, i<=length(participants), i++ )
 			for (var/datum/vr_race_progress/P in participants)
 				if (i == P.race_position) sorted_by_place += P
 
 		race_console.race_results = sorted_by_place
+		for (var/datum/vr_race_progress/P in sorted_by_place)
+			var/position_text = "[P.race_position]"
+			if (P.finished)
+				switch(copytext("[P.race_position]",-1))
+					if("1")
+						position_text += "st"
+					if("2")
+						position_text += "nd"
+					if("3")
+						position_text += "rd"
+					else
+						position_text += "th"
 
+			var/list/times_list = list()
 
+			// length of 1 is index 2 - 1, length of 2 is index 3 - 2, length of 3 is index 4 - index 3
+			for(var/lap=1, lap<length(P.lap_start_times), lap++)
+				times_list += formatTimeText(P.lap_start_times[lap+1]-P.lap_start_times[lap])
+
+			// did they finish the race at all
+			. += list(
+			list(
+			"driver" = P.holder?.driver ? P.holder.driver : "N/A",
+			"place" = P.finished ? position_text : "DNF",
+			"times" = times_list
+			))
 
 
 
 	proc/end_race()
 		active = FALSE
+		// update the console
+		if (race_console)
+			race_console.race_results = on_race_end()
 		// start resetting
 		for (var/datum/vr_race_progress/P in participants)
 			P.in_race = FALSE
