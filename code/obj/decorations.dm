@@ -437,7 +437,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			response.transmission_method = TRANSMISSION_RADIO
 			response.data["address_1"] = signal.data["sender"]
 			response.data["command"] = "ping_reply"
-			response.data["device"] = "PNET_SHRUB"
+			response.data["device"] = "WNET_SHRUB"
 			response.data["netid"] = src.net_id
 			response.data["sender"] = src.net_id
 			SPAWN(0.5 SECONDS)
