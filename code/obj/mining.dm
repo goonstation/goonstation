@@ -2099,11 +2099,14 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 						qdel (src)
 						return
 				else
-					if (istype(target, /turf/simulated/wall/auto/asteroid/) && !src.hacked)
+					if (\
+						(\
+							istype(target, /turf/simulated/wall/auto/asteroid/) ||\
+							istype(target, /obj/geode) && istypes(get_turf(target), list(/turf/space, /turf/simulated/floor/plating/airless/asteroid))\
+						) && !src.hacked)
 						boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 						user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 						src.icon_state = "bcharge2"
-						user.drop_item()
 
 						// Yes, please (Convair880).
 						if (src?.hacked)
@@ -2111,8 +2114,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 						user.set_dir(get_dir(user, target))
 						user.drop_item()
-						var/t = (isturf(target) ? target : target.loc)
-						step_towards(src, t)
+						var/turf/T = get_turf(target)
+						src.set_loc(T)
+						src.anchored = ANCHORED
+						step_towards(src, T)
 
 						SPAWN( src.det_time )
 							concussive_blast()
@@ -2182,6 +2187,9 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 			if(GET_DIST(src,C) <= src.expl_heavy)
 				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
+
+		for (var/obj/geode/geode in get_turf(src))
+			geode.ex_act(2, null, 10 * src.expl_heavy)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2419,6 +2427,16 @@ TYPEINFO(/obj/item/cargotele)
 
 	attack_self(var/mob/user as mob)
 		mining_scan(get_turf(user), user, 6)
+
+	afterattack(obj/geode/geode, mob/user, reach, params)
+		if (!istype(geode))
+			return ..()
+		var/text = "----------------------------------<br>"
+		text += "<B><U>Geological Report:</U></B><br>"
+		text += "<b>Structural composition: [istype(geode, /obj/geode/fluid) ? "liquid" : "hollow"]</b><br>"
+		text += "<b>Explosive resistance estimate:</b> [geode.break_power] Kiloblasts<br>"
+		boutput(user, text)
+
 
 /proc/mining_scan(var/turf/T, var/mob/living/L, var/range)
 	if (!istype(T) || !istype(L))
@@ -2916,3 +2934,110 @@ TYPEINFO(/obj/item/ore_scoop)
 
 	ex_act(severity)
 		return
+
+ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
+/obj/geode
+	name = "rock geode"
+	desc = "A very tough looking lump of rock."
+	icon = 'icons/obj/geodes.dmi'
+	icon_state = "pale"
+	density = TRUE
+	var/break_power = 10
+
+	proc/break_open()
+		src.icon_state = "[initial(src.icon_state)]-broken"
+		src.visible_message(SPAN_ALERT("[src] breaks open!"))
+		src.desc = "Half of a broken open rock geode."
+		for (var/atom/movable/AM as anything in src.contents) //let admins hide goodies in here
+			AM.set_loc(src.loc)
+
+	ex_act(severity, last_touched, power, datum/explosion/explosion)
+		var/exp_power = (power / 2) ** 2 || (4-clamp(severity, 1, 3))*2 //TODO: figure out if this even makes sense and generalize it if it does
+		if (exp_power >= src.break_power)
+			src.break_open()
+
+/obj/geode/crystal
+	icon_state = "pale"
+	var/crystal_path = /obj/item/raw_material/molitz
+	var/amount = 5
+
+	New()
+		..()
+		src.set_crystal(src.crystal_path)
+
+	proc/get_crystal_material()
+		RETURN_TYPE(/datum/material)
+		var/obj/item/item_path = src.crystal_path
+		return getMaterial(initial(item_path.default_material))
+
+	proc/set_crystal(crystal_path)
+		src.crystal_path = crystal_path
+		var/image/crystals = image('icons/obj/geodes.dmi', "crystals")
+		crystals.color = src.get_crystal_material().getColor()
+		src.AddOverlays(crystals, "crystals")
+
+	break_open()
+		for (var/i in 1 to src.amount)
+			new src.crystal_path(src)
+		var/image/crystals = image('icons/obj/geodes.dmi', "crystals-broken")
+		crystals.color = src.get_crystal_material().getColor()
+		crystals.alpha = 200
+		src.AddOverlays(crystals, "crystals")
+		..()
+
+	claretine
+		amount = 6
+		crystal_path = /obj/item/raw_material/claretine
+
+	molitz_b
+		crystal_path = /obj/item/raw_material/molitz_beta
+
+	starstone
+		icon_state = "dark"
+		crystal_path = /obj/item/raw_material/starstone
+		amount = 1
+		New()
+			..()
+			src.break_power = rand(20, 40)
+
+	uqil
+		icon_state = "red"
+		crystal_path = /obj/item/raw_material/uqill
+		New()
+			..()
+			src.break_power = rand(7, 15) //small chance you can break it with just a concussive charge
+
+
+
+/obj/geode/fluid
+	var/reagent_id = null
+	New()
+		..()
+		var/amt = rand(100, 400)
+		src.create_reagents(amt)
+		if (src.reagent_id)
+			src.reagents.add_reagent(src.reagent_id, amt)
+		src.AddComponent(/datum/component/reagent_overlay, 'icons/obj/geodes.dmi', "trickles", 1)
+
+	break_open()
+		var/obj/reagent_dispensers/geode/fluid_shell = new(src.loc, src.reagents.total_volume)
+		src.reagents.trans_to(fluid_shell, src.reagents.total_volume)
+		src.visible_message(SPAN_ALERT("[src] breaks open!"))
+		qdel(src)
+
+	oil
+		reagent_id = "oil"
+
+
+/obj/reagent_dispensers/geode
+	name = "broken geode"
+	icon = 'icons/obj/geodes.dmi'
+	icon_state = "pale-broken"
+
+	special_desc()
+		return "Half of a broken open rock geode[src.reagents.total_volume > 0 ? ", filled with some kind of liquid" : "."]"
+
+	New(loc, capacity)
+		src.capacity = capacity || 400
+		..()
+		src.AddComponent(/datum/component/reagent_overlay, 'icons/obj/geodes.dmi', "geode", 4)
