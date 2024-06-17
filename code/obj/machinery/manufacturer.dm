@@ -864,7 +864,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.storage.add_contents(M, visible = FALSE)
+				src.add_contents(M)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
@@ -891,7 +891,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.storage.add_contents(W, visible = FALSE)
+				src.add_contents(W)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -913,7 +913,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.storage.add_contents(C, visible = FALSE)
+				src.add_contents(C)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -936,7 +936,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.storage.add_contents(W, visible = FALSE)
+				src.add_contents(W)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == DISMANTLE_NONE)
@@ -1021,7 +1021,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.storage.add_contents(W, user, visible = FALSE)
+			src.add_contents(W)
 
 		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
@@ -1212,7 +1212,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!istype(M,src.base_material_class))
 					continue
 				src.get_contents() // Ensure contents exist first
-				src.storage.add_contents(M, user = user, visible = FALSE)
+				src.add_contents(M, user)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1229,7 +1229,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.storage.add_contents(M, user = user, visible = FALSE)
+				src.add_contents(M, user)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
@@ -1861,11 +1861,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.manudrive = null
 		should_update_static = TRUE
 
+	proc/ensure_contents()
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece))
+
+	proc/add_contents(obj/item/W, mob/user = null)
+		src.ensure_contents()
+		src.storage.add_contents(I, user, visible=FALSE)
+
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
 	proc/get_contents()
-		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece))
+		src.ensure_contents()
 		var/list/storage_contents = src.storage.get_contents()
 		for (var/obj/item/I as anything in storage_contents)
 			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
@@ -1915,7 +1922,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/mat_path in src.free_resources)
 			var/obj/item/material_piece/P = new mat_path
 			P.amount = src.free_resources[mat_path]
-			src.storage.add_contents(P, visible = FALSE)
+			src.add_contents(P)
 
 		free_resources = list()
 
