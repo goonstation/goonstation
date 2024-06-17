@@ -13,9 +13,9 @@
 
 
 		var/mob/fe = holder.owner
-		boutput(holder.owner, SPAN_ALERT("[fe.get_damage()] damage."))
+		// boutput(holder.owner, SPAN_ALERT("[fe.get_damage()] damage."))
 		if (fe.get_damage() < 100)
-			boutput(fe, SPAN_ALERT("You must be in perfect health to self-immolate!"))
+			boutput(fe, SPAN_ALERT("You must be in good health to self-immolate!"))
 			return 1
 
 		fe.TakeDamage("All", 50, 0, 0, DAMAGE_BLUNT)

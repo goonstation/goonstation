@@ -65,11 +65,14 @@
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1500,200)
+		var count = 0
 		for (var/obj/hotspot/chemfire/cf in range(3, T))
+			if (count > 3) return
 			if (cf.fire_color != CHEM_FIRE_DARKRED) continue
 			if (prob(50)) continue
 			var/obj/projectile/proj = initialize_projectile_pixel_spread(cf, new/datum/projectile/special/homing/fire_heal, src)
 			proj.launch()
+			count += 1
 			if(prob(30))
 				break
 
@@ -90,7 +93,7 @@
 		return TRUE
 
 
-/datum/projectile/special/homing/fire_heal
+/datum/projectile/special/fire_heal
 	icon_state = "ember"
 	start_speed = 3
 	goes_through_walls = 0
@@ -113,14 +116,6 @@
 			var/mob/living/critter/fire_elemental/fe = hit
 			fe.HealDamage("All", 2, 2, 2)
 			fe.add_stamina(20)
-			if (!P.special_data["returned"])
-				P.travelled = 0
-				P.max_range = 4
-				P.special_data["returned"] = TRUE
-
 		..()
 
-	on_end(var/obj/projectile/P)
-		if ((P.special_data["returned"]))
-			..()
-		..()
+
