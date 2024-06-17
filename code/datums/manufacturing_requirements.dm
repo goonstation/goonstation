@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	name = "Radioactive"
 	id = "energy_property"
 	property_id = "radioactive"
-	property_threshold = 3
+	property_threshold = 2
 
 /datum/manufacturing_requirement/match_property/energy/high
 	name = "Highly Radioactive"

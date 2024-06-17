@@ -1458,7 +1458,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
-		M.mind?.set_miranda(PROC_REF(inspector_miranda))
+		M.mind?.set_miranda(list(PROC_REF(inspector_miranda)))
 		return
 
 /datum/job/special/random/diplomat

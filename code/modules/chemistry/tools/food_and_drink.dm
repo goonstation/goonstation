@@ -44,6 +44,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	proc/ant_safe()
 		if (!isturf(src.loc))
 			return FALSE
+		if (isrestrictedz(src.loc.z))
+			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
