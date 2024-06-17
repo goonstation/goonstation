@@ -1,4 +1,62 @@
-
+(t)mon jun 17 24
+(u)LeahTheTech
+(+)The PTL is now correctly more dangerous at lower power levels.
+(t)sun jun 16 24
+(u)glowbold
+(p)19529
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The Buttes Motel has installed door locks.
+(u)Glamurio (Ryou)
+(p)19398
+(e)🆕🗺|C-Feature, A-Mapping
+(*)NT put aside some funding for an escape pod bay in Clarion.
+(u)Retrino
+(p)19105
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Anti-bioweapon crates have been moved to their proper homes in the armory.
+(u)JORJ949
+(p)19426
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate now offers a cheaper version of the radio upgrade granting access to the syndicate frequency.
+(u)Glamurio (Ryou)
+(p)19508
+(e)🪲💅|C-Bug, C-QoL
+(+)You can now choose not to have a middle name in character creation by leaving it empty.
+(t)sat jun 15 24
+(u)Skeletonman0
+(p)19513
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The VR Go-Karts have been serviced and are ready for their next race.
+(u)Carton171
+(p)19481
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Players will once again lose their shit upon being filled with/covered in ants
+(u)Lord_Earthfire
+(p)19521
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The bowling kit's cost was reduced to 6, down from 7.
+(+)Bowling balls from the bowling kit now deal additional damage when thrown or in melee while wearing the bowling suit.
+(t)fri jun 14 24
+(u)LeahTheTech
+(p)19525
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Traitor bowling balls thrown while wearing the bowling suit now throw people flying and can continue through multiple targets.
+(u)Azrun
+(p)19503
+(e)⚖🧛💪|C-Balance, A-Gamemodes, A-Traits
+(*)Salvagers no longer receive selected character traits.  They are truly just someone else entirely.
+(t)wed jun 12 24
+(u)glowbold
+(p)19423
+(e)🔄📦|C-Rework, A-Game-Objects
+(*)The authentication disk can be used on the escape shuttle console to immediately launch it.
+(u)Ilysen
+(p)18889
+(e)🎨🔎💅⚙|C-Sprites, C-Code-Quality, C-QoL, A-Internal
+(+)Wraith possession now shows an action bar to the wraith and all ghosts, and has a status effect showing its duration.
+(+)After a trickster wraith finishes possessing someone, they will be moved to that person's location.
+(+)Ghosts are now alerted when a trickster wraith possesses someone, or ends their possession.
+(+)Ghosts are now alerted when a poltergeist spawns in, so people are explicitly aware if they didn't get the role!
 (t)mon jun 10 24
 (u)Zamujasa
 (e)🪲|C-Bug

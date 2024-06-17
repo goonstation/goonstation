@@ -659,7 +659,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	icon_state = "bong"
 	fluid_overlay_states = 8
 	container_style = "bong"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 	filled
 

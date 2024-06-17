@@ -226,7 +226,6 @@ export class RestrictedInput extends Component {
         this.setEditing(false);
         e.target.value = this.props.value;
         e.target.blur();
-        return;
       }
     };
   }
