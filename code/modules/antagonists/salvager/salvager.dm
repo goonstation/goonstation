@@ -15,7 +15,7 @@
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
-
+		H.traitHolder.removeAll()
 		// You are... no one...
 		randomize_look(H, change_gender=FALSE)
 		H.bioHolder.mobAppearance.flavor_text = null

@@ -3154,16 +3154,6 @@
 	dir = 6
 	},
 /area/station/crew_quarters/quarters)
-"alP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "alQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
@@ -7176,16 +7166,6 @@
 /obj/item/decoration/ashtray{
 	pixel_x = 8;
 	pixel_y = 6
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/security/main)
-"aBr" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/stool/chair{
-	dir = 8
 	},
 /obj/window/reinforced{
 	dir = 1
@@ -29652,26 +29632,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"ccM" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
-"ccN" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
-"ccO" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "ccP" = (
 /obj/machinery/dispenser{
 	o2tanks = 5;
@@ -42383,15 +42343,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
-"gdD" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
-	},
-/obj/mapping_helper/access/sec_lockers,
-/obj/item/gun/flamethrower/assembled/loaded,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/security/main)
 "geM" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -43329,6 +43280,13 @@
 /obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"gRy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "gRz" = (
 /obj/disposalpipe/segment,
 /obj/machinery/alarm{
@@ -44367,6 +44325,13 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
+"hIP" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "hJj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -45256,6 +45221,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"ite" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "itI" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -45404,6 +45376,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
+"izq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "iBz" = (
 /obj/machinery/atmospherics/unary/tank,
 /turf/simulated/floor/grey,
@@ -51659,6 +51639,35 @@
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/captain)
+"nEK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_y = 13
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "nEP" = (
 /obj/item/device/radio/intercom/medical{
 	dir = 1
@@ -53727,6 +53736,23 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
+"phD" = (
+/obj/decal/stripe_caution,
+/obj/table/auto,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "phW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62341,6 +62367,19 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"vNK" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
 "vNU" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -62700,6 +62739,12 @@
 /obj/decal/poster/wallsign/no_smoking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
+"wcb" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "wcq" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -64918,26 +64963,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/hotloop)
-"xOA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -10;
-	pixel_y = 8
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 11;
-	pixel_y = 3
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/security/main)
 "xOJ" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -91132,8 +91157,8 @@ bWo
 bXu
 eOu
 cah
-ccM
-ccM
+hIP
+hIP
 cec
 cfk
 pNY
@@ -91435,7 +91460,7 @@ bHW
 bYS
 gAp
 rWP
-ccN
+wcb
 bXs
 bXs
 cal
@@ -91737,7 +91762,7 @@ bHW
 bYT
 huq
 cak
-ccO
+ite
 ced
 cfl
 cgD
@@ -94349,8 +94374,8 @@ adC
 adC
 adC
 adC
-nxc
 dHa
+eFW
 eFW
 eFW
 eFW
@@ -94651,8 +94676,8 @@ adC
 adC
 adC
 adC
-nxc
 gsU
+nxc
 nxc
 nxc
 nxc
@@ -94673,8 +94698,8 @@ shp
 qEI
 jIz
 sDK
-xOA
-gdD
+avd
+phD
 awK
 xra
 azI
@@ -94953,11 +94978,11 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 fju
 acU
+vjb
 vjb
 vjb
 vjb
@@ -94980,7 +95005,7 @@ pSF
 ant
 ayj
 azJ
-aBr
+vNK
 aCD
 aDT
 pGt
@@ -95255,10 +95280,10 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 acp
+acV
 acV
 acV
 acV
@@ -95557,13 +95582,13 @@ adC
 adC
 adC
 adC
-nxc
 wwh
 eFW
 act
 acV
 foS
 jYE
+izq
 fWA
 nPU
 niY
@@ -95859,12 +95884,12 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 act
 acV
 sgN
+adE
 adE
 adE
 adE
@@ -96161,12 +96186,12 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 act
 acV
 mMm
+adE
 adE
 adE
 adE
@@ -96463,7 +96488,6 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 isQ
 act
@@ -96472,7 +96496,8 @@ vOf
 uvs
 ahr
 ahr
-alP
+ahr
+nEK
 acV
 wpH
 stQ
@@ -96765,12 +96790,12 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 act
 acV
 fAd
+adE
 adE
 adE
 adE
@@ -97067,13 +97092,13 @@ adC
 adC
 adC
 adC
-nxc
 wwh
 eFW
 act
 acV
 ghV
 aeW
+gRy
 agc
 aim
 afR
@@ -97369,10 +97394,10 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 ado
+acV
 acV
 acV
 acV
@@ -97671,11 +97696,11 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 adF
 acU
+vjb
 vjb
 vjb
 vjb
@@ -97973,8 +97998,8 @@ adC
 adC
 adC
 adC
-nxc
 gsU
+nxc
 nxc
 gsU
 nxc
@@ -98275,8 +98300,8 @@ aar
 aar
 aar
 aar
-eFW
 kvm
+eFW
 eFW
 fML
 xuC

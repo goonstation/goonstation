@@ -134,7 +134,7 @@ var/global/datum/apiHandler/apiHandler
 
 			// This one is over so we can clear it now
 			src.lazy_concurrent_counter--
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: Request timed out during [req_route]"))
@@ -150,7 +150,7 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]"))
@@ -171,7 +171,7 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: JSON decode error during [req_route]"))
