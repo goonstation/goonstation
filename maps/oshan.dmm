@@ -1023,6 +1023,12 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "adi" = (
@@ -4563,17 +4569,11 @@
 	},
 /area/station/medical/head)
 "apB" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/armory)
 "apD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -9001,15 +9001,14 @@
 /area/station/science/lobby)
 "aDR" = (
 /obj/window_blinds/cog2/middle,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
 "aDS" = (
@@ -23210,7 +23209,6 @@
 "bFX" = (
 /obj/disposalpipe/segment/mail,
 /obj/storage/secure/closet/brig,
-/obj/item/storage/box/prosthesis_kit/eye_laser,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -27421,9 +27419,17 @@
 	},
 /area/station/ai_monitored/armory)
 "bVa" = (
-/obj/item/device/radio/intercom/security,
-/obj/machinery/vending/security_ammo,
-/turf/simulated/floor/black,
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = null
+	},
+/obj/item/gun/flamethrower/assembled/loaded,
+/obj/item/ammo/bullets/flare,
+/obj/item/ammo/bullets/flare,
+/obj/item/gun/kinetic/flaregun,
+/obj/machinery/recharger/wall{
+	pixel_y = 28
+	},
+/turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "bVc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -27449,6 +27455,9 @@
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /obj/machinery/light_switch/auto,
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "bVk" = (
@@ -27892,9 +27901,7 @@
 /obj/stool/chair/red{
 	dir = 4
 	},
-/turf/simulated/floor/redblack{
-	dir = 10
-	},
+/turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bWK" = (
 /obj/cable{
@@ -28154,10 +28161,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/recharger/wall{
-	pixel_y = 28
-	},
-/turf/simulated/floor/redblack,
+/turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bXx" = (
 /obj/cable{
@@ -30255,12 +30259,8 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "ceT" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/kinetic/flaregun,
-/obj/item/ammo/bullets/flare,
-/obj/item/ammo/bullets/flare,
-/obj/item/gun/flamethrower/assembled/loaded,
 /obj/decal/stripe_delivery,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor,
 /area/station/security/main)
 "ceU" = (
@@ -33457,16 +33457,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
@@ -37266,8 +37260,9 @@
 /area/station/security/hos)
 "jWq" = (
 /obj/random_item_spawner/armory_breaching_supplies,
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/redblack{
-	dir = 8
+	dir = 10
 	},
 /area/station/ai_monitored/armory)
 "jWV" = (
@@ -37487,9 +37482,8 @@
 	name = "Genetic Research"
 	})
 "krS" = (
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
+/obj/machinery/vending/security_ammo,
+/turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "ksg" = (
 /turf/simulated/floor/black,
@@ -39105,14 +39099,15 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "mHz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "mIo" = (
@@ -41865,7 +41860,6 @@
 	})
 "quk" = (
 /obj/machinery/computer/secure_data/detective_computer,
-/obj/item/device/radio/intercom/security,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
@@ -41982,14 +41976,15 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "qCE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/black,
 /area/research_outpost/chamber)
 "qDI" = (
@@ -43244,15 +43239,14 @@
 /area/station/crew_quarters/info)
 "sMK" = (
 /obj/window_blinds/cog2/right,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
 "sNg" = (
@@ -44105,15 +44099,14 @@
 /area/station/hydroponics/bay)
 "ulP" = (
 /obj/window_blinds/cog2/left,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "test_chamber";
 	name = "Test Chamber Blast Door";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
 "umv" = (
@@ -91063,7 +91056,7 @@ bRH
 bSN
 bTR
 jWq
-krS
+bVX
 bWH
 bVX
 bVX
@@ -91666,7 +91659,7 @@ kbS
 hmK
 bJR
 bTR
-bTR
+krS
 bXw
 bXx
 bVX

@@ -532,6 +532,10 @@
 /proc/blank_or_es(mob/subject)
 	return subject.get_pronouns().pluralize ? "" : "es"
 
+/// 'they were' vs 'he was'
+/proc/were_or_was(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "were" : "was"
+
 /mob/proc/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
@@ -902,6 +906,9 @@
 	var/prev_invis = ghost_invisibility
 	ghost_invisibility = new_invis
 	for (var/mob/dead/observer/G in mobs)
+		if (G.invisibility == INVIS_ALWAYS)
+			// logged out ghosts stay invisible
+			continue
 		G.invisibility = new_invis
 		REMOVE_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G)
 		APPLY_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G, new_invis)

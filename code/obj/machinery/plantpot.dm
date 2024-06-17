@@ -154,8 +154,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(0 to 0) current_water_level = 1
 		if(0 to 40) current_water_level = 2
 		if(40 to 100) current_water_level = 3
-		if(100 to 200) current_water_level = 4
-		if(200 to INFINITY) current_water_level = 5
+		if(100 to 200.1) current_water_level = 4
+		if(200.1 to INFINITY) current_water_level = 5
 	if(current_water_level != src.water_level)
 		src.water_level = current_water_level
 		src.do_update_water_icon = 1
@@ -164,8 +164,8 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(0 to 0) current_total_volume = 1
 			if(0 to 40) current_total_volume = 2
 			if(40 to 100) current_total_volume = 3
-			if(100 to 200) current_total_volume = 4
-			if(200 to INFINITY) current_total_volume = 5
+			if(100 to 200.1) current_total_volume = 4
+			if(200.1 to INFINITY) current_total_volume = 5
 		if(current_total_volume != src.total_volume)
 			src.total_volume = current_total_volume
 			src.do_update_water_icon = 1
@@ -208,7 +208,6 @@ TYPEINFO(/obj/machinery/plantpot)
 /obj/machinery/plantpot/process()
 	..()
 
-		// We skip every other tick. Another cpu-conserving measure.
 	if(!src.current || src.dead)
 		return
 		// If the plantpot is empty or contains a dead plant, we don't need to do anything

@@ -35753,9 +35753,7 @@
 	},
 /area/station/crew_quarters/quarters_south)
 "gjV" = (
-/obj/stool/chair/office/red{
-	dir = 4
-	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -36573,7 +36571,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "gOK" = (
@@ -47562,7 +47559,9 @@
 	rand_pos = 1
 	},
 /obj/item/pen/fancy,
-/obj/machinery/door_control/bolter/new_walls/west,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_diplo"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
@@ -55328,7 +55327,8 @@
 "uLm" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Diplomatic Quarters"
+	name = "Diplomatic Quarters";
+	id = "cc_diplo"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -57007,9 +57007,7 @@
 	},
 /area/station/solar/east)
 "vXP" = (
-/obj/machinery/computer3/generic/communications{
-	dir = 8
-	},
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"

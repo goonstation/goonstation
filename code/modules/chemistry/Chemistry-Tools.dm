@@ -206,68 +206,25 @@ proc/ui_describe_reagents(atom/A)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 
-	/// The number of fluid overlay states that this container has.
-	var/fluid_overlay_states = 0
+	/// The icon file that this container should for fluid overlays.
+	var/container_icon = 'icons/obj/items/chemistry_glassware.dmi'
 	/// The icon state that this container should for fluid overlays.
 	var/container_style = null
+	/// The number of fluid overlay states that this container has.
+	var/fluid_overlay_states = 0
 	/// The scaling that this container's fluid overlays should use.
-	var/fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_LINEAR
+	var/fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR
 
 	New()
 		. = ..()
 		src.container_style ||= src.icon_state
-		src.UpdateIcon()
-
-	on_reagent_change()
-		. = ..()
-		src.UpdateIcon()
-
-	update_icon()
-		. = ..()
-		src.update_fluid_overlays()
-
-	proc/update_fluid_overlays()
-		if (!src.fluid_overlay_states)
-			return
-
-		var/fluid_state = src.get_fluid_state()
-
-		if (fluid_state)
-			var/image/fluid_image = image('icons/obj/items/chemistry_glassware.dmi', "f-[src.container_style]-[fluid_state]")
-			var/datum/color/average = reagents.get_average_color()
-			average.a = max(average.a, RC_MINIMUM_REAGENT_ALPHA)
-			fluid_image.color = average.to_rgba()
-			src.UpdateOverlays(fluid_image, "fluid_image")
-		else
-			src.UpdateOverlays(null, "fluid_image")
-
-	/// Returns the numerical fluid state of this container.
-	proc/get_fluid_state()
-		// Show no fluid state only if the container is completely empty.
-		if (src.reagents.total_volume <= 0)
-			return 0
-
-		// Show the last fluid state only if the container is full.
-		if (src.reagents.total_volume >= src.reagents.maximum_volume)
-			return src.fluid_overlay_states
-
-		var/normalised_fluid_height = 0
-		var/normalised_volume = src.reagents.total_volume / src.reagents.maximum_volume
-		switch (src.fluid_overlay_scaling)
-			// Volume of liquid will be directly proportional to height, so setting total volume to 1, the normalised height will be equal to the ratio.
-			if (RC_FLUID_OVERLAY_SCALING_LINEAR)
-				normalised_fluid_height = normalised_volume
-
-			// Vₛ = volume of sphere, r = radius of sphere, Vₗ = volume of liquid inside of sphere, h = height of liquid.
-			// `Vₗ = ∫ π(r² - (z - r)²) dx` with lower and upper limits of 0 and h respectively gives the equation `Vₗ = πh²(r - h/3)`.
-			// `Vₗ = πh²(r - h/3)` is very closely approximated by `Vₗ = -0.5Vₛ(cos(h(π / 2r)) - 1)` for 0 <= h <= 2r.
-			// This permits us to efficiently solve for h without the need for the cubic formula: `h = (2r / π) * arccos(1 - 2(Vₗ / Vₛ))`
-			// Setting Vₛ = 1 and normalising h to a range of 0-1 gives: `h = arccos(1 - 2Vₗ) / π`
-			// Converting from radians to degrees: `h = arccos(1 - 2Vₗ) / 180`
-			if (RC_FLUID_OVERLAY_SCALING_SPHERICAL)
-				normalised_fluid_height = arccos(1 - (2 * normalised_volume)) / 180
-
-		return clamp(round(normalised_fluid_height * src.fluid_overlay_states, 1), 1, src.fluid_overlay_states - 1)
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = src.container_icon, \
+			reagent_overlay_icon_state = src.container_style, \
+			reagent_overlay_states = src.fluid_overlay_states, \
+			reagent_overlay_scaling = src.fluid_overlay_scaling, \
+		)
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)

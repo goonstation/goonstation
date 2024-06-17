@@ -1102,7 +1102,7 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+		adjust_throw(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src))
 		if(yeet)
 			new/obj/effect/supplyexplosion(I.loc)
 
@@ -2979,7 +2979,7 @@
 
 	if (!src.juggling())
 		return
-	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
+	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
 		if(istype(A, /obj/item/device/light)) //i hate this
@@ -3033,7 +3033,7 @@
 				continue
 			items += ", [juggled]"
 		items = copytext(items, 3)
-		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)]'s already juggling!")
+		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
