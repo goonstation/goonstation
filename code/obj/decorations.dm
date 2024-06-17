@@ -417,9 +417,22 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	is_syndicate = TRUE
 	New()
 		. = ..()
-		var/turf/T = get_turf(src.loc)
-		var/obj/machinery/power/data_terminal/link = locate() in T
-		link?.master = src
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_FREE)
+
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
+		..()
+		if(signal.data["address_1"] == "ping" && signal.data["sender"])
+			var/datum/signal/response = get_free_signal()
+			response.source = src
+			response.transmission_method = TRANSMISSION_RADIO
+			response.data["address_1"] = signal.data["sender"]
+			response.data["command"] = "ping_reply"
+			response.data["device"] = "PNET_SHRUB"
+			response.data["netid"] = src.net_id
+			response.data["sender"] = src.net_id
+			SPAWN(0.5 SECONDS)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, response)
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
