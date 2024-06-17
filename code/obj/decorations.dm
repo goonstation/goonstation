@@ -421,7 +421,13 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_FREE)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
+
+	proc/fuck_up()
+		var/datum/effects/system/spark_spread/S = new
+		S.set_up(4, FALSE, src)
+		S.start()
+		src.visible_message(SPAN_ALERT("<b>[src] starts spraying sparks everywhere! What the fuck?</b>"))
 
 	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		..()
@@ -436,6 +442,15 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			response.data["sender"] = src.net_id
 			SPAWN(0.5 SECONDS)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, response)
+
+		if(signal.data["address_1"] == src.net_id)
+			switch(signal.data["command"])
+				if("shake")
+					if(prob(5)) // this thing sucks ass
+						src.fuck_up()
+					else
+						src.wiggle()
+
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
