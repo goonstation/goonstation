@@ -117,6 +117,8 @@
 	proc/show_popup(mob/M, var/popup_name)
 		var/window_title = "Antagonist Tips"
 		var/filename = null
+		//Once all popups are migrated to TGUI, please delete the switch and the grabResource technique
+		var/tguiPopup = FALSE
 		switch(popup_name)
 			// traitor
 			if ("traitorradio")
@@ -165,8 +167,7 @@
 
 			// nuke/rev
 			if ("nukeop")
-				window_title = "Nuclear Operative Basics"
-				filename = "html/traitorTips/nukeopTips.html"
+				tguiPopup = TRUE
 			if ("nukeop_commander")
 				window_title = "Nuclear Commander Basics"
 				filename = "html/traitorTips/nukeopcommanderTips.html"
@@ -324,6 +325,10 @@
 				filename = "html/traitorTips/zoldorfTips.htm"
 			if ("souldorf")
 				filename = "html/traitorTips/souldorfTips.htm"
+
+		if (tguiPopup)
+			tgui_alert(M, content_window = popup_name, do_wait = FALSE)
+			return
 
 		if (!filename)
 			return
