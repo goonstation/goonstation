@@ -52,17 +52,27 @@
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
+		abilityHolder.addAbility(/datum/targetable/critter/self_immolate)
 		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
 		abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
-		var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
-		S.visible = 0
-		S.heal_brute = 0.25
+		// var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
+		// S.visible = 0
+		// S.heal_brute = 0.25
+		// S.heal_tox = 0.5
 
 	Life()
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1500,200)
+		for (var/obj/hotspot/chemfire/cf in range(3, T))
+			if (cf.fire_color != CHEM_FIRE_DARKRED) continue
+			if (prob(50)) continue
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(cf, new/datum/projectile/special/homing/fire_heal, src)
+			proj.launch()
+			if(prob(30))
+				break
+
 		.=..()
 
 	get_disorient_protection_eye()
@@ -78,3 +88,39 @@
 
 	is_heat_resistant()
 		return TRUE
+
+
+/datum/projectile/special/homing/fire_heal
+	icon_state = "ember"
+	start_speed = 3
+	goes_through_walls = 0
+	//goes_through_mobs = 1
+	auto_find_targets = 0
+	silentshot = 1
+	pierces = 0
+	max_range = 5
+	shot_sound = null
+
+	on_launch(var/obj/projectile/P)
+		P.layer = EFFECTS_LAYER_BASE
+		// flick("ember",P)
+		P.special_data["returned"] = FALSE
+
+		..()
+
+	on_hit(atom/hit, direction, var/obj/projectile/P)
+		if(istype(hit, /mob/living/critter/fire_elemental))
+			var/mob/living/critter/fire_elemental/fe = hit
+			fe.HealDamage("All", 2, 2, 2)
+			fe.add_stamina(20)
+			if (!P.special_data["returned"])
+				P.travelled = 0
+				P.max_range = 4
+				P.special_data["returned"] = TRUE
+
+		..()
+
+	on_end(var/obj/projectile/P)
+		if ((P.special_data["returned"]))
+			..()
+		..()
