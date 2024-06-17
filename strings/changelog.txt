@@ -1,5 +1,9 @@
 
 (t)mon jun 17 24
+(u)JORJ949
+(p)19490
+(e)🗺🔎⚙|A-Mapping, C-Code-Quality, A-Internal
+(+)HoS and Armory access have been separated, presently only affects the NTSO who no longer gets HoS access. Please report any other changes as a bug.
 (u)Sovexe
 (p)19561
 (e)🪲🔒|C-Bug, A-Secret
