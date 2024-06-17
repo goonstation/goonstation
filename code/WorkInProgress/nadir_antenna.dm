@@ -298,6 +298,38 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 	ex_act(severity)
 		return //it's a tough critter if you're not damaging it from the inside
 
+/obj/machinery/communications_dish/transception/get_help_message(dist, mob/user)
+	. = ..()
+	switch (src.repair_status)
+		if(ARRAY_INTEG_WELD0 to ARRAY_INTEG_WELD2)
+			. += "The array looks pretty beat. A good place to start would be welding the microvoltage cabinet's plating."
+		if(ARRAY_INTEG_WRENCH_OFF)
+			. += "The cabinet is mostly back together, but some of the rods are shredded. There are bolts holding them in place."
+		if(ARRAY_INTEG_PRY_RODS)
+			. += "The bolts for the broken rods have been removed, but it seems they'll need some prying to come out."
+		if(ARRAY_INTEG_ADD_SHEET)
+			. += "With broken rods gone, this seems like a good time to grab some metal sheets and make a new compartment door."
+		if(ARRAY_INTEG_ADD_RODS)
+			. += "The internal capacitor's microvoltage cabinet seems intact now. Some rods for the frame would be good."
+		if(ARRAY_INTEG_WRENCH_ON)
+			. += "The newly-repaired rods seem a bit shaky; they haven't been bolted in yet."
+
+///Meteor hits will eject the battery and require through repair
+/obj/machinery/communications_dish/transception/meteorhit(obj/meteor)
+	src.intcap_charging = FALSE
+	src.status |= BROKEN
+	src.primed = FALSE
+	src.intcap_door_open = TRUE
+	src.repair_status = ARRAY_INTEG_WELD0
+	if (src.intcap)
+		var/obj/item/cell/former_cell = src.intcap
+		former_cell.set_loc(get_turf(src))
+		var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
+		former_cell.throw_at(target,5,1)
+		src.intcap = null
+	src.UpdateIcon()
+	src.visible_message(SPAN_ALERT("<b>[src]'s internal capacitor is violently ejected!</b>"))
+
 /obj/machinery/communications_dish/transception/attack_hand(mob/user)
 	if(src.intcap && intcap_door_open)
 		boutput(user, SPAN_NOTICE("You remove \the [intcap] from the cabinet's cell compartment."))
