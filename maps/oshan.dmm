@@ -32621,7 +32621,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "dxt" = (
 /obj/machinery/door/airlock/pyro/alt,
@@ -33700,7 +33700,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "eQH" = (
 /obj/stool/chair/dining/wood{
@@ -34838,7 +34838,7 @@
 	pixel_x = 4;
 	tag = ""
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "gmC" = (
 /obj/cable{
@@ -37374,7 +37374,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "kcY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -38038,7 +38038,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "leR" = (
 /obj/stool/chair/comfy/green{
@@ -38124,7 +38124,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "lkm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -40209,7 +40209,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "nXq" = (
 /obj/machinery/light/incandescent/blueish,
@@ -41549,7 +41549,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "pMV" = (
 /obj/cable{
@@ -42794,7 +42794,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "rKg" = (
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "rNv" = (
 /obj/decal/fakeobjects/pipe{
@@ -42911,7 +42911,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "sfy" = (
 /obj/table/auto,
@@ -44631,7 +44631,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "vaM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -45440,7 +45440,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid,
+/turf/space/fluid/nospawn,
 /area/station/quartermaster/cargobay)
 "wqE" = (
 /obj/submachine/GTM{
