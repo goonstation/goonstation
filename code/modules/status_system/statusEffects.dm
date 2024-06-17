@@ -2911,7 +2911,7 @@
 		if (istype(src.owner,/obj/racing_clowncar))
 			var/obj/racing_clowncar/C = src.owner
 			C.speed = C.base_speed - C.turbo
-			if (C.driving) C.drive(C.dir, C.speed)
+			if (C.driving) C.drive(C.drive_dir, C.speed)
 
 			if (istype(src.owner,/obj/racing_clowncar/kart))
 				src.owner.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
@@ -2922,7 +2922,7 @@
 			var/obj/racing_clowncar/C = src.owner
 
 			C.speed = C.base_speed
-			if (C.driving) C.drive(C.dir, C.speed)
+			if (C.driving) C.drive(C.drive_dir, C.speed)
 
 			if (istype(src.owner,/obj/racing_clowncar/kart))
 				C.ClearSpecificOverlays("boost")
@@ -2959,7 +2959,7 @@
 /datum/statusEffect/kart_stun
 	id = "kart_stun"
 	desc = "Owner is currently spinning out of control"
-	maxDuration = 2 SECONDS
+	maxDuration = 5 SECONDS
 	onAdd()
 		..()
 		if (istype(src.owner,/obj/racing_clowncar))
@@ -2982,6 +2982,7 @@
 		if (istype(src.owner,/obj/racing_clowncar))
 			var/obj/racing_clowncar/C = src.owner
 			C.set_dir(turn(C.dir, 90))
+			C.facing = C.dir
 
 	onRemove()
 		..()

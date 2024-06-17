@@ -30,7 +30,7 @@
 
 			// be absolutely sure it starts going away from us
 			if (R.driving)
-				R.drive(R.dir,R.speed)
+				R.drive(dir,R.speed)
 
 
 /obj/racing_powerup_spawner
@@ -327,6 +327,11 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	density = 1
 	opacity = 0
 
+	/// what direction SHOULD the kart be facing right now, used to keep us pointing the right way
+	var/facing
+	/// what direction should the kart be driving, similar to pods
+	var/drive_dir
+
 	var/cant_control = 0 //Used during spins, etc
 	var/base_speed = 2 //Base speed.
 	var/turbo = 1 //Boost speed is base_speed - turbo.
@@ -364,6 +369,12 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if(can_act(usr))
 			exit()
 		return
+
+	Move()
+		..()
+		// only do this if we're driving and need to face a direction
+		if (driving && facing)
+			src.set_dir(facing)
 
 	// allow people to enter the car by clickdragging
 	MouseDrop_T(mob/living/target, mob/user)
@@ -434,12 +445,13 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 
 	proc/drive(var/direction, var/speed)
-		// if we're spinning out, dont interrupt the spinning smh
-		if (!src.cant_control)
-			set_dir(direction)
+		// set facing so we can do spinning out properly
+		set_dir(direction)
+		facing = direction
+		drive_dir = direction
 		driving = 1
 		src.glide_size = (32 / speed) * world.tick_lag
-		walk(src, dir, speed)
+		walk(src, drive_dir, speed)
 
 	proc/stop()
 		driving = 0
@@ -453,6 +465,8 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		if(direction == turn(src.dir,180))
 			set_dir(direction)
+			facing = direction
+			drive_dir = direction
 			stop()
 		else
 			drive(direction, speed)
