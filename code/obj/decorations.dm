@@ -279,19 +279,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
-
-		var/original_x = pixel_x
-		var/original_y = pixel_y
-		var/wiggle = 6
-
-		SPAWN(0) //need spawn, why would we sleep in attack_hand that's disgusting
-			while (wiggle > 0)
-				wiggle--
-				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
-				sleep(0.1 SECONDS)
-
-		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
+		src.wiggle()
 
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
@@ -390,6 +378,21 @@
 		new /obj/decal/cleanable/leaves(get_turf(src))
 		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
 		qdel(src)
+
+	proc/wiggle()
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
+
+		var/original_x = pixel_x
+		var/original_y = pixel_y
+		var/wiggle = 6
+
+		SPAWN(0)
+			while (wiggle > 0)
+				wiggle--
+				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
+				sleep(0.1 SECONDS)
+
+		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
 
 	random
 		New()
