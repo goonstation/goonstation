@@ -740,6 +740,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/science/lab)
 "acQ" = (
@@ -6483,6 +6484,7 @@
 /area/station/science/artifact)
 "aRM" = (
 /obj/window/reinforced/south,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
@@ -7412,7 +7414,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/vending/standard,
+/obj/machinery/atmospherics/unary/cold_sink/freezer,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aWy" = (
@@ -7583,7 +7585,9 @@
 /area/station/science/lab)
 "aXo" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "aXv" = (
@@ -21697,10 +21701,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/landmark/pest,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/science/lab)
 "icU" = (
@@ -35703,11 +35707,11 @@
 	},
 /area/station/security/secwing)
 "sLR" = (
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15
 	},
+/obj/machinery/vending/standard,
 /turf/simulated/floor,
 /area/station/science/lab)
 "sMg" = (
