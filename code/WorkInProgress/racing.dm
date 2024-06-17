@@ -28,6 +28,10 @@
 			var/obj/racing_clowncar/R = A
 			R.boost()
 
+			// be absolutely sure it starts going away from us
+			if (R.driving)
+				R.drive(R.dir,R.speed)
+
 
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
@@ -323,10 +327,6 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	density = 1
 	opacity = 0
 
-	var/obj/powerup/powerup = null
-
-	var/dir_original = 1
-
 	var/cant_control = 0 //Used during spins, etc
 	var/base_speed = 2 //Base speed.
 	var/turbo = 1 //Boost speed is base_speed - turbo.
@@ -344,12 +344,16 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 			return
 		var/datum/targetable/kart_powerup/new_powerup = pick(powerups)
 
-		playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 
 		if (abilities && new_powerup)
 			// only add a new kart powerup when there's not one already there
 			if (!length(abilities.abilities))
 				abilities.addAbility(new_powerup)
+				if (!ON_COOLDOWN(src,"item_noise",1 SECOND))
+					playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
+			else
+				// if we're full, play the destroy item noise
+				playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, FALSE)
 
 		return
 	// copied from clown cars
@@ -412,58 +416,35 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		driving = 0
 
 	proc/spin(var/magnitude)
-		if(super) return
-		cant_control = 1
-		set_density(0)
-		dir_original = src.dir
-		var/image/out_of_control = image('icons/misc/racing.dmi',"broken")
-		src.AddOverlays(out_of_control,"spin")
-
-		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, FALSE)
-
-		SPAWN(magnitude+1)
-			cant_control = 0
-			dir_original = 0
-			set_density(1)
-			src.ClearSpecificOverlays("spin")
-
-		SPAWN(0)
-			for(var/i=0, i<magnitude, i++)
-				src.set_dir(turn(src.dir, 90))
-				sleep(0.1 SECONDS)
-		return
+		if(!super)
+			src.setStatus("kart_stun",magnitude)
 
 	proc/boost(var/super_boost = FALSE)
-		speed = base_speed - turbo
-		drive(dir, speed)
 
-		// clown car doesnt have an overlay, so sad
-		if (super_boost)
-			src.super = TRUE
-			src.icon_state = "clowncar_super"
-			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
-			SPAWN(10 SECONDS)
-				src.super = FALSE
-				speed = base_speed
-				src.icon_state = "clowncar"
-		else
-			icon_state = "clowncar_boost"
+		// all boost sounds must shut the hell up
+		if (!ON_COOLDOWN(src,"boost_sound",1 SECOND))
 			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
-			SPAWN(5 SECONDS)
-				speed = base_speed
-				if (driving) drive(dir, speed)
-				icon_state = "clowncar"
+
+		if (super_boost)
+			src.setStatus("kart_boost",10 SECONDS)
+			src.setStatus("kart_super",10 SECONDS)
+		else
+			src.setStatus("kart_boost", 5 SECONDS)
+
 
 
 	proc/drive(var/direction, var/speed)
-		set_dir(direction)
+		// if we're spinning out, dont interrupt the spinning smh
+		if (!src.cant_control)
+			set_dir(direction)
 		driving = 1
 		src.glide_size = (32 / speed) * world.tick_lag
 		walk(src, dir, speed)
 
 	proc/stop()
 		driving = 0
-		playsound(src, 'sound/mksounds/skidd.ogg', 25, FALSE)
+		if (!ON_COOLDOWN(src,"skidd_noise",0.1 SECONDS))
+			playsound(src, 'sound/mksounds/skidd.ogg', 25, FALSE)
 		walk(src, 0)
 
 	relaymove(mob/user, direction)
@@ -584,30 +565,6 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if(returnloc)
 			set_loc(returnloc)
 			set_dir(returndir)
-
-	boost(var/super_boost = FALSE) // this exists because we dont have a boosted kart sprite????
-		speed = base_speed - turbo
-		drive(dir, speed)
-
-		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
-
-		if (super_boost)
-			src.super = TRUE
-			src.AddOverlays(image('icons/misc/racing.dmi', "kart_super"),"super")
-			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
-			SPAWN(10 SECONDS)
-				src.super = FALSE
-				speed = base_speed
-				if (driving) drive(dir, speed)
-				src.ClearSpecificOverlays("super")
-				src.ClearSpecificOverlays("boost")
-		else
-			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
-			SPAWN(5 SECONDS)
-				speed = base_speed
-				if (driving) drive(dir, speed)
-				src.ClearSpecificOverlays("boost")
-
 
 /obj/racing_clowncar/kart/red
 	icon_state = "kart_red_u"
