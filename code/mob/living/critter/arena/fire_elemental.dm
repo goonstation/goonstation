@@ -56,10 +56,10 @@
 		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)
 		abilityHolder.addAbility(/datum/targetable/critter/fireball)
 		abilityHolder.addAbility(/datum/targetable/critter/fire_sprint)
-		// var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
-		// S.visible = 0
-		// S.heal_brute = 0.25
-		// S.heal_tox = 0.5
+		var/datum/statusEffect/simplehot/S = src.setStatus("simplehot", INFINITE_STATUS)
+		S.visible = 0
+		S.heal_brute = 0.25
+		S.heal_tox = 0.5
 
 	Life()
 		var/turf/T = src.loc
