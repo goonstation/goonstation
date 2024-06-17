@@ -171,6 +171,9 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
+			// Temp logging for bad responses
+			world.log << "(TEMP) API Error: JSON decode error for response: [response.body]"
+
 			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
