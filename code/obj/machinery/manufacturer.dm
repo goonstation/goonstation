@@ -864,7 +864,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.add_contents(M)
+				src.add_contents(M, user)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
@@ -891,7 +891,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.add_contents(W)
+				src.add_contents(W, user)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -913,7 +913,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.add_contents(C)
+				src.add_contents(C, user)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -936,7 +936,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.add_contents(W)
+				src.add_contents(W, user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == DISMANTLE_NONE)
@@ -1021,7 +1021,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.add_contents(W)
+			src.add_contents(W, user)
 
 		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
