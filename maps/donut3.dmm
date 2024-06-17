@@ -588,6 +588,20 @@
 	dir = 4
 	},
 /area/station/crew_quarters/cafeteria)
+"afc" = (
+/obj/machinery/turretid{
+	pixel_y = 28
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/turret_protected/armory_outside)
 "afh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2287,6 +2301,15 @@
 	dir = 4
 	},
 /area/listeningpost)
+"aEB" = (
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 1
+	},
+/obj/machinery/space_heater/sauna_stove,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/sauna)
 "aEC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -20557,21 +20580,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"geZ" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner,
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "gfk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -21729,6 +21737,18 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"gvS" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner,
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/mapping_helper/access/armory,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "gwb" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -23693,20 +23713,6 @@
 	dir = 1
 	},
 /turf/space,
-/area/station/turret_protected/armory_outside)
-"hag" = (
-/obj/machinery/turretid{
-	pixel_y = 28
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "hai" = (
 /obj/stool/chair/yellow{
@@ -25931,18 +25937,6 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
-"hJb" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/stripe_delivery,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "hJG" = (
 /turf/simulated/floor/yellow/corner,
 /area/station/hallway/primary/east)
@@ -28205,6 +28199,21 @@
 	dir = 10
 	},
 /area/station/medical/medbay)
+"ixZ" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner,
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "iyc" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -42002,20 +42011,6 @@
 /obj/machinery/power/tracker/west,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
-"mGp" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
 "mGx" = (
 /obj/railing/green{
 	dir = 1;
@@ -42101,15 +42096,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"mHU" = (
-/obj/machinery/light/small/sticky/warm/very{
-	dir = 1
-	},
-/obj/machinery/space_heater/sauna_stove,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/sauna)
 "mHZ" = (
 /obj/stool/chair/comfy/red{
 	desc = "The perfect view.";
@@ -71729,6 +71715,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"vGY" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/turret_protected/armory_outside)
 "vHi" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -104404,11 +104404,11 @@ uAJ
 syV
 oya
 hvR
-geZ
+ixZ
 rZQ
 wzZ
 jso
-hJb
+gvS
 vDP
 pzR
 sEJ
@@ -105010,7 +105010,7 @@ vFX
 neh
 jJd
 jJd
-mGp
+vGY
 jJd
 jJd
 fAb
@@ -105915,7 +105915,7 @@ xYm
 rYD
 rtR
 jJd
-hag
+afc
 kQY
 fiB
 hsP
@@ -119797,7 +119797,7 @@ dXQ
 jYw
 hWo
 vBq
-mHU
+aEB
 vBq
 vBq
 vBq

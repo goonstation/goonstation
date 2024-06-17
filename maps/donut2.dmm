@@ -24804,6 +24804,12 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"hni" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "hop" = (
 /obj/machinery/firealarm/north,
 /obj/storage/closet/wardrobe/grey,
@@ -30292,12 +30298,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"kTp" = (
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "kTw" = (
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment/mail,
@@ -35261,6 +35261,21 @@
 "nUH" = (
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"nUZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	pixel_x = 24;
+	pixel_y = 1;
+	req_access = null
+	},
+/obj/machinery/light/incandescent,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/ai_monitored/armory)
 "nVj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40016,21 +40031,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"qGO" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/turretid{
-	pixel_x = 24;
-	pixel_y = 1;
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/ai_monitored/armory)
 "qHe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42827,6 +42827,19 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
+"swZ" = (
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_x = -24;
+	pixel_y = 1;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/ai_monitored/armory)
 "syQ" = (
 /obj/machinery/door_control/antagscanner{
 	pixel_x = 32
@@ -45010,17 +45023,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"tOl" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "tOK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -47812,6 +47814,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"vHO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "vIi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48254,19 +48267,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"vVo" = (
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	pixel_y = 1;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
-/area/station/ai_monitored/armory)
 "vVq" = (
 /obj/machinery/computer/bank_data,
 /obj/machinery/light/incandescent,
@@ -48988,6 +48988,22 @@
 	dir = 9
 	},
 /area/station/ranch)
+"wte" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "wtf" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -49955,22 +49971,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"xdb" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "xdw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -96933,7 +96933,7 @@ beM
 beO
 bgN
 bgN
-tOl
+vHO
 bgN
 bgN
 wFJ
@@ -97236,7 +97236,7 @@ bgP
 bgP
 nJh
 bry
-vVo
+swZ
 bgP
 hVA
 tMz
@@ -97539,7 +97539,7 @@ bgP
 vKF
 bry
 bzC
-kTp
+hni
 wFJ
 tMz
 lus
@@ -97840,7 +97840,7 @@ bgP
 bgP
 cNF
 piG
-qGO
+nUZ
 bgP
 rWV
 tMz
@@ -98141,7 +98141,7 @@ bgP
 bgP
 bgP
 vgM
-xdb
+wte
 qcT
 bgP
 yiQ

@@ -31206,6 +31206,15 @@
 /obj/decal/poster/wallsign/construction,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/central)
+"cjz" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "cjB" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -37453,15 +37462,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"koY" = (
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "kpv" = (
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/floor/plating/random,
@@ -90752,7 +90752,7 @@ bJR
 kxQ
 bRG
 bSM
-koY
+cjz
 bVX
 bVX
 bWH

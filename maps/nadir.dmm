@@ -37657,6 +37657,19 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/pasiphae/survey)
+"pQX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/ai_monitored/armory)
 "pRb" = (
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -38470,19 +38483,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"qih" = (
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/turf/simulated/floor/engine/caution/westeast,
-/area/station/ai_monitored/armory)
 "qip" = (
 /obj/item/rods/steel{
 	amount = 50;
@@ -91668,7 +91668,7 @@ wdh
 bKB
 qLh
 qLh
-qih
+pQX
 qLh
 qLh
 qLh

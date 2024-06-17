@@ -60823,21 +60823,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/coldloop)
-"ifP" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Weapons Storage"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "iix" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -66062,6 +66047,21 @@
 	icon_state = "wooden"
 	},
 /area/station/security/detectives_office)
+"nqs" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Weapons Storage"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "nrh" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -67076,18 +67076,6 @@
 	dir = 10
 	},
 /area/station/com_dish/auxdish)
-"owh" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 4
-	},
-/obj/mapping_helper/access/hos,
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "owx" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
 /area/station/medical/medbay/psychiatrist)
@@ -70312,6 +70300,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"rLY" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Weapons Storage"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "rMQ" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/yellow/side{
@@ -73734,6 +73734,18 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"vyB" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
+	dir = 4
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "vzf" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/shuttlebay,
@@ -75370,18 +75382,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/maintenance)
-"xDX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Weapons Storage"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "xEv" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -130867,9 +130867,9 @@ bzH
 bBk
 tdm
 bFf
-xDX
+rLY
 bIU
-ifP
+nqs
 bMu
 guo
 bBn
@@ -131773,7 +131773,7 @@ bzK
 bBn
 bBn
 bFi
-owh
+vyB
 bIX
 xWI
 bMx

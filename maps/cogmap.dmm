@@ -3154,6 +3154,35 @@
 	dir = 6
 	},
 /area/station/crew_quarters/quarters)
+"alP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_y = 13
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "alQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
@@ -7169,6 +7198,19 @@
 	},
 /obj/window/reinforced{
 	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"aBr" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -37609,6 +37651,17 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
+"cPQ" = (
+/obj/deployable_turret/riot/active,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "cPW" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -40357,15 +40410,6 @@
 	},
 /turf/space,
 /area/space)
-"eEB" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "eEI" = (
 /obj/machinery/disposal{
 	name = "Test Chamber Chute"
@@ -42356,6 +42400,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"gdD" = (
+/obj/decal/stripe_caution,
+/obj/table/auto,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "geM" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -43680,23 +43741,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
-"hij" = (
-/obj/decal/stripe_caution,
-/obj/table/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -10;
-	pixel_y = 8
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/turf/simulated/floor,
-/area/station/security/main)
 "hix" = (
 /obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
@@ -50498,17 +50542,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"mMm" = (
-/obj/deployable_turret/riot/active,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -51334,35 +51367,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
-"nsX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/item/storage/box/flashbang_kit{
-	pixel_y = 13
-	},
-/obj/item/storage/box/flashbang_kit{
-	pixel_x = -6;
-	pixel_y = 13
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -9;
-	pixel_y = 2
-	},
-/obj/table/auto,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "ntb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -51830,19 +51834,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
-"nLl" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/security/main)
 "nLC" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/disposalpipe/segment/mail,
@@ -55344,17 +55335,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"quU" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 4;
-	id = "Hot Loop Gas Supply 1";
-	target_pressure = 1000
-	},
-/turf/simulated/floor/black,
-/area/station/engine/hotloop)
 "qva" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -57020,15 +57000,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
-"rIL" = (
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "rIQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -59773,6 +59744,15 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/primary)
+"tNH" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "tOb" = (
 /obj/table/auto,
 /obj/item/wrench{
@@ -60585,14 +60565,6 @@
 	},
 /turf/space,
 /area/space)
-"unr" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "unw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61818,6 +61790,17 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/chemistry)
+"vhW" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4;
+	id = "Hot Loop Gas Supply 1";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/black,
+/area/station/engine/hotloop)
 "vif" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Bar"
@@ -64949,6 +64932,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/hotloop)
+"xOA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "xOJ" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -94685,7 +94676,7 @@ qEI
 jIz
 sDK
 avd
-hij
+gdD
 awK
 xra
 azI
@@ -94991,7 +94982,7 @@ pSF
 ant
 ayj
 azJ
-nLl
+aBr
 aCD
 aDT
 pGt
@@ -95574,7 +95565,7 @@ act
 acV
 foS
 jYE
-unr
+xOA
 fWA
 nPU
 niY
@@ -95880,7 +95871,7 @@ adE
 adE
 adE
 ajj
-eEB
+tNH
 dPe
 sfv
 xnp
@@ -96176,7 +96167,7 @@ gsU
 nxc
 act
 acV
-mMm
+cPQ
 adE
 adE
 adE
@@ -96483,7 +96474,7 @@ uvs
 ahr
 ahr
 ahr
-nsX
+alP
 acV
 wpH
 stQ
@@ -96786,7 +96777,7 @@ adE
 adE
 adE
 aji
-rIL
+tNH
 iqt
 dSf
 aHB
@@ -110450,7 +110441,7 @@ jfS
 hzN
 giA
 uqr
-quU
+vhW
 kYR
 bqk
 laa
