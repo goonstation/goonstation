@@ -1,4 +1,9 @@
+
 (t)mon jun 17 24
+(u)Sovexe
+(p)19561
+(e)🪲🔒|C-Bug, A-Secret
+(+)Ants will no longer spawn in food located on restricted Z levels
 (u)LeahTheTech
 (+)The PTL is now correctly more dangerous at lower power levels.
 (t)sun jun 16 24
