@@ -181,13 +181,16 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		if (!uplink?.purchase_log[src.type])
-			var/mob/M = item.loc
-			if (istype(M)) // This is used for spiefs, whose items get put into their hand automatically
-				M.drop_item(item)
 			var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc, TRUE)
-			MI.storage.add_contents(item)
-			if (istype(M))
-				M.put_in_hand(MI)
+			// Spief uplinks put the spawned item in the player's hands after this proc,
+			// so we need to account for that and make sure we don't spit the box out onto the ground
+			if (uplink.purchase_flags & UPLINK_SPY_THIEF || uplink.purchase_flags & UPLINK_SPY)
+				SPAWN(0)
+					owner.drop_item(item)
+					MI.storage.add_contents(item)
+					owner.put_in_hand_or_drop(MI)
+			else
+				MI.storage.add_contents(item)
 
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
