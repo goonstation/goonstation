@@ -2993,3 +2993,8 @@
 			// alright we're back on the road
 			C.cant_control = FALSE
 			C.set_density(1)
+
+			// unspin the kart to be safe
+			C.set_dir(C.drive_dir)
+			C.facing = C.drive_dir
+
