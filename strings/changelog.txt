@@ -1,4 +1,41 @@
 
+(t)tue jun 18 24
+(u)TemThrush
+(p)19540
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)A new stylish furniture set is available to purchase from Cargo!
+(t)mon jun 17 24
+(u)JORJ949
+(p)19490
+(e)🗺🔎⚙|A-Mapping, C-Code-Quality, A-Internal
+(+)HoS and Armory access have been separated, presently only affects the NTSO who no longer gets HoS access. Please report any other changes as a bug.
+(u)Sovexe
+(p)19561
+(e)🪲🔒|C-Bug, A-Secret
+(+)Ants will no longer spawn in food located on restricted Z levels
+(u)LeahTheTech
+(+)The PTL is now correctly more dangerous at lower power levels.
+(t)sun jun 16 24
+(u)glowbold
+(p)19529
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The Buttes Motel has installed door locks.
+(u)Glamurio (Ryou)
+(p)19398
+(e)🆕🗺|C-Feature, A-Mapping
+(*)NT put aside some funding for an escape pod bay in Clarion.
+(u)Retrino
+(p)19105
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Anti-bioweapon crates have been moved to their proper homes in the armory.
+(u)JORJ949
+(p)19426
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate now offers a cheaper version of the radio upgrade granting access to the syndicate frequency.
+(u)Glamurio (Ryou)
+(p)19508
+(e)🪲💅|C-Bug, C-QoL
+(+)You can now choose not to have a middle name in character creation by leaving it empty.
 (t)sat jun 15 24
 (u)Skeletonman0
 (p)19513

@@ -883,10 +883,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		return
 
 	if(growing.harvested_proc)
-		if(growing.HYPharvested_proc(src,user)) return
-		if(MUT?.HYPharvested_proc_M(src,user)) return
 		// Does this plant react to being harvested? If so, do it - it also functions as
 		// a check since harvesting will stop here if this returns anything other than 0.
+		if(growing.HYPharvested_proc(src,user)) return
+		if(MUT?.HYPharvested_proc_M(src,user)) return
+		//it can happen during HYPharvested_proc that the planttype in the pot gets replaced, we account for that here
+		growing = src.current
 
 	if(hydro_controls)
 		src.recently_harvested = 1
