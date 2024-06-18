@@ -1181,6 +1181,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
 
+/datum/supply_packs/furniture_sleek
+	name = "Sleek Furnishings Crate"
+	desc = "A flat-packed set of tables, stools and chairs in a glossy black."
+	contains = list(/obj/item/furniture_parts/table/sleek = 4,
+					/obj/item/furniture_parts/stool/sleek = 2,
+					/obj/item/furniture_parts/sleekchair =2)
+	cost = PAY_EXECUTIVE*2
+	containertype = /obj/storage/crate/wooden
+	containername = "Sleek Furnishings Crate"
+
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"
 	desc = "A set of very fancy flat-packed, regal furniture."
