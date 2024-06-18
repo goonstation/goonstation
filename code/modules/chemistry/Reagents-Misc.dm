@@ -1781,13 +1781,13 @@ datum
 				else if (prob(10))
 					random_brute_damage(M, 2 * mult)
 					M.emote(pick("twitch", "twitch_s", "grumble"))
-					M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under their skin", "their skin")]!"),\
+					M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under [his_or_her(M)] skin", "[his_or_her(M)] skin")]!"),\
 					SPAN_ALERT("<b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b>"))
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
 					M.emote("twitch")
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
-					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at their own skin!"),\
+					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
 				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
 					if (!locate(/obj/decal/cleanable/vomit) in T)
@@ -2456,7 +2456,7 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M)] legs!"))
 						M.change_misstep_chance(33 * mult)
 						M.setStatusMin("knockdown", 3 SECONDS * mult)
 					else if (effect <= 4)
@@ -4247,7 +4247,7 @@ datum
 		while (!disposed)
 			if (BOUNDS_DIST(src, src.deathtarget) == 0)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!"), 1)
+					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches [him_or_her(deathtarget)] in the groin before rolling under the floortiles!"), 1)
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
