@@ -1132,7 +1132,7 @@ datum
 					return //Since is created by a meth overdose, dont react while meth is in their system.
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M] legs!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M)] legs!"))
 						M.change_misstep_chance(12 * mult)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 4)

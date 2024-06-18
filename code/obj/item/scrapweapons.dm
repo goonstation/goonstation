@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] swings [his_or_her(user)] [src] in a mighty arc around [his_or_her(user)] head faster and faster until it hits [his_or_her[user]] head and knocks it clean off! [pick("Holy fucking shit", "Jesus christ what a show", "How is that even possible?", "Nice")]! </b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] swings [his_or_her(user)] [src] in a mighty arc around [his_or_her(user)] head faster and faster until it hits [his_or_her(user)] head and knocks it clean off! [pick("Holy fucking shit", "Jesus christ what a show", "How is that even possible?", "Nice")]! </b>"))
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 		SPAWN(10 SECONDS)
