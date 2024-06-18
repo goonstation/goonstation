@@ -53,8 +53,9 @@ export const MapVote = (_props, context) => {
           {mapList.map(map => (
             <MapPanel
               key={map.name}
-              mapName={map.name}
-              mapThumbnail={map.thumbnail}
+              name={map.name}
+              thumbnail={map.thumbnail}
+              details={map.details}
               button={
                 <Button.Checkbox
                   checked={clientVoteMap[map.name]}
@@ -64,7 +65,6 @@ export const MapVote = (_props, context) => {
               onClick={() => act('toggle_vote', { map_name: map.name })}
               style={{ cursor: "pointer" }}
               voted={!!clientVoteMap[map.name]}
-              details={map.details}
             />
           ))}
         </Stack>
@@ -93,25 +93,23 @@ export const MapVote = (_props, context) => {
   );
 };
 
-interface MapPanelProps {
-  mapName: string,
-  voted?: boolean,
+
+type MapPanelProps = Pick<MapVoteMapData, 'name' | 'thumbnail' | 'details'> & {
+  voted?: boolean
   won?: boolean,
   button?: InfernoNode,
   onClick?: () => void,
   style?: Record<string, string>,
-  mapThumbnail: string,
   children?: InfernoNode,
-  details: MapVoteMapDetials | null
-}
+};
 
 export const MapPanel = (props: MapPanelProps) => {
   const {
-    mapName,
-    button,
-    mapThumbnail,
-    children,
+    name,
+    thumbnail,
     details,
+    button,
+    children,
     voted,
     won,
     ...rest
@@ -123,7 +121,7 @@ export const MapPanel = (props: MapPanelProps) => {
         <Box inline nowrap overflow="hidden"
           style={{ "text-overflow": "ellipsis" }}
           maxWidth={`${MAP_PANEL_WIDTH - 35}px`}>
-          {mapName}
+          {name}
         </Box>)}
       className={`MapPanel ${voted ? "MapPanel--voted" : ""} ${won ? "MapPanel--won" : ""}`}
       buttons={button}
@@ -133,7 +131,7 @@ export const MapPanel = (props: MapPanelProps) => {
       {...computeBoxProps(rest)}
     >
       <Box align="center">
-        <Image src={mapThumbnail} backgroundColor="#0f0f0f" width="75px" />
+        <Image src={thumbnail} backgroundColor="#0f0f0f" width="75px" />
       </Box>
       {children}
     </Section>
@@ -142,22 +140,19 @@ export const MapPanel = (props: MapPanelProps) => {
   return (
     <Stack.Item>
       {details
-        ? <Tooltip content={<MapPanelTooltip mapName={mapName} details={details} />}>{panel}</Tooltip>
+        ? <Tooltip content={<MapPanelTooltip name={name} details={details} />}>{panel}</Tooltip>
         : panel}
     </Stack.Item>
   );
 };
 
-interface MapPanelTooltipProps {
-  mapName: string,
-  details: MapVoteMapDetials
-}
+type MapPanelTooltipProps = Pick<MapVoteMapData, 'name' | 'details'>;
 
 const MapPanelTooltip = (props: MapPanelTooltipProps) => {
-  const { mapName, details } = props;
+  const { name, details } = props;
   return (
     <>
-      <strong>{mapName}</strong><br />
+      <strong>{name}</strong><br />
       {details.description}<br />
       <strong>Location:</strong> {details.location}<br />
       <strong>Engine:</strong> {details.engine}<br />

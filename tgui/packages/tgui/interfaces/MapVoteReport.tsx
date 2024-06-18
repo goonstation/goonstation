@@ -47,10 +47,11 @@ export const MapVoteReport = (_props, context) => {
             return (
               <MapPanel
                 key={map.name}
-                mapName={map.name}
-                mapThumbnail={map.thumbnail}
+                name={map.name}
+                details={map.details}
+                thumbnail={map.thumbnail}
                 won={map.name === winner}
-                details={map.details}>
+              >
                 <VoteCountLabel voteCount={map.count} />
                 {!!isDetailed && <Voters voters={map.voters} />}
               </MapPanel>
@@ -62,7 +63,7 @@ export const MapVoteReport = (_props, context) => {
   );
 };
 
-interface VoteCountLabelProps {
+type VoteCountLabelProps = {
   voteCount: number;
 }
 
@@ -75,9 +76,7 @@ const VoteCountLabel = (props: VoteCountLabelProps) => {
   );
 };
 
-interface VotersProps {
-  voters: Array<string>
-}
+type VotersProps = Pick<MapVoteReportMapData, 'voters'>;
 
 const Voters = (props: VotersProps) => {
   const { voters } = props;
