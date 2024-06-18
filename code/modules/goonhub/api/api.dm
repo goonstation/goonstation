@@ -177,7 +177,7 @@ var/global/datum/apiHandler/apiHandler
 			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
-			src.apiError(list("message" = "API Error: JSON decode error during [req_route]"))
+			src.apiError(list("message" = "API Error: JSON decode error during [req_route]", "status_code" = response.status_code))
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)
