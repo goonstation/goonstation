@@ -1,4 +1,9 @@
 
+(t)tue jun 18 24
+(u)TemThrush
+(p)19540
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)A new stylish furniture set is available to purchase from Cargo!
 (t)mon jun 17 24
 (u)JORJ949
 (p)19490
