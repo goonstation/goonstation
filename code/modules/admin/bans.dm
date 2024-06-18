@@ -138,7 +138,7 @@
 			SPAWN(0)
 				try
 					// Add these details to the existing ban
-					src.addDetails(ban, TRUE, "bot", ckey, comp_id, ip)
+					src.addDetails(ban.id, TRUE, "bot", ckey, comp_id, ip)
 				catch (var/exception/e)
 					var/logMsg = "Failed to add ban evasion details to ban [ban.id] because: [e.name]"
 					logTheThing(LOG_ADMIN, "bot", logMsg)
@@ -230,9 +230,9 @@
 		ircbot.export_async("admin", ircmsg)
 
 	/// Add details to an existing ban
-	proc/addDetails(datum/apiModel/Tracked/BanResource/ban, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
+	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
 		var/datum/apiRoute/bans/add_detail/addDetail = new
-		addDetail.routeParams = list("[ban.id]")
+		addDetail.routeParams = list("[banId]")
 		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, evasion)
 		var/datum/apiModel/Tracked/BanDetail/banDetail
 		try
@@ -244,16 +244,16 @@
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
 		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
-		var/original_ckey = ban.original_ban_detail["ckey"]
+		var/original_ckey = banDetail.original_ban_detail["ckey"]
 
 		// Tell admins
-		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>[ban.id]</a>, Original Ckey: [original_ckey]"
+		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='[goonhub_href("/admin/bans/[banId]", TRUE)]'>[banId]</a>, Original Ckey: [original_ckey]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
 		message_admins("<span class='internal'>[messageAdminsAdmin] [msg]</span>")
 
 		// Tell discord
-		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[ban.id]\](<[goonhub_href("/admin/bans/[ban.id]")]>), Original Ckey: [original_ckey]"
+		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[banId]\](<[goonhub_href("/admin/bans/[banId]")]>), Original Ckey: [original_ckey]"
 		var/ircmsg[] = new()
 		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
