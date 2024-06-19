@@ -7196,8 +7196,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "awv" = (
-/obj/decal/boxingrope,
 /obj/table/reinforced/auto,
+/obj/item/device/microphone,
+/obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aww" = (
@@ -7221,8 +7222,7 @@
 /area/station/crew_quarters/fitness)
 "awz" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awA" = (
