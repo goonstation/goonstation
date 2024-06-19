@@ -2942,9 +2942,12 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	icon = 'icons/obj/geodes.dmi'
 	icon_state = "pale"
 	density = TRUE
+	var/broken = FALSE
 	var/break_power = 5
 
 	proc/break_open()
+		SHOULD_CALL_PARENT(TRUE)
+		src.broken = TRUE
 		src.icon_state = "[initial(src.icon_state)]-broken"
 		src.visible_message(SPAN_ALERT("[src] breaks open!"))
 		src.desc = "Half of a broken open rock geode."
@@ -2963,36 +2966,54 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	///If true, look for custom material icon states in the form `crystals$$materialname`, otherwise do a best attempt to recolour using the material colour
 	///Darker materials (ie uqil) may need custom crystal sprites
 	var/custom_crystal_states = FALSE
+	var/embedded_crystals_left = 1
 
 	New()
 		..()
 		src.set_crystal(src.crystal_path)
+		src.embedded_crystals_left = rand(1,3)
 
 	proc/get_crystal_material()
 		RETURN_TYPE(/datum/material)
 		var/obj/item/item_path = src.crystal_path
 		return getMaterial(initial(item_path.default_material))
 
-	proc/make_crystal_overlay(broken)
+	proc/update_crystal_overlay()
 		var/datum/material/crystal_material = src.get_crystal_material()
 		var/image/crystals = null
 		if (src.custom_crystal_states)
-			crystals = image('icons/obj/geodes.dmi', "crystals[broken ? "-broken" : ""]$$[crystal_material.getID()]")
+			crystals = image('icons/obj/geodes.dmi', "crystals[src.broken ? "-broken" : ""]$$[crystal_material.getID()]")
 		else
-			crystals = image('icons/obj/geodes.dmi', "crystals[broken ? "-broken" : ""]")
+			crystals = image('icons/obj/geodes.dmi', "crystals[src.broken ? "-broken" : ""]")
 			crystals.color = crystal_material.getColor()
 		crystals.alpha = 200
 		src.AddOverlays(crystals, "crystals")
 
 	proc/set_crystal(crystal_path)
 		src.crystal_path = crystal_path
-		src.make_crystal_overlay(FALSE)
+		src.update_crystal_overlay()
 
 	break_open()
+		..()
 		for (var/i in 1 to src.amount)
 			new src.crystal_path(src)
-		src.make_crystal_overlay(TRUE)
-		..()
+		src.update_crystal_overlay()
+
+	attackby(obj/item/I, mob/user)
+		if (!src.broken || !istypes(I, list(/obj/item/mining_tool, /obj/item/mining_tools)))
+			return ..()
+		if (src.embedded_crystals_left <= 0)
+			for (var/i in 1 to 3)
+				new /obj/item/raw_material/rock(src.loc)
+			src.visible_message(SPAN_ALERT("[src] smashes into pieces!"))
+			qdel(src)
+			return
+		src.embedded_crystals_left--
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 50, 1)
+		var/spawn_type = pick(100; /obj/item/raw_material/molitz, 50; src.crystal_path, 10; /obj/item/raw_material/gemstone)
+		var/obj/item/crystal = new spawn_type(src.loc)
+		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]"))
+		user.lastattacked = src //is this how this works?
 
 	claretine
 		amount = 6
@@ -3005,7 +3026,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		icon_state = "dark"
 		crystal_path = /obj/item/raw_material/starstone
 		New()
-			src.amount = rand(1,3)
+			src.amount = rand(1,2)
 			..()
 			src.break_power = rand(15, 40)
 
@@ -3034,12 +3055,12 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 		src.AddComponent(/datum/component/reagent_overlay, 'icons/obj/geodes.dmi', "trickles", 1)
 
 	break_open()
+		..()
 		var/obj/reagent_dispensers/geode/fluid_shell = new(src.loc, src.reagents.total_volume)
 		src.reagents.trans_to(fluid_shell, src.reagents.total_volume)
-		fluid_shell.icon_state = "[src.icon_state]-broken"
+		fluid_shell.icon_state = src.icon_state
 		if (src.material)
 			fluid_shell.setMaterial(src.material)
-		src.visible_message(SPAN_ALERT("[src] breaks open!"))
 		qdel(src)
 
 	oil
@@ -3062,7 +3083,6 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 		default_material = "gnesis"
 		uses_default_material_appearance = TRUE
 		reagent_id = "flockdrone_fluid"
-
 
 
 /obj/reagent_dispensers/geode
