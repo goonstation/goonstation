@@ -3007,6 +3007,11 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			..()
 			src.break_power = rand(7, 15) //small chance you can break it with just a concussive charge
 
+	erebite
+		icon_state = "sandy"
+		crystal_path = /obj/item/raw_material/erebite
+		amount = 2
+
 
 
 /obj/geode/fluid
