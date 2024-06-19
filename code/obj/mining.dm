@@ -3094,6 +3094,10 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 	icon = 'icons/obj/geodes.dmi'
 	icon_state = "pale-broken"
 
+	New(loc, capacity)
+		. = ..()
+		src.flags |= OPENCONTAINER
+
 	special_desc()
 		return "Half of a broken open rock geode[src.reagents.total_volume > 0 ? ", filled with some kind of liquid" : "."]"
 
