@@ -3004,8 +3004,8 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	starstone
 		icon_state = "dark"
 		crystal_path = /obj/item/raw_material/starstone
-		amount = 1
 		New()
+			src.amount = rand(1,3)
 			..()
 			src.break_power = rand(15, 40)
 
