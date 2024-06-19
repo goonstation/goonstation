@@ -559,7 +559,7 @@
 		// give PDA group messages
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] pressure. "
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 		return value
