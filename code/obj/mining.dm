@@ -2986,7 +2986,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		else
 			crystals = image('icons/obj/geodes.dmi', "crystals[src.broken ? "-broken" : ""]")
 			crystals.color = crystal_material.getColor()
-		crystals.alpha = 200
+			crystals.alpha = 200
 		src.AddOverlays(crystals, "crystals")
 
 	proc/set_crystal(crystal_path)
@@ -3026,8 +3026,9 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		crystal_path = /obj/item/raw_material/molitz_beta
 
 	starstone
-		icon_state = "red"
+		icon_state = "dark"
 		crystal_path = /obj/item/raw_material/starstone
+		custom_crystal_states = TRUE
 		New()
 			src.amount = rand(1,2)
 			..()
