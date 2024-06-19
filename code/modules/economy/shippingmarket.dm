@@ -556,7 +556,7 @@
 		if (sell && value > 0)
 			src.pressure_crystal_sales["[pc.pressure]"] = value
 
-		// give PDA group messages
+		// tell sci
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] pressure. "
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
