@@ -58073,7 +58073,7 @@
 "fuA" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/crew_quarters/quartersA)
 "fuP" = (
 /obj/cable{
 	icon_state = "4-8"
