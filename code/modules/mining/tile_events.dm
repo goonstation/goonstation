@@ -41,7 +41,7 @@
 	analysis_string = "Large crystalline formations detected."
 	excavation_string = "A geode was unearthed!"
 	scan_decal = "scan-object"
-	weight = 1000
+	weight = 200 //let's make these pretty common for now
 
 	onExcavate(turf/simulated/wall/auto/asteroid/AST)
 		if (..())
