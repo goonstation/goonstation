@@ -18,8 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			AM.set_loc(src.loc)
 
 	ex_act(severity, last_touched, power, datum/explosion/explosion)
-		var/exp_power = (power / 2) ** 2 || (4-clamp(severity, 1, 3))*2 //TODO: figure out if this even makes sense and generalize it if it does
-		if (exp_power >= src.break_power)
+		if (explosion.power >= src.break_power)
 			src.break_open()
 
 /obj/geode/crystal
