@@ -3012,8 +3012,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		crystal_path = /obj/item/raw_material/erebite
 		amount = 2
 
-
-
+ABSTRACT_TYPE(/obj/geode/fluid)
 /obj/geode/fluid
 	var/reagent_id = null
 	New()
@@ -3027,11 +3026,31 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	break_open()
 		var/obj/reagent_dispensers/geode/fluid_shell = new(src.loc, src.reagents.total_volume)
 		src.reagents.trans_to(fluid_shell, src.reagents.total_volume)
+		if (src.material)
+			fluid_shell.setMaterial(src.material)
 		src.visible_message(SPAN_ALERT("[src] breaks open!"))
 		qdel(src)
 
 	oil
+		icon_state = "sandy"
 		reagent_id = "oil"
+
+	sulfuric_acid
+		reagent_id = "acid"
+	//hehehehe
+	cyanide
+		reagent_id = "cyanide"
+	ants
+		reagent_id = "ants"
+		break_open()
+			new /mob/living/critter/fermid/worker(src.loc) //beeg ant
+			..()
+
+	gnesis
+		default_material = "gnesis"
+		uses_default_material_appearance = TRUE
+		reagent_id = "flockdrone_fluid"
+
 
 
 /obj/reagent_dispensers/geode
