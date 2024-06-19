@@ -61,7 +61,8 @@
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
-	return P.hits_ghosts
+	// INVIS_ALWAYS ghosts are logged out/REALLY hidden.
+	return (P.hits_ghosts && (src.invisibility != INVIS_ALWAYS))
 
 /mob/dead/say(var/message)
 	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
