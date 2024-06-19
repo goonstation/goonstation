@@ -37,6 +37,26 @@
 		I.quality = AST.quality + rand(-50,50)
 		I.name = "[getGemQualityName(I.quality)] [I.name]"
 
+/datum/ore/event/geode
+	analysis_string = "Large crystalline formations detected."
+	excavation_string = "A geode was unearthed!"
+	scan_decal = "scan-object"
+	weight = 1000
+
+	onExcavate(turf/simulated/wall/auto/asteroid/AST)
+		if (..())
+			return
+		//this should maybe be a weighting system on the geode types instead
+		var/geode_type = null
+		if (prob(30))
+			if (prob(70))
+				geode_type = /obj/geode/fluid/oil
+			else
+				geode_type = pick(concrete_typesof(/obj/geode/fluid))
+		else
+			geode_type = pick(concrete_typesof(/obj/geode/crystal))
+		new geode_type(AST)
+
 /datum/ore/event/gem/molitz_b
 	analysis_string = "Small unusual crystalline deposit detected."
 	excavation_string = "Something unusual tumbles out of the collapsing rock!"
