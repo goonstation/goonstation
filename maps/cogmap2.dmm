@@ -1334,6 +1334,21 @@
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
 	})
+"aet" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/crate/clown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "aev" = (
 /obj/machinery/light{
 	dir = 8;
@@ -56374,6 +56389,25 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
+"dtv" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/firealarm/east,
+/obj/machinery/computer/announcement/clown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "dtC" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -57261,6 +57295,18 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"eoW" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Weapons Storage"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "erl" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -60786,21 +60832,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/coldloop)
-"ifP" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Weapons Storage"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "iix" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -64819,25 +64850,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
-"mbm" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/firealarm/east,
-/obj/machinery/computer/announcement/clown,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "mbH" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -67058,20 +67070,6 @@
 	dir = 10
 	},
 /area/station/com_dish/auxdish)
-"owh" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Armory"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 4
-	},
-/obj/mapping_helper/access/hos,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "owx" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
 /area/station/medical/medbay/psychiatrist)
@@ -69798,21 +69796,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"rhT" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/storage/crate/clown,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "riK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -71524,6 +71507,21 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
+"sVi" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Weapons Storage"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "sVH" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8
@@ -74722,6 +74720,20 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/brig)
+"wRy" = (
+/obj/machinery/door/airlock/pyro/command{
+	aiControlDisabled = 1;
+	dir = 4;
+	name = "Armory"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "wRU" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -75380,18 +75392,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/maintenance)
-"xDX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Weapons Storage"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "xEv" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -111484,8 +111484,8 @@ kju
 aaI
 aaa
 adh
-mbm
-rhT
+dtv
+aet
 afc
 afV
 afU
@@ -130877,9 +130877,9 @@ bzH
 bBk
 tdm
 bFf
-xDX
+eoW
 bIU
-ifP
+sVi
 bMu
 guo
 bBn
@@ -131783,7 +131783,7 @@ bzK
 bBn
 bBn
 bFi
-owh
+wRy
 bIX
 xWI
 bMx

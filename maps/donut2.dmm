@@ -24878,6 +24878,22 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria)
+"hsw" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "hsx" = (
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor/grime,
@@ -25343,24 +25359,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
-"hHu" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable/orange{
-	icon_state = "0-4"
-	},
-/obj/decal/cleanable/rust/jen,
-/obj/machinery/computer/announcement/clown{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "hHK" = (
 /obj/landmark/start/job/detective,
 /obj/stool/chair/comfy/red{
@@ -30303,14 +30301,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"kTp" = (
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiHacking = 1
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "kTw" = (
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment/mail,
@@ -30831,6 +30821,19 @@
 	dir = 4
 	},
 /area/station/security/processing)
+"lkk" = (
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_x = -24;
+	pixel_y = 1;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/ai_monitored/armory)
 "lks" = (
 /obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/grey,
@@ -36650,6 +36653,24 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/research)
+"oFj" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/computer/announcement/clown{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "oFu" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -40040,21 +40061,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"qGO" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/turretid{
-	pixel_x = 24;
-	pixel_y = 1;
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/ai_monitored/armory)
 "qHe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48271,19 +48277,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"vVo" = (
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	pixel_y = 1;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
-/area/station/ai_monitored/armory)
 "vVq" = (
 /obj/machinery/computer/bank_data,
 /obj/machinery/light/incandescent,
@@ -49335,6 +49328,21 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"wDq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	pixel_x = 24;
+	pixel_y = 1;
+	req_access = null
+	},
+/obj/machinery/light/incandescent,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/ai_monitored/armory)
 "wDG" = (
 /obj/stool/chair{
 	dir = 4
@@ -49814,6 +49822,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"wWw" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "wWy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49972,22 +49988,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"xdb" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "xdw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -79996,7 +79996,7 @@ azU
 aES
 aYB
 eAg
-hHu
+oFj
 enT
 wgf
 eAg
@@ -97253,7 +97253,7 @@ bgP
 bgP
 nJh
 bry
-vVo
+lkk
 bgP
 hVA
 tMz
@@ -97556,7 +97556,7 @@ bgP
 vKF
 bry
 bzC
-kTp
+wWw
 wFJ
 tMz
 lus
@@ -97857,7 +97857,7 @@ bgP
 bgP
 cNF
 piG
-qGO
+wDq
 bgP
 rWV
 tMz
@@ -98158,7 +98158,7 @@ bgP
 bgP
 bgP
 vgM
-xdb
+hsw
 qcT
 bgP
 yiQ

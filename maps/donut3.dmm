@@ -2300,6 +2300,15 @@
 	dir = 4
 	},
 /area/listeningpost)
+"aEB" = (
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 1
+	},
+/obj/machinery/space_heater/sauna_stove,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/sauna)
 "aEC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -6703,6 +6712,20 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/north)
+"bRo" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_delivery,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "bRs" = (
 /obj/machinery/vending/floppy,
 /obj/machinery/light/incandescent,
@@ -20562,21 +20585,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"geZ" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner,
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "gfk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -23698,20 +23706,6 @@
 	dir = 1
 	},
 /turf/space,
-/area/station/turret_protected/armory_outside)
-"hag" = (
-/obj/machinery/turretid{
-	pixel_y = 28
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "hai" = (
 /obj/stool/chair/yellow{
@@ -35510,6 +35504,21 @@
 /obj/mapping_helper/access/hydro,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"kJs" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner,
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "kKf" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass{
@@ -41988,20 +41997,6 @@
 /obj/machinery/power/tracker/west,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
-"mGp" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
 "mGx" = (
 /obj/railing/green{
 	dir = 1;
@@ -42087,15 +42082,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"mHU" = (
-/obj/machinery/light/small/sticky/warm/very{
-	dir = 1
-	},
-/obj/machinery/space_heater/sauna_stove,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/sauna)
 "mHZ" = (
 /obj/stool/chair/comfy/red{
 	desc = "The perfect view.";
@@ -43748,6 +43734,20 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"nhM" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/turret_protected/armory_outside)
 "nhO" = (
 /obj/item/clothing/mask/wrestling,
 /obj/item/clothing/mask/wrestling/black,
@@ -66849,20 +66849,6 @@
 "ujy" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/storage/tech)
-"uke" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/stripe_delivery,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "ukq" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -76027,6 +76013,20 @@
 	},
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost)
+"wTz" = (
+/obj/machinery/turretid{
+	pixel_y = 28
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/turret_protected/armory_outside)
 "wTA" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/black,
@@ -104413,11 +104413,11 @@ uAJ
 syV
 oya
 hvR
-geZ
+kJs
 rZQ
 wzZ
 jso
-uke
+bRo
 vDP
 pzR
 sEJ
@@ -105019,7 +105019,7 @@ vFX
 neh
 jJd
 jJd
-mGp
+nhM
 jJd
 jJd
 fAb
@@ -105924,7 +105924,7 @@ xYm
 rYD
 rtR
 jJd
-hag
+wTz
 kQY
 fiB
 hsP
@@ -119806,7 +119806,7 @@ dXQ
 jYw
 hWo
 vBq
-mHU
+aEB
 vBq
 vBq
 vBq
