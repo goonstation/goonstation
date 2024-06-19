@@ -325,9 +325,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 			new /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver(src.loc)
 			if (src.reagents?.total_volume > 0)
 				src.reagents.trans_to(liver, src.reagents.total_volume)
-		else if (prob(25)) // Don't try doing it if you don't know what you're doing
-			boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
-			src.reagents.trans_to(user, 20)
+		else
+			if (prob(25)) // Don't try doing it if you don't know what you're doing
+				boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
+				src.reagents.trans_to(user, 20)
+			else if (prob(30)) // 30% of 75%(slightly more than 22%) chance of still being safe to eat
+				src.reagents.remove_reagent("tetrodotoxin",src.reagents.get_reagent_amount("tetrodotoxin"))
+
 
 	proc/spikes_protected(mob/living/carbon/human/H)
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0
