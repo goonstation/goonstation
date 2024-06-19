@@ -1076,11 +1076,11 @@
 		var/throw_dir = get_dir(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-				yeet_change_mod = 1
+				yeet_change_mod *= 1
 			if(src.mind.karma < 0) //you come and go, you come and go.
-				yeet_change_mod = 0
+				yeet_change_mod *= 0
 			if(src.mind.karma < 50 && src.mind.karma >= 0)
-				yeet_change_mod = 0.1
+				yeet_change_mod *= 0.1
 
 		if(prob(yeet_change_mod))
 			src.visible_message(SPAN_ALERT("[src] yeets [I]."))
