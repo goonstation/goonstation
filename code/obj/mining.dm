@@ -2994,14 +2994,17 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		src.update_crystal_overlay()
 
 	break_open()
-		..()
 		for (var/i in 1 to src.amount)
 			new src.crystal_path(src)
+		..()
 		src.update_crystal_overlay()
 
 	attackby(obj/item/I, mob/user)
-		if (!src.broken || !istypes(I, list(/obj/item/mining_tool, /obj/item/mining_tools)))
+		if (!istypes(I, list(/obj/item/mining_tool, /obj/item/mining_tools)))
 			return ..()
+		if (!src.broken)
+			boutput(user, SPAN_ALERT("Your [I.name] fails to make a dent in the tough rock."))
+			return
 		if (src.embedded_crystals_left <= 0)
 			for (var/i in 1 to 3)
 				new /obj/item/raw_material/rock(src.loc)
@@ -3012,7 +3015,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 50, 1)
 		var/spawn_type = pick(100; /obj/item/raw_material/molitz, 50; src.crystal_path, 10; /obj/item/raw_material/gemstone)
 		var/obj/item/crystal = new spawn_type(src.loc)
-		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]"))
+		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]."))
 		user.lastattacked = src //is this how this works?
 
 	claretine
@@ -3023,7 +3026,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		crystal_path = /obj/item/raw_material/molitz_beta
 
 	starstone
-		icon_state = "dark"
+		icon_state = "red"
 		crystal_path = /obj/item/raw_material/starstone
 		New()
 			src.amount = rand(1,2)
@@ -3076,7 +3079,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 		reagent_id = "ants"
 		break_open()
 			new /mob/living/critter/fermid/worker(src.loc) //beeg ant
-			src.visible_message(SPAN_ALERT("An angry fermid jumps out of [src]!"))
+			src.visible_message(SPAN_ALERT(SPAN_BOLD("An angry fermid jumps out of [src]!")))
 			..()
 
 	gnesis
