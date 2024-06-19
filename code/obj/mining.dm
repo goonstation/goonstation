@@ -2960,6 +2960,9 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	icon_state = "pale"
 	var/crystal_path = /obj/item/raw_material/molitz
 	var/amount = 5
+	///If true, look for custom material icon states in the form `crystals$$materialname`, otherwise do a best attempt to recolour using the material colour
+	///Darker materials (ie uqil) may need custom crystal sprites
+	var/custom_crystal_states = FALSE
 
 	New()
 		..()
@@ -2970,19 +2973,25 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		var/obj/item/item_path = src.crystal_path
 		return getMaterial(initial(item_path.default_material))
 
+	proc/make_crystal_overlay(broken)
+		var/datum/material/crystal_material = src.get_crystal_material()
+		var/image/crystals = null
+		if (src.custom_crystal_states)
+			crystals = image('icons/obj/geodes.dmi', "crystals[broken ? "-broken" : ""]$$[crystal_material.getID()]")
+		else
+			crystals = image('icons/obj/geodes.dmi', "crystals[broken ? "-broken" : ""]")
+			crystals.color = crystal_material.getColor()
+		crystals.alpha = 200
+		src.AddOverlays(crystals, "crystals")
+
 	proc/set_crystal(crystal_path)
 		src.crystal_path = crystal_path
-		var/image/crystals = image('icons/obj/geodes.dmi', "crystals")
-		crystals.color = src.get_crystal_material().getColor()
-		src.AddOverlays(crystals, "crystals")
+		src.make_crystal_overlay(FALSE)
 
 	break_open()
 		for (var/i in 1 to src.amount)
 			new src.crystal_path(src)
-		var/image/crystals = image('icons/obj/geodes.dmi', "crystals-broken")
-		crystals.color = src.get_crystal_material().getColor()
-		crystals.alpha = 200
-		src.AddOverlays(crystals, "crystals")
+		src.make_crystal_overlay(TRUE)
 		..()
 
 	claretine
@@ -3000,9 +3009,10 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			..()
 			src.break_power = rand(20, 40)
 
-	uqil
+	uqill
 		icon_state = "red"
 		crystal_path = /obj/item/raw_material/uqill
+		custom_crystal_states = TRUE
 		New()
 			..()
 			src.break_power = rand(7, 15) //small chance you can break it with just a concussive charge
