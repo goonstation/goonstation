@@ -20,6 +20,8 @@
 	var/list/listen_modifier_ids_with_subcount
 	/// An associative list of modifier listen modules, indexed by the module ID.
 	var/list/datum/listen_module/modifier/listen_modifiers_by_id
+	/// An associative list of modifier listen modules that overide say channel modifier preferences, indexed by the module ID.
+	var/list/datum/speech_module/modifier/persistent_listen_modifiers_by_id
 
 	/// An associative list of language datum subscription counts, indexed by the language ID.
 	var/list/known_language_ids_with_subcount
@@ -42,6 +44,7 @@
 
 	src.listen_modifier_ids_with_subcount = list()
 	src.listen_modifiers_by_id = list()
+	src.persistent_listen_modifiers_by_id = list()
 	for (var/modifier_id in modifiers)
 		src.AddModifier(modifier_id)
 
@@ -54,6 +57,7 @@
 	for (var/input_id in src.input_modules_by_id)
 		qdel(src.input_modules_by_id[input_id])
 
+	src.persistent_listen_modifiers_by_id = null
 	for (var/modifier_id in src.listen_modifiers_by_id)
 		qdel(src.listen_modifiers_by_id[modifier_id])
 
@@ -69,6 +73,7 @@
 	if (!istype(message))
 		CRASH("A non say_message thing was passed to a listen_module_tree. This should never happen.")
 
+	// If the say channel permits, apply the effects of all languages and modifiers, otherwise only apply modifiers that override say channel preferences.
 	if (message.received_module.say_channel.affected_by_modifiers)
 		if (src.understands_all_languages || src.known_languages_by_id[message.language.id])
 			message = message.language.heard_understood(message)
@@ -83,13 +88,20 @@
 			// If the module consumed the message, no need to process any further.
 			if (QDELETED(message))
 				return
+	else
+		for (var/modifier_id in src.persistent_listen_modifiers_by_id)
+			message = src.persistent_listen_modifiers_by_id[modifier_id].process(message)
+			// If the module consumed the message, no need to process any further.
+			if (QDELETED(message))
+				return
 
+	/// Pass to the listener atom.
 	src.listener_parent.hear(message)
 
+	/// Handle hear sounds.
 	if (message.hear_sound && !message.received_module.say_channel.suppress_hear_sound && ismob(src.listener_parent))
 		var/mob/mob_listener = src.listener_parent
 		mob_listener.playsound_local_not_inworld(message.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE)
-
 
 /// Update this listen module tree's listener origin. This will cause parent to hear messages from the location of the new listener origin.
 /datum/listen_module_tree/proc/update_listener_origin(atom/new_origin)
@@ -156,6 +168,11 @@
 
 	src.listen_modifiers_by_id[modifier_id] = new_modifier
 	sortList(src.listen_modifiers_by_id, GLOBAL_PROC_REF(cmp_say_modules), TRUE)
+
+	if (new_modifier.override_say_channel_modifier_preference)
+		src.persistent_listen_modifiers_by_id[modifier_id] = new_modifier
+		sortList(src.persistent_listen_modifiers_by_id, GLOBAL_PROC_REF(cmp_say_modules), TRUE)
+
 	return new_modifier
 
 /// Removes a modifier from the tree. Returns TRUE on success, FALSE on failure.
@@ -167,6 +184,7 @@
 	if (!src.listen_modifier_ids_with_subcount[modifier_id])
 		qdel(src.listen_modifiers_by_id[modifier_id])
 		src.listen_modifiers_by_id -= modifier_id
+		src.persistent_listen_modifiers_by_id -= modifier_id
 
 	return TRUE
 

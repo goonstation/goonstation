@@ -145,7 +145,6 @@ Contributing:
 Limitations To Later Code Out:
 - Currently tree can only support one instance of each module ID - this is not ideal for delimited listen and speech modules.
 - Delimited listen modules do not harmonise with associted global listen modules - two messages will be displayed.
-- The say channel `affected_by_modifiers` var cannot be overriden by modifers - this is an issue for admin modules.
 
 Cleanup:
 - Move say procs into this directory.

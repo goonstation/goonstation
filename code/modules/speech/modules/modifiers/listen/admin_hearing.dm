@@ -1,5 +1,6 @@
 /datum/listen_module/modifier/admin_hearing
 	id = LISTEN_MODIFIER_ADMIN_HEARING
+	override_say_channel_modifier_preference = TRUE
 
 /datum/listen_module/modifier/admin_hearing/process(datum/say_message/message)
 	. = message

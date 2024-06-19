@@ -18,6 +18,8 @@
 	var/list/speech_modifier_ids_with_subcount
 	/// An associative list of modifier speech modules, indexed by the module ID.
 	var/list/datum/speech_module/modifier/speech_modifiers_by_id
+	/// An associative list of modifier speech modules that overide say channel modifier preferences, indexed by the module ID.
+	var/list/datum/speech_module/modifier/persistent_speech_modifiers_by_id
 
 /datum/speech_module_tree/New(atom/parent, list/modifiers = list(), list/outputs = list())
 	. = ..()
@@ -32,6 +34,7 @@
 
 	src.speech_modifier_ids_with_subcount = list()
 	src.speech_modifiers_by_id = list()
+	src.persistent_speech_modifiers_by_id = list()
 	for (var/modifier_id in modifiers)
 		src.AddModifier(modifier_id)
 
@@ -39,6 +42,7 @@
 	for (var/output_id in src.output_modules_by_id)
 		qdel(src.output_modules_by_id[output_id])
 
+	src.persistent_speech_modifiers_by_id = null
 	for (var/modifier_id in src.speech_modifiers_by_id)
 		qdel(src.speech_modifiers_by_id[modifier_id])
 
@@ -58,10 +62,16 @@
 	if (!length(output_modules))
 		return
 
-	// If the say channel permits, apply modifier module message manipulation.
+	// If the say channel permits, apply the effects of all modifiers, otherwise only those that override say channel preferences.
 	if (global.SpeechManager.GetSayChannelInstance(message.output_module_channel).affected_by_modifiers)
 		for (var/modifier_id in src.speech_modifiers_by_id)
 			message = src.speech_modifiers_by_id[modifier_id].process(message)
+			// If the module consumed the message, no need to process any further.
+			if (QDELETED(message))
+				return
+	else
+		for (var/modifier_id in src.persistent_speech_modifiers_by_id)
+			message = src.persistent_speech_modifiers_by_id[modifier_id].process(message)
 			// If the module consumed the message, no need to process any further.
 			if (QDELETED(message))
 				return
@@ -148,6 +158,11 @@
 
 	src.speech_modifiers_by_id[modifier_id] = new_modifier
 	sortList(src.speech_modifiers_by_id, GLOBAL_PROC_REF(cmp_say_modules), TRUE)
+
+	if (new_modifier.override_say_channel_modifier_preference)
+		src.persistent_speech_modifiers_by_id[modifier_id] = new_modifier
+		sortList(src.persistent_speech_modifiers_by_id, GLOBAL_PROC_REF(cmp_say_modules), TRUE)
+
 	return new_modifier
 
 /// Removes a modifier from the tree. Returns TRUE on success, FALSE on failure.
@@ -159,6 +174,7 @@
 	if (!src.speech_modifier_ids_with_subcount[modifier_id])
 		qdel(src.speech_modifiers_by_id[modifier_id])
 		src.speech_modifiers_by_id -= modifier_id
+		src.persistent_speech_modifiers_by_id -= modifier_id
 
 	return TRUE
 
