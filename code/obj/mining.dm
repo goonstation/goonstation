@@ -3026,6 +3026,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 	break_open()
 		var/obj/reagent_dispensers/geode/fluid_shell = new(src.loc, src.reagents.total_volume)
 		src.reagents.trans_to(fluid_shell, src.reagents.total_volume)
+		fluid_shell.icon_state = "[src.icon_state]-broken"
 		if (src.material)
 			fluid_shell.setMaterial(src.material)
 		src.visible_message(SPAN_ALERT("[src] breaks open!"))
