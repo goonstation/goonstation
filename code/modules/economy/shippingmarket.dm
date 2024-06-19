@@ -555,6 +555,13 @@
 		value = round(value)
 		if (sell && value > 0)
 			src.pressure_crystal_sales["[pc.pressure]"] = value
+
+		// tell sci
+		var/datum/signal/pdaSignal = get_free_signal()
+		var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] kiloblast. "
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
 		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
