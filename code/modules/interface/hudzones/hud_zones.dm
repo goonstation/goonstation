@@ -55,13 +55,13 @@
 /datum/hud_zone/proc/adjust_offset(datum/hud_element/element)
 	PRIVATE_PROC(TRUE)
 	// prework
-	var/relative_pos_horizontal // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
+	var/relative_pos_horizontal // relative horizontal position (whole screen) where new elements are added, used with hud offsets
 	if (src.horizontal_edge == "EAST")
 		relative_pos_horizontal = 21 - src.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
 		relative_pos_horizontal = 0 + src.coords["x_low"] - 1 // take x loc of left corner (west edge)
 
-	var/relative_pos_vertical // absolute vertical position (whole screen) where new elements are added, used with hud offsets
+	var/relative_pos_vertical // relative vertical position (whole screen) where new elements are added, used with hud offsets
 	if (src.vertical_edge == "NORTH")
 		relative_pos_vertical = TILE_HEIGHT - src.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
