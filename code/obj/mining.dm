@@ -3055,6 +3055,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 		reagent_id = "ants"
 		break_open()
 			new /mob/living/critter/fermid/worker(src.loc) //beeg ant
+			src.visible_message(SPAN_ALERT("An angry fermid jumps out of [src]!"))
 			..()
 
 	gnesis
