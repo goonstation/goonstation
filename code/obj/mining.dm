@@ -2189,7 +2189,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 10 * src.expl_heavy)
+			geode.ex_act(2, null, 5 * src.expl_heavy)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2942,7 +2942,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	icon = 'icons/obj/geodes.dmi'
 	icon_state = "pale"
 	density = TRUE
-	var/break_power = 10
+	var/break_power = 5
 
 	proc/break_open()
 		src.icon_state = "[initial(src.icon_state)]-broken"
@@ -3007,7 +3007,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		amount = 1
 		New()
 			..()
-			src.break_power = rand(20, 40)
+			src.break_power = rand(15, 40)
 
 	uqill
 		icon_state = "red"
@@ -3015,7 +3015,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		custom_crystal_states = TRUE
 		New()
 			..()
-			src.break_power = rand(7, 15) //small chance you can break it with just a concussive charge
+			src.break_power = rand(3, 10) //small chance you can break it with just a concussive charge
 
 	erebite
 		icon_state = "sandy"
