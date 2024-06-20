@@ -600,6 +600,8 @@ ABSTRACT_TYPE(/obj/item)
 	if ((amount + diff) < 0)
 		return 0
 	amount += diff
+	// Fix some of the floating point imprecision
+	amount = round(amount, 0.1)
 	if (!inventory_counter)
 		create_inventory_counter()
 	inventory_counter.update_number(amount)

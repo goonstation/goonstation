@@ -80,7 +80,7 @@
 	initial_reagents = list("cryoxadone" = 40)
 	fluid_overlay_states = 8
 	container_style = "round_flask"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 /obj/item/reagent_containers/glass/beaker/epinephrine
 	name = "beaker (epinephrine)"
@@ -121,7 +121,7 @@
 	item_state = "large_flask"
 	fluid_overlay_states = 11
 	container_style = "large_flask"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
@@ -209,7 +209,7 @@
 	icon_state = "round_flask"
 	fluid_overlay_states = 8
 	container_style = "round_flask"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 /obj/item/reagent_containers/glass/flask/black_powder //prefab shit
 	initial_reagents = "blackpowder"
@@ -221,21 +221,6 @@
 	icon_state = "heartbottle"
 	initial_volume = 50
 	initial_reagents = "love"
-	var/icon_style = "heartbottle"
-	var/image/fluid_image
-
-	update_icon() //updates icon based on fluids inside
-		src.underlays = null
-		if (src.reagents && src.reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
-			var/datum/color/average = reagents.get_average_color()
-			var/average_rgb = average.to_rgba()
-			src.icon_state = "[src.icon_style][fluid_state]"
-			if (!src.fluid_image)
-				src.fluid_image = image('icons/misc/janstuff.dmi', "fluid-[icon_style][fluid_state]", -1)
-			else
-				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
-			src.fluid_image.color = average_rgb
-			src.underlays += fluid_image
-		else
-			src.icon_state = src.icon_style
+	container_icon = 'icons/misc/janstuff.dmi'
+	container_style = "heartbottle"
+	fluid_overlay_states = 5
