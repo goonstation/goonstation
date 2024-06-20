@@ -1168,37 +1168,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.ui_interact(user)
 
 	attackby(obj/item/W, mob/user, params)
-		var/obj/item/implant/marionette/M
-		if (istype(W, /obj/item/implanter))
-			var/obj/item/implanter/I = W
-			if (!istype(I.imp, /obj/item/implant/marionette))
-				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
-				return
-			M = I.imp
-		else if (istype(W, /obj/item/implantcase))
-			var/obj/item/implantcase/IC = W
-			if (!istype(IC.imp, /obj/item/implant/marionette))
-				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
-				return
-			M = IC.imp
-		else if (istype(W, /obj/item/implant))
-			M = W
-		if (istype(M))
-			if (M.burned_out)
-				boutput(user, SPAN_ALERT("The implant is burned out and permanently unusable."))
-				return
-			if (M.net_id in src.implant_status)
-				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
-				return
-			boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
-			src.implant_status[M.net_id] = "UNKNOWN"
-			M.linked_address = src.net_id
-			user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
+		if (src.link_with(W, user))
+			return
 		return ..()
 
 	afterattack(atom/target, mob/user, reach, params)
 		if (istype(target, /obj/item/implanter) || istype(target, /obj/item/implantcase) || istype(target, /obj/item/implant))
-			src.Attackby(target, user, params)
+			src.link_with(target, user)
 		else
 			return ..()
 
@@ -1310,6 +1286,34 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 								src.implant_status[implant_to_ping] = MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
 				playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
 				. = TRUE
+
+	proc/link_with(obj/item/W, mob/living/user)
+		var/obj/item/implant/marionette/M
+		if (istype(W, /obj/item/implanter))
+			var/obj/item/implanter/I = W
+			if (!istype(I.imp, /obj/item/implant/marionette))
+				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
+				return TRUE
+			M = I.imp
+		else if (istype(W, /obj/item/implantcase))
+			var/obj/item/implantcase/IC = W
+			if (!istype(IC.imp, /obj/item/implant/marionette))
+				boutput(user, SPAN_ALERT("\The [W] doesn't have a compatible implant."))
+				return TRUE
+			M = IC.imp
+		else if (istype(W, /obj/item/implant))
+			M = W
+		if (istype(M))
+			if (M.burned_out)
+				boutput(user, SPAN_ALERT("The implant is burned out and permanently unusable."))
+			else if (M.net_id in src.implant_status)
+				boutput(user, SPAN_NOTICE("This implant is already in the remote's tracking list."))
+			else
+				boutput(user, SPAN_NOTICE("You scan the implant into \the [src]'s database."))
+				src.implant_status[M.net_id] = "UNKNOWN"
+				M.linked_address = src.net_id
+				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
+			return TRUE
 
 /obj/item/implant/mindhack/super
 	name = "mindhack DELUXE implant"
