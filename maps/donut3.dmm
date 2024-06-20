@@ -4922,11 +4922,6 @@
 	id = "toxins_o2";
 	operating = 1
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/conveyor/WE{
-	id = "toxins_o2";
-	operating = 1
-	},
 /obj/strip_door{
 	dir = 4;
 	layer = 3
@@ -10441,11 +10436,6 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "cYj" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
-	operating = 1
-	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/conveyor/EW{
 	id = "toxins_n2o";
@@ -33521,11 +33511,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "kbt" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
-	operating = 1
-	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/conveyor/EW{
 	id = "toxins_n2o";
@@ -57464,11 +57449,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "roR" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/conveyor/WE{
-	id = "toxins_plasma";
-	operating = 1
-	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/conveyor/WE{
 	id = "toxins_plasma";
