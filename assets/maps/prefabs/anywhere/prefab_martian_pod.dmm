@@ -27,7 +27,11 @@
 /area/noGenerate)
 "ej" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/martian,
+/turf/simulated/floor/plating/airless/shuttlebay{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor2";
+	name = "organic floor"
+	},
 /area/noGenerate)
 "gV" = (
 /obj/item/storage/firstaid/docbag{
@@ -40,7 +44,7 @@
 /area/noGenerate)
 "mg" = (
 /obj/fluid_spawner/polluted_filth/green_goop,
-/obj/sea_plant,
+/mob/living/critter/aquatic/fish/jellyfish,
 /turf/simulated/floor/sand,
 /area/noGenerate)
 "ml" = (
@@ -54,8 +58,8 @@
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "nt" = (
+/obj/sea_plant/tubesponge,
 /obj/fluid_spawner,
-/obj/sea_plant,
 /turf/simulated/floor/sand,
 /area/noGenerate)
 "oF" = (
@@ -73,6 +77,11 @@
 	},
 /obj/map/light/white,
 /turf/simulated/floor/martian,
+/area/noGenerate)
+"qx" = (
+/obj/sea_plant/anemone,
+/obj/fluid_spawner,
+/turf/simulated/floor/sand,
 /area/noGenerate)
 "rv" = (
 /obj/indestructible/shuttle_corner{
@@ -164,6 +173,11 @@
 /obj/lattice,
 /obj/item/raw_material/shard/plasmacrystal,
 /turf/variableTurf/clear,
+/area/noGenerate)
+"EL" = (
+/obj/sea_plant/bulbous,
+/obj/fluid_spawner/polluted_filth/green_goop,
+/turf/simulated/floor/sand,
 /area/noGenerate)
 "FO" = (
 /obj/storage/crate/medical,
@@ -600,7 +614,7 @@ pJ
 pJ
 xM
 YW
-mg
+EL
 ae
 ej
 nh
@@ -636,8 +650,8 @@ pJ
 pJ
 pJ
 IU
-nt
 ae
+qx
 ej
 nh
 nh
