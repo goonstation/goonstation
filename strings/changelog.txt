@@ -1,4 +1,9 @@
 
+(t)thu jun 20 24
+(u)Garash2k
+(p)19107
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)New UI for the stationary and portable Chemicompiler.
 (t)wed jun 19 24
 (u)LeahTheTech and Flaborized
 (p)19598
