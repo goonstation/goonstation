@@ -1,3 +1,9 @@
+
+(t)wed jun 19 24
+(u)LeahTheTech and Flaborized
+(p)19598
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added geodes that mining can find. Can only be broken open with explosions, check your geological scanner for the power required. Geodes can contain various types of crystalline ore deposits as well as oil and other liquids.
 (t)tue jun 18 24
 (u)TemThrush
 (p)19540
