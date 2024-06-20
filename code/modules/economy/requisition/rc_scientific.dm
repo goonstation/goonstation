@@ -573,12 +573,14 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
 					if(GOAL_REFINEMENT)
-						goal_desc = "fuel encapsulation lining improvements"
-						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
+						goal_desc = "sanitation hardware enhancement"
+						src.payout += rand(80,130) * 20
+						src.item_rewarders += new /datum/rc_itemreward/sonic_shower
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
 
 			if(PROTOTYPIST_REV_ENG)
 				prototypist_desc = "Artifact reverse-engineer"
+				src.payout += rand(80,120) * 20
 
 				if(prob(60))
 					var/suitsets = rand(1,2)
@@ -605,8 +607,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 					if(GOAL_REFINEMENT)
 						goal_desc = "development of an enhanced mobile recharging bay"
 						//special backpack capable of accepting a large power cell to recharge contents automatically
-						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/reservoir,1)
-						//src.item_rewarders += new /datum/rc_itemreward/recharge_bay
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/chamber,1)
+						src.item_rewarders += new /datum/rc_itemreward/recharge_bay
 
 		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
 
@@ -638,11 +640,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"Melee Weapon"
 	)
 
-/datum/rc_entry/artifact/reservoir
-	name = "reservoir-type artifact"
+/datum/rc_entry/artifact/chamber
+	name = "chamber-type artifact"
 	acceptable_types = list(
 		"Bag of Holding",
 		"Beaker",
+		"Instrument",
 		"Large power cell",
 		"Small power cell",
 		"Pitcher"
@@ -917,17 +920,24 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			yielder += new rewardthing
 		return yielder
 
-/datum/rc_itemreward/upgraded_welders
-	name = "high-capacity welding tool"
+/datum/rc_itemreward/sonic_shower
+	name = "sonic shower head"
 
 	New()
 		..()
-		count = rand(3,5)
+		count = rand(2,3)
 
 	build_reward()
 		var/list/yielder = list()
 		for(var/i in 1 to count)
-			yielder += new /obj/item/weldingtool/high_cap
+			var/obj/item/electronics/frame/F = new
+			F.store_type = /obj/machinery/sonic_shower
+			F.name = "sonic shower head frame"
+			F.viewstat = 2
+			F.secured = 2
+			F.icon_state = "dbox_big"
+			F.w_class = W_CLASS_BULKY
+			yielder += F
 		return yielder
 
 //artifact reverse engineer rewards
