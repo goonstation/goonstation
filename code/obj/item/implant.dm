@@ -988,6 +988,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.send_ping(signal.data["sender"])
 			return
 
+		if (command == "unlink")
+			if (signal.data["sender"] == src.linked_address)
+				src.linked_address = null
+			return
+
 		if (src.passkey && src.passkey != signal.data["passkey"])
 			if (signal.data["sender"] != src.linked_address)
 				src.send_activation_reply(signal.data["sender"], MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY)
@@ -1246,7 +1251,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (.)
 			return
 		if (action == "set_data")
-			var/new_data = params["new_data"] ? params["new_data"] : tgui_input_text(usr, "Choose new data (such as a spoken phrase or emote key) for the remote.", src.name, src.entered_data, 45)
+			var/new_data = params["new_data"]
+			if (!istext(new_data))
+				return
+			new_data = copytext(new_data, 1, 46)
 			src.entered_data = new_data
 			playsound(src.loc, "keyboard", 25, TRUE, -(MAX_SOUND_RANGE - 5))
 			. = TRUE
@@ -1258,6 +1266,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.implant_status.Remove(params["address"])
 			boutput(usr, SPAN_NOTICE("Implant removed from tracking list."))
 			playsound(src.loc, 'sound/machines/keypress.ogg', 25, TRUE, -(MAX_SOUND_RANGE - 5))
+			var/datum/signal/unlink_packet = get_free_signal()
+			unlink_packet.source = src
+			unlink_packet.data["device"] = "IMP_MARIONETTE_REMOTE"
+			unlink_packet.data["sender"] = src.net_id
+			unlink_packet.data["address_1"] = params["address"]
+			unlink_packet.data["command"] = "unlink"
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, unlink_packet)
 			. = TRUE
 		else
 			var/address = params["address"]

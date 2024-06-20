@@ -1,6 +1,8 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Button, Flex, LabeledList, Section, Stack } from '../components';
+import { Button, Flex, Input, LabeledList, Section } from '../components';
+
+const onChange = (value) => act('set_data', { value });
 
 export const MarionetteRemote = (_props, context) => {
   const { act, data } = useBackend(context);
@@ -11,93 +13,91 @@ export const MarionetteRemote = (_props, context) => {
       title="Marionette Remote"
       width={410}
       height={550}
-      theme="syndicate" >
+      theme="syndicate">
       <Window.Content scrollable>
-        <Stack vertical fill minHeight="1%" maxHeight="100%">
-          <Section title="Controls">
-            <Flex direction="column">
-              <Flex.Item>
-                <LabeledList>
-                  <LabeledList.Item key="data" label="Data">
-                    {selected_command !== "step" ? (
-                      <Button
-                        fluid
-                        onClick={() => act("set_data")}
-                        disabled={selected_command !== "say" && selected_command !== "emote"}
-                        content={entered_data ? entered_data : "UNSET"}
-                      />)
-                      : (
-                        <>
-                          <Button
-                            onClick={() => act("set_data", { new_data: "NORTH" })}
-                            icon="arrow-up"
-                            selected={entered_data === "NORTH"}
-                          />
-                          <Button
-                            onClick={() => act("set_data", { new_data: "SOUTH" })}
-                            icon="arrow-down"
-                            selected={entered_data === "SOUTH"}
-                          /><Button
-                            onClick={() => act("set_data", { new_data: "WEST" })}
-                            icon="arrow-left"
-                            selected={entered_data === "WEST"}
-                          /><Button
-                            onClick={() => act("set_data", { new_data: "EAST" })}
-                            icon="arrow-right"
-                            selected={entered_data === "EAST"}
-                          />
-                        </>)}
-                  </LabeledList.Item>
-                  <LabeledList.Item key="command" label="Command">
-                    <Button
-                      onClick={() => act("set_command", { new_command: "say" })}
-                      content="Say"
-                      selected={selected_command === "say"}
-                    />
-                    <Button
-                      onClick={() => act("set_command", { new_command: "emote" })}
-                      content="Emote"
-                      selected={selected_command === "emote"}
-                    />
-                    <Button
-                      onClick={() => act("set_command", { new_command: "step" })}
-                      content="Step"
-                      selected={selected_command === "step"}
-                    />
-                    <Button
-                      onClick={() => act("set_command", { new_command: "drop" })}
-                      content="Drop"
-                      selected={selected_command === "drop"}
-                    />
-                    <Button
-                      onClick={() => act("set_command", { new_command: "use" })}
-                      content="Use"
-                      selected={selected_command === "use"}
-                    />
-                    <Button
-                      onClick={() => act("set_command", { new_command: "shock" })}
-                      content="Shock"
-                      selected={selected_command === "shock"}
-                    />
-                  </LabeledList.Item>
-                  <LabeledList.Item key="action_heat" label="Heat Per Action">
-                    {selected_command === "shock" || selected_command === "drop" ? "HIGH"
-                      : selected_command === "step" ? "LOW" : "MEDIUM"}
-                  </LabeledList.Item>
-                </LabeledList>
-              </Flex.Item>
-            </Flex>
-          </Section>
-          <Section title="Implants" buttons={(
-            <Button
-              icon="rotate"
-              content="Refresh"
-              onClick={() => act('ping_all')}
-            />
-          )}>
-            {mapImplants(act, entered_data, selected_command, implants)}
-          </Section>
-        </Stack>
+        <Section title="Controls">
+          <Flex direction="column">
+            <Flex.Item>
+              <LabeledList>
+                <LabeledList.Item key="data" label="Data">
+                  {selected_command !== "step" ? (
+                    <Input
+                      fluid
+                      onChange={(_, data) => act("set_data", { new_data: data })}
+                      value={entered_data}
+                      placeholder="Unset..."
+                    />)
+                    : (
+                      <>
+                        <Button
+                          onClick={() => act("set_data", { new_data: "NORTH" })}
+                          icon="arrow-up"
+                          selected={entered_data === "NORTH"}
+                        />
+                        <Button
+                          onClick={() => act("set_data", { new_data: "SOUTH" })}
+                          icon="arrow-down"
+                          selected={entered_data === "SOUTH"}
+                        /><Button
+                          onClick={() => act("set_data", { new_data: "WEST" })}
+                          icon="arrow-left"
+                          selected={entered_data === "WEST"}
+                        /><Button
+                          onClick={() => act("set_data", { new_data: "EAST" })}
+                          icon="arrow-right"
+                          selected={entered_data === "EAST"}
+                        />
+                      </>)}
+                </LabeledList.Item>
+                <LabeledList.Item key="command" label="Command">
+                  <Button
+                    onClick={() => act("set_command", { new_command: "say" })}
+                    content="Say"
+                    selected={selected_command === "say"}
+                  />
+                  <Button
+                    onClick={() => act("set_command", { new_command: "emote" })}
+                    content="Emote"
+                    selected={selected_command === "emote"}
+                  />
+                  <Button
+                    onClick={() => act("set_command", { new_command: "step" })}
+                    content="Step"
+                    selected={selected_command === "step"}
+                  />
+                  <Button
+                    onClick={() => act("set_command", { new_command: "drop" })}
+                    content="Drop"
+                    selected={selected_command === "drop"}
+                  />
+                  <Button
+                    onClick={() => act("set_command", { new_command: "use" })}
+                    content="Use"
+                    selected={selected_command === "use"}
+                  />
+                  <Button
+                    onClick={() => act("set_command", { new_command: "shock" })}
+                    content="Shock"
+                    selected={selected_command === "shock"}
+                  />
+                </LabeledList.Item>
+                <LabeledList.Item key="action_heat" label="Heat Per Action">
+                  {selected_command === "shock" || selected_command === "drop" ? "HIGH"
+                    : selected_command === "step" ? "LOW" : "MEDIUM"}
+                </LabeledList.Item>
+              </LabeledList>
+            </Flex.Item>
+          </Flex>
+        </Section>
+        <Section title="Implants" buttons={(
+          <Button
+            icon="rotate"
+            content="Ping All"
+            onClick={() => act('ping_all')}
+          />
+        )}>
+          {mapImplants(act, entered_data, selected_command, implants)}
+        </Section>
       </Window.Content>
     </Window>
   );
@@ -150,8 +150,9 @@ const mapImplants = (act, entered_data, selected_command, implants) => {
                 disabled={implant.status === "BURNED OUT"}
               />
               <Button.Confirm
-                icon="x"
+                icon="link-slash"
                 onClick={() => act('remove_from_list', { address: implant.address })}
+                tooltip="Stops tracking this implant. This doesn't destroy the implant, only removes it from the list."
               />
             </>
           )}>
