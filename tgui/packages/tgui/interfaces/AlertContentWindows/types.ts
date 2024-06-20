@@ -7,8 +7,8 @@
 import { InfernoNode } from 'inferno';
 
 export type AlertContentWindow = {
-  width: number,
-  height: number,
+  width?: number, // Default to 600
+  height?: number, // Defaults to 480
   title: string,
   content: InfernoNode
 };
