@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 	var/reagent_id = null
 	New()
 		..()
-		var/amt = rand(100, 400)
+		var/amt = rand(100, 300)
 		src.create_reagents(amt)
 		if (src.reagent_id)
 			src.reagents.add_reagent(src.reagent_id, amt)
