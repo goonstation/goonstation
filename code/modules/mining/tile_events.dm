@@ -41,7 +41,7 @@
 	analysis_string = "Large crystalline formations detected."
 	excavation_string = "A geode was unearthed!"
 	scan_decal = "scan-object"
-	weight = 2000 //let's make these pretty common for now
+	weight = 200 //let's make these pretty common for now
 	///weighted lists of geode types to pick from
 	var/static/list/fluid_geode_types = list()
 	var/static/list/crystal_geode_types = list()
