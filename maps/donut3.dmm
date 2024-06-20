@@ -33513,7 +33513,7 @@
 "kbt" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
+	id = "toxins_co2";
 	operating = 1
 	},
 /obj/strip_door{
@@ -34260,7 +34260,7 @@
 /obj/machinery/firealarm/east,
 /obj/machinery/light/small/sticky/harsh,
 /obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
+	id = "toxins_co2";
 	operating = 1
 	},
 /turf/simulated/floor/plating/jen,
