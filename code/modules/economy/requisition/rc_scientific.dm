@@ -448,11 +448,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		return F
 
 
-#define NUM_PROTOTYPISTS 3
+#define NUM_PROTOTYPISTS 4
 
 #define PROTOTYPIST_SAFETY 1
 #define PROTOTYPIST_ENERGY 2
 #define PROTOTYPIST_ENGINEER 3
+#define PROTOTYPIST_REV_ENG 4
 
 #define NUM_GOALS 3
 
@@ -576,6 +577,37 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
 
+			if(PROTOTYPIST_REV_ENG)
+				prototypist_desc = "Artifact reverse-engineer"
+
+				if(prob(60))
+					var/suitsets = rand(1,2)
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/radsuit,suitsets)
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/radhelm,suitsets)
+				else
+					if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/uqill_minprice,1)
+				if(prob(70) || !length(src.rc_entries))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/geiger,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mini_ox,rand(1,3)*2)
+
+				switch(goal_id)
+					if(GOAL_PROTOTYPING)
+						goal_desc = ""
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
+						//src.item_rewarders += new /datum/rc_itemreward
+					if(GOAL_MANUFACTURE)
+						goal_desc = "production of a medical biomatter recombinator"
+						//when built and powered, slowly makes weak healing patches out of compostables you load in
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
+						//src.item_rewarders += new /datum/rc_itemreward/medimulcher
+					if(GOAL_REFINEMENT)
+						goal_desc = "development of compact interdictor technology"
+						//portable interdictor, perhaps can be equipped in backpack slot. range is fixed at 5x5 but you can add your own mainboard
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/force_projection,1)
+						//src.item_rewarders += new /datum/rc_itemreward/personal_interdictor_kit
+
 		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
 
 		..()
@@ -585,12 +617,44 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #undef PROTOTYPIST_SAFETY
 #undef PROTOTYPIST_ENERGY
 #undef PROTOTYPIST_ENGINEER
+#undef PROTOTYPIST_REV_ENG
 
 #undef NUM_GOALS
 
 #undef GOAL_PROTOTYPING
 #undef GOAL_MANUFACTURE
 #undef GOAL_REFINEMENT
+
+/datum/rc_entry/artifact/martian
+	name = "any martian artifact"
+	required_origin = "Martian"
+
+/datum/rc_entry/artifact/force_projection
+	name = "force projection artifact"
+	acceptable_types = list(
+		"Elemental Wand",
+		"Energy Gun",
+		"Forcefield Wand",
+		"Melee Weapon"
+	)
+
+/datum/rc_entry/item/radsuit
+	name = "radiation suit"
+	typepath = /obj/item/clothing/suit/hazard/rad
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/radhelm
+	name = "radiation helmet"
+	typepath = /obj/item/clothing/head/rad_hood
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/geiger
+	name = "Geiger counter"
+	typepath = /obj/item/device/geiger
+
+/datum/rc_entry/item/mini_ox
+	name = "personnel-class 'mini' pressure tank"
+	typepath = /obj/item/tank/mini_oxygen
 
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"
@@ -856,7 +920,5 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			yielder += new /obj/item/weldingtool/high_cap
 		return yielder
 
-
-
-
+//artifact reverse engineer rewards
 

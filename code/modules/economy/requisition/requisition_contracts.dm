@@ -46,6 +46,7 @@
 #define RC_REAGENT 2
 #define RC_STACK 3
 #define RC_SEED 4
+#define RC_ARTIFACT 5
 
 //base entry
 ABSTRACT_TYPE(/datum/rc_entry)
@@ -268,6 +269,36 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 			src.rollcount++
 			. = TRUE // Let manager know seed passes muster and is claimed by contract
 
+///Artifact entry. Evaluates provided handheld artifacts based on their artifact parameters.
+ABSTRACT_TYPE(/datum/rc_entry/artifact)
+/datum/rc_entry/artifact
+	entryclass = RC_ARTIFACT
+	///Origin requirement, checked against the artifact's type_name if specified. Current type names are Silicon, Martian, Wizard, Eldritch, Precursor
+	var/required_origin
+	///Types of artifact functionality desired. Can be left empty.
+	var/acceptable_types = list()
+
+	New()
+		..()
+
+	rc_eval(atom/eval_item)
+		. = ..()
+		if(rollcount >= count) return // Standard skip-if-complete
+		if(!istype(eval_item.artifact,/datum/artifact/)) return // No artifact data? Skip it
+
+		var/datum/artifact/arty = eval_item.artifact
+
+		if(required_origin && arty.artifact_origin.type_name != required_origin) return
+		if(length(acceptable_types))
+			var/is_acceptable_type = FALSE
+			for(var/nom in acceptable_types)
+				if(arty.type_name == nom)
+					is_acceptable_type = TRUE
+			if(!is_acceptable_type) return
+
+		src.rollcount++
+		. = TRUE // Let manager know artifact passes muster and is claimed by contract
+
 /**
  * Item reward datum optionally used in contract creation.
  * Should generally return an object, or set of objects that makes sense as a list entry (i.e. "fast food meal" for a burger, fries and soda).
@@ -364,6 +395,19 @@ ABSTRACT_TYPE(/datum/req_contract)
 							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
 					else
 						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
+				if(RC_ARTIFACT)
+					var/datum/rc_entry/artifact/rcart = rce
+					src.requis_desc += "x[rce.count] handheld artifact with following parameters<br>"
+					if(rcart.required_origin)
+						src.requis_desc += "| Origin class: [rcart.required_origin]<br>"
+					else
+						src.requis_desc += "| Origin class: any<br>"
+					if(length(rcart.acceptable_types))
+						src.requis_desc += "| Acceptable categories:<br>"
+						for(var/index in rcart.acceptable_types)
+							src.requis_desc += "| [index]<br>"
+					else
+						src.requis_desc += "| Acceptable categories: Any<br>"
 			src.payout += rce.feemod * rce.count
 
 /**
