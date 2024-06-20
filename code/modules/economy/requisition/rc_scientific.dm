@@ -932,3 +932,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 //artifact reverse engineer rewards
 
+/datum/rc_itemreward/recharge_bay
+	name = "mobile recharging bay"
+	build_reward()
+		var/theitem = new /obj/item/storage/backpack/recharge_bay
+		return theitem
