@@ -1900,11 +1900,11 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 		easing = SINE_EASING | EASE_IN,
 		pixel_y = center_y)
 
-/proc/animate_juggle(atom/thing, time = 0.5 SECONDS)
+/proc/animate_juggle(atom/thing, time = 0.7 SECONDS)
 	animate(thing, time/3, pixel_x = -15, loop = -1)
 	animate(time = time, pixel_x = 15, loop = -1)
 	animate(thing, time = time/3, flags = ANIMATION_PARALLEL, loop = -1)
-	animate(time = time/2, pixel_y = 30, easing = CUBIC_EASING | EASE_OUT, loop = -1)
+	animate(time = time/2, pixel_y = 45, easing = CUBIC_EASING | EASE_OUT, loop = -1)
 	animate(time = time/2, pixel_y = 0, easing = CUBIC_EASING | EASE_IN, loop = -1)
 	animate_spin(thing, parallel = TRUE)
 

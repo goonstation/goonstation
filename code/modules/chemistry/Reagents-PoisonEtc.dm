@@ -1093,6 +1093,12 @@ datum
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
+			reaction_obj(obj/item/clothing/item)
+				if (istype(item) && !(item.item_function_flags & IMMUNE_TO_ACID))
+					var/datum/component/gear_corrosion/corroder = item.LoadComponent(/datum/component/gear_corrosion)
+					corroder.apply_decay()
+
+
 		harmful/pancuronium
 			name = "pancuronium"
 			id = "pancuronium"

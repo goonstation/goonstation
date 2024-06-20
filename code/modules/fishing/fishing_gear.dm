@@ -45,7 +45,7 @@
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
-					return
+					return TRUE
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
 
@@ -448,8 +448,10 @@ TYPEINFO(/obj/item/fish_portal)
 	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
-	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
-
+	mats = list("metal_superdense" = 15,
+				"wood" = 5,
+				"energy_high" = 5,
+				"conductive_high" = 5)
 /obj/item/syndie_fishing_rod
 	name = "\improper Glaucus fishing rod"
 	desc = "A high grade tactical fishing rod, completely impractical for reeling in bass."

@@ -310,7 +310,10 @@
 			src.update_buttons()
 			return
 		else
-			if(params["right"])
+			if(params["left"])
+				var/datum/blob_ability/spread_abil = src.get_ability(/datum/blob_ability/spread)
+				spread_abil?.onUse(T)
+			else if(params["right"])
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))

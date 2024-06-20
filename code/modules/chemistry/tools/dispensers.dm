@@ -16,13 +16,13 @@
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
-	var/capacity
+	var/capacity = 4000
 
 	New()
 		..()
 		// TODO enable when I do leaking
 		// src.AddComponent(/datum/component/bullet_holes, 10, 5)
-		src.create_reagents(4000)
+		src.create_reagents(src.capacity)
 
 
 	get_desc(dist, mob/user)

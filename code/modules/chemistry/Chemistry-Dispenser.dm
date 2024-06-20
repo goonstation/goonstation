@@ -8,8 +8,9 @@ var/list/basic_elements = list(
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 TYPEINFO(/obj/machinery/chem_dispenser)
-	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
-
+	mats = list("metal_dense" = 10,
+				"conductive_high" = 10,
+				"miracle" = 20)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipes."
@@ -525,7 +526,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser/chef
 	name = "HAPPY CHEF Dispense-o-tronic"
 	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
-	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk")
+	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks

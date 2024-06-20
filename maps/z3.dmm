@@ -12391,7 +12391,7 @@
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbD" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/tank/anesthetic,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbE" = (
@@ -15601,6 +15601,14 @@
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"bDw" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "bDZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -15866,6 +15874,14 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/mining/diner)
+"cld" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_6"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "cll" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -16408,6 +16424,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"dIS" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "dLg" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -16556,6 +16580,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"emx" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "enz" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/green{
@@ -16873,6 +16903,13 @@
 /obj/item/sheet/wood,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"ftX" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "fvE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/mars{
@@ -17544,6 +17581,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"hlR" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_1"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "hme" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -17981,9 +18024,10 @@
 "izy" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
-	locked = 1;
-	name = "rusty airlock"
+	name = "rusty airlock";
+	id = "buttes_3"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "izC" = (
@@ -18387,6 +18431,14 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"jxr" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_5"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "jyD" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -19115,6 +19167,12 @@
 /obj/item/paper_bin,
 /turf/simulated/floor/arrival,
 /area/diner/hallway)
+"lIc" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_5"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "lIC" = (
 /obj/map/light/cyan,
 /turf/unsimulated/wall/setpieces/leadwindow{
@@ -19588,6 +19646,12 @@
 	dir = 1
 	},
 /area/timewarp/ship)
+"mSc" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_3"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "mSk" = (
 /obj/item/storage/wall/random,
 /obj/stool/bed,
@@ -20549,6 +20613,13 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"pAk" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_6"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "pBN" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/scorched,
@@ -22684,7 +22755,8 @@
 "vem" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4
+	dir = 4;
+	id = "buttes_1"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -79375,15 +79447,15 @@ ahW
 ahW
 aod
 aod
-usy
+lIc
 bGx
 aod
 aod
-usy
+mSc
 ajM
 aod
 aod
-usy
+hlR
 rRi
 aob
 wqS
@@ -79979,7 +80051,7 @@ ahW
 ahW
 aod
 aod
-vem
+jxr
 akH
 aod
 aod
@@ -80885,15 +80957,15 @@ lMB
 vFH
 aod
 aod
-vem
+cld
 akJ
 aod
 aod
-vem
+dIS
 sAF
 aod
 aod
-vem
+bDw
 iZW
 aod
 wuN
@@ -81489,15 +81561,15 @@ ahW
 ahW
 aod
 aod
-sdM
+pAk
 bGx
 aod
 aod
-sdM
+ftX
 rRi
 aod
 aod
-usy
+emx
 bGx
 bam
 wqS

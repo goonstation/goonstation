@@ -34,7 +34,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/slowdown = 0 //Movement delay attack after attack
 	var/slowdown_time = 10 //For this long
 
-	var/forensic_ID = null
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
 	var/shoot_delay = 4
@@ -115,15 +114,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
 			user.back.Attackby(src, user)
 			return TRUE
-
-/obj/item/gun/proc/CreateID() //Creates a new tracking id for the gun and returns it.
-	. = ""
-
-	do
-		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
-			. += "[pick(numbersAndLetters)]"
-	while(. in forensic_IDs)
-
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
@@ -490,7 +480,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (new_dmg >= (dmg + 20)) // it did some appreciable amount of damage
 		user.TakeDamage("head", 500, 0)
 	else if (new_dmg < (dmg + 20))
-		user.visible_message(SPAN_ALERT("[user] hangs their head in shame because they chose such a weak gun."))
+		user.visible_message(SPAN_ALERT("[user] hangs [his_or_her(user)] head in shame because [he_or_she(user)] chose such a weak gun."))
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
