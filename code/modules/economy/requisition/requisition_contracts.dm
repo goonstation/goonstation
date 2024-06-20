@@ -284,11 +284,13 @@ ABSTRACT_TYPE(/datum/rc_entry/artifact)
 	rc_eval(atom/eval_item)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
-		if(!istype(eval_item.artifact,/datum/artifact/)) return // No artifact data? Skip it
+		var/obj/eval_obj = eval_item
+		if(!istype(eval_obj)) return // Not an object? Not an artifact
+		if(!istype(eval_obj.artifact,/datum/artifact/)) return // No artifact data? Skip it
 
-		var/datum/artifact/arty = eval_item.artifact
+		var/datum/artifact/arty = eval_obj.artifact
 
-		if(required_origin && arty.artifact_origin.type_name != required_origin) return
+		if(required_origin && arty.artitype.type_name != required_origin) return
 		if(length(acceptable_types))
 			var/is_acceptable_type = FALSE
 			for(var/nom in acceptable_types)

@@ -594,19 +594,19 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				switch(goal_id)
 					if(GOAL_PROTOTYPING)
 						goal_desc = ""
-						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
-						//src.item_rewarders += new /datum/rc_itemreward
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/force_projection,1)
+						//src.item_rewarders += new /datum/rc_itemreward/personal_interdictor_kit
 					if(GOAL_MANUFACTURE)
 						goal_desc = "production of a medical biomatter recombinator"
 						//when built and powered, slowly makes weak healing patches out of compostables you load in
 						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
 						//src.item_rewarders += new /datum/rc_itemreward/medimulcher
 					if(GOAL_REFINEMENT)
-						goal_desc = "development of compact interdictor technology"
-						//portable interdictor, perhaps can be equipped in backpack slot. range is fixed at 5x5 but you can add your own mainboard
-						src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
-						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/force_projection,1)
-						//src.item_rewarders += new /datum/rc_itemreward/personal_interdictor_kit
+						goal_desc = "development of an enhanced mobile recharging bay"
+						//special backpack capable of accepting a large power cell to recharge contents automatically
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/reservoir,1)
+						//src.item_rewarders += new /datum/rc_itemreward/recharge_bay
 
 		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
 
@@ -636,6 +636,16 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"Energy Gun",
 		"Forcefield Wand",
 		"Melee Weapon"
+	)
+
+/datum/rc_entry/artifact/reservoir
+	name = "reservoir-type artifact"
+	acceptable_types = list(
+		"Bag of Holding",
+		"Beaker",
+		"Large power cell",
+		"Small power cell",
+		"Pitcher"
 	)
 
 /datum/rc_entry/item/radsuit
