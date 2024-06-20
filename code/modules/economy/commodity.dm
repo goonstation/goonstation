@@ -574,9 +574,9 @@
 ////////////////////////////////
 
 /datum/commodity/clothing_restock
-	comname = "Clothing Vendor Restock Cartridge"
-	desc = "A restock cartridge for restocking clothing vending machines."
-	comtype = /obj/item/vending/restock_cartridge/jobclothing
+	comname = "Syndicate Clothing Vendor Restock Cartridge"
+	desc = "A restock cartridge for restocking syndicate clothing vending machines."
+	comtype = /obj/item/vending/restock_cartridge/jobclothing/syndicate
 	price = PAY_IMPORTANT
 
 /datum/commodity/contraband

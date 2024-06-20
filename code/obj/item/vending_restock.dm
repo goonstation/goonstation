@@ -148,8 +148,8 @@
 	desc = "A cartridge that restocks the portable nanomed vending machine."
 	vendingType = "port_a_nanomed"
 
-/obj/item/vending/restock_cartridge/jobclothing
-	name = "clothing restock cartridge"
+/obj/item/vending/restock_cartridge/jobclothing/syndicate
+	name = "syndicate clothing restock cartridge"
 	icon_state = "clothing"
-	desc = "A cartridge that restocks clothing vending machines."
-	vendingType = "jobclothing"
+	desc = "A cartridge that restocks syndicate clothing vending machines."
+	vendingType = "jobclothing/syndicate"
