@@ -433,4 +433,3 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		if (src.health <= 0)
 			src.visible_message(SPAN_NOTICE("<B>[src]</B> crumbles away into dust!"))
 			qdel (src)
-
