@@ -7,6 +7,8 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	density = TRUE
 	var/broken = FALSE
 	var/break_power = 5
+	///Weighting var for the random asteroid generation
+	var/weight = 100
 
 	proc/break_open()
 		SHOULD_CALL_PARENT(TRUE)
@@ -91,6 +93,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		icon_state = "dark"
 		crystal_path = /obj/item/raw_material/starstone
 		custom_crystal_states = TRUE
+		weight = 20
 		New()
 			src.amount = rand(1,2)
 			..()
@@ -100,6 +103,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		icon_state = "red"
 		crystal_path = /obj/item/raw_material/uqill
 		custom_crystal_states = TRUE
+		weight = 40
 		New()
 			..()
 			src.break_power = rand(3, 10) //small chance you can break it with just a concussive charge
@@ -108,6 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		icon_state = "sandy"
 		crystal_path = /obj/item/raw_material/erebite
 		amount = 2
+		weight = 60
 
 ABSTRACT_TYPE(/obj/geode/fluid)
 /obj/geode/fluid
@@ -129,9 +134,10 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 			fluid_shell.setMaterial(src.material)
 		qdel(src)
 
-	oil
+	oil //weighted in generation code separately so it can be consistently high as more variants are added
 		icon_state = "sandy"
 		reagent_id = "oil"
+		weight = 0
 
 	sulfuric_acid
 		reagent_id = "acid"
@@ -140,6 +146,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 		reagent_id = "cyanide"
 	ants
 		reagent_id = "ants"
+		weight = 20
 		break_open()
 			new /mob/living/critter/fermid/worker(src.loc) //beeg ant
 			src.visible_message(SPAN_ALERT(SPAN_BOLD("An angry fermid jumps out of [src]!")))
@@ -149,6 +156,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 		default_material = "gnesis"
 		uses_default_material_appearance = TRUE
 		reagent_id = "flockdrone_fluid"
+		weight = 20
 
 
 /obj/reagent_dispensers/geode

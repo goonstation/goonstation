@@ -41,20 +41,30 @@
 	analysis_string = "Large crystalline formations detected."
 	excavation_string = "A geode was unearthed!"
 	scan_decal = "scan-object"
-	weight = 200 //let's make these pretty common for now
+	weight = 2000 //let's make these pretty common for now
+	///weighted lists of geode types to pick from
+	var/static/list/fluid_geode_types = list()
+	var/static/list/crystal_geode_types = list()
 
 	onExcavate(turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		//this should maybe be a weighting system on the geode types instead
+		//horrible weighted caching zone
+		if (!length(src.fluid_geode_types))
+			for (var/obj/geode/type as anything in concrete_typesof(/obj/geode/fluid))
+				src.fluid_geode_types[type] = initial(type.weight)
+		if (!length(src.crystal_geode_types))
+			for (var/obj/geode/type as anything in concrete_typesof(/obj/geode/crystal))
+				src.crystal_geode_types[type] = initial(type.weight)
+
 		var/geode_type = null
-		if (prob(30))
-			if (prob(70))
+		if (prob(30)) //make fluid geodes always a bit rarer since they're more niche
+			if (prob(50)) //hardcoded oil chance so the weight stays high as more fluid geodes are added
 				geode_type = /obj/geode/fluid/oil
 			else
-				geode_type = pick(concrete_typesof(/obj/geode/fluid))
+				geode_type = weighted_pick(src.fluid_geode_types)
 		else
-			geode_type = pick(concrete_typesof(/obj/geode/crystal))
+			geode_type = weighted_pick(src.crystal_geode_types)
 		new geode_type(AST)
 
 /datum/ore/event/gem/molitz_b
