@@ -1,3 +1,14 @@
+
+(t)thu jun 20 24
+(u)Garash2k
+(p)19107
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)New UI for the stationary and portable Chemicompiler.
+(t)wed jun 19 24
+(u)LeahTheTech and Flaborized
+(p)19598
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added geodes that mining can find. Can only be broken open with explosions, check your geological scanner for the power required. Geodes can contain various types of crystalline ore deposits as well as oil and other liquids.
 (t)tue jun 18 24
 (u)TemThrush
 (p)19540

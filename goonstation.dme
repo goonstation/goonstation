@@ -1823,6 +1823,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\electric_chair.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
+#include "code\obj\geodes.dm"
 #include "code\obj\grille.dm"
 #include "code\obj\health_scanner.dm"
 #include "code\obj\item.dm"
