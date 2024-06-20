@@ -17,8 +17,9 @@
 
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
-
+	mats = list("metal" = 5,
+				"conductive_high" = 5,
+				"energy_extreme" = 10)
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -536,6 +537,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 	New()
 		..()
@@ -579,9 +581,12 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
-	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
-/obj/item/dagger/syndicate/specialist //Infiltrator class knife
+	New()
+		..()
+		src.setProperty("piercing", 80)
+
+/obj/item/dagger/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
 	desc = "A light but robust combat knife that allows you to move faster in fights. Knocks down targets when thrown."
 	icon_state = "combat_knife"
@@ -604,6 +609,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
 	gang
 		name = "familiar fighting knife"
 		force = 17
@@ -1065,7 +1071,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 TYPEINFO(/obj/item/bat)
 	mats = list("wood" = 8)
-
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -1296,7 +1301,7 @@ TYPEINFO(/obj/item/bat)
 		return 0
 	else
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into [his_or_her(user)] own chest, ripping out [his_or_her(user)] [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
 		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 		user.TakeDamage("chest", 100, 0)
@@ -1326,8 +1331,8 @@ TYPEINFO(/obj/item/bat)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
-	mats = list("MET-3"=20, "FAB-1"=5)
-
+	mats = list("metal_superdense" = 20,
+				"fabric" = 5)
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
@@ -1416,8 +1421,7 @@ TYPEINFO(/obj/item/swords/katana)
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
 TYPEINFO(/obj/item/swords/captain)
-	mats = list("MET-2"=15)
-
+	mats = list("metal_dense" = 15)
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
@@ -1458,7 +1462,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] cuts [his_or_her(user)] own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
@@ -1499,7 +1503,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to [his_or_her(user)] head and sotfly honks it.</b>"))
 		SPAWN(1 SECOND)
 			if(prob(5))
 				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, FALSE, 0)

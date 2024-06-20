@@ -28,6 +28,9 @@
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 
+/obj/pool/perspective/innercorners
+	name = "pool"
+	icon_state = "pool_inner"
 /obj/pool_springboard
 	name = "springboard"
 	density = 0

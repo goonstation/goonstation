@@ -16803,6 +16803,19 @@
 	icon_state = "floor4"
 	},
 /area/drone)
+"bpm" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 1;
+	name = "exhibit window"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/gun/kinetic/pumpweapon/riotgun,
+/obj/decal/cleanable/blood/gibs,
+/turf/unsimulated/floor/green,
+/area/owlery/owllock)
 "bpn" = (
 /obj/trigger/critter,
 /turf/unsimulated/floor/setpieces{
@@ -48987,19 +49000,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dBf" = (
-/obj/item/gun/kinetic/riotgun{
-	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
-	pixel_x = -6;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "dBg" = (
 /obj/storage/cart/hotdog,
 /obj/item/clothing/suit/gimmick/hotdog,
@@ -51927,22 +51927,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dLc" = (
-/obj/pool/perspective{
-	density = 0;
-	dir = 1;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/channel{
-	required_to_pass = 210
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/pool/ladder,
-/turf/unsimulated/floor/white,
-/area/centcom/garden)
 "dLd" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -52101,16 +52085,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dLE" = (
-/obj/machinery/light/small/floor/blueish{
-	desc = "Probably waterproof. You never really knew how these things worked.";
-	name = "cool pool lighting"
-	},
-/turf/unsimulated/floor/pool/no_animate,
-/area/centcom/garden)
-"dLF" = (
-/turf/unsimulated/floor/pool/no_animate,
-/area/centcom/garden)
 "dLG" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -52218,10 +52192,6 @@
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
-/area/centcom/garden)
-"dLU" = (
-/obj/item/inner_tube,
-/turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "dLV" = (
 /obj/table/round/auto,
@@ -52364,22 +52334,6 @@
 	icon_state = "sand";
 	name = "sand"
 	},
-/area/centcom/garden)
-"dMs" = (
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
-/obj/pool/perspective{
-	dir = 1;
-	pixel_x = 10;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/white,
 /area/centcom/garden)
 "dMt" = (
 /obj/shrub{
@@ -52665,16 +52619,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
-"dNn" = (
-/obj/fluid_spawner{
-	amount = 10000
-	},
-/turf/unsimulated/floor/pool/no_animate,
-/area/centcom/garden)
-"dNo" = (
-/obj/item/beach_ball,
-/turf/unsimulated/floor/pool/no_animate,
-/area/centcom/garden)
 "dNp" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -52910,18 +52854,6 @@
 	dir = 4
 	},
 /turf/unsimulated/nicegrass/random,
-/area/centcom/garden)
-"dOa" = (
-/obj/pool/perspective,
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 6;
-	icon_state = "line1"
-	},
-/turf/unsimulated/floor/white,
 /area/centcom/garden)
 "dOb" = (
 /obj/pool/perspective,
@@ -60666,6 +60598,9 @@
 	icon_state = "shore-42"
 	},
 /area/titlescreen)
+"jwE" = (
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jwG" = (
 /obj/item/storage/toilet/goldentoilet/azrun,
 /turf/unsimulated/floor/caution/south,
@@ -60699,6 +60634,13 @@
 /obj/chaser/hospital_trigger,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"jxI" = (
+/obj/machinery/light/small/floor/blueish{
+	desc = "Probably waterproof. You never really knew how these things worked.";
+	name = "cool pool lighting"
+	},
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jxO" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -60723,6 +60665,12 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"jyB" = (
+/obj/fluid_spawner{
+	amount = 10000
+	},
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jyU" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -61079,6 +61027,10 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"jVS" = (
+/obj/item/beach_ball,
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "jWb" = (
 /obj/machinery/door_control{
 	id = "thunderdome";
@@ -64570,6 +64522,16 @@
 "njo" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/offices/enakai)
+"njR" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/pool/perspective/innercorners{
+	dir = 4
+	},
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "njW" = (
 /obj/decal/cleanable/robot_debris{
 	dir = 4;
@@ -66680,6 +66642,22 @@
 	name = "reinforced plating"
 	},
 /area/owlery/staffhall)
+"pdw" = (
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/obj/channel{
+	required_to_pass = 210
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/pool/ladder,
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "pdL" = (
 /obj/storage/crate,
 /obj/item/peripheral/drive/tape_reader,
@@ -67018,6 +66996,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"poq" = (
+/obj/item/inner_tube,
+/turf/unsimulated/floor/pool/no_animate,
+/area/centcom/garden)
 "por" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -69060,6 +69042,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"rbe" = (
+/obj/item/gun/kinetic/pumpweapon/riotgun{
+	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
+	pixel_x = -6;
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "rcr" = (
 /obj/machinery/light,
 /obj/rack,
@@ -74284,19 +74279,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
-"vOE" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 1;
-	name = "exhibit window"
-	},
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/item/gun/kinetic/riotgun,
-/obj/decal/cleanable/blood/gibs,
-/turf/unsimulated/floor/green,
-/area/owlery/owllock)
 "vOI" = (
 /obj/lattice{
 	dir = 9;
@@ -76518,6 +76500,17 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
+"xDp" = (
+/obj/pool/perspective,
+/obj/decal/tile_edge/line/blue{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/pool/perspective/innercorners{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/centcom/garden)
 "xDP" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -89426,7 +89419,7 @@ cRD
 cRD
 cRD
 cRF
-vOE
+bpm
 cSO
 cNx
 cPw
@@ -159267,7 +159260,7 @@ dBl
 mAM
 dCl
 wel
-dBf
+rbe
 dBo
 dBo
 wel
@@ -161925,15 +161918,15 @@ sbw
 dKt
 dKG
 dLb
-dLE
-dLF
-dLF
-dLF
-dLE
-dLF
-dLF
-dLF
-dLE
+jxI
+jwE
+jwE
+jwE
+jxI
+jwE
+jwE
+jwE
+jxI
 dOb
 dOr
 dPm
@@ -162226,16 +162219,16 @@ aES
 sbw
 dKu
 dKG
-dLc
-dLF
-dLU
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
+pdw
+jwE
+poq
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
 dOb
 dOW
 dOY
@@ -162529,15 +162522,15 @@ sbw
 dKt
 dKG
 dLb
-dLF
-dLF
-dLE
-dLF
-dNn
-dLF
-dLE
-dLF
-dLF
+jwE
+jwE
+jxI
+jwE
+jyB
+jwE
+jxI
+jwE
+jwE
 dOb
 dOr
 dPm
@@ -162831,15 +162824,15 @@ sbw
 dKv
 dKG
 dLb
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLF
-dLU
-dLF
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
+jwE
+poq
+jwE
 dOb
 dOX
 dOY
@@ -163133,15 +163126,15 @@ sbw
 dKt
 dKG
 dLb
-dLE
-dLF
-dLF
-dLF
-dLE
-dLF
-dLF
-dLF
-dLE
+jxI
+jwE
+jwE
+jwE
+jxI
+jwE
+jwE
+jwE
+jxI
 dOb
 dOr
 dPm
@@ -163437,11 +163430,11 @@ dKG
 dLd
 dLG
 dLG
-dMs
-dLF
-dNo
-dLF
-dOa
+njR
+jwE
+jVS
+jwE
+xDp
 dLG
 dLG
 dOc
@@ -163740,9 +163733,9 @@ dKH
 dLH
 dLV
 dLb
-dLF
-dLE
-dLF
+jwE
+jxI
+jwE
 dOb
 dOr
 dKG
@@ -164041,10 +164034,10 @@ dKJ
 dKG
 dLI
 dKG
-dLc
-dLF
-dLF
-dLF
+pdw
+jwE
+jwE
+jwE
 dOb
 dOs
 dLI

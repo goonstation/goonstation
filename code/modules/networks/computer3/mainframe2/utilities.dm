@@ -60,7 +60,7 @@
 
 					var/is_folder = istype(P, /datum/computer/folder)
 					message += "\[[add_zero("[is_folder ? "--" : P.size]", 2)]] [add_zero( (P.metadata && ("group" in P.metadata) && isnum(text2num_safe(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)][print_file_permissions(P)] [is_folder ? "DIR" : "[copytext(P:extension,1,4)]"]"
-					message += " [add_lspace((!P.metadata || isnull(P.metadata["owner"]) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
+					message += " [pad_leading((!P.metadata || isnull(P.metadata["owner"]) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
 				else
 					if (dd_hasprefix(P.name, "_"))
 						continue
@@ -77,7 +77,7 @@
 				var/message = "\[[add_zero("[P.size]", 2)]] "
 				message += add_zero((P.metadata && P.metadata.Find("group") && isnum(text2num_safe(P.metadata["group"])) ? "[P.metadata["group"]]" : "ANY"), 3)
 				message += "[print_file_permissions(P)] [copytext(P.extension,1,4)]"
-				message += " [add_lspace(( (!P.metadata || !P.metadata.Find("owner") || isnull(P.metadata["owner"])) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
+				message += " [pad_leading(( (!P.metadata || !P.metadata.Find("owner") || isnull(P.metadata["owner"])) ? "Nobody" : P.metadata["owner"]), 16)] [P.name]|n"
 				message_user(message, "multiline")
 			else
 				message_user("Error: Invalid resource or directory.")
