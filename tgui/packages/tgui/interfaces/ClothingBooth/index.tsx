@@ -1,53 +1,69 @@
-import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Image, Section, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { ClothingBoothData } from './type';
+/**
+ * @file
+ * @copyright 2023
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
 
-import { capitalize } from '../common/stringUtils';
+import { useBackend, useLocalState } from '../../backend';
+import { Button, Section, Stack } from '../../components';
+import { Window } from '../../layouts';
+import { CharacterPreview } from './CharacterPreview';
+import { StockList } from './StockList';
+import { PurchaseInfo } from './PurchaseInfo';
+import { TagsModal } from './TagsModal';
+import type { ClothingBoothData } from './type';
+import { LocalStateKey } from './utils/enum';
 
 export const ClothingBooth = (_, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
-  const categories = data.clothingBoothCategories || [];
-
-  const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
-  const { items } = selectedCategory;
+  const { act, data } = useBackend<ClothingBoothData>(context);
+  const { name, accountBalance, cash, scannedID } = data;
+  const [tagModal] = useLocalState(context, LocalStateKey.TagModal, false);
 
   return (
-    <Window title={data.name} width={300} height={500}>
+    <Window title={name} width={500} height={600}>
       <Window.Content>
+        {tagModal && <TagsModal />}
         <Stack fill vertical>
-          {/* Topmost section, containing the cash balance and category dropdown. */}
-          <Stack.Item>
-            <Section fill>
-              <Stack fill align="center" justify="space-between">
-                <Stack.Item bold>{`Cash: ${data.money}⪽`}</Stack.Item>
-                <Stack.Item>
-                  <Dropdown
-                    className="clothingbooth__dropdown"
-                    options={categories.map((category) => category.category)}
-                    selected={selectedCategory.category}
-                    onSelected={(value) => (
-                      selectCategory(categories[categories.findIndex((category) => category.category === value)])
-                    )}
-                  />
-                </Stack.Item>
-              </Stack>
-            </Section>
-          </Stack.Item>
-          {/* Clothing booth item list */}
+          {!!(!data.everythingIsFree && (scannedID || cash)) && (
+            <Stack.Item>
+              <Section fill>
+                <Stack fill vertical>
+                  {!!cash && (
+                    <Stack.Item>
+                      <Stack fluid align="center" justify="space-between">
+                        <Stack.Item bold>Cash: {cash}⪽</Stack.Item>
+                        <Stack.Item>
+                          <Button icon="eject" content="Eject Cash" onClick={() => act('eject_cash')} />
+                        </Stack.Item>
+                      </Stack>
+                    </Stack.Item>
+                  )}
+                  {!!scannedID && (
+                    <Stack.Item>
+                      <Stack fluid align="center" justify="space-between">
+                        <Stack.Item bold>Money In Account: {accountBalance}⪽</Stack.Item>
+                        <Stack.Item>
+                          <Button
+                            ellipsis
+                            icon="id-card"
+                            content={scannedID}
+                            onClick={() => {
+                              act('logout');
+                            }}
+                          />
+                        </Stack.Item>
+                      </Stack>
+                    </Stack.Item>
+                  )}
+                </Stack>
+              </Section>
+            </Stack.Item>
+          )}
           <Stack.Item grow={1}>
-            <Stack fill vertical>
-              <Stack.Item grow={1}>
-                <Section fill scrollable>
-                  {items.map((item) => (
-                    <ClothingBoothItem key={item.name} item={item} />
-                  ))}
-                </Section>
-              </Stack.Item>
-            </Stack>
+            <StockList />
           </Stack.Item>
-          {/* Character rendering and purchase button. */}
           <Stack.Item>
             <Stack>
               <Stack.Item align="center">
@@ -56,7 +72,7 @@ export const ClothingBooth = (_, context) => {
                 </Section>
               </Stack.Item>
               <Stack.Item grow={1}>
-                <Section fill title="Purchase Info">
+                <Section fill>
                   <Stack fill vertical justify="space-around">
                     <Stack.Item>
                       <PurchaseInfo />
@@ -69,75 +85,5 @@ export const ClothingBooth = (_, context) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const ClothingBoothItem = (props, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  const { item } = props;
-
-  return (
-    <>
-      <Stack
-        align="center"
-        className={classes([
-          'clothingbooth__boothitem',
-          item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
-        ])}
-        onClick={() => act('select', { path: item.path })}>
-        <Stack.Item>
-          <img src={`data:image/png;base64,${item.img}`} />
-        </Stack.Item>
-        <Stack.Item grow={1}>
-          <Box bold>{capitalize(item.name)}</Box>
-        </Stack.Item>
-        <Stack.Item bold>{`${item.cost}⪽`}</Stack.Item>
-      </Stack>
-      <Divider />
-    </>
-  );
-};
-
-const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  return (
-    <Stack vertical align="center">
-      <Stack.Item textAlign>
-        <Image height={data.previewHeight * 2 + "px"} src={`data:image/png;base64,${data.previewIcon}`} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
-        <Button
-          icon="chevron-right"
-          tooltip="Counter-clockwise"
-          tooltipPosition="right"
-          onClick={() => act('rotate-ccw')}
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  return (
-    <Stack bold vertical textAlign="center">
-      {data.selectedItemName ? (
-        <>
-          <Stack.Item>{`Selected: ${data.selectedItemName}`}</Stack.Item>
-          <Stack.Item>{`Price: ${data.selectedItemCost}⪽`}</Stack.Item>
-          <Stack.Item>
-            <Button
-              color="green"
-              disabled={data.selectedItemCost > data.money}
-              onClick={() => act('purchase')}>
-              {(data.selectedItemCost <= data.money) ? `Purchase` : `Insufficient Cash`}
-            </Button>
-          </Stack.Item>
-        </>
-      ) : (
-        <Stack.Item>{`Please select an item.`}</Stack.Item>
-      )}
-    </Stack>
   );
 };

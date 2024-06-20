@@ -1,21 +1,72 @@
+import { BooleanLike } from "common/react";
+
 export interface ClothingBoothData {
-  clothingBoothCategories: ClothingBoothCategory[];
-  money: number;
+  accountBalance?: number;
+  cash?: number;
+  catalogue: Record<string, ClothingBoothGroupingData>;
+  everythingIsFree: boolean;
   name: string;
   previewHeight: number;
   previewIcon: string;
-  selectedItemCost: number;
-  selectedItemName: string;
+  previewShowClothing: BooleanLike;
+  scannedID?: string;
+  selectedGroupingName: string | null;
+  selectedItemName: string | null;
+  tags: Record<string, ClothingBoothGroupingTagsData>;
 }
 
-export interface ClothingBoothCategory {
-  category: string;
-  items: CategoryItems[];
-}
-
-export interface CategoryItems {
-  cost: number;
-  img: string;
+export interface ClothingBoothGroupingData {
+  clothingbooth_items: Record<string, ClothingBoothItemData>;
+  cost_max: number;
+  cost_min: number;
+  grouping_tags: string[];
+  list_icon: string;
   name: string;
-  path: string;
+  slot: ClothingBoothSlotKey;
+}
+
+export interface ClothingBoothItemData {
+  name: string;
+  cost: number;
+  swatch_background_colour?: string;
+	swatch_foreground_shape?: string;
+	swatch_foreground_colour?: string;
+}
+
+export interface SwatchForegroundProps {
+  colour: string;
+}
+
+export interface ClothingBoothGroupingTagsData {
+  name: string;
+  colour?: string;
+  display_order?: number | 1;
+}
+
+// Keep in sync with `\_std\defines\clothing.dm` `SLOT_` defines.
+export enum ClothingBoothSlotKey {
+  Mask = "wear_mask",
+  Glasses = "glasses",
+  Gloves = "gloves",
+  Headwear = "head",
+  Shoes = "shoes",
+  Suit = "wear_suit",
+  Uniform = "w_uniform",
+}
+
+export enum ClothingBoothSortType {
+  Name = "Name",
+  Price = "Price",
+  Variants = "Variants",
+}
+
+export enum ClothingBoothSortComparatorType {
+  String,
+  Number,
+}
+
+export enum TagDisplayOrderType {
+  Season = 1,
+  Formality = 2,
+  Collection = 3,
 }
