@@ -1,5 +1,7 @@
 
 (t)thu jun 20 24
+(u)LeahTheTech
+(+)Mining charges now correctly break low-hardness geodes.
 (u)Garash2k
 (p)19107
 (e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
