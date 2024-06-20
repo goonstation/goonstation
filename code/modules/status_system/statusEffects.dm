@@ -180,6 +180,32 @@
 		onCheck(optional)
 			return src.dialysis_machine == optional
 
+	wrestler
+		id = "wrestler"
+		name = "Wrestling!"
+		desc = "You're in the ring, break a leg!"
+		icon_state = "person"
+		unique = TRUE
+		effect_quality = STATUS_QUALITY_NEUTRAL
+
+		onUpdate(timePassed)
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+			else
+				return ..(timePassed)
+
+			if (M.health < 0)
+				playsound(M.loc, 'sound/misc/knockout.ogg', 25, FALSE)
+				M.make_dizzy(120)
+				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
+				M.setStatus("resting", INFINITE_STATUS)
+				SPAWN(5 SECONDS)
+					M.UpdateOverlays(null, "dizzy")
+				M.delStatus("wrestler")
+
+
+
 	staminaregen
 		id = "staminaregen"
 		name = ""

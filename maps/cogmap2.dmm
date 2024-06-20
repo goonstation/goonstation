@@ -5980,7 +5980,7 @@
 /obj/landmark/halloween,
 /obj/landmark/boxing_ring,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "asN" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/chapel{
@@ -7200,7 +7200,7 @@
 /obj/item/device/microphone,
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aww" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/under/shorts/blue,
@@ -7208,12 +7208,12 @@
 /obj/item/clothing/gloves/boxing,
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "awx" = (
 /obj/loudspeaker,
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "awy" = (
 /obj/stool/chair{
 	dir = 4
@@ -7812,14 +7812,14 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aya" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "ayb" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
@@ -7829,7 +7829,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "ayc" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -8454,10 +8454,10 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "azJ" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "azK" = (
 /obj/decal/boxingropeenter{
 	dir = 4
@@ -8471,7 +8471,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "azL" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -9076,7 +9076,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aBg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -9097,7 +9097,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aBi" = (
 /obj/machinery/camera/television{
 	c_tag = "boxing";
@@ -9726,7 +9726,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aCC" = (
 /obj/machinery/navbeacon/tour/cog2/tour3,
 /obj/decal/stage_edge{
@@ -58525,7 +58525,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "fPe" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/medical{
@@ -60801,7 +60801,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "ied" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -75123,7 +75123,7 @@
 	},
 /obj/table/reinforced/auto,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "xoa" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/firealarm/north,
