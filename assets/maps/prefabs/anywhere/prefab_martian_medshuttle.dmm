@@ -276,7 +276,7 @@
 	},
 /obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/incandescent/purpleish,
-/obj/item/paper/martian_spawn_note,
+/obj/item/paper/martian_clone_note,
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "Oh" = (

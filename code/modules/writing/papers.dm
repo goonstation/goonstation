@@ -185,7 +185,7 @@
 		. = ..()
 		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
 
-/obj/item/paper/martian_spawn_note
+/obj/item/paper/martian_clone_note
 	name = "martian medical documents"
 	icon_state = "folder"
 	info = {"
