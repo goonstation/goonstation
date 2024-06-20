@@ -258,6 +258,7 @@
 	name = "Adamantium Skeleton"
 	desc = "Halves the chance that an explosion will blow off your limbs."
 	id = "explolimbs"
+	icon_state = "adskeleton"
 	category = list("body")
 	points = -2
 
@@ -290,7 +291,7 @@
 	name = "Stumped"
 	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
 	id = "nolegs"
-	icon_state = "placeholder"
+	icon_state = "stumped"
 	category = list("body")
 	points = 0
 	disability_type = TRAIT_DISABILITY_MAJOR
@@ -609,7 +610,7 @@
 	name = "Bald"
 	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
 	id = "bald"
-	icon_state = "placeholder"
+	icon_state = "bald"
 	points = 0
 	category = list("trinkets", "nopug")
 
@@ -620,6 +621,7 @@
 	name = "Smooth talker"
 	desc = "Traders will tolerate 50% more when you are haggling with them."
 	id = "smoothtalker"
+	icon_state = "sale"
 	category = list("skill")
 	points = -1
 
@@ -627,6 +629,7 @@
 	name = "Matrix Flopout"
 	desc = "Flipping lets you dodge bullets and attacks for a higher stamina cost!"
 	id = "matrixflopout"
+	icon_state = "matrix"
 	category = list("skill")
 	points = -2
 
@@ -634,6 +637,7 @@
 	name = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
 	id = "happyfeet"
+	icon_state = "dance"
 	category = list("skill")
 	points = -1
 
@@ -752,6 +756,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Athletic"
 	desc = "Great stamina! Frail body."
 	id = "athletic"
+	icon_state = "athletic"
 	category = list("stats")
 	points = -2
 
@@ -771,6 +776,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Big Bruiser"
 	desc = "Stronger punches but higher stamina cost!"
 	id = "bigbruiser"
+	icon_state = "bruiser"
 	category = list("stats")
 	points = -2
 
@@ -778,6 +784,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Slow Strider"
 	desc = "What's the rush? You can't sprint anymore."
 	id = "slowstrider"
+	icon_state = "slow"
 	category = list("stats")
 	points = 2
 	afterlife_blacklisted = TRUE
@@ -816,6 +823,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Heavy Sleeper"
 	desc = "You always sleep through the start of the shift, and wake up in a random bed."
 	id = "sleepy"
+	icon_state = "sleepy"
 	category = list("background")
 	points = 0
 	spawn_delay = 10 SECONDS
@@ -858,6 +866,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Hemophilia"
 	desc = "You bleed more easily and you bleed more."
 	id = "hemophilia"
+	icon_state = "hemophilia"
 	points = 1
 	category = list("hemophilia")
 	disability_type = TRAIT_DISABILITY_MINOR
@@ -868,6 +877,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Frail Constitution"
 	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
 	id = "weakorgans"
+	icon_state = "frailc"
 	points = 2
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Organ Sensitivity"
@@ -877,6 +887,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Slow Metabolism"
 	desc = "Any chemicals in you body deplete much more slowly."
 	id = "slowmetabolism"
+	icon_state = "slowm"
 	points = 0
 
 /datum/trait/alcoholic
@@ -897,6 +908,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Allergy"
 	desc = "You're allergic to... something. You can't quite remember, but how bad could it possibly be?"
 	id = "randomallergy"
+	icon_state = "allergy"
 	points = 0
 	category = list("allergy")
 	afterlife_blacklisted = TRUE
@@ -926,6 +938,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Medical Allergy"
 	desc = "You're allergic to some medical chemical... but you can't remember which."
 	id = "medicalallergy"
+	icon_state = "medallergy"
 	points = 1
 	category = list("allergy")
 	afterlife_blacklisted = TRUE
@@ -938,7 +951,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Addict"
 	desc = "You spawn with a random addiction. Once cured there is a small chance that you will suffer a relapse."
 	id = "addict"
-	icon_state = "syringe"
+	icon_state = "addict"
 	points = 2
 	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
@@ -1050,12 +1063,14 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Chem resistant"
 	desc = "You are more resistant to chem overdoses."
 	id = "chemresist"
+	icon_state = "chemresist"
 	points = -2
 
 /datum/trait/puritan
 	name = "Puritan"
 	desc = "You can not be cloned or revived except by cyborgification. Any attempt will end badly."
 	id = "puritan"
+	icon_state = "puritan"
 	points = 2
 	category = list("cloner_stuff")
 	disability_type = TRAIT_DISABILITY_MAJOR
@@ -1066,6 +1081,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Survivalist"
 	desc = "Food will heal you even if you are badly injured."
 	id = "survivalist"
+	icon_state = "survivalist"
 	points = -1
 
 /datum/trait/smoker
@@ -1108,6 +1124,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Kleptomaniac"
 	desc = "You will sometimes randomly pick up nearby items."
 	id = "kleptomaniac"
+	icon_state = "klepto"
 	points = 1
 	afterlife_blacklisted = TRUE
 
@@ -1123,6 +1140,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Clutz"
 	desc = "When interacting with anything you have a chance to interact with something different instead."
 	id = "clutz"
+	icon_state = "clutz"
 	points = 2
 	afterlife_blacklisted = TRUE
 
@@ -1130,6 +1148,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
 	id = "leftfeet"
+	icon_state = "twoleft"
 	points = 1
 	afterlife_blacklisted = TRUE
 
@@ -1137,6 +1156,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Trippy"
 	desc = "You have a tendency to randomly trip while moving."
 	id = "trippy"
+	icon_state = "trip"
 	points = 1
 	afterlife_blacklisted = TRUE
 
@@ -1151,7 +1171,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Hyperallergic"
 	desc = "You have a severe sensitivity to allergens and are liable to slip into anaphylactic shock upon exposure."
 	id = "allergic"
-	icon_state = "placeholder"
+	icon_state = "hypeallergy"
 	points = 1
 	category = list("allergy")
 	disability_type = TRAIT_DISABILITY_MINOR
@@ -1162,12 +1182,14 @@ TYPEINFO(/datum/trait/partyanimal)
 	name="All ears"
 	desc = "You lost your headset on the way to work."
 	id = "allears"
+	icon_state = "allears"
 	points = 0
 
 /datum/trait/atheist
 	name = "Atheist"
 	desc = "In this moment, you are euphoric. You cannot receive faith healing, and prayer makes you feel silly."
 	id = "atheist"
+	icon_state = "atheist"
 	points = 0
 
 	onAdd(mob/living/owner)
@@ -1231,6 +1253,7 @@ TYPEINFO(/datum/trait/partyanimal)
 /datum/trait/super_slips
 	name = "Slipping Hazard"
 	id = "super_slips"
+	icon_state = "slip"
 	desc = "You never were good at managing yourself slipping."
 	points = 1
 
