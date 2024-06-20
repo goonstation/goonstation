@@ -44,6 +44,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	proc/ant_safe()
 		if (!isturf(src.loc))
 			return FALSE
+		if (isrestrictedz(src.loc.z))
+			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
@@ -1236,7 +1238,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 					JOB_XP(user, "Bartender", 1)
 				return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/pineappleslice))
 			if (src.wedge)
 				boutput(user, SPAN_ALERT("You can't add another wedge to [src], that would just look silly!!"))
 				return
@@ -1713,7 +1715,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			var/P = pick(/obj/item/reagent_containers/food/snacks/plant/orange/wedge,\
 			/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge,\
 			/obj/item/reagent_containers/food/snacks/plant/lime/wedge,\
-			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge)
+			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/pineappleslice)
 			src.wedge = new P(src)
 		if (prob(33))
 			src.umbrella = new /obj/item/cocktail_stuff/drink_umbrella(src)

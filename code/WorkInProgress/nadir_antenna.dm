@@ -888,7 +888,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				src.is_transceiving = FALSE
 
 /obj/machinery/computer/transception
-	name = "\improper Transception Interlink"
+	name = "transception interlink"
 	desc = "A console capable of remotely connecting to and operating cargo transception pads."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMpad"
