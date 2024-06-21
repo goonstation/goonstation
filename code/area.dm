@@ -2478,7 +2478,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Wrestling Ring"
 	icon_state = "wrestling"
 	sound_environment = 2
-
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
 		if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
@@ -2498,10 +2497,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 				return
 			if (M.hasStatus("wrestler"))
 				M.delStatus("wrestler")
-
-
-
-
 
 /area/station/crew_quarters/captain
 	name = "Captain's Quarters"
