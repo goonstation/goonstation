@@ -619,14 +619,32 @@ obj/decal/fakeobjects/teleport_pad
 			. = 1
 		UNCROSS_BUMP_CHECK(O)
 
-/obj/decal/boxingropeenter
+/obj/decal/boxingrope/enter //code swiped from railings
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
+	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
+
+	Bumped(var/mob/AM as mob)
+		. = ..()
+		if(!istype(AM)) return
+		if(AM.client?.check_key(KEY_RUN) || AM.client?.check_key(KEY_BOLT))
+			src.try_vault(AM, TRUE)
+
+	attack_hand(mob/user)
+		src.try_vault(user)
+
+	attack_ai(mob/user)
+		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
+			return
+		return src.Attackhand(user)
+
+	proc/try_vault(mob/user, use_owner_dir = FALSE)
+		if(!actions.hasAction(user, /datum/action/bar/icon/railing_jump))
+			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 /obj/decal/alienflower
 	name = "strange alien flower"

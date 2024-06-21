@@ -85,13 +85,12 @@
 			else
 				src.put_back_hammer()
 
-	/// Check to see if the defib is too far away from the mount.
+	/// snap back if too far away
 	proc/hammer_move()
 		if (src.hammer && src.hammer.loc != src)
 			if (BOUNDS_DIST(src.hammer, src) > 0)
 				src.put_back_hammer()
 
-	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_hammer()
 		if (src.hammer)
 			src.hammer.force_drop(sever=TRUE)

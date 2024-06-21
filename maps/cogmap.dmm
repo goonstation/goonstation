@@ -3674,7 +3674,7 @@
 	},
 /obj/landmark/boxing_ring,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aob" = (
 /obj/machinery/light{
 	dir = 1;
@@ -4899,8 +4899,10 @@
 /area/station/crew_quarters/fitness)
 "ats" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone{
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "att" = (
@@ -5242,17 +5244,17 @@
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "auI" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "auJ" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "auK" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
@@ -5597,9 +5599,6 @@
 	},
 /area/station/crew_quarters/fitness)
 "avT" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
@@ -5608,11 +5607,14 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/decal/boxingrope/enter{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "avU" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "avV" = (
 /obj/stool,
 /obj/decal/boxingrope{
@@ -5623,7 +5625,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "avW" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/specialroom/bar,
@@ -6030,7 +6032,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "axo" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -6043,7 +6045,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "axr" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/black,
@@ -6378,7 +6380,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "ayJ" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -6388,7 +6390,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "ayM" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -6885,14 +6887,14 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aAm" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aAn" = (
 /obj/decal/boxingrope,
 /obj/machinery/light,
@@ -6900,7 +6902,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aAo" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
@@ -6910,7 +6912,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aAq" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -41591,7 +41593,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "fxp" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -60524,7 +60526,7 @@
 "ulX" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "ume" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4

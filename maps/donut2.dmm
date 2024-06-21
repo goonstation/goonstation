@@ -7850,7 +7850,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aOL" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -7961,7 +7961,7 @@
 /area/station/hangar/science)
 "aPt" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aPx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8250,7 +8250,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "aQM" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/red/side{
@@ -12586,7 +12586,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "boz" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -18837,7 +18837,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "drq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25523,7 +25523,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "hMP" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating,
@@ -26093,7 +26093,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "igI" = (
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment,
@@ -31201,7 +31201,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "lwG" = (
 /obj/stool/chair{
 	dir = 8
@@ -31957,7 +31957,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "lQp" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/yellow/side,
@@ -33203,7 +33203,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "mIq" = (
 /obj/item/bananapeel,
 /turf/simulated/floor/plating/airless,
@@ -33609,11 +33609,13 @@
 /area/station/science/lab)
 "mTi" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
 /obj/machinery/light/small/floor,
 /obj/decal/stage_edge{
 	dir = 8
+	},
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone{
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -33661,7 +33663,7 @@
 "mVd" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "mVq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39281,7 +39283,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "qjS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39694,7 +39696,7 @@
 /obj/decal/boxingrope,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "qxw" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -39912,7 +39914,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "qCm" = (
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/ce)
@@ -41175,7 +41177,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "rwt" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -49319,7 +49321,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/wrestling_ring)
 "wDG" = (
 /obj/stool/chair{
 	dir = 4

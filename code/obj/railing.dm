@@ -312,8 +312,8 @@
 					var/turf/T2 = get_step(get_turf(owner), turn(direction, -45))
 					obstacle = check_turf_obstacles(T2)
 
-
-		if(obstacle) // did we end up ever bumping the dest or two corners?
+		// did we end up ever bumping the dest or two corners?
+		if(obstacle && !istype(obstacle, /obj/decal/boxingrope)) //check if there's boxing ropes in the way, for ring entrances
 			// if they are a living mob, make them TASTE THE PAIN
 			if (istype(ownerMob, /mob/living))
 				if (!ownerMob.hasStatus("knockdown"))

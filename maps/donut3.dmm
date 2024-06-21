@@ -6526,7 +6526,6 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/hallway/primary/west)
 "bPa" = (
-/obj/decal/boxingrope,
 /obj/table/wood/round/auto,
 /obj/item/clothing/under/shorts/blue{
 	pixel_x = 2;
@@ -6536,6 +6535,7 @@
 	pixel_x = -7;
 	pixel_y = 4
 	},
+/obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bPo" = (
@@ -27622,7 +27622,6 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "ine" = (
-/obj/decal/boxingrope,
 /obj/table/wood/round/auto,
 /obj/item/basketball{
 	pixel_x = 4;
@@ -27640,6 +27639,7 @@
 	pixel_x = 13;
 	pixel_y = 1
 	},
+/obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "inf" = (
@@ -31909,7 +31909,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
 "jCe" = (
-/obj/decal/boxingrope,
 /obj/table/wood/round/auto,
 /obj/item/clothing/under/shorts/black{
 	pixel_x = 5;
@@ -31919,6 +31918,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "jCk" = (
@@ -44236,9 +44236,6 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "npz" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 5
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -44254,6 +44251,9 @@
 /obj/item/clothing/gloves/boxing{
 	pixel_x = 2;
 	pixel_y = -2
+	},
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -65781,14 +65781,14 @@
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
 "tRA" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 9
-	},
 /obj/table/wood/round/auto,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -73310,8 +73310,10 @@
 /area/station/engine/engineering)
 "weI" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone{
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "weM" = (
