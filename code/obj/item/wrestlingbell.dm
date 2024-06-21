@@ -83,7 +83,7 @@
 					last_ring = world.time
 					playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 					for (var/mob/living/carbon/human/human in view(10, src)) // this really should be looking in the ring area for humans, but then you'd have to account for nadir and wrestlemap
-						if (istype(get_area(human), /area/station/crew_quarters/wrestling_ring))
+						if (istype(get_turf(human), /turf/simulated/floor/specialroom/gym))
 							if (human.hasStatus("wrestler") == null)
 								human.setStatus("wrestler") // we only want to give the status on ring, not take it away, so new rounds can be started without leaving and entering
 			else

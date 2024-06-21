@@ -38000,7 +38000,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/station/crew_quarters/wrestling_ring)
+/area/station/science/testchamber)
 "qPu" = (
 /obj/item/device/radio/intercom/security{
 	pixel_y = 29
@@ -38480,7 +38480,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
 	},
-/area/station/crew_quarters/wrestling_ring)
+/area/station/science/testchamber)
 "rbZ" = (
 /obj/machinery/firealarm{
 	dir = 8;
