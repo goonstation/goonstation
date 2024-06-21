@@ -196,13 +196,14 @@
 				return ..(timePassed)
 
 			if (M.health < 0)
-				playsound(M.loc, 'sound/misc/knockout.ogg', 25, FALSE)
-				M.make_dizzy(120)
+				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+				SPAWN(0)
+					playsound(M.loc, 'sound/misc/knockout.ogg', 50, FALSE)
+				M.make_dizzy(140)
 				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
 				M.setStatus("resting", INFINITE_STATUS)
-				SPAWN(5 SECONDS)
+				SPAWN(10 SECONDS)
 					M.UpdateOverlays(null, "dizzy")
-				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 				M.delStatus("wrestler")
 
 
