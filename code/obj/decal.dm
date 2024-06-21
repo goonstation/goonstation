@@ -620,7 +620,7 @@ obj/decal/fakeobjects/teleport_pad
 		UNCROSS_BUMP_CHECK(O)
 
 /obj/decal/boxingrope/enter //code swiped from railings
-	name = "Ring entrance"
+	name = "ring entrance"
 	desc = "Do not exit the ring."
 	density = 1
 	anchored = ANCHORED

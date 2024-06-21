@@ -75,13 +75,17 @@
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
-		switch(user.a_intent)
-			if ("harm")
+		if(istype(W, /obj/item/wrestlingbell/hammer))
+			if (user.a_intent == "harm")
 				if(last_ring + 20 >= world.time)
 					return
 				else
 					last_ring = world.time
 					playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+					for (var/mob/living/carbon/human/human in view(10, src)) // this really should be looking in the ring area for humans, but then you'd have to account for nadir and wrestlemap
+						if (istype(get_area(human), /area/station/crew_quarters/wrestling_ring))
+							if (human.hasStatus("wrestler") == null)
+								human.setStatus("wrestler") // we only want to give the status on ring, not take it away, so new rounds can be started without leaving and entering
 			else
 				src.put_back_hammer()
 

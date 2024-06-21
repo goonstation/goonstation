@@ -205,13 +205,10 @@
 				SPAWN(10 SECONDS)
 					M.UpdateOverlays(null, "dizzy")
 
-				var/list/nearby_turfs
-				for (var/turf/T in view(2, M))
-					nearby_turfs += T
+				for (var/mob/living/carbon/human/human in view(5, M))
+					if (human.hasStatus("wrestler"))
+						human.delStatus("wrestler") // We want to remove all nearby people's wrestling status if one goes down
 
-				for (var/mob/living/carbon/human/H in /area/station/crew_quarters/wrestling_ring)
-					if (H in nearby_turfs && H.hasStatus("wrestler"))
-						H.delStatus("wrestler") // We want to remove all nearby people's wrestling status if one goes down
 				M.delStatus("wrestler")
 
 
