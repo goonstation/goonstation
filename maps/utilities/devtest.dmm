@@ -3409,7 +3409,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Si" = (
-/obj/machinery/chem_dispenser_admin,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor,
 /area/station/devzone)
 "Sk" = (

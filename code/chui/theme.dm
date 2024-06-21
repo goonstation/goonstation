@@ -136,7 +136,7 @@ chui/theme/flock
 
 	generateHeader(var/list/params)
 		params["css"] += list("css/chui/flockdrone.css")
-		params["js"] += list("vendor/js/howler.core.min.js", "js/flockmind.js")
+		params["js"] += list("js/flockmind.js")
 
 		return ..(params)
 
