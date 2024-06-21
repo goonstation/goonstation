@@ -202,6 +202,7 @@
 				M.setStatus("resting", INFINITE_STATUS)
 				SPAWN(5 SECONDS)
 					M.UpdateOverlays(null, "dizzy")
+				playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 				M.delStatus("wrestler")
 
 
