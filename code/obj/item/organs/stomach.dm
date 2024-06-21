@@ -58,7 +58,7 @@
 		if (istype(AM, /obj/item/organ)) // organs don't have a digestion proc, so just delete them instead
 			var/obj/item/organ/organtodelete = AM
 			if (!organtodelete.robotic)
-				organtodelete.Del()
+				qdel(organtodelete)
 				return
 		AM.set_loc(src.donor)
 		src.stomach_contents |= AM
