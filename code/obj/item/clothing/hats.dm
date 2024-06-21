@@ -53,7 +53,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "ogloves"
 
 /obj/item/clothing/head/purple
-	desc = "A knit cap in orange."
+	desc = "A knit cap in purple."
 	icon_state = "purple"
 	item_state = "jgloves"
 
@@ -517,6 +517,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
+
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chefhat-alt"
 
 /obj/item/clothing/head/chefhatpuffy
 	name = "Puffy Chef's Hat"

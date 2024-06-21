@@ -516,7 +516,7 @@
 				src.buckled = null
 				return
 			src.set_density(initial(src.density))
-		else
+		else if (src.can_lie)
 			src.set_density(src.lying ? FALSE : initial(src.density))
 
 		// update canmove

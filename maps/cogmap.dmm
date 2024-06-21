@@ -861,10 +861,6 @@
 "adW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"adY" = (
-/obj/item/tile/steel,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction2)
 "adZ" = (
 /obj/decal/cleanable/dirt,
 /obj/stool,
@@ -1213,20 +1209,12 @@
 /area/station/crew_quarters/clown)
 "afm" = (
 /obj/decal/cleanable/dirt,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/marker/supplymarker,
-/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/damaged1,
 /area/station/crew_quarters/clown)
-"afn" = (
-/obj/item/rods/steel,
-/obj/storage/crate,
-/obj/item/clothing/under/gimmick/police,
-/obj/item/clothing/head/helmet/bobby,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/construction2)
 "afo" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1263,6 +1251,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "aft" = (
@@ -1538,18 +1528,11 @@
 /area/station/ai_monitored/armory)
 "age" = (
 /obj/decal/cleanable/dirt,
-/obj/item/bananapeel,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"agg" = (
-/obj/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/ears/earmuffs,
-/turf/simulated/floor/plating/scorched,
-/area/station/hallway/secondary/construction2)
 "agh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1559,6 +1542,7 @@
 "agi" = (
 /obj/item/sheet/steel,
 /obj/storage/closet/office,
+/obj/item/tile/steel,
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/secondary/construction2)
 "agj" = (
@@ -3177,7 +3161,26 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/storage/box/flashbang_kit{
+	pixel_y = 13
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "alQ" = (
@@ -5000,6 +5003,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "atP" = (
@@ -7204,6 +7208,9 @@
 	},
 /obj/window/reinforced{
 	dir = 1
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -25503,12 +25510,14 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera/television/mobile/science,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bOx" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/television/mobile/science,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "Stairs2_wide"
@@ -41491,18 +41500,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"fsC" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "fsG" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/red/side{
@@ -42393,12 +42390,20 @@
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "gdD" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
-	},
-/obj/mapping_helper/access/sec_lockers,
-/obj/item/gun/flamethrower/assembled/loaded,
 /obj/decal/stripe_caution,
+/obj/table/auto,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "geM" = (
@@ -43329,15 +43334,22 @@
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"gRy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "gRz" = (
 /obj/disposalpipe/segment,
 /obj/machinery/alarm{
@@ -44253,6 +44265,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"hFt" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/computer/announcement/clown,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "hFD" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular{
@@ -46018,13 +46035,13 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "jft" = (
@@ -47444,6 +47461,11 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/engine)
+"kii" = (
+/obj/decal/cleanable/dirt,
+/obj/item/bananapeel,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "kiI" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -50517,7 +50539,7 @@
 	req_access = null;
 	turretArea = /area/station/turret_protected/armory_outside
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "mMJ" = (
@@ -56375,6 +56397,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"rdh" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "rdI" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -60218,6 +60248,14 @@
 /obj/machinery/cargo_router/Router15,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"uec" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'CONSTRUCTION AREA'";
+	name = "CONSTRUCTION";
+	pixel_y = -4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/clown)
 "ueu" = (
 /obj/rack,
 /obj/item/clothing/gloves/yellow{
@@ -61749,7 +61787,7 @@
 	},
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
-	id = "Hot Loop Gas Supply 2";
+	id = "Hot Loop Gas Supply 1";
 	target_pressure = 1000
 	},
 /turf/simulated/floor/black,
@@ -62535,10 +62573,10 @@
 	name = "Armory"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "vVq" = (
@@ -64898,25 +64936,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/hotloop)
 "xOA" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
-/obj/table/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -10;
-	pixel_y = 8
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 11;
-	pixel_y = 3
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/decal/stripe_caution,
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor,
-/area/station/security/main)
+/area/station/ai_monitored/armory)
 "xOJ" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -94328,8 +94354,8 @@ adC
 adC
 adC
 adC
-nxc
 dHa
+eFW
 eFW
 eFW
 eFW
@@ -94630,8 +94656,8 @@ adC
 adC
 adC
 adC
-nxc
 gsU
+nxc
 nxc
 nxc
 nxc
@@ -94652,7 +94678,7 @@ shp
 qEI
 jIz
 sDK
-xOA
+avd
 gdD
 awK
 xra
@@ -94932,11 +94958,11 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 fju
 acU
+vjb
 vjb
 vjb
 vjb
@@ -95234,10 +95260,10 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 acp
+acV
 acV
 acV
 acV
@@ -95536,13 +95562,13 @@ adC
 adC
 adC
 adC
-nxc
 wwh
 eFW
 act
 acV
 foS
 jYE
+xOA
 fWA
 nPU
 niY
@@ -95838,12 +95864,12 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 act
 acV
 sgN
+adE
 adE
 adE
 adE
@@ -96140,12 +96166,12 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 act
 acV
 mMm
+adE
 adE
 adE
 adE
@@ -96442,13 +96468,13 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 isQ
 act
 acV
 vOf
 uvs
+ahr
 ahr
 ahr
 alP
@@ -96744,7 +96770,6 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 act
@@ -96753,8 +96778,9 @@ fAd
 adE
 adE
 adE
+adE
 aji
-fsC
+vUR
 iqt
 dSf
 aHB
@@ -97046,13 +97072,13 @@ adC
 adC
 adC
 adC
-nxc
 wwh
 eFW
 act
 acV
 ghV
 aeW
+gRy
 agc
 aim
 afR
@@ -97348,10 +97374,10 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 ado
+acV
 acV
 acV
 acV
@@ -97650,11 +97676,11 @@ adC
 adC
 adC
 adC
-nxc
 gsU
 nxc
 adF
 acU
+vjb
 vjb
 vjb
 vjb
@@ -97952,8 +97978,8 @@ adC
 adC
 adC
 adC
-nxc
 gsU
+nxc
 nxc
 gsU
 nxc
@@ -98254,8 +98280,8 @@ aar
 aar
 aar
 aar
-eFW
 kvm
+eFW
 eFW
 fML
 xuC
@@ -108529,9 +108555,9 @@ acB
 acB
 acB
 adW
-adW
-adW
-adW
+hFt
+rdh
+kii
 adW
 ahL
 aiJ
@@ -108830,11 +108856,11 @@ air
 acB
 acB
 acB
-acJ
-oUt
-afn
-agg
-agT
+adW
+adW
+adW
+adW
+uec
 ahO
 aiG
 ajP
@@ -109133,7 +109159,7 @@ aca
 aca
 abY
 acJ
-adY
+oUt
 afo
 agh
 gfj

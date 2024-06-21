@@ -172,7 +172,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/obj/decal/cleanable/tomatosplat/splat = new
 			if(src.reagents)
 				src.reagents.handle_reactions()
-				splat.reagents = new(10000)
+				splat.create_reagents(src.reagents.total_volume)
 				src.reagents.trans_to(splat, src.reagents.total_volume)
 			splat.set_loc(T)
 			splat.setup(T)

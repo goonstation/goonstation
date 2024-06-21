@@ -6,6 +6,7 @@
 	var/comp_id		= null // integer
 	var/ip			= null // integer
 	var/deleted_at	= null // date-time | null
+	var/datum/apiModel/Tracked/BanDetail/original_ban_detail = null // Model - not required
 
 /datum/apiModel/Tracked/BanDetail/SetupFromResponse(response)
 	. = ..()
@@ -14,6 +15,10 @@
 	src.comp_id = response["comp_id"]
 	src.ip = response["ip"]
 	src.deleted_at = response["deleted_at"]
+
+	if (("original_ban_detail" in response) && islist(response["original_ban_detail"]))
+		src.original_ban_detail = new
+		src.original_ban_detail.SetupFromResponse(response["original_ban_detail"])
 
 /datum/apiModel/Tracked/BanDetail/VerifyIntegrity()
 	. = ..()
@@ -32,3 +37,6 @@
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
+	.["original_ban_detail"] = src.original_ban_detail
+	if (src.original_ban_detail)
+		.["original_ban_detail"] = src.original_ban_detail.ToList()

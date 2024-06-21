@@ -30293,11 +30293,11 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "kTp" = (
-/obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security/alt{
 	aiHacking = 1
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kTw" = (
@@ -36656,6 +36656,9 @@
 	icon_state = "0-4"
 	},
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/computer/announcement/clown{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "oFu" = (
@@ -40024,8 +40027,8 @@
 	pixel_y = 1;
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -48261,7 +48264,7 @@
 	req_access = null;
 	turretArea = /area/station/turret_protected/armory_outside
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -49961,13 +49964,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "xdw" = (

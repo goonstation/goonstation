@@ -409,7 +409,7 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if(!can_act(user) || !in_interact_range(target, user))
+		if(!can_act(user) || !in_interact_range(target, user) || GB.status & (NOPOWER | BROKEN))
 			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
@@ -2249,7 +2249,7 @@
 	checkRequirements(var/obj/item/device/speech_pro/sp, var/mob/user)
 		if(!can_act(user))
 			return FALSE
-		return sp in user
+		return sp == user.equipped()
 
 	greeting
 		name = "Greeting"

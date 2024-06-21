@@ -16,7 +16,7 @@ datum
 			fluid_g = 250
 			fluid_b = 250
 			transparency = 100
-			addiction_prob = 15//80
+			addiction_prob = 15
 			addiction_min = 5
 			overdose = 20
 			depletion_rate = 0.6
@@ -51,7 +51,7 @@ datum
 						H.set_face_icon_dirty()
 						boutput(M, SPAN_ALERT("<b>You feel gruff!</b>"))
 						SPAWN(0.3 SECONDS)
-							M.visible_message(SPAN_ALERT("<b>[M.name]</b> has a wild look in their eyes!"))
+							M.visible_message(SPAN_ALERT("<b>[M.name]</b> has a wild look in [his_or_her(M)] eyes!"))
 					if(check < 60)
 						H.remove_stuns()
 					if(check < 30)
@@ -65,7 +65,7 @@ datum
 
 				if(check < 8)
 					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), rand(1,5))
-					M.visible_message(SPAN_ALERT("<b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!"))
+					M.visible_message(SPAN_ALERT("<b>[M.name]</b> scratches at something under [his_or_her(M)] [issilicon(M) ? "chassis" : "skin"]!"))
 					random_brute_damage(M, 5 * mult)
 				else if (check < 16)
 					switch(rand(1,2))
@@ -165,7 +165,7 @@ datum
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
 						M.emote("scream")
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at their own skin!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"))
 						random_brute_damage(M, 5 * mult)
 						M.reagents.add_reagent("salts1", 5 * mult)
 						M.emote("twitch")
@@ -179,7 +179,7 @@ datum
 			fluid_b = 0
 			fluid_g = 200
 			transparency = 40
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 5
 			overdose = 20
 			value = 20 // 10 2 1 3 1 heat explosion :v
@@ -242,7 +242,7 @@ datum
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
 						M.emote("scream")
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> nervously scratches at their skin!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> nervously scratches at [his_or_her(M)] skin!"))
 						M.make_jittery(10)
 						random_brute_damage(M, 5 * mult)
 						M.emote("twitch")
@@ -400,8 +400,8 @@ datum
 			fluid_r = 200
 			fluid_g = 185
 			fluid_b = 230
-			addiction_prob = 15//65
-			addiction_min = 10
+			addiction_prob = 15
+			addiction_min = 25
 			depletion_rate = 0.2
 			value = 3 // 1c + 1c + 1c
 			viscosity = 0.2
@@ -433,8 +433,8 @@ datum
 			fluid_r = 230
 			fluid_g = 220
 			fluid_b = 230
-			addiction_prob = 1 //It lasts a while, it's not as low as it seems
-			addiction_min = 100
+			addiction_prob = 1 //Less addictive than ethanol due to its higher depletion rate
+			addiction_min = 50
 			max_addiction_severity = "LOW"
 			stun_resist = 3
 			depletion_rate = 0.1
@@ -742,7 +742,7 @@ datum
 			fluid_b = 0
 			viscosity = 0.2
 			transparency = 190
-			addiction_prob = 15//70
+			addiction_prob = 15
 			addiction_min = 10
 			max_addiction_severity = "LOW"
 			overdose = 35 // raise if too low - trying to aim for one sleepypen load being problematic, two being deadlyish
@@ -965,7 +965,7 @@ datum
 			fluid_g = 100
 			fluid_b = 180
 			transparency = 250
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 10
 			overdose = 20
 			hunger_value = -0.1
@@ -1132,7 +1132,7 @@ datum
 					return //Since is created by a meth overdose, dont react while meth is in their system.
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M)] legs!"))
 						M.change_misstep_chance(12 * mult)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 4)
@@ -1160,7 +1160,7 @@ datum
 			fluid_g = 250
 			fluid_b = 250
 			transparency = 220
-			addiction_prob = 10//60
+			addiction_prob = 10
 			addiction_min = 5
 			overdose = 20
 			depletion_rate = 0.6
@@ -1222,7 +1222,7 @@ datum
 					return
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M)] legs!"))
 						M.change_misstep_chance(20 * mult)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
 					else if (effect <= 4)

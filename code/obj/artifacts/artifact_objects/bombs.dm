@@ -279,7 +279,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 						continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 

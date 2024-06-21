@@ -31,6 +31,7 @@
 	var/spawn_in_loc = 0 //spawn verb spawning in loc?
 	/// toggles seeing the Topic log entires on or off by default
 	var/show_topic_log = FALSE
+	var/hide_offline_indicators = TRUE // overrides offline indicator behavior
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
 	var/ghost_interaction = FALSE //! if toggled on then the admin ghost can interact with things
@@ -166,6 +167,7 @@
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Don't create manifest entries when respawning?: <a href='?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide offline indicators when mob jumping?: <a href='?src=\ref[src];action=toggle_hide_offline'>[(src.hide_offline_indicators ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
@@ -310,6 +312,11 @@
 			saved_skip_manifest = FALSE
 		skip_manifest = saved_skip_manifest
 
+		var/saved_hide_offline_indicators = AP["hide_offline_indicators"]
+		if (isnull(saved_hide_offline_indicators))
+			saved_hide_offline_indicators = TRUE
+		hide_offline_indicators = saved_hide_offline_indicators
+
 		var/saved_slow_stat = AP["slow_stat"]
 		if (isnull(saved_slow_stat))
 			saved_slow_stat = FALSE
@@ -372,6 +379,7 @@
 		AP["spawn_in_loc"] = spawn_in_loc
 		AP["show_topic_log"] = show_topic_log
 		AP["skip_manifest"] = skip_manifest
+		AP["hide_offline_indicators"] = hide_offline_indicators
 		AP["slow_stat"] = slow_stat
 
 		for(var/cat in toggleable_admin_verb_categories)
