@@ -1296,10 +1296,10 @@ TYPEINFO(/datum/trait/partyanimal)
 					explanation_text += "and [ingredient]<br/>"
 
 /datum/trait/deathwish
-	name = "Death wish"
+	name = "Death Wish"
 	desc = "You take double damage from all sources."
 	id = "deathwish"
-	category = "stats"
+//	category = "stats"
 	points = 2
 	icon_state = "deathwish"
 
