@@ -2226,6 +2226,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\manufacturer.dm"
 #include "code\obj\machinery\manufacturer_subtypes.dm"
 #include "code\obj\machinery\mass_driver.dm"
+#include "code\obj\machinery\medimulcher.dm"
 #include "code\obj\machinery\meter.dm"
 #include "code\obj\machinery\microwave.dm"
 #include "code\obj\machinery\navbeacon.dm"
