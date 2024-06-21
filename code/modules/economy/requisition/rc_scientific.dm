@@ -601,9 +601,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						//src.item_rewarders += new /datum/rc_itemreward/personal_interdictor_kit
 					if(GOAL_MANUFACTURE)
 						goal_desc = "production of a medical biomatter recombinator"
-						//when built and powered, slowly makes weak healing patches out of compostables you load in
+						//when built and powered, slowly makes weak healing patches out of food you load in
 						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
-						//src.item_rewarders += new /datum/rc_itemreward/medimulcher
+						src.item_rewarders += new /datum/rc_itemreward/medimulcher
 					if(GOAL_REFINEMENT)
 						goal_desc = "development of an enhanced mobile recharging bay"
 						//special backpack capable of accepting a large power cell to recharge contents automatically
@@ -947,3 +947,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	build_reward()
 		var/theitem = new /obj/item/storage/backpack/recharge_bay
 		return theitem
+
+/datum/rc_itemreward/medimulcher
+	name = "APS-4 bio-integrator"
+	build_reward()
+		var/obj/item/electronics/frame/F = new
+		F.store_type = /obj/machinery/medimulcher
+		F.name = "APS-4 bio-integrator frame"
+		F.viewstat = 2
+		F.secured = 2
+		F.icon_state = "dbox_big"
+		F.w_class = W_CLASS_BULKY
+		return F
