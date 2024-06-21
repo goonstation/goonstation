@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 			user.drop_item(src)
 			src.set_loc(B)
+			src.storage.hide_all_huds()
 			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
 			return
 
@@ -213,7 +214,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
-			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
+			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("knockdown"))
 				boutput(user, SPAN_ALERT("[capitalize(hes_or_shes(G.affecting))] moving too much to feed to His Grace!"))
 				return
 			user.visible_message(SPAN_ALERT("<b>[user] is trying to feed [G.affecting] to [src]!</b>"))
@@ -383,9 +384,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 			affected_mob:HealDamage("All", 12 * mult, 12 * mult)
 			if(affected_mob.get_toxin_damage())
 				affected_mob.take_toxin_damage(-5 * mult)
-			affected_mob.delStatus("stunned")
-			affected_mob.delStatus("weakened")
-			affected_mob.delStatus("paralysis")
+			affected_mob.remove_stuns()
 			affected_mob.dizziness = max(0,affected_mob.dizziness-10 * mult)
 			affected_mob.changeStatus("drowsy", -20 * mult SECONDS)
 			affected_mob:sleeping = 0

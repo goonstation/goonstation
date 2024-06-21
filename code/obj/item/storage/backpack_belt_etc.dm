@@ -327,8 +327,8 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -564,8 +564,8 @@
 	slots = 7
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -765,7 +765,7 @@
 	check_wclass = 1
 
 /obj/item/storage/belt/mining/prepared
-	spawn_contents = list(/obj/item/mining_tool/power_pick,
+	spawn_contents = list(/obj/item/mining_tool/powered/pickaxe,
 		/obj/item/ore_scoop/prepared,
 		/obj/item/satchel/mining,
 		/obj/item/device/geiger,
@@ -972,8 +972,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /* -------------------- Wrestling Belt -------------------- */
 
 TYPEINFO(/obj/item/storage/belt/wrestling)
-	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
-
+	mats = list("metal_dense" = 5,
+				"dense_super" = 10,
+				"fabric" = 5)
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."

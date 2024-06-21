@@ -49,12 +49,14 @@ toxic - poisons
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)
-		return
+		if (!ismob(hit)) //I do not want to deal with players' bloodstreams boiling them alive, as metal as that would be
+			//this isn't completely realistic, as lasers don't really have a temperature and so won't plateau like this buuut this works for now
+			hit.temperature_expose(null, T0C + 100 + power * 20, 100, TRUE)
 
 	tick(var/obj/projectile/P)
 		if (istype(P.loc, /turf) && !(locate(/obj/blob/reflective) in get_turf(P.loc))) //eh, works for me:tm:
 			var/turf/T = P.loc
-			T.hotspot_expose(power*20, 5)
+			T.hotspot_expose(T0C + 100 + power*20, 5)
 
 /datum/projectile/laser/quad
 	name = "4 lasers"
@@ -123,7 +125,7 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit, dir, obj/projectile/P)
-		fireflash(get_turf(hit), 0)
+		fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_BLUE)
 		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
 			hit.ex_act(2)
 		else
@@ -461,6 +463,7 @@ toxic - poisons
 			mult = 0.5
 		return ..(P, A) * mult
 
+
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"
 	color_icon = "#3d9cff"
@@ -485,6 +488,47 @@ toxic - poisons
 		turret = 1
 		damage = 15
 
+/datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	cost = 10
+	damage = 12.5
+	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY/smg
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	cost = 10
+	damage = 12.5
+	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
+
+/datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	cost = 10
+	damage = 15
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY/shotgun
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	cost = 10
+	damage = 15
 
 // cogwerks- mining laser, first attempt
 
@@ -680,3 +724,17 @@ toxic - poisons
 	var/heat_low = 10
 	/// higher bounds of heat added to the makeshift laser rifle this was fired from
 	var/heat_high = 12
+/datum/projectile/laser/lasergat
+	cost = 5
+	shot_sound = 'sound/weapons/laser_a.ogg'
+	icon_state = "lasergat_laser"
+	shot_volume = 50
+	name = "single"
+	sname = "single"
+	damage = 14
+
+/datum/projectile/laser/lasergat/burst
+	name = "burst laser"
+	sname = "burst laser"
+	cost = 15
+	shot_number = 3

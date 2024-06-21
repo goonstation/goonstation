@@ -2118,7 +2118,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
 "cBV" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/unsimulated/floor/green/side{
 	dir = 1
@@ -7433,18 +7433,6 @@
 	dir = 8
 	},
 /area/crater/biodome/crew)
-"iQU" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
-/obj/item/gun/kinetic/riotgun,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 8
-	},
-/area/swampzone/ground)
 "iRq" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -8265,6 +8253,18 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/grasstodirt{
+	dir = 8
+	},
+/area/swampzone/ground)
+"jND" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/obj/item/gun/kinetic/pumpweapon/riotgun,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
 /area/swampzone/ground)
@@ -10892,12 +10892,6 @@
 /obj/item/knife/butcher/predspear,
 /turf/unsimulated/floor/circuit/off,
 /area/crater/cave)
-"mVn" = (
-/obj/machinery/processor,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/swampzone/interiors/outbuildings)
 "mWl" = (
 /obj/decal/fakeobjects/azarakrocks,
 /turf/unsimulated/floor/auto/dirt,
@@ -16588,6 +16582,12 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
+"tUf" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/swampzone/interiors/outbuildings)
 "tUz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41106,7 +41106,7 @@ jxC
 roE
 roE
 mfJ
-iQU
+jND
 uEW
 uEW
 uEW
@@ -53130,7 +53130,7 @@ gmv
 pVY
 pVY
 mwe
-mVn
+tUf
 pDC
 pDC
 mwe

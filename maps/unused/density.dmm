@@ -363,7 +363,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aW" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aX" = (
@@ -1441,7 +1441,7 @@
 /area/station/crew_quarters/kitchen)
 "dI" = (
 /obj/table/wood/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "dJ" = (
@@ -3216,7 +3216,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "hR" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8

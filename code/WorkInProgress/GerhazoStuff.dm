@@ -260,7 +260,7 @@
 	dissipation_rate = 5
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
 
@@ -268,7 +268,7 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.do_disorient(15, weakened = 10)
+			M.do_disorient(15, knockdown = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
 
@@ -729,7 +729,7 @@
 
 	afterattack(var/atom/target, mob/user, flag)
 		if (target == user)
-			src.attack_self(user)
+			src.AttackSelf(user)
 		else
 			. = ..()
 

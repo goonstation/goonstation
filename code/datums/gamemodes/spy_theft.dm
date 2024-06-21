@@ -144,12 +144,7 @@
 	boutput(world, "<B>There are spies planted on [station_or_ship()]. They plan to steal valuables and assasinate rival spies  - Do not let them succeed!</B>")
 
 /datum/game_mode/spy_theft/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
@@ -320,7 +315,7 @@
 	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
 	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
-	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
@@ -356,7 +351,7 @@
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
-	station_bounties[/obj/item/gun/kinetic/riotgun] = 3
+	station_bounties[/obj/item/gun/kinetic/pumpweapon/riotgun] = 3
 
 
 	station_bounties[/obj/item/kitchen/utensil] = 1

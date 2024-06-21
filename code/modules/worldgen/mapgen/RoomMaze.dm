@@ -200,14 +200,21 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		LAGCHECK(LAG_MED)
+		if (current_state >= GAME_STATE_PLAYING)
+			LAGCHECK(LAG_LOW)
+		else
+			LAGCHECK(LAG_HIGH)
 
 /datum/map_generator/room_maze_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = src.cell_grid[T.x][T.y]
 
+	if(flags & MAPGEN_FLOOR_ONLY)
+		cell_value = FLOOR
+
 	switch(cell_value)
 		if(WALL, null)
 			T.ReplaceWith(wall_turf_type, handle_air=FALSE)
+
 		if(FLOOR)
 			T.ReplaceWith(floor_turf_type, handle_air=FALSE)
 

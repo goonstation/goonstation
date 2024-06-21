@@ -25,6 +25,12 @@
 #define RC_FULLNESS 4		// can estimate fullness of container
 #define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
 
+/// The minimum alpha value that a reagent's fluid overlay can display.
+#define RC_MINIMUM_REAGENT_ALPHA 100
+
+#define RC_REAGENT_OVERLAY_SCALING_LINEAR "linear"
+#define RC_REAGENT_OVERLAY_SCALING_SPHERICAL "spherical"
+
 // Meal Times used to identify when a food product might TYPICALLY be consumed
 #define MEAL_TIME_BREAKFAST (1<<0)
 #define MEAL_TIME_LUNCH	(1<<1)

@@ -5,7 +5,10 @@ datum/mind
 	var/mob/current
 	var/mob/virtual
 
+	/// stores valuable things about the mind's memory
 	var/memory
+	/// stores custom notes set by the player
+	var/cust_notes
 	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
@@ -28,6 +31,9 @@ datum/mind
 	var/list/datum/antagonist/antagonists = list()
 	/// A list of every antagonist datum subordinate to this mind.
 	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
+
+	//Gang variables
+	var/obj/item/device/pda2/originalPDA //! The PDA that this crewmember started with - for gang PDA messages
 
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
@@ -185,8 +191,12 @@ datum/mind
 				src.dynamic_memories -= dynamic_memory
 
 	proc/show_memory(mob/recipient)
-		var/output = "<B>[current.real_name]'s Memory</B><HR>"
+		var/output = "<B>[current.real_name]'s Memory</B><br>"
 		output += memory
+
+		if (src.cust_notes)
+			output += "<HR><B>Notes:</B><br>"
+			output += replacetext(src.cust_notes, "\n", "<br>")
 
 		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
 			output += dynamic_memory.memory_text
@@ -204,14 +214,14 @@ datum/mind
 		if (master?.current)
 			output += "<br><b>Your master:</b> [master.current.real_name]"
 
-		recipient.Browse(output,"window=memory;title=Memory")
+		tgui_message(recipient, output, "Notes")
 
 	proc/set_miranda(new_text)
 		miranda = new_text
 
 	proc/get_miranda()
-		if (isproc(src.miranda)) //imfunctionalprogrammer
-			return call(src.miranda)()
+		if (islist(src.miranda)) //isproc machine broke, so uh just wrap your procs in a list when you pass them here to distinguish them from strings :)
+			return call(src.miranda[1])()
 		return src.miranda
 
 	proc/show_miranda(mob/recipient)
@@ -318,9 +328,12 @@ datum/mind
 		if (!antagonist_role)
 			return FALSE
 		if (antagonist_role.faction)
-			antagonist_role.owner.current.faction &= ~antagonist_role.faction
+			antagonist_role.owner.current.faction -= antagonist_role.faction
 		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
+		var/mob/living/carbon/human/H = src.current
+		if (istype(H))
+			H.update_arrest_icon() // for derevving
 		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
 			src.special_role = null
 			ticker.mode.traitors.Remove(src)

@@ -234,19 +234,23 @@ ABSTRACT_TYPE(/datum/buildmode)
 	set name = "Reset Build Mode"
 	set desc = "If your build mode save got screwed up use this to reset it!"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(src.buildmode?.is_active)
 		src.togglebuildmode()
 	qdel(src.buildmode)
 	src.buildmode = new(src)
 	src.player.buildmode = src.buildmode
-	src.cloud_put("buildmode", null)
+	src.player.cloudSaves.deleteData("buildmode")
 	src.togglebuildmode()
 
 /client/proc/togglebuildmode()
 	set name = "Build Mode"
 	set desc = "Toggle build Mode on/off."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(!src.buildmode)
 		src.buildmode = src.player.get_buildmode()

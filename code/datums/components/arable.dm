@@ -27,8 +27,7 @@ TYPEINFO(/datum/component/arable)
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(plant_seed))
 
-/datum/component/arable/proc/plant_seed(atom/A, obj/item/I, mob/user)
-	PRIVATE_PROC(TRUE)
+/datum/component/arable/proc/plant_seed(atom/A, obj/item/I, mob/user = null)
 	if(P?.disposed)
 		if(istype(A, /atom/movable))
 			var/atom/movable/AM = A
@@ -37,6 +36,12 @@ TYPEINFO(/datum/component/arable)
 
 	if(P)
 		return
+
+
+	var/datum/component/seedy/seed_container = I.GetComponent(/datum/component/seedy)
+	if(seed_container)
+		I = seed_container.generate_seed()
+
 	if(istype(I, /obj/item/seed) || istype(I, /obj/item/seedplanter/) )
 		if(isturf(A))
 			var/turf/T = A
@@ -70,15 +75,19 @@ TYPEINFO(/datum/component/arable)
 		P.auto_water = src.auto_water
 
 		if(SEED.planttype)
-			user.visible_message(SPAN_NOTICE("[user] plants a seed in \the [A]."))
-			user.u_equip(SEED)
+			user?.visible_message(SPAN_NOTICE("[user] plants a seed in \the [A]."))
+			user?.u_equip(SEED)
 			SEED.set_loc(P)
-			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(P)].")
-			if(!(user in P.contributors))
+			logTheThing(LOG_STATION, user || usr, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(P)].")
+			if(user && !(user in P.contributors))
 				P.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 			qdel(SEED)
+
+		if(seed_container)
+			user?.u_equip(seed_container.parent)
+			qdel(seed_container.parent)
 
 		return TRUE
 

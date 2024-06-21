@@ -37,6 +37,7 @@
 	material_amt = 0.1
 
 	New()
+		START_TRACKING
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
 			src.p_class = 2 // so make us easy to move
 		..()
@@ -96,7 +97,7 @@
 			return FALSE
 		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
-		if (user.hasStatus("weakened"))
+		if (user.hasStatus("knockdown"))
 			return FALSE
 		if (src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
 			user.show_text("There's already someone buckled in [src]!", "red")
@@ -205,6 +206,13 @@ TYPEINFO(/obj/stool/wooden)
 
 	constructed //no "wood wood stool"
 		name = "stool"
+
+/obj/stool/sleek
+	name = "sleek bar stool"
+	icon_state = "sleek_stool"
+	desc = "Like a bar stool, but sleek and stylish."
+	parts_type = /obj/item/furniture_parts/stool/sleek
+
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -292,6 +300,16 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/bench/yellow/auto
 	auto = 1
 	auto_path = /obj/stool/bench/yellow/auto
+
+/* ---------- Purple ---------- */
+
+/obj/stool/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	parts_type = /obj/item/furniture_parts/bench/purple
+
+/obj/stool/bench/purple/auto
+	auto = 1
+	auto_path = /obj/stool/bench/purple/auto
 
 /* ---------- Wooden ---------- */
 
@@ -416,6 +434,12 @@ TYPEINFO(/obj/stool/wooden)
 		to_buckle.set_clothing_icon_dirty()
 		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
+
+		if (istype(ticker?.mode, /datum/game_mode/revolution) && to_buckle.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+			to_buckle.update_canmove()
+			SPAWN(1 SECOND) // so no abrupt ending
+				ticker.mode.check_win()
+
 		return TRUE
 
 	unbuckle()
@@ -655,9 +679,10 @@ TYPEINFO(/obj/stool/chair)
 		for (var/mob/living/M in src.loc)
 
 			if (ishuman(M))
-				chair_chump = M
-			if (!chair_chump || !chair_chump.on_chair)
-				chair_chump = null
+				var/mob/living/carbon/human/H = M
+				if (H.on_chair)
+					chair_chump = H
+
 			if (chair_chump)// == 1)
 				if (chair_chump == L)
 					user.visible_message(SPAN_NOTICE("<b>[chair_chump]</b> steps off [chair_chump.on_chair]."), SPAN_NOTICE("You step off [src]."))
@@ -686,7 +711,7 @@ TYPEINFO(/obj/stool/chair)
 				chair_chump.visible_message(SPAN_ALERT("<b>[chair_chump.name] falls off of [src]!</b>"))
 				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
-				chair_chump.changeStatus("weakened", 1 SECOND)
+				chair_chump.changeStatus("knockdown", 1 SECOND)
 				chair_chump.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
@@ -898,9 +923,9 @@ TYPEINFO(/obj/stool/chair)
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
+		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("knockdown"))
 			src.visible_message(SPAN_ALERT("[src] trips [AM]!"), SPAN_ALERT("You hear someone fall."))
-			AM.changeStatus("weakened", 2 SECONDS)
+			AM.changeStatus("knockdown", 2 SECONDS)
 		return
 
 /* ======================================================= */
@@ -1071,6 +1096,16 @@ TYPEINFO(/obj/item/chair/folded)
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/throne_gold
 
+/obj/stool/chair/comfy/sleek
+	name = "sleek chair"
+	desc = "This advanced seat commands authority and respect. Everyone is super envious of whoever sits in this chair."
+	icon_state = "chair_comfy_sleek"
+	arm_icon_state = "arm_sleek"
+	comfort_value = 7
+	anchored= UNANCHORED
+	deconstructable = 1
+	parts_type = /obj/item/furniture_parts/sleekchair
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */
@@ -1144,7 +1179,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 3, 1)
 				M.changeStatus("stunned", 5 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
+				M.changeStatus("knockdown", 3 SECONDS)
 			else
 				src.visible_message(SPAN_ALERT("[src] tips [T ? "as it rolls over [T]" : "over"]!"))
 		else

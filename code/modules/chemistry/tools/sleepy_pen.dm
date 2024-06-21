@@ -65,7 +65,7 @@
 				src.reagents.add_reagent(pick("spiders", "vomit", "space_drugs", "mutagen"), 5)
 			else
 				src.reagents.add_reagent(pick("water", "krokodil", "methamphetamine"), 4)
-				src.reagents.add_reagent(pick("LSD", "lsd_bee", "nicotine", "jenkem", "glitter"), 6)
+				src.reagents.add_reagent(pick("LSD", "lsd_bee", "nicotine", "glitter"), 6)
 				src.reagents.add_reagent(pick("radium", "porktonium", "bathsalts", "gvomit"), 2)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)

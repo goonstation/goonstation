@@ -189,12 +189,14 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
+		step_lots = TRUE
 		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
+		step_lots = FALSE
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
@@ -217,8 +219,9 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
-	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
-
+	mats = list("metal_superdense" = 15,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
 	name = "mechanised diving boots"
@@ -234,12 +237,14 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	kick_bonus = 2
 
 /obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
+	APPLY_ATOM_PROPERTY(user, PROP_MOB_MOVESPEED_ASSIST, src.type, 1)
 	. = ..()
-	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mechboots, src.type)
 
 /obj/item/clothing/shoes/industrial/unequipped(mob/user)
+	REMOVE_ATOM_PROPERTY(user, PROP_MOB_MOVESPEED_ASSIST, src.type)
 	. = ..()
-	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mechboots, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
@@ -348,6 +353,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 
 	New()
 		..()
+		src.item_function_flags |= IMMUNE_TO_ACID
 		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
 

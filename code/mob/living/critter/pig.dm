@@ -50,8 +50,7 @@
 		else
 			if (isintangible(C)) return FALSE
 			if (isdead(C)) return FALSE
-			if (src.faction)
-				if (C.faction & src.faction) return FALSE
+			if (length(C.faction & src.faction)) return FALSE
 			if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)

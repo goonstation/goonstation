@@ -117,6 +117,7 @@
 			F.info = src.info
 			F.old_desc = src.desc
 			F.old_icon_state = src.icon_state
+			F.stamps = src.stamps
 			user.put_in_hand_or_drop(F)
 
 		qdel(src)
@@ -128,7 +129,7 @@
 
 /obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
 	if(length(stamps) < PAPER_MAX_STAMPS)
-		var/list/stamp_info = list(list(stamp_png, x, y, r))
+		var/list/stamp_info = list(list(stamp_png, x, y, r, icon_state))
 		LAZYLISTADD(stamps, stamp_info)
 	if(icon_state)
 		var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[icon_state]");
@@ -174,6 +175,9 @@
 			var/stamp_y = text2num_safe(params["y"])
 			var/stamp_r = text2num_safe(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
+			if(!istype(stamp))
+				boutput(usr, "What stamp? Where stamp?")
+				return
 
 			if(length(stamps) < PAPER_MAX_STAMPS)
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
@@ -204,7 +208,8 @@
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
-					phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
+					if(length(info) <= 2000)
+						phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
 					update_static_data(usr,ui)
 			. = TRUE
 
@@ -570,7 +575,7 @@
 	name = "paper bin"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
-	amount = 10
+	var/amount_left = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
@@ -590,7 +595,7 @@
 	desc = "A tray full of forms for classifying alien artifacts."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form_tray"
-	amount = INFINITY
+	amount_left = INFINITY
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
@@ -598,7 +603,7 @@
 
 /obj/item/paper_bin/proc/update()
 	tooltip_rebuild = 1
-	src.icon_state = "paper_bin[(src.amount || locate(bin_type, src)) ? "1" : null]"
+	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
@@ -612,8 +617,8 @@
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
-		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
-			src.amount--
+		if (src.amount_left >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
+			src.amount_left--
 			var/obj/item/P = new bin_type(src)
 			user.put_in_hand_or_drop(P)
 			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
@@ -635,7 +640,7 @@
 		return ..()
 
 /obj/item/paper_bin/get_desc()
-	var/n = src.amount
+	var/n = src.amount_left
 	if (n == INFINITY)
 		return "There's an infinite amount of paper in \the [src], the wonders of future technology."
 	for(var/obj/item/paper/P in src)
@@ -647,10 +652,10 @@
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amount < 1 && isnull(locate(bin_type) in src))
+		if (src.amount_left < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < TIME)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
-				src.amount++
+				src.amount_left++
 				src.update()
 				src.next_generate = TIME + 5 SECONDS
 				return
@@ -659,7 +664,7 @@
 			return
 
 		boutput(user, "You remove a piece of paper from the [src].")
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 /obj/item/stamp
 	name = "rubber stamp"
@@ -852,7 +857,17 @@
 	if (src.sealed)
 		user.show_text("You unfold the [src] back into a sheet of paper! It looks pretty crinkled.", "blue")
 		src.name = "crinkled paper"
-		src.desc = src.old_desc
+		src.desc = "This sheet has seen better days"
+		tooltip_rebuild = TRUE // tooltip description won't update otherwise
+		var/i = 0
+		for (var/list/stamp in stamps)
+			var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp[5]]");
+			var/matrix/stamp_matrix = matrix()
+			stamp_matrix.Scale(1, 1)
+			stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+			stamp_overlay.transform = stamp_matrix
+			src.UpdateOverlays(stamp_overlay, "stamps_[i % PAPER_MAX_STAMPS_OVERLAYS]")
+			i++
 		if(src.old_icon_state)
 			src.icon_state = src.old_icon_state
 		else
@@ -953,6 +968,15 @@
 	src.generate_headline()
 	src.generate_article()
 	src.update_desc()
+
+/obj/item/paper/newspaper/pickup(mob/user)
+	. = ..()
+	user.UpdateName() //hide their face
+
+/obj/item/paper/newspaper/dropped(mob/user)
+	. = ..()
+	SPAWN(0) //sigh
+		user.UpdateName()
 
 /obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
 	if (!src.two_handed)

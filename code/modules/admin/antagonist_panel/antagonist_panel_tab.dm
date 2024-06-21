@@ -252,8 +252,6 @@
 				"sectionName" = "Gang Locker",
 				"sectionData" = list(
 					"gangLocker" = "\ref[locker]",
-					"maxHealth" = locker.max_health,
-					"health" = locker.health,
 					"area" = A.name,
 					"coordinates" = "([T.x], [T.y], [T.z])",
 				),
@@ -268,7 +266,7 @@
 /datum/antagonist_panel_tab/gang/generate_location_data()
 	. = list()
 
-	for (var/datum/antagonist/antagonist_datum as anything in (get_all_antagonists(ROLE_GANG_LEADER) + get_all_antagonists(ROLE_GANG_MEMBER)))
+	for (var/datum/antagonist/antagonist_datum in (get_all_antagonists(ROLE_GANG_LEADER) + get_all_antagonists(ROLE_GANG_MEMBER)))
 		var/turf/T = get_turf(antagonist_datum.owner.current)
 		var/area/A = get_area(antagonist_datum.owner.current)
 		.["\ref[antagonist_datum.owner]"] = list(

@@ -130,7 +130,7 @@
 /area/ship/artemis)
 "lI" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/artemis)
@@ -350,7 +350,7 @@
 /area/ship/artemis)
 "wN" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "wY" = (

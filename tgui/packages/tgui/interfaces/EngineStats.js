@@ -85,20 +85,17 @@ export const EngineStats = (props, context) => {
           )
           : (
             <Box>
-              <Section title={
-                <Box>
-                  TEG Data
+              <Section
+                title="TEG Data"
+                buttons={(
                   <Button
                     tooltip="Power"
                     icon="power-off"
                     color="caution"
-                    position="absolute"
-                    right={0.25}
-                    top={0.25}
                     onClick={() => act('toggle-power')}
                   />
-                </Box>
-              }>
+                )}
+              >
                 <Stack
                   wrap="wrap"
                   justify="space-around"

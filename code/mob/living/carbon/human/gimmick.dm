@@ -231,9 +231,9 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 	proc/chatter()
 		set name = "Chatter"
 		var/phrase = pick_smart_string("father_grife.txt", "say", list(
-			"job" = PROC_REF(say_helper_job),
-			"crewmember" = PROC_REF(say_helper_crewmember),
-			"logged_phrase" = PROC_REF(say_helper_logged_phrase)
+			"job" = /mob/living/carbon/human/fathergrife/proc/say_helper_job,
+			"crewmember" = /mob/living/carbon/human/fathergrife/proc/say_helper_crewmember,
+			"logged_phrase" = /mob/living/carbon/human/fathergrife/proc/say_helper_logged_phrase
 		))
 		src.say(phrase)
 
@@ -748,7 +748,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		src.changeStatus("weakened", 5 SECONDS)
+		src.changeStatus("knockdown", 5 SECONDS)
 		if(prob(15))
 			SPAWN(0) emote(pick("giggle", "laugh"))
 		if(prob(1))
@@ -803,7 +803,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	proc/illusion_expire(mob/user)
 		if(user)
 			boutput(user, SPAN_ALERT("<B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B>"))
-			user.changeStatus("weakened", 4 SECONDS)
+			user.changeStatus("knockdown", 4 SECONDS)
 		for(var/mob/M in viewers(src, null))
 			if(M.client && M != user)
 				M.show_message(SPAN_ALERT("<b>The Waldo illusion explodes into smoke!</b>"))
@@ -954,6 +954,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/spacer
 	is_npc = TRUE
 	uses_mobai = 1
+	ailment_immune = TRUE
 	New()
 		..()
 		src.say("Hey there [JOHN_PICK("insults")]")//debug
@@ -964,7 +965,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		src.ai.disable()
 
 	initializeBioholder()
@@ -993,6 +993,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	gender = MALE
 	is_npc = TRUE
 	uses_mobai = 1
+	ailment_immune = TRUE
 
 	New()
 		..()
@@ -1002,7 +1003,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		src.ai.disable()
 
 	initializeBioholder()

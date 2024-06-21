@@ -27,7 +27,7 @@
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
 				var/wet_adjusted = T.wet
-				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+				if (traitHolder?.hasTrait("super_slips") && (T.wet > 0)) //slippery when wet
 					wet_adjusted = max(wet_adjusted, 2) //whee
 
 				switch (wet_adjusted)
@@ -64,7 +64,7 @@
 
 					if (3) // superlube
 						src.remove_pulling()
-						src.changeStatus("weakened", 3.5 SECONDS)
+						src.changeStatus("knockdown", 3.5 SECONDS)
 						playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 						boutput(src, SPAN_NOTICE("You slipped on the floor!"))
 						var/atom/target = get_edge_target_turf(src, src.dir)
@@ -85,45 +85,6 @@
 		M.set_loc(src.loc)
 
 	. = ..(give_medal, include_ejectables)
-
-/mob/living/carbon/proc/urinate()
-	SPAWN(0)
-		var/obj/item/reagent_containers/pee_target = src.equipped()
-		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container(TRUE))
-			src.visible_message(SPAN_ALERT("<B>[src] pees in [pee_target]!</B>"))
-			playsound(src, 'sound/misc/pourdrink.ogg', 50, TRUE)
-			pee_target.reagents.add_reagent("urine", 4)
-			return
-
-		// possibly change the text colour to the gray emote text
-		src.visible_message(pick("<B>[src]</B> unzips their pants and pees on the floor.", "<B>[src]</B> pisses all over the floor!", "<B>[src]</B> makes a big piss puddle on the floor."))
-
-		var/obj/decal/cleanable/urine/U = make_cleanable(/obj/decal/cleanable/urine, src.loc)
-
-		// Flag the urine stain if the pisser is trying to make fake initropidril
-		if(src.reagents.has_reagent("tongueofdog"))
-			U.thrice_drunk = 4
-		else if(src.reagents.has_reagent("woolofbat"))
-			U.thrice_drunk = 3
-		else if(src.reagents.has_reagent("toeoffrog"))
-			U.thrice_drunk = 2
-		else if(src.reagents.has_reagent("eyeofnewt"))
-			U.thrice_drunk = 1
-
-
-		// check for being in sight of a working security camera
-
-		if(seen_by_camera(src) && ishuman(src))
-
-			// determine the name of the perp (goes by ID if wearing one)
-			var/perpname = src.name
-			if(src:wear_id && src:wear_id:registered)
-				perpname = src:wear_id:registered
-
-			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-			if(sec_record && sec_record["criminal"] != "*Arrest*")
-				sec_record["criminal"] = "*Arrest*"
-				sec_record["mi_crim"] = "Public urination."
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)

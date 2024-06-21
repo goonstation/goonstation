@@ -22,6 +22,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/welcome_text_alpha = 140
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
+	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -414,7 +415,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
 		return
 	src.toggle(user)
 	src.add_fingerprint(user)
@@ -445,12 +446,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 					SPAWN(src.timer)
 						M.open()
 
-	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			if (M.density)
-				M.open()
-			else
-				M.close()
+	if(src.controlmode == 1)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				if (M.density)
+					M.open()
+				else
+					M.close()
+
+	if(src.controlmode == 2)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				if (M.locked)
+					M.set_unlocked()
+				else
+					if (M.density)
+						M.set_locked()
+					else
+						M.close()
+						SPAWN(5 DECI SECONDS)
+							M.set_locked()
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
@@ -519,6 +534,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	requires_power = 0
 	welcome_text = "Welcome, Agent."
 
+/obj/machinery/door_control/ex_act(severity)
+	return
+
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
@@ -577,8 +595,19 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 /obj/machinery/activation_button/driver_button
 	name = "Mass Driver Button"
 	desc = "A remote control switch for a Mass Driver."
+	var/emagged = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if (user && !emagged)
+			boutput(user, SPAN_NOTICE("You fry the control circuits beyond repair!"))
+		emagged = TRUE
+
 
 	activate()
+		if(emagged)
+			return
+
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				M.open()
@@ -1022,7 +1051,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	New()
 		..()
 		UnsubscribeProcess()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		if(id)
 			pass = "[id]-[rand(1,50)]"
@@ -1132,3 +1161,18 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		signal.source = src
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+/obj/machinery/door_control/bolter
+	name = "Remote Door Bolt Control"
+	desc = "A remote control switch for a door's locking bolts."
+	controlmode = 2
+
+	new_walls
+		north
+			pixel_y = 24
+		east
+			pixel_x = 22
+		south
+			pixel_y = -19
+		west
+			pixel_x = -22

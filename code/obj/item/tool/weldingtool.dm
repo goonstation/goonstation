@@ -57,7 +57,7 @@
 				if (!src.cautery_surgery(H, user, 15, src.welding))
 					return ..()
 			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head" && H.limbs.vars[user.zone_sel.selecting])
-				if (!(locate(/obj/machinery/optable, target.loc) && target.lying) && !(locate(/obj/table, target.loc) && (target.getStatusDuration("paralysis") || target.stat)) && !(target.reagents && target.reagents.get_reagent_amount("ethanol") > 10 && target == user))
+				if (!(locate(/obj/machinery/optable, target.loc) && target.lying) && !(locate(/obj/table, target.loc) && (target.getStatusDuration("unconscious") || target.stat)) && !(target.reagents && target.reagents.get_reagent_amount("ethanol") > 10 && target == user))
 					return ..()
 				switch (user.zone_sel.selecting)
 					if ("l_arm")
@@ -154,7 +154,7 @@
 		if (prob(power * 0.5))
 			qdel(src)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		if (exposed_temperature > 1000)
 			return ..()
 
@@ -188,6 +188,10 @@
 		amount = min(get_fuel(), amount)
 		if (reagents)
 			reagents.remove_reagent("fuel", amount)
+		src.inventory_counter.update_number(get_fuel())
+
+	on_reagent_change(add)
+		. = ..()
 		src.inventory_counter.update_number(get_fuel())
 
 #define EYE_DAMAGE_IMMUNE 2

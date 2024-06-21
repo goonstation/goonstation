@@ -12,7 +12,7 @@
 "ad" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "ae" = (
@@ -48,7 +48,7 @@
 "aj" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "ak" = (
@@ -165,7 +165,7 @@
 "az" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "aA" = (
@@ -179,7 +179,7 @@
 /area/space)
 "aB" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -195,7 +195,7 @@
 /area/space)
 "aD" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "aE" = (
@@ -250,7 +250,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -709,7 +708,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -3538,7 +3536,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -3935,7 +3932,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jH" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "jI" = (
@@ -5030,7 +5027,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -7306,7 +7303,6 @@
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/storage/box/cutlery{
@@ -16356,7 +16352,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/t_scanner,
 /obj/item/wrench,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
@@ -16655,7 +16651,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 1
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
@@ -17837,8 +17833,8 @@
 	})
 "ND" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/fire/heavy,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/head/helmet/welding,
 /obj/machinery/power/apc/autoname_north,
@@ -18220,7 +18216,7 @@
 	})
 "Ol" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
@@ -23073,8 +23069,8 @@
 	})
 "YZ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/cable{

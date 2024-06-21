@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_pointblank(obj/projectile/O, mob/target)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 	proc/split(var/obj/projectile/P)
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
@@ -250,6 +250,19 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle_variance = 10
 	dissipation_variance = 10
 
+/datum/projectile/special/spreader/buckshot_burst/bone
+	spread_projectile_type = /datum/projectile/bullet/improvbone
+	name = "bone"
+	sname = "bone"
+	cost = 1
+	pellets_to_fire = 3
+	casing = /obj/item/casing/shotgun/pipe
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 30
+	speed_min = 20
+	spread_angle_variance = 25
+	dissipation_variance = 40
+
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
 	sname = "nails"
@@ -275,6 +288,26 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 7
 	spread_projectile_type = /datum/projectile/bullet/spike
 	shot_sound = 'sound/weapons/radxbow.ogg'
+
+/datum/projectile/special/spreader/uniform_burst/bird12
+	name = "birdshot"
+	sname = "birdshot"
+	spread_angle = 8
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/bird12
+	casing = /obj/item/casing/shotgun/red
+	shot_sound = 'sound/weapons/birdshot.ogg'
+
+/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	name = "buckshot"
+	sname = "buckshot"
+	spread_angle = 13
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/kuvalda_shrapnel
+	casing = /obj/item/casing/shotgun/gray
+	shot_sound = 'sound/weapons/kuvalda.ogg'
 
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
@@ -369,11 +402,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/temperature = 800
 
 	tick(var/obj/projectile/P)
-		fireflash_melting(get_turf(P), burn_range, temperature)
+		fireflash_melting(get_turf(P), burn_range, temperature, chemfire = CHEM_FIRE_RED)
 
 	on_hit(var/atom/A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
-		fireflash_melting(get_turf(A), blast_size, temperature)
+		fireflash_melting(get_turf(A), blast_size, temperature, chemfire = CHEM_FIRE_RED)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -403,7 +436,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/T1 = get_turf(P)
 		if((!istype(T1,/turf/space))) // so uh yeah this will be pretty mean
-			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE)
+			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE, chemfire = CHEM_FIRE_RED)
 			new /obj/effects/explosion/dangerous(get_step(P.loc,P.dir))
 
 
@@ -724,7 +757,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		. = ..()
 		if(isliving(A)) // pre_hit should filter out any spacemagic people
 			var/mob/living/M = A
-			M.changeStatus("weakened", src.weaken_length)
+			M.changeStatus("knockdown", src.weaken_length)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
@@ -840,7 +873,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				targetTurf = get_edge_target_turf(hit, P.dir)
 
-			L.changeStatus("weakened", 2 SECONDS)
+			L.changeStatus("knockdown", 2 SECONDS)
 			L.force_laydown_standup()
 			L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
@@ -886,6 +919,35 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
+/datum/projectile/special/spreader/pwshotgunspread
+	name = "blaster bolt"
+	sname = "shotgun spread"
+	cost = 40
+	pellets_to_fire = 5
+	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/laser_b.ogg'
+	var/spread_angle = 10
+	var/current_angle = 0
+	var/angle_adjust_per_pellet = 0
+	var/initial_angle_offset_mult = 0.5
+
+	on_launch(var/obj/projectile/P)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
+		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
+		..()
+
+	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
+		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
+		FC.rotateDirection(current_angle)
+		FC.launch()
+		current_angle += angle_adjust_per_pellet
+
+	NT
+		spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+
+	SY
+		spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY/shotgun
 
 /datum/projectile/special/spreader/quadwasp
 	name = "4 space wasp eggs"
@@ -1026,7 +1088,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
-			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			hitguy.do_disorient(15, knockdown = 20 * 10, disorient = 80)
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy

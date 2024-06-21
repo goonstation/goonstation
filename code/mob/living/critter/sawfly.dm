@@ -37,13 +37,13 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	can_burn = FALSE
 	pet_text = "cuddles"
 	hand_count = 1 //stabby hands
+	ailment_immune = TRUE
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	New()
 		..()
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 
 		if(name == initial(name))
@@ -51,7 +51,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
 	setup_healths()
@@ -162,24 +162,21 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 
-		remove_lifeprocess(/datum/lifeprocess/canmove)
 		remove_lifeprocess(/datum/lifeprocess/disability)
-		remove_lifeprocess(/datum/lifeprocess/fire)
 		remove_lifeprocess(/datum/lifeprocess/hud)
 		remove_lifeprocess(/datum/lifeprocess/mutations)
 		remove_lifeprocess(/datum/lifeprocess/organs)
 		remove_lifeprocess(/datum/lifeprocess/sight)
-		remove_lifeprocess(/datum/lifeprocess/skin)
 		remove_lifeprocess(/datum/lifeprocess/statusupdate)
 
 
 	proc/blowup() //chance to activate when they die and get EMP'd
 		if(prob(66))
 			src.visible_message(SPAN_COMBAT("[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!"))
-			fireflash(src,1, checkLos = FALSE)
+			fireflash(src,1, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 		else
 			src.visible_message(SPAN_COMBAT("[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!"))
-			fireflash(src,0, checkLos = FALSE)
+			fireflash(src,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 

@@ -208,6 +208,11 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
 	furniture_type = /obj/table/nanotrasen/auto
 
+/obj/item/furniture_parts/table/sleek
+	name = "sleek table parts"
+	desc = "A collection of parts that can be used to make a sleek table."
+	icon = 'icons/obj/furniture/table_sleek.dmi'
+	furniture_type = /obj/table/sleek/auto
 /* ---------- Glass Table Parts ---------- */
 TYPEINFO(/obj/item/furniture_parts/table/glass)
 	mat_appearances_to_ignore = list("glass")
@@ -317,6 +322,14 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	furniture_type = /obj/table/endtable_gothic
 	furniture_name = "gothic endtable"
 
+/obj/item/furniture_parts/endtable_honey
+	name = "block of solidified honey parts"
+	desc = "Not sure how you accomplished this considering that it was a single solid block of crystallized honey, but sure."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney-parts"
+	furniture_type = /obj/table/endtable_honey
+	furniture_name = "block of solidified honey"
+
 /obj/item/furniture_parts/podium_wood
 	name = "wooden podium parts"
 	desc = "A collection of parts that can be used to make a wooden podium."
@@ -411,6 +424,13 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/neon
 	furniture_name = "neon bar stool"
 
+/obj/item/furniture_parts/stool/sleek
+	name = "sleek bar stool parts"
+	desc = "A collection of parts that can be used to make a sleek bar stool."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "sleek_stool_parts"
+	furniture_type = /obj/stool/sleek
+	furniture_name = "sleek bar stool"
 /* ---------- Bench Parts ---------- */
 /obj/item/furniture_parts/bench
 	name = "bench parts"
@@ -437,6 +457,10 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 /obj/item/furniture_parts/bench/yellow
 	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	furniture_type = /obj/stool/bench/yellow/auto
+
+/obj/item/furniture_parts/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	furniture_type = /obj/stool/bench/purple/auto
 
 /obj/item/furniture_parts/bench/wooden
 	name = "wooden bench parts"
@@ -576,6 +600,15 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/chair/comfy/throne_gold
 	furniture_name = "golden throne"
 
+/obj/item/furniture_parts/sleekchair
+	name = "comfy sleek chair parts"
+	desc = "A collection of parts that can be used to make a sleek and stylish chair."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "comf_sleek_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/sleek
+	furniture_name = "sleek chair"
 /* ---------- Bed Parts ---------- */
 /obj/item/furniture_parts/bed
 	name = "bed parts"

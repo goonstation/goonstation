@@ -451,7 +451,7 @@
 					playsound(O, 'sound/voice/animal/hoot.ogg', 70, TRUE)
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> hoots uncontrollably!"), 1)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
-				affected_mob.changeStatus("weakened", 10 SECONDS)
+				affected_mob.changeStatus("knockdown", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
@@ -477,7 +477,7 @@
 				random_brute_damage(affected_mob, 5)
 				affected_mob.take_oxygen_deprivation(5)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
-				affected_mob.changeStatus("weakened", 10 SECONDS)
+				affected_mob.changeStatus("knockdown", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				for(var/mob/O in viewers(affected_mob, null))
 					playsound(O, 'sound/voice/animal/hoot.ogg', 70, TRUE)
@@ -494,13 +494,6 @@
 				P.name = affected_mob.real_name
 				logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob.gib()
-
-/obj/item/reagent_containers/food/snacks/candy/butterscotch
-	name = "butterscotch candy"
-	desc = "It's one of those old timey butterscotch candies like your grampa used to have."
-	real_name = "butterscotch"
-	icon_state = "butterscotch"
-	food_effects = list("food_energized")
 
 /obj/machinery/floorflusher/bathtub
 	name = "bathtub"
@@ -896,7 +889,7 @@
 				random_brute_damage(src.target, 10)//shivved
 				take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 				M.changeStatus("stunned", 2 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 				if(!M.stat)
 					M.emote("scream")
 			else
@@ -1047,7 +1040,7 @@
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
 				user.throw_at(T, 3, 2)
-				user.changeStatus("weakened", 0.5 SECONDS)
+				user.changeStatus("knockdown", 0.5 SECONDS)
 				user.changeStatus("stunned", 0.5 SECONDS)
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
@@ -1098,7 +1091,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			if(ismob(M))
 				M.changeStatus("stunned", 2 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
+				M.changeStatus("knockdown", 2 SECONDS)
 
 	CritterAttack(mob/M)
 		src.attacking = 1
@@ -1158,7 +1151,7 @@
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 				src.visible_message(SPAN_ALERT("<b>[src]</b> slams into [src.target]!"))
 				if(iscarbon(M))
-					M.changeStatus("weakened", 0.4 SECONDS)
+					M.changeStatus("knockdown", 0.4 SECONDS)
 				frenzy(src.target)
 
 			if (isdead(M)) // devour corpses
@@ -1228,7 +1221,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	proc/process()
 		while(current_state < GAME_STATE_FINISHED)
 			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
+			if (current_state == GAME_STATE_PLAYING && length(population))
 				if(!played_fx_2 && prob(15))
 					sound_fx_2 = pick(owlery_sounds)
 					for(var/mob/M in src)

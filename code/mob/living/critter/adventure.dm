@@ -324,7 +324,7 @@
 		ghostize()
 		qdel(src)
 
-	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
+	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
 		return
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -403,7 +403,7 @@
 	health_burn_vuln = 0.6
 	var/activated = FALSE
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	active
 		New()

@@ -30,6 +30,8 @@
 	var/welded = FALSE
 	var/can_be_welded = FALSE
 	var/can_be_anchored = UNANCHORED
+	var/default_hat_y = 0
+	var/default_hat_x = 0
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
@@ -224,6 +226,11 @@
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
+		default_hat_y = 14
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y)
+			..()
 
 		attack_hand(mob/user)
 			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
@@ -265,6 +272,12 @@
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+		default_hat_y = 7
+		default_hat_x = -1
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y, default_hat_x)
+			..()
 
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
@@ -503,7 +516,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)))
+		string = trimtext(sanitize(html_encode(string)))
 		var/maptext = null
 		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
 
@@ -1858,9 +1871,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",PROC_REF(toggleAddressFiltering))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",PROC_REF(toggleForwardAll))
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
-
 		src.net_id = format_net_id("\ref[src]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "main", frequency)
 
 	proc/setFreqManually(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
@@ -1957,7 +1969,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, signal.encryption_obfuscation))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -2376,9 +2388,9 @@
 	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
 		send_only = !send_only
 		if(send_only)
-			src.UpdateOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
+			src.AddOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
 		else
-			src.UpdateOverlays(null, "sendonly")
+			src.ClearSpecificOverlays("sendonly")
 		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 		tooltip_rebuild = 1
 		return 1
@@ -2450,9 +2462,9 @@
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
 		if(src.level == UNDERFLOOR)
-			src.UpdateOverlays(telelight, "telelight")
+			src.AddOverlays(telelight, "telelight")
 		else
-			src.UpdateOverlays(null, "telelight")
+			src.ClearSpecificOverlays("telelight")
 		return
 
 /obj/item/mechanics/ledcomp
@@ -2600,7 +2612,7 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", PROC_REF(setfreq))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqMan))
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
@@ -2721,7 +2733,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		if(level == UNDERFLOOR)
@@ -2742,7 +2754,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return
 		var/lpm = params2list(params)
 		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
-			src.attack_hand(usr)
+			src.Attackhand(usr)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
@@ -2948,8 +2960,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon_state = "comp_gun"
 	density = 0
 	can_rotate = 1
+	cooldown_time = 1 SECOND
 	var/obj/item/gun/Gun = null
-	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent)
+	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent, /obj/item/gun/paintball)
 	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]")]"
@@ -3102,6 +3115,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	var/delay = 10
 	var/sounds = null
 	var/volume = 50
+	var/anti_stack = TRUE
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Instrument: [instrument ? "[instrument]" : "None"]")]"
@@ -3123,6 +3137,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 0
 
 	attackby(obj/item/W, mob/user)
+		var/allow_polyphony = FALSE
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")
@@ -3133,6 +3148,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			sounds = I.sounds_instrument
 			volume = I.volume
 			delay = I.note_time
+			if(I.note_time < 1 SECOND)
+				allow_polyphony = TRUE
 		else if (istype(W, /obj/item/clothing/head/butt))
 			instrument = W
 			sounds = 'sound/voice/farts/poo2.ogg'
@@ -3158,11 +3175,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1
+			anti_stack = !allow_polyphony
 			return 1
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
+		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument || (anti_stack && ON_COOLDOWN((get_turf(src)), "instrument_anti_stacking", delay))) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
@@ -3203,15 +3221,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoFloor: [floorResults ? "ON" : "OFF"]")]"
-	secure()
-		icon_state = "comp_arith1"
-	loosen()
-		icon_state = "comp_arith"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", PROC_REF(setA))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", PROC_REF(setB))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", PROC_REF(evaluate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Mode", PROC_REF(compSetMode))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",PROC_REF(setAManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",PROC_REF(setBManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",PROC_REF(setMode))
@@ -3267,6 +3282,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 			if (autoEval)
 				src.evaluate()
+	proc/compSetMode(var/datum/mechanicsMessage/input)
+		LIGHT_UP_HOUSING
+		tooltip_rebuild = 1
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+			mode = input.signal
 	proc/evaluate()
 		switch(mode)
 			if("add")
@@ -3309,6 +3329,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = round(.)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_arith"
 
 
 /obj/item/mechanics/counter
@@ -3322,10 +3344,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current value: [currentValue] | Changes by [(change >= 0 ? "+" : "-")][change] | Starting value: [startingValue]")]"
-	secure()
-		icon_state = "comp_counter1"
-	loosen()
-		icon_state = "comp_counter"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", PROC_REF(doCounting))
@@ -3405,6 +3423,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = currentValue
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_counter"
+
 
 /obj/item/mechanics/clock
 	name = "Clock Component"
@@ -3417,10 +3438,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current stored time: [startTime] | Current time: [round(TIME)] | Time units: [divisor / 10] seconds")]"
 
-	secure()
-		icon_state = "comp_clock1"
-	loosen()
-		icon_state = "comp_clock"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Time", PROC_REF(sendTime))
@@ -3471,6 +3488,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		tooltip_rebuild = 1
 		return 1
 
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_clock"
+
+
 /obj/item/mechanics/interval_timer
 	name = "Automatic Signaller Component"
 	desc = "Outputs a signal on regular, configurable intervals."
@@ -3494,12 +3515,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current interval length: [intervalLength / 10] sec.")]"
-
-	secure()
-		icon_state = "comp_clock1"
 	loosen()
-		// when someone detaches this we want it to stop.
-		icon_state = "comp_clock"
 		wantActive = FALSE
 	// if we're leaving then yeah stop this shit, just in case
 	disposing()
@@ -3519,6 +3535,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start",PROC_REF(setActive))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Stop",PROC_REF(setInactive))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle On/Off",PROC_REF(toggleActive))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Interval Length",PROC_REF(setIntervalLength))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Repeat Count",PROC_REF(setRepeatCount))
 
@@ -3562,6 +3579,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/setInactive()
 		wantActive = FALSE
+
+	proc/toggleActive()
+		if (src.wantActive)
+			wantActive = FALSE
+		else
+			startRepeatingTheSignal()
 
 	proc/setActiveManually(obj/item/W as obj, mob/user as mob)
 		if(!in_interact_range(src, user) || user.stat)
@@ -3611,6 +3634,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			// I don't care about checking for values below -1 here,
 			// because anything below 0 is effectively infinite
 			repeatCount = input_num
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_clock"
 
 
 /obj/item/mechanics/association
@@ -3945,7 +3971,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
 		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
 		// hence the special regex. I don't know if any other protocols are included in this by byond but ftp is not so I'm giving up here
-		. = replacetext(., bullshit_byond_parser_url_regex, "")
+		var/oldtext = null
+		while(!cmptext(oldtext, .)) //repeat until all protocols are killed.
+			oldtext = .
+			. = replacetext(., bullshit_byond_parser_url_regex, "")
 
 	proc/setText(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || !input) return
@@ -4065,9 +4094,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
 		var/direction = text2num_safe(input.signal)
-		if (!direction)
+		if (!isnum_safe(direction))
 			direction = dirname_to_dir(input.signal)
-		if (!(direction in alldirs))
+		if (!(direction in alldirs) && direction != 0)
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
@@ -4339,7 +4368,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (src.text_limit)
 			text = copytext_char(text,1,src.text_limit+1)
 		if (src.trim_text)
-			text = trim(text)
+			text = trimtext(text)
 
 		if (!length(text) || src.text_limit == 0)
 			return

@@ -409,7 +409,7 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if(!can_act(user) || !in_interact_range(target, user))
+		if(!can_act(user) || !in_interact_range(target, user) || GB.status & (NOPOWER | BROKEN))
 			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
@@ -1365,7 +1365,7 @@
 					patient.implant.Remove(I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = patient.blood_color
-					newcase.UpdateOverlays(wadblood, "blood")
+					newcase.AddOverlays(wadblood, "blood")
 					newcase.blood_DNA = patient.bioHolder.Uid
 					newcase.blood_type = patient.bioHolder.bloodType
 				else
@@ -2227,3 +2227,110 @@
 
 		execute(obj/item/device/t_scanner/t_scanner, mob/user)
 			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)
+
+/datum/contextAction/speech_pro
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "hey"
+	var/speech_text = "Hello!"
+	var/speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+	var/phrase = SPEECH_PRO_SAY_HELLO
+
+	execute(var/obj/item/device/speech_pro/sp, var/mob/user)
+		if (!istype(sp, /obj/item/device/speech_pro))
+			return
+		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
+			sp.speak(src.speech_text, user)
+			playsound(sp, src.speech_sound, 50, 1)
+		else
+			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
+
+	checkRequirements(var/obj/item/device/speech_pro/sp, var/mob/user)
+		if(!can_act(user))
+			return FALSE
+		return sp == user.equipped()
+
+	greeting
+		name = "Greeting"
+		icon_state = "hey"
+		phrase = SPEECH_PRO_SAY_HELLO
+		speech_text = "Hello!"
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+	farewell
+		name = "Farewell"
+		icon_state = "bye"
+		phrase = SPEECH_PRO_SAY_BYE
+		speech_text = "Goodbye!"
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+	assistance
+		name = "Assistance"
+		icon_state = "caution"
+		phrase = SPEECH_PRO_SAY_HELP
+		speech_text = "I require assistance."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	confusion
+		name = "Confusion"
+		icon_state = "what"
+		phrase = SPEECH_PRO_SAY_WHAT
+		speech_text = "I don't understand."
+		speech_sound = 'sound/misc/talk/cyborg_ask.ogg'
+
+	gratitude
+		name = "Gratitude"
+		icon_state = "thx"
+		phrase = SPEECH_PRO_SAY_THX
+		speech_text = "Thank you."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	apology
+		name = "Apology"
+		icon_state = "sry"
+		phrase = SPEECH_PRO_SAY_SRY
+		speech_text = "I'm sorry."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	congratulations
+		name = "Congratulations"
+		icon_state = "happy_face"
+		phrase = SPEECH_PRO_SAY_GJ
+		speech_text = "Good job!"
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+	wait
+		name = "Wait"
+		icon_state = "wait"
+		phrase = SPEECH_PRO_SAY_WAIT
+		speech_text = "Please wait."
+		speech_sound = 'sound/misc/talk/cyborg_ask.ogg'
+
+	affirmation
+		name = "Affirmation"
+		icon_state = "yes"
+		phrase = SPEECH_PRO_SAY_YES
+		speech_text = "Yes."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	rejection
+		name = "Rejection"
+		icon_state = "no"
+		phrase = SPEECH_PRO_SAY_NO
+		speech_text = "No."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	follow
+		name = "Follow"
+		icon_state = "board"
+		phrase = SPEECH_PRO_SAY_FOLLOW
+		speech_text = "Follow me."
+		speech_sound = 'sound/misc/talk/cyborg.ogg'
+
+	explanation
+		name = "Explanation"
+		icon_state = "computer"
+		phrase = SPEECH_PRO_SAY_SP
+		speech_text = "I am using a Speech Pro."
+		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'

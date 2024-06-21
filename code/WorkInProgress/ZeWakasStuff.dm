@@ -2,7 +2,7 @@
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 46: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat tgui
+//foo 49: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat tgui guh mord map
 
 
 /* 514 checklist
@@ -10,6 +10,24 @@
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
 	particle abuse
 */
+
+/*
+515 stuff
+
+world.Tick
+client.RenderIcon
+pragmas?
+noise_hash()
+get_steps_to
+refcount
+list.removeall
+animation delay?
+sound pitch, offset, sound end
+basic sound end example sound.params
+sound time adjustment, SOUND_UPDATE offset var, query with query
+atoms can be rendered by reference in browser
+*/
+
 
 // playsound\(([^,]*), "(sound/[^\[]+)"
 // playsound($1, '$2'

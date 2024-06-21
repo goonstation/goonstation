@@ -442,12 +442,12 @@ TYPEINFO(/turf/simulated/floor/void)
 				playsound(src.loc, 'sound/machines/modem.ogg', 75, 1)
 
 				A.emote("scream")
-				A.changeStatus("weakened", 5 SECONDS)
+				A.changeStatus("knockdown", 5 SECONDS)
 				A.show_text("<B>IT HURTS!</B>", "red")
 				A.shock(src, 75000, ignore_gloves=1)
 
 				B.emote("scream")
-				B.changeStatus("weakened", 5 SECONDS)
+				B.changeStatus("knockdown", 5 SECONDS)
 				B.show_text("<B>IT HURTS!</B>", "red")
 				B.shock(src, 75000, ignore_gloves=1)
 				SPAWN(5 SECONDS)
@@ -461,11 +461,11 @@ TYPEINFO(/turf/simulated/floor/void)
 				playsound(src.loc,'sound/effects/elec_bzzz.ogg', 60, 1)
 				if(A && B && can_operate()) //We're all here, still
 					A.emote("faint")
-					A.changeStatus("paralysis", 25 SECONDS)
+					A.changeStatus("unconscious", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					B.emote("faint")
-					B.changeStatus("paralysis", 25 SECONDS)
+					B.changeStatus("unconscious", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					if(A.mind)

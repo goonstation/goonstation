@@ -300,7 +300,7 @@ mob/verb/checkrewards()
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/E = O
 			var/list/ret = list()
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			if(SEND_SIGNAL(E, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				charge = ret["charge"]
 				max_charge = ret["max_charge"]
 			C.mob.remove_item(E)
@@ -325,6 +325,7 @@ mob/verb/checkrewards()
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
+		LG.assign_name(C.mob)
 		C.mob.put_in_hand_or_drop(LGP)
 		boutput(C.mob, SPAN_EMOTE("A pamphlet flutters out."))
 		return

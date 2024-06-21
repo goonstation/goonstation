@@ -31,6 +31,7 @@
 	var/spawn_in_loc = 0 //spawn verb spawning in loc?
 	/// toggles seeing the Topic log entires on or off by default
 	var/show_topic_log = FALSE
+	var/hide_offline_indicators = TRUE // overrides offline indicator behavior
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
 	var/ghost_interaction = FALSE //! if toggled on then the admin ghost can interact with things
@@ -44,20 +45,24 @@
 	var/datum/centcomviewer/centcomviewer = null
 	var/datum/bioeffectmanager/bioeffectmanager = null
 	var/datum/abilitymanager/abilitymanager = null
+	var/datum/ban_panel/ban_panel = null
 	var/datum/antagonist_panel/antagonist_panel = null
+	var/datum/job_manager/job_manager = null
+	var/datum/region_allocator_panel/region_allocator_panel = null
 
 	var/list/hidden_categories = null
 
 	var/mob/respawn_as_self_mob = null
+	var/skip_manifest = FALSE
+	var/slow_stat = FALSE
 
-	New()
+	New(client/C)
 		..()
+		src.owner = C
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
-			if (src.owner)
-				var/client/C = src.owner
-				C.chatOutput.getContextFlag()
-				src.load_admin_prefs()
+			src.owner.chatOutput.getContextFlag()
+			src.load_admin_prefs()
 
 		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)
 			admin_interact_atom_verbs = list(\
@@ -161,6 +166,9 @@
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Don't create manifest entries when respawning?: <a href='?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide offline indicators when mob jumping?: <a href='?src=\ref[src];action=toggle_hide_offline'>[(src.hide_offline_indicators ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
 			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
@@ -170,16 +178,15 @@
 		user.Browse(HTML.Join(),"window=aprefs;size=385x540")
 
 	proc/load_admin_prefs()
-		if (!src.owner)
-			return
 		var/list/AP
-		if (!owner.player.clouddata)
-			owner.player.cloud_fetch()
-		var/json_data = src.owner.player.cloud_get("admin_preferences")
+		if (!owner.player.cloudSaves.loaded)
+			owner.player.cloudSaves.fetch()
+
+		var/json_data = owner.player.cloudSaves.getData("admin_preferences")
 		if (json_data)
 			AP = json_decode(json_data)
 		else
-			boutput(src.owner, SPAN_NOTICE("ERROR: Admin prefence data is null. You either have no saved prefs or cloud is unreachable."))
+			boutput(src.owner, SPAN_NOTICE("ERROR: Admin preference data is null. You either have no saved prefs or cloud is unreachable."))
 			return
 
 		var/saved_servertoggles_toggle = AP["servertoggles_toggle"]
@@ -300,6 +307,21 @@
 			saved_show_topic_log = FALSE
 		show_topic_log = saved_show_topic_log
 
+		var/saved_skip_manifest = AP["skip_manifest"]
+		if (isnull(saved_skip_manifest))
+			saved_skip_manifest = FALSE
+		skip_manifest = saved_skip_manifest
+
+		var/saved_hide_offline_indicators = AP["hide_offline_indicators"]
+		if (isnull(saved_hide_offline_indicators))
+			saved_hide_offline_indicators = TRUE
+		hide_offline_indicators = saved_hide_offline_indicators
+
+		var/saved_slow_stat = AP["slow_stat"]
+		if (isnull(saved_slow_stat))
+			saved_slow_stat = FALSE
+		slow_stat = saved_slow_stat
+
 		src.hidden_categories = list()
 		for(var/cat in toggleable_admin_verb_categories)
 			var/cat_hidden = AP["hidden_[cat]"]
@@ -320,10 +342,10 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/list/data = owner.player.cloud_get("admin_preferences")
+		var/data = owner.player.cloudSaves.getData("admin_preferences")
 		var/list/auto_aliases = list()
 		if (data) // decoding null will runtime
-			data = json_decode(owner.player.cloud_get("admin_preferences"))
+			data = json_decode(data)
 			auto_aliases = data["auto_aliases"]
 
 		if (auto_alias_global_save)
@@ -356,11 +378,14 @@
 		AP["buildmode_view"] = buildmode_view
 		AP["spawn_in_loc"] = spawn_in_loc
 		AP["show_topic_log"] = show_topic_log
+		AP["skip_manifest"] = skip_manifest
+		AP["hide_offline_indicators"] = hide_offline_indicators
+		AP["slow_stat"] = slow_stat
 
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
 
-		if (!owner.player.cloud_put("admin_preferences", json_encode(AP)))
+		if (!owner.player.cloudSaves.putData("admin_preferences", json_encode(AP)))
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, SPAN_NOTICE("Admin preferences saved."))
@@ -372,6 +397,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	src.holder.show_pref_window(src.mob)
 

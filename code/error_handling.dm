@@ -6,8 +6,9 @@
 * It does NOT catch reference bugs
 */
 
-var/global/list/runtimeDetails = new()
+var/global/list/runtimeDetails = list()
 var/global/runtime_count = 0
+var/global/blame_for_runtimes = FALSE
 
 /world/Error(exception/E)
 	var/timestamp = time2text(world.timeofday,"hh:mm:ss")
@@ -25,6 +26,9 @@ var/global/runtime_count = 0
 		"invalid" = invalid
 	)
 
+	var/datum/eventRecord/Error/errorEvent = new()
+	errorEvent.buildAndSend(E, usr)
+
 	//Output formatted runtime to the usual error.log
 #ifndef CI_RUNTIME_CHECKING
 	if (invalid)
@@ -34,6 +38,11 @@ var/global/runtime_count = 0
 		if (E.desc)
 			world.log << "[E.desc]"
 #endif
+
+	//dumb stupid dangerous meme, do not use unless you want to have bad time
+	if (blame_for_runtimes && !ON_COOLDOWN(global, "runtime_blame", 1 DECI SECOND)) //cooldown should prevent infinite server crashing loops at least
+		if (get_turf(usr))
+			new /obj/lightning_target(get_turf(usr))
 
 	// if we're in a fucked up state and generating lots of runtimes we don't want to make the performance of the runtimes even worse
 	if(runtime_count < 1000)
@@ -48,6 +57,7 @@ var/global/runtime_count = 0
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!cdn)
 		var/list/viewerResources = list(
@@ -58,6 +68,20 @@ var/global/runtime_count = 0
 
 	src.Browse(grabResource("html/runtimeViewer.html"), "window=runtimeviewer;size=500x600;title=Runtime+Viewer;", 1)
 
+/client/proc/cmd_aggressive_debugging()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Toggle Aggressive Debugging"
+	set desc = "Makes triggering a runtime strike you with lightning. Yes really."
+	set popup_menu = 0
+
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	if (global.blame_for_runtimes)
+		global.blame_for_runtimes = FALSE
+		boutput(src, SPAN_NOTICE("Aggressive debugging disabled"))
+	else
+		if (input(src, "Are you sure you want to cause a lightning strike on every runtime? (May cause extreme unforseen consequences) Type YES below if you're sure.", "Really enable aggressive debugging?", "NO") == "YES")
+			global.blame_for_runtimes = TRUE
 
 /client/Topic(href, href_list)
 

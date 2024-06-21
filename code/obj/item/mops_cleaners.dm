@@ -17,6 +17,7 @@ TRASH BAG
 	item_state = "cleaner"
 	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -37,6 +38,14 @@ TRASH BAG
 /obj/item/spraybottle/New()
 	..()
 	create_reagents(initial_volume)
+
+
+/obj/item/spraybottle/clown_flower
+	name = "suspicious flower"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
+	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent. Wait, do these all have nozzles?"
 
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
@@ -353,19 +362,18 @@ TRASH BAG
 		src.reagents.reaction(T, 1, 5)
 		src.reagents.remove_any(5)
 		mopcount++
+		if (istype(T, /turf/simulated))
+			var/turf/simulated/S = T
+			if (S.wet < 1)
+				S.wetify(1, rand(20, 35) SECONDS)
 
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
-			target_fluid.group.drain(target_fluid,1,src)
+			target_fluid.group.drain(target_fluid, 1, src)
 		if (mopcount > 0)
 			mopcount--
-	else if (T)
-		T.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
-	else
-		A.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
+	T.clean_forensic()
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 		SPAWN(0.5 SECONDS)
@@ -431,13 +439,7 @@ TRASH BAG
 
 			if(istype(U,/turf/simulated))
 				var/turf/simulated/T = U
-				var/wetoverlay = image('icons/effects/water.dmi',"wet_floor")
-				T.overlays += wetoverlay
-				T.wet = 1
-				SPAWN(30 SECONDS)
-					if (istype(T))
-						T.wet = 0
-						T.overlays -= wetoverlay
+				T.wetify(1, 75 SECONDS)
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
 			SPAWN(0.5 SECONDS)
@@ -490,6 +492,7 @@ TRASH BAG
 	stamina_damage = 5
 	throwforce = 0
 	w_class = W_CLASS_SMALL // gross why would you put a sponge in your pocket
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 
 	var/hit_face_prob = 30 // MODULAR SPONGES
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary
@@ -518,8 +521,8 @@ TRASH BAG
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)
 		return
+	. = ..()
 	var/turf/location = get_turf(user)
-	user.visible_message(SPAN_NOTICE("[user] wrings out [src]."))
 	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
@@ -532,6 +535,12 @@ TRASH BAG
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		if (src.loc == user && isrobot(user))
+			boutput(user, "You can't quite angle your [W.name] into your [src.name].")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "You can't bring yourself to cut away your own personal [src.name]!")
+			return
 		user.visible_message(SPAN_NOTICE("[user] cuts [src] into the shape of... cheese?"))
 		if(src.loc == user)
 			user.u_equip(src)
@@ -623,12 +632,8 @@ TRASH BAG
 					F.group.drain(F,1,src)
 				else
 					F.removed()
-				user.visible_message("[user] soaks up [F] with [src].",\
-				SPAN_NOTICE("You soak up [F] with [src]."), group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
-				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				SPAN_NOTICE("You soak up the mess on [target] with [src]."), group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -636,15 +641,11 @@ TRASH BAG
 			if (!istype(target, /turf/simulated)) // really, how?? :I
 				return
 			var/turf/simulated/T = target
-			user.visible_message("[user] dries up [T] with [src].",\
-			SPAN_NOTICE("You dry up [T] with [src]."))
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
 			T.wet = 0
 
 		if (SPONGE_WIPE)
-			user.visible_message("[user] wipes down [target] with [src].",\
-			SPAN_NOTICE("You wipe down [target] with [src]."), group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
@@ -658,7 +659,6 @@ TRASH BAG
 				animate_smush(target)
 
 		if (SPONGE_WRING)
-			user.visible_message(SPAN_ALERT("[user] wrings [src] out into [target]."))
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
 			else if(istype(target, /obj/submachine/chef_sink))
@@ -666,7 +666,6 @@ TRASH BAG
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-			user.visible_message(SPAN_ALERT("[user] wets [src] in [target]."))
 			if (target.reagents)
 				target.reagents.trans_to(src, fill_amt)
 			else
@@ -720,6 +719,7 @@ TRASH BAG
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -837,6 +837,7 @@ TRASH BAG
 
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -892,8 +893,8 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list("bamboo"=3, "MET-1"=10)
-
+	mats = list("bamboo" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
@@ -967,6 +968,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
+			if (storage.secure && storage.locked)
+				return // storage provides user feedback
 			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
 			boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
@@ -1103,8 +1106,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list("neutronium"=3, "MET-1"=10)
-
+	mats = list("neutronium" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
 	color = list(0,0,1, 0,1,0, 1,0,0)
@@ -1177,7 +1180,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
-								M.changeStatus("weakened", 0.9 SECONDS)
+								M.changeStatus("knockdown", 0.9 SECONDS)
 								M.force_laydown_standup()
 								boutput(M, SPAN_ALERT("You are pulled by the force of [user]'s [master]."))
 						else

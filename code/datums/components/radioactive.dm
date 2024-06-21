@@ -68,7 +68,7 @@ TYPEINFO(/datum/component/radioactive)
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
 			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
-			PA.UpdateOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
+			PA.AddOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
 		else
 			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
@@ -87,7 +87,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_simple_light("radiation_light_\ref[src]")
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
-		PA.UpdateOverlays(null, "radiation_overlay_\ref[src]")
+		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")
 		PA.color = src._backup_color
 		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))

@@ -25,14 +25,20 @@
 	var/input_pressure_min = 0
 	/// The maximum pressure to keep our output at.
 	var/output_pressure_max = 0
-	var/frequency = 0
+	/// Radio frequency to operate on.
+	var/frequency = null
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 	/// What bounds to check for.
 	var/pressure_checks = BOUND_EXTERNAL
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if(src.frequency)
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/update_icon()
 	var/turf/T = get_turf(src)
@@ -104,73 +110,87 @@
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
-	signal.data["tag"] = id
+	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
 	signal.data["device"] = "ADVP"
-	signal.data["power"] = on?("on"):("off")
-	signal.data["direction"] = pump_direction?("release"):("siphon")
-	signal.data["checks"] = pressure_checks
-	signal.data["input"] = input_pressure_min
-	signal.data["output"] = output_pressure_max
-	signal.data["external"] = external_pressure_bound
+	signal.data["power"] = src.on?("on"):("off")
+	signal.data["direction"] = src.pump_direction?("release"):("siphon")
+	signal.data["checks"] = src.pressure_checks
+	signal.data["input"] = src.input_pressure_min
+	signal.data["output"] = src.output_pressure_max
+	signal.data["external"] = src.external_pressure_bound
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	return TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
-		return FALSE
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS)
+				broadcast_status()
+
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
-			on = !on
+			src.on = !on
+			. = TRUE
 
 		if("set_direction")
 			var/number = text2num_safe(signal.data["parameter"])
-			if(number > 0.5)
-				pump_direction = RELEASING
-			else
-				pump_direction = SIPHONING
+			src.pump_direction = (number > 0.5) ? RELEASING : SIPHONING
+			. = TRUE
 
 		if("set_checks")
 			var/number = round(text2num_safe(signal.data["parameter"]),1)
-			pressure_checks = number
+			src.pressure_checks = number
+			. = TRUE
 
 		if("purge")
-			pressure_checks &= ~BOUND_EXTERNAL
-			pump_direction = SIPHONING
+			src.pressure_checks &= ~BOUND_EXTERNAL
+			src.pump_direction = SIPHONING
+			. = TRUE
 
 		if("stabalize")
-			pressure_checks |= BOUND_EXTERNAL
-			pump_direction = RELEASING
+			src.pressure_checks |= BOUND_EXTERNAL
+			src.pump_direction = RELEASING
+			. = TRUE
 
 		if("set_input_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
-			input_pressure_min = number
+			src.input_pressure_min = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
-			output_pressure_max = number
+			src.output_pressure_max = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 		if("set_external_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
-			external_pressure_bound = number
+			src.external_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
-	if(signal.data["tag"])
-		SPAWN(0.5 SECONDS) broadcast_status()
-	UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/releasing
 	icon_state = "out-map"

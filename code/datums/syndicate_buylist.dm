@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/bowling
 	name = "Bowling Kit"
 	item = /obj/item/storage/bowling
-	cost = 7
+	cost = 6
 	desc = "Comes with several bowling balls and a suit. You won't be able to pluck up the courage to throw them very hard without wearing the suit!"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -565,12 +565,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 			owner.mind.diabolical = 1 //can't sell souls to ourselves now can we?
 
 /datum/syndicate_buylist/traitor/mailsuit
-	name = "Mailman Suit"
+	name = "Mail Courier Suit"
 	item = /obj/item/clothing/under/misc/mail/syndicate
 	cost = 1
-	desc = "A mailman's uniform that allows the wearer to use mail chutes as a means of transportation."
+	desc = "A mail courier's uniform that allows the wearer to use mail chutes as a means of transportation."
 	br_allowed = TRUE
-	job = list("Mailman")
+	job = list("Mail Courier")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/chargehacker
@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/electronics/scanner/syndicate
 	cost = 4
 	vr_allowed = FALSE
-	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
+	desc = "A standard Nanotrasen mechanic's analyzer with jailbroken internals. This baby doesn't give a damn about DRM, patents, or \"safety\"!"
 	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
@@ -977,6 +977,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/syndicate_radio_upgrade
+	name = "Syndicate Radio Upgrade"
+	item = /obj/item/device/radio_upgrade/syndicatechannel
+	cost = 1
+	desc = "A small device that may be installed in a headset to grant access to a radio channel reserved for Syndicate operatives."
+	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/tape
 	name = "Ducktape"
 	item = /obj/item/handcuffs/tape_roll
@@ -1034,7 +1042,17 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 5
 	vr_allowed = FALSE // no
 	not_in_crates = TRUE
-	job = list("Captain", "VIP", "Regional Director", "Inspector")
+	job = list("Captain", "VIP", "Inspector", "Head of Personnel")
+
+/datum/syndicate_buylist/traitor/ai_disguised_module
+	name = "Disguised AI Law Module"
+	item = /obj/item/aiModule/freeform/disguised
+	cost = 2
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "An AI law module that at a glance looks completely normal, but could tell the AI to do anything."
+	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	can_buy = UPLINK_TRAITOR
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
@@ -1363,3 +1381,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	cost = 1
 	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
 
+
+/datum/syndicate_buylist/surplus/switchblade
+	name = "Switchblade"
+	item = /obj/item/switchblade
+	cost = 2
+	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding"
+
+/datum/syndicate_buylist/surplus/quickhack
+	name = "Quickhack"
+	item = /obj/item/tool/quickhack/syndicate
+	cost = 1
+	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."

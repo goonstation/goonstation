@@ -3,8 +3,6 @@
 	name = "EngineMaster"
 	size = 10
 	req_access = list(access_engineering_engine)
-	var/tmp/authenticated = null //Are we currently logged in?
-	var/datum/computer/file/user_data/account = null
 	var/log_string = null
 	var/obj/item/peripheral/network/powernet_card/netcard = null
 	var/obj/item/peripheral/network/radio/radiocard = null
@@ -15,34 +13,24 @@
 	var/list/fieldgen_ids = list() //Net ids of located field generators.
 	var/tmp/last_event_report = 0 //When did we last report an event?
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "englog"
 	var/setup_mail_freq = FREQ_PDA //Which freq do we report to?
 	var/setup_mailgroup = MGO_ENGINEER //The PDA mailgroup used when alerting engineer pdas.
 
 
 	initialize()
-
-		src.authenticated = null
+		if (..())
+			return TRUE
 		src.task = null
 		src.master.temp = null
 		src.startup_line = 1
-
-		if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
-		if(!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
 
 		src.netcard = locate() in src.master.peripherals
 		if(!src.netcard || !istype(src.netcard))
 			src.print_text("<b>Error:</b> No network card detected.<br>Quitting...")
 			src.log_string += "<br>Startup Failure: No network card."
 			src.master.unload_program(src)
-			return
+			return TRUE
 
 		src.radiocard = locate() in src.master.peripherals
 		if(!radiocard || !istype(src.radiocard))
@@ -50,7 +38,6 @@
 			src.print_text("<b>Warning:</b> No radio module detected.")
 			src.log_string += "<br>Startup Error: No radio."
 
-		src.authenticated = src.account.registered
 		src.log_string += "<br><b>LOGIN:</b> [src.authenticated]"
 
 		src.ping_devices()
@@ -64,8 +51,6 @@
 		<br>(Clear) to clear the screen.
 		<br>(Quit) to exit."}
 		src.print_text(intro_text)
-
-		return
 
 	input_text(text)
 		if(..())
@@ -275,15 +260,3 @@
 			last_event_report = world.time
 			peripheral_command("transmit", signal, "\ref[src.radiocard]")
 			return
-
-		find_access_file() //Look for the whimsical account_data file
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				src.account = target
-				return 1
-
-			return 0

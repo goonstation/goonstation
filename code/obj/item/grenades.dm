@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -690,8 +691,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		return
 
 TYPEINFO(/obj/item/old_grenade/oxygen)
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
-
+	mats = list("metal_dense" = 2,
+				"conductive" = 2,
+				"molitz" = 10,
+				"char" = 1)
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -812,6 +815,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New()
 		..()
@@ -1402,19 +1406,27 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
 					W.ReplaceWithFloor()
-			for (var/obj/structure/girder/G in range(src.expl_range, location))
-				var/area/a = get_area(G)
-				if (G && istype(G) && !a.sanctuary)
-					qdel(G)
-			for (var/obj/window/WD in range(src.expl_range, location))
-				var/area/a = get_area(WD)
-				if (WD && istype(WD) && prob(max(0, 100 - (WD.health / 3))) && !a.sanctuary)
-					WD.smash()
-			for (var/obj/grille/GR in range(src.expl_range, location))
-				var/area/a = get_area(GR)
-				if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
-					GR.ex_act(2)
-
+			for (var/obj/O in range(src.expl_range, location))
+				var/area/area = get_area(O)
+				if (area?.sanctuary)
+					continue
+				if (istype(O, /obj/structure/girder))
+					qdel(O)
+					continue
+				if (istype(O, /obj/window))
+					var/obj/window/window = O
+					if (prob(max(0, 100 - (window.health / 3))))
+						window.smash()
+					continue
+				if (istype(O, /obj/grille))
+					var/obj/grille/grille = O
+					if (!grille.ruined)
+						grille.ex_act(2)
+					continue
+				if (istype(O, /obj/machinery/door/firedoor))
+					var/obj/machinery/door/firedoor/firelock = O
+					qdel(firelock)
+					continue
 		qdel(src)
 		return
 
@@ -1497,24 +1509,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/floor))
 					continue
 
-				T.hotspot_expose(2000, 125)
-
-				var/obj/overlay/O = new/obj/overlay(T)
-				O.name = "Thermite"
-				O.desc = "A searing wall of flames."
-				O.icon = 'icons/effects/fire.dmi'
-				O.anchored = ANCHORED
-				O.layer = TURF_EFFECTS_LAYER
-				O.color = "#ff9a3a"
-				var/datum/light/point/light = new
-				light.set_brightness(1)
-				light.set_color(0.5, 0.3, 0.0)
-				light.attach(O)
-
-				if (istype(T,/turf/simulated/wall))
-					O.set_density(1)
-				else
-					O.set_density(0)
 
 				var/distance = GET_DIST(T, location)
 				if (distance < 2)
@@ -1523,7 +1517,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					if (istype(T, /turf/simulated/wall/auto/feather))
 						var/turf/simulated/wall/auto/feather/flockwall = T
 						flockwall.takeDamage("fire", 1)
-						O.icon_state = "2"
 						if (flockwall.health <= 0)
 							flockwall.destroy()
 					else if (istype(T, /turf/simulated/wall))
@@ -1535,29 +1528,36 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					if (F && istype(F))
 						F.to_plating()
 						F.burn_tile()
-						O.icon_state = "2"
-				else
-					O.icon_state = "1"
-					if (istype(T, /turf/simulated/floor))
-						var/turf/simulated/floor/F = T
-						F.burn_tile()
 
 			for (var/obj/machinery/door/DR in src.loc)
 				var/area/a = get_area(DR)
 				if (!DR.cant_emag && !a.sanctuary)
 					DR.take_damage(DR.health)
-			for (var/obj/structure/girder/G in range(src.expl_range, location))
-				var/area/a = get_area(G)
-				if (G && istype(G) && !a.sanctuary)
-					qdel(G)
-			for (var/obj/window/W in range(src.expl_range, location))
-				var/area/a = get_area(W)
-				if (W && istype(W) && !a.sanctuary)
-					W.damage_heat(500)
-			for (var/obj/grille/GR in range(src.expl_range, location))
-				var/area/a = get_area(GR)
-				if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
-					GR.damage_heat(500)
+
+			for (var/obj/O in range(src.expl_range, location))
+				var/area/area = get_area(O)
+				if (area?.sanctuary)
+					continue
+				if (istype(O, /obj/structure/girder))
+					qdel(O)
+					continue
+				if (istype(O, /obj/window))
+					var/obj/window/window = O
+					if (prob(max(0, 100 - (window.health / 3))))
+						window.damage_heat(500)
+					continue
+				if (istype(O, /obj/grille))
+					var/obj/grille/grille = O
+					if (!grille.ruined)
+						grille.damage_heat(500)
+					continue
+				if (istype(O, /obj/machinery/door/firedoor))
+					var/obj/machinery/door/firedoor/firelock = O
+					qdel(firelock)
+					continue
+
+			// placed here so that fire appears in place of destroyed turfs
+			fireflash(location, src.expl_range, 2000, checkLos = FALSE, chemfire = CHEM_FIRE_DARKRED)
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
@@ -1566,11 +1566,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				M.update_burning(damage)
 
 			SPAWN(10 SECONDS)
-				if (src)
-					for (var/obj/overlay/O in range(src.expl_range, location))
-						if (O.name == "Thermite")
-							qdel(O)
-					qdel(src)
+				qdel(src)
 		else
 			qdel(src)
 

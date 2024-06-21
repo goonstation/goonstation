@@ -9,7 +9,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 	else
-		var/data[] = genericBanDialog(sharktarget)
+		var/data[] = src.addBanTempDialog(sharktarget)
 		if(data)
 			var/speed = input(usr,"How fast is the shark? Lower is faster.","speed","5") as num
 			if(!speed)
@@ -102,7 +102,7 @@
 			else if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message(SPAN_ALERT("<B>[src]</B> bites [sharktarget2]!"), 1)
-				sharktarget2.changeStatus("weakened", 1 SECOND)
+				sharktarget2.changeStatus("knockdown", 1 SECOND)
 				sharktarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 				banproc()
@@ -125,8 +125,16 @@
 		else
 			boutput(sharktarget2, SPAN_ALERT("<BIG><B>You can escape the banshark, but not the ban!</B></BIG>"))
 			logTheThing(LOG_ADMIN, caller:client, "has evaded the shark by ceasing to exist!  Banning them anyway.")
-			message_admins(SPAN_INTERNAL("data["ckey"] has evaded the shark by ceasing to exist!  Banning them anyway."))
-		addBan(data)
+			message_admins(SPAN_INTERNAL("[data["ckey"]] has evaded the shark by ceasing to exist!  Banning them anyway."))
+		bansHandler.add(
+			data["akey"],
+			data["server"],
+			data["ckey"],
+			data["compId"],
+			data["ip"],
+			data["reason"],
+			data["duration"]
+		)
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		qdel(src)
 
@@ -161,7 +169,7 @@
 			if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message(SPAN_ALERT("<B>[src]</B> bites [sharktarget2]!"), 1)
-				sharktarget2.changeStatus("weakened", 1 SECOND)
+				sharktarget2.changeStatus("knockdown", 1 SECOND)
 				sharktarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 				gibproc()

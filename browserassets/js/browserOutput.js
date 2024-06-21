@@ -211,11 +211,6 @@ function output(message, group, skipNonEssential, forceScroll) {
         }
     }
 
-    //Url stuff
-    // if (message.length && flag != 'preventLink') {
-    //  message = anchorme(message);
-    // }
-
     opts.messageCount++;
 
     //Pop the top message off if history limit reached
@@ -1008,7 +1003,7 @@ $(function() {
             '</div>');
     }
 
-    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading&param[ua]='+escaper(navigator.userAgent));
+    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading');
     if ($('#loading').is(':visible')) {
         $('#loading').remove();
     }

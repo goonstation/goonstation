@@ -4,25 +4,30 @@
  * @license MIT
  */
 
-import { canRender, classes } from 'common/react';
 import { Component, createRef, InfernoNode, RefObject } from 'inferno';
+import { canRender, classes } from 'common/react';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
-interface SectionProps extends BoxProps {
-  className?: string;
-  title?: string;
-  buttons?: InfernoNode;
-  fill?: boolean;
-  fitted?: boolean;
-  scrollable?: boolean;
-  /** @deprecated This property no longer works, please remove it. */
-  level?: boolean;
-  /** @deprecated Please use `scrollable` property */
-  overflowY?: any;
-}
+type Props = Partial<{
+  /** Buttons to render aside the section title. */
+  buttons: InfernoNode;
+  /** If true, fills all available vertical space. */
+  fill: boolean;
+  /** If true, removes all section padding. */
+  fitted: boolean;
+  /** Shows or hides the scrollbar. */
+  scrollable: boolean;
+  /** Shows or hides the horizontal scrollbar. */
+  scrollableHorizontal: boolean;
+  /** Title of the section. */
+  title: InfernoNode;
+  /** @member Callback function for the `scroll` event */
+  onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
+}> &
+  BoxProps;
 
-export class Section extends Component<SectionProps> {
+export class Section extends Component<Props> {
   scrollableRef: RefObject<HTMLDivElement>;
   scrollable: boolean;
 
@@ -46,13 +51,15 @@ export class Section extends Component<SectionProps> {
 
   render() {
     const {
-      className,
-      title,
       buttons,
+      children,
+      className,
       fill,
       fitted,
+      onScroll,
       scrollable,
-      children,
+      scrollableHorizontal,
+      title,
       ...rest
     } = this.props;
     const hasTitle = canRender(title) || canRender(buttons);
@@ -60,26 +67,22 @@ export class Section extends Component<SectionProps> {
       <div
         className={classes([
           'Section',
-          Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
+          scrollableHorizontal && 'Section--scrollableHorizontal',
           className,
           computeBoxClassName(rest),
         ])}
         {...computeBoxProps(rest)}>
         {hasTitle && (
           <div className="Section__title">
-            <span className="Section__titleText">
-              {title}
-            </span>
-            <div className="Section__buttons">
-              {buttons}
-            </div>
+            <span className="Section__titleText">{title}</span>
+            <div className="Section__buttons">{buttons}</div>
           </div>
         )}
         <div className="Section__rest">
-          <div ref={this.scrollableRef} className="Section__content">
+          <div onScroll={onScroll} ref={this.scrollableRef} className="Section__content">
             {children}
           </div>
         </div>

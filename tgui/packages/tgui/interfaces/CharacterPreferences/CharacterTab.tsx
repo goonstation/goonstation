@@ -31,7 +31,6 @@ const CustomPart = ({ slot_id }, context) => {
       tooltip={data.partsData[slot_id].name}
     >
       <Image
-        pixelated
         width="64px"
         height="64px"
         src={`data:image/png;base64,${data.partsData[slot_id].img}`}

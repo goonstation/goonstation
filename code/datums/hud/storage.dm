@@ -142,7 +142,7 @@
 		var sy = num_contents + 1
 		var/turfd = 0
 
-		if (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
+		if (isturf(master.linked_item?.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
 			sx = (num_contents + 1) / 2
@@ -194,7 +194,7 @@
 			src.obj_locs[obj_loc] = I
 			i++
 		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-		master.linked_item.UpdateIcon()
+		master.linked_item?.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)

@@ -127,7 +127,20 @@
 	static_colour = TRUE
 	parallax_value = 0.5
 	scroll_speed = 500
+	scroll_angle = 0
 
+// scrolling doesnt work if scroll_angle is changed after initialisation i think. So I made these.
+/atom/movable/screen/parallax_render_source/meteor_shower/north
+	scroll_angle = 180
+
+/atom/movable/screen/parallax_render_source/meteor_shower/south
+	scroll_angle = 0
+
+/atom/movable/screen/parallax_render_source/meteor_shower/east
+	scroll_angle = 270
+
+/atom/movable/screen/parallax_render_source/meteor_shower/west
+	scroll_angle = 90
 
 // Effects
 

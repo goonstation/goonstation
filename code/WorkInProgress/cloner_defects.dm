@@ -497,3 +497,31 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_OVERDOSE_WEAKNESS, src)
+
+/// Write current cloner defects to an existing datacore medical record
+/proc/record_cloner_defects(mob/living/carbon/human/H)
+	if (!ishuman(H) || !H.cloner_defects)
+		return
+
+	var/datum/db_record/genrec = get_general_record(H)
+	if (!istype(genrec))
+		return
+
+	var/datum/db_record/medrec = data_core.medical.find_record("id", genrec["id"])
+	if (!istype(medrec))
+		return
+
+	var/datum/cloner_defect_holder/defect_holder = H.cloner_defects
+	if(!length(defect_holder.active_cloner_defects))
+		medrec["cl_def"] = "None"
+		medrec["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
+		return
+
+	var/list/defect_names = list()
+	var/list/defect_descs = list()
+
+	for (var/datum/cloner_defect/defect in defect_holder.active_cloner_defects)
+		defect_names.Add(defect.name)
+		defect_descs.Add(defect.desc)
+	medrec["cl_def"] = jointext(defect_names, ", ")
+	medrec["cl_def_d"] = jointext(defect_descs, " ")

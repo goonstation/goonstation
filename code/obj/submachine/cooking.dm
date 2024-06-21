@@ -1,3 +1,4 @@
+
 TYPEINFO(/obj/submachine/chef_sink)
 	mats = 12
 
@@ -223,107 +224,112 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
 	var/doing_a_thing = 0
 
-	attack_hand(var/mob/user)
-		src.add_dialog(user)
-		var/dat = "<b>Ice Cream-O-Mat 9900</b><br>"
-		if(src.cone)
-			dat += "<a href='?src=\ref[src];eject=cone'>Eject Cone</a><br>"
-			dat += "<b>Select a Flavor:</b><br><ul>"
-			for(var/flavor in flavors)
-				dat += "<li><a href='?src=\ref[src];flavor=[flavor]'>[capitalize(flavor)]</a></li>"
-			if(src.beaker)
-				dat += "<li><a href='?src=\ref[src];flavor=beaker'>From Beaker</a></li>"
-			dat += "</ul><br>"
+	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "IceCreamMachine")
+			ui.open()
 
-		else
-			dat += "<b>No Cone Inserted!</b><br>"
+	ui_static_data(mob/user)
+		var/list/flavorsTemp = list()
+		if(!flavors)
+			return
+		for(var/reagent in flavors)
+			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
+			flavorsTemp.Add(list(list(
+				name = current_reagent.name,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b
+			)))
+		. = list(
+			"flavors" = flavorsTemp
+		)
 
-		if(src.beaker)
-			dat += "<a href='?src=\ref[src];eject=beaker'>Eject Beaker</a><br>"
+	ui_data(mob/user)
+		. = list(
+			"beaker" = ui_describe_reagents(src.beaker),
+			"cone" = src.cone
+		)
 
-		user.Browse(dat, "window=icecream;size=400x500")
-		onclose(user, "icecream")
-		return
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
 
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
-	Topic(href, href_list)
 		if (istype(src.loc, /turf) && (( BOUNDS_DIST(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
 			if (is_incapacitated(usr) || usr.restrained())
 				return
 
-			src.add_fingerprint(usr)
-			src.add_dialog(usr)
-
-			if(href_list["eject"])
-				switch(href_list["eject"])
-					if("beaker")
-						if(src.beaker)
-							src.beaker.set_loc(src.loc)
-							usr.put_in_hand_or_eject(src.beaker) // try to eject it into the users hand, if we can
-							src.beaker = null
-							src.UpdateIcon()
-
-					if("cone")
-						if(src.cone)
-							src.cone.set_loc(src.loc)
-							usr.put_in_hand_or_eject(src.cone) // try to eject it into the users hand, if we can
-							src.cone = null
-							src.UpdateIcon()
-
-			else if(href_list["flavor"])
-				if(doing_a_thing)
-					src.updateUsrDialog()
+		src.add_fingerprint(usr)
+		switch(action)
+			if("eject_cone")
+				var/obj/item/target = src.cone
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
 					return
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the cone from [src]."))
+				src.cone = null
+				src.UpdateIcon()
+				. = TRUE
+
+			if("eject_beaker")
+				var/obj/item/target = src.beaker
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
+					return
+
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the beaker from [src]."))
+				src.beaker = null
+				src.UpdateIcon()
+				. = TRUE
+
+			if("insert_beaker")
+				var/obj/item/reagent_containers/newbeaker = usr.equipped()
+				if (istype(newbeaker, /obj/item/reagent_containers/glass/) || istype(newbeaker, /obj/item/reagent_containers/food/drinks/))
+					if(!newbeaker.cant_drop)
+						usr.drop_item()
+						newbeaker.set_loc(src)
+					src.beaker = newbeaker
+					src.UpdateIcon()
+					. = TRUE
+
+			if("make_ice_cream")
 				if(!cone)
 					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
-					src.updateUsrDialog()
 					return
 
-				var/the_flavor = href_list["flavor"]
-				if(the_flavor == "beaker")
-					if(!beaker)
-						boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
-						src.updateUsrDialog()
-						return
-
+				var/flavor = params["flavor"]
+				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new(src)
+				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
 						boutput(usr, SPAN_ALERT("The beaker is empty!"))
-						src.updateUsrDialog()
 						return
 
-					doing_a_thing = 1
-					qdel(src.cone)
-					src.cone = null
-					var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 					beaker.reagents.trans_to(newcream,40)
-					newcream.set_loc(src.loc)
+				else if(flavor in src.flavors)
+					newcream.reagents.add_reagent(flavor,40)
 
-				else
-					if(the_flavor in src.flavors)
-						doing_a_thing = 1
-						qdel(src.cone)
-						src.cone = null
-						var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
-						newcream.reagents.add_reagent(the_flavor,40)
-						newcream.set_loc(src.loc)
-					else
-						boutput(usr, SPAN_ALERT("Unknown flavor!"))
-
-				doing_a_thing = 0
+				usr.put_in_hand_or_eject(newcream)
+				src.cone = null
 				src.UpdateIcon()
+				. = TRUE
 
-			src.updateUsrDialog()
-		return
+
+	attack_ai(var/mob/user as mob)
+		return ui_interact(user)
 
 	attackby(obj/item/W, mob/user)
 		if (W.cant_drop) // For borg held items
@@ -341,7 +347,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				boutput(user, SPAN_NOTICE("You load the cone into [src]."))
 
 			src.UpdateIcon()
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.beaker)
@@ -354,7 +360,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				boutput(user, SPAN_ALERT("You load [W] into [src]."))
 
 			src.UpdateIcon()
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
@@ -390,6 +396,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
+	object_flags = NO_GHOSTCRITTER
 	var/emagged = 0
 	var/working = 0
 	var/time = 5
@@ -543,9 +550,6 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_shroom(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_pepper(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
@@ -764,8 +768,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
 			// Put all single-ingredient recipes after this point
-			src.recipes += new /datum/cookingrecipe/oven/pizza(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_fresh(src)
+			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/oven/pancake(src)
 			src.recipes += new /datum/cookingrecipe/oven/bread(src)
@@ -792,6 +795,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheesewheel(src)
 			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
+			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
+			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -863,15 +868,6 @@ table#cooktime a#start {
 					// this is null if it uses normal outputs (see below),
 					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
-
-					//Complete pizza crew objectives if possible
-					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
-						var/obj/item/reagent_containers/food/snacks/pizza/P = output
-						if (usr.mind?.objectives)
-							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
-								var/list/matching_toppings = P.topping_types & objective.choices
-								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
-									objective.completed = TRUE
 
 					if (isnull(output))
 						output = R.output
@@ -1272,8 +1268,8 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (milk_amount < 10 && yoghurt_amount < 10)
 					continue
 
-				var/cream_output = roundfloor(milk_amount / 10)
-				var/yoghurt_output = roundfloor(yoghurt_amount / 10)
+				var/cream_output = floor(milk_amount / 10)
+				var/yoghurt_output = floor(yoghurt_amount / 10)
 				P.reagents.remove_reagent("milk", cream_output * 10)
 				P.reagents.remove_reagent("yoghurt", yoghurt_output * 10)
 				for (var/i in 1 to cream_output)
@@ -1349,27 +1345,27 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/chilly)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/coldsauce/F = new(src.loc)
-					F.reagents.add_reagent("cryostylane", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("cryostylane", HYPfull_potency_calculation(DNA))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/ghostchilisauce/F = new(src.loc)
-					F.reagents.add_reagent("ghostchilijuice", 5 + DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("ghostchilijuice", 5 + HYPfull_potency_calculation(DNA))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
-					F.reagents.add_reagent("capsaicin", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("capsaicin", HYPfull_potency_calculation(DNA))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
-					F.reagents.add_reagent("chocolate", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("chocolate", HYPfull_potency_calculation(DNA))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
-					F.reagents.add_reagent("cream", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("cream", HYPfull_potency_calculation(DNA))
 					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
@@ -1387,7 +1383,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/ingredient/pepper/F = new(src.loc)
-					F.reagents.add_reagent("pepper", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("pepper", HYPfull_potency_calculation(DNA))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/avocado)
 					new/obj/item/reagent_containers/food/snacks/soup/guacamole(src.loc)
@@ -1515,193 +1511,3 @@ TYPEINFO(/obj/submachine/foodprocessor)
 			boutput(user, SPAN_NOTICE("You finish stuffing food into [src]!"))
 		else ..()
 		src.updateUsrDialog()
-
-var/list/mixer_recipes = list()
-
-TYPEINFO(/obj/submachine/mixer)
-	mats = 15
-
-/obj/submachine/mixer
-	name = "KitchenHelper"
-	desc = "A food Mixer."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "blender"
-	density = 1
-	anchored = ANCHORED
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	var/list/recipes = null
-	var/list/to_remove = list()
-	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
-	var/working = 0
-
-	New()
-		..()
-		src.recipes = mixer_recipes
-		if (!src.recipes)
-			src.recipes = list()
-
-		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
-			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
-			src.recipes += new /datum/cookingrecipe/mixer/custard(src)
-			src.recipes += new /datum/cookingrecipe/mixer/mashedpotatoes(src)
-			src.recipes += new /datum/cookingrecipe/mixer/mashedbrains(src)
-			src.recipes += new /datum/cookingrecipe/mixer/gruel(src)
-			src.recipes += new /datum/cookingrecipe/mixer/fishpaste(src)
-			src.recipes += new /datum/cookingrecipe/mixer/meatpaste(src)
-			src.recipes += new /datum/cookingrecipe/mixer/wonton_wrapper(src)
-			src.recipes += new /datum/cookingrecipe/mixer/butters(src)
-
-		src.UpdateIcon()
-		return
-
-	attackby(obj/item/W, mob/user)
-		var/amount = length(src.contents)
-		if (amount >= 4)
-			boutput(user, SPAN_ALERT("The mixer is full."))
-			return
-		var/proceed = 0
-		for(var/check_path in src.allowed)
-			if(istype(W, check_path))
-				proceed = 1
-				break
-		if (!proceed)
-			boutput(user, SPAN_ALERT("You can't put that in the mixer!"))
-			return
-		user.visible_message(SPAN_NOTICE("[user] puts [W] into the [src]."))
-		user.u_equip(W)
-		W.set_loc(src)
-		W.dropped(user)
-
-	attack_hand(var/mob/user)
-		if (!src.working)
-			src.add_dialog(user)
-			var/dat = {"<B>KitchenHelper Mixer</B><BR>
-			<HR>
-			<B>Contents:</B><BR>"}
-			for (var/obj/item/I in src.contents)
-				dat += "[I]<BR>"
-			dat += {"<HR>
-			<A href='?src=\ref[src];mix=1'>Mix!</A><BR>
-			<A href='?src=\ref[src];eject=1'>Eject Contents</A>"}
-			user.Browse(dat, "window=mixer;size=400x500")
-			onclose(user, "mixer")
-		else
-			src.add_dialog(user)
-			var/dat = {"<B>KitchenHelper Mixer</B><BR>
-			<HR><BR>
-			Mixing! Please wait!"}
-			user.Browse(dat, "window=mixer;size=400x500")
-			onclose(user, "mixer")
-
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
-			return src.Attackby(W, user)
-		return ..()
-
-	Topic(href, href_list)
-		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-			return
-		if (is_incapacitated(usr) || usr.restrained())
-			return
-
-		if (href_list["mix"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
-				return
-			mix()
-		if(href_list["eject"])
-			for (var/obj/item/I in src.contents)
-				I.set_loc(src.loc)
-			src.updateUsrDialog()
-			return
-
-	proc/bowl_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
-		var/count = 0
-		for(var/obj/item/I in src.contents)
-			if(istype(I, recipeitem))
-				count++
-				to_remove += I
-
-		if (count < recipecount)
-			return 0
-		return 1
-
-	proc/mix()
-		var/amount = length(src.contents)
-		if (!amount)
-			boutput(usr, SPAN_ALERT("There's nothing in the mixer."))
-			return
-		working = 1
-		src.UpdateIcon()
-		src.updateUsrDialog()
-		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
-		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-		var/derivename = 0
-		for (var/datum/cookingrecipe/R in src.recipes)
-			to_remove.len = 0
-			if (R.item1)
-				if (!bowl_checkitem(R.item1, R.amt1)) continue
-			if (R.item2)
-				if (!bowl_checkitem(R.item2, R.amt2)) continue
-			if (R.item3)
-				if (!bowl_checkitem(R.item3, R.amt3)) continue
-			if (R.item4)
-				if (!bowl_checkitem(R.item4, R.amt4)) continue
-			output = R.specialOutput(src)
-			if (!output)
-				output = R.output
-			if (R.useshumanmeat)
-				derivename = 1
-			break
-		SPAWN(2 SECONDS)
-
-			if (!isnull(output))
-				var/obj/item/reagent_containers/food/snacks/F
-				if (ispath(output))
-					F = new output(get_turf(src))
-				else
-					F = output
-					F.set_loc(get_turf(src))
-
-				if (derivename)
-					var/foodname = F.name
-					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-						F.name = "[M.subjectname] [foodname]"
-						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-						if(!isnull(F.unlock_medal_when_eaten))
-							continue
-						else if (M.subjectjob && M.subjectjob == "Clown")
-							F.unlock_medal_when_eaten = "That tasted funny"
-						else
-							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-				for (var/obj/item/I in to_remove)
-					qdel(I)
-				to_remove.len = 0
-
-			for (var/obj/I in src.contents)
-				I.set_loc(src.loc)
-				src.visible_message(SPAN_ALERT("[I] is tossed out of [src]!"))
-				var/edge = get_edge_target_turf(src, pick(alldirs))
-				I.throw_at(edge, 25, 4)
-
-			working = 0
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-
-	update_icon()
-		if (!src || !istype(src))
-			return
-
-		if (src.working != 0)
-			src.icon_state = "blender_on"
-		else
-			src.icon_state = "blender"
-
-		return

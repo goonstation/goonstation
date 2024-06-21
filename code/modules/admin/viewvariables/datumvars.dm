@@ -6,7 +6,8 @@
 /client/proc/debug_global_variable(var/S as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Global Variable"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if( !src.holder || src.holder.level < LEVEL_ADMIN)
 		boutput( src, SPAN_ALERT("Get down from there!!") )
 		return
@@ -67,7 +68,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Ref Variables"
 	set desc = "(reference) Enter a ref to view its variables"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (src.holder?.level < LEVEL_ADMIN)
 		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
 		tgui_alert(src.mob, "You must be at least an Administrator to use this command.", "Access Denied")
@@ -116,7 +118,9 @@
 		return
 	#endif
 
-	if(D != "GLOB")
+	if (D == world)
+		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on world")
+	else if (D != "GLOB")
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on [D]: [D.type] [istype(D, /atom) ? "at [D:x], [D:y], [D:z]" : ""]")
 	else
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
@@ -137,6 +141,8 @@
 		#endif
 	if(D == "GLOB")
 		title = "Global Variables"
+	else if (D == world)
+		title = "World Variables"
 	else
 		title = "[D][src.holder.level >= LEVEL_ADMIN ? " (\ref[D])" : ""] = [D.type]"
 
@@ -802,11 +808,11 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, \
-											DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, \
-											DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, \
-											DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, \
-											DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_COLOR_MATRIX_EDITOR), \
+	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_BITFIELD,
+											DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, \
+											DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, \
+											DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, DATA_INPUT_NULL, DATA_INPUT_REF, \
+											DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_COLOR_MATRIX_EDITOR), \
 											default = var_value, default_type = default)
 
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases

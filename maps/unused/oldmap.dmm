@@ -47,7 +47,7 @@
 "aj" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "al" = (
@@ -252,13 +252,13 @@
 /area/hallway/primary/north)
 "aT" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aU" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aV" = (
@@ -1708,7 +1708,7 @@
 "eh" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor,
 /area/engine/engineering)
@@ -1892,7 +1892,7 @@
 "eE" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -2030,7 +2030,7 @@
 "eV" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor,
 /area/engine/engineering)
 "eW" = (
@@ -7565,7 +7565,7 @@
 "tf" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/syndicate_station)
 "tg" = (
@@ -7576,7 +7576,7 @@
 "th" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/syndicate_station)
 "ti" = (
@@ -8124,7 +8124,7 @@
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/syndicate_station)
 "uE" = (
@@ -8169,7 +8169,7 @@
 "uI" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/syndicate_station)
 "uJ" = (
@@ -8658,7 +8658,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/syndicate_station)
 "we" = (
@@ -9244,7 +9244,7 @@
 /area/space)
 "xj" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/syndicate_station)
 "xk" = (
@@ -9266,7 +9266,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/wizard_station)
 "xn" = (
@@ -9296,7 +9296,7 @@
 "xq" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/wizard_station)
 "xr" = (
@@ -9361,7 +9361,7 @@
 "xy" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/wizard_station)
 "xz" = (
@@ -9543,7 +9543,7 @@
 /area/wizard_station)
 "xR" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/wizard_station)
 "xS" = (
@@ -9555,7 +9555,7 @@
 "xT" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/wizard_station)
 "xU" = (
@@ -9590,7 +9590,7 @@
 "xX" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "xY" = (
@@ -9600,7 +9600,7 @@
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/wizard_station)
 "xZ" = (
@@ -9698,7 +9698,7 @@
 "yl" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/escape/centcom)
 "ym" = (
@@ -9721,7 +9721,7 @@
 "yp" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/escape/centcom)
 "yq" = (
@@ -9785,13 +9785,13 @@
 /area/shuttle/escape/centcom)
 "yz" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/escape/centcom)
 "yA" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/escape/centcom)
 "yB" = (
@@ -10228,7 +10228,7 @@
 "zH" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/meteor/dock)
 "zI" = (
@@ -10253,7 +10253,7 @@
 "zJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/meteor/dock)
 "zK" = (
@@ -10396,7 +10396,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/meteor/dock)
 "zZ" = (
@@ -10614,7 +10614,7 @@
 /area/meteor/dock)
 "Az" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/meteor/dock)
 "AA" = (
@@ -10625,7 +10625,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/meteor/dock)
 "AB" = (
@@ -10675,7 +10675,7 @@
 "AF" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/meteor/dock)
 "AG" = (
@@ -13496,7 +13496,7 @@
 "Hg" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/research/outpost)
 "Hh" = (
@@ -13515,7 +13515,7 @@
 "Hi" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/research/outpost)
 "Hj" = (
@@ -15460,13 +15460,13 @@
 /area/ai_monitored/storage/secure)
 "Lc" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/research/outpost)
 "Ld" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/research/outpost)
 "Le" = (
@@ -17818,7 +17818,7 @@
 "Qu" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/mining/space)
 "Qv" = (
@@ -17828,7 +17828,7 @@
 "Qw" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/mining/space)
 "Qx" = (
@@ -17966,7 +17966,7 @@
 /area/engine/miningoutpost)
 "QS" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/mining/space)
 "QT" = (
@@ -17976,7 +17976,7 @@
 "QU" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/mining/space)
 "QV" = (

@@ -47,6 +47,7 @@ const DataInputEntry = (props, context) => {
     "Ref": <DataInputRefEntry {...props} />,
     "Mob Reference": <DataInputRefEntry {...props} />,
     "Reference Picker": <DataInputRefEntry {...props} />,
+    "Bit Field": <DataInputBitFieldEntry {...props} />,
     // DATA_INPUT_TURF_BY_COORDS
     // DATA_INPUT_REFPICKER
     // DATA_INPUT_NEW_INSTANCE
@@ -72,13 +73,33 @@ const DataInputEntry = (props, context) => {
   );
 };
 
+export const DataInputBitFieldEntry = (props, context) => {
+  const { value, tooltip, name, type, list } = props;
+  const { act } = useBackend(context);
+  return (
+    <Section>
+      {Array.apply(null, { length: 24 }).map((item, buttonIndex) => (
+        <Button.Checkbox
+          minWidth={4}
+          checked={value & (1 <<buttonIndex)}
+          key={buttonIndex}
+          content={buttonIndex+1}
+          onClick={() => act('modify_value', {
+            name: name,
+            type: type,
+            value: value ^ (1 << buttonIndex),
+          })}
+        />
+      ))}
+    </Section>
+  );
+};
+
 const DataInputListEntry = (props, context) => {
   const { value, tooltip, name, type, list } = props;
   const { act } = useBackend(context);
   return (
-    <Section fill scrollable
-      height={15}
-    >
+    <Section fill scrollable height={15}>
       {list.map((item, buttonIndex) => (
         <Button fluid key={buttonIndex}
           selected={item === value}

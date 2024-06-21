@@ -4,11 +4,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	item_state = "gun"
 	m_amt = 2000
+	camera_recoil_sway_min = 5 // kinetics can be more shuddery than lasers
+	recoil_inaccuracy_max = 10 // +10 degrees of seperation at max recoil
 	var/obj/item/ammo/bullets/ammo = null
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
 	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/ammo_cats = null
+	var/ammo_cats = list()
 	/// Does this gun have a special icon state for having no ammo lefT?
 	var/has_empty_state = FALSE
 	/// Does this gun have a special icon state it should flick to when fired?
@@ -33,6 +35,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
 	var/sound_load_override = null
 
+	/// How many bullets get moved into this gun per action?
+	var/max_move_amount = -1
+	/// What's the fastest speed we can reload this? 2 deciseconds is the default spam limiter.
+	var/reload_cooldown = 2 DECI SECONDS
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
 
@@ -109,7 +115,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attackby(obj/item/ammo/bullets/b, mob/user)
 		if(istype(b, /obj/item/ammo/bullets))
-			if(ON_COOLDOWN(src, "reload_spam", 2 DECI SECONDS))
+			if(ON_COOLDOWN(src, "reload_spam", src.reload_cooldown))
 				return
 			switch (src.ammo.loadammo(b,src))
 				if(0)
@@ -145,6 +151,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 							user.visible_message(SPAN_ALERT("[user] reloads [src]."), SPAN_ALERT("You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name]."))
 					src.logme_temp(user, src, b)
 					return
+				if(AMMO_RELOAD_CAPPED)
+					if(!ON_COOLDOWN(src, "reload_single_spam", 3 SECONDS))
+						user.visible_message("<span class='alert'>[user] loads some ammo into [src].</span>", "<span class='alert'>You load [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
+					src.tooltip_rebuild = TRUE
+					src.logme_temp(user, src, b)
+
 		else
 			..()
 
@@ -326,7 +338,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/max_ammo_capacity = 1
 	var/default_magazine = null
 	var/default_projectile = null
-
+	var/recoil_strength = 6
 	New()
 		name = "[src.caliber_name] rifle barrel"
 		desc = "An interchangable barrel for the Efnysien survival rifle. This one is designed to fire [src.caliber_name]."
@@ -339,6 +351,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		max_ammo_capacity = 10
 		default_magazine = /obj/item/ammo/bullets/bullet_22
 		default_projectile = /datum/projectile/bullet/bullet_22
+		recoil_strength = 6
 
 
 	barrel_9mm
@@ -348,6 +361,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		max_ammo_capacity = 15
 		default_magazine = /obj/item/ammo/bullets/bullet_9mm
 		default_projectile = /datum/projectile/bullet/bullet_9mm
+		recoil_strength = 9
 
 	barrel_556
 		caliber_name = "5.56x45mm NATO"
@@ -356,6 +370,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		max_ammo_capacity = 20
 		default_magazine = /obj/item/ammo/bullets/assault_rifle
 		default_projectile = /datum/projectile/bullet/assault_rifle
+		recoil_strength = 12
 
 /obj/item/casing
 	name = "bullet casing"
@@ -363,7 +378,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
-	var/forensic_ID = null
 	burn_possible = FALSE
 
 	small
@@ -501,7 +515,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/failure_chance = 6
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/staples
-
+	icon_recoil_cap = 30
 	New()
 
 		ammo = new default_magazine
@@ -604,6 +618,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.ammo_cats = barrel.ammo_cats
 		src.max_ammo_capacity = barrel.max_ammo_capacity
 		src.default_magazine = barrel.default_magazine
+		src.recoil_strength = barrel.recoil_strength
 		set_current_projectile(new barrel.default_projectile)
 		src.projectiles = list(current_projectile)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
@@ -626,7 +641,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
 	fire_animation = TRUE
-
+	recoil_strength = 4
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
@@ -650,7 +666,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_22HP
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22, /obj/item/ammo/bullets/bullet_22HP)
 	ammobag_restock_cost = 1
-
+	recoil_strength = 3
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
@@ -673,6 +690,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 15 //15 degrees is a lot
 	can_dual_wield = TRUE //if you can figure it out, you can do it
 	fire_animation = TRUE
+	recoil_strength = 12
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD
@@ -683,7 +701,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
-		AddComponent(/datum/component/holdertargeting/fullauto, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
+		AddComponent(/datum/component/holdertargeting/fullauto/ramping, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
 	setupProperties()
@@ -714,6 +732,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 	ammobag_restock_cost = 3
+	recoil_strength = 10
 
 	New()
 		ammo = new default_magazine
@@ -742,6 +761,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/rifle_3006
 	fire_animation = TRUE
+	recoil_strength = 14
+	recoil_max = 14
+	recoil_inaccuracy_max = 20
 
 	New()
 		ammo = new default_magazine
@@ -767,6 +789,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
 	fire_animation = TRUE
+	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -789,7 +812,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
-
+	recoil_stacking_enabled = TRUE
+	recoil_strength = 6
+	icon_recoil_cap = 30
 	New()
 		if (prob(70))
 			icon_state = "glocktan"
@@ -805,7 +830,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			projectiles = list(current_projectile)
 		else
 			projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_NATO/auto)
-			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+			AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 	attack_self(mob/user as mob)
@@ -870,6 +895,319 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			projectiles = list(current_projectile)
 			UpdateIcon()
 
+/obj/item/gun/kinetic/uzi
+	desc = "A stamped metal PDW."
+	name = "\improper MOR-30"
+	icon_state = "uzi"
+	item_state = "uzi"
+	spread_angle = 8
+	shoot_delay = 5
+	has_empty_state = TRUE
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_SMG_9MM)
+	max_ammo_capacity = 30
+	auto_eject = TRUE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_mor
+	icon_recoil_cap = 15
+	get_desc(dist, mob/user)
+		if (user.get_gang() != null)
+			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."
+		else
+			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm Surplus rounds."
+
+	New()
+		ammo = new default_magazine
+
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
+		..()
+
+	attack_self(mob/user)
+		..()	//burst shot has a slight spread.
+		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_surplus/auto))
+			spread_angle = 10
+			shoot_delay = 4
+		else
+			spread_angle = 8
+			shoot_delay = 5
+
+	//warcrimes brought to you by bullets telling guns how to shoot!
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/previous_ammo = ammo
+		var/mode_was_auto = current_projectile.fullauto_valid
+		..()
+		if(previous_ammo.type != ammo.type)  // we switched ammo types
+			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
+				if(mode_was_auto)
+					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+					projectiles = list(new/datum/projectile/bullet/nine_mm_surplus/burst, current_projectile)
+				else
+					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
+			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
+				if(mode_was_auto)
+					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
+					projectiles = list(new/datum/projectile/bullet/bullet_9mm/smg, current_projectile)
+				else
+					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/bullet_9mm/smg/auto)
+
+/obj/item/gun/kinetic/greasegun
+	name = "\improper Grease Gun"
+	desc = "A stamped metal SMG, cheaply produced years ago, and found in the weirdest places today."
+	icon_state = "grease"
+	item_state = "grease"
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	spread_angle = 14
+	shoot_delay = 5
+	has_empty_state = TRUE
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_SMG_9MM)
+	max_ammo_capacity = 30
+	auto_eject = TRUE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_grease
+	var/grease = 0 //guh
+	icon_recoil_cap = 20
+
+	New()
+		if (prob(33))
+			name = "\improper [pick ("Greafe","Grief","Greef","Griff","Greece")] Gun"
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+		var/datum/callback/delay_callback = new(src, PROC_REF(set_auto_delay))
+		AddComponent(/datum/component/holdertargeting/fullauto/callback, 1.2, delay_callback)
+		..()
+
+	get_desc(dist, mob/user)
+		if (grease == 0)
+			. += "It's all seized up and could do with maintenance."
+		else if (grease < 0)
+			. += "It's, er, all sticky and covered glue. WHY is it covered with glue???"
+		else
+			. += "It's greasy, alright..."
+
+	attack_self(mob/user as mob)
+		if(ishuman(user))
+			if(two_handed)
+				setTwoHanded(0) //Go 1-handed.
+				src.spread_angle = initial(src.spread_angle)
+				icon_recoil_cap = initial(src.icon_recoil_cap)
+				recoil_max = initial(src.recoil_max)
+				icon_state = "grease"
+			else
+				if(!setTwoHanded(1)) //Go 2-handed.
+					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
+				else
+					icon_recoil_cap = 10
+					icon_state = "greaseunfolded"
+					recoil_max = 100 // double how easy it is to control
+					src.spread_angle = 6
+		..()
+
+	reagent_act(reagent_id,volume)
+		if ((reagent_id in list("oil","lube", "superlube", "grease", "badgrease", "fishoil")) && volume >= 5)
+			grease = 15
+		if (reagent_id == "spaceglue" && volume >= 5)
+			grease = -30
+
+	//copy pastes brought to you by bullets telling guns how to shoot!
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/previous_ammo = ammo
+		..()
+		if(previous_ammo.type != ammo.type)  // we switched ammo types
+			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
+				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
+				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
+
+	proc/set_auto_delay(delay)
+		. = delay * 10
+		if (grease > 0)
+			. = 18 - (grease)
+			grease--
+		else if (grease < 0)
+			. = 30
+			grease++
+		else
+			. = clamp(. + rand(-8,8),10,26)
+		. /= 10
+
+/obj/item/gun/kinetic/draco
+	name = "\improper Draco Pistol"
+	desc = "A full size 7.62x39mm 'Pistol'. With no stock. You should shoot this in bursts."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "draco"
+	item_state = "draco"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_RIFLE
+	contraband = 8
+	ammo_cats = list(AMMO_AUTO_762)
+	spread_angle = 3
+	shoot_delay = 3
+	max_ammo_capacity = 30
+	auto_eject = 1
+	can_dual_wield = 0
+	two_handed = 1
+	gildable = 1
+	default_magazine = /obj/item/ammo/bullets/akm/draco
+	fire_animation = TRUE
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	w_class = W_CLASS_BULKY
+	recoil_strength = 7
+	recoil_stacking_enabled = TRUE
+	recoil_stacking_max_stacks = 4 //make this thing go HARD if you hold it down
+	recoil_stacking_amount = 3
+	recoil_inaccuracy_max = 25
+	recoil_max = 100 // can eat more recoil for worse effects
+	icon_recoil_cap = 30
+
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/draco)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.6)
+		..()
+/obj/item/gun/kinetic/webley
+	name = "Webley 'Holdout' Snubnose"
+	desc = "A cut down Webley break-action revolver. There's some extra weight in the grip for spinning action."
+	icon_state = "webleysnub"
+	force = MELEE_DMG_REVOLVER
+	ammo_cats = list(AMMO_WEBLEY)
+	w_class = W_CLASS_SMALL
+	fire_animation = TRUE
+	has_fire_anim_state = TRUE
+	fire_anim_state = "webleysnubfire"
+	max_ammo_capacity = 6
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = FALSE
+	add_residue = TRUE
+	gildable = TRUE
+	spread_angle = 2
+	default_magazine = /obj/item/ammo/bullets/webley
+	safe_spin = TRUE // so you dont shoot yourself drawing the gun
+
+	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a brief, large firerate increase, at the cost of accuracy."})
+
+	var/broke_open = FALSE
+	var/locked_shut = FALSE // stop folk doing weird stuff while fanning the hammer
+	var/shells_to_eject = 0
+
+	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
+		ammo = new/obj/item/ammo/bullets/webley
+		set_current_projectile(new/datum/projectile/bullet/webley)
+		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "webleysnub" + (!src.broke_open ? "" : "open" )
+
+	canshoot(mob/user)
+		if (!src.broke_open)
+			return TRUE
+		..()
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (src.broke_open)
+			boutput(user, SPAN_ALERT("You need to close [src] before you can fire!"))
+		if (!src.broke_open && src.ammo.amount_left > 0)
+			src.shells_to_eject++
+		..()
+
+	attack_self(mob/user)
+		src.toggle_action(user)
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && !src.broke_open)
+			boutput(user, SPAN_ALERT("You can't load rounds into the cylinder! You'll have to open [src] first!"))
+			return
+		..()
+
+	attack_hand(mob/user)
+		if (!src.broke_open && user.find_in_hand(src))
+			boutput(user, SPAN_ALERT("[src] is still closed, you need to open the action to take the rounds out!"))
+			return
+		..()
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
+		..()
+	attack_hand(mob/user)
+		if (ishuman(loc))
+			var/mob/living/carbon/human/H = src.loc
+			if ( (H.l_store == src || H.r_store == src) && H.l_hand == null && H.r_hand == null)
+				fan_the_hammer(user)
+		..()
+
+	proc/fan_the_hammer(mob/user)
+		if (!ON_COOLDOWN(src, "twirl_spam", 2 SECONDS))
+			src.on_spin_emote(user)
+			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+			locked_shut = TRUE
+			shoot_delay = 1
+			spread_angle = 15
+			user.show_message(SPAN_ALERT("[user] whips \the [src] out of [his_or_her(user)] pocket, seating their free hand over the hammer!"), 1)
+			src.current_projectile.power *= 0.7 //a full pelting puts you INCHES from death
+			SPAWN (2 SECONDS)
+				locked_shut = FALSE
+				spread_angle = 2
+				shoot_delay = 4
+				src.current_projectile.generate_stats() //regenerate power
+
+	proc/toggle_action(mob/user)
+		if (locked_shut)
+			return
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+
+
+
+/obj/item/gun/kinetic/american180
+	name = "\improper American-180"
+	desc = "A .22 machine gun, loaded with a huge triple-stack pancake mag. It's a shame you can't see the sights through it."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "american180"
+	item_state = "a180"
+	spread_angle = 10
+	shoot_delay = 1
+	has_empty_state = FALSE // non detachable mag, for now...
+	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_RIFLE
+	ammo_cats = 0
+	max_ammo_capacity = 177
+	two_handed = TRUE
+	auto_eject = TRUE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/bullet_22/american_180
+
+	eject_magazine(mob/user)
+		user.show_message(SPAN_ALERT("They tell stories of how BORING these magazines are to load! Let's not do that."))
+		return
+
+	New()
+		ammo = new default_magazine
+
+		set_current_projectile(new/datum/projectile/bullet/bullet_22/a180)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
+		..()
+
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"
 	desc = "An time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
@@ -912,9 +1250,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 2
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/veritate)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/veritate/burst)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	attack_self(mob/user as mob)
@@ -926,6 +1269,44 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 0
 			shoot_delay = 2 DECI SECONDS
 
+/obj/item/gun/kinetic/lopoint
+	desc = "Cheap and disposable, having a Lo-Point is the first step towards a life of crime. Just remember to throw it away when you're done."
+	name = "Lo-Point"
+	icon_state = "hipoint"
+	item_state = "hipoint"
+	shoot_delay = 4
+	spread_angle = 3
+	throwforce = 14 // literally throw it away
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_9MM)
+	fire_animation = TRUE
+	max_ammo_capacity = 10
+	auto_eject = TRUE
+	has_empty_state = TRUE
+	gildable = FALSE
+	default_magazine = /obj/item/ammo/bullets/bullet_9mm/lopoint
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
+		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(selfdestruct))
+		..()
+
+	// teehee. get it? 'throw' it away?
+	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
+		if(!isliving(target) || src.ammo?.amount_left > 0)
+			return
+		var/mob/living/H = target
+		H.changeStatus("knockdown", 3 SECONDS)
+		H.force_laydown_standup()
+		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
+		var/obj/decal/cleanable/gib = make_cleanable( /obj/decal/cleanable/machine_debris,src.loc)
+		gib.streak_cleanable()
+		qdel(src)
+
+
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
@@ -934,7 +1315,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
-	ammo_cats = list(AMMO_SMG_9MM)
+	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
 	auto_eject = 0
 
@@ -1021,7 +1402,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	ammobag_magazines = list(/obj/item/ammo/bullets/a357, /obj/item/ammo/bullets/a357/AP)
 	ammobag_restock_cost = 2
-
+	recoil_strength = 12
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
@@ -1040,6 +1422,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/a38/stun
 	fire_animation = TRUE
+	recoil_strength = 10
 
 	New()
 		ammo = new default_magazine
@@ -1062,6 +1445,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
+	add_residue = FALSE
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1160,6 +1545,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 6
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
+	add_residue = FALSE
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1183,6 +1570,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 12
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
+	add_residue = FALSE
+	recoil_strength = 3
 
 	New()
 		ammo = new default_magazine
@@ -1206,6 +1595,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/blow_darts/single
+	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -1225,6 +1615,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
 	HELP_MESSAGE_OVERRIDE(null)
+	recoil_strength = 6
 
 	get_help_message(dist, mob/user)
 		var/keybind = "Default CTRL + W"
@@ -1269,6 +1660,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 1
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/c_45
+	recoil_strength = 11
 
 	detective
 		name = "\improper Peacemaker"
@@ -1299,6 +1691,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_FLINTLOCK)
 	max_ammo_capacity = 1
 	default_magazine = /obj/item/ammo/bullets/flintlock/single
+	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -1332,6 +1725,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/a12
 	ammobag_magazines = list(/obj/item/ammo/bullets/a12, /obj/item/ammo/bullets/aex)
 	ammobag_restock_cost = 2
+	recoil_strength = 10
+	recoil_max = 60
 
 	New()
 		if(prob(10))
@@ -1366,13 +1761,116 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			ammo = new/obj/item/ammo/bullets/a12/weak
 			set_current_projectile(new/datum/projectile/bullet/a12/weak)
 
-/obj/item/gun/kinetic/riotgun
+
+/obj/item/gun/kinetic/pumpweapon
+	/// Whether this shotgun needs an action to pump in each direction
+	var/is_heavy = FALSE
+	/// Whether this shotgun's action is open (pump is pulled backwards)
+	var/pump_back = FALSE
+	/// Whether this shotgun is ready to fire (if the slide is not racked)
+	var/hammer_ready = FALSE
+	var/base_icon_state = ""
+	/// The path to the sound played when the shotgun is pumped, or if is_heavy, pulled back
+	var/pumpsound = 'sound/weapons/shotgunpump.ogg'
+	/// The path to the sound played when the shotgun is pushed forwards, if is_heavy
+	var/pushsound = FALSE
+	/// The delay between racking this gun
+	var/rack_delay = 0
+
+
+	New()
+		if (!is_heavy)
+			pump_back = TRUE
+			hammer_ready = TRUE
+		..()
+
+	canshoot(mob/user)
+		return(..() && hammer_ready && !src.pump_back)
+
+	attack_self(mob/user as mob)
+		..()
+		src.rack(user)
+
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if(ammo.amount_left > 0 && (pump_back || !hammer_ready))
+			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+		..()
+		src.hammer_ready = FALSE
+		if (!is_heavy)
+			src.pump_back = TRUE //lighter guns get this half-done for you
+		else
+			ON_COOLDOWN(src,"rack_delay",rack_delay)
+		src.UpdateIcon()
+
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if(ammo.amount_left > 0 && (pump_back || !hammer_ready))
+			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+			return
+		..()
+		src.hammer_ready = FALSE
+		if (!is_heavy)
+			src.pump_back = TRUE //lighter guns get this half-done for you
+		else
+			ON_COOLDOWN(src,"rack_delay",rack_delay)
+		src.UpdateIcon()
+
+
+	update_icon()
+		. = ..()
+		src.icon_state = base_icon_state + (gilded ? "-golden" : "") + ((!pump_back || !has_empty_state) ? "" : "-empty" )
+
+
+
+	proc/rack(var/atom/movable/user)
+		var/mob/mob_user = null
+		if(ismob(user))
+			mob_user = user
+		if (ON_COOLDOWN(src,"rack_delay",rack_delay))
+			return
+		if (!src.hammer_ready || src.pump_back) //Are we racked?
+			if (src.ammo.amount_left == 0)
+				if (!pump_back)
+					playsound(user.loc, pumpsound, 50, 1)
+					ejectcasings()
+				src.pump_back = TRUE
+				src.hammer_ready = TRUE
+				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
+				UpdateIcon()
+			else
+				if (is_heavy)
+					if (pump_back)
+						src.pump_back = FALSE
+						src.hammer_ready = TRUE
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden" : ""]" // having UpdateIcon() here breaks
+						playsound(user.loc, pushsound, 50, 1)
+					else
+						ejectcasings()
+						src.pump_back = TRUE
+						src.hammer_ready = TRUE
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
+						playsound(user.loc, pumpsound, 50, 1)
+				else
+					src.hammer_ready = TRUE
+					src.pump_back = FALSE
+					playsound(user.loc, pumpsound, 50, 1)
+
+					ejectcasings()
+					if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
+						animate(icon_state = base_icon_state+"[gilded ? "-golden" : ""]")
+					else
+						UpdateIcon() // Slide already open? Just close the slide
+				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
+
+/obj/item/gun/kinetic/pumpweapon/riotgun
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
 	wear_state = "shotty" // prevent empty state from breaking the worn image
+	base_icon_state = "shotty"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
@@ -1380,14 +1878,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
-	auto_eject = 0
-	can_dual_wield = 0
-	two_handed = 1
-	has_empty_state = 1
-	gildable = 1
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/abg
-	var/racked_slide = FALSE
-
+	recoil_strength = 14
+	recoil_max = 60
 
 
 	New()
@@ -1395,57 +1893,44 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
 
-	update_icon()
-		. = ..()
-		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+/obj/item/gun/kinetic/pumpweapon/ks23
+	name = "Kuvalda Carbine"
+	desc = "A *huge* 4-gauge shotgun built with a repurposed 23mm cannon barrel. It's unlikely there's any moral justification for using this against humans."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "ks23"
+	item_state = "ks23"
+	wear_state = "ks23" // prevent empty state from breaking the worn image
+	base_icon_state = "ks23"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
+	force = MELEE_DMG_RIFLE
+	contraband = 6
+	is_heavy = TRUE
+	ammo_cats = list(AMMO_KUVALDA)
+	max_ammo_capacity = 4
+	reload_cooldown = 12 DECI SECONDS
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	gildable = TRUE
+	recoil_reset = 15 DECI SECONDS
+	default_magazine = /obj/item/ammo/bullets/kuvalda
+	recoil_strength = 18
+	recoil_max = 40
+	max_move_amount = 1
+	rack_delay = 6
+	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
+	pushsound = 'sound/weapons/kuvalda_push2.ogg'
+	empty
+		default_magazine = /obj/item/ammo/bullets/kuvalda/empty
 
-	canshoot(mob/user)
-		return(..() && src.racked_slide)
-
-	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel)
 		..()
-		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
-		src.UpdateIcon()
 
-	shoot_point_blank(atom/target, mob/user, second_shot)
-		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
-			return
-		..()
-		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
-		src.UpdateIcon()
-
-	attack_self(mob/user as mob)
-		..()
-		src.rack(user)
-
-	proc/rack(var/atom/movable/user)
-		var/mob/mob_user = null
-		if(ismob(user))
-			mob_user = user
-		if (!src.racked_slide) //Are we racked?
-			if (src.ammo.amount_left == 0)
-				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-				UpdateIcon()
-			else
-				src.racked_slide = TRUE
-				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
-					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
-					animate(src, time = 0.2 SECONDS)
-					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
-				else
-					UpdateIcon() // Slide already open? Just close the slide
-				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
-				playsound(user.loc, 'sound/weapons/shotgunpump.ogg', 50, 1)
-				src.casings_to_eject = 0
-				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
-					var/turf/T = get_turf(src)
-					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-						new src.current_projectile.casing(T, src.forensic_ID)
 
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
@@ -1468,11 +1953,76 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
+	recoil_strength = 10
+	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new /datum/projectile/special/spreader/buckshot_burst/scrap)
 		..()
+
+/obj/item/gun/kinetic/striker
+	name = "\improper Striker-7"
+	desc = "A terrifying looking drum shotgun, legally declared as a 'destructive device'."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "striker12"
+	item_state = "striker"
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = EQUIPPED_WHILE_HELD
+	force = MELEE_DMG_RIFLE
+	contraband = 7
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	max_ammo_capacity = 7
+	max_move_amount = 1
+	reload_cooldown = 8 DECI SECONDS
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = FALSE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/a12/bird/seven
+
+	var/is_loading = FALSE //are we reloading?
+
+	shoot(var/atom/target, var/atom/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
+		if (src.is_loading)
+			return
+		if (casings_to_eject > 0) //bully gun nerds 2day (striker doesnt auto-	eject your first shell)
+			auto_eject = TRUE
+		else
+			auto_eject = FALSE
+		..()
+
+
+	attackby(obj/item/b, mob/user)
+		if (istype(b, /obj/item/ammo/bullets) && !src.is_loading)
+			if (!ON_COOLDOWN(src, "reload_spam", src.reload_cooldown))
+				boutput(user, "<span class='alert'>It's too [pick("fiddly","frustrating","awkward")] to load \the [src] like this! You'll need to lower it first.</span>")
+			return
+		..()
+
+	canshoot(mob/user)
+		return(..() && !src.is_loading)
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/bird12)
+		..()
+
+	attack_self(mob/user as mob)
+		if (is_loading)
+			if (setTwoHanded(TRUE))
+				is_loading = FALSE
+				src.transform = src.transform.Turn(-45)
+				boutput(user, "<span class='alert'>You raise the striker, ready to shoot!</span>")
+			else
+				boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+		else
+			boutput(user, "<span class='alert'>You lower the [src] for reloading.</span>")
+			setTwoHanded(FALSE)
+			is_loading = TRUE
+			src.transform = src.transform.Turn(45)
 
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."
@@ -1485,7 +2035,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
-
+	recoil_strength = 10
+	recoil_max = 20
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flare)
@@ -1511,7 +2063,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-
+	recoil_strength = 14
+	recoil_max = 14
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/a12)
@@ -1566,10 +2119,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	mouse_drop(atom/over_object, src_location, over_location, params)
-		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			attack_hand(usr)
+			src.Attackhand(usr)
 			return
 
 	attackby(obj/item/b, mob/user)
@@ -1605,6 +2158,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = TRUE
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/flintlock/rifle/single
+	recoil_strength = 18
 
 	New()
 		..()
@@ -1627,6 +2181,40 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
 
+/obj/item/gun/kinetic/four_bore_albatross
+	name = "\improper Albatross four-bore rifle"
+	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Intended for suppression or elimination of monstrous targets."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "four_bore"
+	item_state = "four_bore"
+	w_class = W_CLASS_BULKY
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	slowdown = 10
+	slowdown_time = 8
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	contraband = 7
+	ammo_cats = list(AMMO_FOUR_BORE)
+	spread_angle = 2
+	shoot_delay = 0.8 SECONDS
+	max_ammo_capacity = 2
+	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
+	fire_animation = FALSE
+	recoil_strength = 20
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/four_bore_stunners)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 512, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		..()
+
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 0.6)
+
 //1.57
 /obj/item/gun/kinetic/riot40mm
 	desc = "A 40mm riot control gun. It can accept standard 40mm rounds and hand-thrown grenades."
@@ -1640,6 +2228,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
 	fire_animation = TRUE
+	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -1690,6 +2279,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/pod_seeking_missile
 	var/collapsed
+	recoil_strength = 13
 
 	New()
 		ammo = new default_magazine
@@ -1806,6 +2396,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/rpg)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 4
+	recoil_strength = 13
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1858,6 +2449,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/mrl)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 6
+	recoil_strength = 12
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1896,6 +2488,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/antisingularity
+	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -1918,6 +2511,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	two_handed = TRUE
 	default_magazine = /obj/item/ammo/bullets/flintlock/mortar/single
+	recoil_strength = 14
 
 	New()
 		..()
@@ -1978,6 +2572,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/meowitzer
+	recoil_strength = 17
 
 	New()
 		ammo = new default_magazine
@@ -2020,7 +2615,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm)
 	ammobag_restock_cost = 1
-
+	recoil_strength = 8
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
@@ -2041,6 +2637,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_PISTOL_22)
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22/smartgun)
+	recoil_enabled = 0
 
 	New()
 		..()
@@ -2069,6 +2666,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
+	recoil_strength = 8
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2085,11 +2683,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(two_handed)
 				setTwoHanded(0) //Go 1-handed.
 				src.spread_angle = initial(src.spread_angle)
+				icon_recoil_cap = initial(src.icon_recoil_cap)
+				recoil_max = initial(src.recoil_max)
+				recoil_strength = initial(src.recoil_strength)
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
 					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
+					icon_recoil_cap = 10
+					recoil_max = 100
 					src.spread_angle = 4
+					recoil_strength = 5
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -2116,7 +2720,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	ammobag_magazines = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol)
 	ammobag_restock_cost = 2
-
+	recoil_strength = 7
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/pistol)
@@ -2138,11 +2743,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
 	fire_animation = TRUE
 	has_empty_state = TRUE
+	recoil_strength = 10
+	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/)
 		..()
+
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -2166,6 +2774,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	can_dual_wield = 0
 	spread_angle = 0
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
+	recoil_strength = 9 // two handed guns can probably take lower recoil
+	recoil_stacking_enabled = TRUE
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2209,6 +2819,72 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 
+// assault
+/obj/item/gun/kinetic/m16
+	name = "\improper M16"
+	desc = "This gun's seen a lot of conflict! And you're probably going to make it see more. Uses 5.56 rounds."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "m16"
+	item_state = "m16"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD
+	force = MELEE_DMG_RIFLE
+	contraband = 8
+	ammo_cats = list(AMMO_AUTO_556)
+	max_ammo_capacity = 20
+	auto_eject = TRUE
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	spread_angle = 0
+	fire_animation = TRUE
+	has_empty_state = TRUE
+	default_magazine = /obj/item/ammo/bullets/assault_rifle/remington
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/assault_rifle/remington)
+		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst/remington)
+		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
+		var/obj/previous_ammo = ammo
+		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
+		..()
+		if(previous_ammo.type != ammo.type)  // we switched ammo types
+			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
+				if(mode_was_burst) // we were in burst shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
+					projectiles = list(new/datum/projectile/bullet/assault_rifle/armor_piercing, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/armor_piercing)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
+			else if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/remington))
+				if(mode_was_burst) // we were in burst shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/remington)
+					projectiles = list(new/datum/projectile/bullet/assault_rifle/remington, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/remington)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/remington)
+			else // we switched from armor penetrating ammo to normal
+				if(mode_was_burst) // we were in burst shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst)
+					projectiles = list(new/datum/projectile/bullet/assault_rifle, current_projectile)
+				else // we were in single shot mode
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
+
+	attack_self(mob/user)
+		..()	//burst shot has a slight spread.
+		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))
+			spread_angle = 7.5
+			shoot_delay = 4 DECI SECONDS
+		else
+			spread_angle = 0
+			shoot_delay = 3 DECI SECONDS
+
+
+
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
 	name = "\improper Antares light machine gun"
@@ -2221,24 +2897,41 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 100
 	auto_eject = 0
+	shoot_delay = 7
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
-	spread_angle = 8
+	spread_angle = 6
 	can_dual_wield = 0
 
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
 	ammobag_magazines = list(/obj/item/ammo/bullets/lmg)
 	ammobag_restock_cost = 3
 
+	camera_recoil_multiplier = 0.65 // this thing packs possibly excessive punch
+	camera_recoil_sway_max = 10 // lower the wobblies when shooting huge volumes of lead
+
+	recoil_strength = 5
+	recoil_stacking_enabled = TRUE
+	recoil_stacking_safe_stacks = 8
+	recoil_stacking_max_stacks = 8
+	recoil_stacking_amount = 0.5
+	recoil_max = 100 // eat more recoil
+
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/lmg)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS, 1.5 DECI SECONDS, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	setupProperties()
@@ -2259,6 +2952,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = 1
 	fire_animation = TRUE
 
+	recoil_strength = 20
+	recoil_max = 25 //seriously how are you going to fire this more than once
+
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
@@ -2267,6 +2963,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
+	contraband = 8
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -2277,8 +2974,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/cannon)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	setupProperties()
@@ -2304,6 +3006,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
+	recoil_strength = 0 // saving the discord from this joke
+
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -2313,8 +3017,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 5
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/howitzer)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	setupProperties()
@@ -2343,6 +3052,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 3
 	sound_load_override = 'sound/weapons/gunload_rigil.ogg'
+	recoil_strength = 12
+	recoil_max = 40
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2394,6 +3105,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown_time = 5
 
 	can_dual_wield = 0
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 
@@ -2401,7 +3113,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/rifle_762_NATO
 	ammobag_magazines = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	ammobag_restock_cost = 3
-
+	recoil_strength = 15
+	recoil_inaccuracy_max = 0 // just to be nice :)
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -2470,17 +3183,24 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	add_residue = TRUE
 	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-
+	recoil_strength = 10
+	recoil_max = 60
+	default_magazine = /obj/item/ammo/bullets/abg/two
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if (prob(25))
 			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
-
-		ammo = new/obj/item/ammo/bullets/abg/two
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	birdshot
+		default_magazine = /obj/item/ammo/bullets/a12/bird/two
+		New()
+			..()
+			set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 
 	update_icon()
 		. = ..()

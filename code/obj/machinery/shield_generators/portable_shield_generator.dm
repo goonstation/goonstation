@@ -457,17 +457,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/obj/machinery/door/linked_door = null
-	var/update_tiles
 
 	flags = 0
 
-	New(Loc, var/obj/machinery/shieldgenerator/deployer, var/update_tiles)
+	New(Loc, var/obj/machinery/shieldgenerator/deployer)
 		..()
-		src.update_tiles = update_tiles
 		src.deployer = deployer
-
-		if(update_tiles)
-			update_nearby_tiles()
+		update_nearby_tiles()
 
 		if((deployer != null && deployer.power_level == 4) || src.powerlevel == 4)
 			src.name = "Liquid Forcefield"
@@ -508,8 +504,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	disposing()
 		if(linked_door)
 			linked_door.linked_forcefield = null
-		if(update_tiles)
-			update_nearby_tiles()
+		update_nearby_tiles()
 		deployer = 0
 		..()
 

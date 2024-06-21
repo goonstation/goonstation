@@ -50,7 +50,7 @@ TYPEINFO(/obj/item/card/emag)
 //delicious fake emag
 	attack_hand(mob/user)
 		boutput(user, SPAN_COMBAT("Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!"))
-		user.changeStatus("paralysis", 10 SECONDS)
+		user.changeStatus("unconscious", 10 SECONDS)
 		SPAWN(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
 			user.set_loc(C)
@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/card/emag)
 
 /obj/item/card/id/New()
 	..()
-	src.pin = rand(1000,9999)
+	src.pin = rand(PIN_MIN, PIN_MAX)
 	START_TRACKING
 
 /obj/item/card/id/disposing()
@@ -165,6 +165,15 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/nt_specialist
 	icon_state = "polaris"
 	keep_icon = TRUE
+
+/obj/item/card/id/pirate
+	access = list(access_maint_tunnels, access_pirate)
+	assignment = "Space Pirate"
+
+	first_mate
+		assignment = "Space Pirate First Mate"
+	captain
+		assignment = "Space Pirate Captain"
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -272,6 +281,8 @@ TYPEINFO(/obj/item/card/emag)
 		all_accesses -= new_access
 		if (istype(src, /obj/item/card/id/syndicate)) // Nuke ops unable to exit their station (Convair880).
 			src.access += access_syndicate_shuttle
+		if (istype(src, /obj/item/card/id/syndicate/commander)) // Commander unable to play their cool tunes
+			src.access += access_syndicate_commander
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
 	user?.show_text("You run [E] over [src], scrambling its access.", "red")
 	logTheThing(LOG_STATION, user || usr, "emagged [src], scrambling its access and granting random access at [log_loc(user || usr)].")
@@ -295,7 +306,7 @@ TYPEINFO(/obj/item/card/emag)
 	if(!src.registered)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","No band")
+		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","nanotrasen","syndicate","No band")
 		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
 		src.pronouns = pronouns
 		switch (color)
@@ -315,6 +326,10 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_res"
 			if ("yellow")
 				src.icon_state = "id_eng"
+			if ("nanotrasen")
+				src.icon_state = "polaris"
+			if ("syndicate")
+				src.icon_state = "id_syndie"
 			else
 				return // Abort process.
 		src.registered = reg
@@ -344,7 +359,7 @@ TYPEINFO(/obj/item/card/emag)
 	input = strip_html(input, MAX_MESSAGE_LEN, 1)
 	if (strip_bad_stuff_only)
 		return input
-	var/list/namecheck = splittext(trim(input), " ")
+	var/list/namecheck = splittext(trimtext(input), " ")
 	for(var/i = 1, i <= namecheck.len, i++)
 		namecheck[i] = capitalize(namecheck[i])
 	input = jointext(namecheck, " ")
@@ -407,7 +422,7 @@ TYPEINFO(/obj/item/card/emag)
 			else
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
-				queryGauntletMatches(1, user.client.key)
+				queryGauntletMatches(user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)

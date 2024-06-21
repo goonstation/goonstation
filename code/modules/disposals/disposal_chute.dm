@@ -41,6 +41,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		if((src.pixel_x == 0) && (src.dir == WEST))
+			src.pixel_x += 5
+		if((src.pixel_x == 0) && (src.dir == EAST))
+			src.pixel_x += -5
+
 		START_TRACKING
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN(0.5 SECONDS)
@@ -231,6 +236,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (GET_COOLDOWN(MO, "PipeEject"))
 			return
 
+		if (isliving(MO))
+			var/mob/living/mobtarget = MO
+			if  (mobtarget.buckled || isAI(mobtarget))
+				return
+
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					return
+
 		if(isitem(MO))
 			var/obj/item/I = MO
 			I.set_loc(src)
@@ -269,8 +284,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// leave the disposal
 	proc/go_out(mob/user)
 		user.set_loc(src.loc)
-		if (!user.hasStatus("weakened"))
-			user.changeStatus("weakened", 1 SECOND)
+		if (!user.hasStatus("knockdown"))
+			user.changeStatus("knockdown", 1 SECOND)
 			user.force_laydown_standup()
 		update()
 		return
@@ -594,7 +609,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		..()
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	expel(var/obj/disposalholder/H)
 		..(H)

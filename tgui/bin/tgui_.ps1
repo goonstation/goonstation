@@ -101,8 +101,26 @@ function task-clean {
   Remove-Quiet -Force "*.map"
   Remove-Quiet -Force "*.hot-update.*"
   Set-Location $basedir
+  Write-Output "tgui: All artifacts cleaned"
 }
 
+## Validates current build against the build stored in git
+function task-validate-build {
+  $diff = git diff --text ../browserassets/tgui/*
+  if ($diff) {
+    Write-Output "Error: our build differs from the build committed into git."
+    Write-Output "Please rebuild tgui."
+    exit 1
+  }
+  Write-Output "tgui: build is ok"
+}
+
+## Installs merge drivers and git hooks
+function task-install-git-hooks () {
+    Set-Location $global:basedir
+    git config --replace-all merge.tgui-merge-bundle.driver "tgui/bin/tgui --merge=bundle %P %O %A %B %L"
+    Write-Output "tgui: Merge drivers have been successfully installed!"
+}
 
 ## Main
 ## --------------------------------------------------------
@@ -110,6 +128,11 @@ function task-clean {
 if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--clean") {
     task-clean
+    exit 0
+  }
+
+  if ($Args[0] -eq "--install-git-hooks") {
+    task-install-git-hooks
     exit 0
   }
 

@@ -10,6 +10,7 @@ var/datum/score_tracker/score_tracker
 	// var/score_crew_evacuation_rate = 0 save this for later to keep categories balanced
 	var/score_crew_survival_rate = 0
 	var/score_enemy_failure_rate = 0
+	var/score_stirstir_alive = FALSE
 	var/final_score_sec = 0
 	// ENGINEERING DEPARTMENT
 	var/power_generated = 0
@@ -24,10 +25,11 @@ var/datum/score_tracker/score_tracker
 	// CIVILIAN DEPARTMENT
 	var/score_cleanliness = 0
 	var/score_expenses = 0
+	var/mail_opened = 0
+	var/mail_fraud = 0
 	var/final_score_civ = 0
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
-	var/tickets_text = null
 	var/mob/richest_escapee = null
 	var/richest_total = 0
 	var/mob/most_damaged_escapee = null
@@ -86,6 +88,14 @@ var/datum/score_tracker/score_tracker
 		score_enemy_failure_rate = clamp(score_enemy_failure_rate,0,100)
 
 		final_score_sec = (score_crew_survival_rate + score_enemy_failure_rate) * 0.5
+
+		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+			if(isalive(M))
+				score_stirstir_alive = TRUE
+
+		if(!score_stirstir_alive)
+			// YOU FUCKED UP
+			final_score_sec /= 2
 
 		// ENGINEERING DEPARTMENT SECTION
 		// also civ cleanliness counted here cos fuck calling a world loop more than once
@@ -168,6 +178,10 @@ var/datum/score_tracker/score_tracker
 
 		score_expenses = clamp(score_expenses,0,100)
 		score_cleanliness = clamp(score_cleanliness,0,100)
+
+		mail_opened = game_stats.GetStat("mail_opened")
+		mail_fraud = game_stats.GetStat("mail_fraud")
+
 		final_score_civ = (score_expenses + score_cleanliness) * 0.5
 
 		var/xp_winner = null
@@ -372,45 +386,7 @@ var/datum/score_tracker/score_tracker
 				. += paper.info ? paper.info : "<BR><BR>"
 		return jointext(., "")
 
-/mob/proc/showtickets()
-	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
+/mob/proc/show_inspector_report()
+	if(!length(score_tracker.inspector_report)) return
 
-	if (!score_tracker.tickets_text)
-		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
-
-		score_tracker.tickets_text = score_tracker.inspector_report
-
-		score_tracker.tickets_text += {"<B>Tickets</B><BR><HR>"}
-
-		if(data_core.tickets.len)
-			var/list/people_with_tickets = list()
-			for (var/datum/ticket/T in data_core.tickets)
-				people_with_tickets |= T.target
-
-			for(var/N in people_with_tickets)
-				score_tracker.tickets_text += "<b>[N]</b><br><br>"
-				for(var/datum/ticket/T in data_core.tickets)
-					if(T.target == N)
-						score_tracker.tickets_text += "[T.text]<br>"
-			score_tracker.tickets_text += "<br>"
-		else
-			score_tracker.tickets_text += "No tickets were issued!<br><br>"
-
-		score_tracker.tickets_text += {"<B>Fines</B><BR><HR>"}
-
-		if(data_core.fines.len)
-			var/list/people_with_fines = list()
-			for (var/datum/fine/F in data_core.fines)
-				people_with_fines |= F.target
-
-			for(var/N in people_with_fines)
-				score_tracker.tickets_text += "<b>[N]</b><br><br>"
-				for(var/datum/fine/F in data_core.fines)
-					if(F.target == N)
-						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
-		else
-			score_tracker.tickets_text += "No fines were issued!<br><br>"
-		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
-
-	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
-	return
+	src.Browse(score_tracker.inspector_report, "window=inspector;size=500x650")

@@ -80,7 +80,7 @@
 
 	attack_ai(mob/user as mob)
 		if(BOUNDS_DIST(src, user) == 0)
-			return attack_hand(user)
+			return src.Attackhand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")
 		return
@@ -125,7 +125,7 @@
 			if(!isdead(M) && M.loc != src) //No transferring to dead dudes.
 				transfer_targets.Add(M)
 
-			M.changeStatus("weakened", 3 SECONDS)
+			M.changeStatus("knockdown", 3 SECONDS)
 
 		if(!src.to_transfer.len || length(src.to_transfer) == 1)
 			src.visible_message("The [src] buzzes.")
@@ -194,9 +194,6 @@
 /obj/item/reagent_containers/glass/beaker/strange_reagent
 	name = "beaker-'Property of H. Jam'"
 	desc = "A beaker labled 'Property of H. Jam'.  Can hold up to 50 units."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beaker0"
-	item_state = "beaker"
 	initial_volume = 50
 
 	New()

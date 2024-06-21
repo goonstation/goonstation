@@ -4,7 +4,7 @@
 // using this solves the problem of having the APC in a wall yet also inside an area
 
 /obj/machinery/power/terminal
-	name = "terminal"
+	name = "power terminal"
 	icon_state = "term"
 	desc = "An underfloor wiring terminal for power equipment"
 	level = 1

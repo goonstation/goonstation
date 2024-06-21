@@ -1,26 +1,41 @@
+ABSTRACT_TYPE(/datum/zoldorfitem)
+/// Zoldorf Player Shop Item
 /datum/zoldorfitem
+	/// Name of the Zoldorf item
 	var/name = ""
-	var/path = ""
-	var/cost = ""
-	var/stock
-	var/list/raw_list
+	/// Object path the Zoldorf Item
+	var/path = null
+	/// Amount of stock (overridden by `infinite`)
+	var/stock = 0
+	/// Does this item have infinite stock (overrides `stock`)
+	var/infinite = FALSE
+	/// Base64 image for the UI
+	var/img = null
 
-	proc/on_bought(var/mob/living/carbon/human/user)
-		return 0
+	proc/on_bought(mob/living/carbon/human/user)
+		user.put_in_hand_or_drop(new src.path)
 
-	proc/soul_cost()
-		if(isnum(src.cost))
-			return 0
-		return text2num(copytext(cost, 1, length(cost)))
+	New()
+		. = ..()
+		if(src.img)
+			return
+		var/product = src.path
+		var/atom/dummy_atom = new product
+		sleep(0) // give it a chance to do icon changes
+		var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
+		qdel(dummy_atom)
+		src.img = icon2base64(dummy_icon)
 
-//database used to construct the zlist and zsecuritylist
+ABSTRACT_TYPE(/datum/zoldorfitem/soul)
+/// Zoldorf items that cost part of user's soul
+/datum/zoldorfitem/soul
+	var/soul_percentage = 0
 
-//soul items
-/datum/zoldorfitem/demonichealing
+/datum/zoldorfitem/soul/demonichealing
 	name = "Demonic Healing"
 	path = /obj/item/reagent_containers/food/snacks/plant/potato
-	cost = "25%"
-	stock = "i"
+	soul_percentage = 25
+	infinite = TRUE
 
 	on_bought(var/mob/living/carbon/human/user)
 		boutput(user, SPAN_ALERT("<b>Your wounds fade away, but at a cost...</b>"))
@@ -28,52 +43,56 @@
 		return 1
 
 /*
-/datum/zoldorfitem/zoldorfdeck
+/datum/zoldorfitem/soul/zoldorfdeck
 	name = "Normal Deck of Cards"
 	path = /obj/item/zoldorfdeck
-	cost = "75%"
+	soul_percentage = 75
 	stock = 1
 */
 
-/datum/zoldorfitem/weighteddice
+/datum/zoldorfitem/soul/weighteddice
 	name = "Weighted Dice"
 	path = /obj/item/dice/weighted
-	cost = "10%"
+	soul_percentage = 10
 	stock = 8
 
-/datum/zoldorfitem/demon
+/datum/zoldorfitem/soul/demon
 	name = "Summon Demon"
 	path = /obj/item/zspellscroll/demon
-	cost = "30%"
-	stock = "i"
+	soul_percentage = 30
+	infinite = TRUE
 
-/datum/zoldorfitem/hat
+/datum/zoldorfitem/soul/hat
 	name = "Magician's Hat Trick"
 	path = /obj/item/zspellscroll/hat
-	cost = "20%"
-	stock = "i"
+	soul_percentage = 20
+	infinite = TRUE
 
-/datum/zoldorfitem/presto
+/datum/zoldorfitem/soul/presto
 	name = "Presto!"
 	path = /obj/item/zspellscroll/presto
-	cost = "20%"
-	stock = "i"
+	soul_percentage = 20
+	infinite = TRUE
 
-//credit items
-/datum/zoldorfitem/soulsell101
+ABSTRACT_TYPE(/datum/zoldorfitem/credit)
+/// Zoldorf items that cost credits
+/datum/zoldorfitem/credit
+	var/price = 0
+
+/datum/zoldorfitem/credit/soulsell101
 	name = "Selling Your Soul"
 	path = /obj/item/paper/soulsell101
-	cost = 1
+	price = 1
 	stock = 10
 
-/datum/zoldorfitem/tarot
+/datum/zoldorfitem/credit/tarot
 	name = "Deck of Tarot Cards"
 	path = /obj/item/card_box/tarot
-	cost = 25
+	price = 25
 	stock = 5
 
-/datum/zoldorfitem/zolscroll
+/datum/zoldorfitem/credit/zolscroll
 	name = "Weird Burrito"
 	path = /obj/item/zolscroll
-	cost = 100
-	stock = "i"
+	price = 100
+	infinite = TRUE
