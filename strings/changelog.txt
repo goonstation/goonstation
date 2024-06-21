@@ -1,4 +1,9 @@
 
+(t)fri jun 21 24
+(u)Garash
+(p)19331
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Map Vote & Map Vote Results windows, do your civic duty today!
 (t)thu jun 20 24
 (u)LeahTheTech
 (+)Mining charges now correctly break low-hardness geodes.
