@@ -215,6 +215,37 @@
 		unique = 1
 		change = 2
 
+	wrestler
+		id = "wrestler"
+		name = "Wrestling!"
+		desc = "You're in the ring, break a leg!"
+		icon_state = "person"
+		unique = TRUE
+		effect_quality = STATUS_QUALITY_NEUTRAL
+
+		onUpdate(timePassed)
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+			else
+				return ..(timePassed)
+
+			if (M.health < 0)
+				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+				SPAWN(0)
+					playsound(M.loc, 'sound/misc/knockout.ogg', 50, FALSE)
+				M.make_dizzy(140)
+				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
+				M.setStatus("resting", INFINITE_STATUS)
+				SPAWN(10 SECONDS)
+					M.UpdateOverlays(null, "dizzy")
+
+				for (var/mob/living/carbon/human/human in view(5, M))
+					if (human.hasStatus("wrestler"))
+						human.delStatus("wrestler") // We want to remove all nearby people's wrestling status if one goes down
+
+				M.delStatus("wrestler")
+
 	staminaregen/darkness
 		id = "darkness_stam_regen"
 		name = "Dark vigor"

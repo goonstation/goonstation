@@ -33609,7 +33609,7 @@
 /area/station/science/lab)
 "mTi" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /obj/machinery/light/small/floor,
 /obj/decal/stage_edge{

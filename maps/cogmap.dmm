@@ -4899,7 +4899,7 @@
 /area/station/crew_quarters/fitness)
 "ats" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)

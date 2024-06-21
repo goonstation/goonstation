@@ -9418,7 +9418,7 @@
 /area/station/security/hos)
 "bka" = (
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)

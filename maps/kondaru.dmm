@@ -6039,7 +6039,7 @@
 /area/station/engine/elect)
 "awy" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /obj/decal/stage_edge,
 /turf/simulated/floor/wood,

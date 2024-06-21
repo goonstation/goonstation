@@ -30651,7 +30651,7 @@
 	icon_state = "4-8"
 	},
 /obj/table,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "cgp" = (

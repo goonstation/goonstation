@@ -36642,7 +36642,7 @@
 /area/station/hallway/primary/east)
 "jHD" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -51702,7 +51702,7 @@
 /area/station/hallway/primary/west)
 "nFx" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
