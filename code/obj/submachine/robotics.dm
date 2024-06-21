@@ -310,8 +310,8 @@
 	var/cost_removal = 400 //Eating a fitting
 	var/removing_toggled = FALSE
 	var/setting = "white"
-	var/dispensing_tube = /obj/item/light/tube/neutral
-	var/dispensing_bulb = /obj/item/light/bulb/neutral
+	var/dispensing_tube = /obj/item/light/tube
+	var/dispensing_bulb = /obj/item/light/bulb
 	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
 	var/dispensing_fitting = /obj/machinery/light
 	var/list/setting_context_actions
