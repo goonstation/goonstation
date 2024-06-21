@@ -1295,6 +1295,14 @@ TYPEINFO(/datum/trait/partyanimal)
 				else
 					explanation_text += "and [ingredient]<br/>"
 
+/datum/trait/deathwish
+	name = "Death wish"
+	desc = "You take double damage from all sources."
+	id = "deathwish"
+	category = "stats"
+	points = 2
+	icon_state = "deathwish"
+
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"

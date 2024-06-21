@@ -322,7 +322,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("deathwish"))
 		brute *= 2
 		burn *= 2
-		//tox *= 2
+		tox *= 2
 
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
