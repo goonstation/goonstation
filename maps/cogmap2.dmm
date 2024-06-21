@@ -8452,7 +8452,8 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/decal/boxingrope/enter{
+/obj/decal/boxingrope{
+	density = 0;
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
