@@ -1303,6 +1303,10 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 2
 	icon_state = "deathwish"
 
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Extreme Vulnerability"
+	disability_desc = "Skin and immune system similar in consistency to paper mache"
+
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"
