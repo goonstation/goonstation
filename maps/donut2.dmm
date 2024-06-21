@@ -7850,7 +7850,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "aOL" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -7961,7 +7961,7 @@
 /area/station/hangar/science)
 "aPt" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "aPx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8250,7 +8250,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "aQM" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/red/side{
@@ -12586,7 +12586,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "boz" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -18829,15 +18829,15 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "drp" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/decal/boxingrope/enter{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "drq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25523,7 +25523,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "hMP" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating,
@@ -26093,7 +26093,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "igI" = (
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment,
@@ -31201,7 +31201,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "lwG" = (
 /obj/stool/chair{
 	dir = 8
@@ -31957,7 +31957,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "lQp" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/yellow/side,
@@ -33203,7 +33203,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "mIq" = (
 /obj/item/bananapeel,
 /turf/simulated/floor/plating/airless,
@@ -33663,7 +33663,7 @@
 "mVd" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "mVq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39283,7 +39283,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "qjS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39696,7 +39696,7 @@
 /obj/decal/boxingrope,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "qxw" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -39914,7 +39914,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "qCm" = (
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/ce)
@@ -41177,7 +41177,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "rwt" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -49312,16 +49312,16 @@
 /area/station/crew_quarters/stockex)
 "wDk" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
 /obj/landmark/start/job/assistant,
 /obj/decal/tile_edge/line/black{
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/decal/boxingrope{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "wDG" = (
 /obj/stool/chair{
 	dir = 4

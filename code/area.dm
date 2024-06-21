@@ -2474,30 +2474,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "fitness"
 	sound_environment = 2
 
-/area/station/crew_quarters/wrestling_ring
-	name = "Wrestling Ring"
-	icon_state = "wrestling"
-	sound_environment = 2
-	Entered(atom/movable/A, atom/oldloc)
-		. = ..()
-		if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
-			var/mob/living/M = A
-			if(!M.client)
-				return
-			if (!M.hasStatus("wrestler"))
-				var/brute = round(M.get_brute_damage(), 0.01)
-				if (brute <= 100)
-					M.setStatus("wrestler", INFINITE_STATUS)
-
-	Exited(atom/movable/A, atom/oldloc)
-		. = ..()
-		if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
-			var/mob/living/M = A
-			if(!M.client)
-				return
-			if (M.hasStatus("wrestler"))
-				M.delStatus("wrestler")
-
 /area/station/crew_quarters/captain
 	name = "Captain's Quarters"
 	icon_state = "captain"

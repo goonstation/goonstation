@@ -43804,6 +43804,7 @@
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit,
 /obj/item/instrument/tambourine,
+/obj/item/instrument/bikehorn,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -54092,12 +54093,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"dSH" = (
-/obj/decal/boxingrope/enter{
-	dir = 8
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/afterlife/bar)
 "dSI" = (
 /obj/stool/bar{
 	name = "stool"
@@ -54117,8 +54112,7 @@
 /area/afterlife/bar)
 "dSL" = (
 /obj/table/wood/round/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
+/obj/machinery/wrestlingbell,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSM" = (
@@ -54231,7 +54225,8 @@
 /area/afterlife/bar)
 "dSZ" = (
 /obj/table/wood/round/auto,
-/obj/item/instrument/bikehorn,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
@@ -54417,10 +54412,6 @@
 /area/afterlife/bar)
 "dTA" = (
 /obj/decal/stage_edge,
-/obj/item/wrestlingbell{
-	density = 0;
-	pixel_y = 7
-	},
 /obj/map/light/white,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
@@ -97493,7 +97484,7 @@ dSn
 dTd
 cwl
 cwl
-dSH
+cwl
 dTg
 dqe
 daN

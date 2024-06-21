@@ -11055,18 +11055,18 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayx" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayy" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayz" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -11080,7 +11080,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayA" = (
 /obj/decal/boxingrope{
 	density = 0;
@@ -11091,7 +11091,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayB" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -11104,7 +11104,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayC" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -11114,7 +11114,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ayD" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
@@ -23470,7 +23470,7 @@
 	},
 /obj/landmark/boxing_ring,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bea" = (
 /obj/landmark/halloween,
 /turf/simulated/floor,
@@ -23834,7 +23834,7 @@
 "bfk" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bfm" = (
 /obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
@@ -41834,7 +41834,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bZa" = (
 /obj/stool,
 /obj/decal/boxingrope{
@@ -41845,7 +41845,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bZb" = (
 /obj/stool,
 /obj/decal/cleanable/cobweb,
@@ -42316,13 +42316,13 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "can" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "cao" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
@@ -42332,13 +42332,13 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "cap" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "caq" = (
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -52550,7 +52550,7 @@
 /area/station/chapel/sanctuary)
 "cxw" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "cxx" = (
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
@@ -64430,7 +64430,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "voc" = (
 /obj/machinery/door/window/northright{
 	req_access_txt = null

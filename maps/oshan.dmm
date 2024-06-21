@@ -19054,14 +19054,14 @@
 	dir = 9
 	},
 /turf/simulated/floor/wood/three,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "brS" = (
 /obj/decal/boxingrope,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/wood/three,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "brT" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19070,7 +19070,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/wood/three,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "brU" = (
 /obj/fireworksbox,
 /obj/disposalpipe/segment{
@@ -19215,10 +19215,10 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bsB" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bsC" = (
 /obj/landmark/halloween,
 /obj/decal/tile_edge/line/black{
@@ -19226,7 +19226,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bsD" = (
 /obj/decal/boxingrope{
 	dir = 4
@@ -19236,7 +19236,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bsE" = (
 /obj/item/clothing/gloves/boxing{
 	pixel_x = -4
@@ -19432,7 +19432,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "btl" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/men{
@@ -19546,14 +19546,14 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "btI" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "btJ" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -21894,7 +21894,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bBE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23219,7 +23219,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bGa" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -24536,7 +24536,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "bKR" = (
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
@@ -35846,7 +35846,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "hLj" = (
 /obj/strip_door,
 /obj/machinery/conveyor/EW{
@@ -37021,7 +37021,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "jEB" = (
 /obj/shrub{
 	dir = 6
@@ -39343,7 +39343,7 @@
 /mob/living/carbon/human/npc/monkey,
 /obj/landmark/boxing_ring,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "mSm" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor,
@@ -45168,7 +45168,7 @@
 "wem" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "weL" = (
 /obj/disposalpipe/segment/morgue,
 /obj/disposalpipe/segment{

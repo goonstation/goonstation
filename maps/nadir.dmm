@@ -6261,8 +6261,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "cPI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6557,8 +6556,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "cVr" = (
 /obj/machinery/light_switch/west,
 /obj/reagent_dispensers/fueltank,
@@ -10027,8 +10025,7 @@
 "eBk" = (
 /obj/decal/boxingrope,
 /obj/grille/catwalk,
-/turf/simulated/floor/black/grime,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/black/grime)
 "eBt" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -10918,8 +10915,7 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "eTI" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -11140,7 +11136,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "eXy" = (
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -12557,7 +12553,7 @@
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "fCW" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/computer3/generic/personal{
@@ -13779,7 +13775,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "gfC" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -14065,7 +14061,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "gli" = (
 /obj/machinery/disposal/mail/autoname/public/crew,
 /obj/disposalpipe/trunk/mail/south,
@@ -15208,8 +15204,7 @@
 	dir = 9
 	},
 /obj/grille/catwalk,
-/turf/simulated/floor/black/grime,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/black/grime)
 "gGz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18018,8 +18013,7 @@
 /obj/decal/boxingrope/enter,
 /turf/simulated/floor/stairs{
 	dir = 1
-	},
-/area/station/crew_quarters/wrestling_ring)
+	})
 "hIn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19809,8 +19803,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "itm" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -20258,8 +20251,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "iAJ" = (
 /obj/stool/chair/comfy/barber_chair{
 	desc = "A traditional barbershop chair, obviously a very old one at that.  What it is doing on a space station you haven't the foggiest.";
@@ -24888,8 +24880,7 @@
 	network = "Zeta";
 	tag = ""
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "ktZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
@@ -32773,7 +32764,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "nHe" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -32886,7 +32877,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "nJn" = (
 /turf/simulated/floor/stairs/wide,
 /area/listeningpost)
@@ -33253,7 +33244,7 @@
 "nSd" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "nSi" = (
 /obj/submachine/slot_machine,
 /turf/simulated/floor/carpet/green/standard/edge{
@@ -34633,7 +34624,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "ozU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -34946,8 +34937,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "oHj" = (
 /obj/machinery/manufacturer/robotics,
 /obj/item/device/radio/intercom/medical{
@@ -35073,7 +35063,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "oLr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37041,7 +37031,7 @@
 /obj/disposalpipe/segment/vertical,
 /obj/decal/boxingrope/enter,
 /turf/simulated/floor,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "pCc" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4;
@@ -37638,12 +37628,11 @@
 /turf/simulated/floor/purpleblack,
 /area/pasiphae/survey)
 "pRb" = (
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "pRy" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "pRG" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -38251,7 +38240,7 @@
 	},
 /obj/decal/boxingrope/enter,
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "qdz" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
@@ -38561,8 +38550,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/boxingrope/enter,
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "qlz" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
@@ -39185,7 +39173,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "qxZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39491,8 +39479,7 @@
 	dir = 5
 	},
 /obj/grille/catwalk,
-/turf/simulated/floor/black/grime,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/black/grime)
 "qEY" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -40209,7 +40196,7 @@
 "rax" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "raO" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -43515,8 +43502,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "sCO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44087,7 +44073,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "sNK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44707,8 +44693,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "tbq" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
@@ -45750,7 +45735,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "txv" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -48288,7 +48273,7 @@
 /area/station/crew_quarters/fitness)
 "uzl" = (
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "uzu" = (
 /obj/lattice,
 /obj/warp_beacon{
@@ -48441,7 +48426,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "uDy" = (
 /obj/lattice,
 /obj/warp_beacon{
@@ -49356,15 +49341,13 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "vbY" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/crew_quarters/wrestling_ring)
+/turf/simulated/floor/specialroom/gym/alt)
 "vcl" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -49902,7 +49885,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "vrF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -50753,7 +50736,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "vII" = (
 /obj/rack,
 /obj/item/furniture_parts/table/wood,
@@ -52747,7 +52730,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/wrestling_ring)
+/area/station/crew_quarters/fitness)
 "wBt" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
