@@ -2373,6 +2373,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					nigiri.icon_state = "nigiri3"
 				if("filletslice-small")
 					nigiri.icon_state = "nigiri4"
+				if("filletslice-pufferfish")
+					nigiri.icon_state = "nigiri_pufferfish"
+					nigiri.desc = "A ball of sticky rice with a thin slice of pufferfish fillet ontop. Hopefully properly prepared."
+			if (W.reagents?.total_volume > 0)
+				W.reagents.trans_to(nigiri, W.reagents.total_volume)
 			user.u_equip(W)
 			qdel(W)
 			if(handspawn)

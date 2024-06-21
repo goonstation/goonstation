@@ -20,7 +20,9 @@
 
 	///Set to TRUE to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	var/can_reconnect = FALSE
+	///The related circuit board type for replacement/repairs
 	var/obj/item/circuitboard/circuit_type = null
+
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
@@ -51,11 +53,12 @@
 			src.Attackhand(user)
 
 	get_help_message(dist, mob/user)
-		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.circuit_type)
+			. = "Use a <b>screwdriver</b> to unscrew the screen."
 		if (src.can_reconnect)
-			. += ",\nor a <b>multitool</b> to re-scan for equipment."
-		else
-			. += "."
+			if (.)
+				.+= "\n"
+			. += "Use a <b>multitool</b> to re-scan for equipment."
 
 	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 		var/obj/computerframe/A = new /obj/computerframe(src.loc)
