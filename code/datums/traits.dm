@@ -1297,7 +1297,7 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/deathwish
 	name = "Death Wish"
-	desc = "You take double damage from all sources."
+	desc = "You take double damage from all sources. Expect to die very very quickly, you're putting your life at serious risk!"
 	id = "deathwish"
 //	category = "stats"
 	points = 2
