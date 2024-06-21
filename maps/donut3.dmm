@@ -34431,9 +34431,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
 "kri" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
 /obj/disposalpipe/segment/morgue,
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -34442,6 +34439,9 @@
 /obj/decal/tile_edge/line/grey{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/decal/boxingrope/enter{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)

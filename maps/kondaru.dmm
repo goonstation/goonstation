@@ -5763,10 +5763,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "avl" = (
-/obj/decal/boxingropeenter,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
+/obj/decal/boxingrope/enter,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/wrestling_ring)
 "avm" = (
@@ -9126,7 +9126,7 @@
 	},
 /area/station/hallway/primary/north)
 "aIO" = (
-/obj/decal/boxingropeenter,
+/obj/decal/boxingrope/enter,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
