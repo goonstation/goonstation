@@ -938,8 +938,8 @@
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
 		M.setting = "white"
-		M.dispensing_tube = /obj/item/light/tube/neutral
-		M.dispensing_bulb = /obj/item/light/bulb/neutral
+		M.dispensing_tube = /obj/item/light/tube
+		M.dispensing_bulb = /obj/item/light/bulb
 		..()
 
 /datum/contextAction/lamp_manufacturer/col_page_1/red
