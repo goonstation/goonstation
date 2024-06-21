@@ -272,10 +272,11 @@ const PlantSeeds = (props, context) => {
     extractablesPerPage*(page - 1) + extractablesPerPage);
   const splice_disable = (splice_seeds[0] !== null && splice_seeds[1] !== null);
   return (
-    <Section fill
+    <Section
+      fill
       title="Seeds"
       buttons={(
-        <Flex.Item textAlign="center" basis={1.5}>
+        <>
           <Button
             icon="eject"
             tooltip="All seeds will be ejected from the Plantmaster"
@@ -308,7 +309,7 @@ const PlantSeeds = (props, context) => {
             onClick={() => act('outputmode')}>
             Output Internally
           </Button.Checkbox>
-        </Flex.Item>
+        </>
       )}>
       <Flex height="100%" direction="column">
         <Flex.Item height={splicing ? "60%" : "100%"}>
@@ -331,10 +332,10 @@ const PlantSeeds = (props, context) => {
             <Section
               title="Splicing"
               buttons={
-                <Flex.Item textAlign="center" basis={1.5}>
-                  Splice Chance: {splice_chance}%&nbsp;
-                  <Button onClick={() => act('splice')}>Splice</Button>
-                </Flex.Item>
+                <>
+                  {`Splice Chance: ${splice_chance}%`}
+                  <Button ml={1} onClick={() => act('splice')}>Splice</Button>
+                </>
               }>
               <Table>
                 <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
@@ -366,10 +367,11 @@ const PlantExtractables = (props, context) => {
     extractablesPerPage*(page - 1) + extractablesPerPage);
 
   return (
-    <Section fill
+    <Section
+      fill
       title="Extractable Items"
       buttons={(
-        <Flex.Item textAlign="center" basis={1.5}>
+        <>
           <Button
             icon="eject"
             tooltip="All produce will be ejected from the Plantmaster"
@@ -402,7 +404,7 @@ const PlantExtractables = (props, context) => {
             onClick={() => act('outputmode')}>
             Output Internally
           </Button.Checkbox>
-        </Flex.Item>
+        </>
       )}>
       <Flex height="100%" direction="column">
         <Flex.Item grow>

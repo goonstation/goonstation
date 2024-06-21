@@ -131,7 +131,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", "")
+					C.player.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
@@ -143,7 +143,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", "")
+					C.player.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
@@ -155,7 +155,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", "")
+					C.player.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -243,6 +243,18 @@ var/global/noir = 0
 		if ("toggle_topic_log")
 			if (src.level >= LEVEL_MOD)
 				src.show_topic_log = !show_topic_log
+				src.show_pref_window(usr)
+		if ("toggle_skip_manifest")
+			if (src.level >= LEVEL_MOD)
+				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
+				src.show_pref_window(usr)
+		if ("toggle_slow_stat")
+			if (src.level >= LEVEL_MOD)
+				src.slow_stat = !slow_stat
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)

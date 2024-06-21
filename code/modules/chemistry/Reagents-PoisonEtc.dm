@@ -20,8 +20,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison", 3 * damage_factor)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 3 * damage_factor
 
 			nitrogen_dioxide
 				name = "nitrogen dioxide"
@@ -43,8 +43,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison", 3 * damage_factor)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 3 * damage_factor
 
 		harmful/acid // COGWERKS CHEM REVISION PROJECT. give this a reaction and remove it from the dispenser machine, hydrogen (2) + sulfur (1) + oxygen (4)
 			name = "sulfuric acid"
@@ -122,9 +122,9 @@ datum
 					else
 						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("acid",5)
-				P.growth -= 3
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.acid_damage += 5
+				growth_tick.growth_rate -= 3
 
 			reaction_blob(var/obj/blob/B, var/volume)
 				. = ..()
@@ -185,8 +185,8 @@ datum
 						random_burn_damage(M, 2)
 						M.emote("scream")
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("acid", 1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.acid_damage += 1
 
 			reaction_blob(var/obj/blob/B, var/volume)
 				. = ..()
@@ -431,8 +431,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",4)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.acid_damage += 4
 
 		harmful/acetaldehyde
 			name = "acetaldehyde"
@@ -454,8 +454,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",4)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.acid_damage += 4
 
 		harmful/lipolicide
 			name = "lipolicide"
@@ -935,9 +935,9 @@ datum
 					else
 						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("acid",10)
-				P.growth -= 5
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.acid_damage += 10
+				growth_tick.growth_rate -= 5
 
 			reaction_blob(var/obj/blob/B, var/volume)
 				. = ..()
@@ -1083,15 +1083,21 @@ datum
 						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
 					boutput(M, SPAN_ALERT("The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!"))
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("acid",8)
-				P.growth -= 4
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.acid_damage += 8
+				growth_tick.growth_rate -= 4
 
 			reaction_blob(var/obj/blob/B, var/volume)
 				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
+
+			reaction_obj(obj/item/clothing/item)
+				if (istype(item) && !(item.item_function_flags & IMMUNE_TO_ACID))
+					var/datum/component/gear_corrosion/corroder = item.LoadComponent(/datum/component/gear_corrosion)
+					corroder.apply_decay()
+
 
 		harmful/pancuronium
 			name = "pancuronium"
@@ -1166,9 +1172,9 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80)) P.HYPdamageplant("radiation",5)
-				if (prob(25)) P.HYPmutateplant(1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.radiation_damage += 4
+				growth_tick.mutation_severity += 0.25
 
 		harmful/sodium_thiopental // COGWERKS CHEM REVISION PROJECT. idk some sort of potent opiate or sedative. chloral hydrate? ketamine
 			name = "sodium thiopental"
@@ -1334,8 +1340,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 		harmful/cytotoxin
 			name = "cytotoxin"
@@ -1586,13 +1592,10 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				/*if (prob(80)) P.growth -= rand(1,2)
-				if (prob(16)) P.HYPmutateplant(1)*/
-				if (prob(40) && P.growth > 1)
-					P.growth--
-				if (prob(24))
-					P.HYPmutateplant(1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				if (P.growth > 1)
+					growth_tick.growth_rate -= 0.4
+				growth_tick.mutation_severity += 0.24
 
 		////////////// work in progress. new mutagen for omega slurrypods - cogwerks
 
@@ -1628,9 +1631,9 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.growth -= rand(1,2)
-				P.HYPmutateplant(1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate -= 1.5
+				growth_tick.mutation_severity += 1
 
 		harmful/formaldehyde/werewolf_serum_fake1
 			name = "Werewolf Serum Precursor Alpha"
@@ -1919,9 +1922,9 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80)) P.growth -= rand(1,3)
-				if (prob(16)) P.HYPmutateplant(1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate -= 1.6
+				growth_tick.mutation_severity += 0.16
 
 		harmful/madness_toxin
 			name = "Rajaijah"

@@ -10,7 +10,7 @@
 	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
-	var/const/setup_max_teams = 6
+	var/const/setup_max_teams = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -766,6 +766,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
+		newsignal.encryption_obfuscation = 90 // too easy to decipher these
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -796,7 +797,10 @@ proc/broadcast_to_all_gangs(var/message)
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area in areas)
-			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/solar))
+				continue
+			var/typeinfo/area/typeinfo = areas[area].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_drop_zones += areas[area]
 
@@ -822,7 +826,7 @@ proc/broadcast_to_all_gangs(var/message)
 					disposalList.Add(O)
 				else if (istype(O,/obj/storage))
 					var/obj/storage/crate = O
-					if (!crate.secure && !crate.locked)
+					if (!crate.secure && !crate.locked && !crate.open)
 						crateList.Add(O)
 				else if (istype(O,/obj/table) && !istype(O,/obj/table/glass))
 					tableList.Add(O)
@@ -856,7 +860,7 @@ proc/broadcast_to_all_gangs(var/message)
 			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
-		else if(length(tableList) && prob(65))
+		else if(length(tableList) && (length(uncoveredTurfList) > 0 || prob(65))) // only spawn on uncovered turf as a last resort
 			var/turf/target = get_turf(pick(tableList))
 			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
@@ -940,7 +944,7 @@ proc/broadcast_to_all_gangs(var/message)
 						validLocation = TRUE
 				for_by_tcl(otherTag, /obj/decal/gangtag)
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
-					if (otherTag.owners && otherTag.owners == user.get_gang())
+					if (otherTag.owners && otherTag.owners == user.get_gang() && otherTag.active)
 						validLocation = TRUE
 			else
 				boutput(user, SPAN_ALERT("You can't spray over your own tags!"))
@@ -951,7 +955,7 @@ proc/broadcast_to_all_gangs(var/message)
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
-				else if (tag.owners)
+				else if (tag.owners && tag.active)
 					boutput(user, SPAN_ALERT("You can't spray in another gang's territory! Spray over their tag, instead!"))
 					if (user.GetComponent(/datum/component/tracker_hud))
 						return
@@ -1366,7 +1370,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.JobEquipSpawned("Gang Respawn")
 			target.transfer_to(H)
 			target.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
-			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
+			message_admins("[key_name(target)] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
 			boutput(H, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
 			if (src.gang.leader)
@@ -1723,7 +1727,7 @@ proc/broadcast_to_all_gangs(var/message)
 		leaderRole.transfer_to(user.mind)
 		boutput(user, "You're the leader of your gang now!")
 		logTheThing(LOG_ADMIN, user, "claims the role of leader for [src.gang.gang_name].")
-		message_admins("[user.key] has claimed the role of leader for their gang, [src.gang.gang_name].")
+		message_admins("[key_name(user)] has claimed the role of leader for their gang, [src.gang.gang_name].")
 
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
 		var/text = {"The going prices for drugs are as follows:<br>
@@ -2025,6 +2029,10 @@ proc/broadcast_to_all_gangs(var/message)
 	w_class = W_CLASS_TINY
 	var/max_charges = 5
 	var/charges = 5
+
+	syndicate
+		max_charges = 10
+		charges = 10
 
 	update_icon()
 		if (charges > 0 )

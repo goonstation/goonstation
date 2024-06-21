@@ -221,7 +221,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 				//for AfterAttack, we specifically need a mob as target
 				randomed_item.AfterAttack(hit_mob, thr.user)
 				if (hit_mob == thr.user)
-					src.visible_message(SPAN_ALERT("[thr.user] fumbles and smacks the [src] into their own face!"))
+					src.visible_message(SPAN_ALERT("[thr.user] fumbles and smacks the [src] into [his_or_her(thr.user)] own face!"))
 				else
 					src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
 		else

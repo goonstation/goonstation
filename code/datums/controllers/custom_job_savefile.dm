@@ -129,6 +129,8 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 		F["[profileNum]_special_spawn_location_coords"] >> maybe_coords
 		if(islist(maybe_coords))
 			src.job_creator.special_spawn_location = locate(maybe_coords[1], maybe_coords[2], maybe_coords[3])
+		else
+			F["[profileNum]_special_spawn_location"] << null
 	F["[profileNum]_bio_effects"] >> src.job_creator.bio_effects
 	F["[profileNum]_objective"] >> src.job_creator.objective
 	// backwards compatibility

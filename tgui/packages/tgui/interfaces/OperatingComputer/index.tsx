@@ -43,7 +43,14 @@ export const OperatingComputer = (props, context) => {
 
 const ComputerTabs = (props) => {
   const { tabIndex } = props;
-  if (tabIndex === 1) { return (<PatientTab />); }
+  switch (tabIndex) {
+    case 1: {
+      return (<PatientTab />);
+    }
+    default: {
+      return null;
+    }
+  }
 };
 
 // mob.stat parsing
@@ -153,30 +160,32 @@ const HealthGraph = (props) => {
 
 const DisplayOrgans = (props: DisplayOrgansProps) => {
   const { occupied, organs } = props;
-  if (occupied) {
-    return (
-      <Stack.Item width={20}>
-        <Table>
-          <Table.Row>
-            <Table.Cell header textAlign="right">Organ</Table.Cell>
-            <Table.Cell header>Status</Table.Cell>
-          </Table.Row>
-          {
-            organs.map((organ_data: OrganData) => {
-              return (
-                <DisplayOrgan
-                  key={organ_data["organ"]}
-                  organ={organ_data["organ"]}
-                  state={organ_data["state"]}
-                  color={organ_data["color"]}
-                  special={organ_data["special"]}
-                />
-              );
-            })
-          }
-        </Table>
-      </Stack.Item>
-    ); }
+  if (!occupied) {
+    return null;
+  }
+  return (
+    <Stack.Item width={20}>
+      <Table>
+        <Table.Row>
+          <Table.Cell header textAlign="right">Organ</Table.Cell>
+          <Table.Cell header>Status</Table.Cell>
+        </Table.Row>
+        {
+          organs.map((organ_data: OrganData) => {
+            return (
+              <DisplayOrgan
+                key={organ_data["organ"]}
+                organ={organ_data["organ"]}
+                state={organ_data["state"]}
+                color={organ_data["color"]}
+                special={organ_data["special"]}
+              />
+            );
+          })
+        }
+      </Table>
+    </Stack.Item>
+  );
 };
 
 const DisplayOrgan = (props: OrganData) => {
@@ -186,69 +195,71 @@ const DisplayOrgan = (props: OrganData) => {
     color,
     special,
   } = props;
-
-  if (state !== "Okay" || special) {
-    return (
-      <Table.Row>
-        <Table.Cell header textAlign="right" width={10}>
-          {capitalize(spaceUnderscores(organ))}:
-        </Table.Cell>
-        <Table.Cell
-          width={10}
-          color={color}
-          bold={state === "Missing" || state === "Dead" || state === "Critical"}
-        >
-          {state !== "Okay" && state}
-          {special && <Box color="white">{special}</Box> }
-        </Table.Cell>
-      </Table.Row>
-    );
+  if (state === 'Okay' && !special) {
+    return null;
   }
+  return (
+    <Table.Row>
+      <Table.Cell header textAlign="right" width={10}>
+        {capitalize(spaceUnderscores(organ))}:
+      </Table.Cell>
+      <Table.Cell
+        width={10}
+        color={color}
+        bold={state === "Missing" || state === "Dead" || state === "Critical"}
+      >
+        {state !== "Okay" && state}
+        {special && <Box color="white">{special}</Box> }
+      </Table.Cell>
+    </Table.Row>
+  );
 };
 
 const DisplayLimbs = (props:DisplayLimbsProps) => {
   const { occupied, limbs } = props;
-  if (occupied) {
-    return (
-      <Stack.Item width={20}>
-        <Table>
-          <Table.Row>
-            <Table.Cell header textAlign="right">Limb</Table.Cell>
-            <Table.Cell header>Status</Table.Cell>
-          </Table.Row>
-          {
-            limbs.map((limb_data: LimbData) => {
-              return (
-                <DisplayLimb
-                  key={limb_data["limb"]}
-                  limb={limb_data["limb"]}
-                  status={limb_data["status"]}
-                />
-              );
-            })
-          }
-        </Table>
-      </Stack.Item>
-    );
+  if (!occupied) {
+    return null;
   }
+  return (
+    <Stack.Item width={20}>
+      <Table>
+        <Table.Row>
+          <Table.Cell header textAlign="right">Limb</Table.Cell>
+          <Table.Cell header>Status</Table.Cell>
+        </Table.Row>
+        {
+          limbs.map((limb_data: LimbData) => {
+            return (
+              <DisplayLimb
+                key={limb_data["limb"]}
+                limb={limb_data["limb"]}
+                status={limb_data["status"]}
+              />
+            );
+          })
+        }
+      </Table>
+    </Stack.Item>
+  );
 };
 
 const DisplayLimb = (props:DisplayLimbProps) => {
   const { limb, status } = props;
-  if (status !== "Okay") {
-    return (
-      <Table.Row>
-        <Table.Cell header textAlign="right" width={10}>
-          {capitalize(spaceUnderscores(limb))}:
-        </Table.Cell>
-        <Table.Cell
-          width={10}
-          color={status === "Missing" ? "red" : "white"}
-          bold={status === "Missing"}>{status}
-        </Table.Cell>
-      </Table.Row>
-    );
+  if (status === 'Okay') {
+    return null;
   }
+  return (
+    <Table.Row>
+      <Table.Cell header textAlign="right" width={10}>
+        {capitalize(spaceUnderscores(limb))}:
+      </Table.Cell>
+      <Table.Cell
+        width={10}
+        color={status === "Missing" ? "red" : "white"}
+        bold={status === "Missing"}>{status}
+      </Table.Cell>
+    </Table.Row>
+  );
 };
 
 const DisplayVitals = (props, context) => {
@@ -394,7 +405,7 @@ const DisplayTitle = (props:OperatingComputerDisplayTitleProps) => {
         </Box>
       </Stack.Item>
       <HealthSummary health_text={patient_health_percent_text} health_color={color} />
-      <PatientSummary occupied={occupied} patient_status={patient_status} isCrit={is_crit} />
+      <PatientSummary occupied={occupied} patient_status={patient_status} isCrit={!!is_crit} />
     </Stack>
   );
 };

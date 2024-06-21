@@ -379,10 +379,10 @@
 	icon_state = "command headset"
 	secure_frequencies = list(
 	"h" = R_FREQ_COMMAND,
-	"e" = R_FREQ_ENGINEERING)
+	"c" = R_FREQ_CIVILIAN)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
-		"e" = RADIOCL_ENGINEERING,
+		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"

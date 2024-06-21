@@ -226,7 +226,7 @@
 					if(istype(A, /area/station/))
 						var/obj/machinery/power/apc/P = A.area_apc
 						if(P?.cell)
-							apc_charge = P.terminal.powernet?.perapc
+							apc_charge = P.terminal?.powernet?.perapc
 							cell_wattage = P.cell.charge/CELLRATE
 							surplus = P.surplus()
 
@@ -567,13 +567,6 @@ datum/pump_ui/circulator_ui
 	get_atom()
 		return our_circ
 
-
-/obj/machinery/computer/power_monitor
-	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "power"
-	density = 1
-	anchored = ANCHORED
 
 /obj/machinery/teg_connector
 	name = "\improper TEG connector"

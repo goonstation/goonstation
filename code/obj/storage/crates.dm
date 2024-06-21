@@ -341,7 +341,7 @@
 					if (istype(T))
 						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
-			var/str_contents = kText.list2text(crate_contents, ", ")
+			var/str_contents = list2text(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
@@ -542,7 +542,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
 		/obj/item/old_grenade/smoke = 2,
-		/obj/item/dagger/syndicate/specialist,
+		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -836,3 +836,19 @@ TYPEINFO(/obj/storage/crate/chest)
 			stx_filler =  new /datum/loot_generator(3,2)
 			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
 			..()
+
+/obj/storage/crate/ks23
+	name = "Kuvalda Carbine crate"
+	desc = "A hefty container, presumably containing an equally hefty shotgun."
+	icon_state = "attachecase"
+	icon_opened = "attachecase_open"
+	icon_closed = "attachecase"
+
+	New()
+		var/datum/loot_generator/shotgun_gen
+		src.vis_controller = new(src)
+		shotgun_gen =  new /datum/loot_generator(4,3)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
+		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
+		..()

@@ -778,6 +778,29 @@ DEFINE_FLOORS(carpet/clowncarpet/innercorner,
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/simulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/simulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/simulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/simulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/simulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/simulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+//////////////////////////////////////////
+
 /turf/simulated/floor/sanitary
 	icon_state = "freezerfloor"
 
@@ -2087,11 +2110,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				msg = insert_girder[min(count+1, insert_girder.len)]
 				if(count >= 69) //nice
 					girder_egg = 1
-					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src.loc, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
+					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
 				else
 					actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
+				actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.rwindows : /obj/window/reinforced, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
