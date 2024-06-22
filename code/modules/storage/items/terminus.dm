@@ -65,3 +65,23 @@ var/global/list/terminus_storage = list()
 	if(!linked_item:synchronized)
 		return FALSE
 	..()
+
+//fully overridden to allow fine-grained behavior and prevent contents dumping
+/datum/storage/terminus/storage_item_mouse_drop(mob/user, atom/over_object, src_location, over_location)
+	// if mouse dropping storage item onto a hand slot, attempt to hold it
+	if (istype(over_object, /atom/movable/screen/hud))
+		var/atom/movable/screen/hud/S = over_object
+		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		if (!user.restrained() && !is_incapacitated(user) && src.linked_item.loc == user)
+			if (S.id == "rhand" && !user.r_hand)
+				user.u_equip(src.linked_item)
+				user.put_in_hand_or_drop(src.linked_item)
+			else if (S.id == "lhand" && !user.l_hand)
+				user.u_equip(src.linked_item)
+				user.put_in_hand_or_drop(src.linked_item)
+	// if mouse dropping storage item onto self, look inside if it's open
+	else if (over_object == user && in_interact_range(src.linked_item, user) && isliving(user) && !is_incapacitated(user) && !isintangible(user) && linked_item:synchronized)
+		user.s_active?.master.hide_hud(user)
+		if (src.mousetrap_check(user))
+			return
+		src.show_hud(user)
