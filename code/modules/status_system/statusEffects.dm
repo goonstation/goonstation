@@ -1666,7 +1666,7 @@
 		id = "wrestler"
 		name = "Wrestling!"
 		desc = "You're in the ring, break a leg!"
-		icon_state = "person"
+		icon_state = "wrestling"
 		unique = TRUE
 		effect_quality = STATUS_QUALITY_NEUTRAL
 		var/play_KO_fx = FALSE
