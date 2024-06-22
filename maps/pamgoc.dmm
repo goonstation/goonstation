@@ -6636,13 +6636,13 @@
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "aoB" = (
-/obj/decal/cleanable/cobweb,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
 /obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "aoC" = (
@@ -8014,7 +8014,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purple/corner{
-	dir = 2
+	dir = 1
 	},
 /area/station/hallway/primary/south)
 "aro" = (
@@ -8337,7 +8337,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/purple/corner{
-	dir = 4
+	dir = 8
 	},
 /area/station/hallway/primary/south)
 "arT" = (
@@ -11125,31 +11125,31 @@
 /turf/simulated/floor/airless/damaged3,
 /area/station/wreckage)
 "ayE" = (
-/obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/oil,
 /obj/reagent_dispensers/heliumtank,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "ayG" = (
-/obj/decal/cleanable/cobweb,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ayH" = (
-/obj/decal/cleanable/cobweb,
 /obj/storage/crate,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
 "ayI" = (
-/obj/decal/cleanable/cobweb,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ayJ" = (
-/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -11174,8 +11174,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ayL" = (
-/obj/decal/cleanable/cobweb2,
 /obj/machinery/vending/security,
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ayM" = (
@@ -28531,8 +28531,8 @@
 	icon_state = "arcadeb";
 	status = 1
 	},
-/obj/decal/cleanable/cobweb,
 /obj/machinery/firealarm/east,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "bsq" = (
@@ -36952,13 +36952,13 @@
 /area/station/engine/gas)
 "bOu" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/obj/decal/cleanable/cobweb,
 /obj/decal/stripe_delivery,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "bOv" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bOw" = (
@@ -39759,7 +39759,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "bVa" = (
-/obj/pool_springboard,
+/obj/pool_springboard{
+	dir = 4;
+	pixel_x = 16
+	},
 /obj/pool/perspective{
 	dir = 8;
 	tag = "icon-pool (WEST)"
@@ -41848,11 +41851,11 @@
 /area/station/crew_quarters/fitness)
 "bZb" = (
 /obj/stool,
-/obj/decal/cleanable/cobweb,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15
 	},
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/station/security/brig)
 "bZc" = (
@@ -43668,8 +43671,8 @@
 /area/station/science/teleporter)
 "cdw" = (
 /obj/storage/closet/emergency,
-/obj/decal/cleanable/cobweb,
 /obj/disposalpipe/segment/transport,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "cdx" = (
@@ -43941,7 +43944,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "ceq" = (
@@ -45170,7 +45173,6 @@
 /area/station/security/checkpoint)
 "cgX" = (
 /obj/table/auto,
-/obj/decal/cleanable/cobweb2,
 /obj/item/gun/kinetic/zipgun{
 	pixel_x = 4;
 	pixel_y = 6
@@ -45179,6 +45181,7 @@
 	pixel_x = -5;
 	pixel_y = 1
 	},
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "cgY" = (
@@ -45988,7 +45991,6 @@
 /area/station/routing/engine)
 "cie" = (
 /obj/table/auto,
-/obj/decal/cleanable/cobweb,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -46002,6 +46004,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "cif" = (
@@ -46868,7 +46871,6 @@
 /area/station/janitor/office)
 "cjh" = (
 /obj/table/auto,
-/obj/decal/cleanable/cobweb,
 /obj/item/scalpel{
 	pixel_x = 4;
 	pixel_y = 11
@@ -46881,6 +46883,7 @@
 	pixel_x = -8;
 	pixel_y = 1
 	},
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cji" = (
@@ -54616,7 +54619,7 @@
 	},
 /obj/table/auto,
 /obj/machinery/recharger,
-/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "ekp" = (
@@ -55857,7 +55860,7 @@
 /obj/machinery/conveyor/EW{
 	operating = 1
 	},
-/obj/decal/cleanable/cobweb,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "ggF" = (
@@ -56044,6 +56047,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"gtD" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
 "gvH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/storage{
@@ -58406,7 +58415,7 @@
 /area/station/hallway/primary/south)
 "jZx" = (
 /obj/storage/closet/fire,
-/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "kbz" = (
@@ -58792,12 +58801,6 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
-"kLj" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_3_trans"
-	},
-/area/abandonedship)
 "kLp" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Arrivals Desk";
@@ -145931,14 +145934,14 @@ cCO
 cCO
 cCO
 cCO
-kLj
+hmi
 cCO
 bgb
 cyV
 bhc
 azw
 cyV
-hmi
+gtD
 cCO
 cCO
 cCO
