@@ -1483,7 +1483,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.8

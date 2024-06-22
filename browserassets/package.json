@@ -26,6 +26,6 @@
 		"postcss": "^8.4.31"
 	},
 	"browserslist": [
-		"ie >= 7"
+		"ie >= 11"
 	]
 }
