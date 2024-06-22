@@ -943,10 +943,11 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 //artifact reverse engineer rewards
 
 /datum/rc_itemreward/terminus
-	name = "3x prototype terminus drive"
+	name = "prototype terminus drive"
+	count = 3
 	build_reward()
 		var/list/yielder = list()
-		for(var/i in 1 to 3)
+		for(var/i in 1 to count)
 			yielder += new /obj/item/terminus_drive
 		return yielder
 
