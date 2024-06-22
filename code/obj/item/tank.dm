@@ -179,22 +179,6 @@ Contains:
 						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
 				qdel(src)
 				return
-			if(src in terminus_storage)
-				var/terminus_count //only count open terminii
-				for_by_tcl(TR, /obj/item/terminus_drive)
-					if(TR.synchronized)
-						terminus_count++
-				if(!terminus_count) //bomb defused
-					qdel(src)
-					return
-				range /= sqrt(terminus_count) // divide by root
-				for_by_tcl(TR, /obj/item/terminus_drive)
-					var/turf/T = get_turf(TR.loc)
-					if(T)
-						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
-				qdel(src)
-				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
@@ -609,26 +593,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
-				if(T)
-					explosion(src, T, 0, strength, strength*2, strength*3)
-			if(src.master)
-				qdel(src.master)
-			qdel(src)
-			return
-
-		if(src in terminus_storage)
-			var/terminus_count //only count open terminii
-			for_by_tcl(TR, /obj/item/terminus_drive)
-				if(TR.synchronized)
-					terminus_count++
-			if(!terminus_count) //bomb defused
-				if(src.master)
-					qdel(src.master)
-				qdel(src)
-				return
-			strength /= sqrt(terminus_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
-			for_by_tcl(TR, /obj/item/terminus_drive)//world)
-				var/turf/T = get_turf(TR.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)
 			if(src.master)

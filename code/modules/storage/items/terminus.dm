@@ -6,7 +6,7 @@
 var/global/list/terminus_storage = list()
 
 /datum/storage/terminus
-	// unlike bibles, contents don't actually exist in the terminus while it's unsynchronized
+	// unlike bibles, contents don't actually exist in each terminus while it's unsynchronized
 
 ///Brings an individual terminus that's being activated up to date with the terminus storage in The Cloud(TM)
 /datum/storage/terminus/proc/synchronize()
