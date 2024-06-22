@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/wirecutters,1)
 		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/crowbar,1)
 		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/powercell,1)
-		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/circular_saw,1)
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/surgical/circular_saw,1)
 		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
 		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,25))
 
