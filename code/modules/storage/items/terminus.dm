@@ -54,7 +54,6 @@ var/global/list/terminus_storage = list()
 			terminus.tooltip_rebuild = TRUE
 	terminus_storage -= I
 	I.stored = null
-	boutput(user,"[I] - [user] - [location]")
 
 	src.transfer_stored_item_extra(I, location, add_to_storage, user)
 
