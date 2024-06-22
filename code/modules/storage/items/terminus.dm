@@ -25,6 +25,7 @@ var/global/list/terminus_storage = list()
 /datum/storage/terminus/proc/desync()
 	for (var/obj/item/I as anything in terminus_storage)
 		src.stored_items -= I
+		src.hud.remove_item(I)
 	src.hide_all_huds()
 
 	linked_item:synchronized = FALSE
