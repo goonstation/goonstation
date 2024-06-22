@@ -9,7 +9,7 @@
 	w_class = W_CLASS_NORMAL
 	var/synchronized = FALSE
 	var/cell_type = /obj/item/ammo/power_cell/med_power
-	var/power_usage = 3 //cell units per process
+	var/power_usage = 2 //cell units per process
 
 	New()
 		..()
