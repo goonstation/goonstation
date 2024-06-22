@@ -1173,6 +1173,16 @@
 			qdel(src)
 			return
 
+		if(src in terminus_storage)
+			for_by_tcl(TR, /obj/item/terminus_drive)
+				if(TR.synchronized) //only detonate open terminii
+					var/turf/T = get_turf(TR.loc)
+					if(T)
+						T.hotspot_expose(700,125)
+						explosion(src, T, -1, -1, 2, 3)
+			qdel(src)
+			return
+
 		var/turf/T = get_turf(src.loc)
 
 		if (ismob(src.loc))

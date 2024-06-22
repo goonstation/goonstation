@@ -202,6 +202,10 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
 		if (!target)
 			return 0
+	if (target in terminus_storage)
+		target = locate(/obj/item/terminus_drive) in range(1, user) // I'm sorry
+		if (!target)
+			return 0
 	var/turf/UT = get_turf(user)
 	var/turf/TT = get_turf(target)
 	if (TT)

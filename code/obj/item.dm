@@ -1179,6 +1179,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
 				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
 					break
+				else if(src in terminus_storage) // ditto
+					break
 				else
 					return 0
 			checkloc = checkloc.loc // Get the loc of the loc! The loop continues until it's the turf of what you clicked on
