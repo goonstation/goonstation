@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		payout =  PAY_TRADESMAN*10
 
 	New()
-		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*12)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*6)
 		..()
 
 //contract below defines the details itself based on variety of order - this is just a dummy so as not to use an abstract type
