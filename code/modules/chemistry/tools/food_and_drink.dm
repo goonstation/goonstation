@@ -1227,6 +1227,18 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		else
 			src.ClearSpecificOverlays("wedge_overlay")
 
+		if (src.reagents.has_reagent("ice"))
+			if (!src.GetOverlayImage("ice_overlay"))
+				var/image/ice_image = image(src.reagent_overlay_icon, "[src.reagent_overlay_icon_state]-ice", layer = FLOAT_LAYER)
+				src.UpdateOverlays(ice_image, "ice_overlay")
+
+		else
+			src.ClearSpecificOverlays("ice_overlay")
+
+	on_reagent_change()
+		. = ..()
+		src.UpdateIcon()
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/ice))
 			if (src.reagents.total_volume >= (src.reagents.maximum_volume - 5))
