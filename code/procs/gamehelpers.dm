@@ -117,7 +117,7 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if ((source in bible_contents) && locate(/obj/item/bible) in range(1, user))
+	else if (source in bible_contents)
 		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
 			if(IN_RANGE(user,B,1))
 				return TRUE
