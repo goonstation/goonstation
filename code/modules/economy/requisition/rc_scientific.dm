@@ -595,10 +595,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 				switch(goal_id)
 					if(GOAL_PROTOTYPING)
-						goal_desc = ""
-						src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
+						goal_desc = "cutting-edge decentralized storage technology"
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,3)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/force_projection,1)
-						//src.item_rewarders += new /datum/rc_itemreward/personal_interdictor_kit
+						src.item_rewarders += new /datum/rc_itemreward/terminus
 					if(GOAL_MANUFACTURE)
 						goal_desc = "production of a medical biomatter recombinator"
 						//when built and powered, slowly makes weak healing patches out of food you load in
@@ -942,11 +942,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 //artifact reverse engineer rewards
 
-/datum/rc_itemreward/recharge_bay
-	name = "mobile recharging bay"
+/datum/rc_itemreward/terminus
+	name = "3x prototype terminus drive"
 	build_reward()
-		var/theitem = new /obj/item/storage/backpack/recharge_bay
-		return theitem
+		var/list/yielder = list()
+		for(var/i in 1 to 3)
+			yielder += new /obj/item/terminus_drive
+		return yielder
 
 /datum/rc_itemreward/medimulcher
 	name = "APS-4 bio-integrator"
@@ -959,3 +961,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		F.icon_state = "dbox_big"
 		F.w_class = W_CLASS_BULKY
 		return F
+
+/datum/rc_itemreward/recharge_bay
+	name = "mobile recharging bay"
+	build_reward()
+		var/theitem = new /obj/item/storage/backpack/recharge_bay
+		return theitem
