@@ -75,19 +75,16 @@
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
-		if(istype(W, /obj/item/wrestlingbell/hammer))
-			if (user.a_intent == "harm")
-				if(last_ring + 20 >= world.time)
-					return
-				else
-					last_ring = world.time
-					playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-					for (var/mob/living/carbon/human/human in view(10, src)) // this really should be looking in the ring area for humans, but then you'd have to account for nadir and wrestlemap
-						if (istype(get_turf(human), /turf/simulated/floor/specialroom/gym))
-							if (human.hasStatus("wrestler") == null)
-								human.setStatus("wrestler") // we only want to give the status on ring, not take it away, so new rounds can be started without leaving and entering
+		if (user.a_intent != "harm")
+			src.put_back_hammer()
+			return
+		if(istype(W, /obj/item/wrestlingbell/hammer) && user.a_intent == "harm")
+			if(last_ring + 10 SECONDS >= world.time)
+				return
 			else
-				src.put_back_hammer()
+				last_ring = world.time
+
+				toggle_boxing_mode()
 
 	/// snap back if too far away
 	proc/hammer_move()
@@ -102,3 +99,14 @@
 			src.hammer.parent = null
 
 			UpdateIcon()
+
+	proc/toggle_boxing_mode()
+		playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+		for (var/mob/living/carbon/human/human in view(10, src))
+			if (istype(get_turf(human), /turf/simulated/floor/specialroom/gym))
+				if (human.hasStatus("wrestler"))
+					human.delStatus("wrestler")
+				else
+					human.setStatus("wrestler")
+
+

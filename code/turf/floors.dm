@@ -989,29 +989,23 @@ DEFINE_FLOORS(minitiles/black,
 	name = "boxing mat"
 	icon_state = "boxing"
 
-	Entered(atom/movable/A, atom/oldloc)
+	Entered(atom/movable/A, atom/oldloc) // if a human leaves the ring with the wrestler status, they get a countdown to get back in before it's removed
 		. = ..()
-		if(istype(oldloc, /turf/simulated/floor/specialroom/gym))
+		if (istype(oldloc, /turf/simulated/floor/specialroom/gym) || !ishuman(A))
 			return
-		if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
-			var/mob/living/M = A
-			if(!M.client)
-				return
-			if (!M.hasStatus("wrestler"))
-				var/brute = round(M.get_brute_damage(), 0.01)
-				if (brute <= 100)
-					M.setStatus("wrestler", INFINITE_STATUS)
+
+		var/mob/living/M = A
+		if (M.hasStatus("wrestler"))
+			M.setStatus("wrestler", INFINITE_STATUS)
 
 	Exited(atom/movable/A, atom/newloc)
 		. = ..()
-		if (istype(newloc, /turf/simulated/floor/specialroom/gym))
+		if (istype(newloc, /turf/simulated/floor/specialroom/gym) || !ishuman(A))
 			return
-		if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
-			var/mob/living/M = A
-			if(!M.client)
-				return
-			if (M.hasStatus("wrestler"))
-				M.delStatus("wrestler")
+
+		var/mob/living/M = A
+		if (M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", 15 SECONDS) // generous countdown, since you can get stuck in the ring ropes if you chairflip into em
 
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
