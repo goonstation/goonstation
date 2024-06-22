@@ -1875,6 +1875,53 @@ datum
 				..()
 				return
 
+		harmful/tetrodotoxin
+			name = "tetrodotoxin"
+			id = "tetrodotoxin"
+			description = "An extremely dangerous neurotoxin which paralyses the heart, most commonly found in incorrectly prepared pufferfish."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 180
+			fluid_b = 240
+			transparency = 10
+			depletion_rate = 0.3
+			var/progression_speed = 1
+			var/counter = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+
+				switch(src.counter+= (mult * src.progression_speed))
+					if (10 to 27) // Small signs of trouble
+						if (prob(15))
+							M.change_misstep_chance(15 * mult)
+						if (probmult(13))
+							boutput(M, SPAN_NOTICE("<b>You feel a [pick("sudden palpitation", "numbness", "slight burn")] in your chest.</b>"))
+							M.stuttering = max(M.stuttering, 10)
+						if (probmult(13))
+							M.emote(pick("twitch","drool","tremble"))
+							M.change_eye_blurry(2, 2)
+					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
+						M.change_eye_blurry(5, 5)
+						M.stuttering = max(M.stuttering, 5)
+						M.setStatusMin("slowed", 40 SECONDS)
+						if (prob(35))
+							M.losebreath = max(5, M.losebreath + (5 * mult))
+						if (prob(20))
+							boutput(M, SPAN_ALERT("<b>Your chest [pick("burns", "hurts", "stings")] like hell.</b>"))
+							M.change_misstep_chance(15 * mult)
+						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
+							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
+					if (47 to INFINITY) // Heart effects kick in
+						M.setStatusMin("slowed", 40 SECONDS)
+						M.change_eye_blurry(15, 15)
+						M.losebreath = max(5, M.losebreath + (5 * mult))
+						if(isliving(M))
+							var/mob/living/L = M
+							L.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
+				..()
+				return
+
 		harmful/dna_mutagen
 			name = "stable mutagen"
 			id = "dna_mutagen"

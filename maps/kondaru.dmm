@@ -29672,10 +29672,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/hos,
 /obj/deployable_turret/riot/active{
 	dir = 1
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -35753,9 +35753,7 @@
 	},
 /area/station/crew_quarters/quarters_south)
 "gjV" = (
-/obj/stool/chair/office/red{
-	dir = 4
-	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -36573,7 +36571,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "gOK" = (
@@ -52620,7 +52617,6 @@
 	name = "Armory";
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -52632,6 +52628,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "sNO" = (
@@ -57014,9 +57011,7 @@
 	},
 /area/station/solar/east)
 "vXP" = (
-/obj/machinery/computer3/generic/communications{
-	dir = 8
-	},
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"

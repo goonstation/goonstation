@@ -341,7 +341,7 @@
 					if (istype(T))
 						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
-			var/str_contents = kText.list2text(crate_contents, ", ")
+			var/str_contents = list2text(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
