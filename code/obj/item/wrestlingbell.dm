@@ -103,7 +103,7 @@
 	proc/toggle_boxing_mode()
 		playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 		for (var/mob/living/carbon/human/human in view(10, src))
-			if (istype(get_turf(human), /turf/simulated/floor/specialroom/gym))
+			if (istype(get_turf(human), /turf/simulated/floor/specialroom/gym) && human.health > 0)
 				if (human.hasStatus("wrestler"))
 					human.delStatus("wrestler")
 				else
