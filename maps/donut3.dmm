@@ -74423,6 +74423,9 @@
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "wwb" = (
@@ -78470,14 +78473,15 @@
 	name = "autoname  - SS13";
 	tag = ""
 	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /obj/table/auto,
 /obj/machinery/coffeemaker/engineering{
 	pixel_y = 6
 	},
 /obj/item/kitchen/food_box/sugar_box,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "xAB" = (
