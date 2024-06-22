@@ -545,7 +545,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			if(PROTOTYPIST_ENGINEER)
 				prototypist_desc = "Engineering firm"
 				if(prob(60))
-					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(2,4))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(1,2))
 				else
 					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mainboard_noprice,rand(1,3))
 				if(prob(70) || !length(src.rc_entries))
