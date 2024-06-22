@@ -119,6 +119,10 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		return TRUE
 	else if ((source in bible_contents) && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
+	else if (source in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive) // this seems like a cleaner way to do things?
+			if(IN_RANGE(user,TR,1))
+				return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -203,7 +207,10 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		if (!target)
 			return 0
 	if (target in terminus_storage)
-		target = locate(/obj/item/terminus_drive) in range(1, user) // I'm sorry
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				target = TR
+				break
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)

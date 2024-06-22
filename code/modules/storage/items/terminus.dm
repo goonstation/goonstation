@@ -23,7 +23,7 @@ var/global/list/terminus_storage = list()
 
 ///Unlinks an individual terminus from other terminii
 /datum/storage/terminus/proc/desync()
-	for (var/obj/item/I as anything in terminus_storage)
+	for (var/obj/item/I as anything in src.stored_items)
 		src.stored_items -= I
 		src.hud.remove_item(I)
 	src.hide_all_huds()
@@ -45,7 +45,7 @@ var/global/list/terminus_storage = list()
 	src.add_contents_extra(I, user, visible)
 
 /datum/storage/terminus/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
-	if (!(I in src.stored_items))
+	if (!(I in terminus_storage))
 		return
 	for_by_tcl(terminus, /obj/item/terminus_drive)
 		if(terminus.synchronized)
@@ -54,8 +54,16 @@ var/global/list/terminus_storage = list()
 			terminus.tooltip_rebuild = TRUE
 	terminus_storage -= I
 	I.stored = null
+	boutput(user,"[I] - [user] - [location]")
 
 	src.transfer_stored_item_extra(I, location, add_to_storage, user)
+
+//don't allow storage interaction while terminus is shut
+
+/datum/storage/terminus/storage_item_attack_by(obj/item/W,mob/user)
+	if(!linked_item:synchronized)
+		return TRUE
+	..()
 
 /datum/storage/terminus/storage_item_attack_hand(mob/user)
 	if(!linked_item:synchronized)
