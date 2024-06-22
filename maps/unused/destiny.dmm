@@ -29510,6 +29510,7 @@
 	icon_state = "pipe-sj2";
 	name = "undeliverable mail router"
 	},
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "ioI" = (

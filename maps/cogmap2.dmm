@@ -46939,6 +46939,7 @@
 /area/station/crew_quarters/market)
 "cHn" = (
 /obj/stool/chair,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"

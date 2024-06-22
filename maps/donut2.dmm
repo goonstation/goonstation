@@ -18249,6 +18249,7 @@
 /area/station/science/chemistry)
 "cWY" = (
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
