@@ -91282,6 +91282,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"xnQ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/quartermaster/cargooffice)
 "xnS" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -153110,7 +153116,7 @@ woz
 owR
 jTW
 dUg
-jTW
+xnQ
 jTW
 wfM
 dXK

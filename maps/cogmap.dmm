@@ -54063,6 +54063,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
+"pqj" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/crew_quarters/supplylobby)
 "pqX" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
 /obj/mapping_helper/firedoor_spawn,
@@ -123142,7 +123148,7 @@ bAf
 clg
 egN
 sQp
-bTB
+pqj
 bUW
 bUU
 bUU

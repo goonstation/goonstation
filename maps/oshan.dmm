@@ -44214,6 +44214,13 @@
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"ukG" = (
+/obj/decal/stripe_caution,
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor,
+/area/station/crew_quarters/market{
+	name = "Supply Lobby"
+	})
 "ulP" = (
 /obj/window_blinds/cog2/left,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -79445,7 +79452,7 @@ bxC
 bxC
 mJV
 bAx
-bBO
+ukG
 bBO
 bEk
 bFh
