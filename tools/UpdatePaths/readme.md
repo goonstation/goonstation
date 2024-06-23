@@ -10,8 +10,6 @@ Drag one of the scripts in the “Scripts” folder onto the .bat file “Update
 
 Use this tool before using MapMerge2 or opening the map in an map editor. This is because the map editor may discard any unknown paths not found in the /tg/station environment (or what it builds after parsing `tgstation.dme`).
 
-Goonstation note: This won't catch maps in +secret or randomrooms by default, just edit the .py and set `default_map_directory = "../../+secret/maps"` and `"../../assets/maps"`
-
 ## Scriptmaking:
 
 This tool updates paths in the game to new paths. For instance:
