@@ -11498,6 +11498,7 @@
 	dir = 1;
 	pixel_y = 0
 	},
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "bxf" = (

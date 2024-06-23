@@ -25390,6 +25390,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
+"kFb" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/yellowblack/corner{
+	dir = 8
+	},
+/area/station/bridge/customs{
+	name = "Bridge Reception"
+	})
 "kFd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/device/radio/beacon,
@@ -102837,7 +102845,7 @@ dZG
 vuR
 xXM
 kaL
-kaL
+kFb
 wEt
 kaL
 rdQ

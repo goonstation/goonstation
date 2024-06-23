@@ -23733,6 +23733,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"kHJ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/crew_quarters/supplylobby)
 "kHX" = (
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -79984,7 +79990,7 @@ aAV
 wQw
 qXa
 rWa
-rDU
+kHJ
 rDU
 aFD
 aHv
