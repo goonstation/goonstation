@@ -380,6 +380,516 @@
 		opencomputer(usr)
 		return
 
+// the big boyo pod construction tool
+
+//mode defines for tool
+#define EFIF_MODE_DRILL 0
+#define EFIF_MODE_FLOORS 1
+#define EFIF_MODE_R_FLOORS 2
+#define EFIF_MODE_WALLS 3
+#define EFIF_MODE_REPAIR 4
+
+//construction time modifier per tile
+#define EFIF_FLOOR_BUILD_TIME 2
+#define EFIF_R_FLOOR_BUILD_TIME 3
+#define EFIF_WALL_BUILD_TIME 4
+//walls will also require the floor build time if built directly on space
+
+//construction cost per tile
+#define EFIF_FLOOR_COST 1
+#define EFIF_R_FLOOR_COST 2
+#define EFIF_WALL_COST 4
+
+/obj/item/shipcomponent/mainweapon/constructor
+	name = "EFIF-1 Construction System"
+	desc = "A pair of elaborate robotic arms equipped for large-scale construction and asteroid demolition."
+	current_projectile = new/datum/projectile/laser/drill/cutter
+	appearanceString = "pod_weapon_drills"
+	icon_state = "util-arms"
+	firerate = 12
+	var/mode = EFIF_MODE_DRILL
+	///Current count of loaded steel sheets (only accepts steel, as metalforming is designed for it)
+	var/steel_sheets = 0
+	///Maximum allowable sheets loaded within tool
+	var/max_sheets = 200
+	///Secondary toggleable setting to increase build size (can be deactivated for fine work)
+	var/wide_field = FALSE
+
+	///Currently active construction fields
+	var/list/active_fields = list()
+
+	attack_self(var/mob/user)
+		if(src.steel_sheets > 0)
+			var/obj/item/madesheets = new /obj/item/sheet/steel(src)
+			madesheets.amount = src.steel_sheets
+			user.put_in_hand_or_drop(madesheets)
+			src.steel_sheets = 0
+			boutput(user,SPAN_NOTICE("You eject the steel sheets stored in [src]."))
+			return
+		..()
+
+	Fire(var/mob/user,var/shot_dir_override = -1)
+		switch(mode)
+
+			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
+				if(ON_COOLDOWN(src, "fire", firerate))
+					return
+				if(src.mode != EFIF_MODE_R_FLOORS && ship.z == 1) //antigrief
+					boutput(user,SPAN_ALERT("The construction system isn't cleared to operate in this mode within this sector."))
+					playsound(ship, 'sound/machines/buzz-two.ogg', 20, 1)
+					return
+				if(length(src.active_fields) >= 1)
+					return
+				if(!src.check_sheets())
+					boutput(user,SPAN_ALERT("The construction system is out of metal sheets and requires reloading."))
+					playsound(ship, 'sound/machines/buzz-two.ogg', 20, 1)
+					return
+
+				if(ship.bound_height == 64)
+					src.do_construct(mode,TRUE)
+				else
+					src.do_construct(mode,FALSE)
+
+				playsound(src.loc, 'sound/machines/rock_drill.ogg', 30, 1)
+				// Necessary when not calling base fire proc
+				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], attempting to construct [mode == EFIF_MODE_WALLS ? "walls" : "floors"] at [log_loc(ship)].")
+
+			if(EFIF_MODE_REPAIR)
+				if(ON_COOLDOWN(src, "fire", firerate))
+					return
+				if(length(src.active_fields) >= 1)
+					return
+
+				if(ship.bound_height == 64)
+					src.do_repair(TRUE,user)
+				else
+					src.do_repair(FALSE,user)
+
+				// Necessary when not calling base fire proc
+				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], attempting to repair an area at [log_loc(ship)].")
+
+			else
+				..()
+
+
+	///Helper proc that checks if enough sheets are available for building given current build mode and ship size
+	proc/check_sheets(var/mode_specify)
+		if(!mode_specify)
+			mode_specify = mode
+		. = FALSE
+		var/sizemult = 1
+		if(ship.bound_height == 64)
+			sizemult = 2
+		if(src.wide_field)
+			sizemult += 2
+		if(mode_specify == EFIF_MODE_FLOORS && src.steel_sheets >= EFIF_FLOOR_COST * sizemult)
+			return TRUE
+		else if(mode_specify == EFIF_MODE_R_FLOORS && src.steel_sheets >= EFIF_R_FLOOR_COST * sizemult)
+			return TRUE
+		else if(mode_specify == EFIF_MODE_WALLS && src.steel_sheets >= EFIF_WALL_COST * sizemult)
+			return TRUE
+
+	///Selects locations for construction operation and initiates action bar
+	proc/do_construct(var/bldmode, var/large_pod)
+		var/list/build_locations = list()
+
+		//oh lordy
+		if(large_pod)
+			switch(ship.dir)
+				if(NORTH)
+					build_locations += locate(ship.x,ship.y+2,ship.z)
+					build_locations += locate(ship.x+1,ship.y+2,ship.z)
+					if(src.wide_field)
+						build_locations += locate(ship.x-1,ship.y+2,ship.z)
+						build_locations += locate(ship.x+2,ship.y+2,ship.z)
+				if(EAST)
+					build_locations += locate(ship.x+2,ship.y,ship.z)
+					build_locations += locate(ship.x+2,ship.y+1,ship.z)
+					if(src.wide_field)
+						build_locations += locate(ship.x+2,ship.y-1,ship.z)
+						build_locations += locate(ship.x+2,ship.y+2,ship.z)
+				if(SOUTH)
+					build_locations += locate(ship.x,ship.y-1,ship.z)
+					build_locations += locate(ship.x+1,ship.y-1,ship.z)
+					if(src.wide_field)
+						build_locations += locate(ship.x-1,ship.y-1,ship.z)
+						build_locations += locate(ship.x+2,ship.y-1,ship.z)
+				if(WEST)
+					build_locations += locate(ship.x-1,ship.y,ship.z)
+					build_locations += locate(ship.x-1,ship.y+1,ship.z)
+					if(src.wide_field)
+						build_locations += locate(ship.x-1,ship.y-1,ship.z)
+						build_locations += locate(ship.x-1,ship.y+2,ship.z)
+		else
+			build_locations += get_step(ship,ship.dir)
+			if(src.wide_field)
+				switch(ship.dir)
+					if(NORTH)
+						build_locations += locate(ship.x+1,ship.y+1,ship.z)
+						build_locations += locate(ship.x-1,ship.y+1,ship.z)
+					if(EAST)
+						build_locations += locate(ship.x+1,ship.y+1,ship.z)
+						build_locations += locate(ship.x+1,ship.y-1,ship.z)
+					if(SOUTH)
+						build_locations += locate(ship.x-1,ship.y-1,ship.z)
+						build_locations += locate(ship.x+1,ship.y-1,ship.z)
+					if(WEST)
+						build_locations += locate(ship.x-1,ship.y-1,ship.z)
+						build_locations += locate(ship.x-1,ship.y+1,ship.z)
+
+		if(!length(build_locations))
+			return
+
+		for(var/turf/T in build_locations)
+			if(build_mode_eval(T))
+				var/obj/overlay/construction_field/newfield = new /obj/overlay/construction_field(T)
+				newfield.to_build = bldmode
+				src.active_fields += newfield
+		actions.start(new /datum/action/bar/construction_field(src.ship,src,src.mode),src.ship)
+
+	///Selects locations for construction operation and initiates action bar. Needs construction recall on turf or area to work
+	proc/do_repair(var/large_pod,var/mob/user)
+		var/list/build_locations = list()
+		var/turf/turfA
+		var/turf/turfB
+
+		//much easier
+		if(large_pod)
+			switch(ship.dir)
+				if(NORTH)
+					turfA = locate(ship.x,ship.y+2,ship.z)
+					turfB = locate(ship.x+1,ship.y+2,ship.z)
+				if(EAST)
+					turfA = locate(ship.x+2,ship.y,ship.z)
+					turfB = locate(ship.x+2,ship.y+1,ship.z)
+				if(SOUTH)
+					turfA = locate(ship.x,ship.y-1,ship.z)
+					turfB = locate(ship.x+1,ship.y-1,ship.z)
+				if(WEST)
+					turfA = locate(ship.x-1,ship.y,ship.z)
+					turfB = locate(ship.x-1,ship.y+1,ship.z)
+		else
+			turfA = get_step(ship,ship.dir)
+
+		build_locations += turfA
+		if(turfB)
+			build_locations += turfB
+		if(src.wide_field)
+			build_locations += get_step(turfA,ship.dir)
+			if(turfB)
+				build_locations += get_step(turfB,ship.dir)
+
+		if(!length(build_locations))
+			return
+
+		var/cost_estimate = 0
+
+		for(var/turf/T in build_locations) //once
+			if(T.type != T.path_old && istype(get_area(T),/area/station))
+				var/mode_instruction //cost calculation
+				if(ispath(T.path_old,/turf/simulated/floor/engine) || ispath(T.path_old,/turf/simulated/floor/shuttlebay))
+					mode_instruction = EFIF_MODE_R_FLOORS
+				else if(ispath(T.path_old,/turf/simulated/floor) && !ispath(T.path_old,/turf/simulated/floor/plating/airless/asteroid))
+					mode_instruction = EFIF_MODE_FLOORS
+				else if(ispath(T.path_old,/turf/simulated/wall/auto) && !ispath(T.path_old,/turf/simulated/wall/auto/asteroid))
+					mode_instruction = EFIF_MODE_WALLS
+				else
+					continue
+				var/obj/overlay/construction_field/newfield = new /obj/overlay/construction_field(T)
+				newfield.to_build = mode_instruction
+				newfield.repair_mode = TRUE
+				cost_estimate += get_cost_mod(newfield)
+				src.active_fields += newfield
+
+		if(!length(active_fields))
+			boutput(user,SPAN_ALERT("The construction system can't find any repair data for this location."))
+			playsound(ship, 'sound/machines/click.ogg', 20, 1)
+			return
+
+		if(src.steel_sheets < cost_estimate)
+			for(var/obj/O in src.active_fields)
+				qdel(O)
+			src.active_fields = list()
+			boutput(user,SPAN_ALERT("The construction system has inadequate metal sheets for the targeted repair."))
+			playsound(ship, 'sound/machines/buzz-two.ogg', 20, 1)
+			return
+
+		playsound(src.loc, 'sound/machines/rock_drill.ogg', 30, 1)
+		actions.start(new /datum/action/bar/construction_field(src.ship,src,src.mode),src.ship)
+
+	///Helper proc to get an individual construction field's cost (used by action bar as well)
+	proc/get_cost_mod(var/obj/overlay/construction_field/F)
+		switch(F.to_build)
+			if(EFIF_MODE_FLOORS)
+				return EFIF_FLOOR_COST
+			if(EFIF_MODE_R_FLOORS)
+				return EFIF_R_FLOOR_COST
+			if(EFIF_MODE_WALLS)
+				return EFIF_WALL_COST
+
+	///Helper proc to determine suitability of current tile for non-repair construction field application
+	proc/build_mode_eval(var/turf/T)
+		. = FALSE
+		//floors can be built on plating, but not other floors
+		if (mode == EFIF_MODE_FLOORS || mode == EFIF_MODE_R_FLOORS)
+			if(istype(T,/turf/simulated/floor/plating))
+				return TRUE
+		//walls can be built on most floors. avoid some types that are unsuitable
+		if (mode == EFIF_MODE_WALLS)
+			if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/airbridge) && !istype(T,/turf/simulated/floor/shuttle)\
+				&& !istype(T,/turf/simulated/floor/setpieces) && !istype(T,/turf/simulated/floor/martian))
+				return TRUE
+		//fallback: space is good
+		if (istype(T,/turf/space))
+			return TRUE
+
+	opencomputer(mob/user as mob)
+		if(user.loc != src.ship)
+			return
+		src.add_dialog(user)
+
+		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
+		if(src.active)
+			dat +="<B>Weapon Mode:</B><BR>"
+			switch(mode)
+				if(EFIF_MODE_FLOORS)
+					dat+="<B>Floors</B><BR>"
+					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+				if(EFIF_MODE_R_FLOORS)
+					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<B>Reinforced Floors</B><BR>"
+					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+				if(EFIF_MODE_WALLS)
+					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<B>Walls</B><BR>"
+					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+				if(EFIF_MODE_REPAIR)
+					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<B>Repair</B><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+				else
+					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<B>Disassembly</B><BR>"
+			dat+="<BR>"
+			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
+
+		else
+			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
+		user.Browse(dat, "window=ship_main_weapon")
+		onclose(user, "ship_main_weapon")
+		return
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+			src.add_dialog(usr)
+
+		if (href_list["floors"])
+			mode = EFIF_MODE_FLOORS
+			firerate = 15
+
+		else if (href_list["r_floors"])
+			mode = EFIF_MODE_R_FLOORS
+			firerate = 25
+
+		else if (href_list["walls"])
+			mode = EFIF_MODE_WALLS
+			firerate = 35
+
+		else if (href_list["repair"])
+			mode = EFIF_MODE_REPAIR
+			firerate = 15
+
+		else if(href_list["cutter"])
+			mode = EFIF_MODE_DRILL
+			firerate = 12
+
+		else if(href_list["wide_field"])
+			wide_field = !wide_field
+
+		opencomputer(usr)
+		return
+
+/obj/overlay/construction_field
+	name = "energy"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "buildeffect"
+	layer = EFFECTS_LAYER_BASE
+	///Tracks the build type of what each field is building for cost calculation and placement logic
+	var/to_build
+	///If in repair mode, build the precise initial turf
+	var/repair_mode = FALSE
+
+/datum/action/bar/construction_field
+	var/obj/machinery/vehicle/pod
+	var/obj/item/shipcomponent/mainweapon/constructor/buildtool
+	var/mode
+	///Sum of current attempted construction's cost in sheets
+	var/action_build_cost = 0
+	duration = 1 SECONDS
+
+	New(var/obj/thepod,var/obj/thetool,var/passmode)
+		src.pod = thepod
+		src.buildtool = thetool
+		src.mode = passmode
+		for (var/obj/overlay/construction_field/F in buildtool.active_fields)
+			src.duration += src.get_duration_mod(F)
+			src.action_build_cost += buildtool.get_cost_mod(F)
+		..()
+
+	proc/get_duration_mod(var/obj/overlay/construction_field/F)
+		switch(F.to_build)
+			if(EFIF_MODE_FLOORS)
+				return EFIF_FLOOR_BUILD_TIME
+			if(EFIF_MODE_R_FLOORS)
+				return EFIF_R_FLOOR_BUILD_TIME
+			if(EFIF_MODE_WALLS)
+				var/space_adjustment = EFIF_WALL_BUILD_TIME
+				if(istype(get_turf(F),/turf/space))
+					space_adjustment += EFIF_FLOOR_BUILD_TIME
+				return space_adjustment
+
+	///Check whether dense objects are present in build fields; interrupt any fields which have been blocked
+	proc/dense_object_refresh()
+		. = FALSE
+		for (var/obj/overlay/construction_field/field in buildtool.active_fields)
+			for (var/obj/O in get_turf(field))
+				if (O.density && !(istype(O, /obj/structure/girder)))
+					src.action_build_cost -= buildtool.get_cost_mod(field)
+					buildtool.active_fields -= field
+					qdel(field)
+					break
+
+	onStart()
+		..()
+		//didn't work right for some reason
+		/*
+		if(pod.bound_height == 64)
+			bar.pixel_x += 16
+			bar.pixel_y += 16
+			border.pixel_x += 16
+			border.pixel_y += 16
+			updateBar()
+		*/
+
+		if (buildtool.steel_sheets < action_build_cost)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.dense_object_refresh()
+
+		if (!length(buildtool.active_fields))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt(var/flag)
+		for(var/atom/field in buildtool.active_fields)
+			qdel(field)
+		buildtool.active_fields = list()
+		..()
+
+	onDelete()
+		for(var/atom/field in buildtool.active_fields)
+			qdel(field)
+		buildtool.active_fields = list()
+		..()
+
+	onEnd()
+		..()
+		src.dense_object_refresh()
+		if (buildtool.steel_sheets < action_build_cost || !length(buildtool.active_fields))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		///Plural management for log formatting
+		var/multy = FALSE
+		if (length(buildtool.active_fields) > 1)
+			multy = TRUE
+
+		playsound(owner, 'sound/machines/rock_drill.ogg', 30, 1)
+
+		///Flag set for log reporting; 1 is floors, 2 is walls
+		var/build_types = 0
+
+		for (var/obj/overlay/construction_field/field in buildtool.active_fields)
+			var/turf/T = get_turf(field)
+			var/turf/built
+			if(field.repair_mode == FALSE)
+				switch(field.to_build)
+					if(EFIF_MODE_FLOORS)
+						build_types |= 1
+						built = T.ReplaceWithFloor()
+					if(EFIF_MODE_R_FLOORS)
+						build_types |= 1
+						built = T.ReplaceWithEngineFloor()
+					if(EFIF_MODE_WALLS)
+						build_types |= 2
+						for (var/obj/O in T) //tidy up girders and lattices
+							if (istype(O, /obj/structure/girder) || istype(O,/obj/lattice))
+								qdel(O)
+						built = T.ReplaceWithWall()
+				if(built)
+					built.inherit_area()
+			else
+				switch(field.to_build)
+					if(EFIF_MODE_FLOORS)
+						build_types |= 1
+					if(EFIF_MODE_R_FLOORS)
+						build_types |= 1
+					if(EFIF_MODE_WALLS)
+						build_types |= 2
+						for (var/obj/O in T) //tidy up girders and lattices
+							if (istype(O, /obj/structure/girder) || istype(O,/obj/lattice))
+								qdel(O)
+				T.ReplaceWithInitial()
+			qdel(field)
+
+		var/what_we_built
+		switch(build_types)
+			if(1)
+				if(multy)
+					what_we_built = "floors"
+				else
+					what_we_built = "a floor"
+			if(2)
+				if(multy)
+					what_we_built = "walls"
+				else
+					what_we_built = "a wall"
+			if(3) //implicitly multiple
+				what_we_built = "floors and walls"
+
+		logTheThing(LOG_STATION, owner, "[mode == EFIF_MODE_REPAIR ? "repairs" : "constructs"] [what_we_built] with a pod at [log_loc(owner)].")
+		buildtool.steel_sheets -= action_build_cost
+
+#undef EFIF_MODE_DRILL
+#undef EFIF_MODE_FLOORS
+#undef EFIF_MODE_R_FLOORS
+#undef EFIF_MODE_WALLS
+#undef EFIF_MODE_REPAIR
+
+#undef EFIF_FLOOR_BUILD_TIME
+#undef EFIF_R_FLOOR_BUILD_TIME
+#undef EFIF_WALL_BUILD_TIME
+
+#undef EFIF_FLOOR_COST
+#undef EFIF_R_FLOOR_COST
+#undef EFIF_WALL_COST
+
+
 /obj/item/shipcomponent/mainweapon/syndicate_purge_system
 	name = "Syndicate Purge System"
 	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
