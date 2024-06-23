@@ -2161,7 +2161,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 15
 	recoil_max = 60
 
-
 	var/guaranteed_uses = MAX_USES	// allows for just over two volleys before it starts breaking
 	var/firemode = ONE_BARREL
 
@@ -2173,7 +2172,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		ammo = new/obj/item/ammo/bullets/pipeshot/plasglass
 		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/plasglass)
-		name = "Four Letter Word" //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
+		name = initial(name) //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
 		UpdateIcon()
 
 	get_help_message(dist, mob/user)
@@ -2207,19 +2206,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		//Go up to the limit defined by the firing mode, but don't exceed however many bullets are in the gun BEFORE we started firing
 		for(i=1, ((i <= priorammo) && (i <= firemode)), i++)
-			..() //shoot an additional ith time
+			..() //shoot an additional ith time (just goes once if it's in single shot)
 			guaranteed_uses-- //damage the gun an additional ith time
 
 		//you're shooting multiple shotgun shells out of a garbage gun at the same time. don't think there won't be consequences
-		if((firemode == TWO_BARRELS) && (priorammo != 0))
+		if((firemode != ONE_BARREL) && (priorammo == 2)) // two shells are shot, can be in 2 or 4 mode
 			boutput(user, SPAN_ALERT("The [src] jumps in your hands!"))
-			animate_shake(user, 2, 3, 3, 0, 0)
 			user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 5, remove_stamina_below_zero = 0)
-		if((firemode == ALL_BARRELS) && (priorammo != 0))
+		else if((firemode == ALL_BARRELS) && (priorammo <= 3)) //3 or more shells, can only be in all barrel mode
 			sleep(0.3) //give it a micro-delay
 			if (src.canshoot(user))
 				boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
-				animate_shake(user, 2, 5, 5, 0, 0)
 				//this might seem punishing but keep in mind it's FOUR whole shotgun shells at once.
 				user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 
@@ -2233,7 +2230,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 					user.visible_message(SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"), SPAN_ALERT("The [src] gives out!"))
 
-					if(firemode == ALL_BARRELS) //ohhh, you REALLY fucked up now.
+					if((firemode == ALL_BARRELS) && (priorammo == 4)) //ohhh, you REALLY fucked up now.
 						explosion(src, get_turf(src), 0, 0.5, 1.5, 4)
 
 					//replace the gun with broken version
