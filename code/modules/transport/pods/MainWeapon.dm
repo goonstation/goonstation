@@ -450,7 +450,7 @@
 				else
 					src.do_construct(mode,FALSE)
 
-				playsound(src.loc, 'sound/machines/constructor_work.ogg', 30, 0)
+				playsound(src.loc, 'sound/machines/constructor_work.ogg', 30, 1)
 				// Necessary when not calling base fire proc
 				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], attempting to construct [mode == EFIF_MODE_WALLS ? "walls" : "floors"] at [log_loc(ship)].")
 
@@ -654,7 +654,7 @@
 			src.sadbuzz()
 			return
 
-		playsound(src.loc, 'sound/machines/constructor_work.ogg', 30, 0)
+		playsound(src.loc, 'sound/machines/constructor_work.ogg', 30, 1)
 		actions.start(new /datum/action/bar/construction_field(src.ship,src,src.mode),src.ship)
 
 	///Helper proc to get an individual construction field's cost (used by action bar as well)
@@ -863,7 +863,7 @@
 		if (length(buildtool.active_fields) > 1)
 			multy = TRUE
 		if(duration > 2 SECONDS)
-			playsound(owner, 'sound/machines/constructor_work.ogg', 30, 0)
+			playsound(owner, 'sound/machines/constructor_work.ogg', 30, 1)
 
 		///Flag set for log reporting; 1 is floors, 2 is walls
 		var/build_types = 0
