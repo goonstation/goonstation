@@ -57936,6 +57936,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"jfJ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/space,
+/area/space)
 "jgJ" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 8;
@@ -62384,6 +62388,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
+"rDn" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/crew_quarters/supplylobby)
 "rET" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light_switch{
@@ -77660,7 +77670,7 @@ cyX
 cyX
 cyX
 cyX
-cCO
+jfJ
 cCO
 cCO
 cCO
@@ -99332,7 +99342,7 @@ ais
 acY
 bex
 ffZ
-cvm
+rDn
 bNn
 cqq
 cqq

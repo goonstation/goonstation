@@ -25390,6 +25390,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
+"kFb" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/yellowblack/corner{
+	dir = 8
+	},
+/area/station/bridge/customs{
+	name = "Bridge Reception"
+	})
 "kFd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/device/radio/beacon,
@@ -30775,7 +30783,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -33854,7 +33861,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "oip" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "oiD" = (
@@ -38476,13 +38483,13 @@
 	aiControlDisabled = 1;
 	dir = 4
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)
 "qip" = (
@@ -55120,24 +55127,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "xDM" = (
-/obj/storage/secure/closet/immersion/security,
-/obj/item/clothing/suit/space/diving/security{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/security{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "xEe" = (
@@ -102855,7 +102845,7 @@ dZG
 vuR
 xXM
 kaL
-kaL
+kFb
 wEt
 kaL
 rdQ

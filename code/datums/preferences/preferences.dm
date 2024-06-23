@@ -443,9 +443,9 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("update-nameMiddle")
-				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
+				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle, allowEmpty = TRUE)
 				if (isnull(new_name))
-					return
+					new_name = ""
 				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
@@ -453,8 +453,7 @@ var/list/removed_jobs = list(
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
 				else if (is_blank_string(new_name) && new_name != "")
-					tgui_alert(usr, "Your middle name cannot contain only spaces.", "Blank name")
-					return
+					new_name = ""
 				new_name = capitalize(new_name)
 				src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 				src.profile_modified = TRUE
@@ -559,10 +558,10 @@ var/list/removed_jobs = list(
 			if ("update-flavorText")
 				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", html_decode(src.flavor_text), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.flavor_text = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -570,10 +569,10 @@ var/list/removed_jobs = list(
 			if ("update-securityNote")
 				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", html_decode(src.security_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.security_note = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -581,10 +580,10 @@ var/list/removed_jobs = list(
 			if ("update-medicalNote")
 				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", html_decode(src.medical_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.medical_note = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -592,10 +591,10 @@ var/list/removed_jobs = list(
 			if ("update-syndintNote")
 				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", html_decode(src.synd_int_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [LONG_FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.synd_int_note = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -823,7 +822,7 @@ var/list/removed_jobs = list(
 					src.font_size = initial(src.font_size)
 					return TRUE
 				else
-					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 100, 1)
+					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
 					if (!isnull(new_font_size))
 						src.font_size = new_font_size
 						src.profile_modified = TRUE

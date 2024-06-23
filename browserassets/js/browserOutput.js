@@ -211,11 +211,6 @@ function output(message, group, skipNonEssential, forceScroll) {
         }
     }
 
-    //Url stuff
-    // if (message.length && flag != 'preventLink') {
-    //  message = anchorme(message);
-    // }
-
     opts.messageCount++;
 
     //Pop the top message off if history limit reached

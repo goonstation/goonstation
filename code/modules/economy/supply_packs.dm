@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
-	access = access_maxsec
+	access = access_armory
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
@@ -1180,6 +1180,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
+
+/datum/supply_packs/furniture_sleek
+	name = "Sleek Furnishings Crate"
+	desc = "A flat-packed set of tables, stools and chairs in a glossy black."
+	contains = list(/obj/item/furniture_parts/table/sleek = 4,
+					/obj/item/furniture_parts/stool/sleek = 2,
+					/obj/item/furniture_parts/sleekchair =2)
+	cost = PAY_EXECUTIVE*2
+	containertype = /obj/storage/crate/wooden
+	containername = "Sleek Furnishings Crate"
 
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"

@@ -20573,13 +20573,13 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner,
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "gfk" = (
@@ -23715,7 +23715,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "hai" = (
@@ -42007,11 +42007,11 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "mGx" = (
@@ -60029,6 +60029,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "see" = (
@@ -66850,13 +66851,13 @@
 	aiControlDisabled = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ukq" = (

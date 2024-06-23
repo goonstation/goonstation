@@ -18249,6 +18249,7 @@
 /area/station/science/chemistry)
 "cWY" = (
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -30293,11 +30294,11 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "kTp" = (
-/obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security/alt{
 	aiHacking = 1
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kTw" = (
@@ -40027,8 +40028,8 @@
 	pixel_y = 1;
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -48264,7 +48265,7 @@
 	req_access = null;
 	turretArea = /area/station/turret_protected/armory_outside
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -49964,13 +49965,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "xdw" = (

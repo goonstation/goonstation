@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/objective/crew)
 ABSTRACT_TYPE(/datum/objective/crew/captain)
 /datum/objective/crew/captain/hat
 	explanation_text = "Don't lose your hat!"
-	medal_name = "Hatris"
+	// medal_name = "Hatris"
 	check_completion()
 		if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat || owner.current.check_contents_for(/obj/item/clothing/head/fancy/captain)))
 			return 1
@@ -86,7 +86,7 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 			return 0
 /datum/objective/crew/captain/drunk
 	explanation_text = "Have alcohol in your bloodstream at the end of the round."
-	medal_name = "Edward Smith"
+	// medal_name = "Edward Smith"
 	check_completion()
 		if(owner.current && owner.current.reagents && owner.current.reagents.has_reagent("ethanol"))
 			return 1
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 /datum/objective/crew/headofsecurity/hat
 	explanation_text = "Don't lose your hat/beret!"
-	medal_name = "Hatris"
+	// medal_name = "Hatris"
 	check_completion()
 		if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/hos_hat))
 			return 1

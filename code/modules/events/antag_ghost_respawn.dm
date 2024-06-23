@@ -396,7 +396,7 @@
 
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
-			message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+			message_admins("[key_name(lucky_dude)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.cleanup()
 		return
 
