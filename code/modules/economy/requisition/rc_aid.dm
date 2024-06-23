@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/multitool
 	name = "multitool"
 	typepath = /obj/item/device/multitool
-	feemod = PAY_EXECUTIVE
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/stack/cable
 	name = "lengths of electrical cabling"
