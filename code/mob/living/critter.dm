@@ -729,29 +729,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			hand_range_attack(target, params)
 			return
 	if (HH.can_attack)
-		if (ismob(target))
-			if (a_intent != INTENT_HELP)
-				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
-
-			switch (a_intent)
-				if (INTENT_HELP)
-					if (can_help)
-						L.help(target, src)
-				if (INTENT_DISARM)
-					if (can_disarm)
-						L.disarm(target, src)
-				if (INTENT_HARM)
-					if (HH.can_attack)
-						L.harm(target, src)
-				if (INTENT_GRAB)
-					if (HH.can_hold_items && can_grab)
-						L.grab(target, src)
-			HH.set_cooldown_overlay()
-			src.lastattacked = target
-
-		else
-			L.attack_hand(target, src)
-			HH.set_cooldown_overlay()
+		L.attack_hand(target, src)
+		HH.set_cooldown_overlay()
 	else
 		boutput(src, SPAN_ALERT("You cannot attack with your [HH.name]!"))
 
