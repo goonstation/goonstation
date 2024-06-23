@@ -2469,6 +2469,17 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
+"aiZ" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/ai{
+	dir = 8
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "aja" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
@@ -6219,9 +6230,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "axi" = (
-/turf/simulated/floor/stairs/wood2/wide{
-	dir = 10
-	},
+/turf/simulated/floor/stairs/wood2/wide,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
@@ -11932,15 +11941,13 @@
 	name = "Book Nook"
 	})
 "aVk" = (
-/turf/simulated/floor/stairs/wood2/middle{
-	dir = 1
-	},
+/turf/simulated/floor/stairs/wood2/middle,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
 "aVl" = (
 /turf/simulated/floor/stairs/wood2/wide{
-	dir = 1
+	dir = 6
 	},
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -12306,6 +12313,11 @@
 /obj/bookshelf/persistent{
 	density = 0;
 	pixel_y = 19
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/info{
@@ -38273,6 +38285,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
+"idB" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/info{
+	name = "Book Nook"
+	})
 "iee" = (
 /obj/table/auto,
 /obj/item/storage/box/evidence,
@@ -40656,6 +40678,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"jNM" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/info{
+	name = "Book Nook"
+	})
 "jNN" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -102239,11 +102271,11 @@ rTU
 qwl
 axl
 aTI
-amJ
+idB
 aVl
 aWD
 aXK
-aVj
+jNM
 jjV
 baQ
 qwW
@@ -113987,7 +114019,7 @@ axk
 aLW
 apW
 uEU
-ase
+aiZ
 atd
 aHW
 auT
