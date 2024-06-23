@@ -627,7 +627,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		var/cost_estimate = 0
 
 		for(var/turf/T in build_locations) //once
-			if(T.type != T.path_old && istype(get_area(T),/area/station))
+			if(T.type != T.path_old && build_mode_eval(T))
 				var/mode_instruction //cost calculation
 				if(ispath(T.path_old,/turf/simulated/floor/engine) || ispath(T.path_old,/turf/simulated/floor/shuttlebay))
 					mode_instruction = EFIF_MODE_R_FLOORS
@@ -670,15 +670,15 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_WALLS)
 				return EFIF_WALL_COST
 
-	///Helper proc to determine suitability of current tile for non-repair construction field application
+	///Helper proc to determine suitability of current tile for construction field application
 	proc/build_mode_eval(var/turf/T)
 		. = FALSE
-		//floors can be built on plating, but not other floors
+		//floors can be built on plating, but not other floors, unless repairing
 		if (mode == EFIF_MODE_FLOORS || mode == EFIF_MODE_R_FLOORS)
 			if(istype(T,/turf/simulated/floor/plating))
 				return TRUE
 		//walls can be built on most floors. avoid some types that are unsuitable
-		if (mode == EFIF_MODE_WALLS)
+		if (mode == EFIF_MODE_WALLS || mode == EFIF_MODE_REPAIR)
 			if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/airbridge) && !istype(T,/turf/simulated/floor/shuttle)\
 				&& !istype(T,/turf/simulated/floor/setpieces) && !istype(T,/turf/simulated/floor/martian))
 				return TRUE
