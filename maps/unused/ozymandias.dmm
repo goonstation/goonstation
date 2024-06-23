@@ -12808,14 +12808,6 @@
 /area/station/medical/maintenance{
 	name = "Medical Booth Morgue"
 	})
-"dxv" = (
-/obj/machinery/manufacturer/hangar{
-	free_resources = list()
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "dxI" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -18088,6 +18080,12 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"eNM" = (
+/obj/machinery/manufacturer/mining{
+	free_resources = list()
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "eNN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/secwing{
@@ -18328,6 +18326,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"eQT" = (
+/obj/machinery/manufacturer/hangar{
+	free_resources = list()
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "eQZ" = (
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -62396,12 +62402,6 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"qpF" = (
-/obj/machinery/manufacturer/mining{
-	free_resources = list()
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
 "qpI" = (
 /obj/table/wood/auto,
 /obj/blind_switch/area/east{
@@ -81593,12 +81593,6 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"uZj" = (
-/obj/machinery/manufacturer/general/grody,
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "uZl" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -84676,6 +84670,12 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
+"vJl" = (
+/obj/machinery/manufacturer/general/grody,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "vJq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -91310,6 +91310,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"xnQ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/quartermaster/cargooffice)
 "xnS" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -122974,7 +122980,7 @@ gpk
 vEb
 vEb
 vEb
-dxv
+eQT
 yiY
 yiY
 yiY
@@ -124186,7 +124192,7 @@ haE
 iMd
 msZ
 kXn
-uZj
+vJl
 fXG
 fXG
 xZC
@@ -126618,7 +126624,7 @@ wfZ
 bJd
 bTA
 xeV
-qpF
+eNM
 iYg
 dSM
 wfZ
@@ -153138,7 +153144,7 @@ woz
 owR
 jTW
 dUg
-jTW
+xnQ
 jTW
 wfM
 dXK

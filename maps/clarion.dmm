@@ -11485,13 +11485,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
-"bxc" = (
-/obj/stool/chair/yellow{
-	dir = 1;
-	pixel_y = 0
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/warehouse)
 "bxf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -23362,6 +23355,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"jmL" = (
+/obj/stool/chair/yellow{
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/warehouse)
 "jmZ" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -83330,7 +83331,7 @@ acl
 tUu
 okg
 vxd
-bxc
+jmL
 dmf
 aae
 wce

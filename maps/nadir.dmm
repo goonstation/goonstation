@@ -3159,23 +3159,6 @@
 /obj/submachine/record_player,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bsM" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/security/equipment)
 "bsN" = (
 /obj/machinery/light{
 	dir = 1;
@@ -15452,6 +15435,12 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
+"gLf" = (
+/obj/storage/secure/crate/eng/nuclearfuel,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "gLk" = (
 /obj/machinery/computer/general_alert{
 	dir = 8
@@ -25379,6 +25368,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
+"kFb" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/yellowblack/corner{
+	dir = 8
+	},
+/area/station/bridge/customs{
+	name = "Bridge Reception"
+	})
 "kFd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/device/radio/beacon,
@@ -30127,20 +30124,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
-"mzm" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/engine/caution/westeast,
-/area/station/ai_monitored/armory)
 "mzq" = (
 /obj/lattice,
 /obj/cable{
@@ -30774,6 +30757,23 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
+"mOd" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/equipment)
 "mOt" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
@@ -33847,6 +33847,10 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"oip" = (
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/turf/simulated/floor/engine/caution/east,
+/area/station/ai_monitored/armory)
 "oiD" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	density = 0;
@@ -34070,10 +34074,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"onW" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor/engine/caution/west,
-/area/station/ai_monitored/armory)
 "oon" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -38465,6 +38465,20 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
+"qih" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/ai_monitored/armory)
 "qip" = (
 /obj/item/rods/steel{
 	amount = 50;
@@ -39981,10 +39995,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/station/hallway/primary/northwest)
-"qTc" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/turf/simulated/floor/engine/caution/east,
-/area/station/ai_monitored/armory)
 "qTl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41360,12 +41370,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"rDZ" = (
-/obj/storage/secure/crate/eng/nuclearfuel,
-/turf/simulated/floor/yellowblack,
-/area/station/engine/monitoring{
-	name = "Nuclear Control Room"
-	})
 "rEj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -55128,6 +55132,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"xDM" = (
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/engine/caution/west,
+/area/station/ai_monitored/armory)
 "xEe" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/industrial,
@@ -91372,7 +91380,7 @@ nEE
 nnZ
 gUq
 mKo
-bsM
+mOd
 qov
 ufa
 uBF
@@ -91675,7 +91683,7 @@ wdh
 bKB
 qLh
 qLh
-mzm
+qih
 qLh
 qLh
 qLh
@@ -91978,7 +91986,7 @@ vsc
 qLh
 rrM
 lXp
-qTc
+oip
 pAs
 orC
 vfp
@@ -92886,7 +92894,7 @@ fYI
 aso
 lBs
 wxF
-onW
+xDM
 kiS
 acA
 qJo
@@ -102843,7 +102851,7 @@ dZG
 vuR
 xXM
 kaL
-kaL
+kFb
 wEt
 kaL
 rdQ
@@ -113698,7 +113706,7 @@ ibV
 ocD
 lFw
 cyT
-rDZ
+gLf
 unT
 tGl
 ocD

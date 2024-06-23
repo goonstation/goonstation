@@ -281,6 +281,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 10,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 10,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 5,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 5,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -297,6 +298,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 15,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -373,6 +375,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 15,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -460,6 +463,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -476,6 +480,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -682,6 +687,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 20,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -773,6 +779,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/damselfish = 10,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 10,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 5,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 5,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -802,6 +809,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 15,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\

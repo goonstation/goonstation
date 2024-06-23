@@ -3154,6 +3154,35 @@
 	dir = 6
 	},
 /area/station/crew_quarters/quarters)
+"alP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_y = 13
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "alQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
@@ -7130,17 +7159,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"aBf" = (
-/obj/deployable_turret/riot/active,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "aBg" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -7180,6 +7198,19 @@
 	},
 /obj/window/reinforced{
 	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"aBr" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -39730,23 +39761,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"elD" = (
-/obj/decal/stripe_caution,
-/obj/table/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -10;
-	pixel_y = 8
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/turf/simulated/floor,
-/area/station/security/main)
 "elK" = (
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 10
@@ -41788,18 +41802,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"fEZ" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "fFs" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
@@ -42385,6 +42387,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"gdD" = (
+/obj/decal/stripe_caution,
+/obj/table/auto,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "geM" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -46872,14 +46891,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
-"jOZ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "jPp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50519,6 +50530,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"mMm" = (
+/obj/deployable_turret/riot/active,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -54044,6 +54066,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
+"pqj" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/crew_quarters/supplylobby)
 "pqX" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
 /obj/mapping_helper/firedoor_spawn,
@@ -61511,19 +61539,6 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
-"uXH" = (
-/obj/machinery/atmospherics/pipe/simple,
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/security/main)
 "uYN" = (
 /obj/stool/chair{
 	dir = 4
@@ -62562,6 +62577,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"vUR" = (
+/obj/machinery/door/airlock/pyro/security{
+	aiControlDisabled = 1;
+	name = "Armory"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "vVq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/grille/catwalk,
@@ -64066,35 +64093,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"xaH" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/item/storage/box/flashbang_kit{
-	pixel_y = 13
-	},
-/obj/item/storage/box/flashbang_kit{
-	pixel_x = -6;
-	pixel_y = 13
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -9;
-	pixel_y = 2
-	},
-/obj/table/auto,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "xbK" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -64947,6 +64945,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/hotloop)
+"xOA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "xOJ" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -94688,7 +94694,7 @@ qEI
 jIz
 sDK
 avd
-elD
+gdD
 awK
 xra
 azI
@@ -94994,7 +95000,7 @@ pSF
 ant
 ayj
 azJ
-uXH
+aBr
 aCD
 aDT
 pGt
@@ -95577,7 +95583,7 @@ act
 acV
 foS
 jYE
-jOZ
+xOA
 fWA
 nPU
 niY
@@ -95883,7 +95889,7 @@ adE
 adE
 adE
 ajj
-fEZ
+vUR
 dPe
 sfv
 xnp
@@ -96179,7 +96185,7 @@ gsU
 nxc
 act
 acV
-aBf
+mMm
 adE
 adE
 adE
@@ -96486,7 +96492,7 @@ uvs
 ahr
 ahr
 ahr
-xaH
+alP
 acV
 wpH
 stQ
@@ -96789,7 +96795,7 @@ adE
 adE
 adE
 aji
-fEZ
+vUR
 iqt
 dSf
 aHB
@@ -123151,7 +123157,7 @@ bAf
 clg
 egN
 sQp
-bTB
+pqj
 bUW
 bUU
 bUU

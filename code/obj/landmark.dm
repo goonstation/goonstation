@@ -133,6 +133,10 @@ var/global/list/job_start_locations = list()
 	name = "Chaplain"
 	icon_state = "chaplain"
 
+/obj/landmark/start/job/mail_courier
+	name = "Mail Courier"
+	icon_state = "mail_courier"
+
 // Engineering
 
 /obj/landmark/start/job/engineer

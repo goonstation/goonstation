@@ -2030,12 +2030,6 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/engine/substation/west)
-"ahC" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/west)
 "ahH" = (
 /obj/machinery/hydro_growlamp,
 /obj/cable{
@@ -13769,6 +13763,13 @@
 	dir = 5
 	},
 /area/station/solar/north)
+"bFl" = (
+/obj/disposalpipe/segment,
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "bIN" = (
 /obj/potted_plant{
 	dir = 4
@@ -65394,7 +65395,7 @@ aQn
 agj
 ahw
 aix
-ahC
+bFl
 aiD
 lLE
 alT

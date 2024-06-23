@@ -5671,25 +5671,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
-"auP" = (
-/obj/table/wood/auto,
-/obj/item/paper{
-	rand_pos = 1
-	},
-/obj/item/paper{
-	rand_pos = 1
-	},
-/obj/item/paper{
-	rand_pos = 1
-	},
-/obj/item/pen/fancy,
-/obj/machinery/door_control/bolter/new_walls/west{
-	id = "cc_diplo"
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
 "auQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power)
@@ -7688,26 +7669,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"aDf" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "aDi" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -21448,10 +21409,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
-"bJp" = (
-/obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/orangeblack,
-/area/station/storage/warehouse)
 "bJq" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -29640,6 +29597,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"coH" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/deployable_turret/riot/active{
+	dir = 1
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/ai_monitored/armory)
 "coJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -34110,15 +34084,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
-"eZy" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/security/secwing)
 "eZD" = (
 /obj/machinery/vending/security,
 /obj/machinery/light/emergency,
@@ -35145,21 +35110,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"fQT" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Diplomatic Quarters";
-	id = "cc_diplo"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
 "fRH" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -35763,6 +35713,12 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
+"gjV" = (
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/ai_monitored/armory)
 "gkk" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -36569,6 +36525,15 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"gNY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/security/secwing)
 "gOK" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire,
@@ -44469,17 +44434,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"mGB" = (
-/obj/machinery/computer3/generic/communications,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/recharger/wall/sticky,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/ai_monitored/armory)
 "mGJ" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
@@ -45478,23 +45432,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/escape)
-"nyT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/deployable_turret/riot/active{
-	dir = 1
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/ai_monitored/armory)
 "nzn" = (
 /obj/disposaloutlet/east,
 /obj/machinery/conveyor/WE{
@@ -46101,6 +46038,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"nTc" = (
+/obj/disposalpipe/segment/bent/west,
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack,
+/area/station/storage/warehouse)
 "nTR" = (
 /obj/machinery/cargo_router/kd_mining,
 /obj/strip_door{
@@ -47586,6 +47528,25 @@
 "paR" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
+"pbG" = (
+/obj/table/wood/auto,
+/obj/item/paper{
+	rand_pos = 1
+	},
+/obj/item/paper{
+	rand_pos = 1
+	},
+/obj/item/paper{
+	rand_pos = 1
+	},
+/obj/item/pen/fancy,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cc_diplo"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/station/crew_quarters/heads{
+	name = "Diplomatic Quarters"
+	})
 "pcs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -51310,12 +51271,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"rLL" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/ai_monitored/armory)
 "rMi" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 8
@@ -52637,6 +52592,26 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"sNE" = (
+/obj/machinery/door/airlock/pyro/command{
+	aiControlDisabled = 1;
+	name = "Armory";
+	req_access = null
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "sNO" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -55340,6 +55315,21 @@
 "uLg" = (
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
+"uLm" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Diplomatic Quarters";
+	id = "cc_diplo"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/heads,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads{
+	name = "Diplomatic Quarters"
+	})
 "uMr" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light,
@@ -57007,6 +56997,17 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/east)
+"vXP" = (
+/obj/machinery/computer3/generic/communications,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/recharger/wall/sticky,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/ai_monitored/armory)
 "vYc" = (
 /obj/machinery/light,
 /obj/landmark/start/job/botanist,
@@ -105163,7 +105164,7 @@ bEq
 bFu
 bGu
 bHO
-bJp
+nTc
 bKL
 cok
 krZ
@@ -119977,7 +119978,7 @@ vTU
 aTu
 vTU
 cba
-rLL
+gjV
 sSD
 fIi
 qha
@@ -120279,7 +120280,7 @@ mff
 dNQ
 uNX
 cba
-mGB
+vXP
 sUs
 gYY
 mQH
@@ -120580,12 +120581,12 @@ wNf
 iyk
 ojj
 ecx
-aDf
+sNE
 mCq
 rHm
 gYY
 tDF
-nyT
+coH
 qUf
 gvi
 nHM
@@ -120880,7 +120881,7 @@ bVQ
 lfD
 gLP
 ykc
-eZy
+gNY
 eLr
 cba
 dSr
@@ -125672,7 +125673,7 @@ mmz
 usA
 cfr
 vrp
-auP
+pbG
 mmz
 cqS
 eJX
@@ -126576,7 +126577,7 @@ aWZ
 aXX
 mmz
 mmz
-fQT
+uLm
 mmz
 mmz
 mmz

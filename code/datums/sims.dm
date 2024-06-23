@@ -268,7 +268,7 @@
 			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
 					holder.owner.setStatus("filthy", 3 MINUTES)
-			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_FILTHY) && holder.owner.hasStatus("rancid"))
 				holder.owner.delStatus("rancid")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
