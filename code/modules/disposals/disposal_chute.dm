@@ -674,7 +674,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
-		flush = 1
 
 		if (!is_processing)
 			SubscribeToProcess()
@@ -854,7 +853,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (msg)
 				chute.visible_message(msg)
 
-			chute.ui_interact(user)
+			if (istype(src.chute, /obj/machinery/disposal/transport))
+				src.chute.flush = TRUE
+			else
+				chute.ui_interact(user)
 
 			chute.update()
 		..()
