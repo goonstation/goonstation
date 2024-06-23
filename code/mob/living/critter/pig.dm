@@ -90,4 +90,5 @@
 
 	New(loc)
 		..()
+		src.flags |= TABLEPASS
 		animate_bumble(src)
