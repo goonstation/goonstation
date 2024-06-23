@@ -63,12 +63,12 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/mudlands
 	turf_type = /turf/unsimulated/floor/auto/dirt
-	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_types = list(/obj/stone/random = 100, /obj/fakeobject/smallrocks = 100)
 	flora_density = 3
 
 /datum/biome/desert
 	turf_type = /turf/unsimulated/floor/auto/sand
-	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_types = list(/obj/stone/random = 100, /obj/fakeobject/smallrocks = 100)
 	flora_density = 1
 
 	fauna_types = list(/mob/living/critter/small_animal/scorpion=15, /mob/living/critter/small_animal/rattlesnake=1, /mob/living/critter/small_animal/armadillo=1, /mob/living/critter/small_animal/wasp=5)
@@ -81,7 +81,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/snow
 	turf_type = /turf/unsimulated/floor/auto/snow
-	flora_types = list(/obj/stone/snow/random = 100, /obj/decal/fakeobjects/smallrocks = 100, /obj/shrub/snow/random{last_use=INFINITY} = 100, /obj/stone/random = 5)
+	flora_types = list(/obj/stone/snow/random = 100, /obj/fakeobject/smallrocks = 100, /obj/shrub/snow/random{last_use=INFINITY} = 100, /obj/stone/random = 5)
 	flora_density = 2
 
 	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=10)
@@ -89,11 +89,11 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/snow/rocky
 	turf_type = /turf/unsimulated/floor/auto/snow
-	flora_types = list(/obj/stone/snow/random = 100, /obj/stone/random = 20, /obj/decal/fakeobjects/smallrocks = 20)
+	flora_types = list(/obj/stone/snow/random = 100, /obj/stone/random = 20, /obj/fakeobject/smallrocks = 20)
 	flora_density = 5
 
 /datum/biome/snow/forest
-	flora_types = list(/obj/tree/snow_random = 50, /obj/shrub/snow/random{last_use=INFINITY} = 100, /obj/stone/snow/random = 10, /obj/decal/fakeobjects/smallrocks = 5)
+	flora_types = list(/obj/tree/snow_random = 50, /obj/shrub/snow/random{last_use=INFINITY} = 100, /obj/stone/snow/random = 10, /obj/fakeobject/smallrocks = 5)
 	flora_density = 20
 
 /datum/biome/snow/forest/thick
@@ -104,7 +104,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/snow/rough
 	turf_type = /turf/unsimulated/floor/auto/snow/rough
-	flora_types = list(/obj/stone/snow/random = 100, /obj/decal/fakeobjects/smallrocks = 50, /obj/stone/random = 5)
+	flora_types = list(/obj/stone/snow/random = 100, /obj/fakeobject/smallrocks = 50, /obj/stone/random = 5)
 	flora_density = 3
 
 	fauna_density = 0.2
@@ -112,7 +112,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/plains
 	turf_type = /turf/unsimulated/floor/auto/grass/swamp_grass
-	flora_types = list(/obj/tree/elm_random = 50, /obj/shrub/random{last_use=INFINITY} = 100, /obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_types = list(/obj/tree/elm_random = 50, /obj/shrub/random{last_use=INFINITY} = 100, /obj/stone/random = 100, /obj/fakeobject/smallrocks = 100)
 	flora_density = 15
 
 /datum/biome/forest
@@ -151,7 +151,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/jungle
 	turf_type = /turf/unsimulated/floor/auto/grass/leafy
-	flora_types = list(/obj/tree/elm_random = 75, /obj/shrub/random{last_use=INFINITY} = 150, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
+	flora_types = list(/obj/tree/elm_random = 75, /obj/shrub/random{last_use=INFINITY} = 150, /obj/stone/random = 10, /obj/fakeobject/smallrocks = 10, /obj/machinery/plantpot/bareplant/swamp_flora = 1)
 	flora_density = 40
 
 	fauna_types = list(/mob/living/critter/small_animal/dragonfly/ai_controlled = 50, /mob/living/critter/small_animal/firefly/ai_controlled = 10, /mob/living/critter/small_animal/firefly/lightning/ai_controlled = 2, /mob/living/critter/small_animal/firefly/pyre/ai_controlled = 1, /mob/living/critter/small_animal/iguana = 3, /mob/living/critter/small_animal/frog=1)

@@ -846,7 +846,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/turret_protected/ai)
 "acJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -857,7 +857,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -883,7 +883,7 @@
 /area/ghostdrone_factory)
 "acN" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -1036,7 +1036,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "adu" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
@@ -18863,7 +18863,7 @@
 	name = "Restricted Area"
 	})
 "bdm" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 20
 	},
 /obj/cable{
@@ -18894,7 +18894,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/decal/fakeobjects/robot{
+/obj/fakeobject/robot{
 	anchored = 1;
 	desc = "How long has this been down here?"
 	},
@@ -19104,7 +19104,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -19422,7 +19422,7 @@
 	name = "Restricted Area"
 	})
 "bfg" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /obj/table/auto,
 /obj/item/disk/data/floppy/monkey,
 /turf/simulated/floor/airless/scorched,
@@ -19455,7 +19455,7 @@
 	name = "Dead plant";
 	pixel_y = 10
 	},
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/airless/scorched,
 /area/station/wreckage{
@@ -55792,7 +55792,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "dmV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -55835,7 +55835,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "dnf" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -69748,7 +69748,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "rgr" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	desc = "It's all smashed.";
 	dir = 4;
 	pixel_x = 28

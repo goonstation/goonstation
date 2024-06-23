@@ -30,7 +30,7 @@
 /turf/space,
 /area/space)
 "aah" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "aai" = (
@@ -59,7 +59,7 @@
 /turf/simulated/floor/airless/damaged1,
 /area/space)
 "aan" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -83,14 +83,14 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aar" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -178,7 +178,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aaC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -2569,7 +2569,7 @@
 	name = "Information Office persistent notice board";
 	persistent_id = "information office"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
@@ -5822,7 +5822,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "avC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -9816,7 +9816,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "aMs" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aMt" = (
@@ -10022,7 +10022,7 @@
 /turf/space,
 /area/space)
 "aNx" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
@@ -10577,7 +10577,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
 "aQi" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /obj/stool/chair{
@@ -10586,7 +10586,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aQj" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -10924,7 +10924,7 @@
 /area/ghostdrone_factory)
 "aRr" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aRs" = (
@@ -11444,7 +11444,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "aTs" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
@@ -11626,14 +11626,14 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/escape)
 "aUf" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUg" = (
 /obj/machinery/drone_recharger/factory,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -11769,20 +11769,20 @@
 /area/station/crew_quarters/sauna)
 "aUQ" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUR" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUS" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -12088,7 +12088,7 @@
 /area/ghostdrone_factory)
 "aWd" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aWe" = (
@@ -12677,7 +12677,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "aYn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -28566,7 +28566,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/research_outpost/indigo_rye)
 "cli" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -28646,7 +28646,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/research_outpost/indigo_rye)
 "clu" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -29218,7 +29218,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cnh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -29237,7 +29237,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cni" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -29249,7 +29249,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cnj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -29356,7 +29356,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "cnC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -39970,7 +39970,7 @@
 /turf/simulated/floor/caution/corner/se,
 /area/station/engine/hotloop)
 "jpl" = (
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,
@@ -48063,7 +48063,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
@@ -54748,7 +54748,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "uqp" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},

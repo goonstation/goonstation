@@ -3193,7 +3193,7 @@
 	})
 "anA" = (
 /obj/disposalpipe/segment,
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/black,
@@ -14290,7 +14290,7 @@
 /turf/space,
 /area/space)
 "bzO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -14348,7 +14348,7 @@
 	},
 /area/space)
 "bzV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -30631,7 +30631,7 @@
 /turf/space,
 /area/mining/magnet)
 "iRw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
@@ -43671,7 +43671,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -53698,7 +53698,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "uNs" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Looks like it needs to be replaced.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";

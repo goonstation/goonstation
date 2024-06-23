@@ -58,7 +58,7 @@ atoms can be rendered by reference in browser
 	desc = "Some bright green grass on the ground."
 	icon_state = "grass"
 
-/obj/decal/fakeobjects/greekgrass
+/obj/fakeobject/greekgrass
 	name = "grass"
 	icon = 'icons/turf/adventure_gannets.dmi'
 	icon_state = "grass"
@@ -137,7 +137,7 @@ atoms can be rendered by reference in browser
 	bullet_act()
 		return
 
-/obj/decal/fakeobjects/rockpile //small rock pile decor
+/obj/fakeobject/rockpile //small rock pile decor
 	name = "rock pile"
 	desc = "Some rocks that tumbled off of the cliff walls."
 	icon = 'icons/turf/adventure_gannets.dmi'

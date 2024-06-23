@@ -1,0 +1,3 @@
+/obj/decals/fakeobjects : /obj/fakeobject
+/obj/decals/fakeobjects/@SUBTYPES : /obj/fakeobject/@SUBTYPES
+/obj/decals/fakeobject/@SUBTYPES : /obj/fakeobject/@SUBTYPES

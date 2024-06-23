@@ -27,7 +27,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#if fexists("+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
+#if !defined(FASTDMM) && !defined(DISABLE_SECRETS)
 #include "+secret\__secret.dme"
 #endif
 #include "code\__secret_public.dme"
@@ -1800,6 +1800,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
 #include "code\obj\electric_chair.dm"
+#include "code\obj\fakeobject.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
 #include "code\obj\geodes.dm"

@@ -10185,7 +10185,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aNh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

@@ -99,7 +99,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "as" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	tag = "icon-offbroken (EAST)";
 	name = "broken computer";
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -119,7 +119,7 @@
 /turf/simulated/floor/airless/damaged2,
 /area/noGenerate)
 "av" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -219,7 +219,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/noGenerate)
 "aQ" = (
-/obj/decal/fakeobjects/sealedsleeper{
+/obj/fakeobject/sealedsleeper{
 	icon_state = "sealedsleeper";
 	dir = 8
 	},
@@ -360,7 +360,7 @@
 /turf/simulated/floor/airless/grime,
 /area/noGenerate)
 "bg" = (
-/obj/decal/fakeobjects/sealedsleeper{
+/obj/fakeobject/sealedsleeper{
 	icon_state = "sealedsleeper";
 	dir = 4
 	},
@@ -416,7 +416,7 @@
 /turf/simulated/floor/airless/damaged1,
 /area/noGenerate)
 "bn" = (
-/obj/decal/fakeobjects/falseladder,
+/obj/fakeobject/falseladder,
 /turf/simulated/floor/airless/damaged2,
 /area/noGenerate)
 "bo" = (
@@ -442,18 +442,18 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/noGenerate)
 "bq" = (
-/obj/decal/fakeobjects/falseladder,
+/obj/fakeobject/falseladder,
 /turf/simulated/floor/airless/grime,
 /area/noGenerate)
 "br" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater";
 	dir = 2
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "bs" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "bt" = (
@@ -495,15 +495,15 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "by" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/airless/circuit/vintage,
 /area/noGenerate)
 "bz" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/airless/circuit/vintage,
 /area/noGenerate)
 "bA" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	icon_state = "alt_propulsion";
 	dir = 2
 	},
