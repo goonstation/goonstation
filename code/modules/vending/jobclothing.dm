@@ -267,4 +267,3 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
 
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap, 1, hidden=1)
