@@ -1191,6 +1191,26 @@
 		else
 			boutput(activator, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
+/* needs a fishing related medal
+/datum/achievementReward/ai_tetris
+	title = "(AI Face) Fish"
+	desc = "Turns you into a fish!"
+	required_medal = " put the fishing medal name here"
+
+	rewardActivate(var/mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/living/intangible/aieye/AE = activator
+				A = AE.mainframe
+			A.custom_emotions = ai_emotions | list("Fish (reward)" = "ai_fish")
+			A.faceEmotion = "ai_fish"
+			A.set_color("#111111")
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, SPAN_ALERT("You need to be an AI to use this, you goof!"))
+*/
 
 /datum/achievementReward/borg_automoton
 	title = "(Cyborg Skin) Automaton"
