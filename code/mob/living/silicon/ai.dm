@@ -1242,7 +1242,7 @@ or don't if it uses a custom topopen overlay
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
+				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris" && faceEmotion != "ai_fish")
 					AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
 						AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
