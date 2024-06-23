@@ -74,6 +74,7 @@
 
 		SPAWN(300)
 			market_shift()
+			auto_market_refresh()
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
@@ -315,6 +316,12 @@
 
 			update_shipping_data()
 			update_buy_prices()
+
+	///Ensure market refresh / mail delivery happens regularly, even if no one checks the console
+	proc/auto_market_refresh()
+		src.timeleft()
+		SPAWN(5 MINUTES)
+			src.auto_market_refresh()
 
 	proc/generate_mail(time_since_previous)
 		var/adjustment = max(time_since_previous, 2 MINUTES)
