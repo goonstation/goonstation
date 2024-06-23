@@ -392,7 +392,7 @@
 //construction time modifier per tile
 #define EFIF_FLOOR_BUILD_TIME 2
 #define EFIF_R_FLOOR_BUILD_TIME 3
-#define EFIF_WALL_BUILD_TIME 4
+#define EFIF_WALL_BUILD_TIME 6
 //walls will also require the floor build time if built directly on space
 
 //construction cost per tile
@@ -408,7 +408,7 @@
 	icon_state = "util-arms"
 	firerate = 12
 	var/mode = EFIF_MODE_DRILL
-	///Current count of loaded steel sheets (only accepts steel, as metalforming is designed for it)
+	///Current count of loaded steel sheets (only accepts steel, as the system's metalforming is designed for it)
 	var/steel_sheets = 0
 	///Maximum allowable sheets loaded within tool
 	var/max_sheets = 200
@@ -436,13 +436,13 @@
 					return
 				if(src.mode != EFIF_MODE_R_FLOORS && ship.z == 1) //antigrief
 					boutput(user,SPAN_ALERT("The construction system isn't cleared to operate in this mode within this sector."))
-					playsound(ship, 'sound/machines/buzz-two.ogg', 20, 1)
+					src.sadbuzz()
 					return
 				if(length(src.active_fields) >= 1)
 					return
 				if(!src.check_sheets())
 					boutput(user,SPAN_ALERT("The construction system is out of metal sheets and requires reloading."))
-					playsound(ship, 'sound/machines/buzz-two.ogg', 20, 1)
+					src.sadbuzz()
 					return
 
 				if(ship.bound_height == 64)
@@ -450,7 +450,7 @@
 				else
 					src.do_construct(mode,FALSE)
 
-				playsound(src.loc, 'sound/machines/rock_drill.ogg', 30, 1)
+				playsound(src.loc, 'sound/machines/constructor_work.ogg', 30, 0)
 				// Necessary when not calling base fire proc
 				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], attempting to construct [mode == EFIF_MODE_WALLS ? "walls" : "floors"] at [log_loc(ship)].")
 
@@ -471,6 +471,9 @@
 			else
 				..()
 
+	proc/sadbuzz()
+		for (var/mob/M in ship)
+			M.playsound_local(ship, 'sound/machines/buzz-two.ogg', 20, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 
 	///Helper proc that checks if enough sheets are available for building given current build mode and ship size
 	proc/check_sheets(var/mode_specify)
@@ -488,6 +491,42 @@
 			return TRUE
 		else if(mode_specify == EFIF_MODE_WALLS && src.steel_sheets >= EFIF_WALL_COST * sizemult)
 			return TRUE
+
+	proc/load_sheets()
+		var/turf/load_from
+		var/load_success
+		if(ship.bound_height == 64) //always load at the front side of the pod, left offset
+			switch(ship.dir)
+				if(NORTH)
+					load_from = locate(ship.x,ship.y+2,ship.z)
+				if(EAST)
+					load_from = locate(ship.x+2,ship.y+1,ship.z)
+				if(SOUTH)
+					load_from = locate(ship.x+1,ship.y-1,ship.z)
+				if(WEST)
+					load_from = locate(ship.x-1,ship.y,ship.z)
+		else
+			load_from = get_step(ship,ship.dir)
+		if(!load_from)
+			return
+		for (var/obj/O in load_from)
+			if(istype(O,/obj/item/sheet))
+				var/obj/item/sheet/S = O
+				if(!S.material || !(S.material.getID() == "steel"))
+					continue
+				load_success = TRUE
+				var/amount_to_load = min(src.max_sheets - src.steel_sheets,S.amount)
+				src.steel_sheets += amount_to_load
+				if(S.amount > amount_to_load)
+					S.amount -= amount_to_load
+					if(S.inventory_counter)
+						S.inventory_counter.update_number(S.amount)
+					S.UpdateIcon()
+				else //fully consumed
+					qdel(S)
+		if(load_success)
+			for (var/mob/M in ship)
+				M.playsound_local(ship, 'sound/machines/chime.ogg', 20, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 
 	///Selects locations for construction operation and initiates action bar
 	proc/do_construct(var/bldmode, var/large_pod)
@@ -603,7 +642,8 @@
 
 		if(!length(active_fields))
 			boutput(user,SPAN_ALERT("The construction system can't find any repair data for this location."))
-			playsound(ship, 'sound/machines/click.ogg', 20, 1)
+			for (var/mob/M in ship)
+				M.playsound_local(ship, 'sound/machines/click.ogg', 20, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 			return
 
 		if(src.steel_sheets < cost_estimate)
@@ -611,10 +651,10 @@
 				qdel(O)
 			src.active_fields = list()
 			boutput(user,SPAN_ALERT("The construction system has inadequate metal sheets for the targeted repair."))
-			playsound(ship, 'sound/machines/buzz-two.ogg', 20, 1)
+			src.sadbuzz()
 			return
 
-		playsound(src.loc, 'sound/machines/rock_drill.ogg', 30, 1)
+		playsound(src.loc, 'sound/machines/constructor_work.ogg', 30, 0)
 		actions.start(new /datum/action/bar/construction_field(src.ship,src,src.mode),src.ship)
 
 	///Helper proc to get an individual construction field's cost (used by action bar as well)
@@ -684,6 +724,7 @@
 					dat+="<B>Disassembly</B><BR>"
 			dat+="<BR>"
 			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
+			dat+="[src.steel_sheets] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
 
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
@@ -720,6 +761,9 @@
 
 		else if(href_list["wide_field"])
 			wide_field = !wide_field
+
+		else if(href_list["load"])
+			src.load_sheets()
 
 		opencomputer(usr)
 		return
@@ -818,8 +862,8 @@
 		var/multy = FALSE
 		if (length(buildtool.active_fields) > 1)
 			multy = TRUE
-
-		playsound(owner, 'sound/machines/rock_drill.ogg', 30, 1)
+		if(duration > 2 SECONDS)
+			playsound(owner, 'sound/machines/constructor_work.ogg', 30, 0)
 
 		///Flag set for log reporting; 1 is floors, 2 is walls
 		var/build_types = 0
