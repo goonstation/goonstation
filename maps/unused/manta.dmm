@@ -26114,6 +26114,7 @@
 /area/station/quartermaster/cargobay)
 "bvp" = (
 /obj/decal/stripe_caution,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bvq" = (

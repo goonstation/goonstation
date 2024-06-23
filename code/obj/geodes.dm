@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			AM.set_loc(src.loc)
 
 	ex_act(severity, last_touched, power, datum/explosion/explosion)
-		if (explosion.power >= src.break_power)
+		if (!src.broken && ((explosion?.power || power) >= src.break_power))
 			src.break_open()
 
 /obj/geode/crystal

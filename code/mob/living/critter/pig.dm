@@ -83,3 +83,12 @@
 		limb.borg_damage_bonus = 5
 		limb.human_desorient_duration = 0
 		limb.human_stam_damage = 20
+
+/mob/living/critter/small_animal/pig/flying
+	icon_state = "pig-fly"
+	ai_type = /datum/aiHolder/pig_flying
+
+	New(loc)
+		..()
+		src.flags |= TABLEPASS
+		animate_bumble(src)

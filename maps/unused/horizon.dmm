@@ -48814,6 +48814,7 @@
 /area/station/crew_quarters/courtroom)
 "gwQ" = (
 /obj/disposalpipe/junction/right/west,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/hallway/secondary/east)
 "gxF" = (

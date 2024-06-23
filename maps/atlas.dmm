@@ -2038,6 +2038,7 @@
 /area/station/engine/substation/west)
 "ahC" = (
 /obj/disposalpipe/segment,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},

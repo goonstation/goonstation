@@ -60029,6 +60029,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "see" = (
