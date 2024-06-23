@@ -36717,6 +36717,12 @@
 "qhg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
+"qhs" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 "qhz" = (
 /obj/decal/tile_edge/stripe,
 /obj/item/material_piece/slag{
@@ -103004,7 +103010,7 @@ aKz
 xhx
 oqv
 dKJ
-dKJ
+qhs
 gpS
 lyA
 cdh

@@ -872,7 +872,11 @@ var/global/list/cycling_airlocks = list()
 			// if they share entry id, don't close, e.g. double doors facing space.
 			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
 				continue
-			D.close()
+			if (D.operating) //can happen with really short airlocks, see atlas south maint
+				SPAWN(0.5 SECONDS)
+					D.close()
+			else
+				D.close()
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
