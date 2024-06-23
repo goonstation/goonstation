@@ -2154,7 +2154,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper Four Letter Word"
 	desc = "For when you REALLY need to get the point across."
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "coachgun" //for sake of not rewriting a ton of break action code, it uses the same names as the DB, but in a different DMI. (change?)
+	icon_state = "quadb"
 	item_state = "quadbarrel" //custom inhands, though.
 
 	camera_recoil_sway_min = 10 //VIOLENCE!
@@ -2163,6 +2163,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	var/guaranteed_uses = MAX_USES	// allows for just over two volleys before it starts breaking
 	var/firemode = ONE_BARREL
+	var/priorammo
 
 	force = MELEE_DMG_RIFLE
 	max_ammo_capacity = 4
@@ -2199,13 +2200,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else  //7+
 			. += " It's barely damaged."
 
+
+	update_icon()
+		. = ..()
+		src.icon_state = "quadb" + (!src.broke_open ? "" : "-empty" )
+
 	shoot(var/target, var/start, var/mob/user)
 
-		var/i //Because we can't initialize variables when we're declaring the loop. thanks, DM.
-		var/priorammo = src.ammo.amount_left
+		//var/i //Because we can't initialize variables when we're declaring the loop. thanks, DM.
+		priorammo = src.ammo.amount_left
 
 		//Go up to the limit defined by the firing mode, but don't exceed however many bullets are in the gun BEFORE we started firing
-		for(i=1, ((i <= priorammo) && (i <= firemode)), i++)
+		for(var/i=1, ((i <= priorammo) && (i <= firemode)), i++)
 			..() //shoot an additional ith time (just goes once if it's in single shot)
 			guaranteed_uses-- //damage the gun an additional ith time
 
@@ -2299,7 +2305,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/brokenquadbarrel
 	two_handed = TRUE
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "flw-broken"
+	icon_state = "quadb-broken"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi' //gotta make it use gun inhands
 	item_state = "quadbarrel"
 	name = "Broken Four Letter Word"
@@ -2324,7 +2330,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
-		W.icon = "scrap4"
+		W.icon = 'icons/obj/materials.dmi'
+		W.icon_state = "scrap4"
 
 		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
 		G.icon_state = "gib1"
