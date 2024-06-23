@@ -1,5 +1,9 @@
 
 (t)fri jun 21 24
+(u)mintyphresh
+(p)19460
+(e)🔄🎭|C-Rework, A-RP
+(+)Showering with clothes on now restores the hygiene motive, with higher chemprot limiting the maximum cleanliness you can achieve.
 (u)JORJ949
 (p)19592
 (e)🆕📦|C-Feature, A-Game-Objects
