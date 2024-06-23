@@ -400,6 +400,9 @@
 #define EFIF_R_FLOOR_COST 2
 #define EFIF_WALL_COST 4
 
+TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
+	mats = list("metal_superdense" = 50, "claretine" = 20, "electrum" = 10)
+
 /obj/item/shipcomponent/mainweapon/constructor
 	name = "EFIF-1 Construction System"
 	desc = "A pair of elaborate robotic arms equipped for large-scale construction and asteroid demolition."
