@@ -21447,6 +21447,7 @@
 /area/station/storage/warehouse)
 "bJp" = (
 /obj/disposalpipe/segment/bent/west,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "bJq" = (
