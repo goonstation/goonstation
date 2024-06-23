@@ -628,7 +628,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 		for(var/turf/T in build_locations) //once
 			if(T.type != T.path_old && build_mode_eval(T))
-				var/mode_instruction //cost calculation
+				var/mode_instruction //cost calculation, and restricting which paths can be repaired to
 				if(ispath(T.path_old,/turf/simulated/floor/engine) || ispath(T.path_old,/turf/simulated/floor/shuttlebay))
 					mode_instruction = EFIF_MODE_R_FLOORS
 				else if(ispath(T.path_old,/turf/simulated/floor) && !ispath(T.path_old,/turf/simulated/floor/plating/airless/asteroid))
