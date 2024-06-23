@@ -79,6 +79,9 @@
 
 	// Remove the maptext line after a short delay.
 	SPAWN(MAPTEXT_FADE_IN_DURATION + MAPTEXT_LINGER_DURATION)
+		if (QDELETED(src))
+			return
+
 		src.lines -= text
 		animate(text, alpha = 0, pixel_y = text.pixel_y + MAPTEXT_FADE_OUT_DISTANCE, time = MAPTEXT_FADE_OUT_DURATION, flags = ANIMATION_PARALLEL)
 

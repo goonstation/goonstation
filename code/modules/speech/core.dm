@@ -158,12 +158,10 @@ Things To Implement:
 - Zoldorf
 - Ghostdrones (language)
 - Radio brain (bioeffect)
-- Radio station mixing desk
 
 Old Code To Remove:
 - `say_quote`
 - `say_understands`
-- `voice_name`
 - `get_heard_name`
 - `try_render_chat_to_admin`
 - `process_accents`
