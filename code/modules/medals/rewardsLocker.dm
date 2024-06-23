@@ -1192,7 +1192,7 @@
 			boutput(activator, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
 /* needs a fishing related medal
-/datum/achievementReward/ai_tetris
+/datum/achievementReward/ai_fish
 	title = "(AI Face) Fish"
 	desc = "Turns you into a fish!"
 	required_medal = " put the fishing medal name here"
