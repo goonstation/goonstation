@@ -380,7 +380,7 @@
 		opencomputer(usr)
 		return
 
-// the big boyo pod construction tool
+// Extra-Facility Integrity Fabricator: the big boyo pod construction tool
 
 //mode defines for tool
 #define EFIF_MODE_DRILL 0
@@ -404,8 +404,8 @@
 	name = "EFIF-1 Construction System"
 	desc = "A pair of elaborate robotic arms equipped for large-scale construction and asteroid demolition."
 	current_projectile = new/datum/projectile/laser/drill/cutter
-	appearanceString = "pod_weapon_drills"
-	icon_state = "util-arms"
+	appearanceString = "pod_weapon_efif"
+	icon_state = "constructor"
 	firerate = 12
 	var/mode = EFIF_MODE_DRILL
 	///Current count of loaded steel sheets (only accepts steel, as the system's metalforming is designed for it)
@@ -473,7 +473,7 @@
 
 	proc/sadbuzz()
 		for (var/mob/M in ship)
-			M.playsound_local(ship, 'sound/machines/buzz-two.ogg', 20, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
+			M.playsound_local(ship, 'sound/machines/buzz-two.ogg', 5, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 
 	///Helper proc that checks if enough sheets are available for building given current build mode and ship size
 	proc/check_sheets(var/mode_specify)
@@ -526,7 +526,7 @@
 					qdel(S)
 		if(load_success)
 			for (var/mob/M in ship)
-				M.playsound_local(ship, 'sound/machines/chime.ogg', 20, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
+				M.playsound_local(ship, 'sound/machines/chime.ogg', 5, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 
 	///Selects locations for construction operation and initiates action bar
 	proc/do_construct(var/bldmode, var/large_pod)
@@ -643,7 +643,7 @@
 		if(!length(active_fields))
 			boutput(user,SPAN_ALERT("The construction system can't find any repair data for this location."))
 			for (var/mob/M in ship)
-				M.playsound_local(ship, 'sound/machines/click.ogg', 20, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
+				M.playsound_local(ship, 'sound/machines/click.ogg', 8, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 			return
 
 		if(src.steel_sheets < cost_estimate)
