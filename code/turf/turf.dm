@@ -798,7 +798,7 @@ var/global/in_replace_with = 0
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
-	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
+	new_turf.icon_old = icon_old
 	new_turf.name_old = name_old
 	new_turf.path_old = old_savedpath
 
