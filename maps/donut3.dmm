@@ -4922,11 +4922,6 @@
 	id = "toxins_o2";
 	operating = 1
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/conveyor/WE{
-	id = "toxins_o2";
-	operating = 1
-	},
 /obj/strip_door{
 	dir = 4;
 	layer = 3
@@ -10441,11 +10436,6 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "cYj" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
-	operating = 1
-	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/conveyor/EW{
 	id = "toxins_n2o";
@@ -33523,12 +33513,7 @@
 "kbt" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
-	operating = 1
-	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
+	id = "toxins_co2";
 	operating = 1
 	},
 /obj/strip_door{
@@ -34275,7 +34260,7 @@
 /obj/machinery/firealarm/east,
 /obj/machinery/light/small/sticky/harsh,
 /obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
+	id = "toxins_co2";
 	operating = 1
 	},
 /turf/simulated/floor/plating/jen,
@@ -57469,11 +57454,6 @@
 	id = "toxins_plasma";
 	operating = 1
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/conveyor/WE{
-	id = "toxins_plasma";
-	operating = 1
-	},
 /obj/strip_door{
 	dir = 4;
 	layer = 3
@@ -74424,6 +74404,9 @@
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "wwb" = (
@@ -78471,14 +78454,15 @@
 	name = "autoname  - SS13";
 	tag = ""
 	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /obj/table/auto,
 /obj/machinery/coffeemaker/engineering{
 	pixel_y = 6
 	},
 /obj/item/kitchen/food_box/sugar_box,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "xAB" = (
