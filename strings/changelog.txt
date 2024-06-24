@@ -1,5 +1,9 @@
 
 (t)mon jun 24 24
+(u)glowbold
+(p)19653
+(e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
+(*)Market refreshes and mail deliveries will now occur automatically.
 (u)Tyrant
 (p)19579
 (e)🪲🗺|C-Bug, A-Mapping
