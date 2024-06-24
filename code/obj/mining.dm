@@ -2509,7 +2509,7 @@ TYPEINFO(/obj/item/cargotele)
 	name = "mineral accumulator"
 	desc = "A powerful device for quick ore and salvage collection and movement."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "gravgen-off"
+	icon_state = "accumulator-off"
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
@@ -2531,11 +2531,11 @@ TYPEINFO(/obj/item/cargotele)
 		if (!src.powercell_image)
 			src.powercell_image = image(src.icon)
 			src.powercell_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			src.powercell_image.icon_state = "gravgen_cell_missing"
+			src.powercell_image.icon_state = "accumulator_cell_missing"
 		if (!src.hatch_image)
 			src.hatch_image = image(src.icon)
 			src.hatch_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			src.hatch_image.icon_state = "gravgen_closed"
+			src.hatch_image.icon_state = "accumulator_closed"
 
 		if(!src.cell)
 			src.UpdateOverlays(src.powercell_image, "powercell")
@@ -2548,9 +2548,9 @@ TYPEINFO(/obj/item/cargotele)
 			src.UpdateOverlays(null, "hatch")
 
 		if(active)
-			icon_state = "gravgen-on"
+			icon_state = "accumulator-on"
 		else
-			icon_state = "gravgen-off"
+			icon_state = "accumulator-off"
 
 
 	attack_hand(var/mob/user)
