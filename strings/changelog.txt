@@ -1,4 +1,9 @@
 
+(t)mon jun 24 24
+(u)Tyrant
+(p)19579
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Fixed Oshan maintenance airlocks not having appropriate maintenance access requirements.
 (t)sun jun 23 24
 (u)tarmunora
 (+)Quartermasters are now forklift certified
