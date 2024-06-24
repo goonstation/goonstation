@@ -78,7 +78,7 @@
 						else
 							var/monkeys = rand(1,3)
 							for(var/i = 0, i < monkeys, i++)
-								fake_attackEx(affected_mob, 'icons/mob/monkey.dmi', "monkey1", pick_string_autokey("names/monkey.txt"))
+								fake_attackEx(affected_mob, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
 					if(2)
 						var/halluc_state = null
 						var/halluc_name = null
