@@ -400,6 +400,10 @@
 #define EFIF_R_FLOOR_COST 2
 #define EFIF_WALL_COST 4
 
+//sheet-loading success flags
+#define LOAD_FULL 1
+#define LOAD_SUCCESS 2
+
 TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	mats = list("metal_superdense" = 50, "claretine" = 20, "electrum" = 10)
 
@@ -410,7 +414,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	appearanceString = "pod_weapon_efif"
 	icon_state = "constructor"
 	firerate = 12
-	var/mode = EFIF_MODE_DRILL
+	var/mode = EFIF_MODE_REPAIR
 	///Current count of loaded steel sheets (only accepts steel, as the system's metalforming is designed for it)
 	var/steel_sheets = 0
 	///Maximum allowable sheets loaded within tool
@@ -430,6 +434,22 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			boutput(user,SPAN_NOTICE("You eject the steel sheets stored in [src]."))
 			return
 		..()
+
+	attackby(obj/item/W, mob/user)
+		var/outcome
+		if (W?.cant_drop)
+			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
+			return ..()
+		else
+			outcome = sheet_load_helper(W, user)
+			if (outcome & LOAD_SUCCESS)
+				boutput(user, SPAN_NOTICE("You load [W] into [src]."))
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
+			if (outcome & LOAD_FULL)
+				boutput(user, SPAN_NOTICE("[src] is[outcome & LOAD_SUCCESS ? " now" : null] fully loaded."))
+			if (outcome < 1)
+				boutput(user, SPAN_ALERT("[src] only accepts steel sheets!"))
+				. = ..()
 
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		switch(mode)
@@ -495,9 +515,10 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		else if(mode_specify == EFIF_MODE_WALLS && src.steel_sheets >= EFIF_WALL_COST * sizemult)
 			return TRUE
 
-	proc/load_sheets()
+	///Ship arms' proc to find and attempt loading of sheets on the ground
+	proc/scoop_up_sheets()
 		var/turf/load_from
-		var/load_success
+		var/loaded_stuff
 		if(ship.bound_height == 64) //always load at the front side of the pod, left offset
 			switch(ship.dir)
 				if(NORTH)
@@ -513,23 +534,41 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		if(!load_from)
 			return
 		for (var/obj/O in load_from)
-			if(istype(O,/obj/item/sheet))
-				var/obj/item/sheet/S = O
-				if(!S.material || !(S.material.getID() == "steel"))
-					continue
-				load_success = TRUE
-				var/amount_to_load = min(src.max_sheets - src.steel_sheets,S.amount)
-				src.steel_sheets += amount_to_load
-				if(S.amount > amount_to_load)
-					S.amount -= amount_to_load
-					if(S.inventory_counter)
-						S.inventory_counter.update_number(S.amount)
-					S.UpdateIcon()
-				else //fully consumed
-					qdel(S)
-		if(load_success)
+			if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
+				loaded_stuff = TRUE
+		if(loaded_stuff)
 			for (var/mob/M in ship)
 				M.playsound_local(ship, 'sound/machines/chime.ogg', 5, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
+			ship.visible_message("<b>[ship]</b> loads metal sheets into its tool.")
+
+	///Sheet-loading proc for both automatic and manual loading. Set up for flag-based return, for responsive player messaging.
+	///Returns FALSE if provided object is unsuitable, LOAD_FULL (1) if storage is full, and/or LOAD_SUCCESS (2) if sheets were loaded.
+	proc/sheet_load_helper(var/obj/O,var/mob/user)
+		. = FALSE
+		if(istype(O,/obj/item/sheet))
+			var/obj/item/sheet/S = O
+			if(!S.material || !(S.material.getID() == "steel"))
+				return
+			var/amount_to_load = min(src.max_sheets - src.steel_sheets,S.amount)
+			. = LOAD_FULL
+			if(amount_to_load <= 0) //we full, return just the full code
+				return
+			. = LOAD_SUCCESS
+			src.steel_sheets += amount_to_load
+			if(S.amount > amount_to_load)
+				S.amount -= amount_to_load
+				if(S.inventory_counter)
+					S.inventory_counter.update_number(S.amount)
+				S.UpdateIcon()
+			else //fully consumed
+				if (S.stored) //avoid Issues if loading from a storage somehow
+					S.stored.transfer_stored_item(S, src, user = user)
+				if (user)
+					user.u_equip(S)
+				qdel(S)
+			if(src.steel_sheets == src.max_sheets) //did this load-up ALSO fill the buffer? if so, let caller know that too
+				. |= LOAD_FULL
+		return
 
 	///Selects locations for construction operation and initiates action bar
 	proc/do_construct(var/bldmode, var/large_pod)
@@ -766,7 +805,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			wide_field = !wide_field
 
 		else if(href_list["load"])
-			src.load_sheets()
+			src.scoop_up_sheets()
 
 		opencomputer(usr)
 		return
@@ -935,6 +974,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 #undef EFIF_FLOOR_COST
 #undef EFIF_R_FLOOR_COST
 #undef EFIF_WALL_COST
+
+#undef LOAD_FULL
+#undef LOAD_SUCCESS
 
 
 /obj/item/shipcomponent/mainweapon/syndicate_purge_system
