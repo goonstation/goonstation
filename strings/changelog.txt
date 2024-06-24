@@ -1,5 +1,6 @@
 
 (t)mon jun 24 24
+(+)RP security officers no longer have access to APCs.
 (u)glowbold
 (p)19653
 (e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
