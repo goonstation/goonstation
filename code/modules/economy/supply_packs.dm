@@ -1106,7 +1106,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "EFIF-1 Construction System"
 	desc = "A top-of-the-line pod-mounted mass construction tool, suitable for large-scale repairs and offsite building projects."
 	category = "Engineering Department"
-	contains = list(/obj/item/shipcomponent/mainweapon/constructor)
+	contains = list(/obj/item/shipcomponent/mainweapon/constructor,
+					/obj/item/paper/efif_disclaimer)
 	cost = PAY_DOCTORATE*15
 	containertype = /obj/storage/secure/crate
 	containername = "EFIF-1 Crate (Cardlocked \[Engineering])"
