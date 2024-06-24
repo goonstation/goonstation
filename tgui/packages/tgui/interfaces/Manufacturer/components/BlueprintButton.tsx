@@ -54,7 +54,7 @@ const getProductionSatisfaction = (
     const target_pattern = requirement_data[i].id;
     const target_amount = requirement_data[i].amount / 10;
     const matchingMaterial = materials_stored.find((material:ResourceData) => (
-      material.amount >= target_amount && material.satisfies?.includes(target_pattern)
+      material.amount > target_amount && material.satisfies?.includes(target_pattern)
     ));
     if (matchingMaterial === undefined) {
       patterns_satisfied.push(false);
