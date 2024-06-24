@@ -6988,6 +6988,7 @@
 /area/station/storage/emergency)
 "aAG" = (
 /obj/machinery/drone_recharger,
+/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aAH" = (
