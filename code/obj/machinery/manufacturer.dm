@@ -272,8 +272,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
-		if (QDELETED(src))
-			return
 		if(src.is_broken())
 			src.build_icon()
 		else
@@ -786,7 +784,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				boutput(user, SPAN_NOTICE("You remove the [src]'s product locks!"))
 			return TRUE
 		return FALSE
-
 
 	attackby(obj/item/W, mob/user)
 		if (src.is_electrified())
