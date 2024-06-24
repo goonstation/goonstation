@@ -97,7 +97,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 // -------------------controller---------------
 TYPEINFO(/obj/item/old_grenade/sawfly)
-	mats = list("CON-1"=2)
+	mats = list("conductive"=2)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
 	desc = "A small device that can be used to fold or deploy sawflies in range."
