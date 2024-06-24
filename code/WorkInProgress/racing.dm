@@ -318,6 +318,104 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		// remove ourselves when we're used
 		holder.removeAbilityInstance(src)
 
+/datum/statusEffect/kart_boost
+	id = "kart_boost"
+	desc = "Owner is currently receiving a speed boost"
+	maxDuration = 10 SECONDS
+
+	onAdd(optional)
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.speed = C.base_speed - C.turbo
+			if (C.driving) C.drive(C.drive_dir, C.speed)
+
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				src.owner.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
+
+	onRemove()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+
+			C.speed = C.base_speed
+			if (C.driving) C.drive(C.drive_dir, C.speed)
+
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				C.ClearSpecificOverlays("boost")
+
+/datum/statusEffect/kart_super
+	id = "kart_super"
+	desc = "Owner is currently invincible"
+	maxDuration = 10 SECONDS
+
+	onAdd(optional)
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.super = TRUE
+			playsound(C, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
+
+			// base clowncars do not use overlays
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				C.AddOverlays(image('icons/misc/racing.dmi', "kart_super"),"super")
+			else
+				C.icon_state = "clowncar_super"
+
+	onRemove()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.super = FALSE
+
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				C.ClearSpecificOverlays("super")
+			else
+				C.icon_state = "clowncar"
+
+/datum/statusEffect/kart_stun
+	id = "kart_stun"
+	desc = "Owner is currently spinning out of control"
+	maxDuration = 5 SECONDS
+	onAdd()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+
+			// if they somehow got hit while boosting, cancel out their boost
+			C.delStatus("kart_boost")
+
+			playsound(C, 'sound/mksounds/cpuspin.ogg', 33, FALSE)
+
+			// this overlay is actually used on the clown car too
+			C.AddOverlays(image('icons/misc/racing.dmi',"broken"),"spin")
+
+			// allow people to pass by us while we're spinning out
+			C.cant_control = TRUE
+			C.set_density(0)
+
+	onUpdate(timePassed)
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.set_dir(turn(C.dir, 90))
+			C.facing = C.dir
+
+	onRemove()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.ClearSpecificOverlays("spin")
+
+			// alright we're back on the road
+			C.cant_control = FALSE
+			C.set_density(1)
+
+			// unspin the kart to our last drive direction to be safe
+			if (C.drive_dir)
+				C.set_dir(C.drive_dir)
+				C.facing = C.drive_dir
+
 /obj/racing_clowncar
 	name = "Turbo Clowncar 2000"
 	desc = ""
