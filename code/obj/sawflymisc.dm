@@ -96,7 +96,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			icon_state_armed = "clusterflyB1"
 
 // -------------------controller---------------
-TYPEINFO(/obj/item/old_grenade/sawfly)
+TYPEINFO(/obj/item/remote/sawflyremote)
 	mats = list("conductive"=2)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
