@@ -787,38 +787,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
-	/*
-	Handling for shocking the user
-	Handling for getting the satchel of an ore scoop
-	Handling for getting the blueprint into a fabricator
-	Handling for loading material bars from a satchel
-	Handling for tools (screwdriver, open maint panel)
-	Handling for tools (welding, repair/load)
-	Handling for cable coils (repair, load)
-	Handling for tools (crowbar, dismantle)
-	Handling for tools (snipping, dismantle)
-	Handling for reconstruction (sheets, reconstruct)
-	Handling for cable coils (reconstruct)
-	Handling for inserting manudrives
-	Grumping for trying to insert sheets/coils/raw mats
-	Handling for inserting material pieces
-	Handling for.. snipping/pulsing calling Attackhand when the panel is open?
-	Handling for early return if a card is scanned successfully
-	Handling for calling parent proc + hitting the machine
-	*/
 
 	attackby(obj/item/W, mob/user)
-		// Handling for shocking the user
 		if (src.is_electrified())
 			if (src.shock(user, 33))
 				return
 
-		// Handling for getting the satchel of an ore scoop
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
 
-		// Handling for getting the blueprint into a fabricator
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
 				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
@@ -857,7 +835,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 			return
 
-		// Handling for loading material bars from a satchel
 		else if (istype(W, /obj/item/satchel))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [W]!"), SPAN_NOTICE("You use [src]'s automatic loader on [W]."))
 			var/amtload = 0
@@ -870,7 +847,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
 			else boutput(user, SPAN_ALERT("No materials loaded!"))
 
-		// Handling for tools (screwdriver, open maint panel)
 		else if (isscrewingtool(W))
 			if (!src.panel_open)
 				src.panel_open = TRUE
@@ -880,7 +856,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 			tgui_process.try_update_ui(user, src)
 
-		// Handling for tools (welding, repair/load)
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -901,7 +876,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health == 100)
 						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
-		// Handling for cable coils (repair, load, reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.panel_open)
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
@@ -925,7 +899,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health >= 50)
 						boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
-		// Handling for tools (wrench, dismantle/reconstruct/load)
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -952,7 +925,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				src.build_icon()
 
-		// Handling for tools (crowbar, dismantle)
 		else if (ispryingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -960,7 +932,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
 
-		// Handling for tools (snipping, dismantle)
 		else if (issnippingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			if (!(status & NOPOWER))
 				if (src.shock(user,100))
@@ -974,14 +945,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			C.UpdateIcon()
 			src.build_icon()
 
-		// Handling for reconstruction (sheets, reconstruct)
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_BOLTS
 			qdel(W)
 			src.build_icon()
 
-		// Handling for cable coils (reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
@@ -991,7 +960,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.shock(user,100)
 			src.build_icon()
 
-		// Handling for inserting manudrives
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
@@ -1018,21 +986,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
-		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
 			src.change_contents(mat_piece = W, user = user)
 
-		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
 			return
 
-		// Handling for early return if a card is scanned successfully
 		else if(scan_card(W))
 			return
 
-		// Handling for calling parent proc + hitting the machine
 		else
 			..()
 			user.lastattacked = src
