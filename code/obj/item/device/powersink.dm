@@ -4,8 +4,9 @@
 #define POWERSINK_OPERATING 2
 
 TYPEINFO(/obj/item/device/powersink)
-	mats = list("MET-2"=20, "CON-2"=20, "CRY-1"=10)
-
+	mats = list("metal_dense" = 20,
+				"conductive_high" = 20,
+				"crystal" = 10)
 /obj/item/device/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
@@ -39,6 +40,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (isscrewingtool(I))
+			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
 				if(isturf(T) && !T.intact)

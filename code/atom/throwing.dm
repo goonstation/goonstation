@@ -18,7 +18,8 @@
 				if (!L.throws_can_hit_me) continue
 				if (L.lying) continue
 				src.throw_impact(A, thr)
-				. = TRUE
+				if (thr.stops_on_mob_hit)
+					. = TRUE
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
@@ -87,7 +88,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, datum/callback/end_throw_callback = null)
 	SHOULD_CALL_PARENT(TRUE)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return

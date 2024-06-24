@@ -229,7 +229,7 @@ TYPEINFO(/obj/item/camera_film/large)
 		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 		IM.pixel_y = 1
 		IM.layer = layer
-		src.UpdateOverlays(IM, "photo")
+		src.AddOverlays(IM, "photo")
 
 	// Update overlay layer for photo to show in hand/backpack
 	pickup()
@@ -260,6 +260,7 @@ TYPEINFO(/obj/item/camera_film/large)
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
 		var/t = input(user, "What do you want to [signwrite]?", null, null) as null|text
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
+		logTheThing(LOG_STATION, user, "[signwrite]s '[t]' on [src]")
 		if(t)
 			if(signwrite == "sign")
 				var/image/signature = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")

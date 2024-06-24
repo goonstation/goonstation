@@ -25,3 +25,7 @@
 #define LOG_TOPIC "topic"			//! Topic() logs
 #define LOG_GAMEMODE "gamemode"		//! Core gamemode stuff like game mode selection, blob starts, flock planting, etc
 #define LOG_CHEMISTRY "chemistry" 	//! Non-combat chemistry interactions
+#define LOG_TGUI "tgui" 			//! TGUI interactions
+
+//#undef Z_LOG_DEBUG
+//#define Z_LOG_DEBUG(WHAT, X) do{if(config){logTheThing(LOG_DEBUG, null, "Z_LOG_DEBUG: [WHAT] - [X]")}}while(FALSE)

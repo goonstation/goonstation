@@ -233,7 +233,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		AddOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/scorched2
 	burnt = 1
@@ -242,7 +242,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		AddOverlays(burn_overlay,"burn")
 
 /turf/simulated/floor/damaged1
 	step_material = "step_plating"
@@ -253,7 +253,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged2
 	step_material = "step_plating"
@@ -264,7 +264,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged3
 	step_material = "step_plating"
@@ -275,7 +275,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged4
 	step_material = "step_plating"
@@ -286,7 +286,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/damaged5
 	step_material = "step_plating"
@@ -297,7 +297,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -323,7 +323,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged2
 	broken = 1
@@ -332,7 +332,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /turf/simulated/floor/plating/damaged3
 	broken = 1
@@ -341,7 +341,7 @@
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
 		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		AddOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 
@@ -777,6 +777,29 @@ DEFINE_FLOORS(carpet/clowncarpet/innercorner,
 	icon_state = "whiteshiny"
 
 /////////////////////////////////////////
+
+/turf/simulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/simulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/simulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/simulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/simulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/simulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/simulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+//////////////////////////////////////////
 
 /turf/simulated/floor/sanitary
 	icon_state = "freezerfloor"
@@ -1484,14 +1507,14 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
 		catwalk = locate() in src
-		catwalk.UpdateOverlays(overlay, "wet_overlay")
+		catwalk.AddOverlays(overlay, "wet_overlay")
 
-	src.UpdateOverlays(overlay, "wet_overlay")
+	src.AddOverlays(overlay, "wet_overlay")
 	src.wet = wetType
 
 	SPAWN(timeout)
-		src.UpdateOverlays(null, "wet_overlay")
-		catwalk?.UpdateOverlays(null, "wet_overlay")
+		src.ClearSpecificOverlays("wet_overlay")
+		catwalk?.ClearSpecificOverlays("wet_overlay")
 		src.wet = 0
 
 /turf/simulated/floor/grassify()
@@ -1587,8 +1610,31 @@ TYPEINFO(/turf/simulated/floor/stone)
 
 /////////////////////////////////////////
 
+/* Misc Adventure tilesets - Walp */
+
+TYPEINFO(/turf/simulated/floor/honeyblocks)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+
+DEFINE_FLOORS(honeyblocks,
+	name = "crystallized honey";\
+	desc = "Probably not edible.";\
+	icon = 'icons/turf/adventure_walpvrgis.dmi';\
+	icon_state = "honeyblock";\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(honeyblocks/border,
+	icon_state = "honeyblock_border")
+
+DEFINE_FLOORS(honeyblocks/corner,
+	icon_state = "honeyblock_corner")
+
+/////////////////////////////////////////
 
 /* Outdoors tilesets - Walp */
+
 TYPEINFO(/turf/simulated/floor/grasslush)
 	mat_appearances_to_ignore = list("steel","synthrubber")
 TYPEINFO(/turf/simulated/floor/grasslush/airless)
@@ -1721,7 +1767,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else
-		icon_state = "ironform"
+		icon_state = "ironfoam"
 
 /turf/simulated/floor/metalfoam/ex_act()
 	ReplaceWithSpace()
@@ -1885,8 +1931,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(broken || burnt)
 		boutput(user, SPAN_ALERT("You remove the broken plating."))
-		UpdateOverlays(null,"burn")
-		UpdateOverlays(null,"damage")
+		ClearSpecificOverlays("burn", "damage")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1945,24 +1990,26 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		var/do_hide = TRUE
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
 			src.Attackby(P, user)
+			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			if(T.amount >= 1)
-				restore_tile()
+				restore_tile(do_hide)
 				src.default_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
 				// we use the material variant from the base floor
-				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.getID()]"
-				var/potential_new_base_icon_state = "floor$$[C.material.getID()]"
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material?.getID()]"
+				var/potential_new_base_icon_state = "floor$$[C.material?.getID()]"
 				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
 					src.icon_state = "floor"
 					src.icon = 'icons/turf/floors.dmi'
@@ -2063,11 +2110,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				msg = insert_girder[min(count+1, insert_girder.len)]
 				if(count >= 69) //nice
 					girder_egg = 1
-					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src.loc, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
+					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
 				else
 					actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
+				actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.rwindows : /obj/window/reinforced, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
@@ -2146,8 +2193,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		qdel(old_hidden_contents)
 	return newfloor
 
-/turf/simulated/floor/restore_tile()
+/turf/simulated/floor/restore_tile(do_hide = TRUE)
 	..()
+	if (!do_hide)
+		return
 	for (var/obj/item/item in src.contents)
 		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
 			src.hide_inside(item)
@@ -2445,26 +2494,27 @@ TYPEINFO(/turf/simulated/floor/auto)
 						src.connect_image = image(src.icon, "connect[overlaydir]")
 					else
 						src.connect_image.icon_state = "connect[overlaydir]"
-					src.UpdateOverlays(src.connect_image, "connect")
+					src.AddOverlays(src.connect_image, "connect")
 				else
-					src.UpdateOverlays(null, "connect")
+					src.ClearSpecificOverlays("connect")
 
 	proc/update_neighbors()
 		for (var/turf/simulated/floor/auto/T in orange(1,src))
 			T.UpdateIcon()
 
 	proc/edge_overlays()
-		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/simulated/floor/auto))
-				var/turf/simulated/floor/auto/TA = T
-				if (TA.edge_priority_level >= src.edge_priority_level)
-					continue
-			var/direction = get_dir(T,src)
-			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[direction]")
+		if(src.icon_state_edge)
+			for (var/turf/T in orange(src,1))
+				if (istype(T, /turf/simulated/floor/auto))
+					var/turf/simulated/floor/auto/TA = T
+					if (TA.edge_priority_level >= src.edge_priority_level)
+						continue
+				var/direction = get_dir(T,src)
+				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+				edge_overlay.plane = PLANE_FLOOR
+				T.AddOverlays(edge_overlay, "edge_[direction]")
 
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
@@ -2520,7 +2570,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 
 			tuft = image('icons/turf/outdoors.dmi', "grass_tuft", src, pixel_x=rand_x, pixel_y=rand_y)
 			tuft.color = hsv_transform_color_matrix(h=hue_shift)
-			UpdateOverlays(tuft,"grass_turf")
+			AddOverlays(tuft,"grass_turf")
 
 	rough
 		tuft_prob = 0.8
@@ -2597,7 +2647,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		. = ..()
 		var/image/R = image('icons/turf/water.dmi', "ripple", dir=pick(alldirs),pixel_x=rand(-10,10),pixel_y=rand(-10,10))
 		R.alpha = 180
-		src.UpdateOverlays(R, "ripple")
+		src.AddOverlays(R, "ripple")
 
 /turf/simulated/floor/auto/snow
 	name = "snow"

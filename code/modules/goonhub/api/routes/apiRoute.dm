@@ -16,6 +16,8 @@
 	var/datum/apiBody/body = null
 	/// The expected type upon deserialization
 	var/correct_response = null
+	/// Is this request allowed to automatically retry if it fails?
+	var/allow_retry = TRUE
 
 
 /// Formats a given parameter associated list into a urlstring format
@@ -27,7 +29,15 @@
 			if (islist(src.queryParams[key])) // Do we need to encode the value?
 				if (length(src.queryParams[key]) > 0)
 					for (var/subKey in src.queryParams[key])
-						.["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
+						if (islist(src.queryParams[key][subKey]))
+							if (length(src.queryParams[key][subKey]))
+								for (var/idx in 1 to length(src.queryParams[key][subKey]))
+									// encode in array syntax e.x. ?&filters[servers][0]=main3&filters[servers][1]=main4
+									.["[key]\[[subKey]\]\[[idx-1]\]"] = src.queryParams[key][subKey][idx]
+							else
+								.["[key]\[[subKey]\]\[\]"] = null
+						else
+							.["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
 				else
 					.["[key]\[\]"] = null
 			else

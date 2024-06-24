@@ -24,7 +24,9 @@
 	can_bleed = FALSE
 	var/name_prefix = "living "
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
+
+	ailment_immune = TRUE
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc)
@@ -91,7 +93,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
@@ -183,7 +184,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	blob_act(var/power)
 		logTheThing(LOG_COMBAT, src, "is hit by a blob")

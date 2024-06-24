@@ -1,6 +1,7 @@
 TYPEINFO(/obj/machinery/dialysis)
-	mats = list("MET-1" = 20, "CRY-1" = 5, "CON-2" = 5)
-
+	mats = list("metal" = 20,
+				"crystal" = 5,
+				"conductive_high" = 5)
 /obj/machinery/dialysis
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."
@@ -88,8 +89,8 @@ TYPEINFO(/obj/machinery/dialysis)
 
 		if (!in_interact_range(src, src.patient))
 			var/fluff = pick("pulled", "yanked", "ripped")
-			src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae gets [fluff] out of [src.patient]'s arm!</b>"),\
-			SPAN_ALERT("<b>[src]'s cannulae gets [fluff] out of your arm!</b>"))
+			src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of [src.patient]'s arm!</b>"),\
+			SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of your arm!</b>"))
 			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"No blood pressure detected.\""))
 			src.stop_dialysis()
 			return

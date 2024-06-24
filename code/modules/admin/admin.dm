@@ -131,7 +131,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", "")
+					C.player.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
@@ -143,7 +143,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", "")
+					C.player.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
@@ -155,7 +155,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", "")
+					C.player.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -243,6 +243,18 @@ var/global/noir = 0
 		if ("toggle_topic_log")
 			if (src.level >= LEVEL_MOD)
 				src.show_topic_log = !show_topic_log
+				src.show_pref_window(usr)
+		if ("toggle_skip_manifest")
+			if (src.level >= LEVEL_MOD)
+				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
+				src.show_pref_window(usr)
+		if ("toggle_slow_stat")
+			if (src.level >= LEVEL_MOD)
+				src.slow_stat = !slow_stat
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
@@ -1875,6 +1887,8 @@ var/global/noir = 0
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue]")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue]")
 				if (length(custom_objective))
 					new /datum/objective/regular(custom_objective, M.mind, M.mind.get_antagonist(antag_options[selected_keyvalue]))
 					tgui_alert(M, "Your objective is: [custom_objective]", "Objective")
@@ -1924,6 +1938,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue] antagonist")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue] antagonist")
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
 			else
 				boutput(usr, SPAN_ALERT("Addition failed with return code [success]. The mob may be incompatible. Report this to a coder."))
@@ -1941,6 +1957,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.remove_antagonist(antag)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed [antag.id] antagonist from [key_name(M)]")
+				message_admins("[key_name(usr)] removed [antag.id] antagonist from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]"))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -1957,6 +1975,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed all antagonists from [key_name(M)]")
+				message_admins("[key_name(usr)] removed all antagonists from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -2366,7 +2386,7 @@ var/global/noir = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
 								continue
-							H.changeStatus("paralysis", 7 SECONDS)
+							H.changeStatus("unconscious", 7 SECONDS)
 							if(H.wear_id)
 								for(var/A in H.wear_id:access)
 									if(A == access_security)
@@ -2509,13 +2529,23 @@ var/global/noir = 0
 					// FUN SECRETS CODE
 					if ("randomguns")
 						if (src.level >= LEVEL_PA)
-							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
-								return
-							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun(get_turf(L))
-							message_admins("[key_name(usr)] gave everyone a random firearm.")
-							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
-							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
+							switch(tgui_alert(usr, "What kind of guns do you want to give everyone?", "Guns2Give", list("Safe-ish Guns", "ANY GUN", "Cancel")))
+								if("Cancel")
+									return
+								if("Safe-ish Guns")
+									message_admins("[key_name(usr)] gave everyone a random safe firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+								if("ANY GUN")
+									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+
+
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -2551,6 +2581,20 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] bricked all radios forever")
 								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
 								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+					if ("airlock_safety")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Disable all station airlocks safeties?", "Cronch?", list("Yes", "Oops misclick")) == "Yes")
+								for (var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door/airlock])
+									if (D.z != 1)
+										break
+									D.safety = 0
+									LAGCHECK(LAG_LOW)
+								message_admins("[key_name(usr)] disabled the safeties on all station airlocks.")
+								logTheThing(LOG_ADMIN, usr, "disabled the safeties on all station airlocks.")
+								logTheThing(LOG_DIARY, usr, "disabled the safeties on all station airlocks.", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3044,7 +3088,7 @@ var/global/noir = 0
 								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
-									M.changeStatus("weakened", 2 SECONDS)
+									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
 							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
@@ -3278,26 +3322,17 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						job_controls.job_config()
+						usr.client.cmd_job_controls()
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
-					if("pathology")
-						pathogen_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
+					if("regionallocator")
+						usr.client.region_allocator_panel()
 					if("artifacts")
 						artifact_controls.config()
-					if("ghostnotifier")
-						ghost_notifier.config()
-					if("unelectrify_all")
-						for(var/obj/machinery/door/airlock/D)
-							D.secondsElectrified = 0
-							LAGCHECK(LAG_LOW)
-						message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
-						logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
-						logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
 					if("DNA")
 						var/dat = "<B>Showing DNA from blood.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
@@ -3694,11 +3729,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=regionallocator'>Region Allocator</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=ghostnotifier'>Ghost Notification Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
@@ -3819,6 +3852,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=airlock_safety'>Disable all airlock's safeties.</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
@@ -3847,6 +3881,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -3871,6 +3907,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Announce"
 	set desc="Announce your desires to the world"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if (message)
 		if(usr.client.holder.rank != "Coder" && usr.client.holder.rank != "Host")
@@ -3883,6 +3921,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!ticker)
 		tgui_alert(usr,"Unable to start the game as it is not set up.")
 		return
@@ -3901,7 +3941,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the game start"
 	set name="Delay Round Start"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (current_state > GAME_STATE_PREGAME)
 		return tgui_alert(usr,"Too late... The game has already started!")
 	game_start_delayed = !(game_start_delayed)
@@ -3921,7 +3962,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the server restart"
 	set name="Delay Round End"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	// If the game end is delayed AT ALL, confirm removing the delay
 	// so that mutiple admins don't end up cancelling their own delays
 	if (game_end_delayed)
@@ -4204,11 +4246,12 @@ var/global/noir = 0
 	usr.Browse(built, "window=chatban;size=500x100")
 
 /client/proc/cmd_admin_managebioeffect(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (isnull(holder.bioeffectmanager))
 		holder.bioeffectmanager = new
@@ -4216,11 +4259,12 @@ var/global/noir = 0
 	holder.bioeffectmanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_manageabils(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (isnull(holder.abilitymanager))
 		holder.abilitymanager = new
@@ -4228,12 +4272,12 @@ var/global/noir = 0
 	holder.abilitymanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_managetraits(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Traits"
 	set desc = "Select a mob to manage its traits."
 	set popup_menu = 0
 	ADMIN_ONLY
-
+	SHOW_VERB_DESC
 	var/list/dat = list()
 	dat += {"
 		<html>
@@ -4316,6 +4360,7 @@ var/global/noir = 0
 	set desc = "Select a mob to manage its mind's objectives."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/dat = list()
 	dat += {"
@@ -4392,6 +4437,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Respawn a mob"
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!M) return
 
 	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
@@ -4420,7 +4467,8 @@ var/global/noir = 0
 	set name = "Respawn Self"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	logTheThing(LOG_ADMIN, src, "respawned themselves.")
 	logTheThing(LOG_DIARY, src, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")

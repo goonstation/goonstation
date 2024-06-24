@@ -574,6 +574,29 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/unsimulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/unsimulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/unsimulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/unsimulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/unsimulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/unsimulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+////////////////////////////////////////
+
 /turf/unsimulated/floor/sanitary
 	icon_state = "freezerfloor"
 
@@ -1103,17 +1126,18 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 			T.UpdateIcon()
 
 	proc/edge_overlays()
-		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/unsimulated/floor/auto))
-				var/turf/unsimulated/floor/auto/TA = T
-				if (TA.edge_priority_level >= src.edge_priority_level)
-					continue
-			var/direction = get_dir(T,src)
-			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[direction]")
+		if(src.icon_state_edge)
+			for (var/turf/T in orange(src,1))
+				if (istype(T, /turf/unsimulated/floor/auto))
+					var/turf/unsimulated/floor/auto/TA = T
+					if (TA.edge_priority_level >= src.edge_priority_level)
+						continue
+				var/direction = get_dir(T,src)
+				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+				edge_overlay.plane = PLANE_FLOOR
+				T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"

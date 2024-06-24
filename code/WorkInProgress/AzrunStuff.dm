@@ -43,20 +43,20 @@
 
 /datum/manufacture/sub/treads
 	name = "Vehicle Treads"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 
@@ -91,7 +91,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -101,24 +101,25 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
 	proc/poof(atom/movable/AM, obj/machinery/plantpot/POT)
 		if(!ON_COOLDOWN(src,"spore_poof", 2 SECONDS))
+			var/datum/plant/P = POT.current
 			var/datum/plantgenes/DNA = POT.plantgenes
 			var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
 			reagents_temp.my_atom = POT
 			var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 			for (var/plantReagent in plant_complete_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * max(1, HYPfull_potency_calculation(DNA, 0.1 / length(plant_complete_reagents))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
 				qdel(reagents_temp)
 
-			POT.growth = clamp(POT.growth/2, src.growtime, src.harvtime-10)
+			POT.growth = clamp(POT.growth/2, P.HYPget_growth_to_matured(DNA), P.HYPget_growth_to_harvestable(DNA)-10)
 			POT.UpdateIcon()
 
 	getIconState(grow_level, datum/plantmutation/MUT)
@@ -175,7 +176,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -618,6 +619,7 @@
 	cooldown = 2 SECONDS
 
 	cast(atom/target)
+		. = ..()
 		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
 		expansion.turret.lasers = !expansion.turret.lasers
 		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"

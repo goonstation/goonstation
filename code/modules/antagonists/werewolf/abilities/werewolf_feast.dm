@@ -11,6 +11,7 @@
 	not_when_handcuffed = 1
 	werewolf_only = 1
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
+	do_logs = FALSE //already logged
 
 	cast(mob/target)
 		if (!holder)
@@ -41,6 +42,7 @@
 			boutput(M, SPAN_ALERT("[target] needs to be lying on the ground first."))
 			return 1
 
+		. = ..()
 		logTheThing(LOG_COMBAT, M, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_feast(target, src), M)
 		return 0

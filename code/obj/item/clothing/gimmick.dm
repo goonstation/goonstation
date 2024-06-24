@@ -101,7 +101,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("paralysis")))
+			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("unconscious")))
 				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
@@ -262,7 +262,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "headset" // lol
 
 /obj/item/clothing/under/gimmick/police
-	name = "police uniform"
+	name = "guard uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
 	item_state = "police"
@@ -2031,3 +2031,28 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "chaps"
 	item_state = "chaps"
+
+/obj/item/clothing/suit/rabbitsuit
+	name = "Rabbit Costume Suit"
+	desc = "Horrifingly cute, or cutely horrifying?"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "rabbitsuit"
+	item_state = "rabbitsuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
+// Goku
+
+/obj/item/clothing/under/gimmick/goku
+	name = "anime martial artist costume"
+	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"
+	icon_state = "goku"
+	item_state = "goku"
+
+/obj/item/clothing/shoes/goku
+	name = "anime martial artist boots"
+	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
+	icon_state = "goku"
+	item_state = "goku"

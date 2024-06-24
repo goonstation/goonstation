@@ -35,14 +35,12 @@
 	req_access = list(access_security)
 	var/tmp/menu = MENU_MAIN
 	var/tmp/field_input = 0
-	var/tmp/authenticated = null //Are we currently logged in?
-	var/tmp/datum/computer/file/user_data/account = null
 	var/datum/record_database/record_database = list()  //List of records, for jumping direclty to a specific ID
 	var/datum/db_record/active_general = null //General record
 	var/datum/db_record/active_secure = null //Security record
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
 	var/obj/item/peripheral/network/radio/radiocard = null
-	var/tmp/last_arrest_report = 0 //When did we last report an arrest?
+	var/tmp/last_status_report = 0 //When did we last report a status change? (Detain, Arrest)
 	var/list/datum/db_record/possible_active = null
 
 	var/tmp/connected = 0
@@ -52,12 +50,13 @@
 	var/tmp/list/known_printers = list()
 	var/tmp/printer_status = "???"
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
 	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
 	var/setup_mail_freq = FREQ_PDA //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
+		if (..())
+			return TRUE
 	/*
 		var/title_art = {"<pre> ____________________    _ __________________
 \\  ___\\  ___\\  ___\\ -./  \\  __ \\ _  _\\  ___\\
@@ -65,28 +64,17 @@
  \\/\\_____\\_____\\_____\\ \\_\\ \\ \\ \\_\\ \\ \\ \\ \\_____\\
   \\/_____/_____/_____/_/  \\/_/_/\\/_/\\/_/\\/_____/ </pre>"}
 */
-		src.authenticated = null
 		src.record_database = data_core.general
 		src.master.temp = null
 		src.menu = MENU_MAIN
 		src.field_input = 0
 		//src.print_text(" [title_art]")
-		if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
 
 		src.radiocard = locate() in src.master.peripherals
 		if(!radiocard || !istype(src.radiocard))
 			src.radiocard = null
 			src.print_text("<b>Warning:</b> No radio module detected.")
 
-		if(!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
-
-		src.authenticated = src.account.registered
 		src.log_string += "<br><b>LOGIN:</b> [src.authenticated]"
 
 		src.print_text(mainmenu_text())
@@ -116,7 +104,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, fingerprint, or criminal status.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -298,7 +286,7 @@
 						R["name"] = src.active_general["name"]
 						R["full_name"] = src.active_general["full_name"]
 						R["id"] = src.active_general["id"]
-						R["criminal"] = "None"
+						R["criminal"] = ARREST_STATE_NONE
 						R["sec_flag"] = "None"
 						R["mi_crim"] = "None"
 						R["mi_crim_d"] = "No minor crime convictions."
@@ -348,7 +336,7 @@
 						return
 
 					if (FIELDNUM_CRIMSTAT)
-						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
+						src.print_text("Please select: (1) Arrest (2) Detain (3) None <br>(4) Suspect (5) Incarcerated (6) Parolled (7) Released (0) Back")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -458,28 +446,46 @@
 							return
 
 						if (lowertext(command) == "clown")
-							src.active_secure["criminal"] = "Clown"
+							src.active_secure["criminal"] = ARREST_STATE_CLOWN
+
+							var/target_name = src.active_general["name"]
+
+							for (var/mob/living/carbon/human/H in mobs)
+								if (H.real_name == target_name || H.name == target_name)
+									H.update_arrest_icon()
 							return
 
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								if (src.active_secure["criminal"] != "*Arrest*")
-									src.report_arrest(src.active_general["name"])
-								src.active_secure["criminal"] = "*Arrest*"
+								if (src.active_secure["criminal"] != ARREST_STATE_ARREST)
+									src.report_status(src.active_general["name"], "*Arrest*")
+								src.active_secure["criminal"] = ARREST_STATE_ARREST
 							if (2)
-								src.active_secure["criminal"] = "None"
-								src.active_secure["sec_flag"] = "None"
+								if (src.active_secure["criminal"] != ARREST_STATE_DETAIN)
+									src.report_status(src.active_general["name"], "*Detain*")
+								src.active_secure["criminal"] = ARREST_STATE_DETAIN
 							if (3)
-								src.active_secure["criminal"] = "Incarcerated"
+								src.active_secure["criminal"] = ARREST_STATE_NONE
+								src.active_secure["sec_flag"] = "None"
 							if (4)
-								src.active_secure["criminal"] = "Parolled"
+								src.active_secure["criminal"] = ARREST_STATE_SUSPECT
 							if (5)
-								src.active_secure["criminal"] = "Released"
+								src.active_secure["criminal"] = ARREST_STATE_INCARCERATED
+							if (6)
+								src.active_secure["criminal"] = ARREST_STATE_PAROLE
+							if (7)
+								src.active_secure["criminal"] = ARREST_STATE_RELEASED
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
 							else
 								return
+
+						var/target_name = src.active_general["name"]
+
+						for (var/mob/living/carbon/human/H in mobs)
+							if (H.real_name == target_name || H.name == target_name)
+								H.update_arrest_icon()
 
 					if (FIELDNUM_SECFLAG)
 						if (!src.active_secure)
@@ -599,6 +605,9 @@
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
 					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/datum/db_record/haystack_secure_addition = data_core.security.find_record("id", R["id"])
+					if(istype(haystack_secure_addition, /datum/db_record))
+						haystack = jointext(list(haystack, ckey(haystack_secure_addition["criminal"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
@@ -796,15 +805,18 @@
 			src.print_text(dat)
 			return 1
 
-		report_arrest(var/perp_name)
-			if(!perp_name || !src.radiocard)
+		report_status(var/perp_name, var/new_status)
+			if(!perp_name || !src.radiocard || !new_status)
+				return
+
+			if(new_status != "*Arrest*" && new_status != "*Detain*")
 				return
 
 			if (usr)
-				logTheThing(LOG_STATION, usr, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
+				logTheThing(LOG_STATION, usr, "[perp_name] is set to [new_status] by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
 
 			//Unlikely that this would be a problem but OH WELL
-			if(last_arrest_report && world.time < (last_arrest_report + 10))
+			if(last_status_report && world.time < (last_status_report + 10))
 				return
 
 			//Set card frequency if it isn't already.
@@ -816,29 +828,15 @@
 
 			var/datum/signal/signal = get_free_signal()
 			//signal.encryption = "\ref[src.radiocard]"
-
 			//Create a PDA mass-message string.
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = "SEC-MAILBOT"
 			signal.data["group"] = list(src.setup_mailgroup, MGA_ARREST) //Only security PDAs should be informed.
-			signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
-
-			src.log_string += "<br>Arrest notification sent."
-			last_arrest_report = world.time
+			signal.data["message"] = "Alert! Crew member \"[perp_name]\" has been flagged to [new_status] by [src.authenticated]!"
+			src.log_string += "<br>[new_status] notification sent."
+			last_status_report = world.time
 			peripheral_command("transmit", signal, "\ref[src.radiocard]")
 			return
-
-		find_access_file() //Look for the whimsical account_data file
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				src.account = target
-				return 1
-
-			return 0
 
 		local_print()
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")

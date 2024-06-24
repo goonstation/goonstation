@@ -90,7 +90,7 @@
 	skin = "hs"
 	treatment_oxy = "perfluorodecalin"
 	access_lookup = "Head Surgeon"
-	text2speech = 0 // @TODO SOMEONE FIX THIS WHEN DECTALK IS WORKING AGAIN THANKS
+	text2speech = TRUE
 
 	New()
 		. = ..()

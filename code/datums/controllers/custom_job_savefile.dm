@@ -63,7 +63,7 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 		F["[profileNum]_special_spawn_location_coords"] << list(T.x, T.y, T.z)
 	F["[profileNum]_bio_effects"] << src.job_creator.bio_effects
 	F["[profileNum]_objective"] << src.job_creator.objective
-	F["[profileNum]_receives_implant"] << src.job_creator.receives_implant
+	F["[profileNum]_receives_implants"] << src.job_creator.receives_implants
 	F["[profileNum]_items_in_backpack"] << src.job_creator.items_in_backpack
 	F["[profileNum]_items_in_belt"] << src.job_creator.items_in_belt
 	F["[profileNum]_announce_on_join"] << src.job_creator.announce_on_join
@@ -129,9 +129,17 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 		F["[profileNum]_special_spawn_location_coords"] >> maybe_coords
 		if(islist(maybe_coords))
 			src.job_creator.special_spawn_location = locate(maybe_coords[1], maybe_coords[2], maybe_coords[3])
+		else
+			F["[profileNum]_special_spawn_location"] << null
 	F["[profileNum]_bio_effects"] >> src.job_creator.bio_effects
 	F["[profileNum]_objective"] >> src.job_creator.objective
-	F["[profileNum]_receives_implant"] >> src.job_creator.receives_implant
+	// backwards compatibility
+	if(F["[profileNum]_receives_implant"])
+		var/obj/item/implant/I = null
+		F["[profileNum]_receives_implant"] >> I
+		src.job_creator.receives_implants = list(I)
+	if(F["[profileNum]_receives_implants"])
+		F["[profileNum]_receives_implants"] >> src.job_creator.receives_implants
 	F["[profileNum]_items_in_backpack"] >> src.job_creator.items_in_backpack
 	if(isnull(src.job_creator.items_in_backpack))
 		src.job_creator.items_in_backpack = list()
@@ -168,6 +176,7 @@ datum/job_controller/proc/savefile_get_job_name(client/user, var/profileNum = 1)
 	return job_name
 
 datum/job_controller/proc/savefile_get_job_names(client/user)
+	RETURN_TYPE(/list)
 
 	if (!savefile_path_exists(user.ckey))
 		return null

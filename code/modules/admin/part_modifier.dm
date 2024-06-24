@@ -5,9 +5,10 @@ var/list/default_organ_paths = list("head" = /obj/item/organ/head, "skull" = /ob
 var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/left, "r_arm" = /obj/item/parts/human_parts/arm/right, "l_leg" = /obj/item/parts/human_parts/leg/left, "r_leg" = /obj/item/parts/human_parts/leg/right)
 
 /client/proc/modify_parts(var/mob/living/carbon/human/target as mob)
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!istype(target))
 		return
 	if (!target.limbs)

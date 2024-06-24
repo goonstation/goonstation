@@ -200,7 +200,7 @@ DEFINE_PLANET(indigo, "Indigo")
 					var/datum/planetData/planet = regions[region]
 					if(planet)
 						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
-						T.UpdateOverlays(planet.ambient_light, "ambient")
+						T.AddOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
 	proc/get_generator(turf/T)
@@ -253,6 +253,9 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
 		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/forest()
 
+	else if(istype(generator, /datum/map_generator/lavamoon_generator) && prob(95))
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/lava_moon()
+
 	// Occlude overlays on edges
 	if(planet_area.area_parallax_render_source_group)
 		planet_area.no_prefab_ref.area_parallax_render_source_group = planet_area.area_parallax_render_source_group
@@ -262,6 +265,15 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
 	generator.generate_terrain(turfs, reuse_seed=TRUE, flags=mapgen_flags)
+
+	var/list/turf/secondary_turfs = list()
+	for(var/turf/space/missed in turfs)
+		secondary_turfs += missed
+
+	if(length(secondary_turfs))
+		logTheThing(LOG_DEBUG, null, "Planet Generation required second pass!")
+		message_admins("Planet region required second pass with [generator]. (WHY??!?)")
+		generator.generate_terrain(secondary_turfs, reuse_seed=TRUE, flags=mapgen_flags)
 
 	//Force Outer Edge to be Cordon Area
 	var/area/border_area = new /area/cordon(null)
@@ -285,7 +297,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		ambient_light.color = color
 
 	for(T in turfs)
-		T.UpdateOverlays(ambient_light, "ambient")
+		T.AddOverlays(ambient_light, "ambient")
 		LAGCHECK(LAG_LOW)
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
@@ -318,7 +330,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 							space_turfs -= T
 					generator.generate_terrain(space_turfs, reuse_seed=TRUE)
 					for(T in space_turfs)
-						T.UpdateOverlays(ambient_light, "ambient")
+						T.AddOverlays(ambient_light, "ambient")
 						LAGCHECK(LAG_LOW)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
@@ -471,6 +483,6 @@ obj/decal/teleport_mark
 		..()
 		for(var/obj/O in location)
 			if(O == src) continue
-			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
+			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/fakeobject/teleport_pad) )
 				qdel(src)
 				return

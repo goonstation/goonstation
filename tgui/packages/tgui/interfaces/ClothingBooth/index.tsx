@@ -103,7 +103,7 @@ const CharacterPreview = (_, context) => {
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
-        <Image height={data.previewHeight * 2 + "px"} pixelated src={`data:image/png;base64,${data.previewIcon}`} />
+        <Image height={data.previewHeight * 2 + "px"} src={`data:image/png;base64,${data.previewIcon}`} />
       </Stack.Item>
       <Stack.Item>
         <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
@@ -131,7 +131,7 @@ const PurchaseInfo = (_, context) => {
               color="green"
               disabled={data.selectedItemCost > data.money}
               onClick={() => act('purchase')}>
-              {!(data.selectedItemCost > data.money) ? `Purchase` : `Insufficient Cash`}
+              {(data.selectedItemCost <= data.money) ? `Purchase` : `Insufficient Cash`}
             </Button>
           </Stack.Item>
         </>

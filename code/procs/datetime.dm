@@ -1,5 +1,5 @@
-/// Convert ISO 8601 to BYOND time format
-proc/fromIso8601(iso8601)
+/// Convert ISO 8601 to BYOND time format (or epoch time if given argument for that)
+proc/fromIso8601(iso8601, epoch = FALSE)
 	var/list/datetimeParts = splittext(iso8601, "T")
 	var/date = datetimeParts[1]
 	var/time = splittext(datetimeParts[2], "Z")[1]
@@ -9,7 +9,7 @@ proc/fromIso8601(iso8601)
 	var/month = text2num(dateParts[2])
 	var/day = text2num(dateParts[3])
 
-	if(year < 2000)
+	if(year < (epoch ? 1970 : 2000))
 		return // invalid date range
 
 	var/list/timeParts = splittext(time, ":")
@@ -19,7 +19,7 @@ proc/fromIso8601(iso8601)
 
 	// Calculate the total number of days for each year
 	var/totalDays = 0
-	for(var/y = 2000; y < year; y++)
+	for(var/y = (epoch ? 1970 : 2000); y < year; y++)
 		totalDays += isLeapYear(y) ? 366 : 365
 
 	// Add the number of days for each month
@@ -31,7 +31,10 @@ proc/fromIso8601(iso8601)
 
 	// Add the remaining days, hours, minutes, and seconds
 	totalDays += day - 1
-	return totalDays DAYS + hour HOURS + minute MINUTES + second SECONDS
+	if(epoch) //yes I could just divide at the end but maybe this saves a little bit of inaccuracy?
+		return totalDays DAYS/10 + hour HOURS/10 + minute MINUTES/10 + second SECONDS/10
+	else
+		return totalDays DAYS + hour HOURS + minute MINUTES + second SECONDS
 
 /// returns true if the year is divisible by 4, except for years that are divisible by 100. However, years that are divisible by 400 are also leap years.
 proc/isLeapYear(year)

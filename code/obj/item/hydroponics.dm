@@ -136,8 +136,9 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
-
+	mats = list("metal_dense" = 25,
+				"conductive" = 5,
+				"energy_high" = 5)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -146,7 +147,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
 	force = 6
-	active_force = 20
+	active_force = 30
 	off_force = 6
 	health = 10
 	throwforce = 5
@@ -160,13 +161,13 @@ TYPEINFO(/obj/item/saw/syndie)
 	arm_icon = "chainsaw_s-D"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
-	stamina_cost = 30
-	stamina_crit_chance = 40
+	stamina_cost = 20
+	stamina_crit_chance = 20
 	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		. = ..()
-		setProperty("deflection", 75)
+		setProperty("deflection", 40)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "redsaw_toggle", 1 SECOND))
@@ -197,10 +198,8 @@ TYPEINFO(/obj/item/saw/syndie)
 			return ..()
 
 		if (!ishuman(target))
-			target.changeStatus("weakened", 3 SECONDS)
 			return ..()
 
-		target.changeStatus("weakened", 3 SECONDS)
 		var/mob/living/carbon/human/H = target
 		if(prob(35))
 			gibs(target.loc, blood_DNA=H.bioHolder.Uid, blood_type=H.bioHolder.bloodType, headbits=FALSE, source=H)
@@ -307,7 +306,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
@@ -315,7 +314,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
 			H.limbs.r_arm = new_arm
 		if (!new_arm) return //who knows
@@ -574,7 +573,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "weedkiller"
 	desc = "A small bottle filled with Atrazine, an effective weedkiller."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "1"
+	icon_state = "bottle_1"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -586,7 +585,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Mutagenic Plant Formula"
 	desc = "An unstable radioactive mixture that stimulates genetic diversity."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -598,7 +597,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Ammonia Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages quick plant growth."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -610,7 +609,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Potash Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages large crop yields."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -622,7 +621,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Saltpetre Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages more potent crops."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -634,7 +633,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Mutadone Plant Formula"
 	desc = "A nutrient-rich formula that attempts to rectify genetic problems."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -660,7 +659,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	icon_state = "bong"
 	fluid_overlay_states = 8
 	container_style = "bong"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 	filled
 

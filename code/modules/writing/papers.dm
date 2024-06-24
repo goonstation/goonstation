@@ -472,25 +472,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	- B <br>
 	"}
 
-/obj/item/paper/cdc_pamphlet
-	name = "So you've contracted a pathogen!"
-	icon_state = "paper"
-	info = {"<center><h2>So you've contracted a pathogen!</h2></center>
-	Hello, dear customer!<hr>
-	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen
-	sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
-	<h3>How to send a pathogen sample</h3><hr>
-	<ul style='list-style-type:disc'>
-		<li>1) Fill a reagent container with a blood sample from a person afflicted with the pathogen you are seeking to cure. (For instance, you could use the syringe we sent you!)</li>
-		<li>2) Deposit reagent container into the received biohazard crate and close it.</li>
-		<li>3) Send the biohazard crate back to us.</li>
-		<li>4) As soon as we receive your sample, you can contact us using your Quartermaster's Console to ask us to start analyzing it.</li>
-		<li>5) Once we are done analyzing your sample, we will offer to sell you cures. Buying a pack of multiple cures at a time will be cheaper for you!</li>
-	</ul>
-	We hope that you have found this pamphlet enlightening and we look forward to receiving your sample soon!<hr>
-	Remember, only you can prevent deadly pathogens!
-	"}
-
 /obj/item/paper/shipping_precautions
 	name = "Read this and check the cargo!"
 	icon_state = "paper_caution_bloody"
@@ -774,19 +755,27 @@ Only trained personnel should operate station systems. Follow all procedures car
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
 
-/obj/item/paper/recipe_tandoori
+//is this a bit extra? Yeess but I wanted it on a random table okay!
+proc/spawn_kitchen_note()
+	for_by_tcl(table, /obj/table)
+		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
+			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
+			new type(get_turf(table))
+			return
+
+/obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
 	desc = "It's creased and worn, and smells a little like dried blood."
 	icon_state = "paper_caution_bloody"
 	info = {"<i>In just nine seconds, treat your family to a meal that tastes like it took hours to roast!</i><br><h3>Tandoori Chicken</h3><br><h4>Ingredients:</h4><br> -chicken meat <br> -a heaping helping of curry powder <br> -a nice, hot chili pepper <br> -a head of garlic <br><br><i>Don't even waste your time slashing the meat or slathering it in spices! Just toss it all in your standard-issue industrial oven and set it to high. Your dinner guests can't even tell the difference!</i>"}
 
-/obj/item/paper/recipe_potatocurry
+/obj/item/paper/recipe/potatocurry
 	name = "tattered recipe clipping"
 	desc = "It's very old, and nearly falls apart in your hand."
 	icon_state = "paper_burned"
 	info = {"<i>Rich and full of vegetables, this hearty curry will satisfy any palate!</i><br><h3>Potato Curry</h3><br><h4>Ingredients:</h4><br> -plenty of curry powder <br> -a fresh potato <br> -chopped carrots <br> -a handful of peas <br><br><i>Simply toss the ingredients into a standard-issue industrial oven and let them simmer on low. Treat anyone to the flavor of a home-cooked stew in a fraction of the time!</i>"}
 
-/obj/item/paper/recipe_coconutcurry
+/obj/item/paper/recipe/coconutcurry
 	name = "creased recipe clipping"
 	desc = "Irreparably creased from years of being folded-up. Luckily, you can still make out the text on it."
 	icon_state = "paper_caution_crumple"
@@ -798,7 +787,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Tell the botanists that they can go back to growing weed now. Beg them to, really.</i>
 	"}
 
-/obj/item/paper/recipe_chickenpapplecurry
+/obj/item/paper/recipe/chickenpapplecurry
 	name = "worn recipe clipping"
 	desc = "An old recipe clipped from a lifestyle magazine for space station chefs. Aw, the color's faded from the layout..."
 	icon_state = "paper_caution"
@@ -1053,6 +1042,29 @@ Only trained personnel should operate station systems. Follow all procedures car
 	S.L.
 	"}
 
+#ifdef NIGHTSHADE
+/obj/item/paper/gallery
+	name = "Gallery submission guide"
+	info = {"
+		<span style="color:null;font-family:Georgia;">
+		<p>Thank you for your interest in making a submission to the Nanotrasen Applied Paints Art Gallery!</p>
+		<p>To make a submission:</p>
+		<ol>
+		<li>Use your completed canvas in hand on any gallery exhibit</li>
+		<li>Pay the fee (see pricing below)</li>
+		<li>(Optional) Title your submission and publicly display your BYOND key as the submitter</li>
+		</ol>
+		<p>Your artwork will remain on display indefinitely unless another artist decides to purchase your exhibit.</p>
+		<p>Pricing (in Spacebux):</p>
+		<ul>
+		<li>Lowend (6x available) - 500</li>
+		<li>Midrange (6x available) - 1,000</li>
+		<li>Highend (2x available) - 2,500 </li>
+		<li>Premium (1x available) - 5,000</li>
+		</ul>
+		</span>
+	"}
+#else
 /obj/item/paper/gallery
 	name = "Gallery submission guide"
 	info = {"
@@ -1074,6 +1086,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		</ul>
 		</span>
 	"}
+#endif
 
 /obj/item/paper/magnetconstruction
 	name = "How to set up a new mining magnet"
@@ -1198,3 +1211,77 @@ Only trained personnel should operate station systems. Follow all procedures car
 	edit 2: it kind of work s now yey<br>
 	please nevr make me com hear a gain
 	"}
+
+/obj/item/paper/marionette_implant_readme
+	name = "marionette implant readme"
+	icon_state = "paper"
+	info ={"
+	<i>Once you're done reading these instructions, you may activate the provided self-destruct function by using them in your hand.</i>
+
+	<h3>Summary</h3>
+	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
+	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
+
+	<h3>Control Remote</h3>
+	<p>You should have received a control remote for easy convenience of using this implant.
+	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
+	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
+
+	<p>Once implanted into a target, simply use the remote to your heart's content! There is a short cooldown period between activations.</p>
+
+	<p>The remote is programmed to interpret response signals sent by activated implants. If the activation triggered an effect successfully, the
+	remote will bloop; if it failed -- whether due to the implantee being dead or the conditions for the effect not being met -- then the remote will
+	rumble. Only the person holding the remote (hopefully you) and anyone sharing a space with them can hear these bloops and grumbles,
+	although the button presses that come from actually using it are audible to anyone within a few tiles!</p>
+
+	<p>When using a remote, the implant's passkey is not required. You don't need this value unless you plan to use packet control, detailed below.</p>
+
+	<h3>Heat</h3>
+	<p>Be wary that <u>each activation of an implant will cause heat buildup that may destroy it.</u> The components are delicate and are not built for
+	repeated short-term stress. Heat will dissipate slowly over time. Heat will build up upon activation even if the conditions for the provided
+	action are not met.</p>
+
+	<h3>Packets</h3>
+	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
+	<b>fully compatible with wireless packets.</b> The implanter should list the frequency and network address of the contained implant,
+	as well as a unique <b>passkey</b> that must be provided in the signal under the <code>passkey</code> parameter to authorize most signals.</p>
+
+	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
+	<ul>
+	<li><b>ping</b> - Prompts the implant to send a signal containing information about its status. Passkey not required.
+	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field. Max 45 characters.</li>
+	<li><b>emote</b> - As <b>say</b>, but with an emote instead. Many emotes can't be replicated with this function, including but not limited to deathgasps,
+	fainting, and tripping.</li>
+	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
+	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance. Notably,
+	this command will function even if the implantee is dead, as long as they haven't decomposed.</li>
+	<li><b>shock</b> or <b>zap</b> - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
+	<li><b>drop</b> or <b>release</b> - The implantee will release a held item from their hands.
+	<li><b>use</b> or <b>activate</b> - The implantee will activate any item held in their hands.
+	</ul>
+	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
+	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it, because there's
+	no way to retrieve it once the implant is applied.</p>
+
+	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
+	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code, detailed below.</p>
+
+	<h4>Error Codes</h4>
+	<ul>
+	<li><code>TARG_DEAD</code> means that the implantee is deceased.</li>
+	<li><code>TARG_NULL</code> means that the implant isn't inside a creature.</li>
+	<li><code>INVALID</code> means that the command is invalid, or that the conditions for triggering the provided command were not met.</li>
+	<li><code>BADPASS</code> means that the provided passkey is incorrect.</li>
+	</ul></p>
+	"}
+
+	attack_self(mob/user)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Read", "Self-Destruct"))
+		if (choice == "Read")
+			src.examine(user)
+		else
+			var/turf/T = get_turf(src)
+			new /obj/effect/supplyexplosion (T)
+			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
+			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
+			qdel(src)

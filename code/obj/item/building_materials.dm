@@ -194,7 +194,7 @@ MATERIAL
 				if(isrobot(user))
 					boutput(user, SPAN_NOTICE("You add [success] sheets to the stack. It now has [S.amount] sheets."))
 				else
-					boutput(user, SPAN_NOTICE("You add [success] sheets to the stack. It now has [src.amount] sheets."))
+					boutput(user, SPAN_NOTICE("You add [src.amount - success] sheets to the stack. It now has [src.amount] sheets."))
 				tgui_process.update_uis(src)
 			return
 
@@ -602,7 +602,7 @@ MATERIAL
 			icon_state = "rods_4"
 		else
 			icon_state = "rods_5"
-		src.inventory_counter.update_number(amount)
+		src.inventory_counter?.update_number(amount)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -682,7 +682,7 @@ MATERIAL
 				if(isrobot(user))
 					boutput(user, SPAN_NOTICE("You add [success] rods to the stack. It now has [W.amount] rods."))
 				else
-					boutput(user, SPAN_NOTICE("You add [success] rods to the stack. It now has [src.amount] rods."))
+					boutput(user, SPAN_NOTICE("You add [src.amount - success] rods to the stack. It now has [src.amount] rods."))
 			return
 
 		if (istype(W, /obj/item/organ/head))
@@ -697,7 +697,7 @@ MATERIAL
 		return
 
 	attack_self(mob/user as mob)
-		if (user.getStatusDuration("weakened") | user.getStatusDuration("stunned"))
+		if (user.getStatusDuration("knockdown") | user.getStatusDuration("stunned"))
 			return
 		if (istype(user.loc, /obj/vehicle/segway))
 			var/obj/vehicle/segway/S = user.loc
@@ -1030,7 +1030,7 @@ MATERIAL
 		if(issilicon(user))
 			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [W.amount] tiles."))
 		else
-			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [src.amount] tiles."))
+			boutput(user, SPAN_NOTICE("You add [src.amount - success] tiles to the stack. It now has [src.amount] tiles."))
 		tooltip_rebuild = 1
 		if (!W.disposed)
 			W.add_fingerprint(user)

@@ -8,6 +8,8 @@ var/global/datum/apiHandler/apiHandler
 /datum/apiHandler
 	/// Is the api handler available for use? only set to false if we try a bunch of times and still fail
 	var/enabled = TRUE
+	/// Is debug logging on? If true, detailed logs for each API request will be logged to debug
+	var/debug = FALSE
 
 	/// how many times should a query attempt to run before giving up
 	var/maxApiRetries = 5
@@ -48,6 +50,19 @@ var/global/datum/apiHandler/apiHandler
 		sleep(src.apiRetryDelay * attempt)
 		attempt++
 		return src.queryAPI(route, attempt)
+
+
+	/**
+	 * Log an API request
+	 *
+	 * @method (string) HTTP method of the request
+	 * @route (string) URL of the request
+	 * @body (string) JSON encoded body of the request if applicable
+	 */
+	proc/debugLog(method, route, body)
+		var/msg = "([method]) [route]<br>[body]"
+		logTheThing(LOG_DEBUG, null, "<b>API DEBUG:</b> [msg]")
+		logTheThing(LOG_DIARY, null, "API DEBUG: [msg]", "debug")
 
 
 	/**
@@ -108,7 +123,9 @@ var/global/datum/apiHandler/apiHandler
 		var/req_body = route.body ? route.body.toJson() : ""
 		request.prepare(route.method, req_route, req_body, headers, "")
 		request.begin_async()
+		if (src.debug) src.debugLog(route.method, req_route, req_body)
 		var/time_started = TIME
+		var/time_started_unix = rustg_unix_timestamp()
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
 		if (!request.is_complete())
 			src.trackRecentError()
@@ -116,9 +133,12 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
+			// Temp logging for timeouts
+			world.log << "(TEMP) API Error: Request timed out for: [req_route]. Time diff: [TIME - time_started]. Unix start: [time_started_unix]. Unix end: [rustg_unix_timestamp()]"
+
 			// This one is over so we can clear it now
 			src.lazy_concurrent_counter--
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: Request timed out during [req_route]"))
@@ -134,7 +154,7 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]"))
@@ -155,10 +175,10 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
-			src.apiError(list("message" = "API Error: JSON decode error during [req_route]"))
+			src.apiError(list("message" = "API Error: JSON decode error during [req_route]", "status_code" = response.status_code))
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)
@@ -180,3 +200,15 @@ var/global/datum/apiHandler/apiHandler
 			return FALSE
 
 		return model
+
+/client/proc/debug_api_handler()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Debug API Handler"
+	set desc = "Toggle debug logging of API requests"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	apiHandler.debug = !apiHandler.debug
+	if (apiHandler.debug)
+		boutput(src, "Enabled debug logging of API requests")
+	else
+		boutput(src, "Disabled debug logging of API requests")

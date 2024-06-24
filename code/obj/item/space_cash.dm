@@ -99,6 +99,20 @@
 		src.UpdateStackAppearance()
 		return src
 
+	stack_item(obj/item/I)
+		if (istype(I,/obj/item/currency/spacecash))
+			if (src.hasStatus("freshly_laundered") || I.hasStatus("freshly_laundered"))
+				if (!(src.hasStatus("freshly_laundered") && I.hasStatus("freshly_laundered")))
+					if (ismob(src.loc))
+						boutput(src.loc, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
+					I.delStatus("freshly_laundered")
+					src.delStatus("freshly_laundered")
+		..()
+
+	get_desc()
+		if (src.hasStatus("freshly_laundered"))
+			. += "It feels warm and soft."
+
 	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
@@ -190,7 +204,9 @@
 	thousand
 		default_min_amount = 1000
 		default_max_amount = 1000
-
+	twothousandfivehundred
+		default_min_amount = 2500
+		default_max_amount = 2500
 	hundredthousand
 		default_min_amount = 100000
 		default_max_amount = 100000
@@ -313,19 +329,24 @@
 		return ..()
 
 	ten
-		amount = 10
+		default_min_amount = 10
+		default_max_amount = 10
 
 	fifty
-		amount = 50
+		default_min_amount = 50
+		default_max_amount = 50
 
 	hundred
-		amount = 100
+		default_min_amount = 100
+		default_max_amount = 100
 
 	fivehundred
-		amount = 500
+		default_min_amount = 500
+		default_max_amount = 500
 
 	thousand
-		amount = 1000
+		default_min_amount = 1000
+		default_max_amount = 1000
 
 //not a good spot for this but idc
 TYPEINFO(/obj/item/stamped_bullion)

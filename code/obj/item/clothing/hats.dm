@@ -7,7 +7,7 @@
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
 	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
@@ -53,7 +53,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "ogloves"
 
 /obj/item/clothing/head/purple
-	desc = "A knit cap in orange."
+	desc = "A knit cap in purple."
 	icon_state = "purple"
 	item_state = "jgloves"
 
@@ -518,6 +518,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "chef"
 	item_state = "chefhat"
 
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chefhat-alt"
+
 /obj/item/clothing/head/chefhatpuffy
 	name = "Puffy Chef's Hat"
 	desc = "A chef's toque blanche, pleasantly puffy on top."
@@ -552,12 +556,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
     desc = "Your toque blanche, now at least 50% taller!"
     icon_state = "cheftall"
     item_state = "cheftall"
-
-/obj/item/clothing/head/policecap
-	name = "Police hat"
-	desc = "An old surplus-issue police hat."
-	icon_state = "mailcap"
-	item_state = "mailcap"
 
 /obj/item/clothing/head/plunger
 	name = "plunger"
@@ -876,7 +874,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(src, src.hitsound, 60, 1)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN(0) // show these messages after the "hit by" ones
 				if (M)
@@ -1064,9 +1062,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S?["criminal"] = "*Arrest*"
+		S?["criminal"] = ARREST_STATE_ARREST
 		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
 		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/mob/living/carbon/human/H = user
+		if (istype(H))
+			H.update_arrest_icon()
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1167,6 +1168,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+
+	sunhaty
+		icon_state = "sunhaty"
+		item_state = "sunhaty"
 
 	stunhatr
 		stunready = 1
@@ -1862,8 +1867,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
-	mats = list("FAB-1"=5, "honey"=5)
-
+	mats = list("fabric" = 5,
+				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."
@@ -2036,6 +2041,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	name = "mushroom cap"
 	desc = "Makes your lungs feel a little fuzzy."
 	var/additional_desc = ""
+	hat_offset_y = 4
 	icon_state = "mushroom-red"
 	item_state = "mushroom-red"
 
@@ -2117,7 +2123,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 						A_value -= 2
 					else if (T.z == Z_LEVEL_STATION)
 						A_value += 1
-				var/atom_name = trim(stripTextMacros(A.name))
+				var/atom_name = trimtext(stripTextMacros(A.name))
 				if (length(atom_name) <= 2)
 					continue
 				if (findtext(atom_name, " "))
@@ -2214,3 +2220,34 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		var/image/big_tree = image(icon('icons/misc/worlds.dmi', "shrub_autumn", SOUTHWEST))
 		big_tree.pixel_y = 32
 		src.wear_image.overlays += big_tree
+
+/obj/item/clothing/head/weirdohat
+	name = "outlander's mask"
+	desc = "A visor with teal spikes dragging behind the mask, vaguely reminiscent of an extinct alien race."
+	icon_state = "weirdohat"
+	item_state = "weirdohat"
+	seal_hair = 1
+
+/obj/item/clothing/head/lighthat
+	name = "light mitre"
+	desc = "A golden mitre pointing tall, proudly touting the strength of its faith and its light"
+	icon_state = "lighthat"
+	item_state = "lighthat"
+	seal_hair = 1
+
+/obj/item/clothing/head/bushhat
+	name = "druid mask"
+	desc = "Flowers, grass, and other flora completely cover the face of this mask. You can almost hear the roar of earthen creatures calling from inside the shrubbery"
+	icon_state = "bushhat"
+	item_state = "bushhat"
+	seal_hair = 1
+
+/obj/item/clothing/head/rabbithat
+	name = "Rabbit Costume Hat"
+	desc = "You're gonna need a psych eval after wearing this. And a shower."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "rabbithat"
+	item_state = "rabbithat"
+	seal_hair = TRUE

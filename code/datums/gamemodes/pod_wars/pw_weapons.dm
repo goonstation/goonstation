@@ -104,7 +104,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	spread_angle = 10
 
 	New()
-		AddComponent(/datum/component/holdertargeting/fullauto, 2, 1.5, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2)
 		..()
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"
@@ -124,7 +124,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 
 /obj/item/gun/energy/blaster_pod_wars/shotgun
-	name = "blaster smg"
+	name = "blaster shotgun"
 	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
 	icon_state = "pw_shotgun"
 	item_state = "pw_shotgun"
@@ -289,7 +289,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 			//if you're on the tile directly.
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
 			if (istype(L))
-				L.do_disorient(stamina_damage = 120, weakened = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
+				L.do_disorient(stamina_damage = 120, knockdown = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
 				L.TakeDamage("chest", rand(20, 40)/max(1, L.get_melee_protection()), 0, 0, DAMAGE_BLUNT)
 				L.emote("twitch_v")
 			else
@@ -299,7 +299,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 					//eh, another typecheck, no way around it I don't think. unless we wanna apply the status effect directly? idk.
 					if (isliving(A))
 						var/mob/living/M = A
-						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+						M.do_disorient(stamina_damage = 60, knockdown = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 					if (target)
 						A.throw_at(target, 10 - GET_DIST(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 

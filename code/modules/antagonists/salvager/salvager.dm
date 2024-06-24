@@ -15,7 +15,7 @@
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
-
+		H.traitHolder.removeAll()
 		// You are... no one...
 		randomize_look(H, change_gender=FALSE)
 		H.bioHolder.mobAppearance.flavor_text = null
@@ -51,7 +51,10 @@
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		if("plasmalungs" in src.owner.current.client?.preferences.traitPreferences.traits_selected) //sigh
+			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended/plasma(H), SLOT_L_STORE)
+		else
+			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), SLOT_R_STORE)
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), SLOT_SHOES)
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), SLOT_GLOVES)
@@ -129,7 +132,7 @@
 	slot_foot = list()
 	slot_back = list()
 	slot_belt = list()
-	spawn_id = 0
+	spawn_id = FALSE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 

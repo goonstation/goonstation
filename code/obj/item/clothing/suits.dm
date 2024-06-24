@@ -284,6 +284,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
+		if(!src.fingerprints)
+			src.fingerprints = list()
 		src.fingerprints |= W.fingerprints
 		qdel(W)
 
@@ -484,6 +486,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
+
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chef-alt"
 
 /obj/item/clothing/suit/apron
 	name = "apron"
@@ -1572,8 +1578,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		item_state = "syndie_specialist-heavy"
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
-	mats = list("MET-3"=20, "uqil"=10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"uqill" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/clothing/suit/space/industrial/salvager
 	name = "\improper Salvager juggernaut combat armor"
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
@@ -2285,3 +2293,49 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "autumn_jacket"
 	item_state = "autumn_jacket"
+
+// New chaplain stuff
+
+/obj/item/clothing/suit/light_robes
+	name = "light regalia"
+	desc = "A golden-white regalia with golden and blue trims. It exudes the energy of life and light."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "lightrobe"
+	item_state = "lightrobe"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
+
+/obj/item/clothing/suit/burned_robes
+	name = "incendiary robes"
+	desc = "A set of ash-colored robes with flared, charred edges on the bottom and sleeves. You feel a subtle burning sensation just looking at it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "burnedrobe"
+	item_state = "burnedrobe"
+	over_hair = TRUE
+	wear_layer = MOB_FULL_SUIT_LAYER
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
+
+/obj/item/clothing/suit/green_robes
+	name = "lost horror robes"
+	desc = "A dull chartreuse robe with faded mysterious imagery of gods around the legs. It exudes an aura of mystery you cannot begin to comprehend."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "greenrobe"
+	item_state = "greenrobe"
+	over_hair = TRUE
+	wear_layer = MOB_FULL_SUIT_LAYER
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
+
+/obj/item/clothing/suit/nature_robes
+	name = "druid robes"
+	desc = "An oak-colored robe wrapped in imagery of leaves and branches. It feels like bark to the touch."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "naturerobe"
+	item_state = "naturerobe"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM

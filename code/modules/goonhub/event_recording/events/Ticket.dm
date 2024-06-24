@@ -18,7 +18,7 @@
 		src.send(
 			M.mind.get_player().id,
 			T.target,
-			T.reason,
+			html_decode(T.reason),
 			M.real_name,
 			M.job,
 			M.ckey

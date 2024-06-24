@@ -91,11 +91,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					clothing.UpdateName()
 				else if (istype(item, /obj/item/currency/spacecash))
 					var/obj/item/currency/spacecash/cash = item
+					cash.changeStatus("freshly_laundered", INFINITE_STATUS)
 					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
 					for (var/amount in amounts)
 						if (amount >= cash.amount)
 							break
 						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
+						newcash.changeStatus("freshly_laundered", INFINITE_STATUS)
 						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
@@ -109,7 +111,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					H.gloves?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					H.glasses?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					H.head?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
-				H.changeStatus("weakened", 1 SECONDS)
+				H.changeStatus("knockdown", 1 SECONDS)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
 				src.open = 1
@@ -154,6 +156,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
+			H?.delStatus("burning")
 			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, TRUE)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
@@ -288,6 +291,10 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					if (!(src in processing_items))
 						processing_items.Add(src)
 	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
 
 #undef PRE
 #undef WASH

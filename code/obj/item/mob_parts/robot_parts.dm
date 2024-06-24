@@ -388,7 +388,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			src.UpdateOverlays(null, "smashed")
 
 	ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
-		..() //parent calls del if we get destroyed so no need to handle not doing this
+		. = ..() //parent calls del if we get destroyed so no need to handle not doing this
 		if (!src.smashed && (bluntdmg > 10 || bluntdmg > 3 && prob(20)))
 			src.smashed = TRUE
 			src.UpdateIcon()
@@ -563,6 +563,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		attach(H,user)
 
 		return
+
+	can_arm_attach()
+		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
 
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
@@ -909,7 +912,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		T?.hotspot_expose(700, 50)
+		if(src.holder && (src.holder.loc == T))
+			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
@@ -925,7 +929,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		if(src.holder.loc == T)
+		if(src.holder && (src.holder.loc == T))
 			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame

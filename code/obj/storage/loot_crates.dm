@@ -52,7 +52,7 @@
 		/obj/item/clothing/gloves/psylink_bracelet = 10,\
 		/obj/item/device/voltron = 5,\
 		/obj/item/injector_belt = 20,\
-		/obj/item/clothing/mask/gas/injector_mask = 10,\
+		/obj/item/clothing/mask/injector_mask = 10,\
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
 		/obj/item/clothing/gloves/ring/titanium = 20,\
 		/obj/item/gun/energy/phaser_gun = 20,\
@@ -71,7 +71,8 @@
 		/mob/living/critter/bear = 20,\
 		/obj/item/clothing/shoes/jetpack = 20,\
 		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20, \
-		/obj/item/gun/kinetic/foamdartshotgun = 20,
+		/obj/item/gun/kinetic/foamdartshotgun = 20, \
+		/obj/item/device/speech_pro = 20
 	)
 
 var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager

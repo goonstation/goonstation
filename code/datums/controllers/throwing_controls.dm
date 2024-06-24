@@ -18,16 +18,17 @@
 	var/mob/thrown_by
 	var/atom/return_target
 	var/bonus_throwforce = 0
-	var/end_throw_callback
+	var/datum/callback/end_throw_callback
 	var/mob/user
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
 	var/speed_error = 0
 	var/throw_type
+	var/stops_on_mob_hit = TRUE
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,
-			bonus_throwforce=0, end_throw_callback=null, throw_type=1)
+			bonus_throwforce=0, datum/callback/end_throw_callback=null, throw_type=1)
 		src.thing = thing
 		src.target = target
 		src.error = error
@@ -120,7 +121,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 		if(end_throwing)
 			thrown -= thr
 			if(thr.end_throw_callback)
-				if(call(thr.end_throw_callback)(thr)) // return 1 to continue the throw, might be useful!
+				if(thr.end_throw_callback.Invoke(thr)) // pass /datum/thrown_thing, return 1 to continue the throw, might be useful!
 					thrown += thr
 					continue
 			if(!thing || thing.disposed)

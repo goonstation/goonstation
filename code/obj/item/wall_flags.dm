@@ -5,12 +5,22 @@
 	icon_state = "blank"
 	/// Must by a type path of `/obj/decal/poster/flag`.
 	var/associated_flag = /obj/decal/poster/flag
+	var/altside_flag
+
+	attack_self(mob/user as mob)
+		if(altside_flag)
+			user.show_text("You flip the [src] around.")
+			if(src.loc == user)
+				user.u_equip(src)
+			qdel(src)
+			user.put_in_hand_or_drop(new altside_flag)
 
 	afterattack(turf/simulated/T, mob/user)
 		if (locate(/obj/decal/poster/flag) in T)
 			return
 		if (istype(T, /turf/simulated/wall/) || istype(T, /turf/unsimulated/wall))
 			var/obj/decal/poster/flag/new_flag = new src.associated_flag(T)
+			qdel(new_flag.flag_item)
 			new_flag.flag_item = src
 			user.u_equip(src)
 			src.set_loc(new_flag)
@@ -71,13 +81,28 @@
 		name = "progressive pride flag"
 		icon_state = "progressive"
 		associated_flag = /obj/decal/poster/flag/progressive
+		altside_flag = /obj/item/flag/rainbow
 
 	rainbow
 		name = "rainbow flag"
 		icon_state = "rainbow"
 		associated_flag = /obj/decal/poster/flag/rainbow
+		altside_flag = /obj/item/flag/progressive
 
 	trans
 		name = "transgender pride flag"
 		icon_state = "trans"
 		associated_flag = /obj/decal/poster/flag/trans
+
+	mlmvinc
+		name = "\improper Vincian MLM pride flag"
+		icon_state = "mlmvinc"
+		associated_flag = /obj/decal/poster/flag/mlmvinc
+		altside_flag = /obj/item/flag/mlmachi
+
+	mlmachi
+		name = "\improper Achilean MLM pride flag"
+		icon_state = "mlmachi"
+		associated_flag = /obj/decal/poster/flag/mlmachi
+		altside_flag = /obj/item/flag/mlmvinc
+

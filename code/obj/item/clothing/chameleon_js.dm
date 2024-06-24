@@ -456,7 +456,7 @@
 		name = "fancy hat"
 		icon_state = "rank-fancy"
 		item_state = "that"
-		desc = "What do you mean this is hat isn't fancy?"
+		desc = "What do you mean this hat isn't fancy?"
 		seal_hair = FALSE
 
 	detective
@@ -1832,7 +1832,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
 		shoes_type = new/datum/chameleon_shoes_pattern/caps_boots
 		gloves_type = new/datum/chameleon_gloves_pattern/caps_gloves
-		belt_type = null
+		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern/captain
 
 	head_of_security
@@ -1842,7 +1842,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		suit_type = new/datum/chameleon_suit_pattern/hos_jacket
 		glasses_type = new/datum/chameleon_glasses_pattern/sechud
 		shoes_type = new/datum/chameleon_shoes_pattern/swat
-		gloves_type = null
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern/security
 		backpack_type = new/datum/chameleon_backpack_pattern/security
 
@@ -1853,7 +1853,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
-		gloves_type = null
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
 
@@ -1971,7 +1971,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		name = "Quartermaster"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/cargo
 		hat_type = new/datum/chameleon_hat_pattern
-		suit_type = new/datum/chameleon_suit_pattern
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_engineering
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern
 		gloves_type = new/datum/chameleon_gloves_pattern

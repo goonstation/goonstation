@@ -1,7 +1,7 @@
 /////////////////////////////////////// General Announcement Computer
 
 /obj/machinery/computer/announcement
-	name = "Announcement Computer"
+	name = "announcement computer"
 	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
@@ -19,6 +19,7 @@
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
+	var/override_font = null
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -42,6 +43,9 @@
 			src.unlocked = check_access(ID, 1)
 			boutput(user, SPAN_NOTICE("You insert [W]."))
 			update_status()
+			tgui_process.update_uis(src)
+			return
+		..()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -129,8 +133,15 @@
 			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
-		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
+
+		var/header = "[A.name] Announcement by [ID.registered] ([ID.assignment])"
+		if (override_font )
+			message = "<font face = '[override_font]'> [message] </font>"
+			header = "<font face = '[override_font]'> [header] </font>"
+
+		command_announcement(message, header, msg_sound)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
+		return TRUE
 
 	proc/get_time(mob/user)
 		return round(GET_COOLDOWN(user,"announcement_computer") / 10)
@@ -160,11 +171,12 @@
 		return L.get_messages(message)
 
 	proc/announce_arrival(var/mob/living/person)
+		var/background_trait = person.traitHolder.getTraitWithCategory("background")
 		if (!src.announces_arrivals)
 			return 1
 		if (!src.arrivalalert)
 			return 1
-		if ((person.traitHolder.hasTrait("stowaway")) || (person.traitHolder.hasTrait("pilot")) || (person.traitHolder.hasTrait("sleepy")))
+		if (background_trait)
 			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
@@ -209,3 +221,62 @@
 		name = "Syndicate Announcement computer"
 		voice_name = "Syndicate Announcement Computer"
 		theme = "syndicate"
+
+/obj/machinery/computer/announcement/clown
+	req_access = null
+	name = "Illegal Announcement Computer"
+	icon_state = "announcementclown"
+	circuit_type = /obj/item/circuitboard/clown_announcement
+	var/emagged = FALSE
+	sound_to_play = 'sound/machines/announcement_clown.ogg'
+	override_font = "Comic Sans MS"
+	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
+
+	send_message(mob/user, message)
+		. = ..()
+		if(.)
+			SPAWN(0.5 SECONDS)
+				new /obj/effects/explosion (src.loc)
+				playsound(src.loc, "explosion", 50, 1)
+				src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
+				user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
+
+				var/mob/living/carbon/clown = user
+				if(istype(clown))
+					var/datum/db_record/S = data_core.security.find_record("id", clown.datacore_id)
+					S?["criminal"] = "*Arrest*"
+					S?["mi_crim"] = "Making a very irritating announcement."
+
+					clown.update_burning(15) // placed here since update_burning is only for mob/living
+				if(ID)
+					user.put_in_hand_or_eject(ID)
+
+				if (emagged)
+					var/turf/T = get_turf(src.loc)
+					if(T)
+						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
+						explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
+				qdel(src)
+
+
+	attackby(obj/item/W, mob/user)
+		..()
+		if (istype(W, /obj/item/card/id))
+			if ( W.icon_state != "id_clown")
+				src.unlocked = 0
+				update_status()
+
+	ui_act(action, parmas)
+		..()
+		switch(action)
+			if ("id")
+				if ( ID.icon_state != "id_clown")
+					src.unlocked = 0 // clowns ONLY
+					update_status()
+
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!emagged)
+			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
+		emagged = TRUE
+

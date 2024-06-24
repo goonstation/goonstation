@@ -1,8 +1,8 @@
 /obj/machinery/computer/robotics
-	name = "Robotics Control"
+	name = "robotics control"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robotics"
-	req_access = list(access_robotics)
+	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
@@ -75,10 +75,10 @@
 		dat += " *------------------------------------------------*<BR>"
 
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			dat += "[R.name] |"
 			if(R.disposed)
 				continue
-			else if(isnull(R.part_head?.brain))
+			dat += "[R.name] |"
+			if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)
 				dat += " Not Responding |"

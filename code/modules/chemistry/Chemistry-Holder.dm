@@ -294,7 +294,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(!target) return
 
 		if (isnull(target.reagents))
-			target.reagents = new
+			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
@@ -714,6 +714,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								turf_reaction_success = 1
 								.+= current_id
 						if(isobj(A))
+
+							if (istype(A, /obj/overlay))
+								continue
 							// use current_reagent.reaction_obj for stuff that affects all objects
 							// and reagent_act for stuff that affects specific objects
 							if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))
@@ -1220,6 +1223,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 /// Convenience proc to create a reagents holder for an atom
 /// Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+atom/proc/create_reagents(var/max_vol = 100)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

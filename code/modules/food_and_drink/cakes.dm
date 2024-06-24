@@ -82,11 +82,11 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-				if(/obj/item/reagent_containers/food/snacks/plant/blackberry)
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry)
 					tag = "cake[clayer]-blackberry"
 				if(/obj/item/reagent_containers/food/snacks/plant/raspberry)
 					tag = "cake[clayer]-raspberry"
-				if(/obj/item/reagent_containers/food/snacks/plant/blueraspberry)
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry)
 					tag = "cake[clayer]-braspberry"
 
 		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data
@@ -589,7 +589,7 @@
 
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
 	name = "Extravagant Chocolate Gateau"
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
+	desc = "Holy shit! This cake probably costs more than the peak market cap of Donk Co.!"
 
 	New()
 		..()

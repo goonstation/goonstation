@@ -78,10 +78,10 @@
 			src.loaded = TRUE
 
 		else
-			if (!src.player.id) return FALSE
+			if (!src.player.id && !src.player.ckey) return FALSE
 			try
 				var/datum/apiRoute/players/saves/get/getSavesAndData = new
-				getSavesAndData.queryParams = list("player_id" = src.player.id)
+				getSavesAndData.queryParams = list("player_id" = src.player.id, "ckey" = src.player.ckey)
 				var/datum/apiModel/GetPlayerSaves/savesAndData = apiHandler.queryAPI(getSavesAndData)
 				var/list/newData = list()
 				for (var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data in savesAndData.data)
@@ -96,6 +96,7 @@
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to have their cloud data loaded: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to have their cloud data loaded: [error.message]", "admin")
 
 		return TRUE
 
@@ -106,16 +107,18 @@
 			src.putSimulatedCloud("data", key, value)
 
 		else
-			if (!src.player?.id)
-				logTheThing(LOG_DEBUG, src.player?.ckey, "No player ID found in cloud data put [key], [value]")
+			if (!src.player.id && !src.player.ckey)
+				logTheThing(LOG_DEBUG, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]")
+				logTheThing(LOG_DIARY, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]", "admin")
 				return
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
-				addPlayerData.buildBody(src.player.id, key, value)
+				addPlayerData.buildBody(src.player.id, src.player.ckey, key, value)
 				apiHandler.queryAPI(addPlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]", "admin")
 				return FALSE
 
 		src.data[key] = value
@@ -128,14 +131,15 @@
 			src.putSimulatedCloud("saves", name, data)
 
 		else
-			if (!src.player.id) return
+			if (!src.player.id && !src.player.ckey) return
 			try
 				var/datum/apiRoute/players/saves/file/post/addPlayerSave = new
-				addPlayerSave.buildBody(src.player.id, name, data)
+				addPlayerSave.buildBody(src.player.id, src.player.ckey, name, data)
 				apiHandler.queryAPI(addPlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put save into their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to put save into their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.saves[name] = data
@@ -148,14 +152,15 @@
 			src.deleteSimulatedCloud("data", key)
 
 		else
-			if (!src.player.id) return
+			if (!src.player.id && !src.player.ckey) return
 			try
 				var/datum/apiRoute/players/saves/data/delete/deletePlayerData = new
-				deletePlayerData.buildBody(src.player.id, key)
+				deletePlayerData.buildBody(src.player.id, src.player.ckey, key)
 				apiHandler.queryAPI(deletePlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.data.Remove(key)
@@ -168,14 +173,15 @@
 			src.deleteSimulatedCloud("saves", name)
 
 		else
-			if (!src.player.id) return
+			if (!src.player.id && !src.player.ckey) return
 			try
 				var/datum/apiRoute/players/saves/file/delete/deletePlayerSave = new
-				deletePlayerSave.buildBody(src.player.id, name)
+				deletePlayerSave.buildBody(src.player.id, src.player.ckey, name)
 				apiHandler.queryAPI(deletePlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.saves.Remove(name)
@@ -233,12 +239,13 @@
 	try
 		var/datum/apiRoute/players/saves/databulk/post/addBulkData = new
 		addBulkData.buildBody(json_encode(data))
-		logTheThing(LOG_DEBUG, null, "TEMP CLOUD BULK: [json_encode(data)]")
+		logTheThing(LOG_DIARY, null, "TEMP CLOUD BULK: [json_encode(data)]", "admin")
 		apiHandler.queryAPI(addBulkData)
 		return TRUE
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
 		logTheThing(LOG_DEBUG, null, "failed to put bulk data into the cloud. Error: [error.message]")
+		logTheThing(LOG_DIARY, null, "failed to put bulk data into the cloud. Error: [error.message]", "admin")
 		return FALSE
 #endif
 

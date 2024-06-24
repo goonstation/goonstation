@@ -213,11 +213,13 @@ ABSTRACT_TYPE(/datum/material_property)
 	onAdded(var/datum/material/M, var/new_value)
 		M.addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/radioactive_add())
 		M.addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/radioactive_remove())
+		M.addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 		return
 
 	onRemoved(var/datum/material/M)
 		M.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radioactive_add)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/radioactive_remove)
+		M.removeTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 		return
 
 /datum/material_property/neutron_radioactivity
