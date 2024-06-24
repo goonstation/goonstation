@@ -1801,6 +1801,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
 #include "code\obj\electric_chair.dm"
+#include "code\obj\fakeobject.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
 #include "code\obj\geodes.dm"

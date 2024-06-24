@@ -123,6 +123,9 @@
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
+			if (!hostpda.uplink.purchase_log[reward.type])
+				hostpda.uplink.purchase_log[reward.type] = 0
+			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
 				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)

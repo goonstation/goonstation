@@ -105,7 +105,7 @@
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "aau" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -164,7 +164,7 @@
 	},
 /area/space)
 "aaC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -18249,6 +18249,7 @@
 /area/station/science/chemistry)
 "cWY" = (
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -21933,7 +21934,7 @@
 /area/station/crew_quarters/locker)
 "fmf" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -22743,7 +22744,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "fUi" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1;
 	pixel_y = -15
 	},
@@ -25552,7 +25553,7 @@
 	},
 /area/station/engine/inner)
 "hOa" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
@@ -26650,7 +26651,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "iAp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -33057,7 +33058,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "mCL" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
@@ -33418,7 +33419,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -37136,7 +37137,7 @@
 	},
 /area/station/science/teleporter)
 "oSE" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -37988,7 +37989,7 @@
 /turf/space,
 /area/space)
 "puY" = (
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/black/side{
@@ -43799,7 +43800,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "sYT" = (
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	desc = "The control panel for a mark 1 rancher minishuttle. It is currently deactivated.";
 	name = "Rancher Shuttle Controls"
 	},
@@ -51631,7 +51632,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/science/artifact)
 "yhT" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	desc = "A futuristic system that collects residual power from chicken alchemy.";
 	dir = 8;
 	name = "Chicken Power Generator"

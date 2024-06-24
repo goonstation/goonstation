@@ -2038,6 +2038,7 @@
 /area/station/engine/substation/west)
 "ahC" = (
 /obj/disposalpipe/segment,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -10184,7 +10185,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aNh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
