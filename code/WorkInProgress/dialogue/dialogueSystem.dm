@@ -224,11 +224,11 @@ Links are ignored on this node. It uses the target node's links.
 			alert(C, "Uh-oh, the dialogue broke! No valid link was found. Please alert a coder with this info: getNodeHtml [targetNodeType] [master.allNodes.len]", "Oh no", "Ok")
 
 /datum/dialogueNode
-	var/nodeImage = null //! Portrait or whatever for this node.
-	var/nodeText = "" //! What's displayed when you enter this node. What the npc says.
-	var/linkText = "" //! The text that links TO this node. What you say to the NPC to get to this node.
-	var/links = list() //! Which nodes are inside this node. What "buttons" this node contains.
-	var/showBackToMain = 1 //! Show button leading back to first screen on this node? Careful: Without this people might get stuck. Plan your dialogue.
+	var/nodeImage = null //Portrait or whatever for this node.
+	var/nodeText = "" //What's displayed when you enter this node. What the npc says.
+	var/linkText = "" //The text that links TO this node. What you say to the NPC to get to this node.
+	var/links = list() //Which nodes are inside this node. What "buttons" this node contains.
+	var/showBackToMain = 1 //Show button leading back to first screen on this node? Careful: Without this people might get stuck. Plan your dialogue.
 	var/datum/dialogueMaster/master = null
 
 	New(var/datum/dialogueMaster/M)
