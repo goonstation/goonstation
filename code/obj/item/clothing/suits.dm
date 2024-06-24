@@ -487,6 +487,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 		..()
 		setProperty("heatprot", 10)
 
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chef-alt"
+
 /obj/item/clothing/suit/apron
 	name = "apron"
 	desc = "A protective frontal garment designed to guard clothing against spills."

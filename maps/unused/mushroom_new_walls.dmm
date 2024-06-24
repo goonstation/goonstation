@@ -6717,7 +6717,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aJt" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -11941,7 +11941,7 @@
 	},
 /area/space)
 "blg" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -12000,7 +12000,7 @@
 	},
 /area/space)
 "blo" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -17637,7 +17637,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eIM" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
@@ -20320,7 +20320,7 @@
 /area/station/security/processing)
 "hjm" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -23733,6 +23733,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"kHJ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/crew_quarters/supplylobby)
 "kHX" = (
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -24326,7 +24332,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "lng" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -38095,7 +38101,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "wVZ" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,
@@ -79984,7 +79990,7 @@ aAV
 wQw
 qXa
 rWa
-rDU
+kHJ
 rDU
 aFD
 aHv
