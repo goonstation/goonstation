@@ -59546,8 +59546,10 @@
 "iha" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
-/obj/window/reinforced{
-	dir = 2
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window"
 	},
 /obj/lattice/directional_icons{
 	dir = 10
@@ -61429,11 +61431,15 @@
 	},
 /area/iomoon/base/underground)
 "jAK" = (
-/obj/window/reinforced{
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window";
 	dir = 4
 	},
 /mob/living/critter/small_animal/floateye/watchful,
 /obj/decal/residual_energy,
+/obj/lattice/directional_icons,
 /turf/space,
 /area/space)
 "jAQ" = (
@@ -63313,11 +63319,15 @@
 /turf/unsimulated/floor/tatami/north,
 /area/centcom/offices/angel)
 "lgd" = (
-/obj/window/reinforced{
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window";
 	dir = 8
 	},
 /mob/living/critter/small_animal/floateye/watchful,
 /obj/decal/residual_energy,
+/obj/lattice/directional_icons,
 /turf/space,
 /area/space)
 "lgr" = (
@@ -65125,7 +65135,10 @@
 "mTn" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
-/obj/window/reinforced{
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window";
 	dir = 8
 	},
 /obj/lattice/directional_icons{
@@ -65326,6 +65339,7 @@
 "mZO" = (
 /mob/living/critter/small_animal/floateye/watchful,
 /obj/decal/residual_energy,
+/obj/lattice/directional_icons,
 /turf/space,
 /area/space)
 "mZZ" = (
@@ -67261,6 +67275,18 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"oDJ" = (
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window";
+	dir = 4
+	},
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/decal/residual_energy,
+/obj/lattice,
+/turf/space,
+/area/space)
 "oDT" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 6
@@ -67934,7 +67960,10 @@
 "piC" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
-/obj/window/reinforced{
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window";
 	dir = 1
 	},
 /obj/lattice/directional_icons{
@@ -68719,6 +68748,14 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
+"pLa" = (
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/decal/residual_energy,
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "pLj" = (
 /obj/tree{
 	dir = 8
@@ -71795,8 +71832,10 @@
 "sgR" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
-/obj/window/reinforced{
-	dir = 2
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window"
 	},
 /obj/lattice/directional_icons{
 	dir = 4
@@ -72346,11 +72385,15 @@
 	},
 /area/owlery/Owlopen)
 "sFw" = (
-/obj/window/reinforced{
+/obj/fakeobject{
+	icon = 'icons/obj/window.dmi';
+	icon_state = "rwindow";
+	name = "window";
 	dir = 1
 	},
 /mob/living/critter/small_animal/floateye/watchful,
 /obj/decal/residual_energy,
+/obj/lattice,
 /turf/space,
 /area/space)
 "sFY" = (
@@ -145550,7 +145593,7 @@ oVS
 cnw
 piC
 wfJ
-mZO
+pLa
 wfJ
 sgR
 cnw
@@ -146154,7 +146197,7 @@ oVS
 cnw
 piC
 wfJ
-mZO
+pLa
 wfJ
 sgR
 cnw
@@ -146456,7 +146499,7 @@ oBN
 wFK
 uLf
 jAK
-jAK
+oDJ
 jAK
 uLf
 wFK
