@@ -827,7 +827,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst
 	icon_state = "makeshiftscrap"
 	amount_left = 4
-	max_amount = 8
+	max_amount = 4
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
