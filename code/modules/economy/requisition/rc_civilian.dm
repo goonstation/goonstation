@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/water
 	name = "water"
 	chem_ids = "water"
-	feemod = PAY_UNTRAINED/10
+	feemod = PAY_UNTRAINED/15
 
 
 /datum/req_contract/civilian/birthdaybash
