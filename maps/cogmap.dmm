@@ -45200,7 +45200,6 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/sanitary,
 /area/station/security/brig)
 "ipZ" = (

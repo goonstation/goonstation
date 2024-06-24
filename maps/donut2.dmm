@@ -37670,15 +37670,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"pmI" = (
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = 6
-	},
-/obj/machinery/drainage,
-/obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "pmU" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -95740,7 +95731,7 @@ bpF
 lZM
 bgL
 bgL
-pmI
+qLw
 qLw
 bns
 bns
