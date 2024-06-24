@@ -2171,8 +2171,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		..()
-		ammo = new/obj/item/ammo/bullets/pipeshot/plasglass
-		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/plasglass)
+		ammo = new/obj/item/ammo/bullets/pipeshot/glass
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/glass)
 		name = initial(name) //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
 		UpdateIcon()
 
@@ -2207,7 +2207,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	shoot(var/target, var/start, var/mob/user)
 
-		//var/i //Because we can't initialize variables when we're declaring the loop. thanks, DM.
 		priorammo = src.ammo.amount_left
 
 		//Go up to the limit defined by the firing mode, but don't exceed however many bullets are in the gun BEFORE we started firing
