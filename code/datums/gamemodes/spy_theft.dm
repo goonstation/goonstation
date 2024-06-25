@@ -472,11 +472,12 @@
 
 	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
-	big_station_bounties[/obj/machinery/clonegrinder] = 1
+	big_station_bounties[/obj/machinery/clonegrinder] = 2
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
+	big_station_bounties[/obj/machinery/dialysis] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
 	big_station_bounties[/obj/machinery/recharge_station] = 2
