@@ -18151,29 +18151,29 @@
 /area/station/hallway/primary/northwest)
 "baZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bba" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bbc" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bbd" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bbe" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bbf" = (
 /turf/simulated/floor/stairs,
 /area/station/maintenance/northeast)
@@ -18483,7 +18483,7 @@
 /obj/item/device/light/lava_lamp,
 /obj/item/storage/wall/random,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bce" = (
 /obj/stool/chair{
 	dir = 8
@@ -18492,10 +18492,10 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bcf" = (
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bcg" = (
 /obj/stool/chair{
 	dir = 4
@@ -18506,7 +18506,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bcj" = (
 /obj/stool/chair{
 	dir = 8
@@ -18517,17 +18517,17 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bck" = (
 /obj/decal/poster/wallsign/poster_human{
 	pixel_y = 32
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bcl" = (
 /obj/fitness/speedbag,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bcm" = (
 /obj/lattice,
 /obj/disposalpipe/segment/food,
@@ -18787,7 +18787,7 @@
 "bdc" = (
 /obj/storage/closet/wardrobe/green,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bdd" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -18795,14 +18795,14 @@
 	icon_state = "bedsheet-green"
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bde" = (
 /obj/storage/secure/closet/personal,
 /obj/machinery/door_control/bolter/new_walls/south{
 	id = "maint_quarters1"
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bdf" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -18810,11 +18810,11 @@
 	icon_state = "bedsheet-black"
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bdg" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bdh" = (
 /obj/lattice{
 	dir = 1;
@@ -19077,7 +19077,7 @@
 "bdT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "bdV" = (
 /obj/machinery/launcher_loader/north,
 /obj/machinery/door/poddoor/pyro{
@@ -37945,11 +37945,11 @@
 /area/space)
 "cgw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cgx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cgz" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
@@ -38181,7 +38181,7 @@
 "chk" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chl" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -38190,10 +38190,10 @@
 	},
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chm" = (
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chn" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -38201,7 +38201,7 @@
 	icon_state = "bedsheet-black"
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cho" = (
 /obj/storage/closet/wardrobe/black,
 /obj/decal/poster/wallsign/poster_borg{
@@ -38209,10 +38209,10 @@
 	},
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chp" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chq" = (
 /obj/storage/secure/closet/personal,
 /obj/decal/poster/wallsign/poster_cool{
@@ -38220,7 +38220,7 @@
 	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chr" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -38228,17 +38228,17 @@
 	icon_state = "bedsheet-pink"
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chs" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cht" = (
 /obj/storage/closet/wardrobe/white/research,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "chu" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
@@ -38531,38 +38531,38 @@
 /obj/table/auto,
 /obj/item/device/light/candle/small,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cir" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cis" = (
 /obj/stool/chair{
 	dir = 4
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "civ" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "ciw" = (
 /obj/stool/chair{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "cix" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "ciA" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -57422,7 +57422,7 @@
 /obj/random_item_spawner/med_tool,
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "eAB" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -61995,7 +61995,7 @@
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "joL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm/north,
@@ -62987,7 +62987,7 @@
 	id = "maint_quarters2"
 	},
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "kkQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -64173,7 +64173,7 @@
 	},
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "lqm" = (
 /obj/lattice{
 	dir = 4;
@@ -65316,7 +65316,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "mAB" = (
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -66330,7 +66330,7 @@
 /obj/random_item_spawner/medicine,
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_east)
+/area/station/crew_quarters/quarters_south)
 "nIZ" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet{
@@ -67878,7 +67878,7 @@
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "pqB" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -69151,7 +69151,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "qGS" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -71471,7 +71471,7 @@
 	},
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "sTv" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -75662,7 +75662,7 @@
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/grime,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/quartersC)
 "xVw" = (
 /obj/stool/chair/comfy/wheelchair,
 /obj/disposalpipe/segment/transport,
