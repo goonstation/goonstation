@@ -131,6 +131,17 @@
 					boutput(user, SPAN_ALERT("The [src.name] is empty."))
 					return
 
+				if (istype(target, /obj/item/bloodslide))
+					var/obj/item/bloodslide/BL = target
+					if (BL.reagents.total_volume)
+						boutput(user, SPAN_ALERT("There is already a sample on [target]."))
+						return
+					var/transferred = src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+					user.update_inhands()
+					boutput(user, SPAN_NOTICE("You fill the blood slide with [transferred] units of the solution."))
+					BL.on_reagent_change()
+					return
+
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					boutput(user, SPAN_ALERT("[target] is full."))
 					return
