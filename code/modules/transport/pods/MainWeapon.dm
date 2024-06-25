@@ -518,17 +518,22 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	///Ship arms' proc to find and attempt loading of sheets on the ground
 	proc/scoop_up_sheets()
 		var/turf/load_from
+		var/turf/also_load_from
 		var/loaded_stuff
 		if(ship.bound_height == 64) //always load at the front side of the pod, left offset
 			switch(ship.dir)
 				if(NORTH)
 					load_from = locate(ship.x,ship.y+2,ship.z)
+					also_load_from = locate(ship.x+1,ship.y+2,ship.z)
 				if(EAST)
 					load_from = locate(ship.x+2,ship.y+1,ship.z)
+					also_load_from = locate(ship.x+2,ship.y+2,ship.z)
 				if(SOUTH)
 					load_from = locate(ship.x+1,ship.y-1,ship.z)
+					also_load_from = locate(ship.x+2,ship.y-1,ship.z)
 				if(WEST)
 					load_from = locate(ship.x-1,ship.y,ship.z)
+					also_load_from = locate(ship.x-1,ship.y+1,ship.z)
 		else
 			load_from = get_step(ship,ship.dir)
 		if(!load_from)
@@ -536,6 +541,10 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		for (var/obj/O in load_from)
 			if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
 				loaded_stuff = TRUE
+		if(also_load_from && src.steel_sheets < src.max_sheets)
+			for (var/obj/O in also_load_from)
+				if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
+					loaded_stuff = TRUE
 		if(loaded_stuff)
 			for (var/mob/M in ship)
 				M.playsound_local(ship, 'sound/machines/chime.ogg', 5, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
