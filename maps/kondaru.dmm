@@ -39786,8 +39786,8 @@
 	name = "Power Room";
 	req_access = null
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/power)
 "jjV" = (
@@ -48594,7 +48594,6 @@
 	dir = 4;
 	name = "Power Room"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
@@ -52384,8 +52383,8 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Power Transmission Laser"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/ptl)
 "sEX" = (
