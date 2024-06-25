@@ -787,9 +787,6 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			src.add_dialog(usr)
-
 		if (href_list["floors"])
 			mode = EFIF_MODE_FLOORS
 			firerate = 15
