@@ -12,11 +12,11 @@
 	speech_verb_exclaim = null
 
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
 	start_speech_modifiers = list(SPEECH_MODIFIER_MONOSPACE_DECORATOR, SPEECH_MODIFIER_BRAIN_DAMAGE)
-	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE)
-	default_speech_output_channel = SPEECH_OUTPUT_GHOSTDRONE
-	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT)
+	default_speech_output_channel = SAY_CHANNEL_GHOSTDRONE
+	start_listen_languages = list(LANGUAGE_ALL)
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	flags = NODRIFT | TABLEPASS | DOORPASS
@@ -1175,9 +1175,8 @@
 // Dumb gimmick ghostdrone with no vis/hear restrictions + construction tools.
 // Same laws, same crap HP, but more useful for just buildin' shit
 /mob/living/silicon/ghostdrone/deluxe
-	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_GHOSTLY_WHISPER)
-	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_SILICONCHAT)
-	start_listen_languages = list(LANGUAGE_ALL)
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_SILICONCHAT)
+	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_SILICONCHAT)
 
 	sees_static = FALSE
 

@@ -67,6 +67,7 @@
 #define LISTEN_INPUT_DEADCHAT "deadchat"
 #define LISTEN_INPUT_EARS "ears"
 #define LISTEN_INPUT_EARS_AI "ai_ears"
+#define LISTEN_INPUT_EARS_GHOSTDRONE "ghostdrone_ears"
 #define LISTEN_INPUT_EQUIPPED "equipped"
 #define LISTEN_INPUT_FLOCK "flock"
 #define LISTEN_INPUT_FLOCK_GLOBAL "global_flock"

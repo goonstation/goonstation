@@ -156,7 +156,6 @@ Things To Implement:
 - AI
 - Observers (not ghosts)
 - Zoldorf
-- Ghostdrones (language)
 - Radio brain (bioeffect)
 
 Old Code To Remove:

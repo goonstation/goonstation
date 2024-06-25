@@ -49,5 +49,14 @@
 	. = ..()
 
 
+/datum/listen_module/input/outloud/ears/ghostdrone
+	id = LISTEN_INPUT_EARS_GHOSTDRONE
+
+/datum/listen_module/input/outloud/ears/ghostdrone/process(datum/say_message/message)
+	message.speaker_to_display = message.voice_ident
+
+	. = ..()
+
+
 /datum/listen_module/input/outloud/ears/ai
 	id = LISTEN_INPUT_EARS_AI
