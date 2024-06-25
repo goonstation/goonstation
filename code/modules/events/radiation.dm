@@ -129,9 +129,9 @@
 			T.AddComponent(/datum/component/radioactive, 25, TRUE, FALSE, 1)
 		for (var/mob/M in T.contents)
 			logTheThing(LOG_STATION, M, "is hit by a neutron radiation burst at [log_loc(M)].")
-			A.take_radiation_dose(rad_strength)
+			M.take_radiation_dose(rad_strength)
 			if(ishuman(M))
-				var/mob/living/carbon/human/H = A
+				var/mob/living/carbon/human/H = M
 				if (prob(mutate_prob) && M.bioHolder)
 					if (prob(bad_mut_prob))
 						H.bioHolder.RandomEffect("bad")
