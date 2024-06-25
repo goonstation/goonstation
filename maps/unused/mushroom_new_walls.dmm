@@ -436,8 +436,7 @@
 /area/shuttle/arrival/station)
 "acE" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -609,9 +608,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/entry)
 "aea" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -683,8 +680,7 @@
 	pixel_y = 24
 	},
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
@@ -827,7 +823,6 @@
 /area/station/security/checkpoint/arrivals)
 "afe" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	name = "Station Intercom (Engineering)"
 	},
 /turf/simulated/floor,
@@ -1325,8 +1320,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -2028,8 +2022,7 @@
 /area/station/maintenance/northeast)
 "amt" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
@@ -2289,7 +2282,6 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1441;
 	name = "Station Intercom (Engineering)"
 	},
@@ -2351,7 +2343,7 @@
 /area/station/com_dish/auxdish)
 "anM" = (
 /obj/cable{
-	icon_state = "4-5"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -2610,10 +2602,10 @@
 /area/station/maintenance/solar/west)
 "aoT" = (
 /obj/cable{
-	icon_state = "6-8"
+	icon_state = "2-5"
 	},
 /obj/cable{
-	icon_state = "2-5"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -2675,8 +2667,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
@@ -2785,7 +2776,6 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "apT" = (
@@ -2928,13 +2918,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aqz" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "1-5"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aqA" = (
@@ -2944,10 +2934,13 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "aqC" = (
+/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "8-10"
 	},
-/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-10"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aqD" = (
@@ -3104,10 +3097,13 @@
 /turf/space,
 /area/space)
 "arC" = (
+/obj/machinery/light/small/sticky/frostedred{
+	dir = 8
+	},
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "arD" = (
@@ -3202,8 +3198,7 @@
 /area/station/maintenance/northeast)
 "asi" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -3419,7 +3414,6 @@
 /area/station/maintenance/northeast)
 "ate" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1441;
 	name = "Station Intercom (Engineering)"
 	},
@@ -3613,8 +3607,7 @@
 	name = "predator"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
@@ -3769,14 +3762,12 @@
 /area/station/crew_quarters/pool)
 "auJ" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -4178,8 +4169,7 @@
 "awC" = (
 /obj/landmark/start/job/janitor,
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -4371,8 +4361,7 @@
 /area/station/maintenance/southwest)
 "axz" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -5221,13 +5210,11 @@
 /area/station/crew_quarters/baroffice)
 "aBw" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -6149,8 +6136,7 @@
 "aGw" = (
 /obj/machinery/firealarm/north,
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -6627,8 +6613,7 @@
 	icon_state = "6-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-10"
@@ -6639,8 +6624,7 @@
 /area/station/chapel/sanctuary)
 "aIU" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -6760,8 +6744,7 @@
 	icon_state = "5-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-10"
@@ -6773,8 +6756,7 @@
 /area/station/chapel/sanctuary)
 "aJD" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -6877,7 +6859,6 @@
 /obj/item/peripheral/printer,
 /obj/item/peripheral/sound_card,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1441;
 	name = "Station Intercom (Engineering)"
 	},
@@ -7061,8 +7042,7 @@
 	icon_state = "1-5"
 	},
 /obj/cable{
-	icon_state = "4-5";
-	tag = null
+	icon_state = "4-5"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
@@ -7129,8 +7109,7 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "4-10"
@@ -8150,8 +8129,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
@@ -8464,8 +8442,7 @@
 /area/station/security/beepsky)
 "aSS" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
@@ -9480,8 +9457,7 @@
 /area/station/hallway/primary/central)
 "aZl" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow/side,
@@ -9952,8 +9928,7 @@
 /area/station/mining/magnet)
 "bbp" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
@@ -10283,8 +10258,7 @@
 /area/station/engine/engineering/private)
 "bcT" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-6"
@@ -10502,7 +10476,6 @@
 /area/station/engine/power)
 "bdQ" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	frequency = 1441;
 	name = "Station Intercom (Engineering)"
@@ -10534,8 +10507,10 @@
 /area/station/maintenance/west)
 "bdT" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "8-10"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -10662,8 +10637,7 @@
 /area/station/engine/power)
 "beE" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -11420,7 +11394,6 @@
 /area/station/medical/morgue)
 "bhQ" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -11586,8 +11559,7 @@
 	icon_state = "5-6"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating,
@@ -12018,8 +11990,7 @@
 /area/listeningpost/power)
 "blq" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -12150,7 +12121,6 @@
 /area/listeningpost)
 "blX" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	frequency = 1485;
 	name = "Security Intercom"
@@ -12176,8 +12146,7 @@
 /area/listeningpost)
 "bmc" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
@@ -12621,8 +12590,7 @@
 /area/station/engine/storage)
 "boe" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -12807,7 +12775,6 @@
 /area/station/hallway/primary/south)
 "boZ" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
@@ -13350,8 +13317,7 @@
 /area/station/mining/magnet)
 "brc" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/greenwhite/corner{
 	dir = 4
@@ -13405,7 +13371,6 @@
 /area/station/medical/staff)
 "brl" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -13492,8 +13457,7 @@
 /area/station/crew_quarters/courtroom)
 "brF" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon = 'icons/misc/beach.dmi';
@@ -13907,8 +13871,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -14097,7 +14060,6 @@
 "btV" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 1;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
@@ -14172,8 +14134,7 @@
 /obj/machinery/light/incandescent,
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/medical/head)
@@ -14320,7 +14281,6 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 1;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
@@ -14421,7 +14381,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -14456,7 +14415,6 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 2;
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
@@ -14717,7 +14675,6 @@
 	},
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau";
 	pixel_x = -4;
 	pixel_y = 11
 	},
@@ -14894,8 +14851,7 @@
 /area/station/security/processing)
 "ccL" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -15445,8 +15401,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
 	dir = 4;
-	name = "Armoury";
-	req_access = null
+	name = "Armoury"
 	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
@@ -15495,7 +15450,6 @@
 "cBd" = (
 /obj/stool/chair/couch/green{
 	dir = 8;
-	icon_state = "chair_couch-green";
 	name = "ratty green couch"
 	},
 /obj/machinery/light/incandescent{
@@ -15523,8 +15477,7 @@
 /area/station/medical/medbay/surgery)
 "cCv" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/machinery/computer/operating/small,
 /turf/simulated/floor/bluewhite{
@@ -15581,8 +15534,7 @@
 /area/station/security/hos)
 "cFj" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor,
@@ -16140,7 +16092,6 @@
 /area/station/maintenance/southeast)
 "dkU" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8
 	},
 /obj/submachine/ice_cream_dispenser,
@@ -16263,8 +16214,7 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "security";
@@ -16866,7 +16816,6 @@
 /area/station/medical/medbay/surgery)
 "dUE" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -17188,8 +17137,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/checkpoint/arrivals)
@@ -17571,15 +17519,13 @@
 	dir = 6
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "eEW" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -18066,8 +18012,7 @@
 /area/ghostdrone_factory)
 "eYB" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -18213,8 +18158,7 @@
 /area/station/crew_quarters/bathroom)
 "ffR" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -18266,8 +18210,7 @@
 "fjy" = (
 /obj/disposalpipe/segment,
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
@@ -18524,7 +18467,6 @@
 /area/station/medical/research)
 "fyK" = (
 /obj/lattice{
-	dir = 2;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -18709,8 +18651,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
+	dir = 4
 	},
 /area/station/solar/aisat)
 "fFV" = (
@@ -18771,7 +18712,6 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
@@ -18814,7 +18754,6 @@
 /area/station/turret_protected/AIsat)
 "fIl" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	frequency = 1485;
 	name = "Station Intercom (Security)"
@@ -18997,8 +18936,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -19213,7 +19151,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -19453,7 +19390,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -19821,7 +19757,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -19878,8 +19813,7 @@
 /area/station/crew_quarters/bar)
 "gJA" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /obj/disposalpipe/segment{
@@ -19924,9 +19858,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	icon_state = "camera";
 	name = "autoname  - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/space,
@@ -20023,9 +19955,7 @@
 	},
 /area/station/bridge)
 "gUr" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "gUS" = (
@@ -20043,7 +19973,6 @@
 "gUT" = (
 /obj/disposalpipe/segment{
 	dir = 4;
-	icon_state = "pipe-s";
 	name = "factory pipe"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -20415,8 +20344,7 @@
 /area/station/turret_protected/ai_upload)
 "hml" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -20548,8 +20476,7 @@
 /area/station/turret_protected/AIsat)
 "hqE" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Engineering Maintenance";
-	req_access = null
+	name = "Engineering Maintenance"
 	},
 /obj/mapping_helper/access/engineering,
 /obj/disposalpipe/segment/mail,
@@ -20877,8 +20804,7 @@
 /area/station/maintenance/southeast)
 "hGx" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -20971,8 +20897,7 @@
 /area/station/crew_quarters/quarters)
 "hOi" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/access/mining,
@@ -21073,9 +20998,7 @@
 	},
 /area/station/security/main)
 "hRh" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
@@ -21532,8 +21455,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -22015,8 +21937,7 @@
 /area/station/hallway/secondary/entry)
 "iQV" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /obj/cable{
@@ -22048,9 +21969,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "iSf" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -22077,9 +21996,7 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "iTR" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "iVl" = (
@@ -22181,8 +22098,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
+	dir = 4
 	},
 /area/station/solar/aisat)
 "jcD" = (
@@ -22615,8 +22531,7 @@
 /area/station/hallway/primary/north)
 "jzK" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /obj/disposalpipe/segment/mail{
@@ -22998,8 +22913,7 @@
 /area/station/science/artifact)
 "jQw" = (
 /obj/machinery/door/airlock/pyro/command{
-	name = "Chief Engineer's Quarters";
-	req_access = null
+	name = "Chief Engineer's Quarters"
 	},
 /obj/mapping_helper/access/engineering_chief,
 /obj/mapping_helper/firedoor_spawn,
@@ -23074,7 +22988,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -23100,12 +23013,12 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "jXp" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir-b"
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "2-10"
 	},
-/turf/space,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "jXB" = (
 /obj/machinery/secscanner{
 	dir = 4;
@@ -23622,9 +23535,7 @@
 /turf/space,
 /area/space)
 "kAJ" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/access/engineering,
 /obj/cable{
 	icon_state = "1-2"
@@ -23649,6 +23560,12 @@
 /obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
+"kDB" = (
+/obj/cable{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "kEd" = (
 /obj/securearea{
 	desc = "A warning sign telling of the dangers of gravitational singularities.  Apparently they are dangerous.";
@@ -23915,8 +23832,7 @@
 /area/station/hallway/primary/south)
 "kNl" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -24010,7 +23926,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -24567,8 +24482,7 @@
 /area/listeningpost/power)
 "lzs" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
@@ -24610,8 +24524,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/terminal{
-	dir = 1;
-	icon_state = "term"
+	dir = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -24708,8 +24621,7 @@
 /area/station/hydroponics/bay)
 "lHv" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
@@ -24783,7 +24695,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -25075,8 +24986,7 @@
 /area/station/hallway/secondary/entry)
 "maJ" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/white,
@@ -25214,7 +25124,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -25384,8 +25293,7 @@
 /area/station/security/brig)
 "mpa" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/access/mining,
@@ -25798,8 +25706,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
+	dir = 4
 	},
 /area/station/solar/aisat)
 "mPq" = (
@@ -25846,8 +25753,7 @@
 /area/ghostdrone_factory)
 "mRO" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -26438,8 +26344,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -26774,7 +26679,6 @@
 "nKO" = (
 /obj/disposalpipe/segment{
 	dir = 4;
-	icon_state = "pipe-s";
 	name = "factory pipe"
 	},
 /turf/simulated/floor/plating/random,
@@ -26830,8 +26734,7 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 4
@@ -26883,8 +26786,7 @@
 /area/station/crew_quarters/courtroom)
 "nOL" = (
 /obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-s"
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 5
@@ -26931,7 +26833,6 @@
 /area/station/storage/primary)
 "nRo" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -26957,7 +26858,6 @@
 "nRJ" = (
 /obj/machinery/camera,
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -27075,7 +26975,6 @@
 "nYB" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
-	frequency = 1225;
 	id = "Cold Loop Gas Supply 1";
 	target_pressure = 1000
 	},
@@ -27108,8 +27007,7 @@
 /area/station/crew_quarters/barber_shop)
 "oaG" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/arrival,
 /area/station/hallway/arrivals)
@@ -27506,8 +27404,7 @@
 /area/station/turret_protected/AIsat)
 "orz" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -27636,6 +27533,12 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"owJ" = (
+/obj/cable{
+	icon_state = "2-6"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "oxh" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -27991,8 +27894,7 @@
 /area/station/hydroponics/bay)
 "oNg" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/space,
 /area/space)
@@ -28514,9 +28416,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	icon_state = "camera";
 	name = "autoname  - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/space,
@@ -28672,9 +28572,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
-	icon_state = "camera";
 	name = "autoname - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/circuit/red,
@@ -28965,9 +28863,6 @@
 	},
 /area/station/solar/aisat)
 "pvA" = (
-/obj/cable{
-	icon_state = "4-5"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -28978,11 +28873,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "pwO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-5"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -29343,7 +29238,6 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
@@ -29709,7 +29603,6 @@
 "qds" = (
 /obj/disposalpipe/segment{
 	dir = 4;
-	icon_state = "pipe-s";
 	name = "factory pipe"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -29795,9 +29688,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "qew" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -29855,8 +29746,7 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -29881,8 +29771,7 @@
 /area/station/hallway/primary/central)
 "qjt" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Cargo Maintenance";
-	req_access = null
+	name = "Cargo Maintenance"
 	},
 /obj/mapping_helper/access/cargo,
 /obj/cable{
@@ -30136,7 +30025,6 @@
 /area/station/security/processing)
 "qsg" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
@@ -30211,9 +30099,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "qvH" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
@@ -30576,8 +30462,7 @@
 /obj/machinery/door_control{
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/computer/atmosphere/pumpcontrol{
 	frequency = 1229;
@@ -30624,14 +30509,12 @@
 /area/station/engine/proto)
 "qNU" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -30814,7 +30697,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -30993,7 +30875,6 @@
 	},
 /obj/stool/chair/couch/green{
 	dir = 4;
-	icon_state = "chair_couch-green";
 	name = "ratty green couch"
 	},
 /turf/simulated/floor/green/side{
@@ -31174,8 +31055,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -31388,7 +31268,6 @@
 	},
 /obj/stool/chair/office/red{
 	dir = 8;
-	icon_state = "office_chair_red";
 	tag = "icon-office_chair_red (WEST)"
 	},
 /turf/simulated/floor/black,
@@ -31751,8 +31630,7 @@
 /area/station/ai_monitored/armory)
 "rBP" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
+	name = "Engineering"
 	},
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor/black/side{
@@ -32093,7 +31971,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 2;
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
@@ -32177,8 +32054,7 @@
 /area/station/garden/owlery)
 "rRB" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Cargo Maintenance";
-	req_access = null
+	name = "Cargo Maintenance"
 	},
 /obj/mapping_helper/access/cargo,
 /obj/cable{
@@ -32659,9 +32535,7 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	icon_state = "camera";
 	name = "autoname  - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/space,
@@ -32846,8 +32720,7 @@
 /area/station/security/processing)
 "szh" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/produce{
 	dir = 2;
@@ -33110,8 +32983,7 @@
 "sLV" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining";
-	req_access = null
+	name = "Mining"
 	},
 /obj/mapping_helper/access/mining,
 /obj/cable{
@@ -33360,7 +33232,6 @@
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 2;
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
@@ -33453,7 +33324,6 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Power Room";
-	req_access = null;
 	dir = 4
 	},
 /obj/mapping_helper/access/engineering_power,
@@ -33525,8 +33395,7 @@
 /area/station/medical/head)
 "sYU" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -33725,14 +33594,12 @@
 /area/station/crew_quarters/cafeteria)
 "thS" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
 	name = "palm tree"
 	},
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "coconuts";
 	name = "coconuts"
@@ -33792,7 +33659,6 @@
 /obj/lattice,
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
-	frequency = 1225;
 	id = "Cold Loop Gas Supply 2";
 	target_pressure = 1000
 	},
@@ -34380,8 +34246,7 @@
 /obj/machinery/door_control{
 	id = "cloning_exit";
 	name = "Cloning Exit Door Control";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/simulated/floor/greenwhite/corner{
 	dir = 8
@@ -34483,7 +34348,6 @@
 /area/station/science/storage)
 "tKl" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 1;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
@@ -34812,8 +34676,7 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -34850,7 +34713,6 @@
 "ucf" = (
 /obj/stool,
 /obj/disposaloutlet{
-	dir = 2;
 	name = "brig delivery chute";
 	pixel_y = 24;
 	density = 0
@@ -34948,7 +34810,6 @@
 /area/station/engine/engineering/private)
 "ugm" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -35245,8 +35106,7 @@
 "uqO" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
@@ -35964,7 +35824,6 @@
 /obj/lattice,
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
-	frequency = 1225;
 	id = "Hot Loop Gas Supply 2";
 	target_pressure = 1000
 	},
@@ -36073,7 +35932,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -36565,8 +36423,7 @@
 /area/station/turret_protected/ai)
 "vwN" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue2"
@@ -36762,7 +36619,6 @@
 "vEC" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
-	frequency = 1225;
 	id = "Hot Loop Gas Supply 1";
 	target_pressure = 1000
 	},
@@ -36848,8 +36704,7 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -36909,8 +36764,7 @@
 /area/station/turret_protected/Zeta)
 "vMn" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -36993,8 +36847,7 @@
 "vPx" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mechanic's Lab";
-	req_access = null
+	name = "Mechanic's Lab"
 	},
 /obj/mapping_helper/access/engineering_mechanic,
 /obj/cable{
@@ -37612,7 +37465,6 @@
 "wwO" = (
 /obj/stool/chair/office/red{
 	dir = 8;
-	icon_state = "office_chair_red";
 	tag = "icon-office_chair_red (WEST)"
 	},
 /obj/landmark/start/job/security_assistant,
@@ -37762,12 +37614,12 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "wFK" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "8-10"
 	},
-/turf/space,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "wGe" = (
 /obj/table/reinforced,
 /obj/item/circuitboard/robotics{
@@ -37943,8 +37795,7 @@
 "wOt" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mechanic's Lab";
-	req_access = null
+	name = "Mechanic's Lab"
 	},
 /obj/mapping_helper/access/engineering_mechanic,
 /obj/disposalpipe/segment{
@@ -38051,8 +37902,7 @@
 /area/station/hallway/primary/central)
 "wSQ" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -38308,7 +38158,6 @@
 /area/station/quartermaster/office)
 "xfV" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Security)"
@@ -38594,7 +38443,6 @@
 /area/station/security/processing)
 "xta" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 1;
 	frequency = 1485;
 	name = "Station Intercom (Security)"
@@ -38607,8 +38455,7 @@
 	dir = 1
 	},
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -38866,8 +38713,7 @@
 "xBM" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room";
-	req_access = null
+	name = "Power Room"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -39397,8 +39243,7 @@
 /area/station/hydroponics/bay)
 "xWD" = (
 /obj/cable{
-	icon_state = "2-4";
-	pixel_y = 0
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -39420,9 +39265,7 @@
 	},
 /area/station/hallway/primary/central)
 "xXU" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -39439,7 +39282,6 @@
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 2;
 	icon_state = "catwalk_cross";
 	layer = 2
 	},
@@ -39613,7 +39455,6 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
-	icon_state = "camera";
 	name = "autoname - SS13";
 	tag = ""
 	},
@@ -60128,29 +59969,29 @@ aaa
 aaa
 aaa
 baI
-wFK
-wFK
+iNv
+iNv
 giH
 aaa
 aaa
 aaa
 aaa
 baI
-wFK
-wFK
+iNv
+iNv
 bkQ
-wFK
-wFK
+iNv
+iNv
 bkQ
-wFK
-wFK
+iNv
+iNv
 giH
 aaa
 aaa
 aaa
 baI
-wFK
-wFK
+iNv
+iNv
 giH
 aaa
 aaa
@@ -60730,7 +60571,7 @@ aaa
 aaa
 aaa
 aaa
-jXp
+bkO
 anA
 mcM
 juF
@@ -60751,7 +60592,7 @@ lME
 ybx
 svG
 svG
-jXp
+bkO
 anA
 mcM
 mcM
@@ -61334,7 +61175,7 @@ aaa
 aaa
 aaa
 aaa
-jXp
+bkO
 aaB
 aaB
 des
@@ -61938,7 +61779,7 @@ aaa
 aaa
 aaa
 aaa
-jXp
+bkO
 anA
 mcM
 mcM
@@ -61959,7 +61800,7 @@ sTP
 eYt
 mmC
 svG
-jXp
+bkO
 anA
 mcM
 mcM
@@ -62544,8 +62385,8 @@ aaa
 aaa
 aaa
 aDR
-wFK
-wFK
+iNv
+iNv
 aLg
 aaa
 svG
@@ -62565,8 +62406,8 @@ mQn
 svG
 aaa
 aDR
-wFK
-wFK
+iNv
+iNv
 aLg
 aaa
 aaa
@@ -72178,7 +72019,7 @@ vuG
 aaa
 aaa
 blm
-wFK
+iNv
 qDY
 awf
 ect
@@ -76105,10 +75946,10 @@ brv
 yam
 raE
 wIC
-wFK
+iNv
 abm
-wFK
-wFK
+iNv
+iNv
 xdt
 lOU
 aty
@@ -76712,7 +76553,7 @@ apI
 aaa
 abm
 abm
-wFK
+iNv
 toE
 mOd
 oZw
@@ -78461,7 +78302,7 @@ iIt
 tyw
 ahO
 aiT
-ahU
+owJ
 anM
 aoT
 apS
@@ -78765,8 +78606,8 @@ ahQ
 aiU
 alH
 anW
-aoU
-aoU
+wFK
+jXp
 aqC
 aoU
 aoU
@@ -89034,7 +88875,7 @@ alx
 qDj
 alx
 amS
-wFK
+iNv
 caz
 gIB
 xDV
@@ -89626,7 +89467,7 @@ acK
 fEr
 aaa
 aaa
-jXp
+bkO
 jHV
 aNE
 aaa
@@ -89704,7 +89545,7 @@ hQH
 joQ
 kNc
 wuu
-urS
+kDB
 pwO
 mGW
 mGW
@@ -90604,7 +90445,7 @@ aaa
 aaa
 aaa
 eIY
-wFK
+iNv
 gLy
 hXL
 joQ
@@ -102168,7 +102009,7 @@ acT
 acT
 acT
 acT
-wFK
+iNv
 acT
 acT
 acT
@@ -111263,7 +111104,7 @@ lXN
 lXN
 lXN
 bJT
-wFK
+iNv
 acT
 aaa
 aaa
@@ -111495,7 +111336,7 @@ aaa
 aaa
 xAv
 xAv
-wFK
+iNv
 xAv
 acT
 jbS
@@ -112703,7 +112544,7 @@ aaa
 aaa
 xAv
 xAv
-wFK
+iNv
 xAv
 acT
 jbS
@@ -113075,7 +112916,7 @@ lXN
 lXN
 lXN
 rOe
-wFK
+iNv
 acT
 aaa
 aaa
@@ -122100,7 +121941,7 @@ acT
 acT
 acT
 acT
-wFK
+iNv
 acT
 acT
 acT
