@@ -1820,6 +1820,7 @@
 /area/station/chapel/sanctuary)
 "agO" = (
 /obj/machinery/light_switch/east,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "agQ" = (
@@ -2176,6 +2177,7 @@
 /area/station/maintenance/northeast)
 "ahT" = (
 /obj/table/wood/round/auto,
+/obj/item/paper/newspaper/rolled,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -3558,9 +3560,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
 "amB" = (
-/obj/machinery/space_heater,
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/obj/table/reinforced/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "amC" = (
 /obj/machinery/light,
 /obj/stool/chair/pew/fancy/left{
@@ -6715,6 +6717,10 @@
 /obj/item/aiModule/notHuman{
 	pixel_y = -6
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "azr" = (
@@ -31342,6 +31348,9 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/interrogation)
+"dht" = (
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "dii" = (
 /obj/landmark/halloween,
 /turf/simulated/floor,
@@ -33146,8 +33155,9 @@
 "etd" = (
 /obj/machinery/lawrack,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "etk" = (
@@ -35075,6 +35085,7 @@
 /area/space)
 "fIt" = (
 /obj/decal/cleanable/dirt,
+/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "fIL" = (
@@ -37399,6 +37410,10 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"hms" = (
+/obj/machinery/ai_status_display,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "hmz" = (
 /obj/stool/chair{
 	dir = 8
@@ -39816,10 +39831,6 @@
 "jfO" = (
 /obj/machinery/turret{
 	dir = 4
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -43529,9 +43540,14 @@
 	},
 /area/station/teleporter)
 "lKu" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "lLw" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -44875,7 +44891,6 @@
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/west)
 "mRQ" = (
-/obj/machinery/firealarm/north,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -44952,13 +44967,6 @@
 /obj/decal/tile_edge/line/black{
 	dir = 9;
 	icon_state = "line2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname - SS13";
-	pixel_x = 2;
-	pixel_y = 11;
-	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -46670,6 +46678,16 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"oiX" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname - SS13";
+	pixel_x = 2;
+	pixel_y = 11;
+	tag = ""
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "ojj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46907,6 +46925,15 @@
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"osH" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/firealarm/north,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "osI" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -48995,6 +49022,16 @@
 	dir = 4
 	},
 /area/station/hangar/engine)
+"pVj" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -7;
+	pixel_y = 18
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/info{
+	name = "Book Nook"
+	})
 "pVl" = (
 /obj/shrub{
 	dir = 6
@@ -56345,6 +56382,11 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"voO" = (
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "vpk" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
@@ -101672,7 +101714,7 @@ axi
 aVj
 aKD
 aYA
-ahT
+pVj
 baQ
 gZJ
 bAI
@@ -112499,7 +112541,7 @@ ael
 agM
 ael
 adp
-adH
+aSO
 aSO
 aMu
 aMz
@@ -112801,7 +112843,7 @@ afX
 aRl
 bfo
 adp
-adE
+aSO
 aSO
 aSO
 aSO
@@ -113103,8 +113145,8 @@ aga
 aRl
 bgu
 adp
-adE
 aSO
+voO
 yfv
 jfO
 azp
@@ -113405,17 +113447,17 @@ adp
 iWQ
 adp
 adp
-adp
 aSO
+oiX
 mVD
-apY
 vDN
+apY
 vDN
 axk
 aHP
 apU
 uEU
-ase
+osH
 mzB
 dYz
 auT
@@ -113706,12 +113748,12 @@ ach
 adp
 agK
 ajS
-aeh
 ajR
 aSO
+hms
 aYz
 etd
-aWC
+lKu
 aWC
 aCg
 alF
@@ -114008,9 +114050,9 @@ ach
 adp
 rWY
 aTH
-aeh
 aND
 aSO
+dht
 hfa
 rFj
 rFj
@@ -114307,12 +114349,12 @@ aaa
 aaa
 aaa
 ach
-aIX
+adp
 asf
 aiS
 fIt
-amB
 aSO
+amB
 dCF
 lut
 mLE
@@ -114609,11 +114651,11 @@ aaa
 aaa
 aaa
 ach
-aIX
+adp
 aze
 aiS
 agO
-lKu
+aSO
 aSO
 aSO
 aSO
@@ -114911,7 +114953,7 @@ aaa
 abW
 aay
 aaf
-aIX
+akV
 akV
 wrk
 akV
