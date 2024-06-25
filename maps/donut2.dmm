@@ -18222,7 +18222,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/engineering_power,
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
@@ -18230,6 +18229,7 @@
 	enter_id = "outer";
 	name = "Inner Engineering"
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
 /area/station/engine/inner)
 "cWz" = (
@@ -26559,7 +26559,6 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -26570,6 +26569,7 @@
 	cycle_id = "innereng2";
 	name = "Inner Engineering"
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
 /area/station/engine/inner)
 "ixk" = (
@@ -28923,7 +28923,6 @@
 /area/station/crew_quarters/pool)
 "jZS" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/engineering_power,
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
@@ -28934,6 +28933,7 @@
 	enter_id = "outer";
 	name = "Inner Engineering"
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
 /area/station/engine/inner)
 "kaC" = (
@@ -35000,7 +35000,6 @@
 /area/station/chapel/sanctuary)
 "nMF" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/cable/orange{
@@ -35011,6 +35010,7 @@
 	enter_id = "inner";
 	name = "Inner Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "nMK" = (
@@ -38624,7 +38624,6 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -38635,6 +38634,7 @@
 	cycle_id = "innereng3";
 	name = "Inner Engineering"
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
 /area/station/engine/inner)
 "pMZ" = (
@@ -48104,7 +48104,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
@@ -48112,6 +48111,7 @@
 	enter_id = "inner";
 	name = "Inner Engineering"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "vQH" = (
