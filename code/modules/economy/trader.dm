@@ -700,10 +700,6 @@
 		/datum/commodity/bodyparts,
 		/datum/commodity/medical)
 
-		#ifdef CREATE_PATHOGENS //Don't need this when there's no pathology
-		commercetypes += /datum/commodity/synthmodule
-		#endif
-
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
 

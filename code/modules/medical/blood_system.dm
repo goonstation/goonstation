@@ -499,10 +499,6 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (!some_idiot || !A || !istype(some_idiot))
 		return 0
 
-	var/mob/living/carbon/human/some_human_idiot = null
-	if (ishuman(some_idiot))
-		some_human_idiot = some_idiot
-
 	if (!A.reagents || (!istype(some_idiot) && !some_idiot.reagents))
 		return 0
 
@@ -527,23 +523,10 @@ this is already used where it needs to be used, you can probably ignore it.
 		bloodHolder.ownerName = some_idiot.real_name
 		bloodHolder.ownerType = some_idiot.type
 
-	var/datum/reagent/R = null
-
 	if (ischangeling(some_idiot))
 		A.reagents.add_reagent("bloodc", blood_to_transfer, bloodHolder)
-		R = A.reagents.get_reagent("bloodc")
 	else
 		A.reagents.add_reagent(some_idiot.blood_id, blood_to_transfer, bloodHolder)
-		R = A.reagents.get_reagent(some_idiot.blood_id)
-
-	if (R && (R.id == "blood" || R.id == "bloodc") && some_human_idiot)
-		var/datum/reagent/blood/B = R
-		var/list/SP = A.reagents.aggregate_pathogens()
-		for (var/uid in some_human_idiot.pathogens)
-			if (!(uid in SP))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.setup(0, some_human_idiot.pathogens[uid], 0)
-				B.pathogens[uid] = P
 
 	// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back (Convair880).
 	if (blood_system && (isvampire(some_idiot) && (some_idiot.get_vampire_blood() >= blood_to_transfer)))

@@ -2510,18 +2510,6 @@
 	if (isdead(src))
 		setalive(src)
 
-/mob/proc/infected(var/datum/pathogen/P)
-	return
-
-/mob/proc/remission(var/datum/pathogen/P)
-	return
-
-/mob/proc/immunity(var/datum/pathogen/P)
-	return
-
-/mob/proc/cured(var/datum/pathogen/P)
-	return
-
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0
 

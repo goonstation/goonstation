@@ -54959,7 +54959,7 @@
 	name = "Monkey Pen";
 	req_access_txt = null
 	},
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -60294,7 +60294,7 @@
 	name = "Psychiatrist's Office";
 	req_access_txt = null
 	},
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
@@ -60856,7 +60856,7 @@
 /area/station/crew_quarters/barber_shop)
 "oAl" = (
 /obj/machinery/door/airlock/pyro/medical,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)

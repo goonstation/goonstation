@@ -18584,7 +18584,7 @@
 /area/space)
 "eUv" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -34911,7 +34911,7 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/secondary/east)
 "jiV" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -43291,7 +43291,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ltm" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ltr" = (
@@ -43443,7 +43443,7 @@
 	},
 /area/station/security/equipment)
 "lvi" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -43483,7 +43483,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "lwf" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -43660,7 +43660,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "lzS" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -47368,12 +47368,12 @@
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
 /obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "mtq" = (
@@ -50106,7 +50106,7 @@
 /area/station/medical/medbay/pharmacy)
 "ngh" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ngj" = (
@@ -59910,7 +59910,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "pIY" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -63179,7 +63179,7 @@
 	},
 /area/station/hallway/primary/north)
 "qBn" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 4
 	},
 /obj/cable{
@@ -74339,8 +74339,8 @@
 	},
 /obj/item/guardbot_core,
 /obj/item/device/guardbot_tool/medicator,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/storage/crate,
 /obj/machinery/light{
 	dir = 4;
@@ -83908,7 +83908,7 @@
 /area/station/crew_quarters/market)
 "vBJ" = (
 /obj/table/wood/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/airless,
 /area/space)
 "vBO" = (
@@ -87839,12 +87839,12 @@
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
 /obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)

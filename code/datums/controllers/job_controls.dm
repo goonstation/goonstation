@@ -1075,13 +1075,10 @@ var/datum/job_controller/job_controls
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
-	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
+	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant", "Pathologist",
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
-	#endif
-	#ifndef CREATE_PATHOGENS
-	excluded_strings += "Pathologist"
 	#endif
 	if (string in excluded_strings)
 		return null

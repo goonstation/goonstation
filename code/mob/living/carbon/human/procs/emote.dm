@@ -24,11 +24,6 @@
 
 	act = lowertext(act)
 
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act, voluntary, param))
-			return
-
 	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
 	var/custom = 0 //Sorry, gotta make this for chat groupings.

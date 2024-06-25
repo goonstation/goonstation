@@ -575,7 +575,7 @@
 /area/hospital)
 "adX" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/hospital)
 "adY" = (
@@ -5336,7 +5336,7 @@
 /area/moon/museum/west)
 "aAk" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/grey/side{
 	dir = 1
 	},
@@ -34654,7 +34654,7 @@
 /area/owlery/lab)
 "cCJ" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cCK" = (
@@ -35242,7 +35242,7 @@
 /area/owlery/lab)
 "cEv" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cEw" = (

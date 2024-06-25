@@ -81,7 +81,7 @@
 /area/space)
 "ap" = (
 /obj/table/wood/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/airless,
 /area/space)
 "aq" = (

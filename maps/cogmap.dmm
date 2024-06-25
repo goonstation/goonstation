@@ -50133,7 +50133,7 @@
 /area/station/ranch)
 "mxm" = (
 /obj/machinery/door/airlock/pyro/medical,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
@@ -52463,7 +52463,7 @@
 	dir = 4;
 	name = "Psychiatrist's Office"
 	},
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
@@ -58539,7 +58539,7 @@
 	dir = 4;
 	name = "Monkey Pen"
 	},
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /obj/cable{
 	icon_state = "4-8"
 	},

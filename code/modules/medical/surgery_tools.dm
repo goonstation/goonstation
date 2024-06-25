@@ -490,10 +490,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
-
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
 					; // do nothing

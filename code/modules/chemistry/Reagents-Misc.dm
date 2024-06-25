@@ -3213,8 +3213,6 @@ datum
 			fluid_g = 0
 			transparency = 255
 			value = 2
-			var/list/pathogens = list()
-			var/pathogens_processed = 0
 			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
@@ -3277,24 +3275,6 @@ datum
 
 			// fluid todo : Hey we should have a reaction_obj that applies blood overlay
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				// Let's assume that blood immediately mixes with the bloodstream of the mob.
-				if (!pathogens_processed) //Only process pathogens once
-					pathogens_processed = 1
-					for (var/uid in src.pathogens)
-						var/datum/pathogen/P = src.pathogens[uid]
-						logTheThing(LOG_PATHOLOGY, M, "metabolizing [src] containing pathogen [P].")
-						M.infected(P)
-				..()
-
-/* this begs the question how bloodbags worked at all if this was a thing
-				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
-					var/datum/reagent/SM = holder.get_reagent("dna_mutagen")
-					if (SM.data) holder.del_reagent(src.id)
-				else
-					holder.del_reagent(src.id)
-				return
-*/
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "carnivore")
@@ -3305,21 +3285,6 @@ datum
 				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
 					var/datum/reagent/blood/blood = target.get_reagent("blood")
 					blood.congealed = TRUE
-				var/list/source_pathogens = source.aggregate_pathogens()
-				var/list/target_pathogens = target.aggregate_pathogens()
-				var/target_changed = 0
-				for (var/uid in source_pathogens)
-					if (!(uid in target_pathogens))
-						target_pathogens += uid
-						target_pathogens[uid] = source_pathogens[uid]
-						target_changed = 1
-				if (target_changed)
-					for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
-						if (target.has_reagent(reagent_id))
-							var/datum/reagent/blood/B = target.get_reagent(reagent_id)
-							if (!istype(B))
-								continue
-							B.pathogens = target_pathogens
 
 		blood/bloodc
 			id = "bloodc"
