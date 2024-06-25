@@ -1006,8 +1006,8 @@ var/global/in_replace_with = 0
 ///Returns a turf to its initial path, if it is a simulated floor or wall. Returns FALSE if requested turf was not one of these initially.
 /turf/proc/ReplaceWithInitial()
 	var/oldpath = src.path_old
+	var/turf/simulated/theturf = ReplaceWith("Initial")
 	if(ispath(oldpath,/turf/simulated/floor) || ispath(oldpath,/turf/simulated/wall))
-		var/turf/simulated/theturf = ReplaceWith("Initial")
 		if(ispath(oldpath,/turf/simulated/floor))
 			for (var/obj/lattice/L in src.contents)
 				qdel(L)

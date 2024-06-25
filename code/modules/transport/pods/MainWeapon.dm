@@ -739,31 +739,31 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_R_FLOORS)
 					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<B>Reinforced Floors</B><BR>"
 					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_WALLS)
 					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<B>Walls</B><BR>"
 					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_REPAIR)
 					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<B>Repair</B><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Disassembly</A><BR>"
+					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				else
 					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<B>Disassembly</B><BR>"
+					dat+="<B>Drilling</B><BR>"
 			dat+="<BR>"
 			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
 			dat+="[src.steel_sheets] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
@@ -940,7 +940,8 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 						for (var/obj/O in T) //tidy up girders and lattices
 							if (istype(O, /obj/structure/girder) || istype(O,/obj/lattice))
 								qdel(O)
-				T.ReplaceWithInitial()
+				if(ispath(T.path_old,/turf/simulated/floor) || ispath(T.path_old,/turf/simulated/wall))
+					T.ReplaceWithInitial()
 			qdel(field)
 
 		var/what_we_built
