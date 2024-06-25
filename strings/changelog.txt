@@ -1,5 +1,12 @@
 
 (t)mon jun 24 24
+(u)LeahTheTech
+(+)RP security officers no longer have access to APCs.
+(u)NightmarechaMillian
+(p)19681
+(e)|
+(+)Mechscanned sawflies will no longer produce a remote on deployment.
+(+)The sawfly remote is separately mechscannable.
 (u)glowbold
 (p)19653
 (e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
