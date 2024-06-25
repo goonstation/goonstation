@@ -27290,7 +27290,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "iUh" = (
@@ -28828,10 +28828,10 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/substation/north)
 "jXF" = (
@@ -29394,10 +29394,10 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "kpN" = (
@@ -32737,12 +32737,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
 "mqk" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/access/research,
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "mqD" = (
@@ -37274,7 +37271,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "oWl" = (
@@ -44911,12 +44908,12 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aisat";
 	enter_id = "inner";
 	name = "AI Satellite"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "tLf" = (
