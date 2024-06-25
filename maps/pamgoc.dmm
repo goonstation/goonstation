@@ -6453,12 +6453,6 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 8;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "aol" = (
@@ -55354,7 +55348,6 @@
 	dir = 8;
 	name = "Electrical Substation"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment{
 	dir = 8
@@ -55373,6 +55366,7 @@
 	enter_id = "outer";
 	name = "AI Power"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "fqT" = (
@@ -59484,7 +59478,7 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/grime,
 /area/station/engine/power)
 "maK" = (
@@ -59635,7 +59629,6 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Electrical Substation"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -59645,6 +59638,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon)
 "mmN" = (
