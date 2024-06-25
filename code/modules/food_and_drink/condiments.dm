@@ -163,7 +163,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "A little bottle for shaking things onto other things."
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	g_amt = 10

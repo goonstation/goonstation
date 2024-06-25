@@ -17,7 +17,7 @@ TYPEINFO(/obj/item/device/infra)
 	icon_state = "infrared0"
 	var/state = 0
 	var/visible = 0
-	flags = TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 	desc = "Scans for infrared beams in the vicinity."
 	icon_state = "infra_sensor"
 	var/passive = 1
-	flags = TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "electronic"
 	m_amt = 150
 

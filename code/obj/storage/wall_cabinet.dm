@@ -7,7 +7,6 @@ TYPEINFO(/obj/item/storage/wall)
 	desc = "It's basically a big box attached to the wall."
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "wall"
-	flags = TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
 	force = 8
 	w_class = W_CLASS_BULKY

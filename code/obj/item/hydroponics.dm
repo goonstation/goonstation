@@ -460,7 +460,6 @@ TYPEINFO(/obj/item/plantanalyzer)
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
-	flags = TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 

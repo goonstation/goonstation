@@ -159,7 +159,6 @@
 	name = "ducktape"
 	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	m_amt = 200
 	amount = 10

@@ -19,7 +19,6 @@ TYPEINFO(/obj/item/device/t_scanner)
 	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = FALSE
-	flags = TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
@@ -1053,7 +1052,6 @@ TYPEINFO(/obj/item/device/appraisal)
 /obj/item/device/appraisal
 	name = "cargo appraiser"
 	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
-	flags = TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150

@@ -513,7 +513,7 @@
 // WHY
 /obj/item/clothing/mask/cigarette/custom
 	desc = "There could be anything in this."
-	flags = TABLEPASS|OPENCONTAINER
+	flags = TABLEPASS | OPENCONTAINER
 
 	New()
 		..()
@@ -538,7 +538,6 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -671,7 +670,6 @@
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
 	var/package_style = "cigarbox"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -735,7 +733,6 @@
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
 	package_style = "cigarbox"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3

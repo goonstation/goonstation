@@ -261,7 +261,6 @@ TYPEINFO(/obj/item/disk)
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 0
 

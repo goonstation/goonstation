@@ -102,7 +102,6 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon_state = "sawfly_remote"
 
 	w_class = W_CLASS_TINY
-	flags = TABLEPASS
 	object_flags = NO_GHOSTCRITTER
 
 	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})

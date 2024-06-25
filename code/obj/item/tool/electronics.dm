@@ -898,7 +898,6 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

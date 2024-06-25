@@ -80,7 +80,7 @@
 	flying = 1
 	health_gain_from_food = 2
 	feed_text = "chirps happily!"
-	flags = CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE | FLUID_SUBMERGE
+	flags = CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
 	var/species = "parrot"						// the species, used to update icon
 	var/list/learned_words = null				// the single words that the bird knows
 	var/list/learned_phrases = null				// ^^^ for complete phrases

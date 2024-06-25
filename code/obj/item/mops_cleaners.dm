@@ -289,7 +289,6 @@ TRASH BAG
 	throw_speed = 5
 	throw_range = 10
 	w_class = W_CLASS_NORMAL
-	flags = TABLEPASS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
@@ -709,7 +708,6 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 4
 	stamina_crit_chance = 10
@@ -780,7 +778,6 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
-	flags = TABLEPASS
 	throw_pixel = 0
 	throw_spin = 0
 	var/currentSelection = "wet"

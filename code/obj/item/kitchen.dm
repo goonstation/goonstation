@@ -1100,7 +1100,6 @@ TRAYS
 	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "coolingrack"
-	flags = TABLEPASS
 	force = 3
 	throwforce = 5
 	throw_speed = 3

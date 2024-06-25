@@ -348,7 +348,6 @@
 	name = "cocktail doodad"
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
-	flags = TABLEPASS
 	w_class = W_CLASS_TINY
 	rand_pos = 1
 

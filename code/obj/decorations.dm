@@ -1532,7 +1532,6 @@ obj/decoration/gibberBroken
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = TABLEPASS
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0

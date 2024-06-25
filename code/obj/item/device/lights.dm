@@ -752,7 +752,6 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	icon_state = "roadflare"
 	w_class = W_CLASS_SMALL
 	throwforce = 1
-	flags = TABLEPASS
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1

@@ -1,7 +1,6 @@
 
 /obj/item/decoration
 	icon = 'icons/obj/decoration.dmi'
-	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 
 /obj/item/decoration/flower_vase

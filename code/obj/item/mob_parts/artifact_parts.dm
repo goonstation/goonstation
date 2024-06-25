@@ -3,7 +3,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = TABLEPASS
 	c_flags = ONBELT
 	skintoned = FALSE
 	decomp_affected = FALSE

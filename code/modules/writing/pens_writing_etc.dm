@@ -19,7 +19,6 @@
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "pen"
-	flags = TABLEPASS
 	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
@@ -1420,7 +1419,6 @@
 	desc = "A portable typewriter, whoa!"
 	icon_state = "portable_typewriter"
 	icon = 'icons/obj/writing.dmi'
-	flags = TABLEPASS
 	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY

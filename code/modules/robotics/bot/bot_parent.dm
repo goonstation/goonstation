@@ -5,7 +5,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
 	event_handler_flags = USE_FLUID_ENTER
-	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
 	pass_unstable = TRUE

@@ -184,7 +184,6 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
-	flags = TABLEPASS
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	var/open = 0

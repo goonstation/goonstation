@@ -8,7 +8,6 @@
 	item_state = "pda"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = TABLEPASS
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
 	force = 3

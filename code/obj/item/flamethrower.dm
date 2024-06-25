@@ -403,7 +403,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	var/obj/item/weldingtool/welder = null
 	var/obj/item/rods/rod = null
 	status = null
-	flags = TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
@@ -424,7 +424,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
 	status = null
-	flags = TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
