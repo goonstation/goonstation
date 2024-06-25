@@ -50,11 +50,6 @@
 	color = SECURITY
 
 //////////// Medical ////
-/obj/mapping_helper/access/pathology
-	name = "pathology spawn"
-	req_access = list(access_medical)
-	color = MEDICAL
-
 /obj/mapping_helper/access/medical
 	name = "medical access spawn"
 	req_access = list(access_medical)
@@ -78,6 +73,11 @@
 /obj/mapping_helper/access/robotics
 	name = "robotics access spawn"
 	req_access = list(access_robotics)
+	color = MEDICAL
+
+/obj/mapping_helper/access/pathology
+	name = "pathology spawn"
+	req_access = list(access_medical)
 	color = MEDICAL
 
 //////////// Engineering ////
