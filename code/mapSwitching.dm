@@ -15,8 +15,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/votingAllowed = 1 //is map voting allowed?
 	var/playersVoting = 0 //are players currently voting on the map?
 	var/voteStartedAt = 0 //timestamp when the map vote was started
-	var/autoVoteDelay = 30 SECONDS //how long should we wait after round start to trigger to automatic map vote?
-	var/autoVoteDuration = 7 MINUTES //how long (in byond deciseconds) the automatic map vote should last (1200 = 2 mins)
+	var/autoVoteDelay = 0 //how long should we delay the auto vote starting?
+	var/autoVoteDuration = 60 SECONDS //how long (in byond deciseconds) the automatic map vote should last
 	var/voteCurrentDuration = 0 //how long is the current vote set to last?
 	var/voteChosenMap = "" //the map that the players voted to switch to
 	var/nextMapIsVotedFor = 0 //is the next map a result of player voting?
@@ -131,13 +131,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.passiveVotes[C.ckey] = C.preferences.preferred_map
 
 		//announce vote
-		var/msg = "<br><span class='bold notice'>"
-		msg += "A vote for next round's map has started! Click here: [mapVoteLinkStat.chat_link()] or on the 'Map Vote' button in your status window."
+		var/sound_to_play = 'sound/misc/announcement_1.ogg'
+		var/msg = "A vote for the next map has started! You can vote by clicking the 'Map Vote' button in your Status window or by clicking here:<div style='text-align: center; font-size: 250%;'>[mapVoteLinkStat.chat_link()]</div>[duration ? "<b>The vote will end in [duration / 10] seconds.</b>" : ""]"
 
-		if (duration)
-			msg += " It will end in [duration / 10] seconds."
-		msg += "</span><br><br>"
-		boutput(world, msg)
+		command_alert(msg, "Map Vote Started", sound_to_play, alert_origin = "Civic Duty Alert");
 
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
