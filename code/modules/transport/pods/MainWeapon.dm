@@ -961,6 +961,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		logTheThing(LOG_STATION, owner, "[mode == EFIF_MODE_REPAIR ? "repairs" : "constructs"] [what_we_built] with a pod at [log_loc(owner)].")
 		buildtool.steel_sheets -= action_build_cost
 
+/obj/item/shipcomponent/mainweapon/constructor/stocked
+	steel_sheets = 200
+
 #undef EFIF_MODE_DRILL
 #undef EFIF_MODE_FLOORS
 #undef EFIF_MODE_R_FLOORS
