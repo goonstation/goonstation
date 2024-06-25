@@ -464,7 +464,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 //Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
 	payout = PAY_DOCTORATE
-	weight = 120
+	weight = 180
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/desc_bonusflavor = list(
