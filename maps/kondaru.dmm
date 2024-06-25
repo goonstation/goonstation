@@ -49408,7 +49408,6 @@
 	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
-/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
@@ -55785,7 +55784,6 @@
 	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
-/obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
