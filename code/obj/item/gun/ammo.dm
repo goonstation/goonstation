@@ -857,6 +857,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "bone load"
 	desc = "Chunks of bone that have been jammed into cut open pipe frames - grotesque!"
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
+	icon_state = "makeshiftbone"
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
