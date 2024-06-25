@@ -35335,7 +35335,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "fXD" = (
@@ -36988,7 +36988,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "haB" = (
