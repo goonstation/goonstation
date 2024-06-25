@@ -27450,7 +27450,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bzo" = (
@@ -28078,7 +28078,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bAR" = (
