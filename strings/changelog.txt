@@ -1,5 +1,10 @@
 
 (t)wed jun 26 24
+(u)Angelx3
+(p)19657
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Resprites the cat ears and all their recolours.
+(+)Makes cat ears overlay over helmets.
 (u)CalliopeSoups
 (p)19496
 (e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
