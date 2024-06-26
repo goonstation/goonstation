@@ -82,7 +82,7 @@
 					ON_COOLDOWN(src,"bit_a_nerd",2 SECONDS)
 			else
 				boutput(user, SPAN_ALERT("[src] doesn't respond to your touch."))
-			src.last_poke_time = world.time
+			src.last_poke_time = TIME
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/reagent_containers/food/snacks))
