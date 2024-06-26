@@ -13,7 +13,6 @@
 	///State of construction of the frame, see defines above
 	var/state = STATE_UNANCHORED
 	var/obj/item/circuitboard/circuit = null
-	var/obj/item/cable_coil/my_cable = null
 	material_amt = 0.5
 	HELP_MESSAGE_OVERRIDE("")
 
@@ -258,8 +257,6 @@ TYPEINFO(/obj/item/circuitboard)
 				boutput(user, SPAN_NOTICE("You remove the cables."))
 				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
-				//my_cable.set_loc(src.loc) // Haine: fix for Cannot execute null.set loc()
-				//my_cable = null
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 				C.amount = 5
 				C.UpdateIcon()
@@ -329,6 +326,49 @@ TYPEINFO(/obj/item/circuitboard)
 				P.change_stack_amount(-2)
 				src.state = STATE_HAS_GLASS
 				src.icon_state = "4"
+
+/obj/computerframe/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				switch(state)
+					if(STATE_UNANCHORED)
+						src.visible_message(SPAN_COMBAT("The empty frame crumples from the impact!"))
+						new /obj/item/scrap(src.loc)
+						qdel(src)
+					if(STATE_ANCHORED)
+						if (src.circuit)
+							src.eject_board()
+						else
+							src.visible_message(SPAN_COMBAT("The [src] is dislodged from the the impact!"))
+							src.anchored = UNANCHORED
+							src.state = STATE_UNANCHORED
+					if(STATE_HAS_BOARD)
+						src.eject_board()
+					if(STATE_HAS_CABLES)
+						src.visible_message(SPAN_COMBAT("The internal wiring snaps and is flung out!"))
+						var/obj/item/cable_coil/debris = new /obj/item/cable_coil(src.loc)
+						debris.amount = 1
+						debris.UpdateIcon()
+						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+						src.state = STATE_HAS_BOARD
+						src.icon_state = "2"
+					if(STATE_HAS_GLASS)
+						src.visible_message(SPAN_COMBAT("The screen shatters and a glass shard flies out!"))
+						var/obj/item/raw_material/shard/glass/debris = new /obj/item/raw_material/shard/glass(src.loc)
+						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+						src.state = STATE_HAS_CABLES
+						src.icon_state = "3"
+
+/obj/computerframe/proc/eject_board()
+		if (!src.circuit) return
+		src.visible_message("The installed circuit board is struck and [pick("flies out", "is launched", "goes flying")]!")
+		src.circuit.set_loc(get_turf(src))
+		src.circuit.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+		src.state = STATE_ANCHORED
+		src.icon_state = "0"
+		src.circuit = null
 
 #undef STATE_UNANCHORED
 #undef STATE_ANCHORED
