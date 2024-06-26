@@ -26,6 +26,9 @@
 	var/image/status_light = null
 	var/image/fill_bar = null
 
+	///"Stop poking me" tracker
+	var/last_poke_time = null
+
 	///Rolling counter to facilitate responsive overlay updates
 	var/last_ratio = 0
 
@@ -65,7 +68,21 @@
 			boutput(user, SPAN_NOTICE("[src] dispenses a small glob.[prob(10) ? " Grody." : null]"))
 			user.put_in_hand_or_drop(I)
 		else
-			boutput(user, SPAN_ALERT("[src] doesn't respond to your touch."))
+			if(ishuman(user) && last_poke_time && (last_poke_time + 1 SECOND > world.time))
+				boutput(user, SPAN_ALERT("You poke [src] trying to get it to do something."))
+				if (prob(15) && !GET_COOLDOWN(src,"bit_a_nerd")) //don't keep poking at it when it's not ready to glob you.
+					var/limb_to_ouch
+					var/mob/living/carbon/human/H = user
+					limb_to_ouch = H.hand ? "l_arm" : "r_arm"
+					var/howmuchbite = rand(3,5)
+					src.stomach = min(src.stomach + howmuchbite, MDM_MAX_STOMACH)
+					H.TakeDamage(limb_to_ouch, howmuchbite*3)
+					playsound(user.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 75)
+					boutput(user, SPAN_COMBAT("[src] lashes out and gnaws on your arm! [prob(50) ? "Holy shit!" : "What the fuck?"]"))
+					ON_COOLDOWN(src,"bit_a_nerd",2 SECONDS)
+			else
+				boutput(user, SPAN_ALERT("[src] doesn't respond to your touch."))
+			src.last_poke_time = world.time
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/reagent_containers/food/snacks))
