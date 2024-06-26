@@ -761,12 +761,6 @@
 	price = PAY_UNTRAINED/10
 	desc_buy = "We are interested in recycling ground metal scrap."
 
-/datum/commodity/salvage/electronic_debris
-	comname = "Electronic Debris"
-	comtype = /obj/item/electronics
-	price = PAY_UNTRAINED/10
-	desc_buy = "We will recover metals from resistors, fuses, and other electronic debris."
-
 /datum/commodity/salvage/robot_upgrades
 	comname = "Cyborg Upgrade"
 	desc = "A salvaged cyborg upgrade kit."
