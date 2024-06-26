@@ -1,5 +1,186 @@
 
+(t)wed jun 26 24
+(u)Kubius
+(p)19648
+(e)🆕⚖|C-Feature, C-Balance
+(+)Small update pass on requisitions, notably less using tools no longer available in general manufacturer.
+(u)Angelx3
+(p)19657
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Resprites the cat ears and all their recolours.
+(+)Makes cat ears overlay over helmets.
+(u)CalliopeSoups
+(p)19496
+(e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
+(+)Skeletons drop their torso on death as a tasty snack for antags.
+(u)Flaborized
+(p)19662
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited the mineral accumulator.
+(u)glowbold
+(p)19613
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(t)mon jun 24 24
+(u)LeahTheTech
+(+)RP security officers no longer have access to APCs.
+(u)NightmarechaMillian
+(p)19681
+(e)|
+(+)Mechscanned sawflies will no longer produce a remote on deployment.
+(+)The sawfly remote is separately mechscannable.
+(u)glowbold
+(p)19653
+(e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
+(*)Market refreshes and mail deliveries will now occur automatically.
+(u)Tyrant
+(p)19579
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Fixed Oshan maintenance airlocks not having appropriate maintenance access requirements.
+(t)sun jun 23 24
+(u)tarmunora
+(+)Quartermasters are now forklift certified
+(u)Ilysen
+(p)19485
+(e)🆕📄📦|C-Feature, A-UI, A-Game-Objects
+(*)Added a new traitor item: the marionette implant. Check your uplink today, especially if you're a packet nerd.
+(t)fri jun 21 24
+(u)mintyphresh
+(p)19460
+(e)🔄🎭|C-Rework, A-RP
+(+)Showering with clothes on now restores the hygiene motive, with higher chemprot limiting the maximum cleanliness you can achieve.
+(u)JORJ949
+(p)19592
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Replacement command PDAs can now be found in their lockers. Helpful for impersonating heads of staff.
+(u)Colossus
+(p)19119
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added pufferfish as a catchable saltwater aquarium fish, filled with tetrodotoxin, can be quite dangerous if prepared incorrectly.
+(+)Tetrodotoxin remains dormant for 10 cycles, causes emotes, messages, slight bouts of misstep and stutters for 17 cycles, causes blurry vision, random oxygen deprivation and slowness, as well as loud heart palpitations for 20 cycles, and finally causes oxygen damage and cardiac arrest.
+(+)Pufferfish come with lots of tetrodotoxin in them, and require someone with proper kitchen training(the chef) to separate the toxic liver from the fillet without either contaminating it or poisoning themselves.
+(u)Garash
+(p)19331
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Map Vote & Map Vote Results windows, do your civic duty today!
+(t)thu jun 20 24
+(u)LeahTheTech
+(+)Mining charges now correctly break low-hardness geodes.
+(u)Garash2k
+(p)19107
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)New UI for the stationary and portable Chemicompiler.
+(t)wed jun 19 24
+(u)LeahTheTech and Flaborized
+(p)19598
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added geodes that mining can find. Can only be broken open with explosions, check your geological scanner for the power required. Geodes can contain various types of crystalline ore deposits as well as oil and other liquids.
+(t)tue jun 18 24
+(u)TemThrush
+(p)19540
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)A new stylish furniture set is available to purchase from Cargo!
+(t)mon jun 17 24
+(u)JORJ949
+(p)19490
+(e)🗺🔎⚙|A-Mapping, C-Code-Quality, A-Internal
+(+)HoS and Armory access have been separated, presently only affects the NTSO who no longer gets HoS access. Please report any other changes as a bug.
+(u)Sovexe
+(p)19561
+(e)🪲🔒|C-Bug, A-Secret
+(+)Ants will no longer spawn in food located on restricted Z levels
+(u)LeahTheTech
+(+)The PTL is now correctly more dangerous at lower power levels.
+(t)sun jun 16 24
+(u)glowbold
+(p)19529
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The Buttes Motel has installed door locks.
+(u)Glamurio (Ryou)
+(p)19398
+(e)🆕🗺|C-Feature, A-Mapping
+(*)NT put aside some funding for an escape pod bay in Clarion.
+(u)Retrino
+(p)19105
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Anti-bioweapon crates have been moved to their proper homes in the armory.
+(u)JORJ949
+(p)19426
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate now offers a cheaper version of the radio upgrade granting access to the syndicate frequency.
+(u)Glamurio (Ryou)
+(p)19508
+(e)🪲💅|C-Bug, C-QoL
+(+)You can now choose not to have a middle name in character creation by leaving it empty.
+(t)sat jun 15 24
+(u)Skeletonman0
+(p)19513
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The VR Go-Karts have been serviced and are ready for their next race.
+(u)Carton171
+(p)19481
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Players will once again lose their shit upon being filled with/covered in ants
+(u)Lord_Earthfire
+(p)19521
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The bowling kit's cost was reduced to 6, down from 7.
+(+)Bowling balls from the bowling kit now deal additional damage when thrown or in melee while wearing the bowling suit.
+(t)fri jun 14 24
+(u)LeahTheTech
+(p)19525
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Traitor bowling balls thrown while wearing the bowling suit now throw people flying and can continue through multiple targets.
+(u)Azrun
+(p)19503
+(e)⚖🧛💪|C-Balance, A-Gamemodes, A-Traits
+(*)Salvagers no longer receive selected character traits.  They are truly just someone else entirely.
+(t)wed jun 12 24
+(u)glowbold
+(p)19423
+(e)🔄📦|C-Rework, A-Game-Objects
+(*)The authentication disk can be used on the escape shuttle console to immediately launch it.
+(u)Ilysen
+(p)18889
+(e)🎨🔎💅⚙|C-Sprites, C-Code-Quality, C-QoL, A-Internal
+(+)Wraith possession now shows an action bar to the wraith and all ghosts, and has a status effect showing its duration.
+(+)After a trickster wraith finishes possessing someone, they will be moved to that person's location.
+(+)Ghosts are now alerted when a trickster wraith possesses someone, or ends their possession.
+(+)Ghosts are now alerted when a poltergeist spawns in, so people are explicitly aware if they didn't get the role!
+(t)mon jun 10 24
+(u)Zamujasa
+(e)🪲|C-Bug
+(*)The Job EXP window now shows level progress properly.
+(u)LeahTheTech
+(*)Walking through fluid puddles will now expose your shoes to them. Acid WILL melt your Jordans.
+(u)TDHooligan, Blackrep
+(p)18446
+(e)🆕🗺🎨🔒🔊📦|C-Feature, A-Mapping, C-Sprites, A-Secret, C-Sound, A-Game-Objects
+(+)The KS-23 'Kuvalda Carbine' (read: big shotgun) can now be found in gang weapon crates.
+(u)Colossusqw
+(p)19413
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Changed cloth rag grabs to begin transfering chems on aggressive grabs, after a two second delay.
+(+)Cloth rags now can hold up to 20 units of chems, and transfer 1.5(ripped cloth rags) or 2(bartender handkerchiefs) per cycle, but don't cause ingest effects anymore.
+(t)sun jun 09 24
+(u)Mintyphresh
+(p)19110
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Increased chance to get figurines of donators that joined the round.
+(u)LeahTheTech
+(p)19274
+(e)🚄💅⛔|C-Performance, C-QoL, C-Removal
+(+)Bullet hit by messages now only show to the person being hit.
+(u)mintyphresh
+(p)19284
+(e)🆕💊⚗🍝💪|C-Feature, A-Medical, A-Chemistry, A-Catering, A-Traits
+(+)Alcohol resistance from genetics, jobs, and traits now helps stave off addiction, too.
 (t)sat jun 08 24
+(u)Emily
+(*)Big Chicken Evolution Refactor. Please report anything strange IMMEDIATELY.
+(*)New Enby-flag-colored chicken! Open the minor changes for a hint.
+(*)Ranch Nametags: Write a name on them in pen to name a ranch critter. Naming a ranch critter slows down their aging, hunger, and offspring production significantly.
+(+)When fluffy chickens collide with each other, static may result. Shocking!
 (u)Keiiro
 (p)19132
 (e)🎨💅💡|C-Sprites, C-QoL, A-Station-Systems

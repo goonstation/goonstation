@@ -251,6 +251,14 @@
 				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 			..()
 
+	handle_addiction(var/mob/M, var/rate, var/addProb)
+		if (isliving(M))
+			var/mob/living/H = M
+			if (isalcoholresistant(H))
+				addProb /= 4
+				rate /= 4
+		..(M, rate, addProb)
+
 /datum/reagent/hydrogen
 	name = "hydrogen"
 	id = "hydrogen"

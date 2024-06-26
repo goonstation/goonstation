@@ -208,7 +208,8 @@
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
-					phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
+					if(length(info) <= 2000)
+						phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
 					update_static_data(usr,ui)
 			. = TRUE
 

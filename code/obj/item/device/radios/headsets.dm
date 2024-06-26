@@ -382,7 +382,7 @@
 	"c" = R_FREQ_CIVILIAN)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
-		"c" = R_FREQ_CIVILIAN,
+		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"

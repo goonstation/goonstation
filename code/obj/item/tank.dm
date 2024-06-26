@@ -511,6 +511,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	plasma
 		name = "extended capacity plasma tank"
 		desc = "A standard extended capacity oxygen tank that someone has filled with plasma. Wow!"
+		icon_state = "ex_pocket_plastank"
 
 		New()
 			..()

@@ -1364,7 +1364,7 @@
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 		the_literal_server
-			var/obj/decal/fakeobjects/the_server = null
+			var/obj/fakeobject/the_server = null
 			var/is_smoking = 0
 
 			New()

@@ -274,7 +274,7 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
+					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to [his_or_her(user)] own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
 				else
 					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to [H.name]'s head!"))
 				if (H.stat!=2)
@@ -289,7 +289,7 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
+					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to [his_or_her(user)] own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
 				else
 					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to [H]'s head!"))
 				if (H.stat!=2)

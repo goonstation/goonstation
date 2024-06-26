@@ -1301,7 +1301,7 @@ TYPEINFO(/obj/item/bat)
 		return 0
 	else
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into [his_or_her(user)] own chest, ripping out [his_or_her(user)] [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
 		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 		user.TakeDamage("chest", 100, 0)
@@ -1462,7 +1462,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] cuts [his_or_her(user)] own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
@@ -1503,7 +1503,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to [his_or_her(user)] head and sotfly honks it.</b>"))
 		SPAWN(1 SECOND)
 			if(prob(5))
 				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, FALSE, 0)

@@ -52,7 +52,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			heldfly.ai = new /datum/aiHolder/aggressive(heldfly)
 
 		qdel(src)
-/obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version
+
+/obj/item/old_grenade/sawfly/firsttime //super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
@@ -61,6 +62,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		..()
 
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
+	mechanics_type_override = /obj/item/old_grenade/sawfly/firsttime //prevents remote clutter if you're making an army
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
@@ -94,7 +96,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			icon_state_armed = "clusterflyB1"
 
 // -------------------controller---------------
-
+TYPEINFO(/obj/item/remote/sawflyremote)
+	mats = list("conductive"=2)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
 	desc = "A small device that can be used to fold or deploy sawflies in range."
@@ -103,6 +106,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
+	is_syndicate = TRUE
 
 	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 

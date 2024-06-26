@@ -600,6 +600,8 @@ ABSTRACT_TYPE(/obj/item)
 	if ((amount + diff) < 0)
 		return 0
 	amount += diff
+	// Fix some of the floating point imprecision
+	amount = round(amount, 0.1)
 	if (!inventory_counter)
 		create_inventory_counter()
 	inventory_counter.update_number(amount)
@@ -1329,11 +1331,14 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if(hasProperty("unstable"))
 		power = rand(power, round(power * getProperty("unstable")))
 
-	var/attack_resistance = target.check_attack_resistance(src)
+	var/attack_resistance = target.check_attack_resistance(src, user)
 	if (attack_resistance)
-		power = 0
-		if (istext(attack_resistance))
-			msgs.show_message_target(attack_resistance)
+		if (isnum(attack_resistance))
+			power *= attack_resistance
+		else
+			power = 0
+			if (istext(attack_resistance))
+				msgs.show_message_target(attack_resistance)
 
 	if (hasProperty("searing"))
 		msgs.damage_type = DAMAGE_BURN

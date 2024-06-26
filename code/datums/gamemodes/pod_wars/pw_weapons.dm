@@ -124,7 +124,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 
 /obj/item/gun/energy/blaster_pod_wars/shotgun
-	name = "blaster smg"
+	name = "blaster shotgun"
 	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
 	icon_state = "pw_shotgun"
 	item_state = "pw_shotgun"

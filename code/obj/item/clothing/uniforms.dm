@@ -613,6 +613,10 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	icon_state = "chef"
 	item_state = "chef"
 
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chef-alt"
+
 /obj/item/clothing/under/rank/chaplain
 	name = "chaplain jumpsuit"
 	desc = "A protestant vicar's outfit. Used to be a nun's, but it was a rather bad habit."

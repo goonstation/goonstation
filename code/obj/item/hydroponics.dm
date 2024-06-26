@@ -306,7 +306,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
@@ -314,7 +314,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
 			H.limbs.r_arm = new_arm
 		if (!new_arm) return //who knows
@@ -658,7 +658,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	icon_state = "bong"
 	fluid_overlay_states = 8
 	container_style = "bong"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 	filled
 

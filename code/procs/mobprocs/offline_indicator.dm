@@ -41,7 +41,7 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 	// - living
 	// - alive
 	// - has a ckey
-	if (!isalive(src) || src.last_ckey == null)
+	if (!isalive(src) || src.last_ckey == null || src.is_npc)
 		return
 
 	if (!force)

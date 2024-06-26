@@ -1509,7 +1509,7 @@ var/satellite_crash_event_status = -1
 
 		var/area/drone/zone/drone_zone = locate()
 		if (istype(drone_zone))
-			var/obj/decal/fakeobjects/teleport_pad/pad = locate() in drone_zone.contents
+			var/obj/fakeobject/teleport_pad/pad = locate() in drone_zone.contents
 			if (istype(pad))
 				portal.target = get_turf(pad)
 			else

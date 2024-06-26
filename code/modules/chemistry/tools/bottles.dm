@@ -410,11 +410,13 @@
 /obj/item/reagent_containers/glass/bottle/holywater
 	name = "Holy Water"
 	desc = "A small bottle filled with blessed water."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "holy_water"
 	initial_reagents = "water_holy"
 	amount_per_transfer_from_this = 10
-	fluid_overlay_states = 0
+	fluid_overlay_states = 8
+	container_style = "holy_water"
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 /obj/item/reagent_containers/glass/bottle/cleaner
 	name = "cleaner bottle"

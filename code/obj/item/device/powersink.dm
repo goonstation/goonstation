@@ -40,6 +40,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (isscrewingtool(I))
+			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
 				if(isturf(T) && !T.intact)
