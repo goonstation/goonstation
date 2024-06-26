@@ -1902,7 +1902,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_state = "ks23" // prevent empty state from breaking the worn image
 	base_icon_state = "ks23"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 6
