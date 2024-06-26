@@ -1,4 +1,81 @@
 
+(t)wed jun 26 24
+(u)Kubius
+(p)19648
+(e)🆕⚖|C-Feature, C-Balance
+(+)Small update pass on requisitions, notably less using tools no longer available in general manufacturer.
+(u)Angelx3
+(p)19657
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Resprites the cat ears and all their recolours.
+(+)Makes cat ears overlay over helmets.
+(u)CalliopeSoups
+(p)19496
+(e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
+(+)Skeletons drop their torso on death as a tasty snack for antags.
+(u)Flaborized
+(p)19662
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited the mineral accumulator.
+(u)glowbold
+(p)19613
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(t)mon jun 24 24
+(u)LeahTheTech
+(+)RP security officers no longer have access to APCs.
+(u)NightmarechaMillian
+(p)19681
+(e)|
+(+)Mechscanned sawflies will no longer produce a remote on deployment.
+(+)The sawfly remote is separately mechscannable.
+(u)glowbold
+(p)19653
+(e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
+(*)Market refreshes and mail deliveries will now occur automatically.
+(u)Tyrant
+(p)19579
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Fixed Oshan maintenance airlocks not having appropriate maintenance access requirements.
+(t)sun jun 23 24
+(u)tarmunora
+(+)Quartermasters are now forklift certified
+(u)Ilysen
+(p)19485
+(e)🆕📄📦|C-Feature, A-UI, A-Game-Objects
+(*)Added a new traitor item: the marionette implant. Check your uplink today, especially if you're a packet nerd.
+(t)fri jun 21 24
+(u)mintyphresh
+(p)19460
+(e)🔄🎭|C-Rework, A-RP
+(+)Showering with clothes on now restores the hygiene motive, with higher chemprot limiting the maximum cleanliness you can achieve.
+(u)JORJ949
+(p)19592
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Replacement command PDAs can now be found in their lockers. Helpful for impersonating heads of staff.
+(u)Colossus
+(p)19119
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added pufferfish as a catchable saltwater aquarium fish, filled with tetrodotoxin, can be quite dangerous if prepared incorrectly.
+(+)Tetrodotoxin remains dormant for 10 cycles, causes emotes, messages, slight bouts of misstep and stutters for 17 cycles, causes blurry vision, random oxygen deprivation and slowness, as well as loud heart palpitations for 20 cycles, and finally causes oxygen damage and cardiac arrest.
+(+)Pufferfish come with lots of tetrodotoxin in them, and require someone with proper kitchen training(the chef) to separate the toxic liver from the fillet without either contaminating it or poisoning themselves.
+(u)Garash
+(p)19331
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Map Vote & Map Vote Results windows, do your civic duty today!
+(t)thu jun 20 24
+(u)LeahTheTech
+(+)Mining charges now correctly break low-hardness geodes.
+(u)Garash2k
+(p)19107
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)New UI for the stationary and portable Chemicompiler.
+(t)wed jun 19 24
+(u)LeahTheTech and Flaborized
+(p)19598
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added geodes that mining can find. Can only be broken open with explosions, check your geological scanner for the power required. Geodes can contain various types of crystalline ore deposits as well as oil and other liquids.
+(t)tue jun 18 24
 (u)TemThrush
 (p)19540
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects

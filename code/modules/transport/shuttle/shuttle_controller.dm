@@ -133,8 +133,12 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/westBound = world.maxx
 						var/eastBound = 1
 
+						// explode everything that exists where the shuttle is landing
 						for (var/atom/A as obj|mob in end_location)
 							SPAWN(0)
+								if (isliving(A))
+									var/mob/living/M = A
+									M.unlock_medal("Reserved Parking", TRUE)
 								A.ex_act(1)
 
 						end_location.color = null //Remove the colored shuttle!

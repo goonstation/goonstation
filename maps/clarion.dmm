@@ -11498,6 +11498,7 @@
 	dir = 1;
 	pixel_y = 0
 	},
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "bxf" = (
@@ -12701,7 +12702,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "bKh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -12745,7 +12746,7 @@
 /turf/space,
 /area/space)
 "bKs" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -19959,7 +19960,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,
@@ -20366,7 +20367,7 @@
 	},
 /area/station/hallway/primary/southwest)
 "hgF" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
@@ -21112,7 +21113,7 @@
 	},
 /area/station/hallway/primary/southeast)
 "hIK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -27058,7 +27059,7 @@
 /area/station/medical/head)
 "mdE" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -28965,7 +28966,7 @@
 	},
 /area/station/storage/primary)
 "nyM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -31726,6 +31727,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "pEu" = (
@@ -34093,7 +34095,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,
@@ -35976,7 +35978,7 @@
 	},
 /area/station/hallway/primary/north)
 "sVn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

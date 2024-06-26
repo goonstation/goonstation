@@ -239,11 +239,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/interfaceboard,1)
 
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/screwdriver,1)
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/wirecutters,1)
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/t_ray,rand(1,2))
-		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering,rand(1,2))
-		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/screwdriver,1)
+		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/wirecutters,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/crowbar,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/powercell,1)
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/surgical/saw,1)
+		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
 		if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,25))
 
 		..()
@@ -269,16 +270,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 	name = "AI interface board"
 	typepath = /obj/item/ai_interface
 	feemod = PAY_EMBEZZLED
-
-/datum/rc_entry/item/t_ray
-	name = "T-ray scanner"
-	typepath = /obj/item/device/t_scanner
-	feemod = PAY_TRADESMAN*2
-
-/datum/rc_entry/item/soldering
-	name = "soldering iron"
-	typepath = /obj/item/electronics/soldering
-	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/item/multitool
 	name = "multitool"
@@ -334,7 +325,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 			if("furnace fuel")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(24,36))
 			if("liquid fuel")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fuel,rand(30,40)*10)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fuel,rand(40,60)*20)
 			if("coffee")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/coffee,rand(24,36)*10)
 
@@ -348,7 +339,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chem_ids = "fuel"
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY_UNTRAINED/10
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
