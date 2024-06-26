@@ -141,50 +141,56 @@
 		if(master.com_system?.active) comms_on = TRUE
 
 		var/element_list = src.get_hudzone("primary_ui").elements
-		for(var/datum/hud_element/H in element_list)
-			switch(H.screen_obj.id)
+		for(var/listkey in element_list)
+			var/datum/hud_element/our_element = element_list[listkey]
+			switch(listkey)
 				if("engine")
-					H.screen_obj.icon_state = master.engine?.active ? "engine-on" : "engine-off"
+					our_element.screen_obj.icon_state = master.engine?.active ? "engine-on" : "engine-off"
 				if("wormhole")
 					if (master.engine?.active && master.sensors?.active)
-						H.screen_obj.overlays.len = 0
-					else if(!H.screen_obj.overlays.len)
-						H.screen_obj.overlays += missing
+						our_element.screen_obj.overlays.len = 0
+					else if(!our_element.screen_obj.overlays.len)
+						our_element.screen_obj.overlays += missing
 				if("life_support")
-					H.screen_obj.icon_state = master.life_support?.active ? "life_support-on" : "life_support-off"
+					our_element.screen_obj.icon_state = master.life_support?.active ? "life_support-on" : "life_support-off"
 				if("comms")
-					H.screen_obj.icon_state = master.life_support?.active ? "comms-on" : "comms-off"
+					our_element.screen_obj.icon_state = master.com_system?.active ? "comms-on" : "comms-off"
 				if("comms_system")
 					if (comms_on)
-						H.screen_obj.overlays.len = 0
-					else if(!H.screen_obj.overlays.len)
-						H.screen_obj.overlays += missing
+						our_element.screen_obj.overlays.len = 0
+					else if(!our_element.screen_obj.overlays.len)
+						our_element.screen_obj.overlays += missing
 				if("sensors")
-					H.screen_obj.icon_state = master.sensors?.active ? "sensors-on" : "sensors-off"
+					our_element.screen_obj.icon_state = master.sensors?.active ? "sensors-on" : "sensors-off"
 				if("sensors_use")
 					if (master.sensors?.active)
-						H.screen_obj.overlays.len = 0
-					else if(!H.screen_obj.overlays.len)
-						H.screen_obj.overlays += missing
+						our_element.screen_obj.overlays.len = 0
+					else if(!our_element.screen_obj.overlays.len)
+						our_element.screen_obj.overlays += missing
 				if("weapon")
-					H.screen_obj.icon_state = master.m_w_system?.active ? "weapon-on" : "weapon-off"
+					our_element.screen_obj.icon_state = master.m_w_system?.active ? "weapon-on" : "weapon-off"
 				if("lights")
-					H.screen_obj.icon_state = master.lights?.active ? "[master.lights.hud_state]-on" : "[master.lights.hud_state]-off"
+					if(master.lights)
+						our_element.screen_obj.icon_state = master.lights?.active ? "[master.lights.hud_state]-on" : "[master.lights.hud_state]-off"
+					else
+						our_element.screen_obj.icon_state = "blank"
 				if("secondary")
 					if(master.sec_system?.f_active)
-						H.screen_obj.icon_state = master.sec_system.hud_state
+						our_element.screen_obj.icon_state = master.sec_system.hud_state
+					else if(master.sec_system)
+						our_element.screen_obj.icon_state = master.sec_system?.active ? "[master.sec_system.hud_state]-on" : "[master.sec_system.hud_state]-off"
 					else
-						H.screen_obj.icon_state = master.sec_system?.active ? "[master.sec_system.hud_state]-on" : "[master.sec_system.hud_state]-off"
+						our_element.screen_obj.icon_state = "blank"
 				if("lock")
 					if(master.lock?.code)
-						H.screen_obj.icon_state = master.locked ? "lock-locked" : "lock-unlocked"
+						our_element.screen_obj.icon_state = master.locked ? "lock-locked" : "lock-unlocked"
 				if("rts")
 					if (comms_on)
-						H.screen_obj.overlays.len = 0
-					else if(!H.screen_obj.overlays.len)
-						H.screen_obj.overlays += missing
+						our_element.screen_obj.overlays.len = 0
+					else if(!our_element.screen_obj.overlays.len)
+						our_element.screen_obj.overlays += missing
 				if("rcs")
-					H.screen_obj.icon_state = master.rcs ? "rcs-on" : "rcs-off"
+					our_element.screen_obj.icon_state = master.rcs ? "rcs-on" : "rcs-off"
 
 	proc/update_systems()
 		check_clients()
