@@ -221,6 +221,7 @@
 			if (prob(P.power))
 				if (status & BROKEN)
 					src.visible_message(SPAN_COMBAT("The [src] is struck by [P] and shatters!"))
+					playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 50, TRUE)
 					src.unscrew_monitor()
 				else
 					src.visible_message(SPAN_COMBAT("The [src] is struck by [P] and breaks!"))
