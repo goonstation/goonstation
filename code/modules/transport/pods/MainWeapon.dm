@@ -448,7 +448,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if (outcome & LOAD_FULL)
 				boutput(user, SPAN_NOTICE("[src] is[outcome & LOAD_SUCCESS ? " now" : null] fully loaded."))
 			if (outcome < 1)
-				boutput(user, SPAN_ALERT("[src] only accepts steel sheets!"))
+				boutput(user, SPAN_ALERT("[src] only accepts unreinforced steel sheets!"))
 				. = ..()
 
 	Fire(var/mob/user,var/shot_dir_override = -1)
@@ -556,7 +556,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		. = FALSE
 		if(istype(O,/obj/item/sheet))
 			var/obj/item/sheet/S = O
-			if(!S.material || !(S.material.getID() == "steel"))
+			if(!S.material || !(S.material.getID() == "steel") || S.reinforcement)
 				return
 			var/amount_to_load = min(src.max_sheets - src.steel_sheets,S.amount)
 			. = LOAD_FULL
