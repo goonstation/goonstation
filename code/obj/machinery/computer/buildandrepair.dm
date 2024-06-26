@@ -363,7 +363,7 @@ TYPEINFO(/obj/item/circuitboard)
 
 /obj/computerframe/proc/eject_board()
 		if (!src.circuit) return
-		src.visible_message("The installed circuit board is struck and [pick("flies out", "is launched", "goes flying")]!")
+		src.visible_message("The installed circuit board [pick("flies out", "is launched", "goes flying")]!")
 		src.circuit.set_loc(get_turf(src))
 		src.circuit.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 		src.state = STATE_ANCHORED
