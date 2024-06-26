@@ -26,8 +26,11 @@
 	var/image/status_light = null
 	var/image/fill_bar = null
 
-	///"Stop poking me" tracker
+	///"Stop poking me" tracker - to not get bit if you're just poking it a little
 	var/last_poke_time = null
+
+	///If you poke it too much, it's not just going to nibble
+	var/grouchy_meter = 0
 
 	///Rolling counter to facilitate responsive overlay updates
 	var/last_ratio = 0
@@ -70,15 +73,32 @@
 		else
 			if(ishuman(user) && last_poke_time && (last_poke_time + 1 SECOND > world.time))
 				boutput(user, SPAN_ALERT("You poke [src] trying to get it to do something."))
-				if (prob(15) && !ON_COOLDOWN(src,"bit_a_nerd")) //don't keep poking at it when it's not ready to glob you.
-					var/limb_to_ouch
+				src.grouchy_meter = min(src.grouchy_meter + 2,100)
+				if (prob(15) && !ON_COOLDOWN(src,"bit_a_nerd",2 SECONDS)) //don't keep poking at it when it's not ready to glob you.
 					var/mob/living/carbon/human/H = user
-					limb_to_ouch = H.hand ? "l_arm" : "r_arm"
-					var/howmuchbite = rand(3,5)
-					src.stomach = min(src.stomach + howmuchbite, MDM_MAX_STOMACH)
-					H.TakeDamage(limb_to_ouch, howmuchbite*3)
-					playsound(user.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 75)
-					boutput(user, SPAN_COMBAT("[src] lashes out and gnaws on your arm! [prob(50) ? "Holy shit!" : "What the fuck?"]"))
+					var/can_bite_off = FALSE
+					if(H.hand)
+						can_bite_off = !!(H.limbs.l_arm)
+					else
+						can_bite_off = !!(H.limbs.r_arm)
+					if(prob(src.grouchy_meter) && can_bite_off)
+						if(H.hand)
+							H.limbs.l_arm.delete()
+						else
+							H.limbs.r_arm.delete()
+						src.stomach = min(src.stomach + 20, MDM_MAX_STOMACH)
+						playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
+						boutput(user, SPAN_COMBAT("<font size='5'>[src] lashes out and bites off your arm!</font>"))
+						H.emote("scream")
+						H.changeStatus("stunned", 5 SECONDS)
+						H.changeStatus("knockdown", 5 SECONDS)
+					else
+						var/limb_to_ouch = H.hand ? "l_arm" : "r_arm"
+						var/howmuchbite = rand(3,5)
+						src.stomach = min(src.stomach + howmuchbite, MDM_MAX_STOMACH)
+						H.TakeDamage(limb_to_ouch, howmuchbite*3)
+						playsound(user.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 75)
+						boutput(user, SPAN_COMBAT("[src] lashes out and gnaws on your arm! [prob(50) ? "Holy shit!" : "What the fuck?"]"))
 			else
 				boutput(user, SPAN_ALERT("[src] doesn't respond to your touch."))
 			src.last_poke_time = TIME
