@@ -1,5 +1,9 @@
 
 (t)wed jun 26 24
+(u)Kubius
+(p)19648
+(e)🆕⚖|C-Feature, C-Balance
+(+)Small update pass on requisitions, notably less using tools no longer available in general manufacturer.
 (u)Angelx3
 (p)19657
 (e)🎨🎩|C-Sprites, A-Clothing
