@@ -44,6 +44,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	proc/ant_safe()
 		if (!isturf(src.loc))
 			return FALSE
+		if (isrestrictedz(src.loc.z))
+			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
@@ -111,7 +113,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
-			src.onSlice()
+			src.onSlice(user)
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
@@ -121,7 +123,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			..()
 
-	proc/onSlice() //special slice behaviour
+	proc/onSlice(var/mob/user) //special slice behaviour
 		return
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)

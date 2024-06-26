@@ -41,6 +41,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		if((src.pixel_x == 0) && (src.dir == WEST))
+			src.pixel_x += 5
+		if((src.pixel_x == 0) && (src.dir == EAST))
+			src.pixel_x += -5
+
 		START_TRACKING
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN(0.5 SECONDS)

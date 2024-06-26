@@ -141,4 +141,4 @@
 				add_machinery(machine)
 			machines[machine]+=amount
 
-#endif MACHINE_PROCESSING_DEBUG
+#endif
