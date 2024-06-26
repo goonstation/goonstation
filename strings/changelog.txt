@@ -1,4 +1,9 @@
 
+(t)wed jun 26 24
+(u)glowbold
+(p)19613
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
 (t)mon jun 24 24
 (u)LeahTheTech
 (+)RP security officers no longer have access to APCs.
