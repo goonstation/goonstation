@@ -262,7 +262,6 @@ TYPEINFO(/obj/item/motherboard)
 							src.eject_peripherals()
 						else if(src.mainboard)
 							src.eject_mainboard()
-
 					if(3)
 						if (src.hd)
 							src.visible_message(SPAN_COMBAT("The disk drive is hit and flung out!"))
@@ -286,6 +285,7 @@ TYPEINFO(/obj/item/motherboard)
 
 /obj/computer3frame/proc/eject_mainboard()
 	if(isnull(src.mainboard)) return
+	src.visible_message("The mainboard is knocked loose!")
 	src.mainboard.set_loc(get_turf(src))
 	src.mainboard.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 	src.mainboard = null
