@@ -1,5 +1,9 @@
 
 (t)wed jun 26 24
+(u)CalliopeSoups
+(p)19496
+(e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
+(+)Skeletons drop their torso on death as a tasty snack for antags.
 (u)Flaborized
 (p)19662
 (e)🎨📦|C-Sprites, A-Game-Objects
