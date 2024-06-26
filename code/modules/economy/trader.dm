@@ -112,7 +112,7 @@
 					boutput(user, SPAN_NOTICE("Card authorized."))
 					src.scan = id_card
 				else
-					boutput(user, SPAN_ALERT("Pin number incorrect."))
+					boutput(user, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -412,7 +412,7 @@
 						boutput(usr, SPAN_NOTICE("Card authorized."))
 						src.scan = id_card
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
@@ -725,7 +725,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"Get 'em boys!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/N = pick(1,2)
 				var/mob/living/critter/martian/P = null
 				if (N == 1)
@@ -796,7 +796,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
@@ -1036,7 +1036,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	New()
 		..()
 		src.goods_sell += new /datum/commodity/diner/mysteryburger(src)
-		src.goods_sell += new /datum/commodity/diner/monster(src)
 		src.goods_sell += new /datum/commodity/diner/sloppyjoe(src)
 		src.goods_sell += new /datum/commodity/diner/mashedpotatoes(src)
 		src.goods_sell += new /datum/commodity/diner/waffles(src)
@@ -1045,6 +1044,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/diner/slurrypie(src)
 		src.goods_sell += new /datum/commodity/diner/daily_special(src)
 
+		src.goods_buy += new /datum/commodity/diner/monster(src)
 		src.goods_buy += new /datum/commodity/produce/special/gmelon(src)
 		src.goods_buy += new /datum/commodity/produce/special/greengrape(src)
 		src.goods_buy += new /datum/commodity/produce/special/ghostchili(src)
@@ -1157,6 +1157,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/waltwhite(src)
 		src.goods_sell += new /datum/commodity/costume/spiderman(src)
 		src.goods_sell += new /datum/commodity/costume/wonka(src)
+		src.goods_sell += new /datum/commodity/costume/goku(src)
 		src.goods_sell += new /datum/commodity/costume/light_borg(src)
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)

@@ -9,41 +9,31 @@
 	pointCost = 0
 	when_stunned = 1
 	not_when_handcuffed = 0
+	interrupt_action_bars = FALSE
+	do_logs = FALSE
 
 	unlock_message = "You have gained Bat Form. When toggled on, you will be able to enter Bat Form by sprinting."
 
-	var/level = 1
+	var/datum/special_sprint/sprint_datum = new /datum/special_sprint/poof/bat
 
 	cast(mob/target)
 		if (!holder)
 			return 1
 
 		var/mob/living/carbon/human/M = holder.owner
-		//var/datum/abilityHolder/vampire/H = holder
 
 		if (!M)
 			return 1
 
-		if (level == 1)
-			M.special_sprint &= ~SPRINT_BAT_CLOAKED
-
-			if (M.special_sprint & SPRINT_BAT)
-				M.special_sprint &= ~SPRINT_BAT
-				icon_state = "batform"
-			else
-				M.special_sprint |= SPRINT_BAT
-				icon_state = "batform-on"
+		. = ..()
+		if (istype(M.special_sprint, /datum/special_sprint/poof/bat))
+			M.special_sprint = null
+			icon_state = "batform"
 		else
-			M.special_sprint &= ~SPRINT_BAT
+			M.special_sprint = src.sprint_datum
+			icon_state = "batform-on"
 
-			if (M.special_sprint & SPRINT_BAT_CLOAKED)
-				M.special_sprint &= ~SPRINT_BAT_CLOAKED
-				icon_state = "batform"
-			else
-				M.special_sprint |= SPRINT_BAT_CLOAKED
-				icon_state = "batform-on"
-
-		boutput(M, SPAN_NOTICE("Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
+		boutput(M, SPAN_NOTICE("Bat Form toggled [M.special_sprint ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
 
 		return 0
 
@@ -51,7 +41,7 @@
 	name = "Bat Form Mk2"
 	desc = "While active : Hold Sprint key to maintain Bat Form. You can squeeze through doors while this form is active, and steal blood from humans you fly over. Your Bat Form is cloaked while standing in darkness."
 	icon_state = "batform"
-	level = 2
+	sprint_datum = new /datum/special_sprint/poof/bat/cloak
 
 	unlock_message = "You have gained Bat Form Mk2. In addition to the previous effect, your bat form now cloaks in dark areas."
 
@@ -84,6 +74,7 @@
 		if (spell_invisibility(M, 1, 1, 0, 1) != 1) // Dry run. Can we phaseshift?
 			return 1
 
+		. = ..()
 		spell_invisibility(M, src.duration, 1)
 		H.locked = 1 // Can't use any powers during phaseshift.
 		SPAWN(src.duration)

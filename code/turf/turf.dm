@@ -153,7 +153,7 @@
 			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
 		damage_overlay.alpha = 200
 		src.broken = TRUE
-		UpdateOverlays(damage_overlay, "damage")
+		AddOverlays(damage_overlay, "damage")
 
 	proc/burn_tile(var/force)
 		if (!src.can_burn && !force)
@@ -167,7 +167,7 @@
 			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
 		burn_overlay.alpha = 200
 		src.burnt = TRUE
-		UpdateOverlays(burn_overlay, "burn")
+		AddOverlays(burn_overlay, "burn")
 
 	proc/restore_tile()
 		if(intact)
@@ -180,8 +180,7 @@
 			icon_state = icon_old
 		else
 			icon_state = "floor"
-		UpdateOverlays(null, "burn")
-		UpdateOverlays(null, "damage")
+		ClearSpecificOverlays("burn", "damage")
 		if (name_old)
 			name = name_old
 		levelupdate()
@@ -450,6 +449,9 @@ proc/generate_space_color()
 	return
 
 /turf/proc/delay_space_conversion()
+	return
+
+/turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
 		air_master.tiles_to_space |= src
 		return TRUE
@@ -470,6 +472,9 @@ proc/generate_space_color()
 		return 0 // nope
 
 	proc/process_cell()
+		return
+
+	meteorhit(obj/meteor)
 		return
 
 /turf/New()
@@ -616,7 +621,7 @@ proc/generate_space_color()
 /turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(src.density)
-		if(AM.throwforce >= 80)
+		if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 
@@ -1108,6 +1113,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
+	explosion_resistance = 999999
 	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors

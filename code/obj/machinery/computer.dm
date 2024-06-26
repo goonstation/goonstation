@@ -20,7 +20,9 @@
 
 	///Set to TRUE to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	var/can_reconnect = FALSE
+	///The related circuit board type for replacement/repairs
 	var/obj/item/circuitboard/circuit_type = null
+
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
@@ -51,11 +53,12 @@
 			src.Attackhand(user)
 
 	get_help_message(dist, mob/user)
-		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.circuit_type)
+			. = "Use a <b>screwdriver</b> to unscrew the screen."
 		if (src.can_reconnect)
-			. += ",\nor a <b>multitool</b> to re-scan for equipment."
-		else
-			. += "."
+			if (.)
+				.+= "\n"
+			. += "Use a <b>multitool</b> to re-scan for equipment."
 
 	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 		var/obj/computerframe/A = new /obj/computerframe(src.loc)
@@ -96,7 +99,7 @@
 */
 
 /obj/machinery/computer/general_alert
-	name = "General Alert Computer"
+	name = "general alert computer"
 	icon_state = "alert:0"
 	circuit_type = /obj/item/circuitboard/general_alert
 	var/list/priority_alarms = list()
@@ -122,7 +125,7 @@
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)	qdel(src)
@@ -176,7 +179,7 @@
 			screen_image.blend_mode = BLEND_ADD
 			screen_image.layer = LIGHTING_LAYER_BASE
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
+			src.AddOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
 			src.icon_state = "[src.base_icon_state]0"
@@ -199,7 +202,7 @@
 		src.screen_image.blend_mode = BLEND_ADD
 		src.screen_image.layer = LIGHTING_LAYER_BASE
 		src.screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 	. = ..()
 
 /obj/machinery/computer/proc/set_broken()

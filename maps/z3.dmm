@@ -224,12 +224,12 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aaU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	pixel_y = -6;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -261,7 +261,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aba" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -335,7 +335,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abo" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -347,7 +347,7 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -355,7 +355,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -367,7 +367,7 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abq" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -427,7 +427,7 @@
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "aby" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
@@ -612,7 +612,7 @@
 	},
 /area/space_hive)
 "abY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An older biopod for the creation of space bee eggs.";
@@ -651,7 +651,7 @@
 /area/space_hive)
 "acd" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -662,16 +662,16 @@
 /turf/unsimulated/floor/black,
 /area/space_hive)
 "ace" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	pixel_y = -6;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -722,7 +722,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It looks like it was never even plugged in. Did this ever work?!";
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
@@ -746,7 +746,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "acs" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	pixel_x = -10
 	},
@@ -872,16 +872,16 @@
 	},
 /area/radiostation/hallway)
 "acI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	pixel_y = -6;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 4;
 	icon = 'icons/obj/pipe-item.dmi';
@@ -919,7 +919,7 @@
 /area/space_hive)
 "acO" = (
 /obj/table/auto,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /turf/unsimulated/floor/black,
@@ -1174,11 +1174,11 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "adC" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	pixel_x = -9;
 	color = "b4b4b4"
@@ -1186,7 +1186,7 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "adD" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
@@ -1365,12 +1365,12 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "aef" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	pixel_x = -9;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	icon = 'icons/obj/pipe-item.dmi';
 	icon_state = "valve";
@@ -1463,10 +1463,10 @@
 /turf/unsimulated/floor/arctic,
 /area/space_hive)
 "aew" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	pixel_x = -9;
 	color = "b4b4b4"
@@ -1551,7 +1551,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aeK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -1561,12 +1561,6 @@
 /obj/effects/background_objects/quadriga,
 /turf/space,
 /area/space)
-"aeQ" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/bee_trader{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	})
 "aeR" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -1626,7 +1620,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Server"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -1658,7 +1652,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "afc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -1782,11 +1776,11 @@
 	},
 /area/space)
 "afK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -1890,7 +1884,7 @@
 /turf/space,
 /area/space)
 "agz" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -2029,7 +2023,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "ahD" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-L"
 	},
@@ -2169,7 +2163,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
 "ajs" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
@@ -2179,7 +2173,7 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/space)
 "ajw" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1
 	},
 /turf/space,
@@ -2216,7 +2210,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "ajQ" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -2260,7 +2254,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "ajX" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2379,7 +2373,7 @@
 /turf/simulated/floor/airless/black/grime,
 /area/space)
 "akZ" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "honk";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -2418,7 +2412,7 @@
 /turf/simulated/floor/plating,
 /area/diner/dining)
 "alf" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -2446,7 +2440,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "alh" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2522,7 +2516,7 @@
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "alH" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2564,7 +2558,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/motel)
 "alQ" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /obj/lattice{
@@ -2598,7 +2592,7 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/industrial,
 /area/space)
 "amf" = (
@@ -2627,13 +2621,13 @@
 /obj/item/cigpacket/cigarillo/juicer,
 /obj/item/cigpacket/cigarillo/juicer,
 /obj/item/cigpacket/cigarillo/juicer,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
 /turf/simulated/floor/industrial,
 /area/space)
 "amh" = (
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_x = 12
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -2649,7 +2643,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /turf/simulated/floor/industrial,
 /area/space)
 "aml" = (
@@ -2700,7 +2694,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -2759,7 +2753,7 @@
 "amC" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/industrial,
 /area/space)
 "amD" = (
@@ -2770,7 +2764,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "amE" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /turf/simulated/floor/industrial,
 /area/space)
 "amF" = (
@@ -2785,7 +2779,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -2829,7 +2823,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/derelict_ai_sat)
 "amS" = (
-/obj/decal/fakeobjects/flock/antenna/end{
+/obj/fakeobject/flock/antenna/end{
 	dir = 1
 	},
 /turf/space,
@@ -2888,7 +2882,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ana" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/cable{
@@ -2956,7 +2950,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "ans" = (
-/obj/decal/fakeobjects/flock/antenna,
+/obj/fakeobject/flock/antenna,
 /turf/space,
 /area/space)
 "ant" = (
@@ -2968,7 +2962,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "anv" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	dir = 1;
 	icon_state = "antenna-broken-2"
 	},
@@ -3020,7 +3014,7 @@
 /turf/simulated/floor/darkblue,
 /area/diner/hallway)
 "anL" = (
-/obj/decal/fakeobjects/flock/wing{
+/obj/fakeobject/flock/wing{
 	dir = 5
 	},
 /turf/space,
@@ -3063,7 +3057,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -3103,7 +3097,7 @@
 	},
 /area/space)
 "aoQ" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
+/obj/fakeobject/flock/wing/destroyed{
 	dir = 9
 	},
 /turf/space,
@@ -3138,7 +3132,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "aoY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -3147,7 +3141,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -3156,7 +3150,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -3270,7 +3264,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "apu" = (
-/obj/decal/fakeobjects/flock/wing/broken{
+/obj/fakeobject/flock/wing/broken{
 	dir = 5
 	},
 /turf/space,
@@ -3280,7 +3274,7 @@
 /turf/space,
 /area/space)
 "apw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Part of the sensor system for a really big syndicate drone.";
@@ -3427,7 +3421,7 @@
 	},
 /area/diner/dining)
 "aqa" = (
-/obj/decal/fakeobjects/flock/antenna{
+/obj/fakeobject/flock/antenna{
 	dir = 8
 	},
 /turf/space,
@@ -3439,7 +3433,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "aqc" = (
-/obj/decal/fakeobjects/flock/antenna/end{
+/obj/fakeobject/flock/antenna/end{
 	dir = 4
 	},
 /turf/space,
@@ -3669,7 +3663,7 @@
 /area/buddyfactory)
 "aqX" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A pen chained to the desk by little metal beads.  Pretty common at reception des-what the heck, the chain is attached to the wrong end.";
 	icon = 'icons/obj/writing.dmi';
@@ -3701,7 +3695,7 @@
 /obj/machinery/light_switch/east{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -3943,7 +3937,7 @@
 	},
 /area/salyut)
 "arT" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 8
 	},
 /obj/submachine/chem_extractor,
@@ -4016,7 +4010,7 @@
 /area/salyut)
 "asc" = (
 /obj/map/light/white,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -4050,7 +4044,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -4106,7 +4100,7 @@
 /area/salyut)
 "ast" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
@@ -4163,7 +4157,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -4196,7 +4190,7 @@
 /turf/simulated/floor,
 /area/buddyfactory/mainframe)
 "asG" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An emergency stop button.  I guess it has stopped working.  What an emergency HA HA HA HA HAaaaaaa";
 	icon = 'icons/misc/worlds.dmi';
@@ -4267,7 +4261,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "asP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -4405,7 +4399,7 @@
 /turf/simulated/floor,
 /area/radiostation/serverroom)
 "atp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -4432,7 +4426,7 @@
 /turf/simulated/floor/plating,
 /area/salyut)
 "ats" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	name = "rusted vent";
@@ -4447,7 +4441,7 @@
 /turf/simulated/floor/plating,
 /area/salyut)
 "atv" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 4;
 	icon = 'icons/obj/pipe-item.dmi';
@@ -4470,7 +4464,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 4;
 	icon = 'icons/obj/pipe-item.dmi';
@@ -4519,7 +4513,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -4597,7 +4591,7 @@
 /turf/simulated/floor/orangeblack,
 /area/buddyfactory)
 "aua" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An emergency stop button.  I guess it has stopped working.  What an emergency HA HA HA HA HAaaaaaa";
 	icon = 'icons/misc/worlds.dmi';
@@ -4633,7 +4627,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -4704,7 +4698,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "auv" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/simulated/floor,
 /area/buddyfactory)
 "aux" = (
@@ -4714,7 +4708,7 @@
 /turf/simulated/floor/orangeblack,
 /area/buddyfactory)
 "auA" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	dir = 4;
 	icon_state = "antenna-broken-2"
 	},
@@ -4727,7 +4721,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "auD" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -4787,7 +4781,7 @@
 /area/buddyfactory)
 "avf" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -4842,7 +4836,7 @@
 /turf/space,
 /area/shuttle/john/diner)
 "avH" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -4905,10 +4899,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "awj" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	pixel_x = -9;
 	color = "b4b4b4"
@@ -4962,14 +4956,6 @@
 	},
 /turf/space,
 /area/salyut)
-"axk" = (
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "wall3_space"
-	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "axl" = (
 /obj/item/raw_material/rock{
 	icon_state = "rock2"
@@ -5021,10 +5007,11 @@
 	},
 /area/salyut)
 "axJ" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -5037,7 +5024,7 @@
 	name = "GLOMAR Salvager"
 	})
 "axL" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
 /obj/submachine/seed_vendor,
@@ -5077,18 +5064,22 @@
 	name = "GLOMAR Salvager"
 	})
 "ayg" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "ayh" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -5150,10 +5141,11 @@
 	name = "GLOMAR Salvager"
 	})
 "ayC" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -5254,7 +5246,7 @@
 	},
 /area/salyut)
 "azR" = (
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -5292,7 +5284,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -5338,7 +5330,7 @@
 	},
 /area/salyut)
 "aAB" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
 /obj/machinery/vending/hydroponics/mean_solarium_bullshit,
@@ -5355,29 +5347,12 @@
 	dir = 5
 	},
 /area/flock_trader)
-"aAU" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "aAV" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
-"aBi" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
-	},
-/area/space)
-"aBj" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "aBk" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5396,14 +5371,14 @@
 /turf/space,
 /area/space)
 "aBR" = (
-/obj/decal/fakeobjects/flock/antenna{
+/obj/fakeobject/flock/antenna{
 	dir = 8
 	},
 /obj/lattice/flock,
 /turf/space,
 /area/space)
 "aBZ" = (
-/obj/decal/fakeobjects/flock/antenna/end{
+/obj/fakeobject/flock/antenna/end{
 	dir = 4
 	},
 /obj/lattice/flock,
@@ -5443,7 +5418,7 @@
 /turf/space,
 /area/space)
 "aDb" = (
-/obj/decal/fakeobjects/flock/telepad,
+/obj/fakeobject/flock/telepad,
 /obj/map/light/cyan,
 /obj/marker/supplymarker,
 /turf/simulated/floor/shuttle/flock,
@@ -5486,7 +5461,7 @@
 	},
 /area/flock_trader)
 "aDU" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	dir = 4;
 	icon_state = "antenna-broken-2"
 	},
@@ -5529,7 +5504,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "aEp" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	icon_state = "atenna-broken-1"
 	},
 /turf/space,
@@ -5588,7 +5563,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "aEI" = (
-/obj/decal/fakeobjects/flock/wing{
+/obj/fakeobject/flock/wing{
 	dir = 6
 	},
 /turf/space,
@@ -5601,13 +5576,13 @@
 /turf/space,
 /area/space)
 "aEK" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
+/obj/fakeobject/flock/wing/destroyed{
 	dir = 6
 	},
 /turf/space,
 /area/space)
 "aEL" = (
-/obj/decal/fakeobjects/flock/wing{
+/obj/fakeobject/flock/wing{
 	dir = 8
 	},
 /turf/space,
@@ -5642,7 +5617,7 @@
 	layer = 29
 	},
 /obj/machinery/door/window/eastleft,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -5818,7 +5793,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aGc" = (
@@ -5905,29 +5880,19 @@
 	},
 /turf/simulated/floor,
 /area/h7/control)
-"aGt" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
 "aGu" = (
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
 /area/radiostation/bedroom)
 "aGv" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/space)
-"aGw" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
 "aGx" = (
 /turf/simulated/wall/auto/supernorn,
 /area/radiostation/bedroom)
@@ -5956,18 +5921,20 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aGB" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aGC" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aGD" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/abandonedship)
 "aGE" = (
@@ -5990,17 +5957,11 @@
 /turf/space,
 /area/space)
 "aGJ" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/space)
 "aGK" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
-"aGL" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
 /area/space)
 "aGN" = (
 /obj/decal/floatingtiles{
@@ -6016,7 +5977,7 @@
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "aGQ" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -6050,14 +6011,6 @@
 /obj/item/raw_material/shard/glass,
 /turf/space,
 /area/space)
-"aHa" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3_space"
-	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "aHb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -6068,11 +6021,6 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
-"aHd" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
-	},
-/area/space)
 "aHf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -6104,7 +6052,7 @@
 "aHl" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -6113,13 +6061,13 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHm" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHn" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
 "aHo" = (
@@ -6137,7 +6085,7 @@
 /area/space)
 "aHs" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -6158,7 +6106,7 @@
 /area/abandonedmedicalship)
 "aHv" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/tapedeck,
+/obj/fakeobject/tapedeck,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -6184,7 +6132,7 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "aHz" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7";
@@ -6192,20 +6140,8 @@
 	},
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
-"aHA" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
-	},
-/area/abandonedship)
-"aHD" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space"
-	},
-/area/abandonedship)
 "aHE" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/radiostation/serverroom)
@@ -6213,7 +6149,7 @@
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
 /obj/machinery/optable,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -6249,7 +6185,7 @@
 /area/abandonedmedicalship)
 "aHL" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -6258,7 +6194,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHM" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -6274,7 +6210,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /obj/item/cell/cerenkite,
@@ -6324,7 +6260,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aHY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -6332,7 +6268,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -6341,7 +6277,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -6353,24 +6289,19 @@
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
 "aHZ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "aIa" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
-"aIb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
-	},
-/area/abandonedmedicalship)
 "aIc" = (
 /obj/item/cable_coil/cut,
 /obj/landmark/spawner/artifact,
@@ -6386,7 +6317,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
 "aIf" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /turf/simulated/floor/airless/damaged4,
@@ -6430,7 +6361,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6458,7 +6389,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6482,12 +6413,12 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aIw" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "aIx" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "A robotic claw, it might still work.";
 	dir = 4;
 	name = "robotic claw"
@@ -6495,7 +6426,7 @@
 /turf/space,
 /area/space)
 "aIy" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6507,10 +6438,11 @@
 	name = "GLOMAR Salvager"
 	})
 "aIA" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -6568,7 +6500,7 @@
 "aIH" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1
 	},
 /obj/item/cloner_upgrade,
@@ -6607,7 +6539,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6616,12 +6548,6 @@
 "aIP" = (
 /turf/simulated/floor/airless/damaged3,
 /area/abandonedship)
-"aIQ" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space_end"
-	},
-/area/space)
 "aIR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -6633,23 +6559,24 @@
 	},
 /area/radiostation/bedroom)
 "aIT" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "aIU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "aIV" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -6664,7 +6591,7 @@
 /area/abandonedmedicalship)
 "aIY" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -6743,7 +6670,7 @@
 /obj/decal/floatingtiles{
 	dir = 8
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /obj/decal/cleanable/machine_debris,
@@ -6776,17 +6703,18 @@
 /turf/space,
 /area/space)
 "aJq" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "aJs" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
 	opacity = 0
 	},
@@ -6805,7 +6733,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
 "aJw" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 8;
 	pixel_x = -24
 	},
@@ -6851,7 +6779,7 @@
 /turf/simulated/floor/orangeblack,
 /area/h7/storage)
 "aJG" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 1
 	},
 /obj/cable{
@@ -6864,7 +6792,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aJH" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 1
 	},
 /obj/cable{
@@ -6878,22 +6806,25 @@
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aJI" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aJJ" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "aJK" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aJL" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -6914,7 +6845,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aJO" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
@@ -6923,10 +6854,11 @@
 	name = "GLOMAR Salvager"
 	})
 "aJP" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -6935,7 +6867,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6983,12 +6915,12 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /obj/item/storage/firstaid/brain,
 /turf/simulated/floor/airless/white,
 /area/abandonedmedicalship)
 "aJZ" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -7001,7 +6933,7 @@
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -7012,26 +6944,28 @@
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "aKc" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "aKd" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
@@ -7047,7 +6981,7 @@
 	name = "GLOMAR Salvager"
 	})
 "aKh" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
@@ -7057,7 +6991,7 @@
 	})
 "aKi" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -7098,7 +7032,7 @@
 /area/abandonedmedicalship)
 "aKo" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -7112,7 +7046,7 @@
 /obj/decal/cleanable/dirt,
 /obj/map/light/white,
 /obj/table/reinforced/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -7121,12 +7055,6 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/airless/circuit,
-/area/abandonedmedicalship)
-"aKq" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
-	},
 /area/abandonedmedicalship)
 "aKx" = (
 /turf/simulated/floor/plating/scorched,
@@ -7145,19 +7073,19 @@
 "aKA" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
 	opacity = 0
 	},
 /area/abandonedmedicalship)
 "aKB" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
 "aKC" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -7168,7 +7096,7 @@
 /area/abandonedmedicalship)
 "aKD" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -7185,7 +7113,7 @@
 /area/abandonedmedicalship)
 "aKF" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/space,
@@ -7211,7 +7139,7 @@
 "aKO" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -7227,7 +7155,7 @@
 /area/abandonedmedicalship)
 "aKQ" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /obj/table/reinforced/auto,
 /obj/item/implantcase/robust,
 /obj/item/implanter,
@@ -7301,7 +7229,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
@@ -7312,20 +7240,22 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "aLe" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -7353,10 +7283,11 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aLn" = (
 /obj/decal/cleanable/robot_debris{
@@ -7375,7 +7306,7 @@
 /turf/space,
 /area/abandonedmedicalship)
 "aLq" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	color = "b4b4b4"
 	},
@@ -7413,13 +7344,13 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "aLy" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "A robotic claw, it might still work.";
 	name = "robotic claw"
 	},
@@ -7452,7 +7383,7 @@
 	},
 /area/h7)
 "aLE" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
@@ -7607,7 +7538,7 @@
 /turf/space,
 /area/space)
 "aMe" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -7657,10 +7588,11 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aMl" = (
 /obj/machinery/navbeacon{
@@ -7688,7 +7620,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 8
 	},
 /obj/overlay{
@@ -7749,7 +7681,7 @@
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aMz" = (
-/obj/decal/fakeobjects/oven,
+/obj/fakeobject/oven,
 /obj/item/reagent_containers/food/snacks/cake/meat,
 /obj/item/crowbar,
 /turf/simulated/floor/specialroom/cafeteria{
@@ -7835,15 +7767,16 @@
 	},
 /area/derelict_ai_sat)
 "aMM" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "You should probably leave it alone.";
 	dir = 4;
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aMO" = (
 /obj/cable{
@@ -7873,10 +7806,11 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aMT" = (
 /obj/cable{
@@ -7890,7 +7824,7 @@
 /turf/simulated/floor/orangeblack,
 /area/derelict_ai_sat)
 "aMV" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 24
 	},
 /obj/machinery/rkit,
@@ -7923,14 +7857,15 @@
 	},
 /area/derelict_ai_sat)
 "aMZ" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "You should probably leave it alone.";
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aNb" = (
 /turf/simulated/floor/airless/plating/damaged2,
@@ -7982,9 +7917,10 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aNm" = (
 /obj/lattice{
@@ -8066,7 +8002,7 @@
 	},
 /area/h7/storage)
 "aNH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "solar_panel-b";
@@ -8219,7 +8155,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aOe" = (
@@ -8304,7 +8240,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat/core)
 "aOq" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1;
 	pixel_y = 10
 	},
@@ -8332,7 +8268,7 @@
 /turf/simulated/floor/orangeblack,
 /area/h7/storage)
 "aOv" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -8345,7 +8281,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aOy" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It's probably broken.";
 	icon = 'icons/obj/power.dmi';
 	icon_state = "solar_panel-b";
@@ -8437,15 +8373,16 @@
 /turf/simulated/floor/plating,
 /area/h7)
 "aOO" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "You should probably leave it alone.";
 	dir = 1;
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aOQ" = (
 /obj/machinery/light{
@@ -8490,10 +8427,11 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aOW" = (
 /obj/storage/crate,
@@ -8501,7 +8439,7 @@
 /turf/simulated/floor/orangeblack,
 /area/h7/storage)
 "aOX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	tag = "icon-intact-f (EAST)";
 	color = "b4b4b4"
@@ -8565,15 +8503,16 @@
 /turf/space,
 /area/space)
 "aPd" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "You should probably leave it alone.";
 	dir = 8;
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aPe" = (
 /obj/cable{
@@ -8718,7 +8657,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/derelict_ai_sat)
 "aPx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/cable{
@@ -8981,7 +8920,7 @@
 	},
 /area/derelict_ai_sat/core)
 "aQp" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/cable{
@@ -9042,7 +8981,7 @@
 /turf/simulated/floor/yellow/side,
 /area/derelict_ai_sat/core)
 "aQB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/engine/caution/westeast,
@@ -9090,7 +9029,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/firelock_broken,
 /obj/machinery/door/airlock/pyro{
 	name = "Storage"
 	},
@@ -9098,7 +9037,7 @@
 /area/h7/storage)
 "aQK" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -9194,7 +9133,7 @@
 /area/derelict_ai_sat)
 "aRc" = (
 /obj/disposalpipe/segment,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "Something about this robot seems very familiar.";
 	icon = 'icons/obj/bots/robuddy/pr-1.dmi';
@@ -9495,7 +9434,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aSh" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -9552,7 +9491,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "You haven't seen any of these in a while! Shame that it's broken.";
 	icon = 'icons/obj/networked.dmi';
@@ -9585,7 +9524,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -9637,7 +9576,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_y = 24
 	},
 /turf/simulated/floor,
@@ -9657,7 +9596,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSE" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/raw_material/pharosium,
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
@@ -9830,7 +9769,7 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "aTc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "";
 	dir = 6;
 	icon = 'icons/misc/worlds.dmi';
@@ -9896,7 +9835,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/abandonedship)
 "aTo" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_y = 24
 	},
 /turf/simulated/floor/green/corner{
@@ -9904,7 +9843,7 @@
 	},
 /area/h7)
 "aTp" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/firelock_broken,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -10025,7 +9964,7 @@
 /area/derelict_ai_sat)
 "aTD" = (
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -10152,7 +10091,7 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aTY" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/mining_tool/powered/hammer,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -10264,7 +10203,7 @@
 /turf/space,
 /area/space)
 "aUq" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -10278,7 +10217,7 @@
 /turf/simulated/floor,
 /area/iss)
 "aUs" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/oreprospector,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
@@ -10343,7 +10282,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUD" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -10403,7 +10342,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 8
 	},
 /obj/overlay{
@@ -10416,7 +10355,7 @@
 /turf/simulated/floor,
 /area/h7)
 "aUM" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 8
 	},
 /obj/cable{
@@ -10455,10 +10394,11 @@
 /turf/simulated/floor,
 /area/h7)
 "aUQ" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/space)
 "aUR" = (
 /obj/item/raw_material/syreline,
@@ -10472,7 +10412,7 @@
 	},
 /area/fermid_hive)
 "aUU" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 4
 	},
 /obj/cable{
@@ -10577,10 +10517,11 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "aVi" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/space)
 "aVj" = (
 /obj/storage/crate,
@@ -10819,7 +10760,7 @@
 /area/abandonedoutpostthing)
 "aVT" = (
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
@@ -10835,7 +10776,7 @@
 	},
 /area/h7/crew)
 "aVV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -10865,7 +10806,7 @@
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -10876,7 +10817,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWc" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
@@ -10918,7 +10859,7 @@
 /turf/simulated/floor/plating,
 /area/h7)
 "aWj" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -10947,7 +10888,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /obj/npc/trader/robot/medical,
@@ -11009,7 +10950,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -11210,7 +11151,7 @@
 	},
 /area/h7/crew)
 "aXi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -11230,7 +11171,7 @@
 /turf/simulated/wall/false_wall,
 /area/h7/lab)
 "aXm" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -11242,7 +11183,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aXn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -11250,7 +11191,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -11259,7 +11200,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -11271,7 +11212,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aXo" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -11334,7 +11275,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -11364,7 +11305,7 @@
 /turf/simulated/floor/caution/corner/ne,
 /area/iss)
 "aXG" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -11405,7 +11346,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "aXM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -11418,13 +11359,13 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "aXN" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1
 	},
 /turf/simulated/floor,
 /area/h7/lab)
 "aXO" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_y = 24
 	},
 /turf/simulated/floor,
@@ -11471,7 +11412,7 @@
 	},
 /area/h7)
 "aXY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -11486,7 +11427,7 @@
 /turf/simulated/floor/plating/airless,
 /area/iss)
 "aXZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -11498,7 +11439,7 @@
 /turf/simulated/floor/plating/airless,
 /area/iss)
 "aYa" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -11506,7 +11447,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -11520,7 +11461,7 @@
 /turf/simulated/floor/caution/west,
 /area/iss)
 "aYc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of electrical machine thing.";
@@ -11538,7 +11479,7 @@
 	},
 /area/iss)
 "aYe" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -11547,7 +11488,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -11587,11 +11528,11 @@
 	},
 /area/space)
 "aYm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -11621,7 +11562,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "aYr" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -11644,7 +11585,7 @@
 	},
 /area/iss)
 "aYv" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -11695,7 +11636,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "aYG" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -11703,7 +11644,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -11712,7 +11653,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -11724,7 +11665,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aYH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -11761,7 +11702,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/space)
 "aYX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -11772,7 +11713,7 @@
 /turf/simulated/floor,
 /area/iss)
 "aYY" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "A robotic claw, it probably broke decades ago.";
 	name = "robotic claw"
 	},
@@ -11800,7 +11741,7 @@
 /area/abandonedoutpostthing)
 "aZd" = (
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -11895,7 +11836,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -11937,7 +11878,7 @@
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
 "aZK" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -11953,7 +11894,7 @@
 	},
 /area/h7/lab)
 "aZN" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -11973,7 +11914,7 @@
 	},
 /area/abandonedoutpostthing)
 "aZS" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
@@ -11983,7 +11924,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "aZU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/lattice{
@@ -12087,7 +12028,7 @@
 	},
 /area/abandonedoutpostthing)
 "bal" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
@@ -12104,7 +12045,7 @@
 /turf/space,
 /area/space)
 "bap" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -12156,7 +12097,7 @@
 /turf/simulated/floor/purple/corner,
 /area/h7/lab)
 "baF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -12174,7 +12115,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "baI" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /obj/decal/cleanable/oil,
@@ -12182,7 +12123,7 @@
 /turf/simulated/floor/white/grime,
 /area/iss)
 "baJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -12194,7 +12135,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "baK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -12205,7 +12146,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "baL" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -12294,7 +12235,7 @@
 	},
 /area/h7/lab)
 "baY" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 4
 	},
 /obj/cable{
@@ -12315,7 +12256,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "bbh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -12450,7 +12391,7 @@
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbD" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/tank/anesthetic,
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbE" = (
@@ -12696,7 +12637,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/simulated/floor/orangeblack/side,
 /area/h7/lab)
 "bcx" = (
@@ -12768,7 +12709,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 1
 	},
 /obj/machinery/door/airlock/pyro/medical{
@@ -12811,7 +12752,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcQ" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	dir = 1
 	},
 /obj/cable{
@@ -12872,7 +12813,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/h7/lab)
 "bdb" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -12896,7 +12837,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
 /obj/machinery/power/terminal{
@@ -12933,11 +12874,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bdn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -12969,7 +12910,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	color = "b4b4b4"
 	},
@@ -12994,7 +12935,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/firelock_broken,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bdz" = (
@@ -13043,7 +12984,7 @@
 /turf/simulated/floor/grime,
 /area/h7/lab)
 "bdM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -13055,7 +12996,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bdQ" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
@@ -13086,7 +13027,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "bdU" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/damaged1,
@@ -13096,7 +13037,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "beb" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -13160,7 +13101,7 @@
 /area/abandonedship)
 "beL" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /obj/item/clothing/under/misc/turds{
@@ -13231,7 +13172,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "beZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -13253,7 +13194,7 @@
 /turf/simulated/floor/caution/west,
 /area/h7/lab)
 "bfh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -13262,7 +13203,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -13310,7 +13251,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "bft" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -13322,7 +13263,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bfv" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -13405,7 +13346,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
@@ -13431,7 +13372,7 @@
 	},
 /area/hollowasteroid)
 "bfP" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	density = 1;
 	icon = 'icons/obj/doors/Doorclassic.dmi';
 	icon_state = "door_closed";
@@ -13446,7 +13387,7 @@
 	},
 /area/hollowasteroid)
 "bfS" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "..How the hell is this even possible?";
@@ -13471,7 +13412,7 @@
 /area/helldrone)
 "bga" = (
 /obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The head seems to be gone.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body2";
@@ -13530,7 +13471,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
 "bgw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -13689,7 +13630,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "bgY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
 	icon = 'icons/misc/lunar.dmi';
@@ -13699,7 +13640,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_ai_sat)
 "bgZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
 	icon = 'icons/misc/lunar.dmi';
@@ -13733,7 +13674,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_ai_sat)
 "bhf" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -13905,7 +13846,7 @@
 	},
 /area/derelict_ai_sat)
 "bhO" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	tag = "icon-intact (SOUTHEAST)";
 	color = "b4b4b4"
@@ -13916,7 +13857,7 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "bhP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -13926,7 +13867,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/derelict_ai_sat/core)
 "bhQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	tag = "icon-intact (SOUTHWEST)";
 	color = "b4b4b4"
@@ -13991,7 +13932,7 @@
 	},
 /area/derelict_ai_sat/core)
 "bhX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/cable{
@@ -14072,7 +14013,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/derelict_ai_sat)
 "bif" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	tag = "icon-intact (NORTH)";
 	color = "b4b4b4"
@@ -14089,7 +14030,7 @@
 	},
 /area/derelict_ai_sat/core)
 "bih" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/cable{
@@ -14105,7 +14046,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/derelict_ai_sat/solar)
 "bij" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	tag = "icon-intact (NORTHEAST)";
 	color = "b4b4b4"
@@ -14113,7 +14054,7 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "bik" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	tag = "icon-intact (NORTHWEST)";
 	color = "b4b4b4"
@@ -14200,7 +14141,7 @@
 /turf/simulated/floor/yellow/side,
 /area/derelict_ai_sat/core)
 "biz" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -14228,7 +14169,7 @@
 /area/derelict_ai_sat)
 "biC" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -14365,7 +14306,7 @@
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
 "biS" = (
-/obj/decal/fakeobjects/broadcastcomputer,
+/obj/fakeobject/broadcastcomputer,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biT" = (
@@ -14377,7 +14318,7 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -14385,7 +14326,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -14394,7 +14335,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -14423,12 +14364,12 @@
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "bjd" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/radiostation/serverroom)
 "bje" = (
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/radiostation/serverroom)
@@ -14473,7 +14414,7 @@
 /obj/submachine/ATM{
 	pixel_x = -32
 	},
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
 "bjs" = (
@@ -14611,11 +14552,11 @@
 /area/salyut)
 "bjW" = (
 /obj/decal/cleanable/machine_debris,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -14640,7 +14581,7 @@
 	},
 /area/salyut)
 "bkb" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -14750,7 +14691,7 @@
 /area/space)
 "bkw" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/tallsmes{
+/obj/fakeobject/tallsmes{
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
 	icon = 'icons/misc/hospital.dmi'
 	},
@@ -14904,7 +14845,7 @@
 /obj/item/storage/secure/ssafe/pilot_cargo1{
 	pixel_y = 32
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Rest in peace.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -14942,7 +14883,7 @@
 /turf/simulated/floor/circuit/vintage,
 /area/derelict_ai_sat)
 "bln" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 6;
 	name = "actuating frame";
@@ -14955,13 +14896,13 @@
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "blp" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 5;
 	name = "actuating frame";
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
 	name = "mag-clamps"
 	},
@@ -14978,7 +14919,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It doesn't seem to be hooked up to anything.";
 	dir = 6;
@@ -14998,13 +14939,13 @@
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "blv" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
 	name = "actuating frame";
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
 	name = "mag-clamps"
 	},
@@ -15018,7 +14959,7 @@
 /turf/space,
 /area/space)
 "blx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 10;
 	name = "actuating frame";
@@ -15027,7 +14968,7 @@
 /turf/space,
 /area/space)
 "bly" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
 	name = "actuating frame";
@@ -15037,7 +14978,7 @@
 /area/space)
 "blz" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "The power cord seems to have been completely ripped off.";
 	icon = 'icons/obj/computer_frame_desk.dmi';
@@ -15094,7 +15035,7 @@
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "blG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 5;
 	name = "actuating frame";
@@ -15104,7 +15045,7 @@
 /area/space)
 "blI" = (
 /obj/item/electronics/capacitor,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 10;
 	name = "actuating frame";
@@ -15113,13 +15054,13 @@
 /turf/space,
 /area/space)
 "blJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
 	name = "actuating frame";
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
 	name = "actuating frame";
@@ -15157,7 +15098,7 @@
 /turf/simulated/floor/longtile/black,
 /area/space)
 "blQ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "It appears to be a part of a very old robotic arm.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -15180,7 +15121,7 @@
 "blV" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -15189,7 +15130,7 @@
 "blX" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -15232,7 +15173,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "bmu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	tag = "icon-intact (NORTH)";
 	color = "b4b4b4"
@@ -15295,7 +15236,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "bmR" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -15306,7 +15247,7 @@
 /turf/space,
 /area/space)
 "bmU" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
@@ -15320,7 +15261,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
@@ -15337,7 +15278,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bni" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /turf/space,
@@ -15348,7 +15289,7 @@
 	icon_state = "lattice-dir-b";
 	tag = "icon-lattice-dir-b (WEST)"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/space,
@@ -15383,7 +15324,7 @@
 /turf/space,
 /area/space)
 "bnu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -15401,7 +15342,7 @@
 	},
 /area/space)
 "bnz" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/map/light/screen,
 /turf/simulated/floor/airless{
 	icon_state = "hive"
@@ -15485,7 +15426,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "bop" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -15501,7 +15442,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
@@ -15649,7 +15590,7 @@
 /area/space_hive)
 "bCL" = (
 /obj/map/light/cyan,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -15660,6 +15601,14 @@
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"bDw" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "bDZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -15688,7 +15637,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "bGL" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -15751,7 +15700,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
 "bPC" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
@@ -15925,6 +15874,14 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/mining/diner)
+"cld" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_6"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "cll" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -15977,7 +15934,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hallway/docking)
 "cvi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Part of the sensor system for a really big syndicate drone.";
@@ -16048,7 +16005,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater"
 	},
@@ -16129,7 +16086,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
 "cOy" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater"
 	},
@@ -16235,7 +16192,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "dce" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -16265,7 +16222,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "dfH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -16306,11 +16263,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
 "doJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -16428,7 +16385,7 @@
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
 "dBR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -16461,12 +16418,20 @@
 /turf/simulated/floor/plating/damaged2,
 /area/diner/hangar)
 "dHX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"dIS" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "dLg" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
@@ -16550,7 +16515,7 @@
 	},
 /area/bee_trader)
 "dYA" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/space,
@@ -16615,6 +16580,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"emx" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "enz" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/green{
@@ -16692,7 +16663,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "eDu" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -16762,7 +16733,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "eXg" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
@@ -16920,7 +16891,7 @@
 	},
 /area/diner/jucer_trader)
 "fqY" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -16932,12 +16903,19 @@
 /obj/item/sheet/wood,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"ftX" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "fvE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/mars{
 	desc = "That isn't any old pile of dirt, it's - Wait! ... where the hell did it come from?"
 	},
-/obj/decal/fakeobjects/console_lever,
+/obj/fakeobject/console_lever,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -17033,7 +17011,7 @@
 	},
 /area/shuttle/mining/diner)
 "fQg" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
@@ -17074,7 +17052,7 @@
 /turf/space,
 /area/space)
 "fWi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -17113,7 +17091,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "fZm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	tag = "icon-intact (NORTH)";
 	color = "b4b4b4"
@@ -17146,12 +17124,12 @@
 	},
 /area/diner/dining)
 "ggh" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
 	},
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/jucer_trader)
 "ggp" = (
@@ -17254,7 +17232,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater"
 	},
@@ -17307,7 +17285,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "gtN" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
@@ -17402,11 +17380,11 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "gEt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -17448,13 +17426,13 @@
 /turf/simulated/floor/orangeblack,
 /area/helldrone)
 "gNH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	icon = 'icons/obj/pipe-item.dmi';
 	icon_state = "valve";
 	name = "rusted valve"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -17467,7 +17445,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "gPt" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
@@ -17503,17 +17481,17 @@
 /area/timewarp/ship)
 "hah" = (
 /obj/lattice,
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "hai" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "vent-map"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -17559,7 +17537,7 @@
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "hiV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "Something about this robot seems very exploitative. Also nonfunctional, but exploitative nonetheless.";
 	icon = 'icons/obj/bots/robuddy/pr-1.dmi';
@@ -17603,6 +17581,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"hlR" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_1"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "hme" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -17620,7 +17604,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hallway)
 "hnx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "vent-map"
 	},
@@ -17631,7 +17615,7 @@
 /turf/simulated/floor/plating,
 /area/diner/hallway/docking)
 "hoh" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/diner/jucer_trader)
 "hpN" = (
@@ -17695,10 +17679,11 @@
 /area/diner/dining)
 "hAu" = (
 /obj/decal/cleanable/machine_debris,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "hEK" = (
 /obj/random_pod_spawner/random_putt_spawner,
@@ -17760,7 +17745,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "hLK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -17793,7 +17778,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/diner/motel/observatory)
 "hTw" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
 "hUd" = (
@@ -17971,7 +17956,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "ioJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	icon = 'icons/obj/pipe-item.dmi';
 	icon_state = "valve";
@@ -18039,9 +18024,10 @@
 "izy" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
-	locked = 1;
-	name = "rusty airlock"
+	name = "rusty airlock";
+	id = "buttes_3"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "izC" = (
@@ -18085,7 +18071,7 @@
 	},
 /area/diner/jucer_trader)
 "iGM" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 4;
 	icon = 'icons/obj/pipe-item.dmi';
@@ -18132,7 +18118,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/arcade)
 "iPp" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -18184,7 +18170,7 @@
 /area/derelict_ai_sat)
 "iUF" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -18263,7 +18249,7 @@
 	},
 /area/diner/jucer_trader)
 "jcK" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -18275,7 +18261,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "jec" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -18377,12 +18363,12 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
 "jqk" = (
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
 /area/abandonedmedicalship)
 "jqq" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -18429,7 +18415,7 @@
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "jvm" = (
-/obj/decal/fakeobjects/airlock_broken,
+/obj/fakeobject/airlock_broken,
 /turf/simulated/floor/black,
 /area/helldrone)
 "jvw" = (
@@ -18445,6 +18431,14 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"jxr" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	id = "buttes_5"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "jyD" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -18489,7 +18483,7 @@
 /turf/simulated/floor/black,
 /area/radiostation/bedroom)
 "jGV" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
@@ -18551,7 +18545,7 @@
 	},
 /area/helldrone)
 "jOk" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-M"
 	},
@@ -18580,7 +18574,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
 "jVk" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -18616,7 +18610,7 @@
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "kdj" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The head seems to be gone.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body2";
@@ -18627,7 +18621,7 @@
 /area/abandonedmedicalship/robot_trader)
 "kdO" = (
 /obj/table/auto,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -18652,7 +18646,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "kgY" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -18681,7 +18675,7 @@
 	},
 /area/shuttle/mining/diner)
 "kjV" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/space,
@@ -18797,7 +18791,7 @@
 /turf/simulated/floor/damaged2,
 /area/diner/hallway)
 "kDA" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-M"
 	},
 /turf/space,
@@ -19015,6 +19009,15 @@
 /obj/table/endtable_honey,
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
+"llr" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -19141,7 +19144,7 @@
 /area/diner/motel/pool)
 "lGG" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A very broken microwave, containing a very exploded casserole.";
 	icon = 'icons/misc/hstation.dmi';
@@ -19164,6 +19167,12 @@
 /obj/item/paper_bin,
 /turf/simulated/floor/arrival,
 /area/diner/hallway)
+"lIc" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_5"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "lIC" = (
 /obj/map/light/cyan,
 /turf/unsimulated/wall/setpieces/leadwindow{
@@ -19256,7 +19265,7 @@
 	},
 /area/diner/solar)
 "lQX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -19265,7 +19274,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -19293,7 +19302,7 @@
 	},
 /area/timewarp/ship)
 "lTu" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
 	},
 /turf/simulated/shuttle/wall{
@@ -19325,7 +19334,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "lZu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 4;
 	icon = 'icons/obj/pipe-item.dmi';
@@ -19345,7 +19354,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "mbx" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/unsimulated/floor/void/timewarp,
@@ -19387,7 +19396,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mfJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -19425,7 +19434,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
 "mnS" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4
 	},
 /obj/grille/steel,
@@ -19489,7 +19498,7 @@
 /turf/simulated/floor/plating,
 /area/h7/control)
 "mvO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -19508,7 +19517,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "mxN" = (
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "myd" = (
@@ -19576,7 +19585,7 @@
 "mKS" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
 "mMr" = (
@@ -19590,7 +19599,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /obj/landmark/spawner/loot,
@@ -19601,7 +19610,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "mQs" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -19610,7 +19619,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -19637,6 +19646,12 @@
 	dir = 1
 	},
 /area/timewarp/ship)
+"mSc" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_3"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "mSk" = (
 /obj/item/storage/wall/random,
 /obj/stool/bed,
@@ -19656,12 +19671,6 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
-"mXB" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
-/area/helldrone)
 "mYW" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -19677,7 +19686,7 @@
 	name = "GLOMAR Salvager"
 	})
 "mZZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -19686,7 +19695,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -19724,7 +19733,7 @@
 /obj/decal/cleanable/dirt/mars{
 	desc = "That isn't any old pile of dirt, it's - Wait! ... where the hell did it come from?"
 	},
-/obj/decal/fakeobjects/console_lever{
+/obj/fakeobject/console_lever{
 	name = "other lever console"
 	},
 /turf/simulated/floor/shuttle{
@@ -19738,7 +19747,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "nfg" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -19753,14 +19762,14 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
 "ngu" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -19803,7 +19812,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "nmO" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater"
 	},
@@ -19819,7 +19828,7 @@
 /turf/space,
 /area/space)
 "nrc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Part of the sensor system for a really big syndicate drone.";
@@ -19837,7 +19846,7 @@
 /turf/space,
 /area/space)
 "nrz" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
@@ -19853,7 +19862,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "nuL" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -19876,7 +19885,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "nwD" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -19928,13 +19937,15 @@
 /turf/space,
 /area/space)
 "nCh" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/abandonedship)
 "nCy" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
@@ -19949,7 +19960,7 @@
 /turf/unsimulated/floor/void/timewarp,
 /area/timewarp)
 "nEE" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-L"
 	},
@@ -20031,7 +20042,7 @@
 /turf/simulated/floor/carpet/green/fancy/innercorner/ne,
 /area/diner/motel/observatory)
 "nWh" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -20113,7 +20124,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/diner/kitchen)
 "olS" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
@@ -20148,7 +20159,7 @@
 "oqh" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/abandonedmedicalship)
 "oro" = (
@@ -20172,7 +20183,7 @@
 /area/diner/arcade)
 "otl" = (
 /obj/table/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
@@ -20213,7 +20224,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "oBX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -20222,7 +20233,7 @@
 /turf/unsimulated/floor/caution/corner/ne,
 /area/timewarp/ship)
 "oBZ" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -20294,11 +20305,11 @@
 "oQX" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
 "oSn" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -20400,7 +20411,7 @@
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
 "pfn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
@@ -20476,10 +20487,11 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "ply" = (
 /obj/item/paint_can/rainbow,
@@ -20559,7 +20571,7 @@
 /turf/simulated/floor/engine,
 /area/derelict_ai_sat)
 "ptJ" = (
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -20584,7 +20596,7 @@
 	dir = 4;
 	name = "Compartment Hatch"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -20601,6 +20613,13 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"pAk" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "buttes_6"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "pBN" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/scorched,
@@ -20637,7 +20656,7 @@
 	},
 /area/space)
 "pIn" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -20654,7 +20673,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "pKb" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -20792,11 +20811,11 @@
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "qdD" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
 	},
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/jucer_trader)
 "qdV" = (
@@ -20915,7 +20934,7 @@
 	},
 /area/diner/dining)
 "qsv" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Looks like it's cooling down!";
@@ -20953,7 +20972,7 @@
 	},
 /area/diner/jucer_trader)
 "qvs" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
@@ -21000,6 +21019,13 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"qHp" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
 "qLo" = (
 /obj/decal/timeplug{
 	dir = 4
@@ -21018,7 +21044,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "qMg" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
 	},
@@ -21035,11 +21061,11 @@
 	},
 /area/space_hive)
 "qNR" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	color = "b4b4b4"
 	},
@@ -21086,7 +21112,7 @@
 /turf/simulated/floor,
 /area/diner/dining)
 "qTq" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-M"
 	},
@@ -21108,7 +21134,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor6"
 	},
@@ -21147,7 +21173,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/space,
@@ -21184,7 +21210,7 @@
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
 "rau" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "raP" = (
@@ -21237,10 +21263,12 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "roN" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/abandonedship)
 "rpS" = (
 /turf/unsimulated/floor/honeyblocks,
@@ -21362,7 +21390,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/diner/motel/observatory)
 "rGA" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
@@ -21377,7 +21405,7 @@
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
 "rIQ" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-M"
 	},
@@ -21410,7 +21438,7 @@
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "rPb" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
@@ -21433,11 +21461,11 @@
 	},
 /area/shuttle/mining/diner)
 "rQI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
 	},
@@ -21517,13 +21545,13 @@
 /area/diner/hallway/docking)
 "rYH" = (
 /obj/decal/cleanable/oil,
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "sao" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -21532,7 +21560,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
@@ -21670,7 +21698,7 @@
 /turf/simulated/floor/carpet/green/fancy/innercorner/nw,
 /area/diner/motel/observatory)
 "svs" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -21705,7 +21733,7 @@
 /area/diner/hangar)
 "sDv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater"
 	},
@@ -21735,7 +21763,7 @@
 /turf/simulated/floor/plating,
 /area/diner/hallway)
 "sHI" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
@@ -21772,7 +21800,7 @@
 	},
 /area/timewarp/ship)
 "sQi" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -21819,7 +21847,7 @@
 /turf/simulated/floor/black,
 /area/radiostation/studio)
 "sWa" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -21831,7 +21859,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "sWn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -21863,14 +21891,14 @@
 /turf/space,
 /area/timewarp)
 "sYh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "vent-map";
 	name = "crusty vent"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of command repeater.";
@@ -21944,7 +21972,7 @@
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
 "tdm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
@@ -21986,7 +22014,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "tin" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -21994,7 +22022,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -22086,6 +22114,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"tux" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#575A5E"
+	},
+/area/abandonedship)
 "tuE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -22194,7 +22231,7 @@
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "tID" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /obj/lattice{
@@ -22278,7 +22315,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
 "tXj" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -22331,7 +22368,7 @@
 /turf/simulated/floor,
 /area/diner/dining)
 "uhK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -22339,7 +22376,7 @@
 	name = "air vent"
 	},
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/reagent_containers/pill/tox{
 	pixel_x = -8;
 	pixel_y = 16
@@ -22356,11 +22393,11 @@
 	icon_state = "lattice-dir"
 	},
 /obj/item/cable_coil/cut,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater"
 	},
@@ -22411,14 +22448,14 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "uvN" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater"
 	},
 /turf/space,
 /area/bee_trader)
 "uxh" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
@@ -22484,7 +22521,7 @@
 /turf/simulated/floor,
 /area/radiostation/studio)
 "uCt" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
@@ -22517,7 +22554,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "uGv" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -22548,7 +22585,7 @@
 	},
 /area/space)
 "uJr" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
@@ -22603,7 +22640,7 @@
 	},
 /area/diner/jucer_trader)
 "uNF" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -22619,7 +22656,7 @@
 /turf/simulated/floor/carpet/green/standard/edge/sw,
 /area/diner/jucer_trader)
 "uPG" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater"
 	},
@@ -22649,7 +22686,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "uVV" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -22686,14 +22723,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/helldrone)
 "uZy" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
 "vdp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -22708,10 +22745,18 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"vef" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
 "vem" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4
+	dir = 4;
+	id = "buttes_1"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -22744,7 +22789,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "vhv" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -22753,7 +22798,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	color = "b4b4b4"
 	},
@@ -22813,7 +22858,7 @@
 /area/space_hive)
 "vrP" = (
 /obj/grille/catwalk,
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/map/light/yellow,
 /turf/space,
 /area/diner/jucer_trader)
@@ -22836,7 +22881,7 @@
 /area/diner/solar)
 "vuQ" = (
 /obj/decal/cleanable/oil,
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -22939,7 +22984,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/motel/pool)
 "vPx" = (
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /obj/decal/cleanable/robot_debris/gib,
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -23098,7 +23143,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "wnW" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
 	layer = 2.5;
 	pixel_y = 8
@@ -23131,7 +23176,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "wqE" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
@@ -23141,7 +23186,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "wrq" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater"
 	},
@@ -23178,14 +23223,14 @@
 /turf/space,
 /area/space)
 "wsR" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/timewarp/ship)
 "wtN" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
@@ -23224,7 +23269,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/bee_trader)
 "wvX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "vent-map"
@@ -23233,6 +23278,13 @@
 	dir = 1
 	},
 /area/timewarp/ship)
+"wwl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
 "wwZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -23261,7 +23313,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedmedicalship/robot_trader)
 "wAJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
 	},
@@ -23272,7 +23324,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "wCN" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -23298,7 +23350,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "wEm" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -23307,7 +23359,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -23336,7 +23388,7 @@
 /area/diner/motel)
 "wIr" = (
 /obj/item/screwdriver,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "wKo" = (
@@ -23361,7 +23413,7 @@
 /turf/simulated/floor/longtile/black,
 /area/space)
 "wOn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
@@ -23510,7 +23562,7 @@
 /turf/simulated/floor/darkblue,
 /area/diner/hallway)
 "xtK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -23540,7 +23592,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "xvz" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 4;
 	icon_state = "alt_heater-L"
 	},
@@ -23578,7 +23630,7 @@
 	},
 /area/shuttle/mining/diner)
 "xEB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -23600,14 +23652,14 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "xKR" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 4;
 	icon = 'icons/obj/pipe-item.dmi';
 	icon_state = "valve";
 	name = "rusted valve"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -23694,7 +23746,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "xZp" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_y = 28
 	},
 /obj/machinery/vending/alcohol,
@@ -23743,7 +23795,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/space,
@@ -33021,7 +33073,7 @@ aaa
 aaa
 aad
 aaa
-aHD
+oxJ
 aHU
 bgC
 aHU
@@ -34853,7 +34905,7 @@ aaa
 aaa
 aaa
 aak
-aBi
+nre
 aaa
 aaa
 aaa
@@ -35457,7 +35509,7 @@ aac
 aaz
 aaa
 aak
-aGL
+ycy
 aQf
 aaa
 aaa
@@ -38182,7 +38234,7 @@ aaz
 aaz
 aaz
 aaz
-hme
+wwl
 iYn
 aSh
 iYn
@@ -39074,9 +39126,9 @@ aaa
 aaa
 aaa
 aaa
-aAU
+atL
 cFx
-aBi
+nre
 aaa
 aaa
 aaa
@@ -39762,7 +39814,7 @@ bgu
 bgu
 bgu
 bgu
-mXB
+tcp
 aaa
 aaa
 aaa
@@ -40063,7 +40115,7 @@ bgu
 wqE
 jOk
 bgu
-mXB
+tcp
 aaa
 aaa
 aaa
@@ -40364,7 +40416,7 @@ bgu
 bgu
 uVV
 uVV
-mXB
+tcp
 aaa
 aaa
 aaa
@@ -46013,7 +46065,7 @@ aaa
 aaa
 aaa
 aaa
-aAU
+atL
 aNl
 aaa
 aaa
@@ -46315,7 +46367,7 @@ aaa
 aaa
 aaa
 aaa
-aGL
+ycy
 aNm
 aaa
 aaa
@@ -47221,7 +47273,7 @@ aaa
 aaa
 aaa
 aGK
-aBj
+dDa
 aao
 aaa
 axl
@@ -47773,7 +47825,7 @@ aaa
 aaa
 aaa
 aaa
-aGt
+kRB
 iYn
 iYn
 aGB
@@ -47827,11 +47879,11 @@ aaa
 aaa
 aaa
 aao
-aAU
+atL
 aNw
 aGK
 aOi
-aBi
+nre
 aaa
 aaa
 aaa
@@ -48679,7 +48731,7 @@ aaa
 aaa
 aaa
 aaa
-aGw
+hme
 iYn
 iYn
 aGC
@@ -49035,11 +49087,11 @@ aaa
 aaa
 aaa
 aaa
-aGL
+ycy
 aNw
 aGK
 aNw
-aBj
+dDa
 aao
 aaa
 aaa
@@ -49645,7 +49697,7 @@ aaa
 aaa
 aaa
 aao
-aAU
+atL
 aGK
 aaa
 aaa
@@ -50010,7 +50062,7 @@ aaa
 aaa
 aHr
 rzX
-nQg
+tux
 aHU
 tQJ
 xiB
@@ -50212,7 +50264,7 @@ aaa
 aaa
 aaa
 aaa
-aHA
+nQg
 aHN
 aHU
 aHU
@@ -50551,7 +50603,7 @@ aaa
 aaa
 aaa
 aNm
-aBi
+nre
 aaa
 aaa
 aaa
@@ -50853,7 +50905,7 @@ aaa
 aaa
 aaa
 aLm
-aBj
+dDa
 aaa
 aaa
 aaa
@@ -52326,7 +52378,7 @@ aaa
 aaa
 aaa
 aaa
-aHD
+oxJ
 aHU
 bej
 aHU
@@ -55003,8 +55055,8 @@ aaa
 aaa
 aaa
 aaa
-aAU
-aBi
+atL
+nre
 aaa
 aaa
 aaa
@@ -55306,7 +55358,7 @@ aaa
 aaa
 aaa
 aAV
-aBj
+dDa
 aaa
 aaa
 aaa
@@ -56045,7 +56097,7 @@ aac
 aab
 aab
 bbs
-aHd
+adh
 aaa
 bcy
 aaa
@@ -56237,7 +56289,7 @@ aac
 aaa
 aaa
 aaa
-aAU
+atL
 bmU
 aaa
 aaa
@@ -56348,7 +56400,7 @@ aab
 aab
 aGW
 aUQ
-aHd
+adh
 bcy
 aaa
 aaa
@@ -56949,7 +57001,7 @@ aab
 aab
 aac
 aab
-nQg
+vef
 aHU
 bfc
 bci
@@ -57445,7 +57497,7 @@ aab
 aaa
 aaa
 aaa
-aGL
+ycy
 aGS
 aaa
 aaa
@@ -58761,7 +58813,7 @@ aac
 aac
 aac
 aab
-oxJ
+qHp
 bfc
 aHU
 aHU
@@ -59861,7 +59913,7 @@ aab
 aab
 aaa
 aaa
-aGt
+kRB
 iYn
 iYn
 iYn
@@ -59874,14 +59926,14 @@ aaa
 aaa
 aaa
 ujl
-aBi
+nre
 aaa
-aGt
+kRB
 iYn
 iYn
 aGB
 aaa
-aAU
+atL
 ujl
 aaa
 aaa
@@ -60485,7 +60537,7 @@ aLQ
 aLW
 aMe
 aaa
-aIQ
+dDa
 aaa
 aaa
 aaa
@@ -60546,7 +60598,7 @@ aaa
 aaa
 aaa
 aaa
-aAU
+atL
 hAu
 aaa
 aaa
@@ -60767,7 +60819,7 @@ aac
 aaa
 aaa
 aaa
-aGw
+hme
 iYn
 iYn
 aAo
@@ -61386,7 +61438,7 @@ aaa
 aaa
 aaa
 aaa
-aGw
+hme
 fJe
 iYn
 aGC
@@ -72258,7 +72310,7 @@ aaa
 aaa
 aaa
 aaa
-aIA
+llr
 aIV
 aIz
 aJL
@@ -72451,13 +72503,13 @@ aaa
 aaa
 aaa
 aaa
-aeQ
+wvT
 alp
 cdo
 sFI
 hGO
 dYj
-aeQ
+wvT
 aaa
 iDu
 rsr
@@ -73660,11 +73712,11 @@ aaa
 aaa
 aaa
 aaa
-aeQ
+wvT
 ajr
 aic
 dlJ
-aeQ
+wvT
 afs
 afD
 afD
@@ -73769,7 +73821,7 @@ aaa
 aaa
 aaa
 aaa
-axk
+aIA
 aIz
 oSn
 aKg
@@ -73779,7 +73831,7 @@ aKX
 alx
 oSn
 aIz
-aHa
+aJP
 aaa
 aaa
 aaa
@@ -79395,15 +79447,15 @@ ahW
 ahW
 aod
 aod
-usy
+lIc
 bGx
 aod
 aod
-usy
+mSc
 ajM
 aod
 aod
-usy
+hlR
 rRi
 aob
 wqS
@@ -79999,7 +80051,7 @@ ahW
 ahW
 aod
 aod
-vem
+jxr
 akH
 aod
 aod
@@ -80905,15 +80957,15 @@ lMB
 vFH
 aod
 aod
-vem
+cld
 akJ
 aod
 aod
-vem
+dIS
 sAF
 aod
 aod
-vem
+bDw
 iZW
 aod
 wuN
@@ -81509,15 +81561,15 @@ ahW
 ahW
 aod
 aod
-sdM
+pAk
 bGx
 aod
 aod
-sdM
+ftX
 rRi
 aod
 aod
-usy
+emx
 bGx
 bam
 wqS
@@ -95572,7 +95624,7 @@ aHb
 aHb
 aHb
 aHb
-aIb
+aIk
 aaa
 aaa
 aaa
@@ -97384,7 +97436,7 @@ aJx
 aHb
 aHb
 aHb
-aKq
+aLa
 aaa
 aaa
 aaa

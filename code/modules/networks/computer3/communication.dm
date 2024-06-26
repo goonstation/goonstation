@@ -87,7 +87,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(0.8 SECONDS)
+							sleep(0.9 SECONDS) // gives enough time for comm dish detection
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -104,13 +104,13 @@
 							src.master.add_fingerprint(usr)
 							return
 
-						if(issilicon(usr) || src.authenticated == "AIUSR")
+						if(issilicon(usr) || isAIeye(usr) || src.authenticated == "AIUSR")
 							src.print_text("<b>Error:</b> Shuttle recall from AIUSR blocked by Central Command.")
 							return
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(0.8 SECONDS)
+							sleep(0.9 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -129,7 +129,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(0.8 SECONDS)
+							sleep(0.9 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -150,7 +150,7 @@
 
 						if(!src.comm_net_id)
 							src.detect_comm_dish()
-							sleep(0.8 SECONDS)
+							sleep(0.9 SECONDS)
 							if (!src.comm_net_id)
 								src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 								return
@@ -215,7 +215,7 @@
 
 				if(!src.comm_net_id)
 					src.detect_comm_dish()
-					sleep(0.8 SECONDS)
+					sleep(0.9 SECONDS)
 					if (!src.comm_net_id)
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return
@@ -254,7 +254,7 @@
 
 				if(!src.comm_net_id)
 					src.detect_comm_dish()
-					sleep(0.8 SECONDS)
+					sleep(0.9 SECONDS)
 					if (!src.comm_net_id)
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return

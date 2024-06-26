@@ -475,8 +475,8 @@ TYPEINFO(/atom)
 	..()
 
 TYPEINFO(/atom/movable)
-	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
-	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	/// A key-value list of match property or material IDs and an amount required to construct the item
+	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
 
 /atom/movable
@@ -722,9 +722,7 @@ TYPEINFO(/atom/movable)
 	if (!( src.anchored ))
 		user.set_pulling(src)
 
-		if (user.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
 /atom/movable/set_dir(new_dir)
 	..()

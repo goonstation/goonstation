@@ -85,7 +85,8 @@ var/global/list/cycling_airlocks = list()
 	..()
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
 		var/area/station/A = get_area(src)
-		src.name = A.name
+		if (!isnull(A))
+			src.name = A.name
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 	START_TRACKING
 
@@ -871,7 +872,11 @@ var/global/list/cycling_airlocks = list()
 			// if they share entry id, don't close, e.g. double doors facing space.
 			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
 				continue
-			D.close()
+			if (D.operating) //can happen with really short airlocks, see atlas south maint
+				SPAWN(0.5 SECONDS)
+					D.close()
+			else
+				D.close()
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
@@ -1162,7 +1167,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 	New()
 		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 /obj/machinery/door/airlock/emp_act()
 	..()

@@ -150,7 +150,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
 			return
-		fireflash(get_turf(owner), 1)
+		fireflash(get_turf(owner), 1, chemfire = CHEM_FIRE_RED)
 		return
 
 /datum/materialProc/generic_itchy_onlife
@@ -173,7 +173,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(probmult(1))
 			boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 			random_brute_damage(M,5)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 			M.make_jittery(6)
 			M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor, scratching themselves violently!"))
 			M.emote("scream")
@@ -394,7 +394,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (!istype(molitz))
 			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
 		var/iterations = owner.material.getProperty("molitz_bubbles")
-		if(iterations <= 0) return
+		if(iterations <= 0)
+			owner.setMaterial(getMaterial("molitz_expended"))
+			return
 
 		var/datum/gas_mixture/air = owner.return_air() || owner.loc.return_air()
 		if(!istype(air))
@@ -472,7 +474,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(location) ? 0 : 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -485,7 +487,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(location) ? 0 : 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
 		return
 
 /datum/materialProc/n_radioactive_remove

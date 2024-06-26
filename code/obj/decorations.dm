@@ -279,19 +279,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
-
-		var/original_x = pixel_x
-		var/original_y = pixel_y
-		var/wiggle = 6
-
-		SPAWN(0) //need spawn, why would we sleep in attack_hand that's disgusting
-			while (wiggle > 0)
-				wiggle--
-				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
-				sleep(0.1 SECONDS)
-
-		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
+		src.wiggle()
 
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
@@ -321,14 +309,14 @@
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
-			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
+			if (!L.getStatusDuration("knockdown") && !L.hasStatus("resting"))
 				boutput(L, SPAN_ALERT("<b>A branch from [src] smacks you right in the face!</b>"))
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
 				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
-						L.changeStatus("weakened", 4 SECONDS)
+						L.changeStatus("knockdown", 4 SECONDS)
 					if (2)
 						L.changeStatus("stunned", 2 SECONDS)
 
@@ -366,7 +354,7 @@
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
-			user.setStatus("weakened", 3 SECONDS)
+			user.setStatus("knockdown", 3 SECONDS)
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the plastic leaves."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!"))
 			user.take_oxygen_deprivation(20)
 			user.losebreath += 2
@@ -391,6 +379,21 @@
 		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
 		qdel(src)
 
+	proc/wiggle()
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
+
+		var/original_x = pixel_x
+		var/original_y = pixel_y
+		var/wiggle = 6
+
+		SPAWN(0)
+			while (wiggle > 0)
+				wiggle--
+				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
+				sleep(0.1 SECONDS)
+
+		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
+
 	random
 		New()
 			. = ..()
@@ -410,13 +413,44 @@
 		icon_state = "shrub-dead"
 
 //It'll show up on multitools
+TYPEINFO(/obj/shrub/syndicateplant)
+	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
+	is_syndicate = TRUE
 	New()
 		. = ..()
-		var/turf/T = get_turf(src.loc)
-		var/obj/machinery/power/data_terminal/link = locate() in T
-		link?.master = src
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
+
+	proc/fuck_up()
+		var/datum/effects/system/spark_spread/S = new
+		S.set_up(4, FALSE, src)
+		S.start()
+		src.visible_message(SPAN_ALERT("<b>[src] starts spraying sparks everywhere! What the fuck?</b>"))
+
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
+		..()
+		if(signal.data["address_1"] == "ping" && signal.data["sender"])
+			var/datum/signal/response = get_free_signal()
+			response.source = src
+			response.transmission_method = TRANSMISSION_RADIO
+			response.data["address_1"] = signal.data["sender"]
+			response.data["command"] = "ping_reply"
+			response.data["device"] = "WNET_SHRUB"
+			response.data["netid"] = src.net_id
+			response.data["sender"] = src.net_id
+			SPAWN(0.5 SECONDS)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, response)
+
+		if(signal.data["address_1"] == src.net_id)
+			switch(signal.data["command"])
+				if("shake")
+					if(prob(5)) // this thing sucks ass
+						src.fuck_up()
+					else
+						src.wiggle()
+
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"

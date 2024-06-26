@@ -1027,8 +1027,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
-
+	mats = list("energy_extreme" = 27,
+				"metal_superdense" = 25,
+				"conductive_high" = 13,
+				"crystal_dense" = 15) //haha this is a bad idea
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
@@ -1051,7 +1053,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 	New()
 		..()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, status_display_freq)
 		SPAWN(0.5 SECONDS)
 			if(!src.link)
 				var/turf/T = get_turf(src)
@@ -1400,7 +1402,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 					src.link.master = src
 
 	proc/add_frequency(newFreq)
-		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
+		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "f[newFreq]", newFreq)
 
 	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))

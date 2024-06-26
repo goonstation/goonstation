@@ -1232,16 +1232,30 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		if (status & BROKEN || !powered())
 			boutput( user, SPAN_ALERT("You can't seem to power it on!") )
 			return
-		src.add_dialog(user)
-		executor.panel()
-		onclose(user, "chemicompiler")
+		ui_interact(user)
 		return
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 		if (isrobot(user)) return attack_ai(user)
-		return attack_hand(user)
+		return src.Attackhand(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemiCompiler", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = executor.get_ui_data()
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+
+		return executor.execute_ui_act(action, params)
 
 	power_change()
 
@@ -1270,13 +1284,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			src.executor.on_process()
 
 	proc
-		topicPermissionCheck(action)
-			if (!(src in range(1)))
-				return 0
-			if(executor.core.running)
-				return action in list("getUIState", "reportError", "abortCode")
-			return 1
-
 		statusChange(oldStatus, newStatus)
 			power_change()
 
@@ -1679,7 +1686,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			return ..()
 
 	attack_self(mob/user)
-		attack_hand(user)
+		src.Attackhand(user)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		return

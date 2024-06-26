@@ -1,6 +1,8 @@
 TYPEINFO(/obj/submachine/claw_machine)
-	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
-
+	mats = list("metal" = 5,
+				"conductive" = 5,
+				"crystal" = 5,
+				"fabric" = 5)
 /obj/submachine/claw_machine
 	name = "claw machine"
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
@@ -48,7 +50,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/submachine/claw_machine/attack_ai(mob/user)
 	if (isAIeye(user))
 		return
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/submachine/claw_machine/get_desc(dist)
 	. = ..()

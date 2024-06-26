@@ -265,6 +265,9 @@
 
 	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
 
+	if(flags & MAPGEN_FLOOR_ONLY)
+		cell_value = FLOOR_ONLY
+
 	switch(cell_value)
 		if(FLOOR)
 			T.ReplaceWith(floor_path)
@@ -324,9 +327,10 @@
 			meaty = text2num(meatier[T.x * world.maxx + T.y])
 		if(index <= length(stomach))
 			stomach_goop = text2num(stomach[T.x * world.maxx + T.y])
+		if(flags & MAPGEN_FLOOR_ONLY)
+			cell_value = FLOOR_ONLY
 
 		var/datum/biome/selected_biome
-
 		switch(cell_value)
 			if(FLOOR)
 				if(meaty && stomach_goop)
@@ -414,7 +418,7 @@
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
 			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[edge_direction]")
+			T.AddOverlays(edge_overlay, "edge_[edge_direction]")
 
 
 /datum/biome/meat

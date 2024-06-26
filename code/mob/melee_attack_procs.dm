@@ -76,8 +76,8 @@
 	target.delStatus("resting")
 
 	target.changeStatus("stunned", -5 SECONDS)
-	target.changeStatus("paralysis", -5 SECONDS)
-	target.changeStatus("weakened", -5 SECONDS)
+	target.changeStatus("unconscious", -5 SECONDS)
+	target.changeStatus("knockdown", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
@@ -155,7 +155,7 @@
 							X.show_text("The stunhat has [hat.uses] charges left!", "red")
 
 
-						src.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+						src.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
 						src.stuttering = max(target.stuttering,5)
 					else
 						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
@@ -205,7 +205,7 @@
 	if(!..())
 		return
 	var/block_it_up = TRUE
-	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+	if (!src.lying && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious"))
 		for(var/obj/stool/stool_candidate in src.loc)
 			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
@@ -377,11 +377,14 @@
 		damage -= armor_mod
 		msgs.stamina_target -= max((STAMINA_DISARM_COST * 2.5) - armor_mod, 0)
 
-		var/attack_resistance = target.check_attack_resistance()
+		var/attack_resistance = target.check_attack_resistance(null, src)
 		if (attack_resistance)
-			damage = 0
-			if (istext(attack_resistance))
-				msgs.show_message_target(attack_resistance)
+			if (isnum(attack_resistance))
+				damage *= attack_resistance
+			else
+				damage = 0
+				if (istext(attack_resistance))
+					msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
 	else if ( !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)) )
 		var/armor_mod = 0
@@ -472,7 +475,7 @@
 
 /mob/proc/check_block(ignoreStuns = 0) //am i blocking?
 	RETURN_TYPE(/obj/item/grab/block)
-	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
+	if (ignoreStuns || (isalive(src) && !getStatusDuration("unconscious")))
 		var/obj/item/I = src.equipped()
 		if (I)
 			if (istype(I,/obj/item/grab/block))
@@ -555,9 +558,9 @@
 			return
 
 #ifdef USE_STAMINA_DISORIENT
-		target.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
+		target.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
 #else
-		target.changeStatus("weakened", 3 SECONDS)
+		target.changeStatus("knockdown", 3 SECONDS)
 		target.changeStatus("stunned", 2 SECONDS)
 #endif
 
@@ -591,7 +594,7 @@
 		attack_effects(target, zone_sel?.selecting)
 		msgs.flush(suppress_flags)
 
-/mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
+/mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1, var/datum/limb/limb = null)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	var/do_armor = TRUE
@@ -623,7 +626,7 @@
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
 	var/do_kick = FALSE
-	if(!target.canmove && target.lying && can_kick)
+	if(target.lying && can_kick)
 		do_armor = FALSE
 		do_stam = FALSE
 		do_kick = TRUE
@@ -686,6 +689,7 @@
 			msgs.stamina_crit = 1
 			msgs.played_sound = pick(sounds_punch)
 
+	target.revenge_stun_reduction(msgs.stamina_target, damage, 0, DAMAGE_BLUNT) // this is a solid 'uncertain this should be here'
 	//do stamina cost
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
@@ -698,11 +702,14 @@
 			msgs.base_attack_message = SPAN_COMBAT("<b>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B>")
 
 	//check godmode/sanctuary/etc
-	var/attack_resistance = msgs.target.check_attack_resistance()
+	var/attack_resistance = msgs.target.check_attack_resistance(null, src)
 	if (attack_resistance)
-		damage = 0
-		if (istext(attack_resistance))
-			msgs.show_message_target(attack_resistance)
+		if (isnum(attack_resistance))
+			damage *= attack_resistance
+		else
+			damage = 0
+			if (istext(attack_resistance))
+				msgs.show_message_target(attack_resistance)
 
 	//clamp damage to non-negative values
 	msgs.damage = max(damage, 0)
@@ -959,7 +966,7 @@
 
 				if ("shoved_down" in src.disarm_RNG_result)
 					target.deliver_move_trigger("pushdown")
-					target.changeStatus("weakened", 2 SECONDS)
+					target.changeStatus("knockdown", 2 SECONDS)
 					target.force_laydown_standup()
 					disarm_log += " shoving them down"
 				if ("shoved" in src.disarm_RNG_result)
@@ -1011,6 +1018,7 @@
 				else
 					var/prev_stam = target.get_stamina()
 					target.remove_stamina(-stamina_target)
+					target.revenge_stun_reduction(stamina_target, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), damage_type )
 					target.stamina_stun()
 					if(prev_stam > 0 && target.get_stamina() <= 0) //We were just knocked out.
 						target.set_clothing_icon_dirty()
@@ -1189,15 +1197,18 @@
 
 /////////////////////////////////////////////////////// Target damage modifiers //////////////////////////////////
 
-/mob/proc/check_attack_resistance(var/obj/item/I)
+/mob/proc/check_attack_resistance(var/obj/item/I, var/mob/attacker)
 	return null
 
-/mob/living/silicon/robot/check_attack_resistance(var/obj/item/I)
+/mob/living/silicon/robot/check_attack_resistance(var/obj/item/I, var/mob/attacker)
 	if (!I)
-		return SPAN_ALERT("Sensors indicate no damage from external impact.")
+		if (attacker.equipped_limb()?.can_beat_up_robots)
+			return 0.5 //let's say they do half damage because metal is stronk
+		else
+			return SPAN_ALERT("Sensors indicate no damage from external impact.")
 	return null
 
-/mob/living/check_attack_resistance(var/obj/item/I)
+/mob/living/check_attack_resistance(var/obj/item/I, var/mob/attacker)
 	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
 		return SPAN_ALERT("You drunkenly shrug off the blow!")
 	return null
@@ -1256,12 +1267,12 @@
 
 	if (variant)
 		if(prob(50))
-			T.changeStatus("weakened", 2 SECONDS)
+			T.changeStatus("knockdown", 2 SECONDS)
 			T.force_laydown_standup()
 		SPAWN(0)
 			step_rand(T, 15)
 	else
-		T.changeStatus("weakened", 2 SECONDS)
+		T.changeStatus("knockdown", 2 SECONDS)
 		T.force_laydown_standup()
 		SPAWN(0)
 			step_away(T, H, 15)
@@ -1272,7 +1283,7 @@
 	if (!H || !ismob(H) || !T || !ismob(T))
 		return
 
-	T.changeStatus("weakened", 5 SECONDS)
+	T.changeStatus("knockdown", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
 		T.throw_at(throwpoint, 10, 2)
@@ -1325,7 +1336,7 @@
 				step_away(M, src, 15)
 			else
 				src.visible_message(SPAN_COMBAT("<b>[src] parries [M]'s attack, knocking [him_or_her(M)] to the ground!</B>"))
-				M.changeStatus("weakened", 4 SECONDS)
+				M.changeStatus("knockdown", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
 		return 1

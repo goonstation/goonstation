@@ -30,7 +30,7 @@
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "h" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 1;
 	pixel_y = 22
 	},
@@ -96,7 +96,7 @@
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 22
 	},
 /obj/shrub{

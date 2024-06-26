@@ -9,7 +9,7 @@
 // The communications computer
 
 /obj/machinery/computer/communications
-	name = "Communications Console"
+	name = "communications console"
 	icon_state = "comm"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -35,7 +35,7 @@
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, status_display_freq)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, status_display_freq)
 
 /obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)

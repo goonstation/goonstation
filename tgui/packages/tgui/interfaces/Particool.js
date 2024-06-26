@@ -300,7 +300,7 @@ const ParticleGeneratorEntry = (props, context) => {
   return (
     <Collapsible
       title="Generator Settings - Hit Set to save">
-      <Section level={2}>
+      <Section>
         <LabeledList>
           <LabeledList.Item label="type">
             <Tooltip position="bottom" content={`${generatorTypes.join(", ")}`}>
@@ -551,11 +551,10 @@ const ParticleEntry = (props, context) => {
   );
 };
 
-
 const GeneratorHelp = () => {
   return (
-    <Collapsible title="Generator Help"><Section level={2} />
-      <Section level={2}>
+    <Collapsible title="Generator Help">
+      <Section>
         <table>
           <tbody>
             <tr>
@@ -612,9 +611,9 @@ const GeneratorHelp = () => {
           </tbody>
         </table>
       </Section>
-    </Collapsible>); };
-
-
+    </Collapsible>
+  );
+};
 
 export const Particool = (props, context) => {
   const { act, data } = useBackend(context);

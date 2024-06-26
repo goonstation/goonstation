@@ -22,13 +22,7 @@ export const ProcCall = (props, context) => {
       width={700}
       height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              {name}
-            </Box>
-          }>
+        <Section title={name}>
           <Flex direction="row">
             <Flex.Item ml={1}>
               <DataInputOptions

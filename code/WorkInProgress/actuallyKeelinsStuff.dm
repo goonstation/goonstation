@@ -1000,7 +1000,7 @@ Returns:
 			qdel(src)
 		..()
 
-/obj/meleeeffect
+/obj/effect/melee
 	name = ""
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
@@ -1045,7 +1045,7 @@ Returns:
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "glowyline"
 
-/obj/meleeeffect/spearimage
+/obj/effect/melee/spearimage
 	name = ""
 	desc = ""
 	icon = null
@@ -1311,8 +1311,8 @@ Returns:
 		return
 
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
-		var/obj/meleeeffect/dagger/M
-		M = new/obj/meleeeffect/dagger(target)
+		var/obj/effect/melee/dagger/M
+		M = new/obj/effect/melee/dagger(target)
 		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
@@ -1460,8 +1460,8 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/spear/M
-		//var/obj/meleeeffect/spearimage/I
+		var/obj/effect/melee/spear/M
+
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
@@ -1470,7 +1470,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1482,7 +1482,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1494,7 +1494,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1506,7 +1506,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1547,29 +1547,29 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/M
+		var/obj/effect/melee/M
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1857,14 +1857,14 @@ Returns:
 
 		if (r <= 60)
 			if(r < 30)
-				return item1.attack_self(user)
+				return item1.AttackSelf(user)
 			else
-				return item2.attack_self(user)
+				return item2.AttackSelf(user)
 		else
 			if(r <= 80)
 				SPAWN(0)
-					item1.attack_self(user)
-					item2.attack_self(user)
+					item1.AttackSelf(user)
+					item2.AttackSelf(user)
 				return
 			else
 				src.fall_apart(user)
@@ -2020,7 +2020,7 @@ Returns:
 			for(var/turf/T in affected)
 				animate_flash_color_fill(T,"#aaddff",1,5)
 				for(var/mob/M in T)
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 					random_burn_damage(M, 10)
 
 				if(istype(T, /turf/simulated/floor))
@@ -2262,6 +2262,7 @@ Returns:
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	mouse_opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
@@ -2270,6 +2271,7 @@ Returns:
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
+	mouse_opacity = 0
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -2678,8 +2680,8 @@ Returns:
 					user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 					user.changeStatus("stunned", 5 SECONDS)
-					user.changeStatus("weakened", 3 SECONDS)
-					user.changeStatus("paralysis", 2 SECONDS)
+					user.changeStatus("knockdown", 3 SECONDS)
+					user.changeStatus("unconscious", 2 SECONDS)
 					user.force_laydown_standup()
 				else
 					src.Attackhand(user)
@@ -2689,7 +2691,7 @@ Returns:
 					var/mob/living/carbon/human/H = hit_atom
 					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
 						H.changeStatus("stunned", 4 SECONDS)
-						H.changeStatus("weakened", 2 SECONDS)
+						H.changeStatus("knockdown", 2 SECONDS)
 						H.force_laydown_standup()
 						//H.paralysis++
 						playsound(H.loc, "swing_hit", 50, 1)
@@ -3311,9 +3313,9 @@ var/list/lag_list = new/list()
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
 
-			src.attack_self(usr)
+			src.AttackSelf(usr)
 			return
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 		return
 

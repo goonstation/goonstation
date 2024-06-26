@@ -64,6 +64,153 @@ var/datum/job_controller/job_controls
 			return 1
 		return 0
 
+	/// Returns TRUE if a player is eligible to play a given job
+	proc/check_job_eligibility(mob/new_player/player, datum/job/job, valid_categories = STAPLE_JOBS | SPECIAL_JOBS | HIDDEN_JOBS)
+		if(!player?.client)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.last_ckey] has no client.")
+			return
+		if (!job)
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested check with invalid job datum arg.")
+			return
+		if ((job.limit >= 0) && (job.assigned >= job.limit))
+			return
+		// prevent someone from trying to sneak their way into a job they shouldn't be able to choose
+		var/list/valid_jobs = list()
+		if (HAS_FLAG(valid_categories, STAPLE_JOBS))
+			valid_jobs.Add(src.staple_jobs)
+		if (HAS_FLAG(valid_categories, SPECIAL_JOBS))
+			valid_jobs.Add(src.special_jobs)
+		if (HAS_FLAG(valid_categories, HIDDEN_JOBS))
+			valid_jobs.Add(src.hidden_jobs)
+		if (!valid_jobs.Find(job))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
+			return
+		var/datum/preferences/P = player.client.preferences
+		// antag job exemptions
+		if(player.mind?.is_antagonist())
+			if ((!job.allow_traitors && player.mind.special_role))
+				return
+			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
+				return
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)))
+				return
+			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
+				return
+			else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+				return
+		// job ban check
+		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
+			return
+		// mentor only job check
+		if (job.mentor_only && !(player.ckey in mentors))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
+			return
+		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
+		if (!job.allow_antag_fallthrough && player.antag_fallthrough)
+			return
+		// all of the 'serious' check have passed, ignore the rest of the requirements for random job rounds.
+		if (global.totally_random_jobs)
+			return TRUE
+
+		if (!job.has_rounds_needed(player.client.player))
+			return
+		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
+			return
+		if (job.requires_whitelist && !NT.Find(ckey(player.mind.key)))
+			return
+		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
+			return
+		return TRUE
+
+	/// attempts to assign a player to a job from a list of either job datums or job strings
+	proc/try_assign_job_from_list(mob/player, list/jobs)
+		PRIVATE_PROC(TRUE)
+		RETURN_TYPE(/datum/job)
+		shuffle_list(jobs)
+		for(var/job_entry in jobs)
+			var/datum/job/job
+			if (istext(job_entry))
+				job = find_job_in_controller_by_string(job_entry)
+			else
+				job = job_entry
+			if (job && check_job_eligibility(player, job, STAPLE_JOBS))
+				player.mind.assigned_role = job.name
+				job.assigned++
+				return job
+		return
+
+	/// Assigns a player a job based on their preferences and job availability
+	proc/allocate_player_to_job_by_preference(mob/new_player/player)
+		RETURN_TYPE(/datum/job)
+		if (!player.client)
+			return
+		var/datum/preferences/player_preferences = player.client.preferences
+		if (!player_preferences)
+			return
+
+		if (totally_random_jobs)
+			var/datum/job/job = try_assign_job_from_list(player, staple_jobs)
+			if (!job) // what are you like, banned from everything...?
+				job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant) // very random
+				player.mind.assigned_role = job.name
+				job.assigned++
+			logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (random job)")
+			return job
+
+		if (player_preferences.job_favorite)
+			var/datum/job/job = find_job_in_controller_by_string(player_preferences.job_favorite)
+			if (job)
+				// antag fall through flag set check
+				if ((!job.allow_traitors && player.mind.special_role))
+					player.antag_fallthrough = TRUE
+				else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
+					player.antag_fallthrough = TRUE
+				else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+					player.antag_fallthrough = TRUE
+
+				// try to assign fav job
+				if (check_job_eligibility(player, job, STAPLE_JOBS))
+					player.mind.assigned_role = job.name
+					job.assigned++
+					logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (favorite job)")
+					return job
+
+		// If favorite job isn't available, check medium priority jobs
+		if (length(player_preferences.jobs_med_priority))
+			var/datum/job/job =	try_assign_job_from_list(player, player_preferences.jobs_med_priority)
+			if (job)
+				logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (medium priority job)")
+				return job
+
+		// If no medium priority jobs are available or suitable, check low priority jobs
+		if (length(player_preferences.jobs_low_priority))
+			var/datum/job/job =	try_assign_job_from_list(player, player_preferences.jobs_low_priority)
+			if (job)
+				logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (low priority job)")
+				return job
+
+		// look, we tried ok? Just be happy you work here at all.
+		var/list/low_priority_jobs = list()
+		for(var/datum/job/job in job_controls.staple_jobs)
+			if (job.low_priority_job)
+				low_priority_jobs += job
+		if (length(low_priority_jobs))
+			var/datum/job/job = pick(low_priority_jobs)
+			player.mind.assigned_role = job.name
+			job.assigned++
+			logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (fallback job).")
+			return job
+
+		// staffie fallback
+		var/datum/job/fallback_job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant)
+		if(!fallback_job)
+			CRASH("Unable to locate the default fallback job in job controller. [player] has not been assigned a job!")
+		player.mind.assigned_role = fallback_job.name
+		fallback_job.assigned++
+		logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [fallback_job.name] (emergency fallback job)")
+		return fallback_job
+
 	proc/job_creator()
 		src.check_user_changed()
 		var/list/dat = list("<html><body><title>Job Creation</title>")
@@ -98,7 +245,7 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
 			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
+			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implants:</A> [english_list(src.job_creator.receives_implants)]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
@@ -668,11 +815,11 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["EditImpl"])
-			switch(alert("Clear or reselect implant?","Job Creator","Clear","Reselect"))
+			switch(alert("Clear or reselect implant?","Job Creator","Clear","Add"))
 				if("Clear")
-					src.job_creator.receives_implant = null
+					src.job_creator.receives_implants = null
 
-				if("Reselect")
+				if("Add")
 					var/list/L = list()
 					var/search_for = input(usr, "Search for implants (or leave blank for complete list)", "Select implant") as null|text
 					if (search_for)
@@ -689,8 +836,10 @@ var/datum/job_controller/job_controls
 					else
 						usr.show_text("No implant matching that name", "red")
 						return
+					if(isnull(src.job_creator.receives_implants))
+						src.job_creator.receives_implants = list()
+					src.job_creator.receives_implants += picker
 
-					src.job_creator.receives_implant = picker
 
 			src.job_creator()
 
@@ -910,7 +1059,7 @@ var/datum/job_controller/job_controls
 	JOB.announce_on_join = src.job_creator.announce_on_join
 	JOB.radio_announcement = src.job_creator.radio_announcement
 	JOB.add_to_manifest = src.job_creator.add_to_manifest
-	JOB.receives_implant = src.job_creator.receives_implant
+	JOB.receives_implants = src.job_creator.receives_implants
 	JOB.items_in_backpack = src.job_creator.items_in_backpack
 	JOB.items_in_belt = src.job_creator.items_in_belt
 	JOB.spawn_id = src.job_creator.spawn_id

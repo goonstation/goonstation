@@ -388,7 +388,7 @@
 "abd" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -407,7 +407,7 @@
 "abg" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -888,7 +888,7 @@
 "aco" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "acp" = (
@@ -1050,7 +1050,6 @@
 /obj/table/wood/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/two,
@@ -1165,7 +1164,7 @@
 "acW" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -1983,7 +1982,7 @@
 "afh" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "afi" = (
@@ -2063,7 +2062,7 @@
 /area/station/crew_quarters/lounge)
 "afu" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -2122,16 +2121,10 @@
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
-"afC" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/station/science/spectral)
 "afE" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "afF" = (
@@ -2312,7 +2305,7 @@
 /turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "agp" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -2538,7 +2531,7 @@
 "agT" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "agU" = (
@@ -2552,7 +2545,7 @@
 /area/station/science/spectral)
 "agW" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "aha" = (
@@ -3636,7 +3629,7 @@
 	name = "Hilarious Storage B"
 	})
 "akK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3652,7 +3645,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
 	color = "b4b4b4"
@@ -3667,7 +3660,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
 	color = "b4b4b4"
@@ -3677,7 +3670,7 @@
 	name = "Hilarious Storage B"
 	})
 "akN" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
@@ -4013,13 +4006,13 @@
 "alQ" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "alR" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "alS" = (
@@ -4078,7 +4071,7 @@
 "ama" = (
 /obj/machinery/shuttle/engine/propulsion,
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/engine/substation/pylon)
 "amb" = (
@@ -4100,7 +4093,7 @@
 /obj/machinery/shuttle/engine/propulsion,
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/engine/substation/pylon)
 "amf" = (
@@ -4251,7 +4244,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6;
@@ -4268,7 +4261,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6;
@@ -8751,7 +8744,7 @@
 "aAx" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aAy" = (
@@ -8775,7 +8768,7 @@
 "aAB" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -9790,7 +9783,7 @@
 "aDJ" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -10485,7 +10478,7 @@
 /area/space)
 "aFz" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aFA" = (
@@ -12228,7 +12221,7 @@
 	},
 /area/shuttle/arrival/station)
 "aKx" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 4;
@@ -13836,7 +13829,7 @@
 "aOL" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/hallway/secondary/exit)
 "aOM" = (
@@ -14582,7 +14575,6 @@
 	},
 /obj/machinery/glass_recycler{
 	density = 1;
-	glass_amt = 10;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
@@ -15447,7 +15439,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "there's grease all over that";
 	icon = 'icons/obj/decals/misc.dmi';
 	icon_state = "drain";
@@ -15839,7 +15831,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple,
 /area/station/bridge/captain)
 "aUa" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 4;
 	pixel_x = -24
 	},
@@ -28812,7 +28804,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bES" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -40880,7 +40872,7 @@
 /area/station/crew_quarters/barber_shop)
 "cmG" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 1;
 	pixel_y = 24
 	},
@@ -41451,7 +41443,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/maintenance/outer/se)
 "cnZ" = (
@@ -42096,7 +42088,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cqf" = (
@@ -42109,14 +42101,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cqg" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cqh" = (
@@ -42556,13 +42548,13 @@
 "csl" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "csn" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "cso" = (
@@ -42581,7 +42573,7 @@
 /turf/simulated/floor/darkblue,
 /area/ghostdrone_factory)
 "csq" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/darkblue,
 /area/ghostdrone_factory)
 "csr" = (
@@ -43011,7 +43003,7 @@
 	})
 "ctG" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "ctH" = (
@@ -43035,7 +43027,7 @@
 "ctK" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "ctL" = (
@@ -43534,14 +43526,8 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"cvw" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "cvy" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/space,
@@ -43651,7 +43637,7 @@
 /area/listeningpost)
 "cvN" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "cvO" = (
@@ -43850,12 +43836,12 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	pixel_x = 6;
 	color = "b4b4b4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
@@ -44058,7 +44044,7 @@
 /turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "cwO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -44107,7 +44093,7 @@
 	},
 /area/space)
 "cwX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -44128,7 +44114,7 @@
 "cwZ" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "cxc" = (
@@ -44226,7 +44212,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "cxq" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -44314,7 +44300,7 @@
 /turf/space,
 /area/listeningpost/power)
 "cxC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -44376,7 +44362,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "cxK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -44401,11 +44387,11 @@
 "cxM" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "cxN" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "coffee-broken";
@@ -44521,7 +44507,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cyn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -44554,7 +44540,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cyr" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -44573,7 +44559,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cyt" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Looks like it needs to be replaced.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -44672,7 +44658,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cyH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Looks like it needs to be replaced.";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -46387,7 +46373,7 @@
 	name = "Artifact Lounge"
 	})
 "cDT" = (
-/obj/decal/fakeobjects/sink{
+/obj/fakeobject/sink{
 	name = "Rusty Sink"
 	},
 /turf/simulated/floor/plating/random,
@@ -46447,7 +46433,7 @@
 	icon_state = "cobweb2"
 	},
 /obj/decal/cleanable/rust,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This teller is incredibly broken.  Look at how broken it is!  And someone took the cash...";
@@ -47320,7 +47306,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/ripped_poster,
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "dYG" = (
@@ -47589,7 +47575,7 @@
 "esS" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -47639,7 +47625,7 @@
 /area/station/security/main)
 "eye" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "This is very important.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -47681,7 +47667,7 @@
 /area/station/engine/engineering)
 "eBc" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of an engineer. not very handsome.";
 	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
 	name = "engineer's skeleton"
@@ -47872,7 +47858,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -48049,7 +48035,7 @@
 "fiU" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -48655,7 +48641,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -48807,7 +48793,7 @@
 "gug" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/ranch)
 "guU" = (
@@ -48828,6 +48814,7 @@
 /area/station/crew_quarters/courtroom)
 "gwQ" = (
 /obj/disposalpipe/junction/right/west,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/hallway/secondary/east)
 "gxF" = (
@@ -49516,7 +49503,7 @@
 /area/station/hallway/secondary/entry)
 "hKo" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "still has his... uh... bedsheet?";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -49636,7 +49623,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -50213,7 +50200,7 @@
 "iNY" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/station/ranch)
@@ -50579,7 +50566,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/auxillary)
 "jxd" = (
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	desc = "The control panel for a mark 1 rancher minishuttle. It is currently deactivated.";
 	name = "Rancher Shuttle Controls"
 	},
@@ -50829,7 +50816,7 @@
 "jUq" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/station/ranch)
@@ -50837,7 +50824,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -51936,7 +51923,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lNx" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Ironic, really";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "burntnerd";
@@ -52232,7 +52219,7 @@
 /turf/simulated/floor/airless/plating,
 /area/station/engine/engineering)
 "miZ" = (
-/obj/decal/fakeobjects/sink{
+/obj/fakeobject/sink{
 	name = "Rusty Sink";
 	pixel_y = 12
 	},
@@ -53078,7 +53065,7 @@
 "nAw" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "nAW" = (
@@ -53729,7 +53716,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -54356,7 +54343,7 @@
 /area/station/crew_quarters/quarters_south)
 "pEL" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/ranch)
 "pFo" = (
@@ -55284,7 +55271,7 @@
 /turf/space,
 /area/space)
 "rhG" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 1
 	},
@@ -55647,7 +55634,7 @@
 /turf/space,
 /area/station/ranch)
 "rHB" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "She seems to have bled out from her injuries.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -55725,7 +55712,7 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -56387,7 +56374,7 @@
 "sPV" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "sSc" = (
@@ -56962,7 +56949,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/exit)
 "uav" = (
@@ -57737,7 +57724,7 @@
 "vhY" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -57918,7 +57905,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "not much of a chef";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -58897,7 +58884,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "wMY" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)
 "wNj" = (
@@ -58925,7 +58912,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "wOR" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "this is not right. this is NOT right.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -59588,7 +59575,7 @@
 	dir = 1;
 	pixel_x = -1
 	},
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	desc = "A futuristic system that collects residual power from chicken alchemy.";
 	dir = 8;
 	name = "Chicken Power Generator"
@@ -59766,7 +59753,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	desc = "A futuristic system that collects residual power from chicken alchemy.";
 	dir = 8;
 	name = "Chicken Power Generator"
@@ -73668,7 +73655,7 @@ aaa
 aaa
 aaa
 aaa
-cvw
+cxM
 cvN
 aaa
 pqC
@@ -74442,7 +74429,7 @@ aaa
 aaa
 aaa
 aaa
-cvw
+cxM
 pqC
 aFy
 aFy
@@ -74742,7 +74729,7 @@ aaa
 aaa
 aaa
 aaa
-cvw
+cxM
 pqC
 pqC
 abI
@@ -86572,7 +86559,7 @@ aaa
 aaa
 aaa
 aaa
-afC
+alQ
 rut
 ahU
 cRB
@@ -86872,7 +86859,7 @@ aaa
 aaa
 aaa
 aaa
-afC
+alQ
 rut
 agT
 ahm

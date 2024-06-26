@@ -258,9 +258,9 @@
 				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
 				UpdateOverlays(bothat, "secbot_hat")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "beacon", beacon_freq)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 		#ifdef I_AM_ABOVE_THE_LAW
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
@@ -615,7 +615,7 @@
 				return
 			SPAWN(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
-			if (src.target.getStatusDuration("weakened"))
+			if (src.target.getStatusDuration("knockdown"))
 				src.anchored = ANCHORED
 				src.target_lastloc = M.loc
 				src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
@@ -798,7 +798,7 @@
 			/// Tango in batonning distance?
 			if ((BOUNDS_DIST(src, src.target) == 0))
 				/// Are they good and downed, and are we allowed to cuff em?
-				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
+				if(!src.arrest_type && src.target?.getStatusDuration("knockdown") >= 3 SECONDS)
 					if(!src.warn_minor_crime || ((src.warn_minor_crime || src.guard_area_lockdown) && src.threatlevel >= src.cuff_threat_threshold))
 						actions.start(new/datum/action/bar/icon/secbot_cuff(src, kpagu), src)
 					else
@@ -940,14 +940,10 @@
 			if(istype(perp_id, /obj/item/card/id/syndicate))
 				threatcount -= 2
 
-			if(perp_id) //Checking for targets and permits
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
-					threatcount += max(contraband_returned)
-			else
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-					threatcount += max(contraband_returned)
+			if(!perp_id || !(contraband_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+			if(!perp_id || !(weapon_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
@@ -964,7 +960,7 @@
 			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == "*Arrest*")
+				if(R["criminal"] == ARREST_STATE_ARREST)
 					threatcount = 7
 					break
 

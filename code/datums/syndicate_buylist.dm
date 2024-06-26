@@ -169,6 +169,29 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/generic/marionette_implant
+	name = "Marionette Implant"
+	item = /obj/item/implanter/marionette
+	cost = 1
+	desc = "Receives data signals and converts them into synaptic impulses, for remote-control puppeting! Packet compatible.<br><br>\
+		The first purchase of this item will be contained in a box that also includes instructions and a remote. Subsequent purchases will only \
+		provide additional implanters."
+	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		if (!uplink?.purchase_log[src.type])
+			var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc, TRUE)
+			// Spief uplinks put the spawned item in the player's hands after this proc,
+			// so we need to account for that and make sure we don't spit the box out onto the ground
+			if (uplink.purchase_flags & UPLINK_SPY_THIEF || uplink.purchase_flags & UPLINK_SPY)
+				SPAWN(0)
+					owner.drop_item(item)
+					MI.storage.add_contents(item)
+					owner.put_in_hand_or_drop(MI)
+			else
+				MI.storage.add_contents(item)
+
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
 	item = /obj/item/pen/sleepypen
@@ -357,7 +380,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/bowling
 	name = "Bowling Kit"
 	item = /obj/item/storage/bowling
-	cost = 7
+	cost = 6
 	desc = "Comes with several bowling balls and a suit. You won't be able to pluck up the courage to throw them very hard without wearing the suit!"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -693,7 +716,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/electronics/scanner/syndicate
 	cost = 4
 	vr_allowed = FALSE
-	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
+	desc = "A standard Nanotrasen mechanic's analyzer with jailbroken internals. This baby doesn't give a damn about DRM, patents, or \"safety\"!"
 	job = list("Engineer", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
@@ -977,6 +1000,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/syndicate_radio_upgrade
+	name = "Syndicate Radio Upgrade"
+	item = /obj/item/device/radio_upgrade/syndicatechannel
+	cost = 1
+	desc = "A small device that may be installed in a headset to grant access to a radio channel reserved for Syndicate operatives."
+	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/tape
 	name = "Ducktape"
 	item = /obj/item/handcuffs/tape_roll
@@ -1034,7 +1065,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 5
 	vr_allowed = FALSE // no
 	not_in_crates = TRUE
-	job = list("Captain", "VIP", "Regional Director", "Inspector")
+	job = list("Captain", "VIP", "Inspector", "Head of Personnel")
 
 /datum/syndicate_buylist/traitor/ai_disguised_module
 	name = "Disguised AI Law Module"
@@ -1373,3 +1404,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	cost = 1
 	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
 
+
+/datum/syndicate_buylist/surplus/switchblade
+	name = "Switchblade"
+	item = /obj/item/switchblade
+	cost = 2
+	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding"
+
+/datum/syndicate_buylist/surplus/quickhack
+	name = "Quickhack"
+	item = /obj/item/tool/quickhack/syndicate
+	cost = 1
+	desc = "An illegal, home-made tool able to fake up to 10 AI 'open' signals to unbolted doors."

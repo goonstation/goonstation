@@ -121,7 +121,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		src.voteChosenMap = ""
 		src.playersVoting = 1
-		src.voteStartedAt = world.time
+		src.voteStartedAt = TIME
 		src.voteCurrentDuration = duration
 		src.voteIndex++
 
@@ -252,23 +252,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (vote > src.voteIndex || !("vote[vote]" in src.previousVotes))
 			throw EXCEPTION("That vote index does not exist")
 
-		var/html = ""
-		var/list/reportData = src.previousVotes["vote[vote]"]
-		for (var/mapName in reportData)
-			var/list/voters = reportData[mapName]
-			html += "<b>[mapName]</b> - [voters.len] total vote[length(voters) == 1 ? "" : "s"]<br>"
-
-			var/count = 1
-			for (var/ckey in voters)
-				html += ckey
-				if (count < voters.len)
-					html += ", "
-				count++
-
-			html += "<br><br>"
-
-		usr.Browse(html, "window=votereport[vote];title=Vote Report")
-
+		var/list/reportDataDetailed = src.previousVotes["vote[vote]"]
+		var/datum/MapVoteReport/mvr = new(reportDataDetailed = reportDataDetailed)
+		mvr.ui_interact(usr)
 
 	//show a html report of the weighted votes per choice
 	proc/composeVoteReportSimple(vote)
@@ -279,15 +265,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (vote > src.voteIndex || !("vote_tally[vote]" in src.previousVotes))
 			throw EXCEPTION("That vote index does not exist")
 
-		var/html = ""
-		var/list/votes = src.previousVotes["vote_tally[vote]"]
-		for (var/mapName in votes)
-			var/list/voters = votes[mapName]
-			html += "<b>[mapName]</b> - [voters] total vote[voters == 1 ? "" : "s"]<br>"
-			html += "<br><br>"
-
-		usr.Browse(html, "window=votetally[vote];title=Vote Tally")
-
+		var/list/reportDataSimple = src.previousVotes["vote_tally[vote]"]
+		var/datum/MapVoteReport/mvr = new(reportDataSimple = reportDataSimple)
+		mvr.ui_interact(usr)
 
 	Topic(href, href_list)
 		if (..())
@@ -301,7 +281,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				var/vote = href_list["vote"]
 				src.composeVoteReportSimple(vote)
 
-
+	proc/get_player_pickable_map_list()
+		. = new/list()
+		for (var/map in src.playerPickable)
+			. += list(list(
+				name = map,
+				thumbnail = "[config.goonhub_url]/storage/maps/[lowertext(src.playerPickable[map]["id"])]/thumb.png"
+			))
 /proc/isMapSwitcherBusted()
 	if (!mapSwitcher || !mapSwitcher.active)
 		return "The map switcher is apparently broken right now. Yell at Wire I guess"
@@ -390,25 +376,21 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				maps += map
 		return maps
 
-	proc/toggle_vote(subaction, href_list)
-		var/client/C = locate(href_list["client"])
-		var/map_name = subaction
+	proc/toggle_vote(map_name, client/C)
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
 		var/list/client_vote_map = vote_map[C.ckey]
 		if(map_name in client_vote_map)
 			client_vote_map[map_name] = !client_vote_map[map_name]
 
-	proc/all_yes(subaction, href_list)
-		var/client/C = locate(href_list["client"])
+	proc/all_yes(client/C)
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
 		var/list/client_vote_map = vote_map[C.ckey]
 		for(var/map_name in client_vote_map)
 			client_vote_map[map_name] = 1
 
-	proc/all_no(subaction, href_list)
-		var/client/C = locate(href_list["client"])
+	proc/all_no(client/C)
 		if(!(C.ckey in vote_map))
 			setup_client_vote_map(C)
 		var/list/client_vote_map = vote_map[C.ckey]
@@ -426,41 +408,44 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		vote_map[vref] = list(map_name)
 		vote_map[vref][map_name] = 1
 
-	proc/topicLink(action, subaction, var/list/extra)
-		return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+	ui_state(mob/user)
+		return tgui_always_state.can_use_topic(src, user)
 
-	proc/generate_window(var/client/C)
-		var/list/dat = list()
-		if(!mapSwitcher.playersVoting)
-			dat += "<h2>Sorry! The map vote is over!</h2><br>"
-			return dat.Join()
-		dat += "<h2>Vote For Some Maps:</h2><br>"
-		if(!(C.ckey in vote_map))
-			setup_client_vote_map(C)
-		var/list/client_vote_map = vote_map[C.ckey]
-		for(var/map_name in client_vote_map)
-			dat += "<B>[map_name]:</B> <A href='[topicLink("toggle_vote", "[map_name]",list("client" = "\ref[C]"))]'>[client_vote_map[map_name] ? "Yes" : "No"]</A><BR>"
+	ui_status(mob/user, datum/ui_state/state)
+		return tgui_always_state.can_use_topic(src, user)
 
-		dat += "<A href='[topicLink("all_yes", "all_yes",list("client" = "\ref[C]"))]'>MAKE THEM ALL YES</A><BR>"
-		dat += "<A href='[topicLink("all_no", "all_no",list("client" = "\ref[C]"))]'>MAKE THEM ALL NO</A>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "MapVote", "Map Vote")
+			ui.open()
 
-		return dat.Join()
+	ui_static_data()
+		. = list(
+			"mapList" = mapSwitcher.get_player_pickable_map_list()
+		)
 
-	proc/show_window(var/client/C)
-		C.Browse(generate_window(C),"window=map_vote_holder;title=Map_Vote")
+	ui_data(mob/user)
+		if(!(user.client.ckey in vote_map))
+			setup_client_vote_map(user.client)
 
-	Topic(href, href_list)
-		. = ..()
-		var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
+		. = list(
+			"playersVoting" = mapSwitcher.playersVoting,
+			"clientVoteMap" = vote_map[user.client.ckey]
+		)
 
-		switch (href_list["action"])
+	proc/show_window(client/C)
+		ui_interact(C.mob)
+
+	ui_act(action, list/params)
+		switch (action)
 			if("toggle_vote")
-				toggle_vote(subaction, href_list)
+				toggle_vote(params["map_name"], usr)
 			if("all_yes")
-				all_yes(subaction,href_list)
+				all_yes(usr)
 			if("all_no")
-				all_no(subaction,href_list)
-		src.show_window(usr.client)
+				all_no(usr)
+		. = TRUE
 
 /obj/mapVoteLink
 	name = "<span style='color: green; text-decoration: underline;'>Map Vote</span>"
@@ -504,3 +489,48 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 var/global/obj/mapVoteLink/mapVoteLinkStat = new /obj/mapVoteLink
 var/global/datum/map_vote_holder/map_vote_holder = new()
+
+/datum/MapVoteReport
+	var/list/mapList
+	var/winner
+	var/isDetailed = FALSE
+
+	New(list/reportDataSimple, list/reportDataDetailed)
+		src.mapList = mapSwitcher.get_player_pickable_map_list()
+
+		if (reportDataSimple)
+			for (var/map in src.mapList)
+				map["count"] = reportDataSimple[map["name"]] || 0
+
+		if (reportDataDetailed)
+			isDetailed = TRUE
+			for (var/map in src.mapList)
+				map["count"] = length(reportDataDetailed[map["name"]]) || 0
+				map["voters"] = reportDataDetailed[map["name"]]
+
+		sortList(src.mapList, /proc/compare_map_vote_count)
+
+		src.winner = mapSwitcher.voteChosenMap
+
+		..()
+
+	ui_state(mob/user)
+		return tgui_always_state.can_use_topic(src, user)
+
+	ui_status(mob/user, datum/ui_state/state)
+		return tgui_always_state.can_use_topic(src, user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "MapVoteReport", "Vote Report")
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list(
+			"mapList" = mapList,
+			"winner" = winner,
+			"isDetailed" = isDetailed)
+
+/proc/compare_map_vote_count(list/a, list/b)
+	. = b["count"] - a["count"]

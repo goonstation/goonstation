@@ -75,7 +75,7 @@
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
-				M.changeStatus("paralysis", 8 SECONDS)
+				M.changeStatus("unconscious", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
@@ -1063,7 +1063,7 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
+		src.preview_icon = new /icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone
@@ -2547,9 +2547,6 @@ var/global/night_mode_enabled = 0
 
 	ADMIN_ONLY
 
-	if (!config || !config.medal_hub || !config.medal_password)
-		return
-
 	if (!medal)
 		medal = input("Enter medal name", "Medal name", "Banned") as null|text
 		if (!medal)
@@ -2577,23 +2574,21 @@ var/global/night_mode_enabled = 0
 
 	ADMIN_ONLY
 
-	if (!config || !config.medal_hub || !config.medal_password)
-		return
 	if (!old_key)
-		old_key = input("Enter old account key", "Old account key", null) as null|text
+		old_key = input("Enter old account ckey", "Old account ckey", null) as null|text
 	if (!new_key)
-		new_key = input("Enter new account key", "New account key", null) as null|text
-	var/datum/player/old_player = make_player(old_key)
-	var/datum/player/new_player = make_player(new_key)
-	var/list/medals = old_player.get_all_medals()
-	if (isnull(medals))
-		boutput(src, "No medals; error communicating with BYOND hub!")
-		return
-	for (var/medal in medals)
-		var/result = new_player.unlock_medal_sync(medal)
-		if (isnull(result))
-			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
-			break
+		new_key = input("Enter new account ckey", "New account ckey", null) as null|text
+
+	try
+		var/datum/apiRoute/players/medals/transfer/transferMedals = new
+		transferMedals.buildBody(old_key, new_key)
+		apiHandler.queryAPI(transferMedals)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		boutput(src, "Error communicating with the place where medals live: [error.message]")
+		return FALSE
+
+	boutput(src, "Successfully copied medals!")
 
 /client/proc/copy_cloud_saves(old_key as null|text)
 	set name  = "Copy Cloud Data"
