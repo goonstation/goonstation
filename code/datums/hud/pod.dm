@@ -14,7 +14,7 @@
 		set_code
 		rts
 		wormhole
-		use_comms
+		comms_system
 		leave
 		rcs
 		lights
@@ -31,21 +31,54 @@
 		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")
-		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")
-		wormhole = create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole", "NORTH+1,WEST+1", tooltipTheme = "pod", desc = "Open a wormhole to a beacon that you can fly through")
-		life_support = create_screen("life_support", "Life Support", 'icons/mob/hud_pod.dmi', "life_support-off", "NORTH+1,WEST+2", tooltipTheme = "pod-alt", desc = "Turn life support on or off")
-		comms = create_screen("comms", "Comms", 'icons/mob/hud_pod.dmi', "comms-off", "NORTH+1,WEST+3", tooltipTheme = "pod-alt", desc = "Turn the pod's communications system on or off")
-		use_comms = create_screen("comms_system", "Use Comms System", 'icons/mob/hud_pod.dmi', "comms_system", "NORTH+1,WEST+4", tooltipTheme = "pod", desc = "Use the communications system to talk or whatever")
-		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+5", tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")
-		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltipTheme = "pod", desc = "Use the pod's sensors to search for drones and lifeforms nearby")
-		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
-		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
-		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Enable or disable the secondary system installed in the pod, if there is one")
-		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
-		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
-		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
+
+		var/list/zone_coords = list(x_low = 1, y_low = TILE_HEIGHT-1, x_high = 14, y_high = TILE_HEIGHT) // Top left, two rows
+		var/datum/hud_zone/mainpanel = src.create_hud_zone(zone_coords, "primary_ui", vertical_edge = NORTH)
+
+		//oh lordy
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off",\
+			tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")),"engine")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole",\
+			tooltipTheme = "pod", desc = "Open a wormhole to a beacon that you can fly through")),"wormhole")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("life_support", "Life Support", 'icons/mob/hud_pod.dmi', "life_support-off",\
+			tooltipTheme = "pod-alt", desc = "Turn life support on or off")),"life_support")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("comms", "Comms", 'icons/mob/hud_pod.dmi', "comms-off",\
+			tooltipTheme = "pod-alt", desc = "Turn the pod's communications system on or off")),"comms")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("comms_system", "Use Comms System", 'icons/mob/hud_pod.dmi', "comms_system",\
+			tooltipTheme = "pod", desc = "Use the communications system to talk or whatever")),"comms_system")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off",\
+			tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")),"sensors")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use",\
+			tooltipTheme = "pod", desc = "Use the pod's sensors to search for drones and lifeforms nearby")),"sensors_use")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off",\
+			tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")),"weapon")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off",\
+			tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")),"lights")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank",\
+			tooltipTheme = "pod", desc = "Enable or disable the secondary system installed in the pod, if there is one")),"secondary")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked",\
+			tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")),"lock")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code",\
+			tooltipTheme = "pod", desc = "Set the code used to unlock the pod")),"set_code")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("rts", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station",\
+			tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")),"rts")
+
+		mainpanel.register_element(new /datum/hud_element(src.create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off",\
+			tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")),"rcs")
+
 		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
-		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")
 		tracking = create_screen("tracking", "Tracking Indicator", 'icons/mob/hud_pod.dmi', "off", "CENTER, CENTER")
 		tracking.mouse_opacity = 0
 		sensor_lock = create_screen("sensor_lock", "Sensor Lock", 'icons/mob/hud_pod.dmi', "off", "SOUTH+1,EAST")
@@ -59,6 +92,10 @@
 			update_systems()
 			update_states()
 			update_fuel()
+
+	disposing()
+		src.delete_hud_zone("primary_ui")
+		..()
 
 	clear_master()
 		master = null
@@ -99,169 +136,162 @@
 
 	proc/update_states()
 		check_clients()
-		if (master.engine)
-			if (master.engine.active)
-				engine.icon_state = "engine-on"
-			else
-				engine.icon_state = "engine-off"
 
-		if (master.engine?.active && master.sensors?.active)
-			wormhole.overlays.len = 0
-		else
-			if (!wormhole.overlays.len)
-				wormhole.overlays += missing
+		var/comms_on = FALSE
+		if(master.com_system?.active) comms_on = TRUE
 
-		if (master.life_support)
-			if (master.life_support.active)
-				life_support.icon_state = "life_support-on"
-			else
-				life_support.icon_state = "life_support-off"
-
-		if (master.com_system)
-			if (master.com_system.active)
-				comms.icon_state = "comms-on"
-				rts.overlays.len = 0
-				use_comms.overlays.len = 0
-			else
-				comms.icon_state = "comms-off"
-				if (!rts.overlays.len)
-					rts.overlays += missing
-				if (!use_comms.overlays.len)
-					use_comms.overlays += missing
-
-		if (master.m_w_system)
-			if (master.m_w_system.active)
-				weapon.icon_state = "weapon-on"
-			else
-				weapon.icon_state = "weapon-off"
-
-		if (master.sec_system)
-			if (master.sec_system.f_active)
-				secondary.icon_state = master.sec_system.hud_state
-			else if (master.sec_system.active)
-				secondary.icon_state = "[master.sec_system.hud_state]-on"
-			else
-				secondary.icon_state = "[master.sec_system.hud_state]-off"
-
-		if (master.sensors)
-			if (master.sensors.active)
-				sensors.icon_state = "sensors-on"
-				sensors_use.overlays.len = 0
-			else
-				sensors.icon_state = "sensors-off"
-				if (!sensors_use.overlays.len)
-					sensors_use.overlays += missing
-
-		if (master.lock)
-			if (master.lock.code && master.locked)
-				lock.icon_state = "lock-locked"
-			else
-				lock.icon_state = "lock-unlocked"
-
-		if (master.lights)
-			if (master.lights.active)
-				lights.icon_state = "[master.lights.hud_state]-on"
-			else
-				lights.icon_state = "[master.lights.hud_state]-off"
-
-		if (master.rcs)
-			rcs.icon_state = "rcs-on"
-		else
-			rcs.icon_state = "rcs-off"
-
+		var/element_list = src.get_hudzone("primary_ui").elements
+		for(var/datum/hud_element/H in element_list)
+			switch(H.screen_obj.id)
+				if("engine")
+					H.screen_obj.icon_state = master.engine?.active ? "engine-on" : "engine-off"
+				if("wormhole")
+					if (master.engine?.active && master.sensors?.active)
+						H.screen_obj.overlays.len = 0
+					else if(!H.screen_obj.overlays.len)
+						H.screen_obj.overlays += missing
+				if("life_support")
+					H.screen_obj.icon_state = master.life_support?.active ? "life_support-on" : "life_support-off"
+				if("comms")
+					H.screen_obj.icon_state = master.life_support?.active ? "comms-on" : "comms-off"
+				if("comms_system")
+					if (comms_on)
+						H.screen_obj.overlays.len = 0
+					else if(!H.screen_obj.overlays.len)
+						H.screen_obj.overlays += missing
+				if("sensors")
+					H.screen_obj.icon_state = master.sensors?.active ? "sensors-on" : "sensors-off"
+				if("sensors_use")
+					if (master.sensors?.active)
+						H.screen_obj.overlays.len = 0
+					else if(!H.screen_obj.overlays.len)
+						H.screen_obj.overlays += missing
+				if("weapon")
+					H.screen_obj.icon_state = master.m_w_system?.active ? "weapon-on" : "weapon-off"
+				if("lights")
+					H.screen_obj.icon_state = master.lights?.active ? "[master.lights.hud_state]-on" : "[master.lights.hud_state]-off"
+				if("secondary")
+					if(master.sec_system?.f_active)
+						H.screen_obj.icon_state = master.sec_system.hud_state
+					else
+						H.screen_obj.icon_state = master.sec_system?.active ? "[master.sec_system.hud_state]-on" : "[master.sec_system.hud_state]-off"
+				if("lock")
+					if(master.lock?.code)
+						H.screen_obj.icon_state = master.locked ? "lock-locked" : "lock-unlocked"
+				if("rts")
+					if (comms_on)
+						H.screen_obj.overlays.len = 0
+					else if(!H.screen_obj.overlays.len)
+						H.screen_obj.overlays += missing
+				if("rcs")
+					H.screen_obj.icon_state = master.rcs ? "rcs-on" : "rcs-off"
 
 	proc/update_systems()
 		check_clients()
+
+		var/datum/hud_element/engine_elem = src.get_hudzone("primary_ui").get_element("engine")
 		if (master.engine)
-			engine.name = master.engine.name
-			engine.overlays.len = 0
+			engine_elem?.screen_obj.name = master.engine.name
+			engine_elem?.screen_obj.overlays.len = 0
 		else
-			engine.name = "Engine"
-			if (!engine.overlays.len)
-				engine.overlays += missing
+			engine_elem?.screen_obj.name = "Engine"
+			if (!engine_elem?.screen_obj.overlays.len)
+				engine_elem?.screen_obj.overlays += missing
 
+		var/datum/hud_element/life_support_elem = src.get_hudzone("primary_ui").get_element("life_support")
 		if (master.life_support)
-			life_support.name = master.life_support.name
-			life_support.overlays.len = 0
+			life_support_elem?.screen_obj.name = master.life_support.name
+			life_support_elem?.screen_obj.overlays.len = 0
 		else
-			life_support.name = "Life Support"
-			if (!life_support.overlays.len)
-				life_support.overlays += missing
+			life_support_elem?.screen_obj.name = "Life Support"
+			if (!life_support_elem?.screen_obj.overlays.len)
+				life_support_elem?.screen_obj.overlays += missing
 
+		var/datum/hud_element/comms_elem = src.get_hudzone("primary_ui").get_element("comms")
+		var/datum/hud_element/rts_elem = src.get_hudzone("primary_ui").get_element("rts")
+		var/datum/hud_element/comms_system_elem = src.get_hudzone("primary_ui").get_element("comms_system")
 		if (master.com_system)
-			comms.name = master.com_system.name
-			comms.overlays.len = 0
+			comms_elem?.screen_obj.name = master.com_system.name
+			comms_elem?.screen_obj.overlays.len = 0
 			if (!master.com_system.active)
-				if (!rts.overlays.len)
-					rts.overlays += missing
-				if (!use_comms.overlays.len)
-					use_comms.overlays += missing
+				if (!rts_elem?.screen_obj.overlays.len)
+					rts_elem?.screen_obj.overlays += missing
+				if (!comms_system_elem?.screen_obj.overlays.len)
+					comms_system_elem?.screen_obj.overlays += missing
 			else
-				rts.overlays.len = 0
-				use_comms.overlays.len = 0
+				rts_elem?.screen_obj.overlays.len = 0
+				comms_system_elem?.screen_obj.overlays.len = 0
 		else
-			comms.name = "Comms"
-			if (!comms.overlays.len)
-				comms.overlays += missing
-			if (!rts.overlays.len)
-				rts.overlays += missing
-			if (!use_comms.overlays.len)
-				use_comms.overlays += missing
+			comms_elem?.screen_obj.name = "Comms"
+			if (!comms_elem?.screen_obj.overlays.len)
+				comms_elem?.screen_obj.overlays += missing
+			if (!rts_elem?.screen_obj.overlays.len)
+				rts_elem?.screen_obj.overlays += missing
+			if (!comms_system_elem?.screen_obj.overlays.len)
+				comms_system_elem?.screen_obj.overlays += missing
 
+		var/datum/hud_element/weapon_elem = src.get_hudzone("primary_ui").get_element("weapon")
 		if (master.m_w_system)
-			weapon.name = master.m_w_system.name
-			weapon.overlays.len = 0
+			weapon_elem?.screen_obj.name = master.m_w_system.name
+			weapon_elem?.screen_obj.overlays.len = 0
 		else
-			weapon.name = "Main Weapon"
-			if (!weapon.overlays.len)
-				weapon.overlays += missing
+			weapon_elem?.screen_obj.name = "Main Weapon"
+			if (!weapon_elem?.screen_obj.overlays.len)
+				weapon_elem?.screen_obj.overlays += missing
 
+		var/datum/hud_element/secondary_elem = src.get_hudzone("primary_ui").get_element("secondary")
 		if (master.sec_system)
-			secondary.name = master.sec_system.name
-			secondary.overlays.len = 0
+			secondary_elem?.screen_obj.name = master.sec_system.name
+			secondary_elem?.screen_obj.overlays.len = 0
 		else
-			secondary.name = "Secondary System"
-			if (!secondary.overlays.len)
-				secondary.overlays += missing
-			secondary.icon_state = "blank"
+			secondary_elem?.screen_obj.name = "Secondary System"
+			if (!secondary_elem?.screen_obj.overlays.len)
+				secondary_elem?.screen_obj.overlays += missing
+			secondary_elem?.screen_obj.icon_state = "blank"
 
+		var/datum/hud_element/sensors_elem = src.get_hudzone("primary_ui").get_element("sensors")
+		var/datum/hud_element/sensors_use_elem = src.get_hudzone("primary_ui").get_element("sensors_use")
 		if (master.sensors)
-			sensors.name = master.sensors.name
-			sensors.overlays.len = 0
+			sensors_elem?.screen_obj.name = master.sensors.name
+			sensors_elem?.screen_obj.overlays.len = 0
 			if (!master.sensors.active)
-				sensors_use.overlays.len = 0
+				sensors_use_elem?.screen_obj.overlays.len = 0
 			else
-				if (!sensors_use.overlays.len)
-					sensors_use.overlays += missing
+				if (!sensors_use_elem?.screen_obj.overlays.len)
+					sensors_use_elem?.screen_obj.overlays += missing
 		else
-			sensors.name = "Sensors"
-			if (!sensors.overlays.len)
-				sensors.overlays += missing
-			if (!sensors_use.overlays.len)
-				sensors_use.overlays += missing
+			sensors_elem?.screen_obj.name = "Sensors"
+			if (!sensors_elem?.screen_obj.overlays.len)
+				sensors_elem?.screen_obj.overlays += missing
+			if (!sensors_use_elem?.screen_obj.overlays.len)
+				sensors_use_elem?.screen_obj.overlays += missing
 
+		var/datum/hud_element/lock_elem = src.get_hudzone("primary_ui").get_element("lock")
+		var/datum/hud_element/set_code_elem = src.get_hudzone("primary_ui").get_element("set_code")
 		if (master.lock)
-			lock.name = master.lock.name
-			lock.overlays.len = 0
-			set_code.overlays.len = 0
+			lock_elem?.screen_obj.name = master.lock.name
+			lock_elem?.screen_obj.overlays.len = 0
+			set_code_elem?.screen_obj.overlays.len = 0
 			if (master && master.locked)
-				lock.icon_state = "lock-locked"
+				lock_elem?.screen_obj.icon_state = "lock-locked"
 			else
-				lock.icon_state = "lock-unlocked"
+				lock_elem?.screen_obj.icon_state = "lock-unlocked"
 		else
-			lock.name = "Lock"
-			lock.icon_state = "lock-locked"
-			if (!lock.overlays.len)
-				lock.overlays += missing
-			if (!set_code.overlays.len)
-				set_code.overlays += missing
+			lock_elem?.screen_obj.name = "Lock"
+			lock_elem?.screen_obj.icon_state = "lock-locked"
+			if (!lock_elem?.screen_obj.overlays.len)
+				lock_elem?.screen_obj.overlays += missing
+			if (!set_code_elem?.screen_obj.overlays.len)
+				set_code_elem?.screen_obj.overlays += missing
+
+		var/datum/hud_element/lights_elem = src.get_hudzone("primary_ui").get_element("lights")
 		if (master.lights)
-			lights.name = master.lights.name
-			lights.overlays.len = 0
+			lights_elem?.screen_obj.name = master.lights.name
+			lights_elem?.screen_obj.overlays.len = 0
 		else
-			lights.name = "Lights"
-			if (!lights.overlays.len)
-				lights.overlays += missing
+			lights_elem?.screen_obj.name = "Lights"
+			if (!lights_elem?.screen_obj.overlays.len)
+				lights_elem?.screen_obj.overlays += missing
 
 	proc/switch_sound()
 		for (var/mob/M in src.master)
@@ -347,7 +377,7 @@
 					master.lock.code = ""
 					boutput(user, SPAN_NOTICE("Code reset.  Please type new code and press enter."))
 					master.lock.show_lock_panel(user)
-			if ("return_to_station")
+			if ("rts")
 				master.return_to_station()
 			if ("leave")
 				master.leave_pod(user)
