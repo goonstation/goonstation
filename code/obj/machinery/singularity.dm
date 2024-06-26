@@ -116,6 +116,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
+	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
