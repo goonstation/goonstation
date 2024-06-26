@@ -334,20 +334,17 @@ TYPEINFO(/obj/item/circuitboard)
 			if (prob(P.power))
 				switch(state)
 					if(STATE_UNANCHORED)
-						src.visible_message(SPAN_COMBAT("The empty frame crumples from the impact!"))
 						new /obj/item/scrap(src.loc)
 						qdel(src)
 					if(STATE_ANCHORED)
 						if (src.circuit)
 							src.eject_board()
 						else
-							src.visible_message(SPAN_COMBAT("The [src] is dislodged from the the impact!"))
 							src.anchored = UNANCHORED
 							src.state = STATE_UNANCHORED
 					if(STATE_HAS_BOARD)
 						src.eject_board()
 					if(STATE_HAS_CABLES)
-						src.visible_message(SPAN_COMBAT("The internal wiring snaps and is flung out!"))
 						var/obj/item/cable_coil/debris = new /obj/item/cable_coil(src.loc)
 						debris.amount = 1
 						debris.UpdateIcon()
@@ -355,7 +352,6 @@ TYPEINFO(/obj/item/circuitboard)
 						src.state = STATE_HAS_BOARD
 						src.icon_state = "2"
 					if(STATE_HAS_GLASS)
-						src.visible_message(SPAN_COMBAT("The screen shatters and a glass shard flies out!"))
 						var/obj/item/raw_material/shard/glass/debris = new /obj/item/raw_material/shard/glass(src.loc)
 						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 						src.state = STATE_HAS_CABLES
@@ -363,7 +359,6 @@ TYPEINFO(/obj/item/circuitboard)
 
 /obj/computerframe/proc/eject_board()
 		if (!src.circuit) return
-		src.visible_message("The installed circuit board [pick("flies out", "is launched", "goes flying")]!")
 		src.circuit.set_loc(get_turf(src))
 		src.circuit.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 		src.state = STATE_ANCHORED

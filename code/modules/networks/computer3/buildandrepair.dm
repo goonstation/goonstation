@@ -248,7 +248,6 @@ TYPEINFO(/obj/item/motherboard)
 			if (prob(P.power))
 				switch(state)
 					if(0)
-						src.visible_message(SPAN_COMBAT("The empty frame crumples from the impact!"))
 						new /obj/item/scrap(src.loc)
 						qdel(src)
 					if(1)
@@ -264,12 +263,10 @@ TYPEINFO(/obj/item/motherboard)
 							src.eject_mainboard()
 					if(3)
 						if (src.hd)
-							src.visible_message(SPAN_COMBAT("The disk drive is hit and flung out!"))
 							src.hd.set_loc(src)
 							src.hd.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 							src.hd = null
 						else
-							src.visible_message(SPAN_COMBAT("The internal wiring snaps and is flung out!"))
 							var/obj/item/cable_coil/debris = new /obj/item/cable_coil(src.loc)
 							debris.amount = 1
 							debris.UpdateIcon()
@@ -277,7 +274,6 @@ TYPEINFO(/obj/item/motherboard)
 							src.state = 2
 							src.icon_state = "2"
 					if(4)
-						src.visible_message(SPAN_COMBAT("The screen shatters and a glass shard flies out!"))
 						var/obj/item/raw_material/shard/glass/debris = new /obj/item/raw_material/shard/glass(src.loc)
 						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 						src.state = 3
@@ -285,7 +281,6 @@ TYPEINFO(/obj/item/motherboard)
 
 /obj/computer3frame/proc/eject_mainboard()
 	if(isnull(src.mainboard)) return
-	src.visible_message("The mainboard is knocked loose!")
 	src.mainboard.set_loc(get_turf(src))
 	src.mainboard.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 	src.mainboard = null
@@ -294,7 +289,6 @@ TYPEINFO(/obj/item/motherboard)
 
 /obj/computer3frame/proc/eject_peripherals()
 	if (length(src.peripherals) == 0) return
-	src.visible_message("The installed components [pick("fly out", "are launched", "go flying")]!")
 	for(var/obj/item/peripheral/peripheral in src.peripherals)
 		peripheral.set_loc(get_turf(src))
 		peripheral.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)

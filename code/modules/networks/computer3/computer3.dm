@@ -638,15 +638,12 @@
 		if (D_KINETIC, D_PIERCING, D_SLASHING)
 			if (prob(P.power))
 				if (status & BROKEN)
-					src.visible_message(SPAN_COMBAT("The [src] is struck by [P] and shatters!"));
 					playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 50, TRUE)
 					src.unscrew_monitor()
 				else
-					src.visible_message(SPAN_COMBAT("The [src] is struck by [P] and breaks!"))
 					src.set_broken()
 		if (D_ENERGY)
 			if (!(status & BROKEN) && prob(P.power))
-				src.visible_message(SPAN_COMBAT("The [src] is struck by [P] and breaks!"))
 				src.set_broken()
 
 /obj/machinery/computer3/disposing()
