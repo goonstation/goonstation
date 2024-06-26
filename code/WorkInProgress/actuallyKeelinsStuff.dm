@@ -1000,7 +1000,7 @@ Returns:
 			qdel(src)
 		..()
 
-/obj/meleeeffect
+/obj/effect/melee
 	name = ""
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
@@ -1045,7 +1045,7 @@ Returns:
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "glowyline"
 
-/obj/meleeeffect/spearimage
+/obj/effect/melee/spearimage
 	name = ""
 	desc = ""
 	icon = null
@@ -1311,8 +1311,8 @@ Returns:
 		return
 
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
-		var/obj/meleeeffect/dagger/M
-		M = new/obj/meleeeffect/dagger(target)
+		var/obj/effect/melee/dagger/M
+		M = new/obj/effect/melee/dagger(target)
 		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
@@ -1460,8 +1460,8 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/spear/M
-		//var/obj/meleeeffect/spearimage/I
+		var/obj/effect/melee/spear/M
+
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
@@ -1470,7 +1470,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1482,7 +1482,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1494,7 +1494,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1506,7 +1506,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1547,29 +1547,29 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/M
+		var/obj/effect/melee/M
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
