@@ -2,8 +2,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 	mats = 20
 
 /obj/machinery/power/furnace
-	name = "Zaojun-2 5kW Furnace"
-	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
+	name = "Zaojun-2 20kW Furnace"
+	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 20 kilowatt thermocouple. \
+	A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
 	anchored = ANCHORED
 	density = 1
@@ -12,7 +13,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	var/fuel = 0
 	var/last_fuel_state = 0
 	var/maxfuel = 1000
-	var/genrate = 20000
+	var/genrate = 20000 // previously 5kW
 	var/stoked = 0 // engine ungrump
 	custom_suicide = TRUE
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
@@ -132,7 +133,8 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if (crate.spawn_contents && crate.make_my_stuff()) //Ensure contents have been spawned properly
 					crate.spawn_contents = null
 
-				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
+				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), \
+				SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
 				for (var/obj/item/I in crate.contents)
 					load_into_furnace(I, 1, user)
 					if (src.fuel >= src.maxfuel)
