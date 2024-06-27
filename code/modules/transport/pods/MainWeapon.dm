@@ -415,8 +415,8 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	icon_state = "constructor"
 	firerate = 12
 	var/mode = EFIF_MODE_REPAIR
-	///Current count of loaded steel sheets (only accepts steel, as the system's metalforming is designed for it)
-	var/steel_sheets = 0
+	///Current loaded steel sheets (only accepts steel, as the system's metalforming is designed for it)
+	var/obj/item/sheet/steel_sheets = null
 	///Maximum allowable sheets loaded within tool
 	var/max_sheets = 200
 	///Secondary toggleable setting to increase build size (can be deactivated for fine work)
@@ -426,12 +426,11 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	var/list/active_fields = list()
 
 	attack_self(var/mob/user)
-		if(src.steel_sheets > 0)
-			var/obj/item/madesheets = new /obj/item/sheet/steel(src)
-			madesheets.amount = src.steel_sheets
-			user.put_in_hand_or_drop(madesheets)
-			src.steel_sheets = 0
+		if(src.steel_sheets)
+			user.put_in_hand_or_drop(steel_sheets)
+			src.steel_sheets = null
 			boutput(user,SPAN_NOTICE("You eject the steel sheets stored in [src]."))
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			return
 		..()
 
@@ -514,11 +513,11 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			sizemult = 2
 		if(src.wide_field)
 			sizemult += 2
-		if(mode_specify == EFIF_MODE_FLOORS && src.steel_sheets >= EFIF_FLOOR_COST * sizemult)
+		if(mode_specify == EFIF_MODE_FLOORS && src.steel_sheets.amount >= EFIF_FLOOR_COST * sizemult)
 			return TRUE
-		else if(mode_specify == EFIF_MODE_R_FLOORS && src.steel_sheets >= EFIF_R_FLOOR_COST * sizemult)
+		else if(mode_specify == EFIF_MODE_R_FLOORS && src.steel_sheets.amount >= EFIF_R_FLOOR_COST * sizemult)
 			return TRUE
-		else if(mode_specify == EFIF_MODE_WALLS && src.steel_sheets >= EFIF_WALL_COST * sizemult)
+		else if(mode_specify == EFIF_MODE_WALLS && src.steel_sheets.amount >= EFIF_WALL_COST * sizemult)
 			return TRUE
 
 	///Ship arms' proc to find and attempt loading of sheets on the ground
@@ -547,10 +546,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		for (var/obj/O in load_from)
 			if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
 				loaded_stuff = TRUE
-		if(also_load_from && src.steel_sheets < src.max_sheets)
+		if(also_load_from && src.steel_sheets.amount < src.max_sheets)
 			for (var/obj/O in also_load_from)
 				if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
 					loaded_stuff = TRUE
+					if(src.steel_sheets.amount >= src.max_sheets)
+						break
 		if(loaded_stuff)
 			for (var/mob/M in ship)
 				M.playsound_local(ship, 'sound/machines/chime.ogg', 5, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
@@ -558,32 +559,31 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 	///Sheet-loading proc for both automatic and manual loading. Set up for flag-based return, for responsive player messaging.
 	///Returns FALSE if provided object is unsuitable, LOAD_FULL (1) if storage is full, and/or LOAD_SUCCESS (2) if sheets were loaded.
-	proc/sheet_load_helper(var/obj/O,var/mob/user)
+	proc/sheet_load_helper(var/obj/item/I,var/mob/user)
 		. = FALSE
-		if(istype(O,/obj/item/sheet))
-			var/obj/item/sheet/S = O
-			if(!S.material || !(S.material.getID() == "steel") || S.reinforcement)
-				return
-			var/amount_to_load = min(src.max_sheets - src.steel_sheets,S.amount)
-			. = LOAD_FULL
-			if(amount_to_load <= 0) //we full, return just the full code
-				return
-			. = LOAD_SUCCESS
-			src.steel_sheets += amount_to_load
-			if(S.amount > amount_to_load)
-				S.amount -= amount_to_load
-				if(S.inventory_counter)
-					S.inventory_counter.update_number(S.amount)
-				S.UpdateIcon()
-			else //fully consumed
-				if (S.stored) //avoid Issues if loading from a storage somehow
-					S.stored.transfer_stored_item(S, src, user = user)
-				if (user)
-					user.u_equip(S)
-				qdel(S)
-			if(src.steel_sheets == src.max_sheets) //did this load-up ALSO fill the buffer? if so, let caller know that too
-				. |= LOAD_FULL
-		return
+		if(!istype(I))
+			return
+
+		///How many sheets we had before attempting to load more
+		var/sheets_before = 0
+
+		//This is out here because
+		var/obj/item/sheet/S = I
+		if(!S.material || !(S.material.getID() == "steel") || S.reinforcement)
+			return
+
+		if(!src.steel_sheets)
+			if(user) user.u_equip(S)
+			I.set_loc(src)
+			src.steel_sheets = S
+		else
+			sheets_before = src.steel_sheets.amount
+			src.steel_sheets.stack_item(S)
+
+		if(src.steel_sheets.amount > sheets_before)
+			. |= LOAD_SUCCESS
+		if(src.steel_sheets.amount >= src.max_sheets)
+			. |= LOAD_FULL
 
 	///Selects locations for construction operation and initiates action bar
 	proc/do_construct(var/bldmode, var/large_pod)
@@ -703,7 +703,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 				M.playsound_local(ship, 'sound/machines/click.ogg', 8, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 			return
 
-		if(src.steel_sheets < cost_estimate)
+		if(src.steel_sheets.amount < cost_estimate)
 			for(var/obj/O in src.active_fields)
 				qdel(O)
 			src.active_fields = list()
@@ -781,7 +781,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 					dat+="<B>Drilling</B><BR>"
 			dat+="<BR>"
 			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
-			dat+="[src.steel_sheets] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
+			dat+="[src.steel_sheets.amount] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
 
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
@@ -884,7 +884,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			updateBar()
 		*/
 
-		if (buildtool.steel_sheets < action_build_cost)
+		if (buildtool.steel_sheets.amount < action_build_cost)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -909,7 +909,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	onEnd()
 		..()
 		src.dense_object_refresh()
-		if (buildtool.steel_sheets < action_build_cost || !length(buildtool.active_fields))
+		if (buildtool.steel_sheets.amount < action_build_cost || !length(buildtool.active_fields))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		///Plural management for log formatting
@@ -972,10 +972,13 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 				what_we_built = "floors and walls"
 
 		logTheThing(LOG_STATION, owner, "[mode == EFIF_MODE_REPAIR ? "repairs" : "constructs"] [what_we_built] with a pod at [log_loc(owner)].")
-		buildtool.steel_sheets -= action_build_cost
+		buildtool.steel_sheets.change_stack_amount(-(action_build_cost))
 
 /obj/item/shipcomponent/mainweapon/constructor/stocked
-	steel_sheets = 200
+	New()
+		. = ..()
+		src.steel_sheets = new /obj/item/sheet/steel(src)
+		src.steel_sheets.set_stack_amount(200)
 
 #undef EFIF_MODE_DRILL
 #undef EFIF_MODE_FLOORS
