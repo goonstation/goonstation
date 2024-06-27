@@ -467,8 +467,7 @@ TYPEINFO(/atom)
 
 /atom/movable/overlay/gibs/proc/delaydispose()
 	SPAWN(3 SECONDS)
-		if (src)
-			dispose(src)
+		qdel(src)
 
 /atom/movable/overlay/disposing()
 	master = null
