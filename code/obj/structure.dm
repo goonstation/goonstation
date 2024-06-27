@@ -60,16 +60,19 @@ obj/structure/ex_act(severity)
 	if (istype(mover, /obj/projectile))
 		if (prob(50))
 			return TRUE
+	return (!density)
 
 /obj/structure/girder/displaced/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		if (prob(70))
 			return TRUE
+	return (!density)
 
 /obj/structure/girder/reinforced/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		if (prob(30))
 			return TRUE
+	return (!density)
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())
