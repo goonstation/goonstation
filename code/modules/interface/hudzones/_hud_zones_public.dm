@@ -5,7 +5,7 @@
 //
 
 /// Returns the `/datum/hud_zone` with `zone_alias`, null if passed bad arguments
-/datum/hud/proc/get_hudzone(zone_alias)
+/datum/hud/proc/get_hudzone(zone_alias) as /datum/hud_zone
 	RETURN_TYPE(/datum/hud_zone)
 	if (!zone_alias)
 		return null
@@ -38,7 +38,8 @@
 *
 * Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, the new /datum/hud_zone otherwise
 **/
-/datum/hud/proc/create_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
+/datum/hud/proc/create_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE) as /datum/hud_zone
+	RETURN_TYPE(/datum/hud_zone)
 	if (!coords || !alias || isnull(horizontal_edge) || isnull(vertical_edge) || isnull(ignore_overlap))
 		return null
 
@@ -67,7 +68,7 @@
 // -- Elements --
 
 /// Returns the `/datum/hud_element` with alias `elem_alias`, `null` if passed improper args
-/datum/hud_zone/proc/get_element(elem_alias)
+/datum/hud_zone/proc/get_element(elem_alias) as /datum/hud_element
 	RETURN_TYPE(/datum/hud_element)
 	if (!elem_alias)
 		return null

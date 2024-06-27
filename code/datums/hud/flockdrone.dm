@@ -7,7 +7,7 @@
 	var/icon/overlay_mask
 
 	New(M)
-		..(M)
+		. = ..()
 		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER_1, tooltipTheme = "flock")
 		releaseButton.desc = "Remove yourself from this drone and become intangible."
 		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER_1, tooltipTheme = "flock")

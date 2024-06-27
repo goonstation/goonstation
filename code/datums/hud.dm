@@ -30,11 +30,15 @@
 	screen_loc = "[x]:[px],[y]:[py]"
 
 /atom/movable/screen/hud
-	plane = PLANE_HUD
 	var/datum/hud/master
 	var/id = ""
 	var/tooltipTheme
 	var/obj/item/item
+
+/atom/movable/screen/hud/New(loc, icon, icon_state)
+	. = ..()
+	src.icon ||= icon
+	src.icon_state ||= icon_state
 
 /atom/movable/screen/hud/disposing()
 	qdel(src.master)

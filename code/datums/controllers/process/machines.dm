@@ -105,7 +105,8 @@
 		src.ticker++
 
 #ifdef MACHINE_PROCESSING_DEBUG
-proc/register_machine_time(var/datum/machine, var/time)
+
+/proc/register_machine_time(var/datum/machine, var/time)
 	if(!machine) return
 	var/list/mtl = detailed_machine_timings[machine.type]
 	if(!mtl)
