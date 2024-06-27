@@ -1,5 +1,7 @@
 
 (t)wed jun 26 24
+(u)LeahTheTech
+(*)Did you know Abzu has two suns? Well now it actually does in-game - Oshan nights will be brighter and red tinted as the planet is lit by its second sun. The bright daylight hours have also been extended a bit, so overall it should feel much brighter.
 (u)Kubius
 (p)19648
 (e)🆕⚖|C-Feature, C-Balance
