@@ -1120,7 +1120,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #undef STATE_RECHARGING
 
 
-/obj/decal/fakeobjects/tallsmes
+/obj/fakeobject/tallsmes
 	name = "large power storage unit"
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/misc/worlds.dmi'

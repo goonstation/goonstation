@@ -1582,6 +1582,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd,
 						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/giraffehat,
 						/obj/item/clothing/head/mushroomcap/random)
 
 	one

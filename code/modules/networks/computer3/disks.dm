@@ -320,6 +320,9 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	w_class = W_CLASS_TINY
 	random_color = 0
 	file_amount = 32
+	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
+	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
+	Use on an escape shuttle launch computer to alter the time until departure."})
 
 	New()
 		. = ..()

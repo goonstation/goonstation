@@ -209,7 +209,7 @@
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > src.rounds_needed_to_play)
+		if (round_num >= src.rounds_needed_to_play)
 			return TRUE
 		return FALSE
 
@@ -1458,7 +1458,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
-		M.mind?.set_miranda(PROC_REF(inspector_miranda))
+		M.mind?.set_miranda(list(PROC_REF(inspector_miranda)))
 		return
 
 /datum/job/special/random/diplomat

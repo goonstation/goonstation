@@ -409,7 +409,7 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if(!can_act(user) || !in_interact_range(target, user))
+		if(!can_act(user) || !in_interact_range(target, user) || GB.status & (NOPOWER | BROKEN))
 			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
@@ -687,16 +687,6 @@
 			var/obj/machinery/vehicle/V = target
 			V.access_main_computer()
 
-	fire_main_weapon
-		name = "Fire Main Weapon"
-		desc = "Fire your weapon. But you should probably be pressing SPACE to fire instead..."
-		icon_state = "gun"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.fire_main_weapon(user)
-
 	use_external_speaker
 		name = "Use External Speaker"
 		desc = "Talk to people with your ship intercom."
@@ -706,56 +696,6 @@
 			..()
 			var/obj/machinery/vehicle/V = target
 			V.use_external_speaker()
-
-	create_wormhole
-		name = "Create Wormhole"
-		desc = "Warp to a pod beacon."
-		icon_state = "portal"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.create_wormhole()
-
-	access_sensors
-		name = "Access Sensors"
-		desc = "Scan your surroundings."
-		icon_state = "radar"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.access_sensors()
-
-	use_secondary_system
-		name = "Use Secondary System"
-		desc = "Use a secondary systems special function if it exists."
-		icon_state = "computer2"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.use_secondary_system()
-
-	open_hangar
-		name = "Open Hangar"
-		desc = "Toggle nearby hangar blast door remotely."
-		icon_state = "door"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.open_hangar()
-
-	return_to_station
-		name = "Return To Station"
-		desc = "Use the ship's comm system to locate the station's Space GPS beacon and plot a return course."
-		icon_state = "return"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.return_to_station()
 
 
 /datum/contextAction/cellphone

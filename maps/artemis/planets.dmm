@@ -908,7 +908,7 @@
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/ship/artemis)
 "yw" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/arjuna)
 "za" = (
@@ -1267,8 +1267,8 @@
 /turf/background_canvas,
 /area/ship/artemis)
 "GP" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/arjuna)
 "GV" = (

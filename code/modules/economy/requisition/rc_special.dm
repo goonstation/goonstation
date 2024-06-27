@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/req_contract/special/chef
 	weight = 50
-	payout = PAY_TRADESMAN*18*3
+	payout = PAY_DOCTORATE*18*3
 	req_sheet = new /obj/item/paper/requisition/food_order
 	var/mealflag = MEAL_TIME_BREAKFAST
 	var/list/cornucopia = list()

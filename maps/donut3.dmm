@@ -1180,7 +1180,7 @@
 	},
 /area/shuttle/asylum/medbay)
 "aoq" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 8;
 	pixel_y = 32
 	},
@@ -3645,7 +3645,7 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of an idea.";
 	name = "\proper Jenny's hopes and dreams"
 	},
@@ -4917,11 +4917,6 @@
 /turf/space,
 /area/space)
 "bsO" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/conveyor/WE{
-	id = "toxins_o2";
-	operating = 1
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/conveyor/WE{
 	id = "toxins_o2";
@@ -6367,11 +6362,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "westsolar";
 	name = "West Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "bMe" = (
@@ -7532,7 +7527,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cfq" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -8850,7 +8845,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "cxe" = (
-/obj/decal/fakeobjects/sink{
+/obj/fakeobject/sink{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/harsh,
@@ -10441,11 +10436,6 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "cYj" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
-	operating = 1
-	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/conveyor/EW{
 	id = "toxins_n2o";
@@ -12925,7 +12915,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/science/testchamber/bombchamber)
 "dNY" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/eight{
@@ -14083,7 +14073,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "eeb" = (
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	layer = 29
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -20573,13 +20563,13 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner,
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "gfk" = (
@@ -21751,7 +21741,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/chapel/sanctuary)
 "gws" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 4;
 	pixel_y = 32
 	},
@@ -23715,7 +23705,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "hai" = (
@@ -25339,7 +25329,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -25436,7 +25426,7 @@
 	name = "Funeral Parlor"
 	})
 "hzO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -25637,7 +25627,7 @@
 /turf/simulated/floor/plating,
 /area/station/library/reading1)
 "hDn" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 1;
 	pixel_y = 32
 	},
@@ -32511,7 +32501,7 @@
 /turf/simulated/floor/carpet/red/fancy/junction/se_w,
 /area/station/security/hos)
 "jLo" = (
-/obj/decal/fakeobjects/moonrock,
+/obj/fakeobject/moonrock,
 /obj/railing/red{
 	layer = 4
 	},
@@ -32714,7 +32704,6 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -32724,6 +32713,7 @@
 	cycle_id = "westsolar";
 	name = "West Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "jOU" = (
@@ -33523,12 +33513,7 @@
 "kbt" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
-	operating = 1
-	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
+	id = "toxins_co2";
 	operating = 1
 	},
 /obj/strip_door{
@@ -34022,7 +34007,7 @@
 /obj/railing/red{
 	layer = 4
 	},
-/obj/decal/fakeobjects/moonrock,
+/obj/fakeobject/moonrock,
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
 "kli" = (
@@ -34275,7 +34260,7 @@
 /obj/machinery/firealarm/east,
 /obj/machinery/light/small/sticky/harsh,
 /obj/machinery/conveyor/EW{
-	id = "toxins_n2o";
+	id = "toxins_co2";
 	operating = 1
 	},
 /turf/simulated/floor/plating/jen,
@@ -35756,7 +35741,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "kNY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -36900,7 +36885,7 @@
 /turf/simulated/floor/carpet/red/standard,
 /area/station/crew_quarters/cafeteria)
 "lfJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -37844,7 +37829,7 @@
 /area/station/science/teleporter)
 "lwp" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -42007,11 +41992,11 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
 "mGx" = (
@@ -43070,7 +43055,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "mYl" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "robust-broken";
@@ -44553,7 +44538,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "ntV" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
@@ -57469,11 +57454,6 @@
 	id = "toxins_plasma";
 	operating = 1
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/conveyor/WE{
-	id = "toxins_plasma";
-	operating = 1
-	},
 /obj/strip_door{
 	dir = 4;
 	layer = 3
@@ -57815,7 +57795,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "ruK" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 4;
 	pixel_y = 32
 	},
@@ -58474,7 +58454,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "rGd" = (
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "rGf" = (
@@ -59599,7 +59579,7 @@
 	},
 /area/station/solar/west)
 "rYa" = (
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
@@ -59725,7 +59705,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -60029,6 +60009,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "see" = (
@@ -66850,13 +66831,13 @@
 	aiControlDisabled = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ukq" = (
@@ -73818,7 +73799,6 @@
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 8;
@@ -73829,6 +73809,7 @@
 	cycle_id = "eastsolar";
 	name = "East Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/east)
 "wmQ" = (
@@ -74422,6 +74403,9 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
 	icon_state = "line2"
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -77667,7 +77651,6 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/obj/mapping_helper/access/engineering,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -77675,6 +77658,7 @@
 	cycle_id = "eastsolar";
 	name = "East Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "xon" = (
@@ -78470,14 +78454,15 @@
 	name = "autoname  - SS13";
 	tag = ""
 	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /obj/table/auto,
 /obj/machinery/coffeemaker/engineering{
 	pixel_y = 6
 	},
 /obj/item/kitchen/food_box/sugar_box,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "xAB" = (
@@ -79430,7 +79415,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "xPk" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	desc = "A calming slab of rock. Nice to look at.";
 	dir = 8;
 	name = "rock"
