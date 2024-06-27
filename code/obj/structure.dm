@@ -19,7 +19,7 @@ obj/structure
 			name = "displaced girder"
 			icon_state = "displaced"
 			anchored = UNANCHORED
-			projectile_passthrough_chance = 30
+			projectile_passthrough_chance = 70
 			desc = "An unsecured support for an incomplete wall."
 			HELP_MESSAGE_OVERRIDE({"
 				You can use a <b>screwdriver</b> to seperate the metal into sheets,
@@ -30,7 +30,7 @@ obj/structure
 			name = "reinforced girder"
 			icon_state = "reinforced"
 			state = 2
-			projectile_passthrough_chance = 70
+			projectile_passthrough_chance = 30
 			desc = "A reinforced metal support for an incomplete wall."
 			get_help_message(dist, mob/user)
 				if (src.state == 2)
@@ -60,9 +60,8 @@ obj/structure/ex_act(severity)
 	return
 
 /obj/structure/girder/Cross(atom/movable/mover)
-	if (istype(mover, /obj/projectile))
-		if (prob(projectile_passthrough_chance))
-			return TRUE
+	if (istype(mover, /obj/projectile) && prob(projectile_passthrough_chance))
+		return TRUE
 	return (!density)
 
 /obj/structure/girder/attack_hand(mob/user)
