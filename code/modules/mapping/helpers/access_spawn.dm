@@ -193,11 +193,6 @@
 	req_access = list(access_maint_tunnels)
 	color = MAINTENANCE
 
-/obj/mapping_helper/access/emergency_storage
-	name = "emergency storage access spawn"
-	req_access = list(access_emergency_storage)
-	color = MAINTENANCE
-
 /obj/mapping_helper/access/chapel_office
 	name = "chapel office access spawn"
 	req_access = list(access_chapel_office)
@@ -239,11 +234,6 @@
 	color = MAINTENANCE
 
 //////////// Command/Heads ////
-/obj/mapping_helper/access/emergency_storage // technically unused, sorta, mostly, kinda
-	name = "emergency storage access spawn"
-	req_access = list(access_emergency_storage)
-	color = MAINTENANCE
-
 /obj/mapping_helper/access/ai_upload
 	name = "ai upload access spawn"
 	req_access = list(access_ai_upload)

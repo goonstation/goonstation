@@ -203,7 +203,7 @@
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
+						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
@@ -217,7 +217,7 @@
 #else
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers, access_forensics_lockers, access_armory,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_morgue, access_medlab,
-						access_emergency_storage, access_change_ids, access_eva, access_heads, access_medical_lockers,
+						access_change_ids, access_eva, access_heads, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo,
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
@@ -258,7 +258,7 @@
 			return list(access_security, access_brig, access_forensics_lockers,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
-				access_emergency_storage, access_chapel_office, access_kitchen,
+				access_chapel_office, access_kitchen,
 				access_bar, access_janitor, access_robotics, access_cargo, access_hydro, access_mail,
 				access_engineering, access_maint_tunnels,
 				access_tech_storage, access_engineering_storage, access_engineering_eva,
@@ -366,7 +366,7 @@
 			return list(access_special_club)
 		if("Inspector", "Communications Officer")
 			return list(access_security, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_emergency_storage, access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
+						access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 
@@ -377,7 +377,7 @@
 	return list(access_security, access_brig, access_forensics_lockers,
 	            access_medical, access_medlab, access_morgue, access_securitylockers,
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
-	            access_emergency_storage, access_change_ids, access_ai_upload,
+	            access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
@@ -392,7 +392,7 @@
 	return list(access_security, access_brig, access_forensics_lockers,
 	            access_medical, access_medlab, access_morgue, access_securitylockers,
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit,
-	            access_emergency_storage, access_change_ids, access_ai_upload,
+	            access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
@@ -454,8 +454,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Janitorial Equipment"
 		if(access_maint_tunnels)
 			return "Maintenance"
-		if(access_emergency_storage)
-			return "Emergency Storage"
 		if(access_change_ids)
 			return "ID Computer"
 		if(access_ai_upload)
