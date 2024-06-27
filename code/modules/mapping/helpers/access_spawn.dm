@@ -136,11 +136,6 @@
 	req_access = list(access_engineering_control)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/mining_shuttle
-	name = "mining_shuttle access spawn"
-	req_access = list(access_mining_shuttle)
-	color = CARGO
-
 /obj/mapping_helper/access/mining
 	name = "mining EVA access spawn"
 	req_access = list(access_mining)

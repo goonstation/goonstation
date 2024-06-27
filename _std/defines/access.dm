@@ -53,7 +53,7 @@
 #define access_engineering_control 48 // Engine control room.
 #define access_engineering_chief 49 // CE's office.
 
-#define access_mining_shuttle 47
+#define access_mining_shuttle 47 // Unused.
 #define access_mining 50
 #define access_mining_outpost 51
 

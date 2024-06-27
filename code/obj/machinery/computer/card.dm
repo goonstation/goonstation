@@ -13,7 +13,7 @@
 	var/custom_access_list = list(list(),list(),list())
 	var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 	var/list/engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
-	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
+	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
@@ -604,7 +604,7 @@
 
 	civilian_access_list = list( access_maint_tunnels, access_tech_storage)
 	engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
-	supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
+	supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	research_access_list = null
 	security_access_list = null
 	command_access_list = list(access_eva) //allow heads to give out eva access in emergencies
@@ -643,7 +643,7 @@
 	#ifdef RP_MODE // fuckin RP mode giving secoffs more access *grumble grumble*
 	civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 	engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
-	supply_access_list = list(access_hangar, access_cargo, access_mining, access_mining_shuttle, access_mining_outpost)
+	supply_access_list = list(access_hangar, access_cargo, access_mining, access_mining_outpost)
 	research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	command_access_list = list(access_emergency_storage, access_eva) // why do secoffs get emergency_storage on rp when basically no one else does?

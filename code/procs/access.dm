@@ -244,12 +244,12 @@
 		if("Chief Engineer")
 			return list(access_engineering, access_maint_tunnels,
 						access_tech_storage, access_engineering_storage, access_engineering_eva, access_engineering_atmos,
-						access_engineering_power, access_engineering_engine, access_mining_shuttle,
+						access_engineering_power, access_engineering_engine,
 						access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 						access_heads, access_ai_upload, access_eva, access_cargo, access_supply_console, access_hangar, access_teleporter)
 		if("Head of Mining", "Mining Supervisor")
 			return list(access_engineering, access_maint_tunnels,
-						access_engineering_eva, access_mining_shuttle, access_mining,
+						access_engineering_eva, access_mining,
 						access_mining_outpost, access_hangar, access_heads, access_ai_upload, access_eva)
 
 		///////////////////////////// Security
@@ -262,7 +262,7 @@
 				access_bar, access_janitor, access_robotics, access_cargo, access_hydro, access_mail,
 				access_engineering, access_maint_tunnels,
 				access_tech_storage, access_engineering_storage, access_engineering_eva,
-				access_engineering_engine, access_mining_shuttle,
+				access_engineering_engine,
 				access_engineering_control, access_engineering_mechanic, access_mining, access_mining_outpost,
 				access_research, access_engineering_atmos, access_hangar, access_ranch, access_pathology, access_artlab, access_telesci,
 				access_researchfoyer, access_robotdepot)
@@ -325,12 +325,12 @@
 						access_tech_storage, access_engineering_mechanic)
 		if("Miner")
 			return list(access_maint_tunnels,
-						access_engineering_eva, access_mining_shuttle, access_mining,
+						access_engineering_eva, access_mining,
 						access_mining_outpost, access_hangar)
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_cargo, access_supply_console, access_hangar)
 		if("Construction Worker")
-			return list(access_engineering,access_maint_tunnel, access_engineering_control,
+			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
 		///////////////////////////// Civilian
@@ -383,7 +383,7 @@
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
-	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
+	            access_engineering_power, access_engineering_engine,
 	            access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 	            access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_hangar, access_medical_director, access_special_club,
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
@@ -398,7 +398,7 @@
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
-	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
+	            access_engineering_power, access_engineering_engine,
 	            access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 	            access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_hangar, access_medical_director, access_special_club, access_syndicate_shuttle,
 				access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
@@ -508,8 +508,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Mechanical Lab"
 		if(access_engineering_atmos)
 			return "Engineering Gas Storage/Atmospherics"
-		if(access_mining_shuttle)
-			return "Mining Outpost Shuttle"
 		if(access_engineering_control)
 			return "Engine Control Room"
 		if(access_engineering_chief)
