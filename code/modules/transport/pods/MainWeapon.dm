@@ -451,6 +451,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 				boutput(user, SPAN_ALERT("[src] only accepts unreinforced steel sheets!"))
 				. = ..()
 
+	//Stopgap discoverability feature, pending pod UI improvement
+	activate()
+		. = ..()
+		if(ship.pilot)
+			src.opencomputer(ship.pilot)
+
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		switch(mode)
 
