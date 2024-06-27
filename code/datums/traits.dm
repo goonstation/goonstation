@@ -532,6 +532,9 @@
 	points = 0
 	category = list("genetics")
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Genetic Deviation"
+	disability_desc = "Minor alteration from baseline genetic sequence"
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
