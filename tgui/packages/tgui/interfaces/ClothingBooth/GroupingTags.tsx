@@ -13,7 +13,7 @@ interface ClothingBoothSlotDetail {
   name: string;
 }
 
-export const GroupingTagContainer = (props: GroupingTagContainerProps, context) => {
+export const GroupingTags = (props: GroupingTagContainerProps, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
   const { tags } = data;
   const { slot, grouping_tags } = props;
@@ -40,7 +40,7 @@ export const GroupingTagContainer = (props: GroupingTagContainerProps, context) 
   );
 };
 
-export const GroupingTag = (props: ClothingBoothGroupingTagsData) => {
+const GroupingTag = (props: ClothingBoothGroupingTagsData) => {
   const { name, colour } = props;
 
   return (

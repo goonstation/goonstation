@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { Image, Stack } from '../../components';
-import { GroupingTagContainer as GroupingTagContainer } from './GroupingTag';
+import { GroupingTags as GroupingTags } from './GroupingTags';
 import type { ClothingBoothGroupingData } from './type';
 
 interface BoothGroupingProps extends ClothingBoothGroupingData {
@@ -44,7 +44,7 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
               <Stack fluid style={{ opacity: '0.5' }}>
                 {Object.values(grouping_tags).length > 0 && (
                   <Stack.Item grow>
-                    <GroupingTagContainer slot={slot} grouping_tags={grouping_tags} />
+                    <GroupingTags slot={slot} grouping_tags={grouping_tags} />
                   </Stack.Item>
                 )}
                 {itemsCount > 1 && <Stack.Item>{itemsCount} variants</Stack.Item>}
