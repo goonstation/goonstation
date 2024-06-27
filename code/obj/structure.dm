@@ -60,7 +60,7 @@ obj/structure/ex_act(severity)
 	return
 
 /obj/structure/girder/Cross(atom/movable/mover)
-	if (istype(mover, /obj/projectile) && prob(projectile_passthrough_chance))
+	if (istype(mover, /obj/projectile) && prob(src.projectile_passthrough_chance))
 		return TRUE
 	return (!density)
 
