@@ -246,11 +246,11 @@
 						access_tech_storage, access_engineering_storage, access_engineering_eva, access_engineering_atmos,
 						access_engineering_power, access_engineering_engine, access_mining_shuttle,
 						access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-						access_heads, access_ai_upload, access_construction, access_eva, access_cargo, access_supply_console, access_hangar, access_teleporter)
+						access_heads, access_ai_upload, access_eva, access_cargo, access_supply_console, access_hangar, access_teleporter)
 		if("Head of Mining", "Mining Supervisor")
 			return list(access_engineering, access_maint_tunnels,
 						access_engineering_eva, access_mining_shuttle, access_mining,
-						access_mining_outpost, access_hangar, access_heads, access_ai_upload, access_construction, access_eva)
+						access_mining_outpost, access_hangar, access_heads, access_ai_upload, access_eva)
 
 		///////////////////////////// Security
 		if("Security Officer")
@@ -259,7 +259,7 @@
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_emergency_storage, access_chapel_office, access_kitchen,
-				access_bar, access_janitor, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
+				access_bar, access_janitor, access_robotics, access_cargo, access_hydro, access_mail,
 				access_engineering, access_maint_tunnels,
 				access_tech_storage, access_engineering_storage, access_engineering_eva,
 				access_engineering_engine, access_mining_shuttle,
@@ -317,12 +317,12 @@
 
 		//////////////////////////// Engineering
 		if("Atmospheric Technician")
-			return list(access_maint_tunnels, access_construction, access_engineering_control,
+			return list(access_maint_tunnels, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
 		if("Engineer")
 			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
-						access_tech_storage, access_engineering_mechanic, access_construction)
+						access_tech_storage, access_engineering_mechanic)
 		if("Miner")
 			return list(access_maint_tunnels,
 						access_engineering_eva, access_mining_shuttle, access_mining,
@@ -380,7 +380,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -395,7 +395,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -482,8 +482,6 @@ var/list/access_name_lookup //Generated at round start.
 			return "Armory"
 		if(access_maxsec)
 			return "Head of Security's Office"
-		if(access_construction)
-			return "Construction Site"
 		if(access_kitchen)
 			return "Kitchen"
 		if(access_hydro)
