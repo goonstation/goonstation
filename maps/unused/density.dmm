@@ -6449,7 +6449,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "uX" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "vP" = (

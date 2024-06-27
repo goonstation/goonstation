@@ -2315,7 +2315,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 
 /obj/item/implanter/marionette
-	name = "marionette implanter"
 	icon_state = "implanter1-g"
 	sneaky = TRUE
 	HELP_MESSAGE_OVERRIDE({"Allows remote signals to exert limited control over the implanted target. Compatible with packets. \

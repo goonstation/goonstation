@@ -1076,12 +1076,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"axX" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The remains of a human. There are little bits of corroded suit wafting around them."
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "ayc" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -2082,6 +2076,29 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/redblack,
 /area/listeningpost)
+"aXc" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and some of the modules seem slightly scorched.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "idle server"
+	},
+/obj/decal/cleanable/generic{
+	alpha = 200;
+	desc = "Toasted.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorscorched1";
+	name = "scorch"
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/small{
+	status = 2
+	},
+/turf/simulated/floor/purpleblack,
+/area/pasiphae/survey)
 "aXj" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -2966,6 +2983,10 @@
 	dir = 4
 	},
 /area/station/engine/engineering)
+"bqb" = (
+/obj/fakeobject/flock/antenna,
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "bql" = (
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/light_switch/west,
@@ -3471,10 +3492,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"byS" = (
-/obj/decal/fakeobjects/console_radar,
-/turf/simulated/floor/industrial,
-/area/ghostdrone_factory)
 "bzJ" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -3709,12 +3726,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
-"bEL" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
-	dir = 9
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "bEZ" = (
 /turf/simulated/floor/greenblack{
 	dir = 10
@@ -4116,12 +4127,6 @@
 "bQm" = (
 /turf/simulated/floor/black/side,
 /area/station/storage/tools)
-"bQn" = (
-/obj/decal/fakeobjects/catalytic_doodad,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/north{
-	name = "North Catalytic Substation"
-	})
 "bQw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5247,15 +5252,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"cre" = (
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/space)
 "crg" = (
 /obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/purpleblack{
@@ -6891,6 +6887,13 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/arcade)
+"ddr" = (
+/obj/fakeobject/operatorconsole,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "ddM" = (
 /obj/grille/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -7372,35 +7375,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"dsY" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
-	icon = 'icons/obj/large_storage.dmi';
-	icon_state = "filecabinet";
-	name = "Planetary Survey Hardcopies";
-	pixel_x = -8
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
-	icon = 'icons/obj/large_storage.dmi';
-	icon_state = "filecabinet";
-	name = "Planetary Survey Hardcopies";
-	pixel_x = 3
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_north/nopoweralert{
-	start_charge = 0
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/pasiphae/survey)
 "dtb" = (
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
@@ -7552,6 +7526,10 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
+"dwy" = (
+/obj/fakeobject/console_radar,
+/turf/simulated/floor/industrial,
+/area/ghostdrone_factory)
 "dwA" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor,
@@ -7886,6 +7864,12 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/cloner)
+"dBW" = (
+/obj/fakeobject/flock/antenna/end{
+	dir = 1
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "dCr" = (
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
@@ -8445,13 +8429,6 @@
 "dPx" = (
 /turf/simulated/floor/redblack/corner,
 /area/station/hangar/sec)
-"dQn" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
-	dir = 4;
-	icon_state = "antenna-broken-2"
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "dQD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8791,6 +8768,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"dXS" = (
+/obj/fakeobject/flock/wing/destroyed{
+	dir = 1
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "dYp" = (
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
@@ -9527,16 +9510,6 @@
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
 	})
-"eqE" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
-	dir = 4;
-	icon_state = "antenna-broken-2"
-	},
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/space)
 "eqK" = (
 /obj/machinery/light{
 	dir = 8;
@@ -10868,6 +10841,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
+"eTl" = (
+/obj/fakeobject/flock/wing/destroyed{
+	dir = 9
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "eTt" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -11197,29 +11176,6 @@
 	dir = 10
 	},
 /area/station/engine/core/nuclear)
-"eZZ" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and some of the modules seem slightly scorched.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "idle server"
-	},
-/obj/decal/cleanable/generic{
-	alpha = 200;
-	desc = "Toasted.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floorscorched1";
-	name = "scorch"
-	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/light/small{
-	status = 2
-	},
-/turf/simulated/floor/purpleblack,
-/area/pasiphae/survey)
 "fac" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -11853,14 +11809,6 @@
 	dir = 1
 	},
 /area/station/turret_protected/Zeta)
-"frb" = (
-/obj/decal/fakeobjects/catalytic_doodad{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/north{
-	name = "North Catalytic Substation"
-	})
 "frj" = (
 /obj/rack,
 /obj/item/extinguisher{
@@ -15180,6 +15128,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"gFZ" = (
+/obj/fakeobject/flock/antenna/broken{
+	dir = 4;
+	icon_state = "antenna-broken-2"
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "gGo" = (
 /obj/table/reinforced/auto,
 /obj/item/folder{
@@ -16394,6 +16349,12 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"hdB" = (
+/obj/fakeobject/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "heh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17371,13 +17332,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"hwH" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
-	dir = 1;
-	icon_state = "antenna-broken-2"
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "hwM" = (
 /turf/simulated/floor/black/side{
 	dir = 6
@@ -17777,13 +17731,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
-"hEx" = (
-/obj/decal/fakeobjects/operatorconsole,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "hEL" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural,
@@ -18390,32 +18337,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"hQG" = (
-/obj/decal/cleanable/ash{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/decal/fakeobjects/skeleton{
-	desc = "Well, there's your problem.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body4";
-	name = "crispy corpse"
-	},
-/obj/decal/cleanable/generic{
-	alpha = 200;
-	desc = "Toasted.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "floorscorched1";
-	name = "scorch"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/grey,
-/area/pasiphae/survey)
 "hQS" = (
 /obj/table/reinforced/auto,
 /obj/item/implantcase/health,
@@ -19342,12 +19263,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"iiW" = (
-/obj/decal/fakeobjects/flock/antenna/end{
-	dir = 4
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/space)
 "iiZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19901,6 +19816,12 @@
 "ium" = (
 /turf/space/fluid/acid/clear,
 /area/shuttle/merchant_shuttle/right_station/cogmap)
+"iun" = (
+/obj/fakeobject/flock/antenna/broken{
+	icon_state = "atenna-broken-1"
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "iux" = (
 /obj/table/nanotrasen/auto,
 /obj/item/storage/box/cablesbox{
@@ -20375,6 +20296,12 @@
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"iCv" = (
+/obj/fakeobject/flock/wing/destroyed{
+	dir = 1
+	},
+/turf/space/fluid/acid,
+/area/space)
 "iCC" = (
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
@@ -21307,20 +21234,6 @@
 "jat" = (
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
-"jav" = (
-/obj/decal/fakeobjects/vacuumtape,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/lab)
 "jaN" = (
 /obj/stool/chair{
 	dir = 8
@@ -21635,14 +21548,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"jfZ" = (
-/obj/rack/organized/techstorage_med,
-/obj/item/circuitboard/siphon_control{
-	pixel_x = 5;
-	pixel_y = -7
-	},
-/turf/simulated/floor/grey/blackgrime/other,
-/area/station/storage/tech)
 "jge" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -21902,6 +21807,12 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
 /area/station/storage/emergency2)
+"jnS" = (
+/obj/fakeobject/flock/wing{
+	dir = 6
+	},
+/turf/space/fluid/acid,
+/area/space)
 "joi" = (
 /obj/submachine/seed_manipulator,
 /obj/machinery/light/small{
@@ -22070,6 +21981,12 @@
 	dir = 8
 	},
 /area/station/storage/emergencyinternals)
+"jrf" = (
+/obj/fakeobject/flock/wing{
+	dir = 8
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "jrg" = (
 /obj/machinery/vending/pda,
 /turf/simulated/floor/grey/side{
@@ -22408,12 +22325,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"jxF" = (
-/obj/decal/fakeobjects/flock/wing/broken{
-	dir = 5
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "jxJ" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -22692,6 +22603,12 @@
 	dir = 1
 	},
 /area/station/security/equipment)
+"jDx" = (
+/obj/fakeobject/flock/antenna/end{
+	dir = 4
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "jDy" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -23337,11 +23254,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"jRV" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/marker/supplymarker,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "jRW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -23766,12 +23678,6 @@
 	dir = 4
 	},
 /area/station/medical/morgue)
-"kaU" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
-	dir = 1
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "kba" = (
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/redblack{
@@ -24517,6 +24423,12 @@
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
 	})
+"kps" = (
+/obj/fakeobject/flock/antenna/end{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "kpw" = (
 /obj/cable/blue{
 	icon_state = "2-9"
@@ -24562,12 +24474,6 @@
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
 	})
-"kqh" = (
-/obj/decal/fakeobjects/flock/wing{
-	dir = 8
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "kqm" = (
 /obj/stool/chair{
 	dir = 8
@@ -26029,12 +25935,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"kTD" = (
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "kTN" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -26168,27 +26068,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"kXy" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and several components seem to have been unceremoniously yanked out.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "idle server"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/pasiphae/survey)
 "kXA" = (
 /obj/pool/perspective{
 	dir = 8;
@@ -28675,6 +28554,10 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
+"lWv" = (
+/obj/fakeobject/flock/antenna,
+/turf/space/fluid/acid/clear,
+/area/space)
 "lWD" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -28977,6 +28860,15 @@
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/redblack,
 /area/station/medical/medbay/surgery)
+"mbC" = (
+/obj/fakeobject/flock/antenna{
+	dir = 8
+	},
+/obj/fakeobject/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "mbF" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -29263,6 +29155,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/southeast)
+"mgk" = (
+/obj/fakeobject/flock/wing/broken{
+	dir = 6
+	},
+/turf/space/fluid/acid,
+/area/space)
 "mgm" = (
 /obj/machinery/shieldgenerator/energy_shield{
 	power_level = 2
@@ -30545,14 +30443,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
-"mIC" = (
-/obj/decal/fakeobjects/catalytic_doodad{
-	dir = 1
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/pylon{
-	name = "South Catalytic Substation"
-	})
 "mIG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
@@ -31495,17 +31385,6 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
-"nfE" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/turf/simulated/floor/black,
-/area/station/science/teleporter)
 "ngd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32494,12 +32373,6 @@
 "nCU" = (
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/cloner)
-"nCX" = (
-/obj/decal/fakeobjects/flock/wing{
-	dir = 6
-	},
-/turf/space/fluid/acid,
-/area/space)
 "nDC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34221,6 +34094,13 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
+"orb" = (
+/obj/fakeobject/flock/antenna/broken{
+	dir = 1;
+	icon_state = "antenna-broken-2"
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "orw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -34880,6 +34760,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/eva)
+"oFk" = (
+/obj/fakeobject/skeleton{
+	desc = "The remains of a human. There are little bits of corroded suit wafting around them."
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "oFp" = (
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/southeast)
@@ -35112,12 +34998,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"oLR" = (
-/obj/decal/fakeobjects/flock/antenna/end{
-	dir = 1
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "oMd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
@@ -38523,12 +38403,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"qkq" = (
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/space)
 "qkS" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -38605,6 +38479,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"qmd" = (
+/obj/fakeobject/catalytic_doodad,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/north{
+	name = "North Catalytic Substation"
+	})
 "qme" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -38810,12 +38690,6 @@
 	do_not_irradiate = 1;
 	name = "Hydroponics Storage"
 	})
-"qqf" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
-	icon_state = "atenna-broken-1"
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "qqu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39701,6 +39575,27 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"qKF" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It appears to be in a low-power idle state, and several components seem to have been unceremoniously yanked out.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "idle server"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/pasiphae/survey)
 "qKT" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
@@ -41044,10 +40939,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
-"rvC" = (
-/obj/decal/fakeobjects/flock/antenna/end,
-/turf/simulated/shuttle/wall/flock,
-/area/space)
 "rvR" = (
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
@@ -41121,10 +41012,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"ryH" = (
-/obj/decal/fakeobjects/flock/antenna,
-/turf/space/fluid/acid/clear,
-/area/space)
 "rzn" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -42440,20 +42327,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge/captain)
-"sdl" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "tapedrive0";
-	name = "broken tape drive"
-	},
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "sdD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42603,12 +42476,6 @@
 /obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
-"shi" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
-	dir = 1
-	},
-/turf/space/fluid/acid,
-/area/space)
 "shv" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/light/emergency{
@@ -42896,6 +42763,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/northeast)
+"snV" = (
+/obj/fakeobject/flock/wing/broken{
+	dir = 5
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "snW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
@@ -43786,6 +43659,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"sHo" = (
+/obj/fakeobject/catalytic_doodad{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/north{
+	name = "North Catalytic Substation"
+	})
 "sHQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44754,14 +44635,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge)
-"tbu" = (
-/obj/decal/fakeobjects/catalytic_doodad{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation/pylon{
-	name = "South Catalytic Substation"
-	})
 "tbC" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
 	dir = 8
@@ -44795,12 +44668,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"tcX" = (
-/obj/decal/fakeobjects/flock/telepad,
-/obj/map/light/cyan,
-/obj/marker/supplymarker,
-/turf/simulated/floor/shuttle/flock,
-/area/flock_trader)
 "tda" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45956,10 +45823,6 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
-"tAA" = (
-/obj/decal/fakeobjects/flock/antenna,
-/turf/simulated/shuttle/wall/flock,
-/area/space)
 "tAC" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -46180,6 +46043,20 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
+"tFH" = (
+/obj/fakeobject/vacuumtape,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "tGe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46774,6 +46651,11 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
+"tSr" = (
+/obj/fakeobject/teleport_pad,
+/obj/marker/supplymarker,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "tSt" = (
 /turf/simulated/floor/blueblack/corner,
 /area/station/crew_quarters/courtroom)
@@ -47126,6 +47008,12 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
+"uan" = (
+/obj/fakeobject/flock/antenna{
+	dir = 8
+	},
+/turf/space/fluid/acid/clear,
+/area/space)
 "uar" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -47153,6 +47041,14 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"uat" = (
+/obj/item/circuitboard/siphon_control{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/obj/rack/organized/techstorage_med/sea,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "uax" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -48469,6 +48365,12 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"uDN" = (
+/obj/fakeobject/flock/telepad,
+/obj/map/light/cyan,
+/obj/marker/supplymarker,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 "uEe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48566,6 +48468,10 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"uGO" = (
+/obj/fakeobject/flock/antenna/end,
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "uHh" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -48638,6 +48544,14 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
+/area/station/engine/substation/pylon{
+	name = "South Catalytic Substation"
+	})
+"uJV" = (
+/obj/fakeobject/catalytic_doodad{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
@@ -50103,6 +50017,14 @@
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
+"vuo" = (
+/obj/fakeobject/catalytic_doodad{
+	dir = 1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/pylon{
+	name = "South Catalytic Substation"
+	})
 "vuv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads{
@@ -50763,6 +50685,20 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"vHP" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "vHX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52005,12 +51941,6 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"wim" = (
-/obj/decal/fakeobjects/flock/wing/broken{
-	dir = 6
-	},
-/turf/space/fluid/acid,
-/area/space)
 "wio" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -52538,6 +52468,17 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"wve" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/black,
+/area/station/science/teleporter)
 "wvk" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/mask/moustache,
@@ -53985,12 +53926,6 @@
 	dir = 4
 	},
 /area/station/science/artifact)
-"xdr" = (
-/obj/decal/fakeobjects/flock/antenna/end{
-	dir = 4
-	},
-/turf/space/fluid/acid/clear,
-/area/space)
 "xdJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54115,6 +54050,35 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
+"xhx" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
+	icon = 'icons/obj/large_storage.dmi';
+	icon_state = "filecabinet";
+	name = "Planetary Survey Hardcopies";
+	pixel_x = -8
+	},
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
+	icon = 'icons/obj/large_storage.dmi';
+	icon_state = "filecabinet";
+	name = "Planetary Survey Hardcopies";
+	pixel_x = 3
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north/nopoweralert{
+	start_charge = 0
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/pasiphae/survey)
 "xhL" = (
 /turf/unsimulated/wall/trench,
 /area/pasiphae/bridge)
@@ -55120,6 +55084,32 @@
 	dir = 4
 	},
 /area/station/engine/core/nuclear)
+"xDv" = (
+/obj/decal/cleanable/ash{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/fakeobject/skeleton{
+	desc = "Well, there's your problem.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body4";
+	name = "crispy corpse"
+	},
+/obj/decal/cleanable/generic{
+	alpha = 200;
+	desc = "Toasted.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorscorched1";
+	name = "scorch"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grey,
+/area/pasiphae/survey)
 "xDE" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/maintenance/outer/sw{
@@ -56220,6 +56210,16 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"ygm" = (
+/obj/fakeobject/flock/antenna/broken{
+	dir = 4;
+	icon_state = "antenna-broken-2"
+	},
+/obj/fakeobject/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/space)
 "ygn" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/quarters_east)
@@ -81752,7 +81752,7 @@ tjr
 hvz
 tjr
 lmL
-sdl
+vHP
 ltz
 iOx
 oUG
@@ -82957,7 +82957,7 @@ syI
 bbu
 eoI
 eoI
-jRV
+tSr
 tjr
 lmL
 hLu
@@ -98579,7 +98579,7 @@ kmj
 mxM
 oWG
 uQe
-nfE
+wve
 lwK
 inp
 bAZ
@@ -99099,7 +99099,7 @@ bzS
 bzS
 bzS
 bzS
-shi
+iCv
 klC
 weL
 qhC
@@ -99109,7 +99109,7 @@ weL
 jEY
 bzS
 bzS
-nCX
+jnS
 bzS
 bzS
 bzS
@@ -99708,7 +99708,7 @@ weL
 kVC
 hRp
 kHY
-tcX
+uDN
 soE
 weL
 rJg
@@ -100013,7 +100013,7 @@ kHY
 kHY
 soE
 weL
-qqf
+iun
 rJg
 rJg
 bzS
@@ -100306,7 +100306,7 @@ bzS
 bzS
 bzS
 bzS
-jxF
+snV
 klC
 weL
 wfY
@@ -100318,7 +100318,7 @@ weL
 jEY
 rJg
 rJg
-wim
+mgk
 bzS
 bzS
 bzS
@@ -101211,7 +101211,7 @@ bzS
 bzS
 bzS
 rJg
-kaU
+dXS
 klC
 weL
 qKo
@@ -101225,7 +101225,7 @@ weL
 jEY
 rJg
 rJg
-nCX
+jnS
 bzS
 bzS
 bzS
@@ -101253,7 +101253,7 @@ bzS
 bzS
 bzS
 rJg
-frb
+sHo
 azY
 txN
 mPl
@@ -101373,7 +101373,7 @@ kXt
 eKx
 mwQ
 vdY
-tbu
+uJV
 rJg
 bzS
 bzS
@@ -101857,7 +101857,7 @@ bzS
 bzS
 bzS
 rJg
-bQn
+qmd
 wnH
 epj
 ykY
@@ -101977,7 +101977,7 @@ xfA
 dDh
 vtr
 bio
-mIC
+vuo
 rJg
 bzS
 bzS
@@ -102461,7 +102461,7 @@ bzS
 bzS
 bzS
 rJg
-frb
+sHo
 azY
 epj
 ceN
@@ -102581,7 +102581,7 @@ oAU
 giE
 vtr
 vdY
-tbu
+uJV
 rJg
 bzS
 bzS
@@ -102718,10 +102718,10 @@ oeA
 oeA
 lZF
 bzS
-oLR
-ryH
-ryH
-ryH
+dBW
+lWv
+lWv
+lWv
 jat
 jat
 jat
@@ -102734,8 +102734,8 @@ jat
 qzx
 weL
 weL
-tAA
-rvC
+bqb
+uGO
 rJg
 bzS
 bzS
@@ -103065,7 +103065,7 @@ bzS
 bzS
 bzS
 rJg
-bQn
+qmd
 wnH
 iED
 sMY
@@ -103185,7 +103185,7 @@ gKY
 yel
 lxS
 bio
-mIC
+vuo
 rJg
 bzS
 bzS
@@ -103324,8 +103324,8 @@ lZF
 bzS
 rJg
 rJg
-oLR
-ryH
+dBW
+lWv
 jat
 jat
 jat
@@ -103338,8 +103338,8 @@ jat
 qzx
 weL
 weL
-tAA
-rvC
+bqb
+uGO
 rJg
 bzS
 bzS
@@ -103627,7 +103627,7 @@ bzS
 rJg
 rJg
 rJg
-hwH
+orb
 jat
 jat
 jat
@@ -103928,8 +103928,8 @@ lZF
 bzS
 rJg
 rJg
-hwH
-ryH
+orb
+lWv
 jat
 jat
 jat
@@ -105439,7 +105439,7 @@ bzS
 rJg
 rJg
 rJg
-bEL
+eTl
 pYq
 weL
 jPt
@@ -105453,7 +105453,7 @@ jat
 jHv
 rJg
 rJg
-kqh
+jrf
 bzS
 bzS
 bzS
@@ -106046,13 +106046,13 @@ rJg
 rJg
 rJg
 rJg
-kTD
-kTD
-qkq
+uan
+uan
+hdB
 fAq
-cre
-kTD
-kTD
+mbC
+uan
+uan
 rJg
 rJg
 rJg
@@ -106348,13 +106348,13 @@ rJg
 rJg
 rJg
 rJg
-xdr
-dQn
-qkq
+jDx
+gFZ
+hdB
 fAq
-eqE
-kTD
-xdr
+ygm
+uan
+jDx
 rJg
 rJg
 rJg
@@ -106652,10 +106652,10 @@ rJg
 rJg
 rJg
 rJg
-qkq
+hdB
 fAq
-qkq
-dQn
+hdB
+gFZ
 rJg
 rJg
 rJg
@@ -106954,9 +106954,9 @@ rJg
 rJg
 rJg
 rJg
-iiW
+kps
 riE
-iiW
+kps
 rJg
 rJg
 rJg
@@ -108897,7 +108897,7 @@ xFU
 hZq
 mlm
 fhp
-jfZ
+uat
 oTB
 gOm
 mlm
@@ -116433,7 +116433,7 @@ kuH
 pnk
 udE
 faZ
-hEx
+ddr
 tbM
 qqu
 bsK
@@ -116735,7 +116735,7 @@ fiR
 pnk
 uok
 faZ
-jav
+tFH
 jMP
 kTa
 ihm
@@ -118910,10 +118910,10 @@ mpe
 tCp
 aZU
 wOf
-kXy
+qKF
 sON
 dtS
-eZZ
+aXc
 fGR
 rJg
 rJg
@@ -119212,9 +119212,9 @@ qqW
 rhn
 bjf
 wOf
-dsY
+xhx
 rhy
-hQG
+xDv
 wFB
 fGR
 tDJ
@@ -125236,7 +125236,7 @@ bzS
 bzS
 bzS
 ozc
-axX
+oFk
 ljS
 xTd
 xTd
@@ -125698,7 +125698,7 @@ bzS
 qef
 llB
 moO
-byS
+dwy
 nVV
 cjY
 bzS

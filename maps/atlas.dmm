@@ -2030,6 +2030,13 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/engine/substation/west)
+"ahC" = (
+/obj/disposalpipe/segment,
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "ahH" = (
 /obj/machinery/hydro_growlamp,
 /obj/cable{
@@ -10163,19 +10170,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"aNh" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "downed server"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/power)
 "aNi" = (
 /obj/storage/crate/furnacefuel,
 /obj/cable{
@@ -13763,13 +13757,6 @@
 	dir = 5
 	},
 /area/station/solar/north)
-"bFl" = (
-/obj/disposalpipe/segment,
-/obj/landmark/start/job/mail_courier,
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/west)
 "bIN" = (
 /obj/potted_plant{
 	dir = 4
@@ -15756,6 +15743,19 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
+"hyJ" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/listeningpost/power)
 "hyW" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -65395,7 +65395,7 @@ aQn
 agj
 ahw
 aix
-bFl
+ahC
 aiD
 lLE
 alT
@@ -99659,7 +99659,7 @@ aaa
 aaa
 agK
 aMP
-aNh
+hyJ
 aMP
 aXH
 aNL
@@ -99669,7 +99669,7 @@ aOE
 aNL
 aXH
 aMP
-aNh
+hyJ
 aMP
 aYB
 aaa
