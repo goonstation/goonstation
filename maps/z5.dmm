@@ -2071,8 +2071,7 @@
 "wv" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
@@ -2477,8 +2476,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	name = "Mining Outpost Airlock";
-	
+	name = "Mining Outpost Airlock"
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/mining_outpost,
@@ -3123,8 +3121,7 @@
 "Da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "Mining Outpost Airlock";
-	
+	name = "Mining Outpost Airlock"
 	},
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
@@ -4246,8 +4243,7 @@
 "Kr" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "Mining Outpost Airlock";
-	
+	name = "Mining Outpost Airlock"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -4898,8 +4894,7 @@
 /area/noGenerate)
 "Or" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Mining Outpost Airlock";
-	
+	name = "Mining Outpost Airlock"
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/mining_outpost,
@@ -5238,8 +5233,7 @@
 /area/mining/comms)
 "Rj" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Emergency Comms Room";
-	
+	name = "Emergency Comms Room"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -6273,8 +6267,7 @@
 /area/mining/dock)
 "Ye" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Mineral Magnet";
-	
+	name = "Mineral Magnet"
 	},
 /obj/cable{
 	icon_state = "1-2"
