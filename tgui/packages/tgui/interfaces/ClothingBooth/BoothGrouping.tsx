@@ -39,16 +39,18 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
               <Stack.Item>{cost_min === cost_max ? `${cost_min}⪽` : `${cost_min}⪽ - ${cost_max}⪽`}</Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item>
-            <Stack fluid style={{ opacity: '0.5' }}>
-              {Object.values(grouping_tags).length > 0 && (
-                <Stack.Item grow>
-                  <GroupingTagContainer slot={slot} grouping_tags={grouping_tags} />
-                </Stack.Item>
-              )}
-              {itemsCount > 1 && <Stack.Item>{itemsCount} variants</Stack.Item>}
-            </Stack>
-          </Stack.Item>
+          {Object.values(grouping_tags).length > 0 || itemsCount > 1 && (
+            <Stack.Item>
+              <Stack fluid style={{ opacity: '0.5' }}>
+                {Object.values(grouping_tags).length > 0 && (
+                  <Stack.Item grow>
+                    <GroupingTagContainer slot={slot} grouping_tags={grouping_tags} />
+                  </Stack.Item>
+                )}
+                {itemsCount > 1 && <Stack.Item>{itemsCount} variants</Stack.Item>}
+              </Stack>
+            </Stack.Item>
+          )}
         </Stack>
       </Stack.Item>
     </Stack>
