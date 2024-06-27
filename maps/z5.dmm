@@ -1907,9 +1907,6 @@
 	},
 /area/station/solar/small_backup3)
 "vB" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Power Room"
@@ -2521,9 +2518,6 @@
 "zl" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
