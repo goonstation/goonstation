@@ -331,12 +331,6 @@
 		for (var/obj/O in src.loc)
 			O.req_access = null
 
-//////////// unsorted/unused ////
-/obj/mapping_helper/access/hangar
-	name = "hangar access spawn"
-	req_access = list(access_hangar)
-	color = CARGO
-
 //////////////////////owlzone access///////
 /obj/mapping_helper/access/owlmaint
 	name = "owlery maint access spawn"
