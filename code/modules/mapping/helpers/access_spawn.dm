@@ -121,11 +121,6 @@
 	req_access = list(access_engineering_engine)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/engineering_power
-	name = "engineering power access spawn"
-	req_access = list(access_engineering_power)
-	color = ENGINEERING
-
 /obj/mapping_helper/access/engineering_mechanic
 	name = "engineering mechanics access spawn"
 	req_access = list(access_engineering_mechanic)
@@ -297,6 +292,11 @@
 /obj/mapping_helper/access/hos
 	name = "HOS access spawn"
 	req_access = list(access_maxsec)
+	color = SECURITY
+
+/obj/mapping_helper/access/armory
+	name = "Armory access spawn"
+	req_access = list(access_armory)
 	color = SECURITY
 
 /obj/mapping_helper/access/engineering_chief

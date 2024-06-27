@@ -131,7 +131,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", "")
+					C.player.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
@@ -143,7 +143,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", "")
+					C.player.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
@@ -155,7 +155,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", "")
+					C.player.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -247,6 +247,10 @@ var/global/noir = 0
 		if ("toggle_skip_manifest")
 			if (src.level >= LEVEL_MOD)
 				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
 				src.show_pref_window(usr)
 		if ("toggle_slow_stat")
 			if (src.level >= LEVEL_MOD)
@@ -3680,11 +3684,11 @@ var/global/noir = 0
 		switch(emergency_shuttle.location)
 			if(0)// centcom
 				if (emergency_shuttle.direction == 1)
-					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft())] sec)"
 				if (emergency_shuttle.direction == -1)
-					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft())] sec)"
 			if(1)// ss13
-				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft()/60)])"
+				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft())] sec)"
 			if(2)// evacuated
 				shuttletext = "Evacuated to Centcom"
 			else

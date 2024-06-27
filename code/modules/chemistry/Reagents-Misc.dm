@@ -1305,11 +1305,7 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
-					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
-					wet.blend_mode = BLEND_ADD
-					wet.alpha = 60
-					T.UpdateOverlays(wet, "wet_overlay")
-					T.wet = 2
+					T.wetify(2, 20 SECONDS)
 					if (!locate(/obj/decal/cleanable/oil) in T)
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						switch(volume)
@@ -1320,9 +1316,6 @@ datum
 								make_cleanable(/obj/decal/cleanable/oil/streak,T)
 							if (20 to INFINITY)
 								make_cleanable(/obj/decal/cleanable/oil,T)
-					SPAWN(20 SECONDS)
-						T.wet = 0
-						T.UpdateOverlays(null, "wet_overlay")
 
 		capulettium
 			name = "capulettium"
@@ -1709,6 +1702,12 @@ datum
 					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
+				if (!ON_COOLDOWN(M, "ants_scream", 10 SECONDS)) //lets make it less spammy
+					M.emote("scream")
+					if (method == INGEST || method == INJECT)
+						boutput(M, SPAN_ALERT("<b>OH SHIT, ANTS [pick("", "IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b>"))
+					else
+						boutput(M, SPAN_ALERT("<b>OH SHIT, ANTS![pick("", "!", "!!", "!!!", "!!!!")]</b>"))
 				random_brute_damage(M, 4)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1782,13 +1781,13 @@ datum
 				else if (prob(10))
 					random_brute_damage(M, 2 * mult)
 					M.emote(pick("twitch", "twitch_s", "grumble"))
-					M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under their skin", "their skin")]!"),\
+					M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("scratches", "digs", "picks")] at [pick("something under [his_or_her(M)] skin", "[his_or_her(M)] skin")]!"),\
 					SPAN_ALERT("<b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b>"))
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
 					M.emote("twitch")
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
-					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at their own skin!"),\
+					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
 				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
 					if (!locate(/obj/decal/cleanable/vomit) in T)
@@ -2457,7 +2456,7 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control [his_or_her(M)] legs!"))
 						M.change_misstep_chance(33 * mult)
 						M.setStatusMin("knockdown", 3 SECONDS * mult)
 					else if (effect <= 4)
@@ -2491,7 +2490,7 @@ datum
 			fluid_g = 16
 			fluid_b = 94
 			transparency = 200
-			addiction_prob = 1//20
+			addiction_prob = 1
 			addiction_min = 5
 			overdose = 11
 			depletion_rate = 0.1
@@ -3592,15 +3591,7 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
-					wet.blend_mode = BLEND_ADD
-					wet.alpha = 60
-					T.UpdateOverlays(wet, "wet_overlay")
-					T.wet = 2
-					SPAWN(80 SECONDS)
-						if (istype(T))
-							T.wet = 0
-							T.UpdateOverlays(null, "wet_overlay")
+					T.wetify(2, 80 SECONDS)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -4256,7 +4247,7 @@ datum
 		while (!disposed)
 			if (BOUNDS_DIST(src, src.deathtarget) == 0)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches them in the groin before rolling under the floortiles!"), 1)
+					O.show_message(SPAN_ALERT("<B>[src]</B> flips up, over and behind [deathtarget] and punches [him_or_her(deathtarget)] in the groin before rolling under the floortiles!"), 1)
 
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50,1,-1)
 				animate_spin(src, prob(50) ? "L" : "R", 1, 0)

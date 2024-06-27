@@ -108,7 +108,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		var/obj/O = target
 
-		if (access_maxsec in O.req_access)
+		if ((access_maxsec in O.req_access) || (access_armory in O.req_access))
 			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
 			boutput(user, SPAN_NOTICE("[src] can't reprogram this."))
 			return
@@ -133,7 +133,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
-		var/str_contents = kText.list2text(ID_card.access, ", ")
+		var/str_contents = list2text(ID_card.access, ", ")
 		if (!mode)
 			O.set_access_list(list(ID_card.access))
 		else
@@ -185,7 +185,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 /obj/item/device/accessgun/lite
 	name = "Access Lite"
-	desc = "A device that sets the access requirments of newly constructed airlocks to ones scanned from an existing airlock."
+	desc = "A device that sets the access requirements of newly constructed airlocks to ones scanned from an existing airlock."
 	req_access = null
 	ID_card = 1
 	var/list/scanned_access = null

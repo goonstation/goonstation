@@ -170,14 +170,22 @@ datum
 							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
 								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
 						if (H.sims)
-							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
+							if (hygiene_value)
+								var/hygiene = H.sims.getValue("Hygiene")
 								var/hygiene_restore = hygiene_value
+								var/hygiene_cap = 100 - H.get_chem_protection() * 4 // Hygiene will not restore above this cap; typical minimum of 40%
+								var/hygiene_distance_from_cap = hygiene_cap - hygiene
+								var/hygiene_change = min(volume * hygiene_restore * (1 - (H.get_chem_protection() / 100)), max(hygiene_distance_from_cap, 0))
+
 								if (H.mutantrace.aquaphobic)
 									if (istype(src, /datum/reagent/oil))
 										hygiene_restore = 3
 									else if (istype(src, /datum/reagent/water))
 										hygiene_restore = -3
-								H.sims.affectMotive("Hygiene", volume * hygiene_restore)
+								if (hygiene_distance_from_cap == 0 && !(hygiene_cap == 100) && hygiene_change == 0)
+									if(!ON_COOLDOWN(H, "Hygiene_restoration_blocked_by_clothes", 1 MINUTE))
+										boutput(M, SPAN_ALERT("Your clothes prevent you from getting any cleaner!"))
+								H.sims.affectMotive("Hygiene", hygiene_change)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
@@ -253,7 +261,7 @@ datum
 						H.sims.affectMotive("Energy", energy_value)
 			deplRate = deplRate * mult
 			if (addiction_prob)
-				src.handle_addiction(M, deplRate)
+				src.handle_addiction(M, deplRate, addiction_prob)
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
@@ -303,13 +311,12 @@ datum
 
 
 
-		proc/handle_addiction(var/mob/M, var/rate)
+		proc/handle_addiction(var/mob/M, var/rate, var/addProb)
 			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
 				//DEBUG_MESSAGE("already have [AD.name]")
 				return AD
-			var/addProb = addiction_prob
 			//DEBUG_MESSAGE("addProb [addProb]")
 			if (isliving(M))
 				var/mob/living/H = M
@@ -338,6 +345,8 @@ datum
 				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
+			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
+				boutput(M, SPAN_ALERT("You think it might be time to hold back on [src.name] for a bit..."))
 			return
 
 		proc/flush(var/datum/reagents/holder, var/amount, var/list/flush_specific_reagents)
