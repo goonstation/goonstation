@@ -1255,13 +1255,6 @@
 
 // helper proooocs
 
-/mob/proc/get_heard_name(just_name_itself=FALSE)
-	if(just_name_itself)
-		. = src.name
-	else
-		. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
-
-
 /mob/proc/move_callback_trigger(var/obj/move_laying, var/turf/NewLoc, var/oldloc, direct)
 	if (move_laying)
 		if((direct & (NORTH|SOUTH)) && (direct & (EAST|WEST)))//MBC : work around the diagonal bug that we don't understand : if((direct & (NORTH|SOUTH)) && (direct & (EAST|WEST)))

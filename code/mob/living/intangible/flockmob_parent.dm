@@ -221,11 +221,6 @@
 
 	src.examine_verb(target) //default to examine
 
-/mob/living/intangible/flock/get_heard_name(just_name_itself=FALSE)
-	if (just_name_itself)
-		return src.real_name
-	return "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
-
 /mob/living/intangible/flock/get_tracked_examine_atoms()
 	return ..() + src.flock.structures
 

@@ -834,8 +834,8 @@
 		message_a = "<i>[message_a]</i>"
 
 	var/my_name = "<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span>"
-	if (!use_voice_name)
-		my_name = src.get_heard_name()
+//	if (!use_voice_name)
+//		my_name = src.get_heard_name()
 	var/rendered = SPAN_SAY("[my_name] [SPAN_MESSAGE("[message_a]")]")
 
 	var/rendered_outside = null

@@ -25,7 +25,7 @@
 		var/mob/mob_speaker = message.original_speaker
 		mind_ref = "\ref[mob_speaker.mind]"
 
-	message.speaker_to_display ||= message.get_speaker_name()
+	message.speaker_to_display ||= message.get_speaker_name(TRUE)
 
 	message.format_speaker_prefix = {"\
 		<span class='name' data-ctx='[mind_ref]'>\

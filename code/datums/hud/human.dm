@@ -880,7 +880,7 @@
 		var/stage = 0
 		if (master?.mini_health_hud)
 			healthicon = "healthpip"
-			if (isdead(master) || master.fakedead)
+			if (isdead(master))
 				health_brute.icon_state = "mhealth7" // rip
 				health_brute.tooltipTheme = "healthDam healthDam7"
 				health_brute.name = "Health"
@@ -983,7 +983,7 @@
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
 
-			if (isdead(master) || master.fakedead)
+			if (isdead(master))
 				health.icon_state = "health7" // dead
 				health.tooltipTheme = "healthDam healthDam7"
 				health.desc = "Seems like you've died. Bummer."

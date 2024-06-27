@@ -1391,36 +1391,6 @@
 	if (!ai_active && is_npc)
 		ai_set_active(1)
 
-/mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
-	var/alt_name = ""
-	if (src.name != src.real_name)
-		if (src.wear_id && src.wear_id:registered && src.wear_id:registered != src.real_name)
-			alt_name = " (as [src.wear_id:registered])"
-		else if (!src.wear_id)
-			alt_name = " (as Unknown)"
-
-	if (src.is_npc)
-		. = "<span class='name'>"
-	else
-		. = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_id)
-			if (just_name_itself)
-				return src.wear_id:registered
-			. += "[src.wear_id:registered]</span>"
-		else
-			if (just_name_itself)
-				return "Unknown"
-			. += "Unknown</span>"
-	else if (src.vdisfigured)
-		if (just_name_itself)
-			return "Unknown"
-		. += "Unknown</span>"
-	else
-		if (just_name_itself)
-			return src.real_name
-		. += "[src.real_name]</span>[alt_name]"
-
 /mob/living/carbon/human/say(message, flags, message_params)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
@@ -1436,12 +1406,6 @@
 		say_language = mask.new_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
-
-	if (src.fakedead)
-		var/the_verb = pick("wails","moans","laments")
-		boutput(src, SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]"))
-		src.say_language = original_language
-		return
 
 	if (dd_hasprefix(message, "*") || isdead(src))
 		..(message)
