@@ -9447,7 +9447,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aKy" = (
-/obj/machinery/vending/standard,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -13263,6 +13265,9 @@
 /obj/item/assembly/time_ignite,
 /obj/item/device/igniter,
 /obj/item/device/analyzer/atmospheric,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "aYO" = (
@@ -15754,7 +15759,6 @@
 "huR" = (
 /obj/machinery/door_control{
 	id = "chamber_1";
-	layer = 3;
 	name = "Vent Control";
 	pixel_y = -24
 	},
@@ -16669,9 +16673,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "koV" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer{
-	dir = 8
-	},
+/obj/machinery/vending/standard,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -17311,9 +17313,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "mmr" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "moQ" = (
