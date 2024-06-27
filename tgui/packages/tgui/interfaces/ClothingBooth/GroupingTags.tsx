@@ -40,7 +40,9 @@ export const GroupingTags = (props: GroupingTagContainerProps, context) => {
   );
 };
 
-const GroupingTag = (props: ClothingBoothGroupingTagsData) => {
+interface GroupingTagProps extends ClothingBoothGroupingTagsData {}
+
+const GroupingTag = (props: GroupingTagProps) => {
   const { name, colour } = props;
 
   return (
