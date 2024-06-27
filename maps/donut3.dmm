@@ -6362,11 +6362,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "westsolar";
 	name = "West Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "bMe" = (
@@ -32704,7 +32704,6 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -32714,6 +32713,7 @@
 	cycle_id = "westsolar";
 	name = "West Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "jOU" = (
@@ -73799,7 +73799,6 @@
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 8;
@@ -73810,6 +73809,7 @@
 	cycle_id = "eastsolar";
 	name = "East Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/east)
 "wmQ" = (
@@ -77651,7 +77651,6 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/obj/mapping_helper/access/engineering,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -77659,6 +77658,7 @@
 	cycle_id = "eastsolar";
 	name = "East Solar Maintenance"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "xon" = (
