@@ -817,7 +817,7 @@ toxic - poisons
 	implanted = null
 	damage = 6
 
-	New()
+	on_launch(var/obj/projectile/P)
 		..()
 		if(prob(50)) //let's get some variation in here
 			icon_state = "glass2"
@@ -833,7 +833,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/shrapnel
 	damage = 10
 
-	New()
+	on_launch(var/obj/projectile/P)
 		..()
 		if(prob(50)) //keep things from getting boring
 			icon_state = "scrap2"
@@ -851,7 +851,7 @@ toxic - poisons
 	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
 
-	New()
+	on_launch(var/obj/projectile/P)
 		..()
 		if(prob(40))
 			icon_state = "bone2"
