@@ -41,7 +41,7 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
           </Stack.Item>
           <Stack.Item>
             <Stack fluid style={{ opacity: '0.5' }}>
-              {Object.values(grouping_tags).length && (
+              {Object.values(grouping_tags).length > 0 && (
                 <Stack.Item grow>
                   <GroupingTagContainer slot={slot} grouping_tags={grouping_tags} />
                 </Stack.Item>
