@@ -1,18 +1,12 @@
 import { classes } from 'common/react';
 import { Box, Tooltip } from '../../components';
-import { SwatchBisectLeft } from './swatchForegroundShapes/bisect-left';
-import { SwatchBisectRight } from './swatchForegroundShapes/bisect-right';
-import { SwatchPolkadots } from './swatchForegroundShapes/polkadots';
-import { SwatchClub } from './swatchForegroundShapes/club';
-import { SwatchDiamond } from './swatchForegroundShapes/diamond';
-import { SwatchHeart } from './swatchForegroundShapes/heart';
-import { SwatchSpade } from './swatchForegroundShapes/spade';
+import { SwatchBisectLeft, SwatchBisectRight, SwatchClub, SwatchDiamond, SwatchHeart, SwatchPolkaDots, SwatchSpade } from './swatchForegroundShapes';
 import type { ClothingBoothItemData } from './type';
 
 const SwatchLookup = {
   'bisect_left': SwatchBisectLeft,
   'bisect_right': SwatchBisectRight,
-  'polkadots': SwatchPolkadots,
+  'polkadots': SwatchPolkaDots,
   'heart': SwatchClub,
   'diamond': SwatchDiamond,
   'club': SwatchHeart,

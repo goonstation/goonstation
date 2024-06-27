@@ -1,6 +1,6 @@
 import { SwatchForegroundProps } from '../type';
 
-export const SwatchPolkadots = (props: SwatchForegroundProps) => {
+export const SwatchPolkaDots = (props: SwatchForegroundProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
