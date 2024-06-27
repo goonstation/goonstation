@@ -1807,6 +1807,9 @@ var/list/fun_images = list()
 		if (ignorePlayerVote == "No")
 			return
 
+	if (mapSwitcher.locked)
+		return alert("The server is currently switching to another map. You will need to wait.")
+
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
 	if (mapSwitcher.next)
