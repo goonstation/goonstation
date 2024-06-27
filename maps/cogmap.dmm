@@ -6988,6 +6988,7 @@
 /area/station/storage/emergency)
 "aAG" = (
 /obj/machinery/drone_recharger,
+/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aAH" = (
@@ -38536,7 +38537,7 @@
 	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/grime,
 /area/station/engine/power)
 "dvn" = (
@@ -45200,7 +45201,6 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/sanitary,
 /area/station/security/brig)
 "ipZ" = (
@@ -54294,7 +54294,6 @@
 	dir = 4;
 	name = "Electrical Substation"
 	},
-/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -54313,6 +54312,7 @@
 	enter_id = "outer";
 	name = "AI Power"
 	},
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "pCg" = (
@@ -63439,12 +63439,6 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";

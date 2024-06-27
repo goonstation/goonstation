@@ -37,7 +37,7 @@
 
 		//oh lordy
 		mainpanel.register_element(new /datum/hud_element(src.create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off",\
-			tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")),"engine")
+			tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off.")),"engine")
 
 		mainpanel.register_element(new /datum/hud_element(src.create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole",\
 			tooltipTheme = "pod", desc = "Open a wormhole to a beacon that you can fly through")),"wormhole")
@@ -55,7 +55,7 @@
 			tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")),"sensors")
 
 		mainpanel.register_element(new /datum/hud_element(src.create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use",\
-			tooltipTheme = "pod", desc = "Use the pod's sensors to search for drones and lifeforms nearby")),"sensors_use")
+			tooltipTheme = "pod", desc = "Use the pod's sensors to search for vehicles and lifeforms nearby")),"sensors_use")
 
 		mainpanel.register_element(new /datum/hud_element(src.create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off",\
 			tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")),"weapon")
