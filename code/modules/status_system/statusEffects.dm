@@ -2900,4 +2900,3 @@
 
 	getTooltip()
 		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
-
