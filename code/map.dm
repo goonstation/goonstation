@@ -489,12 +489,12 @@ var/global/list/mapNames = list(
 
 	escape_dir = WEST
 
-	windows = /obj/window/auto
+	windows = /obj/window/auto/walp
 	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
+	rwindows = /obj/window/auto/reinforced/walp
 	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	windows_crystal = /obj/window/auto/crystal/walp
+	windows_rcrystal = /obj/window/auto/crystal/reinforced/walp
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
