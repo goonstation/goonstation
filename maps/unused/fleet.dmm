@@ -17446,8 +17446,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/computer/atmosphere/mixercontrol{
-	dir = 4;
-	frequency = 1225
+	frequency = 1225;
+	id = "engine_combust_control";
+	mixerid = "engine_combust";
+	name = "Gas Mixer Control (Combustion Chamber)";
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/power{
@@ -22815,7 +22818,7 @@
 /obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1225;
-	id_tag = "engine_combust";
+	id_tag = s;
 	master_id = "engine_combust_control";
 	name = "Gas Mixer (Combustion Chamber)"
 	},
