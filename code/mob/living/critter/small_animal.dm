@@ -2871,19 +2871,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return 1
 		boutput(user, SPAN_ALERT("You feel uncomfortable now."))
 
-/// global list of watchful eyes in the world, for iteration
-var/global/list/watchful_eyes = list()
-
 /// the floating eyes found in the watchful eye sensor array.
 /mob/living/critter/small_animal/floateye/watchful
 	desc = "It seems to be staring directly at the Purple Giant."
 	ai_type = /datum/aiHolder/empty
 	ai_retaliates = FALSE
-
-	New()
-		..()
-		SPAWN(0)
-			watchful_eyes += src
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */

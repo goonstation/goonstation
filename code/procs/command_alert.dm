@@ -11,9 +11,8 @@
 
 #ifndef MAP_OVERRIDE_OSHAN
 	if (alert_origin == ALERT_WEATHER)
-		SPAWN(0)
-			for (var/mob/living/critter/small_animal/floateye/watchful/eye in watchful_eyes)
-				eye.make_jittery(rand(10, 250))
+		for_by_tcl(eye, /mob/living/critter/small_animal/floateye/watchful)
+			eye.make_jittery(rand(10, 250))
 #endif
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
