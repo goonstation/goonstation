@@ -3153,7 +3153,6 @@
 	},
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/twotone,
 /area/station/storage/tools)
 "aPz" = (
@@ -47013,7 +47012,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/west)
 "kLM" = (
-/obj/machinery/chem_dispenser,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -47022,6 +47020,7 @@
 	pixel_x = -32;
 	pixel_y = 25
 	},
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -70772,9 +70771,8 @@
 	pixel_x = -6
 	},
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
-/obj/item/clothing/under/suit{
-	name = "Mortician Suit";
-	pixel_x = 16
+/obj/item/clothing/under/suit/mortician{
+	pixel_x = 18
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
