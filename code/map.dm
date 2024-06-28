@@ -476,7 +476,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/decarabia
 	name = "DECARABIA"
-	goonhub_map = "https://goonhub.com/maps/donut2"
+	goonhub_map = "https://goonhub.com/maps/decarabia"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/walp
 	rwalls = /turf/simulated/wall/auto/reinforced/walp
@@ -484,7 +484,6 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/donut2,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
