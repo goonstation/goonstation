@@ -28,7 +28,7 @@ export const ItemSwatch = (props: ItemSwatchProps) => {
     swatch_foreground_colour,
     swatch_foreground_shape,
   } = props;
-  const swatchboxClasses = classes([selected && 'outline-color-good', 'clothingbooth__swatch_box']);
+  const swatchboxClasses = classes([selected && 'outline-color-good', 'clothingbooth__swatch-box']);
   const swatchiconClasses = classes([
     'clothingbooth__swatch_icon',
     `clothingbooth__swatch_icon_${swatch_foreground_shape}`,

@@ -30,12 +30,10 @@
     height: 128px;
   }
 
-  &__swatch {
-    &_box {
-      margin: 0.2em;
-      &:hover {
-        outline: 0.167rem solid colors.$good;
-      }
+  &__swatch-box {
+    margin: 0.2em;
+    &:hover {
+      outline: 0.167rem solid colors.$good;
     }
   }
 
