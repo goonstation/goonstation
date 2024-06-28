@@ -261,7 +261,7 @@
 
 /datum/dialogueNode
 	telEyeStart
-		nodeImage = "valiantStatic.png" // placeholder until i upload a png
+		nodeImage = "eye.png"
 		nodeText = "Periodic Signals emanate from this Satellite.<br>It seems awfully close to the purple giant."
 		linkText = "..."
 		links = list(/datum/dialogueNode/telEyeEnable)

@@ -1391,7 +1391,6 @@ TYPEINFO(/area/diner)
 	name = "Watchful Eye Sensor Satellite"
 	icon_state = "red"
 	requires_power = FALSE
-	// sound_environment = 12 // what the hell is a sound environment
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/watchful_eye_sensor
 
 /area/pasiphae
