@@ -1,4 +1,9 @@
 
+(t)thu jun 27 24
+(u)glowbold
+(p)19720
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Projectiles have a chance to pass through girders. The more secure a girder is, the less likely projectiles can travel through them.
 (t)wed jun 26 24
 (u)LeahTheTech
 (*)Did you know Abzu has two suns? Well now it actually does in-game - Oshan nights will be brighter and red tinted as the planet is lit by its second sun. The bright daylight hours have also been extended a bit, so overall it should feel much brighter.
