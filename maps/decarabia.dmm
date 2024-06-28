@@ -865,7 +865,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "akr" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /turf/simulated/floor/circuit/off,
 /area/station/maintenance/outer/north)
 "akv" = (
@@ -1663,11 +1663,6 @@
 "avn" = (
 /obj/decoration/clock{
 	pixel_y = 32
-	},
-/obj/machinery/door_control{
-	id = "gene_door";
-	name = "Genetics Door Control";
-	pixel_x = 25
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/head)
@@ -7799,6 +7794,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -8142,12 +8138,11 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/bookcase{
-	dir = 1;
-	pixel_y = 19
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -10917,6 +10912,11 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/west)
+"cxV" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/fakeobject/skeleton,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "cxW" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -12133,13 +12133,6 @@
 	},
 /area/station/ranch)
 "cLs" = (
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/north)
@@ -13386,7 +13379,8 @@
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
+	dir = 1;
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
@@ -14725,7 +14719,7 @@
 	dir = 1;
 	icon_state = "cobweb"
 	},
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/sw)
 "dnr" = (
@@ -17390,6 +17384,7 @@
 /area/station/mining/staff_room)
 "dQM" = (
 /obj/storage/crate/internals,
+/obj/fakeobject/skeleton/unanchored,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_west"
 	},
@@ -18505,14 +18500,7 @@
 	},
 /area/shuttle/research/station)
 "ecP" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "downed server"
-	},
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/techfloor/red,
 /area/listeningpost)
 "ecW" = (
@@ -18751,21 +18739,15 @@
 	},
 /area/station/chapel/sanctuary)
 "ege" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 4;
-	pixel_y = 19
-	},
 /obj/machinery/light/incandescent,
-/obj/decal/fakeobjects{
-	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "skeleton_stand";
-	name = "Jim"
-	},
 /obj/item/storage/wall/office{
 	dir = 8;
 	pixel_x = 32;
 	pixel_y = 0
+	},
+/obj/fakeobject/bookcase{
+	dir = 1;
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
@@ -21494,6 +21476,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -22836,14 +22819,15 @@
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/west)
 "eZa" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/table/wood/auto/desk,
 /obj/machinery/door_control{
 	id = "md_door";
 	name = "MD's Office Door Control";
 	pixel_y = 3
+	},
+/obj/fakeobject/bookcase{
+	dir = 4;
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/head)
@@ -22880,12 +22864,6 @@
 /area/station/maintenance/outer/west)
 "eZw" = (
 /obj/machinery/light/incandescent,
-/obj/decal/fakeobjects{
-	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake.";
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "skeleton_stand";
-	name = "Presto"
-	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "eZx" = (
@@ -23416,12 +23394,11 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "ffG" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 4;
-	pixel_y = 19
-	},
 /obj/stool/chair/couch{
 	dir = 8
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/medical/head)
@@ -25036,10 +25013,10 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/bookcase{
+/obj/machinery/light/incandescent,
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/marble/border_bw,
 /area/station/bridge/customs)
 "fwT" = (
@@ -27940,16 +27917,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/solar/south)
-"gfa" = (
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
-/turf/simulated/floor/yellow/side,
-/area/station/hallway/primary/southeast)
 "gfh" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -28649,7 +28616,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/dirt/dirt5,
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 1;
 	pixel_y = 19
 	},
@@ -31135,10 +31102,10 @@
 /turf/simulated/floor/grass/random/walp,
 /area/station/hallway/primary/east)
 "gQm" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/landmark/pest,
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
-/obj/landmark/pest,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -31436,11 +31403,11 @@
 /area/station/hallway/primary/west)
 "gTd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /obj/machinery/light/incandescent/small{
 	dir = 4
 	},
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "gTg" = (
@@ -31827,9 +31794,6 @@
 /turf/simulated/floor/circuit/purple,
 /area/station/turret_protected/ai)
 "gXE" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/decoration/pottedfern,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -33837,7 +33801,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
 /turf/simulated/floor/marble/border_bw,
@@ -34243,21 +34207,6 @@
 	dir = 6
 	},
 /area/station/chapel/office)
-"hyu" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
-/turf/simulated/floor/twotone/purple,
-/area/station/conveniencestore)
 "hyv" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/morgue{
@@ -34441,8 +34390,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "hzN" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 4;
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
 /turf/simulated/floor/wood{
@@ -35855,12 +35803,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/barber_shop)
-"hSd" = (
-/obj/decal/fakeobjects/creepytv{
-	desc = "It's got wood panelling and everything!"
-	},
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "hSf" = (
 /obj/map/light/yellow,
 /obj/item/bananapeel,
@@ -38554,16 +38496,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
-"iwQ" = (
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
-/turf/simulated/floor/twotone/yellow,
-/area/station/conveniencestore)
 "iwT" = (
 /obj/storage/closet/fire,
 /obj/machinery/light/small{
@@ -40555,9 +40487,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "iUo" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -40568,6 +40497,10 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/fakeobject/bookcase{
+	dir = 1;
+	pixel_y = 19
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -40917,11 +40850,6 @@
 	icon_state = "wooden"
 	},
 /area/station/hydroponics/bay)
-"iYt" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "iYB" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/woodwall,
@@ -41966,14 +41894,13 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/north)
 "jjL" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 4;
-	pixel_y = 19
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent,
+/obj/fakeobject/bookcase{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_north,
 /area/station/crew_quarters/hor)
 "jjN" = (
@@ -43918,7 +43845,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/robot_debris/limb,
 /obj/item/ammo/bullets/rod,
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "jIM" = (
@@ -47078,16 +47005,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/north)
-"ktL" = (
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/north)
 "ktW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -47483,15 +47400,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"kxU" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 1;
-	pixel_y = 19
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge{
-	dir = 1
-	},
-/area/station/crew_quarters/hor/horprivate)
 "kxY" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment/mail/vertical,
@@ -48332,14 +48240,14 @@
 	icon_state = "line2"
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/obj/decal/fakeobjects/bookcase{
-	dir = 4;
-	pixel_y = 19
-	},
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light_switch/east{
 	dir = 8;
 	pixel_y = -5
+	},
+/obj/fakeobject/bookcase{
+	dir = 4;
+	pixel_y = 19
 	},
 /turf/simulated/floor/blackwhite/corner{
 	dir = 4
@@ -49230,16 +49138,6 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It is still kinda warm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "neutinj";
-	name = "Matter Transposition Processor";
-	pixel_x = -1;
-	pixel_y = 5
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
@@ -50588,7 +50486,7 @@
 /area/station/crew_quarters/barber_shop)
 "liY" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/broadcastcomputer,
+/obj/fakeobject/broadcastcomputer,
 /turf/simulated/floor/airless/carpet/grime,
 /area/ghostdrone_factory)
 "ljm" = (
@@ -50697,16 +50595,15 @@
 	},
 /area/station/engine/engineering)
 "lke" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 8;
-	pixel_y = 19
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/light/incandescent,
+/obj/fakeobject/bookcase{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/nw,
 /area/station/crew_quarters/hor)
 "lkf" = (
@@ -51785,12 +51682,13 @@
 /turf/simulated/floor/glassblock/transparent/purple,
 /area/station/crewquarters/clothingstore)
 "lun" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/stool/chair/couch{
 	dir = 4;
 	icon_state = "chair_couch-brown"
+	},
+/obj/fakeobject/bookcase{
+	dir = 4;
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/medical/head)
@@ -53747,6 +53645,7 @@
 "lPl" = (
 /obj/machinery/portable_reclaimer,
 /obj/decal/nav_danger,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -54746,8 +54645,9 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "maz" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
+/obj/fakeobject/bookcase{
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/nw,
 /area/station/crew_quarters/heads)
@@ -55751,8 +55651,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "mnf" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 1;
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
 /turf/simulated/floor/wood{
@@ -57767,14 +57666,15 @@
 /turf/simulated/floor/glassblock/transparent/indigo,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "mKH" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/fakeobject/bookcase{
+	dir = 4;
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/ne,
 /area/station/crew_quarters/hor)
@@ -59456,14 +59356,15 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/east)
 "neX" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/fakeobject/bookcase{
+	dir = 4;
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
@@ -61201,14 +61102,15 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/machinery/light/incandescent,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/fakeobject/bookcase{
+	dir = 1;
+	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -62380,7 +62282,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/decal/fakeobjects/robot,
+/obj/fakeobject/robot,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "nQo" = (
@@ -64906,7 +64808,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/grime,
@@ -65401,14 +65303,15 @@
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/southeast)
 "owI" = (
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/fakeobject/bookcase{
+	dir = 4;
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_north,
 /area/station/crew_quarters/hor)
@@ -67069,10 +66972,6 @@
 /obj/table/auto,
 /obj/item/sponge{
 	name = "loofah"
-	},
-/obj/item/rubberduck/syndicate{
-	pixel_y = 10;
-	pixel_x = -3
 	},
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost)
@@ -71008,10 +70907,6 @@
 	},
 /turf/simulated/floor/carpet/office,
 /area/station/bridge)
-"pPp" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
-/turf/simulated/floor/terrazzo/black,
-/area/station/crew_quarters/jazz)
 "pPt" = (
 /obj/cable{
 	d1 = 1;
@@ -71351,10 +71246,10 @@
 /turf/simulated/floor/minitiles,
 /area/station/quartermaster/office)
 "pTZ" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /obj/storage/crate/wooden{
 	name = "leftovers"
 	},
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/plating/random,
 /area/space)
 "pUa" = (
@@ -71362,7 +71257,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "pUc" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
+	dir = 1;
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge{
@@ -76302,7 +76198,7 @@
 	},
 /area/station/hangar/main)
 "rai" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
@@ -82594,7 +82490,7 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "sqM" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 4;
 	pixel_y = 19
 	},
@@ -84367,17 +84263,6 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
-"sKL" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "idle server"
-	},
-/turf/simulated/floor/circuit/purple,
-/area/station/turret_protected/ai)
 "sKX" = (
 /obj/machinery/computer/security,
 /obj/machinery/power/data_terminal,
@@ -85966,10 +85851,6 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/security/main)
-"tcd" = (
-/obj/decal/fakeobjects/skeleton,
-/turf/space,
-/area/space)
 "tcm" = (
 /obj/cable{
 	d2 = 2;
@@ -87004,7 +86885,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "tlO" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
+	dir = 4;
 	pixel_y = 19
 	},
 /turf/simulated/floor/wood{
@@ -89301,6 +89183,11 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"tME" = (
+/obj/decal/cleanable/dirt,
+/obj/fakeobject/vacuumtape,
+/turf/simulated/floor/airless/carpet/grime,
+/area/ghostdrone_factory)
 "tMF" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -90018,7 +89905,6 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects/vacuumtape,
 /turf/simulated/floor/techfloor/purple,
 /area/station/turret_protected/ai_upload)
 "tUL" = (
@@ -90230,13 +90116,9 @@
 	},
 /area/station/science/chemistry)
 "tXE" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/outer/se)
+/obj/fakeobject/skeleton/unanchored,
+/turf/simulated/floor/terrazzo/black,
+/area/station/crew_quarters/jazz)
 "tXF" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/shuttlebay{
@@ -92849,14 +92731,6 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "uzj" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "idle server"
-	},
 /turf/simulated/floor/techfloor,
 /area/station/maintenance/outer/north)
 "uzo" = (
@@ -95225,7 +95099,7 @@
 	pixel_x = 11
 	},
 /obj/item/clothing/head/basecap/white,
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 1;
 	pixel_y = 19
 	},
@@ -95391,7 +95265,6 @@
 	icon_state = "drip1a"
 	},
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/west)
@@ -95500,9 +95373,6 @@
 /area/station/ranch)
 "veO" = (
 /obj/machinery/light/incandescent,
-/obj/decal/fakeobjects/bookcase{
-	pixel_y = 19
-	},
 /obj/rack,
 /obj/item/clothing/head/apprentice,
 /obj/item/clothing/mask/skull,
@@ -95517,6 +95387,9 @@
 	contraband = 0;
 	magical = 0;
 	name = "apprentice wizard robe"
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 19
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -96687,7 +96560,6 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects/vacuumtape,
 /turf/simulated/floor/techfloor/purple,
 /area/station/turret_protected/ai_upload)
 "vtc" = (
@@ -98212,8 +98084,8 @@
 /area/station/hallway/secondary/west)
 "vMt" = (
 /obj/decal/cleanable/cobweb2,
-/obj/decal/fakeobjects/apc_broken{
-	pixel_y = 28
+/obj/fakeobject/apc_broken{
+	pixel_y = 24
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -98541,6 +98413,7 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -100671,12 +100544,12 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/medbay)
 "wom" = (
-/obj/decal/fakeobjects/bookcase{
-	dir = 1;
-	pixel_y = 19
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/fakeobject/bookcase{
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_north,
 /area/station/crew_quarters/hor)
@@ -101194,8 +101067,7 @@
 "wtD" = (
 /obj/stool/chair/comfy/blue,
 /obj/machinery/light/incandescent/warm,
-/obj/decal/fakeobjects/bookcase{
-	dir = 1;
+/obj/fakeobject/bookcase{
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
@@ -102266,14 +102138,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/obj/decal/fakeobjects{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix";
-	pixel_y = 5
-	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
 "wDI" = (
@@ -102406,13 +102270,13 @@
 	},
 /area/station/science/lobby)
 "wEE" = (
-/obj/landmark/random_room/size3x3,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
+/obj/fakeobject/bookcase{
+	pixel_y = 19
 	},
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/outer/se)
+/turf/simulated/floor/carpet/purple/fancy/edge{
+	dir = 1
+	},
+/area/station/crew_quarters/hor/horprivate)
 "wEM" = (
 /turf/simulated/wall/auto/walp/red,
 /area/station/security/hos)
@@ -102618,11 +102482,6 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/five,
 /turf/simulated/floor/twotone/purple,
 /area/research_outpost)
-"wHt" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/airless/carpet/grime,
-/area/ghostdrone_factory)
 "wHu" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -105937,7 +105796,6 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/toilets)
 "xwF" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
 /turf/simulated/floor/carpet/green/standard/edge/sw,
 /area/station/hangar/north)
 "xwY" = (
@@ -107006,6 +106864,10 @@
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"xKk" = (
+/obj/fakeobject/creepytv,
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "xKu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
@@ -108711,7 +108573,7 @@
 "yev" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/gibs,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/wood/five,
 /area/ghostdrone_factory)
 "yey" = (
@@ -113059,7 +112921,7 @@ xJC
 xJC
 xJC
 xJC
-tcd
+xJC
 xJC
 gjr
 ufP
@@ -115067,7 +114929,7 @@ veI
 bDi
 bDi
 yei
-wHt
+tME
 bYe
 sdV
 goZ
@@ -116584,7 +116446,7 @@ hhy
 tqm
 tqm
 gmP
-hSd
+xKk
 tae
 ozX
 qiP
@@ -119898,7 +119760,7 @@ rFb
 lGX
 bDi
 bDi
-iYt
+cxV
 bDi
 bDi
 bDi
@@ -131612,7 +131474,7 @@ vmG
 uRE
 aje
 cCZ
-kxU
+wEE
 bQu
 xYy
 rka
@@ -154189,7 +154051,7 @@ xDG
 mnA
 gBD
 ojg
-ktL
+pUV
 qXv
 fug
 epI
@@ -155392,7 +155254,7 @@ umx
 pXG
 mbz
 cXV
-sKL
+nSl
 dVi
 upu
 dMp
@@ -155400,7 +155262,7 @@ pUV
 www
 pUV
 pUV
-ktL
+pUV
 rqe
 saU
 qXv
@@ -158412,7 +158274,7 @@ ojh
 jIP
 mbz
 cXV
-sKL
+nSl
 ezu
 upu
 cVE
@@ -159426,7 +159288,7 @@ jxQ
 iEI
 nKD
 pFT
-iwQ
+kSQ
 xAd
 ehE
 kSQ
@@ -160027,7 +159889,7 @@ pHt
 swr
 nba
 jrz
-hyu
+jbb
 wtr
 etS
 jbb
@@ -160329,7 +160191,7 @@ ols
 mni
 mHP
 dgU
-iwQ
+kSQ
 nKD
 pFT
 kSQ
@@ -164586,7 +164448,7 @@ cXr
 fuP
 dzo
 hlW
-gfa
+wDJ
 dMr
 iLo
 ijE
@@ -165492,7 +165354,7 @@ fll
 uEn
 hwY
 xyu
-gfa
+wDJ
 dMr
 qtd
 ijE
@@ -176375,8 +176237,8 @@ bDi
 bDi
 xJC
 qQZ
-qQZ
-tXE
+aFR
+aFR
 qQZ
 qQZ
 xJC
@@ -176676,11 +176538,11 @@ xJC
 bDi
 xJC
 xJC
-aFR
-saK
-saK
-wEE
-aFR
+xJC
+xJC
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -176978,11 +176840,11 @@ xJC
 xJC
 xJC
 xJC
-aFR
-saK
-saK
-saK
-aFR
+xJC
+xJC
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -177280,11 +177142,11 @@ xJC
 xJC
 xJC
 xJC
-aFR
-avU
-saK
-saK
-aFR
+xJC
+xJC
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -177582,11 +177444,11 @@ xJC
 xJC
 xJC
 xJC
-qQZ
-qQZ
-qQZ
-qQZ
-qQZ
+xJC
+xJC
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -185060,7 +184922,7 @@ eJl
 mVp
 koH
 wZv
-pPp
+tXE
 iIU
 dDT
 xJC
