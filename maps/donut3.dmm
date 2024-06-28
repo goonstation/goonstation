@@ -80,7 +80,7 @@
 	icon_state = "line1"
 	},
 /obj/item/storage/wall/clothingrack/dresses{
-	dir = 2
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
