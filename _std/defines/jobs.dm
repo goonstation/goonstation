@@ -56,10 +56,10 @@
 #define HIDDEN_JOBS (1<<2)
 
 // Job round requirements
-#define ROUNDS_REQ_CAPTAIN 30 // captains should know what they're doing (they won't)
-#define ROUNDS_REQ_SECURITY 30 // higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
-#define ROUNDS_REQ_DETECTIVE 15 // half of sec, please stop shooting people with lethals
-#define ROUNDS_REQ_SECASS 5
+#define ROUNDS_MIN_CAPTAIN 30 // captains should know what they're doing (they won't)
+#define ROUNDS_MIN_SECURITY 30 // higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
+#define ROUNDS_MIN_DETECTIVE 15 // half of sec, please stop shooting people with lethals
+#define ROUNDS_MIN_SECASS 5
 
 // Job round maximum (for newbees)
 #define ROUNDS_MAX_RESASS 75
