@@ -22818,7 +22818,7 @@
 /obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1225;
-	id_tag = s;
+	id_tag = "engine_combust";
 	master_id = "engine_combust_control";
 	name = "Gas Mixer (Combustion Chamber)"
 	},
