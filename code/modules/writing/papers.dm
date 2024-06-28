@@ -1,5 +1,9 @@
 // This file is for premade paper/pamphlet things
 
+//stupid fucking awful defines to make images display properly because the styling is all fucked and I cant
+#define IMAGE_OFFSET_X 20
+#define IMAGE_OFFSET_Y 52
+
 /obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
@@ -643,25 +647,27 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postcard-mushroom"
 	sizex = 1066
 	sizey = 735
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
 
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
 	icon_state = "botany_guide"
-	sizex = 970
-	sizey = 690
+	sizex = 965 + IMAGE_OFFSET_X
+	sizey = 682 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
 
 /obj/item/paper/ranch_guide
 	name = "Ranch Field Guide"
@@ -669,6 +675,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "ranch_guide"
 	sizex = 1100
 	sizey = 800
+	scrollbar = FALSE
 
 	New()
 		..()
@@ -682,6 +689,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postcard-owlery"
 	sizex = 1229 //pls
 	sizey = 650
+	scrollbar = FALSE
 
 	New()
 		..()
@@ -870,13 +878,15 @@ proc/spawn_kitchen_note()
 	icon_state = "businesscard"
 	desc = "A generic looking business card, offering printing services for more business cards."
 
-	sizex = 640
-	sizey = 400
+	sizex = 600 + 20
+	sizey = 346 + 52
+	scrollbar = FALSE
 
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+		//note that the margin styling here does not work, I'm just leaving it here to indicate that there is indeed a problem with the margins that someone smarter than me should fix
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
 
 
 /obj/item/paper/businesscard/banjo
@@ -886,7 +896,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
 
 
 /obj/item/paper/businesscard/biteylou
@@ -897,7 +907,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
 
 
 /obj/item/paper/businesscard/bonktek
@@ -907,17 +917,17 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
 
 /obj/item/paper/businesscard/clowntown
 	name = "business card - Clown Town"
 	icon_state = "businesscard"
-	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+	desc = "A business card for the Clown Town Autonomous Collective."
 	color = "blue"
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
 
 /obj/item/paper/businesscard/cosmicacres
 	name = "business card - Cosmic Acres"
@@ -926,7 +936,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
 
 /obj/item/paper/businesscard/ezekian
 	name = "business card - Ezekian Veterinary Clinic"
@@ -936,7 +946,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
 
 /obj/item/paper/businesscard/gragg1
 	name = "business card - Amantes Mini Golf"
@@ -945,7 +955,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
 
 /obj/item/paper/businesscard/gragg2
 	name = "business card - Amantes Rock Shop"
@@ -954,7 +964,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
 
 /obj/item/paper/businesscard/josh
 	name = "business card - Josh"
@@ -964,7 +974,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
 
 /obj/item/paper/businesscard/lawyers
 	name = "business card - Hogge & Wylde"
@@ -973,7 +983,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_law.png")]'></body></html>"
 
 /obj/item/paper/businesscard/hemera_rcd
 	name = "info card - Rapid Construction Device"
@@ -982,7 +992,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
 
 
 /obj/item/paper/businesscard/skulls
@@ -992,7 +1002,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
 
 /obj/item/paper/businesscard/taxi
 	name = "business card - Old Fortuna Taxi Company"
@@ -1002,7 +1012,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
 
 /obj/item/paper/businesscard/vurdulak
 	name = "business card - Emporium Vurdulak"
@@ -1012,7 +1022,19 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+
+/obj/item/paper/businesscard/seneca
+	name = "business card - Seneca Falls"
+	desc = "A dog-eared blue and gold business card from a staff recruitment agency."
+	icon_state = "businesscard-seneca"
+	//slightly smaller because a staffie left it in their pocket and it shrunk in the wash and also cog can't get the original resolution right now
+	sizex = 408 + IMAGE_OFFSET_X
+	sizey = 233 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_seneca.png")]'></body></html>"
 
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
@@ -1245,3 +1267,6 @@ proc/spawn_kitchen_note()
 			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
 			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
 			qdel(src)
+
+#undef IMAGE_OFFSET_X
+#undef IMAGE_OFFSET_Y

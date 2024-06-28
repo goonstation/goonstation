@@ -61,6 +61,8 @@
 	var/list/stamps = null
 	var/list/form_fields = list()
 	var/field_counter = 1
+	///Some subtypes might want to hide the scrollbar
+	var/scrollbar = TRUE
 
 /obj/item/paper/New()
 	..()
@@ -224,6 +226,7 @@
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
+		"scrollbar" = src.scrollbar,
 	)
 
 /obj/item/paper/ui_data(mob/user)
