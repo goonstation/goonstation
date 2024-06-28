@@ -57100,6 +57100,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "fXD" = (
@@ -57412,6 +57414,10 @@
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
+"glo" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/plating,
+/area/watchful_eye_sensor)
 "glz" = (
 /obj/lattice,
 /turf/unsimulated/floor/void,
@@ -58903,7 +58909,7 @@
 	icon_state = "2-8"
 	},
 /obj/grille/catwalk,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate,
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old,
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "hxO" = (
@@ -59741,9 +59747,7 @@
 /obj/cable/green{
 	icon_state = "4-10"
 	},
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate{
-	skeletonized = 1
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old,
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
@@ -61147,6 +61151,12 @@
 /obj/fakeobject/junction_box{
 	desc = "A large, wall-mounted metal box with several burly cables moving from it to the floor.  The front panel is locked. "
 	},
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/blood,
+/obj/fluid_spawner{
+	reagent_id = "blood";
+	amount = 300
+	},
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "jns" = (
@@ -61262,6 +61272,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "jtH" = (
@@ -61807,6 +61819,14 @@
 "jRh" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owleryhall)
+"jRl" = (
+/obj/cable/green{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "jRr" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/sw,
 /area/centcom/offices{
@@ -62759,7 +62779,6 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/dirt2,
-/obj/fakeobject/junction_box,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "kGs" = (
@@ -63662,6 +63681,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light/small/sticky/warm/very,
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "lsj" = (
@@ -68578,9 +68598,7 @@
 /area/iomoon/base)
 "pzo" = (
 /obj/grille/catwalk,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate{
-	skeletonized = 1
-	},
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old,
 /turf/space,
 /area/watchful_eye_sensor)
 "pzY" = (
@@ -72140,6 +72158,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "handblood_c"
 	},
+/obj/decal/cleanable/blood,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "smg" = (
@@ -146672,7 +146691,7 @@ jCA
 nFq
 nJg
 xmf
-udu
+jRl
 nJg
 mzo
 mzo
@@ -147274,9 +147293,9 @@ irO
 wVh
 nJg
 nJg
-yfl
+glo
 slY
-yfl
+glo
 nJg
 mzo
 nzY
