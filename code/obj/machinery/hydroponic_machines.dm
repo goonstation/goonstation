@@ -92,7 +92,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydro_mister0"
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
 	anchored = UNANCHORED
 	var/active = 0
@@ -190,17 +190,6 @@ TYPEINFO(/obj/machinery/hydro_mister)
 			user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !src.anchored
-	if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
-		// Not just watering cans - any kind of glass can be used to pour stuff in.
-		if(!W.reagents.total_volume)
-			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
-			return
-		else
-			user.visible_message(SPAN_NOTICE("[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src]."))
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-			if(!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
-
 
 /obj/machinery/hydro_mister/attack_hand(var/mob/user)
 	src.add_fingerprint(user)

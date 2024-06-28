@@ -67,7 +67,7 @@
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = FALSE
-	var/special_spawn_location = null
+	var/tmp/special_spawn_location = null
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
@@ -209,7 +209,7 @@
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > src.rounds_needed_to_play)
+		if (round_num >= src.rounds_needed_to_play)
 			return TRUE
 		return FALSE
 
@@ -2859,3 +2859,25 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Special Job"
 	job_category = JOB_CREATED
 
+	//handle special spawn location
+	Write(F)
+		. = ..()
+		if(istext(src.special_spawn_location))
+			F["special_spawn_location"] << src.special_spawn_location
+		else if(ismovable(src.special_spawn_location) || isturf(src.special_spawn_location))
+			var/atom/A = src.special_spawn_location
+			var/turf/T = get_turf(A)
+			F["special_spawn_location_coords"] << list(T.x, T.y, T.z)
+
+	Read(F)
+		. = ..()
+		src.special_spawn_location = null
+		var/maybe_spawn_loc = null
+		F["special_spawn_location"] >> maybe_spawn_loc
+		if(istext(maybe_spawn_loc))
+			src.special_spawn_location = maybe_spawn_loc
+		else
+			var/list/maybe_coords = null
+			F["special_spawn_location_coords"] >> maybe_coords
+			if(islist(maybe_coords))
+				src.special_spawn_location = locate(maybe_coords[1], maybe_coords[2], maybe_coords[3])

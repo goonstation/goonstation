@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aY" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17,7 +17,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "bt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -30,7 +30,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "bP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/valve.dmi';
 	icon_state = "valve0-map";
@@ -72,7 +72,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -145,7 +145,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "jf" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -213,7 +213,7 @@
 /area/shuttle/escape/centcom)
 "lL" = (
 /obj/machinery/atmospherics/unary/portables_connector,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -331,7 +331,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "rr" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -386,7 +386,7 @@
 	},
 /area/shuttle/escape/centcom)
 "vN" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -475,7 +475,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -484,7 +484,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -526,7 +526,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -553,7 +553,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "DB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "pipe";
 	color = "b4b4b4"
@@ -561,7 +561,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Es" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -613,7 +613,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -662,7 +662,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "GQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -706,7 +706,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -854,7 +854,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "Ol" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -866,7 +866,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "OU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -881,7 +881,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Pm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	name = "pipe";
 	color = "b4b4b4"
@@ -908,7 +908,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "QF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map";
@@ -938,7 +938,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -959,7 +959,7 @@
 	},
 /area/centcom)
 "Sn" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1022,7 +1022,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "VQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1051,7 +1051,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "Xm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	name = "pipe";
 	color = "b4b4b4"

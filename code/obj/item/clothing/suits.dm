@@ -12,7 +12,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
 	var/over_hair = FALSE
-	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
@@ -486,6 +485,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
+
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chef-alt"
 
 /obj/item/clothing/suit/apron
 	name = "apron"

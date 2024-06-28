@@ -16,8 +16,8 @@
 #define CONDUCT						(1<<6)
 /// can mousedrop reagents into from a reagent_container
 #define ACCEPTS_MOUSEDROP_REAGENTS	(1<<7)
-/// takes a fingerprint
-#define FPRINT						(1<<8)
+/// doesn't record fingerprints
+#define NOFPRINT					(1<<8)
 /// item has priority to check when entering or leaving
 #define ON_BORDER					(1<<9)
 /// can pass through a closed door

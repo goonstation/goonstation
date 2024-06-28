@@ -64,7 +64,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	flags = TGUI_INTERACTIVE | FPRINT
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
@@ -1483,7 +1482,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.8
