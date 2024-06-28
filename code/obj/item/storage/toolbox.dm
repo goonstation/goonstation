@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "red"
 	item_state = "toolbox-red"
-	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 	force = 8
 	throwforce = 10
 	throw_speed = 1

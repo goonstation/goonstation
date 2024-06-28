@@ -7,7 +7,6 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -527,7 +526,6 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	w_class = W_CLASS_BULKY
 	slots = 5
@@ -591,7 +589,6 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	max_wclass = W_CLASS_POCKET_SIZED
 	opens_if_worn = TRUE
@@ -1013,7 +1010,6 @@ TYPEINFO(/obj/item/inner_tube)
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

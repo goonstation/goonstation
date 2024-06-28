@@ -105,7 +105,6 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 	icon_state = "sawfly_remote"
 
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER
 	is_syndicate = TRUE
 

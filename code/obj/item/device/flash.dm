@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/flash)
 	throw_speed = 4
 	throw_range = 10
 	click_delay = COMBAT_CLICK_DELAY
-	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	flags = TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"

@@ -248,7 +248,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	icon_state = "matanalyzer"
 	name = "material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
