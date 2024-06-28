@@ -200,6 +200,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	var/datum/light/point/light
 	var/install_type = INSTALL_WALL
 
+	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
+
 	New()
 		..()
 		inserted_lamp = new light_type()
@@ -817,6 +819,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	light.set_color(initial(src.light_type.color_r), initial(src.light_type.color_g), initial(src.light_type.color_b))
 	light.set_height(2.4)
 	light.attach(src)
+	if (is_valid_icon_state("[src.base_state]-overlay", src.icon))
+		light_overlay = new()
+		light_overlay.mouse_opacity = 0
+		light_overlay.icon = src.icon
+		light_overlay.icon_state = "[src.base_state]-overlay"
+		light_overlay.vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 	SPAWN(1 DECI SECOND)
 		update()
 
@@ -862,6 +870,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			if(LIGHT_BROKEN)
 				icon_state = "[base_state]-broken"
 				on = 0
+	if (!on)
+		vis_contents -= light_overlay
+		return
+	if (!(light_overlay in vis_contents))
+		vis_contents += light_overlay
 
 /obj/machinery/light/proc/do_break()
 	current_lamp.light_status = LIGHT_BROKEN
