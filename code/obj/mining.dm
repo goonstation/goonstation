@@ -2384,6 +2384,7 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			qdel(cargo)
 		src.total_earned += value
+		logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to sell shit for [value] credits.")
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 		boutput(user, "[bicon(src)] *beep*")
