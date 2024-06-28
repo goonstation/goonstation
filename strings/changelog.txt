@@ -1,4 +1,9 @@
 
+(t)fri jun 28 24
+(u)TealSeer
+(p)19405
+(e)🔎🔒❗⚙|C-Code-Quality, A-Secret, E-FUCK, A-Internal
+(*)The way fingerprints are left on objects has been changed under the hood, please report any weirdness or things having fingerprints that shouldn't!
 (t)thu jun 27 24
 (u)glowbold
 (p)19720
