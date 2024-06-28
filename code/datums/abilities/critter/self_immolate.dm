@@ -1,6 +1,6 @@
 /datum/targetable/critter/self_immolate
 	name = "Self Immolate"
-	desc = "Expend some of your health to create a permanent fire that gives off healing embers."
+	desc = "Expend 20% of your current health to create a permanent fire that gives off healing embers."
 	icon_state = "fire_e_immolate"
 
 	cooldown = 15 SECONDS
@@ -14,11 +14,12 @@
 
 		var/mob/fe = holder.owner
 		// boutput(holder.owner, SPAN_ALERT("[fe.get_damage()] damage."))
-		if (fe.get_damage() < 100)
+		if (fe.get_damage() < 0)
 			boutput(fe, SPAN_ALERT("You must be in good health to self-immolate!"))
 			return 1
 
-		fe.TakeDamage("All", 50, 0, 0, DAMAGE_BLUNT)
+		var/damage_dealt = fe.get_damage() * 0.2
+		fe.TakeDamage("All", damage_dealt, 0, 0, DAMAGE_BLUNT)
 		holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner] self immolates! [fe]!</b>"))
 
 		// fireflash(get_turf(fe), 1, checkLos = FALSE, chemfire = CHEM_FIRE_BLUE)

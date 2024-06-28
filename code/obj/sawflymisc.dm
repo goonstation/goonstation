@@ -96,8 +96,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			icon_state_armed = "clusterflyB1"
 
 // -------------------controller---------------
-TYPEINFO(/obj/item/old_grenade/sawfly)
-	mats = list("CON-1"=2)
+TYPEINFO(/obj/item/remote/sawflyremote)
+	mats = list("conductive"=2)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
 	desc = "A small device that can be used to fold or deploy sawflies in range."
@@ -105,7 +105,6 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon_state = "sawfly_remote"
 
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER
 	is_syndicate = TRUE
 

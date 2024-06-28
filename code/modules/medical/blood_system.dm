@@ -771,7 +771,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	var/damage_type = DAMAGE_CUT
 
 	attack_self(mob/user as mob)
@@ -813,7 +813,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	force = 0
 	throwforce = 0
 	throw_range = 16
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = TABLEPASS | NOSHIELD
 	burn_type = 1
 
 	New()

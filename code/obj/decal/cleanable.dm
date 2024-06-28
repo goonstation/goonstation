@@ -31,7 +31,7 @@ proc/make_cleanable(var/type,var/loc)
 	var/last_dry_start = 0
 	var/dry_time = 100
 
-	flags = NOSPLASH | FPRINT
+	flags = NOSPLASH
 	layer = DECAL_LAYER
 
 	plane = PLANE_NOSHADOW_BELOW

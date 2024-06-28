@@ -9,7 +9,6 @@ TYPEINFO(/obj/item/device/speech_pro)
 	item_state = "speech_pro"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	contextLayout = new /datum/contextLayout/experimentalcircle
 
