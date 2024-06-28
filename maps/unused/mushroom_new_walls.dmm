@@ -13579,7 +13579,9 @@
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/oil,
-/obj/reagent_dispensers/heliumtank,
+/obj/machinery/computer/announcement/clown{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "brI" = (
@@ -13873,6 +13875,9 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/peripheral/videocard,
+/obj/item/storage/goodybag,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bsI" = (
@@ -14062,12 +14067,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/engine/engineering/ce)
 "btv" = (
-/obj/table/auto,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
+/obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "btw" = (
@@ -14453,6 +14455,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 8
