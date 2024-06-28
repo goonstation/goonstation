@@ -10,7 +10,6 @@
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50
-	flags = FPRINT|TABLEPASS
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800

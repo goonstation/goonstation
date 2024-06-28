@@ -672,7 +672,6 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
-	flags = FPRINT | TABLEPASS
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7

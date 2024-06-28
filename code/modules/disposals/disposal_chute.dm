@@ -19,7 +19,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon_state = "disposal"
 	anchored = ANCHORED
 	density = 1
-	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
