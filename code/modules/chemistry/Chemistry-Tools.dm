@@ -1334,7 +1334,7 @@ proc/ui_describe_reagents(atom/A)
 	desc = "A dish tailored hold pathogen cultures."
 	initial_volume = 40
 	rc_flags = 0
-	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
+	flags = TABLEPASS | CONDUCT | OPENCONTAINER
 
 /obj/item/bloodslide
 	name = "Blood Slide"
@@ -1344,7 +1344,7 @@ proc/ui_describe_reagents(atom/A)
 
 	var/datum/reagent/blood/blood = null
 
-	flags = TABLEPASS | CONDUCT | FPRINT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 	New()
 		..()
