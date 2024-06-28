@@ -8,7 +8,8 @@ interface PreviewImageProps {
 }
 
 const PreviewImage = (props: PreviewImageProps) => {
-  const { height, icon } = props;
+  const DEFAULT_PREVIEW_HEIGHT = 64;
+  const { height = DEFAULT_PREVIEW_HEIGHT, icon } = props;
   return <Image height={`${height * 2}px`} pixelated src={`data:image/png;base64,${icon}`} />;
 };
 
