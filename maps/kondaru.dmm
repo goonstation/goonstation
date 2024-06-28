@@ -3560,8 +3560,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
 "amB" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "amC" = (
 /obj/machinery/light,
@@ -4527,6 +4530,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -12828,6 +12834,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/machinery/ai_status_display,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aYA" = (
@@ -31349,7 +31356,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/interrogation)
 "dht" = (
-/turf/simulated/floor/circuit,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "dii" = (
 /obj/landmark/halloween,
@@ -37411,8 +37425,14 @@
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "hms" = (
-/obj/machinery/ai_status_display,
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "hmz" = (
 /obj/stool/chair{
@@ -44968,6 +44988,9 @@
 	dir = 9;
 	icon_state = "line2"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "mVR" = (
@@ -46686,7 +46709,17 @@
 	pixel_y = 11;
 	tag = ""
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "ojj" = (
 /obj/cable{
@@ -56383,9 +56416,17 @@
 	},
 /area/station/medical/medbay)
 "voO" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone,
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "vpk" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -113450,7 +113491,7 @@ adp
 aSO
 oiX
 mVD
-vDN
+dht
 apY
 vDN
 axk
@@ -114052,7 +114093,7 @@ rWY
 aTH
 aND
 aSO
-dht
+hms
 hfa
 rFj
 rFj
