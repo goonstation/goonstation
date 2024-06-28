@@ -878,8 +878,8 @@ proc/spawn_kitchen_note()
 	icon_state = "businesscard"
 	desc = "A generic looking business card, offering printing services for more business cards."
 
-	sizex = 600 + 20
-	sizey = 346 + 52
+	sizex = 600 + IMAGE_OFFSET_X
+	sizey = 346 + IMAGE_OFFSET_Y
 	scrollbar = FALSE
 
 
