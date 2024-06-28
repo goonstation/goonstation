@@ -2857,6 +2857,7 @@
 	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
+	else if(limb == "all") src.limbs.sever("all")
 
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)
@@ -2985,7 +2986,7 @@
 		src.remove_juggle(A)
 		if(istype(A, /obj/item/device/light)) //i hate this
 			var/obj/item/device/light/L = A
-			L.light.attach(L)
+			L.light?.attach(L)
 		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)

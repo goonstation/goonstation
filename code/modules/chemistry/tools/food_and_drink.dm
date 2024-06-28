@@ -569,7 +569,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.

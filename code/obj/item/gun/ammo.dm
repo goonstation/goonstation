@@ -4,7 +4,7 @@
 	name = "ammo"
 	var/sname = "Generic Ammo"
 	icon = 'icons/obj/items/ammo.dmi'
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "syringe_kit"
 	m_amt = 40000
 	g_amt = 0
@@ -136,17 +136,18 @@
 		// We can't delete A here, because there's going to be ammo left over.
 		if (K.max_ammo_capacity < A.amount_left)
 			// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
-			var/obj/item/ammo/bullets/ammoDrop = new K.ammo.type
-			ammoDrop.amount_left = K.ammo.amount_left
-			ammoDrop.name = K.ammo.name
-			ammoDrop.icon = K.ammo.icon
-			ammoDrop.icon_state = K.ammo.icon_state
-			ammoDrop.ammo_type = K.ammo.ammo_type
-			ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
-			ammoDrop.UpdateIcon()
-			usr.put_in_hand_or_drop(ammoDrop)
-			ammoDrop.after_unload(usr)
-			K.ammo.amount_left = 0 // Make room for the new ammo.
+			for(var/i in 1 to ceil(K.ammo.amount_left / K.ammo.max_amount))
+				var/obj/item/ammo/bullets/ammoDrop = new K.ammo.type
+				ammoDrop.amount_left = min(K.ammo.amount_left, K.ammo.max_amount)
+				ammoDrop.name = K.ammo.name
+				ammoDrop.icon = K.ammo.icon
+				ammoDrop.icon_state = K.ammo.icon_state
+				ammoDrop.ammo_type = K.ammo.ammo_type
+				ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
+				ammoDrop.UpdateIcon()
+				usr.put_in_hand_or_drop(ammoDrop)
+				ammoDrop.after_unload(usr)
+				K.ammo.amount_left = max(K.ammo.amount_left - K.ammo.max_amount, 0) // Make room for the new ammo.
 			K.ammo.loadammo(A, K) // Let the other proc do the work for us.
 			//DEBUG_MESSAGE("Swapped [K]'s ammo with [A.type]. There are [A.amount_left] round left over.")
 			return 2
@@ -156,16 +157,18 @@
 			usr.u_equip(A) // We need a free hand for ammoHand first.
 
 			// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
-			var/obj/item/ammo/bullets/ammoHand = new K.ammo.type
-			ammoHand.amount_left = K.ammo.amount_left
-			ammoHand.name = K.ammo.name
-			ammoHand.icon = K.ammo.icon
-			ammoHand.icon_state = K.ammo.icon_state
-			ammoHand.ammo_type = K.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
-			ammoHand.UpdateIcon()
-			usr.put_in_hand_or_drop(ammoHand)
-			ammoHand.after_unload(usr)
+			for(var/i in 1 to ceil(K.ammo.amount_left / K.ammo.max_amount))
+				var/obj/item/ammo/bullets/ammoHand = new K.ammo.type
+				ammoHand.amount_left = min(K.ammo.amount_left, K.ammo.max_amount)
+				ammoHand.name = K.ammo.name
+				ammoHand.icon = K.ammo.icon
+				ammoHand.icon_state = K.ammo.icon_state
+				ammoHand.ammo_type = K.ammo.ammo_type
+				ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
+				ammoHand.UpdateIcon()
+				usr.put_in_hand_or_drop(ammoHand)
+				ammoHand.after_unload(usr)
+				K.ammo.amount_left = max(K.ammo.amount_left - K.ammo.max_amount, 0)
 
 			var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
 			ammoGun.amount_left = A.amount_left

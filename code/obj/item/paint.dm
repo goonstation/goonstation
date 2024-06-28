@@ -263,7 +263,7 @@ var/list/cached_colors = new/list()
 	var/uses = 15
 	var/paint_intensity = 0.5
 	var/add_orig = 0
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = TRUE
 

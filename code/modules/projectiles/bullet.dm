@@ -881,6 +881,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
+	silentshot = TRUE
 
 /datum/projectile/bullet/grenade_fragment
 	name = "grenade fragment"
@@ -893,6 +894,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
+	silentshot = TRUE
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
