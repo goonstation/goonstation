@@ -1,8 +1,8 @@
 // This file is for premade paper/pamphlet things
 
-//stupid fucking awful defines to make images display properly because the styling is all fucked and I cant
-#define IMAGE_OFFSET_X 20
-#define IMAGE_OFFSET_Y 52
+//the size of the paper includes the 32px wide bar at the top, so we need to account for that here if we want the image to fit exactly
+#define IMAGE_OFFSET_X 0 //x one kept just in case and because I like symmetry :)
+#define IMAGE_OFFSET_Y 32
 
 /obj/item/paper/alchemy
 	name = "'Chemistry Information'"
@@ -645,15 +645,15 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Mushroom Station postcard"
 	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
 	icon_state = "postcard-mushroom"
-	sizex = 1066
-	sizey = 735
+	sizex = 174 + IMAGE_OFFSET_X
+	sizey = 247 + IMAGE_OFFSET_Y
 	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
 
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
@@ -667,7 +667,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin: 0;'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/pocket_guides/botanyguide.png")
 
 /obj/item/paper/ranch_guide
 	name = "Ranch Field Guide"
@@ -681,19 +681,20 @@ Only trained personnel should operate station systems. Follow all procedures car
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
+		//ranch guide actually needs to be scaled down, so we just let it do its own styling here
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
 
 /obj/item/paper/siphon_guide
 	name = "Harmonic Siphon Brief"
 	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
 	icon_state = "postcard-owlery"
-	sizex = 1229 //pls
-	sizey = 650
+	sizex = 1192 + IMAGE_OFFSET_X
+	sizey = 600 + IMAGE_OFFSET_Y
 	scrollbar = FALSE
 
 	New()
 		..()
-		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/siphonguide.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/pocket_guides/siphonguide.png")
 
 /obj/item/paper/iou
 	name = "IOU"
@@ -886,7 +887,7 @@ proc/spawn_kitchen_note()
 	New()
 		..()
 		//note that the margin styling here does not work, I'm just leaving it here to indicate that there is indeed a problem with the margins that someone smarter than me should fix
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_blank.png")
 
 
 /obj/item/paper/businesscard/banjo
@@ -896,7 +897,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_banjo.png")
 
 
 /obj/item/paper/businesscard/biteylou
@@ -907,7 +908,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_biteylou.png")
 
 
 /obj/item/paper/businesscard/bonktek
@@ -917,7 +918,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_bonktek.png")
 
 /obj/item/paper/businesscard/clowntown
 	name = "business card - Clown Town"
@@ -927,7 +928,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_clowntown.png")
 
 /obj/item/paper/businesscard/cosmicacres
 	name = "business card - Cosmic Acres"
@@ -936,7 +937,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_cosmicacres.png")
 
 /obj/item/paper/businesscard/ezekian
 	name = "business card - Ezekian Veterinary Clinic"
@@ -946,7 +947,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_ezekian.png")
 
 /obj/item/paper/businesscard/gragg1
 	name = "business card - Amantes Mini Golf"
@@ -955,7 +956,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_gragg1.png")
 
 /obj/item/paper/businesscard/gragg2
 	name = "business card - Amantes Rock Shop"
@@ -964,7 +965,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_gragg2.png")
 
 /obj/item/paper/businesscard/josh
 	name = "business card - Josh"
@@ -974,7 +975,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_josh.png")
 
 /obj/item/paper/businesscard/lawyers
 	name = "business card - Hogge & Wylde"
@@ -983,7 +984,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_law.png")
 
 /obj/item/paper/businesscard/hemera_rcd
 	name = "info card - Rapid Construction Device"
@@ -992,7 +993,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_RCD.png")
 
 
 /obj/item/paper/businesscard/skulls
@@ -1002,7 +1003,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_skulls.png")
 
 /obj/item/paper/businesscard/taxi
 	name = "business card - Old Fortuna Taxi Company"
@@ -1012,7 +1013,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_taxi.png")
 
 /obj/item/paper/businesscard/vurdulak
 	name = "business card - Emporium Vurdulak"
@@ -1022,7 +1023,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_vurdulak.png")
 
 /obj/item/paper/businesscard/seneca
 	name = "business card - Seneca Falls"
@@ -1034,7 +1035,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin: 0;'><img src='[resource("images/arts/business_seneca.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_seneca.png")
 
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
@@ -1267,6 +1268,20 @@ proc/spawn_kitchen_note()
 			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
 			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
 			qdel(src)
+
+/obj/item/paper/xg_tapes
+	name = "XIANG|GIESEL Onboarding Course"
+	desc = "A cover sheet meant to accompany a set of corporate training materials."
+	icon_state = "paper_burned"
+	sizex = 718 + IMAGE_OFFSET_X
+	sizey = 1023 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
 
 #undef IMAGE_OFFSET_X
 #undef IMAGE_OFFSET_Y
