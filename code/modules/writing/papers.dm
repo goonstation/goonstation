@@ -922,9 +922,8 @@ proc/spawn_kitchen_note()
 
 /obj/item/paper/businesscard/clowntown
 	name = "business card - Clown Town"
-	icon_state = "businesscard"
+	icon_state = "businesscard-clowntown"
 	desc = "A business card for the Clown Town Autonomous Collective."
-	color = "blue"
 
 	New()
 		..()
@@ -969,9 +968,8 @@ proc/spawn_kitchen_note()
 
 /obj/item/paper/businesscard/josh
 	name = "business card - Josh"
-	icon_state = "businesscard"
+	icon_state = "businesscard-josh"
 	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-	color = "green"
 
 	New()
 		..()
@@ -1017,9 +1015,8 @@ proc/spawn_kitchen_note()
 
 /obj/item/paper/businesscard/vurdulak
 	name = "business card - Emporium Vurdulak"
-	icon_state = "businesscard"
+	icon_state = "businesscard-vurdulak"
 	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-	color = "purple"
 
 	New()
 		..()
