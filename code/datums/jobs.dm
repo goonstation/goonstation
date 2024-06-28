@@ -209,7 +209,7 @@
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > src.rounds_needed_to_play)
+		if (round_num >= src.rounds_needed_to_play)
 			return TRUE
 		return FALSE
 

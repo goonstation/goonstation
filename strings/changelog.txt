@@ -1,4 +1,33 @@
 
+(t)thu jun 27 24
+(u)glowbold
+(p)19720
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Projectiles have a chance to pass through girders. The more secure a girder is, the less likely projectiles can travel through them.
+(t)wed jun 26 24
+(u)LeahTheTech
+(*)Did you know Abzu has two suns? Well now it actually does in-game - Oshan nights will be brighter and red tinted as the planet is lit by its second sun. The bright daylight hours have also been extended a bit, so overall it should feel much brighter.
+(u)Kubius
+(p)19648
+(e)🆕⚖|C-Feature, C-Balance
+(+)Small update pass on requisitions, notably less using tools no longer available in general manufacturer.
+(u)Angelx3
+(p)19657
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Resprites the cat ears and all their recolours.
+(+)Makes cat ears overlay over helmets.
+(u)CalliopeSoups
+(p)19496
+(e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
+(+)Skeletons drop their torso on death as a tasty snack for antags.
+(u)Flaborized
+(p)19662
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited the mineral accumulator.
+(u)glowbold
+(p)19613
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
 (t)mon jun 24 24
 (u)LeahTheTech
 (+)RP security officers no longer have access to APCs.

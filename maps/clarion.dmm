@@ -31727,6 +31727,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "pEu" = (

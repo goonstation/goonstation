@@ -547,7 +547,7 @@ proc/filter_carrier_pets(var/type)
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (pounce && !pounce.disabled && pounce.cooldowncheck() && prob(50))
-			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips [him_or_her(target)]!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -770,7 +770,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips them!"), SPAN_COMBAT("You run into [target]!"))
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips [him_or_her(target)]!"), SPAN_COMBAT("You run into [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -1865,7 +1865,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					src.death()
 					return
 				else
-					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
+					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws [him_or_her(M)] off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
 					M.setStatus("knockdown", 5 SECONDS)
 					return
 		. = ..()

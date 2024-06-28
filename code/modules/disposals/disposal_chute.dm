@@ -670,11 +670,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attackby(var/obj/item/I, var/mob/user)
 		return
 
+	Entered()
+		. = ..()
+		flush = 1
+
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
-		flush = 1
 
 		if (!is_processing)
 			SubscribeToProcess()
