@@ -359,6 +359,15 @@
 	medical = 1
 	initial_reagents = "synthflesh"
 
+/obj/item/reagent_containers/patch/synthetic
+	name = "synthetic anticyst"
+	desc = "It reeks like an abandoned TV dinner. Hopefully it's healthier than one."
+	icon_state = "synthpatch"
+	style = "synthpatch"
+	sticker_icon_state = "synthpatch"
+	initial_volume = 10
+	initial_reagents = "synthflesh"
+
 /obj/item/patch_stack
 	name = "Patch Stack"
 	desc = "A stack, holding patches. The top patch can be used."

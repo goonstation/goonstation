@@ -665,7 +665,7 @@
 /area/station/hallway/primary/east)
 "agP" = (
 /obj/item/storage/wall/clothingrack/clothes3{
-	dir = 4
+	dir = 2
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
@@ -21466,7 +21466,7 @@
 /area/station/hangar/science)
 "grK" = (
 /obj/item/storage/wall/clothingrack/clothes1{
-	dir = 4
+	dir = 2
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
@@ -27676,7 +27676,7 @@
 /area/station/chapel/sanctuary)
 "iof" = (
 /obj/item/storage/wall/clothingrack/clothes4{
-	dir = 4
+	dir = 2
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
