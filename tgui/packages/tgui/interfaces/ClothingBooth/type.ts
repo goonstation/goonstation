@@ -28,18 +28,18 @@ export interface ClothingBoothGroupingData {
 export interface ClothingBoothItemData {
   name: string;
   cost: number;
-  swatch_background_colour?: string;
+  swatch_background_color?: string;
 	swatch_foreground_shape?: string;
-	swatch_foreground_colour?: string;
+	swatch_foreground_color?: string;
 }
 
 export interface SwatchForegroundProps {
-  colour: string;
+  color: string;
 }
 
 export interface ClothingBoothGroupingTagsData {
   name: string;
-  colour?: string;
+  color?: string;
   display_order?: number | 1;
 }
 

@@ -32,8 +32,8 @@ var/list/serialized_clothingbooth_tags = list()
 			serialized_items[item.name] = list(
 				"name" = item.name,
 				"cost" = item.cost,
-				"swatch_background_colour" = item.swatch_background_colour,
-				"swatch_foreground_colour" = item.swatch_foreground_colour,
+				"swatch_background_color" = item.swatch_background_color,
+				"swatch_foreground_color" = item.swatch_foreground_color,
 				"swatch_foreground_shape" = item.swatch_foreground_shape,
 			)
 
@@ -49,7 +49,7 @@ var/list/serialized_clothingbooth_tags = list()
 			if (!tag_match_found)
 				serialized_clothingbooth_tags_buffer[grouping_tag.name] = list(
 					"name" = grouping_tag.name,
-					"colour" = grouping_tag.colour,
+					"color" = grouping_tag.color,
 					"display_order" = grouping_tag.display_order,
 				)
 		var/list/serialized_grouping = list(
@@ -88,13 +88,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item)
 	/// The type path of the actual item that is for purchase.
 	var/item_path = /obj/item/clothing/under/color/white
 
-	/// Hex representation of the swatch's primary swatch colour. This must be manually overridden by all items if you don't want the hideous
+	/// Hex representation of the swatch's primary swatch color. This must be manually overridden by all items if you don't want the hideous
 	/// placeholder.
-	var/swatch_background_colour = "#ff00ff"
-	/// This will be the colour of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined.
-	var/swatch_foreground_colour = "#000000"
+	var/swatch_background_color = "#ff00ff"
+	/// This will be the color of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined.
+	var/swatch_foreground_color = "#000000"
 	/// The name of the foreground shape to use, defined in `_std\defines\clothingbooth.dm`. Only necessary if differentiating between items within a
-	/// parent `clothingbooth_grouping` cannot be done with background colours alone.
+	/// parent `clothingbooth_grouping` cannot be done with background colors alone.
 	var/swatch_foreground_shape = null
 
 	New()
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag)
  */
 /datum/clothingbooth_grouping_tag
 	var/name = "Foo"
-	var/colour = null
+	var/color = null
 	/// The higher the `display_order`, the lower the `clothingbooth_grouping_tag`s will be displayed (i.e., further right). Exists for the sake of
 	///	a clear organizational hirearchy. Seasonal tags will be shown first, followed by formality, then set name, etc.
 	var/display_order = 1

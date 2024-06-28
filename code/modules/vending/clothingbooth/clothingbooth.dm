@@ -43,7 +43,7 @@
 	/// If `TRUE`, don't check for account balance or inserted money.
 	var/everything_is_free = FALSE
 
-	/// Optional dye colour or matrix to apply to all sold objects.
+	/// Optional dye color or matrix to apply to all sold objects.
 	var/dye
 
 /obj/machinery/clothingbooth/New()
