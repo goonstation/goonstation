@@ -1,5 +1,9 @@
 
 (t)fri jun 28 24
+(u)Kubius
+(p)19635
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The Prototypist requisition has four new outcomes.
 (u)mintyphresh
 (p)19479
 (e)🆕💡|C-Feature, A-Station-Systems
