@@ -907,7 +907,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	item_state = "spraycan"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE

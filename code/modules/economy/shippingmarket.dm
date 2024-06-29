@@ -641,6 +641,7 @@
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
 			wagesystem.shipping_budget += share_NT
 			account["current_money"] += share_seller
+			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
