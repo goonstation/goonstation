@@ -1306,7 +1306,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "agQ" = (
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/manufacturer/gas,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "agT" = (
@@ -28555,8 +28555,8 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "jIt" = (
-/obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/light/small/sticky/frostedred,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "jIC" = (

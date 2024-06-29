@@ -28537,10 +28537,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYT" = (
-/obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/manufacturer/gas,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYV" = (

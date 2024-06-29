@@ -7699,7 +7699,6 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aYy" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -7707,6 +7706,7 @@
 	pixel_x = -10
 	},
 /obj/decal/stripe_caution,
+/obj/machinery/manufacturer/gas,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aYz" = (
