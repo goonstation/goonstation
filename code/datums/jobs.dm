@@ -264,7 +264,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
-	rounds_needed_to_play = ROUNDS_REQ_CAPTAIN
+	rounds_needed_to_play = ROUNDS_MIN_CAPTAIN
 
 	derelict
 		//name = "NT-SO Commander"
@@ -537,7 +537,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
-	rounds_needed_to_play = ROUNDS_REQ_SECURITY
+	rounds_needed_to_play = ROUNDS_MIN_SECURITY
 	wiki_link = "https://wiki.ss13.co/Security_Officer"
 
 	assistant
@@ -558,7 +558,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_poc1 = list(/obj/item/storage/security_pouch/assistant)
 		slot_poc2 = list(/obj/item/requisition_token/security/assistant)
 		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
-		rounds_needed_to_play = ROUNDS_REQ_SECASS
+		rounds_needed_to_play = ROUNDS_MIN_SECASS
 		wiki_link = "https://wiki.ss13.co/Security_Assistant"
 
 	derelict
@@ -601,7 +601,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 	map_can_autooverride = FALSE
-	rounds_needed_to_play = ROUNDS_REQ_DETECTIVE
+	rounds_needed_to_play = ROUNDS_MIN_DETECTIVE
 	wiki_link = "https://wiki.ss13.co/Detective"
 
 	special_setup(var/mob/living/carbon/human/M)
