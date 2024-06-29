@@ -1,5 +1,10 @@
 
 (t)sat jun 29 24
+(u)glowbold
+(p)19703
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Kinetic projectiles progressively break computers/consoles to scrap.
+(+)Energy projectiles, including tasers, have a chance to break computer/console screens.
 (u)joeled
 (p)19647
 (e)🗺💅🔬|A-Mapping, C-QoL, A-Science
