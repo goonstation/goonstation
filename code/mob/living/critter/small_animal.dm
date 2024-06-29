@@ -2968,7 +2968,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Tiny Bat Rina"
 	real_name = "Tiny Bat Rina"
 	desc = "Why does this little bat have a purple ponytail?"
-	icon = "icons/misc/janstuff.dmi"
+	icon = 'icons/misc/janstuff.dmi'
 	icon_state = "batrina"
 	icon_state_dead = "batrina-dead"
 	health_brute = 30
