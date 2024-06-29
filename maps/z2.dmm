@@ -63484,8 +63484,8 @@
 	},
 /obj/item/decoration/flower_vase/vase7{
 	icon_state = "vase3";
-	pixel_x = 10;
-	pixel_y = 13
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/drinks/pinkmug{
 	pixel_x = -4;
@@ -65503,6 +65503,13 @@
 "nUo" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4
+	},
+/mob/living/critter/small_animal/bat/doctor{
+	pixel_y = 4
+	},
+/obj/stool/bee_bed/double{
+	desc = "Just the right size for a tiny bat.";
+	name = "batsket"
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 4
@@ -73014,15 +73021,13 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/decoration/flower_vase/vase7{
-	icon_state = "vase4";
-	pixel_x = -2;
-	pixel_y = 21
-	},
 /obj/item/clothing/glasses/regular{
 	desc = "She doesn't wear glasses. Whose were these?";
 	pixel_x = -2;
 	pixel_y = 3
+	},
+/obj/item/decoration/flower_vase/fleurdaffodil{
+	pixel_x = -3
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 10

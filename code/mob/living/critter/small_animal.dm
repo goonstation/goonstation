@@ -30,6 +30,7 @@
   - bats
    - angry bats
    - Dr. Acula
+   - Tiny Bat Rina (admin office pet)
   - wasps
   - raccoons
   - slugs
@@ -2959,6 +2960,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 	is_pet = 2
+	player_can_spawn_with_pet = FALSE
+
+/* ------------------ Tiny Bat Rina ------------------ */
+
+/mob/living/critter/small_animal/bat/doctor
+	name = "Tiny Bat Rina"
+	real_name = "Tiny Bat Rina"
+	desc = "Why does this little bat have a purple ponytail?"
+	icon = "icons/misc/janstuff.dmi"
+	icon_state = "batrina"
+	icon_state_dead = "batrina-dead"
+	health_brute = 30
+	health_burn = 30
 	player_can_spawn_with_pet = FALSE
 
 /* ============================================== */
