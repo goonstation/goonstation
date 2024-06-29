@@ -225,3 +225,6 @@
 #define MATCH_UNLIT 0
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
+
+///macro for rendering an image fullsize on paper
+#define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"

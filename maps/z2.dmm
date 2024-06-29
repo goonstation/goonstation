@@ -16473,6 +16473,11 @@
 	dir = 4
 	},
 /area/precursor)
+"bnO" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm8"
+	},
+/area/syndicate_station/battlecruiser)
 "bnP" = (
 /obj/critter/ancient_thing,
 /obj/fakeobject{
@@ -32419,7 +32424,9 @@
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm1"
+	},
 /area/syndicate_station/battlecruiser)
 "cwc" = (
 /obj/decal/stalagtite{
@@ -44474,11 +44481,9 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfo" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm14"
 	},
-/turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -44683,11 +44688,9 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "dfQ" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm4"
 	},
-/turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfS" = (
 /obj/cable{
@@ -44902,7 +44905,9 @@
 /area/syndicate_station/battlecruiser)
 "dgv" = (
 /obj/machinery/light,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	dir = 1
+	},
 /area/syndicate_station/battlecruiser)
 "dgx" = (
 /turf/unsimulated/floor/red,
@@ -46549,6 +46554,11 @@
 "dny" = (
 /turf/unsimulated/floor,
 /area/centcom)
+"dnH" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm18"
+	},
+/area/syndicate_station/battlecruiser)
 "dnK" = (
 /obj/stool/chair/comfy/red{
 	dir = 4
@@ -54759,16 +54769,6 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
-"eaa" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/landmark{
-	name = "Nuclear-Bomb"
-	},
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "eal" = (
 /obj/table/wood/round/auto,
 /obj/map/light/white,
@@ -56513,6 +56513,11 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
+"fJM" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm9"
+	},
+/area/syndicate_station/battlecruiser)
 "fKc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -59218,6 +59223,14 @@
 	dir = 8
 	},
 /area/centcom/gallery)
+"ioZ" = (
+/obj/landmark{
+	name = "Nuclear-Bomb"
+	},
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm11"
+	},
+/area/syndicate_station/battlecruiser)
 "iqp" = (
 /obj/table/auto,
 /obj/item/currency/spacecash/twenty,
@@ -60432,6 +60445,11 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
+"joO" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm19"
+	},
+/area/syndicate_station/battlecruiser)
 "joV" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/red,
@@ -65990,6 +66008,11 @@
 /obj/tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
+"oss" = (
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/syndicate_station/battlecruiser)
 "osO" = (
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
@@ -66615,6 +66638,11 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"pah" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm21"
+	},
+/area/syndicate_station/battlecruiser)
 "pbV" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -70381,7 +70409,9 @@
 /obj/rack,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/breath,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm2"
+	},
 /area/syndicate_station/battlecruiser)
 "sdU" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -70805,6 +70835,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
+"swp" = (
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/syndicate_station/battlecruiser)
 "sxc" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/glass/bottle/acetone/janitors,
@@ -72271,7 +72306,9 @@
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
 /obj/machinery/light,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm3"
+	},
 /area/syndicate_station/battlecruiser)
 "uca" = (
 /obj/fakeobject/pipe{
@@ -72750,6 +72787,11 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"uzI" = (
+/turf/unsimulated/floor/black{
+	dir = 1
+	},
+/area/syndicate_station/battlecruiser)
 "uAc" = (
 /obj/surgery_tray,
 /obj/item/storage/firstaid/docbag{
@@ -73004,6 +73046,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"uIv" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm13"
+	},
+/area/syndicate_station/battlecruiser)
 "uJb" = (
 /obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
@@ -73560,7 +73607,9 @@
 /area/retentioncenter)
 "vkk" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm20"
+	},
 /area/syndicate_station/battlecruiser)
 "vkY" = (
 /obj/window_blinds/cog2{
@@ -73810,6 +73859,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"vsp" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/syndicate_station/battlecruiser)
 "vss" = (
 /obj/critter/monster_door,
 /turf/unsimulated/floor,
@@ -102375,11 +102430,11 @@ cLo
 cIm
 ddr
 der
-bqV
-bqV
-bqV
-bqV
-bqV
+oss
+oss
+oss
+oss
+oss
 dgD
 bqW
 dgR
@@ -102677,9 +102732,9 @@ cIJ
 cIJ
 eRK
 des
-bqV
+uzI
 dfo
-dfQ
+fJM
 dfQ
 dgv
 lzl
@@ -102979,10 +103034,10 @@ cIJ
 fvB
 ddG
 des
-bqV
-dfo
-dfQ
-dfQ
+joO
+dfT
+dgm
+dgz
 cvZ
 lzl
 dgQ
@@ -103282,9 +103337,9 @@ cIJ
 eRK
 des
 vkk
-eaa
-dfQ
-dfQ
+dfU
+ioZ
+dgA
 sdh
 lzl
 bqW
@@ -103583,10 +103638,10 @@ cIJ
 fvB
 ddG
 des
-bqV
-dfo
-dfQ
-dfQ
+pah
+dfV
+dgo
+dgB
 ubB
 lzl
 bqW
@@ -103885,11 +103940,11 @@ cIJ
 cIJ
 eRK
 des
-bqV
-dfo
-dfQ
-dfQ
-bqV
+uzI
+dnH
+uIv
+bnO
+uzI
 dgD
 bqW
 dha
@@ -104187,11 +104242,11 @@ cLq
 cIN
 ddK
 det
-bqV
-bqV
-bqV
-bqV
-dgv
+swp
+swp
+swp
+swp
+vsp
 lzl
 dgP
 dhb
