@@ -14092,6 +14092,14 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
+"cMa" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/station/science/lab)
 "cMJ" = (
 /obj/machinery/clonepod,
 /obj/cable{
@@ -15638,14 +15646,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
-"hth" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer{
-	dir = 8
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 6
-	},
-/area/station/science/lab)
 "hto" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -21168,29 +21168,6 @@
 	dir = 6
 	},
 /area/station/solar/north)
-"xlN" = (
-/obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer,
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/igniter,
-/obj/item/device/analyzer/atmospheric,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/lab)
 "xpG" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -21393,6 +21370,29 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"xPP" = (
+/obj/table/auto,
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/timer,
+/obj/item/device/prox_sensor{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/assembly/time_ignite,
+/obj/item/device/igniter,
+/obj/item/device/analyzer/atmospheric,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lab)
 "xRX" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -63932,7 +63932,7 @@ aIT
 nUY
 exF
 mmr
-xlN
+xPP
 aKH
 aaa
 aaa
@@ -64234,7 +64234,7 @@ aIR
 vqf
 aJI
 koV
-hth
+cMa
 aKH
 aaa
 aaa

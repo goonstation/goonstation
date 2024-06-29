@@ -39103,13 +39103,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
-"dQJ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "dQM" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -52947,6 +52940,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"oDS" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "oEp" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -91756,7 +91756,7 @@ bQK
 bPx
 bOd
 bHW
-dQJ
+oDS
 huq
 cak
 ite

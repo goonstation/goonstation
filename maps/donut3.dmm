@@ -13752,6 +13752,12 @@
 	dir = 4
 	},
 /area/station/crew_quarters/cafeteria)
+"dZe" = (
+/obj/item/storage/wall/clothingrack/clothes4{
+	dir = 2
+	},
+/turf/simulated/floor/white,
+/area/station/crewquarters/fuq3)
 "dZp" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -18497,6 +18503,12 @@
 "fwX" = (
 /turf/simulated/floor/dojo/sand/horizontal,
 /area/station/crew_quarters/captain)
+"fxt" = (
+/obj/item/storage/wall/clothingrack/clothes3{
+	dir = 2
+	},
+/turf/simulated/floor/white,
+/area/station/crewquarters/fuq3)
 "fxy" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -42329,13 +42341,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
-"mME" = (
-/obj/machinery/light/incandescent/harsh{
-	dir = 1
-	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/black/grime,
-/area/station/science/storage)
 "mMG" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -49766,12 +49771,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/testchamber/bombchamber)
-"oYv" = (
-/obj/item/storage/wall/clothingrack/clothes3{
-	dir = 2
-	},
-/turf/simulated/floor/white,
-/area/station/crewquarters/fuq3)
 "oYA" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal/personel_alt,
@@ -62134,6 +62133,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"sNM" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "sNQ" = (
 /obj/grille/catwalk/jen,
 /obj/cable{
@@ -63551,12 +63557,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"tjM" = (
-/obj/item/storage/wall/clothingrack/clothes4{
-	dir = 2
-	},
-/turf/simulated/floor/white,
-/area/station/crewquarters/fuq3)
 "tkf" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
@@ -65710,6 +65710,12 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"tQv" = (
+/obj/item/storage/wall/clothingrack/clothes1{
+	dir = 2
+	},
+/turf/simulated/floor/white,
+/area/station/crewquarters/fuq3)
 "tQD" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/decal/stripe_caution,
@@ -76195,12 +76201,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"wVv" = (
-/obj/item/storage/wall/clothingrack/clothes1{
-	dir = 2
-	},
-/turf/simulated/floor/white,
-/area/station/crewquarters/fuq3)
 "wVy" = (
 /obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/yellowblack{
@@ -118399,7 +118399,7 @@ qnG
 lmi
 qnG
 hyr
-mME
+sNM
 vDz
 vDz
 ijU
@@ -133682,9 +133682,9 @@ aTP
 cNW
 jGO
 koB
-tjM
-oYv
-wVv
+dZe
+fxt
+tQv
 klB
 uEC
 wzi

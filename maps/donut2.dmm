@@ -34587,6 +34587,10 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/stockex)
+"nxx" = (
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "nyC" = (
 /obj/warp_beacon{
 	name = "Hangar Beacon"
@@ -35070,10 +35074,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
-"nPY" = (
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "nQm" = (
 /obj/cable/blue{
 	icon_state = "4-8"
@@ -39412,6 +39412,11 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"qnV" = (
+/obj/machinery/light/small/sticky/frostedred,
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "qoa" = (
 /obj/machinery/teleport/portal_generator,
 /obj/cable/blue{
@@ -41401,11 +41406,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
-"rCw" = (
-/obj/machinery/light/small/sticky/frostedred,
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "rCA" = (
 /obj/lattice{
 	dir = 10;
@@ -122222,7 +122222,7 @@ aeA
 aey
 luU
 agk
-rCw
+qnV
 aeg
 pcf
 dkS
@@ -122524,7 +122524,7 @@ aeS
 afk
 aez
 agl
-nPY
+nxx
 aeg
 uGs
 dkS

@@ -58403,6 +58403,17 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
+"fJf" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "fJr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62079,17 +62090,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"jwk" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "jwl" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/caution/south,
@@ -68435,6 +68435,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/storage/emergency2)
+"pWt" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "pWw" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
@@ -74045,13 +74052,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/west)
-"vQa" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "vQh" = (
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/plating,
@@ -100994,7 +100994,7 @@ cTu
 cUU
 qZJ
 kmf
-jwk
+fJf
 cZv
 cOR
 dbw
@@ -101293,7 +101293,7 @@ xFf
 cOR
 cSb
 cTv
-vQa
+pWt
 cWd
 cWd
 cYE

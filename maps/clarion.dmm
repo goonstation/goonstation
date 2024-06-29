@@ -13879,17 +13879,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"cby" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/obj/decal/stripe_caution,
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor,
-/area/station/science/lab)
 "cch" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -39223,6 +39212,17 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
+"uZn" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname  - SS13";
+	pixel_x = -10
+	},
+/obj/decal/stripe_caution,
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor,
+/area/station/science/lab)
 "uZD" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -93361,7 +93361,7 @@ aTi
 aUG
 aWd
 aXk
-cby
+uZn
 aYz
 baY
 lzt
