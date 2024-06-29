@@ -924,6 +924,7 @@ proc/spawn_kitchen_note()
 	name = "business card - Clown Town"
 	icon_state = "businesscard-clowntown"
 	desc = "A business card for the Clown Town Autonomous Collective."
+	sizey = 341 + IMAGE_OFFSET_Y
 
 	New()
 		..()
@@ -1033,6 +1034,15 @@ proc/spawn_kitchen_note()
 	New()
 		..()
 		info = PAPER_IMAGE_RENDER("images/arts/business_seneca.png")
+
+/obj/item/paper/businesscard/cans
+	name = "business card - Dented Cans"
+	desc = "A dodgy looking flyer for what you hope is a scrap metal business."
+	sizey = 345 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
 
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
