@@ -23801,6 +23801,23 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
+"bQr" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/fakeobject{
+	desc = "It's probably broken.";
+	dir = 6;
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "bQs" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black,
@@ -55156,6 +55173,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"eji" = (
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid1"
+	},
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "ejn" = (
 /obj/decal/stage_edge{
 	dir = 4
@@ -77833,6 +77860,13 @@
 	name = "plating"
 	},
 /area/centcom)
+"xjx" = (
+/obj/grille/catwalk,
+/obj/cable/green{
+	icon_state = "6-8"
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "xjT" = (
 /obj/securearea{
 	desc = "";
@@ -147618,7 +147652,7 @@ nJg
 yfl
 hpB
 mef
-swP
+eji
 nJg
 mzo
 nzY
@@ -149126,7 +149160,7 @@ eqP
 gVS
 tuc
 nJg
-dZA
+bQr
 iIC
 cLt
 mzo
@@ -153951,7 +153985,7 @@ nzY
 nzY
 nzY
 nzY
-ipy
+xjx
 mzo
 ltJ
 nzY
