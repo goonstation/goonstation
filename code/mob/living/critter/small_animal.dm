@@ -2964,7 +2964,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /* ------------------ Tiny Bat Rina ------------------ */
 
-/mob/living/critter/small_animal/bat/rina
+/mob/living/critter/small_animal/bat/rina //for Jan's office
 	name = "Tiny Bat Rina"
 	real_name = "Tiny Bat Rina"
 	desc = "Why does this little bat have a purple ponytail?"
@@ -2974,6 +2974,24 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 	player_can_spawn_with_pet = FALSE
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					flick("batrina-dance", src)
+					return SPAN_EMOTE("<b>[src]</b> dances!")
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_EMOTE("<b>[src]</b> makes a tiny bat squeak!")
+		return ..()
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","dance")
+				return 2
+		return ..()
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
