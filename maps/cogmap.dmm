@@ -29675,22 +29675,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"ccM" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
-"ccN" = (
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
-"ccO" = (
-/obj/reagent_dispensers/fueltank,
-/obj/machinery/light/small,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "ccP" = (
 /obj/machinery/dispenser{
 	o2tanks = 5;
@@ -41027,6 +41011,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/medsci)
+"ffc" = (
+/obj/machinery/door/airlock/pyro/security{
+	aiControlDisabled = 1;
+	name = "Armory"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "ffe" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -44389,6 +44385,13 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
+"hIP" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "hJj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -45211,6 +45214,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"iqh" = (
+/obj/deployable_turret/riot/active,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "iqk" = (
 /obj/machinery/cargo_router/Router13,
 /turf/space,
@@ -45277,6 +45291,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"ite" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "itI" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -50531,17 +50552,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"mMm" = (
-/obj/deployable_turret/riot/active,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -57369,6 +57379,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"rWP" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "rWQ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -62573,18 +62587,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"vUR" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "vVq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/grille/catwalk,
@@ -62723,6 +62725,12 @@
 /obj/decal/poster/wallsign/no_smoking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
+"wcb" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "wcq" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -91137,8 +91145,8 @@ bWo
 bXu
 eOu
 cah
-cak
-ccM
+hIP
+hIP
 cec
 cfk
 pNY
@@ -91439,8 +91447,8 @@ bWp
 bHW
 bYS
 gAp
-cak
-ccN
+rWP
+wcb
 bXs
 bXs
 cal
@@ -91742,7 +91750,7 @@ bHW
 bYT
 huq
 cak
-ccO
+ite
 ced
 cfl
 cgD
@@ -95874,7 +95882,7 @@ adE
 adE
 adE
 ajj
-vUR
+ffc
 dPe
 sfv
 xnp
@@ -96170,7 +96178,7 @@ gsU
 nxc
 act
 acV
-mMm
+iqh
 adE
 adE
 adE
@@ -96780,7 +96788,7 @@ adE
 adE
 adE
 aji
-vUR
+ffc
 iqt
 dSf
 aHB
