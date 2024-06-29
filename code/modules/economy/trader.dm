@@ -38,6 +38,11 @@
 	var/doing_a_thing = 0
 	var/log_trades = TRUE
 
+	///A business card or other item type to occasionally include with orders
+	///copy pasted from /datum/trader because we have two separate trader types APPARENTLY
+	var/business_card = null
+	var/business_card_chance = 20
+
 	var/datum/dialogueMaster/dialogue = null //dialogue will open on click if available. otherwise open trade directly.
 	var/lastWindowName = ""
 	var/angrynope = "Not interested." //What the trader says when he declines trade because angry.
@@ -472,6 +477,8 @@
 		var/obj/storage/crate/A = new /obj/storage/crate(pickedloc)
 		showswirl(pickedloc)
 		A.name = "Goods Crate ([src.name])"
+		if (src.business_card && prob(src.business_card_chance))
+			new src.business_card(A)
 		if (!custom)
 			for(var/atom/movable/purchased as anything in shopping_cart)
 				purchased.set_loc(A)
@@ -989,7 +996,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/salvage/electronic_debris(src)
 		src.goods_buy += new /datum/commodity/relics/gnome(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 
@@ -1144,6 +1150,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	name = "Geoff Honkington"
 	angrynope = "HO--nngh. Leave me alone."
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
+	business_card = /obj/item/paper/businesscard/clowntown
 	var/honk = 0
 
 	New()

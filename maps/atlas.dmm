@@ -4057,10 +4057,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"arb" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "arc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9176,9 +9172,6 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"aJG" = (
-/turf/simulated/floor/caution/westeast,
-/area/station/science/lab)
 "aJI" = (
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -9300,16 +9293,6 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
-"aKi" = (
-/obj/machinery/door_control{
-	id = "chamber_2";
-	name = "Vent Control";
-	pixel_x = 24
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/lab)
 "aKk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9404,12 +9387,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
-"aKy" = (
-/obj/machinery/vending/standard,
-/turf/simulated/floor/purplewhite{
-	dir = 6
-	},
-/area/station/science/lab)
 "aKC" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -10084,20 +10061,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"aMS" = (
-/obj/machinery/door_control{
-	id = "chamber_1";
-	name = "Vent Control";
-	pixel_x = -24
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/lab)
 "aMU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/airless/circuit/red,
@@ -10170,6 +10133,19 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"aNh" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/listeningpost/power)
 "aNi" = (
 /obj/storage/crate/furnacefuel,
 /obj/cable{
@@ -13204,26 +13180,6 @@
 	icon_state = "corner_east"
 	},
 /area/station/engine/coldloop)
-"aYN" = (
-/obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer,
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/igniter,
-/obj/item/device/analyzer/atmospheric,
-/turf/simulated/floor/purplewhite,
-/area/station/science/lab)
 "aYO" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/grime,
@@ -14738,6 +14694,19 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"eyO" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/obj/item/device/radio/beacon{
+	pixel_y = 15
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "ezY" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -15688,6 +15657,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"huR" = (
+/obj/machinery/door_control{
+	id = "chamber_1";
+	name = "Vent Control";
+	pixel_y = -24
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/science/lab)
 "hvs" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -15743,19 +15720,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"hyJ" = (
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "downed server"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/power)
 "hyW" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -16116,6 +16080,15 @@
 	dir = 6
 	},
 /area/station/quartermaster/office)
+"iGS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/lab)
 "iIW" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 1
@@ -16495,6 +16468,29 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"jXx" = (
+/obj/table/auto,
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/timer,
+/obj/item/device/prox_sensor{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/assembly/time_ignite,
+/obj/item/device/igniter,
+/obj/item/device/analyzer/atmospheric,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lab)
 "jZc" = (
 /obj/stool/chair/pew/fancy{
 	dir = 4
@@ -16616,6 +16612,12 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
+"koV" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/lab)
 "koZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17259,6 +17261,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"mmr" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "moQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -17841,6 +17847,14 @@
 	desc = "The Regional Director wouldn't stop raving about the great price they got for this carpet. Looking at it makes you uneasy."
 	},
 /area/station/crew_quarters/cafeteria)
+"nRT" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/station/science/lab)
 "nSa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18168,16 +18182,6 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
-"oWM" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "oXp" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/pocketguide/medical{
@@ -18845,6 +18849,14 @@
 	},
 /turf/simulated/floor,
 /area/station/ranch)
+"qJI" = (
+/obj/machinery/door_control{
+	id = "chamber_2";
+	name = "Vent Control";
+	pixel_y = -24
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/science/lab)
 "qLQ" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
@@ -62710,7 +62722,7 @@ aGG
 aXW
 aIR
 aHE
-aJG
+huR
 aIR
 aIR
 azD
@@ -63013,7 +63025,7 @@ aXW
 aIR
 civ
 axK
-aMS
+iGS
 aQc
 aZO
 aaa
@@ -63616,7 +63628,7 @@ aSc
 aRr
 aHC
 aBT
-oWM
+eyO
 pRz
 aKw
 aIR
@@ -63918,9 +63930,9 @@ aGG
 aCs
 aIT
 nUY
-arb
-aJI
-aYN
+exF
+mmr
+jXx
 aKH
 aaa
 aaa
@@ -64221,8 +64233,8 @@ aIv
 aIR
 vqf
 aJI
-aKi
-aKy
+koV
+nRT
 aKH
 aaa
 aaa
@@ -64522,7 +64534,7 @@ aDb
 aCs
 aIR
 aJS
-aJG
+qJI
 aIR
 aIR
 aIR
@@ -99659,7 +99671,7 @@ aaa
 aaa
 agK
 aMP
-hyJ
+aNh
 aMP
 aXH
 aNL
@@ -99669,7 +99681,7 @@ aOE
 aNL
 aXH
 aMP
-hyJ
+aNh
 aMP
 aYB
 aaa

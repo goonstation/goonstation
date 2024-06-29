@@ -71,7 +71,7 @@
 	stamina_cost = 5
 
 	hit_type = DAMAGE_BLUNT
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
@@ -184,7 +184,6 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	var/open = 0

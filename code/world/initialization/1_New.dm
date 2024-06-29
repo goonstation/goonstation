@@ -18,8 +18,6 @@
 	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
 
 	// Global handlers that should be highly available
-	apiHandler = new()
-	eventRecorder = new()
 	roundManagement = new()
 	participationRecorder = new()
 	antagWeighter = new()

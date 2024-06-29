@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/pinpointer)
 	name = "pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"

@@ -496,7 +496,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "walkietalkie"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "radio"
@@ -1183,7 +1183,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "A nifty device used by the commander to order powerful equipment for their team."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "uplink_commander"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "uplink_commander"
@@ -1319,7 +1319,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
-	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
+	flags = TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
 	health = 5
