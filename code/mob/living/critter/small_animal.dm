@@ -2964,7 +2964,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /* ------------------ Tiny Bat Rina ------------------ */
 
-/mob/living/critter/small_animal/bat/doctor
+/mob/living/critter/small_animal/bat/rina
 	name = "Tiny Bat Rina"
 	real_name = "Tiny Bat Rina"
 	desc = "Why does this little bat have a purple ponytail?"

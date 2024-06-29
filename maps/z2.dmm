@@ -65504,13 +65504,11 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/mob/living/critter/small_animal/bat/doctor{
-	pixel_y = 4
-	},
 /obj/stool/bee_bed/double{
 	desc = "Just the right size for a tiny bat.";
 	name = "batsket"
 	},
+/mob/living/critter/small_animal/bat/rina,
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 4
 	},
