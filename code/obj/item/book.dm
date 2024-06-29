@@ -13,12 +13,12 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "book0"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1100
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	//
 
@@ -37,7 +37,7 @@ Custom Books
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b>"))
 		user.suiciding = 0
 		return 1
 
@@ -107,7 +107,7 @@ Custom Books
 	file_path = "strings/books/matsci_guide_old.txt"
 
 /obj/item/paper/book/from_file/matsci_guide
-	name = "Dummies' Guide to Material Science, 7th Ed."
+	name = "Dummies' Guide to Material Science, 8th Ed."
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
 	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_new.txt"
@@ -272,11 +272,11 @@ Custom Books
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 2 SECONDS)
-				user.changeStatus("weakened", 2 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
+				user.changeStatus("knockdown", 2 SECONDS)
+				user.changeStatus("unconscious", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(usr)
@@ -285,7 +285,7 @@ Custom Books
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
 				var/mob/living/carbon/human/H = hit_atom
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
+				var/hos = istype(user) && (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
 					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
@@ -338,7 +338,7 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "pinkbook"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 
 	New()
@@ -348,13 +348,14 @@ Custom Books
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = user
+			var/mob/living/carbon/human/jerk = user
 			if (!istype(jerk))
 				return
 
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = "*Arrest*"
+			S?["criminal"] = ARREST_STATE_ARREST
 			S?["mi_crim"] = "Reading highly-confidential private information."
+			jerk.update_arrest_icon()
 		else
 			return list("It appears to be heavily encrypted information.")
 
@@ -408,7 +409,7 @@ Custom Books
 	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
+			boutput(user, SPAN_NOTICE("You pore over the book with the magnifying glass."))
 			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
@@ -451,8 +452,8 @@ Custom Books
 	file_path = "strings/books/syndies_guide.txt"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -546,7 +547,8 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			else if (!src.book_cover)
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
-		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+		if(!findtext(src.info, "<span style=\"color:[src.ink_color]\">", 1, 50))
+			src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
 
 /obj/item/paper/spaceodyssey
 	name = "strange printout"

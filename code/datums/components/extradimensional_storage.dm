@@ -117,9 +117,9 @@ TYPEINFO(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage/ladder/on_entered(atom/movable/thing,mob/user)
 	var/obj/ladder/ladder = src.parent
 	if (istype(ladder, /obj/ladder/embed))
-		boutput(user, "You enter the gap in the wall.")
+		boutput(user, SPAN_SUCCESS("You enter the gap in the wall."))
 	else
-		boutput(user, "You climb [ladder.icon_state == "ladder" ? "down" : "up"] the ladder.")
+		boutput(user, SPAN_SUCCESS("You climb [ladder.icon_state == "ladder" ? "down" : "up"] the ladder."))
 	user.set_loc(region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2)))
 
 /datum/component/extradimensional_storage/ladder/UnregisterFromParent()
@@ -128,4 +128,29 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	ladder.unclimbable = FALSE
 	UnregisterSignal(src.parent, COMSIG_ATTACKHAND)
 	UnregisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING)
+	. = ..()
+
+/datum/component/extradimensional_storage/shrink
+
+/datum/component/extradimensional_storage/shrink/Initialize(width=9, height=9, region_init_proc=null)
+	if(!istype(parent, /atom/movable))
+		return COMPONENT_INCOMPATIBLE
+	exit = get_turf(src.parent)
+	. = ..()
+	RegisterSignal(src.parent, COMSIG_ATTACKHAND, PROC_REF(on_entered))
+
+/datum/component/extradimensional_storage/shrink/on_entered(atom/movable/thing,mob/user)
+	if (user.loc == parent)
+		return
+	user.set_loc(src.parent)
+	var/atom/movable/am_parent = src.parent
+	am_parent.vis_contents += user
+	animate(user, transform = matrix(user.transform, 0.1, 0.1, MATRIX_SCALE), time = 1 SECOND, easing = SINE_EASING)
+	SPAWN(1 SECOND)
+		am_parent.vis_contents -= user
+		user.transform = matrix(user.transform, 10, 10, MATRIX_SCALE)
+		user.set_loc(region.turf_at(rand(3, region.width - 2), rand(3, region.height - 2)))
+
+/datum/component/extradimensional_storage/shrink/UnregisterFromParent()
+	UnregisterSignal(src.parent, COMSIG_ATTACKHAND)
 	. = ..()

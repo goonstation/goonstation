@@ -3,7 +3,7 @@
 	name = "Ship Component"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "default"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	/// How much of the engine's capacity the part takes up
 	var/power_used = 0
 	/// The owner of the part
@@ -16,10 +16,12 @@
 	var/component_class = 0
 	/// What system it is, to avoid a bunch of istype checks
 	var/system = "part"
+	/// The part is disrupted by an attack and is forced to be off
+	var/disrupted = FALSE
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
-	if(src.loc == ship)
+	if(ship && src.loc == ship)
 		ship.components -= src
 	ship = null
 	..()
@@ -34,16 +36,22 @@
 	else
 		activate()
 
-//What the component does when activated
+///What the component does when activated
+///Returns 1 if successful
 /obj/item/shipcomponent/proc/activate()
 	if(src.active == 1 || !ship)//NYI find out why ship is null
-		return
+		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
 		for(var/mob/M in ship)
 			boutput(M, "[ship.ship_message("Not enough power to activate [src]!")]")
-			return
+			return FALSE
 	else
 		ship.powercurrent += power_used
+
+	if (src.disrupted)
+		for(var/mob/M in ship)
+			boutput(M, "[ship.ship_message("ALERT: [src] is temporarily disabled!")]")
+			return FALSE
 
 	src.active = 1
 	for(var/mob/M in src.ship)
@@ -51,7 +59,7 @@
 		mob_activate(M)
 	if (src.ship.myhud)
 		src.ship.myhud.update_states()
-	return
+	return TRUE
 
 ///Component does this constantly
 /obj/item/shipcomponent/proc/run_component()

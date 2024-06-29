@@ -8,15 +8,15 @@
 #define INLET_MIN 0
 
 TYPEINFO(/obj/machinery/power/combustion_generator)
-	mats = list("MET-2" = 14, "CON-1" = 8)
-
+	mats = list("metal_dense" = 14,
+				"conductive" = 8)
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
 	icon_state = "chemportgen0"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FLUID_SUBMERGE | NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
@@ -50,18 +50,20 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		"oil" = 10,
 		"fuel" = 8,
 		"pyrosium" = 7,
+		"diesel" = 7,
 		"ethanol" = 6,
 		"hydrogen" = 6,
 		"plasma" = 6,
 		"phosphorus" = 5,
-		"magnesium" = 5
+		"magnesium" = 5,
 	) // kilowattage (returns about half for a default setup)
 
 	// bit wierd but a bunch of type checks feels bad
 	var/static/valid_tanks = list(
 		/obj/item/tank/air,
 		/obj/item/tank/oxygen,
-		/obj/item/tank/anesthetic
+		/obj/item/tank/anesthetic,
+		/obj/item/tank/empty
 	)
 
 	// tanks
@@ -253,38 +255,38 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		if (href_list["engine"])
 			if (!src.active)
 				if (src.start_engine())
-					boutput(usr, "<span class='alert'>The [src] fails to start!</span>")
+					boutput(usr, SPAN_ALERT("The [src] fails to start!"))
 
 				else
-					src.visible_message("<span class='notice'>[usr] starts the [src].</span>")
+					src.visible_message(SPAN_NOTICE("[usr] starts the [src]."))
 
 			else
 				src.stop_engine()
-				src.visible_message("<span class='notice'>[usr] stops the [src].</span>")
+				src.visible_message(SPAN_NOTICE("[usr] stops the [src]."))
 
 		if (href_list["packet"])
 			if (!src.packet_control)
 				src.packet_control = 1
 				src.send_status()
-				boutput(usr, "<span class='notice'>You enable wireless control of the [src] by connecting the radio module.</span>")
+				boutput(usr, SPAN_NOTICE("You enable wireless control of the [src] by connecting the radio module."))
 
 			else
 				src.packet_control = 0
-				boutput(usr, "<span class='notice'>You disable wireless control of the [src] by disconnecting the radio module.</span>")
+				boutput(usr, SPAN_NOTICE("You disable wireless control of the [src] by disconnecting the radio module."))
 
 		else if (href_list["fuel"])
 			if (src.fuel_tank)
-				src.visible_message("<span class='notice'>[usr] removes [src.fuel_tank] from the [src].</span>")
+				src.visible_message(SPAN_NOTICE("[usr] removes [src.fuel_tank] from the [src]."))
 				src.eject_fuel_tank(usr)
 
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/reagent_containers/food/drinks/fueltank))
 					if (!src.get_fuel_power(I.reagents))
-						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any fuel!</span>")
+						boutput(usr, SPAN_ALERT("The [I.name] doesn't contain any fuel!"))
 						return
 
-					src.visible_message("<span class='notice'>[usr] loads [I] into the [src].</span>")
+					src.visible_message(SPAN_NOTICE("[usr] loads [I] into the [src]."))
 					usr.u_equip(I)
 					I.set_loc(src)
 					src.fuel_tank = I
@@ -294,17 +296,17 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 
 		else if (href_list["inlet"])
 			if (src.inlet_tank)
-				src.visible_message("<span class='notice'>[usr] removes [src.inlet_tank] from the [src].</span>")
+				src.visible_message(SPAN_NOTICE("[usr] removes [src.inlet_tank] from the [src]."))
 				src.eject_inlet_tank(usr)
 
 			else
 				var/obj/item/tank/I = usr.equipped()
 				if (istype(I) && (I.type in src.valid_tanks))
 					if (!src.check_tank_oxygen(I))
-						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any oxygen.</span>")
+						boutput(usr, SPAN_ALERT("The [I.name] doesn't contain any oxygen."))
 						return
 
-					src.visible_message("<span class='notice'>[usr] loads [I] into the [src].</span>")
+					src.visible_message(SPAN_NOTICE("[usr] loads [I] into the [src]."))
 					usr.u_equip(I)
 					I.set_loc(src)
 					src.inlet_tank = I
@@ -341,14 +343,14 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		// atmos tank
 		if (istype(W, /obj/item/tank) && (W.type in src.valid_tanks))
 			if (src.inlet_tank)
-				boutput(user, "<span class='alert'>There appears to be a tank loaded already!</span>")
+				boutput(user, SPAN_ALERT("There appears to be a tank loaded already!"))
 				return
 
 			if (!src.check_tank_oxygen(W))
-				boutput(user, "<span class='alert'>The [W.name] doesn't contain any oxygen.</span>")
+				boutput(user, SPAN_ALERT("The [W.name] doesn't contain any oxygen."))
 				return
 
-			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
 			src.inlet_tank = W
@@ -362,14 +364,14 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		// fuel tank
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/fueltank))
 			if (src.fuel_tank)
-				boutput(user, "<span class='alert'>There appears to be a fuel tank loaded already!</span>")
+				boutput(user, SPAN_ALERT("There appears to be a fuel tank loaded already!"))
 				return
 
 			if (!src.get_fuel_power(W.reagents))
-				boutput(user, "<span class='alert'>The [W.name] doesn't contain any fuel!</span>")
+				boutput(user, SPAN_ALERT("The [W.name] doesn't contain any fuel!"))
 				return
 
-			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
 			src.fuel_tank = W
@@ -382,10 +384,10 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		else if (iswrenchingtool(W))
 			if (src.anchored)
 				if (src.active)
-					src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
+					src.visible_message(SPAN_NOTICE("The [src] stops as it was unachored by [user]."))
 					src.stop_engine()
 				else
-					src.visible_message("<span class='notice'>[user] removes the [src]'s bolts from the floor.</span>")
+					src.visible_message(SPAN_NOTICE("[user] removes the [src]'s bolts from the floor."))
 
 				src.anchored = UNANCHORED
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -393,7 +395,7 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 				return
 
 			src.anchored = ANCHORED
-			src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
+			src.visible_message(SPAN_NOTICE("[user] secures the [src]'s bolts into the floor."))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.send_status()
 			src.updateIntDialog()
@@ -401,16 +403,16 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 
 		else if (ispulsingtool(W))
 			if (!src.active)
-				boutput(user, "<span class='alert'>You fail to interface with the [src]'s engine control system.</span>")
+				boutput(user, SPAN_ALERT("You fail to interface with the [src]'s engine control system."))
 				return
 
 			boutput(user, {"
 			<hr>
-			<span class='notice'><b>You take readings from the [src]'s engine control system:</b></span><br><br>
-			<span class='notice'>Mix: [src.last_mix]</span><br>
-			<span class='notice'>Inlet Flow: [src.last_inlet * 100]%</span><br>
-			<span class='notice'>Oxygen Purity: [src.last_oxygen * 100]%</span><br>
-			<span class='notice'>Fuel Rating: [src.last_fuel]</span>
+			[SPAN_NOTICE("<b>You take readings from the [src]'s engine control system:</b>")]<br><br>
+			[SPAN_NOTICE("Mix: [src.last_mix]")]<br>
+			[SPAN_NOTICE("Inlet Flow: [src.last_inlet * 100]%")]<br>
+			[SPAN_NOTICE("Oxygen Purity: [src.last_oxygen * 100]%")]<br>
+			[SPAN_NOTICE("Fuel Rating: [src.last_fuel]")]
 			<hr>
 			"})
 			return
@@ -425,27 +427,27 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		src.last_oxygen = src.check_available_oxygen()
 		if (!src.last_oxygen || !src.last_fuel || !src.fuel_inlet || !src.atmos_inlet)
 			src.stop_engine()
-			src.visible_message("<span class='alert'>The [src]'s engine fails to run, it has nothing to combust!</span>")
+			src.visible_message(SPAN_ALERT("The [src]'s engine fails to run, it has nothing to combust!"))
 			src.post_status(null, "command", "error", "data", "COMBUSTION_FAILURE", multicast = 1)
 			return
 
 		if (!src.anchored)
 			src.stop_engine()
-			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, it has become unanchored!</span>")
+			src.visible_message(SPAN_ALERT("The [src] makes a horrible racket and shuts down, it has become unanchored!"))
 			src.post_status(null, "command", "error", "data", "UNANCHORED", multicast = 1)
 			return
 
 		var/fuel_air_mix = (src.atmos_inlet / src.fuel_inlet) // difference between current mix and optimal mix.
 		if (fuel_air_mix < 8 || fuel_air_mix > 20) // too much or too little air or fuel
 			src.stop_engine()
-			src.visible_message("<span class='alert'>The [src] sputters for a moment and then stops, it failed to combust the reagents.</span>")
+			src.visible_message(SPAN_ALERT("The [src] sputters for a moment and then stops, it failed to combust the reagents."))
 			src.post_status(null, "command", "error", "data", "INVALID_MIX", multicast = 1)
 			return
 
 		var/obj/cable/C = src.get_output_cable()
 		if (!C)
 			src.stop_engine()
-			src.visible_message("<span class='alert'>Electricity begins to arc off the [src] causing it to shutdown, it has nothing to output to!</span>")
+			src.visible_message(SPAN_ALERT("Electricity begins to arc off the [src] causing it to shutdown, it has nothing to output to!"))
 			src.post_status(null, "command", "error", "data", "NO_POWER_OUTLET", multicast = 1)
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
@@ -612,7 +614,7 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 			return
 
 		if (src.active)
-			src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
+			src.visible_message(SPAN_NOTICE("The [src] stops as the fuel tank is removed."))
 			src.stop_engine()
 
 		src.fuel_tank.set_loc(get_turf(src))

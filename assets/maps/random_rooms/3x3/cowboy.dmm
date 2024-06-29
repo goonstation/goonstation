@@ -24,7 +24,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "G" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	pixel_x = -2
 	},
 /obj/item/clothing/shoes/cowboy{
@@ -35,7 +35,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/clothing/under/gimmick/chaps{
+/obj/item/clothing/suit/chaps{
 	pixel_y = 2;
 	pixel_x = -8
 	},

@@ -5,7 +5,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, Tooltip, Section } from '../components';
+import { Box, Button, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { ReagentList } from './common/ReagentInfo';
 
@@ -24,13 +24,7 @@ export const Precipitation = (props, context) => {
       width={300}
       height={425}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Precipitation
-            </Box>
-          }>
+        <Section title="Precipitation">
           <Tooltip content="Cooldown for how fast ATOMs can be rained on.">
             <Box m={1}>
               Cooldown

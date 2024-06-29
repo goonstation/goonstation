@@ -57,10 +57,10 @@
 	desc = "A free-floating mineral deposit from space."
 	icon_base = "adoor"
 	doordir = "single"
-	plane = PLANE_WALL-1 //We don't want depth shadows
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
-	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
+	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
 		autoclose = TRUE
@@ -73,7 +73,7 @@
 			vertical
 				dir = EAST
 
-/obj/machinery/door_control/podbay/suspiciousdebris/
+/obj/machinery/door_control/podbay/suspiciousdebris
 	name = "suspicious debris"
 	id = "podbay_safehouse"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -148,7 +148,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	if(ON_COOLDOWN(src, "bio_handscanner_attackby", cooldown)) // To reduce chat spam in case of multi-click
 		return
 	if(istype(W, /obj/item/parts/human_parts/arm/))
-		boutput(user, "<span class='alert'>ERROR: no pulse detected.</span>")
+		boutput(user, SPAN_ALERT("ERROR: no pulse detected."))
 	if(istype(W, /obj/item/card/emag))
 		boutput(user, "You short out the hand scanner's circuits. So much for cutting edge.")
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
@@ -166,7 +166,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.bioHolder.Uid == allowed_bioHolders) //Are you the authorised bioHolder (for all intents and purposes)?
-			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps.</span>")
+			user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the hand and beeps."))
 			for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 				if(M.id == src.id)
 					if(M.density)
@@ -174,9 +174,9 @@ obj/item/reagent_containers/iv_drip/dead_exec
 					else
 						M.close()
 		else
-			boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
+			boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
 
-/obj/decal/fakeobjects/safehouse/cloner
+/obj/fakeobject/safehouse/cloner
 	name = "lazarus H-16 cloning pod"
 	desc = "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -214,7 +214,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			qdel(M)
 
 	attack_hand(mob/user)
-		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br><span class='alert'>Alert: Biomatter reserves are low (5% full).</span>")
+		boutput(user, "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!<br>Currently idle.<br>[SPAN_ALERT("Alert: Biomatter reserves are low (5% full).")]")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 		src.add_fingerprint(user)
 		return
@@ -277,7 +277,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		for_by_tcl(C, /obj/machinery/computer/cloning) //Scan success or corruption is on a by-computer basis, results allowed to differ.
 			C.scan_mob(H) //Take advantage of scan_mob's checks
 			var/datum/db_record/R = new /datum/db_record()
-			R = C.find_record(H.ckey)
+			R = C.find_record_by_mind(H.mind)
 			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
@@ -290,7 +290,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 //DECORATIVE OBJECTS
 
-/obj/decal/fakeobjects/beacon
+/obj/fakeobject/beacon
 	name = "broken beacon"
 	desc = "A small tracking beacon in fairly poor condition. What's it doing all the way out here?"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -351,7 +351,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	pixel_y = 26
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>You check behind the [src.name] for a hidden safe, but don't find anything.</span>")
+		boutput(user, SPAN_NOTICE("You check behind the [src.name] for a hidden safe, but don't find anything."))
 		src.add_fingerprint(user)
 		return
 
@@ -364,7 +364,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	pixel_y = 10
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>You rub the sculpture's bald head for luck.</span>")
+		boutput(user, SPAN_NOTICE("You rub the sculpture's bald head for luck."))
 		src.add_fingerprint(user)
 		return
 
@@ -374,7 +374,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "scuffmarks"
 
-/obj/decal/fakeobjects/recordplayer
+/obj/fakeobject/recordplayer
 	name = "old record player"
 	desc = "An old fashioned turntable for playing vinyl. Doesn't appear to be plugged in."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -384,15 +384,15 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/record))
-			src.visible_message("<span class='notice'><b>[user] attempts to place the 12 inch record on the 7 inch turntable, but it obviously doesn't fit. How embarassing!</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>[user] attempts to place the 12 inch record on the 7 inch turntable, but it obviously doesn't fit. How embarassing!</b>"))
 		return
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>You fiddle with the [src.name] but you can't seem to get it working.</span>")
+		boutput(user, SPAN_NOTICE("You fiddle with the [src.name] but you can't seem to get it working."))
 		src.add_fingerprint(user)
 		return
 
-/obj/decal/fakeobjects/safehouse/reclaimer
+/obj/fakeobject/safehouse/reclaimer
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -402,11 +402,11 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	layer = 3.1 //I mess with layers here & below to help me set-up the clone room. Quite a bit was var-edited in StrongDMM as well.
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>You try to activate the [src.name] but nothing happens! Looks like it's jammed</span>")
+		boutput(user, SPAN_NOTICE("You try to activate the [src.name] but nothing happens! Looks like it's jammed"))
 		src.add_fingerprint(user)
 		return
 
-/obj/decal/fakeobjects/safehouse/biomatter_tank
+/obj/fakeobject/safehouse/biomatter_tank
 	name = "biomatter reserve tank"
 	desc = "A reserve tank for storing large quantities of biomatter. You could clone a small army with a tank that size."
 	icon = 'icons/obj/large/32x48.dmi'
@@ -415,7 +415,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1
 
-/obj/decal/fakeobjects/safehouse/biotube
+/obj/fakeobject/safehouse/biotube
 	name = "biomatter transfer pipe"
 	desc = "A large pipe for transporting fluid. It looks very durable."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -423,7 +423,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = ANCHORED
 	layer = 2.8
 
-/obj/decal/fakeobjects/safehouse/conduit
+/obj/fakeobject/safehouse/conduit
 	name = "electrical conduit"
 	desc = "An electrical conduit. The casing is welded on"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -431,7 +431,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = ANCHORED
 	layer = 2.8
 
-/obj/decal/fakeobjects/safehouse/mechcomp_cabinet
+/obj/fakeobject/safehouse/mechcomp_cabinet
 	name = "component cabinets"
 	desc = "A pair of cabinets containing mechanical components, set up to automate operation of the cloner. Technology is incredible!"
 	icon = 'icons/obj/large/32x48.dmi'
@@ -440,7 +440,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1
 
-/obj/decal/fakeobjects/safehouse/cloning_console
+/obj/fakeobject/safehouse/cloning_console
 	name = "cloning console"
 	desc = "A console used to operate a cloning scanner and pod. This one looks like it's seen better days."
 	icon = 'icons/obj/computer.dmi'
@@ -449,7 +449,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1
 
-/obj/decal/fakeobjects/safehouse/dead_exec
+/obj/fakeobject/safehouse/dead_exec
 	name = "dead clone"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "deadexecclean"
@@ -460,7 +460,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		name = "bloody clone"
 		icon_state = "deadexecbloody"
 
-/obj/decal/fakeobjects/safehouse/airhandlingunit
+/obj/fakeobject/safehouse/airhandlingunit
 	name = "air handling unit"
 	desc = "This a recirculating air handling unit designed to keep ambient conditions within comfortable limits."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -468,7 +468,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/safehouse/airfilter
+/obj/fakeobject/safehouse/airfilter
 	name = "air filter"
 	desc = "This is a filter for scrubbing CO2 and other harmful gases out the air. The 'filter clogged' alarm is lit up."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -582,7 +582,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		<br> Head Researcher, VitaNova</span>
 		"}
 
-/datum/computer/file/record/saferoom/
+/datum/computer/file/record/saferoom
 	New()
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"

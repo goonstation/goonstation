@@ -24,3 +24,5 @@ var/global/list/addr_padding = list("00000", "0000", "000", "00", "0", "")
 #define NUM_TO_ADDR(NUM) "\[0x[num2text(NUM, 0, 16)]\]"
 
 #define isproc(P) (TYPE_ID_OF_ADDR(ref(P)) == PROC_TYPEID)
+
+#define isresource(R) (TYPE_ID_OF_ADDR(ref(R)) == "c")

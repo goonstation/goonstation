@@ -1,6 +1,6 @@
 /mob/living/intangible/blob_overmind
-	name = "Blob Overmind"
-	real_name = "Blob Overmind"
+	name = "blob overmind"
+	real_name = "blob overmind"
 	desc = "The disembodied consciousness of a big pile of goop."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blob"
@@ -11,6 +11,7 @@
 	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
+	voice_type = null
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1
@@ -68,10 +69,10 @@
 	var/debuff_duration = 1200 //deciseconds. 1200 = 2 minutes
 
 	//give blobs who get rekt soon after starting another chance
-	var/current_try = 1
-	var/extra_tries_max = 2
-	var/extra_try_period = 3000 //3000 = 5 minutes
-	var/extra_try_timestamp = 0
+	var/spawn_time = 0
+	var/respawned = FALSE
+
+	var/random_event_spawn = FALSE
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
@@ -84,7 +85,7 @@
 		if (tutorial.initial_turf)
 			tutorial.Start()
 		else
-			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
+			boutput(src, SPAN_ALERT("Could not start tutorial! Please try again later or call Wire."))
 			tutorial = null
 			return
 
@@ -98,13 +99,13 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
-		my_material = copyMaterial(getMaterial("blob"))
-		my_material.color = "#ffffff"
-		initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		initial_material = getMaterial("blob")
 
 		//set start grace-period timestamp
-		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
-		src.extra_try_timestamp = world.timeofday + extra_try_period + extraGrace
+		src.spawn_time = TIME
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
@@ -136,16 +137,16 @@
 		if (..(parent))
 			return 1
 
-		if (started && (nuclei.len == 0 || blobs.len == 0))
+		if (started && (length(nuclei) == 0 || length(blobs) == 0))
 			death()
 			return
 
 		//time to un-apply the nucleus-destroyed debuff
 		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
 			src.debuff_timestamp = 0
-			out(src, "<span class='alert'><b>You can feel your former power returning!</b></span>")
+			boutput(src, SPAN_ALERT("<b>You can feel your former power returning!</b>"))
 
-		if (blobs.len > 0)
+		if (length(blobs) > 0)
 			/**
 			 * at 2175 blobs, blob points max will reach about 350. It will begin decreasing sharply after that
 			 * This is a size penalty. Basically if the blob gets too damn big, the crew has some chance of
@@ -175,26 +176,26 @@
 				return
 
 		if (starter_buff == 1)
-			if (blobs.len >= 25)
-				boutput(src, "<span class='alert'><b>You no longer have the starter assistance.</b></span>")
+			if (length(blobs) >= 25)
+				boutput(src, SPAN_ALERT("<b>You no longer have the starter assistance.</b>"))
 				starter_buff = 0
 
-		if (blobs.len >= next_evo_point)
+		if (length(blobs) >= next_evo_point)
 			next_evo_point += initial(next_evo_point)
 			evo_points++
-			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
+			boutput(src, SPAN_NOTICE("<b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b>"))
 
 		if (total_placed >= next_pity_point)
 			next_pity_point += initial(next_pity_point)
 			evo_points++
-			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
+			boutput(src, SPAN_NOTICE("<b>You have performed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b>"))
 
-		if (blobs.len >= next_extra_nucleus)
+		if (length(blobs) >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
 			extra_nuclei++
-			boutput(src, "<span class='notice'><b>You have expanded enough to earn one extra nucleus! You will be granted another at size [next_extra_nucleus]. Good luck!</b></span>")
+			boutput(src, SPAN_NOTICE("<b>You have expanded enough to earn one extra nucleus! You will be granted another at size [next_extra_nucleus]. Good luck!</b>"))
 
-		src.nucleus_reflectivity = src.blobs.len < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
+		src.nucleus_reflectivity = length(src.blobs) < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
 		var/old_alpha = src.nucleus_overlay.alpha
 		var/new_alpha = clamp(src.nucleus_reflectivity * 2, 0, 255)
 		if(abs(old_alpha - new_alpha) >= 25 || (old_alpha != new_alpha && (new_alpha == 0 || old_alpha == 0)))
@@ -211,18 +212,18 @@
 		. = ..()
 
 		//if within grace period, respawn
-		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
-			src.extra_try_timestamp = 0
-			src.current_try++
+		var/respawn_time = !src.random_event_spawn ? 15 MINUTES : 7 MINUTES
+		if (!src.respawned && (TIME - src.spawn_time <= respawn_time))
+			src.respawned = TRUE
 			src.reset()
-			out(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
+			boutput(src, SPAN_NOTICE("<b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready to try again!</b>"))
 
 		//no grace, go die scrub
 		else
 			src.remove_all_abilities()
 			src.remove_all_upgrades()
 
-			boutput(src, "<span class='alert'><b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b></span>")
+			boutput(src, SPAN_ALERT("<b>With no nuclei to bind it to your biomass, your consciousness slips away into nothingness...</b>"))
 			src.ghostize()
 			SPAWN(0)
 				qdel(src)
@@ -235,7 +236,7 @@
 		//debuff active
 		if (src.debuff_timestamp && gen_rate_bonus > 0)
 			var/genBonus = round(gen_rate_bonus / 2)
-			stat("Generation Rate:", "[base_gen_rate + genBonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP <span class='alert'>(WEAKENED)</span>")
+			stat("Generation Rate:", "[base_gen_rate + genBonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP [SPAN_ALERT("(WEAKENED)")]")
 
 		else
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")
@@ -309,7 +310,10 @@
 			src.update_buttons()
 			return
 		else
-			if(params["right"])
+			if(params["left"])
+				var/datum/blob_ability/spread_abil = src.get_ability(/datum/blob_ability/spread)
+				spread_abil?.onUse(T)
+			else if(params["right"])
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))
@@ -353,9 +357,10 @@
 		src.upgrade_id = 1
 		src.lipids = new()
 		src.nuclei = new()
-		src.my_material = copyMaterial(getMaterial("blob"))
-		src.my_material.color = "#ffffff"
-		src.initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		src.initial_material = getMaterial("blob")
 		src.organ_color = initial(src.organ_color)
 		src.debuff_timestamp = 0
 
@@ -590,6 +595,25 @@
 		src.hat = hat
 		hat.set_loc(src)
 
+	proc/go_critical() //I'm sure this won't turn out to be a bad idea
+		SPAWN(0)
+			while (TRUE)
+				if (prob(10)) //pfff sure
+					sleep(1)
+				var/emergency_var = 0 //no infinite loops if we *really* can't find one
+				var/obj/blob/blob = pick(by_type[/obj/blob])
+				while ((blob.surrounded == (NORTH | SOUTH | EAST | WEST)) && emergency_var < 100)
+					blob = pick(by_type[/obj/blob])
+					emergency_var++
+				if (!blob) //give up and try again next iteration
+					continue
+				for (var/dir in cardinal)
+					if (!(blob.surrounded & dir))
+						var/turf/T = get_step(blob, dir)
+						if (T?.can_blob_spread_here(skip_adjacent = TRUE))
+							var/obj/blob/new_blob = new(T)
+							new_blob.setOvermind(blob.overmind)
+							blob.overmind.total_placed++
 
 /atom/movable/screen/blob
 	plane = PLANE_HUD
@@ -643,7 +667,7 @@
 			return
 		var/atom/movable/screen/blob/source = O
 		if (!istype(src.ability) || !istype(source.ability))
-			boutput(user, "<span class='alert'>You may only switch the places of ability buttons.</span>")
+			boutput(user, SPAN_ALERT("You may only switch the places of ability buttons."))
 			return
 		var/mob/living/intangible/blob_overmind/owner = user
 
@@ -689,64 +713,64 @@
 				boutput(user, "[upgrade.desc]")
 				boutput(user, "<b>Evo Point Cost:</b> [upgrade.evo_point_cost]")
 				if (upgrade.check_requirements())
-					boutput(user, "<span class='notice'>Shift-click on this icon to take the upgrade.</span>")
+					boutput(user, SPAN_NOTICE("Shift-click on this icon to take the upgrade."))
 				else
-					boutput(user, "<span class='alert'>You cannot take this upgrade yet.</span>")
+					boutput(user, SPAN_ALERT("You cannot take this upgrade yet."))
 			return
 
 		if (parameters["ctrl"] && ability.targeted)
 			if (ability == user.alt_power || ability == user.shift_power)
-				boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
+				boutput(user, SPAN_ALERT("That ability is already bound to another key."))
 				return
 
 			if (ability == user.ctrl_power)
 				user.ctrl_power = null
-				boutput(user, "<span class='notice'><b>[ability.name] has been unbound from Ctrl-Click.</b></span>")
+				boutput(user, SPAN_NOTICE("<b>[ability.name] has been unbound from Ctrl-Click.</b>"))
 				user.update_buttons()
 			else
 				user.ctrl_power = ability
-				boutput(user, "<span class='notice'><b>[ability.name] is now bound to Ctrl-Click.</b></span>")
+				boutput(user, SPAN_NOTICE("<b>[ability.name] is now bound to Ctrl-Click.</b>"))
 
 		else if (parameters["alt"] && ability.targeted)
 			if (ability == user.shift_power || ability == user.ctrl_power)
-				boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
+				boutput(user, SPAN_ALERT("That ability is already bound to another key."))
 				return
 
 			if (ability == user.alt_power)
 				user.alt_power = null
-				boutput(user, "<span class='notice'><b>[ability.name] has been unbound from Alt-Click.</b></span>")
+				boutput(user, SPAN_NOTICE("<b>[ability.name] has been unbound from Alt-Click.</b>"))
 				user.update_buttons()
 			else
 				user.alt_power = ability
-				boutput(user, "<span class='notice'><b>[ability.name] is now bound to Alt-Click.</b></span>")
+				boutput(user, SPAN_NOTICE("<b>[ability.name] is now bound to Alt-Click.</b>"))
 
 		else if (parameters["shift"] && ability.targeted)
 			if (ability == user.alt_power || ability == user.ctrl_power)
-				boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
+				boutput(user, SPAN_ALERT("That ability is already bound to another key."))
 				return
 
 			if (ability == user.shift_power)
 				user.shift_power = null
-				boutput(user, "<span class='notice'><b>[ability.name] has been unbound from Shift-Click.</b></span>")
+				boutput(user, SPAN_NOTICE("<b>[ability.name] has been unbound from Shift-Click.</b>"))
 				user.update_buttons()
 			else
 				user.shift_power = ability
-				boutput(user, "<span class='notice'><b>[ability.name] is now bound to Shift-Click.</b></span>")
+				boutput(user, SPAN_NOTICE("<b>[ability.name] is now bound to Shift-Click.</b>"))
 
 		else
 			if (user.help_mode)
-				boutput(user, "<span class='notice'><b>This is your [ability.name] ability.</b></span>")
-				boutput(user, "<span class='notice'>It costs [ability.bio_point_cost] bio points to use.</span>")
+				boutput(user, SPAN_NOTICE("<b>This is your [ability.name] ability.</b>"))
+				boutput(user, SPAN_NOTICE("It costs [ability.bio_point_cost] bio points to use."))
 				if (istype(ability,/datum/blob_ability/build))
 					var/datum/blob_ability/build/AB = ability
-					boutput(user, "<span class='notice'>This is a building ability - you need to use it on a regular blob tile.</span>")
+					boutput(user, SPAN_NOTICE("This is a building ability - you need to use it on a regular blob tile."))
 					if (AB.gen_rate_invest > 0)
-						boutput(user, "<span class='notice'>This ability requires you to invest [AB.gen_rate_invest] of your BP generation rate in it. It will be returned when the cell is destroyed.</span>")
-				boutput(user, "<span class='notice'>[ability.desc]</span>")
-				boutput(user, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-				boutput(user, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-				boutput(user, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
-				boutput(user, "<span class='notice'>If you want to swap the places of two buttons on this bar, click and drag one to the position you want it to occupy.</span>")
+						boutput(user, SPAN_NOTICE("This ability requires you to invest [AB.gen_rate_invest] of your BP generation rate in it. It will be returned when the cell is destroyed."))
+				boutput(user, SPAN_NOTICE("[ability.desc]"))
+				boutput(user, SPAN_NOTICE("Hold down Shift, Ctrl or Alt while clicking the button to set it to that key."))
+				boutput(user, SPAN_NOTICE("You will then be able to use it freely by holding that button and left-clicking a tile."))
+				boutput(user, SPAN_NOTICE("Alternatively, you can click with your middle mouse button to use the ability on your current tile."))
+				boutput(user, SPAN_NOTICE("If you want to swap the places of two buttons on this bar, click and drag one to the position you want it to occupy."))
 			else
 				ability.onUse()
 

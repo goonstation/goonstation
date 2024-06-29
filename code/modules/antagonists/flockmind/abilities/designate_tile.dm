@@ -11,15 +11,15 @@
 	var/mob/living/intangible/flock/F = holder.owner
 	var/turf/T = get_turf(target)
 	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)) || !flockTurfAllowed(T))
-		boutput(holder.get_controlling_mob(), "<span class='alert'>The flock can't convert this.</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("The flock can't convert this."))
 		return TRUE
 	if(isfeathertile(T))
-		boutput(holder.get_controlling_mob(), "<span class='alert'>This tile has already been converted.</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("This tile has already been converted."))
 		return TRUE
 	if (!(T in F.flock.priority_tiles))
 		for (var/name in F.flock.busy_tiles)
 			if (T == F.flock.busy_tiles[name])
-				boutput(holder.get_controlling_mob(), "<span class='alert'>This tile is already scheduled for conversion!</span>")
+				boutput(holder.get_controlling_mob(), SPAN_ALERT("This tile is already scheduled for conversion!"))
 				return TRUE
 	if (!src.tutorial_check(FLOCK_ACTION_MARK_TILE, T))
 		return TRUE

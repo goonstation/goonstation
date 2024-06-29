@@ -5,9 +5,7 @@
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/decal/tile_edge/stripe/big,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/specialroom/medbay,
 /area/dmm_suite/clear_area)
 "l" = (
@@ -79,9 +77,7 @@
 /area/dmm_suite/clear_area)
 "X" = (
 /obj/decal/tile_edge/stripe/big,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/item/storage/toolbox/electrical/mechanic_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/dmm_suite/clear_area)

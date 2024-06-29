@@ -32,7 +32,7 @@
 		if(istype(mover, /mob))
 			var/mob/M = mover
 			M.setStatus(statusId = "slowed", duration = 0.5 SECONDS, optional = 4)
-			boutput(M, "<span class='alert'>Running through \the [src] is slowing you down...</span>")
+			boutput(M, SPAN_ALERT("Running through \the [src] is slowing you down..."))
 		return ..()
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -40,7 +40,7 @@
 		..()
 
 	onDestroy()
-		src.visible_message("<span class='alert'>\The [src] breaks apart!</span>")
+		src.visible_message(SPAN_ALERT("\The [src] breaks apart!"))
 		..()
 
 /obj/concrete_wall
@@ -51,7 +51,7 @@
 	opacity = 0 	// changed in New()
 	anchored = ANCHORED
 	desc = "A heavy duty wall made of concrete! This thing is gonna take some manual labour to get through..."
-	flags = FPRINT | CONDUCT | USEDELAY
+	flags = CONDUCT | USEDELAY
 	var/const/baseHealth = 30
 	_max_health = baseHealth //Health related nums can be changed thru update_strength()
 	_health = baseHealth
@@ -95,10 +95,10 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 		if (user.bioHolder.HasEffect("hulk") && (prob(100 - strength*20))) //hulk smash
-			user.visible_message("<span class='alert'>[user] smashes through \the [src]! OH YEAH!!!</span>")
+			user.visible_message(SPAN_ALERT("[user] smashes through \the [src]! OH YEAH!!!"))
 			onDestroy()
 		else
-			boutput(user, "<span class='alert'>You hit \the [src] and really hurt your hand!</span>")
+			boutput(user, SPAN_ALERT("You hit \the [src] and really hurt your hand!"))
 			playsound(src.loc, pick(sounds_punch), 50, 1)
 			random_brute_damage(user, 5)
 		return
@@ -110,7 +110,7 @@
 		..()
 
 	onDestroy()
-		src.visible_message( "<span class='alert'>\The [src] crumbles to dust!</span>")
+		src.visible_message( SPAN_ALERT("\The [src] crumbles to dust!"))
 		playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 		..()
 

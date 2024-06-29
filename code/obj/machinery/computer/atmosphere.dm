@@ -12,14 +12,14 @@ Atmos alert computer
 	light_b = 1
 
 /obj/machinery/computer/atmosphere/alerts
-	name = "Alert Computer"
+	name = "alert computer"
 	icon_state = "atmos"
 	circuit_type = /obj/item/circuitboard/atmospherealerts
 	var/alarms = list("Fire"=list(), "Atmosphere"=list())
 	machine_registry_idx = MACHINES_ATMOSALERTS
 
 /obj/machinery/computer/atmosphere/siphonswitch
-	name = "Area Air Control"
+	name = "area air control"
 	icon_state = "atmos"
 	var/otherarea
 	var/area/area
@@ -55,7 +55,7 @@ Atmos alert computer
 				var/list/sources = alm[3]
 				dat += "<NOBR>"
 				dat += "[A.name]"
-				if (sources.len > 1)
+				if (length(sources) > 1)
 					dat += text("- [] sources", sources.len)
 				dat += "</NOBR><BR><br>"
 		else
@@ -84,7 +84,7 @@ Atmos alert computer
 	var/list/CL = null
 	if (O && istype(O, /list))
 		CL = O
-		if (CL.len == 1)
+		if (length(CL) == 1)
 			C = CL[1]
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
@@ -102,7 +102,7 @@ Atmos alert computer
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
-			if (srcs.len == 0)
+			if (length(srcs) == 0)
 				cleared = 1
 				L -= I
 	return !cleared

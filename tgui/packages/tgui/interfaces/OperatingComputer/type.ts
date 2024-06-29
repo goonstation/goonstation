@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+import { BrainDamageData, DisplayOccupiedProps, EmbeddedObjects } from '../common/KeyHealthIndicators/type';
 export interface OperatingComputerData {
   occupied: BooleanLike
 
@@ -49,12 +50,6 @@ export interface OperatingComputerData {
   reagent_container // ReagentContainer
 }
 
-interface EmbeddedObjects {
-  foreign_object_count: number
-  implant_count: number
-  has_chest_object: BooleanLike
-}
-
 export interface OrganData {
   organ: string,
   state: string,
@@ -66,9 +61,7 @@ export interface LimbData {
   limb: string,
   status: string
 }
-export interface DisplayOccupiedProps {
-  occupied: BooleanLike
-}
+
 export interface OperatingComputerDisplayTitleProps extends DisplayOccupiedProps{
   patient_name: string
   patient_health: number
@@ -81,10 +74,6 @@ export interface PatientSummaryProps extends DisplayOccupiedProps {
   isCrit: boolean
 }
 
-export interface DisplayTempImplantRowProps extends DisplayTemperatureProps {
-  embedded_objects: EmbeddedObjects
-}
-
 export interface DisplayBloodstreamContentProps extends DisplayOccupiedProps {
   reagent_container
 }
@@ -92,11 +81,6 @@ export interface DisplayBloodstreamContentProps extends DisplayOccupiedProps {
 export interface DisplayAnatomicalAnomoliesProps extends DisplayOccupiedProps {
   organs: OrganData[]
   limbs: LimbData[]
-}
-
-export interface DisplayTemperatureProps extends DisplayOccupiedProps {
-  body_temp: number,
-  optimal_temp: number
 }
 
 export interface DisplayGeneticAnalysisProps extends DisplayOccupiedProps {
@@ -109,13 +93,6 @@ export interface DisplayGeneticAnalysisProps extends DisplayOccupiedProps {
   genetic_stability: number,
 }
 
-export interface DisplayBloodPressureProps extends DisplayOccupiedProps {
-  patient_status: number,
-  blood_pressure_rendered: string,
-  blood_pressure_status: string,
-  blood_volume: number,
-}
-
 export interface DisplayLimbsProps extends DisplayOccupiedProps {
   limbs: LimbData[]
 }
@@ -126,15 +103,4 @@ export interface DisplayLimbProps {
 
 export interface DisplayOrgansProps extends DisplayOccupiedProps {
   organs: OrganData[]
-}
-
-export interface DisplayBrainProps extends DisplayOccupiedProps {
-  status: BrainDamageData
-}
-
-
-export interface BrainDamageData {
-  value: number
-  desc: string
-  color: string
 }

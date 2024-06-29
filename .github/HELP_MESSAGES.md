@@ -11,6 +11,7 @@ Help messages should be added either by putting the `HELP_MESSAGE_OVERRIDE` macr
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
 ```
 Or if you need the message to change based on the object's state by overriding the `get_help_message` proc.
+Note that even when overriding the proc you **have** to insert `HELP_MESSAGE_OVERRIDE` on the type, even if with an empty string. (This is in order to make the `Help` button appear in the rightclick menu.)
 
 <b>Note: do not set the `help_message` var manually.</b>
 

@@ -122,7 +122,7 @@
 
 
 	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
-		if(signal.data["address_1"] == master.net_id && signal.data["command"] == "ping_reply")
+		if(signal.data["address_1"] == master.net_id && signal.data["command"] == "ping_reply" && connection_id == "ping")
 			if(!result)
 				result = new/list()
 			result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"
@@ -193,7 +193,7 @@
 
 		if(result)
 			for(var/r in result)
-				dat += "<tt>[r]</tt><BR>"
+				dat += "<tt>[html_encode(r)]</tt><BR>"
 
 		dat +="<HR>"
 		if(mode == 0)
@@ -268,12 +268,12 @@
 		// ruck kit lock packets use this
 		if(signal.encryption)
 			t += "[signal.encryption]"
-			t2 = stars(t2, 15)
+			t2 = stars(t2, signal.encryption_obfuscation)
 
 		result += "[t][t2]"
 
 
-		if(result.len > 100)
+		if(length(result) > 100)
 			result.Cut(1,2)
 		master.updateSelfDialog()
 
@@ -430,7 +430,7 @@
 
 		else if(href_list["add"])
 
-			if(keyval && (keyval.len >= MAX_PACKET_KEYS))
+			if(keyval && (length(keyval) >= MAX_PACKET_KEYS))
 				return
 
 			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 255)

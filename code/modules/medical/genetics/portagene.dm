@@ -38,7 +38,7 @@
 			return
 		if ((usr in src.contents) || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -56,7 +56,7 @@
 
 		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -65,13 +65,17 @@
 		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			boutput(usr, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 
 		src.go_out()
 		add_fingerprint(usr)
 		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
+
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
@@ -80,9 +84,10 @@
 		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
-		if (target == user)
-			go_in(target)
-		else if (can_operate(user,target))
+		if (can_operate(user, target))
+			if (target == user)
+				go_in(target)
+				return
 			var/previous_user_intent = user.a_intent
 			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
@@ -92,29 +97,28 @@
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-		return
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
 		if (BOUNDS_DIST(src, M) > 0)
 			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
+		if (M.getStatusDuration("unconscious") || M.getStatusDuration("stunned") || M.getStatusDuration("knockdown"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
+			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
 			return 0
 		if(!iscarbon(target) )
-			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
+			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if (src.locked)
-			boutput(M, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+			boutput(M, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
 			return 0
 
 		.= 1
@@ -132,25 +136,25 @@
 
 	attack_hand(mob/user)
 		if (src.status & BROKEN)
-			boutput(user, "<span class='notice'>The [src.name] is busted! You'll need at least two sheets of glass to fix it.</span>")
+			boutput(user, SPAN_NOTICE("The [src.name] is busted! You'll need at least two sheets of glass to fix it."))
 			return
 		. = ..()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+			if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				if (S.amount >= 2)
 					W.change_stack_amount(-2)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					src.status &= !BROKEN
 					src.icon_state = "PAG_0"
 					light.enable()
-					boutput(user, "<span class='notice'>You repair the [src.name]!</span>")
+					boutput(user, SPAN_NOTICE("You repair the [src.name]!"))
 				else
-					boutput(user, "<span class='alert'>You need at least two sheets of glass to repair the [src.name].</span>")
+					boutput(user, SPAN_ALERT("You need at least two sheets of glass to repair the [src.name]."))
 			else
-				boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
+				boutput(user, SPAN_ALERT("This is the wrong kind of material. You'll need a type of glass or crystal."))
 
 		else if (istype(W,/obj/item/genetics_injector/dna_activator))
 			var/obj/item/genetics_injector/dna_activator/DNA = W
@@ -170,15 +174,15 @@
 			var/obj/item/grab/G = W
 
 			if (src.occupant)
-				boutput(user, "<span class='alert'><B>The scanner is already occupied!</B></span>")
+				boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
 				return
 
 			if (src.locked)
-				boutput(user, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+				boutput(user, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
 				return
 
 			if(!iscarbon(G.affecting))
-				boutput(user, "<span class='hint'><B>The scanner supports only carbon based lifeforms.</B></span>")
+				boutput(user, SPAN_HINT("<B>The scanner supports only carbon based lifeforms.</B>"))
 				return
 
 			var/mob/M = G.affecting
@@ -207,7 +211,7 @@
 		if (!isalive(usr) || iswraith(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			boutput(usr, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 
 		src.go_out()
@@ -221,15 +225,15 @@
 		set category = "Local"
 
 		if (src.status & BROKEN)
-			boutput(usr, "<span class='alert'>It's broken! You'll need to repair it first.</span>")
+			boutput(usr, SPAN_ALERT("It's broken! You'll need to repair it first."))
 			return
 		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(usr, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			boutput(usr, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 		if (src.occupant)
-			boutput(usr, "<span class='alert'>It's already occupied.</span>")
+			boutput(usr, SPAN_ALERT("It's already occupied."))
 			return
 
 		src.go_in(usr)
@@ -245,7 +249,7 @@
 		if (!isalive(usr))
 			return
 		if (usr == src.occupant)
-			boutput(usr, "<span class='alert'><b>You can't reach the scanner lock from the inside.</b></span>")
+			boutput(usr, SPAN_ALERT("<b>You can't reach the scanner lock from the inside.</b>"))
 			return
 
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -253,12 +257,12 @@
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock slide out of place.</span>")
+				boutput(src.occupant, SPAN_ALERT("You hear the scanner's lock slide out of place."))
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock click into place.</span>")
+				boutput(src.occupant, SPAN_ALERT("You hear the scanner's lock click into place."))
 
 	proc/go_out()
 		if (!src.occupant)

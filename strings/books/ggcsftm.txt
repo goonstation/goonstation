@@ -46,6 +46,6 @@ This is due to the doppler effect </span><span>linked to the movement of the hot
 <span class="c1">.</span><span>&nbsp;Advanced teams may make use of the Stomper Unit to move a hotspot enabling them to take advantage of the huge tracts of asteroid rock below. &nbsp;This can lead</span><span class="c0">&nbsp;into untold amounts of energy for harvest.</span></p><p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c1">While this process can</span><span>&nbsp;also </span><span class="c0">be completed alone; it is far more effective when done as a team.</span></p></body></html>
 <br>
 <p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
-<ul><li><a href="https://wiki.ss13.co/Powering_the_Station" target="Goonstation Wiki: Powering the Station">https://wiki.ss13.co/Powering_the_Station</a>
+<ul><li><a href="https://wiki.ss13.co/Geothermal_Generator" target="Goonstation Wiki: Geothermal Generator">https://wiki.ss13.co/Geothermal_Generator</a>
 <li><a href="https://wiki.ss13.co/Engineer" target="Goonstation Wiki: Engineer">https://wiki.ss13.co/Engineer</a></li></ul>
 Thank you for your service to Nanotrasen.</i></p>

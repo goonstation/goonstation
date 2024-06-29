@@ -25,22 +25,17 @@
 	. = ..()
 	var/list/possible_salvagers = list()
 
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(pop_divisor+1)
 	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 2, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
 	if (!length(possible_salvagers))
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b></span>")
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b>"))
 		return 0
-	if( ( master_mode != config_tag ) && ( length(possible_salvagers) < minimum_salvagers) )
+	if( ( master_mode != config_tag )   \
+	 && ( (length(possible_salvagers) < minimum_salvagers) || (target_antag_count < minimum_salvagers) ) )
 		return 0
 
 	// now that we've done everything that could cause the round to fail to start (in this proc, at least), we can deal with antag tokens

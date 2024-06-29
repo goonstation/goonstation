@@ -58,11 +58,11 @@
 	layer = 3.09;
 	pixel_y = 12
 	},
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "z" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "D" = (

@@ -2,8 +2,6 @@
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	var/static/icon/flat_template = icon('icons/misc/flatBlank.dmi')
 
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
-
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
 	#define INDEX_Y_LOW 3
@@ -119,10 +117,9 @@
 				continue
 
 			if(I == copy) // 'I' is an /image based on the object being flattened.
-				curblend = BLEND_OVERLAY
 				add = icon(I.icon, I.icon_state, base_icon_dir)
 			else // 'I' is an appearance object.
-				add = getFlatIcon(image(I), curdir, curicon, curstate, curblend, FALSE, no_anim)
+				add = getFlatIcon(image(I), curdir, curicon, curstate, I.blend_mode, FALSE, no_anim)
 			if(!add)
 				continue
 			// Find the new dimensions of the flat icon to fit the added overlay
@@ -144,12 +141,22 @@
 				flat_size = add_size.Copy()
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
+			var/Iblend = I.blend_mode
+			if(Iblend == BLEND_INSET_OVERLAY)
+				var/icon/flat_alpha_mask = icon(flat)
+				flat_alpha_mask.MapColors(0,0,0, 0,0,0, 0,0,0, 0,0,0)
+				add.Blend(flat_alpha_mask, ICON_AND)
+				Iblend = BLEND_OVERLAY
+			flat.Blend(add, blendMode2iconMode(Iblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
-		if(A.color)
-			flat.Blend(A.color, ICON_MULTIPLY)
-		if(A.alpha < 255)
-			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
+		if(islist(A.color))
+			var/list/c = normalize_color_to_matrix(A.color)
+			flat.MapColors(c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10],c[11],c[12],c[13],c[14],c[15],c[16],c[17],c[18],c[19],c[20])
+		else
+			if(A.color)
+				flat.Blend(A.color, ICON_MULTIPLY)
+			if(A.alpha < 255)
+				flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
 		if(no_anim)
 			//Clean up repeated frames
@@ -160,7 +167,16 @@
 			. = icon(flat, "", SOUTH)
 	else	//There's no overlays.
 		if(!noIcon)
-			SET_SELF(.)
+			var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null)
+			if(islist(A.color))
+				var/list/c = normalize_color_to_matrix(A.color)
+				SELF_ICON.MapColors(c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10],c[11],c[12],c[13],c[14],c[15],c[16],c[17],c[18],c[19],c[20])
+			else
+				if(A.alpha<255)
+					SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY)
+				if(A.color)
+					SELF_ICON.Blend(A.color,ICON_MULTIPLY)
+			. = SELF_ICON
 
 //Converts a blend_mode constant to one acceptable to icon.Blend()
 /proc/blendMode2iconMode(blend_mode)
@@ -188,5 +204,3 @@
 	#undef INDEX_X_HIGH
 	#undef INDEX_Y_LOW
 	#undef INDEX_Y_HIGH
-
-	#undef SET_SELF

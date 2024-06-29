@@ -31,7 +31,7 @@
 			var/turf/T = get_turf(owner)
 			make_cleanable(/obj/decal/cleanable/blood,T)
 		if (probmult(3))
-			owner.visible_message("<span class='alert'>[owner] vomits a lot of blood!</span>")
+			owner.visible_message(SPAN_ALERT("[owner] vomits a lot of blood!"))
 			playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			bleed(owner, rand(5,8), 5)
 
@@ -70,13 +70,13 @@
 			owner.eye_damage += 10
 			if (owner.eye_damage > 90)
 				owner.emote("blink")
-				boutput(owner, "<span class='alert'>A shadowy veil falls over your vision.</span>")
+				boutput(owner, SPAN_ALERT("A shadowy veil falls over your vision."))
 			else if (owner.eye_damage > 50)
 				owner.emote("blink")
-				boutput(owner, "<span class='alert'>You can't seem to be able to see things clearly anymore.</span>")
+				boutput(owner, SPAN_ALERT("You can't seem to be able to see things clearly anymore."))
 			else
 				owner.emote("blink")
-				boutput(owner, "<span class='notice'>You blink and notice that your vision is blurier than before.<span>")
+				boutput(owner, SPAN_NOTICE("You blink and notice that your vision is blurier than before."))
 
 	OnRemove()
 		. = ..()
@@ -108,13 +108,13 @@
 
 	OnLife(mult)
 		if (probmult(5))
-			boutput(owner, "<span class='notice'>You suddenly feel very [pick("winded", "tired")].</span>")
+			boutput(owner, SPAN_NOTICE("You suddenly feel very [pick("winded", "tired")]."))
 			owner.changeStatus("slowed", 10 SECONDS)
 		if (probmult(3))
-			boutput(owner, pick("<span class='notice'>Your muscles tense up.</span>", "<span class='notice'>You feel light-headed.</span>", "<span class='notice'>Your legs almost give in.</span>"))
+			boutput(owner, pick(SPAN_NOTICE("Your muscles tense up."), SPAN_NOTICE("You feel light-headed."), SPAN_NOTICE("Your legs almost give in.")))
 			owner.emote("pale")
 		if (probmult(3))
-			boutput(owner, pick("<span class='notice'>Your conscience slips.</span>", "<span class='notice'>You feel awfully drowsy.</span>"))
+			boutput(owner, pick(SPAN_NOTICE("Your conscience slips."), SPAN_NOTICE("You feel awfully drowsy.")))
 			owner.changeStatus("drowsy", 10 SECONDS)
 
 	OnRemove()
@@ -149,7 +149,7 @@
 
 	OnLife(mult)
 		if (probmult(5))
-			var/vomit_message = "<span class='alert'>[owner] suddenly vomits on the floor!</span>"
+			var/vomit_message = SPAN_ALERT("[owner] suddenly vomits on the floor!")
 			owner.vomit(rand(3,5), null, vomit_message)
 		if (probmult(3))
 			owner.emote(pick("cough", "sneeze"))

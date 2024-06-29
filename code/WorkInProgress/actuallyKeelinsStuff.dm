@@ -17,6 +17,9 @@ Arguments:
 	trg_off_y: Y offset applied to the target location of the beam.
 	mode: If set to LINEMODE_SEGMENT, the proc will use multiple beam segments to reach the full length. The last segment might still be squished.
 		  If set to LINEMODE_STRETCH, the beam segment will be stretched to the full length of the beam.
+		     -LINEMODE_STRETCH has an existing issue where BYOND will partially clip the line sprites in certain situations.
+			  If set to LINEMODE_STRETCH_NOCLIP, it will attempt to bypass this by not using filter transforms, though this has its' own downsides scaling caps.
+
 		  TBI: If set to LINEMODE_MOVE, one full sized segment will travel from source to target, repeatedly.
 	getCrossed: If set to 1, we will return a list of crossed turfs in our /datum/lineResult 's crossed var.
 	adjustTiles: If 1, will attempt to correct the list of crossed turfs based on the offsets passed into the proc.
@@ -93,6 +96,24 @@ Returns:
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.lineImage = I
+
+	else if(mode == LINEMODE_STRETCH_NO_CLIP)
+		// This mode is mostly the same as LINEMODE_STRETCH, but does the transformation outside of filters.
+		// This prevents some weird issues that cause LINEMODE_STRETCH to cut off the sprite at certain pixel offsets, but
+		// makes it difficult to have caps at both ends of a line.
+
+		//Matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
+		var/image/I = image(null,source)
+		I.appearance_flags = KEEP_APART  //Required for some odd reason.
+		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
+		if(render_source_cap != null)
+			//And to avoid resizing caps, we pre-emptively upscale the source cap, so that it looks the same.
+			//This probably breaks dual-ended caps.
+			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
+			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
+		I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE)
 		var/image/I = image(null,source)
@@ -214,7 +235,6 @@ Returns:
 	S.filters += filter(type="layer", render_source = "*hidden_game_plane")
 	S.filters += filter(type="color", color=list(0.2,0.05,0.05, 0.1,0.3,0.2, 0.1,0.1,0.4, 0,0,0)) //Alpha method preserves interaction but you can use object outside your range and alpha gets destroyed
 	S.filters += filter(type="alpha", render_source="*test")										//Going with this because i only need visibility
-	//S.plane = PLANE_LIGHTING - 1  //If we want lighting
 	usr << I
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
@@ -362,6 +382,11 @@ Returns:
 	desc = "someone drew something here"
 	var/list/arteests = list()
 
+/datum/gunTarget
+	var/params = null
+	var/target = null
+	var/user = 0
+
 /obj/item/permmarker
 	name = "Permanent Marker"
 	icon = 'icons/obj/items/items.dmi'
@@ -448,9 +473,9 @@ Returns:
 	var/loaded = file2text(mapPath)
 
 	if(loaded)
-		boutput(usr, "<span class='alert'>GRABBED '[mapPath]' FROM LOCAL FILESYSTEM</span>")
+		boutput(usr, SPAN_ALERT("GRABBED '[mapPath]' FROM LOCAL FILESYSTEM"))
 	else
-		boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
+		boutput(usr, SPAN_ALERT("COULDNT LOAD '[mapPath]'"))
 		return
 
 	var/trgX = input(usr, "Enter target X:", "", 1) as num
@@ -463,9 +488,9 @@ Returns:
 		if(loaded && length(loaded))
 			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
-			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
+			boutput(usr, SPAN_ALERT("LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC"))
 		else
-			boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
+			boutput(usr, SPAN_ALERT("COULDNT LOAD '[mapPath]'"))
 	return
 
 /proc/endoftheworldasweknowit()
@@ -478,7 +503,7 @@ Returns:
 	var/turf/TLast = pick(L)
 	L.Remove(TLast)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		TLast.vis_contents += TLast
@@ -491,7 +516,7 @@ Returns:
 		if(T.z == 1)
 			L.Add(T)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		var/turf/TB = pick(L)
@@ -663,7 +688,7 @@ Returns:
 			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
-	while(areas.len >= 2)
+	while(length(areas) >= 2)
 		var/area/one = pick(areas)
 		areas.Remove(one)
 		var/area/two = pick(areas)
@@ -739,7 +764,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue oneOuter
 
-			if(twoTurfsExpend.len > 0)
+			if(length(twoTurfsExpend) > 0)
 				var/turf/T = pick(twoTurfsExpend)
 				twoTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -762,7 +787,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue twoOuter
 
-			if(oneTurfsExpend.len > 0)
+			if(length(oneTurfsExpend) > 0)
 				var/turf/T = pick(oneTurfsExpend)
 				oneTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -793,7 +818,8 @@ Returns:
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Test Cinematic camera"
 	set desc="Test Cinematic camera"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/mob/M = usr
 	var/datum/targetable/cincam/R = new()
 	M.targeting_ability = R
@@ -974,7 +1000,7 @@ Returns:
 			qdel(src)
 		..()
 
-/obj/meleeeffect
+/obj/effect/melee
 	name = ""
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
@@ -1019,7 +1045,7 @@ Returns:
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "glowyline"
 
-/obj/meleeeffect/spearimage
+/obj/effect/melee/spearimage
 	name = ""
 	desc = ""
 	icon = null
@@ -1041,7 +1067,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	var/obj/beam_dummy/beam
 	var/turf/last = null
 
@@ -1096,7 +1122,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, var/reach)
 		return doAttack(user, target, reach ? target : null)
@@ -1127,7 +1153,6 @@ Returns:
 		return attackDir
 
 /datum/action/bar/private/icon/daggerStab
-	id = "daggerStab"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"
@@ -1199,7 +1224,7 @@ Returns:
 					else continue
 				if(canSee)
 					seen.Add(O)
-					O.show_message("<span class='alert'><B>[user] raises \the [dagger] menacingly!!!</B></span>", 1)
+					O.show_message(SPAN_ALERT("<B>[user] raises \the [dagger] menacingly!!!</B>"), 1)
 
 
 /obj/item/experimental/melee/dagger
@@ -1210,7 +1235,7 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "dagger"
 	hitsound = null
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	force = 1
 	var/datum/action/bar/private/icon/daggerStab/stabAction
 
@@ -1274,9 +1299,9 @@ Returns:
 					A.Attackby(src, user)
 
 		if(bloody && hitmob)
-			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, 0)
+			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, FALSE)
 		else
-			playsound(target, 'sound/impact_sounds/Blade_Small.ogg', 100, 0)
+			playsound(target, 'sound/impact_sounds/Blade_Small.ogg', 100, FALSE)
 
 		flags |= SUPPRESSATTACK
 		force = initial(force)
@@ -1286,8 +1311,8 @@ Returns:
 		return
 
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
-		var/obj/meleeeffect/dagger/M
-		M = new/obj/meleeeffect/dagger(target)
+		var/obj/effect/melee/dagger/M
+		M = new/obj/effect/melee/dagger(target)
 		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
@@ -1335,8 +1360,8 @@ Returns:
 		shaft = M
 		SetPrefix()
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
@@ -1344,8 +1369,8 @@ Returns:
 		SetPrefix()
 		setMaterial(M, setname = 0)
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") * 2)
 			src.throwforce = round(src.material.getProperty("hard") * 3)
@@ -1355,9 +1380,9 @@ Returns:
 		src.remove_prefixes(prefix)
 		prefix = ""
 		if(head)
-			prefix += "[head.name]-tipped[shaft?" ":""]"
+			prefix += "[head.getName()]-tipped[shaft?" ":""]"
 		if (shaft)
-			prefix += "[shaft.name]"
+			prefix += "[shaft.getName()]"
 		src.name_prefix(prefix)
 		src.UpdateName()
 
@@ -1365,15 +1390,15 @@ Returns:
 		overlays.Cut()
 		if(shaft)
 			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
-			imgShaft.color = shaft.color
-			imgShaft.alpha = shaft.alpha
+			imgShaft.color = shaft.getColor()
+			imgShaft.alpha = shaft.getAlpha()
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
 			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
-			imgHead.color = head.color
-			imgHead.alpha = head.alpha
+			imgHead.color = head.getColor()
+			imgHead.alpha = head.getAlpha()
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
@@ -1435,8 +1460,8 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/spear/M
-		//var/obj/meleeeffect/spearimage/I
+		var/obj/effect/melee/spear/M
+
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
@@ -1445,7 +1470,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1457,7 +1482,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1469,7 +1494,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1481,7 +1506,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1522,29 +1547,29 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/M
+		var/obj/effect/melee/M
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1572,7 +1597,7 @@ Returns:
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
 
-			src.visible_message("<span class='alert'><B>[src] breaks into pieces!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] breaks into pieces!</B>"))
 			icon_state = "statuefloorpills0"
 
 			broken = 1
@@ -1609,12 +1634,24 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
+/datum/admins/proc/pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
-	set desc = "Enter pixel explosion mode."
-	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic(mode == "explode")
+	set desc = "Makes everything you click on explode into pixels."
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
+	if (istype(usr.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = usr.targeting_ability
+		usr.targeting_ability = null
+		qdel(pixel_picker)
+		usr.update_cursor()
+		boutput(usr, "Pixel explosion mode toggled off.")
+	else
+		var/mode = alert(usr, "Explode or pixelate?", "", "Explode", "Pixelate", "Cancel")
+		if (!mode || mode == "Cancel")
+			return
+		pixelmagic(mode == "Explode")
+		boutput(usr, "Clicking things will now [mode == "Explode" ? "explode them into pixels" : "turn them into individual pixel items"]")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
@@ -1645,11 +1682,15 @@ Returns:
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
+/proc/dothepixelthing(var/atom/movable/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
 		return
 
 	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
+		return
+
+	//large objects + pixel explosion effects = world ending amounts of lag
+	if (A.bound_width > 32 || A.bound_height > 32)
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1661,7 +1702,7 @@ Returns:
 	var/atom/movable/AT = A.loc
 
 	if(explode)
-		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
+		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, TRUE)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
 			var/color = I.GetPixel(x, y)
@@ -1719,19 +1760,6 @@ Returns:
 		. = ..()
 		src.icon = initial(icon)
 
-
-/datum/admins/proc/turn_off_pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Turn off pixel explosion mode"
-	set desc = "Turns off pixel explosion mode."
-
-	var/mob/M = usr
-	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
-		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
-		M.targeting_ability = null
-		qdel(pixel_picker)
-		M.update_cursor()
-
 /obj/item/craftedmelee/spear
 	name = "spear"
 	desc = "it's an improvised spear."
@@ -1763,8 +1791,8 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M, mob/user) //TBI
-		return ..(M,user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		return ..(target,user)
 
 /obj/item/craftedmelee
 	name = "melee weapon"
@@ -1798,7 +1826,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -1807,14 +1835,14 @@ Returns:
 
 		if (r <= 70)
 			if(r < 35)
-				return item1.attack(M, user, def_zone)
+				return item1.attack(target, user, def_zone)
 			else
-				return item2.attack(M, user, def_zone)
+				return item2.attack(target, user, def_zone)
 		else
 			if(r < 90)
 				SPAWN(0)
-					item1.attack(M, user, def_zone)
-					item2.attack(M, user, def_zone)
+					item1.attack(target, user, def_zone)
+					item2.attack(target, user, def_zone)
 				return
 			else
 				src.fall_apart(user)
@@ -1829,14 +1857,14 @@ Returns:
 
 		if (r <= 60)
 			if(r < 30)
-				return item1.attack_self(user)
+				return item1.AttackSelf(user)
 			else
-				return item2.attack_self(user)
+				return item2.AttackSelf(user)
 		else
 			if(r <= 80)
 				SPAWN(0)
-					item1.attack_self(user)
-					item2.attack_self(user)
+					item1.AttackSelf(user)
+					item2.AttackSelf(user)
 				return
 			else
 				src.fall_apart(user)
@@ -1965,10 +1993,10 @@ Returns:
 /obj/item/teslacannon
 	desc = "An experimental piece of syndicate technology."
 	name = "Tesla cannon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/firing = 0
 
@@ -1992,7 +2020,7 @@ Returns:
 			for(var/turf/T in affected)
 				animate_flash_color_fill(T,"#aaddff",1,5)
 				for(var/mob/M in T)
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 					random_burn_damage(M, 10)
 
 				if(istype(T, /turf/simulated/floor))
@@ -2043,7 +2071,7 @@ Returns:
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))
 				if("Yes")
 					copy_to(trgTurf)
-					boutput(usr, "<span class='success'>*** All done ***</span>")
+					boutput(usr, SPAN_SUCCESS("*** All done ***"))
 				if("No")
 					return
 		return
@@ -2094,7 +2122,7 @@ Returns:
 		procArgs = listargs
 		procName = procname
 		procTarget = target
-		boutput(usr, "<span class='success'>*** All done ***</span>")
+		boutput(usr, SPAN_SUCCESS("*** All done ***"))
 
 		return
 
@@ -2134,7 +2162,7 @@ Returns:
 			spawn_rate = nRate
 			spawn_check_rate = nCheck
 			spawn_type = nSpawn
-			boutput(usr, "<span class='success'>*** All done ***</span>")
+			boutput(usr, SPAN_SUCCESS("*** All done ***"))
 		return
 
 	New()
@@ -2155,7 +2183,7 @@ Returns:
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2234,6 +2262,7 @@ Returns:
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	mouse_opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
@@ -2242,6 +2271,7 @@ Returns:
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
+	mouse_opacity = 0
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -2253,7 +2283,7 @@ Returns:
 	throw_speed = 2
 	throw_range = 10
 	force = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
 	var/xo = null
@@ -2333,7 +2363,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, 'sound/weapons/rocket.ogg', 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, TRUE)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2425,7 +2455,7 @@ Returns:
 			if(!isturf(T)) continue
 			newareaturfs += T
 
-		if(newareaturfs.len < oldareaturfs.len) //Out of bounds. Fucking byond.
+		if(length(newareaturfs) < oldareaturfs.len) //Out of bounds. Fucking byond.
 			moving = 0
 			return
 
@@ -2556,7 +2586,7 @@ Returns:
 	Bumped(atom/movable/AM)
 		var/obj/source = locate(/obj/dfissure_to)
 		if (!istype(source))
-			boutput(AM, "<span class='combat'>You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!</span>")
+			boutput(AM, SPAN_COMBAT("You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!"))
 			return
 		var/turf/trg = source.loc
 
@@ -2575,12 +2605,12 @@ Returns:
 			eligible.Add(H)
 
 	var/mob/living/carbon/human/picked1
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked1 = pick(eligible)
 		eligible -= picked1
 
 	var/mob/living/carbon/human/picked2
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked2 = pick(eligible)
 
 	picked1?.zombify()
@@ -2589,8 +2619,8 @@ Returns:
 
 	for(var/turf/T in random_floor_turfs)
 		if(prob(3))
-			new/obj/item/plank(T)
-			new/obj/item/plank(T)
+			new/obj/item/sheet/wood(T)
+			new/obj/item/sheet/wood(T)
 		else if(prob(1) && prob(40))
 			new/obj/item/gun/kinetic/spes(T)
 			new/obj/item/ammo/bullets/a12(T)
@@ -2606,12 +2636,12 @@ Returns:
 	if (!istype(ZOM,/datum/ailment/disease/))
 		return
 	ZOM.stage = 5
-	boutput(src, "<span class='alert'>########################################</span>")
-	boutput(src, "<span class='alert'>You have turned into a zombie.</span>")
-	boutput(src, "<span class='alert'>To infect other players, you must knock</span>")
-	boutput(src, "<span class='alert'>them down and then attack them with your</span>")
-	boutput(src, "<span class='alert'>bare hands and the harm intent.</span>")
-	boutput(src, "<span class='alert'>########################################</span>")
+	boutput(src, SPAN_ALERT("########################################"))
+	boutput(src, SPAN_ALERT("You have turned into a zombie."))
+	boutput(src, SPAN_ALERT("To infect other players, you must knock"))
+	boutput(src, SPAN_ALERT("them down and then attack them with your"))
+	boutput(src, SPAN_ALERT("bare hands and the harm intent."))
+	boutput(src, SPAN_ALERT("########################################"))
 
 /obj/item/boomerang
 	name = "Boomerang"
@@ -2647,11 +2677,11 @@ Returns:
 			var/mob/living/carbon/human/user = thr.user
 			if(hit_atom == user)
 				if(prob(prob_clonk))
-					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 					user.changeStatus("stunned", 5 SECONDS)
-					user.changeStatus("weakened", 3 SECONDS)
-					user.changeStatus("paralysis", 2 SECONDS)
+					user.changeStatus("knockdown", 3 SECONDS)
+					user.changeStatus("unconscious", 2 SECONDS)
 					user.force_laydown_standup()
 				else
 					src.Attackhand(user)
@@ -2661,7 +2691,7 @@ Returns:
 					var/mob/living/carbon/human/H = hit_atom
 					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
 						H.changeStatus("stunned", 4 SECONDS)
-						H.changeStatus("weakened", 2 SECONDS)
+						H.changeStatus("knockdown", 2 SECONDS)
 						H.force_laydown_standup()
 						//H.paralysis++
 						playsound(H.loc, "swing_hit", 50, 1)
@@ -2770,6 +2800,7 @@ Returns:
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/mob/M = src.mob
 	if (istype(M))
@@ -2779,7 +2810,7 @@ Returns:
 		M.update_cursor()
 		return
 
-/obj/perm_portal
+/obj/laser_sink/perm_portal //this path is FINE, shut UP
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = ANCHORED
@@ -2789,16 +2820,32 @@ Returns:
 	var/target_tag = null
 	var/datum/light/light
 
+	var/obj/linked_laser/out_laser = null
+
 	New()
 		..()
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
-		light.set_brightness(0.5)
+		light.set_brightness(1)
 		light.attach(src)
 		light.enable()
 		SPAWN(0.6 SECONDS)
 			if (target_tag)
 				target = locate(target_tag)
+
+	incident(obj/linked_laser/laser)
+		if (src.in_laser) //no infinite loops allowed
+			return FALSE
+		src.in_laser = laser
+		src.out_laser = laser.copy_laser(get_turf(target), laser.dir)
+		laser.next = src.out_laser
+		src.out_laser.try_propagate()
+		return TRUE
+
+	exident(obj/linked_laser/laser)
+		qdel(src.out_laser)
+		src.out_laser = null
+		..()
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
@@ -2823,6 +2870,11 @@ Returns:
 	ex_act()
 		return
 
+	Click(location, control, params)
+		if (isobserver(usr))
+			usr.set_loc(src.target)
+			return
+		..()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()
@@ -2831,7 +2883,7 @@ Returns:
 	if(findtext(text,"for no raisin"))
 		if(M.client)
 			if(!(M.client in raisinlist) && isliving(M))
-				boutput(M, "<span class='alert'>A raisin mysteriously materializes right next to your feet...</span>")
+				boutput(M, SPAN_ALERT("A raisin mysteriously materializes right next to your feet..."))
 				new/obj/item/reagent_containers/food/snacks/raisin(get_turf(M))
 				raisinlist += M.client
 	return
@@ -2843,28 +2895,28 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M, mob/user, def_zone)
-		if(ishuman(M))
-			if(M == user)
-				M.nutrition += src.heal_amt * 10
-				M.poo += 1
-				src.heal(M)
-				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman(target))
+			if(target == user)
+				target.nutrition += src.heal_amt * 10
+				target.poo += 1
+				src.heal(target)
+				playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				boutput(user, SPAN_ALERT("You eat the raisin and shed a single tear as you realise that you now have no raisin."))
 				qdel(src)
 				return 1
 			else
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='alert'>[user] attempts to feed [M] [src].</span>", 1)
-				if(!do_mob(user, M)) return
+					O.show_message(SPAN_ALERT("[user] attempts to feed [target] [src]."), 1)
+				if(!do_mob(user, target)) return
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='alert'>[user] feeds [M] [src].</span>", 1)
+					O.show_message(SPAN_ALERT("[user] feeds [target] [src]."), 1)
 				src.amount--
-				M.nutrition += src.heal_amt * 10
-				M.poo += 1
-				src.heal(M)
-				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
-				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
+				target.nutrition += src.heal_amt * 10
+				target.poo += 1
+				src.heal(target)
+				playsound(target.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
+				boutput(user, SPAN_ALERT("[target] eats the raisin."))
 				qdel(src)
 				return 1
 		return 0 */
@@ -2880,11 +2932,11 @@ var/list/lag_list = new/list()
 
 /proc/add_and_average(var/value)
 	lag_list.Insert(1,value)
-	if(lag_list.len > lag_average_size) lag_list.Cut(lag_average_size+1,0)
+	if(length(lag_list) > lag_average_size) lag_list.Cut(lag_average_size+1,0)
 	var/tempnum = 0
 	for(var/a in lag_list)
 		tempnum += a
-	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
+	if(length(lag_list) >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
 		if(0 to 0.1)
@@ -2905,7 +2957,7 @@ var/list/lag_list = new/list()
 	SPAWN(0.5 SECONDS) lag_loop()
 
 /proc/get_lag_average()
-	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
+	boutput(usr, SPAN_SUCCESS("[average_tenth] at [lag_list.len] samples."))
 
 
 /obj/item/spook
@@ -2937,10 +2989,7 @@ var/list/lag_list = new/list()
 				break
 
 	proc/spook(var/mob/living/L)
-		if (narrator_mode)
-			playsound(L, 'sound/vox/ghost.ogg', 5, 0)
-		else
-			playsound(L, 'sound/effects/ghost.ogg', 5, 0)
+		playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
@@ -3025,9 +3074,9 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		if(hasvar(target,"id"))
 			target:id = saved_var
-			boutput(usr, "<span class='notice'>Done.</span>")
+			boutput(usr, SPAN_NOTICE("Done."))
 		else
-			boutput(usr, "<span class='alert'>Not a linkabled object.</span>")
+			boutput(usr, SPAN_ALERT("Not a linkabled object."))
 		return
 
 /datum/engibox_mode/reqacc
@@ -3037,9 +3086,9 @@ var/list/lag_list = new/list()
 		if(istype(target, /obj/machinery/door))
 			if(hasvar(target, "req_access"))
 				target:req_access = get_access(input(usr) in get_all_jobs() + "Club member")
-				boutput(usr, "<span class='notice'>Done.</span>")
+				boutput(usr, SPAN_NOTICE("Done."))
 			else
-				boutput(usr, "<span class='alert'>Invalid object.</span>")
+				boutput(usr, SPAN_ALERT("Invalid object."))
 		return
 
 /datum/engibox_mode/spawnid
@@ -3176,10 +3225,10 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		if(obj_path)
 			var/atom/A = new obj_path(get_turf(target))
-			boutput(usr, "<span class='notice'>Placed: [A.name]</span>")
+			boutput(usr, SPAN_NOTICE("Placed: [A.name]"))
 		else
 			obj_path = target.type
-			boutput(usr, "<span class='notice'>Now replicating: [target.name]s</span>")
+			boutput(usr, SPAN_NOTICE("Now replicating: [target.name]s"))
 		return
 
 /datum/engibox_mode/transmute
@@ -3195,7 +3244,7 @@ var/list/lag_list = new/list()
 	desc = "Toggles the density of an object."
 	used(atom/user, atom/target)
 		target.set_density(!target.density)
-		boutput(usr, "<span class='notice'>Target density now: [target.density]</span>")
+		boutput(usr, SPAN_NOTICE("Target density now: [target.density]"))
 		return
 
 /datum/engibox_mode/opacity
@@ -3203,7 +3252,7 @@ var/list/lag_list = new/list()
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
 		target.set_opacity(!target.opacity)
-		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
+		boutput(usr, SPAN_NOTICE("Target opacity now: [target.opacity]"))
 		return
 
 /obj/item/engibox
@@ -3215,19 +3264,19 @@ var/list/lag_list = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
 	var/z_level_lock = 0
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)
-			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
+			boutput(user, SPAN_ALERT("You are not authorized to use this item."))
 			return
 		if(BOUNDS_DIST(target, user) > 0)
-			boutput(user, "<span class='alert'>You are too far away.</span>")
+			boutput(user, SPAN_ALERT("You are too far away."))
 			return
 		if(target == loc) return
 		var/turf/T = get_turf(src)
 		if(z_level_lock && T.z != z_level_lock)
-			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
+			boutput(user, SPAN_ALERT("\The [src] is not authorized to be used outside official NanoTrasen stations."))
 			return
 		active_mode?.used(user, target)
 		return
@@ -3237,7 +3286,7 @@ var/list/lag_list = new/list()
 
 	attack_self(mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)
-			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
+			boutput(user, SPAN_ALERT("You are not authorized to use this item."))
 			return
 		var/dat = "Engie-box modes:<BR><BR>"
 		for(var/datum/engibox_mode/D in modes)
@@ -3264,9 +3313,9 @@ var/list/lag_list = new/list()
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
 
-			src.attack_self(usr)
+			src.AttackSelf(usr)
 			return
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 		return
 

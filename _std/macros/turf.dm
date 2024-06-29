@@ -6,6 +6,9 @@
 	*/
 #define get_turf(x) get_step(x, 0)
 
+/// Gets the z-level of the turf an atom is on
+#define get_z(x) get_step(x, 0)?.z
+
 /// returns a list of all neighboring turfs in cardinal directions.
 #define getneighbours(x) (list(get_step(x, NORTH), get_step(x, EAST), get_step(x, SOUTH), get_step(x, WEST)))
 
@@ -15,8 +18,13 @@
 /// Returns true if x is a floor type
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
 
+/// Returns true if x is a any kind of wall
+#define iswall(x) (istype(x,/turf/simulated/wall)||istype(x,/turf/unsimulated/wall))
+
 /// Returns true if x is a reinforced wall
 #define isrwall(x) (istype(x,/turf/simulated/wall/r_wall)||istype(x,/turf/simulated/wall/auto/reinforced)||istype(x,/turf/unsimulated/wall/auto/reinforced)||istype(x,/turf/simulated/wall/false_wall/reinforced))
+
+#define wall_window_check(x) (isturf(x) && (istypes(x, list(/turf/simulated/wall/auto, /turf/unsimulated/wall/auto) || (locate(/obj/mapping_helper/wingrille_spawn) in x) || (locate(/obj/window) in x))))
 
 /**
 	* Creates typepaths for an unsimulated turf, a simulated turf, an airless simulated turf, and an airless unsimulated turf at compile time.

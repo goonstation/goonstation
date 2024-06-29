@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend } from "../../backend";
 import { Box, Button, ByondUi, ColorBox, Dropdown, Flex, Knob, LabeledList, Section } from "../../components";
 
@@ -33,7 +32,7 @@ export const AppearanceEditor = (params, context) => {
     <Section
       title="Appearance Editor"
       buttons={
-        <Fragment>
+        <>
           <Button
             onClick={() => act("editappearance", { apply: true })}
             icon="user"
@@ -44,7 +43,7 @@ export const AppearanceEditor = (params, context) => {
             onClick={() => act("editappearance", { cancel: true })}
             icon="times"
             color="bad" />
-        </Fragment>
+        </>
       }>
       <Flex>
         <Flex.Item shrink="1">
@@ -165,7 +164,7 @@ const ColorInput = (params, context) => {
         maxValue={fix ? 190 : 255}
         value={r}
         color="red"
-        onChange={(_, newR) => onComponentChange(newR, g, b)} />
+        onChange={(_, newR) => onComponentChange(Math.round(newR), g, b)} />
       <Knob
         inline
         ml={1}
@@ -173,7 +172,7 @@ const ColorInput = (params, context) => {
         maxValue={fix ? 190 : 255}
         value={g}
         color="green"
-        onChange={(_, newG) => onComponentChange(r, newG, b)} />
+        onChange={(_, newG) => onComponentChange(r, Math.round(newG), b)} />
       <Knob
         inline
         ml={1}
@@ -181,7 +180,7 @@ const ColorInput = (params, context) => {
         maxValue={fix ? 190 : 255}
         value={b}
         color="blue"
-        onChange={(_, newB) => onComponentChange(r, g, newB)} />
+        onChange={(_, newB) => onComponentChange(r, g, Math.round(newB))} />
     </Box>
   );
 };

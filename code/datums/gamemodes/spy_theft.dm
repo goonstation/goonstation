@@ -48,24 +48,24 @@
 
 /datum/bounty_item
 	var/name = "bounty name (this is a BUG)" 	//When a bounty object is deleted, we will still need a ref to its name
-	var/obj/item = 0										//Ref to exact item
-	var/path = 0												//Req path of item
-	var/claimed = 0											//Claimed already?
-	var/area/delivery_area = 0					//You need to stand here to deliver this
-	var/photo_containing = 0 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
-	var/reveal_area = 0									//Show area of target in pda
+	var/obj/item = null										//Ref to exact item
+	var/path = null												//Req path of item
+	var/claimed = null											//Claimed already?
+	var/area/delivery_area = null					//You need to stand here to deliver this
+	var/photo_containing = null 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
+	var/reveal_area = FALSE									//Show area of target in pda
 	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
-	var/bounty_type = 0 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
+	var/bounty_type = null 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
 	var/difficulty = 0									//Stored difficulty for items and big items
-	var/hot_bounty = 0									//This bounty randomly rolled a high tier reward
+	var/hot_bounty = FALSE									//This bounty randomly rolled a high tier reward
 
-	var/datum/syndicate_buylist/reward = 0
+	var/datum/syndicate_buylist/reward = null
 	var/value_low = 0
 	var/value_high = 10
 
-	var/datum/game_mode/spy_theft/game_mode = 0
+	var/datum/game_mode/spy_theft/game_mode = null
 
-	var/reward_was_spawned = 0
+	var/reward_was_spawned = FALSE
 
 	New(var/datum/game_mode/spy_theft/ST)
 		game_mode = ST
@@ -105,9 +105,9 @@
 				continue
 
 			if (S.cost <= value_high && S.cost >= value_low)
-				possible_items += S
+				possible_items[S] = S.surplus_weight
 
-		reward = pick(possible_items)
+		reward = weighted_pick(possible_items)
 
 	proc/spawn_reward(var/mob/user,var/obj/item/device/pda2/hostpda)
 		if (reward_was_spawned) return
@@ -123,6 +123,9 @@
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
+			if (!hostpda.uplink.purchase_log[reward.type])
+				hostpda.uplink.purchase_log[reward.type] = 0
+			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
 				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)
@@ -144,12 +147,7 @@
 	boutput(world, "<B>There are spies planted on [station_or_ship()]. They plan to steal valuables and assasinate rival spies  - Do not let them succeed!</B>")
 
 /datum/game_mode/spy_theft/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready) num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
@@ -208,7 +206,7 @@
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
 		if (M.special_role == ROLE_SPY_THIEF && M.current)
-			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
+			boutput(M.current, SPAN_NOTICE("<b>Spy Console</b> has been updated with new requests.")) //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current.playsound_local(M.current, 'sound/machines/twobeep.ogg', 35)
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
@@ -317,10 +315,10 @@
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
 
-	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
-	station_bounties[/obj/item/clothing/suit/bio_suit/paramedic] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
-	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
@@ -356,7 +354,7 @@
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
-	station_bounties[/obj/item/gun/kinetic/riotgun] = 3
+	station_bounties[/obj/item/gun/kinetic/pumpweapon/riotgun] = 3
 
 
 	station_bounties[/obj/item/kitchen/utensil] = 1
@@ -386,7 +384,7 @@
 	station_bounties[/obj/item/instrument/tambourine] = 1
 
 	station_bounties[/obj/item/clothing/glasses/blindfold] = 1
-	station_bounties[/obj/item/clothing/glasses/meson] = 1
+	station_bounties[/obj/item/clothing/glasses/toggleable/meson] = 1
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
@@ -474,11 +472,12 @@
 
 	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
-	big_station_bounties[/obj/machinery/clonegrinder] = 1
+	big_station_bounties[/obj/machinery/clonegrinder] = 2
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
+	big_station_bounties[/obj/machinery/dialysis] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
 	big_station_bounties[/obj/machinery/recharge_station] = 2
@@ -581,7 +580,7 @@
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
-		if (big_station_bounties.len <= 0)
+		if (length(big_station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
@@ -620,7 +619,7 @@
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
-		if (station_bounties.len <= 0)
+		if (length(station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break

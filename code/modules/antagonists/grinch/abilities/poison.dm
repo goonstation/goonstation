@@ -11,7 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
-	var/list/the_poison = list("coniine", "cyanide", "curare")
+	var/list/the_poison = list("coniine", "toxin", "curare")
 	var/amount_per_poison = 7
 
 	cast(mob/target)
@@ -24,13 +24,13 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to poison yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to poison yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
-
+		. = ..()
 		// Written in such a way that adding other reagent containers (e.g. medicine) would be trivial.
 		var/obj/item/reagent_containers/RC = null
 		var/attempt_success = 0
@@ -38,11 +38,11 @@
 		if (istype(target, /obj/item/reagent_containers/food)) // Food and drinking glass/bottle parent.
 			RC = target
 		else
-			boutput(M, "<span class='alert'>You can't poison [target], only food items and drinks.</span>")
+			boutput(M, SPAN_ALERT("You can't poison [target], only food items and drinks."))
 			return 1
 
 		if (RC && istype(RC))
-			if (src.the_poison.len > 1)
+			if (length(src.the_poison) > 1)
 				if (!RC.reagents)
 					RC.reagents = new /datum/reagents(src.amount_per_poison * src.the_poison.len)
 					RC.reagents.my_atom = RC
@@ -67,9 +67,9 @@
 			attempt_success = 0
 
 		if (attempt_success == 1)
-			boutput(M, "<span class='notice'>You successfully poisoned [target].</span>")
+			boutput(M, SPAN_NOTICE("You successfully poisoned [target]."))
 			logTheThing(LOG_COMBAT, M, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
 			return 0
 		else
-			boutput(M, "<span class='alert'>You failed to poison [target].</span>")
+			boutput(M, SPAN_ALERT("You failed to poison [target]."))
 			return 1

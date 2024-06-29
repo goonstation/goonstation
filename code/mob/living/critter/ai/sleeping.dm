@@ -4,5 +4,5 @@
 /datum/aiTask/prioritizer/waking
 	name = "waking"
 
-/datum/aiTask/timed/
+/datum/aiTask/timed
 

@@ -1,12 +1,13 @@
 /mob/living/critter/mimic
-	name = "Mimic"
+	name = "mimic"
+	real_name = "mimic"
 	desc = null
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mimicface"
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 20
 	health_burn = 20
 	health_brute_vuln = 0.75
@@ -71,6 +72,9 @@
 	proc/disguise_as(var/obj/target)
 		src.appearance = target
 		src.dir = target.dir
+		src.invisibility = initial(src.invisibility)
+		src.alpha = max(src.alpha, 200)
+		src.plane = initial(src.plane)
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.start_hiding()
 
@@ -132,14 +136,14 @@
 		if (..())
 			return TRUE
 		if (!isobj(target))
-			boutput(holder.owner, "<span class='alert'>You can't mimic this!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't mimic this!"))
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>You must be adjacent to [target] to mimic it.</span>")
+			boutput(holder.owner, SPAN_ALERT("You must be adjacent to [target] to mimic it."))
 			return TRUE
 		var/mob/living/critter/mimic/parent = holder.owner
 		parent.disguise_as(target)
-		boutput(holder.owner, "<span class='alert'>You mimic [target].</span>")
+		boutput(holder.owner, SPAN_ALERT("You mimic [target]."))
 		return FALSE
 
 /datum/targetable/critter/sting/mimic

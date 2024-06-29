@@ -16,11 +16,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -43,7 +43,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "kudzu"
-	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	pointName = "nutrients"
 	var/stealthed = 0
@@ -78,10 +78,10 @@
 			//unstealth
 			if (stealthed)
 				src.stealthed = 0
-				owner.changeStatus("weakened", 6 SECONDS)
+				owner.changeStatus("knockdown", 6 SECONDS)
 				animate(owner, alpha=255, time=3 SECONDS)
 
-				boutput(owner, "You no invisible.")
+				boutput(owner, "<b class='hint'>You reappear.</b>")
 		else if (points > MAX_POINTS)
 			points = MAX_POINTS
 
@@ -113,7 +113,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 		return
 
 	updateObject()
@@ -146,17 +146,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		//maybe have to be on kudzu to use power?
@@ -181,23 +181,24 @@
 	max_range = 2
 
 	cast(atom/tar)
+		. = ..()
 		var/turf/T = get_turf(tar)
 		if (isturf(T))
 			//if there's already a marker here, remove it
 			var/marker_to_del = locate(/obj/kudzu_marker) in T.contents
 			if (marker_to_del in T.contents)
 				qdel(locate(/obj/kudzu_marker) in T.contents)
-				boutput(holder.owner, "<span class='alert'>You remove the guiding maker from [T].</span>")
+				boutput(holder.owner, SPAN_ALERT("You remove the guiding maker from [T]."))
 
 			//make the marker
 			else
 				//remove kudzu from the marked tile.
 				if (T.temp_flags & HAS_KUDZU)
-					T.visible_message("<span class='notice'>The Kudzu shifts off of [T].</span>")
+					T.visible_message(SPAN_NOTICE("The Kudzu shifts off of [T]."))
 					for (var/obj/spacevine/K in T.contents)
 						qdel(K)
 				else
-					boutput(holder.owner, "<span class='notice'>You create a guiding marker on [T].</span>")
+					boutput(holder.owner, SPAN_NOTICE("You create a guiding marker on [T]."))
 				new/obj/kudzu_marker(T)
 
 //technically kudzu, non invasive
@@ -263,14 +264,15 @@
 	pointCost = 1
 
 	cast(atom/T)
+		. = ..()
 		var/datum/abilityHolder/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
-			boutput(holder.owner, "You secrete nutriends to refract light.")
+			boutput(holder.owner, SPAN_HINT("You secrete nutrients to refract light."))
 			animate(holder.owner, alpha=80, time=3 SECONDS)
 		else
 			HK.stealthed = 0
-			boutput(holder.owner, "You no invisible.")
+			boutput(holder.owner, SPAN_HINT("You reappear."))
 			animate(holder.owner, alpha=255, time=3 SECONDS)
 		return 0
 
@@ -290,12 +292,12 @@
 
 		if (target == holder.owner)
 			heal_coef = round(heal_coef/2)
-			boutput(holder.owner, "<span class='alert'>Using your own nutrients to heal is slightly less effective!</span>")
+			boutput(holder.owner, SPAN_ALERT("Using your own nutrients to heal is slightly less effective!"))
 
 		var/mob/living/C = target
 		if (istype(C))
-			C.visible_message("<span class='alert'><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
-			boutput(C, "<span class='notice'>You feel your pain fading away.</span>")
+			C.visible_message(SPAN_ALERT("<b>[holder.owner] touches [C], enveloping them soft glowing vines!</b>"))
+			boutput(C, SPAN_NOTICE("You feel your pain fading away."))
 			C.HealDamage("All", heal_coef, heal_coef)
 			C.take_toxin_damage(-heal_coef)
 			C.take_oxygen_deprivation(-heal_coef)
@@ -309,10 +311,9 @@
 			if (C.implant)
 				for (var/obj/item/implant/I in C.implant)
 					if (istype(I, /obj/item/implant/projectile))
-						boutput(C, "[I] falls out of you!")
+						boutput(C, SPAN_ALERT("[I] falls out of you!"))
 						I.on_remove(C)
 						C.implant.Remove(I)
-						//del(I)
 						I.set_loc(get_turf(C))
 						continue
 
@@ -321,7 +322,7 @@
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
 				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
-				H.changeStatus("weakened", -3 SECONDS)
+				H.changeStatus("knockdown", -3 SECONDS)
 		return
 
 /datum/targetable/kudzu/kudzusay
@@ -357,6 +358,7 @@
 
 	//This is basically all stolen from the seedplanter item.
 	cast(atom/T)
+		. = ..()
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		var/power = 1
 		if (istype(K))
@@ -391,7 +393,7 @@
 
 		if (choice == "Mend Seed")
 			S.seeddamage = max(S.seeddamage - amount*2, 0)
-			boutput(user, "<span class='notice'>You heal the cute little [S] in your hand.</span>")
+			boutput(user, SPAN_NOTICE("You heal the cute little [S] in your hand."))
 			return
 
 		//Can't raise the value past the max_gene_amt which is 25, 50, 75; based on size of the kudzu growth
@@ -409,7 +411,7 @@
 			if ("Endurance")
 				DNA.endurance += min(DNA.endurance + amount, max_gene_amt)
 
-		boutput(user, "<span class='notice'>You try to manipulate [S]'s [choice] gene on a molecular level.</span>")
+		boutput(user, SPAN_NOTICE("You try to manipulate [S]'s [choice] gene on a molecular level."))
 		return 0
 
 	proc/create(var/power as num)
@@ -436,7 +438,7 @@
 				S = new pick.unique_seed(holder.owner.loc)
 			else
 				S = new /obj/item/seed(holder.owner.loc,0)
-			S.generic_seed_setup(pick)
+			S.generic_seed_setup(pick, FALSE)
 			holder.owner.put_in_hand_or_drop(S)
 
 		return 0
@@ -452,24 +454,25 @@
 	max_range = 1
 
 	cast(atom/target)
+		. = ..()
 		//For giving nutrients to plantpots
 		if (istype(target, /obj/machinery/plantpot) && target.reagents)
 			//replace with kudzu_nutrients when I make it. should be a good thing for plants, maybe kinda good for man.
 			target.reagents.add_reagent("poo", 60)
 			target.reagents.add_reagent("water", 60)
-			boutput(holder.owner, "<span class='notice'>You release some nutrients into [target].</span>")
+			boutput(holder.owner, SPAN_NOTICE("You release some nutrients into [target]."))
 			return 0
 
 		//For spreading kudzu growth
 		var/turf/T = get_turf(target)
 		if (isturf(T))
 			if (T.density)
-				boutput(holder.owner, "<span class='alert'>The kudzu can't seem to find purchase on this turf!</span>")
+				boutput(holder.owner, SPAN_ALERT("The kudzu can't seem to find purchase on this turf!"))
 				return 1
 			//all the objects that kudzu can't grow on. Sans other kudzu turfs, cause we have a special interaction for that.
 			for (var/obj/O in T.contents)
 				if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob)|| istype(O, /obj/kudzu_marker))
-					boutput(holder.owner, "<span class='alert'>The kudzu can't seem to find purchase on this turf!</span>")
+					boutput(holder.owner, SPAN_ALERT("The kudzu can't seem to find purchase on this turf!"))
 					return 1
 
 
@@ -485,10 +488,10 @@
 					other_kudzu.to_spread += 5
 					other_kudzu.update_self()
 
-				boutput(holder.owner, "<span class='notice'>You mentally redirect some nutrients towards [kudzu_tile] to help it and the surrounding kudzu grow.</span>")
+				boutput(holder.owner, SPAN_NOTICE("You mentally redirect some nutrients towards [kudzu_tile] to help it and the surrounding kudzu grow."))
 			else
 				new/obj/spacevine/living(loc=T, to_spread=5)
-				boutput(holder.owner, "<span class='notice'>Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T].</span>")
+				boutput(holder.owner, SPAN_NOTICE("Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T]."))
 
 
 /datum/targetable/kudzu/vine_appendage
@@ -509,6 +512,7 @@
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
 
 	cast()
+		. = ..()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
 			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")
@@ -518,7 +522,7 @@
 			//if you can't drop the item in the active hand, just gotta show em an error.
 			var/obj/item/I = owner.equipped()
 			if (I?.cant_drop)
-				boutput(owner, "<span class='alert'>You're holding [I] in your hand, but you can't drop it, it's preventing you from controlling your vine.</span>")
+				boutput(owner, SPAN_ALERT("You're holding [I] in your hand, but you can't drop it, it's preventing you from controlling your vine."))
 				return 1
 
 			//Try to put the vine in their hand. If it fails, try to drop the item and put it in their hand after. If that fails, you're fucked.
@@ -535,7 +539,7 @@
 					icon_state = "vine-1"
 					return 0	//we're done successfully
 				else
-					boutput(owner, "Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.")
+					boutput(owner, "<h3 class='alert'>Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.</span>")
 					return 1
 
 		//turn off
@@ -545,12 +549,8 @@
 			else
 				//if it's not in their hands, where it should be, check if it's in their contents, if not fail.
 				var/obj/item/kudzu/kudzumen_vine/V = locate(/obj/item/kudzu/kudzumen_vine) in holder?.owner.contents
-				if (istype(V))
+				if (V)
 					return attempt_vine_drop(V, owner)
-
-				else
-					boutput(owner, "Can't find your vine to put away. Call 1-800-CODER.")
-					return 1
 
 
 	//I know. success = 0 and failure = 1. Ask whoever wrote ability casts.
@@ -620,7 +620,7 @@
 			kudzu_controller = K
 			amount = length(K.kudzu)
 		else
-			boutput(usr, "messed up kudzu controller call 1-800-CODER")
+			boutput(usr, "<h3 class='alert'>Messed up kudzu controller call 1-800-CODER</h3>")
 			logTheThing(LOG_DEBUG, null, "Messed up kudzu controller for kudzuman")
 
 	disposing()
@@ -697,7 +697,7 @@
 		..()
 		if (iskudzuman(user))
 			src.set_loc(user)
-			boutput(user, "<span class='notice'>[src] wraps back around your body, giving you a snuggly hug.</span>")
+			boutput(user, SPAN_NOTICE("[src] wraps back around your body, giving you a snuggly hug."))
 
 			//This isn't supposed to be dropped. We'll try to cast the ability to sync it if it does though.
 			// //find abilityholder and cast ability to put it back in the guy.
@@ -706,16 +706,16 @@
 			// 	var/datum/targetable/kudzu/vine_appendage/VA = KH.getAbility(/datum/targetable/kudzu/vine_appendage)
 			// 	VA.cast()
 		else
-			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
+			boutput(user, SPAN_ALERT("[src] breaks apart in your hands."))
 			qdel(src)
 
-	attack(mob/M, mob/user, def_zone, is_special = 0)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
 
 		if (prob(20))
-			var/turf/target = get_edge_target_turf(user, get_dir(user, M))
-			user.visible_message("<span class='alert'>[user] sends [M] flying with mighty oak-like strength!</span>")
-			M.throw_at(target, 5, 1)
+			var/turf/target_turf = get_edge_target_turf(user, get_dir(user, target))
+			user.visible_message(SPAN_ALERT("[user] sends [target] flying with mighty oak-like strength!"))
+			target.throw_at(target_turf, 5, 1)
 
 /obj/item/kudzu/kudzumen_vine/proc/build_buttons()
 	if (src.contextActions != null)	//dont need rebuild
@@ -729,7 +729,6 @@
 /datum/action/bar/icon/kudzu_shaping
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "kudzu_shaping"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "kudzu_shaping"
 	var/obj/item/kudzu/kudzumen_vine/vine_arm
@@ -741,7 +740,7 @@
 		src.vine_arm = vine_arm
 		src.creation_path = creation_path
 		if (!ispath(creation_path))
-			boutput(owner, "Invalid creation object path. Call 1-800-CODER")
+			boutput(owner, "<h3 class='alert'>Invalid creation object path. Call 1-800-CODER</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		duration += extra_time
@@ -766,7 +765,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!iskudzuman(owner))
-			boutput(owner, "You're not a kudzuman, you can't bend the kudzu to your will!")
+			boutput(owner, SPAN_ALERT("You're not a kudzuman, you can't bend the kudzu to your will!"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -777,7 +776,7 @@
 
 	onInterrupt()
 		if (kudzu && owner)
-			boutput(owner, "<span class='alert'>Your kudzu shaping was interrupted!</span>")
+			boutput(owner, SPAN_ALERT("Your kudzu shaping was interrupted!"))
 		..()
 
 

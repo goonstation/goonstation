@@ -28,7 +28,7 @@
 		Fail("[where] reagent id of incorrect type: [value]")
 
 /datum/unit_test/reagent_id_typos/Run()
-	if (reagents_cache.len <= 0)
+	if (length(reagents_cache) <= 0)
 		build_reagent_cache()
 
 	for (var/list/reagent_test_pair in reagent_vars)

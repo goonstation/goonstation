@@ -13,7 +13,6 @@
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/table/auto,
-/obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/device/analyzer/healthanalyzer,
 /turf/simulated/floor/bluegreen,

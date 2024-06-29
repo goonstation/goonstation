@@ -6,54 +6,68 @@ var/list/miningModifiers = list()
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
 //Make sure all your actual structures are inside that area.
 
+
 /turf/variableTurf
 	icon = 'icons/turf/internal.dmi'
 	name = ""
 
 	New()
 		..()
-		place()
+		CRASH("Creating variableTurf directly is not allowed. Use ReplaceWith() instead.")
 
-	proc/place()
+TYPEINFO(/turf/variableTurf)
+	proc/place(turf/source)
+		if(source.z == planetZLevel)
+			return // noop
 		if (map_currently_underwater)
-			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
-			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
-	floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
-		name = "variable floor"
-		icon_state = "floor"
-		place()
-			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
-			if(gen && gen.floor_turf_type)
-				src.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
-			else if (map_currently_underwater)
-				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			else
-				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
-	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
-		name = "variable wall"
-		icon_state = "wall"
-		place()
-			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
-			if(gen && gen.wall_turf_type)
-				src.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
-			else
-				src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+/turf/variableTurf/floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
+	name = "variable floor"
+	icon_state = "floor"
 
-	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
-		name = "variable clear"
-		icon_state = "clear"
-		place()
-			PLANET_LOCATIONS.repair_planet(src)// Clear turf will be replaced by planet mapgen
-			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
-			if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
-				src.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
-			else if (map_currently_underwater)
-				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			else
-				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+TYPEINFO(/turf/variableTurf/floor)
+	place(turf/source)
+		var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(source)
+		if(gen && gen.floor_turf_type)
+			source.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+		else if (map_currently_underwater)
+			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			source.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
+
+
+/turf/variableTurf/wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
+	name = "variable wall"
+	icon_state = "wall"
+
+TYPEINFO(/turf/variableTurf/wall)
+	place(turf/source)
+		var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(source)
+		if(gen && gen.wall_turf_type)
+			source.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+		else
+			source.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+
+
+/turf/variableTurf/clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
+	name = "variable clear"
+	icon_state = "clear"
+
+TYPEINFO(/turf/variableTurf/clear)
+	place(turf/source)
+		PLANET_LOCATIONS.repair_planet(source)// Clear turf will be replaced by planet mapgen
+		var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(source)
+		if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
+			source.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
+		else if (map_currently_underwater)
+			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+
 
 /area/noGenerate
 	name = "BLOCK GENERATION"
@@ -99,8 +113,8 @@ var/list/miningModifiers = list()
 	var/width = length(L)
 	var/height = length(L[1])
 	var/count = 0
-	for(var/xx=-1, xx<=1, xx++)
-		for(var/yy=-1, yy<=1, yy++)
+	for(var/xx in -1 to 1)
+		for(var/yy in -1 to 1)
 			if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
 				count += L[currentX+xx][currentY+yy]
 			else //OOB, count as wall.
@@ -108,8 +122,8 @@ var/list/miningModifiers = list()
 
 	var/count2 = 0
 	if(fillLarge)
-		for(var/xx=-passTwoRange, xx<=passTwoRange, xx++)
-			for(var/yy=-passTwoRange, yy<=passTwoRange, yy++)
+		for(var/xx in -passTwoRange to passTwoRange)
+			for(var/yy in -passTwoRange to passTwoRange)
 				if(abs(xx)==passTwoRange && abs(yy)==passTwoRange) continue //Skip diagonals for this one. Better results
 				if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
 					count2 += L[currentX+xx][currentY+yy]
@@ -154,14 +168,14 @@ var/list/miningModifiers = list()
 
 		for(var/i in 0 to n_iterations-1) //5 Passes to smooth it out.
 			var/mapnew[width][height]
-			for(var/x=1,x<=width,x++)
-				for(var/y=1,y<=height,y++)
+			for(var/x in 1 to width)
+				for(var/y in 1 to height)
 					mapnew[x][y] = CAGetSolid(map, x, y, i)
-					LAGCHECK(LAG_REALTIME)
+					LAGCHECK_IF_LIVE(LAG_INIT)
 			map = mapnew
 
 		for(var/x in 1 to width)
-			for(var/y=1,y<=height,y++)
+			for(var/y in 1 to height)
 				var/map_x = clamp(round(x * x_scale), 1, width)
 				var/map_y = clamp(round(y * y_scale), 1, height)
 				var/turf/T = locate(min_x+x-1,min_y+y-1,z_level)
@@ -171,10 +185,13 @@ var/list/miningModifiers = list()
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
-				LAGCHECK(LAG_REALTIME)
+				LAGCHECK_IF_LIVE(LAG_INIT)
 
 		var/list/used = list()
 		for(var/s in 0 to 19)
+			if(!length(src.generated - used))
+				break
+
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
 			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))
@@ -187,7 +204,8 @@ var/list/miningModifiers = list()
 			var/list/holeList = list()
 			for(var/k in 0 to AST_RNGWALKINST-1)
 				var/turf/T = pick(L)
-				for(var/j in 0 to rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5))-1)
+				var/maxrand = round(AST_RNGWALKCNT*1.5)
+				for(var/j in 0 to rand(AST_RNGWALKCNT, maxrand)-1)
 					holeList.Add(T)
 					T = get_step(T, pick(cardinal))
 					if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
@@ -276,7 +294,7 @@ var/list/miningModifiers = list()
 				if(decideSolid(west, X, sizeMod))
 					solidTiles.Add(west)
 					edgeTiles.Add(west)
-				LAGCHECK(LAG_REALTIME)
+				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
@@ -284,7 +302,7 @@ var/list/miningModifiers = list()
 					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
-				LAGCHECK(LAG_REALTIME)
+				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			if(prob(15))
 				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))
@@ -301,7 +319,8 @@ var/list/miningModifiers = list()
 					var/list/holeList = list()
 					for(var/k in 0 to AST_RNGWALKINST-1)
 						var/turf/T = pick(placed)
-						for(var/j in 0 to rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5))-1)
+						var/maxrand = round(AST_RNGWALKCNT * 1.5)
+						for(var/j in 0 to rand(AST_RNGWALKCNT, maxrand)-1)
 							holeList.Add(T)
 							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
@@ -312,10 +331,10 @@ var/list/miningModifiers = list()
 /proc/makeMiningLevel()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
-		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
+		boutput(world, SPAN_ALERT("Skipping Mining Generation!"))
 		return
 	else
-		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
+		boutput(world, SPAN_ALERT("Generating Mining Level ..."))
 
 	var/list/miningZ = block(locate(1, 1, AST_ZLEVEL), locate(world.maxx, world.maxy, AST_ZLEVEL))
 
@@ -326,7 +345,7 @@ var/list/miningModifiers = list()
 	for (var/n in 1 to num_to_place)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/list/wanted_tags = get_prefab_tags()
-		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags)
+		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags_any=wanted_tags)
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
@@ -368,7 +387,7 @@ var/list/miningModifiers = list()
 		for (var/turf/T in get_area_turfs(/area/allowGenerate))
 			new /area/space(T)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	boutput(world, SPAN_ALERT("Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!"))
 	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)
@@ -384,6 +403,13 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 	var/perlin_zoom = 65
 	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
 	var/const/color_alpha = 30
+	/// percentage of map to cover, used as salinity cutoff
+	var/coverage = 0.25
+
+	New(coverage_override)
+		. = ..()
+		if (coverage_override)
+			src.coverage = coverage_override
 
 	proc/setup()
 		seeds = list()
@@ -397,7 +423,7 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
 		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > 0.25) // no algae for you :(
+		if (salinity > coverage) // no algae for you :(
 			return
 		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
 		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))

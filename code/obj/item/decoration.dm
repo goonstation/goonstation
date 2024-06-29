@@ -1,7 +1,6 @@
 
 /obj/item/decoration
 	icon = 'icons/obj/decoration.dmi'
-	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 
 /obj/item/decoration/flower_vase
@@ -23,7 +22,6 @@
 	desc = "The rarely visited graveyard for cigarettes."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "ashtray"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	var/butts = 0 // heh
 
@@ -79,7 +77,7 @@
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 20
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()

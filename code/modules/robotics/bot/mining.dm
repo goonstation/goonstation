@@ -90,7 +90,7 @@
 	///Emagged code///////
 	//////////////////////
 	if ((istype(W, /obj/item/card/emag)) && (!src.emagged))
-		boutput(user,  "<span class='alert'>You short out [src]. It.. didn't really seem to affect anything, though.</span>")
+		boutput(user,  SPAN_ALERT("You short out [src]. It.. didn't really seem to affect anything, though."))
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert bold'><B>[src] buzzes oddly!</span>", 1)
 		src.target = null
@@ -143,7 +143,7 @@
 /obj/machinery/bot/mining/proc/pointAtTarget()
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> points and beeps, \"Doomed rock detected!\"</span></span>", 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] points and beeps, \"Doomed rock detected!\"")), 2)
 		point(target)
 
 /obj/machinery/bot/mining/proc/buildPath()
@@ -159,7 +159,7 @@
 	actions.start(new/datum/action/bar/icon/digbotdig(src, target), src)
 
 /obj/machinery/bot/mining/proc/startDiggingEffects()
-	src.visible_message("<span class='alert'>[src] starts digging!</span>")
+	src.visible_message(SPAN_ALERT("[src] starts digging!"))
 	if (src.diglevel > 2) playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 	else playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 100, 1)
 	src.digging = 1
@@ -200,7 +200,6 @@
 /datum/action/bar/icon/digbotdig
 	duration = 3 SECONDS //This varies, see below
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "digbot_dig"
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "" //intentionaly blank
 	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
@@ -255,8 +254,7 @@
 		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
-	id = "digbot_drill"
-	icon_state = "lasdrill"
+	icon_state = "lasdrill-old"
 
 
 //////////////////////////////////////
@@ -324,7 +322,7 @@
 			else
 				boutput(user,  "You already added that part!")
 				return
-		else if (istype(T, /obj/item/mining_tool/drill))
+		else if (istype(T, /obj/item/mining_tool/powered/drill))
 			if (src.build_step == 1)
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)

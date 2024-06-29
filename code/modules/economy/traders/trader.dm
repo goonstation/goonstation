@@ -10,6 +10,10 @@
 	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
 
+	///A business card or other item type to occasionally include with orders
+	var/business_card = null
+	var/business_card_chance = 20
+
 	// lists of commodity datums that the trader will buy or sell, and the cart
 	// these are the base lists of commodities this trader will have
 	var/list/base_goods_buy = list()
@@ -183,6 +187,9 @@
 		invoice.name = "Sale Invoice ([src.name])"
 		invoice.info = "Invoice of Sale from [src.name]<br><br>"
 
+		if (src.business_card && prob(src.business_card_chance))
+			new src.business_card(S)
+
 		var/total_price = 0
 		for (var/datum/commodity/trader/C in src.shopping_cart)
 			if (!C.comtype || C.amount < 1) continue
@@ -214,7 +221,7 @@
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
 
-/datum/commodity/trader/
+/datum/commodity/trader
 	var/listed_name = "a thing!!!"   // What it shows up as outside the shopping cart
 	var/list/possible_names = list() // List of names the trader will call this commodity
 	var/list/possible_alt_types = list() // List of things this trade can be other than the base path
@@ -232,5 +239,5 @@
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
 		src.baseprice = price
 
-/datum/commodity/trader/incart/
+/datum/commodity/trader/incart
 	var/datum/commodity/reference = null

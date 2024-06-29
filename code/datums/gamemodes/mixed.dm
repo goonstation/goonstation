@@ -29,18 +29,12 @@
 	boutput(world, "<B>Anything could happen! Be on your guard!</B>")
 
 /datum/game_mode/mixed/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if(player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	if (num_players < werewolf_players_req || !has_werewolves)
 		traitor_types[ROLE_WEREWOLF] = 0;
 
-	var/i = rand(25)
+	var/i = rand(15)
 	var/num_enemies = 1
 
 	if(traitor_scaling)

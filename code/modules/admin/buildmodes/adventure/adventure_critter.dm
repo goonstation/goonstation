@@ -18,7 +18,7 @@
 		var/kind = input(usr, "What kind of critter?", "Critter type", "Skeleton") in src.critters
 		critter_vars = list()
 		crittertype = src.critters[kind]
-		boutput(usr, "<span class='notice'>Now placing [kind] critters in single spawn mode.</span>")
+		boutput(usr, SPAN_NOTICE("Now placing [kind] critters in single spawn mode."))
 
 	settings(var/ctrl, var/alt, var/shift)
 		var/target = input(usr, "Which default setting to modify?", "Default setting", "aggressive") in list("aggressive", "atkcarbon", "atksilicon", "health", "opensdoors", "wanderer")
@@ -44,10 +44,10 @@
 		"Ice Spider (baby)" = /mob/living/critter/spider/ice/baby,
 		"Ice Spider (queen)" = /mob/living/critter/spider/ice/queen,
 		"Killer Tomato" = /obj/critter/killertomato,
-		"Martian Psychic" = /obj/critter/martian/psychic,
-		"Martian Sapper" = /obj/critter/martian/sapper,
-		"Martian Soldier" = /obj/critter/martian/soldier,
-		"Martian Warrior" = /obj/critter/martian/warrior,
+		"Martian Psychic" = /mob/living/critter/martian/mutant,
+		"Martian Sapper" = /mob/living/critter/martian/sapper,
+		"Martian Soldier" = /mob/living/critter/martian/soldier,
+		"Martian Warrior" = /mob/living/critter/martian/warrior,
 		"Meat Mutant" = /mob/living/critter/blobman,
 		"Meat Thing" = /mob/living/critter/blobman/meat,
 		"Micro Man" = /obj/critter/microman,

@@ -533,7 +533,7 @@
 		src.ui_interact(user)
 
 	attack_ai(var/mob/user)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user, params)
 		/// Check if the board is hit by a paint can
@@ -546,13 +546,13 @@
 			else if(user.r_hand == can)
 				tileColour = STYLING_TILECOLOR2
 			else
-				boutput(user, "<span class='warning'>You need to hold the paint can in your hand to use it!</span>")
+				boutput(user, SPAN_ALERT("You need to hold the paint can in your hand to use it!"))
 				return
 
 
 			//Check if the paint can is empty
 			if(can.uses <= 0)
-				boutput(user, "<span class='warning'>The paint can is empty!</span>")
+				boutput(user, SPAN_ALERT("The paint can is empty!"))
 				return
 
 			//Apply the paint to the src.styling[tileColour]

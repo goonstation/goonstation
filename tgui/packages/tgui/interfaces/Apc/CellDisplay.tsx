@@ -19,9 +19,9 @@ const getChargingStatusText = (charging, chargecount) => {
     case 0:
       return chargecount ? 'Performing self-test' : 'Not charging';
     case 1:
-      return 'Fully Charged';
-    default:
       return 'Charging';
+    default:
+      return 'Fully Charged';
   }
 };
 

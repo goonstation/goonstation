@@ -13,7 +13,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
-	var/make_amount = 0 //from 0 to 30, amount of copies the photocopier will copy, copy?
+	var/make_amount = 1 //from 0 to 30, amount of copies the photocopier will copy, copy?
 
 	var/list/paper_info = list()//index 1 is name, index 2 is desc, index 3 is info
 	var/list/photo_info = list()//index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon
@@ -68,7 +68,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	attackby(var/obj/item/w, var/mob/user) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 		if (src.use_state == 2) //photocopier is busy?
-			boutput(user, "<span class='alert'>/The [src] is busy! Try again later!</span>")
+			boutput(user, SPAN_ALERT("/The [src] is busy! Try again later!"))
 			return
 
 		else if (src.use_state == 1) //is the photocopier open?
@@ -129,7 +129,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		else //photocopier is closed? if someone varedits use state this'll screw up but if they do theyre dumb so
 			if (istype(w, /obj/item/paper))
 				if (src.paper_amount >= 30.0)
-					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
+					boutput(user, SPAN_ALERT("You can't fit any more paper into \the [src]."))
 					return
 				var/obj/item/paper/P = w
 				if (P.info != "" && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
@@ -141,12 +141,12 @@ TYPEINFO(/obj/machinery/photocopier)
 
 			else if (istype(w, /obj/item/paper_bin))
 				if ((w.amount + src.paper_amount) > 30.0)
-					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
+					boutput(user, SPAN_ALERT("You can't fit any more paper into \the [src]."))
 					return
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
-				src.paper_amount += w.amount
-				P.amount = 0
+				src.paper_amount += P.amount_left
+				P.amount_left = 0
 				P.update()
 				return
 
@@ -154,7 +154,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
-			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
+			boutput(user, SPAN_ALERT("\The [src] is busy right now! Try again later!"))
 			return
 		var/mode_sel = tgui_input_list(user, "Which do you want to do?", "Photocopier Controls", list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid"))
 		if (BOUNDS_DIST(user, src) == 0)
@@ -167,7 +167,7 @@ TYPEINFO(/obj/machinery/photocopier)
 						return
 					src.reset_all()
 					playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
-					boutput(user, "<span class='notice'>You reset \the [src]'s memory.</span>")
+					boutput(user, SPAN_NOTICE("You reset \the [src]'s memory."))
 					return
 
 				if ("Print Copies")
@@ -207,7 +207,7 @@ TYPEINFO(/obj/machinery/photocopier)
 							boutput(user, "Amount set to: [num_sel] sheets.")
 							return
 						else
-							boutput(user, "<span class='alert'>There's not enough paper for that!</span>")
+							boutput(user, SPAN_ALERT("There's not enough paper for that!"))
 							return
 
 				if ("Toggle Lid")

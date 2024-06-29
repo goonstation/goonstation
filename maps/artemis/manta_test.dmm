@@ -3,13 +3,13 @@
 /turf/background_canvas{
 	icon_state = "M-canvas"
 	},
-/area)
+/area/background_canvas)
 "b" = (
 /obj/artemis/manta,
 /turf/background_canvas{
 	icon_state = "M-canvas"
 	},
-/area)
+/area/background_canvas)
 
 (1,1,1) = {"
 a

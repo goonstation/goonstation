@@ -191,6 +191,38 @@
 			else
 				return 0
 
+#ifdef ENABLE_ARTEMIS
+/* Artemis Dialogue */
+
+/datum/dialogueMaster/telescopeArtemis
+	dialogueName = "Artemis"
+	start = /datum/dialogueNode/telArtemisStart
+	visibleDialogue = 0
+
+/datum/dialogueNode
+	telArtemisStart
+		nodeImage = "static.png"
+		nodeText = "There appears to be a transponder signal from a NT science vessel."
+		linkText = "..."
+		links = list(/datum/dialogueNode/telArtemisEnable)
+
+	telArtemisEnable
+		linkText = "Save the location."
+		nodeText = "The location is now available at the long-range teleporter."
+
+		onActivate(var/client/C)
+			if(!special_places.Find("Artemis"))
+				special_places.Add("Artemis")
+			return
+
+		canShow(var/client/C)
+			if(!special_places.Find("Artemis"))
+				return 1
+			else
+				return 0
+#endif
+
+
 /* COW DINER DIALOGUE BELOW */
 
 /datum/dialogueMaster/telescopeCow

@@ -19,7 +19,7 @@ TYPEINFO(/datum/component/death_confetti)
 		return
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(T))
 	SPAWN(1 SECOND)
-		playsound(T, 'sound/voice/yayyy.ogg', 50, 1)
+		playsound(T, 'sound/voice/yayyy.ogg', 50, TRUE)
 
 /datum/component/death_confetti/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH)

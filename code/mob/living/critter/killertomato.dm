@@ -34,14 +34,14 @@
 	blood_id = "juice_tomato"
 	add_abilities = list(/datum/targetable/critter/bite/tomato_bite, /datum/targetable/critter/slam/polymorph)
 
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] roars!</span></b>"
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] roars!</b>")
 		return null
 
 	specific_emote_type(var/act)

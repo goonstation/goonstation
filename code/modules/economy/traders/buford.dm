@@ -26,7 +26,8 @@
 	/datum/commodity/trader/buford/groboost,
 	/datum/commodity/trader/buford/fruitful,
 	/datum/commodity/trader/buford/topcrop,
-	/datum/commodity/trader/buford/weedkiller)// 8
+	/datum/commodity/trader/buford/weedkiller,
+	/datum/commodity/trader/buford/methane)
 
 	dialogue_greet = list("Hey man. Got the good shit for sale, yeah.",
 	"Sup brother, what's goin' on. Got the damn fresh shit for you here.",
@@ -89,7 +90,7 @@
 	comname = "Strange Seeds"
 	comtype = /obj/item/seed/alien
 	amount = 5
-	price_boundary = list(200,400)
+	price_boundary = list(PAY_TRADESMAN/2,PAY_TRADESMAN*2)
 	possible_names = list("Got these weirdo alien plant seeds. Dunno what they'll grow.",
 	"I got some strange seeds, maybe they'll grow some good shit. It's some alien shit.",
 	"Some real strange alien plant seeds for sale here. I dunno what they grow into.")
@@ -97,7 +98,7 @@
 /datum/commodity/trader/buford/weedseeds
 	comname = "Cannabis Seeds"
 	comtype = /obj/item/seed/cannabis
-	price_boundary = list(3,5)
+	price_boundary = list(PAY_UNTRAINED/20,PAY_UNTRAINED/10)
 	possible_names = list("Got some good weed seeds here for sale.",
 	"If you can't get your hands on some weed seeds, i'll sell you some.")
 
@@ -105,7 +106,7 @@
 	comname = "Saltpetre Plant Formula"
 	comtype = /obj/item/reagent_containers/glass/bottle/powerplant
 	amount = 20
-	price_boundary = list(50,100)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_UNTRAINED)
 	possible_names = list("Got some good nutrients to make your plants more potent.",
 	"I'm selling some Powerplant formula. It's great for making your herbs more potent.")
 
@@ -113,7 +114,7 @@
 	comname = "Mutagenic Plant Formula"
 	comtype = /obj/item/reagent_containers/glass/bottle/mutriant
 	amount = 20
-	price_boundary = list(50,100)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_UNTRAINED)
 	possible_names = list("Got some weird plant nutrients. It makes your plants mutate more often.",
 	"Mutriant formula for sale. Makes your plants go all fucked up and weird. In a good way. I hope.")
 
@@ -121,7 +122,7 @@
 	comname = "Potash Plant Formula"
 	comtype = /obj/item/reagent_containers/glass/bottle/topcrop
 	amount = 20
-	price_boundary = list(50,100)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_UNTRAINED)
 	possible_names = list("Got some plant nutrients that'll encourage huge yields.",
 	"Got some good old Top Crop formula. I'm buying most of the good shit you grow, by the way.")
 
@@ -129,7 +130,7 @@
 	comname = "Ammonia Plant Formula"
 	comtype = /obj/item/reagent_containers/glass/bottle/groboost
 	amount = 20
-	price_boundary = list(50,100)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_UNTRAINED)
 	possible_names = list("Selling some great nutrients for making plants grow fast.",
 	"Gro-Boost for sale, great nutrients that make your plants grow really quickly.")
 
@@ -137,7 +138,7 @@
 	comname = "Mutadone Plant Formula"
 	comtype = /obj/item/reagent_containers/glass/bottle/fruitful
 	amount = 20
-	price_boundary = list(50,100)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_UNTRAINED)
 	possible_names = list("Got some nutrients that'll fix any bad shit on your plants.",
 	"Got some good Fruitful Farming formula here. Got any ill plants, this'll fix em.")
 
@@ -145,44 +146,52 @@
 	comname = "Weedkiller"
 	comtype = /obj/item/reagent_containers/glass/bottle/weedkiller
 	amount = 20
-	price_boundary = list(20,60)
+	price_boundary = list(PAY_UNTRAINED/4,PAY_UNTRAINED)
 	possible_names = list("Selling some good ol' weedkiller. Got any shitty plants, douse em with this.",
 	"Weedkiller for sale. Like, for shitty weeds, not good weed. Ha ha.")
+
+/datum/commodity/trader/buford/methane
+	comname = "Methane canister"
+	comtype = /obj/machinery/portable_atmospherics/canister/methane
+	amount = 1
+	price_boundary = list(PAY_EXECUTIVE, PAY_EMBEZZLED) //a little expensive
+	possible_names = list("Big ol' canister of stink, don't ask where it comes from.",
+	"Probably won't get you high but it's worth a shot. Maybe.")
 
 // Buford wants these things
 
 /datum/commodity/trader/buford/vennecure
 	comname = "Curative Venne"
 	comtype = /obj/item/plant/herb/venne/curative
-	price_boundary = list(40,250)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_TRADESMAN)
 	possible_names = list("I hear there's a mutation of Venne that's a cool sunset color. Hit me up with some of that, brother.")
 
 /datum/commodity/trader/buford/megaweed
 	comname = "Rainbow Weed"
 	comtype = /obj/item/plant/herb/cannabis/mega
-	price_boundary = list(50,500)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_TRADESMAN*2)
 	possible_names = list("I'd like to buy any rainbow weed you got. Good stuff.")
 
 /datum/commodity/trader/buford/whiteweed
 	comname = "White Weed"
 	comtype = /obj/item/plant/herb/cannabis/white
-	price_boundary = list(50,400)
+	price_boundary = list(PAY_UNTRAINED/2,PAY_TRADESMAN*2)
 	possible_names = list("You got any of that white cannabis?")
 
 /datum/commodity/trader/buford/omegaweed
 	comname = "Omega Weed"
 	comtype = /obj/item/plant/herb/cannabis/omega
-	price_boundary = list(500,1500)
+	price_boundary = list(PAY_TRADESMAN,PAY_TRADESMAN*2)
 	possible_names = list("I hear there's a super-potent mutant strain of Cannabis. Got any of that?")
 
 /datum/commodity/trader/buford/psilocybin
 	comname = "Psilocybin Mushrooms"
 	comtype = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
-	price_boundary = list(100,650)
+	price_boundary = list(PAY_TRADESMAN,PAY_TRADESMAN*2)
 	possible_names = list("You got any magic mushrooms? The Psilocybin kind.")
 
 /datum/commodity/trader/buford/pizza
 	comname = "Pizza (Priced per Slice)"
 	comtype = /obj/item/reagent_containers/food/snacks/pizza
-	price_boundary = list(10,42)
+	price_boundary = list(4,20) // we can keep this joke in here, as a treat
 	possible_names = list("You got any pizza?","Got some pizza? I'm dying for a slice, man. Or, like. Maybe a whole one.")

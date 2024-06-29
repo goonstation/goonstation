@@ -12,6 +12,7 @@
 	name = "transposed scientist"
 	real_name = "transposed scientist"
 	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
+	icon = 'icons/mob/critter/humanoid/crunched.dmi'
 	icon_state = "crunched"
 	icon_state_dead = "crunched"
 	hand_count = 2
@@ -100,7 +101,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 5, 15, 0, can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = "grab"
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with [src.holder]!</span></b>"
+		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
@@ -112,6 +113,7 @@
 	name = "darkness"
 	real_name = "darkness"
 	desc = "Oh god."
+	icon = 'icons/mob/critter/humanoid/shade.dmi'
 	icon_state = "shade"
 	icon_state_dead = "shade" //doesn't have a dead icon, just fades away
 	death_text = null //has special spooky voice lines
@@ -269,6 +271,7 @@
 	name = "strange robot"
 	real_name = "strange robot"
 	desc = "It looks like some sort of floating repair bot or something?"
+	icon = 'icons/mob/critter/robotic/ancient/repairbot.dmi'
 	icon_state = "ancient_repairbot"
 	hand_count = 1
 	can_throw = FALSE
@@ -321,7 +324,7 @@
 		ghostize()
 		qdel(src)
 
-	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
+	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
 		return
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -400,7 +403,7 @@
 	health_burn_vuln = 0.6
 	var/activated = FALSE
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	active
 		New()
@@ -425,13 +428,14 @@
 		src.activated = TRUE
 		src.icon_state = "drone_service_bot"
 		src.desc = "A machine. Of some sort. It looks mad"
-		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
+		src.visible_message(SPAN_COMBAT("[src] seems to power up!"))
 
 ////////////// Town guards ////////////////
 /mob/living/critter/townguard
 	name = "town guard"
 	real_name = "town guard"
 	desc = "An angry man dressed in medieval armor."
+	icon = 'icons/mob/critter/humanoid/town_guard.dmi'
 	icon_state = "townguard"
 	icon_state_dead = "townguard-dead"
 	hand_count = 2
@@ -510,19 +514,15 @@
 		// Hand 2 = SWORD Hand 1 = ARM
 		if (is_incapacitated(target))
 			src.set_a_intent(INTENT_HARM)
-			src.active_hand = 1
+			set_hand(1)
 			return ..() // Punch / Kick them
 		if (prob(30))
 			src.set_a_intent(INTENT_DISARM)
-			src.active_hand = 1
+			src.set_hand(1)
 			return src.hand_attack(target) // Disarm them
 		src.set_a_intent(INTENT_HARM)
-		src.active_hand = 2
+		set_hand(2)
 		return ..() // Stab them
-
-	death(var/gibbed)
-		src.can_lie = FALSE
-		..()
 
 	proc/HALT()
 		if(!ON_COOLDOWN(src, "say_HALT!", src.halt_cooldown))
@@ -573,8 +573,8 @@
 		HH.icon_state = "handr"
 
 	setup_healths()
-		add_hh_robot(src.health_brute, src.health_brute_vuln)
-		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	critter_ability_attack(var/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -596,8 +596,8 @@
 		var/missing_arm = target_missing_limb(target)
 		if ((missing_arm == "r_arm" || missing_arm == "l_arm") && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			src.visible_message("<span class='alert'><b>[src] latches onto [H]'s stump!!</b></span>")
-			boutput(H, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] latches onto [H]'s stump!!</b>"))
+			boutput(H, SPAN_ALERT("OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			H.emote("scream")
 			H.changeStatus("stunned", 2 SECONDS)
@@ -623,7 +623,7 @@
 	death(var/gibbed)
 		..()
 		if (!gibbed)
-			src.visible_message("<span class='alert'>[src] explodes into viscera!</span>")
+			src.visible_message(SPAN_ALERT("[src] explodes into viscera!"))
 			src.unequip_all()
 			src.gib()
 

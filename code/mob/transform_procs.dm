@@ -56,7 +56,6 @@
 		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
-		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
 		qdel(src)
@@ -71,7 +70,7 @@
 	if (src.transforming || !src.bioHolder)
 		return
 	if (iswizard(src))
-		src.visible_message("<span class='alert'><b>[src] magically resists being transformed!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] magically resists being transformed!</b>"))
 		return
 
 	src.bioHolder.AddEffect("monkey")
@@ -79,6 +78,8 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
+	src.name = "AI"
+	src.real_name = "AI"
 	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
@@ -112,14 +113,14 @@
 	if (!mobile && !do_not_move && job_start_locations["AI"])
 		O.set_loc(pick(job_start_locations["AI"]))
 
-	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
-	boutput(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	boutput(O, "To use something, simply click it.")
-	boutput(O, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
+	boutput(O, SPAN_HINT("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
+	boutput(O, SPAN_HINT("To look at other parts of the station, double-click yourself to get a camera menu."))
+	boutput(O, SPAN_HINT("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
+	boutput(O, SPAN_HINT("To use something, simply click it."))
+	boutput(O, SPAN_HINT("Use the prefix <b>:s</b> to speak to fellow silicons through binary."))
 
 	O.show_laws()
-	boutput(O, "<b>These laws may be changed by other players.</b>")
+	boutput(O, SPAN_HINT("<b>These laws may be changed by other players.</b>"))
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -168,12 +169,13 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE)
+/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
@@ -199,8 +201,9 @@
 		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
-	SPAWN(1 DECI SECOND)
-		qdel(src)
+	if (delete_original)
+		SPAWN(1 DECI SECOND)
+			qdel(src)
 	return newmob
 
 
@@ -280,10 +283,10 @@
 			src.client.mob = O
 		src.mind?.transfer_to(O)
 		O.set_loc(src.loc)
-		boutput(O, "<B>You are a Robot.</B>")
-		boutput(O, "<B>You're more or less a Cyborg but have no organic parts.</B>")
-		boutput(O, "To use something, simply double-click it.")
-		boutput(O, "Use say \":s to speak in binary.")
+		boutput(O, "<b class='hint'>You are a Robot.</b>")
+		boutput(O, "<b class='hint'>You're more or less a Cyborg but have no organic parts.</b>")
+		boutput(O, "<b class='hint'>To use something, simply double-click it.</b>")
+		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
 
 		dispose()
 		return O
@@ -301,10 +304,10 @@
 		src.mind?.transfer_to(O)
 		O.Namepick()
 		O.set_loc(src.loc)
-		boutput(O, "<B>You are a Mainframe Unit.</B>")
-		boutput(O, "<B>You cant do much on your own but can take remote command of nearby empty Robots.</B>")
-		boutput(O, "Press Deploy to search for nearby bots to command.")
-		boutput(O, "Use say \":s to speak in binary.")
+		boutput(O, "<b class='hint'>You are a Mainframe Unit.</b>")
+		boutput(O, "<b class='hint'>You cant do much on your own but can take remote command of nearby empty Robots.</b>")
+		boutput(O, "<b class='hint'>Press Deploy to search for nearby bots to command.</b>")
+		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
 
 		dispose()
 		return O
@@ -419,6 +422,7 @@
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
+		announce_ghost_afterlife(usr.key, "<b>[usr.name]</b> is logging into Ghost VR.")
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
 
@@ -432,7 +436,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 /mob/dead/proc/can_respawn_as_ghost_critter(var/initial_time_passed = 3 MINUTES, var/second_time_around = 10 MINUTES)
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		boutput(src, SPAN_ALERT("The game hasn't started yet, silly!"))
 		return
 
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
@@ -461,7 +465,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as a ghost critter.</span>")
+		boutput(src, SPAN_ALERT("You must wait at least [time_left_message] until you can respawn as a ghost critter."))
 
 		return FALSE
 	return TRUE
@@ -492,7 +496,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
-		traitor = checktraitor(selfmob)
+		traitor = selfmob.mind?.is_antagonist()
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else
@@ -528,7 +532,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!(src.client.player.mentor || src.client.holder))
-		boutput(src, "<span class='alert'>You aren't even a mentor, how did you get here?!</span>")
+		boutput(src, SPAN_ALERT("You aren't even a mentor, how did you get here?!"))
 		return
 
 	if (!can_respawn_as_ghost_critter(0 MINUTES, 2 MINUTES))
@@ -540,7 +544,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// you can be an animal
 	var/turf/spawnpoint = get_turf(src)
 	if(spawnpoint.density)
-		boutput(src, "<span class='alert'>The wall is in the way.</span>")
+		boutput(src, SPAN_ALERT("The wall is in the way."))
 		return
 	// be critter
 
@@ -569,12 +573,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!src.client.holder)
-		boutput(src, "<span class='alert'>You aren't even an admin, how did you get here?!</span>")
-		return
-
-	// has the game started?
-	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		boutput(src, SPAN_ALERT("You aren't even an admin, how did you get here?!"))
 		return
 
 	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")
@@ -609,7 +608,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (current_state < GAME_STATE_PLAYING)
 		boutput(src, "It's too early to go to the bar!")
 		return
-	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
+	if(!isobserver(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't available during football mode.")
@@ -620,10 +619,27 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
-	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
-		src.mind.assigned_role = "Staff Assistant"
-	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
 
+	// preserve your original role;
+	// gives "???" if not an observer and not assigned a role,
+	// your "special_role" if one exists,
+	// and both your job and special role if both are set.
+	var/bar_role_name = src.observe_round ? "Observer" : (src.mind.assigned_role || "???")
+	if (src.mind.special_role)
+		bar_role_name = "[bar_role_name != "???" ? "[bar_role_name], " : ""][capitalize(replacetext(src.mind.special_role, "_", " "))]"
+
+	// future: maybe different outfits for special roles. cyborg costumes. lol
+	var/role_override = null
+	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
+		role_override = "Staff Assistant"
+	newbody.JobEquipSpawned(role_override || src.mind.assigned_role, no_special_spawn = 1)
+
+	if (newbody.traitHolder && newbody.traitHolder.hasTrait("bald"))
+		newbody.stow_in_available(newbody.create_wig())
+		newbody.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		newbody.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		newbody.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		newbody.update_colorful_parts()
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -646,8 +662,18 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
+	if(!newbody.w_uniform)
+		// you get some random clothes if you don't have any
+		newbody.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/under/color)), SLOT_W_UNIFORM)
 	if(newbody.wear_id)
 		newbody.wear_id:access = get_access("Captain")
+	else
+		// if you dont have an id, you get one anyway
+		newbody.spawnId(new /datum/job/command/captain)
+
+	var/obj/item/card/id/newID = newbody.wear_id
+	newID?.assignment = bar_role_name
+	newID?.update_name()
 
 	if (!newbody.bioHolder)
 		newbody.bioHolder = new bioHolder(newbody)
@@ -662,11 +688,19 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
 
+	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")
+	boutput(src, "<h2>You are visiting the Afterlife Bar!</h2>You can still talk to ghosts! Start a message with \"<tt>:d</tt>\" (like \"<tt>:dhello ghosts</tt>\") to talk in deadchat.")
+
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
 		newbody.key = src.key
 
+	// copy the respawn timer to the new body.
+	// since afterlife bodies get trashed when you die it isnt too big of a deal
+	var/atom/movable/screen/respawn_timer/respawn_timer = newbody.ghost.hud?.get_respawn_timer()
+	if (respawn_timer)
+		newbody.hud.add_object(newbody.ghost.hud?.get_respawn_timer())
 
 
 	return

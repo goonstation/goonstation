@@ -134,7 +134,7 @@
 	name = "doctor's bag"
 	icon_state = "docbag1"
 	item_state = "docbag1"
-	desc = "A old-fashioned doctor's bag designed to cary medical and surgical supplies."
+	desc = "A old-fashioned doctor's bag designed to carry medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
 	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
 
@@ -282,7 +282,7 @@
 	eye_normal
 		name = "ocular prosthesis kit"
 		desc = "A box containing a pair of cybereyes."
-		spawn_contents = list(/obj/item/organ/eye/cyber = 2,\
+		spawn_contents = list(/obj/item/organ/eye/cyber/configurable = 2,\
 		/obj/item/surgical_spoon = 1)
 
 	eye_sunglasses
@@ -351,7 +351,7 @@
 		spawn_contents = list(/obj/item/surgical_spoon = 1)
 		make_my_stuff()
 			..()
-			var/list/eyez = typesof(/obj/item/organ/eye/cyber)
+			var/list/eyez = childrentypesof(/obj/item/organ/eye/cyber/configurable)
 			if (eyez.len)
 				for (var/i=rand(2,3), i>0, i--)
 					var/epath = pick(eyez)
@@ -477,7 +477,7 @@
 /obj/item/storage/pill_bottle/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] swallows [src] whole and begins to choke!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] swallows [src] whole and begins to choke!</b>"))
 	user.take_oxygen_deprivation(175)
 	qdel(src)
 	return 1

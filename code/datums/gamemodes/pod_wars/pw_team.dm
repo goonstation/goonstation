@@ -12,7 +12,10 @@
 	var/commander_job_title			//for commander selection
 	var/datum/game_mode/pod_wars/mode
 
-	var/list/datum/resources = list("mauxite" = 0, "pharosium" = 0, "molitz" = 0) // List of material resources
+	var/list/datum/resources = list(
+		/obj/item/material_piece/mauxite = 20,
+		/obj/item/material_piece/pharosium = 20,
+		/obj/item/material_piece/molitz = 20) // List of material resources
 
 	//These two are for playing sounds, they'll only play for the first death or system destruction.
 	var/first_system_destroyed = 0
@@ -60,6 +63,7 @@
 			comms_frequency = rand(1360,1420)
 
 		mode.frequencies_used += comms_frequency
+		protected_frequencies += comms_frequency
 
 
 	proc/accept_initial_players(var/list/players)
@@ -158,14 +162,8 @@
 			SPAWN(0)
 				H.JobEquipSpawned(H.mind.assigned_role)
 
-		if (!ishuman(H))
-			boutput(H, "something went wrong. Horribly wrong. Call 1-800-CODER")
-			return
-
 		H.set_clothing_icon_dirty()
-		// H.set_loc(pick(pod_pilot_spawns[team_num]))
-		boutput(H, "You're in the [name] faction!")
-		// bestow_objective(player,/datum/objective/battle_royale/win)
+		boutput(H, "<h3 class='hint'>You're in the <b>[name]</b> faction!</b>")
 		if (show_popup)
 			H.show_antag_popup("podwars")
 		if (istype(mode))

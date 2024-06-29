@@ -48,7 +48,7 @@
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
 			SPAWN(0)
-				S.handleCast(target)
+				S.handleCast(target, params)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
 						if(src)
@@ -98,7 +98,7 @@
 	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
 	if (GET_DIST(src, target) > 0)
-		if(!src.dir_locked)
+		if(src.can_turn())
 			set_dir(get_dir(src, target))
 			if(dir & (dir-1))
 				if (dir & EAST)
@@ -112,36 +112,40 @@
  * (Note that the Click() call for the *first* click always happens.)
  */
 /mob/proc/double_click(atom/target, location, control, list/params)
-	if(src.client?.check_key(KEY_EXAMINE))
+	if(src.client?.check_key(KEY_EXAMINE) && !src.client?.preferences?.help_text_in_examine)
 		if(src.help_examine(target))
 			return TRUE
 
-/mob/proc/help_examine(atom/target)
-	var/help_message = target.get_help_message(GET_DIST(src, target), src)
+/mob/proc/get_final_help_examine(atom/target)
+	. = target.get_help_message(GET_DIST(src, target), src)
 	var/list/additional_help_messages = list()
 	SEND_SIGNAL(target, COMSIG_ATOM_HELP_MESSAGE, src, additional_help_messages)
 	if (length(additional_help_messages))
-		if (help_message)
-			additional_help_messages = list(help_message)	+ additional_help_messages
-		help_message = jointext(additional_help_messages, "\n")
-	help_message = replacetext(trim(help_message), "\n", "<br>")
-	if (help_message)
-		boutput(src, "<span class='helpmsg'>[help_message]</span>")
+		if (.)
+			additional_help_messages = list(.)	+ additional_help_messages
+		. = jointext(additional_help_messages, "\n")
+	. = replacetext(trimtext(.), "\n", "<br>")
+
+/mob/proc/help_examine(atom/target)
+	var/help = get_final_help_examine(target)
+	if (help)
+		boutput(src, SPAN_HELPMSG("[help]"))
 		return TRUE
+	return FALSE
 
 /mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)
 		if ("look_n")
-			if(!dir_locked)
+			if(src.can_turn())
 				src.set_dir(NORTH)
 		if ("look_s")
-			if(!dir_locked)
+			if(src.can_turn())
 				src.set_dir(SOUTH)
 		if ("look_e")
-			if(!dir_locked)
+			if(src.can_turn())
 				src.set_dir(EAST)
 		if ("look_w")
-			if(!dir_locked)
+			if(src.can_turn())
 				src.set_dir(WEST)
 		if ("admin_interact")
 			src.admin_interact_verb()
@@ -201,11 +205,11 @@
 /mob/proc/apply_custom_keybinds(client/C)
 	PROTECTED_PROC(TRUE)
 
-	if(!C || !C.cloud_available())
+	if(!C)
 		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
-	var/fetched_keylist = C.cloud_get("custom_keybind_data")
+	var/fetched_keylist = C.player.cloudSaves.getData("custom_keybind_data")
 	if (!isnull(fetched_keylist) && fetched_keylist != "") //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
@@ -221,7 +225,6 @@
 		src.client.applied_keybind_styles = list() //Reset currently applied styles
 		build_keybind_styles(src.client)
 		apply_custom_keybinds(src.client)
-		if (src.use_movement_controller)
-			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-			if (controller)
-				controller.modify_keymap(src.client)
+		var/datum/movement_controller/controller = src.override_movement_controller
+		if (controller)
+			controller.modify_keymap(src.client)

@@ -116,7 +116,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"P" = "pickup",
 	"F1" = "adminhelp",
 	"F3" = "mentorhelp",
-	"CTRL+P" = "togglepoint",
 	"F2" = "autoscreenshot",
 	"SHIFT+F2" = "screenshot",
 	"G" = "refocus",

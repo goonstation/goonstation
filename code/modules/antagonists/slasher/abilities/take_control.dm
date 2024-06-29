@@ -14,11 +14,11 @@
 			var/mob/living/carbon/human/H = target
 			var/mob/living/carbon/human/slasher/W = src.holder.owner
 			if(H?.traitHolder?.hasTrait("training_chaplain"))
-				boutput(src.holder.owner, "<span class='alert'>You cannot possess a holy man!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You cannot possess a holy man!"))
 				JOB_XP(H, "Chaplain", 2)
 				return TRUE
 			if(isdead(H))
-				boutput(src.holder.owner, "<span class='alert'>You cannot possess a corpse.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You cannot possess a corpse."))
 				return TRUE
 			if(H.client)
 				boutput(src.holder.owner, "<b>You begin to possess [H].</b>")
@@ -29,5 +29,5 @@
 				boutput(src.holder.owner, "<b>The target must have a consciousness to be possessed.</b>")
 				return TRUE
 		else
-			boutput(src.holder.owner, "<span class='alert'>You cannot possess a non-human.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You cannot possess a non-human."))
 			return TRUE

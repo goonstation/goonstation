@@ -29,7 +29,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -43,14 +43,14 @@
 
 		shotgun
 			name = "shotgun crate"
-			spawn_contents = list(/obj/item/gun/kinetic/riotgun = 4,\
+			spawn_contents = list(/obj/item/gun/kinetic/pumpweapon/riotgun = 4,\
 			/obj/item/ammo/bullets/abg = 4)
 
 		pod_weapons
 			name = "pod weapons crate"
 			spawn_contents = list(/obj/item/shipcomponent/mainweapon/disruptor_light = 2,\
 			/obj/item/shipcomponent/mainweapon/laser = 2,\
-			/obj/item/ammo/bullets/autocannon/seeker = 2)
+			/obj/item/storage/box/missile_launcher)
 
 /obj/storage/secure/crate/plasma
 	desc = "A secure plasma crate."
@@ -62,7 +62,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		anti_biological
 			name = "anti-biological crate"
@@ -77,22 +77,47 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
-	armory
-		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+/obj/storage/secure/crate/gear/saxitoxin_grenades
+	name = "nerve agent crate (DANGER)"
+	req_access_txt = "52"
+	spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
+	/obj/item/chem_grenade/saxitoxin = 3)
 
-		grenades
-			name = "special grenades crate"
-			spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
-			/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
-			/obj/item/storage/box/stinger_kit,\
-			/obj/item/storage/box/stun_landmines)
+/obj/storage/secure/crate/gear/armory
+	name = "secure weapons crate"
+	req_access = list(access_armory)
 
-	saxitoxin_grenades
-		name = "nerve agent crate (DANGER)"
-		req_access_txt = "52"
-		spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
-		/obj/item/chem_grenade/saxitoxin = 3)
+/obj/storage/secure/crate/gear/armory/grenades
+	name = "special grenades crate"
+	spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
+	/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
+	/obj/item/storage/box/stinger_kit,\
+	/obj/item/storage/box/stun_landmines)
+
+/obj/storage/secure/crate/gear/armory/alcohol
+	name = "secure alcohol crate"
+	desc = "For the most dire of situations."
+	spawn_contents = list(/obj/item/storage/box/cocktail_umbrellas,\
+	/obj/item/storage/box/cocktail_doodads,\
+	/obj/item/storage/box/straws,\
+	/obj/item/storage/box/fruit_wedges,\
+	/obj/item/storage/box/beer,\
+	/obj/item/storage/box/glassbox,\
+	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style = 4,\
+	/obj/item/reagent_containers/food/drinks/bottle/vodka = 3,\
+	/obj/item/reagent_containers/food/drinks/curacao)
+
+/obj/storage/secure/crate/gear/armory/equipment
+	name = "\improper Special Equipment crate"
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/requisition_token/security/assistant = 2,
+	/obj/item/turret_deployer/riot = 2)
+
+/obj/storage/secure/crate/gear/armory/equipment/looted
+	spawn_contents = list()
+	locked = 0
+	open = 1
+	emagged = 1
 
 /obj/storage/secure/crate/bee
 	name = "Secure Bee crate"
@@ -154,6 +179,11 @@
 				var/obj/item/paper/book/from_file/interdictor_guide/B5 = new(src)
 				B5.pixel_y = 1
 				return 1
+
+	nuclearfuel
+		name = "Fissile Materials Crate"
+		desc = "Contains the resources required to construct nuclear fuel rods."
+		spawn_contents = list(/obj/item/raw_material/cerenkite = 6)
 
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."

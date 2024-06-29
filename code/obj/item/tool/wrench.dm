@@ -5,7 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 	icon_state = "wrench"
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_WRENCHING
 	health = 5
@@ -24,8 +24,8 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/living/carbon/M, mob/user)
-		if (!wrench_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!wrench_surgery(target, user))
 			return ..()
 
 /obj/item/wrench/gold
@@ -53,8 +53,8 @@
 	stamina_damage = 55
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -63,15 +63,34 @@
 /obj/item/wrench/yellow
 	desc = "A tool used to apply torque to turn nuts and bolts. This one has a bright yellow handle."
 	icon_state = "wrench-yellow"
+	item_state = "wrench"
 
 /obj/item/wrench/grey
 	desc = "A tool used to apply torque to turn nuts and bolts, sporting a droll grey grip."
 	icon_state = "wrench-grey"
+	item_state = "wrench"
 
 /obj/item/wrench/orange
 	desc = "A tool used to apply torque to turn nuts and bolts. But orange!"
 	icon_state = "wrench-orange"
+	item_state = "wrench"
 
 /obj/item/wrench/green
 	desc = "A tool used to apply torque to turn nuts and bolts. In green!"
 	icon_state = "wrench-green"
+	item_state = "wrench"
+
+/obj/item/wrench/glench
+	name = "glench"
+	desc = "That's a helluva wrench. The name 'GLEN' is etched into the handle."
+	icon_state = "wrench-glench"
+	item_state = "wrench-glench"
+	force = 15
+	stamina_damage = 55
+	rarity = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("block", 15)
+		setItemSpecial(/datum/item_special/slam)

@@ -43,7 +43,15 @@
 			. += "It seems to be missing a usable battery."
 		. += "The unit will consume [get_draw()] power a second."
 		. += "The range setting is set to [src.range]."
-		. += "The power setting is set to [src.power_level]."
+		. += "The power setting is set to [src.power_level] ("
+		switch(src.power_level)
+			if(SHIELD_BLOCK_GAS)
+				. += "blocking gas"
+			if(SHIELD_BLOCK_FLUID)
+				. += "blocking gas and liquids"
+			if(SHIELD_BLOCK_ALL)
+				. += "blocking everything"
+		. += ")."
 
 	shield_on()
 		if (PCEL && PCEL.charge > 0) //first, try to activate off cell power
@@ -58,7 +66,7 @@
 
 	pulse(var/mob/user)
 		if(active)
-			boutput(user, "<span class='alert'>You can't change the power level or range while the generator is active.</span>")
+			boutput(user, SPAN_ALERT("You can't change the power level or range while the generator is active."))
 			return
 		var/list/choices = list("Set Range")
 		if(max_power != min_power)
@@ -77,11 +85,11 @@
 					if(!the_level)
 						return
 					if(BOUNDS_DIST(user, src) > 0)
-						boutput(user, "<span class='alert'>You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
+						boutput(user, SPAN_ALERT("You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!"))
 						return
 					the_level = clamp(the_level, min_power, max_power)
 					src.power_level = the_level
-					boutput(user, "<span class='notice'>You set the power level to [src.power_level].</span>")
+					boutput(user, SPAN_NOTICE("You set the power level to [src.power_level]."))
 
 	//Code for placing the shields and adding them to the generator's shield list
 	proc/generate_shield()
@@ -130,7 +138,7 @@
 	proc/createForcefieldObject(xa, ya, turf/T)
 		if(isnull(T))
 			T = locate((src.x + xa), (src.y + ya), src.z)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src, TRUE)
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src)
 		S.layer = 2
 		src.deployed_shields += S
 		return S
@@ -213,7 +221,7 @@
 		. = ..()
 
 	proc/createDoorForcefield(var/obj/machinery/door/D)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src, 1) //1 update tiles
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src)
 
 		S.layer = 2
 		S.set_dir(D.dir)

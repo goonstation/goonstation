@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "ampoule-0"
 	initial_volume = 5
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/expended = FALSE //Whether or not the ampoule has been used.
 	var/image/fluid_image
@@ -19,28 +19,17 @@
 	..()
 	UpdateIcon()
 
-/obj/item/reagent_containers/ampoule/attack(mob/M, mob/user)
+/obj/item/reagent_containers/ampoule/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(expended || reagents.total_volume <= 0)
-		boutput(user, "<span class='alert'>[src] is empty!</span>")
+		boutput(user, SPAN_ALERT("[src] is empty!"))
 		return
-	else if(M == user)
-		boutput(user, "<span class='notice'>You crack open and inhale [src].</span>")
+	if(target == user)
+		boutput(user, SPAN_NOTICE("You crack open and inhale [src]."))
+		user.inhale_ampoule(src, user)
 	else
-		user.visible_message("<span class='alert'>[user] attempts to force [M] to inhale [src]!</span>")
-		logTheThing(LOG_COMBAT, user, "tries to make [constructTarget(M,"combat")] inhale [src] [log_reagents(src)] at [log_loc(user)].")
-		if(!do_mob(user, M))
-			if(user && ismob(user))
-				boutput(user, "<span class='alert'>You were interrupted!</span>")
-			return
-		user.visible_message("<span class='alert'>[user] forces [M] to inhale [src]!</span>", \
-								"<span class='alert'>You force [M] to inhale [src]!</span>")
-	logTheThing(LOG_COMBAT, user, "[user == M ? "inhales" : "makes [constructTarget(M,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
-	reagents.trans_to(M, 5)
-	reagents.reaction(M, INGEST)
-	expended = TRUE
-	icon_state = "amp-broken"
-	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-	return
+		user.visible_message(SPAN_ALERT("[user] attempts to force [target] to inhale [src]!"))
+		SETUP_GENERIC_ACTIONBAR(user, target, 3 SECONDS, /mob/proc/inhale_ampoule, list(src, user), src.icon, src.icon_state, null, \
+			list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
 /obj/item/reagent_containers/ampoule/on_reagent_change()
 	..()

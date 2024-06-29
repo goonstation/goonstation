@@ -29,6 +29,8 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
@@ -55,6 +57,7 @@
 		. = ..()
 /turf/simulated/floor/airless/plating/catwalk/auto
 	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto"
 
 	New()
 		. = ..()
@@ -81,7 +84,42 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
+/turf/unsimulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto"
+
+	New()
+		. = ..()
+		UpdateIcon()
+		src.UpdateNeighbors()
+
+	update_icon()
+		. = ..()
+		var/connectdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (istype(T, src))
+				connectdir |= dir
+
+		src.icon_state = "[connectdir]"
+
+	proc/UpdateNeighbors()
+		for (var/turf/simulated/floor/airless/plating/catwalk/auto/T in orange(1, src))
+			T.UpdateIcon()
+
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon
+	name = "hot catwalk support"
+	icon_state = "auto_lava"
+	carbon_dioxide = 20
+	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
+
+	New()
+		..()
+		var/image/lava = image(icon = 'icons/turf/floors.dmi', icon_state = "lava", layer = src.layer - 0.1)
+		src.UpdateOverlays(lava, "lava")
 
 ////////////////////////////////////////////////////////////
 
@@ -92,7 +130,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		UpdateOverlays(burn_overlay, "burn")
 
 /turf/simulated/floor/airless/scorched2
 	burnt = 1
@@ -573,6 +611,28 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/simulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/simulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/simulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/simulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/simulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/simulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+////////////////////////////////////////////////
 /turf/simulated/floor/airless/sanitary
 	icon_state = "freezerfloor"
 

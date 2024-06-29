@@ -29,7 +29,7 @@ Left Mouse Button                      = FIRE!<br>
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!P || !object.loc) return
 		if (!get_turf(object)) return
-		var/obj/projectile/proj = initialize_projectile_ST(usr, P, object)
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(usr, P, object)
 
 		if (proj && !proj.disposed) //ZeWaka: Fix for null.launch()
 

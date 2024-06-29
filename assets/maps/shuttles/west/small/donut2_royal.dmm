@@ -104,7 +104,7 @@
 	},
 /area/centcom)
 "in" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},
@@ -296,7 +296,7 @@
 	},
 /area/shuttle/escape/centcom)
 "xV" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -400,7 +400,7 @@
 /turf/unsimulated/floor/marble/border_bw,
 /area/shuttle/escape/centcom)
 "FS" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 8
 	},
@@ -536,7 +536,7 @@
 	},
 /area/shuttle/escape/centcom)
 "QK" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{

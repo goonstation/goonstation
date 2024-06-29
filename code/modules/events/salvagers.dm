@@ -5,9 +5,6 @@
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
 	weight = 20
-#ifdef RP_MODE
-	disabled = 1
-#endif
 
 	var/antag_count = 0
 	var/lock = 0
@@ -70,7 +67,7 @@
 
 			if (emergency_shuttle.online)
 				return
-		message_admins("<span class='internal'>Setting up [src] event. Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Setting up [src] event. Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Setting up [src] event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
 			src.lock = TRUE
@@ -165,7 +162,7 @@
 
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a Salvager.</h3>", "blue")
-			message_admins("[key_name(lucky_dude.key)] respawned as a random event Salvager. Source: [source ? "[source]" : "random"]")
+			message_admins("[key_name(lucky_dude)] respawned as a random event Salvager. Source: [source ? "[source]" : "random"]")
 		src.post_event()
 
 	proc/post_event()

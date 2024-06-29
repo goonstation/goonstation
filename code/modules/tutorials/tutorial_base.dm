@@ -19,12 +19,12 @@
 
 		ShowStep()
 			if (!current_step || current_step > steps.len)
-				boutput(owner, "<span class='alert'><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
+				boutput(owner, SPAN_ALERT("<b>Invalid tutorial state, please notify `An Admin`.</b>"))
 				qdel(src)
 				return
 			var/datum/tutorialStep/T = steps[current_step]
-			boutput(owner, "<span class='notice'><b>Tutorial step #[current_step]: [T.name]</b></span>")
-			boutput(owner, "<span class='notice'>[T.instructions]</span>")
+			boutput(owner, SPAN_NOTICE("<b>Tutorial step #[current_step]: [T.name]</b>"))
+			boutput(owner, SPAN_NOTICE("[T.instructions]"))
 
 		Start()
 			if (!owner)
@@ -58,7 +58,7 @@
 			if (current_step <= steps.len)
 				var/datum/tutorialStep/T = steps[current_step]
 				T.TearDown()
-			boutput(owner, "<span class='notice'><b>The tutorial is finished!</b></span>")
+			boutput(owner, SPAN_NOTICE("<b>The tutorial is finished!</b>"))
 			return 1
 
 		CheckAdvance()
@@ -71,14 +71,14 @@
 
 		PerformAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)
-				boutput(owner, "<span class='alert'><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
+				boutput(owner, SPAN_ALERT("<b>Invalid tutorial state, please notify `An Admin`.</b>"))
 				qdel(src)
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			var/result = T.PerformAction(action, context)
 			if (!result || istext(result)) //if text is returned it's an error message
 				ShowStep()
-				boutput(owner, result || "<span class='alert'><b>You cannot do that currently.</b></span>")
+				boutput(owner, result || SPAN_ALERT("<b>You cannot do that currently.</b>"))
 				return FALSE
 			else
 				SPAWN(0)
@@ -88,7 +88,7 @@
 
 		PerformSilentAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)
-				boutput(owner, "<span class='alert'><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
+				boutput(owner, SPAN_ALERT("<b>Invalid tutorial state, please notify `An Admin`.</b>"))
 				qdel(src)
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]

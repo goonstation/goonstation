@@ -10,7 +10,8 @@
 		countdown.maptext_x = -(480 / 2) + 16
 		countdown.maptext_y = -320
 		countdown.maptext_height = 320
-		countdown.plane = 100
+		countdown.plane = PLANE_HUD
+		countdown.layer = 420
 		..()
 
 	proc/update_time(var/seconds)

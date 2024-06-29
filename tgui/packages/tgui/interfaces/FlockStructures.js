@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, Image, Stack } from '../components';
+import { Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const FlockStructures = (props, context) => {
@@ -33,7 +33,6 @@ export const FlockStructures = (props, context) => {
                         </Stack.Item>
                         <Stack.Item>
                           <Image
-                            pixelated
                             height="64px"
                             width="64px"
                             src={`data:image/png;base64,${icon}`} />

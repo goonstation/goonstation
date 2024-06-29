@@ -30,14 +30,13 @@
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
 #define FLOCK_RELAY_COMPUTE_COST 500 // total compute, also make sure to update flockmindTips.html if changing this
+#define FLOCK_RELAY_TILE_REQUIREMENT 250 // total flock turf
 
 #define FLOCKTRACE_COMPUTE_COST 100 // total compute
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
 #define FLOCK_ACHIEVEMENT_CHEAT_COMPUTE "infinite_compute"
-#define FLOCK_ACHIEVEMENT_CAGE_HUMAN "human_dissection"
-#define FLOCK_ACHIEVEMENT_BULLETS_HIT "bullets_hit"
 
 #define FLOCK_BULLETS_HIT_THRESHOLD 15
 

@@ -12,7 +12,7 @@
 		if (wall_type in icons)
 			wall_icon = icons[wall_type]
 		wall_name = input("Wall name", "Wall name", "strange wall") as text
-		boutput(usr, "<span class='notice'>Left click to place walls. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, SPAN_NOTICE("Left click to place walls. Ctrl+click anywhere to finish."))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)
@@ -76,4 +76,4 @@
 				return
 
 	attack_hand(mob/user)
-		user.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")
+		user.show_message(SPAN_ALERT("[src] seems to be movable, but you cannot muster the strength to displace it."))

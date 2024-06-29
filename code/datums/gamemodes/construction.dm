@@ -248,20 +248,20 @@
 			if (3)
 				ORE = pick(minor_ores)
 			else
-				// default
+				; // default
 		if (ORE)
 			AST.ore = ORE
 			AST.hardness += ORE.hardness_mod
 			AST.amount = rand(ORE.amount_per_tile_min,ORE.amount_per_tile_max)
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[ORE.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
+			var/image/ore_overlay = image('icons/turf/walls/asteroid.dmi',"[ORE.name][AST.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[AST.icon_state]"))
 			ore_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-			AST.UpdateOverlays(ore_overlay, "ast_ore")
+			AST.AddOverlays(ore_overlay, "ast_ore")
 
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			AST.UpdateOverlays(new /image/fullbright, "fullbright")
+			AST.AddOverlays(new /image/fullbright, "fullbright")
 #endif
 
 			ORE.onGenerate(AST)

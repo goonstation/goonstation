@@ -49,11 +49,11 @@ TYPEINFO(/datum/component/holdertargeting/baseball_bat_reflect)
 		)
 
 	if(!ON_COOLDOWN(owner, "baseball-bat-reflect-sound-spam", 1 DECI SECOND))
-		playsound(owner, 'sound/items/woodbat.ogg', 50, 1)
+		playsound(owner, 'sound/items/woodbat.ogg', 50, TRUE)
 		if(homerun)
-			playsound(owner, 'sound/items/batcheer.ogg', 50, 1)
-			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent] and scores a HOMERUN! Woah!!!!</span>")
+			playsound(owner, 'sound/items/batcheer.ogg', 50, TRUE)
+			owner.visible_message(SPAN_ALERT("[owner] hits \the [thing] with \the [src.parent] and scores a HOMERUN! Woah!!!!"))
 		else
-			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent]!</span>")
+			owner.visible_message(SPAN_ALERT("[owner] hits \the [thing] with \the [src.parent]!"))
 
 	return TRUE

@@ -395,7 +395,7 @@ datum/computer/file/embedded_program/department_controller
 obj/machinery/embedded_controller
 	var/datum/computer/file/embedded_program/program
 
-	name = "Embedded Controller"
+	name = "embedded controller"
 	density = 0
 	anchored = ANCHORED
 
@@ -446,7 +446,7 @@ obj/machinery/embedded_controller
 
 		New()
 			..()
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		post_signal(datum/signal/signal)
 			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
@@ -456,7 +456,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
-	name = "Access Console"
+	name = "access console"
 	density = 0
 
 	frequency = FREQ_AIRLOCK_CONTROL
@@ -522,7 +522,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
-	name = "Airlock Console"
+	name = "airlock console"
 	density = 0
 
 	frequency = FREQ_AIRLOCK_CONTROL
@@ -604,7 +604,7 @@ obj/machinery/embedded_controller/radio/department_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
-	name = "Access Console"
+	name = "access console"
 	density = 0
 
 	frequency = FREQ_AIRLOCK_CONTROL
@@ -658,14 +658,14 @@ obj/machinery/embedded_controller/radio/department_controller
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(user, SPAN_ALERT("Access denied."))
 		else
 			..()
 
 		return
 
 	attack_ai(mob/user)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		if (src.status & NOPOWER)

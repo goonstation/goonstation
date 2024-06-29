@@ -18,12 +18,19 @@
 				if (!L.throws_can_hit_me) continue
 				if (L.lying) continue
 				src.throw_impact(A, thr)
-				. = TRUE
+				if (thr.stops_on_mob_hit)
+					. = TRUE
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
 				if(!A.Cross(src))
 					src.throw_impact(A, thr)
+					. = TRUE
+			//Would be an idea to move all these checks into its own proc so non-humans don't need to check for this
+			if(ishuman(src) && istype(A, /obj/item/plant/tumbling_creeper))
+				var/obj/item/plant/tumbling_creeper/M = A
+				if(M.armed)
+					src.throw_impact(M, thr)
 					. = TRUE
 
 /atom/movable/proc/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
@@ -46,10 +53,14 @@
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return TRUE
-	src.material?.triggerOnAttack(src, src, hit_atom)
-	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
-	for(var/atom/A in hit_atom)
-		A.material?.triggerOnAttacked(A, src, hit_atom, src)
+	src.material_on_attack_use(thr?.user, hit_atom)
+	hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
+	if(ismob(hit_atom))
+		var/mob/hit_mob = hit_atom
+		for(var/atom/A in hit_mob)
+			A.material_trigger_on_mob_attacked(thr?.user, hit_atom, src, "chest")
+		for(var/atom/A in hit_mob.equipped())
+			A.material_trigger_on_mob_attacked(thr?.user, hit_atom, src, "chest")
 
 	if(!hit_atom)
 		return TRUE
@@ -62,7 +73,7 @@
 	var/impact_sfx = hit_atom.hitby(src, thr)
 	impact_sfx = src.overwrite_impact_sfx(impact_sfx,hit_atom, thr)
 	if(src && impact_sfx)
-		playsound(src, impact_sfx, 40, 1)
+		playsound(src, impact_sfx, 40, TRUE)
 
 /atom/movable/bump(atom/O)
 	if(src.throwing)
@@ -77,7 +88,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, datum/callback/end_throw_callback = null)
 	SHOULD_CALL_PARENT(TRUE)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return

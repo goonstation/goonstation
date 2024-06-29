@@ -96,3 +96,10 @@
 
 	src.can_move = 0
 	SPAWN(0.2 SECONDS) src.can_move = 1
+
+/obj/dummy/spell_doppel/disposing()
+	var/turf/T = get_turf(src)
+	if(T)
+		for (var/atom/movable/A in contents)
+			A.set_loc(T)
+	. = ..()

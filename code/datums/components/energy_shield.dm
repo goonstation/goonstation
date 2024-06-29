@@ -111,8 +111,8 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 /datum/component/wearertargeting/energy_shield/proc/turn_on()
 	processing_items |= src
 	src.active = TRUE
-	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, 0, -5, 1.5)
-	boutput(current_user, "<span class='notice'>You power up your energy shield.</span>")
+	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, FALSE, -5, 1.5)
+	boutput(current_user, SPAN_NOTICE("You power up your energy shield."))
 	current_user.vis_contents += overlay
 
 /datum/component/wearertargeting/energy_shield/proc/turn_off(shatter = FALSE)
@@ -121,11 +121,11 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	current_user.vis_contents -= overlay
 	if(shatter)
 		playsound(current_user, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 30, 0.1, 0, 0.5)
-		current_user.visible_message("<span class='alert'>[current_user]'s energy shield violently pops!</span>")
+		current_user.visible_message(SPAN_ALERT("[current_user]'s energy shield violently pops!"))
 		elecflash(current_user, 1, 1, 0)
 	else
-		playsound(current_user, 'sound/items/miningtool_off.ogg', 25, 0, -5, 1.5)
-		boutput(current_user, "<span class='notice'>Your energy shield powers down.</span>")
+		playsound(current_user, 'sound/items/miningtool_off.ogg', 25, FALSE, -5, 1.5)
+		boutput(current_user, SPAN_NOTICE("Your energy shield powers down."))
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()
 	if(active)
@@ -135,7 +135,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 			src.turn_on()
 		else
 			playsound(current_user, "sparks", 75, 1, -1)
-			boutput(current_user, "<span class='alert'>Your energy shield is depleted!</span>")
+			boutput(current_user, SPAN_ALERT("Your energy shield is depleted!"))
 
 /obj/ability_button/toggle_shield //TODO: percentage inventory-counter for remaining power?
 	name = "Toggle Energy Shield"

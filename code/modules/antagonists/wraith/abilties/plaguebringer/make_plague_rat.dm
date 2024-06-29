@@ -28,11 +28,11 @@
 		if(total_plague_rats < (max_allowed_rats + (player_count / 30)))	//Population scaling
 			var/turf/T = get_turf(holder.owner)
 			if (!T || !istype(T,/turf/simulated/floor))
-				boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+				boutput(holder.owner, SPAN_NOTICE("You cannot use this here!"))
 				return TRUE
 			for (var/obj/O in T)
 				if (O.density)
-					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					boutput(holder.owner, SPAN_NOTICE("There is something in the way!"))
 					return TRUE
 			boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm!")
 			src.doCooldown()
@@ -40,15 +40,16 @@
 			return FALSE
 
 		else
-			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
+			boutput(holder.owner, SPAN_ALERT("This [station_or_ship()] is already a rat den, you cannot summon another rat!"))
 			return TRUE
 
-	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
+	proc/make_plague_rat(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
+		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a plague rat. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -58,7 +59,7 @@
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending plague rat offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
-		if (!islist(candidates) || candidates.len <= 0)
+		if (!islist(candidates) || length(candidates) <= 0)
 			message_admins("Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up plague rat ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
@@ -76,6 +77,7 @@
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
 		if (lucky_dude.add_subordinate_antagonist(ROLE_PLAGUE_RAT, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "plague rat", src.holder.owner)
-			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
+			message_admins("[key_name(lucky_dude)] respawned as a plague rat for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)
+		W.spawn_marker = null

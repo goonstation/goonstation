@@ -140,6 +140,12 @@
 				owner.see_infrared = 1
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
+
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION))
+			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+		else if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK))
+			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_MESONVISION))
 			if(T && !isrestrictedz(T.z))
 				owner.sight |= SEE_TURFS
@@ -149,12 +155,6 @@
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 			if (owner.see_invisible < INVIS_INFRA)
 				owner.see_invisible = INVIS_INFRA
-
-
-		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION))
-			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		else if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK))
-			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/construction) && (T && !isrestrictedz(T.z)))

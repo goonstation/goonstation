@@ -135,11 +135,11 @@
 				current_schedule++
 				invulnerability = invulnerable_on_transition
 				tick_at = 1
-			if (schedules.len < current_schedule)
+			if (length(schedules) < current_schedule)
 				broken = 1
 				message_coders("Marquesas/Bullethell: We broke due to veering off schedule.")
 				return
-			if (maxticks.len < current_schedule)
+			if (length(maxticks) < current_schedule)
 				broken = 1
 				message_coders("Marquesas/Bullethell: We broke due to veering off schedule <maxticks>.")
 				return

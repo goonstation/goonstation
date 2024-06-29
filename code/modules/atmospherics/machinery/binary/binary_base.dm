@@ -141,3 +141,4 @@
 			network2.dispose()
 		network2 = null
 		node2 = null
+	UpdateIcon()

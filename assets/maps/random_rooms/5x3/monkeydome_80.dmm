@@ -23,17 +23,13 @@
 	},
 /area/dmm_suite/clear_area)
 "k" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
 /area/dmm_suite/clear_area)
 "v" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/grass{
 	name = "astroturf"

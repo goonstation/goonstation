@@ -21,21 +21,21 @@
 	var/list/obj/critter/default_mobs = list(/mob/living/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
 								/mob/living/critter/robotic/repairbot/security,
-								/obj/critter/mechmonstrositycrawler,
+								/mob/living/critter/robotic/crawler,
 								/mob/living/critter/shade,
 								/obj/critter/bat/buff,
 								/mob/living/critter/bear,
 								/mob/living/critter/lion,
 								/mob/living/critter/skeleton/wraith,
 								/mob/living/critter/brullbar,
-								/obj/critter/gunbot/heavy)
+								/mob/living/critter/robotic/gunbot)
 
 	New(var/mob_type_chosen = null)
 		if(mob_type_chosen != null)
 			src.mob_type = mob_type_chosen
 		else	//In case we arent spawned by a wraith, or are spawned on random mode
 			src.mob_type = pick(src.default_mobs)
-		src.visible_message("<span class='alert'>A [src] appears into view, some shadows coalesce within!</b></span>")
+		src.visible_message(SPAN_ALERT("A [src] appears into view, some shadows coalesce within!</b>"))
 		next_growth = TIME + (20 SECONDS)
 		next_spawn = TIME + (21 SECONDS)	//Should call the first spawn check after the portal grew once.
 
@@ -90,7 +90,7 @@
 					for (var/turf/simulated/floor/floor in block(locate(max(src.x - growth, 0), max(src.y - growth, 0), src.z), locate(min(src.x + growth, world.maxx), min(src.y + growth, world.maxy), src.z)))
 						eligible_turf += floor
 				if (!length(eligible_turf))
-					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b>"))
 					return 1
 				chosen_turf = pick(eligible_turf)
 				var/obj/decal/harbinger_portal/portal = new /obj/decal/harbinger_portal
@@ -119,7 +119,7 @@
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
-						src.visible_message("<span class='alert'><b>[minion] emerges from the [src]!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[minion] emerges from the [src]!</b>"))
 						src.total_mob_value += minion_value
 			next_spawn = TIME + (20 SECONDS) + (minion_value * 5) SECONDS
 
@@ -163,11 +163,11 @@
 				return 5
 			if (/mob/living/critter/brullbar)
 				return 15
-			if (/obj/critter/gunbot/heavy)
+			if (/mob/living/critter/robotic/gunbot)
 				return 15
 			if (/obj/critter/ancient_thing)
 				return 7
-			if (/obj/critter/mechmonstrositycrawler)
+			if (/mob/living/critter/robotic/crawler)
 				return 4
 			else	//You never know, lets give an average point cost
 				return 6

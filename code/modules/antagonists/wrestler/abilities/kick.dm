@@ -23,17 +23,18 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to wrestle yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if(check_target_immunity( target ))
-			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
+			M.visible_message(SPAN_ALERT("You seem to attack [target]!"))
 			return 1
 
+		. = ..()
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		M.emote("scream")
@@ -43,7 +44,7 @@
 		for (var/mob/C in oviewers(M))
 			shake_camera(C, 8, 24)
 
-		M.visible_message("<span class='alert'><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B>"))
 		if (!fake)
 			random_brute_damage(target, 15, 1)
 		playsound(M.loc, "swing_hit", 60, 1)
@@ -51,7 +52,7 @@
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 		if (!fake && T && isturf(T))
 			target.throw_at(T, 3, 2, bonus_throwforce = 15)
-			target.changeStatus("weakened", 3 SECONDS)
+			target.changeStatus("knockdown", 3 SECONDS)
 			target.changeStatus("stunned", 3 SECONDS)
 			target.changeStatus("slowed", 8 SECONDS, 2)
 			target.force_laydown_standup()

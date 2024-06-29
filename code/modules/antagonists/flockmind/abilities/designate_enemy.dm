@@ -12,7 +12,7 @@
 	var/mob/living/intangible/flock/F = holder.owner
 
 	if (!(isliving(M) || iscritter(M) || isvehicle(M)) || isflockmob(M) || isintangible(M))
-		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
+		boutput(F, SPAN_ALERT("That isn't a valid target."))
 		return TRUE
 
 	var/datum/flock/flock = F.flock
@@ -46,7 +46,7 @@
 	var/mob/living/intangible/flock/F = holder.owner
 
 	if (!isflockvalidenemy(target))
-		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
+		boutput(F, SPAN_ALERT("That isn't a valid target."))
 		return TRUE
 
 	if (!F.flock)

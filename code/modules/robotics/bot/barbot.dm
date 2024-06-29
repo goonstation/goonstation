@@ -4,8 +4,8 @@
 /obj/machinery/bot/barbuddy
 	name = "BarBuddy"
 	desc = "A little bartending robot!"
-	icon = 'icons/obj/bots/aibots.dmi'
-	icon_state = "robuddy1"
+	icon = 'icons/obj/bots/robuddy/pr-6.dmi'
+	icon_state = "body"
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
@@ -16,7 +16,7 @@
 	var/list/targets = list() // Nearby tables that are in need of drinks.
 	var/atom/moveTowards // The object that should be moved towards.
 	var/worryLevel = 0 // Taking the barbuddy away from their bar makes them sad. Very sad. This stores how sad they are.
-	var/emotion // The face the barbuddy should be making.
+	var/emotion = "neutral" // The face the barbuddy should be making.
 
 	var/possible_drinks = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
 							"boorbon","beepskybeer","screwdriver","bloody_mary","bloody_scary",\
@@ -55,14 +55,12 @@
 	New()
 		..()
 		src.setEmotion("happy")
+		src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
 		// Start by getting a few initial things
 		home = get_turf(src)
 		if (!home)
 			qdel(src)
 			return
-		if (!length(src.homeTables))
-			for (var/obj/table/reinforced/bar/T in view(5, src.home))
-				src.homeTables += T
 
 	proc/setEmotion(var/set_emotion)
 		if(src.emotion == set_emotion)
@@ -98,7 +96,7 @@
 		if (!moveTowards)
 			if (!hasDrink)
 				// if there's a barbuddy dispenser nearby, let's do the cute little animation thing. if not, use magic to summon a drink
-				for (var/obj/decal/fakeobjects/barbuddy_dispenser/D in view(5, src))
+				for (var/obj/fakeobject/barbuddy_dispenser/D in view(5, src))
 					moveTowards = D
 				if (!moveTowards)
 					hasDrink = 1
@@ -134,7 +132,7 @@
 				homesick()
 
 	proc/bartend()
-		if (istype(moveTowards, /obj/decal/fakeobjects/barbuddy_dispenser)) // If it's the dispenser, do a little animation.
+		if (istype(moveTowards, /obj/fakeobject/barbuddy_dispenser)) // If it's the dispenser, do a little animation.
 			playsound(moveTowards.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.3)
 			moveTowards.icon_state = "alc_dispenser[rand(1,5)]"
 			hasDrink = 1
@@ -183,7 +181,7 @@
 			if (9)
 				src.setEmotion("screaming")
 			if (10)
-				src.visible_message("<span class='alert'><B>[src] gets so homesick that they explode!</B></span>", 1)
+				src.visible_message(SPAN_ALERT("<B>[src] gets so homesick that they explode!</B>"))
 				explode()
 		src.worryLevel++
 
@@ -192,7 +190,7 @@
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
 
-/obj/decal/fakeobjects/barbuddy_dispenser
+/obj/fakeobject/barbuddy_dispenser
 	name = "BarBuddy Drink Dispenser"
 	desc = "A dispenser made specifically for BarBuddies to use."
 	icon = 'icons/obj/chemical.dmi'

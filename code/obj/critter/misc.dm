@@ -84,7 +84,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [C.name]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> [src.angertext] [C.name]!"))
 				src.task = "chasing"
 				break
 			else
@@ -92,7 +92,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if (prob(30)) M.changeStatus("weakened", 3 SECONDS)
+		if (prob(30)) M.changeStatus("knockdown", 3 SECONDS)
 
 	CritterAttack(mob/M)
 		..()
@@ -165,15 +165,12 @@
 
 	ChaseAttack(mob/M)
 		src.attacking = 1
-		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/ghost.ogg', 50, 1, -1)
-		else
-			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
+		playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
-			boutput(M, "<span class='combat'><b>You are forced to the ground by \the [src]!</b></span>")
+			boutput(M, SPAN_COMBAT("<b>You are forced to the ground by \the [src]!</b>"))
 			random_brute_damage(M, rand(0,5))
 			M.changeStatus("stunned", 5 SECONDS)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 			src.attacking = 0
 			return
 
@@ -186,9 +183,9 @@
 			if(prob(66))
 				random_brute_damage(M, rand(5,10))
 				take_bleeding_damage(M, null, rand(10,35), DAMAGE_CRUSH, 5, get_turf(M))
-				boutput(M, "<span class='combat'><b>You feel [what_is_sucked_out] getting drawn out through your skin!</b></span>")
+				boutput(M, SPAN_COMBAT("<b>You feel [what_is_sucked_out] getting drawn out through your skin!</b>"))
 			else
-				boutput(M, "<span class='combat'>You feel uncomfortable. Your [what_is_sucked_out] seeks to escape you.</span>")
+				boutput(M, SPAN_COMBAT("You feel uncomfortable. Your [what_is_sucked_out] seeks to escape you."))
 				M.changeStatus("slowed", 3 SECONDS, 3)
 
 		SPAWN(0.5 SECONDS)
@@ -200,19 +197,19 @@
 			return
 		else
 			if(!W.reagents)
-				boutput(user, "<span class='combat'>Hitting it with [W] is ineffective!</span>")
+				boutput(user, SPAN_COMBAT("Hitting it with [W] is ineffective!"))
 				return
 			if(W.reagents.has_reagent("water_holy"))
 				boutput(user, "[src] screams!")
 				CritterDeath()
 				return
 			else
-				boutput(user, "<span class='combat'>Hitting it with [W] is ineffective!</span>")
+				boutput(user, SPAN_COMBAT("Hitting it with [W] is ineffective!"))
 				return
 
 	attack_hand(var/mob/user)
 		if (src.alive)
-			boutput(user, "<span class='combat'><b>Your hand passes right through!</b></span>")
+			boutput(user, SPAN_COMBAT("<b>Your hand passes right through!</b>"))
 		return
 
 	ai_think()
@@ -239,6 +236,7 @@
 /obj/critter/ancient_thing
 	name = "???"
 	desc = "What the hell is that?"
+	icon = 'icons/mob/critter/robotic/ancient/robot.dmi'
 	icon_state = "ancientrobot"
 	dead_state = "ancientrobot" // fades away
 	death_text = "%src% fades away."
@@ -293,19 +291,19 @@
 		src.attacking = 1
 
 		if (boredom_countdown-- > 0)
-			src.visible_message("<span class='combat'><B>[src]</B> [pick("measures", "gently pulls at", "examines", "pokes", "gently prods", "feels")] [src.target]'s [pick("head","neck","shoulders","right arm", "left arm","left leg","right leg")]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> [pick("measures", "gently pulls at", "examines", "pokes", "gently prods", "feels")] [src.target]'s [pick("head","neck","shoulders","right arm", "left arm","left leg","right leg")]!"))
 			if (prob(50))
-				boutput(src.target, "<span class='combat'>You feel [pick("very ",null,"rather ","fairly ","remarkably ")]uncomfortable.</span>")
+				boutput(src.target, SPAN_COMBAT("You feel [pick("very ",null,"rather ","fairly ","remarkably ")]uncomfortable."))
 		else
 			var/mob/living/doomedMob = src.target
 			if (!istype(doomedMob))
 				return
 
-			src.visible_message("<span class='combat'><b>In a whirling flurry of tendrils, [src] rends down [src.target]! Holy shit!</b></span>")
+			src.visible_message(SPAN_COMBAT("<b>In a whirling flurry of tendrils, [src] rends down [src.target]! Holy shit!</b>"))
 			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			doomedMob.ghostize()
-			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)
+			new /obj/fakeobject/skeleton(doomedMob.loc)
 			doomedMob.gib()
 			src.target = null
 
@@ -320,58 +318,4 @@
 		src.invisibility = INVIS_NONE
 		SPAWN(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
-		return
-
-/obj/critter/livingtail
-	name = "Living tail"
-	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
-	icon_state = "twitchytail"
-	density = 0
-	health = 20
-	flags = NOSPLASH | TABLEPASS
-	maxhealth = 40
-	butcherable = 1
-
-	var/obj/item/organ/tail/lizard/tail_memory = null
-	var/maxsteps
-	var/currentsteps = 0
-	var/primary_color =	"#21a833"
-	var/secondary_color = "#000000"
-
-	New()
-		..()
-		maxsteps = rand(2,12)
-
-	proc/setup_overlays()
-		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
-		overlayprimary.color = primary_color
-		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
-		overlaysecondary.color = secondary_color
-		src.UpdateOverlays(overlayprimary, "bottomdetail")
-		src.UpdateOverlays(overlaysecondary, "topdetail")
-
-	process()
-		currentsteps++
-
-		if (currentsteps >= maxsteps)
-			CritterDeath()
-
-		if (prob(70))
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
-			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
-		..()
-
-	CritterDeath()
-		..()
-		if (tail_memory)
-			tail_memory.set_loc(get_turf(src))
-		else
-			new/obj/item/organ/tail/lizard(get_turf(src))
-		qdel(src)
-
-	Crossed(atom/movable/M as mob)
-		..()
-		if (ishuman(M) && prob(25))
-			src.visible_message("<span class='combat'>[src] coils itself around [M]'s legs and trips [him_or_her(M)]!</span>")
-			M:changeStatus("weakened", 2 SECONDS)
 		return

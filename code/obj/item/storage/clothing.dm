@@ -69,7 +69,12 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/janitor,\
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/janitor)
+	/obj/item/device/pda2/janitor,\
+#ifdef SEASON_WINTER
+	/obj/item/clothing/suit/puffer/janitor)
+#else
+	)
+#endif
 
 /obj/item/storage/box/clothing/botanist
 	name = "\improper Botanist's equipment"
@@ -77,7 +82,12 @@
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
-	/obj/item/clothing/gloves/black)
+	/obj/item/clothing/gloves/black,\
+#ifdef SEASON_WINTER
+	/obj/item/clothing/suit/puffer/botanist)
+#else
+	)
+#endif
 
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
@@ -85,7 +95,12 @@
 	/obj/item/clothing/shoes/westboot/brown/rancher,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
-	/obj/item/clothing/gloves/black)
+	/obj/item/clothing/gloves/black,\
+#ifdef SEASON_WINTER
+	/obj/item/clothing/suit/puffer/rancher)
+#else
+	)
+#endif
 
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"
@@ -238,6 +253,14 @@
 	/obj/item/clothing/head/witchfinder,\
 	/obj/item/clothing/shoes/witchfinder)
 
+/obj/item/storage/box/clothing/mail
+	name = "\improper Postmaster's equipment"
+	spawn_contents = list(/obj/item/clothing/under/misc/mail,\
+	/obj/item/clothing/head/mailcap,\
+	/obj/item/clothing/shoes/black,\
+	/obj/item/clothing/gloves/black,\
+	/obj/item/device/radio/headset/mail)
+
 /* ============================== */
 /* ---------- Costumes ---------- */
 /* ============================== */
@@ -368,6 +391,13 @@
 		acane.name = "cane"
 		acane.desc = "Totally a cane."
 
+/obj/item/storage/box/costume/crap/goku
+	name = "anime martial artist costume"
+	spawn_contents = list(
+		/obj/item/clothing/shoes/goku,
+		/obj/item/clothing/under/gimmick/goku
+	)
+
 /obj/item/storage/box/costume/light_borg
 	name = "light cyborg costume"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/light_borg)
@@ -454,3 +484,8 @@
 	/obj/item/clothing/suit/witchcape_mint,
 	/obj/item/device/light/glowstick/cyan)
 
+/obj/item/storage/box/costume/rabbitsuit
+	name = "rabbit suit costume set"
+	desc = "Be the mascot you always knew you could be."
+	spawn_contents = list(/obj/item/clothing/head/rabbithat,
+	/obj/item/clothing/suit/rabbitsuit)

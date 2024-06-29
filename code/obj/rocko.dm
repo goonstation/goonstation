@@ -33,9 +33,9 @@ obj/item/rocko
 		if (prob(10))
 			var/new_material = pick(childrentypesof(/datum/material/metal))
 			var/datum/material/dummy = new new_material
-			src.setMaterial(getMaterial(dummy.mat_id), setname = FALSE)
+			src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
 		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE, copy = FALSE)
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
 
 		UpdateIcon()
 
@@ -100,7 +100,7 @@ obj/item/rocko
 
 		for(var/mob/O in targets)
 			if(src.can_mob_observe(O))
-				O.show_message("<span class='game say bold'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
+				O.show_message("<span class='say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
 
 	proc/emote(message, maptext_out)
 		var/list/targets
@@ -114,7 +114,7 @@ obj/item/rocko
 
 		for (var/mob/O in targets)
 			if(src.can_mob_observe(O))
-				O.show_message("<span class='emote'>[message]</span>", assoc_maptext = chat_text)
+				O.show_message(SPAN_EMOTE("[message]"), assoc_maptext = chat_text)
 
 	update_icon()
 		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")
@@ -147,8 +147,8 @@ obj/item/rocko
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
 
-		if (src.material?.mat_id != "rock")
-			. += "<br>Wait, that isn't a rock. It's a [pick("hunk", "chunk")] of [src.material.name]!"
+		if (src.material?.getID() != "rock")
+			. += "<br>Wait, that isn't a rock. It's a [pick("hunk", "chunk")] of [src.material.getName()]!"
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/clothing/head))

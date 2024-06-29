@@ -15,11 +15,14 @@
 	var/object_flags = 0
 
 	animate_movement = 2
-//	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
+//	desc = SPAN_ALERT("HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???")
 //heh no not really
 
 	var/_health = 100
 	var/_max_health = 100
+
+	/// if gun/bullet related, forensic profile of it
+	var/forensic_ID = null
 
 	New()
 		. = ..()
@@ -85,7 +88,7 @@
 		. = ..()
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				changeHealth(-100)
@@ -96,7 +99,6 @@
 			if(3)
 				changeHealth(-40)
 				return
-			else
 
 	onMaterialChanged()
 		..()
@@ -104,10 +106,10 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.quality
-			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
+			quality = src.material.getQuality()
+			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
-			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
+			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
 				set_opacity(1)
 
 	disposing()
@@ -135,7 +137,12 @@
 	*/
 	proc/can_access_remotely_default(mob/user)
 		if(isAI(user))
-			. = TRUE
+			var/mob/living/silicon/ai/mainframe = user
+			if(isAIeye(user))
+				var/mob/living/intangible/aieye/aEye = user
+				mainframe = aEye.mainframe
+			if((mainframe.z == src.z) || (inunrestrictedz(src) && inonstationz(mainframe)))
+				. = TRUE
 		else if(issilicon(user))
 			if (ishivebot(user) || isrobot(user))
 				var/mob/living/silicon/robot/R = user
@@ -174,6 +181,9 @@
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return 0
 
+	proc/can_arm_attach()
+		return !(src.object_flags & NO_ARM_ATTACH )
+
 	assume_air(datum/air_group/giver)
 		if (loc)
 			return loc.assume_air(giver)
@@ -209,14 +219,20 @@
 
 	proc/initialize()
 
+	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+		return FALSE
+
+	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
+		return 7 //default is up a bit since most objects are centered
+
 	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
 			if  (!grab_smash(G, user))
-				return ..(I, user)
+				return ..()
 			else return
-		return ..(I, user)
+		return ..()
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
@@ -253,9 +269,6 @@
 	deserialize_postprocess()
 		return
 
-/obj/proc/get_movement_controller(mob/user)
-	return
-
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets."
@@ -279,7 +292,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no bedsheets left in [src]!")
+			boutput(user, SPAN_ALERT("There's no bedsheets left in [src]!"))
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
@@ -307,7 +320,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no towels left in [src]!")
+			boutput(user, SPAN_ALERT("There's no towels left in [src]!"))
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
@@ -318,7 +331,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 	density = 0
 
 	updateHealth()
@@ -356,7 +369,8 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
+/// Whether or not to hide something based on the value of hide, usually whether or not the turf is intact.
+/obj/proc/hide(hide)
 	return
 
 /obj/proc/replace_with_explosive()
@@ -380,11 +394,11 @@
 
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
 	. = FALSE
-	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
+	if (W && !isghostdrone(user)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 		if (user)
-			if (W.cant_drop)
+			if (W.cant_drop) // this should handle borgs dropping their tools, anyway? - mylie
 				return
 			user.drop_item()
 		if(W.dir != dirbuffer)
@@ -393,6 +407,8 @@
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
+		if(W.layer < src.layer)
+			W.layer = src.layer + 0.1
 		. = TRUE
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)
@@ -401,10 +417,10 @@
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
-	user.show_text("<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
-	user.changeStatus("paralysis", 4 SECONDS)
-	user.changeStatus("weakened", 4 SECONDS)
-	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
+	user.show_text(SPAN_ALERT("You leap and slam against the inside of [src]! Ouch!"))
+	user.changeStatus("unconscious", 4 SECONDS)
+	user.changeStatus("knockdown", 4 SECONDS)
+	src.visible_message(SPAN_ALERT("<b>[src]</b> emits a loud thump and rattles a bit."))
 
 	animate_storage_thump(src)
 
@@ -428,3 +444,46 @@
 	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
 	replacer.disguise_as(src)
 	qdel(src)
+
+
+ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
+/obj/proc/admin_command_obj_speak()
+	set name = "Object Speak"
+	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	if (msg)
+		src.obj_speak(msg)
+
+/obj/proc/obj_speak(message)
+	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
+
+	var/list/mob/targets = null
+	var/mob/holder = src
+	while(holder && !istype(holder))
+		holder = holder.loc
+	ENSURE_TYPE(holder)
+	if(!holder)
+		targets = hearers(src, null)
+	else
+		targets = list(holder)
+		chat_text.plane = PLANE_HUD
+		chat_text.layer = 999
+
+	for(var/mob/O in targets)
+		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
+
+/obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
+	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
+		var/mob/dead/observer/O = viewer
+		O.insert_observer(occupant)
+		return TRUE
+
+/obj/proc/after_abcu_spawn()
+
+/// creates an id profile for any forenics purpose. override as needed
+/obj/proc/CreateID()
+	. = ""
+
+	do
+		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
+			. += "[pick(numbersAndLetters)]"
+	while(. in forensic_IDs)

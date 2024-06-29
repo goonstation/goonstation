@@ -18,7 +18,7 @@
 			holder.owner.say("BRIXHUN MOHTYR", FALSE, maptext_style, maptext_colors)
 		..()
 		if(!holder.owner.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 
 		playsound(holder.owner.loc, 'sound/effects/mag_forcewall.ogg', 25, 1, -1)
 		var/forcefield1
@@ -55,6 +55,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "forcewall"
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	opacity = 0
 	density = 1
 	luminosity = 3

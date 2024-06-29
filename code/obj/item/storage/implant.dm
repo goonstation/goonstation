@@ -3,15 +3,6 @@
 /obj/item/storage/box/trackimp_kit
 	name = "tracking implant kit"
 	icon_state = "implant"
-	desc = "A box containing an implanting tool, four tracking implant cases, a locator, and an implant pad. The implanter can remove the implants from their cases and inject them in a person, and the locator can tell you where they are."
-	spawn_contents = list(/obj/item/implantcase/tracking = 4,\
-	/obj/item/implanter,\
-	/obj/item/implantpad,\
-	/obj/item/locator)
-
-/obj/item/storage/box/trackimp_kit2
-	name = "tracking implant kit"
-	icon_state = "implant"
 	desc = "A box containing an implanting tool, four tracking implant cases, and two GPS devices. The implanter can remove the implants from their cases and inject them in a person, and the GPS devices can tell you where they are."
 	spawn_contents = list(/obj/item/implantcase/tracking = 4,\
 	/obj/item/device/gps = 2,\
@@ -37,3 +28,14 @@
 	desc = "A box containing an implanting tool and five access implant cases. The implanter can remove the implants from their cases and inject them into a subject, granting them accesses defined by an ID computer."
 	spawn_contents = list(/obj/item/implantcase/access = 6,\
 	/obj/item/implanter)
+
+/obj/item/storage/box/marionetteimp_kit
+	name = "marionette implant kit"
+	desc = "Contains one marionette implant and the peripherals required to use it."
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/remote/marionette_implant, /obj/item/paper/marionette_implant_readme)
+
+	New(loc, flag_that_prevents_the_box_from_having_its_free_implanter)
+		..()
+		if (!flag_that_prevents_the_box_from_having_its_free_implanter)
+			src.storage.add_contents(new /obj/item/implanter/marionette)

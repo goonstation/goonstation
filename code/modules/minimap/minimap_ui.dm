@@ -27,7 +27,7 @@
 		src.minimap_id = "[control_id]"
 
 		src.handler = new
-		src.handler.plane = 0
+		src.handler.plane = PLANE_BLACKNESS
 		src.handler.mouse_opacity = 0
 		src.handler.screen_loc = "[src.minimap_id]:1,1"
 

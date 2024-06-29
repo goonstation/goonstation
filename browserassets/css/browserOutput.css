@@ -11,7 +11,7 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji";
     font-size: 12px;
     line-height: 1.4;
 	overflow-x: hidden;
@@ -32,12 +32,15 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Twemoji", "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;
 	margin: 0 .05em 0 .1em;
 	vertical-align: -0.1em;
+}
+wbr:after {
+	content:"";
+	display: block;
 }
 
 
@@ -326,10 +329,12 @@ img.emoji {
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}
+.newbeeooc {color: #29AB87;}
+.newbeelooc {color: #8BC16E;}
 .adminooc {color: #b82e00;}
 .adminlooc {color: #cd6c4c;}
 .admin {color: #386aff;}
-.admin .prefix {display: block; float:left; font-size: 0.5em; text-align: center;}
+.admin .prefix {float:left; font-size: 0.49em; text-align: center;}
 .adminMsgWrap {color: #AE46BA;}
 .gfartooc {color: #0099cc;}
 .gfartlooc {color: #4cb7db;}
@@ -339,8 +344,8 @@ img.emoji {
 .medal {color: #808000;}
 .combat {color: #ff0000;}
 .say {}
-.sing {color: #B87AB8;}
-.robotsing {color: #7EBAB5;}
+.sing {color: #591259;}
+.robotsing {color: #114f4b;}
 .blobsay {color: white; background-color: #226622;}
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
@@ -366,6 +371,7 @@ img.emoji {
 .green, .radio {color: #008000;}
 .alert {color: #ff0000;}
 h1.alert, h2.alert {color: #000000;}
+.arthint {color:  #a97da9;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
@@ -437,12 +443,15 @@ body.theme-dark .notice { color: #7996ff; }
 body.theme-dark .hint { color: #7996ff; }
 body.theme-dark .internal { color: #92b4ff; }
 body.theme-dark .alert { color: #FF6D6D; }
+body.there-dark .arthint {color: #5A1D8A}
 body.theme-dark .system { color: #FF6D6D; }
 body.theme-dark .success { color: #92E592; }
 body.theme-dark .emote { color: #888888; }
 body.theme-dark .subtle { color: #7A7471; }
 body.theme-dark .ooc {color: #688eff;}
 body.theme-dark .looc {color: #92a9ee;}
+body.theme-dark .newbeeooc {color: #29AB87;}
+body.theme-dark .newbeelooc {color: #8BC16E;}
 body.theme-dark .adminooc {color: #be6e53;}
 body.theme-dark .adminlooc {color: #ce8c76;}
 body.theme-dark .mentorooc {color: #a653ff;}

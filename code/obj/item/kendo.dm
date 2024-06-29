@@ -71,7 +71,7 @@
 	stamina_cost = 5
 
 	hit_type = DAMAGE_BLUNT
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
@@ -144,25 +144,25 @@
 		if(guard != user.a_intent)
 			change_guard(user,user.a_intent)
 
-	attack(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
-		if(ishuman(defender))
-			if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
-				var/obj/item/shinai/S = defender.equipped()
-				var/parry_block = S.parry_block_check(attacker,defender)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman(target))
+			if(target.equipped() && istype(target.equipped(),/obj/item/shinai))
+				var/obj/item/shinai/S = target.equipped()
+				var/parry_block = S.parry_block_check(user,target)
 				if((parry_block == 1) || (parry_block == 2))
-					attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
+					user.do_disorient((user.equipped().stamina_damage),0,0,0,0,1,null)
 					return //stops damage if parried or blocked, if not, itll check for a disarm
 
-			if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
-				var/obj/item/I = defender.equipped()
+			if((user.a_intent=="disarm") && prob(20) && target.equipped())
+				var/obj/item/I = target.equipped()
 				if (I.cant_drop)
 					return
-				defender.u_equip(I)
-				I.set_loc(defender.loc)
+				target.u_equip(I)
+				I.set_loc(target.loc)
 				var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
 				I.throw_at(target_turf,3,1)
-				defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
-				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
+				target.show_text("<b>[user] knocks the [I] right out of your hands!</b>","red")
+				user.show_text("<b>You knock the [I] right out of [target]'s hands!</b>","green")
 		..()
 
 	attack_hand(mob/user)
@@ -184,7 +184,6 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	var/open = 0

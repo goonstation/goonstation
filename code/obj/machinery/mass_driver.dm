@@ -23,7 +23,7 @@
 		O_limit++
 		if(O_limit >= 20)
 			for(var/mob/M in hearers(src, null))
-				boutput(M, "<span class='notice'>The mass driver lets out a screech, it mustn't be able to handle any more items.</span>")
+				boutput(M, SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
 			break
 		use_power(500)
 		O.throw_at(target, drive_range * src.power, src.power)

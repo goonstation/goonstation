@@ -16,17 +16,17 @@
 		if(isnull(the_bomb))
 			try_to_find_the_nuke()
 		if(isnull(the_bomb))
-			boutput(user, "<span class='alert'>No teleportation target found!</span>")
+			boutput(user, SPAN_ALERT("No teleportation target found!"))
 			return
 		if(T.z != Z_LEVEL_STATION)
-			boutput(user, "<span class='alert'>You cannot summon the bomb here!</span>")
+			boutput(user, SPAN_ALERT("You cannot summon the bomb here!"))
 			return
 		if(the_bomb.anchored)
-			boutput(user, "<span class='alert'>\The [the_bomb] is currently secured to the floor and cannot be teleported.</span>")
+			boutput(user, SPAN_ALERT("\The [the_bomb] is currently secured to the floor and cannot be teleported."))
 			return
 		tele_the_bomb(user)
 	else
-		boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
+		boutput(user, SPAN_ALERT("The [src] is out of charge and can't be used again!"))
 
 /obj/item/remote/nuke_summon_remote/proc/try_to_find_the_nuke()
 	if(ticker.mode.type == /datum/game_mode/nuclear)
@@ -41,6 +41,6 @@
 	showswirl(the_bomb)
 	the_bomb.set_loc(get_turf(src))
 	showswirl(src)
-	src.visible_message("<span class='alert'>[user] has summoned the [the_bomb]!</span>")
+	src.visible_message(SPAN_ALERT("[user] has summoned the [the_bomb]!"))
 	src.charges -= 1
 	playsound(src.loc, use_sound, 70, 1)

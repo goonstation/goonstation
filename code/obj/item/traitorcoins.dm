@@ -10,7 +10,7 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
-			boutput(user, "<span class='notice'>You add the [src] to the stack. It now has [src.amount] [src].</span>")
+			boutput(user, SPAN_NOTICE("You add the [src] to the stack. It now has [src.amount] [src]."))
 			return
 		else ..()
 
@@ -18,7 +18,7 @@
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many [src] do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
 				return
 			if (!src.loc || BOUNDS_DIST(src, user) > 0)
 				return

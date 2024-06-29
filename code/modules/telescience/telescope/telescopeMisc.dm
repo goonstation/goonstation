@@ -1,6 +1,10 @@
 var/datum/telescope_manager/tele_man
-var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
+var/list/special_places = list("Luna", "Observatory") //list of location names, which are coincidentally also landmark ids
 
+TYPEINFO(/obj/machinery/lrteleporter)
+	mats = list("telecrystal" = 10,
+				"metal" = 10,
+				"conductive" = 10)
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
@@ -8,7 +12,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	icon_state = "lrport"
 	density = 0
 	anchored = ANCHORED
-	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	flags = CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
@@ -18,9 +22,14 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		ui_interact(user)
@@ -58,7 +67,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				return 0
 			src.busy = 1
 			flick("[src.icon_state]-act", src)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
 					continue
@@ -83,7 +92,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				return 0
 			src.busy = 1
 			flick("[src.icon_state]-act", src)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
 					continue
@@ -158,7 +167,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		return
 
 	proc/tick()
-		if(events_active.len < 3)
+		if(length(events_active) < 3)
 
 			var/can_spawn = 0 //If there's only events with less than 100% rarity left, we don't spawn anything.
 			//This is to stop the system from spawning only rare events when there's few left.
@@ -213,21 +222,21 @@ var/list/special_places = list() //list of location names, which are coincidenta
 /obj/critter/gunbot/drone/buzzdrone/naniteswarm
 	name = "nanite swarm"
 	desc = "A swarm of angry nanites."
+	icon = 'icons/mob/critter/robotic/nanites.dmi'
 	icon_state = "nanites"
 	dead_state = "nanites-dead"
-	icon = 'icons/misc/critter.dmi'
 	health = 30
 	maxhealth = 30
 	score = 1
 	projectile_type = /datum/projectile/laser/drill/cutter
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
-	smashes_shit = 1
+	smashes_shit = FALSE
 
 	ChaseAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
-			src.visible_message("<span class='alert'><b>[src]</b> floats towards [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> floats towards [M]!"))
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -239,7 +248,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		if(target && !attacking)
 			attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> shreds [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> shreds [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -254,7 +263,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 
 	CritterDeath()
 		if(prob(33) && alive && !dying)
-			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> begins to reassemble!"))
 			var/turf/T = src.loc
 			SPAWN(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)

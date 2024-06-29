@@ -19,20 +19,21 @@
 		var/mob/living/M = holder.owner
 
 		if (istype(M.loc,/mob/))
-			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
+			boutput(usr, SPAN_ALERT("You can't jump right now!"))
 			return 1
 
 		var/jump_tiles = max_range
 		var/pixel_move = round((8/7)*max_range)
 		var/sleep_time = 1
 
+		. = ..()
 		if (istype(M.loc,/turf))
 			playsound(M.loc, 'sound/voice/animal/werewolf_attack2.ogg', 50, 1, 0, 1.4)
 			playsound(M.loc, 'sound/effects/swoosh.ogg', 50, 1)
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
-			usr.visible_message("<span class='alert'><b>[M]</b> pounces into the air!</span>")
+			usr.visible_message(SPAN_ALERT("<b>[M]</b> pounces into the air!"))
 
 			for(var/i=0, i < jump_tiles, i++)
 
@@ -53,11 +54,11 @@
 
 		if (istype(M.loc,/obj/))
 			var/obj/container = M.loc
-			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			M.setStatus("paralysis", 3 SECONDS)
-			M.setStatus("weakened", 5 SECONDS)
-			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+			boutput(M, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
+			M.setStatus("unconscious", 3 SECONDS)
+			M.setStatus("knockdown", 5 SECONDS)
+			container.visible_message(SPAN_ALERT("<b>[M.loc]</b> emits a loud thump and rattles a bit."))
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			var/wiggle = 6
 			while(wiggle > 0)
 				wiggle--

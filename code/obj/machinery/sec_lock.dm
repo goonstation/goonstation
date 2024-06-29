@@ -35,7 +35,7 @@
 	if(..())
 		return
 	if ((!( src.d1 ) || !( src.d2 )))
-		boutput(usr, "<span class='alert'>Error: Cannot interface with door security!</span>")
+		boutput(usr, SPAN_ALERT("Error: Cannot interface with door security!"))
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
 		src.add_dialog(usr)

@@ -42,6 +42,9 @@ var/global/total_gas_mixtures = 0
 	 *	This is done before air system calculations for a cycle. */
 	var/list/datum/air_group/groups_to_rebuild = list()
 
+	/// List of single turfs to rebuild together with [groups_to_rebuild].
+	var/list/turf/simulated/tiles_to_rebuild = list()
+
 	/// Turfs to be converted to space on the next cycle in case we're busy right now.
 	/// Use [/turf/proc/delay_space_conversion] instead of adding to this list directly.
 	var/list/turf/tiles_to_space = list()
@@ -65,11 +68,11 @@ var/global/total_gas_mixtures = 0
 /datum/controller/air_system/proc/setup(datum/controller/process/air_system/controller)
 	parent_controller = controller
 
-	#if SKIP_FEA_SETUP == 1
+	#ifdef SKIP_FEA_SETUP
 	return
 	#else
 
-	boutput(world, "<span class='alert'>Processing Geometry...</span>")
+	boutput(world, SPAN_ALERT("Processing Geometry..."))
 
 	var/start_time = world.timeofday
 
@@ -78,7 +81,7 @@ var/global/total_gas_mixtures = 0
 			assemble_group_turf(S)
 		S.update_air_properties()
 
-	boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
+	boutput(world, SPAN_ALERT("Geometry processed in [(world.timeofday-start_time)/10] seconds!"))
 	#endif
 
 /// Collects turfs into groups.
@@ -120,6 +123,16 @@ var/global/total_gas_mixtures = 0
 			group.space_borders = possible_space_borders
 			group.length_space_border = possible_space_length
 
+		// Allow groups to determine if group processing is applicable after FEA setup
+		if(current_cycle)
+			group.group_processing = FALSE
+
+		group.members = members
+		air_groups += group
+
+		group.update_group_from_tiles() //Initialize air group variables
+		. = group
+
 		for(var/turf/simulated/test as anything in members)
 			test.parent = group
 			test.processing = FALSE
@@ -134,16 +147,6 @@ var/global/total_gas_mixtures = 0
 				dist = GET_DIST(possible, test)
 				if (!test.dist_to_space || (dist < test.dist_to_space))
 					test.dist_to_space = dist
-
-		// Allow groups to determine if group processing is applicable after FEA setup
-		if(current_cycle)
-			group.group_processing = FALSE
-
-		group.members = members
-		air_groups += group
-
-		group.update_group_from_tiles() //Initialize air group variables
-		return group
 	else
 		base.processing = FALSE //singletons at startup are technically unconnected anyway
 		base.parent = null
@@ -159,11 +162,11 @@ var/global/total_gas_mixtures = 0
 	src.is_busy = TRUE
 
 	if(!explosions.exploding)
-		if(length(groups_to_rebuild))
+		if(length(src.groups_to_rebuild) || length(src.tiles_to_rebuild))
 			src.process_rebuild_select_groups()
 		LAGCHECK(LAG_REALTIME)
 
-		if(length(tiles_to_update))
+		if(length(src.tiles_to_update))
 			src.process_update_tiles()
 		LAGCHECK(LAG_REALTIME)
 
@@ -225,17 +228,24 @@ var/global/total_gas_mixtures = 0
 			src.assemble_group_turf(S)
 	LAGCHECK(LAG_REALTIME)
 
+	for(var/turf/simulated/S in tiles_to_rebuild) // update the singletons
+		if(!S.parent)
+			src.assemble_group_turf(S)
+		turf_list += S
+	LAGCHECK(LAG_REALTIME)
+
 	for(var/turf/simulated/S as anything in turf_list)
 		S.update_air_properties()
 	LAGCHECK(LAG_REALTIME)
 
 	groups_to_rebuild.len = 0
+	tiles_to_rebuild.len = 0
 
 /// Process all air groups.
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_groups()
 	PROTECTED_PROC(TRUE)
-	for(var/datum/air_group/AG as anything in air_groups)
+	for(var/datum/air_group/AG as anything in src.air_groups)
 		AG?.process_group(parent_controller)
 		LAGCHECK(LAG_REALTIME)
 
@@ -243,7 +253,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_singletons()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/loner as anything in active_singletons)
+	for(var/turf/simulated/loner as anything in src.active_singletons)
 		loner.process_cell()
 		LAGCHECK(LAG_REALTIME)
 
@@ -251,7 +261,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_super_conductivity()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
+	for(var/turf/simulated/hot_potato as anything in src.active_super_conductivity)
 		hot_potato.super_conduct()
 		LAGCHECK(LAG_REALTIME)
 
@@ -259,7 +269,7 @@ var/global/total_gas_mixtures = 0
 /// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_high_pressure_delta()
 	PROTECTED_PROC(TRUE)
-	for(var/turf/simulated/pressurized as anything in high_pressure_delta)
+	for(var/turf/simulated/pressurized as anything in src.high_pressure_delta)
 		pressurized.high_pressure_movements()
 		LAGCHECK(LAG_REALTIME)
 

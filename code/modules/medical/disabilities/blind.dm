@@ -1,7 +1,7 @@
 /datum/ailment/disability/blind
 	name = "Blindness"
 	max_stages = 1
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	affected_species = list("Human","Monkey")
 
 /datum/ailment/disability/blind/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

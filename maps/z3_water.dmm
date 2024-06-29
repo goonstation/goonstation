@@ -128,7 +128,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "bz" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -139,7 +139,7 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bA" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /obj/dialogueobj/securitycorpse2,
@@ -147,7 +147,7 @@
 /area/wrecknsspolaris)
 "bB" = (
 /obj/shrub/dead,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -159,7 +159,7 @@
 /area/wrecknsspolaris)
 "bD" = (
 /obj/item/pen/fancy,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -180,7 +180,7 @@
 /area/wrecknsspolaris)
 "bH" = (
 /obj/shrub/dead,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -205,7 +205,7 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bL" = (
-/obj/decal/fakeobjects/creepytv{
+/obj/fakeobject/creepytv{
 	desc = "Only creepy static here."
 	},
 /obj/map/light/screen,
@@ -251,7 +251,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/wrecknsspolaris)
 "bS" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -307,7 +307,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "bY" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -319,7 +319,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "bZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -373,7 +373,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "cg" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -396,7 +396,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cj" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /turf/unsimulated/floor/black,
@@ -443,7 +443,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 2;
 	icon_state = "tube0";
@@ -481,7 +481,7 @@
 /obj/shrub/dead{
 	dir = 4
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -513,7 +513,7 @@
 	},
 /area/wrecknsspolaris)
 "cA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -524,7 +524,7 @@
 /turf/simulated/floor/plating,
 /area/wrecknsspolaris)
 "cB" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "snack-broken";
@@ -605,7 +605,7 @@
 	name = "Dead plant";
 	pixel_y = 10
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -619,14 +619,14 @@
 	},
 /area/wrecknsspolaris)
 "cN" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/wood/two,
 /area/wrecknsspolaris)
 "cO" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -649,10 +649,10 @@
 /area/wrecknsspolaris/vault)
 "cR" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -671,7 +671,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cT" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	icon = 'icons/obj/power_cond.dmi';
@@ -688,7 +688,7 @@
 	},
 /area/wrecknsspolaris)
 "cV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -699,7 +699,7 @@
 /area/wrecknsspolaris)
 "cW" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -708,7 +708,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
@@ -719,7 +719,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -732,7 +732,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -740,7 +740,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -760,7 +760,7 @@
 	},
 /area/wrecknsspolaris)
 "db" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -770,7 +770,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -778,7 +778,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -790,7 +790,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -799,7 +799,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -819,7 +819,7 @@
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "de" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -831,7 +831,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "df" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -843,7 +843,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dg" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -852,7 +852,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -864,7 +864,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -873,7 +873,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -882,7 +882,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 10;
@@ -894,7 +894,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "di" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -903,7 +903,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -912,7 +912,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -924,7 +924,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 5;
@@ -948,7 +948,7 @@
 	},
 /area/wrecknsspolaris)
 "dm" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -992,7 +992,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4;
 	icon_state = "tube-broken"
 	},
@@ -1077,7 +1077,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "dJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A broken gas circulator from a generator.";
@@ -1105,7 +1105,7 @@
 	},
 /area/wrecknsspolaris)
 "dN" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1120,7 +1120,7 @@
 /area/wrecknsspolaris)
 "dP" = (
 /obj/fluid_spawner/shortdelaybig,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -1134,7 +1134,7 @@
 	},
 /area/wrecknsspolaris)
 "dQ" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 2;
 	icon_state = "tube0";
@@ -1146,7 +1146,7 @@
 	},
 /area/wrecknsspolaris)
 "dR" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -1168,7 +1168,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "dT" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /obj/dialogueobj/polariscrate,
@@ -1177,7 +1177,7 @@
 /area/wrecknsspolaris/vault)
 "dU" = (
 /obj/stool/bench,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -1194,7 +1194,7 @@
 "dW" = (
 /obj/stool/bench,
 /obj/fluid_spawner/shortdelaybig,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4;
 	icon_state = "tube-broken"
 	},
@@ -1240,7 +1240,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eb" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -1252,7 +1252,7 @@
 	},
 /area/wrecknsspolaris)
 "ed" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -1337,7 +1337,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "en" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1349,7 +1349,7 @@
 /area/wrecknsspolaris)
 "eo" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1363,7 +1363,7 @@
 	},
 /area/wrecknsspolaris)
 "ep" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -1387,7 +1387,7 @@
 /area/wrecknsspolaris)
 "es" = (
 /obj/decal/cleanable/dirt/dirt2,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -1396,7 +1396,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "et" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -1445,10 +1445,10 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "ey" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = 32
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4;
 	icon_state = "tube-broken"
 	},
@@ -1475,7 +1475,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -1514,7 +1514,7 @@
 	},
 /area/wrecknsspolaris)
 "eI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/unsimulated/floor/yellow,
@@ -1532,7 +1532,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -1541,14 +1541,14 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/item/storage/toolbox/emergency,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eN" = (
 /obj/decal/cleanable/machine_debris,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -1561,13 +1561,13 @@
 /area/wrecknsspolaris)
 "eO" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 8;
@@ -1580,7 +1580,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "eQ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -1723,10 +1723,10 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fo" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = -32
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	icon_state = "tube-broken"
 	},
@@ -1778,7 +1778,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fw" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -32
 	},
 /obj/table/wood/auto,
@@ -1803,7 +1803,7 @@
 /area/wrecknsspolaris)
 "fz" = (
 /obj/item/scrap,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A segment of a broken gas turbine.  Seems to be broken due to an impact.";
@@ -1843,18 +1843,6 @@
 "fF" = (
 /turf/unsimulated/floor/damaged1,
 /area/wrecknsspolaris)
-"fG" = (
-/obj/machinery/handscanner{
-	pixel_y = 32
-	},
-/mob/living/critter/robotic/gunbot{
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
-	icon_state = "mars_nuke_bot";
-	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Ketchup.";
-	name = "Unmarked Robot"
-	},
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris/vault)
 "fH" = (
 /turf/unsimulated/floor/damaged2,
 /area/wrecknsspolaris)
@@ -1913,9 +1901,7 @@
 	},
 /area/wrecknsspolaris)
 "fP" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "fQ" = (
@@ -1946,7 +1932,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fU" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1
 	},
 /obj/decoration/bullethole{
@@ -1981,23 +1967,9 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
-"fY" = (
-/obj/decoration/weirdmark{
-	desc = "Yet another weid energy marking, this one going deeper into the vault. What the..";
-	pixel_y = 32
-	},
-/obj/map/light/green,
-/mob/living/critter/robotic/gunbot{
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
-	icon_state = "mars_nuke_bot";
-	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Mustard.";
-	name = "Unmarked Robot"
-	},
-/turf/unsimulated/floor/black,
-/area/wrecknsspolaris/vault)
 "fZ" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -2126,29 +2098,21 @@
 /area/wrecknsspolaris/outside/teleport)
 "gt" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gu" = (
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gv" = (
 /obj/item/raw_material/shard/glass,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gw" = (
 /obj/item/raw_material/rock,
-/obj/landmark{
-	name = "polarisfall"
-	},
+/obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gx" = (
@@ -2206,9 +2170,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "gH" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
@@ -2458,7 +2420,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/dank_trench)
 "hr" = (
-/obj/decal/fakeobjects/creepytv{
+/obj/fakeobject/creepytv{
 	desc = "There's a gummy layer of dust over the controls."
 	},
 /obj/map/light/screen,
@@ -2759,9 +2721,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "ia" = (
-/obj/landmark{
-	name = "marjfall"
-	},
+/obj/landmark/fall/sea/marj,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "ib" = (
@@ -2914,8 +2874,6 @@
 /area/dank_trench)
 "iv" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-9"
 	},
 /obj/item/bluntwrap{
@@ -2977,10 +2935,6 @@
 /obj/decal/cleanable/machine_debris,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
-"iC" = (
-/turf/space,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/mantavault)
 "iD" = (
 /obj/indestructible/invisible_block/opaque,
 /turf/unsimulated/floor/longtile/black,
@@ -2989,10 +2943,6 @@
 /obj/decoration/ntcratesmall{
 	dir = 4
 	},
-/turf/unsimulated/floor/longtile/black,
-/area/mantavault)
-"iF" = (
-/turf/space,
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
 "iG" = (
@@ -3045,7 +2995,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "ne" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
@@ -3093,7 +3043,7 @@
 "uV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -3104,14 +3054,10 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"AE" = (
-/turf/space,
-/turf/unsimulated/wall/trench,
-/area/dank_trench)
-"AH" = (
-/turf/space,
-/turf/cordon,
-/area/cordon)
+"xL" = (
+/mob/living/critter/martian/soldier,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "AJ" = (
 /obj/ladder{
 	icon_state = "ladder_wall";
@@ -3119,10 +3065,6 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/floor/longtile/black,
-/area/mantavault)
-"AL" = (
-/turf/space,
-/turf/unsimulated/floor/special/fogofcheating,
 /area/mantavault)
 "AR" = (
 /turf/unsimulated/floor/special/fogofcheating,
@@ -3137,10 +3079,10 @@
 "Co" = (
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
-"Cr" = (
-/turf/space,
-/turf/space,
-/area/space)
+"Cz" = (
+/mob/living/critter/martian/mutant,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
 "Dz" = (
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
@@ -3159,17 +3101,9 @@
 "FT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Gj" = (
-/obj/critter/martian/soldier/dead,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"Go" = (
-/obj/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Hn" = (
@@ -3190,21 +3124,13 @@
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
-"Iz" = (
-/obj/critter/martian/psychic,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
-"JZ" = (
-/obj/critter/martian/soldier,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
 "KR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Mi" = (
 /obj/marker/supplymarker,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
@@ -3220,7 +3146,7 @@
 "Pt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -3256,18 +3182,38 @@
 /obj/machinery/door/unpowered/martian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"To" = (
+/obj/decoration/weirdmark{
+	desc = "Yet another weid energy marking, this one going deeper into the vault. What the..";
+	pixel_y = 32
+	},
+/obj/map/light/green,
+/mob/living/critter/robotic/gunbot/syndicate/polaris/mustard,
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris/vault)
 "TR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"TX" = (
+/obj/machinery/handscanner{
+	pixel_y = 32
+	},
+/mob/living/critter/robotic/gunbot/syndicate/polaris/ketchup,
+/turf/unsimulated/floor/black,
+/area/wrecknsspolaris/vault)
 "UF" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"WJ" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "XC" = (
@@ -3276,6 +3222,10 @@
 /area/evilreaver/security)
 "Yb" = (
 /obj/decal/cleanable/blood,
+/turf/unsimulated/floor/martian,
+/area/evilreaver/security)
+"Zq" = (
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 
@@ -5699,7 +5649,7 @@ gW
 ab
 Hn
 In
-JZ
+xL
 Yb
 UF
 KR
@@ -6306,7 +6256,7 @@ Ns
 Ns
 Ns
 Ns
-JZ
+xL
 Hn
 ab
 aS
@@ -6908,7 +6858,7 @@ ab
 Hn
 Ns
 Ns
-Go
+Zq
 Ns
 tO
 Hn
@@ -7242,7 +7192,7 @@ dS
 eC
 fd
 fu
-fG
+TX
 dV
 cy
 cx
@@ -7511,7 +7461,7 @@ gW
 ab
 Hn
 Ns
-JZ
+xL
 Ns
 Ns
 Ns
@@ -7846,7 +7796,7 @@ dV
 dV
 dV
 cy
-fY
+To
 dV
 cy
 cr
@@ -8418,7 +8368,7 @@ ab
 Hn
 Pt
 Ns
-JZ
+xL
 Ns
 Ns
 Hn
@@ -9927,7 +9877,7 @@ gW
 ab
 Hn
 pX
-Gj
+WJ
 Ns
 Ns
 Ns
@@ -11136,7 +11086,7 @@ ab
 Hn
 pX
 Ns
-Gj
+WJ
 Ns
 FT
 Hn
@@ -11445,7 +11395,7 @@ Hn
 Hn
 lr
 Ns
-Iz
+Cz
 Ns
 Hn
 ab
@@ -12978,34 +12928,34 @@ AR
 AR
 AR
 AR
-AL
-AL
-iC
-iF
-iF
-iC
-AH
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+AR
+AR
+Bg
+Co
+Co
+Bg
+ab
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -13280,7 +13230,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 iG
@@ -13307,7 +13257,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -13582,7 +13532,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 AV
 Co
@@ -13609,7 +13559,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -13884,7 +13834,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 iD
 Co
@@ -13911,7 +13861,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -14186,7 +14136,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 iD
 Co
@@ -14213,7 +14163,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -14488,7 +14438,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 iH
@@ -14515,7 +14465,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -14790,7 +14740,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 Co
@@ -14817,7 +14767,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15092,7 +15042,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 Co
@@ -15119,7 +15069,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15394,7 +15344,7 @@ Bg
 Bg
 Bg
 Bg
-iC
+Bg
 Bg
 Bg
 Bg
@@ -15421,7 +15371,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15696,13 +15646,13 @@ ab
 ab
 ab
 ab
-AH
 ab
 ab
 ab
 ab
 ab
 ab
+ab
 gW
 gW
 gW
@@ -15723,7 +15673,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15998,7 +15948,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -16025,7 +15974,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -16292,15 +16242,8 @@ Ip
 gy
 gP
 gP
-AE
-AH
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+Ip
+ab
 gW
 gW
 gW
@@ -16327,7 +16270,14 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -16629,7 +16579,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -16896,15 +16846,8 @@ Ip
 Ip
 Ip
 Ip
-AE
-AH
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+Ip
+ab
 gW
 gW
 gW
@@ -16931,7 +16874,14 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -17206,7 +17156,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -17233,7 +17182,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -17508,7 +17458,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -17535,7 +17484,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -17810,7 +17760,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -17837,7 +17786,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -18112,14 +18062,6 @@ gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
 gW
 gW
 gW
@@ -18139,7 +18081,15 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -18421,7 +18371,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -18441,7 +18390,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -18723,7 +18673,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -18743,7 +18692,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19025,7 +18975,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19045,7 +18994,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19327,7 +19277,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19347,7 +19296,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19629,7 +19579,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19649,7 +19598,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19931,7 +19881,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19951,7 +19900,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -20233,7 +20183,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -20253,7 +20202,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -20535,27 +20485,27 @@ gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -20850,7 +20800,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -21145,16 +21095,16 @@ gW
 gW
 gW
 gW
-Cr
-Cr
 gW
 gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -21447,7 +21397,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -21456,7 +21405,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -21749,7 +21699,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -21758,7 +21707,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22051,7 +22001,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22060,7 +22009,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22353,7 +22303,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22362,7 +22311,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22655,7 +22605,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22664,7 +22613,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22957,7 +22907,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22966,7 +22915,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -23259,7 +23209,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -23268,7 +23217,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -23561,7 +23511,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -23570,7 +23519,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -23863,7 +23813,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -23872,7 +23821,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -24165,16 +24115,16 @@ gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW

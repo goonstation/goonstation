@@ -6,6 +6,7 @@
 
 	cast(atom/target)
 		var/mob/M = target
+		. = ..()
 		if (!(BOUNDS_DIST(M, holder.owner) == 0))
 			return
 		if (istype(M) && isalive(holder.owner) && !holder.owner.transforming)
@@ -13,7 +14,7 @@
 				if (G.affecting == M)
 					return
 			playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
-			holder.owner.visible_message("<span class='alert'><B>[holder.owner] aggressively grabs [M]!</B></span>")
+			holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] aggressively grabs [M]!</B>"))
 			var/obj/item/grab/G = new /obj/item/grab(holder.owner, holder.owner, M)
 			holder.owner.put_in_hand(G, holder.owner.hand)
 			M.changeStatus("stunned", 10 SECONDS)

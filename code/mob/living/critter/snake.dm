@@ -10,7 +10,7 @@
 	can_throw = FALSE
 	can_grab = TRUE
 	can_disarm = FALSE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = FALSE
 	max_skins = 1
 	health_brute = 15
@@ -33,14 +33,16 @@
 	var/atom/movable/my_stick = null
 
 	//note: this is not the best way to do this, but I'm showing it here as an example. It is better to create a peaceful AI holder with no attack tasks and use that.
-	var/aggressive = TRUE
+	aggressive = TRUE
 
-	faction = FACTION_WIZARD
+	faction = list(FACTION_WIZARD)
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth	// if not null, the special limb to use when attack_handing
+		var/datum/limb/mouth/M = HH.limb
+		M.stam_damage_mult = 0.5
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
@@ -58,7 +60,7 @@
 
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
 	//Special behaviour for Sticks To Snakes spell
 
@@ -93,7 +95,7 @@
 			my_stick.mouse_opacity = 1
 			my_stick.set_loc(src.loc)
 			if(revert_message)
-				src.visible_message("<span class='combat'><b>[src]</b> reverts into [my_stick]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> reverts into [my_stick]!"))
 			if(istype(my_stick, /mob/living/critter/small_animal/snake))
 				var/mob/living/critter/small_animal/snake/snake = my_stick
 				snake.start_expiration(2 MINUTES)
@@ -181,7 +183,7 @@
 
 	proc/contents_check()
 		if(!src.allow_empty && !length(src.contents))
-			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
+			src.visible_message(SPAN_NOTICE("<B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!"))
 			qdel(src)
 
 	death(var/gibbed)

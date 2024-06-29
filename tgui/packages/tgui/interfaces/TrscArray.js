@@ -6,10 +6,10 @@ import {
   Button,
   Divider,
   Flex,
-  Slider,
-  Section,
   Image,
   ProgressBar,
+  Section,
+  Slider,
 } from '../components';
 import { formatPower } from '../format';
 
@@ -50,7 +50,6 @@ export const TrscArray = (props, context) => {
                   <Flex mx={2} my={2} height={18} direction="column" justify="space-around">
                     <Flex.Item>
                       <Image
-                        pixelated
                         width="96px"
                         height="96px"
                         src={`data:image/png;base64,${arrayImage}`}

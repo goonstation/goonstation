@@ -1,5 +1,5 @@
 import { useLocalState } from '../../../backend';
-import { XYType, TileSizeType, PalleteExpandType } from '.';
+import { PalleteExpandType, TileSizeType, XYType } from '.';
 
 export const DEFAULT_STATES = {
   // TODO: add more default states here
@@ -15,7 +15,7 @@ export const STATES = (context) => {
     zoom: useLocalState<number>(context, 'zoom', DEFAULT_STATES.ZOOM),
     mouseCoords: useLocalState<XYType>(context, 'mouseCoords', DEFAULT_STATES.MOUSE_COORDS),
     palettesExpanded: useLocalState<PalleteExpandType>(context, 'palettesExpanded', {}),
-    paletteLastElement: useLocalState<HTMLElement>(context, 'paletteLastElement', null),
+    paletteLastElement: useLocalState<HTMLElement | null>(context, 'paletteLastElement', null),
     tileSize: useLocalState<TileSizeType>(context, 'tileSize', { width: 0, height: 0 }),
     helpModalOpen: useLocalState<boolean>(context, 'helpModalOpen', false),
   };

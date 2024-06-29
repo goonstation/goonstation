@@ -8,7 +8,7 @@
 import { toFixed } from 'common/math';
 import { truncate } from '../format.js';
 import { useBackend } from '../backend';
-import { Button, Divider, NoticeBox, Section, Box, Knob, LabeledControls, Icon, NumberInput } from '../components';
+import { Box, Button, Divider, Icon, Knob, LabeledControls, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const DJPanel = (props, context) => {

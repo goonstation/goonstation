@@ -41,7 +41,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			if(new_color)
 				screen_image.color = new_color
 		screen_image.alpha = 180
-		src.UpdateOverlays(screen_image, "screen")
+		src.AddOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			update_pixel_offset_dir(src,null,src.dir)
 
@@ -51,15 +51,15 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
 	SPAWN(0)
-		attack_self(user)
+		src.AttackSelf(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	SPAWN(0)
-		attack_self(user)
+		src.AttackSelf(user)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/fish))
+	if (istype(W, /obj/item/reagent_containers/food/fish))
 		if(src.dir == SOUTH)
 			user.visible_message("<b><span class='hint'>[user] shoves the fish over the intercom, and then mounts the whole thing on a board \
 				which they conveniently had.</span></b>", "<b><span class='hint'>You shove the fish over the intercom, and then mount the whole thing on a board \
@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			qdel(W)
 			qdel(src)
 		else
-			boutput(user, "<span class='alert'>Looks like the fish won't fit over an intercom facing that way.</span>")
+			boutput(user, SPAN_ALERT("Looks like the fish won't fit over an intercom facing that way."))
 		return
 	. = ..()
 
@@ -92,7 +92,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	for(var/image/chat_maptext/I in src.chat_text?.lines)
 		I.bump_up()
 	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
-	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+	if(maptext)
+		target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
 	..()
@@ -101,12 +102,12 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		return
 
 	if (!isAIeye(user))
-		boutput("Deploy to an AI Eye first to override intercoms.")
+		boutput(user, "Deploy to an AI Eye first to override intercoms.")
 		return
 
 	if(user.client.check_key(KEY_BOLT))
 		if (src.locked_frequency)
-			boutput(user, "<span class='alert'>You can't override an intercom with a locked frequency!</span")
+			boutput(user, SPAN_ALERT("You can't override an intercom with a locked frequency!"))
 			return
 
 		var/original_src_frequency = src.frequency
@@ -116,7 +117,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 		// fake it till you make it
 		var/message = "<span class='radio [src.chat_class]' style='color:[src.device_color || text_colour]'>[radio_icon(src)]\
-		<span class='name'>[src]</span> <span class='message'>alerts, \"AI override engaged!\"</span></span>"
+		[SPAN_NAME("[src]")] [SPAN_MESSAGE("alerts, \"AI override engaged!\"")]</span>"
 		var/maptext = make_chat_maptext(src, "AI override engaged!", "color:[text_colour]")
 
 		src.speech_bubble(image('icons/mob/mob.dmi', "ai"))
@@ -243,6 +244,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	broadcasting = TRUE
 	device_color = "#820A16"
 	hardened = TRUE
+	locked_frequency = TRUE
 
 	initialize()
 		if(istype(ticker.mode, /datum/game_mode/nuclear))
@@ -356,3 +358,11 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	update_pixel_offset_dir()
 		return // no
+
+/obj/item/device/radio/intercom/AI/handheld
+	name = "Portable Intercom"
+	desc = "A portable intercom that's useful to do all the things intercoms normally do, which is mostly listening in on people."
+	broadcasting = FALSE
+	listening = FALSE
+	anchored = UNANCHORED
+	icon_state = "intercom_pot"

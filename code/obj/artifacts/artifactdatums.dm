@@ -1,7 +1,7 @@
 // MASTER DATUMS
 
 ABSTRACT_TYPE(/datum/artifact/)
-/datum/artifact/
+/datum/artifact
 	/// the actual /obj type that is the artifact for this datum
 	var/associated_object = null
 	/// a weighted commonness, the higher it is the more often the artifact will appear
@@ -211,6 +211,16 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// By the old Tier system this would be ~0.63 for a tier 4 artifact, ~0.1 for a tier 1 artifact
 	proc/get_rarity_modifier()
 		return src.rarity_weight ? 0.995**src.rarity_weight : 0.2
+
+	/// show artifact fx
+	proc/show_fx(obj/artifact)
+		artifact.vis_contents += src.fx_image
+		artifact.vis_contents += src.fx_fallback
+
+	/// hide artifact fx
+	proc/hide_fx(obj/artifact)
+		artifact.vis_contents -= src.fx_image
+		artifact.vis_contents -= src.fx_fallback
 
 // SPECIFIC DATUMS
 

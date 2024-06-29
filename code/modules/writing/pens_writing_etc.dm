@@ -19,7 +19,6 @@
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "pen"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
@@ -80,7 +79,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(user, 'sound/items/penclick.ogg', 50, 1)
+			playsound(user, 'sound/items/penclick.ogg', 50, TRUE)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -101,7 +100,7 @@
 			drawing.setMaterial(src.material)
 			src.material_uses--
 			if(src.material_uses <= 0)
-				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
+				boutput(user, SPAN_NOTICE("[src.material.getName()] rubs off of [src]."))
 				src.removeMaterial()
 			return TRUE
 		return FALSE
@@ -110,7 +109,7 @@
 		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0 || isghostdrone(user))
 			return
 		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to write.</span>")
+			boutput(user, SPAN_ALERT("You don't know how to write."))
 			return
 		src.in_use = TRUE
 		var/t = tgui_input_text(user, "What do you want to write?", "Write")
@@ -121,7 +120,7 @@
 		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -165,7 +164,7 @@
 	afterattack(atom/target, mob/user)
 		if (target.is_open_container())
 			if (src.reagents.maximum_volume <= src.reagents.total_volume)
-				boutput(user, "<span class='alert'>The pen is totally coated!</span>")
+				boutput(user, SPAN_ALERT("The pen is totally coated!"))
 				return
 
 			if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne))
@@ -173,14 +172,14 @@
 				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, src.reagents.maximum_volume - src.reagents.total_volume)
-				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				boutput(user, SPAN_NOTICE("You fill [src] with [amt] units of [target]."))
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else if (target.reagents && src.can_dip)
 				if (target.reagents.total_volume)
-					boutput(user, "<span class='hint'>You dip [src] in [target].</span>")
+					boutput(user, SPAN_HINT("You dip [src] in [target]."))
 					target.reagents.trans_to(src, min(PEN_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
 				else
-					boutput(user, "<span class='alert'>[target] is empty!</span>")
+					boutput(user, SPAN_ALERT("[target] is empty!"))
 		else
 			return ..()
 
@@ -192,9 +191,9 @@
 
 			if (src.material)
 				src.removeMaterial() // no
-				src.visible_message("<span class='alert'>Dipping [src] causes the material to slough off.</span>")
+				src.visible_message(SPAN_ALERT("Dipping [src] causes the material to slough off."))
 
-	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 		. = ..()
 		src.reagents?.clear_reagents() // no
 
@@ -202,7 +201,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return FALSE
-		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b>"))
 		user.TakeDamage("head", 175, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -537,16 +536,16 @@
 				..()
 				src.picked_color = random_color()
 				src.reset_color()
-				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+				user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
 
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
-			attack(mob/M, mob/user, def_zone)
-				if (M == user)
+			attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+				if (target == user)
 					src.picked_color = random_color()
 					src.reset_color()
-					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+					user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
 					return
 
 				return ..()
@@ -586,7 +585,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] jams [src] up [his_or_her(user)] nose!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] jams [src] up [his_or_her(user)] nose!</b>"))
 		SPAWN(0.5 SECONDS) // so we get a moment to think before we die
 			user.take_brain_damage(120)
 		user.u_equip(src)
@@ -698,7 +697,7 @@
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
-			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -769,7 +768,7 @@
 
 	proc/chalk_break(var/mob/user as mob)
 		if (src.chalk_health <= 1)
-			user.visible_message("<span class='alert'><b>\The [src] snaps into pieces so small that you can't use them to draw anymore!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>\The [src] snaps into pieces so small that you can't use them to draw anymore!</b>"))
 			qdel(src)
 			return
 		if (src.chalk_health % 2)
@@ -780,7 +779,7 @@
 		C.assign_color(src.color)
 		C.adjust_icon()
 		src.adjust_icon()
-		user.visible_message("<span class='alert'><b>\The [src] snaps in half! [pick("Fuck!", "Damn!", "Shit!", "Damnit!", "Fucking...", "Argh!", "Arse!", "Piss!")]")
+		user.visible_message(SPAN_ALERT("<b>\The [src] snaps in half! [pick("Fuck!", "Damn!", "Shit!", "Damnit!", "Fucking...", "Argh!", "Arse!", "Piss!")]"))
 
 	proc/adjust_icon()
 		if (src.chalk_health > 10) //shouldnt happen but it could
@@ -805,8 +804,8 @@
 		src.chalk_health--
 		src.adjust_icon()
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target && ishuman(target) && istype(target:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
 			playsound(user.loc, 'sound/items/eatfoodshort.ogg', rand(30, 60), 1)
 			src.chalk_health -= rand(2,5)
@@ -818,7 +817,7 @@
 			boutput(user, "You couldn't possibly eat \the [src], that's such a cold blooded thing to do!") //heh
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b>"))
 		SPAWN(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
@@ -841,7 +840,7 @@
 		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to write.</span>")
+			boutput(user, SPAN_ALERT("You don't know how to write."))
 			return
 		src.in_use = 1
 		var/t = tgui_input_text(user, "What do you want to write?", "Write")
@@ -851,7 +850,7 @@
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -880,11 +879,12 @@
 	name = "hand labeler"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "labeler"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 	rand_pos = 1
 
@@ -894,25 +894,25 @@
 		else
 			. += "<br>Its label is set to \"[src.label]\"."
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		/* lol vvv
-		if (!ismob(M)) // do this via afterattack()
+		if (!ismob(target)) // do this via afterattack()
 			return
 		*/
 		if (!src.labels_left)
-			boutput(user, "<span class='alert'>No labels left.</span>")
+			boutput(user, SPAN_ALERT("No labels left."))
 			return
 		if (!src.label || !length(src.label))
-			RemoveLabel(M, user)
+			RemoveLabel(target, user)
 			return
 
-		src.Label(M, user)
+		src.Label(target, user)
 
 	afterattack(atom/A, mob/user as mob)
 		if (ismob(A)) // do this via attack()
 			return
 		if (!src.labels_left)
-			boutput(user, "<span class='alert'>No labels left.</span>")
+			boutput(user, SPAN_ALERT("No labels left."))
 			return
 		if (!src.label || !length(src.label))
 			RemoveLabel(A, user)
@@ -922,11 +922,11 @@
 
 	attack_self(mob/user as mob)
 		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to write.</span>")
+			boutput(user, SPAN_ALERT("You don't know how to write."))
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE)), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -934,14 +934,14 @@
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(user, "<span class='notice'>Label text cleared.</span>")
+			boutput(user, SPAN_NOTICE("Label text cleared."))
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(user, "<span class='alert'>Text too long.</span>")
+			boutput(user, SPAN_ALERT("Text too long."))
 			return
 		src.label = "[str]"
-		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		boutput(user, SPAN_NOTICE("You set the text to '[str]'."))
 		logTheThing(LOG_STATION, user, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
@@ -953,8 +953,8 @@
 		if (A.name_suffixes.len)
 			A.remove_suffixes(1)
 			A.UpdateName()
-			user.visible_message("<span class='notice'><b>[user]</b> removes the label from [A].</span>",\
-			"<span class='notice'>You remove the label from [A].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> removes the label from [A]."),\
+			SPAN_NOTICE("You remove the label from [A]."))
 			return
 
 	proc/Label(var/atom/A, var/mob/user, var/no_message = 0)
@@ -966,8 +966,8 @@
 				return
 
 		if (user && !no_message)
-			user.visible_message("<span class='notice'><b>[user]</b> labels [A] with \"[src.label]\".</span>",\
-			"<span class='notice'>You label [A] with \"[src.label]\".</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> labels [A] with \"[src.label]\"."),\
+			SPAN_NOTICE("You label [A] with \"[src.label]\"."))
 		if (istype(A, /obj/item/paper))
 			A.name = "'[src.label]'"
 		else
@@ -976,7 +976,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
-		playsound(src, 'sound/items/hand_label.ogg', 40, 1)
+		playsound(src, 'sound/items/hand_label.ogg', 40, TRUE)
 		if (user && !no_message)
 			logTheThing(LOG_STATION, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
@@ -987,7 +987,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] labels [him_or_her(user)]self \"DEAD\"!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] labels [him_or_her(user)]self \"DEAD\"!</b>"))
 		src.label = "DEAD"
 		Label(user,user,1)
 
@@ -1061,7 +1061,7 @@
 
 		else//Stuff that involves writing from here on down
 			if(!usr.literate)
-				boutput(usr, "<span class='alert'>You don't know how to write.</span>")
+				boutput(usr, SPAN_ALERT("You don't know how to write."))
 				return
 			var/obj/item/pen/available_pen = null
 			if (istype(usr.r_hand, /obj/item/pen))
@@ -1071,7 +1071,7 @@
 			else if (istype(src.pen, /obj/item/pen))
 				available_pen = src.pen
 			else
-				boutput(usr, "<span class='alert'>You need a pen for that.</span>")
+				boutput(usr, SPAN_ALERT("You need a pen for that."))
 				return
 
 			if (href_list["write"])
@@ -1081,7 +1081,7 @@
 
 			else if (href_list["title"])
 				if (istype(available_pen, /obj/item/pen/odd))
-					boutput(usr, "<span class='alert'>Try as you might, you fail to write anything sensible.</span>")
+					boutput(usr, SPAN_ALERT("Try as you might, you fail to write anything sensible."))
 					src.add_fingerprint(usr)
 					return
 				var/obj/item/P = locate(href_list["title"])
@@ -1090,7 +1090,7 @@
 					if (str == null || length(str) == 0)
 						return
 					if (length(str) > 30)
-						boutput(usr, "<span class='alert'>A title that long will never catch on!</span>") //We're actually checking because titles above a certain length get clipped, but where's the fun in that
+						boutput(usr, SPAN_ALERT("A title that long will never catch on!")) //We're actually checking because titles above a certain length get clipped, but where's the fun in that
 						return
 					if(url_regex?.Find(str))
 						return
@@ -1113,11 +1113,11 @@
 	attackby(obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
-			if (src.contents.len < 15)
+			if (length(src.contents) < 15)
 				user.drop_item()
 				P.set_loc(src)
 			else
-				boutput(user, "<span class='notice'>Not enough space!!!</span>")
+				boutput(user, SPAN_NOTICE("Not enough space!!!"))
 		else
 			if (istype(P, /obj/item/pen))
 				if (!src.pen)
@@ -1129,7 +1129,7 @@
 		src.update()
 		user.update_inhands()
 		SPAWN(0)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 		return
 
@@ -1187,7 +1187,7 @@
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper))
-			if (src.contents.len < 10)
+			if (length(src.contents) < 10)
 				boutput(user, "You cram the paper into the folder.")
 				user.drop_item()
 				W.set_loc(src)
@@ -1234,11 +1234,10 @@
 	desc = "A stack of papers stapled together in a sequence intended for reading in."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "booklet-thin"
-	uses_multiple_icon_states = 1
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 	w_class = W_CLASS_TINY
 
@@ -1327,7 +1326,7 @@
 					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
-					cur_page.attack_self(usr)
+					cur_page.AttackSelf(usr)
 			if ("title_book")
 				src.give_title(usr)
 			if ("first_page")
@@ -1343,12 +1342,12 @@
 				src.pages += P
 				P.set_loc(src)
 				S.ammo--
-				if (pages.len >= 10 && !icon_state == "booklet-thick")
+				if (length(pages) >= 10 && !icon_state == "booklet-thick")
 					src.icon_state = "booklet-thick"
 				src.visible_message("[user] staples [P] at the back of [src].")
-				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)
 			else
-				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(user, SPAN_ALERT("You need a loaded stapler in hand to add this paper to the booklet."))
 		else
 			..()
 		return
@@ -1366,7 +1365,7 @@
 	amount = 10
 	burn_point = 220
 	burn_output = 200
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 2
 
 	// @TODO
@@ -1420,7 +1419,6 @@
 	desc = "A portable typewriter, whoa!"
 	icon_state = "portable_typewriter"
 	icon = 'icons/obj/writing.dmi'
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
@@ -1441,7 +1439,7 @@
 			if(!src.can_create_paper)
 				return
 			if(ON_COOLDOWN(src, "create_paper", src.paper_creation_cooldown))
-				boutput(user, "<span class='alert'>\The [src]'s paper-manufacturing mechanism is recharging.</span>")
+				boutput(user, SPAN_ALERT("\The [src]'s paper-manufacturing mechanism is recharging."))
 				return
 			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 0, pitch=0.7)
 			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
@@ -1467,10 +1465,10 @@
 	proc/eject_paper(atom/target, mob/user)
 		if(isnull(src.stored_paper))
 			return FALSE
-		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
+		boutput(user, SPAN_NOTICE("\The [src] ejects \the [src.stored_paper]."))
 		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
 			playsound(src.loc, 'sound/machines/typewriter.ogg', 60, 0)
-			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
+			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null
 		src.UpdateIcon()
@@ -1492,10 +1490,10 @@
 			if(isnull(stored_paper))
 				paper.set_loc(src)
 				src.stored_paper = paper
-				user.visible_message("<span class='notice'>[user] sucks up \the [paper] into \the [src].</span>", "<span class='notice'>You suck up \the [paper] into \the [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] sucks up \the [paper] into \the [src]."), SPAN_NOTICE("You suck up \the [paper] into \the [src]."))
 				src.UpdateIcon()
 			else
-				boutput(user, "<span class='alert'>\The [src] already has a paper in it.</span>")
+				boutput(user, SPAN_ALERT("\The [src] already has a paper in it."))
 		else if(isfloor(target) || istype(target, /obj/table))
 			if(src.stored_paper)
 				src.eject_paper(get_turf(target), user)

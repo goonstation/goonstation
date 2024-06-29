@@ -8,7 +8,7 @@
 	var/obj/item/device/igniter/igniter = null
 	var/obj/item/chem_grenade/payload = null
 	status = 0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/mob/attacher = "Unknown"
 
@@ -39,7 +39,7 @@
 		if (src.triggering_device:state)
 			//boutput(world, "sending signal")
 			receive_signal()
-		else
+		//else
 			//boutput(world, "not active")
 	..()
 
@@ -58,6 +58,7 @@
 		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()
+	. = ..()
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
 	SPAWN( 0 )
@@ -117,7 +118,7 @@
 	if (isnull(src) || isnull(src.triggering_device))
 		return
 
-	src.triggering_device.attack_self(user, 1)
+	src.triggering_device.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 

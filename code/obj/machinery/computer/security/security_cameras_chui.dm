@@ -7,7 +7,7 @@ chui/window/security_cameras
 
 	proc/create_viewport(client/target_client, turf/T)
 		if(BOUNDS_DIST(owner, target_client.mob) > 0)
-			boutput(target_client,"<span class='alert'>You are too far to see the screen.</span>")
+			boutput(target_client,SPAN_ALERT("You are too far to see the screen."))
 		else
 			var/list/viewports = target_client.getViewportsByType("cameras: Viewport")
 			if(length(viewports))
@@ -303,7 +303,9 @@ chui/window/security_cameras
 	OnTopic( client/clint, href, href_list[] )
 		var/mob/user = clint.mob
 		if (!islist(href_list))	//don't need to check for user. that is done in chui/Topic()
-			user.set_eye(null)
+			owner.current?.disconnect_viewer(user)
+			owner.current = null
+			owner.last_viewer = null
 			Unsubscribe(clint)
 			return
 
@@ -314,24 +316,28 @@ chui/window/security_cameras
 
 			//maybe I should change this, could be dumb for the movement mode - Kyle
 			if (!C.camera_status)
-				boutput(user, "<span class='alert'>BEEEEPP. Camera broken.</span>")
-				// user.set_eye(null)
-				// if( IsSubscribed( user.client ) )
-				// 	Unsubscribe( user.client )
+				boutput(user, SPAN_ALERT("BEEEEPP. Camera broken."))
 				return
-
 			else
 				owner.use_power(50)
 				if (length(clint.getViewportsByType("cameras: Viewport")))
 					owner.move_viewport_to_camera(C, clint)
+					return
+				else if (owner.current)
+					owner.current.move_viewer_to(user, C)
 				else
-					owner.current = C
-					user.set_eye(C)
+					C.connect_viewer(user)
+				owner.current = C
+				owner.last_viewer = user
+				if(!(locate(/obj/ability_button/reset_view/console) in user.item_abilities))
+					user.item_abilities += new /obj/ability_button/reset_view/console()
+					user.need_update_item_abilities = 1
+					user.update_item_abilities()
 
 		else if (href_list["save"])
 			var/obj/machinery/camera/C = locate(href_list["save"])
 
-			if (istype(C) && owner.favorites.len < owner.favorites_Max)
+			if (istype(C) && length(owner.favorites) < owner.favorites_Max)
 				owner.favorites += C
 		else if (href_list["remove"])
 			var/obj/machinery/camera/C = locate(href_list["remove"])
@@ -344,7 +350,9 @@ chui/window/security_cameras
 				boutput(clint, "<b>You need to select a camera before creating a viewport.</b>")
 			else
 				create_viewport(clint, get_turf(owner.current))
-				clint.mob.set_eye(null)
+				owner.current?.disconnect_viewer(user)
+				owner.current = null
+				owner.last_viewer = null
 
 
 		//using arrowkeys/wasd/ijkl to move from camera to camera
@@ -371,4 +379,10 @@ chui/window/security_cameras
 	Unsubscribe( client/who )
 		..()
 		who.clearViewportsByType("cameras: Viewport")
-		who.mob.set_eye(null)
+		owner.current?.disconnect_viewer(who.mob)
+		owner.current = null
+		owner.last_viewer = null
+		for (var/obj/ability_button/reset_view/console/ability in who.mob.item_abilities)
+			who.mob.item_abilities -= ability
+		who.mob.need_update_item_abilities = 1
+		who.mob.update_item_abilities()

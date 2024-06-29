@@ -20,13 +20,13 @@
 		if (!M || !ishuman(M))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/hunter_summongear(src), M)
 		return 0
 
 /datum/action/bar/private/icon/hunter_summongear
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "hunter_gearteleport"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
@@ -35,18 +35,18 @@
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") > 0)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("unconscious") > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, "<span class='alert'><B>Request acknowledged. You must stand still.</B></span>")
+		boutput(M, SPAN_ALERT("<B>Request acknowledged. You must stand still.</B>"))
 
 	onUpdate()
 		..()
 
 		var/mob/living/M = owner
 
-		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("knockdown") || M.getStatusDuration("unconscious") > 0 || !isalive(M) || M.restrained())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -83,14 +83,14 @@
 						SEND_SIGNAL(HC, COMSIG_SEND_TO_MOB, M, TRUE)
 						cloak_found = TRUE
 		if (!gun_found)
-			boutput(M, "<span class='alert'>Your plasma gun is lost or destroyed!</span>")
+			boutput(M, SPAN_ALERT("Your plasma gun is lost or destroyed!"))
 		if (!spear_found)
-			boutput(M, "<span class='alert'>Your hunting spear is lost or destroyed!</span>")
+			boutput(M, SPAN_ALERT("Your hunting spear is lost or destroyed!"))
 		if (!cloak_found)
-			boutput(M, "<span class='alert'>Your cloaking device is lost or destroyed!</span>")
+			boutput(M, SPAN_ALERT("Your cloaking device is lost or destroyed!"))
 
 	onInterrupt()
 		..()
 
 		var/mob/living/M = owner
-		boutput(M, "<span class='alert'>You were interrupted!</span>")
+		boutput(M, SPAN_ALERT("You were interrupted!"))

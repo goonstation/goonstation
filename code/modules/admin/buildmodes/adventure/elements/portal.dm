@@ -5,7 +5,7 @@
 
 	initialize()
 		selection = new /obj/adventurepuzzle/marker
-		boutput(usr, "<span class='notice'>Select a target location with right click, then left click to place portals. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, SPAN_NOTICE("Select a target location with right click, then left click to place portals. Ctrl+click anywhere to finish."))
 
 	proc/clear_selection()
 		if (!selection)
@@ -21,14 +21,14 @@
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)
 			if (!target)
-				boutput(user, "<span class='alert'>Select a target first!</span>")
+				boutput(user, SPAN_ALERT("Select a target first!"))
 			var/turf/T = get_turf(object)
 			if ("ctrl" in pa)
 				finished = 1
 				clear_selection()
 				return
 			if (T)
-				var/obj/perm_portal/P = new /obj/perm_portal(T)
+				var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal(T)
 				P.target = target
 		else if ("right" in pa)
 			var/turf/T = get_turf(object)
@@ -37,9 +37,9 @@
 					target.overlays -= selection
 				target = T
 				target.overlays += selection
-				boutput(user, "<span class='notice'>Target set.</span>")
+				boutput(user, SPAN_NOTICE("Target set."))
 
-/obj/perm_portal
+/obj/laser_sink/perm_portal
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		var/blx = sandbox.context["min_x"]
 		var/bly = sandbox.context["min_y"]

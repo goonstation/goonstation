@@ -203,7 +203,7 @@
 /obj/neon_lining{
 	dir = 8
 	},
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = -28
@@ -345,14 +345,14 @@
 /area/prefab/candy_shop)
 "Ag" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup{
 	pixel_x = 6;
 	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup{
 	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup{
 	pixel_x = -4;
 	pixel_y = 6;
 	rand_pos = 0
@@ -395,7 +395,7 @@
 /turf/simulated/wall/auto/reinforced/jen/cyan,
 /area/prefab/candy_shop)
 "Df" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a confectioner.";
 	name = "Carlisle"
 	},
@@ -485,15 +485,15 @@
 /obj/machinery/light/incandescent/cool/very{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	pixel_y = 8;
 	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	pixel_y = 4;
 	rand_pos = 0
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
@@ -525,7 +525,7 @@
 	dir = 4;
 	lining_color = "pink"
 	},
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = 28

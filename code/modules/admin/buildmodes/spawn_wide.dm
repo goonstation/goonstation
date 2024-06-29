@@ -29,7 +29,7 @@ change the direction of created objects.<br>
 			return
 		if(alt)
 			delete_area = !delete_area
-			boutput(usr, delete_area ? "<span class='alert'>Now also deleting areas!</span>" : "<span class='alert'>Now not deleting areas!</span>")
+			boutput(usr, delete_area ? SPAN_ALERT("Now also deleting areas!") : SPAN_ALERT("Now not deleting areas!"))
 			return
 
 		if (!objpath)
@@ -52,16 +52,18 @@ change the direction of created objects.<br>
 	var/matrix/mtx = matrix()
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span class='alert'>No object path!</span>")
+			boutput(usr, SPAN_ALERT("No object path!"))
 			return
 		if (!A)
 			mark_corner(object)
 		else
 			var/turf/B = get_turf(object)
 			if (!B || A.z != B.z)
-				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
+				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
 			update_button_text("Spawning...")
+			var/total_area = abs(A.x - B.x) * abs(A.y - B.y)
+			logTheThing(LOG_ADMIN, usr, "used buildmode wide area spawn between [log_loc(A)] and [log_loc(B)] with type [src.objpath]. Total area [total_area] objects.")
 			var/cnt = 0
 			for (var/turf/Q in block(A,B))
 				//var/atom/sp = new objpath(Q)
@@ -71,7 +73,7 @@ change the direction of created objects.<br>
 				switch(cinematic)
 					if("Telepad")
 						var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
-						var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
+						var/obj/fakeobject/teleport_pad/pad = new /obj/fakeobject/teleport_pad
 						swirl.mouse_opacity = 0
 						pad.mouse_opacity = 0
 						pad.loc = Q
@@ -105,7 +107,7 @@ change the direction of created objects.<br>
 					if("Fancy and Inefficient yet Laggy Telepad")
 						SPAWN(cnt/10)
 							var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
-							var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
+							var/obj/fakeobject/teleport_pad/pad = new /obj/fakeobject/teleport_pad
 							swirl.mouse_opacity = 0
 							pad.mouse_opacity = 0
 							pad.loc = Q
@@ -188,7 +190,7 @@ change the direction of created objects.<br>
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
+				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
 			for (var/turf/T in block(A,B))
 				if (cinematic == "Blink")

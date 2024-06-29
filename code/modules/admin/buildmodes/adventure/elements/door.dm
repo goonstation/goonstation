@@ -8,7 +8,7 @@
 	door_type = input("Door type", "Door type", "normal") in list("normal", "glass", "ancient", "shuttle", "wall", "runes")
 	color_rgb = input("Color", "Color", "#ffffff") as color
 	door_name = input("Door name", "Door name", "[door_type] door") as text
-	boutput(usr, "<span class='notice'>Left click to place doors, right click doors to toggle state. Ctrl+click anywhere to finish.</span>")
+	boutput(usr, SPAN_NOTICE("Left click to place doors, right click doors to toggle state. Ctrl+click anywhere to finish."))
 
 /datum/puzzlewizard/door/build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 	if ("left" in pa)
@@ -115,7 +115,7 @@
 
 /obj/adventurepuzzle/triggerable/door/attack_hand(mob/user)
 	if (src.density)
-		user.show_message("<span class='alert'>[src] won't open. Perhaps you need a key?</span>")
+		user.show_message(SPAN_ALERT("[src] won't open. Perhaps you need a key?"))
 	flick("door_[door_type]_deny", src)
 
 /obj/adventurepuzzle/triggerable/door/serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

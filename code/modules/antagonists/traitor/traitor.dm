@@ -12,7 +12,7 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you."))
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
@@ -55,7 +55,7 @@
 			src.uplink = S
 			uplink_source = S
 			S.lock_code_autogenerate = TRUE
-			if (!(H.equip_if_possible(S, H.slot_in_backpack)))
+			if (!(H.equip_if_possible(S, SLOT_IN_BACKPACK)))
 				loc_string = "on the ground beneath you"
 			else
 				loc_string = "in [H.back] on your back"
@@ -78,9 +78,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_TRAITOR)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 
 	remove_from_image_groups()
 		. = ..()
@@ -103,20 +102,40 @@
 				override = "traitorpda"
 		..(override)
 
-	handle_round_end(log_data)
-		var/list/dat = ..() // while we could use . here instead of a cache var, this lets us manipulate the list in more ways
-		if (length(dat))
-			var/purchases = length(src.purchased_items)
-			dat.Insert(2, "They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]") // Insert at the second index, so it comes immediately after the "X was a traitor" text
-			if (purchases)
-				var/item_detail = "They purchased: "
-				for (var/datum/syndicate_buylist/S as anything in src.purchased_items)
-					item_detail += "[bicon(S.item)] [S.name], "
-				item_detail = copytext(item_detail, 1, -2)
-				if (length(src.surplus_crate_items))
-					item_detail += "<br>Their surplus crate contained: "
-					for (var/datum/syndicate_buylist/S as anything in src.surplus_crate_items)
-						item_detail += "[bicon(S.item)] [S.name], "
-					item_detail = copytext(item_detail, 1, -2)
-				dat.Insert(3, item_detail)
-		return dat
+	get_statistics()
+		var/list/purchased_items = list()
+		for (var/datum/syndicate_buylist/purchased_item as anything in src.purchased_items)
+			var/obj/item_type = initial(purchased_item.item)
+			purchased_items += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+				)
+			)
+
+		. = list(
+			list(
+				"name" = "Purchased Items",
+				"type" = "itemList",
+				"value" = purchased_items,
+			)
+		)
+
+		var/list/crate_items = list()
+		if (length(src.surplus_crate_items))
+			for (var/datum/syndicate_buylist/crate_item as anything in src.surplus_crate_items)
+				var/obj/item_type = initial(crate_item.item)
+				crate_items += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[crate_item.name]",
+					)
+				)
+
+			. += list(
+				list(
+					"name" = "Surplus Crate Items",
+					"type" = "itemList",
+					"value" = crate_items,
+				)
+			)

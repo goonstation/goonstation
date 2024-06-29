@@ -60,6 +60,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/lastused_equip = 0
 	var/lastused_environ = 0
 	var/lastused_total = 0
+	var/cycle_load = 0 //distinct from lastused_total; tracks state of expended power through the cycling process
 	var/main_status = 0
 	var/light_consumption = 0
 	var/equip_consumption = 0
@@ -73,6 +74,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/host_id = null
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
+	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
 
 //	luminosity = 1
 	var/debug = 0
@@ -88,6 +90,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+		hardened	//azone/listening post apcs
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
 
 	autoname_east
 		name = "Autoname E APC"
@@ -101,6 +108,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			noalerts = 1
 			aidisabled = 1
 
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
+
 	autoname_south
 		name = "Autoname S APC"
 		dir = SOUTH
@@ -113,6 +126,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			noalerts = 1
 			aidisabled = 1
 
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
+
 	autoname_west
 		name = "Autoname W APC"
 		dir = WEST
@@ -124,6 +143,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
 
 /proc/RandomAPCWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -279,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (cell)
 			// if opened, update overlays for cell
 			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			UpdateOverlays(I_cell, "cell", 0, 1)
+			AddOverlays(I_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -307,14 +332,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/image/I_equp = SafeGetOverlayImage("equipment", 'icons/obj/power.dmi', "apco0-[equipment]")
 		var/image/I_envi = SafeGetOverlayImage("environment", 'icons/obj/power.dmi', "apco2-[environ]")
 
-		UpdateOverlays(I_lock, "lock", 0, 1)
-		UpdateOverlays(I_chrg, "charge", 0, 1)
-		UpdateOverlays(I_brke, "breaker", 0, 1)
+		AddOverlays(I_lock, "lock")
+		AddOverlays(I_chrg, "charge")
+		AddOverlays(I_brke, "breaker")
 
 		if(operating && !do_not_operate)
-			UpdateOverlays(I_lite, "lighting", 0, 1)
-			UpdateOverlays(I_equp, "equipment", 0, 1)
-			UpdateOverlays(I_envi, "environment", 0, 1)
+			AddOverlays(I_lite, "lighting",)
+			AddOverlays(I_equp, "equipment")
+			AddOverlays(I_envi, "environment")
 
 /obj/machinery/power/apc/emp_act()
 	..()
@@ -385,10 +410,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					return
 				if (2)
-					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
+					boutput(user, SPAN_ALERT("Securing the terminals now without tuning the autotransformer could fry the control board."))
 					return
 				if (3)
-					boutput(user, "<span class='alert'>The control board must be reset before connection to the autotransformer..</span>")
+					boutput(user, SPAN_ALERT("The control board must be reset before connection to the autotransformer.."))
 					return
 				if (4)
 					src.repair_status = 0
@@ -420,14 +445,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		else if (istype(W, /obj/item/cable_coil))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span class='alert'>The control board must be disconnected before you can repair the autotransformer.</span>")
+					boutput(user, SPAN_ALERT("The control board must be disconnected before you can repair the autotransformer."))
 					return
 				if (1) //Repair the transformer with a cable.
 					var/obj/item/cable_coil/theCoil = W
 					if (theCoil.amount >= 4)
 						boutput(user, "You unravel some cable..<br>Now repairing the autotransformer's windings.  This could take some time.")
 					else
-						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
+						boutput(user, SPAN_ALERT("Not enough cable! <I>(Requires four pieces)</I>"))
 						return
 					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
 					list(theCoil, user), W.icon, W.icon_state, null, null)
@@ -441,9 +466,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		else if (iswrenchingtool(W))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span class='alert'>You must disconnect the control board prior to working on the autotransformer.</span>")
+					boutput(user, SPAN_ALERT("You must disconnect the control board prior to working on the autotransformer."))
 				if (1)
-					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
+					boutput(user, SPAN_ALERT("You must repair the autotransformer's windings prior to tuning it."))
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
 					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
@@ -456,12 +481,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		else if (ispulsingtool(W))
 			switch(src.repair_status)
 				if (3)
-					boutput(user, "<span class='alert'>You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
+					boutput(user, SPAN_ALERT("You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]"))
 					src.repair_status = 4
 				if (4)
 					boutput(user, "The control board has already been reset. It just needs to be reconnected now.")
 				else
-					boutput(user, "<span class='alert'>You need to repair and tune the autotransformer before resetting the control board.</span>")
+					boutput(user, SPAN_ALERT("You need to repair and tune the autotransformer before resetting the control board."))
 			return
 
 		return
@@ -518,7 +543,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				UpdateIcon()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(user, SPAN_ALERT("Access denied."))
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
 	W.change_stack_amount(-4)
@@ -759,6 +784,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		return FALSE
 
 /obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
+	if (issilicon(user) || isAIeye(user))
+		boutput(user, "You don't have teeth, dummy!")
+		return FALSE
 	if (!src.canPhysicallyAccess(user))
 		boutput(user, "You are too far away to bite a wire!")
 		return FALSE
@@ -864,7 +892,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
 		return
 	if (!in_interact_range(src, user))
 		return
@@ -884,7 +912,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/equip = power_levels["power_equip"]
 		var/environ = power_levels["power_environ"]
 
-		for(var/obj/machinery/power/apc/APC in src.area)
+		for(var/obj/machinery/power/apc/APC in src.area.machines)
 			power_levels = APC.get_power_levels()
 			light |= power_levels["power_light"]
 			equip |= power_levels["power_equip"]
@@ -988,14 +1016,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
-		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
+		boutput(user, SPAN_NOTICE("You absorb the electrical shock, healing your body!"))
 		return
 	else if (user.bioHolder.HasEffect("resist_electric"))
-		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
+		boutput(user, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 		return
 
 	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+	boutput(user, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -1004,16 +1032,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
-	var/weak = (user.getStatusDuration("weakened") < shock_damage * 20) ? shock_damage * 20 : 0
+	var/knockdown = (user.getStatusDuration("knockdown") < shock_damage * 20) ? shock_damage * 20 : 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
-	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
+	user.do_disorient(130, knockdown = knockdown, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 2 SECONDS)
+	if(user.getStatusDuration("knockdown") < shock_damage * 20)	user.changeStatus("knockdown", shock_damage * 2 SECONDS)
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
-		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
+		M.show_message(SPAN_ALERT("[user.name] was shocked by the [src.name]!"), 3, SPAN_ALERT("You hear a heavy electrical crack"), 2)
 	return 1
 
 
@@ -1139,8 +1167,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		return 0
 
 /obj/machinery/power/apc/add_load(var/amount)
-	if(terminal?.powernet && !circuit_disabled)
-		terminal.powernet.newload += amount
+	if(!circuit_disabled)
+		. = terminal?.add_load(amount)
 
 /obj/machinery/power/apc/avail()
 	if(terminal && !circuit_disabled)
@@ -1149,6 +1177,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		return 0
 
 /obj/machinery/power/apc/process()
+	if(!terminal || !terminal.powernet) // if no powernet is managing our cycling, do it on the APC
+		if(load_cycle())
+			cell_cycle()
+
+///APC cycle phase 1: load cycle. Check if the APC's able to operate, and if so, combine and prepare the load for phase 2 where it gets expended.
+/obj/machinery/power/apc/proc/load_cycle()
 	if(debug) boutput(world, "PROCESS [world.timeofday / 10]")
 
 	if(status & BROKEN)
@@ -1161,6 +1195,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			qdel(src)
 		CRASH("Broken-ass APC [identify_object(src)] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
 
+	. = TRUE //APC is working and can proceed to the next phase
 
 	/*
 	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
@@ -1178,6 +1213,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
+	cycle_load = lastused_total
 
 	if (src.setup_networkapc && host_id && terminal)
 		if(src.timeout == 0)
@@ -1191,24 +1227,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
+///APC cycle phase 2: cell cycle. Debit the load from cell, and if any external power is available, attempt to use it to "settle up"
+/obj/machinery/power/apc/proc/cell_cycle(var/charge_percentile = 1)
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
 	var/last_ch = charging
 
-	var/excess = surplus()
-
 	if(!src.avail())
 		main_status = 0
-	else if(excess < 0)
+	else if(!(terminal?.powernet?.apc_charge_share))
 		main_status = 1
 	else
 		main_status = 2
-
-	var/perapc = 0
-	if(terminal?.powernet)
-		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
 		SPAWN(0)
@@ -1219,47 +1251,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	if(cell && !shorted)
 
-		// draw power from cell as before
+		// First, draw power from cell to the extent we're able
 
-		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, CELLRATE * lastused_total) // Clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		// current status: cell has had this update's power drawn
+		// Current status: cell has had this update's power drawn to the extent possible
+		// Next step: attempt to square up with the grid
 
-		if(excess > 0 || perapc > lastused_total)
-			// if there is excess power (i.e. more than enough for all apcs?)
-			// OR the amount of power per APC is more than we needed,
-			// refund the cell all that we used, and apply that load to the net instead
+		// If our load is supposed to be fully covered, double check that it actually is, and if so we're good to go!
+		if(charge_percentile == 1 && add_load(cycle_load))
 			cell.give(cellused)
-			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
+			cycle_load = 0
 
-			// current status: cell has been fully refunded, power taken from grid
-			// don't pop a power popup here -- we will do it in charging later
-
+		// If not, see if we can reimburse enough to stay online, or fall over and die otherwise
 		else
-			// no excess AND the perapc allotment is less than what we need, total
-
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)
+			//Charge based on the share we're supposed to have or the actual remaining power (whichever is lower)
+			var/attempt_to_supply = min(lastused_total * charge_percentile, terminal?.powernet?.avail - terminal?.powernet?.newload)
+			if(!add_load(attempt_to_supply))
+				attempt_to_supply = 0
+			if( (cell.charge/CELLRATE) + attempt_to_supply >= cycle_load )
 				// do we have enough power in the cell + apc allotment to run?
+				// if yes, reimburse what power we can and don't enter a failure state
+				cell.charge = min(cell.maxcharge, cell.charge + (attempt_to_supply * CELLRATE))
+				cycle_load -= attempt_to_supply
 
-				// with the above "drain the apc immediately"
-				// cell charge = (per apc + charge) - drain
-				cell.charge = min(cell.maxcharge, cell.charge + CELLRATE * perapc)	//recharge with what we can
-				// then take the entire allotment from the grid
-				add_load(perapc)
-				// and turn off charging
-				charging = 0
-
-				// status: per-apc allotment is empty and we recharged the cell
+				// status: core allotment is empty and we recharged the cell
 				// we can pop a power usage change here: the total we couldn't recharge
 				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = -(lastused_total - perapc), channel = -1)
+					new /obj/maptext_junk/power(get_turf(src), change = -(cycle_load - attempt_to_supply), channel = -1)
 
 			else
 				// not enough power available to run the last tick!
 				// we are 100% out of power.
 				charging = 0
-				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
 				equipment = autoset(equipment, 0)
 				lighting = autoset(lighting, 0)
@@ -1268,51 +1293,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		// set channels depending on how much charge we have left
 		check_channel_thresholds()
 
-		// now trickle-charge the cell
-
-		if(chargemode && charging == 1 && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-				var/ch = min(perapc, (cell.maxcharge - cell.charge), (cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src)))
-				add_load(ch) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-				if (zamus_dumb_power_popups)
-					new /obj/maptext_junk/power(get_turf(src), change = ch / CELLRATE, channel = -1)
-
-			else
-				charging = 0		// stop charging
-				chargecount = 0
-
-		// show cell as fully charged if so
-
-		if(cell.charge >= cell.maxcharge)
-			charging = 2
-		else if (charging == 2)
-			charging = 0 // we lost power somehow; move to failure mode
-
-		if(chargemode)
-			// require that we have sufficient power for 10 cycles before we start actually charging
-			// TODO: consider not doing this and just trickle charging?
-			if(!charging)
-				if(excess > cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src))
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 10)
-
-					chargecount = 0
-					charging = 1
-
-		else // chargemode off
-			charging = 0
-			chargecount = 0
-
 	else // no cell, switch everything off
 
 		charging = 0
-		chargecount = 0
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
@@ -1324,6 +1307,39 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		UpdateIcon()
 		update()
 
+///Post-cycle APC proc; updates charging status, and delivers discretionary recharging if excess power is available.
+/obj/machinery/power/apc/proc/accept_excess(var/allocated_excess)
+	var/last_ch = charging
+	if(cell && !shorted && chargemode)
+		if(cell.charge < cell.maxcharge) // check to make sure we're still at a net positive and actually need to charge
+			if(allocated_excess > cycle_load)
+				charging = 1
+			else
+				charging = 0
+
+			//adjust the charge rate cap for APC's current processing tier
+			var/chargelevel_adj = CHARGELEVEL * PROCESSING_TIER_MULTI(src)
+
+			//determine how much charge we can (or should) give the cell
+			var/charge_to_add = min(allocated_excess*CELLRATE, (cell.maxcharge - cell.charge), (cell.maxcharge*chargelevel_adj))
+			//then apply that charge
+			cell.give(charge_to_add)
+
+			if(cell.charge >= cell.maxcharge) charging = 2 // capped off for this tick? report fully charged
+
+			. = charge_to_add / CELLRATE // return the amount of consumed power for subtraction from netexcess
+
+			if (zamus_dumb_power_popups)
+				new /obj/maptext_junk/power(get_turf(src), change = charge_to_add / CELLRATE, channel = -1)
+		else
+			charging = 2	// didn't need to charge but power is still good. report fully charged
+
+	else // chargemode off
+		charging = 0
+
+	if(last_ch != charging)
+		UpdateIcon()
+		update()
 
 // set channels depending on how much charge we have left
 /obj/machinery/power/apc/proc/check_channel_thresholds()
@@ -1375,8 +1391,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // damage and destruction acts
 
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
@@ -1384,8 +1403,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/ex_act(severity)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
@@ -1405,13 +1427,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel (src)
 
 /obj/machinery/power/apc/blob_act(var/power)
+	if (src.hardened)
+		return
+
 	if (prob(power * 2.5))
 		set_broken()
 

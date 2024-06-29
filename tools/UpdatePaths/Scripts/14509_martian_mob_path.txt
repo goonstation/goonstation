@@ -1,0 +1,4 @@
+/obj/critter/martian/warrior : /mob/living/critter/martian/warrior
+/obj/critter/martian/psychic : /mob/living/critter/martian/mutant
+/obj/critter/martian/soldier : /mob/living/critter/martian/soldier
+/obj/critter/martian : /mob/living/critter/martian

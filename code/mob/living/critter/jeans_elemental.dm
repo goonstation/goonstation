@@ -1,7 +1,7 @@
 /mob/living/critter/jeans_elemental
 	name = "jeans jelemental"
 	desc = "A jysteroius jeing jomposed jostly of jeans."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/humanoid/elemental/jeans.dmi'
 	icon_state = "jeans_elemental"
 	density = TRUE
 	custom_gib_handler = /proc/gibs
@@ -10,7 +10,7 @@
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	meat_type = /obj/item/material_piece/cloth/jean
 	custom_vomit_type = /obj/item/material_piece/cloth/jean
 	name_the_meat = FALSE
@@ -91,7 +91,7 @@
 		A.setMaterial(getMaterial(transmute_mat))
 
 	valid_target(mob/living/C)
-		if (C.material?.mat_id == transmute_mat) return FALSE //don't attack other jeans-like things
+		if (C.material?.getID() == transmute_mat) return FALSE //don't attack other jeans-like things
 		if (C.ckey == null && prob(80)) return FALSE //usually do not attack non-threats ie. NPC monkeys and AFK players
 		return ..()
 
@@ -114,7 +114,7 @@
 		if(prob(20))
 			var/list/walls = list()
 			for(var/turf/simulated/wall/wall in orange(1, src))
-				if(wall.material?.mat_id == transmute_mat)
+				if(wall.material?.getID() == transmute_mat)
 					walls += wall
 			if(length(walls))
 				src.set_loc(pick(walls))

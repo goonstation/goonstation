@@ -25,12 +25,12 @@
 
 	proc/d_print()
 		for(var/obj/machinery/machine in src.machines)
-			boutput(world,"[machine.name] : [machine.type]")
+			boutput(world,SPAN_ADMIN("[machine.name] : [machine.type]"))
 
 	doWork()
 		var/c = 0
 
-		if (ticker % 8 == 0)
+		if (ticker % 4 == 0)
 			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
 			for (var/obj/machinery/machine as anything in atmos_machines)
 				if( !machine || machine.z == 4 && !Z4_ACTIVE || istype(machine.loc, /obj/item/electronics/frame) ) continue
@@ -45,7 +45,7 @@
 
 				if (!(c++ % 100))
 					scheck()
-		if (ticker % 8 == 1)
+		if (ticker % 4 == 1)
 			src.pipe_networks = global.pipe_networks
 			for(var/X in src.pipe_networks)
 				if(!X) continue
@@ -140,7 +140,4 @@ proc/register_machine_time(var/datum/machine, var/time)
 				add_machinery(machine)
 			machines[machine]+=amount
 
-#endif MACHINE_PROCESSING_DEBUG
-
-
-
+#endif

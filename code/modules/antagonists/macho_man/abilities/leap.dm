@@ -13,6 +13,7 @@
 		possible_areas += get_areas(/area/sim)
 
 	cast(mob/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			var/area/A = input("Select the area to leap to: ", "Select Area", null) as null|anything in possible_areas
 			if (!A)
@@ -31,14 +32,13 @@
 			if (H)
 				if (H.lying)
 					H.lying = 0
-					H.delStatus("paralysis")
-					H.delStatus("weakened")
+					H.remove_stuns()
 					H.set_clothing_icon_dirty()
 				H.transforming = 1
 				H.set_density(0)
 				H.set_loc(holder.owner.loc)
 			else
-				holder.owner.visible_message("<span class='alert'>[holder.owner] closes his eyes for a moment.</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] closes his eyes for a moment."))
 				playsound(holder.owner.loc, 'sound/voice/macho/macho_breathing18.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 				sleep(4 SECONDS)
 			holder.owner.set_density(0)
@@ -57,9 +57,9 @@
 				H.overlays = null
 				H.icon = composite
 				*/
-				holder.owner.visible_message("<span class='alert'><B>[holder.owner] grabs [H] and flies through the ceiling!</B></span>")
+				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] grabs [H] and flies through the ceiling!</B>"))
 			else
-				holder.owner.visible_message("<span class='alert'>[holder.owner] flies through the ceiling!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] flies through the ceiling!"))
 			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 			playsound(holder.owner.loc, 'sound/voice/macho/macho_become_enraged01.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 			for (var/i = 0, i < 20, i++)
@@ -84,10 +84,10 @@
 				sleep(0.1 SECONDS)
 			holder.owner.set_loc(pick(turfs))
 			if (H)
-				holder.owner.visible_message("<span class='alert'>[holder.owner] suddenly descends from the ceiling with [H]!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] suddenly descends from the ceiling with [H]!"))
 				H.set_loc(holder.owner.loc)
 			else
-				holder.owner.visible_message("<span class='alert'>[holder.owner] suddenly descends from the ceiling!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] suddenly descends from the ceiling!"))
 			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 			for (var/i = 0, i < 20, i++)
 				holder.owner.pixel_y -= 15
@@ -115,13 +115,13 @@
 			playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 			for (var/mob/M in viewers(holder.owner, 5))
 				if (M != holder.owner)
-					M.changeStatus("weakened", 8 SECONDS)
+					M.changeStatus("knockdown", 8 SECONDS)
 				SPAWN(0)
 					shake_camera(M, 4, 16)
 			if (istype(holder.owner.loc, /turf/simulated/floor))
 				holder.owner.loc:break_tile()
 			if (H)
-				holder.owner.visible_message("<span class='alert'><B>[holder.owner] ultra atomic piledrives [H]!!</B></span>")
+				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] ultra atomic piledrives [H]!!</B>"))
 				var/obj/overlay/O = new/obj/overlay(get_turf(holder.owner))
 				O.anchored = ANCHORED
 				O.name = "Explosion"
@@ -132,7 +132,7 @@
 				O.icon_state = "explosion"
 				SPAWN(3.5 SECONDS) qdel(O)
 				random_brute_damage(H, 50)
-				H.changeStatus("weakened", 1 SECOND)
+				H.changeStatus("knockdown", 1 SECOND)
 				H.pixel_x = 0
 				H.pixel_y = 0
 				H.transforming = 0

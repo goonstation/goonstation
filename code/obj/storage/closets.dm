@@ -1,3 +1,7 @@
+
+TYPEINFO(/obj/storage/closet)
+	mat_appearances_to_ignore = list("steel")
+
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
@@ -75,6 +79,16 @@
 		src.open()
 		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
+	Crossed(atom/movable/AM)
+		. = ..()
+		if (src.open && ismob(AM) && AM.throwing)
+			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
+			AM.throw_impact(src, thr)
+			AM.throwing = FALSE
+			AM.changeStatus("knockdown", 1 SECOND)
+			AM.set_loc(src.loc)
+			src.close()
+
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes prestocked with emergency equipment. <i>Hopefully</i>."
@@ -120,7 +134,7 @@
 			if (prob(50))
 				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
-				new /obj/item/clothing/suit/fire(src)
+				new /obj/item/clothing/suit/hazard/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
 			if (prob(10))
 				new /obj/item/storage/firstaid/fire(src)
@@ -133,15 +147,14 @@
 	desc = "It's a closet! This one can be opened AND closed. Comes with janitor's clothes and biohazard gear."
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
 							/obj/item/storage/box/trash_bags = 2,
-							/obj/item/clothing/suit/bio_suit,
+							/obj/item/clothing/suit/hazard/bio_suit,
 							/obj/item/clothing/head/bio_hood,
-							/obj/item/clothing/under/rank/janitor = 2,
-							/obj/item/clothing/shoes/black = 2,
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
+							/obj/item/storage/box/clothing/janitor,
 							/obj/item/disk/data/floppy/manudrive/cleaner_grenade)
 
 /obj/storage/closet/law
@@ -181,7 +194,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_closed = "bio"
 	icon_opened = "bio-open"
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
-	/obj/item/clothing/suit/bio_suit = 2,
+	/obj/item/clothing/suit/hazard/bio_suit = 2,
 	/obj/item/clothing/under/color/white = 2,
 	/obj/item/clothing/shoes/white = 2,
 	/obj/item/clothing/head/bio_hood = 2)
@@ -194,8 +207,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_opened = "syndicate-open"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -413,7 +426,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span class='alert'>It won't budge!</span>")
+			visible_message(SPAN_ALERT("It won't budge!"))
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -436,7 +449,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span class='alert'>It won't budge!</span>")
+			visible_message(SPAN_ALERT("It won't budge!"))
 			return 0
 
 		src.open = 0
@@ -497,7 +510,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 				return
 			var/amt = length(W.contents)
 			if (amt)
-				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] dumps out [W]'s contents into [src]!"))
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
 					if(length(contents) >= max_capacity)
@@ -527,10 +540,10 @@ TYPEINFO(/obj/storage/closet/coffin)
 				return
 			if (!src.welded)
 				src.weld(1, W, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
+				src.visible_message(SPAN_ALERT("[user] welds [src] closed with [W]."))
 			else
 				src.weld(0, W, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+				src.visible_message(SPAN_ALERT("[user] unwelds [src] with [W]."))
 			return
 
 		if (src.secure)
@@ -542,7 +555,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message(SPAN_NOTICE("The locker has been [src.locked ? null : "un"]locked by [user]."))
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
@@ -554,7 +567,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message(SPAN_NOTICE("[src] has been [src.locked ? null : "un"]locked by [user]."))
 					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
@@ -595,10 +608,10 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_state = "radiation"
 	icon_opened = "radiation-open"
 	desc = "A handy closet full of everything you need to protect yourself from impending doom of radioactive death."
-	spawn_contents = list(/obj/item/clothing/suit/rad = 1,
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad = 1,
 					/obj/item/clothing/head/rad_hood = 1,
 					/obj/item/storage/pill_bottle/antirad = 1,
-					/obj/item/clothing/glasses/meson = 1,
+					/obj/item/clothing/glasses/toggleable/meson = 1,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 1)
 
 /obj/storage/closet/medicalclothes
@@ -635,5 +648,5 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed$$mauxite"
 	default_material = "mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE

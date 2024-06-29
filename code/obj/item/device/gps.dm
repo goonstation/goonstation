@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/gps)
 	var/distress = 0
 	var/active = 0		//probably should
 	var/atom/tracking_target = null		//unafilliated with allowtrack, which essentially just lets your gps appear on other gps lists
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
@@ -182,22 +182,22 @@ TYPEINFO(/obj/item/device/gps)
 			src.add_dialog(usr)
 			var/turf/T = get_turf(src)
 			if(href_list["getcords"])
-				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, SPAN_NOTICE("Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]"))
 				return
 
 			if(href_list["track1"])
-				boutput(usr, "<span class='notice'>Tracking enabled.</span>")
+				boutput(usr, SPAN_NOTICE("Tracking enabled."))
 				src.allowtrack = 1
 			if(href_list["track2"])
-				boutput(usr, "<span class='notice'>Tracking disabled.</span>")
+				boutput(usr, SPAN_NOTICE("Tracking disabled."))
 				src.allowtrack = 0
 			if(href_list["changeid"])
 				var/t = strip_html(input(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier) as text)
 				if(length(t) > 4)
-					boutput(usr, "<span class='alert'>Input too long.</span>")
+					boutput(usr, SPAN_ALERT("Input too long."))
 					return
 				if(length(t) < 4)
-					boutput(usr, "<span class='alert'>Input too short.</span>")
+					boutput(usr, SPAN_ALERT("Input too short."))
 					return
 				if(!t)
 					return
@@ -205,12 +205,12 @@ TYPEINFO(/obj/item/device/gps)
 				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
-					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
+					boutput(usr, SPAN_ALERT("Sending distress signal."))
 					distress = 1
 					src.send_distress_signal(distress)
 				else
 					distress = 0
-					boutput(usr, "<span class='alert'>Distress signal cleared.</span>")
+					boutput(usr, SPAN_ALERT("Distress signal cleared."))
 					src.send_distress_signal(distress)
 			if(href_list["refresh"])
 				..()
@@ -241,7 +241,7 @@ TYPEINFO(/obj/item/device/gps)
 		serial = rand(4201,7999)
 		START_TRACKING
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	get_desc(dist, mob/user)
 		. = "<br>Its serial code is [src.serial]-[identifier]."
@@ -255,7 +255,7 @@ TYPEINFO(/obj/item/device/gps)
 			var/x = text2num_safe(href_list["x"])
 			var/y = text2num_safe(href_list["y"])
 			if (!x || !y)
-				boutput(usr, "<span class='alert'>Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
+				boutput(usr, SPAN_ALERT("Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!"))
 				return
 			// This is to get a turf with the specified coordinates on the same Z as the device
 			var/turf/T = get_turf(src) //bugfix for this not working when src was in containers
@@ -266,11 +266,11 @@ TYPEINFO(/obj/item/device/gps)
 			//Set located turf to be the tracking_target
 			if (isturf(T))
 				src.tracking_target = T
-				boutput(usr, "<span class='notice'>Now tracking: <b>[href_list["name"]]</b> at <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, SPAN_NOTICE("Now tracking: <b>[href_list["name"]]</b> at <b>X</b>: [T.x], <b>Y</b>: [T.y]"))
 
 				begin_tracking()
 			else
-				boutput(usr, "<span class='alert'>Invalid GPS coordinates.</span>")
+				boutput(usr, SPAN_ALERT("Invalid GPS coordinates."))
 		sleep(1 SECOND)
 
 	proc/begin_tracking()
@@ -280,7 +280,7 @@ TYPEINFO(/obj/item/device/gps)
 				return
 			active = 1
 			process()
-			boutput(usr, "<span class='notice'>You activate the gps.</span>")
+			boutput(usr, SPAN_NOTICE("You activate the gps."))
 
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"

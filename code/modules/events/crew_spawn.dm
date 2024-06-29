@@ -43,7 +43,7 @@
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE)
+		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE, for_antag = FALSE)
 
 		for (var/i = 1 to src.num_crew)
 			if (!length(candidates))
@@ -68,10 +68,13 @@
 
 		if(!player.mind)
 			player.mind = new (player)
+		var/datum/mind/mind = player.mind
+		mind.wipe_antagonists()
+		player = mind.current
+
 		player.mind.assigned_role = job.name
 		M.job = job.name
 		player.mind.transfer_to(M)
-		remove_antag(M, usr, 1, 1)
 		SPAWN(5 SECONDS)
 			if(player && !player:client)
 				qdel(player)

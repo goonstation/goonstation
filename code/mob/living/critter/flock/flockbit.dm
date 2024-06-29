@@ -36,12 +36,12 @@
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.real_name]
-		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
-		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
-		<br><span class='bold'>Cognition:</span> [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.real_name]<br>\
+		[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none"]<br>\
+		[SPAN_BOLD("System Integrity:")] [max(0, round(src.get_health_percentage() * 100))]%<br>\
+		[SPAN_BOLD("Cognition:")] [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]]<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -54,7 +54,7 @@
 		return
 	if(target == user)
 		if(istype(user, /mob/living/intangible/flock))
-			boutput(user, "<span class='flocksay'>Insufficient processing power for partition override.</span>")
+			boutput(user, SPAN_FLOCKSAY("Insufficient processing power for partition override."))
 		else
 			..() // ghost observe
 	else
@@ -135,7 +135,7 @@
 		target = get_turf(target)
 
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
-		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
+		boutput(user, SPAN_ALERT("Something about this structure prevents it from being assimilated."))
 	else
 		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, extrarange = -10)
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)

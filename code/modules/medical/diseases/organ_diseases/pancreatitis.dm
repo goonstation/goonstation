@@ -3,7 +3,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's pancreas is dangerously enlarged"
-	cure = "Removal of organ"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Removal of organ"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -31,18 +32,18 @@
 	switch (D.stage)
 		if (1)
 			if (probmult(0.1))
-				boutput(H, "<span class='notice'>You feel better.</span>")
+				boutput(H, SPAN_NOTICE("You feel better."))
 				H.cure_disease(D)
 				return
 			if (probmult(8)) H.emote(pick("pale", "shudder"))
 			if (probmult(5))
-				boutput(H, "<span class='alert'>Your abdomen hurts!</span>")
+				boutput(H, SPAN_ALERT("Your abdomen hurts!"))
 		if (2)
 			if (probmult(8)) H.emote(pick("pale", "groan"))
 			if (probmult(5))
-				boutput(H, "<span class='alert'>Your back aches terribly!</span>")
+				boutput(H, SPAN_ALERT("Your back aches terribly!"))
 			if (probmult(3))
-				boutput(H, "<span class='alert'>You feel excruciating pain in your upper-right adbomen!</span>")
+				boutput(H, SPAN_ALERT("You feel excruciating pain in your upper-right abdomen!"))
 				// H.organHolder.takepancreas
 
 			if (probmult(5)) H.emote(pick("faint", "collapse", "groan"))

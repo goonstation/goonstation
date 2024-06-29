@@ -136,3 +136,9 @@
 /datum/component/packet_connected/radio/proc/get_frequency()
 	var/datum/packet_network/radio/radio_network = src.network
 	return radio_network?.frequency
+
+/datum/component/packet_connected/radio/UnregisterFromParent()
+	if(!src.send_only)
+		src.network?.unregister(src)
+	UnregisterSignal(src.parent, COMSIG_MOVABLE_POST_RADIO_PACKET)
+	. = ..()

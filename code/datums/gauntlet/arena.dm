@@ -8,7 +8,7 @@
 			process()
 
 /obj/literal_firewall
-	name = "Firewall"
+	name = "firewall"
 	desc = "Man, your port doesn't feel like it's allowed through there! If only there was a way to open it."
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
@@ -21,5 +21,5 @@
 		if (disposed)
 			return
 		if (istype(W, /obj/item/device/key/iridium))
-			boutput(user, "<span class='notice'>iridium -c 'ufw allow 2323/stcp from ::1'</span>")
+			boutput(user, SPAN_NOTICE("iridium -c 'ufw allow 2323/stcp from ::1'"))
 			qdel(src)

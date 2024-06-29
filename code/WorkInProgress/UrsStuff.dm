@@ -24,32 +24,35 @@
 
 /turf/unsimulated/floor/dream/space
 
-/obj/decal/fakeobjects/dreambeach/earth
+/obj/fakeobject/dreambeach/earth
 
-/obj/decal/fakeobjects/dreambeach/biggest/big_palm_with_nuts
+/obj/fakeobject/dreambeach/biggest/big_palm_with_nuts
 
-/obj/decal/fakeobjects/dreambeach/sticks
+/obj/fakeobject/dreambeach/sticks
 
-/obj/decal/fakeobjects/dreambeach/biggest/big_palm
+/obj/fakeobject/dreambeach/biggest/big_palm
 
-/obj/decal/fakeobjects/dreambeach/mars
+/obj/fakeobject/dreambeach/mars
 
-/obj/decal/fakeobjects/dreambeach/saturn
+/obj/fakeobject/dreambeach/saturn
 
-/obj/decal/fakeobjects/dreambeach/stones
+/obj/fakeobject/dreambeach/stones
 
-/obj/decal/fakeobjects/dreambeach/seashells
+/obj/fakeobject/dreambeach/seashells
 
-/obj/decal/fakeobjects/dreambeach/big/palm1
+/obj/fakeobject/dreambeach/big/palm1
 
-/obj/decal/fakeobjects/dreambeach/palm_leaf
+/obj/fakeobject/dreambeach/palm_leaf
 
-/obj/decal/fakeobjects/dreambeach/mercury
+/obj/fakeobject/dreambeach/mercury
 
 /obj/item/storage/box/knitting
 	name = "\improper Knitting Supplies"
 
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep
+	var/secret_thing = 0
 
 /mob/living/critter/robotic/bot/engibot
 
@@ -60,6 +63,17 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "simp"
 #endif
+
+/obj/machinery/light/small/floor/centcom_nightlight
+	name = "night light"
+	desc = "A light that gets brighter at night."
+	light_type = /obj/item/light/bulb/neutral
+	New()
+		var/list/light_outside = rgb2num(CENTCOM_LIGHT,COLORSPACE_HSL)
+		brightness = (1 - (light_outside[3]/255))*1.3
+		. = ..()
+
+
 
 /obj/overlay/simple_light/disco_lighting/rainbow
 	New()
@@ -115,3 +129,11 @@
 
 		random_start
 			randomize_start = 1
+
+/obj/item/storage/box/nametags
+	name = "box of nametags"
+	desc = "A box of little nametags for your favorite ranch animals!"
+	icon_state = "box"
+	#ifdef SECRETS_ENABLED
+	spawn_contents = list(/obj/item/ranch_nametag= 7)
+	#endif

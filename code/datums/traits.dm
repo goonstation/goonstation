@@ -1,6 +1,4 @@
 //Unlockable traits? tied to achievements?
-#define TRAIT_STARTING_POINTS 1 //How many "free" points you get
-#define TRAIT_MAX 7			    //How many traits people can select at most.
 
 /proc/getTraitById(var/id)
 	. = traitList[id]
@@ -28,44 +26,54 @@
 		"hemophilia",
 	)
 
-	proc/selectTrait(var/id)
+	var/list/traitData = list()
+	var/traitDataDirty = TRUE
+
+	proc/selectTrait(var/id, var/list/parts_selected = null)
 		var/list/future_selected = traits_selected.Copy()
 		if (id in traitList)
 			future_selected |= id
 
-		if (!isValid(future_selected))
+		if (!isValid(future_selected, parts_selected))
 			return FALSE
 
 		traits_selected = future_selected
+		traitDataDirty = TRUE
 		updateTotal()
 		return TRUE
 
-	proc/unselectTrait(var/id)
+	proc/unselectTrait(var/id, var/list/parts_selected = null)
 		var/list/future_selected = traits_selected.Copy()
 		future_selected -= id
 
-		if (!isValid(future_selected))
+		if (!isValid(future_selected, parts_selected))
 			return FALSE
 
 		traits_selected = future_selected
+		traitDataDirty = TRUE
 		updateTotal()
 		return TRUE
 
 	proc/resetTraits()
+		traitDataDirty = TRUE
 		traits_selected = list()
 		updateTotal()
 
-	proc/calcTotal(var/list/selected = traits_selected)
+	proc/calcTotal(var/list/selected = traits_selected, var/list/parts_selected = null)
 		. = free_points
 		for(var/T in selected)
 			if(T in traitList)
 				var/datum/trait/O = traitList[T]
 				. += O.points
+		for (var/slot_id in parts_selected)
+			var/part_id = parts_selected[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			. -= customization.trait_cost
 
 	proc/updateTotal()
 		point_total = calcTotal()
 
-	proc/isValid(var/list/selected = traits_selected)
+	proc/isValid(var/list/selected = traits_selected, var/list/parts_selected = null)
 		if (length(selected) > TRAIT_MAX)
 			return FALSE
 
@@ -81,7 +89,7 @@
 					else
 						categories.Add(cat)
 
-		return (calcTotal(selected) >= 0)
+		return (calcTotal(selected, parts_selected) >= 0)
 
 	proc/isAvailableTrait(var/id, var/unselect = FALSE)
 		var/list/future_selected = traits_selected.Copy()
@@ -111,13 +119,26 @@
 					if(!(C.requiredUnlock in user.client.qualifiedXpRewards))
 						continue
 				else
-					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
+					boutput(user, SPAN_ALERT("<b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b>"))
 					SPAWN(0)
 						user.client.updateXpRewards()
 					skipUnlocks = 1
 					continue
 
 			. += C
+
+	proc/generateTraitData(/mob/user)
+		if(traitDataDirty)
+			traitData = list()
+			for (var/datum/trait/trait as anything in src.getTraits(user))
+				var/selected = (trait.id in src.traits_selected)
+				traitData += list(list(
+					"id" = trait.id,
+					"selected" = selected,
+					"available" = src.isAvailableTrait(trait.id, selected)
+				))
+			traitDataDirty = FALSE
+		return traitData
 
 /datum/traitHolder
 	var/list/traits = list()
@@ -148,9 +169,9 @@
 				T = new traitType
 			else
 				T = trait_instance
-			traits[id] = T
 			if(T.afterlife_blacklisted && inafterlifebar(owner))
 				return
+			traits[id] = T
 			if(!isnull(owner))
 				if(T.isMoveTrait)
 					moveTraits.Add(id)
@@ -181,6 +202,13 @@
 	proc/hasTrait(var/id)
 		. = (id in traits)
 
+	proc/getTraitWithCategory(var/cat)
+		for(var/id in traits)
+			var/datum/trait/T = traits[id]
+			for (var/heldcat in T.category)
+				if (heldcat == cat)
+					return T
+
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
 	var/name
@@ -195,6 +223,10 @@
 	var/isMoveTrait = FALSE // If TRUE, onMove will be called each movement step from the holder's mob
 	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
 	var/afterlife_blacklisted = FALSE // If TRUE, trait will not be added in the Afterlife Bar
+	var/disability_type = TRAIT_DISABILITY_NONE //! Is this a major/minor/not a disability
+	var/disability_name = "" //! Name of the disability for medical records
+	var/disability_desc = "" //! Description of the disability for medical records
+	var/spawn_delay = 0 // To avoid ugly hardcoded spawn delay
 
 	New()
 		ASSERT(src.name)
@@ -208,6 +240,10 @@
 		return
 
 	proc/onRemove(var/mob/owner)
+		if(mutantRace && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.default_mutantrace = /datum/mutantrace/human
+			H.set_mutantrace(H.default_mutantrace)
 		return
 
 	proc/onLife(var/mob/owner, var/mult)
@@ -218,48 +254,11 @@
 
 // BODY - Red Border
 
-/datum/trait/roboarms
-	name = "Robotic arms"
-	desc = "Your arms have been replaced with light robotic arms."
-	id = "roboarms"
-	icon_state = "robotarmsR"
-	points = 0
-	category = list("body")
-
-	onAdd(var/mob/owner)
-		SPAWN(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0, TRUE)
-					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0, TRUE)
-					H.limbs.l_arm.holder = H
-					H.limbs.r_arm.holder = H
-					H.update_body()
-
-/datum/trait/syntharms
-	name = "Green Fingers"
-	desc = "Excess exposure to radiation, mutagen and gardening have turned your arms into plants. The horror!"
-	id = "syntharms"
-	icon_state = "robotarmsR"
-	points = -2
-	category = list("body")
-
-	onAdd(var/mob/owner)
-		SPAWN(4 SECONDS)
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0, TRUE)
-					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0, TRUE)
-					H.limbs.l_arm.holder = H
-					H.limbs.r_arm.holder = H
-					H.update_body()
-
 /datum/trait/explolimbs
 	name = "Adamantium Skeleton"
 	desc = "Halves the chance that an explosion will blow off your limbs."
 	id = "explolimbs"
+	icon_state = "adskeleton"
 	category = list("body")
 	points = -2
 
@@ -270,6 +269,10 @@
 	icon_state = "deaf"
 	category = list("body")
 	points = 1
+	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Deaf"
+	disability_desc = "Permanent hearing loss"
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -280,15 +283,77 @@
 		if(!owner.ear_disability)
 			owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
 
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("deaf")
+
+
 /datum/trait/nolegs
 	name = "Stumped"
 	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
 	id = "nolegs"
-	icon_state = "placeholder"
+	icon_state = "stumped"
 	category = list("body")
 	points = 0
-// LANGUAGE - Yellow Border
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Legless"
+	disability_desc = "Legs have been severed"
 
+/datum/trait/plasmalungs
+	name = "Plasma Lungs"
+	desc = "You signed up for a maintenance experiment involving someone who was definitely a scientist and your lungs are now only capable of breathing in plasma. At least they gave you a free tank to breathe from."
+	id = "plasmalungs"
+	icon_state = "plasmalungs"
+	category = list("body")
+	points = 1
+	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Plasma Lungs"
+	disability_desc = "Only capable of breathing plasma in a gaseous state"
+
+	onAdd(mob/living/carbon/human/owner)
+		if (!istype(owner))
+			return
+		var/obj/item/organ/created_organ
+		var/obj/item/organ/lung/left = owner?.organHolder?.left_lung
+		var/obj/item/organ/lung/right = owner?.organHolder?.right_lung
+		if(istype(left) && istype(right))
+			created_organ = new /obj/item/organ/lung/plasmatoid/left()
+			owner.organHolder.drop_organ(left.organ_holder_name)
+			qdel(left)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+			created_organ = new /obj/item/organ/lung/plasmatoid/right()
+			owner.organHolder.drop_organ(right.organ_holder_name)
+			qdel(right)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+	onRemove(mob/living/carbon/human/owner)
+		if (!istype(owner))
+			return
+		var/obj/item/organ/created_organ
+		var/obj/item/organ/lung/plasmatoid/left = owner?.organHolder?.left_lung
+		var/obj/item/organ/lung/plasmatoid/right = owner?.organHolder?.right_lung
+		if(istype(left))
+			created_organ = new /obj/item/organ/lung/left()
+			owner.organHolder.drop_organ(left.organ_holder_name)
+			qdel(left)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+		if(istype(right))
+			created_organ = new /obj/item/organ/lung/right()
+			owner.organHolder.drop_organ(right.organ_holder_name)
+			qdel(right)
+
+			created_organ.donor = owner
+			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+// LANGUAGE - Yellow Border
 /datum/trait/swedish
 	name = "Swedish"
 	desc = "You are from sweden. Meat balls and so on."
@@ -358,6 +423,17 @@
 		return
 */
 
+/datum/trait/german
+	name = "German"
+	desc = "You're from somewhere in the middle of Texas. Prost y'all."
+	id = "german"
+	icon_state = "german"
+	points = 0
+	category =  list("language")
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("accent_german")
+
 /datum/trait/finnish
 	name = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"
@@ -406,6 +482,9 @@
 	category = list("vision")
 	points = 1
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Myopic"
+	disability_desc = "Requires glasses for visual acuity"
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -416,6 +495,9 @@
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("bad_eyesight"))
 			owner.bioHolder.AddEffect("bad_eyesight", 0, 0, 0, 1)
 
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("bad_eyesight")
+
 /datum/trait/blind
 	name = "Blind"
 	desc = "Spawn with permanent blindness and a VISOR."
@@ -424,6 +506,9 @@
 	category = list("vision")
 	points = 2
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Blind"
+	disability_desc = "Permanent vision loss"
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -433,6 +518,9 @@
 	onLife(var/mob/owner) //Just to be safe.
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("blind"))
 			owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
+
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("blind")
 
 // GENETICS - Blue Border
 
@@ -444,6 +532,9 @@
 	points = 0
 	category = list("genetics")
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Genetic Deviation"
+	disability_desc = "Minor alteration from baseline genetic sequence"
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
@@ -502,6 +593,14 @@
 	points = -1
 	category = list("trinkets")
 
+/datum/trait/petperson
+	name = "Pet Person"
+	desc = "Start with your (possibly lovable) pet!"
+	id = "petperson"
+	icon_state = "petperson"
+	points = -1
+	category = list("trinkets")
+
 /datum/trait/lunchbox
 	name = "Lunchbox"
 	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
@@ -514,17 +613,9 @@
 	name = "Bald"
 	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
 	id = "bald"
-	icon_state = "placeholder"
+	icon_state = "bald"
 	points = 0
 	category = list("trinkets", "nopug")
-
-/datum/trait/one_armed
-	name = "One Armed Spaceman"
-	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
-	id = "onearmed"
-	icon_state = "placeholder"
-	points = 0
-
 
 
 // Skill - White Border
@@ -533,6 +624,7 @@
 	name = "Smooth talker"
 	desc = "Traders will tolerate 50% more when you are haggling with them."
 	id = "smoothtalker"
+	icon_state = "sale"
 	category = list("skill")
 	points = -1
 
@@ -540,6 +632,7 @@
 	name = "Matrix Flopout"
 	desc = "Flipping lets you dodge bullets and attacks for a higher stamina cost!"
 	id = "matrixflopout"
+	icon_state = "matrix"
 	category = list("skill")
 	points = -2
 
@@ -547,6 +640,7 @@
 	name = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
 	id = "happyfeet"
+	icon_state = "dance"
 	category = list("skill")
 	points = -1
 
@@ -579,10 +673,31 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in cultural and psychological matters."
 	id = "training_chaplain"
 
+	var/faith = FAITH_STARTING
+	///multiplier for faith gain only - faith losses ignore this
+	var/faith_mult = 1
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	onAdd(mob/living/owner)
+		if(owner.traitHolder?.hasTrait("atheist"))
+			src.faith_mult = 0.2
+
 /datum/trait/job/medical
 	name = "Medical Training"
 	desc = "Subject is a proficient surgeon."
 	id = "training_medical"
+
+/datum/trait/job/scientist
+	name = "Scientist Training."
+	desc = "Subject is a experienced researcher."
+	id = "training_scientist"
 
 /datum/trait/job/headsurgeon
 	name = "Party Surgeon"
@@ -601,7 +716,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
-	desc = "Subject is proficent at haggling."
+	desc = "Subject is proficient at haggling."
 	id = "training_quartermaster"
 
 /datum/trait/job/chef
@@ -615,11 +730,36 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
 
+/datum/trait/job/clown
+	name = "Clown Training"
+	desc = "Subject is trained at being a clumsy buffoon."
+	id = "training_clown"
+
+	onAdd(var/mob/owner)
+		owner.AddComponent(/datum/component/death_confetti)
+		owner.bioHolder?.AddEffect("accent_comic", magical = TRUE)
+		owner.bioHolder?.AddEffect("clumsy", magical = TRUE)
+
+/datum/trait/job/mime
+	name = "Mime Training"
+	desc = "..."
+	id = "training_mime"
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("mute", magical = TRUE)
+		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
+
+/datum/trait/job/miner
+	name = "Miner Training"
+	desc = "Subject is trained at carving out asteroids."
+	id = "training_miner"
+
 // Stats - Undetermined Border
 /datum/trait/athletic
 	name = "Athletic"
 	desc = "Great stamina! Frail body."
 	id = "athletic"
+	icon_state = "athletic"
 	category = list("stats")
 	points = -2
 
@@ -629,12 +769,38 @@ ABSTRACT_TYPE(/datum/trait/job)
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait", STAMINA_REGEN * 0.1)
 
+	onRemove(mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.remove_stam_mod_max("trait", STAMINA_MAX * 0.1)
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "trait")
+
 /datum/trait/bigbruiser
 	name = "Big Bruiser"
 	desc = "Stronger punches but higher stamina cost!"
 	id = "bigbruiser"
+	icon_state = "bruiser"
 	category = list("stats")
 	points = -2
+
+/datum/trait/slowstrider
+	name = "Slow Strider"
+	desc = "What's the rush? You can't sprint anymore."
+	id = "slowstrider"
+	icon_state = "slow"
+	category = list("stats")
+	points = 2
+	afterlife_blacklisted = TRUE
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_CANTSPRINT, "trait")
+
+	onRemove(mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTSPRINT, "trait")
 
 //Category: Background.
 
@@ -644,7 +810,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "stowaway"
 	icon_state = "stowaway"
 	category = list("background")
-	points = 1
+	points = 0
+	unselectable = TRUE
 
 /datum/trait/pilot
 	name = "Pilot"
@@ -659,8 +826,42 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Heavy Sleeper"
 	desc = "You always sleep through the start of the shift, and wake up in a random bed."
 	id = "sleepy"
+	icon_state = "sleepy"
 	category = list("background")
 	points = 0
+	spawn_delay = 10 SECONDS
+
+TYPEINFO(/datum/trait/partyanimal)
+	var/list/allowed_items = list(
+		/obj/item/clothing/head/party/random,
+		/obj/item/balloon_animal/random,
+		/obj/item/reagent_containers/balloon,
+		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/clothing/head/party/birthday,
+		/obj/random_item_spawner/hat/one,
+		/obj/random_item_spawner/snacks/one,
+		/obj/random_item_spawner/junk/one,
+		/obj/random_item_spawner/mask/one,
+		/obj/random_item_spawner/pizza/one,
+		/obj/random_item_spawner/cola/one
+	)
+	var/list/allowed_debris = list(
+		/obj/decal/cleanable/balloon,
+		/obj/decal/cleanable/vomit,
+		/obj/decal/cleanable/paper,
+		/obj/decal/cleanable/eggsplat,
+		/obj/decal/cleanable/generic
+	)
+	var/num_bar_turfs = null
+	var/clutter_count = 0
+/datum/trait/partyanimal
+	name = "Party Animal"
+	desc = "You don't remember much about last night, but you know you had a good time."
+	id = "partyanimal"
+	icon_state = "partyanimal"
+	category = list("background")
+	points = 0
+	spawn_delay = 3 SECONDS
 
 // NO CATEGORY - Grey Border
 
@@ -668,19 +869,28 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Hemophilia"
 	desc = "You bleed more easily and you bleed more."
 	id = "hemophilia"
+	icon_state = "hemophilia"
 	points = 1
 	category = list("hemophilia")
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Hemophilia"
+	disability_desc = "Prone to blood loss"
 
 /datum/trait/weakorgans
 	name = "Frail Constitution"
 	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
 	id = "weakorgans"
+	icon_state = "frailc"
 	points = 2
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Organ Sensitivity"
+	disability_desc = "Organs prone to damage"
 
 /datum/trait/slowmetabolism
 	name = "Slow Metabolism"
 	desc = "Any chemicals in you body deplete much more slowly."
 	id = "slowmetabolism"
+	icon_state = "slowm"
 	points = 0
 
 /datum/trait/alcoholic
@@ -693,10 +903,15 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
 
+	onRemove(mob/owner)
+		owner.bioHolder?.RemoveEffect("resist_alcohol")
+
+
 /datum/trait/random_allergy
 	name = "Allergy"
 	desc = "You're allergic to... something. You can't quite remember, but how bad could it possibly be?"
 	id = "randomallergy"
+	icon_state = "allergy"
 	points = 0
 	category = list("allergy")
 	afterlife_blacklisted = TRUE
@@ -705,9 +920,9 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
-	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","ethanol","iron","mercury","oxygen","plasma","sugar","radium","water","bathsalts","jenkem","crank",\
+	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","ethanol","iron","mercury","oxygen","plasma","sugar","radium","water","bathsalts","crank",\
 	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","saxitoxin","smokepowder","infernite","phlogiston","fuel",\
-	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
+	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
 	New()
@@ -726,6 +941,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Medical Allergy"
 	desc = "You're allergic to some medical chemical... but you can't remember which."
 	id = "medicalallergy"
+	icon_state = "medallergy"
 	points = 1
 	category = list("allergy")
 	afterlife_blacklisted = TRUE
@@ -738,7 +954,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Addict"
 	desc = "You spawn with a random addiction. Once cured there is a small chance that you will suffer a relapse."
 	id = "addict"
-	icon_state = "syringe"
+	icon_state = "addict"
 	points = 2
 	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
@@ -771,6 +987,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 		AD.name = "[selected_reagent] addiction"
 		AD.affected_mob = M
 		M.ailments += AD
+
+	onRemove(mob/owner)
+		for(var/datum/ailment_data/addiction/AD in owner.ailments)
+			if(AD.associated_reagent == selected_reagent)
+				owner.ailments -= AD
 
 /datum/trait/strongwilled
 	name = "Strong willed"
@@ -845,20 +1066,25 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Chem resistant"
 	desc = "You are more resistant to chem overdoses."
 	id = "chemresist"
+	icon_state = "chemresist"
 	points = -2
 
 /datum/trait/puritan
 	name = "Puritan"
 	desc = "You can not be cloned or revived except by cyborgification. Any attempt will end badly."
 	id = "puritan"
+	icon_state = "puritan"
 	points = 2
 	category = list("cloner_stuff")
-
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Clone Instability"
+	disability_desc = "Genetic structure incompatible with cloning"
 
 /datum/trait/survivalist
 	name = "Survivalist"
 	desc = "Food will heal you even if you are badly injured."
 	id = "survivalist"
+	icon_state = "survivalist"
 	points = -1
 
 /datum/trait/smoker
@@ -901,6 +1127,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Kleptomaniac"
 	desc = "You will sometimes randomly pick up nearby items."
 	id = "kleptomaniac"
+	icon_state = "klepto"
 	points = 1
 	afterlife_blacklisted = TRUE
 
@@ -916,6 +1143,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Clutz"
 	desc = "When interacting with anything you have a chance to interact with something different instead."
 	id = "clutz"
+	icon_state = "clutz"
 	points = 2
 	afterlife_blacklisted = TRUE
 
@@ -923,6 +1151,15 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
 	id = "leftfeet"
+	icon_state = "twoleft"
+	points = 1
+	afterlife_blacklisted = TRUE
+
+/datum/trait/trippy
+	name = "Trippy"
+	desc = "You have a tendency to randomly trip while moving."
+	id = "trippy"
+	icon_state = "trip"
 	points = 1
 	afterlife_blacklisted = TRUE
 
@@ -937,21 +1174,39 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Hyperallergic"
 	desc = "You have a severe sensitivity to allergens and are liable to slip into anaphylactic shock upon exposure."
 	id = "allergic"
-	icon_state = "placeholder"
+	icon_state = "hypeallergy"
 	points = 1
 	category = list("allergy")
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Anaphylactic"
+	disability_desc = "Acute response to allergens"
 
 /datum/trait/allears
 	name="All ears"
 	desc = "You lost your headset on the way to work."
 	id = "allears"
+	icon_state = "allears"
 	points = 0
 
 /datum/trait/atheist
 	name = "Atheist"
 	desc = "In this moment, you are euphoric. You cannot receive faith healing, and prayer makes you feel silly."
 	id = "atheist"
+	icon_state = "atheist"
 	points = 0
+
+	onAdd(mob/living/owner)
+		if (istype(owner))
+			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
+		chap_trait?.faith_mult = 0.2
+
+	onRemove(mob/living/owner)
+		if (istype(owner))
+			owner.add_lifeprocess(/datum/lifeprocess/faith)
+		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
+		chap_trait?.faith_mult = 1
+
 
 /datum/trait/lizard
 	name = "Reptilian"
@@ -1001,8 +1256,47 @@ ABSTRACT_TYPE(/datum/trait/job)
 /datum/trait/super_slips
 	name = "Slipping Hazard"
 	id = "super_slips"
+	icon_state = "slip"
 	desc = "You never were good at managing yourself slipping."
 	points = 1
+
+/datum/trait/picky_eater
+	name = "Picky eater"
+	icon_state = "foodstuff"
+	id = "picky_eater"
+	desc = "Your refined palate only tolerates a handful of foods."
+	points = 0
+	var/list/fav_foods = list()
+	var/explanation_text = null
+
+	onAdd(var/mob/owner)
+		if (length(fav_foods) <= 0 && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/choices[5]
+			var/list/names[5]
+			var/i = 0
+			var/max_rolls = 30
+			var/current_rolls = 0
+			while (i < 5)
+				i++
+				choices[i] = pick(allowed_favorite_ingredients)
+				var/choiceType = choices[i]
+				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
+				if(instance.custom_food)
+					fav_foods += choiceType
+					names[i] = instance.name
+				else
+					i--
+				current_rolls++
+				if (current_rolls > max_rolls)
+					stack_trace("Failed to generate a foodlist for picky eater [H]. Aborting.")
+					return
+			explanation_text = "<b>Your favorite foods are : </b>"
+			for (var/ingredient in names)
+				if (ingredient != names[5])
+					explanation_text += "[ingredient], "
+				else
+					explanation_text += "and [ingredient]<br/>"
 
 //Infernal Contract Traits
 /datum/trait/hair

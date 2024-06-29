@@ -2,7 +2,8 @@
 	name = "Avian Flu"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Chicken Soup"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Chicken soup"
 	associated_reagent = "feather_fluid"
 	reagentcure = list("chickensoup")
 	affected_species = list("Human")
@@ -23,12 +24,12 @@
 			if(probmult(3))
 				affected_mob.emote("aflap")
 			if(probmult(2))
-				boutput(affected_mob, "<span class='alert'>You feel your ribcage constrict.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel your ribcage constrict."))
 			if(probmult(2))
-				boutput(affected_mob, "<span class='alert'>You feel your body contort.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel your body contort."))
 		if(4)
-			boutput(affected_mob, "<span class='alert'>You feel your physical form condensing into something light and airy... What?</span>")
-			affected_mob.visible_message("<span class='alert'><b>[affected_mob] transforms!</b></span>")
+			boutput(affected_mob, SPAN_ALERT("You feel your physical form condensing into something light and airy... What?"))
+			affected_mob.visible_message(SPAN_ALERT("<b>[affected_mob] transforms!</b>"))
 			affected_mob.unequip_all()
 			logTheThing(LOG_COMBAT, affected_mob, "is transformed into a critter bird by the [name] reagent at [log_loc(affected_mob)].")
 			affected_mob.make_critter(/mob/living/critter/small_animal/bird/random)

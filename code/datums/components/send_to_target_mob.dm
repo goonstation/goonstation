@@ -17,7 +17,7 @@ TYPEINFO(/datum/component/send_to_target_mob)
 	if (!I || !istype(I) || !M || !istype(M))
 		return
 
-	I.visible_message("<span class='alert'><b>The [I.name] is suddenly warped away!</b></span>")
+	I.visible_message(SPAN_ALERT("<b>The [I.name] is suddenly warped away!</b>"))
 	elecflash(I)
 
 	if (ismob(I.loc))

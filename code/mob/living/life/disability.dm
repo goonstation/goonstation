@@ -14,21 +14,21 @@
 
 		// The value at which this stuff is capped at can be found in mob.dm
 		if (owner.hasStatus("resting"))
+			owner.dizziness = max(0, owner.dizziness - 10*mult)
+			owner.jitteriness = max(0, owner.jitteriness - 10*mult)
+		else
 			owner.dizziness = max(0, owner.dizziness - 5*mult)
 			owner.jitteriness = max(0, owner.jitteriness - 5*mult)
-		else
-			owner.dizziness = max(0, owner.dizziness - 2*mult)
-			owner.jitteriness = max(0, owner.jitteriness - 2*mult)
 
 		if (owner.mind && isvampire(owner) || isvampiricthrall(owner))
 			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))
 				if (prob(33))
-					boutput(owner, "<span class='alert'>The holy ground burns you!</span>")
+					boutput(owner, SPAN_ALERT("The holy ground burns you!"))
 				owner.TakeDamage("chest", 0, 5 * mult, 0, DAMAGE_BURN)
 				owner.change_vampire_blood(-5 * mult)
 			if (owner.loc && istype(owner.loc, /turf/space) || (istype(owner.loc, /obj/dummy/spell_batpoof) && istype(get_turf(owner.loc), /turf/space)))
 				if (prob(33))
-					boutput(owner, "<span class='alert'>The starlight burns you!</span>")
+					boutput(owner, SPAN_ALERT("The starlight burns you!"))
 				owner.TakeDamage("chest", 0, 2.5 * mult, 0, DAMAGE_BURN)
 				owner.change_vampire_blood(-2.5 * mult)
 
@@ -37,12 +37,7 @@
 			if (A.irradiated)
 				//spatial interdictor: mitigate effect of radiation
 				//power expenditure is managed centrally by the interdictor
-				var/interdictor_influence = 0
-				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.radstorm_interdict(owner))
-						interdictor_influence = 1
-						break
-				if(!interdictor_influence)
+				if (!owner.hasStatus("spatial_protection"))
 					owner.take_radiation_dose((rand() * 0.3 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder && ishuman(owner))

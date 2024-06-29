@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Stack, Box, NumberInput, Image } from '../components';
+import { Box, Button, Image, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const PipeDispenser = (props, context) => {
@@ -62,7 +62,6 @@ export const DisposalPipeRow = (props, context) => {
         <Stack.Item>
           <Box style={{ "overflow": "show", "height": "32px" }}>
             <Image
-              pixelated
               src={`data:image/png;base64,${disposalpipe.image}`}
             />
           </Box>
@@ -109,8 +108,7 @@ export const AutoPipeLaying = (props, context) => {
   } = props;
 
   return (
-    <Section
-      title="Automatic Pipe Options">
+    <Section title="Automatic Pipe Options">
       <Button
         color={laying_pipe ? "average" : "green"}
         content={laying_pipe ? "Stop Laying Pipe Automatically" : "Start Laying Pipe Automatically"}

@@ -47,9 +47,9 @@
 				C.drop_item()
 				C.hand_attack(I)
 				if (prob(20))
-					holder.owner.visible_message("<span class='notice'>[holder.owner] begins to chew on [holder.target]!</span>")
+					holder.owner.visible_message(SPAN_NOTICE("[holder.owner] begins to chew on [holder.target]!"))
 				else
-					holder.owner.visible_message("<span class='notice'>[holder.owner] picks up [holder.target]!</span>")
+					holder.owner.visible_message(SPAN_NOTICE("[holder.owner] picks up [holder.target]!"))
 					holder.priority_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/dog/fetch_back, list(holder, holder.default_task))
 			is_complete = TRUE
 
@@ -76,7 +76,7 @@
 		var/seen_item = "something"
 		if (the_item.w_class > W_CLASS_TINY)
 			seen_item = the_item
-		the_dog.visible_message("<span class='notice'>[the_dog] begins happily running towards [playmate] with [seen_item] in their mouth, wagging their tail furiously!</span>")
+		the_dog.visible_message(SPAN_NOTICE("[the_dog] begins happily running towards [playmate] with [seen_item] in their mouth, wagging their tail furiously!"))
 		return list(the_dog.fetch_playmate)
 	else
 		return list()
@@ -104,7 +104,7 @@
 			C.set_dir(get_dir(C, M))
 			if(C.set_hand(1))
 				C.drop_item()
-				C.visible_message("<span class='notice'>[C] drops what they have in their mouth in front of [M]. [pick("It's positively COVERED in dog saliva.", "[C] wags their tail happily.", "Good dog!")]</span>")
+				C.visible_message(SPAN_NOTICE("[C] drops what they have in their mouth in front of [M]. [pick("It's positively COVERED in dog saliva.", "[C] wags their tail happily.", "Good dog!")]"))
 			is_complete = TRUE
 
 /datum/aiTask/succeedable/critter/dog/fetch_back/on_reset()

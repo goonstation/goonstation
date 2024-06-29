@@ -2,24 +2,31 @@
 /datum/hud/critter/flock/drone
 	hud_icon = 'icons/mob/flock_ui.dmi'
 
+	var/atom/movable/screen/hud/relay/relayInfo
 	var/atom/movable/screen/hud/charge_overlay
 	var/icon/overlay_mask
 
 	New(M)
 		..(M)
-		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER+1, tooltipTheme = "flock")
+		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER_1, tooltipTheme = "flock")
 		releaseButton.desc = "Remove yourself from this drone and become intangible."
-		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER+1, tooltipTheme = "flock")
+		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER_1, tooltipTheme = "flock")
 		eggButton.desc = "Lay egg is true! Starts at [FLOCK_LAY_EGG_COST] and scales with number of drones."
+		if (istype(M, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/F = M
+			if (F.flock.relay_allowed)
+				create_screen("relayBack", "", 'icons/mob/flock_ui.dmi', "template-full", "EAST-1,NORTH", HUD_LAYER)
+				src.relayInfo = create_screen("relay", "Relay Progress", 'icons/mob/flock_ui.dmi', "structure-relay", "EAST-1,NORTH", HUD_LAYER_1, customType=/atom/movable/screen/hud/relay)
+				relayInfo.update_value()
 
 	relay_click(id, mob/user, list/params)
 		var/mob/living/critter/flock/drone/F = master
 		if(F)
 			if (id == "release")
 				if (!F.flock) //we are a lone drone!
-					boutput(user, "<span class='alert'>You have no flock to return to.")
+					boutput(user, SPAN_ALERT("You have no flock to return to."))
 					return
-				if (!F.flock.flockmind.tutorial || F.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_RELEASE))
+				if (!F.flock.flockmind?.tutorial || F.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_RELEASE))
 					F.release_control()
 			else if(id == "spawn")
 				F.create_egg()
@@ -36,3 +43,4 @@
 ///Charge is given as a ratio from 0 to 1
 /datum/hud/critter/flock/drone/proc/set_stunner_charge(var/charge)
 	src.charge_overlay.transition_filter("mask", 0.5 SECONDS, list("y" = -24 * (1 - charge)), SINE_EASING, FALSE)
+

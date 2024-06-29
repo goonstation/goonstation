@@ -30,7 +30,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 					src.link.master = src
 
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	disposing()
 		STOP_TRACKING
@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 			if (src.status & (BROKEN|NOPOWER))
 				return
 
-			if (cargo_logs.len > 20)
+			if (length(cargo_logs) > 20)
 				cargo_logs.len = 10
 
 			var/shiftTime = round(ticker.round_elapsed_ticks / 600)
@@ -190,7 +190,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 								return
 							src.post_reply("SHUTL_E_RET", target)
 					else
-						//to-do: error reply
+						; //to-do: error reply
 			if("transmit")
 				if(signal.data["acc_code"] != netpass_heads)
 					return

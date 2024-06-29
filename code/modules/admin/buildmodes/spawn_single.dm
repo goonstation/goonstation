@@ -40,14 +40,14 @@ change the direction of created objects.<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span class='alert'>No object path!</span>")
+			boutput(usr, SPAN_ALERT("No object path!"))
 			return
 		var/turf/T = get_turf(object)
 		if(!isnull(T) && objpath)
 			switch(cinematic)
 				if("Telepad")
 					var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
-					var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
+					var/obj/fakeobject/teleport_pad/pad = new /obj/fakeobject/teleport_pad
 					swirl.mouse_opacity = 0
 					pad.mouse_opacity = 0
 					pad.loc = T
@@ -174,7 +174,7 @@ change the direction of created objects.<br>
 						new objpath(T)
 						var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 						P.setup(T)
-						playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
+						playsound(T, 'sound/effects/poff.ogg', 50, TRUE, pitch = 1)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else

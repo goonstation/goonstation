@@ -10,6 +10,7 @@
 	not_when_in_an_object = FALSE
 	when_stunned = 2
 	not_when_handcuffed = 0
+	interrupt_action_bars = FALSE
 
 	proc/remove_stuns(var/message_type = 1)
 		if (!holder)
@@ -23,9 +24,7 @@
 		if (is_incapacitated(M) && M.stamina < 40)
 			M.set_stamina(40)
 
-		M.delStatus("stunned")
-		M.delStatus("weakened")
-		M.delStatus("paralysis")
+		M.remove_stuns()
 		M.delStatus("slowed")
 		M.delStatus("disorient")
 		M.change_misstep_chance(-INFINITY)
@@ -34,12 +33,12 @@
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
-			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] contorts [his_or_her(M)] body and judders upright!</B>"))
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)
-			boutput(M, "<span class='notice'>You feel your flesh knitting itself back together.</span>")
+			boutput(M, SPAN_NOTICE("You feel your flesh knitting itself back together."))
 		else
-			boutput(M, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
+			boutput(M, SPAN_NOTICE("You feel refreshed and ready to get back into the fight."))
 
 		M.delStatus("resting")
 		if (ishuman(M))
@@ -61,13 +60,14 @@
 		if (!M)
 			return 1
 
-		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("weakened"),M.getStatusDuration("paralysis"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
+		. = ..()
+		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("knockdown"),M.getStatusDuration("unconscious"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
 		greatest_stun = round(greatest_stun / 20)
 
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
 		M.losebreath = min(usr.losebreath - 3)
-		boutput(M, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
+		boutput(M, SPAN_NOTICE("You cancel your stuns and take [greatest_stun] damage in return."))
 
 		src.remove_stuns(3)
 		return 0
@@ -89,6 +89,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		if (M.get_burn_damage() > 0 || M.get_toxin_damage() > 0 || M.get_brute_damage() > 0 || M.get_oxygen_deprivation() > 0 || M.losebreath > 0)
 			M.HealDamage("All", 40, 40)
 			M.take_toxin_damage(-40)

@@ -18,9 +18,9 @@
 
 	if(length(F.flock.traces) >= F.flock.max_trace_count)
 		if (length(F.flock.traces) < round(FLOCK_RELAY_COMPUTE_COST / FLOCKTRACE_COMPUTE_COST))
-			boutput(holder.get_controlling_mob(), "<span class='alert'>You need more compute!</span>")
+			boutput(holder.get_controlling_mob(), SPAN_ALERT("You need more compute!"))
 		else
-			boutput(holder.get_controlling_mob(), "<span class='alert'>You cannot make any more Flocktraces!</span>")
+			boutput(holder.get_controlling_mob(), SPAN_ALERT("You cannot make any more Flocktraces!"))
 		return TRUE
 
 	if (!src.tutorial_check(FLOCK_ACTION_PARTITION))

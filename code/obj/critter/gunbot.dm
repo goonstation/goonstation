@@ -4,8 +4,8 @@ TYPEINFO(/obj/critter/gunbot)
 /obj/critter/gunbot
 	name = "Robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/mob/robots.dmi'
-	icon_state = "syndibot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot_light"
 	density = 1
 	health = 50
 	aggressive = 1
@@ -34,7 +34,7 @@ TYPEINFO(/obj/critter/gunbot)
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [src.target]!"))
 
 
 				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
@@ -62,7 +62,7 @@ TYPEINFO(/obj/critter/gunbot)
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [src.target]!"))
 
 				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)

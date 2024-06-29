@@ -167,7 +167,7 @@ Contents:
 	stamina_cost = 45
 	stamina_crit_chance = 10
 
-/obj/decal/fakeobjects/unfinished_katana
+/obj/fakeobject/unfinished_katana
 
 /obj/item/unfinished_katana
 	name = "unfinished blade"
@@ -262,7 +262,6 @@ Contents:
 /datum/action/bar/icon/forge_katana
 	duration = 1.5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
-	id = "forge_katana"
 
 	var/mob/living/user
 	var/obj/item/dojohammer/H
@@ -338,7 +337,7 @@ Contents:
 
 // -Decoration
 
-/obj/decal/fakeobjects/arch
+/obj/fakeobject/arch
 	name = "torii"
 	desc = "A great gate marking sacred grounds."
 	icon = 'icons/obj/large/160x128.dmi'
@@ -361,31 +360,31 @@ Contents:
 * It's a pretty horrible mistranslation, so I'm 100% keeping it.
 */
 
-/obj/decal/fakeobjects/kanji_1
+/obj/fakeobject/kanji_1
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
 	anchored = ANCHORED_ALWAYS
 
-/obj/decal/fakeobjects/kanji_2
+/obj/fakeobject/kanji_2
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"
 	anchored = ANCHORED_ALWAYS
 
-/obj/decal/fakeobjects/dojohouse
+/obj/fakeobject/dojohouse
 	icon = 'icons/effects/224x160.dmi'
 	icon_state = "dojohouse"
 
-/obj/decal/fakeobjects/lotus
+/obj/fakeobject/lotus
 	name = "lotus"
 	desc = "A pretty water garden flower."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "lotus_1"
 
-/obj/decal/fakeobjects/birdhouse // i literally cannot find the correct name for this.
+/obj/fakeobject/birdhouse // i literally cannot find the correct name for this.
 	name = "small shrine"
 	density = 1
 	anchored = ANCHORED
@@ -408,7 +407,7 @@ Contents:
 		light.attach(src)
 		light.enable()
 
-/obj/decal/fakeobjects/plantpot
+/obj/fakeobject/plantpot
 	name = "plant pot"
 	density = 1
 	anchored = ANCHORED
@@ -427,7 +426,7 @@ Contents:
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "lamp1"
 
-/obj/decal/fakeobjects/bridge_rail
+/obj/fakeobject/bridge_rail
 	name = "railing"
 	icon = 'icons/obj/dojo_rail.dmi'
 	layer = EFFECTS_LAYER_BASE
@@ -478,7 +477,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
+					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -497,12 +496,29 @@ Contents:
 	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
+	HELP_MESSAGE_OVERRIDE("") // No, you can't wrench it
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W) && src.place_on(W, user, params))
+		if (istype(W))
+			src.place_on(W, user, params)
+
+/obj/table/anvil/gimmick
+	anchored = UNANCHORED
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to slice it into sheets."})
+	attackby(obj/item/W, mob/user, params)
+		if (isweldingtool(W) && user.a_intent == "harm")
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, PROC_REF(deconstruct), null, W.icon, W.icon_state, "[user] finishes slicing \the [src] into sheets.",
+			INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 			return
-		else
-			return ..()
+		..()
+
+	deconstruct()
+		var/obj/item/sheet/sheet_stack = new /obj/item/sheet(src.loc)
+		sheet_stack.amount = 10
+		if (src.material)
+			sheet_stack.setMaterial(src.material)
+		sheet_stack.update_appearance()
+		qdel(src)
 
 /obj/dojo_bellows
 	name = "bellows"
@@ -519,10 +535,10 @@ Contents:
 		else
 			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
-				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
+				src.visible_message("\The [src] breathe life into \the [T] causing it erupt in flames.", blind_message="A loud roar of air causes a fire to erupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
 
-/obj/decal/fakeobjects/swordrack
+/obj/fakeobject/swordrack
 	name = "katana rack"
 	desc = "A wooden rack of swords."
 	icon = 'icons/obj/dojo.dmi'
@@ -530,13 +546,13 @@ Contents:
 	density = 1
 	anchored = ANCHORED_ALWAYS
 
-/obj/decal/fakeobjects/rake
+/obj/fakeobject/rake
 	name = "zen garden rake"
 	desc = "A little wooden tool for raking sand in to patterns."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "rake"
 
-/obj/decal/fakeobjects/sealed_door
+/obj/fakeobject/sealed_door
 	name = "laboratory door"
 	desc = "It appears to be sealed."
 	icon = 'icons/obj/dojo.dmi'
@@ -545,7 +561,7 @@ Contents:
 	anchored = ANCHORED_ALWAYS
 	opacity = 1
 
-/obj/decal/fakeobjects/katana_fake
+/obj/fakeobject/katana_fake
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -687,7 +703,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/paper)
@@ -695,17 +711,17 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 
 
 /turf/unsimulated/wall/sengoku_tall
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 	icon_state= "tall"
 	opacity = 0
 
 /turf/simulated/wall/false_wall/sengoku
 	desc = "There seems to be markings on one of the edges, huh."
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 	icon_state = "2"
 	can_be_auto = 0
 

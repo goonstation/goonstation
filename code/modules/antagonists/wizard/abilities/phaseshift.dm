@@ -26,7 +26,7 @@
 		if(holder.owner.wizard_spellpower(src))
 			SPtime = 50
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell doesn't last as long without a staff to focus it!"))
 		playsound(holder.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
@@ -37,7 +37,7 @@
 	if (!isturf(H.loc))
 		H.show_text("You can't seem to turn incorporeal here.", "red")
 		return
-	if (H.stat || H.getStatusDuration("paralysis") > 0)
+	if (H.stat || H.getStatusDuration("unconscious") > 0)
 		H.show_text("You can't turn incorporeal when you are incapacitated.", "red")
 		return
 
@@ -58,7 +58,7 @@
 
 	if (stop_burning == 1)
 		if (H.getStatusDuration("burning"))
-			boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
+			boutput(H, SPAN_NOTICE("The flames sputter out as you phase shift."))
 			H.delStatus("burning")
 
 	SPAWN(0)
@@ -143,47 +143,25 @@
 /obj/dummy/spell_invis/bullet_act(obj/projectile/P)
 	return
 
+/obj/dummy/spell_invis/dimshift
+	var/mob/living/carbon/human/owner
+	var/datum/bioEffect/power/dimension_shift/P
 
-
-/proc/spell_batpoof(var/mob/H, var/cloak = 0)
-	if (!H || !ismob(H))
-		return
-	if (!isturf(H.loc))
-		H.show_text("You can't seem to transform in here.", "red")
-		return
-	if (isdead(H))
-		return
-	if (!H.canmove)
-		return
-	if(isrestrictedz(H.loc.z))
-		return
-
-	if (isliving(H))
-		var/mob/living/owner = H
-		if (owner.stamina < STAMINA_SPRINT)
-			return
-
-
-	//usecloak == check abilityholder
-	new /obj/dummy/spell_batpoof( get_turf(H), H , cloak)
-
-/proc/spell_firepoof(var/mob/H)
-	if (!H || !ismob(H))
-		return
-	if (!isturf(H.loc))
-		H.show_text("You can't seem to transform in here.", "red")
-		return
-	if (isdead(H))
-		return
-	if (!H.canmove)
-		return
-
-	if (isliving(H))
-		var/mob/living/owner = H
-		if (owner.stamina < STAMINA_SPRINT)
-			return
-
-	new /obj/dummy/spell_batpoof/firepoof( get_turf(H), H , 0)
+/obj/dummy/spell_invis/dimshift/New(loc, owner, power)
+	. = ..()
+	src.owner = owner
+	src.P = power
+/obj/dummy/spell_invis/dimshift/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == owner)
+		owner.visible_message(SPAN_ALERT("<b>[owner] appears in a burst of blue light!</b>"))
+		playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
+		SPAWN(0.7 SECONDS)
+			animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
+			animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+			P.active = FALSE
+			P.processing = FALSE
+		qdel(src)
 
 /obj/dummy/spell_batpoof
 	name = "bat"
@@ -363,7 +341,7 @@
 
 		relaymove()
 			..()
-			tfireflash(get_turf(owner), 0, 100)
+			fireflash(get_turf(owner), 0, 100, chemfire = CHEM_FIRE_RED)
 
 
 		dispel()

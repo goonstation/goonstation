@@ -12,7 +12,7 @@
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/item/broken_egun,
-/obj/item/clothing/under/shorts/trashsinglet{
+/obj/item/clothing/under/gimmick/trashsinglet{
 	pixel_x = 11;
 	pixel_y = -9
 	},
@@ -62,7 +62,7 @@
 /area/dmm_suite/clear_area)
 "X" = (
 /obj/machinery/computer/security/wooden_tv,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1;
 	pixel_y = 17
 	},

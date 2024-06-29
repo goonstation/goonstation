@@ -88,7 +88,7 @@
 		if (length(whoAdmins) < 1)
 			for (var/client/C as anything in clients)
 				if (C?.holder?.adminwho_alerts && !C.player_mode)
-					var/msg = "<span class='admin'>ADMIN LOG: [key_name(usr)] used Who and saw [length(whoAdmins)] admins.</span>"
+					var/msg = SPAN_ADMIN("ADMIN LOG: [key_name(usr)] used Who and saw [length(whoAdmins)] admins.")
 					boutput(C, replacetext(replacetext(msg, "%admin_ref%", "\ref[C?.holder]"), "%client_ref%", "\ref[C]"))
 
 /client/verb/adminwho()
@@ -130,5 +130,5 @@
 		logTheThing(LOG_DIARY, usr, "used adminwho and saw [adwnum] admins.", "admin")
 		for(var/client/C as anything in clients)
 			if(C?.holder?.adminwho_alerts && !C.player_mode)
-				var/msg = "<span class='admin'>ADMIN LOG: [key_name(usr)] used adminwho and saw [adwnum] admins.</span>"
+				var/msg = SPAN_ADMIN("ADMIN LOG: [key_name(usr)] used adminwho and saw [adwnum] admins.")
 				boutput(C, replacetext(replacetext(msg, "%admin_ref%", "\ref[C?.holder]"), "%client_ref%", "\ref[C]"))

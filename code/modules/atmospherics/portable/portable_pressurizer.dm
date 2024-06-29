@@ -23,8 +23,10 @@
  * 	Once sufficient pressure has been reached it can be released spreading it across the current airgroup with a minor stun explosion.
   */
 TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
-	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
-
+	mats = list("metal" = 15,
+				"metal_dense" = 3,
+				"insulated" = 3,
+				"conductive" = 10)
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
 	desc = "Some kind of nightmare contraption to make a lot of noise or pressurize rooms."
@@ -33,7 +35,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 	icon_state = "pressurizer"
 	density = 1
 	status = REQ_PHYSICAL_ACCESS
-	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	flags = CONDUCT | TGUI_INTERACTIVE
 	requires_power = FALSE //power only required for material processing
 	p_class = 3
 
@@ -146,7 +148,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			material_progress = 0
 			if(length(src.contents))
 				target_material = pick(src.contents)
-				if((target_material.amount > 1) && (target_material.material?.name in src.whitelist))
+				if((target_material.amount > 1) && (target_material.material?.getName() in src.whitelist))
 					var/atom/movable/splitStack = target_material.split_stack(target_material.amount-1)
 					splitStack.set_loc(src)
 				target_material.set_loc(null)
@@ -162,8 +164,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			var/progress = min(src.process_rate * 5,100-material_progress)
 			var/datum/gas_mixture/GM = new /datum/gas_mixture
 			GM.temperature = T20C
-			if(target_material.material?.name in src.whitelist)
-				switch(target_material.material.name)
+			if(target_material.material?.getName() in src.whitelist)
+				switch(target_material.material.getName())
 					if("molitz")
 						GM.oxygen += 1500 * progress / 100
 					if("viscerite")
@@ -189,7 +191,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		if (!src.emagged)
 			if (user)
 				user.show_text("You short out the material processor on [src].", "red")
-			src.audible_message("<span class='combat'><B>[src] buzzes oddly!</B></span>")
+			src.audible_message(SPAN_COMBAT("<B>[src] buzzes oddly!</B>"))
 			playsound(src.loc, "sparks", 50, 1, -1)
 			whitelist += blacklist
 			src.emagged = TRUE
@@ -214,7 +216,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			..()
 			return
 		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I,/obj/item/device/pda2)))
-			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
 			var/obj/item/satchel/S = I
@@ -232,13 +234,13 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		var/obj/item/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+				boutput(user, SPAN_ALERT("That won't fit!"))
 				return
 		else
 			if(!user.drop_item())
 				return
 			else if(I.w_class > W_CLASS_NORMAL)
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+				boutput(user, SPAN_ALERT("That won't fit!"))
 				return
 			I.set_loc(src)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\

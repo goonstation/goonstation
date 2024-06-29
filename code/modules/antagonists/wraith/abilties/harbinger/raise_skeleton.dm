@@ -29,7 +29,7 @@
 		if (ishuman(T))
 			var/mob/living/carbon/human/H = T
 			if (!isdead(H) || H.decomp_stage != DECOMP_STAGE_SKELETONIZED)
-				boutput(usr, "<span class='alert'>That body refuses to submit its skeleton to your will.</span>")
+				boutput(usr, SPAN_ALERT("That body refuses to submit its skeleton to your will."))
 				return 1
 			var/personname = H.real_name
 			var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(get_turf(T))
@@ -51,13 +51,13 @@
 				S.name = "Locker skeleton"
 				S.health_burn = 10
 				S.health_brute = 10
-				S.icon = 'icons/misc/critter.dmi'
+				S.icon = 'icons/mob/critter/humanoid/skeleton.dmi'
 				S.icon_state = "skeleton"
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 				return 0
 			else
-				boutput(usr, "<span class='alert'>You can't summon a skeleton there!</span>")
+				boutput(usr, SPAN_ALERT("You can't summon a skeleton there!"))
 				return 1
 		else
-			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
+			boutput(usr, SPAN_ALERT("There are no skeletonized corpses here to raise!"))
 			return 1

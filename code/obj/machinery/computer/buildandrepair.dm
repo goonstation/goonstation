@@ -13,8 +13,8 @@
 	///State of construction of the frame, see defines above
 	var/state = STATE_UNANCHORED
 	var/obj/item/circuitboard/circuit = null
-	var/obj/item/cable_coil/my_cable = null
 	material_amt = 0.5
+	HELP_MESSAGE_OVERRIDE("")
 
 	blob_act(var/power)
 		qdel(src)
@@ -29,7 +29,7 @@ TYPEINFO(/obj/item/circuitboard)
 	anchored = UNANCHORED
 	health = 6
 	w_class = W_CLASS_SMALL
-	name = "Circuit board"
+	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
@@ -48,129 +48,132 @@ TYPEINFO(/obj/item/circuitboard)
 		. = ..()
 
 /obj/item/circuitboard/security
-	name = "Circuit board (Security Cameras)"
-	computertype = "/obj/machinery/computer/security"
+	name = "circuit board (security cameras)"
+	computertype = /obj/machinery/computer/security
 /obj/item/circuitboard/security_tv
-	name = "Circuit board (Security Television)"
-	computertype = "/obj/machinery/computer/security/wooden_tv"
+	name = "circuit board (security television)"
+	computertype = /obj/machinery/computer/security/wooden_tv
 /obj/item/circuitboard/small_tv
-	name = "Circuit board (Television)"
-	computertype = "/obj/machinery/computer/security/wooden_tv/small"
-
-//obj/item/circuitboard/med_data
-//	name = "Circuit board (Medical)"
-//	computertype = "/obj/machinery/computer/med_data"
-/obj/item/circuitboard/scan_consolenew
-	name = "Circuit board (DNA Machine)"
-	computertype = "/obj/machinery/scan_consolenew"
+	name = "circuit board (television)"
+	computertype = /obj/machinery/computer/security/wooden_tv/small
 /obj/item/circuitboard/communications
-	name = "Circuit board (Communications)"
-	computertype = "/obj/machinery/computer/communications"
+	name = "circuit board (communications)"
+	computertype = /obj/machinery/computer/communications
 /obj/item/circuitboard/card
-	name = "Circuit board (ID Computer)"
-	computertype = "/obj/machinery/computer/card"
-//obj/item/circuitboard/shield
-//	name = "Circuit board (Shield Control)"
-//	computertype = "/obj/machinery/computer/stationshield"
+	name = "circuit board (ID computer)"
+	computertype = /obj/machinery/computer/card
 /obj/item/circuitboard/teleporter
-	name = "Circuit board (Teleporter)"
-	computertype = "/obj/machinery/computer/teleporter"
-/obj/item/circuitboard/science_teleport
-	name = "Circuit board (Science Teleporter)"
-	computertype = "/obj/machinery/computer/science_teleport"
+	name = "circuit board (teleporter)"
+	computertype = /obj/machinery/computer/teleporter
 /obj/item/circuitboard/secure_data
-	name = "Circuit board (Secure Data)"
-	computertype = "/obj/machinery/computer/secure_data"
+	name = "circuit board (secure data)"
+	computertype = /obj/machinery/computer/secure_data
 /obj/item/circuitboard/atmospherealerts
-	name = "Circuit board (Atmosphere alerts)"
-	computertype = "/obj/machinery/computer/atmosphere/alerts"
+	name = "circuit board (atmosphere alerts)"
+	computertype = /obj/machinery/computer/atmosphere/alerts
 /obj/item/circuitboard/atmospheresiphonswitch
-	name = "Circuit board (Atmosphere siphon control)"
-	computertype = "/obj/machinery/computer/atmosphere/siphonswitch"
+	name = "circuit board (atmosphere siphon control)"
+	computertype = /obj/machinery/computer/atmosphere/siphonswitch
 /obj/item/circuitboard/air_management
-	name = "Circuit board (Atmospheric monitor)"
-	computertype = "/obj/machinery/computer/general_air_control"
+	name = "circuit board (atmospheric monitor)"
+	computertype = /obj/machinery/computer/general_air_control
 /obj/item/circuitboard/injector_control
-	name = "Circuit board (Injector control)"
-	computertype = "/obj/machinery/computer/general_air_control/fuel_injection"
+	name = "circuit board (injector control)"
+	computertype = /obj/machinery/computer/general_air_control/fuel_injection
 /obj/item/circuitboard/general_alert
-	name = "Circuit board (General Alert)"
-	computertype = "/obj/machinery/computer/general_alert"
+	name = "circuit board (general alert)"
+	computertype = /obj/machinery/computer/general_alert
 /obj/item/circuitboard/pod
-	name = "Circuit board (Massdriver control)"
-	computertype = "/obj/machinery/computer/pod"
+	name = "circuit board (massdriver control)"
+	computertype = /obj/machinery/computer/pod
 /obj/item/circuitboard/atm
-	name = "Circuit board (ATM)"
-	computertype = "/obj/machinery/computer/ATM"
+	name = "circuit board (ATM)"
+	computertype = /obj/machinery/computer/ATM
 /obj/item/circuitboard/bank_data
-	name = "Circuit board (Bank Records)"
-	computertype = "/obj/machinery/computer/bank_data"
+	name = "circuit board (bank records)"
+	computertype = /obj/machinery/computer/bank_data
 /obj/item/circuitboard/robotics
-	name = "Circuit board (Robotics Control)"
-	computertype = "/obj/machinery/computer/robotics"
+	name = "circuit board (robotics control)"
+	computertype = /obj/machinery/computer/robotics
 /obj/item/circuitboard/robot_module_rewriter
-	name = "circuit board (Cyborg Module Rewriter)"
-	computertype = "/obj/machinery/computer/robot_module_rewriter"
+	name = "circuit board (cyborg module rewriter)"
+	computertype = /obj/machinery/computer/robot_module_rewriter
 /obj/item/circuitboard/cloning
-	name = "Circuit board (Cloning)"
-	computertype = "/obj/machinery/computer/cloning"
+	name = "circuit board (cloning)"
+	computertype = /obj/machinery/computer/cloning
 /obj/item/circuitboard/genetics
-	name = "Circuit board (Genetics)"
-	computertype = "/obj/machinery/computer/genetics"
+	name = "circuit board (genetics)"
+	computertype = /obj/machinery/computer/genetics
 /obj/item/circuitboard/tetris
-	name = "Circuit board (Robustris Pro)"
-	computertype = "/obj/machinery/computer/tetris"
+	name = "circuit board (Robustris Pro)"
+	computertype = /obj/machinery/computer/tetris
 /obj/item/circuitboard/arcade
-	name = "Circuit board (Arcade)"
-	computertype = "/obj/machinery/computer/arcade"
-/obj/item/circuitboard/turbine_control
-	name = "Circuit board (Turbine control)"
-	computertype = "/obj/machinery/computer/turbine_computer"
+	name = "circuit board (arcade)"
+	computertype = /obj/machinery/computer/arcade
 /obj/item/circuitboard/solar_control
-	name = "Circuit board (Solar control)"
-	computertype = "/obj/machinery/computer/solar_control"
+	name = "circuit board (solar control)"
+	computertype = /obj/machinery/computer/solar_control
 /obj/item/circuitboard/powermonitor
-	name = "Circuit board (Power Monitoring Computer)"
-	computertype = "/obj/machinery/computer/power_monitor"
+	name = "circuit board (power monitoring computer)"
+	computertype = /obj/machinery/computer/power_monitor
 /obj/item/circuitboard/powermonitor_smes
-	name = "Circuit board (Engine Monitoring Computer)"
-	computertype = "/obj/machinery/computer/power_monitor/smes"
+	name = "circuit board (engine monitoring computer)"
+	computertype = /obj/machinery/computer/power_monitor/smes
 /obj/item/circuitboard/olddoor
-	name = "Circuit board (DoorMex)"
-	computertype = "/obj/machinery/computer/pod/old"
+	name = "circuit board (DoorMex)"
+	computertype = /obj/machinery/computer/pod/old
 /obj/item/circuitboard/syndicatedoor
-	name = "Circuit board (ProComp Executive)"
-	computertype = "/obj/machinery/computer/pod/old/syndicate"
+	name = "circuit board (ProComp Executive)"
+	computertype = /obj/machinery/computer/pod/old/syndicate
 /obj/item/circuitboard/swfdoor
-	name = "Circuit board (Magix)"
-	computertype = "/obj/machinery/computer/pod/old/swf"
+	name = "circuit board (Magix)"
+	computertype = /obj/machinery/computer/pod/old/swf
 /obj/item/circuitboard/barcode
-	name = "Circuit board (General Barcode Computer)"
-	computertype = "/obj/machinery/computer/barcode"
+	name = "circuit board (general barcode computer)"
+	computertype = /obj/machinery/computer/barcode
 /obj/item/circuitboard/barcode_qm
-	name = "Circuit board (QM Barcode Computer)"
-	computertype = "/obj/machinery/computer/barcode/qm"
+	name = "circuit board (QM barcode computer)"
+	computertype = /obj/machinery/computer/barcode/qm
 /obj/item/circuitboard/operating
-	name = "Circuit board (Operating Computer)"
-	computertype = "/obj/machinery/computer/operating"
+	name = "circuit board (operating computer)"
+	computertype = /obj/machinery/computer/operating
 /obj/item/circuitboard/qmorder
-	name = "Circuit board (Supply Request Console)"
-	computertype = "/obj/machinery/computer/ordercomp"
+	name = "circuit board (supply request console)"
+	computertype = /obj/machinery/computer/ordercomp
 /obj/item/circuitboard/qmsupply
-	name = "Circuit board (Quartermaster's Console)"
-	computertype = "/obj/machinery/computer/supplycomp"
+	name = "circuit board (quartermaster's console)"
+	computertype = /obj/machinery/computer/supplycomp
+/obj/item/circuitboard/stockexchange
+	name = "circuit board (stock exchange)"
+	computertype = /obj/machinery/computer/stockexchange
 /obj/item/circuitboard/transception
-	name = "Circuit board (Transception Interlink)"
-	computertype = "/obj/machinery/computer/transception"
+	name = "circuit board (transception interlink)"
+	computertype = /obj/machinery/computer/transception
 /obj/item/circuitboard/mining_magnet
-	name = "Circuit board (Mining Magnet Computer)"
-	computertype = "/obj/machinery/computer/magnet"
+	name = "circuit board (mining magnet computer)"
+	computertype = /obj/machinery/computer/magnet
 /obj/item/circuitboard/telescope
-	name = "Circuit board (Quantum Telescope)"
-	computertype = "/obj/machinery/computer/telescope"
+	name = "circuit board (quantum telescope)"
+	computertype = /obj/machinery/computer/telescope
 /obj/item/circuitboard/announcement
-	name = "Circuit board (Announcement Computer)"
-	computertype = "/obj/machinery/computer/announcement"
+	name = "circuit board (announcement computer)"
+	computertype = /obj/machinery/computer/announcement
+/obj/item/circuitboard/clown_announcement
+	name = "circuit board (clown announcement computer)"
+	computertype = "/obj/machinery/computer/announcement/clown"
+/obj/item/circuitboard/siphon_control
+	name = "circuit board (siphon control)"
+	computertype = /obj/machinery/computer/siphon_control
+/obj/item/circuitboard/chem_request
+	name = "circuit board (chemical request console)"
+	computertype = /obj/machinery/computer/chem_requester
+/obj/item/circuitboard/chem_request_receiver
+	name = "circuit board (chemical request receiver)"
+	computertype = /obj/machinery/computer/chem_request_receiver
+
+/obj/item/circuitboard/sea_elevator
+	name = "circuit board (sea elevator control)"
+	computertype = /obj/machinery/computer/elevator/sea
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
@@ -222,19 +225,19 @@ TYPEINFO(/obj/item/circuitboard)
 				actions.start(action_bar, user)
 			if (istype(P, /obj/item/circuitboard) && !circuit)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
+				boutput(user, SPAN_NOTICE("You place the circuit board inside the frame."))
 				src.icon_state = "1"
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You screw the circuit board into place.</span>")
+				boutput(user, SPAN_NOTICE("You screw the circuit board into place."))
 				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
 			if (ispryingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
+				boutput(user, SPAN_NOTICE("You remove the circuit board."))
 				src.state = STATE_ANCHORED
 				src.icon_state = "0"
 				circuit.set_loc(src.loc)
@@ -242,7 +245,7 @@ TYPEINFO(/obj/item/circuitboard)
 		if (STATE_HAS_BOARD)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You unfasten the circuit board.</span>")
+				boutput(user, SPAN_NOTICE("You unfasten the circuit board."))
 				src.state = STATE_ANCHORED
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
@@ -250,40 +253,38 @@ TYPEINFO(/obj/item/circuitboard)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					actions.start(action_bar, user)
 				else
-					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
+					boutput(user, SPAN_ALERT("You need at least five pieces of cable to wire the computer."))
 
 		if (STATE_HAS_CABLES)
 			if (issnippingtool(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the cables.</span>")
+				boutput(user, SPAN_NOTICE("You remove the cables."))
 				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
-				//my_cable.set_loc(src.loc) // Haine: fix for Cannot execute null.set loc()
-				//my_cable = null
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 				C.amount = 5
 				C.UpdateIcon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
-				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
 					else
-						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
+						boutput(user, SPAN_ALERT("You need at least two sheets of glass to install the screen."))
 				else
-					boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
+					boutput(user, SPAN_ALERT("This is the wrong kind of material. You'll need a type of glass or crystal."))
 		if (STATE_HAS_GLASS)
 			if (ispryingtool(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+				boutput(user, SPAN_NOTICE("You remove the glass panel."))
 				src.state = STATE_HAS_CABLES
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass( src.loc )
 				A.amount = 2
 			if (isscrewingtool(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You connect the monitor.</span>")
+				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
 				if (circuit.id)
@@ -299,11 +300,11 @@ TYPEINFO(/obj/item/circuitboard)
 	switch(state)
 		if(STATE_UNANCHORED)
 			if(user.equipped(P) && iswrenchingtool(P))
-				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+				boutput(user, SPAN_NOTICE("You wrench the frame into place."))
 				src.anchored = ANCHORED
 				src.state = STATE_ANCHORED
 			if(user.equipped(P) && isweldingtool(P))
-				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+				boutput(user, SPAN_NOTICE("You deconstruct the frame."))
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 				A.amount = 5
 				if (src.material)
@@ -314,21 +315,59 @@ TYPEINFO(/obj/item/circuitboard)
 				qdel(src)
 		if(STATE_ANCHORED)
 			if(user.equipped(P) && iswrenchingtool(P))
-				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+				boutput(user, SPAN_NOTICE("You unfasten the frame."))
 				src.anchored = UNANCHORED
 				src.state = STATE_UNANCHORED
 		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+				boutput(user, SPAN_NOTICE("You add cables to the frame."))
 				P.change_stack_amount(-5)
 				src.state = STATE_HAS_CABLES
 				src.icon_state = "3"
 		if(STATE_HAS_CABLES)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
-				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+				boutput(user, SPAN_NOTICE("You put in the glass panel."))
 				P.change_stack_amount(-2)
 				src.state = STATE_HAS_GLASS
 				src.icon_state = "4"
+
+/obj/computerframe/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				switch(state)
+					if(STATE_UNANCHORED)
+						new /obj/item/scrap(src.loc)
+						qdel(src)
+					if(STATE_ANCHORED)
+						if (src.circuit)
+							src.eject_board()
+						else
+							src.anchored = UNANCHORED
+							src.state = STATE_UNANCHORED
+					if(STATE_HAS_BOARD)
+						src.eject_board()
+					if(STATE_HAS_CABLES)
+						var/obj/item/cable_coil/debris = new /obj/item/cable_coil(src.loc)
+						debris.amount = 1
+						debris.UpdateIcon()
+						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+						src.state = STATE_HAS_BOARD
+						src.icon_state = "2"
+					if(STATE_HAS_GLASS)
+						var/obj/item/raw_material/shard/glass/debris = new /obj/item/raw_material/shard/glass(src.loc)
+						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+						src.state = STATE_HAS_CABLES
+						src.icon_state = "3"
+
+/obj/computerframe/proc/eject_board()
+		if (!src.circuit) return
+		src.circuit.set_loc(get_turf(src))
+		src.circuit.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+		src.state = STATE_ANCHORED
+		src.icon_state = "0"
+		src.circuit = null
 
 #undef STATE_UNANCHORED
 #undef STATE_ANCHORED

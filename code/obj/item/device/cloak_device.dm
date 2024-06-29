@@ -6,9 +6,8 @@ TYPEINFO(/obj/item/cloaking_device)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
-	uses_multiple_icon_states = 1
 	var/active = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
+	flags = TABLEPASS | CONDUCT | NOSHIELD
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 2
@@ -52,7 +51,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		for (var/obj/item/cloaking_device/C in user)
 			if (C.active)
 				number_of_devices += C
-		if (number_of_devices.len > 0)
+		if (length(number_of_devices) > 0)
 			return FALSE
 
 		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, PROC_REF(deactivate))
@@ -69,7 +68,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		cloak_overlay.loc = null
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
-			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
 		src.active = FALSE
 		src.UpdateIcon()
 

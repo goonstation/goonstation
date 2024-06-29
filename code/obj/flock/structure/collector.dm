@@ -38,9 +38,9 @@
 	ON_COOLDOWN(src, "apc_charging", src.charge_cycle)
 
 /obj/flock_structure/collector/building_specific_info()
-	return {"<span class='bold'>Connections:</span> Currently Connected to [length(connectedto)] tile[length(connectedto) == 1 ? "" : "s"].
-	<br><span class='bold'>Compute generation:</span> Currently generating [src.compute_provided()].
-	<br><span class='bold'>APC connected:</span> [!src.area_apc?.cell || src.area_apc.cell.charge >= src.area_apc.cell.maxcharge ? "Not charging APC" : "Charging local APC at [src.charge_per_cycle]% every [src.charge_cycle / 10] seconds"]."}
+	return {"[SPAN_BOLD("Connections:")] Currently Connected to [length(connectedto)] tile[length(connectedto) == 1 ? "" : "s"].
+	<br>[SPAN_BOLD("Compute generation:")] Currently generating [src.compute_provided()].
+	<br>[SPAN_BOLD("APC connected:")] [!src.area_apc?.cell || src.area_apc.cell.charge >= src.area_apc.cell.maxcharge ? "Not charging APC" : "Charging local APC at [src.charge_per_cycle]% every [src.charge_cycle / 10] seconds"]."}
 
 /obj/flock_structure/collector/process(mult)
 	..()

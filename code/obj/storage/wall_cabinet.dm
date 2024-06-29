@@ -7,7 +7,6 @@ TYPEINFO(/obj/item/storage/wall)
 	desc = "It's basically a big box attached to the wall."
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "wall"
-	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
 	force = 8
 	w_class = W_CLASS_BULKY
@@ -38,15 +37,18 @@ TYPEINFO(/obj/item/storage/wall)
 			src.storage.add_contents(new /obj/item/storage/firstaid/oxygen(src))
 		if (prob(10))
 			src.storage.add_contents(new /obj/item/tank/air(src))
-		if (prob(2))
+		if (prob(4))
 			src.storage.add_contents(new /obj/item/tank/oxygen(src))
 		if (prob(2))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		for (var/i=rand(2,3), i>0, i--)
+			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/tank/mini_oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/clothing/mask/breath(src))
+
+		return 1
 
 /obj/item/storage/wall/fire
 	name = "firefighting supplies"
@@ -60,7 +62,7 @@ TYPEINFO(/obj/item/storage/wall)
 		if (prob(50))
 			src.storage.add_contents(new /obj/item/clothing/head/helmet/firefighter(src))
 		if (prob(30))
-			src.storage.add_contents(new /obj/item/clothing/suit/fire(src))
+			src.storage.add_contents(new /obj/item/clothing/suit/hazard/fire(src))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		if (prob(10))
 			src.storage.add_contents(new /obj/item/storage/firstaid/fire(src))
@@ -131,7 +133,7 @@ TYPEINFO(/obj/item/storage/wall)
 	icon_state = "miniorange"
 	pixel_y = 32
 	spawn_contents = list(/obj/item/clothing/under/color/orange = 2,
-	/obj/item/clothing/under/misc = 2,
+	/obj/item/clothing/under/misc/prisoner = 2,
 	/obj/item/clothing/shoes/orange = 3)
 
 /obj/item/storage/wall/blue
@@ -176,8 +178,8 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/mining_tool/powered/pickaxe,
+	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining)
 
 /obj/item/storage/wall/cargo
@@ -191,22 +193,37 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/hand_labeler,
 	/obj/item/cargotele)
 
+/obj/item/storage/wall/bar
+	name = "bartending supplies"
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,
+	/obj/item/storage/box/cocktail_doodads,
+	/obj/item/storage/box/cocktail_umbrellas,
+	/obj/item/storage/box/glassbox,
+	/obj/item/hand_labeler,
+	/obj/item/storage/firstaid/toxin,
+	/obj/item/device/reagentscanner,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/dropper/mechanical,
+	/obj/item/storage/box/ic_cones = 2)
+
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
 	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "clothingrack_01"
+	var/base_icon_state = "01"
 	density = 1
 	slots = 7
 	anchored = ANCHORED
-	icon_state = "clothingrack" //They start full so might as well
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
 	update_icon()
 		if (!length(src.storage?.get_contents()))
-			src.icon_state = "clothingrack-empty"
+			src.icon_state = "clothingrack_empty"
 		else
-			src.icon_state = "clothingrack"
+			src.icon_state = "clothingrack_[src.base_icon_state]"
 
 /obj/item/storage/wall/clothingrack/dresses
+	base_icon_state = "dress1"
 	spawn_contents = list(/obj/item/clothing/under/suit/red/dress = 1,
 	/obj/item/clothing/under/suit/purple/dress = 1,
 	/obj/item/clothing/under/gimmick/wedding_dress = 1,
@@ -216,6 +233,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/kilt = 1)
 
 /obj/item/storage/wall/clothingrack/clothes1
+	base_icon_state = "01"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
@@ -225,6 +243,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/misc/america = 1)
 
 /obj/item/storage/wall/clothingrack/dresses2
+	base_icon_state = "dress2"
 	spawn_contents = list(/obj/item/clothing/under/misc/dress/hawaiian = 1,
 	/obj/item/clothing/under/misc/dress/red = 1,
 	/obj/item/clothing/suit/dressb = 1,
@@ -234,6 +253,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/anthy = 1)
 
 /obj/item/storage/wall/clothingrack/clothes2
+	base_icon_state = "02"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/toga = 1,
 	/obj/item/clothing/suit/mj_suit = 1,
@@ -243,6 +263,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/greek = 1)
 
 /obj/item/storage/wall/clothingrack/clothes3
+	base_icon_state = "03"
 	spawn_contents = list(/obj/item/clothing/suit/suspenders = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/misc/barber = 1,
@@ -252,21 +273,23 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/misc/mail = 1)
 
 /obj/item/storage/wall/clothingrack/clothes4
+	base_icon_state = "04"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
 	/obj/item/clothing/under/misc/mobster = 1,
-	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/suit/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 /obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
+	base_icon_state = "05"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/suit/wintercoat = 1,
-	/obj/item/clothing/suit/labcoat/hitman = 1,
+	/obj/item/clothing/suit/hitman = 1,
 	/obj/item/clothing/suit/johnny_coat = 1,
-	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/suit/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 obj/item/storage/wall/clothingrack/hatrack
@@ -297,6 +320,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/sunhat/sunhatg = 1,
+		/obj/item/clothing/head/sunhat/sunhaty = 1,
 		/obj/item/clothing/head/serpico = 1,
 		/obj/item/clothing/head/cowboy = 1)
 

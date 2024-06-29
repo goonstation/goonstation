@@ -12,7 +12,7 @@
 			return 1
 
 		if (src.holder.owner.density)
-			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
+			boutput(usr, SPAN_ALERT("You cannot force your consciousness into a body while corporeal."))
 			return 1
 
 		//If you targeted a turf for some reason, find a corpse on it
@@ -29,5 +29,5 @@
 				playsound(W.loc, 'sound/voice/wraith/reventer.ogg', 80, 0)
 			return
 		else
-			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
+			boutput(usr, SPAN_ALERT("There are no corpses here to possess!"))
 			return 1

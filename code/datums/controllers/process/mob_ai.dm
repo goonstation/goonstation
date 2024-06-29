@@ -68,17 +68,11 @@ datum/controller/process/mob_ai
 						logTheThing(LOG_DEBUG, "mobAI process", "The mob [constructTarget(M)](\ref[M]) overran while processing its AI, and will be skipped for one tick. You should probably check why it's slow. AI = [M.ai] AI task = [M.ai?.current_task]")
 					continue
 
-				SPAWN(0)
-#ifndef MOBAI_UNSAFE_LOOP
-					try
-						M.ai._mobai_being_processed = TRUE
-						M.ai.tick()
-					catch(var/exception/e)
-						logTheThing(LOG_DEBUG, "mobAI process", "A runtime was thrown by [constructTarget(M)](\ref[M]) while processing its AI. [e] on [e.file]:[e.line]")
-#else
+				SPAWN(-1)
+					if(QDELETED(M))
+						continue
 					M.ai._mobai_being_processed = TRUE
 					M.ai.tick()
-#endif
 					M?.ai?._mobai_being_processed = FALSE //null checks just in case something went *really* wrong
 				scheck()
 

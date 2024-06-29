@@ -8,7 +8,7 @@
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are incapacitated."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
@@ -21,6 +21,7 @@
 		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
+		. = ..()
 		if(M.layer == BETWEEN_FLOORS_LAYER)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, "underfloor")
 			M.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)

@@ -12,7 +12,7 @@ TYPEINFO(/obj/tug_cart)
 	layer = MOB_LAYER + 1
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
@@ -67,18 +67,18 @@ TYPEINFO(/obj/tug_cart)
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 		if (!load)
 			return
 		if (T)
 			if (T.density)
-				boutput(user, "<span class='alert'>That tile is blocked by [T].</span>")
+				boutput(user, SPAN_ALERT("That tile is blocked by [T]."))
 				return
 
 		for (var/obj/O in T.contents)
 			if (O.density)
-				boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
+				boutput(user, SPAN_ALERT("That tile is blocked by [O]."))
 				return
 		src.visible_message("<b>[user]</b> unloads [load] from [src].")
 		unload(over_object)
@@ -234,13 +234,13 @@ TYPEINFO(/obj/vehicle/tug)
 			if (crashed)
 				if (crashed == 2)
 					playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-				boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
+				boutput(rider, SPAN_ALERT("<B>You are flung off of [src]!</B>"))
 				rider.changeStatus("stunned", 8 SECONDS)
-				rider.changeStatus("weakened", 5 SECONDS)
+				rider.changeStatus("knockdown", 5 SECONDS)
 				for (var/mob/C in AIviewers(src))
 					if (C == rider)
 						continue
-					C.show_message("<span class='alert'><B>[rider] is flung off of [src]!</B></span>", 1)
+					C.show_message(SPAN_ALERT("<B>[rider] is flung off of [src]!</B>"), 1)
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				rider.throw_at(target, 5, 1)
 				rider.buckled = null
@@ -248,7 +248,7 @@ TYPEINFO(/obj/vehicle/tug)
 				overlays = null
 				return
 			if (selfdismount)
-				boutput(rider, "<span class='notice'>You dismount from [src].</span>")
+				boutput(rider, SPAN_NOTICE("You dismount from [src]."))
 				for (var/mob/C in AIviewers(src))
 					if (C == rider)
 						continue
@@ -260,7 +260,7 @@ TYPEINFO(/obj/vehicle/tug)
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
@@ -291,10 +291,10 @@ TYPEINFO(/obj/vehicle/tug)
 
 		if (target == user && !user.stat)	// if drop self, then climbed in
 			msg = "[user.name] climbs onto [src]."
-			boutput(user, "<span class='notice'>You climb onto [src].</span>")
+			boutput(user, SPAN_NOTICE("You climb onto [src]."))
 		else if (target != user && !user.restrained())
 			msg = "[user.name] helps [target.name] onto [src]!"
-			boutput(user, "<span class='notice'>You help [target.name] onto [src]!</span>")
+			boutput(user, SPAN_NOTICE("You help [target.name] onto [src]!"))
 		else
 			return
 
@@ -336,17 +336,17 @@ TYPEINFO(/obj/vehicle/tug)
 			if ("harm", "disarm")
 				if (prob(60))
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-					src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of [src]!</B></span>")
-					rider.changeStatus("weakened", 2 SECONDS)
+					src.visible_message(SPAN_ALERT("<B>[M] has shoved [rider] off of [src]!</B>"))
+					rider.changeStatus("knockdown", 2 SECONDS)
 					eject_rider()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
-					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
+					src.visible_message(SPAN_ALERT("<B>[M] has attempted to shove [rider] off of [src]!</B>"))
 		return
 
 	disposing()
 		if (rider)
-			boutput(rider, "<span class='alert'><B>[src] is destroyed!</B></span>")
+			boutput(rider, SPAN_ALERT("<B>[src] is destroyed!</B>"))
 			eject_rider()
 		cart = null
 		..()

@@ -1,6 +1,6 @@
 ### [![Goonstation](.github/assets/goonstation.png)](#) Welcome to the main repository for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
-[![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)](#)[![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)](#)[![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](#)
+[![contains technical debt](https://shields.io/badge/contains-technical%20debt-blue?style=for-the-badge)](#)[![made with crayons](https://shields.io/badge/made%20with%20crayons-green?style=for-the-badge)](#)[![made in byond](https://github.com/goonstation/goonstation/assets/4741640/041eb7c6-4bfa-443a-a615-5e1e0bfa3c11)](#)
 
 # SETUP
 
@@ -43,15 +43,8 @@ To contribute audio to the game, please follow our audio guidelines! It details 
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fmaps)
 To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission. There are also guides on how to map included.
 
-## FAQ (Frequently Asked Question)
-
-#### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
-
-You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. You can run the `initial_setup.bat` file to create it automatically. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
-
-
 ## LICENSE
-[![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+[![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
 All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
 

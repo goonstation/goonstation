@@ -50,9 +50,9 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	icon_state = "synthesizer"
 	anchored = ANCHORED
 	density = 0
-	var/glass_amt = 0
+	var/glass_amt = 5
 	var/list/product_list = list()
-	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = NOSPLASH | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
@@ -66,17 +66,17 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (!istype(O, /obj/item)) // dont recycle the floor!
 			return
 
-		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
+		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user) || !in_interact_range(src, user))
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.cant_drop)
-			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			boutput(user, SPAN_ALERT("You cannot put [W] into [src]!"))
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
-			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
+			boutput(user, SPAN_ALERT("You need to empty [W] first!"))
 			return
 		if(W.reagents?.total_volume) // Ask if they really want to lose the contents of the beaker
 			if (tgui_alert(user,"The [W] has reagents in it, are you sure you want to recycle it?","Recycler alert!",list("Yes","No")) != "Yes")
@@ -111,7 +111,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 						if (!B.broken) glass_amt += 2
 					else
 						glass_amt += W.amount
-		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
+		else if (istype(W, /obj/item/material_piece) && W.material?.getMaterialFlags() & MATERIAL_CRYSTAL && W.material?.getAlpha() <= 180)
 			success = TRUE
 			glass_amt += W.amount * 10
 		else if (istype(W, /obj/item/raw_material/shard))
@@ -119,7 +119,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			glass_amt += W.amount
 		else if (istype(W, /obj/item/plate))
 			if (length(W.contents))
-				boutput(user, "<span class='alert'>You can't put [W] into [src] while it has things on it!</span>")
+				boutput(user, SPAN_ALERT("You can't put [W] into [src] while it has things on it!"))
 				return FALSE // early return for custom messageP
 			success = TRUE
 			glass_amt += PLATE_COST
@@ -131,7 +131,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (success)
 			W.stored?.transfer_stored_item(W, src, user = user)
 
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]."))
 			user.u_equip(W)
 			qdel(W)
 			ui_interact(user)
@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			playsound(src.loc, sound, 40, 0, 0.1)
 			return TRUE
 		else
-			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			boutput(user, SPAN_ALERT("You cannot put [W] into [src]!"))
 			return FALSE
 
 	proc/get_products()
@@ -176,14 +176,14 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			return
 
 		if (src.glass_amt < target_product.product_cost)
-			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
+			src.visible_message(SPAN_ALERT("[src] doesn't have enough glass to make that!"))
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 40, 0, 0.1)
 			return
 
 		var/obj/item/G = new target_product.product_path(get_turf(src))
 		src.glass_amt -= target_product.product_cost
 
-		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
+		src.visible_message(SPAN_NOTICE("[src] manufactures \a [G]!"))
 		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
 		user?.put_in_hand_or_eject(G)
 		use_power(20 WATTS)
@@ -228,6 +228,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
+	glass_amt = 15
 
 	get_products()
 		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
@@ -235,5 +236,35 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("bottle", /obj/item/reagent_containers/glass/bottle, 1)
 		product_list += new /datum/glass_product("vial", /obj/item/reagent_containers/glass/vial, 1)
 		product_list += new /datum/glass_product("flask", /obj/item/reagent_containers/glass/flask, 1)
+		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
+		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
+		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1) // for making "spicy dip"
 
+/obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
+	name = "kitchen glass recycler"
+	glass_amt = 20
+
+	get_products()
+		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("drinking", /obj/item/reagent_containers/food/drinks/drinkingglass, 1)
+		product_list += new /datum/glass_product("mug", /obj/item/reagent_containers/food/drinks/mug/random_color, 1)
+		product_list += new /datum/glass_product("oldf", /obj/item/reagent_containers/food/drinks/drinkingglass/oldf, 1)
+		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
+		product_list += new /datum/glass_product("wine", /obj/item/reagent_containers/food/drinks/drinkingglass/wine, 1)
+		product_list += new /datum/glass_product("cocktail", /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail, 1)
+		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
+		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
+		product_list += new /datum/glass_product("longbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/long, 2)
+		product_list += new /datum/glass_product("tallbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/tall, 2)
+		product_list += new /datum/glass_product("rectangularbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular, 2)
+		product_list += new /datum/glass_product("squarebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/square, 2)
+		product_list += new /datum/glass_product("masculinebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/masculine, 2)
+		product_list += new /datum/glass_product("round", /obj/item/reagent_containers/food/drinks/drinkingglass/round, 2)
+		product_list += new /datum/glass_product("plate", /obj/item/plate, PLATE_COST)
+		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1)
+		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
+		product_list += new /datum/glass_product("largebeaker", /obj/item/reagent_containers/glass/beaker/large, 2)
+		product_list += new /datum/glass_product("bottle", /obj/item/reagent_containers/glass/bottle, 1)
+		product_list += new /datum/glass_product("vial", /obj/item/reagent_containers/glass/vial, 1)
 #undef PLATE_COST

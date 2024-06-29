@@ -4,15 +4,16 @@
 #define POWERSINK_OPERATING 2
 
 TYPEINFO(/obj/item/device/powersink)
-	mats = list("MET-2"=20, "CON-2"=20, "CRY-1"=10)
-
+	mats = list("metal_dense" = 20,
+				"conductive_high" = 20,
+				"crystal" = 10)
 /obj/item/device/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
@@ -25,6 +26,7 @@ TYPEINFO(/obj/item/device/powersink)
 	var/mode = POWERSINK_OFF		// 0 = off, 1=clamped (off), 2=operating
 	is_syndicate = 1
 	rand_pos = 0
+	HELP_MESSAGE_OVERRIDE({"To anchor the powersink, use a <b>screwdriver</b> on it while it is on exposed wiring. To turn the powersink on/off click it with an empty hand."})
 
 	var/obj/cable/attached		// the attached cable
 	var/datum/light/light
@@ -38,6 +40,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (isscrewingtool(I))
+			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
 				if(isturf(T) && !T.intact)
@@ -111,7 +114,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 				// found a powernet, so drain up to max power from it
 
-				var/drained = min ( drain_rate, PN.avail )
+				var/drained = min ( drain_rate, (PN.avail - PN.newload) )
 				PN.newload += drained
 				power_drained += drained
 
@@ -127,7 +130,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 
 			if(power_drained > max_power * 0.95)
-				playsound(src, 'sound/effects/screech.ogg', 50, 1, 1)
+				playsound(src, 'sound/effects/screech.ogg', 50, TRUE, 1)
 			if(power_drained >= max_power)
 				processing_items.Remove(src)
 				explosion(src, src.loc, 3,6,9,12)

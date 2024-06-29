@@ -10,7 +10,7 @@
 		return TRUE
 	var/mob/living/intangible/flock/flockmind/flockmind = holder.owner
 	if (istype(flockmind) && flockmind.tutorial)
-		boutput(flockmind, "<span class='alert'>You're already in the tutorial!</span>")
+		boutput(flockmind, SPAN_ALERT("You're already in the tutorial!"))
 		return TRUE
 	flockmind.start_tutorial()
 
@@ -28,8 +28,8 @@
 			return
 		var/mob/living/intangible/flock/flockmind/flockmind = holder.owner
 		if (!flockmind.tutorial)
-			boutput(holder.get_controlling_mob(), "<span class='alert'>You're not in the tutorial!</span>")
+			boutput(holder.get_controlling_mob(), SPAN_ALERT("You're not in the tutorial!"))
 			return
-		if (tgui_alert(holder.get_controlling_mob(), "Exit tutorial?", "Confirm", list("Ok", "Cancel")) == "Ok")
+		if (tgui_alert(holder.get_controlling_mob(), "Exit tutorial?", "Confirm", list("Ok", "Cancel"), theme = "flock") == "Ok")
 			flockmind.tutorial.Finish()
 			flockmind.tutorial = null

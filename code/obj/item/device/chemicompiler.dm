@@ -11,12 +11,13 @@
 /datum/chemicompiler_core/portableCore
 	maxReservoir = 6
 
-/obj/item/device/chemicompiler/
+/obj/item/device/chemicompiler
 	name = "sloppy-looking hackjob of a device"
 	desc = "you have no earthy idea what this pile of junk could be for."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler"
 	var/datum/chemicompiler_executor/executor
+	HELP_MESSAGE_OVERRIDE({"Chemicompiler information can be found on the wiki "} + EXTERNAL_LINK("https://wiki.ss13.co/ChemiCompiler", "here") + ".")
 
 	New()
 		..()
@@ -28,14 +29,24 @@
 		processing_items -= src
 
 	attack_self(mob/user as mob)
-		executor.panel()
+		ui_interact(user)
 
-	proc/topicPermissionCheck(action)
-		if(src.loc != usr)
-			return 0
-		if(executor.core.running)
-			return action in list("getUIState", "reportError", "abortCode")
-		return 1
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemiCompiler", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = executor.get_ui_data()
+		.["theme"] = "syndicate"
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+
+		return executor.execute_ui_act(action, params)
 
 	process()
 		. = ..()

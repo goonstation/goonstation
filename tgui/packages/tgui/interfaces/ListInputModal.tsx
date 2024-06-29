@@ -8,7 +8,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z, KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_TAB } from 'common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_END, KEY_ENTER, KEY_ESCAPE, KEY_HOME, KEY_PAGEDOWN, KEY_PAGEUP, KEY_TAB, KEY_UP, KEY_Z } from 'common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
@@ -27,6 +27,7 @@ const nextTick
    title: string;
    start_with_search: number;
    capitalize: number;
+   theme: string;
  };
 
 
@@ -39,15 +40,18 @@ const nextTick
 *
 * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
 */
-const getTextWidth = (text, font) => {
+const getTextWidth = (text, font, defaultWidth: number) => {
   // re-use canvas object for better performance
   const canvas = textWidthCanvas || (textWidthCanvas = document.createElement("canvas"));
   const context = canvas.getContext("2d");
+  if (!context) {
+    return defaultWidth;
+  }
   context.font = font;
   const metrics = context.measureText(text);
   return metrics.width;
 };
-let textWidthCanvas = null;
+let textWidthCanvas: HTMLCanvasElement | null = null;
 
 const getCssStyle = (element, prop) => {
   return window.getComputedStyle(element, null).getPropertyValue(prop);
@@ -63,7 +67,7 @@ const getCanvasFont = (el = document.body) => {
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, timeout, title, start_with_search, capitalize } = data;
+  const { items = [], message, init_value, timeout, title, start_with_search, capitalize, theme } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -79,7 +83,7 @@ export const ListInputModal = (_, context) => {
     'searchQuery',
     ''
   );
-  const [windowWidth, setWindowWidth] = useLocalState<number>(
+  const [windowWidth, setWindowWidth] = useLocalState<number | null>(
     context,
     'windowWidth',
     null
@@ -113,7 +117,10 @@ export const ListInputModal = (_, context) => {
   };
   // User presses a letter key and searchbar is visible
   const onFocusSearch = (letter) => {
-    let searchBarInput = searchBarVisible ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    let searchBarInput = searchBarVisible ? document.getElementById("search_bar")?.getElementsByTagName('input')[0] : null;
+    if (!searchBarInput) {
+      return;
+    }
     searchBarInput.focus();
     searchBarInput.value += letter;
     onSearch(searchBarInput.value);
@@ -170,7 +177,7 @@ export const ListInputModal = (_, context) => {
   }
 
   const handleKey = (event) => {
-    let searchBarInput = searchBarVisible ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    let searchBarInput = searchBarVisible ? document.getElementById("search_bar")?.getElementsByTagName('input')[0] : null;
     let searchBarFocused = document.activeElement === searchBarInput;
     const len = filteredItems.length - 1;
     const keyCode = window.event ? event.which : event.keyCode;
@@ -181,7 +188,7 @@ export const ListInputModal = (_, context) => {
     }
     else if (charCode === "f" && event.ctrlKey) {
       if (!searchBarVisible) {
-        nextTick(() => document.getElementById("search_bar").getElementsByTagName('input')[0].focus());
+        nextTick(() => document.getElementById("search_bar")?.getElementsByTagName('input')[0].focus());
       }
       setSearchBarVisible(!searchBarVisible);
       setSearchQuery('');
@@ -228,7 +235,7 @@ export const ListInputModal = (_, context) => {
     let maxWidth = 325;
     const font = getCanvasFont();
     for (const item of items) {
-      maxWidth = Math.max(maxWidth, getTextWidth(item, font));
+      maxWidth = Math.max(maxWidth, getTextWidth(item, font, maxWidth));
     }
     // No clue why the nextTick is necessary but it seems like if you do it directly then there's about
     // 50% chance something in Inferno will race condition and crash. Pls help.
@@ -237,7 +244,7 @@ export const ListInputModal = (_, context) => {
   }
 
   return (
-    <Window title={title} width={actualWindowWidth} height={windowHeight}>
+    <Window title={title} width={actualWindowWidth} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onkeydown={handleKey}>

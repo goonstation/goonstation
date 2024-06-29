@@ -35,7 +35,7 @@
 <p>0: Basic Tricks. Reproduce any mundane seeming magic trick or sleight of hand. Clean, Soil, or Flavor any one object.</p>
 <p>0: Light. Produce and manipulate a heatless torchlight that moves at your discretion within sight.</p>
 <p>0: Sound. Produce and manipulate a sound that moves at your discretion within sight.</p>
-<p>0: Sense Power. Sense the presence or abscence of active powers and/or artifacts in an area, object, or creature.</p>
+<p>0: Sense Power. Sense the presence or absence of active powers and/or artifacts in an area, object, or creature.</p>
 <p>0: Purify/Putrefy. Food or water cupped in your hands becomes sacred or defiled, your choice. If it is sacred, it becomes safe to eat. If it is defiled, it becomes spoiled and rancid.</p>
 <p>1: Psychic Attack. Deal damage to a target within sight.</p>
 <p>1: Lesser Inspiration. One creature within sight is inspired. The next time they would fail a check, they partially succeed instead. That creature cannot benefit from any lesser inspirations again until the next time it rests.</p>
@@ -43,10 +43,10 @@
 <p>1: Telepathy. Create and maintain a single telepathic bond, with a single willing person you touch, allowing the two of you to communicate using only your thoughts. Creating a new telepathic bond ends the first one.</p>
 <p>1: Ward Area. Create a ward around a camp-sized area that rings an audible or mental alert to all creatures inside the ward if it is crossed. This alert is enough to wake any creature from sleeping. The ward ends when it is crossed.</p>
 <p>1: Speak with Dead. One corpse you touch may speak with you as if alive, until you stop touching it. This does not mean it is friendly to you, nor does it mean it necessarily tells the truth.</p>
-<p>2: Camoflauge. A creature you touch blends in with their surroundings, unable to be seen until the next time it takes a hostile action.</p>
-<p>2: Dispel Power. Your power suppresses the genetic powers of others. Any genetic power with a tier of 2 or less is dispelled; any genetic power of a tier higher than 2 is supressed or reduced so long as you focus on it,</p>
+<p>2: Camouflage. A creature you touch blends in with their surroundings, unable to be seen until the next time it takes a hostile action.</p>
+<p>2: Dispel Power. Your power suppresses the genetic powers of others. Any genetic power with a tier of 2 or less is dispelled; any genetic power of a tier higher than 2 is suppressed or reduced so long as you focus on it,</p>
 <p>2: Explosion. You create an explosion at a point you can see, dealing deadly damage to all creatures nearby.</p>
 <p>2: Sleep. You put a creature within sight to sleep. They wake up as they normally would. Creatures that do not sleep are unaffected.</p>
 <p>2: Heavy Weapon. One weapon you touch is filled with dark matter. All attacks made with it deal deadly damage. This power ends if you use it again.</p>
-<p>3: Resurrection. One corpse you touch comes back to life. Ressurecting a corpse requires significant effort, and both you and the ressurected person suffer a permanent affliction.</p>
+<p>3: Resurrection. One corpse you touch comes back to life. Resurrecting a corpse requires significant effort, and both you and the resurrected person suffer a permanent affliction.</p>
 <p>3: Polymorph. One creature you touch changes shape to that of another creature you have seen before. This transformation lasts for as long as they are within sight, and you choose their new attribute array allocation appropriately for the creature you choose.</p>

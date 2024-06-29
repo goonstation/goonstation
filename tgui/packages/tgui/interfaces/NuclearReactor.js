@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Knob, Box, Section, Table, RoundGauge } from '../components';
+import { Box, Button, Knob, RoundGauge, Section, Table } from '../components';
 import { Window } from '../layouts';
 import { Flex } from '../components';
 import { capitalize } from './common/stringUtils';
@@ -20,7 +20,7 @@ const ReactorRow = (shape) => {
         if (c === null)
         {
           return (
-            <Table.Cell>
+            <Table.Cell key={name}>
               <Button
                 key={name}
                 fluid
@@ -45,7 +45,7 @@ const ReactorRow = (shape) => {
         {
           const { x, y, name, img, temp, extra, flux } = c;
           return (
-            <Table.Cell>
+            <Table.Cell key={name}>
               <Button
                 key={name}
                 fluid

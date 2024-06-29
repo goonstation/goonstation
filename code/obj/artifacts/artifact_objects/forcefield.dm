@@ -35,7 +35,7 @@
 		if (!..())
 			return 0
 		if (ticker.round_elapsed_ticks < next_activate)
-			O.visible_message("<span class='alert'>[O] emits a loud pop and lights up momentarily but nothing happens!</span>")
+			O.visible_message(SPAN_ALERT("[O] emits a loud pop and lights up momentarily but nothing happens!"))
 			return 0
 		return 1
 

@@ -54,6 +54,7 @@ export const GasTankInfo = props => {
   const {
     pressure,
     maxPressure,
+    name,
   } = props;
 
   return (
@@ -74,6 +75,10 @@ export const GasTankInfo = props => {
           format={formatPressure}
         />
       </LabeledList.Item>
+      {name ? (
+        <LabeledList.Item label="Label">
+          {name}
+        </LabeledList.Item>) : null}
     </LabeledList>
   );
 };

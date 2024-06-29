@@ -24,11 +24,11 @@ TYPEINFO(/datum/component/obj_projectile_damage)
 	var/obj/O = parent
 	switch(O._health/O._max_health)
 		if (0.6 to 0.9)
-			lines += "<span class='alert'>It is a little bit damaged.</span>"
+			lines += SPAN_ALERT("It is a little bit damaged.")
 		if (0.3 to 0.6)
-			lines += "<span class='alert'>It looks pretty beaten up.</span>"
+			lines += SPAN_ALERT("It looks pretty beaten up.")
 		if (0 to 0.3)
-			lines += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
+			lines += SPAN_ALERT("<b>It seems to be on the verge of falling apart!</b>")
 
 /datum/component/obj_projectile_damage/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATOM_HITBY_PROJ, COMSIG_ATOM_EXAMINE))

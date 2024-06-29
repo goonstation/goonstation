@@ -15,6 +15,9 @@
 		SPAWN(0)
 			src.ArtifactSetup()
 
+		if (prob(15))
+			src.reagents.inert = TRUE
+
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
 		var/capacity = rand(5,20)
 		capacity *= 100
@@ -136,10 +139,10 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(.) // successfully made person drink
-			src.ArtifactFaultUsed(M)
+			src.ArtifactFaultUsed(target)
 
 	examine()
 		return list(desc)

@@ -8,7 +8,7 @@
 	stack_type = /obj/item/material_piece
 	/// used for prefab bars
 	default_material = null
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
 
 	New()
@@ -20,14 +20,14 @@
 
 	_update_stack_appearance()
 		if(material)
-			name = "[amount] [mat_changename ? material.name : ""] [initial(src.name)][amount > 1 ? "s":""]"
+			name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
 	split_stack(var/toRemove)
 		if(toRemove >= amount || toRemove < 1) return 0
 		var/obj/item/material_piece/P = new src.type
 		P.set_loc(src.loc)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material)
 		src.change_stack_amount(-toRemove)
 		P.change_stack_amount(toRemove - P.amount)
 		return P
@@ -36,7 +36,7 @@
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
 				return
 			var/obj/item/material_piece/new_stack = split_stack(splitnum)
 			user.put_in_hand_or_drop(new_stack)
@@ -49,31 +49,31 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
-			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
+			boutput(user, SPAN_NOTICE("You add the material to the stack. It now has [src.amount] pieces."))
 
 	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
-			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
+			boutput(usr, SPAN_ALERT("Quit that! You're dead!"))
 			return
 		if(isintangible(usr))
-			boutput(usr,"<span class='alert'>You need hands to do that. Do you have hands? No? Then stop it.</span>")
+			boutput(usr,SPAN_ALERT("You need hands to do that. Do you have hands? No? Then stop it."))
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
 			if (BOUNDS_DIST(usr, src) > 0)
-				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
 				return
 			if (BOUNDS_DIST(usr, over_object) > 0)
-				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
 				return
 
 		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]!"))
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
-				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
+				usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]!"))
 				var/toSplit = round(amount / 2)
 				var/atom/movable/splitStack = split_stack(toSplit)
 				if(splitStack)
@@ -87,7 +87,7 @@
 					if (!src.check_valid_stack(I))
 						continue
 					src.stack_item(I)
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]!"))
 		else if(istype(over_object, /atom/movable/screen/hud))
 			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
@@ -98,12 +98,12 @@
 						else if (istype(dude.l_hand, /obj/item/material_piece))
 							var/obj/item/material_piece/DP = dude.l_hand
 							DP.stack_item(src)
-							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]!"))
 					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]!"))
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 1)
 				if("rhand")
@@ -112,12 +112,12 @@
 						else if (istype(dude.r_hand, /obj/item/material_piece))
 							var/obj/item/material_piece/DP = dude.r_hand
 							DP.stack_item(src)
-							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]!"))
 					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]!"))
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
 		else
@@ -139,6 +139,18 @@
 			default_material = "blob"
 			mat_changename = FALSE
 
+			random
+				var/static/list/random_blob_materials = null
+				New()
+					. = ..()
+					if (!src.random_blob_materials)
+						src.random_blob_materials = list()
+						var/datum/material/base_mat = getMaterial("blob")
+						for (var/i in 1 to 10)
+							var/datum/material/new_mat = base_mat.getMutable()
+							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))
+							src.random_blob_materials += new_mat
+					src.setMaterial(pick(src.random_blob_materials))
 	sphere
 		// energy
 		icon_state = "sphere"
@@ -152,13 +164,13 @@
 		desc = "A weave of some kind."
 		var/in_use = 0
 
-		attack(mob/living/carbon/M, mob/living/carbon/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (user.a_intent == INTENT_GRAB)
 				return ..()
 			if (src.in_use)
 				return ..()
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (ishuman(target))
+				var/mob/living/carbon/human/H = target
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
@@ -180,10 +192,12 @@
 			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
 				if (src.material) B.setMaterial(src.material)
-				logTheThing(LOG_STATION, user, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Hangs up a banner (<b>Material:</b> [B.material && B.material.getID() ? "[B.material.getID()]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
 				src.change_stack_amount(-1)
-				user.visible_message("<span class='notice'>[user] hangs up a [B.name] in [A]!.</span>", "<span class='notice'>You hang up a [B.name] in [A]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] hangs up a [B.name] in [A]!."), SPAN_NOTICE("You hang up a [B.name] in [A]!"))
 
+/// The metal appearance and stuff is on the parent, this is just a concrete subtype
+/obj/item/material_piece/metal
 /obj/item/material_piece/fart
 	icon_state = "fart"
 	name = "frozen fart"
@@ -191,7 +205,7 @@
 	amount = 5
 	default_material = "frozenfart"
 	mat_changename = FALSE
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
@@ -201,7 +215,7 @@
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
-	desc = "A big clump of petrified mince, with a horriffic smell."
+	desc = "A big clump of petrified mince, with a horrific smell."
 	default_material = "hamburgris"
 	icon_state = "wad"
 
@@ -220,7 +234,7 @@
 	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	amount = 5
 
 /obj/item/material_piece/spacelag
@@ -236,8 +250,9 @@
 	default_material = "slag"
 	mat_changename = FALSE
 
+ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber/latex
-	name = "sheet"
+	name = "latex sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
@@ -247,12 +262,18 @@
 		reagents.add_reagent("rubber", 10)
 		return ..()
 
+/obj/item/material_piece/rubber/plastic
+	name = "plastic sheet"
+	icon_state = "latex"
+	desc = "A sheet of plastic."
+	default_material = "plastic"
+
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
 	default_material = "wood"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 	attackby(obj/item/W, mob/user)
@@ -271,7 +292,7 @@
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
 	default_material = "bamboo"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -291,7 +312,7 @@
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
 	default_material = "spidersilk"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/leather
@@ -360,17 +381,28 @@
 	default_material = "beewool"
 	mat_changename = FALSE
 
+/obj/item/material_piece/cloth/carpet
+	name = "carpet"
+	desc = "Some grimy carpet."
+	icon_state = "fabric"
+	default_material = "carpet"
+
 /obj/item/material_piece/soulsteel
 	desc = "A bar of soulsteel. Metal made from souls."
 	icon_state = "bar"
 	default_material = "soulsteel"
+
+/obj/item/material_piece/metal/censorium
+	desc = "A bar of censorium. Nice try."
+	icon_state = "bar"
+	default_material = "censorium"
 
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
 	default_material = "bone"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 /obj/item/material_piece/gnesis
@@ -381,7 +413,7 @@
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
-	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
+	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
 
@@ -390,7 +422,7 @@
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
 	default_material = "coral"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."

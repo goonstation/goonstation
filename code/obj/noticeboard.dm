@@ -3,14 +3,24 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	pixel_y = 32
-	flags = FPRINT
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
 	density = 0
 	anchored = ANCHORED
 	var/notices = 0
 
+/obj/noticeboard/north
+	pixel_y = 32
 
+/obj/noticeboard/east
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/noticeboard/west
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0
 /obj/noticeboard/ex_act()
 	qdel(src)
 
@@ -24,10 +34,10 @@
 			O.set_loc(src)
 			src.notices++
 			src.UpdateIcon()
-			boutput(user, "<span class='notice'>You pin \the [O] to the noticeboard.</span>")
+			boutput(user, SPAN_NOTICE("You pin \the [O] to the noticeboard."))
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
+			boutput(user, SPAN_ALERT("You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached."))
 
 
 /obj/noticeboard/update_icon()
@@ -42,6 +52,8 @@
 	user.Browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
 	onclose(user, "noticeboard")
 
+/obj/noticeboard/attack_ai(mob/user)
+	src.Attackhand(user)
 
 /obj/noticeboard/Topic(href, href_list)
 	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -81,6 +93,19 @@
 	var/static/data = null
 	var/persistent_id = null
 
+/obj/noticeboard/persistent/north
+	pixel_y = 32
+
+/obj/noticeboard/persistent/east
+	dir = EAST
+	pixel_x = 32
+	pixel_y = 0
+
+/obj/noticeboard/persistent/west
+	dir = WEST
+	pixel_x = -32
+	pixel_y = 0
+
 /obj/noticeboard/persistent/New()
 	. = ..()
 	if(isnull(src.persistent_id))
@@ -110,7 +135,7 @@
 				paper.name = book_info[1]
 				paper.info = book_info[2]
 				paper.fingerprintslast = book_info[3]
-				if(book_info.len >= 4) // Gotta love adding a line that will be useful exactly once on each server...
+				if(length(book_info) >= 4) // Gotta love adding a line that will be useful exactly once on each server...
 					paper.color = book_info[4]
 		if(version == 1)
 			for(var/list/info in our_data["things"])
@@ -163,9 +188,7 @@ proc/save_noticeboards()
 	if(isnull(some_board))
 		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
-	fdel(some_board.file_name)
-	var/json_data = json_encode(some_board.data)
-//	logTheThing(LOG_DEBUG, null, "Persistent noticeboard save data: [json_data]")
-	text2file(json_data, some_board.file_name)
+	rustg_file_write(json_encode(some_board.data), some_board.file_name)
+
 
 #undef PERSISTENT_NOTICEBOARD_VERSION

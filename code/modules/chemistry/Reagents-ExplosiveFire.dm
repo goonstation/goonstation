@@ -32,11 +32,11 @@ datum
 
 				var/list/covered = holder.covered_turf()
 
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				var/radius = clamp(volume/SD, 0, 8)
-				fireflash_sm(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
+				fireflash_melting(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500, chemfire = CHEM_FIRE_RED)
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -50,7 +50,7 @@ datum
 					L.update_burning(MB)
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume_passed * 2, 10, 45), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>It burns!</span>")
+					boutput(M, SPAN_ALERT("It burns!"))
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
@@ -62,9 +62,9 @@ datum
 					L.update_burning(2 * mult)
 				..()
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("fire",8)
-				P.growth -= 12
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.fire_damage += 8
+				growth_tick.growth_rate -= 12
 
 		combustible/phlogiston/firedust
 			name = "phlogiston dust"
@@ -97,7 +97,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = clamp((volume/covered.len)*0.15, 0, 8)
-						fireflash_s(t, radius, rand(3000, 6000), 500)
+						fireflash(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 				holder?.del_reagent(id)
 				return
 
@@ -125,8 +125,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 			syndicate
 				name = "syndicate napalm"
@@ -159,31 +159,31 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (!holder)
 					return
-				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.mat_id == "steel")))
-					O.visible_message("<span class='alert'>[O] melts!</span>")
+				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.getID() == "steel")))
+					O.visible_message(SPAN_ALERT("[O] melts!"))
 					qdel(O)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/radius = clamp(volume*0.15, 0, 8)
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
+				radius = clamp((volume/covered.len)*0.15, 0, 8)
+				holder?.del_reagent(id)
 				for(var/turf/t in covered)
-					radius = clamp((volume/covered.len)*0.15, 0, 8)
-					affected += fireflash_sm(t, radius, rand(3000, 6000), 500)
+					affected += fireflash_melting(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
-						O.visible_message("<span class='alert'>[O] melts!</span>")
+						O.visible_message(SPAN_ALERT("[O] melts!"))
 						qdel(O)
-				holder?.del_reagent(id)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!holder)
 					return
 				if (!istype(T) || volume < 5 || holder.total_temperature < T0C + 400)
 					return
-				if (T.material && T.material.mat_id == "steel")
-					//T.visible_message("<span class='alert'>[T] melts!</span>")
+				if (T.material && T.material.getID() == "steel")
+					//T.visible_message(SPAN_ALERT("[T] melts!"))
 					T.ex_act(2)
 
 		combustible/thermite
@@ -197,6 +197,7 @@ datum
 			transparency = 255
 			volatility = 1.5
 			minimum_reaction_temperature = T0C+100
+			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/turf/simulated/A = holder.my_atom
@@ -204,7 +205,7 @@ datum
 
 				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
 					holder.del_reagent(id)
-					fireflash_sm(A, 0, rand(20000, 25000), 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
+					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, CHEM_FIRE_DARKRED, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -229,8 +230,13 @@ datum
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
 
 					T.reagents.add_reagent("thermite", volume, null)
-					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
+					if (length(T.active_hotspots))
+						var/max_temp = T.active_hotspots[1].temperature
+						var/max_vol = T.active_hotspots[1].volume
+						if (length(T.active_hotspots) > 1)
+							max_temp = max(max_temp, T.active_hotspots[2].temperature)
+							max_vol = max(max_vol, T.active_hotspots[2].volume)
+						T.reagents.temperature_reagents(max_temp, max_vol, 350, 300, 1)
 
 
 		combustible/smokepowder
@@ -242,20 +248,7 @@ datum
 			fluid_g = 200
 			fluid_b = 200
 			transparency = 230
-			minimum_reaction_temperature = T0C+25
-			var/ignited = 0
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/datum/reagents/myholder = holder
-				var/vol = volume
-				myholder.del_reagent(id)
-				if(!myholder?.my_atom?.is_open_container() && !istype(myholder, /datum/reagents/fluid_group))
-					if(myholder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(myholder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
-					ignited = 1
-					myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			// Heat reaction moved to reactions to account for opening and closing containers
 
 		combustible/propellant
 			name = "aerosol propellant"
@@ -266,21 +259,6 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			transparency = 230
-			minimum_reaction_temperature = T0C + 100
-			var/ignited = FALSE
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
-					ignited = TRUE
-					var/vol = volume
-					SPAWN(1 DECI SECOND)
-						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-				myholder.del_reagent(id)
 
 		combustible/sonicpowder
 			name = "hootingium"
@@ -360,8 +338,6 @@ datum
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
-					if(!I.burn_possible)
-						I.burn_possible = 1
 					if(!I.health)
 						I.health = 10
 					if(!I.burn_output)
@@ -391,7 +367,7 @@ datum
 
 				if (!fail)
 					var/radius = min((volume - 3) * 0.15, 3)
-					fireflash_sm(T, radius, 4500 + volume * 500, 350)
+					fireflash_melting(T, radius, 4500 + volume * 500, 350, chemfire = CHEM_FIRE_RED)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
@@ -406,7 +382,7 @@ datum
 							L.update_burning(50)
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume * 2.5, 15, 90), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>It burns!</span>")
+					boutput(M, SPAN_ALERT("It burns!"))
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
@@ -429,16 +405,16 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				tfireflash(T, clamp(volume/10, 0, 8), 7000)
+				fireflash(T, clamp(volume/10, 0, 8), 7000, chemfire = CHEM_FIRE_RED)
 				if(!istype(T, /turf/space))
 					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
 							if(0 to 15)
 								if(prob(15))
-									//T.visible_message("<span class='alert'>[T] melts!</span>")
+									//T.visible_message(SPAN_ALERT("[T] melts!"))
 									T.ex_act(2)
 							if(16 to INFINITY)
-								//T.visible_message("<span class='alert'>[T] melts!</span>")
+								//T.visible_message(SPAN_ALERT("[T] melts!"))
 								T.ex_act(2)
 				return
 
@@ -450,7 +426,7 @@ datum
 						L.update_burning(90)
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume * 6, 30, 90), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>It burns!</span>")
+					boutput(M, SPAN_ALERT("It burns!"))
 					M.emote("scream")
 				return
 
@@ -472,6 +448,7 @@ datum
 			transparency = 150
 			viscosity = 0.7
 			minimum_reaction_temperature = 1000
+			fluid_flags = FLUID_SMOKE_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				holder.del_reagent(id)
@@ -602,21 +579,21 @@ datum
 					return
 				else
 					var/list/covered = holder.covered_turf()
-					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
-						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
+					if (length(covered) < 4 || (volume / holder.total_volume) > min_req_fluid)
+						if(length(covered) > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
 							caused_fireflash = 1
 						for(var/turf/turf in covered)
 							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
-							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
+							fireflash_melting(turf, radius, 2200 + radius * 250, radius * 50, chemfire = CHEM_FIRE_RED)
 							if(holder && volume/length(covered) >= explosion_threshold)
 								if(holder.my_atom)
-									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
 									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
 										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 									logTheThing(LOG_BOMBING, holder.my_atom.fingerprintslast, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
-									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									turf.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
 									message_admins("Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
 									logTheThing(LOG_BOMBING, null, "Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
@@ -645,12 +622,12 @@ datum
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
 				if(probmult(1))
-					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 					M.vomit(0, null, vomit_message)
 				..()
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison", 1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 
@@ -667,6 +644,7 @@ datum
 			depletion_rate = 0.05
 			penetrates_skin = 1 // think of it as just being all over them i guess
 			minimum_reaction_temperature = T0C+200
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(src.reacting)
@@ -678,7 +656,7 @@ datum
 				for(var/turf/location in covered)
 					var/our_amt = holder.get_reagent_amount(src.id) / length(covered)
 
-					if (our_amt < 10 && covered.len > 5)
+					if (our_amt < 10 && length(covered) > 5)
 						if (prob(min(covered.len/3,85)))
 							continue
 
@@ -688,44 +666,47 @@ datum
 						switch(our_amt)
 							if(0 to 20)
 								holder.my_atom.visible_message("<b>The black powder ignites!</b>")
-								if (covered.len < 5 || prob(5))
+								if (length(covered) < 5 || prob(5))
 									var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 									smoke.set_up(1, 0, location)
 									smoke.start()
 								explosion(holder.my_atom, location, -1, -1, pick(0,1), 1)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(21 to 80)
 								holder.my_atom.visible_message("<b>[holder.my_atom] flares up!</b>")
-								fireflash(location,0)
+								fireflash(location,0, chemfire = CHEM_FIRE_RED)
 								explosion(holder.my_atom, location, -1, -1, 1, 2)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(81 to 160)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+								holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 								explosion(holder.my_atom, location, -1, 1, 2, 3)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(161 to 300)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] violently explodes!</b></span>")
+								holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] violently explodes!</b>"))
 								explosion(holder.my_atom, location, 1, 3, 6, 8)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(301 to INFINITY)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] detonates in a huge blast!</b></span>")
+								holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] detonates in a huge blast!</b>"))
 								explosion(holder.my_atom, location, 3, 6, 12, 15)
-								if (covered.len > 1)
+								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
+						if(istype(holder?.my_atom, /obj))
+							var/obj/container = holder.my_atom
+							container.shatter_chemically(projectiles = TRUE)
 
 			reaction_obj(var/obj/O, var/volume)
 				return
@@ -835,3 +816,19 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				bang()
+
+		combustible/photophosphide
+			id = "photophosphide"
+			name = "photophosphide"
+			random_chem_blacklisted = TRUE //probably for the best ??
+			description = "A photosensitive explosive reagent that detonates when exposed to relatively small amounts of light."
+			reagent_state = SOLID
+			fluid_r = 149
+			fluid_g = 119
+			fluid_b = 163
+			transparency = 255
+			taste = "sandy"
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED | FLUID_SMOKE_BANNED
+
+			reaction_turf()
+				return

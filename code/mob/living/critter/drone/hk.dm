@@ -1,7 +1,8 @@
 /mob/living/critter/robotic/drone/hk
 	drone_designation = "HK"
 	desc = "A heavily-armed Syndicate hunter-killer drone."
-	icon_state = "drone2"
+	icon = 'icons/mob/critter/robotic/drone/disruptor.dmi'
+	icon_state = "drone_disruptor"
 
 	setup_hands()
 		..()

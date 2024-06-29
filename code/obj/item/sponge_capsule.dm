@@ -4,7 +4,7 @@
 	icon_state = "sponge"
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	throw_speed = 4
 	throw_range = 7
 	stamina_damage = 0
@@ -12,6 +12,8 @@
 	stamina_crit_chance = 1
 	rand_pos = 1
 	color = "#FF0000"
+	edible = TRUE
+	eat_sound = 'sound/misc/gulp.ogg'
 	var/colors = list("#FF0000", "#0000FF", "#00FF00", "#FFFF00")
 	var/obj/critter/animal_to_spawn = null
 	var/animals = list(/mob/living/critter/small_animal/cat,
@@ -35,6 +37,17 @@
 					/mob/living/critter/lion,
 					/mob/living/critter/fermid)
 
+	add_water()
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.setStatus("unconscious", 10 SECONDS)
+			M.TakeDamage("all", 60)
+			take_bleeding_damage(M, M, 50, DAMAGE_CUT)
+			SPAWN(1)
+				boutput(M, SPAN_ALERT("Something horrible forces its way out of your stomach! HOLY SHIT!!!"))
+		. = ..()
+
+
 /obj/item/toy/sponge_capsule/New()
 	..()
 	color = pick(colors)
@@ -48,20 +61,22 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack(mob/M, mob/user)
-	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
-		eat_twitch(M)
-		user.u_equip(src)
-		qdel(src)
-	else
-		return
+/obj/item/toy/sponge_capsule/eat_msg(mob/M)
+	M.visible_message(SPAN_NOTICE("[M] stuffs [src] into [his_or_her(M)] mouth and and eats it."))
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	var/turf/T = get_turf(src)
 	if (!T)
 		return
+	if (ismob(src.loc))
+		var/mob/idiot = src.loc
+		idiot.emote("scream")
+		if (ishuman(idiot))
+			var/mob/living/carbon/human/human_idiot = idiot
+			if (src in human_idiot.organHolder?.stomach?.stomach_contents)
+				boutput(human_idiot, SPAN_ALERT("You feel your stomach suddenly bloat horribly!"))
+				human_idiot.organHolder.stomach.eject(src)
+				human_idiot.organHolder.stomach.take_damage(30)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
@@ -69,7 +84,7 @@
 	if (ismobcritter(C))
 		var/mob/living/critter/M = C
 		M.faction |= FACTION_SPONGE
-	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
+	T.visible_message(SPAN_NOTICE("What was once [src] has become [C.name]!"))
 	qdel(src)
 
 /obj/item/toy/sponge_capsule/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
@@ -78,7 +93,7 @@
 
 /obj/item/toy/sponge_capsule/custom_suicide = TRUE
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
-	user.visible_message("<span class='alert'><b>[user] eats [src]!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] eats [src]!</b>"))
 	var/atom/C = new animal_to_spawn(user.loc)
 	C.name = user.real_name
 	C.desc = "Holy shit! That used to be [user.real_name]!"
@@ -87,7 +102,7 @@
 
 /obj/item/toy/sponge_capsule/afterattack(atom/target, mob/user as mob)
 	if(istype(target, /obj/item/spongecaps))
-		boutput(user, "<span class='alert'>You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!</span>")
+		boutput(user, SPAN_ALERT("You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!"))
 		return
 	return ..()
 
@@ -98,7 +113,7 @@
 	icon_state = "spongecaps"
 	w_class = W_CLASS_TINY
 	throwforce = 2
-	flags = TABLEPASS | FPRINT | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -133,7 +148,7 @@
 /obj/item/spongecaps/attack_hand(mob/user)
 	if(user.find_in_hand(src))
 		if(caps_amt == 0)
-			boutput(user, "<span class='alert'>There aren't any capsules left, you ignoramus!</span>")
+			boutput(user, SPAN_ALERT("There aren't any capsules left, you ignoramus!"))
 			return
 		else
 			var/obj/item/toy/sponge_capsule/S = new caps_type(user)

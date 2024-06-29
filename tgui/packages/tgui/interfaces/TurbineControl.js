@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Chart, LabeledList, Stack, NumberInput } from '../components';
+import { Chart, LabeledList, NumberInput, Stack } from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 
@@ -89,11 +89,11 @@ export const TurbineControl = (_props, context) => {
               onChange={(e, value) => act("loadChange", { newVal: value })} />
           </Stack.Item>
           <Stack.Item>
-            Coolant Volume:
+            Flow Rate:
             <NumberInput
               minValue={1}
               value={volume}
-              format={value => value + " L"}
+              format={value => value + " L/s"}
               onChange={(e, value) => act("volChange", { newVal: value })} />
           </Stack.Item>
         </Stack>

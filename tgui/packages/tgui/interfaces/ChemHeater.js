@@ -7,9 +7,10 @@
 
 import { classes } from 'common/react';
 import { useBackend } from "../backend";
-import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionEx, Stack } from '../components';
+import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils';
+import { capitalize } from './common/stringUtils';
+import { freezeTemperature, getTemperatureChangeName, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 
 export const ChemHeater = (props, context) => {
@@ -77,9 +78,8 @@ const ChemDisplay = (props, context) => {
   const { temperature, totalVolume } = container;
 
   return (
-    <SectionEx
-      capitalize
-      title={container.name}
+    <Section
+      title={capitalize(container.name)}
       buttons={
         <Button
           icon="eject"
@@ -121,6 +121,6 @@ const ChemDisplay = (props, context) => {
           </Button>
         </Dimmer>
       )}
-    </SectionEx>
+    </Section>
   );
 };

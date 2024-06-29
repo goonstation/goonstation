@@ -1,0 +1,67 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/stool/bed/moveable/hospital/halloween,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/critter/domestic_bee/cluwnebee,
+/obj/stool/chair/syndicate,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/item/bananapeel,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/storage/crate/bloody,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne,
+/obj/item/clothing/under/gimmick/cursedclown,
+/obj/item/clothing/shoes/cursedclown_shoes,
+/obj/item/clothing/mask/cursedclown_hat,
+/obj/item/clothing/gloves/cursedclown_gloves,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/table/scrap,
+/obj/decal/cleanable/desk_clutter,
+/obj/item/instrument/bikehorn/airhorn,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"F" = (
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/reagent_dispensers/watertank/fountain/drugged,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/decal/cleanable/dirt,
+/obj/table/scrap,
+/obj/item/aiModule/hologram_expansion/elden,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+M
+v
+Q
+"}
+(2,1,1) = {"
+e
+g
+l
+"}
+(3,1,1) = {"
+r
+A
+F
+"}

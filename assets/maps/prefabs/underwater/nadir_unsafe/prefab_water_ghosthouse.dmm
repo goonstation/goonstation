@@ -87,7 +87,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "ay" = (
-/obj/item/furniture_parts/wood_chair,
+/obj/item/furniture_parts/dining_chair/wood,
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "az" = (
@@ -111,7 +111,7 @@
 /area/prefab/ghost_house)
 "aC" = (
 /obj/critter/spirit,
-/obj/item/furniture_parts/wood_chair,
+/obj/item/furniture_parts/dining_chair/wood,
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "aD" = (
@@ -398,7 +398,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/north,
 /area/prefab/ghost_house)
 "bJ" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8;
 	icon_state = "chair_wooden"
 	},
@@ -445,7 +445,7 @@
 /turf/simulated/floor/wood/two,
 /area/prefab/ghost_house)
 "bS" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4;
 	icon_state = "chair_wooden"
 	},
@@ -523,7 +523,7 @@
 	pixel_y = 11
 	},
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "cf" = (
@@ -544,7 +544,7 @@
 /turf/simulated/floor/wood/two,
 /area/prefab/ghost_house)
 "ci" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/item/gun/energy/ghost,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
@@ -608,7 +608,7 @@
 	},
 /area/prefab/ghost_house)
 "ct" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8;
 	icon_state = "chair_wooden"
 	},
@@ -625,7 +625,7 @@
 /turf/simulated/floor/carpet/blue/standard,
 /area/prefab/ghost_house)
 "cv" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8;
 	icon_state = "chair_wooden"
 	},

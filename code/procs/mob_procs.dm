@@ -115,6 +115,20 @@
 		return 0
 	return 1
 
+/mob/proc/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+
+	var/check_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order for the check to suceed
+
+	if (walking_matters)
+		check_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
+	if (ignore_actual_delay)
+		movedelay = movement_delay_real
+	return (movedelay < check_delay)
+
+/mob/living/carbon/human/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null
@@ -200,15 +214,26 @@
 	return 1
 
 /mob/living/carbon/human/sight_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.hasStatus("paralysis") || src.sleeping || src.stat || src.hibernating))
+	//Order of checks:
+	//1) Are you unconscious?
+	//2a) Are you capable of seeing through eye coverings? 2b) Are any items covering your eyes?
+	//3) Do any of your items allow you to see?
+	//4) Are you blind?
+
+	if (consciousness_check && (src.hasStatus("unconscious") || src.sleeping || src.stat || src.hibernating))
 		return 0
+
+	if(!(HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION_WEAK)))
+		for (var/thing in src.get_equipped_items())
+			if (!thing) continue
+			var/obj/item/I = thing
+			if (I.block_vision)
+				return 0
 
 	if (istype(src.glasses, /obj/item/clothing/glasses/))
 		var/obj/item/clothing/glasses/G = src.glasses
 		if (G.allow_blind_sight)
 			return 1
-		if (G.block_vision)
-			return 0
 
 	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
 		return 0
@@ -216,7 +241,7 @@
 	return 1
 
 /mob/living/critter/sight_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
+	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 	return 1
 
@@ -232,11 +257,11 @@
 		return 0
 	return 0
 
-/mob/proc/apply_flash(var/animation_duration, var/weak, var/stnu, var/misstep, var/eyes_blurry, var/eyes_damage, var/eye_tempblind, var/burn, var/uncloak_prob, var/stamina_damage,var/disorient_time)
+/mob/proc/apply_flash(var/animation_duration, var/knockdown, var/stnu, var/misstep, var/eyes_blurry, var/eyes_damage, var/eye_tempblind, var/burn, var/uncloak_prob, var/stamina_damage,var/disorient_time)
 	return
 
 // We've had like 10+ code snippets for a variation of the same thing, now it's just one mob proc (Convair880).
-/mob/living/apply_flash(var/animation_duration = 30, var/weak = 8, var/stun = 0, var/misstep = 0, var/eyes_blurry = 0, var/eyes_damage = 0, var/eye_tempblind = 0, var/burn = 0, var/uncloak_prob = 50, var/stamina_damage = 130,var/disorient_time = 60)
+/mob/living/apply_flash(var/animation_duration = 30, var/knockdown = 8, var/stun = 0, var/misstep = 0, var/eyes_blurry = 0, var/eyes_damage = 0, var/eye_tempblind = 0, var/burn = 0, var/uncloak_prob = 50, var/stamina_damage = 130,var/disorient_time = 60)
 	if (isintangible(src) || islivingobject(src))
 		return
 	if (animation_duration <= 0)
@@ -246,7 +271,7 @@
 		return 0
 	// Target checks.
 	var/mod_animation = 0 // Note: these aren't multipliers.
-	var/mod_weak = 0
+	var/mod_knockdown = 0
 	var/mod_stun = 0
 	var/mod_misstep = 0
 	var/mod_eyeblurry = 0
@@ -263,7 +288,7 @@
 		var/mob/living/carbon/human/H = src
 		var/hulk = 0
 		if (H.is_hulk())
-			mod_weak = -INFINITY
+			mod_knockdown = -INFINITY
 			mod_stun = -INFINITY
 			hulk = 1
 		var/helmet_thermal = FALSE
@@ -274,7 +299,7 @@
 			H.show_text("<b>Your thermals intensify the bright flash of light, hurting your eyes quite a bit.</b>", "red")
 			mod_animation = 20
 			if (hulk == 0)
-				mod_weak = rand(1, 2)
+				mod_knockdown = rand(1, 2)
 			mod_eyeblurry = rand(6, 8)
 			mod_eyedamage = rand(2, 3)
 		else if (istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
@@ -282,7 +307,7 @@
 			H.show_text("<b style=\"font-size: 200%\">IT BURNS</b>", "red")
 			mod_animation = 30
 			if (hulk == 0)
-				mod_weak = rand(3, 4)
+				mod_knockdown = rand(3, 4)
 			mod_eyeblurry = rand(8, 10)
 			mod_eyedamage = rand(3, 5)
 		else
@@ -290,7 +315,7 @@
 
 	// No negative values.
 	animation_duration = max(0, animation_duration + mod_animation)
-	weak = max(0, weak + mod_weak)
+	knockdown = max(0, knockdown + mod_knockdown)
 	stun = max(0, stun + mod_stun)
 	misstep = max(0, misstep + mod_misstep)
 	eyes_blurry = max(0, eyes_blurry + mod_eyeblurry)
@@ -308,9 +333,9 @@
 	if (safety == 0)
 		//src.flash(animation_duration)
 #ifdef USE_STAMINA_DISORIENT
-		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
+		src.do_disorient(stamina_damage, knockdown = knockdown*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
-		changeStatus("weakened", weak*2 SECONDS)
+		changeStatus("knockdown", knockdown*2 SECONDS)
 		changeStatus("stunned", stun*2 SECONDS)
 #endif
 
@@ -346,7 +371,7 @@
 	return 1
 
 /mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.stat || src.getStatusDuration("paralysis") || src.sleeping))
+	if (consciousness_check && (src.stat || src.getStatusDuration("unconscious") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
 	else
@@ -362,7 +387,7 @@
 			.= 0
 
 /mob/living/silicon/hearing_check(var/consciousness_check = 0)
-	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
+	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 
 	if (src.ear_disability)
@@ -383,15 +408,15 @@
 	return
 
 // Similar concept to apply_flash(). One proc in place of a bunch of individually implemented code snippets (Convair880).
-#define DO_NOTHING (!weak && !stun && !misstep && !slow && !drop_item && !ears_damage && !ear_tempdeaf)
-/mob/living/apply_sonic_stun(var/weak = 0, var/stun = 8, var/misstep = 0, var/slow = 0, var/drop_item = 0, var/ears_damage = 0, var/ear_tempdeaf = 0, var/stamina_damage = 130)
+#define DO_NOTHING (!knockdown && !stun && !misstep && !slow && !drop_item && !ears_damage && !ear_tempdeaf)
+/mob/living/apply_sonic_stun(var/knockdown = 0, var/stun = 8, var/misstep = 0, var/slow = 0, var/drop_item = 0, var/ears_damage = 0, var/ear_tempdeaf = 0, var/stamina_damage = 130)
 	if (isintangible(src) || islivingobject(src))
 		return
 	if (DO_NOTHING)
 		return
 
 	// Target checks.
-	var/mod_weak = 0 // Note: these aren't multipliers.
+	var/mod_knockdown = 0 // Note: these aren't multipliers.
 	var/mod_stun = 0
 	var/mod_misstep = 0
 	var/mod_slow = 0
@@ -405,11 +430,11 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (H.is_hulk())
-			mod_weak = -INFINITY
+			mod_knockdown = -INFINITY
 			mod_stun = -INFINITY
 
 	// No negative values.
-	weak = max(0, weak + mod_weak)
+	knockdown = max(0, knockdown + mod_knockdown)
 	stun = max(0, stun + mod_stun)
 	misstep = max(0, misstep + mod_misstep)
 	slow = max(0, slow + mod_slow)
@@ -423,14 +448,14 @@
 	//DEBUG_MESSAGE("Apply_sonic_stun() called for [src] at [log_loc(src)]. W: [weak], S: [stun], MS: [misstep], SL: [slow], DI: [drop_item], ED: [ears_damage], EF: [ear_tempdeaf]")
 
 	// Stun target mob.
-	boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
+	boutput(src, SPAN_ALERT("<b>You hear an extremely loud noise!</b>"))
 
 
 #ifdef USE_STAMINA_DISORIENT
-	src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_EAR)
+	src.do_disorient(stamina_damage, knockdown = knockdown*20, stunned = stun*20, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_EAR)
 #else
 
-	changeStatus("weakened", stun*10)
+	changeStatus("knockdown", stun*10)
 
 	changeStatus("stunned", stun*10)
 #endif
@@ -445,8 +470,8 @@
 		if (ear_tempdeaf > 0)
 			src.take_ear_damage(ear_tempdeaf, 1)
 
-		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
-			src.show_message("<span class='alert'><B>You drop what you were holding to clutch at your ears!</B></span>")
+		if (knockdown == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
+			src.show_message(SPAN_ALERT("<B>You drop what you were holding to clutch at your ears!</B>"))
 			src.drop_item()
 
 	return
@@ -459,9 +484,11 @@
 	src.mind.violated_hippocratic_oath = 1
 	return 1
 
+/// 'this man' vs 'this person'
 /proc/man_or_woman(var/mob/subject)
 	return subject.get_pronouns().preferredGender
 
+/// 'their cookie' vs 'her cookie'
 /proc/his_or_her(var/mob/subject)
 	return subject.get_pronouns().possessive
 
@@ -471,15 +498,43 @@
 /proc/he_or_she(var/mob/subject)
 	return subject.get_pronouns().subjective
 
+/// "they're outside" vs "he's outside"
 /proc/hes_or_shes(var/mob/subject)
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
+/// 'they are' vs 'he is'
 /proc/is_or_are(var/mob/subject)
-	return (subject.get_pronouns().pluralize ? "are" : "is")
+	return subject.get_pronouns().pluralize ? "are" : "is"
+
+/// 'they have' vs 'he has'
+/proc/has_or_have(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "have" : "has"
+
+/// "they've had" vs "he's had"
+/proc/ve_or_s(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "'ve" : "'s"
 
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
+
+/// "he doesn't" vs "they don't"
+///
+/// should arguably just be 'does_or_doesnt' but i figure this is by far the dominant use of that so I'm rolling them together
+/proc/he_or_she_dont_or_doesnt(mob/subject)
+	return "[he_or_she(subject)] do[blank_or_es(subject)]n't"
+
+/// 'they run' vs 'he runs'
+/proc/blank_or_s(mob/subject)
+	return subject.get_pronouns().pluralize ? "" : "s"
+
+/// 'they smash' vs 'he smashes'
+/proc/blank_or_es(mob/subject)
+	return subject.get_pronouns().pluralize ? "" : "es"
+
+/// 'they were' vs 'he was'
+/proc/were_or_was(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "were" : "was"
 
 /mob/proc/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
@@ -493,19 +548,19 @@
 
 	if (src.wear_mask)
 		src.wear_mask.add_blood(whose)
+		src.update_bloody_mask()
 	if (src.head)
 		src.head.add_blood(whose)
+		src.update_bloody_head()
 	if (src.glasses && prob(33))
 		src.glasses.add_blood(whose)
 	if (prob(15))
 		if (src.wear_suit)
 			src.wear_suit.add_blood(whose)
+			src.update_bloody_suit()
 		else if (src.w_uniform)
 			src.w_uniform.add_blood(whose)
-
-	src.update_clothing()
-	src.update_body()
-	return
+			src.update_bloody_uniform()
 
 /mob/proc/spread_blood_hands(mob/whose)
 	return
@@ -516,8 +571,10 @@
 
 	if (src.gloves)
 		src.gloves.add_blood(whose)
+		src.update_bloody_gloves()
 	else
 		src.add_blood(whose)
+		src.update_bloody_hands()
 	if (src.equipped())
 		var/obj/item/I = src.equipped()
 		if (istype(I))
@@ -525,12 +582,10 @@
 	if (prob(15))
 		if (src.wear_suit)
 			src.wear_suit.add_blood(whose)
+			src.update_bloody_suit()
 		else if (src.w_uniform)
 			src.w_uniform.add_blood(whose)
-
-	src.update_clothing()
-	src.update_body()
-	return
+			src.update_bloody_uniform()
 
 /mob/proc/is_bleeding()
 	return 0
@@ -539,6 +594,7 @@
 	return bleeding
 
 /mob/proc/equipped_limb()
+	RETURN_TYPE(/datum/limb)
 	return null
 
 /mob/living/critter/equipped_limb()
@@ -672,52 +728,52 @@
 				old.u_equip(CI5)
 
 			old.u_equip(CI)
-			newbody.equip_if_possible(CI, slot_w_uniform) // Has to be at the top of the list, naturally.
-			if (CI2) newbody.equip_if_possible(CI2, slot_belt)
-			if (CI3) newbody.equip_if_possible(CI3, slot_wear_id)
-			if (CI4) newbody.equip_if_possible(CI4, slot_l_store)
-			if (CI5) newbody.equip_if_possible(CI5, slot_r_store)
+			newbody.equip_if_possible(CI, SLOT_W_UNIFORM) // Has to be at the top of the list, naturally.
+			if (CI2) newbody.equip_if_possible(CI2, SLOT_BELT)
+			if (CI3) newbody.equip_if_possible(CI3, SLOT_WEAR_ID)
+			if (CI4) newbody.equip_if_possible(CI4, SLOT_L_STORE)
+			if (CI5) newbody.equip_if_possible(CI5, SLOT_R_STORE)
 
 		if (old.wear_suit)
 			var/obj/item/CI6 = old.wear_suit
 			old.u_equip(CI6)
-			newbody.equip_if_possible(CI6, slot_wear_suit)
+			newbody.equip_if_possible(CI6, SLOT_WEAR_SUIT)
 		if (old.head)
 			var/obj/item/CI7 = old.head
 			old.u_equip(CI7)
-			newbody.equip_if_possible(CI7, slot_head)
+			newbody.equip_if_possible(CI7, SLOT_HEAD)
 		if (old.wear_mask)
 			var/obj/item/CI8 = old.wear_mask
 			old.u_equip(CI8)
-			newbody.equip_if_possible(CI8, slot_wear_mask)
+			newbody.equip_if_possible(CI8, SLOT_WEAR_MASK)
 		if (old.ears)
 			var/obj/item/CI9 = old.ears
 			old.u_equip(CI9)
-			newbody.equip_if_possible(CI9, slot_ears)
+			newbody.equip_if_possible(CI9, SLOT_EARS)
 		if (old.glasses)
 			var/obj/item/CI10 = old.glasses
 			old.u_equip(CI10)
-			newbody.equip_if_possible(CI10, slot_glasses)
+			newbody.equip_if_possible(CI10, SLOT_GLASSES)
 		if (old.gloves)
 			var/obj/item/CI11 = old.gloves
 			old.u_equip(CI11)
-			newbody.equip_if_possible(CI11, slot_gloves)
+			newbody.equip_if_possible(CI11, SLOT_GLOVES)
 		if (old.shoes)
 			var/obj/item/CI12 = old.shoes
 			old.u_equip(CI12)
-			newbody.equip_if_possible(CI12, slot_shoes)
+			newbody.equip_if_possible(CI12, SLOT_SHOES)
 		if (old.back)
 			var/obj/item/CI13 = old.back
 			old.u_equip(CI13)
-			newbody.equip_if_possible(CI13, slot_back)
+			newbody.equip_if_possible(CI13, SLOT_BACK)
 		if (old.l_hand)
 			var/obj/item/CI14 = old.l_hand
 			old.u_equip(CI14)
-			newbody.equip_if_possible(CI14, slot_l_hand)
+			newbody.equip_if_possible(CI14, SLOT_L_HAND)
 		if (old.r_hand)
 			var/obj/item/CI15 = old.r_hand
 			old.u_equip(CI15)
-			newbody.equip_if_possible(CI15, slot_r_hand)
+			newbody.equip_if_possible(CI15, SLOT_R_HAND)
 
 	SPAWN(2 SECONDS) // Necessary.
 		if (newbody)
@@ -739,7 +795,7 @@
 		if (S == "window" && istype(target, /obj/window))
 			var/obj/window/W = target
 			if (show_message)
-				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span class='notice'>You smash through the window.</span>")
+				src.visible_message(SPAN_ALERT("[src] smashes through the window."), SPAN_NOTICE("You smash through the window."))
 			W.health = 0
 			W.smash()
 			return TRUE
@@ -748,7 +804,7 @@
 			var/obj/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
-					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
+					G.visible_message(SPAN_ALERT("<b>[src]</b> violently slashes [G]!"))
 				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 				G.damage_slashing(15)
 				return TRUE
@@ -768,7 +824,7 @@
 		if (S == "blob" && istype(target, /obj/blob))
 			var/obj/blob/B = target
 			if(show_message)
-				src.visible_message("<span class='alert'><B>[src] savagely slashes [B]!</span>", "<span class='notice'>You savagely slash at \the [B]</span>")
+				src.visible_message(SPAN_ALERT("<B>[src] savagely slashes [B]!"), SPAN_NOTICE("You savagely slash at \the [B]"))
 			B.take_damage(rand(10,20),1,DAMAGE_CUT)
 			playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 			return TRUE
@@ -785,7 +841,7 @@
 	var/my_name = "<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span>"
 	if (!use_voice_name)
 		my_name = src.get_heard_name()
-	var/rendered = "<span class='game say'>[my_name] <span class='message'>[message_a]</span></span>"
+	var/rendered = SPAN_SAY("[my_name] [SPAN_MESSAGE("[message_a]")]")
 
 	var/rendered_outside = null
 	if (length(olocs))
@@ -806,11 +862,11 @@
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = SPAN_SAY("[my_name] (on [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = SPAN_SAY("[my_name] (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = SPAN_SAY("muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 
 	for (var/mob/M in heard)
 		if (M in processed)
@@ -825,7 +881,7 @@
 				continue
 		else
 			if (isghostdrone(M) && !isghostdrone(src) && !istype(M, /mob/living/silicon/ghostdrone/deluxe))
-				thisR = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_a]</span></span>"
+				thisR = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -851,10 +907,13 @@
 	var/prev_invis = ghost_invisibility
 	ghost_invisibility = new_invis
 	for (var/mob/dead/observer/G in mobs)
+		if (G.invisibility == INVIS_ALWAYS)
+			// logged out ghosts stay invisible
+			continue
 		G.invisibility = new_invis
 		REMOVE_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G)
 		APPLY_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G, new_invis)
 		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
-			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+			boutput(G, SPAN_NOTICE("You are [new_invis == 0 ? "now" : "no longer"] visible to the living!"))
 
 

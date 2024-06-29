@@ -39,13 +39,13 @@
 			if ("un3") playsound(src.loc, 'sound/voice/yeaaahhh.ogg', 50, 1)
 			else playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		var/newmode = tgui_input_list(user, "Select sound to play", "Make some noise", list("bang", "burp", "buzz", "cat", "coo", "fart", "gunshot", "harmonica", "honk", "rimshot", "siren", "squeak", "trombone", "vuvuzela"), src.mode)
 
 		if (newmode && rand(1,150) == 1)
-			boutput(user, "<span class='alert'>BZZZ SOUND SYNTHESISER ERROR</span>")
-			boutput(user, "<span class='notice'>Mode is now: ???</span>")
+			boutput(user, SPAN_ALERT("BZZZ SOUND SYNTHESISER ERROR"))
+			boutput(user, SPAN_NOTICE("Mode is now: ???"))
 			src.mode = pick("un1","un2","un3")
 		else if (newmode)
-			boutput(user, "<span class='notice'>Mode is now: [newmode]</span>")
+			boutput(user, SPAN_NOTICE("Mode is now: [newmode]"))
 			src.mode = newmode

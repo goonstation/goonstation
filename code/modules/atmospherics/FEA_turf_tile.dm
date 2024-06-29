@@ -14,7 +14,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	/// The direction of the pressure delta.
 	var/tmp/pressure_direction = 0
 	/// Current fire object on us.
-	var/tmp/obj/hotspot/active_hotspot
+	var/tmp/list/obj/hotspot/active_hotspots
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/tmp/process_cell_operations = 0
@@ -25,6 +25,10 @@ var/global/list/turf/hotly_processed_turfs = list()
 	var/tmp/atmos_operations = 0
 	var/static/max_atmos_operations = 0
 #endif
+
+/turf/New()
+	. = ..()
+	src.active_hotspots = list()
 
 /// Assumes air into the turf. Use this instead of directly adding to air.
 /turf/assume_air(datum/gas_mixture/giver)
@@ -195,8 +199,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.air.temperature = src.temperature
 
 		if(air_master)
-			air_master.tiles_to_update |= src
-			src.find_group()
+			if(explosions.exploding)
+				air_master.tiles_to_rebuild |= src
+			else
+				air_master.tiles_to_update |= src
+				src.find_group()
 
 	else
 		if(!air_master)
@@ -214,11 +221,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 		else
 			air_master.active_singletons.Remove(src)
 
-	if(src.active_hotspot)
-		src.active_hotspot.dispose() // have to call this now to force the lighting cleanup
-		if (src.active_hotspot)
-			qdel(active_hotspot)
-			src.active_hotspot = null
+	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+		qdel(hotspot)
+		src.active_hotspots -= null
 
 	if(src.being_superconductive)
 		air_master.active_super_conductivity.Remove(src)
@@ -269,12 +274,10 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /// Returns air mixture of turf or air group, if we have one. If we don't, return [/turf/return_air].
 /turf/simulated/return_air()
-	if(src.air)
-		if(src.parent?.group_processing)
-			return src.parent.air
-		else
-			return src.air
-
+	if(src.parent?.group_processing)
+		return src.parent.air
+	else if(!isnull(src.air))
+		return src.air
 	else
 		return ..()
 
@@ -341,7 +344,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 		src.parent.length_space_border += src.length_space_border
 
-	if(src.air_check_directions)
+	if(src.air_check_directions || length(src.active_hotspots))
 		src.processing = TRUE
 		if(!src.parent)
 			air_master.active_singletons |= src
@@ -386,7 +389,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 					else
 						if(enemy_tile.current_cycle < current_cycle)
 							connection_difference = src.air.share(enemy_tile.air)
-					if(src.active_hotspot)
+					if(length(src.active_hotspots))
 						if(!possible_fire_spreads)
 							possible_fire_spreads = list()
 						possible_fire_spreads += enemy_tile
@@ -404,12 +407,14 @@ var/global/list/turf/hotly_processed_turfs = list()
 		return
 
 	if(src.air.react() & CATALYST_ACTIVE)
-		src.active_hotspot?.catalyst_active = TRUE
+		for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+			hotspot.catalyst_active = TRUE
 	else
-		src.active_hotspot?.catalyst_active = FALSE
+		for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+			hotspot.catalyst_active = FALSE
 
-	if(src.active_hotspot && possible_fire_spreads)
-		src.active_hotspot.process(possible_fire_spreads)
+	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+		hotspot.process(possible_fire_spreads)
 
 	if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 		src.consider_superconductivity(starting = 1)
@@ -538,10 +543,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 						src.mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
 
 	//Radiate excess tile heat to space
-	var/turf/space/sample_space = locate(/turf/space)
-	if(sample_space && (temperature > T0C))
-	//Considering 0 degC as te break even point for radiation in and out
-		src.mimic_temperature_solid(sample_space, FLOOR_HEAT_TRANSFER_COEFFICIENT)
+	if(temperature > T0C)
+		//Considering 0 degC as te break even point for radiation in and out
+		src.mimic_temperature_solid(locate(/turf/space), FLOOR_HEAT_TRANSFER_COEFFICIENT)
 
 	//Conduct with air on my tile if I have it
 	if(src.air)
@@ -678,3 +682,16 @@ var/global/list/turf/hotly_processed_turfs = list()
 			w.tilenotify(src)
 
 	return TRUE
+
+/turf/simulated/proc/stabilize()
+	ZERO_GASES(src.air)
+#ifdef ATMOS_ARCHIVING
+	ZERO_ARCHIVED_GASES(src.air)
+	src.air.ARCHIVED(temperature) = null
+#endif
+	src.air.oxygen = MOLES_O2STANDARD
+	src.air.nitrogen = MOLES_N2STANDARD
+	src.air.fuel_burnt = 0
+	src.air.temperature = T20C
+	if(src.parent?.group_processing)
+		src.parent?.suspend_group_processing()

@@ -32,7 +32,7 @@
 		return 12.5 + 2.5 * clamp(GET_DIST(A, P.orig_turf) - 4, 0, 7)
 
 
-/datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
+/datum/projectile/wavegun/transverse //expensive taser shots that go through /everything
 	shot_number = 1
 	stun = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
 	max_range = 5 //super short. about 4 tile max range
@@ -49,6 +49,10 @@
 	color_red = 0
 	color_green = 1
 	color_blue = 0
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(ismob(hit) && proj.power == 40) //hax
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
 
 	get_power(obj/projectile/P, atom/A)
 		return 10 + 30 * (P.travelled >= 128)

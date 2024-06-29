@@ -10,7 +10,6 @@
 	icon_state = "uplink" //replace later
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
-	flags = TABLEPASS | FPRINT
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -72,7 +71,7 @@
 	proc/accepted_token(token, mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
-		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
+		boutput(user, SPAN_NOTICE("You insert the requisition token into [src]."))
 		if(log_purchase)
 			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 

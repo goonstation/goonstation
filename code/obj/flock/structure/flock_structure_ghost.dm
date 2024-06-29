@@ -11,8 +11,8 @@
 
 
 /obj/flock_structure/ghost/building_specific_info()
-	return {"<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%
-	<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"}
+	return {"[SPAN_BOLD("Construction Percentage:")] [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%
+	<br>[SPAN_BOLD("Construction Progress:")] [currentmats] materials added, [goal] needed"}
 
 /obj/flock_structure/ghost/New(atom/location, datum/flock/F, obj/flock_structure/building = null, goal = 0)
 	..(location, F)
@@ -67,7 +67,7 @@
 	cancelBuild()
 
 /obj/flock_structure/ghost/gib()
-	visible_message("<span class='alert'>[src] suddenly dissolves!</span>")
+	visible_message(SPAN_ALERT("[src] suddenly dissolves!"))
 	playsound(src.loc, 'sound/impact_sounds/Glass_Shatter_2.ogg', 80, 1)
 	if (currentmats > 0)
 		var/obj/item/flockcache/cache = new(get_turf(src))
@@ -111,5 +111,5 @@
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats
 	flock_speak(src, "Tealprint derealizing", flock)
-	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, TRUE, extrarange = -10)
 	qdel(src)

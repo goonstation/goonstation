@@ -130,15 +130,15 @@
 /obj/storage/secure/closet/fridge{
 	pixel_y = 0;
 	locked = 0;
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/cola=3,/obj/item/storage/box/cocktail_doodads,);
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/cola=3,/obj/item/storage/box/cocktail_doodads);
 	color = "#69ffe3";
 	layer = 2
 	},
 /obj/random_item_spawner{
 	max_amt2spawn = 10;
 	amt2spawn = 5;
-	items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/orange,/obj/item/reagent_containers/food/drinks/bottle/soda/lime./obj/item/reagent_containers/food/drinks/bottle/soda/gingerale,/obj/item/reagent_containers/food/drinks/bottle/soda/pink,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/drinks/fruitmilk,/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,/obj/item/reagent_containers/food/drinks/energyshake);
-	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza,/obj/item/reagent_containers/food/snacks/greengoo,/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,/obj/item/reagent_containers/food/drinks/milk/clownspider,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/item/reagent_containers/food/drinks/weightloss_shake,/obj/critter/snail);
+	items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/orange,/obj/item/reagent_containers/food/drinks/bottle/soda/lime,/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale,/obj/item/reagent_containers/food/drinks/bottle/soda/pink,/obj/item/reagent_containers/food/drinks/milk,/obj/item/reagent_containers/food/drinks/fruitmilk,/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,/obj/item/reagent_containers/food/drinks/energyshake);
+	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza,/obj/item/reagent_containers/food/snacks/greengoo,/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,/obj/item/reagent_containers/food/drinks/milk/clownspider,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/item/reagent_containers/food/drinks/weightloss_shake);
 	rare_chance = 15;
 	min_amt2spawn = 5
 	},
@@ -199,6 +199,7 @@
 	heal_amt = 2;
 	rand_pos = 0
 	},
+/mob/living/critter/small_animal/slug/snail,
 /turf/simulated/floor/white/checker2,
 /area/dmm_suite/clear_area)
 "Q" = (
@@ -235,7 +236,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/purpleish,
-/obj/decal/poster/wallsign/lesb_flag{
+/obj/decal/poster/flag/lesb{
 	pixel_y = 6;
 	pixel_x = -25;
 	desc = "Neato!"

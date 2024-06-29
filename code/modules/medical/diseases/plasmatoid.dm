@@ -2,7 +2,8 @@
 	name = "Plasmatoid"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Mutadone"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Mutadone"
 	reagentcure = list("mutadone")
 	recureprob = 15
 	associated_reagent = "liquid plasma"
@@ -19,26 +20,26 @@
 			if(probmult(1))
 				affected_mob.emote("cough")
 			else if(probmult(2))
-				boutput(affected_mob, "<span class='alert'>You feel a strange pressure in your chest.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel a strange pressure in your chest."))
 				if(prob(20))
 					random_brute_damage(affected_mob, 1)
 			else if(probmult(3))
-				boutput(affected_mob, "<span class='alert'>Your chest hurts.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your chest hurts."))
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
 		if(3)
 			if(probmult(1))
 				affected_mob.emote("cough")
 			else if(probmult(2))
-				boutput(affected_mob, "<span class='alert'>You feel a strange pressure in your chest.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel a strange pressure in your chest."))
 				if(prob(20))
 					random_brute_damage(affected_mob, 1)
 			else if(probmult(1))
-				boutput(affected_mob, "<span class='alert'>Your chest hurts.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your chest hurts."))
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
 			else if(probmult(3))
-				boutput(affected_mob, "<span class='alert'>Your breathing feels labored.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your breathing feels labored."))
 				affected_mob.take_oxygen_deprivation(1)
 
 		if(4)
@@ -66,5 +67,5 @@
 				lung_replaced = TRUE
 
 			if(lung_replaced)
-				boutput(affected_mob, "<span class='alert'>Your chest suddenly feels very tight as breathing seems different...</span>")
+				boutput(affected_mob, SPAN_ALERT("Your chest suddenly feels very tight as breathing seems different..."))
 				affected_mob.take_oxygen_deprivation(2)

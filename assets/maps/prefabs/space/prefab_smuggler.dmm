@@ -99,13 +99,13 @@
 /area/prefab/smuggler_den)
 "ar" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 10
+	free_resources = list(/obj/item/material_piece/steel = 10, /obj/item/material_piece/copper = 10, /obj/item/material_piece/glass = 10)
 	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
@@ -146,7 +146,7 @@
 	desc = "The bottom of the pad has a bunch of wire coil and electrical insulation sticking out the sides haphazardly - cutting-edge signature masking tech.";
 	name = "Auxiliary Cargo Pad"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 6;
 	icon = 'icons/obj/monitors.dmi';
@@ -171,16 +171,12 @@
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/grime,
 /area/prefab/smuggler_den)
 "ax" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
@@ -190,34 +186,24 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
 /area/prefab/smuggler_den)
 "az" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/prefab/smuggler_den)
 "aA" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/stool/chair/office/purple{
@@ -278,7 +264,6 @@
 /area/prefab/smuggler_den)
 "aI" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -294,8 +279,6 @@
 	icon_state = "chair_comfy"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/grime,
@@ -304,7 +287,7 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/instrument/harmonica,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
@@ -400,7 +383,7 @@
 	},
 /obj/item/plantanalyzer,
 /obj/item/satchel/hydro,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
 	dir = 8;
 	icon = 'icons/obj/monitors.dmi';
