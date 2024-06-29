@@ -1139,7 +1139,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
 
-	flags = FPRINT | TGUI_INTERACTIVE
+	flags = TABLEPASS | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_SMALL
 

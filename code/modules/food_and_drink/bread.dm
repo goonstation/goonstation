@@ -9,7 +9,6 @@
 	fill_amt = 6
 	food_color = "#FFFFCC"
 	real_name = "bread"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	sliceable = TRUE
 	slice_amount = 6

@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10

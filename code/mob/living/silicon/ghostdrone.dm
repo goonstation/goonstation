@@ -1184,6 +1184,11 @@
 		if (C.tg_controls)
 			C.apply_keybind("drone_tg")
 
+	projCanHit(datum/projectile/P)
+		. = ..()
+		if(isdead(src))
+			return FALSE
+
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0
 
