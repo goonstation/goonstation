@@ -14613,7 +14613,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "bKG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -15429,6 +15429,9 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
+"cte" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/janitor/supply)
 "ctu" = (
 /obj/lattice{
 	dir = 4;
@@ -15479,7 +15482,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "cun" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -18942,7 +18945,7 @@
 "fEn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "fEr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -20550,7 +20553,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "hfi" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/latex,
@@ -21869,7 +21872,7 @@
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "ipk" = (
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -23780,7 +23783,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "kna" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -26631,7 +26634,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/purple/side,
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "neF" = (
 /obj/machinery/conveyor/WE{
 	id = "ghostdrone"
@@ -30533,7 +30536,7 @@
 /obj/mapping_helper/access/janitor,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "qlu" = (
 /obj/decal/poster/wallsign/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33699,7 +33702,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "sLl" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -33946,7 +33949,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "sSw" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -39153,7 +39156,7 @@
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/area/station/maintenance/southeast)
+/area/station/janitor/supply)
 "xrR" = (
 /obj/decal/tile_edge/floorguide/qm{
 	dir = 8
@@ -90637,7 +90640,7 @@ mGW
 sRp
 hfg
 sLa
-mGW
+cte
 mGW
 mGW
 mGW
@@ -91241,7 +91244,7 @@ mGW
 cuc
 xrz
 bKv
-mGW
+cte
 aaa
 aaa
 aaa
@@ -91540,10 +91543,10 @@ wuu
 mGW
 mGW
 mGW
-mGW
-mGW
-mGW
-mGW
+cte
+cte
+cte
+cte
 aaa
 uCl
 uCl
