@@ -13,7 +13,7 @@ TYPEINFO(/atom)
 	plane = PLANE_DEFAULT
 	/// Are we above or below the floor tile?
 	var/level = OVERFLOOR
-	var/flags = FPRINT
+	var/flags = 0
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -467,8 +467,7 @@ TYPEINFO(/atom)
 
 /atom/movable/overlay/gibs/proc/delaydispose()
 	SPAWN(3 SECONDS)
-		if (src)
-			dispose(src)
+		qdel(src)
 
 /atom/movable/overlay/disposing()
 	master = null

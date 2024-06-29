@@ -50,7 +50,7 @@
 	var/power = 5 //Damage to asteroid tiles.
 	var/hit_sound = 'sound/items/mining_drill.ogg'
 
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 
 	New()

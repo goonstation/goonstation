@@ -1,7 +1,7 @@
 /obj/item/artifact/attack_wand
 	name = "artifact attack wand"
 	associated_datum = /datum/artifact/attack_wand
-	flags =  FPRINT | CONDUCT | EXTRADELAY
+	flags =  CONDUCT | EXTRADELAY
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range

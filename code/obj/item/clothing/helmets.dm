@@ -117,6 +117,7 @@
 	name = "bespoke space helmet"
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
+	blocked_from_petasusaphilic = TRUE
 
 	var/image/fabrItemImg = null
 	var/image/fabrWornImg = null
