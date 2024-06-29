@@ -1413,6 +1413,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\mapping\_helper_parent.dm"
 #include "code\modules\mapping\helpers\access_spawn.dm"
 #include "code\modules\mapping\helpers\airlock_helpers.dm"
+#include "code\modules\mapping\helpers\button_helpers.dm"
 #include "code\modules\mapping\helpers\firedoor_spawn.dm"
 #include "code\modules\mapping\helpers\mob_spawn.dm"
 #include "code\modules\mapping\helpers\turf_helpers.dm"
