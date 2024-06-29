@@ -1,5 +1,22 @@
 
+(t)sat jun 29 24
+(u)joeled
+(p)19647
+(e)🗺💅🔬|A-Mapping, C-QoL, A-Science
+(+)Plasma Research has been outfitted with their own gas extractor on nearly all stations.
 (t)fri jun 28 24
+(u)DecodeQwertyPls
+(p)19564
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Most maps now have freezers in toxins.
+(u)Kubius
+(p)19635
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The Prototypist requisition has four new outcomes.
+(u)mintyphresh
+(p)19479
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)NT's payroll stipends now deposit some excess money to the payroll budget.
 (u)TealSeer
 (p)19405
 (e)🔎🔒❗⚙|C-Code-Quality, A-Secret, E-FUCK, A-Internal

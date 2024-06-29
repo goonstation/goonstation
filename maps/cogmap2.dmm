@@ -50850,7 +50850,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cUW" = (
@@ -51856,7 +51856,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cYD" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
@@ -51864,6 +51863,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/manufacturer/gas,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cYE" = (
