@@ -13250,15 +13250,12 @@
 	},
 /area/station/medical/staff)
 "bqj" = (
-/obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
-	dir = 4;
-	hardened = 1
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
@@ -13367,11 +13364,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
-	dir = 4;
-	hardened = 1;
-	id = "medbay_entrance"
+	dir = 4
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
@@ -16096,13 +16089,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
-	dir = 4;
-	hardened = 1
-	},
 /obj/mapping_helper/access/medical,
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "cXF" = (
@@ -23486,11 +23476,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
-	dir = 4;
-	hardened = 1;
-	id = "medbay_entrance"
+	dir = 4
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -24823,11 +24809,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	aiControlDisabled = 1;
-	cant_emag = 1;
-	dir = 4;
-	hardened = 1;
-	id = "medbay_entrance"
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/hallway/primary/south)
@@ -24994,11 +24976,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4;
-	id = "cloning_exit"
-	},
 /obj/mapping_helper/access/medical,
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "lBa" = (
@@ -28236,10 +28217,6 @@
 	icon_state = "6-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4;
-	id = "cloning_exit"
-	},
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blackwhite/side{
 	dir = 4
