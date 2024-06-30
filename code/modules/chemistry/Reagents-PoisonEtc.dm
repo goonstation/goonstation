@@ -837,7 +837,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(6))
-					M.reagents.add_reagent("histamine", randfloat(3.3 , 10) * mult)
+					M.reagents.add_reagent("histamine", randfloat(11 , 33.4) * src.calculate_depletion_rate(M, mult))
 				if (prob(2))
 					boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 					random_brute_damage(M,5 * mult)
@@ -1361,7 +1361,7 @@ datum
 
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(25, 50) * mult)
+					M.reagents.add_reagent("histamine", rand(125, 250) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 20)
 					M.take_toxin_damage(0.75 * mult)
 					random_brute_damage(M, 0.75 * mult)
