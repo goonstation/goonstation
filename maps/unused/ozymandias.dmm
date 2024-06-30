@@ -8022,7 +8022,7 @@
 	name = "Dockside Restroom"
 	})
 "ciU" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},
@@ -18076,7 +18076,7 @@
 	})
 "eNM" = (
 /obj/machinery/manufacturer/mining{
-	free_resource_amt = 0
+	free_resources = list()
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
@@ -18322,7 +18322,7 @@
 /area/station/engine/elect)
 "eQT" = (
 /obj/machinery/manufacturer/hangar{
-	free_resource_amt = 0
+	free_resources = list()
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -19106,7 +19106,7 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
 "fch" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A solar electrical generator.";
 	icon = 'icons/obj/power.dmi';
@@ -21439,7 +21439,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 20
 	},
 /turf/simulated/floor/white/grime,
@@ -24818,7 +24818,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/north)
 "gBu" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -33075,7 +33075,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
 "iJi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A strange solar tracker. You can't tell if it's operating.";
 	icon = 'icons/obj/power.dmi';
@@ -39434,7 +39434,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "krs" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -48899,7 +48899,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "mOE" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -51533,7 +51533,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "nDg" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -52367,7 +52367,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "nNp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -54151,7 +54151,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/research)
 "ojv" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -54346,7 +54346,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "oml" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
@@ -55314,7 +55314,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/ranch)
 "oyw" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/white/grime,
@@ -59019,7 +59019,7 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
@@ -70158,14 +70158,14 @@
 	},
 /area/station/crew_quarters/fitness)
 "sok" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -73365,7 +73365,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
 "sZL" = (
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "sZO" = (
@@ -75100,7 +75100,7 @@
 	},
 /area/station/hallway/primary/east)
 "twc" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -75674,7 +75674,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "tDD" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "tDE" = (
@@ -84652,9 +84652,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/quartermaster/office)
 "vJl" = (
-/obj/machinery/manufacturer/general/grody{
-	free_resource_amt = 2
-	},
+/obj/machinery/manufacturer/general/grody,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -88195,7 +88193,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -91284,6 +91282,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"xnQ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/quartermaster/cargooffice)
 "xnS" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -91344,7 +91348,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "xov" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
@@ -153112,7 +153116,7 @@ woz
 owR
 jTW
 dUg
-jTW
+xnQ
 jTW
 wfM
 dXK

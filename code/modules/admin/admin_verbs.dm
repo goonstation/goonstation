@@ -248,6 +248,7 @@ var/list/admin_verbs = list(
 		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
+		/client/proc/toggle_hide_offline,
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
@@ -1361,6 +1362,13 @@ var/list/fun_images = list()
 		src.set_saturation(1)
 		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
 
+	var/confirm8 = tgui_alert(src.mob, "Disable Global Parallax?", "Disable Global Parallax?", list("Yes", "No"))
+	if (confirm8 == "Yes")
+		parallax_enabled = !parallax_enabled
+
+		for (var/client/client in clients)
+			client.toggle_parallax()
+
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
 		del(hudItem)
@@ -1798,6 +1806,9 @@ var/list/fun_images = list()
 		var/ignorePlayerVote = tgui_alert(src.mob, "The next map was voted for by the players, are you sure you want to override it? This could be very rude!", "Ignore Players?", list("Yes", "No"))
 		if (ignorePlayerVote == "No")
 			return
+
+	if (mapSwitcher.locked)
+		return alert("The server is currently switching to another map. You will need to wait.")
 
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
@@ -2244,7 +2255,8 @@ var/list/fun_images = list()
 
 	var/client/C = src.client
 	if (choice in type_procs)
-		call(A, type_procs[choice])()
+		var/procpath/procpath = type_procs[choice]
+		call(A, procpath.name)()
 		src.update_cursor()
 		return
 

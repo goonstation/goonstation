@@ -105,7 +105,7 @@
 	var/datum/trait/trait
 	for (var/trait_id in P.traitPreferences.traits_selected)
 		trait = getTraitById(trait_id)
-		if (trait.mutantRace)
+		if (trait.mutantRace && src.icon == initial(src.icon))
 			src.icon_state = trait.mutantRace.ghost_icon_state
 			is_mutantrace = TRUE
 			break
@@ -303,10 +303,6 @@
 				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 					antagonist.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
-				if (istype(src.loc, /obj/cryotron))
-					var/datum/job/job = find_job_in_controller_by_string(src.job, soft=TRUE)
-					if (job)
-						job.assigned = max(0, job.assigned - 1)
 				src.ghostize()
 				qdel(src)
 			else
@@ -356,19 +352,19 @@
 				else
 					our_ghost.last_words = living_src.last_words
 
-		var/turf/T = get_turf(src)
-		if (can_ghost_be_here(src, T))
-			our_ghost.set_loc(T)
-		else
-			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-
 		// step 2: make sure they actually make it to the ghost
 		if (src.mind)
 			src.mind.transfer_to(our_ghost)
 		else
 			our_ghost.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
 
-		if(istype(get_area(src),/area/afterlife))
+		var/turf/T = get_turf(src)
+		if (can_ghost_be_here(our_ghost, T))
+			our_ghost.set_loc(T)
+		else
+			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+
+		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
 		if(!mind?.get_player()?.dnr)
@@ -561,6 +557,13 @@
 		OnMove()
 		return
 
+	. = ..()
+
+/mob/dead/observer/set_loc(atom/new_loc, new_pixel_x, new_pixel_y)
+	if (isturf(new_loc) && !can_ghost_be_here(src, new_loc) && (isnull(src.corpse) || !can_ghost_be_here(src.corpse, new_loc)))
+		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
+		src.set_loc(OS)
+		return
 	. = ..()
 
 /mob/dead/observer/mouse_drop(atom/A)

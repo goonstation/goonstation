@@ -550,6 +550,8 @@
 							src.throw_at(T, 10, 2)
 				/*if (user.glove_weaponcheck())
 					user.energyclaws_attack(src)*/
+				else if (user.equipped_limb()?.can_beat_up_robots)
+					user.equipped_limb().harm(src, user)
 				else
 					user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 					random_brute_damage(user, rand(2,5))

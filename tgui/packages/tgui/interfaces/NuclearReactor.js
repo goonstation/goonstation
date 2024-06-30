@@ -20,7 +20,7 @@ const ReactorRow = (shape) => {
         if (c === null)
         {
           return (
-            <Table.Cell>
+            <Table.Cell key={name}>
               <Button
                 key={name}
                 fluid
@@ -45,7 +45,7 @@ const ReactorRow = (shape) => {
         {
           const { x, y, name, img, temp, extra, flux } = c;
           return (
-            <Table.Cell>
+            <Table.Cell key={name}>
               <Button
                 key={name}
                 fluid

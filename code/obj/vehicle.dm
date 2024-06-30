@@ -2382,7 +2382,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len < (user.traitHolder?.hasTrait("training_quartermaster") ? 2 : 1) * helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
