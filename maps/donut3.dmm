@@ -77394,9 +77394,7 @@
 /area/station/chapel/sanctuary)
 "xli" = (
 /obj/table/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/station/science/storage)
 "xlw" = (

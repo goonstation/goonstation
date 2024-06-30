@@ -10704,10 +10704,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bdz" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
 /obj/table/reinforced/chemistry/auto,
+/obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bdB" = (
