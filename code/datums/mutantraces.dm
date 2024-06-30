@@ -1164,7 +1164,15 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
 			I.loc = get_turf(src.mob)
-			src.mob.sever_limb("all", messy=FALSE)
+			var/list/limbs = list()
+			limbs += src.mob.limbs.l_arm?.remove(FALSE)
+			limbs += src.mob.limbs.r_arm?.remove(FALSE)
+			limbs += src.mob.limbs.l_leg?.remove(FALSE)
+			limbs += src.mob.limbs.r_leg?.remove(FALSE)
+
+			for (var/obj/limb in limbs) // You do not know my pain.
+				limb.throw_random = FALSE
+				ThrowRandom(limb, rand(2,3), 1)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
