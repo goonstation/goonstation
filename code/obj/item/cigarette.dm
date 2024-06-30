@@ -513,7 +513,7 @@
 // WHY
 /obj/item/clothing/mask/cigarette/custom
 	desc = "There could be anything in this."
-	flags = FPRINT|TABLEPASS|OPENCONTAINER
+	flags = TABLEPASS | OPENCONTAINER
 
 	New()
 		..()
@@ -538,7 +538,6 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
-	flags = TABLEPASS | FPRINT
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -671,7 +670,6 @@
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
 	var/package_style = "cigarbox"
-	flags = TABLEPASS | FPRINT
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -735,7 +733,6 @@
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
 	package_style = "cigarbox"
-	flags = TABLEPASS | FPRINT
 	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
@@ -817,7 +814,7 @@
 	icon_state = "matchbook"
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -895,7 +892,7 @@
 	icon_state = "match"
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -1114,7 +1111,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
-	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	flags = TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	click_delay = 0.7 SECONDS

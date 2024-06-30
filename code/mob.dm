@@ -4,7 +4,7 @@
 	animate_movement = 2
 	soundproofing = 10
 
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
@@ -178,6 +178,7 @@
 
 	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
+	var/logout_at = null
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0
@@ -332,6 +333,14 @@
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
 
+	qdel(chat_text)
+	chat_text = null
+
+	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
+	src.ghost = src.ghostize()
+	if (src.ghost?.corpse == src)
+		src.ghost.corpse = null
+
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
@@ -342,14 +351,6 @@
 		else
 			m.set_loc(src.loc)
 			m.ghostize()
-
-	qdel(chat_text)
-	chat_text = null
-
-	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
-	src.ghost = src.ghostize()
-	if (src.ghost?.corpse == src)
-		src.ghost.corpse = null
 
 	if (traitHolder)
 		traitHolder.removeAll()
@@ -518,11 +519,15 @@
 	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY, src.respect_view_tint_settings)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+	if (src.client)
+		SEND_SIGNAL(src.client, COMSIG_CLIENT_LOGIN, src)
 
 /mob/Logout()
 
 	//logTheThing(LOG_DIARY, src, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
+	if (src.last_client)
+		SEND_SIGNAL(src.last_client, COMSIG_CLIENT_LOGOUT, src)
 
 	tgui_process?.on_logout(src)
 
@@ -605,7 +610,12 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if((tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush"))
+			var/flubber = FALSE
+			if(tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0)
+				flubber = TRUE
+			if((flubber || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush")))
+
+
 				src.now_pushing = 0
 				if(ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || ON_COOLDOWN(tmob, "flubber_bounce", 0.1 SECONDS))
 					return
@@ -617,7 +627,7 @@
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
 				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
-				if(!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS))
+				if((!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS)) && flubber)
 					random_brute_damage(tmob, 7, TRUE)
 					random_brute_damage(src, 7, TRUE)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
@@ -678,7 +688,32 @@
 							tmob.now_pushing = 0
 
 		if (!issilicon(AM) && !issilicon(src))
-			if (tmob.a_intent == "help" && src.a_intent == "help" \
+			var/flubber = FALSE
+			if(tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0)
+				flubber = TRUE
+			if((flubber || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush")))
+
+
+				src.now_pushing = 0
+				if(ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || ON_COOLDOWN(tmob, "flubber_bounce", 0.1 SECONDS))
+					return
+
+				var/atom/source = get_turf(tmob)
+				src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B> bounce off each other!"))
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
+				var/target_dir = get_dir(src, tmob)
+				var/src_dir = get_dir(tmob, src)
+				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
+				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
+				if((!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS)) && flubber)
+					random_brute_damage(tmob, 7, TRUE)
+					random_brute_damage(src, 7, TRUE)
+				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
+
+				return
+
+			else if (tmob.a_intent == "help" && src.a_intent == "help" \
 				&& tmob.canmove && src.canmove \
 				&& !tmob.buckled && !src.buckled \
 				&& !src.throwing && !tmob.throwing \
@@ -888,34 +923,28 @@
 	if (IsGuestKey(src.key))
 		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
 		return
-	else if (!config)
-		boutput(src, SPAN_ALERT("Sorry, medal information is currently not available."))
-		return
-	else if (!config.medal_hub || !config.medal_password)
-		boutput(src, SPAN_ALERT("Sorry, this server does not have medals enabled."))
-		return
 
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
 
 	SPAWN(0)
 		var/list/output = list()
-		var/list/medals = src.mind.get_player().get_all_medals()
+		var/datum/player/player = src.mind.get_player()
+		var/list/medals = player.get_all_medals()
 
 		if (isnull(medals))
-			output += SPAN_ALERT("Sorry, could not contact the BYOND hub for your medal information.")
+			output += SPAN_ALERT("Sorry, could not retrieve your medal information.")
 			return
 
+		medals = medals["data"]
 		if (length(medals) == 0)
 			boutput(src, "<b>You don't have any medals.</b>")
 			return
 
-		sortList(medals, /proc/cmp_text_asc)
-
 		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			output += "&emsp;[medal]"
+			output += "&emsp;[medal["medal"]["title"]]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
+		output += {"<br><a href="[goonhub_href("/players/[player.id]")]" target="_blank">Medal Details</a>"}
 		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
@@ -1563,7 +1592,7 @@
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
-		src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+		boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	return
@@ -2406,6 +2435,9 @@
 	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 	actions.interrupt(src, INTERRUPT_ACT)
 
+/mob/proc/adjust_throw(datum/thrown_thing/thr)
+	return
+
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if (thr.throw_type & THROW_PEEL_SLIP)
 		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
@@ -2945,6 +2977,9 @@
 			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
+
+/mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
+	item.forcefeed(src, user, edibility_override)
 
 /mob/proc/get_hand_pixel_x()
 	.= 0

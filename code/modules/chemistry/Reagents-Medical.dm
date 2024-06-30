@@ -71,7 +71,7 @@ datum
 			fluid_g = 251
 			fluid_b = 251
 			transparency = 30
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 15
 			overdose = 15
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
@@ -127,7 +127,7 @@ datum
 			fluid_g = 251
 			fluid_b = 251
 			transparency = 30
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 15
 			depletion_rate = 0.2
 			overdose = 40   //Ether is known for having a big difference in effective to toxic dosage
@@ -1271,7 +1271,7 @@ datum
 			fluid_b = 255
 			fluid_g = 230
 			transparency = 220
-			addiction_prob = 1//10
+			addiction_prob = 1
 			addiction_min = 10
 			value = 10 // 4 3 1 1 1
 			threshold = THRESHOLD_INIT

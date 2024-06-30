@@ -9,7 +9,7 @@
 	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = TABLEPASS | OPENCONTAINER
 	rc_flags = 0
 	initial_volume = 40
 	pass_unstable = TRUE

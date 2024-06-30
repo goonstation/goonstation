@@ -743,7 +743,7 @@ ported and crapped up by: haine
 	desc = "A nutriant hose for hydroponics work." // Description that shows up when examined
 	icon = 'icons/obj/items/device.dmi' // Icon, just using a green cable coil for now.
 	icon_state = "nutrient"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	var/amt_to_transfer = 10  // How much it transfers at once.
 	var/charge_cost = 20 // How much the thing costs, I'm not sure if this is per tick or what. Can be adjusted.
 	var/charge_tick = 0 // regulates if the borg is in a recharge station, to recharge reagents.

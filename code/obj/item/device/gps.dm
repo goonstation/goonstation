@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/gps)
 	var/distress = 0
 	var/active = 0		//probably should
 	var/atom/tracking_target = null		//unafilliated with allowtrack, which essentially just lets your gps appear on other gps lists
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
