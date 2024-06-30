@@ -2850,14 +2850,13 @@
 /mob/living/carbon/human/proc/sever_limb(var/limb, var/user = src, var/messy)
 	if (!src.limbs)
 		return
-	if(!(limb in list("l_arm","r_arm","l_leg","r_leg","all"))) return
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
 
 	//not exactly elegant, but fuck it, src.vars[limb].sever() didn't want to work :effort:
 	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.sever()
 	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
-	else if(limb == "all") src.limbs.sever("all")
 
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)
