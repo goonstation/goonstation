@@ -1163,14 +1163,8 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			P.setup(src.mob.loc)
 			var/obj/item/I
 			I = src.mob.organHolder.drop_organ("head", src.mob)
-			var/list/limbs = list()
-			limbs += src.mob.limbs.l_arm?.remove(FALSE)
-			limbs += src.mob.limbs.r_arm?.remove(FALSE)
-			limbs += src.mob.limbs.l_leg?.remove(FALSE)
-			limbs += src.mob.limbs.r_leg?.remove(FALSE)
-
-			for (var/obj/limb in limbs) // You do not know my pain.
-				ThrowRandom(limb, 1)
+			I.loc = get_turf(src.mob)
+			src.mob.sever_limb("all", messy=FALSE)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
@@ -1185,19 +1179,10 @@ TYPEINFO(/datum/mutantrace/skeleton)
 				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
-			var/list/organlist = list()
-			for(var/idx in src.mob.organHolder.organ_list)
-				organlist += src.mob.organHolder.organ_list[idx]
-			for(var/obj/item/C in src.mob.list_ejectables())
-				if(!(C in organlist))
-					C.set_loc(src.mob.loc)
-					C.pixel_x += rand(-8, 8)
-					C.pixel_y += rand(-8, 8)
 
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
 
-			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"

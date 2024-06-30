@@ -207,7 +207,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.holder = null
 		return object
 
-	proc/sever(var/mob/user)
+	proc/sever(var/mob/user, var/messy=TRUE)
 		if (!src.holder) // fix for Cannot read null.loc, hopefully - haine
 			if (remove_object)
 				src.remove_object = null
@@ -236,7 +236,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
+		if (messy)
+			holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
+		else
+			holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off!"))
 
 		switch(direction)
 			if(NORTH)
@@ -252,7 +255,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 			direction = turn(direction,180)
 
 		if (isitem(object))
-			object.streak_object(direction, src.streak_decal)
+			if (messy)
+				object.streak_object(direction, src.streak_decal)
+			else
+				object.streak_object(direction, null)
 
 		if(prob(60))
 			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
@@ -396,12 +402,13 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	var/list/linepath = getline(src, destination)
 
+
 	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
 		var/num_splats = randfloat(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)
 			if(step_to(src, T, 0, 300) || num_splats-- >= 1)
-				if (ispath(streak_splatter))
+				if (streak_splatter && ispath(streak_splatter))
 					make_cleanable(streak_splatter,src.loc)
 			sleep(0.1 SECONDS)
 

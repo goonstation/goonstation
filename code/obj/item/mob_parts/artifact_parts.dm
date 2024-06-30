@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		src.on_remove()
 		return ..()
 
-	sever(mob/user)
+	sever(mob/user, messy)
 		src.on_remove()
 		return ..()
 

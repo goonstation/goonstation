@@ -350,7 +350,7 @@
 		if (r_leg && istype(r_leg, /obj/item/parts/human_parts))
 			r_leg:set_skin_tone()
 
-	proc/sever(var/target = "all", var/mob/user)
+	proc/sever(var/target = "all", var/mob/user, var/messy=TRUE)
 		if (!target)
 			return 0
 		if (istext(target))
@@ -372,11 +372,11 @@
 					limbs_to_sever += list(src.r_leg)
 			if (length(limbs_to_sever))
 				for (var/obj/item/parts/P in limbs_to_sever)
-					P.sever(user)
+					P.sever(user, messy)
 				return 1
 		else if (istype(target, /obj/item/parts))
 			var/obj/item/parts/P = target
-			P.sever(user)
+			P.sever(user, messy)
 			return 1
 
 	// quick hacky thing to have similar functionality to get_organ
@@ -2847,17 +2847,17 @@
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.remove()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.remove()
 
-/mob/living/carbon/human/proc/sever_limb(var/limb)
+/mob/living/carbon/human/proc/sever_limb(var/limb, var/user = src, var/messy)
 	if (!src.limbs)
 		return
-	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg","all"))) return
 
 	//not exactly elegant, but fuck it, src.vars[limb].sever() didn't want to work :effort:
-	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.sever()
-	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
-	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
-	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
-	else if(limb == "all") src.limbs.sever("all")
+	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.sever(user, messy)
+	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever(user, messy)
+	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever(user, messy)
+	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever(user, messy)
+	else if(limb == "all") src.limbs.sever("all", user, messy)
 
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)

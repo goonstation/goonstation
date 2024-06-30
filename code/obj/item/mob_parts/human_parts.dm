@@ -171,7 +171,7 @@
 				src.original_fprints = src.original_holder.bioHolder.fingerprints
 		return ..()
 
-	sever(mob/user)
+	sever(mob/user, messy)
 		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
@@ -342,7 +342,7 @@
 			holder.losebreath = 5
 			strangling = TRUE
 
-	sever(mob/user)
+	sever(mob/user, messy)
 		if(holder?.handcuffs)
 			var/obj/item/I = holder.handcuffs
 			holder.u_equip(I)
@@ -582,7 +582,7 @@
 		remove_from_mob(0)
 		..()
 
-	sever()
+	sever(user, messy)
 		remove_from_mob(0)
 		..()
 
@@ -709,7 +709,7 @@
 		remove_from_mob(0)
 		..()
 
-	sever()
+	sever(user, messy)
 		remove_from_mob(0)
 		..()
 
@@ -990,7 +990,7 @@
 			set_loc(holder)
 		..()
 
-	sever(mob/user)
+	sever(mob/user, messy)
 		. = ..()
 		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
@@ -1029,7 +1029,7 @@
 			set_loc(holder)
 		..()
 
-	sever(mob/user)
+	sever(mob/user, messy)
 		. = ..()
 		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
@@ -1646,7 +1646,7 @@
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
 
-	sever(mob/user)
+	sever(mob/user, messy)
 		. = ..()
 		src.visible_message(SPAN_NOTICE("[src] withers greatly as it falls off!"))
 		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
