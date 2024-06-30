@@ -14456,9 +14456,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -32846,6 +32843,9 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
