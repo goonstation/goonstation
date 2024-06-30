@@ -720,7 +720,6 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 			var/obj/item/device/analyzer/atmospheric/a = src
 			a.analyzer_upgrade = 1
 			a.icon_state = "atmos"
-			a.item_state = "atmosphericnalyzer"
 
 		else
 			boutput(user, SPAN_ALERT("That cartridge won't fit in there!"))
