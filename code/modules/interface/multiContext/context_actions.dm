@@ -915,6 +915,8 @@
 
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
+		var/datum/contextLayout/experimentalcircle/layout = M.contextLayout
+		layout.dist = 40 //more options, bigger
 		M.setting_context_actions = M.page_2_actions + M.common_actions
 		M.AttackSelf(user)
 		..()
@@ -926,6 +928,8 @@
 
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
+		var/datum/contextLayout/experimentalcircle/layout = M.contextLayout
+		layout.dist = 34 //less options, smaller
 		M.setting_context_actions = M.page_1_actions + M.common_actions
 		M.AttackSelf(user)
 		..()

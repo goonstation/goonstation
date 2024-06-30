@@ -318,10 +318,10 @@
 	var/list/common_actions
 	var/list/page_1_actions
 	var/list/page_2_actions
-	contextLayout = new /datum/contextLayout/experimentalcircle
 
 	New()
 		..()
+		contextLayout = new /datum/contextLayout/experimentalcircle(Dist = 34)
 		setting_context_actions = list()
 		common_actions = list()
 		page_1_actions = list()
