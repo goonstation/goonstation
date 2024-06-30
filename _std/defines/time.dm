@@ -32,31 +32,31 @@
 	#elif (BUILD_TIME_HOUR == 7) || (BUILD_TIME_HOUR - 8 == 7) || (BUILD_TIME_HOUR - 16 == 7)
 		#define OCEAN_LIGHT  rgb(0.10 * 191, 0.10 *  64, 1.00 *  62, 0.65 * 255)
 	#endif
-#else // oshan (and manta too technically)
-	#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 12 == 0) // noon
-		#define OCEAN_LIGHT  rgb(0.160 * 255, 0.60 * 255, 1.00 * 255, 0.65 * 255)
+#else // Abzu - oshan (and manta too technically), we're just going to say that fugg has noon exactly at shidd's midnight because we want a nice reddish glow during the night
+	#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 12 == 0) // shidd noon, fugg midnight
+		#define OCEAN_LIGHT  rgb(0.160 *   0, 0.60 * 255, 1.00 * 255, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 12 == 1)
-		#define OCEAN_LIGHT  rgb(0.160 * 236, 0.60 * 236, 1.00 * 236, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 * 236, 1.00 * 255, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 2) || (BUILD_TIME_HOUR - 12 == 2)
-		#define OCEAN_LIGHT  rgb(0.160 * 187, 0.60 * 187, 1.00 * 187, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.160 *  63, 0.60 * 187, 1.00 * 236, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 3) || (BUILD_TIME_HOUR - 12 == 3)
 		#define OCEAN_LIGHT  rgb(0.160 * 125, 0.60 * 125, 1.00 * 125, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 4) || (BUILD_TIME_HOUR - 12 == 4)
-		#define OCEAN_LIGHT  rgb(0.160 *  63, 0.60 *  63, 1.00 *  63, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.160 * 187, 0.60 *  63, 1.00 *  63, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 5) || (BUILD_TIME_HOUR - 12 == 5)
-		#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 *  18, 1.00 *  18, 0.65 * 255)
-	#elif (BUILD_TIME_HOUR == 6) || (BUILD_TIME_HOUR - 12 == 6) // midnight
-		#define OCEAN_LIGHT  rgb(0.160 *   0, 0.60 *   0, 1.00 *   0, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.2   * 236, 0.60 *  18, 1.00 *  18, 0.65 * 255)
+	#elif (BUILD_TIME_HOUR == 6) || (BUILD_TIME_HOUR - 12 == 6) // shidd mignight, fugg noon
+		#define OCEAN_LIGHT  rgb(0.25   * 255, 0.60 * 23, 1.00 *   0, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 7) || (BUILD_TIME_HOUR - 12 == 7)
-		#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 *  18, 1.00 *  18, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.2   * 236, 0.60 *  18, 1.00 *  18, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 8) || (BUILD_TIME_HOUR - 12 == 8)
-		#define OCEAN_LIGHT  rgb(0.160 *  63, 0.60 *  63, 1.00 *  63, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.160 * 187, 0.60 *  63, 1.00 *  63, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 9) || (BUILD_TIME_HOUR - 12 == 9)
 		#define OCEAN_LIGHT  rgb(0.160 * 125, 0.60 * 125, 1.00 * 125, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 10) || (BUILD_TIME_HOUR - 12 == 10)
-		#define OCEAN_LIGHT  rgb(0.160 * 187, 0.60 * 187, 1.00 * 187, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.160 *  63, 0.60 * 187, 1.00 * 236, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 11) || (BUILD_TIME_HOUR - 12 == 11)
-		#define OCEAN_LIGHT  rgb(0.160 * 236, 0.60 * 236, 1.00 * 236, 0.65 * 255)
+		#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 * 236, 1.00 * 255, 0.65 * 255)
 	#endif
 #endif
 

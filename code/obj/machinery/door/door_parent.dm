@@ -10,7 +10,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	opacity = 1
 	#endif
 	density = 1
-	flags = FPRINT | ALWAYS_SOLID_FLUID
+	flags = ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
 	pass_unstable = TRUE

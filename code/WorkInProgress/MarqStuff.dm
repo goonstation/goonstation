@@ -292,7 +292,7 @@
 	name = "steel-headed arrow"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	// placeholder
 	var/datum/material/head_material
 	var/datum/material/shaft_material
@@ -483,7 +483,7 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 

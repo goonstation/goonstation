@@ -72,6 +72,7 @@
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
+			logTheThing(LOG_STATION, M, "is hit by a radiation burst at [log_loc(M)].")
 			M.take_radiation_dose(rad_strength)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
@@ -126,15 +127,16 @@
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		if(!istype_exact(T, /turf/space))
 			T.AddComponent(/datum/component/radioactive, 25, TRUE, FALSE, 1)
-		for (var/mob/A in T.contents)
-			A.take_radiation_dose(rad_strength)
-			if(iscarbon(A))
-				var/mob/living/carbon/M = A
+		for (var/mob/M in T.contents)
+			logTheThing(LOG_STATION, M, "is hit by a neutron radiation burst at [log_loc(M)].")
+			M.take_radiation_dose(rad_strength)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
 				if (prob(mutate_prob) && M.bioHolder)
 					if (prob(bad_mut_prob))
-						M.bioHolder.RandomEffect("bad")
+						H.bioHolder.RandomEffect("bad")
 					else
-						M.bioHolder.RandomEffect("good")
+						H.bioHolder.RandomEffect("good")
 
 
 // Oldest version of event - just unavoidably puts radiation on everyone

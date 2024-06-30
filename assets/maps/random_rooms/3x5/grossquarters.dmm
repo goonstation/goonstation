@@ -19,7 +19,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
 /obj/decal/cleanable/vomit,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body6"
 	},
 /obj/decal/cleanable/blood{

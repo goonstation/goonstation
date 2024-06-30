@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/obj/item)
 	/*_____*/
 	/*Flags*/
 	/*‾‾‾‾‾*/
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
 	var/tooltip_flags = null
@@ -1179,6 +1179,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
 				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
 					break
+				else if(src in terminus_storage) // ditto
+					break
 				else
 					return 0
 			checkloc = checkloc.loc // Get the loc of the loc! The loop continues until it's the turf of what you clicked on
@@ -1331,11 +1333,14 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if(hasProperty("unstable"))
 		power = rand(power, round(power * getProperty("unstable")))
 
-	var/attack_resistance = target.check_attack_resistance(src)
+	var/attack_resistance = target.check_attack_resistance(src, user)
 	if (attack_resistance)
-		power = 0
-		if (istext(attack_resistance))
-			msgs.show_message_target(attack_resistance)
+		if (isnum(attack_resistance))
+			power *= attack_resistance
+		else
+			power = 0
+			if (istext(attack_resistance))
+				msgs.show_message_target(attack_resistance)
 
 	if (hasProperty("searing"))
 		msgs.damage_type = DAMAGE_BURN

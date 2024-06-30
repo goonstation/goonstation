@@ -9,7 +9,6 @@ TYPEINFO(/obj/item/device/accessgun)
 	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	var/obj/item/card/id/ID_card = null
 	req_access = list(access_change_ids,access_engineering_chief)
@@ -133,7 +132,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
-		var/str_contents = kText.list2text(ID_card.access, ", ")
+		var/str_contents = list2text(ID_card.access, ", ")
 		if (!mode)
 			O.set_access_list(list(ID_card.access))
 		else

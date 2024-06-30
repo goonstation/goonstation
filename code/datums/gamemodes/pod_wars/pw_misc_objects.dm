@@ -144,8 +144,8 @@
 
 		//Friendly fire check
 		if (get_pod_wars_team_num(user) == team_num)
-			message_admins("[user] just committed friendly fire against their team's [src]!")
-			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			message_admins("[user] just committed friendly fire against [his_or_her(user)] team's [src]!")
+			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks [his_or_her(user)] own team's critical system [src].")
 
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
