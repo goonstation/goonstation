@@ -35,7 +35,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 	icon_state = "pressurizer"
 	density = 1
 	status = REQ_PHYSICAL_ACCESS
-	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	flags = CONDUCT | TGUI_INTERACTIVE
 	requires_power = FALSE //power only required for material processing
 	p_class = 3
 

@@ -248,6 +248,7 @@ var/list/admin_verbs = list(
 		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
+		/client/proc/toggle_hide_offline,
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
@@ -1806,6 +1807,9 @@ var/list/fun_images = list()
 		if (ignorePlayerVote == "No")
 			return
 
+	if (mapSwitcher.locked)
+		return alert("The server is currently switching to another map. You will need to wait.")
+
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
 	if (mapSwitcher.next)
@@ -2251,7 +2255,8 @@ var/list/fun_images = list()
 
 	var/client/C = src.client
 	if (choice in type_procs)
-		call(A, type_procs[choice])()
+		var/procpath/procpath = type_procs[choice]
+		call(A, procpath.name)()
 		src.update_cursor()
 		return
 

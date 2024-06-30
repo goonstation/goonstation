@@ -58,7 +58,7 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
-	flags = OPENCONTAINER | FPRINT
+	flags = OPENCONTAINER
 
 
 	New()
@@ -449,6 +449,9 @@ proc/generate_space_color()
 	return
 
 /turf/proc/delay_space_conversion()
+	return
+
+/turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
 		air_master.tiles_to_space |= src
 		return TRUE

@@ -16,6 +16,8 @@
 	var/datum/apiBody/body = null
 	/// The expected type upon deserialization
 	var/correct_response = null
+	/// Is this request allowed to automatically retry if it fails?
+	var/allow_retry = TRUE
 
 
 /// Formats a given parameter associated list into a urlstring format

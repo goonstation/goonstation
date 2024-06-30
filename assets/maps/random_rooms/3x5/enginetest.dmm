@@ -20,7 +20,7 @@
 /turf/simulated/floor/airless/caution/east,
 /area/dmm_suite/clear_area)
 "s" = (
-/obj/decal/fakeobjects/shuttleweapon/base,
+/obj/fakeobject/shuttleweapon/base,
 /turf/simulated/floor/airless/caution/corner,
 /area/dmm_suite/clear_area)
 "v" = (
@@ -30,7 +30,7 @@
 	info = "<b>Seems that a part of the card is burnt.</b><br>Engine Report 53<br><br>-------------------------------------------<br>The engine seems to be acting normaly without any errors i suspect we can use this engine very very so-<br>-------------------------------------------<br>Rest of the card is burnt off"
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /turf/simulated/floor/airless/caution/corner/sw,
 /area/dmm_suite/clear_area)
 "y" = (
@@ -40,16 +40,16 @@
 "z" = (
 /obj/decal/cleanable/blood/gibs,
 /obj/machinery/light/emergency,
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/fakeobject/lightbulb_broken,
 /turf/simulated/floor/airless/caution/corner/se,
 /area/dmm_suite/clear_area)
 "C" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/airless/caution/south,
 /area/dmm_suite/clear_area)
 "F" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/simulated/floor/airless/caution/corner,
 /area/dmm_suite/clear_area)
 "G" = (

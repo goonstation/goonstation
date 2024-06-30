@@ -125,6 +125,7 @@ var/global/datum/apiHandler/apiHandler
 		request.begin_async()
 		if (src.debug) src.debugLog(route.method, req_route, req_body)
 		var/time_started = TIME
+		var/time_started_unix = rustg_unix_timestamp()
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
 		if (!request.is_complete())
 			src.trackRecentError()
@@ -132,9 +133,12 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
+			// Temp logging for timeouts
+			world.log << "(TEMP) API Error: Request timed out for: [req_route]. Time diff: [TIME - time_started]. Unix start: [time_started_unix]. Unix end: [rustg_unix_timestamp()]"
+
 			// This one is over so we can clear it now
 			src.lazy_concurrent_counter--
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: Request timed out during [req_route]"))
@@ -150,7 +154,7 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]"))
@@ -171,10 +175,10 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < src.maxApiRetries)
+			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)
 
-			src.apiError(list("message" = "API Error: JSON decode error during [req_route]"))
+			src.apiError(list("message" = "API Error: JSON decode error during [req_route]", "status_code" = response.status_code))
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)

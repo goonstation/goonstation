@@ -627,7 +627,8 @@
 					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+					if (voluntary)
+						src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 					return
 
 			if ("uguu")
@@ -2173,7 +2174,7 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
+					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Inspector")))
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
@@ -2263,7 +2264,8 @@
 					message = "<b>[src]</b> woofs!"
 					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
-				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+				if (voluntary)
+					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 
 	showmessage:

@@ -38,6 +38,11 @@
 	var/doing_a_thing = 0
 	var/log_trades = TRUE
 
+	///A business card or other item type to occasionally include with orders
+	///copy pasted from /datum/trader because we have two separate trader types APPARENTLY
+	var/business_card = null
+	var/business_card_chance = 20
+
 	var/datum/dialogueMaster/dialogue = null //dialogue will open on click if available. otherwise open trade directly.
 	var/lastWindowName = ""
 	var/angrynope = "Not interested." //What the trader says when he declines trade because angry.
@@ -472,6 +477,8 @@
 		var/obj/storage/crate/A = new /obj/storage/crate(pickedloc)
 		showswirl(pickedloc)
 		A.name = "Goods Crate ([src.name])"
+		if (src.business_card && prob(src.business_card_chance))
+			new src.business_card(A)
 		if (!custom)
 			for(var/atom/movable/purchased as anything in shopping_cart)
 				purchased.set_loc(A)
@@ -725,7 +732,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"Get 'em boys!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/N = pick(1,2)
 				var/mob/living/critter/martian/P = null
 				if (N == 1)
@@ -796,7 +803,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
@@ -989,7 +996,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/salvage/electronic_debris(src)
 		src.goods_buy += new /datum/commodity/relics/gnome(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 
@@ -1144,6 +1150,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	name = "Geoff Honkington"
 	angrynope = "HO--nngh. Leave me alone."
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
+	business_card = /obj/item/paper/businesscard/clowntown
 	var/honk = 0
 
 	New()

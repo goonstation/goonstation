@@ -2291,9 +2291,8 @@
 
 	onUpdate(timePassed)
 		. = ..()
-		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.delStatus("filthy")
-
 
 	onRemove()
 		. = ..()
@@ -2842,6 +2841,8 @@
 	onUpdate(timePassed)
 		src.passed += timePassed
 		if (ON_COOLDOWN(src.owner, "active_ailments_tick", LIFE_PROCESS_TICK_SPACING))
+			return
+		if (istype(src.owner.loc, /obj/cryotron))
 			return
 		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
 		src.passed = 0
