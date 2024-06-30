@@ -934,6 +934,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Staff_Assistant"
 
+	special_setup(mob/living/carbon/human/M, no_special_spawn)
+		..()
+		if (prob(20))
+			M.stow_in_available(new /obj/item/paper/businesscard/seneca)
+
+
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
 	linkcolor = "#0099FF"
