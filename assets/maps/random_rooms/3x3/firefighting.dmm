@@ -24,6 +24,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"l" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/reagent_dispensers/foamtank,
 /obj/item/storage/wall/fire{
@@ -60,7 +64,7 @@ a
 "}
 (2,1,1) = {"
 M
-M
+l
 M
 "}
 (3,1,1) = {"
