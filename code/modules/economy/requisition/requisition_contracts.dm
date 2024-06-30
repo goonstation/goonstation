@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	 * This should ALWAYS be included in any entry variant, as late as possible in primary checks but before the rolling count is incremented.
 	 * It should return TRUE if additional checks pass, and FALSE if they do not.
 	 */
-	proc/extra_eval()
+	proc/extra_eval(atom/eval_item)
 		return TRUE
 
 ABSTRACT_TYPE(/datum/rc_entry/item)
@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 		else // Regular type evaluation
 			if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt))) valid_item = TRUE
 		if(!valid_item) return
-		if(!extra_eval()) return
+		if(!extra_eval(eval_item)) return
 		src.rollcount++
 		. = TRUE
 
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(src.exactpath && eval_item.type != typepath) return // More fussy type evaluation
 		else if(!istype(eval_item,typepath)) return // Regular type evaluation
-		if(!extra_eval()) return
+		if(!extra_eval(eval_item)) return
 		switch(food_integrity)
 			if(FOOD_REQ_INTACT)
 				if(eval_item.bites_left != eval_item.uneaten_bites_left) return
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 			if(!eval_item.material || eval_item.material.getID() != src.mat_id)
 				return
 		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
-			if(!extra_eval()) return
+			if(!extra_eval(eval_item)) return
 			rollcount += eval_item.amount
 			. = TRUE // Let manager know passed eval item is claimed by contract
 
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 		. = ..()
 		if(rollcount >= count) return //standard skip-if-complete
 		if(contained_in && !istype(eval_item,contained_in)) return // Do we have a required container type? If so, validate it
-		if(!extra_eval()) return
+		if(!extra_eval(eval_item)) return
 		if(eval_item.reagents)
 			var/C // Total count of matching reagents, by unit
 			if(islist(src.chem_ids)) // If there are multiple reagents to evaluate, iterate by chem IDs
@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 		var/obj/item/seed/cultivar = eval_item
 		if(!cultivar.plantgenes) return // No genome? Skip it
 		if(cultivar.planttype.name != cropname) return // Wrong species? Skip it
-		if(!extra_eval()) return
+		if(!extra_eval(eval_item)) return
 
 		gene_count = 0
 		for(var/index in gene_reqs) // Iterate over each parameter to see if the genome meets it, or exceeds it in the right direction
@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/rc_entry/artifact)
 					is_acceptable_type = TRUE
 			if(!is_acceptable_type) return
 
-		if(!extra_eval()) return
+		if(!extra_eval(eval_item)) return
 		src.rollcount++
 		. = TRUE // Let manager know artifact passes muster and is claimed by contract
 
