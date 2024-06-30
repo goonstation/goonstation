@@ -2993,6 +2993,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				return 2
 		return ..()
 
+	animate_lying(lying)
+		if (lying)
+			src.icon_state = "batrina-sleeping"
+		else
+			src.icon_state = initial(src.icon_state)
+
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
 /* ============================================== */
