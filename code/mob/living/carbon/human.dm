@@ -350,7 +350,7 @@
 		if (r_leg && istype(r_leg, /obj/item/parts/human_parts))
 			r_leg:set_skin_tone()
 
-	proc/sever(var/target = "all", var/mob/user, var/messy=TRUE)
+	proc/sever(var/target = "all", var/mob/user)
 		if (!target)
 			return 0
 		if (istext(target))
@@ -372,11 +372,11 @@
 					limbs_to_sever += list(src.r_leg)
 			if (length(limbs_to_sever))
 				for (var/obj/item/parts/P in limbs_to_sever)
-					P.sever(user, messy)
+					P.sever(user)
 				return 1
 		else if (istype(target, /obj/item/parts))
 			var/obj/item/parts/P = target
-			P.sever(user, messy)
+			P.sever(user)
 			return 1
 
 	// quick hacky thing to have similar functionality to get_organ
