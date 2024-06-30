@@ -437,7 +437,7 @@ datum
 			addiction_min = 50
 			max_addiction_severity = "LOW"
 			stun_resist = 3
-			depletion_rate = 0.1
+			depletion_rate = 0.05
 			taste = "bitter"
 			overdose = 60
 			threshold = THRESHOLD_INIT
@@ -471,14 +471,14 @@ datum
 				. = ..()
 				var/caffeine_amt = holder.get_reagent_amount(src.id)
 				switch(caffeine_amt) //use ~midpoints for depeletion rate thresholds - need stronger coffees or blends to overcaffeinate
-					if(0 to 3)
-						. *= 0.5
-					if(10 to 30)
+					if(3 to 10)
 						. *= 2
-					if(30 to 50)
+					if(10 to 30)
 						. *= 4
+					if(30 to 50)
+						. *= 8
 					if(50 to INFINITY)
-						. *= 5
+						. *= 10
 				return .
 
 
