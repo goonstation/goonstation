@@ -1171,7 +1171,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			limbs += src.mob.limbs.r_leg?.remove(FALSE)
 
 			for (var/obj/limb in limbs) // You do not know my pain.
-				limb.throw_random = FALSE
+				limb.throw_return = FALSE
 				ThrowRandom(limb, rand(2,3), 1)
 
 			//good fucking god i hate skeletons
