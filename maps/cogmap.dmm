@@ -36431,8 +36431,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "czS" = (
-/obj/table/wood/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "czT" = (
@@ -65207,6 +65206,7 @@
 	pixel_x = -2;
 	pixel_y = 10
 	},
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "xZQ" = (

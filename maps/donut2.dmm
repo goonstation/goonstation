@@ -264,13 +264,11 @@
 	dir = 1
 	},
 /obj/item/peripheral/network/radio/locked,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abd" = (
-/obj/table/wood/auto{
-	dir = 6
-	},
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abe" = (

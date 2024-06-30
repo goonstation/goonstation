@@ -7334,7 +7334,7 @@
 /turf/unsimulated/floor/black,
 /area/space)
 "tl" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/unsimulated/floor/black,
 /area/space)
 "tm" = (
@@ -10006,7 +10006,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -10390,7 +10390,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-	
+
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;

@@ -55933,13 +55933,13 @@
 	dir = 1;
 	pixel_x = -1
 	},
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/listeningpost)
 "dnI" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
