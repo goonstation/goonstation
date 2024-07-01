@@ -1903,9 +1903,9 @@ datum
 			reagent_state = LIQUID
 			taste = "seaworthy"
 
-		fooddrink/alcoholic/kalimoxto
-			name = "Kalimoxto"
-			id = "kalimoxto"
+		fooddrink/alcoholic/kalimotxo
+			name = "Kalimotxo"
+			id = "kalimotxo"
 			fluid_r = 164
 			fluid_g = 77
 			fluid_b = 65
